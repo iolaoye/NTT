@@ -1,0 +1,14 @@
+﻿<div  id='cssmenu'>
+    <ul id="mnuFooter" >
+		  <li><a <%= link_to "Instructions" %> </a></li>
+          <li><a <%= link_to "Contact Us" %></a></li>
+          <li><a <%= link_to "About NTT"  %></a></li>
+          <li><a <%= link_to "Help" %></a></li>
+          <li class='active has-sub'><%= link_to "Language" %>
+            <ul id="cssSubMenu" >
+              <li><%=  button_to "English", {action: "change_to_english", method: :post} %></li>
+              <li><%=  button_to "Spanish", {action: "change_to_spanish", method: :post} %></li>
+            </ul>
+        </li>
+    </ul>
+</div>

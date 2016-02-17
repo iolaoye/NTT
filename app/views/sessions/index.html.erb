@@ -1,0 +1,24 @@
+﻿<% if !signed_in? %>
+  <h2>Log in</h2>
+  <%= form_tag session_path do %>
+    <% if flash[:alert] %>
+      <p class="flash_alert"><%= flash[:alert] %></p>
+    <% end %>
+    <div class="field">
+      <%= label_tag :email %><br />
+      <%= text_field_tag :email %>
+    </div>
+    <div class="field">
+      <%= label_tag :password %><br />
+      <%= password_field_tag :password %>
+    </div>
+    <div class="actions">
+      <p><%= submit_tag 'Login' %></p>
+    </div>
+    <div class="actions">
+      <p><%= link_to 'New User', users_new_path, method: :get %></p>
+    </div>
+  <% end %>
+<% else %>
+    <%#= render 'sessions\index' %>
+<% end %>
