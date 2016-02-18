@@ -266,3 +266,9 @@
   transform: rotateY(180deg);
 }
 
+/*Table styles  */
+.gvHeaderStyle {color:Blue;background-color:Gray;}
+
+.gvRowStyle { color:Black;background-color:Silver; }
+
+.gvTableStyle { background-color:White;border-color:#CC9966;border-width:10px;border-style:None;border-collapse:collapse; }

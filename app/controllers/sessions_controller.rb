@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  def create
+  def create  #runs when log in.
     if user = User.authenticate(params[:email], params[:password])  # authenticate user 
 	  session[:user_id] = user.id									# store user id in session
 	  #redirect_to '/welcomes', :notice => "Logged in successfully"	# redirect is successful
@@ -11,15 +11,10 @@ class SessionsController < ApplicationController
 	end
   end
 
-  def index
-    if user = User.authenticate(params[:email], params[:password])  # authenticate user 
-	  session[:user_id] = user.id									# store user id in session
-	  redirect_to welcomes_index_path, :notice => "Logged in successfully"	# redirect is successful	  
-	else
-	  render :action => 'index'										# redirect to the same page
-	end
+  def index  #run when comes to web page and user is already logged in
+	  redirect_to welcomes_index_path, :notice => "Already loged"	# redirect is successful	  
   end 
-  
+
   def new
 	@user = User.new
 	redirect_to users_new_path

@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :projects
   resource :session
   resources :users
   resources :welcomes

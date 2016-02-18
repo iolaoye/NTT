@@ -1,21 +1,19 @@
 ﻿<% if signed_in? %>
     <div class="navbar navbar-default">
         <ul class="nav navbar-nav">
-		  <li><%= link_to "Welcome", welcomes_index_path %></li>
-          <li><%#= link_to "projects", projects_path %></li>
-          <li><%= link_to "Projects" %></li>
-          <li><%= link_to "Location"  %></li>
-          <li><%= link_to "Weather" %></li>
-          <li><%= link_to "Fields" %></li>
-          <li><%= link_to "Soils" %></li>
-          <li><%= link_to "Managements" %></li>
-          <li><%= link_to "Subprojects" %></li>
-          <li><%= link_to "Economics" %></li>
-          <li><%= link_to "Simulations" %></li>
-          <li><%= link_to "Results" %></li>
-          <li><%= link_to "Modifications" %></li>
-          <li><%#= link_to "Sign out", signout_path, method: "delete" %></li>
-          <li><%= link_to "Sign out", logout_path %></li>
+		  <li><%= link_to t('menu.welcome'), welcomes_index_path %></li>
+          <li><%= link_to t('menu.projects'), projects_path %></li>
+          <li><%= link_to t('menu.location')  %></li>
+          <li><%= link_to t('menu.weather') %></li>
+          <li><%= link_to t('menu.fields') %></li>
+          <li><%= link_to t('menu.soils') %></li>
+          <li><%= link_to t('menu.managements') %></li>
+          <li><%= link_to t('menu.subprojects') %></li>
+          <li><%= link_to t('menu.economics') %></li>
+          <li><%= link_to t('menu.simulations') %></li>
+          <li><%= link_to t('menu.results') %></li>
+          <li><%= link_to t('menu.nodifications') %></li>
+          <li><%= link_to t('menu.signout'), logout_path %></li>
         </ul>      
     </div>
 <% else %>

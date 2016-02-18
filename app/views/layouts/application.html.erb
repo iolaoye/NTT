@@ -6,14 +6,11 @@
 	  <%= csrf_meta_tags %>
 	</head>
 	<body>
-	<%= NTTG3::Application.config.language %>
-	<%= I18n.default_locale %>
 	  <% if NTTG3::Application.config.language == "en" %>
 		<% I18n.default_locale = :en %>
 	  <% else %>
 		<% I18n.default_locale = :es %>
 	  <% end %>
-	<%= I18n.default_locale %>
 
 	  <%= image_tag("NTTG2_Logo.png", :alt => "NTT Logo", width:'100%', height:'180px') %>
 	  <% if signed_in? %>
