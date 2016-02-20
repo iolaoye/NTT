@@ -3,16 +3,18 @@
         <ul class="nav navbar-nav">
 		  <li><%= link_to t('menu.welcome'), welcomes_index_path %></li>
           <li><%= link_to t('menu.projects'), projects_path %></li>
-          <li><%= link_to t('menu.location')  %></li>
-          <li><%= link_to t('menu.weather') %></li>
-          <li><%= link_to t('menu.fields') %></li>
-          <li><%= link_to t('menu.soils') %></li>
-          <li><%= link_to t('menu.managements') %></li>
-          <li><%= link_to t('menu.subprojects') %></li>
-          <li><%= link_to t('menu.economics') %></li>
-          <li><%= link_to t('menu.simulations') %></li>
-          <li><%= link_to t('menu.results') %></li>
-          <li><%= link_to t('menu.nodifications') %></li>
+		  <% if !session[:project_id] == nil %>
+			  <li><%= link_to t('menu.location')  %></li>
+			  <li><%= link_to t('menu.weather') %></li>
+			  <li><%= link_to t('menu.fields') %></li>
+			  <li><%= link_to t('menu.soils') %></li>
+			  <li><%= link_to t('menu.managements') %></li>
+			  <li><%= link_to t('menu.subprojects') %></li>
+			  <li><%= link_to t('menu.economics') %></li>
+			  <li><%= link_to t('menu.simulations') %></li>
+			  <li><%= link_to t('menu.results') %></li>
+			  <li><%= link_to t('menu.modifications') %></li>
+		  <% end %>
           <li><%= link_to t('menu.signout'), logout_path %></li>
         </ul>      
     </div>

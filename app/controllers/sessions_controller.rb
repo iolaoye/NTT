@@ -12,7 +12,9 @@ class SessionsController < ApplicationController
   end
 
   def index  #run when comes to web page and user is already logged in
+    if user = User.authenticate(params[:email], params[:password])  # authenticate user 
 	  redirect_to welcomes_index_path, :notice => "Already loged"	# redirect is successful	  
+	end
   end 
 
   def new

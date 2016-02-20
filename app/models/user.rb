@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 	attr_accessor :password
     attr_accessible :email, :hashed_password, :password_confirmation, :name, :company, :password
  #Associations
-	has_many_projects
+	has_many :projects
  #validations
 	 validates_uniqueness_of :email
 	 validates_length_of :email, :within => 5..50

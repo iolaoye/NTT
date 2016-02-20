@@ -1,4 +1,13 @@
 NTTG3::Application.routes.draw do
+  resources :counties
+
+
+  resources :states
+
+
+  resources :locations
+
+
   resources :projects
   resource :session
   resources :users
@@ -7,10 +16,6 @@ NTTG3::Application.routes.draw do
   resources :users do
 	get 'welcomes/index', to: 'welcomes#index'
   end 
-
-  #resource :session do
-	#get 'welcomes/index', to: 'welcomeS#index'
-  #end 
 
   #define two name routes, login_path and logout_path
   get '/login' => "sessions#index", :as => "login"
@@ -21,12 +26,6 @@ NTTG3::Application.routes.draw do
   get 'users/new'
   get 'welcomes/index'
   get 'welcomes/show'
-
-  resources :welcomes do
-    post :change_to_english, on: :member
-    post :change_to_spanish, on: :member
-  end
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

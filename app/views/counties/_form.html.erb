@@ -1,0 +1,41 @@
+<%= form_for(@county) do |f| %>
+  <% if @county.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@county.errors.count, "error") %> prohibited this county from being saved:</h2>
+
+      <ul>
+      <% @county.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :county_name %><br />
+    <%= f.text_field :county_name %>
+  </div>
+  <div class="field">
+    <%= f.label :county_code %><br />
+    <%= f.text_field :county_code %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.number_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude %>
+  </div>
+  <div class="field">
+    <%= f.label :state_id %><br />
+    <%= f.number_field :state_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

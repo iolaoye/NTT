@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  state_id: 1
+  county_id: 1
+  status: MyString
+  project_id: 1
+
+two:
+  state_id: 1
+  county_id: 1
+  status: MyString
+  project_id: 1

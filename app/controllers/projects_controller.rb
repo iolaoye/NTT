@@ -1,10 +1,9 @@
 class ProjectsController < ApplicationController
-  require 'will_paginate/array'
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.where(:user_id => session[:user_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,10 +15,12 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
-
+	session[:project_id] = @project.id		# store project id for location
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @project }
+      #format.html # show.html.erb
+      format.html { redirect_to location_path }
+      format.json { render json: @project, status: :created, location: @project.id }
+      #format.json { render json: @project }
     end
   end
 
