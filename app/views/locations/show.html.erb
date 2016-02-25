@@ -1,25 +1,17 @@
 <p id="notice"><%= notice %></p>
+<div>
+  <%= label :state_id, 'State:' %>
+  <%= collection_select :location, :state_id, State.all, :id, :state_name, {:prompt => 'Select state'}, {:required => true} %>
 
-<p>
-  <b>State:</b>
-  <%= @location.state_id %>
-</p>
-
-<p>
-  <b>County:</b>
-  <%= @location.county_id %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @location.status %>
-</p>
-
-<p>
-  <b>Project:</b>
-  <%= @location.project_id %>
-</p>
+  <%= label :state_id, 'County:' %>
+  <%= collection_select :location, :county_id, County.where(:state_id == @location.state_id), :id, :county_name, {:prompt => 'Select county'} %>
 
 
-<%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
+    <%= link_to 'Edit', edit_location_path(@location) %> |
+  <%= link_to 'Back', locations_path %>
+  
+  <iframe width='1180' height='600' src='<%= url_for :controller => 'locations', :action => 'send_to_mapping_site', :id => @location.project_id %>'>
+  </iframe>
+</div>
+
+

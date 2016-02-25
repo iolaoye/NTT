@@ -4,6 +4,6 @@ class State < ActiveRecord::Base
     belongs_to :location
 	has_many :counties
   #validations
-	 validates_uniqueness_of :name, :code
-	 validates_presence_of :name, :code
+	 validates_uniqueness_of :state_name, :state_code
+	 validates_presence_of :state_name, :state_code
 end

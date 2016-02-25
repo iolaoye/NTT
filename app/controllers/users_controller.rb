@@ -20,19 +20,19 @@ class UsersController < ApplicationController
 	  end
   end
 
-	def edit
-	  set_user
-	end
+  def edit
+	set_user
+  end
 
-	def update
+  def update
 		if @user.update(user_params)
 			#redirect_to welcomes_path, notice: 'Updated user information succesfully'
 		else
 			render action: 'edit'
 		end
-	end
+  end
 
-	private
+  private
 	def set_user
 		@user = User.find(params[:id])
 	end

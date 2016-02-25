@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = Project.where(:user_id => session[:user_id])
-
+	session[:status] = "Welcome"
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @projects }
@@ -15,12 +15,23 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
-	session[:project_id] = @project.id		# store project id for location
+	session[:status] = "projects"		# store project id for location
     respond_to do |format|
       #format.html # show.html.erb
       format.html { redirect_to location_path }
       format.json { render json: @project, status: :created, location: @project.id }
       #format.json { render json: @project }
+    end
+  end
+
+  # GET /projects/1
+  # GET /projects/1.json
+  def shows
+shows
+    @project = Project.find(params[:id])
+    respond_to do |format|
+      format.html { render action: "show" } # show.html.erb
+      format.json { render json: @project }
     end
   end
 

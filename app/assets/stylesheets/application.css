@@ -11,6 +11,7 @@
  *= require_self
  *= require_tree .
  */
+ 
 .flash_alert { background-color:red; }
 
 .navbar-default 
@@ -19,6 +20,7 @@
   text-decoration: none;
   background: -webkit-gradient(linear, left top, left bottom, from(#4F2D7F), to(#0FFFF0));
   width: 100%;
+  border:blue 1px solid;
 }
 
 .nav li  {
@@ -42,6 +44,7 @@
   text-decoration: none;
   padding: 0px 0px 0px 0px;
   text-shadow: 0 0 1px rgba(0,0,0,0.3);
+  vertical-align: top;
 }
 
 .nav > li > a:hover {

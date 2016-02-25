@@ -3,7 +3,6 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
     @locations = Location.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @locations }
@@ -13,12 +12,31 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @location = Location.where(project_id = params[:id])
+    @location = Location.where(:project_id => params[:id]).first
+	@county = County.where(:state_id => @location.state_id)
+    if !@location == [] # empty array
+	sadfalj
+		respond_to do |format|
+		  format.html # show.html.erb
+		  format.json { render json: @location }
+		end
+	end
+  end
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @location }
-    end
+  # GET /locations/1
+  # GET /locations/1.json
+  def shows
+    @location = Location.find(params[:id])
+	respond_to do |format|
+		format.html # show.html.erb
+		format.json { render json: @location }
+	end
+  end
+
+  def send_to_mapping_site
+    @location = Location.where(:project_id => params[:id]).first
+	@county = County.find(@location.county_id)
+    render :send_to_mapping_site, :layout => false
   end
 
   # GET /locations/new

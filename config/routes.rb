@@ -1,21 +1,30 @@
 NTTG3::Application.routes.draw do
+  resources :fields
+
+
   resources :counties
-
-
   resources :states
-
-
   resources :locations
-
-
   resources :projects
   resource :session
   resources :users
   resources :welcomes
 
+  resources :projects do
+    member do
+      get 'shows'
+	end 
+  end 
+	
+
   resources :users do
 	get 'welcomes/index', to: 'welcomes#index'
   end 
+
+  resources :locations do
+    get :send_to_mapping_site, on: :member
+    post :receive_from_mapping_site, on: :member
+  end
 
   #define two name routes, login_path and logout_path
   get '/login' => "sessions#index", :as => "login"

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  field_name: MyString
+  field_area: 1.5
+  field_average_slope: 1.5
+  location_id: 1
+  field_type: false
+
+two:
+  field_name: MyString
+  field_area: 1.5
+  field_average_slope: 1.5
+  location_id: 1
+  field_type: false

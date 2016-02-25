@@ -11,17 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160218222838) do
+ActiveRecord::Schema.define(:version => 20160222200813) do
 
-  create_table "locations", :force => true do |t|
-    t.string   "state_name"
-    t.string   "state_code"
+  create_table "counties", :force => true do |t|
     t.string   "county_name"
     t.string   "county_code"
+    t.integer  "status"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "state_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "fields", :force => true do |t|
+    t.integer  "location_id"
+    t.string   "field_name"
+    t.float    "field_area"
+    t.float    "field_average_slope"
+    t.boolean  "field_type"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.string   "coordinates"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.integer  "state_id"
+    t.integer  "county_id"
     t.string   "status"
     t.integer  "project_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "coordinates"
   end
 
   create_table "projects", :force => true do |t|
@@ -31,6 +52,14 @@ ActiveRecord::Schema.define(:version => 20160218222838) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "user_id"
+  end
+
+  create_table "states", :force => true do |t|
+    t.string   "state_name"
+    t.string   "state_code"
+    t.integer  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

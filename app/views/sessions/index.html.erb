@@ -1,4 +1,4 @@
-﻿<% if !signed_in? %>
+﻿<%# if !signed_in? %>
   <h2>Log in</h2>
   <%= form_tag session_path do %>
     <% if flash[:alert] %>
@@ -19,4 +19,4 @@
       <p><%= link_to 'New User', users_new_path, method: :get %></p>
     </div>
   <% end %>
-<% end %>
+<%# end %>

@@ -1,12 +1,19 @@
 ﻿<% if signed_in? %>
-    <div class="navbar navbar-default">
+    <% if session[:status] == "projects"%>
+	    <a><%= link_to t('menu.projects'), projects_path %></a>
+	<% end %>
+    <div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
-		  <li><%= link_to t('menu.welcome'), welcomes_index_path %></li>
-          <li><%= link_to t('menu.projects'), projects_path %></li>
-		  <% if !session[:project_id] == nil %>
+		  <% if session[:status] == "signed" %>
+			  <li><%= link_to t('menu.welcome'), welcomes_index_path %></li>
+			  <li><%= link_to t('menu.projects'), projects_path %></li>
+		  <% end %>
+		  <% if session[:status] == "projects" %>
 			  <li><%= link_to t('menu.location')  %></li>
 			  <li><%= link_to t('menu.weather') %></li>
 			  <li><%= link_to t('menu.fields') %></li>
+		  <% end %>
+		  <% if session[:status] == "fields" %>		  
 			  <li><%= link_to t('menu.soils') %></li>
 			  <li><%= link_to t('menu.managements') %></li>
 			  <li><%= link_to t('menu.subprojects') %></li>
@@ -18,6 +25,6 @@
           <li><%= link_to t('menu.signout'), logout_path %></li>
         </ul>      
     </div>
-<% else %>
-
 <% end %>
+
+

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Field name:</b>
+  <%= @field.field_name %>
+</p>
+
+<p>
+  <b>Field area:</b>
+  <%= @field.field_area %>
+</p>
+
+<p>
+  <b>Field average slope:</b>
+  <%= @field.field_average_slope %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @field.location_id %>
+</p>
+
+<p>
+  <b>Field type:</b>
+  <%= @field.field_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_field_path(@field) %> |
+<%= link_to 'Back', fields_path %>

@@ -3,6 +3,6 @@ class County < ActiveRecord::Base
   #Associatons
      belongs_to :state
   #validations
-	 validates_uniqueness_of :name, :code
-	 validates_presence_of :name, :code
+	 validates_uniqueness_of :county_name, :county_code
+	 validates_presence_of :county_name, :county_code
 end
