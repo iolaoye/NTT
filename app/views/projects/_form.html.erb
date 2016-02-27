@@ -12,6 +12,7 @@
   <% end %>
 
   <div class="field">
+    <%= session[:project_id] %>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
@@ -23,7 +24,7 @@
     <%= f.submit %>
   </div>
   <div >
-	<%= "prjkect id" %>
+	<%= "project id" %>
     <%= session[:project_id] %>
   </div>
 <% end %>

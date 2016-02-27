@@ -15,8 +15,8 @@
       <br/>
       <input type='hidden' size='80' name='source_id' value='<%= session[:session_id] %>'>
       <br/>
-      return_url:
-      <input type='text' size='80' name='return_url' value='<%= location_url(@location) %>/receive_from_mapping_site'>
+      <input type='text' size='80' name='return_url' value=<%= locations_url.gsub('locations', "locations/#{@location.project_id}/receive_from_mapping_site") %>
+      <input type='text' size='80' name='return_url_org' value='<%= locations_url(@location) %>/receive_from_mapping_site'>
       <br/>
       parcelcoords: <input type='text' size='80' name='parcelcoords' value='<%= @location.coordinates %>'>
       <br/>

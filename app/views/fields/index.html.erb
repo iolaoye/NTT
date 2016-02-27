@@ -1,7 +1,7 @@
 <h1>Listing fields</h1>
 
-<table>
-  <tr>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
     <th>Field name</th>
     <th>Field area</th>
     <th>Field average slope</th>
@@ -13,8 +13,8 @@
   </tr>
 
 <% @fields.each do |field| %>
-  <tr>
-    <td><%= field.field_name %></td>
+  <tr class="gvRowStyle">
+    <td><%= link_to field.field_name, field %></td>
     <td><%= field.field_area %></td>
     <td><%= field.field_average_slope %></td>
     <td><%= field.location_id %></td>

@@ -14,10 +14,12 @@ class FieldsController < ApplicationController
   # GET /fields/1.json
   def show
     @field = Field.find(params[:id])
+	session[:status] = "fields"		# store project id for location
+	session[:field_id] = params[:id]
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @field }
+      format.html { redirect_to weather_path }
+      format.json { render json: @field, status: :created, weather: @field.id }
     end
   end
 

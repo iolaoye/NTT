@@ -4,7 +4,7 @@
   <%= collection_select :location, :state_id, State.all, :id, :state_name, {:prompt => 'Select state'}, {:required => true} %>
 
   <%= label :state_id, 'County:' %>
-  <%= collection_select :location, :county_id, County.where(:state_id == @location.state_id), :id, :county_name, {:prompt => 'Select county'} %>
+  <%= collection_select :location, :county_id, @county.all, :id, :county_name, {:prompt => 'Select county'} %>
 
 
     <%= link_to 'Edit', edit_location_path(@location) %> |

@@ -1,0 +1,35 @@
+<h1>Listing weathers</h1>
+
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Station</th>
+    <th>Station way</th>
+    <th>Simulation initial year</th>
+    <th>Simulation final year</th>
+    <th>Longitude</th>
+    <th>Latitude</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @weathers.each do |weather| %>
+  <tr>
+    <td><%= weather.field_id %></td>
+    <td><%= weather.station_id %></td>
+    <td><%= weather.station_way %></td>
+    <td><%= weather.simulation_initial_year %></td>
+    <td><%= weather.simulation_final_year %></td>
+    <td><%= weather.longitude %></td>
+    <td><%= weather.latitude %></td>
+    <td><%= link_to 'Show', weather %></td>
+    <td><%= link_to 'Edit', edit_weather_path(weather) %></td>
+    <td><%= link_to 'Destroy', weather, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Weather', new_weather_path %>

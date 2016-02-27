@@ -26,3 +26,4 @@ updateCounties = ->
 $(document).ready ->
     $("#location_state_id").change ->
       updateCounties()
+java

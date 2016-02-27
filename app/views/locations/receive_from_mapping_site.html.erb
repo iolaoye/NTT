@@ -2,36 +2,19 @@
 <head>
   <script type="text/javascript">
       function reLoad() {
-          window.top.location = '<%=farm_fields_url(@farm) %>';
+          window.top.location = '<%=stations_url %>';
       }
   </script>
 </head>
 
-
-
-
 <% if !session[:debug] %>
-
     <body onload="reLoad();">
     </body>
-
 <% else %>
     <body>
-
-    <%
-       params.each do |key, value|
-    %>
-
-        <%= key %> = <%= value %>  <br/>
-
-    <%
-       end
-
-    %>
-
+    <%params.each do |key, value|%>
+      <%= key %> = <%= value %>  <br/>
+    <%end%>
     </body>
-
 <% end %>
-
-
 </html>

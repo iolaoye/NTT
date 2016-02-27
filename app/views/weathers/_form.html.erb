@@ -1,0 +1,45 @@
+<%= form_for(@weather) do |f| %>
+  <% if @weather.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@weather.errors.count, "error") %> prohibited this weather from being saved:</h2>
+
+      <ul>
+      <% @weather.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :field_id %><br />
+    <%= f.number_field :field_id %>
+  </div>
+  <div class="field">
+    <%= f.label :station_id %><br />
+    <%= f.number_field :station_id %>
+  </div>
+  <div class="field">
+    <%= f.label :station_way %><br />
+    <%= f.text_field :station_way %>
+  </div>
+  <div class="field">
+    <%= f.label :simulation_initial_year %><br />
+    <%= f.number_field :simulation_initial_year %>
+  </div>
+  <div class="field">
+    <%= f.label :simulation_final_year %><br />
+    <%= f.number_field :simulation_final_year %>
+  </div>
+  <div class="field">
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude %>
+  </div>
+  <div class="field">
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

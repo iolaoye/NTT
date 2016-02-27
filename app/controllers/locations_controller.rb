@@ -9,13 +9,13 @@ class LocationsController < ApplicationController
     end
   end
 
+  ###################################### SHOW ######################################
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @location = Location.where(:project_id => params[:id]).first
+    @location = Location.where(:project_id => session[:project_id]).first
 	@county = County.where(:state_id => @location.state_id)
     if !@location == [] # empty array
-	sadfalj
 		respond_to do |format|
 		  format.html # show.html.erb
 		  format.json { render json: @location }
@@ -23,6 +23,7 @@ class LocationsController < ApplicationController
 	end
   end
 
+  ###################################### SHOWS ######################################
   # GET /locations/1
   # GET /locations/1.json
   def shows
@@ -33,11 +34,68 @@ class LocationsController < ApplicationController
 	end
   end
 
+  ###################################### send_to_mapping_site ######################################
   def send_to_mapping_site
-    @location = Location.where(:project_id => params[:id]).first
+    @location = Location.where(:project_id => session[:project_id]).first
 	@county = County.find(@location.county_id)
     render :send_to_mapping_site, :layout => false
   end
+
+  ###################################### receive_from_mapping_site ######################################
+  def receive_from_mapping_site
+    @location = Location.where(:project_id => params[:id]).first
+
+	if (session[:session_id] == params[:source_id]) then
+      # step 1: delete fields not found
+      @location.fields.each do |field|
+        isFound = false
+        for i in 1..params[:fieldnum].to_i
+          if (field.field_name == params["field#{i}id"]) then
+            isFound = true
+          end
+        end
+        if (!isFound) then
+          field.destroy()
+        end  # end if isFound
+      end # end for
+
+	  # step 2: update or create remaining fields
+      for i in 1..params[:fieldnum].to_i
+        # find or create field
+        @field = @location.fields.where(:field_name => params["field#{i}id"]).first || @location.fields.build(:field_name => params["field#{i}id"])
+        @field.coordinates = params["field#{i}coords"]
+        @field.field_area = params["field#{i}acres"]
+		#find or create weather
+		if (@field.weather_id == nil) then
+		   #create the weather for this field
+		   @weather = Weather.new
+		else
+		   #update the weather for this field
+		   @weather = Weather.find(@field.weather_id)
+		end   #end weather validation
+        @weather.weather_file = params["field#{i}parcelweather"]
+		@weather.station_way = "map"
+		if @weather.save
+		   @field.weather_id = @weather.id
+		end 
+		@field.save
+		@weather.field_id = @field.id
+		@weather.save
+      end # end for fields
+
+	  # step 3: update location
+	  state_abbreviation = params[:state]
+	  state = State.find_by_state_abbreviation(state_abbreviation)
+	  #state = State.where(:state_abbreviation => state_abbreviation).first
+	  @location.state_id = state.id
+	  county_name = params[:county]
+	  county_name.slice! " County"
+	  county = County.find_by_county_name(county_name)
+	  @location.county_id = county.id
+	  @location.coordinates = params[:parcelcoords]
+      @location.save
+	end # end if of session_id check
+  end 
 
   # GET /locations/new
   # GET /locations/new.json

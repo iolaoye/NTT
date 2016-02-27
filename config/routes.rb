@@ -1,4 +1,10 @@
 NTTG3::Application.routes.draw do
+  resources :weathers
+
+
+  resources :stations
+
+
   resources :fields
 
 

@@ -1,19 +1,38 @@
 ﻿<% if signed_in? %>
-    <% if session[:status] == "projects"%>
-	    <a><%= link_to t('menu.projects'), projects_path %></a>
+    <% if session[:status] == "projects" %>
+	    <%= link_to t('menu.projects'), projects_path %>
+		<% if request.original_url.include? "location" %>
+			<%= ">> Location" %>
+		<% end %>
+		<% if request.original_url.include? "station" %>
+			<%= ">> Stations" %>
+		<% end %>
+		<% if request.original_url.include? "field" %>
+			<%= ">> Fields" %>
+		<% end %>
 	<% end %>
+
+    <% if session[:status] == "fields" %>
+	    <%= link_to t('menu.projects'), projects_path %>
+		<%= ">>" %>
+        <%= link_to t('menu.fields'), fields_path %>
+		<% if request.original_url.include? "weather" %>
+			<%= ">> Weather" %>
+		<% end %>
+	<% end %>
+
     <div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
 		  <% if session[:status] == "signed" %>
 			  <li><%= link_to t('menu.welcome'), welcomes_index_path %></li>
 			  <li><%= link_to t('menu.projects'), projects_path %></li>
 		  <% end %>
-		  <% if session[:status] == "projects" %>
-			  <li><%= link_to t('menu.location')  %></li>
-			  <li><%= link_to t('menu.weather') %></li>
-			  <li><%= link_to t('menu.fields') %></li>
+		  <% if session[:status] == "projects" %> 
+			  <li><%= link_to t('menu.location'), locations_url.gsub('locations', "locations/#{session[:project_id]}") %></li>
+			  <li><%= link_to t('menu.fields'), fields_path %></li>
 		  <% end %>
 		  <% if session[:status] == "fields" %>		  
+			  <li><%= link_to t('menu.weather') %></li>
 			  <li><%= link_to t('menu.soils') %></li>
 			  <li><%= link_to t('menu.managements') %></li>
 			  <li><%= link_to t('menu.subprojects') %></li>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160222200813) do
+ActiveRecord::Schema.define(:version => 20160226222712) do
 
   create_table "counties", :force => true do |t|
     t.string   "county_name"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20160222200813) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.string   "coordinates"
+    t.integer  "weather_id"
   end
 
   create_table "locations", :force => true do |t|
@@ -58,8 +59,25 @@ ActiveRecord::Schema.define(:version => 20160222200813) do
     t.string   "state_name"
     t.string   "state_code"
     t.integer  "status"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "state_abbreviation"
+  end
+
+  create_table "stations", :force => true do |t|
+    t.integer  "county_id"
+    t.string   "station_name"
+    t.string   "station_code"
+    t.string   "station_type"
+    t.boolean  "station_status"
+    t.integer  "wind_code"
+    t.integer  "wp1_code"
+    t.string   "wind_name"
+    t.string   "wp1_name"
+    t.integer  "initial_year"
+    t.integer  "final_year"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -69,6 +87,19 @@ ActiveRecord::Schema.define(:version => 20160222200813) do
     t.string   "company"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "weathers", :force => true do |t|
+    t.integer  "field_id"
+    t.integer  "station_id"
+    t.string   "station_way"
+    t.integer  "simulation_initial_year"
+    t.integer  "simulation_final_year"
+    t.float    "longitude"
+    t.float    "latitude"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.string   "weather_file"
   end
 
 end

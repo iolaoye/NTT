@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  field_id: 1
+  station_id: 1
+  station_way: MyString
+  simulation_initial_year: 1
+  simulation_final_year: 1
+  longitude: 1.5
+  latitude: 1.5
+
+two:
+  field_id: 1
+  station_id: 1
+  station_way: MyString
+  simulation_initial_year: 1
+  simulation_final_year: 1
+  longitude: 1.5
+  latitude: 1.5
