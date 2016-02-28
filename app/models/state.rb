@@ -6,4 +6,10 @@ class State < ActiveRecord::Base
   #validations
 	 validates_uniqueness_of :state_name, :state_code
 	 validates_presence_of :state_name, :state_code
+
+  def list_counties
+  	@state = State.find(self)
+  	return @state.counties
+  end
+
 end

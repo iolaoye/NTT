@@ -1,13 +1,7 @@
 NTTG3::Application.routes.draw do
   resources :weathers
-
-
   resources :stations
-
-
   resources :fields
-
-
   resources :counties
   resources :states
   resources :locations
@@ -16,13 +10,16 @@ NTTG3::Application.routes.draw do
   resources :users
   resources :welcomes
 
+  resources :states do
+    resources :counties
+  end
+
   resources :projects do
     member do
       get 'shows'
 	end 
   end 
 	
-
   resources :users do
 	get 'welcomes/index', to: 'welcomes#index'
   end 

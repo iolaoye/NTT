@@ -248,3 +248,6 @@ en:
   languages:
     english: 'English'
     spanish: 'Spanish'
+  weather:
+    longitude: Longitude
+    latitude: Latitude

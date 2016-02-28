@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   # GET /projects/1.json
-  def show
+  def show   #selected when click on a project or a new project is created.
     @project = Project.find(params[:id])
 	session[:status] = "projects"		# store project id for location
 	session[:project_id] = params[:id]
@@ -54,11 +54,11 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
 	session[:project_id] = @project.id
-
+	@project.user_id = session[:user_id]
     respond_to do |format|
       if @project.save
 		location = Location.new
-		location.project_id = 12
+		location.project_id = @project.id
 		location.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }

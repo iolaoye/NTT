@@ -10,6 +10,7 @@ class FieldsController < ApplicationController
     end
   end
 
+################################  SHOW   #################################
   # GET /fields/1
   # GET /fields/1.json
   def show
@@ -23,6 +24,7 @@ class FieldsController < ApplicationController
     end
   end
 
+################################  NEW   #################################
   # GET /fields/new
   # GET /fields/new.json
   def new

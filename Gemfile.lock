@@ -36,7 +36,7 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.10.0)
+    coffee-script-source (1.8.0)
     erubis (2.7.0)
     execjs (2.6.0)
     hike (1.2.3)
@@ -109,10 +109,12 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  coffee-script-source (= 1.8.0)
   jquery-rails
   rails (= 3.2.21)
   sass-rails (~> 3.2.3)
   sqlite3
   strong_parameters
+  therubyracer
   uglifier (>= 1.0.3)
   will_paginate (= 3.0.3)

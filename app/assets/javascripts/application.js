@@ -9,21 +9,30 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//
+// ...
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
 
-updateCounties = ->
-  $.getJSON "/states/" + $("#location_state_id").val() + "/counties.json", (counties) ->
-    items = []
-    items.push "<option value>Select County</option>"
-    $.each counties, (key, county) ->
-      items.push "<option value=\"" + county.id + "\">" + county.name + "</option>"
-    $("#location_county_id").html items.join("")
-    $("#location_county_id").removeAttr("disabled")
+function rbtnStation_onclick(way) {
+    document.getElementById("fsetStations").style.display = "none";
+    document.getElementById("fsetUploadWeatherFile").style.display = "none";
+    document.getElementById("fsetCoordinates").style.display = "none";
+    document.getElementById("tdWeather").style.verticalAlign = "middle";
+    var indexOf = document.getElementById("lblStation").innerHTML.indexOf("PRISM");
+    switch (way) {
+        case "Station":
+            if (indexOf != -1) 
+                //{document.getElementById("MainContent_fsetStations").style.display = "";}
+            break;
+        case "Prism":
+            break;
+        case "Own":
+            document.getElementById("fsetUploadWeatherFile").style.display = "";
+            break;
+        case "Coordinates":
+            document.getElementById("fsetCoordinates").style.display = "";
+            break;
+    }
+}
 
-$(document).ready ->
-    $("#location_state_id").change ->
-      updateCounties()
-java

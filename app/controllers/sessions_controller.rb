@@ -4,7 +4,6 @@ class SessionsController < ApplicationController
     if user = User.authenticate(params[:email], params[:password])  # authenticated user 
 	  session[:user_id] = user.id
 	  session[:status] = "signed"									# store user id in session
-	  #redirect_to '/welcomes', :notice => "Logged in successfully"	# redirect is successful
 	  redirect_to welcomes_index_path, :notice => "Logged in successfully"	# redirect is successful	  
 	else
 	  flash.now[:alert] = "Invalid login/password combination"		# alert if error
@@ -12,6 +11,7 @@ class SessionsController < ApplicationController
 	end
   end
 
+####################### INDEX  ##########################################################
   def index  
     if session[:status] == "signed"  # authenticate user 
 	  redirect_to welcomes_index_path, :notice => "Already loged"	#run when comes to web page and user is already logged in
@@ -21,11 +21,13 @@ class SessionsController < ApplicationController
 	end
   end 
 
+####################### NEW  ##########################################################
   def new
 	@user = User.new
 	redirect_to users_new_path
   end 
 
+####################### DESTROY  ##########################################################
   #destroy session on login out
   def destroy
     reset_session													# reset all of the values for the current session

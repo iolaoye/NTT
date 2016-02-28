@@ -13,14 +13,14 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @location = Location.where(:project_id => session[:project_id]).first
-	@county = County.where(:state_id => @location.state_id)
-    if !@location == [] # empty array
-		respond_to do |format|
-		  format.html # show.html.erb
-		  format.json { render json: @location }
+    @location = Location.find_by_project_id(params[:id])
+    #if !@location == [] # empty array
+        #@county = County.where(:state_id => @location.state_id)
+		respond_to do |format|		  
+		  format.html # show.html.erb		  
+		  #format.json { render json: @location }
 		end
-	end
+	#end
   end
 
   ###################################### SHOWS ######################################
@@ -37,7 +37,9 @@ class LocationsController < ApplicationController
   ###################################### send_to_mapping_site ######################################
   def send_to_mapping_site
     @location = Location.where(:project_id => session[:project_id]).first
-	@county = County.find(@location.county_id)
+	if !(@location.county_id == nil)
+	   @county = County.find(@location.county_id)
+	end
     render :send_to_mapping_site, :layout => false
   end
 
@@ -108,11 +110,13 @@ class LocationsController < ApplicationController
     end
   end
 
+  ###################################### EDIT ######################################
   # GET /locations/1/edit
   def edit
     @location = Location.find(params[:id])
   end
 
+  ###################################### CREATE ######################################
   # POST /locations
   # POST /locations.json
   def create

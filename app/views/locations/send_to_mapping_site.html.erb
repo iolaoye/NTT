@@ -11,7 +11,11 @@
     Loading map...
 
     <form action='<%= URL_MAP %>' method='post'>
-      <input type='hidden' size='80' name='county' value='<%= @county.county_code %>'>
+	  <% if @county == nil %>
+         <input type='hidden' size='80' name='county' value='<%=  %>'>
+	  <% else %>    
+         <input type='hidden' size='80' name='county' value='<%= @county.county_code %>'>
+	  <% end %>
       <br/>
       <input type='hidden' size='80' name='source_id' value='<%= session[:session_id] %>'>
       <br/>
@@ -33,12 +37,9 @@
     </body>
 
 <% else %>
-
     <body>
-
-    <form action='<%= URL_MAP %>' method='post'>
-
-      County: <input type='text' size='80' name='county' value='<%= @county.id %>'>
+      <form action='<%= URL_MAP %>' method='post'>
+      County: <input type='text' size='80' name='county' value=''>
       <br/>
       Source id: <input type='text' size='80' name='source_id' value='<%= session[:session_id] %>'>
       <br/>

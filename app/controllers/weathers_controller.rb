@@ -2,7 +2,7 @@ class WeathersController < ApplicationController
   # GET /weathers
   # GET /weathers.json
   def index
-    @weathers = Weather.all
+	@weather = Weather.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,6 +10,7 @@ class WeathersController < ApplicationController
     end
   end
 
+################################  SHOW   #################################
   # GET /weathers/1
   # GET /weathers/1.json
   def show
