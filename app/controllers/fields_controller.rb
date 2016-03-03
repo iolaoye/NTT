@@ -2,11 +2,23 @@ class FieldsController < ApplicationController
   # GET /fields
   # GET /fields.json
   def index
-    @fields = Field.all
+  
+    @fields = Field.where(:location_id => session[:location_id])
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @fields }
+    end
+  end
+
+################################  SHOW   #################################
+  def soils 
+    @soils = Soil.where(:field_id => params[:id])
+
+    respond_to do |format|
+      #format.html # index.html.erb
+	  redirect_to @soils
+      format.json { render json: @soils}
     end
   end
 

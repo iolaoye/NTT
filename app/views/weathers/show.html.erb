@@ -1,97 +1,60 @@
-<p id="notice"><%= notice %></p>
-
-<table >
-  <tr>
-    <td>
-      <fieldset class="section">
-        <legend id="lblWeatherTitle" runat="server" >Select Source for Weather Information</legend>
-        <input type="radio" runat="server" id="rbtnStation" name="rbtnWeather" value="Station" onchange="rbtnStation_onclick('Station');" onselect="rbtnStation_onclick('Station');" />
-        <label id="lblStation" runat="server" for="rbtnStation">Weather Information Using PRISM Data</label>
-        <br />
-        <input type="radio" runat="server" id="rbtnOwn"  name="rbtnWeather" value="Own" onchange="return rbtnStation_onclick('Own');" onselect="return rbtnStation_onclick('Own');"/>
-        <label id="lblOwn" runat="server" for="rbtnOwn">Load your Own Weather File</label>
-        <br />
-        <input type="radio" runat="server" id="rbtnCoordinates"  name="rbtnWeather" value="Coordinates" onchange="return rbtnStation_onclick('Coordinates');" onselect="return rbtnStation_onclick('Coordinates');"/>
-        <label id="lblCoordinates" runat="server" for="rbtnStation">Load Using Specific Coordinates (USA only)</label>
-        <br />
-      </fieldset>
-    </td>
-    <td id="tdWeather" runat="server" style="vertical-align: middle; text-align:left" >
-      <fieldset style="display:none" id="fsetStations" runat="server" class="section">
-        <legend id="lblStations" runat="server">Select Station from the Drop Down List</legend>
-        <select id="ddlStations" name="ddlStations" runat="server" style="text-align:left;"  ></select>
-      </fieldset>
-      <fieldset id="fsetUploadWeatherFile" runat="server" style="display:none"  class="section">
-        <legend id="lblUploadWeatherFile" runat="server">Choose the file to Upload and then select Upload Weather File</legend>
-        <input id="flUpload" runat="server" type="file" onchange="__doPostBack('btnUpload', 'Load Project')"/>
-      </fieldset>
-      <fieldset id="fsetCoordinates" runat="server" class="section">
-        <legend id="lblCoordinates1" runat="server">Enter Coordinates and then save them</legend>
-        <%= t("weather.longitude") %>
-        <input  type="text" id="txtLong" runat="server" value="0"   />
-         <%= t("weather.latitude") %>
-         <input  type="text" id="txtLat" runat="server" value="0"   />
-        <asp:Button ID="btnSaveCoordinates" runat="server" Text="Save Coordinates" />
-      </fieldset>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="font-weight: bold" >
-      <asp:Label ID="lblYearsOfInfo" runat="server" Text="Years of Weather Information: "></asp:Label>
-      <asp:Label ID="lblWeatherYears" runat="server" Text="1981 - 2000"></asp:Label>
-    </td>
-  </tr>
-</table>
-<fieldset runat="server" class="section">
-  <legend></legend>
-  <asp:Label ID="lblSimulationNote" runat="server" Text="The period to simulate is the same as the period selected in the weather information. You can cange the period to be simulated but the model will add five years to the befinning to warm up. 
-        The las twleve years are shown in the graphs in the Results page. If the period is less than 12 years, all of the years are shown on the Results page."></asp:Label>
-  <br>
-    <div id="divWeatherTitle" style="text-align:center; font-weight:bold">
-      <asp:Label ID="lblPeriodToSimulate" runat="server" Text="Period to simulate:"></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;
-      <asp:TextBox ID="txtPeriodFromSimulate" runat="server" CssClass="align-right"></asp:TextBox> &nbsp;
-      <asp:Label ID="lblTo" runat="server" Text="to"></asp:Label>&nbsp;&nbsp;
-      <asp:TextBox ID="txtPeriodToSimulate" runat="server" CssClass="align-right"></asp:TextBox>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <asp:Label ID="lblSimulationPeriod" runat="server" Text="Simulation period from 0 to 0."></asp:Label>
-    </div>
-  </fieldset>
-<section>
-
-  <b>Field:</b>
-  <%= @weather.field_id %>
-</p>
-
-<p>
-  <b>Station:</b>
-  <%= @weather.station_id %>
-</p>
-
-<p>
-  <b>Station way:</b>
-  <%= @weather.station_way %>
-</p>
-
-<p>
-  <b>Simulation initial year:</b>
-  <%= @weather.simulation_initial_year %>
-</p>
-
-<p>
-  <b>Simulation final year:</b>
-  <%= @weather.simulation_final_year %>
-</p>
-
-<p>
-  <b>Longitude:</b>
-  <%= @weather.longitude %>
-</p>
-
-<p>
-  <b>Latitude:</b>
-  <%= @weather.latitude %>
-</p>
+<%= form_for(@weather) do |f| %>   
+  <table >
+    <tr>
+      <td>
+        <fieldset class="section">
+          <legend id="lblWeatherTitle" runat="server" >Select Source for Weather Information</legend>
+          <%= radio_button("weather", "way_id", "1", onchange: "rbtnStation_onclick('Prism')") %>
+            <label id="lblStation" runat="server" for="rbtnStation">Weather Information Using PRISM Data</label>
+          <br />
+          <%= radio_button("weather", "way_id", "2", onchange: "rbtnStation_onclick('Own')") %>
+            <label id="lblOwn" runat="server" for="rbtnOwn">Load your Own Weather File</label>
+          <br />
+          <%= radio_button("weather", "way_id", "3", onchange: "rbtnStation_onclick('Coordinates')") %>
+            <label id="lblCoordinates" runat="server" for="rbtnStation">Load Using Specific Coordinates (USA only)</label>
+            <%= f.text_field :way_id %>
+          </fieldset>
+      </td>
+      <td id="tdWeather" runat="server" style="vertical-align: middle; text-align:left" >
+        <fieldset style="display:none" id="fsetStations" runat="server" class="section">
+          <legend id="lblStations" runat="server">Select Station from the Drop Down List</legend>
+          <select id="ddlStations" name="ddlStations" runat="server" style="text-align:left;"  ></select>
+        </fieldset>
+        <fieldset id="fsetUploadWeatherFile" runat="server" style="display:none" class="section">
+          <legend id="lblUploadWeatherFile" runat="server">Choose the file to Upload and then select Upload Weather File</legend>
+          <input id="flUpload" runat="server" type="file" onchange="__doPostBack('btnUpload', 'Load Project')"/>
+        </fieldset>
+        <fieldset id="fsetCoordinates" runat="server" style="display:none" class="section">
+          <legend id="lblCoordinates1" runat="server">Enter Coordinates and then save them</legend>
+          <%= t("weather.longitude") %>
+          <%= f.text_field :longitude %>
+          <%= t("weather.latitude") %>
+          <%= f.text_field :latitude %>
+          <%= button_to "Save Coordinates", action: "save_coordinates" %>
+        </fieldset>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="font-weight: bold" >
+        <asp:Label ID="lblYearsOfInfo" runat="server" Text="Years of Weather Information: "></asp:Label>
+        <asp:Label ID="lblWeatherYears" runat="server" Text="1981 - 2000"></asp:Label>
+      </td>
+    </tr>
+  </table>
+  <fieldset runat="server" class="section">
+    <legend></legend>
+    <asp:Label ID="lblSimulationNote" runat="server" Text="The period to simulate is the same as the period selected in the weather information. You can cange the period to be simulated but the model will add five years to the befinning to warm up. 
+          The las twleve years are shown in the graphs in the Results page. If the period is less than 12 years, all of the years are shown on the Results page."></asp:Label>
+    <br>
+      <div id="divWeatherTitle" style="text-align:center; font-weight:bold">
+        <asp:Label ID="lblPeriodToSimulate" runat="server" Text="Period to simulate:"></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:TextBox ID="txtPeriodFromSimulate" runat="server" CssClass="align-right"></asp:TextBox> &nbsp;
+        <asp:Label ID="lblTo" runat="server" Text="to"></asp:Label>&nbsp;&nbsp;
+        <asp:TextBox ID="txtPeriodToSimulate" runat="server" CssClass="align-right"></asp:TextBox>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:Label ID="lblSimulationPeriod" runat="server" Text="Simulation period from 0 to 0."></asp:Label>
+      </div>
+    </fieldset>
+<% end %>
 
 
-<%= link_to 'Edit', edit_weather_path(@weather) %> |
-<%= link_to 'Back', weathers_path %>

@@ -11,8 +11,6 @@
  *= require_self
  *= require_tree .
  */
- .section { border-style: solid; border-color: #660066; vertical-align:top; width:auto; }
- 
 .flash_alert { background-color:red; }
 
 .navbar-default 

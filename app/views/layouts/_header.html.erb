@@ -33,7 +33,8 @@
 		  <% end %>
 		  <% if session[:status] == "fields" %>		  
 			  <li><%= link_to t('menu.weather'), weathers_url.gsub('weathers', "weathers/#{session[:field_id]}") %></li>
-			  <li><%= link_to t('menu.soils') %></li>
+			  <li><%#= link_to t('menu.soils'), soils_url.gsub('soils', "soils/#{session[:field_id]}") %></li>
+			  <li><%= link_to t('menu.soils'), soils_field_url(session[:field_id]) %></li>
 			  <li><%= link_to t('menu.managements') %></li>
 			  <li><%= link_to t('menu.subprojects') %></li>
 			  <li><%= link_to t('menu.economics') %></li>

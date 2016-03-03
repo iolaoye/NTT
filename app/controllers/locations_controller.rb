@@ -14,7 +14,9 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find_by_project_id(params[:id])
-    #if !@location == [] # empty array
+    #if !@location == nil then
+	   session[:location_id] = @location.id
+	#end 
         #@county = County.where(:state_id => @location.state_id)
 		respond_to do |format|		  
 		  format.html # show.html.erb		  
@@ -36,7 +38,8 @@ class LocationsController < ApplicationController
 
   ###################################### send_to_mapping_site ######################################
   def send_to_mapping_site
-    @location = Location.where(:project_id => session[:project_id]).first
+    #@location = Location.where(:project_id => session[:project_id]).first
+    @location = Location.find_by_project_id(params[:id])
 	if !(@location.county_id == nil)
 	   @county = County.find(@location.county_id)
 	end
@@ -45,7 +48,8 @@ class LocationsController < ApplicationController
 
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site
-    @location = Location.where(:project_id => params[:id]).first
+    #@location = Location.where(:project_id => params[:id]).first
+    @location = Location.find_by_project_id(params[:id])
 
 	if (session[:session_id] == params[:source_id]) then
       # step 1: delete fields not found
@@ -67,6 +71,12 @@ class LocationsController < ApplicationController
         @field = @location.fields.where(:field_name => params["field#{i}id"]).first || @location.fields.build(:field_name => params["field#{i}id"])
         @field.coordinates = params["field#{i}coords"]
         @field.field_area = params["field#{i}acres"]
+		
+		#verify if this field aready has its soils. If not the soils coming from the map are added
+		if !(@field.soils.any?) then
+		    create_soils(i)
+		end #end if for soils.any?
+
 		#find or create weather
 		if (@field.weather_id == nil) then
 		   #create the weather for this field
@@ -77,7 +87,7 @@ class LocationsController < ApplicationController
 		end   #end weather validation
         @weather.weather_file = params["field#{i}parcelweather"]
 		@weather.station_way = "map"
-		if @weather.save
+		if @weather.save then
 		   @field.weather_id = @weather.id
 		end 
 		@field.save
@@ -97,8 +107,8 @@ class LocationsController < ApplicationController
 	  @location.coordinates = params[:parcelcoords]
       @location.save
 	end # end if of session_id check
-  end 
-
+  end
+ 
   # GET /locations/new
   # GET /locations/new.json
   def new
@@ -169,4 +179,42 @@ class LocationsController < ApplicationController
     def location_params
       params.require(:location).permit(:county_id, :project_id, :state_id, :status)
     end
+
+ ###################################### create_soil ######################################
+ ## Create soils receiving from map for each field.
+  def create_soils(i)
+    for j in 1..params["field#{i}soils"].to_i
+  	   @soil = @field.soils.new
+
+	   @soil.key = params["field#{i}soil#{j}mukey"]
+	   @soil.symbol = params["field#{i}soil#{j}musym"]
+       @soil.group = params["field#{i}soil#{j}hydgrpdcd"]
+	   @soil.name = params["field#{i}soil#{j}muname"]
+	   @soil.albedo = params["field#{i}soil#{j}albedo"]
+	   @soil.slope = params["field#{i}soil#{j}slopw"]
+	   @soil.percentage = params["field#{i}soil#{j}pctsoiltype"]
+ 	   if @soil.save then
+		   create_layers(i, j)
+	   end 
+	end #end for craete_soils
+  end  
+
+ ###################################### create_soil ######################################
+ ## Create layers receiving from map for each soil.
+  def create_layers(i, j)
+    for l in 1..params["field#{i}soil#{j}layers"].to_i
+  	   layer = @soil.layers.new
+
+	   layer.sand = params["field#{i}soil#{j}layer#{l}sand"]
+	   layer.silt = params["field#{i}soil#{j}layer#{l}silt"]
+	   layer.clay = params["field#{i}soil#{j}layer#{l}clay"]
+	   layer.bulk_density = params["field#{i}soil#{j}layer#{l}bd"]
+	   layer.organic_matter = params["field#{i}soil#{j}layer#{l}om"]
+	   layer.ph = params["field#{i}soil#{j}layer#{l}ph"]
+	   layer.depth = params["field#{i}soil#{j}layer#{l}depth"]
+	   layer.soil_p = 0
+ 	   layer.save
+	end #end for create_layers
+  end  
+
 end

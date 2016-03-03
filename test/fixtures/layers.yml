@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  depth: 1.5
+  soil_p: 1.5
+  bulk_density: 1.5
+  sand: 1.5
+  silt: 1.5
+  clay: 1.5
+  organic_matter: 1.5
+  ph: 1.5
+  soil_id: 1
+
+two:
+  depth: 1.5
+  soil_p: 1.5
+  bulk_density: 1.5
+  sand: 1.5
+  silt: 1.5
+  clay: 1.5
+  organic_matter: 1.5
+  ph: 1.5
+  soil_id: 1

@@ -1,4 +1,9 @@
 NTTG3::Application.routes.draw do
+  resources :layers
+
+
+  resources :soils
+  resources :ways
   resources :weathers
   resources :stations
   resources :fields
@@ -10,8 +15,18 @@ NTTG3::Application.routes.draw do
   resources :users
   resources :welcomes
 
+  resources :weathers do
+	member do
+		post 'save_coordinates'
+	end
+  end
+
   resources :states do
     resources :counties
+  end
+
+  resources :soils do
+    get 'index', on: :member
   end
 
   resources :projects do
@@ -27,6 +42,7 @@ NTTG3::Application.routes.draw do
   resources :locations do
     get :send_to_mapping_site, on: :member
     post :receive_from_mapping_site, on: :member
+    get :index, on: :member
   end
 
   #define two name routes, login_path and logout_path
@@ -38,6 +54,10 @@ NTTG3::Application.routes.draw do
   get 'users/new'
   get 'welcomes/index'
   get 'welcomes/show'
+
+  resources :fields do
+	  get :soils, on: :member
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

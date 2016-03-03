@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  selected: false
+  key: MyString
+  symbol: MyString
+  group: MyString
+  name: MyString
+  albedo: 1.5
+  slope: 1.5
+  percentage: 1.5
+  field_id: 1
+  drainage_type: MyString
+
+two:
+  selected: false
+  key: MyString
+  symbol: MyString
+  group: MyString
+  name: MyString
+  albedo: 1.5
+  slope: 1.5
+  percentage: 1.5
+  field_id: 1
+  drainage_type: MyString

@@ -1,0 +1,39 @@
+<h1>Listing layers</h1>
+
+<table>
+  <tr>
+    <th>Depth</th>
+    <th>Soil p</th>
+    <th>Bulk density</th>
+    <th>Sand</th>
+    <th>Silt</th>
+    <th>Clay</th>
+    <th>Organic matter</th>
+    <th>Ph</th>
+    <th>Soil</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @layers.each do |layer| %>
+  <tr>
+    <td><%= layer.depth %></td>
+    <td><%= layer.soil_p %></td>
+    <td><%= layer.bulk_density %></td>
+    <td><%= layer.sand %></td>
+    <td><%= layer.silt %></td>
+    <td><%= layer.clay %></td>
+    <td><%= layer.organic_matter %></td>
+    <td><%= layer.ph %></td>
+    <td><%= layer.soil_id %></td>
+    <td><%= link_to 'Show', layer %></td>
+    <td><%= link_to 'Edit', edit_layer_path(layer) %></td>
+    <td><%= link_to 'Destroy', layer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Layer', new_layer_path %>

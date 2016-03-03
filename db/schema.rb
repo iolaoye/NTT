@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160226222712) do
+ActiveRecord::Schema.define(:version => 20160303164442) do
 
   create_table "counties", :force => true do |t|
     t.string   "county_name"
@@ -36,6 +36,20 @@ ActiveRecord::Schema.define(:version => 20160226222712) do
     t.integer  "weather_id"
   end
 
+  create_table "layers", :force => true do |t|
+    t.float    "depth"
+    t.float    "soil_p"
+    t.float    "bulk_density"
+    t.float    "sand"
+    t.float    "silt"
+    t.float    "clay"
+    t.float    "organic_matter"
+    t.float    "ph"
+    t.integer  "soil_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "locations", :force => true do |t|
     t.integer  "state_id"
     t.integer  "county_id"
@@ -53,6 +67,21 @@ ActiveRecord::Schema.define(:version => 20160226222712) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "user_id"
+  end
+
+  create_table "soils", :force => true do |t|
+    t.boolean  "selected"
+    t.string   "key"
+    t.string   "symbol"
+    t.string   "group"
+    t.string   "name"
+    t.float    "albedo"
+    t.float    "slope"
+    t.float    "percentage"
+    t.integer  "field_id"
+    t.string   "drainage_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "states", :force => true do |t|
@@ -89,6 +118,12 @@ ActiveRecord::Schema.define(:version => 20160226222712) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "ways", :force => true do |t|
+    t.string   "way_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "weathers", :force => true do |t|
     t.integer  "field_id"
     t.integer  "station_id"
@@ -100,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20160226222712) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
     t.string   "weather_file"
+    t.integer  "way_id"
   end
 
 end

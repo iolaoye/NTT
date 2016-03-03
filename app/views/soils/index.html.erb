@@ -1,0 +1,39 @@
+<h1>Listing soils</h1>
+
+<table>
+  <tr>
+    <th>Selected</th>
+    <th>Key</th>
+    <th>Symbol</th>
+    <th>Group</th>
+    <th>Name</th>
+    <th>Albedo</th>
+    <th>Slope</th>
+    <th>Percentage</th>
+    <th>Drainage type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @soils.each do |soil| %>
+  <tr>
+    <td><%= soil.selected %></td>
+    <td><%= soil.key %></td>
+    <td><%= soil.symbol %></td>
+    <td><%= soil.group %></td>
+    <td><%= soil.name %></td>
+    <td><%= soil.albedo %></td>
+    <td><%= soil.slope %></td>
+    <td><%= soil.percentage %></td>
+    <td><%= soil.drainage_type %></td>
+    <td><%= link_to 'Show', soil %></td>
+    <td><%= link_to 'Edit', edit_soil_path(soil) %></td>
+    <td><%= link_to 'Destroy', soil, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Soil', new_soil_path %>

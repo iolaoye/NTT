@@ -1,0 +1,53 @@
+<%= form_for(@layer) do |f| %>
+  <% if @layer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
+
+      <ul>
+      <% @layer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :depth %><br />
+    <%= f.text_field :depth %>
+  </div>
+  <div class="field">
+    <%= f.label :soil_p %><br />
+    <%= f.text_field :soil_p %>
+  </div>
+  <div class="field">
+    <%= f.label :bulk_density %><br />
+    <%= f.text_field :bulk_density %>
+  </div>
+  <div class="field">
+    <%= f.label :sand %><br />
+    <%= f.text_field :sand %>
+  </div>
+  <div class="field">
+    <%= f.label :silt %><br />
+    <%= f.text_field :silt %>
+  </div>
+  <div class="field">
+    <%= f.label :clay %><br />
+    <%= f.text_field :clay %>
+  </div>
+  <div class="field">
+    <%= f.label :organic_matter %><br />
+    <%= f.text_field :organic_matter %>
+  </div>
+  <div class="field">
+    <%= f.label :ph %><br />
+    <%= f.text_field :ph %>
+  </div>
+  <div class="field">
+    <%= f.label :soil_id %><br />
+    <%= f.number_field :soil_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
