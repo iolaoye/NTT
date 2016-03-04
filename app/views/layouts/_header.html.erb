@@ -1,50 +1,18 @@
 ﻿<% if signed_in? %>
     <% if session[:status] == "projects" %>
-	    <%= link_to t('menu.projects'), projects_path %>
-		<% if request.original_url.include? "location" %>
-			<%= ">> Location" %>
-		<% end %>
-		<% if request.original_url.include? "station" %>
-			<%= ">> Stations" %>
-		<% end %>
-		<% if request.original_url.include? "field" %>
-			<%= ">> Fields" %>
-		<% end %>
-	<% end %>
+    <% end %>
 
-    <% if session[:status] == "fields" %>
-	    <%= link_to t('menu.projects'), projects_path %>
-		<%= ">>" %>
-        <%= link_to t('menu.fields'), fields_path %>
-		<% if request.original_url.include? "weather" %>
-			<%= ">> Weather" %>
-		<% end %>
-	<% end %>
-
-    <div class="navbar navbar-default" style="line-height:0px" id="div1">
+	<div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
-		  <% if session[:status] == "signed" %>
-			  <li><%= link_to t('menu.welcome'), welcomes_index_path %></li>
-			  <li><%= link_to t('menu.projects'), projects_path %></li>
-		  <% end %>
-		  <% if session[:status] == "projects" %> 
-			  <li><%= link_to t('menu.location'), locations_url.gsub('locations', "locations/#{session[:project_id]}") %></li>
-			  <li><%= link_to t('menu.fields'), fields_path %></li>
-		  <% end %>
-		  <% if session[:status] == "fields" %>		  
-			  <li><%= link_to t('menu.weather'), weathers_url.gsub('weathers', "weathers/#{session[:field_id]}") %></li>
-			  <li><%#= link_to t('menu.soils'), soils_url.gsub('soils', "soils/#{session[:field_id]}") %></li>
-			  <li><%= link_to t('menu.soils'), soils_field_url(session[:field_id]) %></li>
-			  <li><%= link_to t('menu.managements') %></li>
-			  <li><%= link_to t('menu.subprojects') %></li>
-			  <li><%= link_to t('menu.economics') %></li>
-			  <li><%= link_to t('menu.simulations') %></li>
-			  <li><%= link_to t('menu.results') %></li>
-			  <li><%= link_to t('menu.modifications') %></li>
-		  <% end %>
-          <li><%= link_to t('menu.signout'), logout_path %></li>
-        </ul>      
+			<%= session[:status] %>
+		    <% if session[:status] == "signed" %>
+	  session[:status] = "signed"									# store user id in session
+			  <li><%= link_to t('menu.welcome'), welcome_path %></li>
+			  <li><%= link_to t('menu.projects'), welcomes_path %></li>
+		    <% end %>			
+	    </ul>      
     </div>
+
 <% end %>
 
 

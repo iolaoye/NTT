@@ -1,20 +1,30 @@
 NTTG3::Application.routes.draw do
-  resources :layers
-
-
-  resources :soils
-  resources :ways
-  resources :weathers
-  resources :stations
-  resources :fields
-  resources :counties
-  resources :states
+  #resources :ways
+  #resources :weathers
+  #resources :stations
+  #resources :counties
+  #resources :states
   resources :locations
   resources :projects
   resource :session
-  resources :users
+  #resources :users
   resources :welcomes
 
+  resources :users do
+	  resources :projects do
+		  resources :locations do
+			  resources :fields do
+				 resources :soils do 
+					resources :layers
+				 end
+				 resources :weathers do
+					resources :ways
+				 end
+			  end
+		  end
+	  end
+  end
+  
   resources :weathers do
 	member do
 		post 'save_coordinates'
@@ -25,24 +35,19 @@ NTTG3::Application.routes.draw do
     resources :counties
   end
 
-  resources :soils do
-    get 'index', on: :member
-  end
+  #resources :soils do
+    #get 'index', on: :member
+  #end
 
-  resources :projects do
-    member do
-      get 'shows'
-	end 
-  end 
+  #resources :projects do
+    #member do
+      #get 'shows'
+	#end 
+  #end 
 	
-  resources :users do
-	get 'welcomes/index', to: 'welcomes#index'
-  end 
-
   resources :locations do
     get :send_to_mapping_site, on: :member
     post :receive_from_mapping_site, on: :member
-    get :index, on: :member
   end
 
   #define two name routes, login_path and logout_path
@@ -52,12 +57,6 @@ NTTG3::Application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
   get 'users/new'
-  get 'welcomes/index'
-  get 'welcomes/show'
-
-  resources :fields do
-	  get :soils, on: :member
-  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

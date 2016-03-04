@@ -3,10 +3,9 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.where(:user_id => session[:user_id])
-	session[:status] = "Welcome"
+    @projects = Project.where(:user_id => params[:user_id])
     respond_to do |format|
-      format.html # index.html.erb
+      format.html   # index.html.erb
       format.json { render json: @projects }
     end
   end
@@ -14,13 +13,10 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show   #selected when click on a project or a new project is created.
-    @project = Project.find(params[:id])
+    @location = Location.find_by_project_id(params[:id])
 	session[:status] = "projects"		# store project id for location
 	session[:project_id] = params[:id]
-    respond_to do |format|
-      format.html { redirect_to location_path }
-      format.json { render json: @project, status: :created, location: @project.id }
-    end
+      redirect_to :controller => :locations, :action => "show", :locale => "en", :project_id => @location.project_id
   end
 
   # GET /projects/1

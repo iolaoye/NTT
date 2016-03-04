@@ -2,7 +2,7 @@ class SoilsController < ApplicationController
   # GET /soils
   # GET /soils.json
   def index
-    @soils = Soil.all
+    @soils = Soil.where(:field_id => params[:field_id])
 
     respond_to do |format|
       format.html # index.html.erb

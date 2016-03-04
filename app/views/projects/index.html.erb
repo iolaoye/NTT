@@ -14,8 +14,8 @@
     <tr class="gvRowStyle">
       <td><%= link_to project.name, project %></td>
       <td><%= project.description %></td>
-      <td><%= link_to t('general.show'), shows_project_path(project) %></td> 
-      <td><%= link_to t('general.edit'), edit_project_path(project) %></td>
+      <td><%#= link_to t('general.show'), shows_project_path(project) %></td> 
+      <td><%#= link_to t('general.edit'), edit_project_path(project) %></td>
       <td><%= link_to t('general.destroy'), project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
