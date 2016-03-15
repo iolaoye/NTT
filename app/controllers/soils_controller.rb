@@ -1,8 +1,29 @@
 class SoilsController < ApplicationController
+  # GET /locations
+  # GET /locations.json
+  def soil_layers  
+  
+    session[:soil_id] = params[:id]
+    redirect_to list_layer_path(params[:id])	
+  end
+################################  SOILS list   #################################
+  # GET /soils/1
+  # GET /1/soils.json
+  def list
+    @soils = Soil.where(:field_id => params[:id])
+	@project_name = Project.find(session[:project_id]).name
+	@field_name = Field.find(session[:field_id]).field_name
+
+	respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @fields }
+    end
+  end
+################################  INDEX   #################################
   # GET /soils
   # GET /soils.json
   def index
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = Soil.where(:field_id => session[:field_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,8 +36,7 @@ class SoilsController < ApplicationController
   def show
     @layers = Layer.where(:soil_id => params[:id])
     respond_to do |format|
-	  redirect_to layers_url(@layers)
-      #format.html # index.html.erb
+	  redirect_to @layers
       format.json { render json: @layers }
     end
   end

@@ -1,0 +1,52 @@
+<h1>Listing operations</h1>
+
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th colspan="8"></th>
+    <th colspan="5">Nutrients Distribution (fraction)</th>
+    <th colspan="3">Action</th>
+  </tr>
+  <tr class='gvHeaderStyle'>
+    <th>Crop</th>
+    <th>Operation</th>
+    <th>Day</th>
+    <th>Month</th>
+    <th>Year</th>
+    <th>Type</th>
+    <th>Amount</th>
+    <th>Depth</th>
+    <th>No3 n</th>
+    <th>Po4 p</th>
+    <th>Org n</th>
+    <th>Org p</th>
+    <th>Nh3</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @operations.each do |operation| %>
+  <tr class="gvRowStyle">
+    <td><%= Crop.find(operation.crop_id).name %></td>
+    <td><%= Activity.find(operation.operation_id).name %></td>
+    <td><%= listYears.detect { |val, index| index == operation.year}[0] %></td>
+    <td><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
+    <td><%= operation.day %></td>
+    <td><%= Tillage.find(operation.type_id).eqp %></td>
+    <td><%= operation.amount %></td>
+    <td><%= operation.depth %></td>
+    <td><%= operation.no3_n %></td>
+    <td><%= operation.po4_p %></td>
+    <td><%= operation.org_n %></td>
+    <td><%= operation.org_p %></td>
+    <td><%= operation.nh3 %></td>
+    <td><%= link_to 'Show', operation %></td>
+    <td><%= link_to 'Edit', edit_operation_path(operation) %></td>
+    <td><%= link_to 'Destroy', operation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+  <% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Operation', new_operation_path %>

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  code: 1
+  abbreviation: MyString
+  spanish_name: MyString
+  operation: 1
+  dndc: 1
+  eqp: MyString
+  status: false
+
+two:
+  name: MyString
+  code: 1
+  abbreviation: MyString
+  spanish_name: MyString
+  operation: 1
+  dndc: 1
+  eqp: MyString
+  status: false

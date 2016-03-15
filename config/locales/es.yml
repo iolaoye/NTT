@@ -232,6 +232,7 @@
     weather: Clima
     fields: Parcelas
     soils: Suelos
+    scenarios: Escenarios
     managements: Operaciones
     subprojects: Subproyectos
     economics: Costos
@@ -241,6 +242,7 @@
     signout: Salir
   project:
     new_project: 'Proyecto Nuevo'
+    upload_project: 'Subir Proyecto'
   footer:
     instructions: Instrucciones
     contact_us: 'Contactarnos'

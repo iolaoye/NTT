@@ -1,0 +1,37 @@
+<h1>Listing tillages</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Abbreviation</th>
+    <th>Spanish name</th>
+    <th>Operation</th>
+    <th>Dndc</th>
+    <th>Eqp</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tillages.each do |tillage| %>
+  <tr>
+    <td><%= tillage.name %></td>
+    <td><%= tillage.code %></td>
+    <td><%= tillage.abbreviation %></td>
+    <td><%= tillage.spanish_name %></td>
+    <td><%= tillage.operation %></td>
+    <td><%= tillage.dndc %></td>
+    <td><%= tillage.eqp %></td>
+    <td><%= tillage.status %></td>
+    <td><%= link_to 'Show', tillage %></td>
+    <td><%= link_to 'Edit', edit_tillage_path(tillage) %></td>
+    <td><%= link_to 'Destroy', tillage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Tillage', new_tillage_path %>

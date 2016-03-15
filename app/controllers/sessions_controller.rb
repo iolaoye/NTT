@@ -2,9 +2,10 @@ class SessionsController < ApplicationController
 
   def create  #runs when logging in.
     if user = User.authenticate(params[:email], params[:password])  # authenticated user 
+	
 	  session[:user_id] = user.id
 	  session[:status] = "signed"									# store user id in session
-	  redirect_to welcomes_index_path, :notice => "Logged in successfully"	# redirect is successful	  
+	  redirect_to welcomes_path, :notice => "Logged in successfully"	# redirect is successful	  
 	else
 	  flash.now[:alert] = "Invalid login/password combination"		# alert if error
 	  render :action => 'index'										# redirect to the same page
@@ -13,8 +14,11 @@ class SessionsController < ApplicationController
 
 ####################### INDEX  ##########################################################
   def index  
-    if session[:status] == "signed"  # authenticate user 
-	  redirect_to welcomes_index_path, :notice => "Already loged"	#run when comes to web page and user is already logged in
+    if session[:status] == "signed"  # authenticated user
+ 	     @projects = Project.where(:user_id => session[:user_id])
+         redirect_to user_projects_path(@projects)
+
+	  #redirect_to welcomes_path, :notice => "Already loged"	#run when comes to web page and user is already logged in
 	else
 	  #render :action => 'new'
 	  #redirect_to "users/new"

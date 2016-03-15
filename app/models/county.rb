@@ -1,5 +1,5 @@
 class County < ActiveRecord::Base
-  attr_accessible :county_code, :county_name, :latitude, :longitude, :state_id, :status
+  attr_accessible :county_code, :county_name, :latitude, :longitude, :state_id, :status, :county_state_code
   #Associatons
      belongs_to :state
   #validations

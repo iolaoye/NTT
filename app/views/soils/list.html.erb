@@ -1,7 +1,7 @@
 <h1>Listing soils</h1>
 
-<table>
-  <tr>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
     <th>Selected</th>
     <th>Key</th>
     <th>Symbol</th>
@@ -17,7 +17,7 @@
   </tr>
 
 <% @soils.each do |soil| %>
-  <tr>
+  <tr class="gvRowStyle">
     <td><%= soil.selected %></td>
     <td><%= soil.key %></td>
     <td><%= soil.symbol %></td>
@@ -27,7 +27,7 @@
     <td><%= soil.slope %></td>
     <td><%= soil.percentage %></td>
     <td><%= soil.drainage_type %></td>
-    <td><%= link_to 'Show', soil %></td>
+    <td><%= link_to 'Layers', soil_layers_soil_path(soil.id) %></td>
     <td><%= link_to 'Edit', edit_soil_path(soil) %></td>
     <td><%= link_to 'Destroy', soil, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>

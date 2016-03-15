@@ -7,11 +7,19 @@ class UsersController < ApplicationController
 		@user = User.new
 	end
 
+	def show
+		@user = User.find(params[:id])
+	    respond_to do |format|
+          format.html # show.html.erb
+          format.json { render json: @user }
+        end
+	end
+
 	def create
 		@user = User.new(user_params)
 		respond_to do |format|
 			if @user.save
-				session[:user_id] = @user.id									# store user id in session
+				session[:user_id] = @user.id				# store user id in session
 				format.html { redirect_to welcomes_index_path, notice: 'User successfully added' }
 			else
 				format.html { render action: :new }

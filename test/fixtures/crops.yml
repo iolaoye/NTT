@@ -1,0 +1,59 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  number: 1
+  dndc: 1
+  code: MyString
+  name: MyString
+  plant_population_mt: 1.5
+  plant_population_ac: 1.5
+  plant_population_ft: 1.5
+  heat_units: 1.5
+  lu_number: 1
+  soil_group_a: 1
+  soil_group_b: 1
+  soil_group_c: 1
+  soil_group_d: 1
+  type: 
+  yield_unit: MyString
+  bushel_weight: 1.5
+  conversion_factor: 1.5
+  dry_matter: 1.5
+  harvest_code: 1
+  planting_code: 1
+  state_id: MyString
+  itil: 1.5
+  to1: 1.5
+  tb: 1.5
+  dd: 1
+  dyam: 1
+  spanish_name: MyString
+
+two:
+  number: 1
+  dndc: 1
+  code: MyString
+  name: MyString
+  plant_population_mt: 1.5
+  plant_population_ac: 1.5
+  plant_population_ft: 1.5
+  heat_units: 1.5
+  lu_number: 1
+  soil_group_a: 1
+  soil_group_b: 1
+  soil_group_c: 1
+  soil_group_d: 1
+  type: 
+  yield_unit: MyString
+  bushel_weight: 1.5
+  conversion_factor: 1.5
+  dry_matter: 1.5
+  harvest_code: 1
+  planting_code: 1
+  state_id: MyString
+  itil: 1.5
+  to1: 1.5
+  tb: 1.5
+  dd: 1
+  dyam: 1
+  spanish_name: MyString

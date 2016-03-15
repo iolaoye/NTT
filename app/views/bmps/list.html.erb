@@ -1,0 +1,23 @@
+﻿<h1>Listing Best Management Practices</h1>
+
+<table>
+  <tr>
+    <th>BMP</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @bmps.each do |bmp| %>
+  <tr>
+    <td><%= Bmpsublist.find(bmp.bmpsublist_id).name %></td>
+    <td><%= link_to 'Show', bmp %></td>
+    <td><%= link_to 'Edit', edit_bmp_path(bmp) %></td>
+    <td><%= link_to 'Destroy', bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Bmp', new_bmp_path %>

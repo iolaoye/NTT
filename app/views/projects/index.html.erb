@@ -1,26 +1,27 @@
-<h1><%= t('menu.projects') %>
-</h1>
+  <h1><%= t('menu.projects') %></h1>
 
-<table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
-    <th><%= t('general.name') %></th>
-    <th><%= t('general.description') %></th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <% @projects.each do |project| %>
-    <tr class="gvRowStyle">
-      <td><%= link_to project.name, project %></td>
-      <td><%= project.description %></td>
-      <td><%#= link_to t('general.show'), shows_project_path(project) %></td> 
-      <td><%#= link_to t('general.edit'), edit_project_path(project) %></td>
-      <td><%= link_to t('general.destroy'), project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <%= link_to t('project.new_project'), new_project_path %>
+  <%= link_to t('project.upload_project'), upload_project_path(0) %>
+  <table class='gvTableStyle'>
+    <tr class='gvHeaderStyle'>
+      <th><%= t('general.name') %></th>
+      <th><%= t('general.description') %></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
-  <% end %>
-</table>
 
+    <% @projects.each do |project| %>
+      <tr class="gvRowStyle">
+        <td><%= link_to project.name, project %></td>
+        <td><%= project.description %></td>
+        <td><%#= link_to t('general.show'), shows_project_path(project) %></td> 
+        <td><%#= link_to t('general.edit'), edit_project_path(project) %></td>
+        <td><%= link_to t('general.destroy'), project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+      
+      </table>
+    
+    
 <br />
-
-<%= link_to t('project.new_project'), new_project_path %>

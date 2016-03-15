@@ -1,30 +1,21 @@
 class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
-  def index
-    @locations = Location.all
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @locations }
-    end
+  def location_fields
+    session[:location_id] = params[:id]
+    redirect_to list_field_path(params[:id])	
   end
 
   ###################################### SHOW ######################################
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @location = Location.find_by_project_id(params[:id])
-    #if !@location == nil then
-	   session[:location_id] = @location.id
-	#end 
-        #@county = County.where(:state_id => @location.state_id)
-		respond_to do |format|		  
-		  format.html # show.html.erb		  
-		  #format.json { render json: @location }
-		end
-	#end
+    @location = Location.find(params[:id])
+	@project_name = Project.find(session[:project_id]).name
+	respond_to do |format|		  
+		format.html # show.html.erb		  
+	end
   end
-
   ###################################### SHOWS ######################################
   # GET /locations/1
   # GET /locations/1.json
@@ -35,7 +26,6 @@ class LocationsController < ApplicationController
 		format.json { render json: @location }
 	end
   end
-
   ###################################### send_to_mapping_site ######################################
   def send_to_mapping_site
     #@location = Location.where(:project_id => session[:project_id]).first
@@ -48,8 +38,9 @@ class LocationsController < ApplicationController
 
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site
-    #@location = Location.where(:project_id => params[:id]).first
     @location = Location.find_by_project_id(params[:id])
+	@project_name = Project.find(session[:project_id]).name
+	session[:location_id] = @location.id
 
 	if (session[:session_id] == params[:source_id]) then
       # step 1: delete fields not found
@@ -86,6 +77,7 @@ class LocationsController < ApplicationController
 		   @weather = Weather.find(@field.weather_id)
 		end   #end weather validation
         @weather.weather_file = params["field#{i}parcelweather"]
+		@weather.way_id = 1   #assign PRISM weather station to the weather way as default from map
 		@weather.station_way = "map"
 		if @weather.save then
 		   @field.weather_id = @weather.id

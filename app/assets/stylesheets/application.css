@@ -11,6 +11,11 @@
  *= require_self
  *= require_tree .
  */
+ /* like .breadcrumbs a.active */
+/* Properly style non-anchor elements in breadcrumbs. */
+/* like .breadcrumbs a */
+.crumbs li { display: inline; color:Blue}
+
 .flash_alert { background-color:red; }
 
 .navbar-default 

@@ -17,8 +17,14 @@ class WeathersController < ApplicationController
   # GET /weathers/1.json
   def show
 	@weather = Weather.find_by_field_id(params[:id])
+	@project_name = Project.find(session[:project_id]).name
+    @field_name = Field.find(params[:id]).field_name
 	if !(@weather == :nil) # no empty array
-	  @way = Way.find(@weather.way_id)
+	  if (@weather.way_id == nil)
+	     @way = ""
+	  else
+	     @way = Way.find(@weather.way_id)
+	  end 
 	  respond_to do |format|
         format.html # show.html.erb
         format.json { render json: @weather }

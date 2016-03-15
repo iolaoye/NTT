@@ -5,3 +5,6 @@
 
 # URL to the mapping application
 	URL_MAP = 'http://nn.tarleton.edu/NTTRails/Default.aspx'
+
+#NTT verision
+	version = "NTTG3"

@@ -22,6 +22,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'breadcrumbs_on_rails'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

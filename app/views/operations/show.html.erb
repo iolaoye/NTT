@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Crop:</b>
+  <%= @operation.crop_id %>
+</p>
+
+<p>
+  <b>Operation:</b>
+  <%= @operation.operation_id %>
+</p>
+
+<p>
+  <b>Day:</b>
+  <%= @operation.day %>
+</p>
+
+<p>
+  <b>Month:</b>
+  <%= @operation.month_id %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @operation.year %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @operation.type_id %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @operation.amount %>
+</p>
+
+<p>
+  <b>Depth:</b>
+  <%= @operation.depth %>
+</p>
+
+<p>
+  <b>No3 n:</b>
+  <%= @operation.no3_n %>
+</p>
+
+<p>
+  <b>Po4 p:</b>
+  <%= @operation.po4_p %>
+</p>
+
+<p>
+  <b>Org n:</b>
+  <%= @operation.org_n %>
+</p>
+
+<p>
+  <b>Org p:</b>
+  <%= @operation.org_p %>
+</p>
+
+<p>
+  <b>Nh3:</b>
+  <%= @operation.nh3 %>
+</p>
+
+
+<%= link_to 'Edit', edit_operation_path(@operation) %> |
+<%= link_to 'Back', scenario_operations_scenario_path(session[:scenario_id]) %>

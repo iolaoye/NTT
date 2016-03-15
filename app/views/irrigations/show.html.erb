@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @irrigation.name %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @irrigation.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_irrigation_path(@irrigation) %> |
+<%= link_to 'Back', irrigations_path %>

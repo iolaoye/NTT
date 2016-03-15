@@ -1,16 +1,29 @@
 class FieldsController < ApplicationController
-  # GET /fields
-  # GET /fields.json
-  def index
-  
-    @fields = Field.where(:location_id => session[:location_id])
+  # GET /locations
+  # GET /locations.json
+  def field_scenarios
+    session[:field_id] = params[:id]
+    redirect_to list_scenario_path	
+  end
+################################  scenarios list   #################################
+  # GET /locations
+  # GET /locations.json
+  def field_soils
+    session[:field_id] = params[:id]
+    redirect_to list_soil_path(params[:id])	
+  end
+################################  soils list   #################################
+  # GET /fields/1
+  # GET /1/fields.json
+  def list
+    @fields = Field.where(:location_id => params[:id])
+	@project_name = Project.find(session[:project_id]).name
 
-    respond_to do |format|
+	respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @fields }
     end
   end
-
 ################################  SHOW   #################################
   def soils 
     @soils = Soil.where(:field_id => params[:id])
@@ -26,9 +39,7 @@ class FieldsController < ApplicationController
   # GET /fields/1
   # GET /fields/1.json
   def show
-    @field = Field.find(params[:id])
-	session[:status] = "fields"		# store project id for location
-	session[:field_id] = params[:id]
+    session[:field_id] = params[:id]
 
     respond_to do |format|
       format.html { redirect_to weather_path }

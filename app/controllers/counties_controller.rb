@@ -87,6 +87,6 @@ class CountiesController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def county_params
-      params.require(:county).permit(:county_code, :county_name, :latitude, :longitude, :state_id, :status)
+      params.require(:county).permit(:county_code, :county_name, :latitude, :longitude, :state_id, :status, :county_state_code)
     end
 end

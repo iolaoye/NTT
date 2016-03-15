@@ -1,18 +1,63 @@
 ﻿<% if signed_in? %>
-    <% if session[:status] == "projects" %>
-    <% end %>
+  	<ul class="crumbs">
+        <% case request.original_url %>
+	        <% when /project/, /welcome/ %>
+	        <% when /location/, /field/ %>
+		        <li><%=link_to "Projects", welcomes_path %></li>
+		        <li><%=">>"%><%=@project_name%></li>
+				<% if request.original_url.include? "location" %>
+				    <li><%=">> Locations" %></li>
+				<% else %>
+				    <li><%=">> Fields" %></li>
+				<% end %>				    
+	        <% when /weather/, /soil/, /scenario/, /layer/ %>
+			    <li><%=link_to "Projects", welcomes_path %></li>
+			    <li><%=">>"%><%=@project_name%></li>
+			    <li><%=link_to "Fields", location_fields_location_path(session[:location_id]) %></li>
+			    <li><%=">>"%><%=@field_name%></li>
+				<% case request.original_url %>
+					<% when /weather/ %>
+						<li><%= ">> Weather" %></li>
+					<% when /soil/ %>
+						<li><%= ">> Soils" %></li>
+					<% when /scenario/ %>
+						<li><%= ">> Scenarios" %></li>
+					<% when /layer/ %>
+						<li><%= ">> Layers" %></li>
+				<% end %>
+			<% when /operation/, /bmp/ %>	
+			    <li><%=link_to "Projects", welcomes_path %></li>
+			    <li><%=">>"%><%=@project_name%></li>
+			    <li><%=link_to "Fields", location_fields_location_path(session[:location_id]) %></li>
+			    <li><%=">>"%><%=@field_name%></li>
+			    <li><%=link_to "Scenarios", field_scenarios_field_path(session[:field_id]) %></li>
+			    <li><%=">>"%><%=@field_name%></li>
+				<% if request.original_url.include? "operation" %>
+				    <li><%=">> Operations" %></li>
+				<% else %>
+				    <li><%=">> BMPs" %></li>
+				<% end %>				    
+		<% end %>
+	</ul>
 
-	<div class="navbar navbar-default" style="line-height:0px" id="div1">
+    <div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
-			<%= session[:status] %>
-		    <% if session[:status] == "signed" %>
-	  session[:status] = "signed"									# store user id in session
-			  <li><%= link_to t('menu.welcome'), welcome_path %></li>
-			  <li><%= link_to t('menu.projects'), welcomes_path %></li>
-		    <% end %>			
+            <% case request.original_url %>
+	           <% when /project/, /welcome/ %>
+			       <li><%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></li>
+   			       <li><%= link_to t('menu.projects'), welcomes_path %></li>
+	           <% when /location/, /field/ %>
+				   <li><%= link_to t('menu.location'), location_path %></li>
+				   <li><%= link_to t('menu.fields'), location_fields_location_path %></li>
+			   <% when /weather/, /soil/, /scenario/, /layer/ %>
+				   <li><%= link_to t('menu.weather'), weather_path(session[:field_id]) %></li>
+				   <li><%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></li>
+				   <li><%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
+			   <% when /operation/, /bmp/ %>
+				   <li><%= link_to t('menu.operations'), scenario_operations_scenario_path(session[:scenario_id]) %></li>
+				   <li><%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></li>
+			<% end %>
+    		<li><%= link_to t('menu.signout'), logout_path %></li>
 	    </ul>      
     </div>
-
 <% end %>
-
-

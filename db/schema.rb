@@ -11,7 +11,72 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160303164442) do
+ActiveRecord::Schema.define(:version => 20160314164750) do
+
+  create_table "activities", :force => true do |t|
+    t.string   "name"
+    t.integer  "code"
+    t.string   "abbreviation"
+    t.string   "spanish_name"
+    t.integer  "apex_code"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "animals", :force => true do |t|
+    t.string   "name"
+    t.boolean  "status"
+    t.integer  "apex_code"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "bmplists", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.boolean  "status"
+  end
+
+  create_table "bmps", :force => true do |t|
+    t.integer  "bmp_id"
+    t.integer  "scenario_id"
+    t.integer  "crop_id"
+    t.integer  "irrigation_id"
+    t.float    "water_stress_factor"
+    t.float    "irrigation_efficiency"
+    t.float    "maximum_single_application"
+    t.float    "safety_factor"
+    t.float    "depth"
+    t.float    "area"
+    t.integer  "number_of_animals"
+    t.integer  "days"
+    t.integer  "hours"
+    t.integer  "animal_id"
+    t.float    "dry_manure"
+    t.float    "no3_n"
+    t.float    "po4_p"
+    t.float    "org_n"
+    t.float    "org_p"
+    t.float    "width"
+    t.float    "grass_field_portion"
+    t.float    "buffer_slope_upland"
+    t.float    "crop_width"
+    t.float    "slope_reduction"
+    t.integer  "sides"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "name"
+    t.integer  "bmpsublist_id"
+  end
+
+  create_table "bmpsublists", :force => true do |t|
+    t.string   "name"
+    t.boolean  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "bmplist_id"
+  end
 
   create_table "counties", :force => true do |t|
     t.string   "county_name"
@@ -20,8 +85,41 @@ ActiveRecord::Schema.define(:version => 20160303164442) do
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "state_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "county_state_code"
+  end
+
+  create_table "crops", :force => true do |t|
+    t.integer  "number"
+    t.integer  "dndc"
+    t.string   "code"
+    t.string   "name"
+    t.float    "plant_population_mt"
+    t.float    "plant_population_ac"
+    t.float    "plant_population_ft"
+    t.float    "heat_units"
+    t.integer  "lu_number"
+    t.integer  "soil_group_a"
+    t.integer  "soil_group_b"
+    t.integer  "soil_group_c"
+    t.integer  "soil_group_d"
+    t.string   "type"
+    t.string   "yield_unit"
+    t.float    "bushel_weight"
+    t.float    "conversion_factor"
+    t.float    "dry_matter"
+    t.integer  "harvest_code"
+    t.integer  "planting_code"
+    t.string   "state_id"
+    t.float    "itil"
+    t.float    "to1"
+    t.float    "tb"
+    t.integer  "dd"
+    t.integer  "dyam"
+    t.string   "spanish_name"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "fields", :force => true do |t|
@@ -34,6 +132,13 @@ ActiveRecord::Schema.define(:version => 20160303164442) do
     t.datetime "updated_at",          :null => false
     t.string   "coordinates"
     t.integer  "weather_id"
+  end
+
+  create_table "irrigations", :force => true do |t|
+    t.string   "name"
+    t.boolean  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "layers", :force => true do |t|
@@ -60,6 +165,25 @@ ActiveRecord::Schema.define(:version => 20160303164442) do
     t.string   "coordinates"
   end
 
+  create_table "operations", :force => true do |t|
+    t.integer  "crop_id"
+    t.integer  "operation_id"
+    t.integer  "day"
+    t.integer  "month_id"
+    t.integer  "year"
+    t.integer  "type_id"
+    t.float    "amount"
+    t.float    "depth"
+    t.float    "no3_n"
+    t.float    "po4_p"
+    t.float    "org_n"
+    t.float    "org_p"
+    t.float    "nh3"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "scenario_id"
+  end
+
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -67,6 +191,13 @@ ActiveRecord::Schema.define(:version => 20160303164442) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "user_id"
+  end
+
+  create_table "scenarios", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "field_id"
   end
 
   create_table "soils", :force => true do |t|
@@ -107,6 +238,20 @@ ActiveRecord::Schema.define(:version => 20160303164442) do
     t.integer  "final_year"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "tillages", :force => true do |t|
+    t.string   "name"
+    t.integer  "code"
+    t.string   "abbreviation"
+    t.string   "spanish_name"
+    t.integer  "operation"
+    t.integer  "dndc"
+    t.string   "eqp"
+    t.boolean  "status"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "activity_id"
   end
 
   create_table "users", :force => true do |t|

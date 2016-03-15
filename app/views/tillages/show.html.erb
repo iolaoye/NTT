@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @tillage.name %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @tillage.code %>
+</p>
+
+<p>
+  <b>Abbreviation:</b>
+  <%= @tillage.abbreviation %>
+</p>
+
+<p>
+  <b>Spanish name:</b>
+  <%= @tillage.spanish_name %>
+</p>
+
+<p>
+  <b>Operation:</b>
+  <%= @tillage.operation %>
+</p>
+
+<p>
+  <b>Dndc:</b>
+  <%= @tillage.dndc %>
+</p>
+
+<p>
+  <b>Eqp:</b>
+  <%= @tillage.eqp %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @tillage.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_tillage_path(@tillage) %> |
+<%= link_to 'Back', tillages_path %>

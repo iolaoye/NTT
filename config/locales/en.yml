@@ -230,6 +230,7 @@ en:
     weather: Weather
     fields: Fields
     soils: Soils
+    scenarios: Scenarios
     managements: Managements
     subprojects: Subprojects
     economics: Economics
@@ -239,6 +240,7 @@ en:
     signout: Sign Out
   project:
     new_project: 'New Project'
+    upload_project: 'Upload Project'
   footer:
     instructions: Instructions
     contact_us: 'Contact Us'

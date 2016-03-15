@@ -1,8 +1,23 @@
 class LayersController < ApplicationController
+################################  LAYERS list   #################################
+  # GET /soils/1
+  # GET /1/soils.json
+  def list
+    @layers = Layer.where(:soil_id => params[:id])
+    @soil_code = Soil.find(session[:soil_id]).key
+	@project_name = Project.find(session[:project_id]).name
+	@field_name = Field.find(session[:field_id]).field_name
+
+	respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @fields }
+    end
+  end
+################################  INDEX  #################################
   # GET /layers
   # GET /layers.json
   def index
-    @layers = Layer.all
+    @layers = Layer.where(:soil_id => params[:soil_id])
 
     respond_to do |format|
       format.html # index.html.erb

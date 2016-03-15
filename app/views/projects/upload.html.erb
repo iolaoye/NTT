@@ -1,0 +1,10 @@
+﻿<%= form_tag({action: :upload_project}, multipart: true) do %>
+  <h1><%= t('project.upload_project') %></h1>
+
+  <label for="project">Project to Upload</label> 
+  <%= file_field_tag "project" %>
+  <%= submit_tag %>
+
+  <br />
+
+<% end %>

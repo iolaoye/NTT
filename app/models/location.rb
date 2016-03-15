@@ -3,6 +3,6 @@ class Location < ActiveRecord::Base
   #Associations
     has_one :state
 	has_one :county
-	has_many :fields, :dependent => :destroy
+	has_many :fields, :dependent => :delete_all
 	belongs_to :project
 end

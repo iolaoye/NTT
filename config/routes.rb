@@ -1,30 +1,36 @@
 NTTG3::Application.routes.draw do
+  resources :animals
+  resources :irrigations
+  resources :bmpsublists
+  resources :bmplists
+  resources :tillages
+  resources :activities
+  resources :crops
+  resources :bmps
+  get "operations/list"
+  resources :operations
+  resources :scenarios
   #resources :ways
   #resources :weathers
   #resources :stations
   #resources :counties
   #resources :states
-  resources :locations
-  resources :projects
+  #resources :locations
+  #resources :projects
   resource :session
   #resources :users
   resources :welcomes
+  #resources :fields 
 
   resources :users do
-	  resources :projects do
-		  resources :locations do
-			  resources :fields do
-				 resources :soils do 
-					resources :layers
-				 end
-				 resources :weathers do
-					resources :ways
-				 end
-			  end
-		  end
-	  end
+	  resources :projects 
   end
-  
+
+  resources :projects do
+	resources :locations
+    get 'upload', on: :member
+  end
+ 
   resources :weathers do
 	member do
 		post 'save_coordinates'
@@ -35,19 +41,51 @@ NTTG3::Application.routes.draw do
     resources :counties
   end
 
-  #resources :soils do
-    #get 'index', on: :member
-  #end
+  resources :activities do
+    resources :tillages
+  end
 
-  #resources :projects do
-    #member do
-      #get 'shows'
-	#end 
-  #end 
-	
   resources :locations do
     get :send_to_mapping_site, on: :member
     post :receive_from_mapping_site, on: :member
+    get :location_fields, on: :member 
+  end  
+
+  resources :fields do
+    get :list, on: :member 
+    resources :soils
+    resources :scenarios
+	resources :weathers
+	get :field_soils, on: :member
+	get :field_scenarios, on: :member
+  end
+
+  resources :soils do
+    get :list, on: :member
+    resources :layers
+	get :soil_layers, on: :member
+  end
+
+  resources :layers do
+    get :list, on: :member
+  end
+
+  resources :scenarios do
+    get :list, on: :member
+	get :scenario_operations, on: :member
+	get :scenario_bmps, on: :member
+  end
+
+  resources :operations do
+	get :list, on: :member
+  end
+
+  resources :bmps do
+	get :list, on: :member
+  end
+
+  resources :bmplists do
+     resources :bmpsublists
   end
 
   #define two name routes, login_path and logout_path
@@ -57,6 +95,7 @@ NTTG3::Application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
   get 'users/new'
+  post 'projects/upload_project'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

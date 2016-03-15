@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
    def self.authenticate(email, password)
      user = find_by_email(email)
      return user if user && user.authenticated?(password)
+	 ddd
    end
    def authenticated?(password)
      self.hashed_password == encrypt(password)

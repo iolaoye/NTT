@@ -1,0 +1,23 @@
+<h1>Listing bmplists</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @bmplists.each do |bmplist| %>
+  <tr>
+    <td><%= bmplist.name %></td>
+    <td><%= link_to 'Show', bmplist %></td>
+    <td><%= link_to 'Edit', edit_bmplist_path(bmplist) %></td>
+    <td><%= link_to 'Destroy', bmplist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Bmplist', new_bmplist_path %>

@@ -1,14 +1,14 @@
 <h1>Listing layers</h1>
 
-<table>
-  <tr>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
     <th>Depth</th>
     <th>Soil p</th>
-    <th>Bulk density</th>
+    <th>Bulk Density</th>
     <th>Sand</th>
     <th>Silt</th>
     <th>Clay</th>
-    <th>Organic matter</th>
+    <th>Organic Matter</th>
     <th>Ph</th>
     <th>Soil</th>
     <th></th>
@@ -17,7 +17,7 @@
   </tr>
 
 <% @layers.each do |layer| %>
-  <tr>
+  <tr class="gvRowStyle">
     <td><%= layer.depth %></td>
     <td><%= layer.soil_p %></td>
     <td><%= layer.bulk_density %></td>
