@@ -1,4 +1,10 @@
 NTTG3::Application.routes.draw do
+  resources :simulations
+
+
+  resources :fertilizers
+
+
   resources :animals
   resources :irrigations
   resources :bmpsublists

@@ -37,3 +37,5 @@ gem 'breadcrumbs_on_rails'
 # gem 'debugger'
 
 # gem 'bcrypt-ruby'
+# rest API for NTT call
+gem "nokogiri"

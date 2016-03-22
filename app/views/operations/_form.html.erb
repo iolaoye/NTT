@@ -32,13 +32,13 @@
     <% case @operation.operation_id %>
 		<% when 1  # planting %>
 			<%= label :type_id, 'Planting' %>
-			<%= collection_select :activity, :type_id, Tillage.where(:activity_id => @operation.operation_id), :id, :eqp, {:prompt => 'Select Fertilizer'}, {:required => true} %>
+			<%= collection_select :activity, :type_id, Tillage.where(:activity_id => @operation.operation_id), :id, :eqp, {:prompt => 'Select Method'}, {:required => true} %>
 		<% when 2  # fertilizer %>
 			<%= label :type_id, 'Fertilizer' %>
 			<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.operation_id), :id, :eqp, {:prompt => 'Select Fertilizer'}, {:required => true} %>
 		<% else  # in new i.e. %>
 			<%= label :type_id, 'Select One' %>
-			<%= collection_select :operation, :type_id, Tillage.where(:activity_id => 0), :id, :eqp, {:prompt => 'Select One'}, {:required => true} %>
+			<%= collection_select :operation, :type_id, Tillage.where(:activity_id => 0), :id, :eqp, {:prompt => 'Select One'}, {:required => false} %>
 	<% end  %>
   </div>
   <div class="field">

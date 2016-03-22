@@ -1,6 +1,5 @@
 class WelcomesController < ApplicationController
   def show
-  
   end
 
   def index

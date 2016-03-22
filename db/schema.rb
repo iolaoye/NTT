@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160314164750) do
+ActiveRecord::Schema.define(:version => 20160322133330) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -68,6 +68,9 @@ ActiveRecord::Schema.define(:version => 20160314164750) do
     t.datetime "updated_at",                 :null => false
     t.string   "name"
     t.integer  "bmpsublist_id"
+    t.float    "difference_max_temperature"
+    t.float    "difference_min_temperature"
+    t.float    "difference_precipitation"
   end
 
   create_table "bmpsublists", :force => true do |t|
@@ -120,6 +123,19 @@ ActiveRecord::Schema.define(:version => 20160314164750) do
     t.string   "spanish_name"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+  end
+
+  create_table "fertilizers", :force => true do |t|
+    t.string   "abbreviation"
+    t.integer  "code"
+    t.integer  "dndc"
+    t.string   "name"
+    t.integer  "operation"
+    t.string   "spinsh_name"
+    t.boolean  "status"
+    t.integer  "activity_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "fields", :force => true do |t|
@@ -200,6 +216,24 @@ ActiveRecord::Schema.define(:version => 20160314164750) do
     t.integer  "field_id"
   end
 
+  create_table "simulations", :force => true do |t|
+    t.integer  "type_id"
+    t.string   "field_id"
+    t.string   "subproject_id"
+    t.integer  "scenario_id"
+    t.boolean  "project"
+    t.boolean  "location"
+    t.boolean  "weather"
+    t.boolean  "fields"
+    t.boolean  "soils"
+    t.boolean  "layers"
+    t.boolean  "management"
+    t.string   "las_simulation"
+    t.string   "comments"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "soils", :force => true do |t|
     t.boolean  "selected"
     t.string   "key"
@@ -213,6 +247,23 @@ ActiveRecord::Schema.define(:version => 20160314164750) do
     t.string   "drainage_type"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.float    "ffc"
+    t.float    "wtmn"
+    t.float    "wtmx"
+    t.float    "wtbl"
+    t.float    "gwst"
+    t.float    "gwmx"
+    t.float    "rft"
+    t.float    "rfpk"
+    t.float    "tsla"
+    t.float    "xids"
+    t.float    "rtn1"
+    t.float    "xidk"
+    t.float    "zqt"
+    t.float    "zf"
+    t.float    "ztk"
+    t.float    "fbm"
+    t.float    "fhp"
   end
 
   create_table "states", :force => true do |t|

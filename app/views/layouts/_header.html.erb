@@ -31,7 +31,7 @@
 			    <li><%=link_to "Fields", location_fields_location_path(session[:location_id]) %></li>
 			    <li><%=">>"%><%=@field_name%></li>
 			    <li><%=link_to "Scenarios", field_scenarios_field_path(session[:field_id]) %></li>
-			    <li><%=">>"%><%=@field_name%></li>
+			    <li><%=">>"%><%=@scenario_name%></li>
 				<% if request.original_url.include? "operation" %>
 				    <li><%=">> Operations" %></li>
 				<% else %>

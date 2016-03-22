@@ -11,7 +11,7 @@
 <% @scenarios.each do |scenario| %>
   <tr class="gvRowStyle">
     <td><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
-    <td><%= link_to 'Show', scenario %></td>
+    <td><%= link_to 'Simulate', scenario %></td>
     <td><%= link_to 'Edit', edit_scenario_path(scenario) %></td>
     <td><%= link_to 'Destroy', scenario, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
@@ -21,3 +21,4 @@
 <br />
 
 <%= link_to 'New Scenario', new_scenario_path %>
+<%= link_to 'Simulate All Scenarios', new_scenario_path %>

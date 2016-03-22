@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  abbreviation: MyString
+  code: 1
+  dndc: 1
+  name: MyString
+  operation: 1
+  spinsh_name: MyString
+  status: false
+  activity_id: 1
+
+two:
+  abbreviation: MyString
+  code: 1
+  dndc: 1
+  name: MyString
+  operation: 1
+  spinsh_name: MyString
+  status: false
+  activity_id: 1

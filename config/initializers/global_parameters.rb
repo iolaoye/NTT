@@ -8,3 +8,6 @@
 
 #NTT verision
 	version = "NTTG3"
+
+# URL to send information to NTT, which return the results
+URL_NTT = 'http://nn.tarleton.edu/NttApex/NNRestService.ashx'

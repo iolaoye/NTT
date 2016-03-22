@@ -30,16 +30,24 @@
     <td><%= Crop.find(operation.crop_id).name %></td>
     <td><%= Activity.find(operation.operation_id).name %></td>
     <td><%= listYears.detect { |val, index| index == operation.year}[0] %></td>
-    <td><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
-    <td><%= operation.day %></td>
-    <td><%= Tillage.find(operation.type_id).eqp %></td>
-    <td><%= operation.amount %></td>
-    <td><%= operation.depth %></td>
-    <td><%= operation.no3_n %></td>
-    <td><%= operation.po4_p %></td>
-    <td><%= operation.org_n %></td>
-    <td><%= operation.org_p %></td>
-    <td><%= operation.nh3 %></td>
+    <td class="numbers"><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
+    <td class="numbers"><%= operation.day %></td>
+    <% if operation.operation_id == 1 %>   
+      <td><%= Tillage.find(operation.type_id).eqp %></td>
+    <% end %>
+    <% if operation.operation_id == 2 %>   
+      <td><%= Fertilizer.find(operation.type_id).name %></td>
+    <% end %>     
+    <% if operation.operation_id == 5 %>   
+      <td><%= "" %></td>
+    <% end %>     
+    <td class="numbers"><%= operation.amount %></td>
+    <td class="numbers"><%= operation.depth %></td>
+    <td class="numbers"><%= operation.no3_n %></td>
+    <td class="numbers"><%= operation.po4_p %></td>
+    <td class="numbers"><%= operation.org_n %></td>
+    <td class="numbers"><%= operation.org_p %></td>
+    <td class="numbers"><%= operation.nh3 %></td>
     <td><%= link_to 'Show', operation %></td>
     <td><%= link_to 'Edit', edit_operation_path(operation) %></td>
     <td><%= link_to 'Destroy', operation, method: :delete, data: { confirm: 'Are you sure?' } %></td>

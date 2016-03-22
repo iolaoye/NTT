@@ -23,9 +23,9 @@
     <td><%= soil.symbol %></td>
     <td><%= soil.group %></td>
     <td><%= soil.name %></td>
-    <td><%= soil.albedo %></td>
-    <td><%= soil.slope %></td>
-    <td><%= soil.percentage %></td>
+    <td class="numbers"><%= soil.albedo %></td>
+    <td class="numbers"><%= soil.slope.round(2) %></td>
+    <td class="numbers"><%= soil.percentage.round(2) %></td>
     <td><%= soil.drainage_type %></td>
     <td><%= link_to 'Layers', soil_layers_soil_path(soil.id) %></td>
     <td><%= link_to 'Edit', edit_soil_path(soil) %></td>

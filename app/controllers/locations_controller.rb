@@ -64,9 +64,9 @@ class LocationsController < ApplicationController
         @field.field_area = params["field#{i}acres"]
 		
 		#verify if this field aready has its soils. If not the soils coming from the map are added
-		if !(@field.soils.any?) then
-		    create_soils(i)
-		end #end if for soils.any?
+		#if !(@field.soils.any?) then
+		    create_soils(i, @field.id)
+		#end #end if for soils.any?
 
 		#find or create weather
 		if (@field.weather_id == nil) then
@@ -174,7 +174,10 @@ class LocationsController < ApplicationController
 
  ###################################### create_soil ######################################
  ## Create soils receiving from map for each field.
-  def create_soils(i)
+  def create_soils(i, field_id)
+    #delete all of the soils for this field
+	soils = Soil.where(:field_id => field_id)
+	soils.delete_all
     for j in 1..params["field#{i}soils"].to_i
   	   @soil = @field.soils.new
 
@@ -183,12 +186,21 @@ class LocationsController < ApplicationController
        @soil.group = params["field#{i}soil#{j}hydgrpdcd"]
 	   @soil.name = params["field#{i}soil#{j}muname"]
 	   @soil.albedo = params["field#{i}soil#{j}albedo"]
-	   @soil.slope = params["field#{i}soil#{j}slopw"]
-	   @soil.percentage = params["field#{i}soil#{j}pctsoiltype"]
+	   @soil.slope = params["field#{i}soil#{j}slope"]
+	   @soil.percentage = params["field#{i}soil#{j}pct"]
  	   if @soil.save then
-		   create_layers(i, j)
-	   end 
-	end #end for craete_soils
+		   create_layers(i, j)		   
+	   end	    
+	end #end for create_soils
+	soils = Soil.where(:field_id => field_id).order(percentage: :desc)
+	i = 1
+	soils.each do |soil|
+		if (i <= 3) then
+			soil.selected = true
+			soil.save
+			i = i + 1
+		end 
+	end
   end  
 
  ###################################### create_soil ######################################

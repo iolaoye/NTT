@@ -20,7 +20,8 @@ class UsersController < ApplicationController
 		respond_to do |format|
 			if @user.save
 				session[:user_id] = @user.id				# store user id in session
-				format.html { redirect_to welcomes_index_path, notice: 'User successfully added' }
+				#format.html { redirect_to "welcomes/0", notice: 'User successfully added' }
+				format.html { redirect_to welcome_path(0), :notice => "User successfully added"	}# redirect is successful	  
 			else
 				format.html { render action: :new }
 				format.json { render json: @user.errors, status: :unprocessable_entity }
