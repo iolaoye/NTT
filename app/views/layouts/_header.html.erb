@@ -57,7 +57,7 @@
 				   <li><%= link_to t('menu.operations'), scenario_operations_scenario_path(session[:scenario_id]) %></li>
 				   <li><%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></li>
 			<% end %>
-    		<li><%= link_to t('menu.signout'), logout_path %></li>
+    		<% if signed_in? %><li><%= link_to t('menu.signout'), logout_path %></li><% end %>
 	    </ul>      
     </div>
 <% end %>
