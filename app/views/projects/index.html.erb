@@ -12,9 +12,9 @@
     </tr>
 
     <% @projects.each do |project| %>
-      <tr class="gvRowStyle">
-        <td><%= link_to project.name, project %></td>
-        <td><%= project.description %></td>
+      <tr class="gvRowStyle"; style="padding-left:25px">
+        <td style="padding-left:5%"><%= link_to project.name, project %></td>
+        <td style="padding-left:5%"><%= project.description %></td>
         <td><%#= link_to t('general.show'), shows_project_path(project) %></td> 
         <td><%#= link_to t('general.edit'), edit_project_path(project) %></td>
         <td><%= link_to t('general.destroy'), project, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -276,8 +276,26 @@
 }
 
 /*Table styles  */
-.gvHeaderStyle {color:Blue;background-color:Gray;}
+.gvHeaderStyle {
+  color:White;
+  background-color:Gray;
+  border-spacing: 50px 0;
+}
 
-.gvRowStyle { color:Black;background-color:Silver; }
+.gvRowStyle { 
+  color:Black;
+  background-color:Silver;
+  text-align: left;
+}
 
-.gvTableStyle { background-color:White;border-color:#CC9966;border-width:10px;border-style:None;border-collapse:collapse; }
+.gvTableStyle { 
+  background-color:White;
+  border-color:#CC9966;
+  border-width:10px;
+  border-style:None;
+  border-collapse:collapse;
+  width: auto;
+  min-width: 400px;
+}
+
+//work on css of listing fields, etc...
