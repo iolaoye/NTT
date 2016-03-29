@@ -1,5 +1,6 @@
 <h1>Listing fields</h1>
 
+<%= link_to 'New Field', new_field_path %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th>Field name</th>
@@ -7,9 +8,7 @@
     <th>Field average slope</th>
     <th>Location</th>
     <th>Field type</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Actions</th>
   </tr>
 
 <% @fields.each do |field| %>
@@ -17,14 +16,15 @@
     <td><%= link_to field.field_name, field %></td>
     <td><%= field.field_area %></td>
     <td><%= field.field_average_slope %></td>
+    <td></td>
     <td><%= field.field_type %></td>
-    <td><%= link_to 'Show', field %></td>
-    <td><%= link_to 'Edit', edit_field_path(field) %></td>
-    <td><%= link_to 'Destroy', field, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td>
+      <%= link_to image_tag("view.png"), field %>
+      <%= link_to image_tag("edit.png"), edit_field_path(field) %>
+      <%= link_to image_tag("delete.png"), field, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Field', new_field_path %>
