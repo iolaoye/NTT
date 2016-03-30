@@ -14,8 +14,8 @@
 <% @fields.each do |field| %>
   <tr class="gvRowStyle">
     <td><%= link_to field.field_name, field %></td>
-    <td><%= field.field_area %></td>
-    <td><%= field.field_average_slope %></td>
+    <td class="numbers"><%= field.field_area %></td>
+    <td class="numbers"><%= field.field_average_slope %></td>
     <td></td>
     <td><%= field.field_type %></td>
     <td>

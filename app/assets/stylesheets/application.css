@@ -14,7 +14,10 @@
  /* like .breadcrumbs a.active */
 /* Properly style non-anchor elements in breadcrumbs. */
 /* like .breadcrumbs a */
-.numbers { text-align: Right }
+.numbers { 
+  text-align: Right; 
+  padding-right: 10%;
+}
 
 .crumbs li { display: inline; color:Blue}
 
@@ -279,23 +282,36 @@
 .gvHeaderStyle {
   color:White;
   background-color:Gray;
-  border-spacing: 50px 0;
+  text-align: center;
+  border-bottom: 2px solid #d1d1d1;
 }
 
 .gvRowStyle { 
   color:Black;
-  background-color:Silver;
-  text-align: left;
+  background-color:#D3D3D3;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 1px solid #ddd;
 }
 
 .gvTableStyle { 
   background-color:White;
   border-color:#CC9966;
-  border-width:10px;
   border-style:None;
   border-collapse:collapse;
-  width: auto;
-  min-width: 400px;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+}
+
+.pageContainer {
+  min-height: 100px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px #4F2D7F;
+  padding: 15px 25px 15px;
+  margin: 0 25px 0;
 }
 
 //work on css of listing fields, etc...
