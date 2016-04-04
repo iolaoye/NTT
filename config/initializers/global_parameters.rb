@@ -4,7 +4,8 @@
 
 
 # URL to the mapping application
-	URL_MAP = 'http://nn.tarleton.edu/NTTRails/Default.aspx'
+	URL_MAP = 'http://nn.tarleton.edu/GoogleMapPost/Default.aspx'
+	#URL_MAP = 'http://nn.tarleton.edu/NTTRails/Default.aspx'
 
 #NTT verision
 	version = "NTTG3"
