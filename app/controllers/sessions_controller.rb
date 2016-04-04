@@ -12,8 +12,12 @@ class SessionsController < ApplicationController
   end
 
 ####################### INDEX  ##########################################################
+<<<<<<< HEAD
   def index  
   
+=======
+  def index
+>>>>>>> d30a22ae964897236d1e66843b7ec87a741a205b
     if session[:status] == "signed"  # authenticated user
  	     @projects = Project.where(:user_id => session[:user_id])
          redirect_to user_projects_path(@projects)
