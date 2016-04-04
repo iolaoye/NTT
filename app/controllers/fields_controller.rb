@@ -87,7 +87,7 @@ class FieldsController < ApplicationController
 
     respond_to do |format|
       if @field.update_attributes(field_params)
-        format.html { redirect_to @field, notice: 'Field was successfully updated.' }
+        format.html { redirect_to location_fields_location_path(session[:location_id]), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
