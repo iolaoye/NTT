@@ -29,12 +29,8 @@ class ScenariosController < ApplicationController
   # GET /scenarios
   # GET /scenarios.json
   def index
-    @scenarios = Scenario.all
-	ddd
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @scenarios }
-    end
+    @scenarios = Scenario.where(:field_id => session[:field_id])
+    render "list"
   end
 
 ################################  simulate the selected scenario  #################################
@@ -76,10 +72,11 @@ class ScenariosController < ApplicationController
   def create
     @scenario = Scenario.new(scenario_params)
 	@scenario.field_id = session[:field_id]
-    respond_to do |format|
+    
+	respond_to do |format|
       if @scenario.save
-        format.html { redirect_to @scenario, notice: 'Scenario was successfully created.' }
-        format.json { render json: @scenario, status: :created, location: @scenario }
+		@scenarios = Scenario.where(:field_id => session[:field_id])
+		format.html { render action: "list" }
       else
         format.html { render action: "new" }
         format.json { render json: @scenario.errors, status: :unprocessable_entity }

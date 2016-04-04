@@ -6,15 +6,15 @@
     <tr class='gvHeaderStyle'>
       <th><%= t('general.name') %></th>
       <th><%= t('general.description') %></th>
-      <th></th>
+      <th><%= t('general.actions') %></th>
     </tr>
 
     <% @projects.each do |project| %>
-      <tr class="gvRowStyle"; style="padding-left:25px">
+      <tr class="gvRowStyle" style="padding-left:25px">
         <td><%= link_to project.name, project %></td>
         <td><%= project.description %></td>
         <td>
-          <%= link_to image_tag("view.png"), project %>
+          <%#= link_to image_tag("view.png"), project %>
           <%= link_to image_tag("edit.png"), edit_project_path(project) %>
           <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
