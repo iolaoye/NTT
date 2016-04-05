@@ -38,7 +38,8 @@ class LocationsController < ApplicationController
 
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site
-    if (params[:error] == "") then
+ 
+    if !(params[:error] == "") then
 		notice = params[:error]
 		return
 	end if

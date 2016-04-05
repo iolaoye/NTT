@@ -18,6 +18,18 @@ class FieldsController < ApplicationController
   def list
     @fields = Field.where(:location_id => params[:id])
 	@project_name = Project.find(session[:project_id]).name
+	@fields.each do |field|
+	   field_average_slope = 0
+       i = 0
+	   field.soils.each do |soil|
+		  if (soil.selected?) then
+			 field_average_slope = field_average_slope + soil.slope
+			 i=i+1
+		  end 
+	   end
+	   field.field_average_slope = (field_average_slope / i).round(2)
+	   field.save
+	end
 
 	respond_to do |format|
       format.html # index.html.erb
