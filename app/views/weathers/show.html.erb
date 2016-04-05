@@ -11,8 +11,7 @@
             <label id="lblOwn" runat="server" for="rbtnOwn">Load your Own Weather File</label>
           <br />
           <%= radio_button("weather", "way_id", "3", onchange: "rbtnStation_onclick('Coordinates')") %>
-            <label id="lblCoordinates" runat="server" for="rbtnStation">Load Using Specific Coordinates (USA only)</label>
-            <%= f.text_field :way_id %>
+            <label id="lblCoordinates" runat="server" for="rbtnStation">Load Using Specific Coordinates (USA only)</label>            
           </fieldset>
       </td>
       <td id="tdWeather" runat="server" style="vertical-align: middle; text-align:left" >
