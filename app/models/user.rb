@@ -37,6 +37,3 @@ class User < ActiveRecord::Base
        Digest::SHA1.hexdigest(string)
      end
 end
-
-
-

@@ -3,8 +3,12 @@ class WelcomesController < ApplicationController
   end
 
   def index
-     @projects = Project.where(:user_id => session[:user_id])
-     redirect_to user_projects_path(session[:user_id])
+  	if signed_in?
+      @projects = Project.where(:user_id => session[:user_id])
+      redirect_to user_projects_path(current_user)
+  	else
+     	redirect_to sessions_index_path
+	end
 	 
 	 #redirect_to :controller => :projects, :action => "index", :locale => "en", :projects => @projects
   end
