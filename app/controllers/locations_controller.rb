@@ -2,8 +2,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def location_fields
-    session[:location_id] = params[:id]
-    redirect_to list_field_path(params[:id])	
+    redirect_to list_field_path(session[:location_id])	
   end
 
   ###################################### SHOW ######################################
@@ -12,6 +11,7 @@ class LocationsController < ApplicationController
   def show
     @location = Location.find(params[:id])
 	@project_name = Project.find(session[:project_id]).name
+    session[:location_id] = params[:id]
 	respond_to do |format|		  
 		format.html # show.html.erb		  
 	end
@@ -37,12 +37,12 @@ class LocationsController < ApplicationController
   end
 
   ###################################### receive_from_mapping_site ######################################
-  def receive_from_mapping_site
- 
+  def receive_from_mapping_site 
     if !(params[:error] == "") then
 		notice = params[:error]
 		return
 	end if
+
     @location = Location.find_by_project_id(params[:id])
 	@project_name = Project.find(session[:project_id]).name
 	session[:location_id] = @location.id
