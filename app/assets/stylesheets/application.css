@@ -15,8 +15,8 @@
 /* Properly style non-anchor elements in breadcrumbs. */
 /* like .breadcrumbs a */
 .numbers { 
-  text-align: Right; 
-  padding-right: 10%;
+  text-align: right; 
+  padding-right: 5%;
 }
 
 .crumbs li { display: inline; color:Blue}
@@ -314,4 +314,4 @@
   margin: 0 25px 0;
 }
 
-//work on css of listing fields, etc...
+/*work on css of listing fields, etc...*/

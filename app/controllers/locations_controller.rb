@@ -2,8 +2,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def location_fields
-    session[:location_id] = params[:id]
-    redirect_to list_field_path(params[:id])	
+    redirect_to list_field_path(session[:location_id])	
   end
 
   ###################################### SHOW ######################################
@@ -12,6 +11,7 @@ class LocationsController < ApplicationController
   def show
     @location = Location.find(params[:id])
 	@project_name = Project.find(session[:project_id]).name
+    session[:location_id] = params[:id]
 	respond_to do |format|		  
 		format.html # show.html.erb		  
 	end
@@ -30,22 +30,21 @@ class LocationsController < ApplicationController
   def send_to_mapping_site
     #@location = Location.where(:project_id => session[:project_id]).first
     @location = Location.find_by_project_id(params[:id])
-	if !(@location.county_id == nil)
+	if !(@location.county_id == nil) and !(@location.county_id == 0)
 	   @county = County.find(@location.county_id)
 	end
     render :send_to_mapping_site, :layout => false
   end
 
   ###################################### receive_from_mapping_site ######################################
-  def receive_from_mapping_site
- 
-    if !(params[:error] == "") then
-		notice = params[:error]
-		return
-	end if
+  def receive_from_mapping_site	 
     @location = Location.find_by_project_id(params[:id])
 	@project_name = Project.find(session[:project_id]).name
 	session[:location_id] = @location.id
+	if !(params[:error] == "") then
+		notice = params[:error]
+		render shows
+	end 
 
 	if (session[:session_id] == params[:source_id]) then
       # step 1: delete fields not found
@@ -69,10 +68,9 @@ class LocationsController < ApplicationController
         @field.field_area = params["field#{i}acres"]
 		
 		#verify if this field aready has its soils. If not the soils coming from the map are added
-		#if !(@field.soils.any?) then
+		if !(params["field#{i}error"] == 1) then
 		    create_soils(i, @field.id)
-		#end #end if for soils.any?
-
+		end
 		#find or create weather
 		if (@field.weather_id == nil) then
 		   #create the weather for this field
@@ -92,15 +90,19 @@ class LocationsController < ApplicationController
 		@weather.save
       end # end for fields
 
-	  # step 3: update location
+	  # step 3: update location	  
 	  state_abbreviation = params[:state]
-	  state = State.find_by_state_abbreviation(state_abbreviation)
-	  #state = State.where(:state_abbreviation => state_abbreviation).first
-	  @location.state_id = state.id
-	  county_name = params[:county]
-	  county_name.slice! " County"
-	  county = County.find_by_county_name(county_name)
-	  @location.county_id = county.id
+	  if (params[:country] == "US") then
+		state = State.find_by_state_abbreviation(state_abbreviation)
+		@location.state_id = state.id
+	    county_name = params[:county]
+	    county_name.slice! " County"
+	    county = County.find_by_county_name(county_name)
+	    @location.county_id = county.id
+	  else
+		@location.state_id = 0		
+	    @location.county_id = 0
+	  end
 	  @location.coordinates = params[:parcelcoords]
       @location.save
 	end # end if of session_id check
@@ -194,7 +196,9 @@ class LocationsController < ApplicationController
 	   @soil.slope = params["field#{i}soil#{j}slope"]
 	   @soil.percentage = params["field#{i}soil#{j}pct"]
  	   if @soil.save then
-		   create_layers(i, j)		   
+		   if !(params["field#{i}soil#{j}error"] == 2) then
+			create_layers(i, j)		   
+		   end
 	   end	    
 	end #end for create_soils
 	soils = Soil.where(:field_id => field_id).order(percentage: :desc)

@@ -27,7 +27,11 @@ class FieldsController < ApplicationController
 			 i=i+1
 		  end 
 	   end
-	   field.field_average_slope = (field_average_slope / i).round(2)
+	   if (field_average_slope > 0) then  
+		field.field_average_slope = (field_average_slope / i).round(2)
+	   else
+		field.field_average_slope = 0
+	   end 
 	   field.save
 	end
 

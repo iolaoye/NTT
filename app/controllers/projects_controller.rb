@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-
   # GET /projects
   # GET /projects.json
   def index 
@@ -15,7 +14,7 @@ class ProjectsController < ApplicationController
   def show   #selected when click on a project or a new project is created.
     if params[:id] == "upload" then 
 		redirect_to "upload"
-	end 
+	end
     session[:project_id] = params[:id]
     @location = Location.find_by_project_id(params[:id])
     redirect_to location_path(@location.id)
