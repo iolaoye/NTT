@@ -3,6 +3,6 @@ class Layer < ActiveRecord::Base
   #associations
     belongs_to :soil
   #scopes
-    default_scope :order => "depth DESC"
+    default_scope :order => "depth ASC"
 
 end

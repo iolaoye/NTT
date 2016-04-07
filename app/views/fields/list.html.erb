@@ -4,8 +4,8 @@
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th>Field name</th>
-    <th>Field area</th>
-    <th>Field average slope</th>
+    <th class="numbers">Field area</th>
+    <th class="numbers">Field average slope</th>
     <th>Actions</th>
   </tr>
 
@@ -16,8 +16,8 @@
     <td class="numbers"><%= field.field_average_slope %></td>
     <td>
       <%#= link_to image_tag("view.png"), field %>
-      <%= link_to image_tag("edit.png"), edit_field_path(field) %>
-      <%= link_to image_tag("delete.png"), field, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
+      <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
     </td>
   </tr>
 <% end %>
