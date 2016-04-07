@@ -1,12 +1,12 @@
-<h1>Listing fields</h1>
+<h1><%= t('field.field_title')%></h1>
 
-<%= link_to 'New Field', new_field_path %>
+<%= link_to t('field.new_field'), new_field_path %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th>Field name</th>
-    <th class="numbers">Field area</th>
-    <th class="numbers">Field average slope</th>
-    <th>Actions</th>
+    <th><%= t('field.field_name')%></th>
+    <th class="numbers"><%= t('field.field_area')%></th>
+    <th class="numbers"><%= t('field.field_avg_slope')%></th>
+    <th><%= t('general.actions')%></th>
   </tr>
 
 <% @fields.each do |field| %>

@@ -1,9 +1,9 @@
 ﻿<%= form_tag({action: :upload_project}, multipart: true) do %>
   <h1><%= t('project.upload_project') %></h1>
 
-  <label for="project">Project to Upload</label> 
+  <label for="project"><%= t('project.upload_button_desc')%></label> 
   <%= file_field_tag "project" %>
-  <%= submit_tag %>
+  <%= submit_tag(value = t('submit.save')) %>
 
   <br />
 

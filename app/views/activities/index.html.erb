@@ -1,8 +1,8 @@
-<h1>Listing activities</h1>
+<h1><%= t('activity.activity_title')%></h1>
 
 <table>
   <tr>
-    <th>Name</th>
+    <th><%= t('general.name') %></th>
     <th>Code</th>
     <th>Abbreviation</th>
     <th>Spanish name</th>
@@ -19,8 +19,8 @@
     <td><%= activity.abbreviation %></td>
     <td><%= activity.spanish_name %></td>
     <td><%= activity.apex_code %></td>
-    <td><%= link_to 'Show', activity %></td>
-    <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
+    <td><%= link_to t('general.show'), activity %></td>
+    <td><%= link_to t('general.edit'), edit_activity_path(activity) %></td>
     <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
@@ -28,4 +28,4 @@
 
 <br />
 
-<%= link_to 'New Activity', new_activity_path %>
+<%= link_to t('activity.new_activity'), new_activity_path %>

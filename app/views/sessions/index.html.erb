@@ -1,22 +1,22 @@
 ﻿<%# if !signed_in? %>
-  <h2>Log in</h2>
+  <h2><%= t('submit.login')%></h2>
   <%= form_tag session_path do %>
     <% if flash[:alert] %>
       <p class="flash_alert"><%= flash[:alert] %></p>
     <% end %>
     <div class="field">
-      <%= label_tag :email %><br />
+      <%= label_tag (t('.email')) %><br />
       <%= text_field_tag :email %>
     </div>
     <div class="field">
-      <%= label_tag :password %><br />
+      <%= label_tag (t('.password')) %><br />
       <%= password_field_tag :password %>
     </div>
     <div class="actions">
-      <p><%= submit_tag 'Login' %></p>
+      <p><%= submit_tag t('submit.login') %></p>
     </div>
     <div class="actions">
-      <p><%= link_to 'New User', users_new_path, method: :get %></p>
+      <p><%= link_to t('.new_user'), users_new_path, method: :get %></p>
     </div>
   <% end %>
 <%# end %>

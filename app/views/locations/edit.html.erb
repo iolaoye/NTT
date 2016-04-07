@@ -1,6 +1,6 @@
-<h1>Editing location</h1>
+<h1><%= t('location.edit')%></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @location %> |
-<%= link_to 'Back', locations_path %>
+<%= link_to t('general.show'), @location %> |
+<%= link_to t('general.back'), locations_path %>
