@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160404194909) do
+ActiveRecord::Schema.define(:version => 20160407185248) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20160404194909) do
     t.integer  "soil_group_b"
     t.integer  "soil_group_c"
     t.integer  "soil_group_d"
-    t.string   "type"
+    t.string   "type1"
     t.string   "yield_unit"
     t.float    "bushel_weight"
     t.float    "conversion_factor"
