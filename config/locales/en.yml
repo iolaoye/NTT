@@ -149,6 +149,10 @@ en:
       create: Create %{model}
       submit: Save %{model}
       update: Update %{model}
+    label:
+      project:
+        name: Name
+        description: Description
   number:
     currency:
       format:
@@ -244,6 +248,7 @@ en:
   project:
     new_project: 'New Project'
     upload_project: 'Upload Project'
+    upload_button_desc: 'Project to Upload'
   footer:
     instructions: Instructions
     contact_us: 'Contact Us'
@@ -264,3 +269,27 @@ en:
     scenario: Scenario
     simulate: Simulate
     operation: Operation
+  location:
+    new_location: New Location
+    edit: Editing Location
+  operation:
+    new_operation: New Operation
+    edit: Editing Operation
+  activity:
+    edit: Editing Activity
+    new_activity: New Activity
+    activity_title: Listing Activities
+  field:
+    field_name: Field Name
+    field_area: Field Area
+    field_avg_slope: Field Average Slope
+    new_field: New Field
+    field_title: Listing Fields
+  submit:
+    save: Save Changes
+    login: Sign in
+  sessions:
+    index:
+      email: Email
+      password: Password
+      new_user: New User

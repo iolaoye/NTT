@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
+  <b><%= t('general.name') %>:</b>
   <%= @activity.name %>
 </p>
 
@@ -26,5 +26,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_activity_path(@activity) %> |
-<%= link_to 'Back', activities_path %>
+<%= link_to t('general.edit'), edit_activity_path(@activity) %> |
+<%= link_to t('general.back'), activities_path %>

@@ -1,6 +1,6 @@
-<h1>Editing operation</h1>
+<h1><%= t('operation.edit')%></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @operation %> |
-<%= link_to 'Back', scenario_operations_scenario_path(session[:scenario_id]) %>
+<%= link_to t('general.show'), @operation %> |
+<%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]) %>

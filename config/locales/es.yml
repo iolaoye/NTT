@@ -147,6 +147,11 @@
       create: Crear %{model}
       submit: Guardar %{model}
       update: Actualizar %{model}
+    label:
+      project:
+        name: Nombre
+        description: Descripción
+      
   number:
     currency:
       format:
@@ -246,6 +251,7 @@
   project:
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'
+    upload_button_desc: 'Proyecto a Subir'
   footer:
     instructions: Instrucciones
     contact_us: 'Contactarnos'
@@ -266,4 +272,27 @@
     scenario: Escenario
     simulate: Simular
     operation: Operación
-    
+  location:
+    new_location: Localización Nuevo
+    edit: Revisión de Localización
+  operation:
+    new_operation: Operación Neuvo
+    edit: Revisión de Operación
+  activity:
+    edit: Revisión de Actividad
+    new_activity: Actividad Nuevo
+    activity_title: Listing Activities #needs translation
+  field:
+    field_name: Nombre del Parcela
+    field_area: Área del Parcela
+    field_avg_slope: Promedio inclinación del Parcela
+    new_field: Parcela Neuvo
+    field_title: Listing Fields #needs translation
+  submit:
+    save: Guardar
+    login: Iniciar sesión
+  sessions:
+    index:
+      email: Correo Electrónico
+      password: Contraseña
+      new_user: Usuario Nuevo

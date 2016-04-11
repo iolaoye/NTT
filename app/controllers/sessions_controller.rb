@@ -13,9 +13,9 @@ class SessionsController < ApplicationController
 
 ####################### INDEX  ##########################################################
   def index
-    if session[:status] == "signed"  # authenticated user
+    if signed_in?  # authenticated user
  	     @projects = Project.where(:user_id => session[:user_id])
-         redirect_to user_projects_path(@projects)
+         redirect_to user_projects_path(current_user.id)
 	else
 	  #render :action => 'new'
 	  #redirect_to "users/new"
