@@ -9,35 +9,86 @@
       <% end %>
       </ul>
     </div>
+  <% else %>
+    <div id="div_notice">
+		<p id="notice"><%= notice %></p>
+    </div>
   <% end %>
 
-  <div class="field">
+ <fieldset class="section">
+    <legend>Select the kind of weather you want to use</legend>
+	<div>
+		<%= f.radio_button :way_id, "1", onchange: "rbtnStation_onclick('Prism')" %>
+		<label id="lblStation" runat="server" for="rbtnStation">Weather Information Using PRISM Data</label>
+	</div>
+	<div>
+		<%= f.radio_button :way_id, "2", onchange: "rbtnStation_onclick('Own')" %>
+		<label id="lblOwn" runat="server" for="rbtnOwn">Load your Own Weather File</label>
+    </div>
+	<div>
+		<%= f.radio_button :way_id, "3", onchange: "rbtnStation_onclick('Coordinates')" %>
+		<label id="lblCoordinates" runat="server" for="rbtnStation">Load Using Specific Coordinates (USA only)</label>            
+    </div>
+  </fieldset>
+  <div class="field" style="display:none">
     <%= f.label :field_id %><br />
     <%= f.number_field :field_id %>
   </div>
-  <div class="field">
+  <div class="field" style="display:none">
     <%= f.label :station_id %><br />
     <%= f.number_field :station_id %>
   </div>
-  <div class="field">
+  <div class="field" style="display:none">
     <%= f.label :station_way %><br />
     <%= f.text_field :station_way %>
   </div>
-  <div class="field">
-    <%= f.label :simulation_initial_year %><br />
-    <%= f.number_field :simulation_initial_year %>
+  <% if @weather.way_id == 3 %>
+	  <fieldset id="fsetCoordinates" class="section" >
+		  <legend id="lblCoordinates1" runat="server">Enter Coordinates</legend>
+		  <div class="field">
+			<%= f.label :latitude %>
+			<%= f.text_field :latitude %>
+			<%= f.label :longitude %>
+			<%= f.text_field :longitude %>
+		  </div>
+	  </fieldset>	
+  <% else %>
+	  <fieldset id="fsetCoordinates" class="section" style="display:none">
+		  <legend id="lblCoordinates1" runat="server">Enter Coordinates</legend>
+		  <div class="field">
+			<%= f.label :latitude %>
+			<%= f.text_field :latitude %>
+			<%= f.label :longitude %>
+			<%= f.text_field :longitude %>
+		  </div>
+	  </fieldset>	
+  <% end %> 
+  <% if @weather.way_id == 2 %>
+	  <fieldset id="fsetUploadWeatherFile" class="section">
+			<legend id="lblUploadWeatherFile" runat="server">Choose the file to Upload and then select Upload Weather File</legend>
+			<input id="flUpload" runat="server" type="file" onchange="__doPostBack('btnUpload', 'Load Project')"/>
+	  </fieldset>
+  <% else %>
+	  <fieldset id="fsetUploadWeatherFile" style="display:none" class="section">
+			<legend id="lblUploadWeatherFile" runat="server">Choose the file to Upload and then select Upload Weather File</legend>
+			<input id="flUpload" runat="server" type="file" onchange="__doPostBack('btnUpload', 'Load Project')"/>
+	  </fieldset>
+  <% end %>
+  <fieldset class="section">
+	  <div class="field">
+		<%= f.label :simulation_initial_year %>
+		<%= f.number_field :simulation_initial_year %>
+		<%= f.label :simulation_final_year %>
+		<%= f.number_field :simulation_final_year %>
+	  </div>
+  </fieldset>
+  <div class="field" style="display:none">
+    <%= f.label :weather_file %><br />
+    <%= f.text_field :weather_file %>
   </div>
-  <div class="field">
-    <%= f.label :simulation_final_year %><br />
-    <%= f.number_field :simulation_final_year %>
-  </div>
-  <div class="field">
-    <%= f.label :longitude %><br />
-    <%= f.text_field :longitude %>
-  </div>
-  <div class="field">
-    <%= f.label :latitude %><br />
-    <%= f.text_field :latitude %>
+  <div class="field" style="display:none">
+    <%= f.label :way_id %><br />
+    <%= f.text_field :way_id %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -2,6 +2,7 @@ class FieldsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def field_scenarios
+  ppp
     session[:field_id] = params[:id]
     redirect_to list_scenario_path	
   end
@@ -41,7 +42,8 @@ class FieldsController < ApplicationController
     end
   end
 ################################  SHOW   #################################
-  def soils 
+  def soils
+  lll 
     @soils = Soil.where(:field_id => params[:id])
 
     respond_to do |format|
@@ -58,7 +60,7 @@ class FieldsController < ApplicationController
     session[:field_id] = params[:id]
 
     respond_to do |format|
-      format.html { redirect_to weather_path }
+      format.html { redirect_to edit_weather_path }
       format.json { render json: @field, status: :created, weather: @field.id }
     end
   end
@@ -99,6 +101,7 @@ class FieldsController < ApplicationController
   # PATCH/PUT /fields/1
   # PATCH/PUT /fields/1.json
   def update
+
     @field = Field.find(params[:id])
 
     respond_to do |format|

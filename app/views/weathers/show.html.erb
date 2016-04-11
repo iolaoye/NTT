@@ -26,10 +26,13 @@
         <fieldset id="fsetCoordinates" runat="server" style="display:none" class="section">
           <legend id="lblCoordinates1" runat="server">Enter Coordinates and then save them</legend>
           <%= t("weather.longitude") %>
-          <%= f.text_field :longitude %>
+          <%= f.text_field :longitude, :size=>"15" %>
           <%= t("weather.latitude") %>
-          <%= f.text_field :latitude %>
-          <%= button_to "Save Coordinates", action: "save_coordinates" %>
+          <%= f.text_field :latitude, :size=>"15" %>
+		  <div class="actions">
+			<%= f.submit %>
+		  </div>
+          <%= button_to "Save Coordinates", save_coordinates_weather_path(session[:field_id]) %>
         </fieldset>
       </td>
     </tr>

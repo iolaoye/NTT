@@ -76,6 +76,7 @@ class SoilsController < ApplicationController
   # PATCH/PUT /soils/1
   # PATCH/PUT /soils/1.json
   def update
+  ppp
     @soil = Soil.find(params[:id])
 
     respond_to do |format|

@@ -1,4 +1,11 @@
 class WeathersController < ApplicationController
+################################  Save_coordinates   #################################
+  # GET /weathers/1
+  # GET /weathers/1.json
+  def Save_coordinates
+	
+  end
+
 ################################  INDEX   #################################
   # GET /weathers
   # GET /weathers.json
@@ -44,8 +51,16 @@ class WeathersController < ApplicationController
 
   # GET /weathers/1/edit
   def edit
-  edit
-    @weather = Weather.find(params[:id])
+	@weather = Weather.find_by_field_id(params[:id])
+	@project_name = Project.find(session[:project_id]).name
+    @field_name = Field.find(params[:id]).field_name
+	if !(@weather == :nil) # no empty array
+	  if (@weather.way_id == nil)
+	     @way = ""
+	  else
+	     @way = Way.find(@weather.way_id)
+	  end 
+    end
   end
 
   # POST /weathers
@@ -71,7 +86,7 @@ class WeathersController < ApplicationController
     @weather = Weather.find(params[:id])
     respond_to do |format|
       if @weather.update_attributes(weather_params)
-        format.html { redirect_to @weather, notice: 'Weather was successfully updated.' }
+        format.html { render action: "edit", notice: 'Weather was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -98,6 +113,6 @@ class WeathersController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def weather_params
-      params.require(:weather).permit(:field_id, :latitude, :longitude, :simulation_final_year, :simulation_initial_year, :station_id, :station_way, :way_id)
+      params.require(:weather).permit(:field_id, :latitude, :longitude, :simulation_final_year, :simulation_initial_year, :station_id, :station_way, :way_id, :weather_file)
     end
 end
