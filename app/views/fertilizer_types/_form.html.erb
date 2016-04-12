@@ -1,0 +1,25 @@
+<%= form_for(@fertilizer_type) do |f| %>
+  <% if @fertilizer_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fertilizer_type.errors.count, "error") %> prohibited this fertilizer_type from being saved:</h2>
+
+      <ul>
+      <% @fertilizer_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :spanish_name %><br />
+    <%= f.text_field :spanish_name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

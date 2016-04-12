@@ -1,0 +1,43 @@
+<h1>Listing create_table_fertilizers</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Qn</th>
+    <th>Qp</th>
+    <th>Yn</th>
+    <th>Yp</th>
+    <th>Nh3</th>
+    <th>Lbs</th>
+    <th>Type</th>
+    <th>Status=boolean</th>
+    <th>Spanish name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @create_table_fertilizers.each do |create_table_fertilizer| %>
+  <tr>
+    <td><%= create_table_fertilizer.code %></td>
+    <td><%= create_table_fertilizer.name %></td>
+    <td><%= create_table_fertilizer.qn %></td>
+    <td><%= create_table_fertilizer.qp %></td>
+    <td><%= create_table_fertilizer.yn %></td>
+    <td><%= create_table_fertilizer.yp %></td>
+    <td><%= create_table_fertilizer.nh3 %></td>
+    <td><%= create_table_fertilizer.lbs %></td>
+    <td><%= create_table_fertilizer.type %></td>
+    <td><%= create_table_fertilizer.status=boolean %></td>
+    <td><%= create_table_fertilizer.spanish_name %></td>
+    <td><%= link_to 'Show', create_table_fertilizer %></td>
+    <td><%= link_to 'Edit', edit_create_table_fertilizer_path(create_table_fertilizer) %></td>
+    <td><%= link_to 'Destroy', create_table_fertilizer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Create table fertilizer', new_create_table_fertilizer_path %>

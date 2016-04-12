@@ -39,7 +39,8 @@ class LocationsController < ApplicationController
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site	 
     @location = Location.find_by_project_id(params[:id])
-	@project_name = Project.find(session[:project_id]).name
+	@project_name = Project.find(params[:id]).name
+	session[:project_id] = params[:id]
 	session[:location_id] = @location.id
 	if !(params[:error] == "") then
 		notice = params[:error]

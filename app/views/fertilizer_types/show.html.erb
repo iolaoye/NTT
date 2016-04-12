@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @fertilizer_type.name %>
+</p>
+
+<p>
+  <b>Spanish name:</b>
+  <%= @fertilizer_type.spanish_name %>
+</p>
+
+
+<%= link_to 'Edit', edit_fertilizer_type_path(@fertilizer_type) %> |
+<%= link_to 'Back', fertilizer_types_path %>

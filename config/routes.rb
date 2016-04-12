@@ -1,4 +1,10 @@
 NTTG3::Application.routes.draw do
+  resources :create_table_fertilizers
+
+
+  resources :fertilizer_types
+
+
   resources :simulations
 
 

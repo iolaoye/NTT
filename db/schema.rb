@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160407185248) do
+ActiveRecord::Schema.define(:version => 20160412145321) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -33,9 +33,10 @@ ActiveRecord::Schema.define(:version => 20160407185248) do
 
   create_table "bmplists", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.boolean  "status"
+    t.string   "spanish_name"
   end
 
   create_table "bmps", :force => true do |t|
@@ -76,9 +77,10 @@ ActiveRecord::Schema.define(:version => 20160407185248) do
   create_table "bmpsublists", :force => true do |t|
     t.string   "name"
     t.boolean  "status"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "bmplist_id"
+    t.string   "spanish_name"
   end
 
   create_table "counties", :force => true do |t|
@@ -125,15 +127,31 @@ ActiveRecord::Schema.define(:version => 20160407185248) do
     t.datetime "updated_at",          :null => false
   end
 
-  create_table "fertilizers", :force => true do |t|
-    t.string   "abbreviation"
-    t.integer  "code"
-    t.integer  "dndc"
+  create_table "fertilizer_type", :force => true do |t|
+    t.string   "field_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "fertilizer_types", :force => true do |t|
     t.string   "name"
-    t.integer  "operation"
-    t.string   "spinsh_name"
+    t.string   "spanish_name"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "fertilizers", :force => true do |t|
+    t.integer  "code"
+    t.string   "name"
+    t.float    "qn"
+    t.float    "qp"
+    t.float    "yn"
+    t.float    "yp"
+    t.float    "nh3"
+    t.float    "lbs"
+    t.integer  "type1"
     t.boolean  "status"
-    t.integer  "activity_id"
+    t.string   "spanish_name"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
@@ -153,8 +171,9 @@ ActiveRecord::Schema.define(:version => 20160407185248) do
   create_table "irrigations", :force => true do |t|
     t.string   "name"
     t.boolean  "status"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "spanish_name"
   end
 
   create_table "layers", :force => true do |t|
@@ -316,8 +335,9 @@ ActiveRecord::Schema.define(:version => 20160407185248) do
 
   create_table "ways", :force => true do |t|
     t.string   "way_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "spanish_name"
   end
 
   create_table "weathers", :force => true do |t|

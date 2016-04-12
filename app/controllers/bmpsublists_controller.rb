@@ -87,6 +87,6 @@ class BmpsublistsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def bmpsublist_params
-      params.require(:bmpsublist).permit(:name, :status, :bmplist_id)
+      params.require(:bmpsublist).permit(:name, :status, :bmplist_id, :spanish_name)
     end
 end

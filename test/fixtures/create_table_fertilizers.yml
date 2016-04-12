@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  code: 1
+  name: MyString
+  qn: 1.5
+  qp: 1.5
+  yn: 1.5
+  yp: 1.5
+  nh3: 1.5
+  lbs: 1.5
+  type: 1
+  status=boolean: MyString
+  spanish_name: MyString
+
+two:
+  code: 1
+  name: MyString
+  qn: 1.5
+  qp: 1.5
+  yn: 1.5
+  yp: 1.5
+  nh3: 1.5
+  lbs: 1.5
+  type: 1
+  status=boolean: MyString
+  spanish_name: MyString

@@ -87,6 +87,6 @@ class FertilizersController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def fertilizer_params
-      params.require(:fertilizer).permit(:abbreviation, :activity_id, :code, :dndc, :name, :operation, :spinsh_name, :status)
+      params.require(:fertilizer).permit(:code, :name, :qn, :qp, :yn, :yp, :nh3, :type1, :lbs, :status, :spanish_name, :status, :fertilizer_type_id)
     end
 end

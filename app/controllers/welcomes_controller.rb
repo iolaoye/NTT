@@ -7,7 +7,7 @@ class WelcomesController < ApplicationController
       @projects = Project.where(:user_id => session[:user_id])
       redirect_to user_projects_path(current_user)
   	else
-     	redirect_to sessions_index_path
+     	redirect_to login_path
 	end
 	 
 	 #redirect_to :controller => :projects, :action => "index", :locale => "en", :projects => @projects
