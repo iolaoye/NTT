@@ -36,7 +36,7 @@ class WeathersControllerTest < ActionController::TestCase
 
   test "should update weather" do
     put :update, id: @weather, weather: { field_id: @weather.field_id, latitude: @weather.latitude, longitude: @weather.longitude, simulation_final_year: @weather.simulation_final_year, simulation_initial_year: @weather.simulation_initial_year, station_id: @weather.station_id, station_way: @weather.station_way }
-    assert_redirected_to weather_path(assigns(:weather))
+    assert_redirected_to edit_weather_path(assigns(:weather))
   end
 
   test "should destroy weather" do

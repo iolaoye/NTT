@@ -23,9 +23,9 @@ class WeathersController < ApplicationController
   # GET /weathers/1
   # GET /weathers/1.json
   def show
-	@weather = Weather.find_by_field_id(params[:id])
+	@weather = Weather.find_by_field_id(session[:field_id])
 	@project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(params[:id]).field_name
+    @field_name = Field.find(session[:field_id]).field_name
 	if !(@weather == :nil) # no empty array
 	  if (@weather.way_id == nil)
 	     @way = ""
@@ -107,12 +107,44 @@ class WeathersController < ApplicationController
     end
   end
 
+	########################################### UPLOAD weather FILE IN TEXT FORMAT ##################
+	def upload_weather
+	    @weather = Weather.find_by_field_id(session[:field_id])
+		name = params[:weather_file].original_filename
+		directory = 'public/weather'
+		# create the file path
+		path = File.join(directory,name)
+		# write the file
+		File.open(path, "w") { |f| f.write(params[:weather_file].read)}
+		i=0
+		data = ""
+		File.open(path, "r").each_line do |line|
+			data = line.split(/\r\n/)
+			break if data[0][2,5].blank?
+			line1 = data[0][2,5].to_i
+			@weather.simulation_final_year = line1
+			@weather.weather_final_year = line1
+			if i == 0
+				@weather.simulation_initial_year = line1
+				@weather.weather_initial_year = line1
+				i = i + 1
+			end
+		end
+		@weather.weather_file = name
+		if @weather.save
+			redirect_to edit_weather_path(@weather.id),  notice: 'File was successfully uploaded.' 
+		else
+			redirect_to edit_weather_path(@weather.id),  notice: 'error.' 
+		end
+		return
+	end
+
   private
 
     # Use this method to whitelist the permissible parameters. Example:
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def weather_params
-      params.require(:weather).permit(:field_id, :latitude, :longitude, :simulation_final_year, :simulation_initial_year, :station_id, :station_way, :way_id, :weather_file)
+      params.require(:weather).permit(:field_id, :latitude, :longitude, :simulation_final_year, :simulation_initial_year, :station_way, :way_id, :weather_file)
     end
 end

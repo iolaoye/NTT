@@ -75,13 +75,12 @@ class SoilsController < ApplicationController
 
   # PATCH/PUT /soils/1
   # PATCH/PUT /soils/1.json
-  def update
-  ppp
+  def update  
     @soil = Soil.find(params[:id])
 
     respond_to do |format|
       if @soil.update_attributes(soil_params)
-        format.html { redirect_to @soil, notice: 'Soil was successfully updated.' }
+        format.html { redirect_to list_soil_path(session[:field_id]), notice: 'Soil was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -97,7 +96,7 @@ class SoilsController < ApplicationController
     @soil.destroy
 
     respond_to do |format|
-      format.html { redirect_to soils_url }
+      format.html { redirect_to list_soil_path(@soil.field_id) }
       format.json { head :no_content }
     end
   end

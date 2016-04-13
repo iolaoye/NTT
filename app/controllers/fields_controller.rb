@@ -1,8 +1,7 @@
 class FieldsController < ApplicationController
   # GET /locations
   # GET /locations.json
-  def field_scenarios
-  ppp
+  def field_scenarios  
     session[:field_id] = params[:id]
     redirect_to list_scenario_path	
   end

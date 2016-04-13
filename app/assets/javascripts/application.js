@@ -15,14 +15,11 @@
 //= require_tree .
 
 function rbtnStation_onclick(way) {
-    //document.getElementById("fsetStations").style.display = "none";
     document.getElementById("fsetUploadWeatherFile").style.display = "none";
     document.getElementById("fsetCoordinates").style.display = "none";
-    //document.getElementById("tdWeather").style.verticalAlign = "middle";
-    var indexOf = document.getElementById("lblStation").innerHTML.indexOf("PRISM");
+    //var indexOf = document.getElementById("lblStation").innerHTML.indexOf("PRISM");
     switch (way) {
         case "Station":
-            if (indexOf != -1) 
             break;
         case "Prism":
             break;

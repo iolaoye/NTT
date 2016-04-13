@@ -2,11 +2,10 @@
   <% if @weather.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@weather.errors.count, "error") %> prohibited this weather from being saved:</h2>
-
       <ul>
-      <% @weather.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+		  <% @weather.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		  <% end %>
       </ul>
     </div>
   <% else %>
@@ -17,32 +16,20 @@
 
  <fieldset class="section">
     <legend>Select the kind of weather you want to use</legend>
-	<div>
-		<%= f.radio_button :way_id, "1", onchange: "rbtnStation_onclick('Prism')" %>
-		<label id="lblStation" runat="server" for="rbtnStation">Weather Information Using PRISM Data</label>
-	</div>
-	<div>
-		<%= f.radio_button :way_id, "2", onchange: "rbtnStation_onclick('Own')" %>
-		<label id="lblOwn" runat="server" for="rbtnOwn">Load your Own Weather File</label>
-    </div>
-	<div>
-		<%= f.radio_button :way_id, "3", onchange: "rbtnStation_onclick('Coordinates')" %>
-		<label id="lblCoordinates" runat="server" for="rbtnStation">Load Using Specific Coordinates (USA only)</label>            
-    </div>
+    <% for way in Way.find(:all) %>
+	   <div>
+           <%= way.id %>
+		   <%= f.radio_button :way_id, way.id, onchange: "rbtnStation_onclick(" + "'" + way.way_value + "'" + ")" %>
+		   <% if NTTG3::Application.config.language == "en" %>
+			  <%= f.label way.way_name %>
+		   <% else %>
+			  <%= f.label way.spanish_name %>
+		   <% end %>
+	   </div>
+	<% end %>
   </fieldset>
-  <div class="field" style="display:none">
-    <%= f.label :field_id %><br />
-    <%= f.number_field :field_id %>
-  </div>
-  <div class="field" style="display:none">
-    <%= f.label :station_id %><br />
-    <%= f.number_field :station_id %>
-  </div>
-  <div class="field" style="display:none">
-    <%= f.label :station_way %><br />
-    <%= f.text_field :station_way %>
-  </div>
-  <% if @weather.way_id == 3 %>
+
+  <% if :way_id == 3 %>
 	  <fieldset id="fsetCoordinates" class="section" >
 		  <legend id="lblCoordinates1" runat="server">Enter Coordinates</legend>
 		  <div class="field">
@@ -54,7 +41,7 @@
 	  </fieldset>	
   <% else %>
 	  <fieldset id="fsetCoordinates" class="section" style="display:none">
-		  <legend id="lblCoordinates1" runat="server">Enter Coordinates</legend>
+		  <legend>Enter Coordinates</legend>
 		  <div class="field">
 			<%= f.label :latitude %>
 			<%= f.text_field :latitude %>
@@ -63,33 +50,35 @@
 		  </div>
 	  </fieldset>	
   <% end %> 
-  <% if @weather.way_id == 2 %>
-	  <fieldset id="fsetUploadWeatherFile" class="section">
-			<legend id="lblUploadWeatherFile" runat="server">Choose the file to Upload and then select Upload Weather File</legend>
-			<input id="flUpload" runat="server" type="file" onchange="__doPostBack('btnUpload', 'Load Project')"/>
-	  </fieldset>
-  <% else %>
-	  <fieldset id="fsetUploadWeatherFile" style="display:none" class="section">
-			<legend id="lblUploadWeatherFile" runat="server">Choose the file to Upload and then select Upload Weather File</legend>
-			<input id="flUpload" runat="server" type="file" onchange="__doPostBack('btnUpload', 'Load Project')"/>
-	  </fieldset>
-  <% end %>
+
+  <fieldset id="fsetUploadWeatherFile" class="section">
+	<legend>Choose the file to Upload and then click Save Changes button</legend>
+	<%= form_tag({:action => "upload_weather"}, multipart: true) do %>
+	<% end %>      
+	<%= form_tag({action: :upload_weather}, multipart: true) do %>
+	  <%= file_field_tag "weather_file" %>
+	  <%= submit_tag(value = t('submit.save')) %>
+      <%= f.label @weather.weather_file %>
+	<% end %>
+  </fieldset>
+
+  <p>
+	  <div class="field">
+		<%= f.label t('weather.years_of_weather') + ": " %>
+		<%= f.label @weather.weather_initial_year %>
+		<%= f.label "-" %>
+		<%= f.label @weather.weather_final_year %>
+	  </div>
+  </p>
   <fieldset class="section">
 	  <div class="field">
+        <p><%= t('weather.note') %></p>
 		<%= f.label :simulation_initial_year %>
 		<%= f.number_field :simulation_initial_year %>
 		<%= f.label :simulation_final_year %>
 		<%= f.number_field :simulation_final_year %>
 	  </div>
   </fieldset>
-  <div class="field" style="display:none">
-    <%= f.label :weather_file %><br />
-    <%= f.text_field :weather_file %>
-  </div>
-  <div class="field" style="display:none">
-    <%= f.label :way_id %><br />
-    <%= f.text_field :way_id %>
-  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

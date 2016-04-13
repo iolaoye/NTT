@@ -76,7 +76,7 @@ class LayersController < ApplicationController
 
     respond_to do |format|
       if @layer.update_attributes(layer_params)
-        format.html { redirect_to @layer, notice: 'Layer was successfully updated.' }
+        format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -92,7 +92,7 @@ class LayersController < ApplicationController
     @layer.destroy
 
     respond_to do |format|
-      format.html { redirect_to layers_url }
+      format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully updated.' }
       format.json { head :no_content }
     end
   end

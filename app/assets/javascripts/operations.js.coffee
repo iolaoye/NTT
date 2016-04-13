@@ -2,11 +2,22 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 updateTypes = ->
-  $.getJSON "/activities/" + $("#operation_operation_id").val() + "/tillages.json", (tillages) ->
+  switch $("#operation_operation_id").val()
+    when "2"
+      url = "/fertilizer_types.json"
+    else
+      url = "/activities/" + $("#operation_operation_id").val() + "/tillages.json"
+
+  $.getJSON url, (tillages) ->
     items = []
     items.push "<option value>Select One</option>"
     $.each tillages, (key, tillage) ->
-      items.push "<option value=\"" + tillage.id + "\">" + tillage.eqp + "</option>"
+      switch $("#operation_operation_id").val()
+        when "2"
+          items.push "<option value=\"" + tillage.id + "\">" + tillage.name + "</option>"
+        else
+          items.push "<option value=\"" + tillage.id + "\">" + tillage.eqp + "</option>"
+        
     $("#operation_type_id").html items.join("")
     $("#operation_type_id").removeAttr("disabled")
 
