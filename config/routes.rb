@@ -108,6 +108,7 @@ NTTG3::Application.routes.draw do
   get 'sessions/destroy'
   get 'users/new'
   post 'projects/upload_project'
+  post 'weathers/upload_weather'
   root to: 'sessions#index'
 
   # The priority is based upon order of creation:

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160412145321) do
+ActiveRecord::Schema.define(:version => 20160413194514) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(:version => 20160412145321) do
     t.float    "yp"
     t.float    "nh3"
     t.float    "lbs"
-    t.integer  "type1"
+    t.integer  "type_id"
     t.boolean  "status"
     t.string   "spanish_name"
     t.datetime "created_at",   :null => false
@@ -332,6 +332,7 @@ ActiveRecord::Schema.define(:version => 20160412145321) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "spanish_name"
+    t.string   "way_value"
   end
 
   create_table "weathers", :force => true do |t|
@@ -346,6 +347,8 @@ ActiveRecord::Schema.define(:version => 20160412145321) do
     t.datetime "updated_at",              :null => false
     t.string   "weather_file"
     t.integer  "way_id"
+    t.integer  "weather_initial_year"
+    t.integer  "weather_final_year"
   end
 
 end

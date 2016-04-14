@@ -7,6 +7,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Way.delete_all
+Way.create!({:id => 1, :way_name => "Weather Information Using PRISM Data", :spanish_name => "Informacion del clima usando datso de Prism", way_value => "Prism"}, :without_protection => true)
+Way.create!({:id => 2, :way_name => "Load your Own Weather File", :spanish_name => "Usar su propio archivo del Clima", way_value => "Own"}, :without_protection => true)
+Way.create!({:id => 3, :way_name => "Load Using Specific Coordinates (USA only)", :spanish_name => "Usando el clima de coordenadas especificas (USA only)", way_value => "Coordinates"}, :without_protection => true)
 
 FertilizerType.delete_all
 FertilizerType.create!({:id => 1, :name => "Commercial Fertilizer", :spanish_name => "Fertilizante Comercial"}, :without_protection => true)
@@ -150,11 +154,6 @@ Activity.create!({:id => 8, :name => "Stop Grazing", :code => 8, :abbreviation =
 Activity.create!({:id => 9, :name => "Burn", :code => 9, :abbreviation => "BURN", :apex_code => 397, :spanish_name => "Quema"}, :without_protection => true)
 Activity.create!({:id => 10, :name => "Liming", :code => 10, :abbreviation => "LIME", :apex_code => 734, :spanish_name => "Encalado"}, :without_protection => true)
 
-Way.delete_all
-Way.create!({:id => 1, :way_name => "Prism", :spanish_name => "Prism"}, :without_protection => true)
-Way.create!({:id => 2, :way_name => "Own Weather File", :spanish_name => "Archivo Propio del Clima"}, :without_protection => true)
-Way.create!({:id => 3, :way_name => "Coordinates", :spanish_name => "Coordenadas"}, :without_protection => true)
-
 Tillage.delete_all
 Tillage.create!({:id => 1,:code => 1,:dndc => 0,:name => 'TR2W40LP', :operation => 4,:eqp => 'TRACTOR 2WD 40 HP LP',:status => true,:abbreviation => 'TILL',:spanish_name => 'TRACTOR 2WD 40 HPLP',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 2,:code => 2,:dndc => 0,:name => 'TR2W40GS', :operation =>4,:eqp => 'TRACTOR 2WD 40 HP GAS',:status => true,:abbreviation => 'TILL',:spanish_name =>  'TRACTOR 2WD 40 HP GAS',:activity_id => 3}, :without_protection => true)
@@ -280,8 +279,8 @@ Tillage.create!({:id => 121,:code => 397,:dndc => 0,:name => 'BURNUNIT',:operati
 Tillage.create!({:id => 122,:code => 417,:dndc => 0,:name => 'CANEPLNT',:operation => 5,:eqp => 'MECH PLANTER SUGARCANE',:status => true,:abbreviation => 'PLNT',:spanish_name =>  'PLANTADORA DE CANA DE AZUCAR',:activity_id => 1}, :without_protection => true)
 Tillage.create!({:id => 123,:code => 426,:dndc => 0,:name => 'GRAZE',:operation => 19,:eqp => 'GRAZING',:status => true,:abbreviation => 'GRAZ',:spanish_name =>  'Pastoreo',:activity_id => 2}, :without_protection => true)
 Tillage.create!({:id => 124,:code => 427,:dndc => 0,:name => 'STOP GRZ',:operation => 20,:eqp => 'STOP GRAZING',:status => true,:abbreviation => 'STOP',:spanish_name =>  'Parar Pastoreo',:activity_id => 3}, :without_protection => true)
-Tillage.create!({:id => 125,:code => 451,:dndc => 7,:name => 'KILL',:operation => 1,:eqp => 'KILL',:status => true,:abbreviation => 'KILL',:spanish_name =>  'TERMINAR',:activity_id => 4}, :without_protection => true)
-Tillage.create!({:id => 126,:code => 500,:dndc => 1,:name => 'CNTR PVT',:operation => 8,:eqp => 'SPRINKLER',:status => true,:abbreviation => 'IRRI',:spanish_name =>  'ROCIAR',:activity_id => 5}, :without_protection => true)
+Tillage.create!({:id => 125,:code => 451,:dndc => 7,:name => 'KILL',:operation => 1,:eqp => 'KILL',:status => true,:abbreviation => 'KILL',:spanish_name =>  'TERMINAR',:activity_id => 5}, :without_protection => true)
+Tillage.create!({:id => 126,:code => 500,:dndc => 1,:name => 'CNTR PVT',:operation => 8,:eqp => 'SPRINKLER',:status => true,:abbreviation => 'IRRI',:spanish_name =>  'ROCIAR',:activity_id => 6}, :without_protection => true)
 Tillage.create!({:id => 127,:code => 501,:dndc => 0,:name => 'IRR100HP',:operation => 8,:eqp => 'IRRIGATION 100HP MOTOR',:status => false,:abbreviation => 'IRRI',:spanish_name =>  'IRRIGACION CON MOTOR HP100',:activity_id => 6}, :without_protection => true)
 Tillage.create!({:id => 128,:code => 502,:dndc => 0,:name => 'FLOODIRR',:operation => 8,:eqp => 'FURROW/FLOOD',:status => true,:abbreviation => 'IRRI',:spanish_name =>  'SURCO/INUNDACION',:activity_id => 7}, :without_protection => true)
 Tillage.create!({:id => 129,:code => 530,:dndc => 2,:name => 'ALDRPIRR',:operation => 8,:eqp => 'DRIP',:status => true,:abbreviation => 'IRRI',:spanish_name =>  'RIEGO POR GOTEO',:activity_id => 8}, :without_protection => true)

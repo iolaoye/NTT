@@ -87,6 +87,6 @@ class WaysController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def way_params
-      params.require(:way).permit(:way_name)
+      params.require(:way).permit(:way_name, :spanish_name, :way_value)
     end
 end
