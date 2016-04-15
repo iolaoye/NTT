@@ -42,7 +42,6 @@ class FieldsController < ApplicationController
   end
 ################################  SHOW   #################################
   def soils
-  lll 
     @soils = Soil.where(:field_id => params[:id])
 
     respond_to do |format|
@@ -69,7 +68,6 @@ class FieldsController < ApplicationController
   # GET /fields/new.json
   def new
     @field = Field.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @field }
@@ -85,10 +83,23 @@ class FieldsController < ApplicationController
   # POST /fields.json
   def create
     @field = Field.new(field_params)
+	@field.location_id = session[:location_id]
+	weather = Weather.new
+	weather.way_id = 2
+	weather.station_way ="Own"
+	weather.weather_file = "No set Yet"
+	weather.weather_initial_year = 0
+	weather.weather_final_year = 0
+	weather.simulation_initial_year = 0
+	weather.simulation_final_year = 0
+	weather.save
+	@field.weather_id = weather.id
 
     respond_to do |format|
       if @field.save
-        format.html { redirect_to @field, notice: 'Field was successfully created.' }
+	  	weather.field_id = @field.id
+		weather.save
+        format.html { redirect_to list_field_path(session[:location_id]), notice: 'Field was successfully created.' }
         format.json { render json: @field, status: :created, location: @field }
       else
         format.html { render action: "new" }
@@ -100,12 +111,11 @@ class FieldsController < ApplicationController
   # PATCH/PUT /fields/1
   # PATCH/PUT /fields/1.json
   def update
-
     @field = Field.find(params[:id])
 
     respond_to do |format|
       if @field.update_attributes(field_params)
-        format.html { redirect_to location_fields_location_path(session[:location_id]), notice: 'Field was successfully updated.' }
+        format.html { redirect_to list_field_path(session[:location_id]), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -121,7 +131,7 @@ class FieldsController < ApplicationController
     @field.destroy
 
     respond_to do |format|
-      format.html { redirect_to fields_url }
+      format.html { redirect_to list_field_path(session[:location_id]) }
       format.json { head :no_content }
     end
   end

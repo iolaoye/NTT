@@ -1,16 +1,7 @@
 NTTG3::Application.routes.draw do
-  resources :create_table_fertilizers
-
-
   resources :fertilizer_types
-
-
   resources :simulations
-
-
   resources :fertilizers
-
-
   resources :animals
   resources :irrigations
   resources :bmpsublists
@@ -55,6 +46,10 @@ NTTG3::Application.routes.draw do
 
   resources :activities do
     resources :tillages
+  end
+
+  resources :fertilizer_types do
+    resources :fertilizers
   end
 
   resources :locations do

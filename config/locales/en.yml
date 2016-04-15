@@ -264,7 +264,7 @@ en:
     years_of_weather: Years of Weather Information
     note: "The period to simulate is the same as the period selected in the weather information. You can change the period to be simulated but the model will add five years to the beginning to warm up. The last twelve years are the shown in the graphs in the Results page. If the period is less than 12 years, all of the years are shown on the Results page."
     years_of_simulation: Simulation period
-    upload_button_desc: 'Weather File to Upload'
+    update: 'Update Weather'
   soil:
     layers: Layers
     soil: Soil

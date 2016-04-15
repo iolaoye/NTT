@@ -84,15 +84,20 @@ class WeathersController < ApplicationController
   # PATCH/PUT /weathers/1.json
   def update
     @weather = Weather.find(params[:id])
-    respond_to do |format|
-      if @weather.update_attributes(weather_params)
-        format.html { render action: "edit", notice: 'Weather was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @weather.errors, status: :unprocessable_entity }
-      end
-    end
+	if !(params[:weather][:weather_file] == nil) then 
+		upload_weather
+		redirect_to edit_weather_path(session[:field_id]),  notice: 'File was successfully uploaded.' 
+	else
+		respond_to do |format|
+		  if @weather.update_attributes(weather_params)
+			format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.' }
+			format.json { head :no_content }
+		  else
+			format.html { render action: "edit" }
+			format.json { render json: @weather.errors, status: :unprocessable_entity }
+		  end
+		end
+	end
   end
 
   # DELETE /weathers/1
@@ -109,13 +114,13 @@ class WeathersController < ApplicationController
 
 	########################################### UPLOAD weather FILE IN TEXT FORMAT ##################
 	def upload_weather
-	    @weather = Weather.find_by_field_id(session[:field_id])
-		name = params[:weather_file].original_filename
+	    #@weather = Weather.find_by_field_id(session[:field_id])
+		name = params[:weather][:weather_file].original_filename
 		directory = 'public/weather'
 		# create the file path
 		path = File.join(directory,name)
 		# write the file
-		File.open(path, "w") { |f| f.write(params[:weather_file].read)}
+		File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read)}
 		i=0
 		data = ""
 		File.open(path, "r").each_line do |line|
@@ -131,11 +136,7 @@ class WeathersController < ApplicationController
 			end
 		end
 		@weather.weather_file = name
-		if @weather.save
-			redirect_to edit_weather_path(@weather.id),  notice: 'File was successfully uploaded.' 
-		else
-			redirect_to edit_weather_path(@weather.id),  notice: 'error.' 
-		end
+		@weather.save
 		return
 	end
 

@@ -2,7 +2,7 @@ class TillagesController < ApplicationController
   # GET /tillages/1
   # GET /1/tillages.json
   def list
-    @tillages = Tillage.where(:activity_id => params[:activity_id])
+    @tillages = Tillage.where(:activity_id => params[:activity_id]).where(:status => true)
 
     respond_to do |format|
       format.html # index.html.erb

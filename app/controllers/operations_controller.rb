@@ -60,7 +60,7 @@ class OperationsController < ApplicationController
     @operation.scenario_id = session[:scenario_id]
     respond_to do |format|
       if @operation.save
-        format.html { redirect_to @operation, notice: 'Operation was successfully created.' }
+        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: 'Operation was successfully created.' }
         format.json { render json: @operation, status: :created, location: @operation }
       else
         format.html { render action: "new" }
@@ -76,7 +76,7 @@ class OperationsController < ApplicationController
 
     respond_to do |format|
       if @operation.update_attributes(operation_params)
-        format.html { redirect_to @operation, notice: 'Operation was successfully updated.' }
+        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: 'Operation was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -92,7 +92,7 @@ class OperationsController < ApplicationController
     @operation.destroy
 
     respond_to do |format|
-      format.html { redirect_to operations_url }
+      format.html { redirect_to list_operation_path(session[:scenario_id]) }
       format.json { head :no_content }
     end
   end
@@ -103,6 +103,6 @@ class OperationsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def operation_params
-      params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :operation_id, :org_n, :org_p, :po4_p, :type_id, :year)
+      params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id)
     end
 end

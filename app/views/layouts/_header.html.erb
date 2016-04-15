@@ -6,8 +6,8 @@
 			       <li><%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></li>
    			       <li><%= link_to t('menu.projects'), welcomes_path %></li>
 	           <% when /location/, /field/ %>
-				   <li><%= link_to t('menu.location'), location_path %></li>
-				   <li><%= link_to t('menu.fields'), location_fields_location_path(session[:location_id]) %></li>
+				   <li><%= link_to t('menu.location'), location_path(session[:project_id]) %></li>
+				   <li><%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 			   <% when /weather/, /soil/, /scenario/, /layer/ %>
 				   <li><%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></li>
@@ -33,7 +33,7 @@
 	        <% when /weather/, /soil/, /scenario/, /layer/ %>
 			    <li><%=link_to "Projects", welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
-			    <li><%=link_to "Fields", location_fields_location_path(session[:location_id]) %></li>
+			    <li><%=link_to "Fields", list_field_path(session[:location_id]) %></li>
 			    <li><%=">>"%><%=@field_name%></li>
 				<% case request.original_url %>
 					<% when /weather/ %>
@@ -48,7 +48,7 @@
 			<% when /operation/, /bmp/ %>	
 			    <li><%=link_to "Projects", welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
-			    <li><%=link_to "Fields", location_fields_location_path(session[:location_id]) %></li>
+			    <li><%=link_to "Fields", list_field_path(session[:location_id]) %></li>
 			    <li><%=">>"%><%=@field_name%></li>
 			    <li><%=link_to "Scenarios", field_scenarios_field_path(session[:field_id]) %></li>
 			    <li><%=">>"%><%=@scenario_name%></li>

@@ -10,9 +10,9 @@
   <tr class='gvHeaderStyle'>
     <th>Crop</th>
     <th>Operation</th>
-    <th>Day</th>
-    <th>Month</th>
     <th>Year</th>
+    <th>Month</th>
+    <th>Day</th>
     <th>Type</th>
     <th>Amount</th>
     <th>Depth</th>
@@ -26,19 +26,18 @@
   <% @operations.each do |operation| %>
   <tr class="gvRowStyle">
     <td><%= Crop.find(operation.crop_id).name %></td>
-    <td><%= Activity.find(operation.operation_id).name %></td>
+    <td><%= Activity.find(operation.activity_id).name %></td>
     <td><%= listYears.detect { |val, index| index == operation.year}[0] %></td>
     <td class="numbers"><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
     <td class="numbers"><%= operation.day %></td>
-    <% if operation.operation_id == 1 %>   
-      <td><%= Tillage.find(operation.type_id).eqp %></td>
+    <% case operation.activity_id %>
+		  <% when 1  # planting, liming %>
+        <td><%= Tillage.find(operation.type_id).eqp %></td>
+      <% when 2  # fertilizer %>
+        <td><%= Fertilizer.find(operation.subtype_id).name %></td>
+      <% else # till, harvest, kill, stop grazin, burn%>
+        <td><%= :"" %></td>
     <% end %>
-    <% if operation.operation_id == 2 %>   
-      <td><%= Fertilizer.find(operation.type_id).name %></td>
-    <% end %>     
-    <% if operation.operation_id == 5 %>   
-      <td><%= "" %></td>
-    <% end %>     
     <td class="numbers"><%= operation.amount %></td>
     <td class="numbers"><%= operation.depth %></td>
     <td class="numbers"><%= operation.no3_n %></td>

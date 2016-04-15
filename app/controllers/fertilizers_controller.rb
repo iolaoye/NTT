@@ -2,7 +2,11 @@ class FertilizersController < ApplicationController
   # GET /fertilizers
   # GET /fertilizers.json
   def index
-    @fertilizers = Fertilizer.all
+    if (params[:id] == "animal") then
+		@fertilizers = Fertilizer.where(:fertilizer_type_id => "2").where(:status => true).where(:animal => true)
+	else
+		@fertilizers = Fertilizer.where(:fertilizer_type_id => params[:fertilizer_type_id]).where(:status => true)
+	end 
 
     respond_to do |format|
       format.html # index.html.erb
@@ -87,6 +91,6 @@ class FertilizersController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def fertilizer_params
-      params.require(:fertilizer).permit(:code, :name, :qn, :qp, :yn, :yp, :nh3, :type1, :lbs, :status, :spanish_name, :status, :fertilizer_type_id)
+      params.require(:fertilizer).permit(:code, :name, :qn, :qp, :yn, :yp, :nh3, :type1, :dry_matter, :status, :spanish_name, :status, :fertilizer_type_id, :convertion_unit, :animal)
     end
 end

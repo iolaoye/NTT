@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160413194514) do
+ActiveRecord::Schema.define(:version => 20160414212002) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -148,12 +148,14 @@ ActiveRecord::Schema.define(:version => 20160413194514) do
     t.float    "yn"
     t.float    "yp"
     t.float    "nh3"
-    t.float    "lbs"
-    t.integer  "type_id"
+    t.float    "dry_matter"
+    t.integer  "fertilizer_type_id"
     t.boolean  "status"
     t.string   "spanish_name"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.float    "convertion_unit"
+    t.boolean  "animal"
   end
 
   create_table "fields", :force => true do |t|
@@ -202,7 +204,7 @@ ActiveRecord::Schema.define(:version => 20160413194514) do
 
   create_table "operations", :force => true do |t|
     t.integer  "crop_id"
-    t.integer  "operation_id"
+    t.integer  "activity_id"
     t.integer  "day"
     t.integer  "month_id"
     t.integer  "year"
@@ -214,9 +216,10 @@ ActiveRecord::Schema.define(:version => 20160413194514) do
     t.float    "org_n"
     t.float    "org_p"
     t.float    "nh3"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "scenario_id"
+    t.integer  "subtype_id"
   end
 
   create_table "projects", :force => true do |t|
