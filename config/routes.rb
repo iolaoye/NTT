@@ -1,4 +1,19 @@
 NTTG3::Application.routes.draw do
+  resources :modifications
+
+
+  resources :soil_operations
+
+
+  resources :subareas
+
+
+  resources :parameters
+
+
+  resources :controls
+
+
   resources :create_table_fertilizers
 
 

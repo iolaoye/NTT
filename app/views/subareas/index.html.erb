@@ -1,0 +1,21 @@
+<h1>Listing subareas</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @subareas.each do |subarea| %>
+  <tr>
+    <td><%= link_to 'Show', subarea %></td>
+    <td><%= link_to 'Edit', edit_subarea_path(subarea) %></td>
+    <td><%= link_to 'Destroy', subarea, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Subarea', new_subarea_path %>

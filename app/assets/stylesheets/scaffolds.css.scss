@@ -12,16 +12,6 @@ p, ol, ul, td {
   line-height: 18px;
 }
 
-th {
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: normal;
-}
-
-tr:last-child {
-  border-bottom: 1px solid #A29D9D;
-}
-
 pre {
   background-color: #eee;
   padding: 10px;
@@ -75,4 +65,14 @@ div {
     font-size: 12px;
     list-style: square;
   }
+}
+
+th {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: normal;
+}
+
+tr:last-child {
+  border-bottom: 1px solid #A29D9D;
 }
