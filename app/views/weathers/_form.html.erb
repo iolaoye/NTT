@@ -53,13 +53,7 @@
 
   <fieldset id="fsetUploadWeatherFile" class="section">
 	<legend>Choose the file to Upload and then click Save Changes button</legend>
-	<%= form_tag({:action => "upload_weather"}, multipart: true) do %>
-	<% end %>      
-	<%= form_tag({action: :upload_weather}, multipart: true) do %>
-	  <%= file_field_tag "weather_file" %>
-	  <%= submit_tag(value = t('submit.save')) %>
-      <%= f.label @weather.weather_file %>
-	<% end %>
+	  <%= f.file_field :weather_file %>
   </fieldset>
 
   <p>
@@ -80,6 +74,6 @@
 	  </div>
   </fieldset>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('weather.update'), name: 'update' %>
   </div>
 <% end %>

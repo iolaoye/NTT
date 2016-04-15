@@ -5,10 +5,18 @@ module OperationsHelper
     ]
   end
 
-  def listMonths
-    [
-        ['01 - January', 1], ['02 - February', 2], ['03 - March', 3], ['04 - April', 4], ['05 - May', 5], ['06 - June', 6], ['07 - July', 7], ['08 - August', 8], ['09 - September', 9], ['10 - October', 10], ['11 - November', 11], ['12 - December', 12]
-    ]
+  if (NTTG3::Application.config.language == "en") then
+	  def listMonths
+		[
+			['January', 1], ['February', 2], ['March', 3], ['April', 4], ['May', 5], ['June', 6], ['July', 7], ['August', 8], ['September', 9], ['October', 10], ['November', 11], ['December', 12]
+		]
+	  end
+  else
+	  def listMonths
+		[
+			['Enero', 1], ['Febrero', 2], ['Marzo', 3], ['Abril', 4], ['Mayo', 5], ['Junio', 6], ['Julio', 7], ['Agosto', 8], ['Septiembre', 9], ['Octubre', 10], ['Noviembre', 11], ['Deciembre', 12]
+		]
+      end
   end
 
   def listDays

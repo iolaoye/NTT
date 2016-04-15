@@ -267,7 +267,7 @@
     years_of_weather: Años de Información del Clima
     note: 'El periodo a simular es el mismo periodo contenido en la información de clima seleccionado. Usted puede cambiar el periodo a simular pero el programa va a adicionar cinco años antes como inicialización. Los últimos doce años son los que se muestran en las gráficas en la página de resultados. Si el periodo es menos que doce años, todos los años serán presentados en la página de resultados.'
     years_of_simulation: Periodo a simular
-    upload_button_desc: 'Archivo de Clima a Subir'
+    update: 'Actualizar el Clima'
   soil:
     layers: Capas
     soil: Suelo
@@ -280,7 +280,7 @@
     new_location: Localización Nuevo
     edit: Revisión de Localización
   operation:
-    new_operation: Operación Neuvo
+    new_operation: Nueva Operación
     edit: Revisión de Operación
   activity:
     edit: Revisión de Actividad
