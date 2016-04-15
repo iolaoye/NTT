@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160413194514) do
+ActiveRecord::Schema.define(:version => 20160415200018) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -170,19 +170,8 @@ ActiveRecord::Schema.define(:version => 20160413194514) do
     t.string   "spanish_name"
   end
 
-  create_table "layers", :force => true do |t|
-    t.float    "depth"
-    t.float    "soil_p"
-    t.float    "bulk_density"
-    t.float    "sand"
-    t.float    "silt"
-    t.float    "clay"
-    t.float    "organic_matter"
-    t.float    "ph"
-    t.integer  "soil_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
+# Could not dump table "layers" because of following StandardError
+#   Unknown type 'fload' for column 'uw'
 
   create_table "locations", :force => true do |t|
     t.integer  "state_id"
