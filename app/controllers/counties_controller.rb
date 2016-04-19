@@ -3,6 +3,7 @@ class CountiesController < ApplicationController
   # GET /counties
   # GET /counties.json
   def index
+
     @counties = County.where(:state_id => params[:state_id])
     respond_to do |format|
       format.html # index.html.erb

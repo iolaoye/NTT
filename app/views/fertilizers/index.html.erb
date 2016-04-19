@@ -2,14 +2,18 @@
 
 <table>
   <tr>
-    <th>Abbreviation</th>
     <th>Code</th>
-    <th>Dndc</th>
     <th>Name</th>
-    <th>Operation</th>
-    <th>Spinsh name</th>
-    <th>Status</th>
-    <th>Activity</th>
+    <th>qn</th>
+    <th>qp</th>
+    <th>yn</th>
+    <th>yp</th>
+    <th>nh3</th>
+    <th>dry_matter</th>
+    <th>convertion_unit</th>
+    <th>animal</th>
+    <th>spanish_name</th>
+    <th>status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,14 +21,18 @@
 
 <% @fertilizers.each do |fertilizer| %>
   <tr>
-    <td><%= fertilizer.abbreviation %></td>
     <td><%= fertilizer.code %></td>
-    <td><%= fertilizer.dndc %></td>
     <td><%= fertilizer.name %></td>
-    <td><%= fertilizer.operation %></td>
-    <td><%= fertilizer.spinsh_name %></td>
+    <td><%= fertilizer.qn %></td>
+    <td><%= fertilizer.qp %></td>
+    <td><%= fertilizer.yn %></td>
+    <td><%= fertilizer.yp %></td>
+    <td><%= fertilizer.nh3 %></td>
+    <td><%= fertilizer.dry_matter %></td>
+    <td><%= fertilizer.convertion_unit %></td>
+    <td><%= fertilizer.animal %></td>
+    <td><%= fertilizer.spanish_name %></td>
     <td><%= fertilizer.status %></td>
-    <td><%= fertilizer.activity_id %></td>
     <td><%= link_to 'Show', fertilizer %></td>
     <td><%= link_to 'Edit', edit_fertilizer_path(fertilizer) %></td>
     <td><%= link_to 'Destroy', fertilizer, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+<<<<<<< HEAD
 
   resources :modifications
   resources :soil_operations
@@ -6,6 +7,7 @@ NTTG3::Application.routes.draw do
   resources :parameters
   resources :controls
   resources :create_table_fertilizers
+  resources :cropping_systems
   resources :fertilizer_types
   resources :simulations
   resources :fertilizers
@@ -23,7 +25,7 @@ NTTG3::Application.routes.draw do
   #resources :ways
   #resources :weathers
   #resources :stations
-  #resources :counties
+  resources :counties
   #resources :states
   #resources :locations
   #resources :projects

@@ -1,0 +1,45 @@
+<%= form_for(@cropping_system) do |f| %>
+  <% if @cropping_system.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cropping_system.errors.count, "error") %> prohibited this cropping_system from being saved:</h2>
+
+      <ul>
+      <% @cropping_system.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :crop %><br />
+    <%= f.text_field :crop %>
+  </div>
+  <div class="field">
+    <%= f.label :tillage %><br />
+    <%= f.text_field :tillage %>
+  </div>
+  <div class="field">
+    <%= f.label :var12 %><br />
+    <%= f.text_field :var12 %>
+  </div>
+  <div class="field">
+    <%= f.label :state_id %><br />
+    <%= f.text_field :state_id %>
+  </div>
+  <div class="field">
+    <%= f.label :grazing %><br />
+    <%= f.check_box :grazing %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.check_box :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

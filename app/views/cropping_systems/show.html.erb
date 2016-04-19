@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @cropping_system.name %>
+</p>
+
+<p>
+  <b>Crop:</b>
+  <%= @cropping_system.crop %>
+</p>
+
+<p>
+  <b>Tillage:</b>
+  <%= @cropping_system.tillage %>
+</p>
+
+<p>
+  <b>var12:</b>
+  <%= @cropping_system.var12 %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @cropping_system.state_id %>
+</p>
+
+<p>
+  <b>Grazing:</b>
+  <%= @cropping_system.grazing %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @cropping_system.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_cropping_system_path(@cropping_system) %> |
+<%= link_to 'Back', cropping_systems_path %>

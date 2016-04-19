@@ -2,8 +2,10 @@
 
 <table>
   <tr>
+    <th>State Id</th>
     <th>State name</th>
     <th>State code</th>
+    <th>State Abrebbiation</th>
     <th>Status</th>
     <th></th>
     <th></th>
@@ -12,8 +14,10 @@
 
 <% @states.each do |state| %>
   <tr>
+    <td><%= state.id %></td>
     <td><%= state.state_name %></td>
     <td><%= state.state_code %></td>
+    <td><%= state.state_abbreviation %></td>
     <td><%= state.status %></td>
     <td><%= link_to 'Show', state %></td>
     <td><%= link_to 'Edit', edit_state_path(state) %></td>
