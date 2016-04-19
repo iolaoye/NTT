@@ -1,6 +1,6 @@
 class AddColumnsToLayer < ActiveRecord::Migration
   def change
-    add_column :layers, :uw, :fload
+    add_column :layers, :uw, :float
     add_column :layers, :fc, :float
     add_column :layers, :wn, :float
     add_column :layers, :smb, :float
@@ -9,7 +9,7 @@ class AddColumnsToLayer < ActiveRecord::Migration
     add_column :layers, :cec, :float
     add_column :layers, :rok, :float
     add_column :layers, :cnds, :float
-    add_column :layers, :rsd, :fload
+    add_column :layers, :rsd, :float
     add_column :layers, :bdd, :float
     add_column :layers, :psp, :float
     add_column :layers, :satc, :float

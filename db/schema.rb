@@ -189,8 +189,21 @@ ActiveRecord::Schema.define(:version => 20160418230947) do
     t.string   "spanish_name"
   end
 
-# Could not dump table "layers" because of following StandardError
-#   Unknown type 'fload' for column 'uw'
+  create_table "layers", :force => true do |t|
+    t.float    "uw"
+    t.float    "fc"
+    t.float    "wn"
+    t.float    "smb"
+    t.float    "woc"
+    t.float    "cac"
+    t.float    "cec"
+    t.float    "rok"
+    t.float    "cnds"
+    t.float    "rsd"
+    t.float    "bdd"
+    t.float    "psp"
+    t.float    "satc"
+  end
 
   create_table "locations", :force => true do |t|
     t.integer  "state_id"
