@@ -1,5 +1,4 @@
 NTTG3::Application.routes.draw do
-<<<<<<< HEAD
 
   resources :modifications
   resources :soil_operations
