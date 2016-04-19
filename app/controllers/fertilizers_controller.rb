@@ -64,7 +64,7 @@ class FertilizersController < ApplicationController
 
     respond_to do |format|
       if @fertilizer.update_attributes(fertilizer_params)
-        format.html { redirect_to @fertilizer, notice: 'Fertilizer was successfully updated.' }
+        format.html { redirect_to fertilizers_path(params[:fertilizer_type_id]), notice: 'Fertilizer was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

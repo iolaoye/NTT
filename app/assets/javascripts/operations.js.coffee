@@ -23,14 +23,18 @@ updateTypes = ->
   $("#div_amount").hide()
   $("#div_depth").hide()
   $("#div_nutrients").hide()
+  $("#div_type").hide()
   $("#div_tillage").hide()
   switch $("#operation_activity_id").val()
-    when "1", "10"   # planting
+    when "1" # planting
       updatePlantPopulation()
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
+      $("#div_type").hide()
       $("#div_amount").show()
       $("#div_tillage").show()
+      $("#div_type").show()
+      $("#operation_type_id").prop('required',true)
     when "2"  # fertilizer
       url = "/fertilizer_types.json"
       $("#div_fertilizer").show()
@@ -38,16 +42,22 @@ updateTypes = ->
       $("#div_depth").show()
       $("#div_nutrients").show()
       $("#div_tillage").show()
+      $("#div_type").show()
+      $("#operation_type_id").prop('required',true)
     when "3"   # tillage
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
       $("#div_tillage").show()
+      $("#div_type").show()
+      $("#operation_type_id").prop('required',true)
     when "6"   # irrigation
       url = "/irrigations.json"
       $("#div_fertilizer").hide()
       $("#div_amount").show()
       $("#div_depth").show()
       $("#div_tillage").show()
+      $("#div_type").show()
+      $("#operation_type_id").prop('required',true)
     when "7"   # grazing
       url = "/fertilizers.json?id=animal"
       $("#div_fertilizer").hide()
@@ -55,6 +65,11 @@ updateTypes = ->
       $("#div_depth").show()
       $("#div_tillage").show()
       $("#div_nutrients").show()
+      $("#div_type").show()
+      $("#operation_type_id").prop('required',true)
+    when "10"   # liming
+      $("#div_fertilizer").hide()
+      $("#div_amount").show()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()

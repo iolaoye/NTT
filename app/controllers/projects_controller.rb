@@ -137,7 +137,9 @@ class ProjectsController < ApplicationController
 		location = Location.new
 		location.project_id = session[:project_id]
 		location.state_id = State.find_by_state_abbreviation(@data["Project"]["StartInfo"]["StateAbrev"]).id
-		location.county_id = County.find_by_county_state_code(@data["Project"]["StartInfo"]["CountyCode"]).id
+		if !((@data["Project"]["StartInfo"]["CountyCode"]) == nil) then 
+			location.county_id = County.find_by_county_state_code(@data["Project"]["StartInfo"]["CountyCode"]).id
+		end if
 		location.status = @data["Project"]["StartInfo"]["Status"]
 		location.coordinates = @data["Project"]["FarmInfo"]["Coordinates"]
 		location.save
@@ -155,8 +157,8 @@ class ProjectsController < ApplicationController
 		field.save
 		# Step 5. save Weather Info
 		save_weather_info(field.id)
-		for j in 0..@data["Project"]["FieldInfo"][i]["SoilInfo"].size-1
-			save_soil_info(field.id, i, j)
+		for k in 0..@data["Project"]["FieldInfo"][i]["SoilInfo"].size-1
+			save_soil_info(field.id, i, k)
 		end
 		for j in 0..@data["Project"]["FieldInfo"][i]["ScenarioInfo"].size-1
 			scenario_id = save_scenario_info(field.id, i, j)
@@ -173,7 +175,7 @@ class ProjectsController < ApplicationController
 		weather.latitude =  @data["Project"]["StartInfo"]["WeatherLat"]
 		weather.longitude =  @data["Project"]["StartInfo"]["WeatherLon"]
 		weather.weather_file =  @data["Project"]["StartInfo"]["CurrentWeatherPath"]
-		weather.way_id = Way.find_by_way_name(@data["Project"]["StartInfo"]["StationWay"]).id
+		weather.way_id = Way.find_by_way_value(@data["Project"]["StartInfo"]["StationWay"]).id
 		weather.save
 	end
 
@@ -181,10 +183,11 @@ class ProjectsController < ApplicationController
 		soil = Soil.new
 		soil.field_id = field_id
 		soil.selected = false
-		if @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Selected"] == "True" then
+		soil.symbol = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Symbol"]
+		soil.key = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Key"]
+		if (@data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Selected"] == "True") then
 			soil.selected = true
 		end
-		soil.key = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Key"]
 		soil.symbol = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Symbol"]
 		soil.group = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Group"]
 		soil.name = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Name"]
@@ -198,7 +201,7 @@ class ProjectsController < ApplicationController
 		end
 	end 
 
-	def save_layer_infor(soil_id, i, j, k)
+	def save_layer_info(soil_id, i, j, k)
 		layer = Layer.new
 		layer.soil_id = soil_id
 		layer.depth = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["LayerInfo"][k]["Depth"]
@@ -218,9 +221,9 @@ class ProjectsController < ApplicationController
 		scenario.name = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Name"]
 		scenario.save
 		for k in 0..@data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"].size-1
-			save_operation_info(scenario_id, i, j, k)
+			save_operation_info(scenario.id, i, j, k)
 		end
-		save_bmp_info(scenario_id, i, j)
+		save_bmp_info(scenario.id, i, j)
 		return scenario.id
 	end
 
@@ -228,73 +231,74 @@ class ProjectsController < ApplicationController
 		operation = Operation.new
 		operation.scenario_id = scenario_id
 		operation.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexCrop"]
-		operation.operation_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexOp"]
+		operation.activity_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexOp"]
 		operation.day = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["Day"]
 		operation.month_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["Month"]
 		operation.year = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["Year"]
-		operation.type_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"]["Operations"][k][j][""]
-		operation.amount = @data["Project"]["FieldInfo"][i]["ScenarioInfo"]["Operations"][k][j][""]
-		operation.depth = @data["Project"]["FieldInfo"][i]["ScenarioInfo"]["Operations"][k][j][""]
-		operation.no3_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"]["Operations"][k][j]["NO3"]
-		operation.po4_p = @data["Project"]["FieldInfo"][i]["ScenarioInfo"]["Operations"][k][j]["PO4"]
-		operation.org_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"]["Operations"][k][j]["OrgN"]
-		operation.org_p = @data["Project"]["FieldInfo"][i]["ScenarioInfo"]["Operations"][k][j]["OrgP"]
+		operation.type_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexTillCode"]
+		operation.subtype_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexFert"]
+		operation.amount = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexOpv1"]
+		operation.depth = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexOpv1"]
+		operation.no3_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["NO3"]
+		operation.po4_p = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["PO4"]
+		operation.org_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["OrgN"]
+		operation.org_p = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["OrgP"]
 		operation.nh3 = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["Nh3"]
 	end
 
 	def save_bmp_info(scenario_id, i, j)
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIType"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIType"].to_i > 0 then
 			save_bmp_ai(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFType"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFType"].to_i > 0 then
 			save_bmp_af(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["TileDrainDepth"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["TileDrainDepth"].to_f > 0 then
 			save_bmp_td(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPNDWidth"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPNDWidth"].to_f > 0 then
 			save_bmp_ppnd(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDSWidth"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDSWidth"].to_f > 0 then
 			save_bmp_ppds(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDEWidth"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDEWidth"].to_f > 0 then
 			save_bmp_ppde(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPTWWidth"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPTWWidth"].to_f > 0 then
 			save_bmp_pptw(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WLArea"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WLArea"].to_f > 0 then
 			save_bmp_wl(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PndF"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PndF"].to_f > 0 then
 			save_bmp_pnd(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFAnimals"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFAnimals"].to_i > 0 then
 			save_bmp_sf(scenario_id, i, j)
 		end
 		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Sbs"] == "True" then
 			save_bmp_sbs(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["RFArea"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["RFArea"].to_f > 0 then
 			save_bmp_rf(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["FSCrop"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["FSCrop"].to_i > 0 then
 			save_bmp_fs(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WWCrop"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WWCrop"].to_i > 0 then
 			save_bmp_ww(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CBCrop"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CBCrop"].to_i > 0 then
 			save_bmp_cf(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SlopeRed"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SlopeRed"].to_f > 0 then
 			save_bmp_ll(scenario_id, i, j)
 		end
 		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Ts"] == "True" then
 			save_bmp_ts(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMaximumTeperature"] > 0 or @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMinimumTeperature"] > 0 or @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcPrecipitation"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMaximumTeperature"].to_f > 0 or @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMinimumTeperature"].to_f > 0 or @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcPrecipitation"].to_f > 0 then
 			save_bmp_cc(scenario_id, i, j)
 		end
 		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AoC"] == "True" then

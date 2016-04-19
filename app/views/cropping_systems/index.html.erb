@@ -1,0 +1,35 @@
+<h1>Listing cropping_systems</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Crop</th>
+    <th>Tillage</th>
+    <th>var12</th>
+    <th>State</th>
+    <th>Grazing</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cropping_systems.each do |cropping_system| %>
+  <tr>
+    <td><%= cropping_system.name %></td>
+    <td><%= cropping_system.crop %></td>
+    <td><%= cropping_system.tillage %></td>
+    <td><%= cropping_system.var12 %></td>
+    <td><%= cropping_system.state_id %></td>
+    <td><%= cropping_system.grazing %></td>
+    <td><%= cropping_system.status %></td>
+    <td><%= link_to 'Show', cropping_system %></td>
+    <td><%= link_to 'Edit', edit_cropping_system_path(cropping_system) %></td>
+    <td><%= link_to 'Destroy', cropping_system, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cropping system', new_cropping_system_path %>

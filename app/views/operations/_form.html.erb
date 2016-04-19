@@ -34,8 +34,10 @@
 
 	<% case @operation.activity_id %>
 		<% when 1  # planting %>
-	        <%= label :type_id, 'Select One' %>
-	        <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => 'Select One'}, {:required => true} %>
+		    <div id="div_type"   >
+			   <%= label :type_id, 'Select One' %>
+			   <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => 'Select One'}, {:required => true} %>
+			</div>
 			<div id="div_fertilizer" style="display:none" >
 	           <%= f.label :type_id, 'Fertilizer Type' %>
 	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
@@ -67,8 +69,10 @@
 			  </div>
 		    </div>
 		<% when 2 # fertilizer %>
-			<%= label :type_id, :Fertilizer_Type %>
-			<%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => 'Select Fertilizer'}, {:required => true} %>
+		    <div id="div_type"  >
+			   <%= label :type_id, :Fertilizer_Type %>
+			   <%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => 'Select Fertilizer'}, {:required => true} %>
+			</div>
 			<div id="div_fertilizer" style="display:inline">
 	           <%= f.label :type_id, :Fertilizer %>
 	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
@@ -99,9 +103,46 @@
 				<%= f.text_field :org_p %>
 			  </div>
 		    </div>
+		<% when 3 # tillage %>
+		    <div id="div_type" >
+	           <%= label :type_id, 'Select One' %>
+	           <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => 'Select One'}, {:required => true} %>
+			</div>
+			<div id="div_fertilizer" style="display:none" >
+	           <%= f.label :type_id, 'Fertilizer Type' %>
+	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
+			</div>
+  		    <div class="field" id="div_amount" style="display:none">
+			  <%= f.label :amount %>
+			  <%= f.text_field :amount %>
+		    </div>
+		    <div class="field" id="div_depth" style="display:none">
+		  	  <%= f.label :depth %>
+			  <%= f.text_field :depth %>
+		    </div>
+		    <div class="field" id="div_nutrients" style="display:none">
+			  <div class="field" >
+				<%= f.label :no3_n %>
+				<%= f.text_field :no3_n %>
+			  </div>
+			  <div class="field" >
+				<%= f.label :po4_p %>
+				<%= f.text_field :po4_p %>
+			  </div>
+			  <div class="field" >
+				<%= f.label :org_n %>
+				<%= f.text_field :org_n %>
+			  </div>
+			  <div class="field" >
+				<%= f.label :org_p %>
+				<%= f.text_field :org_p %>
+			  </div>
+		    </div>
 		<% when 6 # irrigation%>
-	        <%= label :type_id, 'Select One' %>
-	        <%= collection_select :operation, :type_id, Irrigation.all, :id, :name, {:prompt => 'Select One'}, {:required => true} %>
+		    <div id="div_type" >
+	           <%= label :type_id, 'Select One' %>
+	           <%= collection_select :operation, :type_id, Irrigation.all, :id, :name, {:prompt => 'Select One'}, {:required => true} %>
+			</div>
 			<div id="div_fertilizer" style="display:none" >
 	           <%= f.label :type_id, 'Fertilizer Type' %>
 	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
@@ -132,10 +173,12 @@
 				<%= f.text_field :org_p %>
 			  </div>
 		    </div>
-		<% when 7 # grazing%>
-			<%= label :type_id, :Animal_Type %>
-			<%= collection_select :operation, :type_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'}, {:required => true} %>
-			<div id="div_fertilizer" style="display:inline">
+		<% when 7 # grazing %>
+		    <div id="div_type" >
+			   <%= label :type_id, :Animal_Type %>
+			   <%= collection_select :operation, :type_id, Fertilizer.where(:fertilizer_type_id => 2).where(:animal => true), :id, :name, {:prompt => 'Select Fertilizer'}, {:required => true} %>
+			</div>
+			<div id="div_fertilizer" style="display:none">
 	           <%= f.label :type_id, :Fertilizer %>
 	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
 			</div>
@@ -165,10 +208,45 @@
 				<%= f.text_field :org_p %>
 			  </div>
 		    </div>
-		<% else # till, harvest, kill, stop grazing, burn%>
+		<% when 10 # liming %>
 		    <div id="div_type"  style="display:none" >
 	           <%= label :type_id, 'Select One' %>
-	           <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => 'Select One'}, {:required => true} %>
+	           <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => 'Select One'} %>
+			</div>
+			<div id="div_fertilizer" style="display:none" >
+	           <%= f.label :type_id, 'Fertilizer Type' %>
+	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
+			</div>
+  		    <div class="field" id="div_amount" >
+			  <%= f.label :amount %>
+			  <%= f.text_field :amount %>
+		    </div>
+		    <div class="field" id="div_depth" style="display:none">
+		  	  <%= f.label :depth %>
+			  <%= f.text_field :depth %>
+		    </div>
+		    <div class="field" id="div_nutrients" style="display:none">
+			  <div class="field" >
+				<%= f.label :no3_n %>
+				<%= f.text_field :no3_n %>
+			  </div>
+			  <div class="field" >
+				<%= f.label :po4_p %>
+				<%= f.text_field :po4_p %>
+			  </div>
+			  <div class="field" >
+				<%= f.label :org_n %>
+				<%= f.text_field :org_n %>
+			  </div>
+			  <div class="field" >
+				<%= f.label :org_p %>
+				<%= f.text_field :org_p %>
+			  </div>
+		    </div>
+		<% else # harvest, kill, stop grazing, burn%>
+		    <div id="div_type"  style="display:none" >
+	           <%= label :type_id, 'Select One' %>
+	           <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => 'Select One'} %>
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 	           <%= f.label :type_id, 'Fertilizer Type' %>

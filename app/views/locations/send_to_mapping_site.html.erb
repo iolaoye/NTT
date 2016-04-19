@@ -28,11 +28,12 @@
       parcelcoords: <input type='text' size='80' name='parcelcoords' value='<%= @location.coordinates %>'>
       <br/>
       <% @location.fields.each_with_index do |field, index| %>
-          field_id: <input type='text' size='80' name='<%= "field#{index+1}id" %>' value='<%= field.field_name %>'>
-          <br/>
-          field
-          coordinates:<input type='text' size='80' name='<%= "field#{index+1}coords" %>' value='<%= field.coordinates %>'>
-          <br/>
+	      <%if !(field.coordinates == nil) %>
+			field_id: <input type='text' size='80' name='<%= "field#{index+1}id" %>' value='<%= field.field_name %>'>
+			<br/>
+			coordinates:<input type='text' size='80' name='<%= "field#{index+1}coords" %>' value='<%= field.coordinates %>'>
+			<br/>
+		  <% end %>
       <% end %>
 
       <input type='submit' name='Click here' value='Submit'>

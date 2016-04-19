@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :cropping_systems
+
+
   resources :fertilizer_types
   resources :simulations
   resources :fertilizers
@@ -16,7 +19,7 @@ NTTG3::Application.routes.draw do
   #resources :ways
   #resources :weathers
   #resources :stations
-  #resources :counties
+  resources :counties
   #resources :states
   #resources :locations
   #resources :projects
