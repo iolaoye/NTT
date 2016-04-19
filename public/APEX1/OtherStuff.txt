@@ -1,0 +1,188 @@
+Begin Livestock Systems Section
+Begin Livestock Types, Finishing Hog
+Begin Livestock Areas Section
+Begin Livestock Area, Buildings
+Begin Livestock Area Options Section
+End Livestock Area Options Section
+Begin Livestock Area Manure Section
+Begin Livestock Area Manure Characteristics
+Type, Manure
+Name, Solid
+Manure Weight, 84
+TSS, 11
+Nitrogen, 0.52
+Ammonia Nitrogen, 0.29
+Phosphorus, 0.18
+OrthoPhosphorus, 0.12
+Potassium, 0.29
+Manure Sale Price, 1
+Manure Purchase Price, 1
+Compost Sale Price, 1
+Compost Purchase Price, 1
+Compost Processing Cost, 1
+Manure Hauling Cost, 0.001
+Compost Hauling Cost, 0.001
+Compost Weight, 1
+End Livestock Area Manure Characteristics
+End Livestock Area Manure Section
+Begin Livestock Area Operations Section
+End Livestock Area Operations Section
+End Livestock Area, Buildings
+End Livestock Areas Section
+Begin Livestock Types Inventory Section
+Begin Livestock Types Inventory
+NumberInHerd, 0, Finishing Hog
+AgeLower, 1, yrs
+AgeTypical, 3, yrs
+AgeUpper, 2, yrs
+WeightLower, 1100, lbs
+WeightTypical, 1400, lbs
+WeightUpper, 1500, lbs
+DurationInHerd, 1, yrs
+Price, 1000, $
+End Livestock Types Inventory
+End Livestock Types Inventory Section
+Begin Livestock Products Section
+Begin Livestock Product
+Buy/Sell, Sell
+Data, 0
+OutOf, 120
+Units, cwt
+OfItem, Milk
+ForEach/All, For Each
+Of, Finishing Hog
+Price, 14
+UnitPrice, $
+Every, 1
+PeriodUnits, yrs
+DebtPercent, 50
+DebtLength, 2
+DebtLengthUnit, yrs
+AnnualRate, 6
+End Livestock Product
+Begin Livestock Product
+Buy/Sell, Sell
+Data, 0
+OutOf, 0
+Units, Finishing Hog
+OfItem, Finishing Hog
+ForEach/All, For Each
+Of, Finishing Hog
+Price, 100
+UnitPrice, $
+Every, 1
+PeriodUnits, yrs
+DebtPercent, 50
+DebtLength, 2
+DebtLengthUnit, yrs
+AnnualRate, 6
+End Livestock Product
+End Livestock Products Section
+Begin Livestock Manure Section
+End Livestock Manure Section
+Begin Livestock Nutrient Section
+End Livestock Nutrient Section
+Begin Livestock Feed Restrictions Section
+End Livestock Feed Restrictions Section
+End Livestock Types, Finishing Hog
+
+End Livestock Systems Section
+Begin Manure Management Section
+	Begin Manure PreHandling Section
+		Begin PreHandling Group, Solids
+			Type, Solidwaste compostable
+			Name, Solids
+			Begin Component, Solid
+				Name, Solid
+				Area, Buildings
+				LivestockType, Finishing Hog
+			End Component, Solid
+		End PreHandling Group, Solids
+	End Manure PreHandling Section
+	Begin Manure Handling Section
+		Begin Handling Group, Solids
+		Type, Solidwaste compostable
+Name, Solids
+			Begin Handling Option, Scrape
+				Begin Handling Impacts
+Type, 0
+Name, 0
+Manure Weight, 0
+TSS, 0
+Nitrogen, 0
+Ammonia Nitrogen, 0
+Phosphorus, 0
+OrthoPhosphorus, 0
+Potassium, 0
+Manure Sale Price, 0
+Manure Purchase Price, 0
+Compost Sale Price, 0
+Compost Purchase Price, 0
+Compost Processing Cost, 0
+Manure Hauling Cost, 0
+Compost Hauling Cost, 0
+Compost Weight, 0
+				End Handling Impacts
+				Begin Handling Operations Section
+					Begin Handling Operation
+					
+					End Handling Operation
+				End Handling Operations Section
+			End Handling Option, Scrape
+			Begin Handling Option, Store
+				Begin Handling Impacts
+Type, 0
+Name, 0
+Manure Weight, 10
+TSS, 10
+Nitrogen, 30
+Ammonia Nitrogen, 20
+Phosphorus, 5
+OrthoPhosphorus, 5
+Potassium, 5
+Manure Sale Price, 0
+Manure Purchase Price, 0
+Compost Sale Price, 0
+Compost Purchase Price, 0
+Compost Processing Cost, 0
+Manure Hauling Cost, 0
+Compost Hauling Cost, 0
+Compost Weight, 0
+				End Handling Impacts
+				Begin Handling Operations Section
+				End Handling Operations Section
+			End Handling Option, Store
+			Begin Handling Option, Apply
+				Begin Handling Impacts
+Type, 0
+Name, 0
+Manure Weight, 10
+TSS, 0
+Nitrogen, 15
+Ammonia Nitrogen, 15
+Phosphorus, 0
+OrthoPhosphorus, 0
+Potassium, 0
+Manure Sale Price, 0
+Manure Purchase Price, 0
+Compost Sale Price, 0
+Compost Purchase Price, 0
+Compost Processing Cost, 0
+Manure Hauling Cost, 0
+Compost Hauling Cost, 0
+Compost Weight, 0
+				End Handling Impacts
+				Begin Handling Operations Section
+				End Handling Operations Section
+			End Handling Option, Apply
+		End Handling Group, Solids
+	End Manure Handling Section
+	Begin Manure PostHandling Section
+		Begin PostHandling Group, AllSolids
+			Type, Solidwaste compostable
+			Name, AllSolids
+			Component, Solids
+		End PostHandling Group, Solids
+	End Manure PostHandling Section
+End Manure Management Section
+

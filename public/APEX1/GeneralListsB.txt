@@ -1,0 +1,55 @@
+Begin Herbicides List 
+Herbicide: Atrazine
+Herbicide: Glyphosate
+Herbicide: Prowl
+Herbicide: Roundup
+Herbicide: Strongarm
+Herbicide: Finesse
+Herbicide: Staple
+Herbicide: Treflan
+End Herbicides List 
+Begin Insecticides List 
+Insecticide: Carbofuran
+Insecticide: Fonofos
+Insecticide: Lorsban
+End Insecticides List 
+Begin Fertilizers List 
+Fertilizer: Nitrogen
+Fertilizer: Phosphorus
+Fertilizer: Potassium
+Fert1001
+Fert1002
+Fert1003
+Fertilizer: Anhydrous ammonia
+Fertilizer: Nitrogen solution 32%
+Fertilizer: Lime
+Fertilizer: 36-30-10
+Fertilizer: 28-0-0
+Fertilizer: 46-0-0
+Fertilizer: 14-17-0
+Fertilizer: 40-0-0
+Fertilizer: 40-20-0
+Fertilizer: 7-21-7
+Fertilizer: 0-0-60
+End Fertilizers List 
+Begin Cropping Systems List 
+Corn-soybeans
+Continuous corn
+Coastal wheat
+End Cropping Systems List 
+Begin Crops List 
+Corn
+Soybeans
+Coastal
+Alfalfa
+Wheat
+Sorghum
+Barley
+End Crops List 
+Begin Manure Handling Options List 
+Scrape
+Store
+Flush
+Apply
+End Manure Handling Options List 
+

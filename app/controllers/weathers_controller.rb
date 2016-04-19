@@ -116,9 +116,8 @@ class WeathersController < ApplicationController
 	def upload_weather
 	    #@weather = Weather.find_by_field_id(session[:field_id])
 		name = params[:weather][:weather_file].original_filename
-		directory = 'public/weather'
 		# create the file path
-		path = File.join(directory,name)
+		path = File.join(OWN,name)
 		# write the file
 		File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read)}
 		i=0
