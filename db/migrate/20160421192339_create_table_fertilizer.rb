@@ -1,4 +1,4 @@
-class CreateTableFertilizers < ActiveRecord::Migration
+class CreateTableFertilizer < ActiveRecord::Migration
   def change
     create_table :fertilizers do |t|
       t.integer :code
@@ -8,12 +8,14 @@ class CreateTableFertilizers < ActiveRecord::Migration
       t.float :yn
       t.float :yp
       t.float :nh3
-      t.float :lbs
-      t.integer :type
+      t.float :dry_matter
+      t.integer :fertilizer_type_id
+	  t.float :convertion_unit
       t.boolean :status
+      t.boolean :animal
       t.string :spanish_name
 
       t.timestamps
     end
-  end
+ end
 end
