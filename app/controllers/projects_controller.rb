@@ -283,7 +283,7 @@ class ProjectsController < ApplicationController
 	   }	 #project end
 	   end   #builder do end
 	   file_name = session[:session_id] + ".prj"
-  	   path = File.join(Rails.root, file_name)
+  	   path = File.join('public/download', file_name)
 	   content = builder.to_xml
 	   File.open(path, "w") { |f| f.write(content)}
 	   #file.write(content)
