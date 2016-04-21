@@ -3,17 +3,24 @@
 <%= link_to t('field.new_field'), new_field_path %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th><%= t('field.field_name')%></th>
-    <th class="numbers"><%= t('field.field_area')%></th>
-    <th class="numbers"><%= t('field.field_avg_slope')%></th>
-    <th><%= t('general.actions')%></th>
+    <th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
+    <th class="gvCellStyleTitle"><%= t('field.field_area')%></th>
+    <th class="gvCellStyleTitle"><%= t('field.field_avg_slope')%></th>
+    <th ><%= t('general.actions')%></th>
   </tr>
 
-<% @fields.each do |field| %>
+  <% i=1 %>
+  <% @fields.each do |field| %>
+    <% if (i % 2  == 0) %>
+      <tr class="gvRowStyleEven">
+    <% else %>
+      <tr class="gvRowStyleOdd">
+    <% end %>
+    <% i = i + 1 %>
   <tr class="gvRowStyle">
-    <td><%= link_to field.field_name, field %></td>
-    <td class="numbers"><%= field.field_area %></td>
-    <td class="numbers"><%= field.field_average_slope %></td>
+    <td class="gvCellStyleText"><%= link_to field.field_name, field %></td>
+    <td class="gvCellStyleNumber", class="numbers"><%= field.field_area %></td>
+    <td class="gvCellStyleNumber"><%= field.field_average_slope %></td>
     <td>
       <%#= link_to image_tag("view.png"), field %>
       <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>

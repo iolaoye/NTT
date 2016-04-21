@@ -21,3 +21,7 @@
 
 #folder for Prism weather files
 	PRISM = 'X:/Weather/weatherFiles/US'
+
+#folder for download project files
+	DOWNLOAD = 'public/download'
+

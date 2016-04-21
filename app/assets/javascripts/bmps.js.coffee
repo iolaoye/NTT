@@ -1,12 +1,6 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-$(document).ready ->
-    activate_bmp_controls()
-    $("#bmp_bmp_id").change ->
-      update_bmpsublist()
-    $("#bmp_bmpsublist_id").change ->
-      activate_bmp_controls()
 
 #update bmp sublist depending on the bmp selected.
 update_bmpsublist = ->
@@ -14,7 +8,7 @@ update_bmpsublist = ->
     items = []
     items.push "<option value>Select One</option>"
     $.each bmpsublists, (key, bmpsublist) ->
-      items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.name + "</option>"
+       items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.name + "</option>"
     $("#bmp_bmpsublist_id").html items.join("")
     $("#bmp_bmpsublist_id").removeAttr("disabled")
 	
@@ -133,4 +127,11 @@ activate_bmp_controls = ->
             $("#width").toggle(true)
             $("#crop").toggle(true)
             $("#buffer_slope_upland").toggle(true)
-            $('#bmp_crop_id').prop('required',true)
+            $("#bmp_crop_id").prop('required',true)
+
+$(document).ready ->
+    activate_bmp_controls()
+    $("#bmp_bmp_id").change ->
+       update_bmpsublist()
+    $("#bmp_bmpsublist_id").change ->
+       activate_bmp_controls()

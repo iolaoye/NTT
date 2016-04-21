@@ -2,29 +2,29 @@
 <%= link_to t('general.new') + ' ' + t('soil.soil'), new_soil_path %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th>Selected</th>
-    <th>Key</th>
-    <th>Symbol</th>
-    <th>Group</th>
-    <th>Name</th>
-    <th class="numbers">Albedo</th>
-    <th class="numbers">Slope</th>
-    <th class="numbers">Percentage</th>
-    <th>Drainage type</th>
+    <th class="gvCellStyleTitle">Selected</th>
+    <th class="gvCellStyleTitle">Key</th>
+    <th class="gvCellStyleTitle">Symbol</th>
+    <th class="gvCellStyleTitle">Group</th>
+    <th class="gvCellStyleTitle">Name</th>
+    <th class="gvCellStyleTitle">Albedo</th>
+    <th class="gvCellStyleTitle">Slope</th>
+    <th class="gvCellStyleTitle">Percentage</th>
+    <th class="gvCellStyleTitle">Drainage type</th>
     <th>Actions</th>
   </tr>
 
-  <% @soils.each do |soil| %>
+  <% for soil in @soils %>
     <tr class="gvRowStyle">
-      <td><%= soil.selected %></td>
-      <td><%= soil.key %></td>
-      <td><%= soil.symbol %></td>
-      <td><%= soil.group %></td>
-      <td><%= soil.name %></td>
-      <td class="numbers"><%= soil.albedo %></td>
-      <td class="numbers"><%= soil.slope.round(2) %></td>
-      <td class="numbers"><%= soil.percentage.round(2) %></td>
-      <td><%= soil.drainage_type %></td>
+      <td class="gvCellStyleCheckbox"><%= check_box_tag :soil, "1", soil.selected, disabled: true %></td>
+      <td class="gvCellStyleText"><%= soil.key %></td>
+      <td class="gvCellStyleText"><%= soil.symbol %></td>
+      <td class="gvCellStyleText"><%= soil.group %></td>
+      <td class="gvCellStyleText"><%= soil.name %></td>
+      <td class="gvCellStyleNumber"><%= soil.albedo %></td>
+      <td class="gvCellStyleNumber"><%= soil.slope.round(2) %></td>
+      <td class="gvCellStyleNumber"><%= soil.percentage.round(2) %></td>
+      <td class="gvCellStyleText"><%= soil.drainage_type %></td>
       <td>
         <%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
       <%= link_to image_tag("edit.png"), edit_soil_path(soil), title: t('general.edit')%>

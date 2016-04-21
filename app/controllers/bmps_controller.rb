@@ -29,6 +29,7 @@ before_filter :take_names
     end
   end
 
+################################  SHOW  #################################
   # GET /bmps/1
   # GET /bmps/1.json
   def show

@@ -1,18 +1,27 @@
   <h1><%= t('menu.projects') %></h1>
 
   <%= link_to t('project.new_project'), new_project_path %>
+  &nbsp &nbsp
   <%= link_to t('project.upload_project'), upload_project_path(0) %>
+  &nbsp &nbsp
+  <%= link_to t('project.download_project'), download_project_path(0) %>
   <table class='gvTableStyle'>
     <tr class='gvHeaderStyle'>
-      <th><%= t('general.name') %></th>
-      <th><%= t('general.description') %></th>
+      <th class="gvCellStyleTitle"><%= t('general.name') %></th>
+      <th class="gvCellStyleTitle"><%= t('general.description') %></th>
       <th><%= t('general.actions') %></th>
     </tr>
-
+      <% i=1 %>
     <% @projects.each do |project| %>
+      <% if (i % 2  == 0) %>
+        <tr class="gvRowStyleEven">
+      <% else %>
+        <tr class="gvRowStyleOdd">
+      <% end %>
+      <% i = i + 1 %>
       <tr class="gvRowStyle" style="padding-left:25px">
-        <td><%= link_to project.name, project %></td>
-        <td><%= project.description %></td>
+        <td class="gvCellStyleText"><%= link_to project.name, project %></td>
+        <td class="gvCellStyleText"><%= project.description %></td>
         <td>
           <%#= link_to image_tag("view.png"), project %>
           <%= link_to image_tag("edit.png"), edit_project_path(project) %>
