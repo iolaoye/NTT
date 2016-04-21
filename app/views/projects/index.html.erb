@@ -24,6 +24,7 @@
         <td class="gvCellStyleText"><%= project.description %></td>
         <td>
           <%#= link_to image_tag("view.png"), project %>
+          <%= link_to image_tag("download.gif"), download_project_path(2) %> <%#https://design.google.com/icons/%>
           <%= link_to image_tag("edit.png"), edit_project_path(project) %>
           <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>

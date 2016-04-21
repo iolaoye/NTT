@@ -300,3 +300,5 @@
       email: Correo Electrónico
       password: Contraseña
       new_user: Usuario Nuevo
+  modifications:
+    mod_title: Modificar Información de APEX

@@ -297,3 +297,5 @@ en:
       email: Email
       password: Password
       new_user: New User
+  modifications:
+    mod_title: Modify APEX Information
