@@ -1,0 +1,21 @@
+<h1>Listing soil_operations</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @soil_operations.each do |soil_operation| %>
+  <tr>
+    <td><%= link_to 'Show', soil_operation %></td>
+    <td><%= link_to 'Edit', edit_soil_operation_path(soil_operation) %></td>
+    <td><%= link_to 'Destroy', soil_operation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Soil operation', new_soil_operation_path %>

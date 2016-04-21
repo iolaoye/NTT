@@ -83,6 +83,11 @@ ActiveRecord::Schema.define(:version => 20160418230947) do
     t.string   "spanish_name"
   end
 
+  create_table "controls", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "counties", :force => true do |t|
     t.string   "county_name"
     t.string   "county_code"
@@ -139,12 +144,6 @@ ActiveRecord::Schema.define(:version => 20160418230947) do
     t.datetime "updated_at",          :null => false
   end
 
-  create_table "fertilizer_type", :force => true do |t|
-    t.string   "field_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "fertilizer_types", :force => true do |t|
     t.string   "name"
     t.string   "spanish_name"
@@ -191,17 +190,19 @@ ActiveRecord::Schema.define(:version => 20160418230947) do
   end
 
   create_table "layers", :force => true do |t|
-    t.float    "depth"
-    t.float    "soil_p"
-    t.float    "bulk_density"
-    t.float    "sand"
-    t.float    "silt"
-    t.float    "clay"
-    t.float    "organic_matter"
-    t.float    "ph"
-    t.integer  "soil_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.float    "uw"
+    t.float    "fc"
+    t.float    "wn"
+    t.float    "smb"
+    t.float    "woc"
+    t.float    "cac"
+    t.float    "cec"
+    t.float    "rok"
+    t.float    "cnds"
+    t.float    "rsd"
+    t.float    "bdd"
+    t.float    "psp"
+    t.float    "satc"
   end
 
   create_table "locations", :force => true do |t|
@@ -212,6 +213,11 @@ ActiveRecord::Schema.define(:version => 20160418230947) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "coordinates"
+  end
+
+  create_table "modifications", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "operations", :force => true do |t|
@@ -232,6 +238,11 @@ ActiveRecord::Schema.define(:version => 20160418230947) do
     t.datetime "updated_at",  :null => false
     t.integer  "scenario_id"
     t.integer  "subtype_id"
+  end
+
+  create_table "parameters", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "projects", :force => true do |t|
@@ -266,6 +277,25 @@ ActiveRecord::Schema.define(:version => 20160418230947) do
     t.string   "comments"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "soil_operations", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "day"
+    t.integer  "operation_id"
+    t.integer  "tractor_id"
+    t.integer  "crop_id"
+    t.integer  "type_id"
+    t.float    "opv1"
+    t.float    "opv2"
+    t.float    "opv3"
+    t.float    "opv4"
+    t.float    "opv5"
+    t.float    "opv6"
+    t.float    "opv7"
   end
 
   create_table "soils", :force => true do |t|
@@ -323,6 +353,11 @@ ActiveRecord::Schema.define(:version => 20160418230947) do
     t.integer  "final_year"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "subareas", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tillages", :force => true do |t|
