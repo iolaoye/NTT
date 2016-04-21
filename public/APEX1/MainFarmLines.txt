@@ -1,0 +1,45 @@
+
+/******Farm1: 
+Begin Farm, Farm1
+     County, 19001
+     State, Iowa
+     ZipCode, 52001
+     Watershed, No name
+     Herd Size, 1
+     Animal Units, 1
+     Begin Lists Section
+     $INCLUDE, C:\OldE\Projects\ElRenoWork\FEM\GeneralListsA.txt
+     $INCLUDE, C:\OldE\Projects\ElRenoWork\FEM\SeedsList.txt
+     $INCLUDE, C:\OldE\Projects\ElRenoWork\FEM\GeneralListsB.txt
+     Begin Power Equipment List 
+     Tractor - 95 HP TRACTOR
+     Tractor - 165 HP TRACTOR
+     Spreader - BULK FERT 25 FT
+     Spreader - NH3 APPL 15 FT
+     Sprayer - sprayer
+     Duckfoot cultivator, field cultivator(heavy duty)
+     Plow - 20 FT CHISEL PLOW
+     Disk - 21 FT TANDEM DISK
+     Field cultivator - FLD CULT, 24 FT
+     Planter - PLANTER, 8 row narrow
+     Head - CORN HEAD, 8 row narrow
+     Combine - 150 HP COMBINE
+     Head - GR PLAT, SB 18 FT
+     End Power Equipment List 
+     Begin Facilities List 
+     $INCLUDE, C:\OldE\Projects\ElRenoWork\FEM\FacilityList.txt
+     End Facilities List 
+     End Lists Section
+     Begin Cropping Systems Section
+     Begin Cropping System, Corn-soybeans
+     Rotation Length, 2
+     Begin Cropping System Definition, All
+     	Rotation Length, 2
+$INCLUDE, C:\OldE\Projects\ElRenoWork\FEM\CornCN.txt
+$INCLUDE, C:\OldE\Projects\ElRenoWork\FEM\SoyCN.txt
+     End Cropping System Definition, All
+     End Cropping System, Corn-soybeans
+     End Cropping Systems Section
+     $INCLUDE, C:\OldE\Projects\ElRenoWork\FEM\OtherStuffNew.txt
+     $INCLUDE, C:\OldE\Projects\ElRenoWork\FEM\LandAreasCornSoyNew2.txt
+End Farm, CornSoyCornCNSoyCN

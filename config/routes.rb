@@ -40,6 +40,7 @@ NTTG3::Application.routes.draw do
   resources :projects do
 	resources :locations
     get 'upload', on: :member
+    get 'download', on: :member
   end
  
   resources :weathers do

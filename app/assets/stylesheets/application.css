@@ -286,9 +286,62 @@
   border-bottom: 2px solid #d1d1d1;
 }
 
+.gvCellStyleNumber { 
+  border-right: 1px solid #ddd;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: green;
+  text-align: right; 
+}
+
+.gvCellStyleCheckbox { 
+  border-right: 1px solid #ddd;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: green;
+  text-align: center;   
+}
+
+.gvCellStyleText { 
+  border-right: 1px solid #ddd;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: green;
+  text-align: left; 
+}
+
+.gvCellStyleTitle { 
+  border-right: 1px solid #ddd;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: green;
+}
+
 .gvRowStyle { 
   color:Black;
   background-color:#D3D3D3;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 1px solid #ddd;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: green;
+}
+
+.gvRowStyleOdd { 
+  color:Black;
+  background-color:#D3D3D3;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 1px solid #ddd;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: green;
+}
+
+.gvRowStyleEven { 
+  color:Black;
+  background-color:#D3D3EF;
   text-align: center;
   vertical-align: middle;
   border-top: 1px solid #ddd;
@@ -304,6 +357,10 @@
   border-collapse:collapse;
   width: 100%;
 }
+
+.gvTableStyle .even td {  background-color: #E3E6FF; }
+
+.gvTableStyle .odd td {  background-color: #D1D8F6; }
 
 .container {
   width: 100%;
