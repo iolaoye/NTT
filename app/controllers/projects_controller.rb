@@ -120,7 +120,6 @@ class ProjectsController < ApplicationController
 			for i in 0..@data["Project"]["FieldInfo"].size-1
 				upload_field_info(i)
 			end
-			#step 4. Save Weather Information
 		end  
 		@projects = Project.where(:user_id => session[:user_id])
    	    render :action => "index"

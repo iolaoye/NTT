@@ -41,6 +41,7 @@ before_filter :take_names
     end
   end
 
+################################  NEW  #################################
   # GET /bmps/new
   # GET /bmps/new.json
   def new
@@ -73,12 +74,11 @@ before_filter :take_names
     end
   end
 
+################################  UPDATE  #################################
   # PATCH/PUT /bmps/1
   # PATCH/PUT /bmps/1.json
   def update
-
     @bmp = Bmp.find(params[:id])
-
     respond_to do |format|
       if @bmp.update_attributes(bmp_params)
         format.html { redirect_to @bmp, notice: 'Bmp was successfully updated.' }
