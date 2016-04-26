@@ -48,8 +48,8 @@ class ScenariosController < ApplicationController
 	end 
 	create_weather_file(dir_name)
 	create_soils()
-	create_subareas()
-	build_xml()
+	create_subareas(1)
+	#build_xml()
 
     respond_to do |format|
       format.html # show.html.erb
@@ -137,6 +137,8 @@ class ScenariosController < ApplicationController
 	OM_TO_OC = 1.724
 	BDMIN = 1.1
     BDMAX = 1.79
+	SoilPMaxForSoilDepth = 15.24
+	SoilPDefault = 0.1
 
    def build_xml()
        require 'nokogiri'
@@ -255,7 +257,6 @@ class ScenariosController < ApplicationController
          rt = Array.new
          ssaCode = ""
 		 #series_name ""
-         records = ""
          albedo = 0
          #added to control when information is not available
          texture = ["sandy clay loam", "silty clay loam", "loamy sand", "sandy loam", "sandy clay", "silt loam", "clay loam", "silty clay", "sand", "loam", "silt", "clay"]
@@ -267,7 +268,7 @@ class ScenariosController < ApplicationController
          dtNow1  = Date.today.to_s
          last_soil1 = 0
 		 last_soil = 0
-		 soil_info = Array.new
+		 @soil_info = Array.new
 		 soil_list = Array.new
 		 soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
 		 #APEXStrings1 = 0
@@ -300,13 +301,17 @@ class ScenariosController < ApplicationController
                 soil_file_name = "APEX" + "00" + last_soil1.to_s + ".sol"
                 #total_area = total_area + soil.percentage
                 apex_scenarios += 1
-                records = " .sol file Soil:APEX" + "00" + last_soil1.to_s + ".sol" + "  Date: " + dtNow1 + "Soil Name:" + soils.name
-                soil_info.push records
+                records = " .sol file Soil: " + soil_file_name + " Date: " + dtNow1 + " Soil Name: " + soil.name
+				@soil_info.push(records + "\n")                
                 records = ""
                 layer_number = 1
                 result = 0
-                hsg = " "
-                layers.each do |layer|                    
+                if soil.group == nil
+                    hsg = "B"
+                else
+                    hsg = soil.group
+                end
+                layers.each do |layer|
 					# try to find texture from texture description from database
                     #For j = 0 To texture.Length - 1
                     #    If layer("texture").Contains(texture(j))  Exit For
@@ -317,18 +322,12 @@ class ScenariosController < ApplicationController
                         if layer.depth <= 5 && layer.sand = 0 && layer.silt = 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
                             next
                         end
-                        if soil.albedo <=0 
-                            albedo = soils.Albedo
+                        if soil.albedo > 0 
+                            albedo = soil.albedo
                         else
                             albedo = 0.37
                         end
                     end 
-
-                    if soil.group == nil
-                        hsg = "B"
-                    else
-                        hsg = soils.group
-                    end
 
                     depth[layer_number] = layer.depth * IN_TO_CM
 
@@ -340,65 +339,77 @@ class ScenariosController < ApplicationController
 							next
 						end
                     end
-
-                    if layer.uw <= 0 && layer_number > 1 
-                        uw[layer_number] = uw[layer_number - 1]
-                    else
-                        uw[layer_number] = layer.uw
-                    end
-                    if layer.fc <= 0 && layer_number > 1 
-                        fc[layer_number] = fc[layer_number - 1]
-                    else
-                        fc[layer_number] = layer.fc
-                    end
+					if !(layer.uw == nil)
+						if layer.uw <= 0.0 && layer_number > 1 
+							uw[layer_number] = uw[layer_number - 1]
+						else
+							uw[layer_number] = layer.uw
+						end
+					else
+						uw[layer_number] = 0
+					end 
+					if !(layer.fc == nil)
+						if layer.fc <= 0 && layer_number > 1 
+							fc[layer_number] = fc[layer_number - 1]
+						else
+							fc[layer_number] = layer.fc
+						end
+					else
+						fc[layer_number] = 0
+					end
                     #These lines were changed to take sand from xml file in case user had changed it
                     if layer.sand <= 0 && layer_number > 1 
                         sand[layer_number] = sand[layer_number - 1]
                     else
                         sand[layer_number] = layer.sand
                     end
-                    if layer.silt = 0 && layer_number > 1 
+                    if layer.silt <= 0 && layer_number > 1 
                         silt[layer_number] = silt[layer_number - 1]
                     else
                         silt[layer_number] = layer.silt
                     end
-
-                    if layer.wn <= 0 && layer_number > 1 
-                        wn[layer_number] = wn[layer_number - 1]
-                    else
-                        wn[layer_number] = layer.wn
-                    end
-                    if layer.ph == 0 
-                        ph[layer_number] = ph[layer_number - 1]
-                    else
-                        ph[layer_number] = layer.ph
-                    end
-                    if ph[layer_number] < PHMIN
-					  ph[layer_number] = PHMIN
+					if !(layer.wn == nil)
+						if layer.wn <= 0 && layer_number > 1 
+							wn[layer_number] = wn[layer_number - 1]
+						else
+							wn[layer_number] = layer.wn
+						end
+					else
+						wn[layer_number] = 0
 					end
-                    if ph[layer_number] > PHMAX
-					  ph[layer_number] = PHMAX
+					if (layer.ph != nil)
+						if layer.ph <= 0 && layer_number > 1 
+							ph[layer_number] = ph[layer_number - 1]
+						else
+							ph[layer_number] = layer.ph
+						end
+					else
+						ph[layer_number] = PHMIN
 					end
+					ph[layer_number] = PHMIN if ph[layer_number] < PHMIN
+					ph[layer_number] = PHMAX if ph[layer_number] > PHMAX
 
-                    if layer.Cec < 0 
+					cec[layer_number] = 0
+                    if layer.cec == 0 
                         cec[layer_number] = cec[layer_number - 1]
                     else
-                        cec[layer_number] = layer.Cec
+                        cec[layer_number] = layer.cec unless layer.cec == nil
                     end
 
-                    smb[layer_number] = 0
+                    smb[layer_number] = 0 
                     if layer.smb == 0 && layer_number > 1 
                         smb[layer_number] = smb[layer_number - 1]
                     else
-                        smb[layer_number] = layer.smb
+                        smb[layer_number] = layer.smb unless layer.smb == nil
                     end
                     #These lines were changed to take sand from xml file in case user had changed it
-                    if layer.organic_matter = 0 
+					woc[layer_number] = 0
+                    if layer.organic_matter == 0 
                         woc[layer_number] = woc[layer_number - 1]
                     else
-                        woc[layer_number] = layer.organic_matter
+                        woc[layer_number] = layer.organic_matter unless layer.organic_matter == nil
                     end
-                    woc[layer_number] = woc[layer_number] / OM_TO_OC
+                    woc[layer_number] = (woc[layer_number] / OM_TO_OC)
                     if woc[layer_number] < OCMIN
 					  woc[layer_number] = OCMIN
 					end
@@ -406,37 +417,42 @@ class ScenariosController < ApplicationController
 						woc[layer_number] = OCMAX
 					end
 
+					cac[layer_number] = 0
                     if layer.cac == 0 && layer_number > 1 
                         cac[layer_number] = cac[layer_number - 1]
                     else
-                        cac[layer_number] = layer.cac
+                        cac[layer_number] = layer.cac unless layer.cac == nil
                     end
+					rok[layer_number] = 0 
                     if layer.rok == 0 && layer_number > 1 
                         rok[layer_number] = rok[layer_number - 1]
                     else
-                        rok[layer_number] = layer.rok
+                        rok[layer_number] = layer.rok unless layer.rok == nil
                     end
+					cnds[layer_number] = 0
                     if layer.cnds == 0 && layer_number > 1
                         cnds[layer_number] = cnds[layer_number - 1]
                     else
-                        cnds[layer_number] = layer.cnds
+                        cnds[layer_number] = layer.cnds unless layer.cnds == nil
                     end
-                    if layer.soilp == 0 && layer_number = 1 
-                        ssf[layer_number] = ssf(layer_number-1)
+                    ssf[layer_number] = 0
+                    if layer.soil_p == 0 && layer_number == 1 
+                        ssf[layer_number] = ssf[layer_number-1]
                     else
-                        ssf[layer_number] = layer.ssf
+                        ssf[layer_number] = layer.soil_p unless layer.soil_p == nil
                     end
-
+					rsd[layer_number] = 0
                     if layer.rsd == 0 && layer_number > 1 
                         rsd[layer_number] = rsd[layer_number - 1]
                     else
-                        rsd[layer_number] = layer.rsd
+                        rsd[layer_number] = layer.rsd unless layer.rsd == nil
                     end
                     #These lines were changed to take silt from xml file in case user had changed it
+					bulk_density[layer_number] = 0
                     if layer.bulk_density == 0 
                         bulk_density[layer_number] = bulk_density[layer_number - 1]
                     else
-                        bulk_density[layer_number] = layer.bulk_density
+                        bulk_density[layer_number] = layer.bulk_density unless layer.bulk_density == nil
                     end
                     if bulk_density[layer_number] < BDMIN
 					  bulk_density[layer_number] = BDMIN
@@ -446,10 +462,11 @@ class ScenariosController < ApplicationController
 					end
                     bdd[layer_number] = bulk_density[layer_number]
                     #psp
+					psp[layer_number] = 0
                     if layer.psp == 0 && layer_number > 1 
                         psp[layer_number] = psp[layer_number - 1]
                     else
-                        psp[layer_number] = layer.psp
+                        psp[layer_number] = layer.psp unless layer.psp == nil
                     end
                     sand_silt = sand[layer_number] + silt[layer_number]
 
@@ -467,52 +484,52 @@ class ScenariosController < ApplicationController
                     cprh[layer_number] = 0
                     rt[layer_number] = 0
 
-                    layer_number = layer_number + 1
-
-                    if soils.Slope <= 0 
+                    if soil.slope <= 0 
                         soilSlope = 0.01
                     else
-                        soilSlope = (soils.Slope / 100)
+                        soilSlope = (soil.slope / 100)
                     end
-                    if hsg == "" || hsg = nill
+                    if hsg == "" || hsg == nil
 						hsg = "B"
-					end 
-                end
-                #if first layer is less than 0.1 m a new layer is added as first one
-                initialLayer = 1
-                if Math.Round(Depth(1) / 100, 3) > 0.1 
-                    Depth[0] = 10
-                    bulk_density[0] = bulk_density(1)
-                    uw[0] = uw(1)
-                    fc[0] = fc(1)
-                    sand[0] = sand(1)
-                    silt[0] = silt(1)
-                    wn[0] = wn(1)
-                    ph[0] = ph(1)
-                    smb[0] = smb(1)
-                    woc[0] = woc(1)
-                    cac[0] = cac(1)
-                    cec[0] = cec(1)
-                    rok[0] = rok(1)
-                    cnds[0] = cnds(1)
-                    ssf[0] = ssf(1)
-                    rsd[0] = rsd(1)
-                    bdd[0] = bdd(1)
-                    psp[0] = psp(1)
-                    satc[0] = satc(1)
-                    hcl[0] = hcl(1)
-                    wpo[0] = wpo(1)
-                    cprv[0] = cprv(0)
-                    cprh[0] = cprh(0)
-                    initialLayer = 0
-                end
+					end
+					layer_number = layer_number + 1
+                end  # end layers do
 
-                #Line 2 Column 1 and 2
+				@bulk_density = bulk_density
+                #if first layer is less than 0.1 m a new layer is added as first one
+                initial_layer = 1
+                if (depth[initial_layer] / 100).round(3) > 0.100
+                    initial_layer = 0
+                    depth[initial_layer] = 10
+                    bulk_density[initial_layer] = bulk_density[initial_layer + 1]
+                    uw[initial_layer] = uw[initial_layer + 1]
+                    fc[initial_layer] = fc[initial_layer + 1]
+                    sand[initial_layer] = sand[initial_layer + 1]
+                    silt[initial_layer] = silt[initial_layer + 1]
+                    wn[initial_layer] = wn[initial_layer + 1]
+                    ph[initial_layer] = ph[initial_layer + 1]
+                    smb[initial_layer] = smb[initial_layer + 1]
+                    woc[initial_layer] = woc[initial_layer + 1]
+                    cac[initial_layer] = cac[initial_layer + 1]
+                    cec[initial_layer] = cec[initial_layer + 1]
+                    rok[initial_layer] = rok[initial_layer + 1]
+                    cnds[initial_layer] = cnds[initial_layer + 1]
+                    ssf[initial_layer] = ssf[initial_layer + 1]
+                    rsd[initial_layer] = rsd[initial_layer + 1]
+                    bdd[initial_layer] = bdd[initial_layer + 1]
+                    psp[initial_layer] = psp[initial_layer + 1]
+                    satc[initial_layer] = satc[initial_layer + 1]
+                    hcl[initial_layer] = hcl[initial_layer + 1]
+                    wpo[initial_layer] = wpo[initial_layer + 1]
+                    cprv[initial_layer] = cprv[initial_layer + 1]
+                    cprh[initial_layer] = cprh[initial_layer + 1]
+                end
+				#Line 2 Column 1 and 2
                 if albedo == 0 
 					albedo = 0.2
 				end
-                records = ""
-                records = Format(albedo, "####0.00").PadLeft(8)
+                records = "%4s%.2f" %['',albedo]
+                #records =  albedo.to_s
                 case hsg
                     when "A"
                         records = records + "      1."
@@ -523,183 +540,203 @@ class ScenariosController < ApplicationController
                     when "D"
                         records = records + "      4."
                 end
-                records = records + soils.Ffc.ToString("F2").PadLeft(8)
-                records = records + soils.Wtmn.ToString("F2").PadLeft(8)
-                records = records + soils.Wtmx.ToString("F2").PadLeft(8)
-                records = records + soils.Wtbl.ToString("F2").PadLeft(8)
-                records = records + soils.Gwst.ToString("F2").PadLeft(8)
-                records = records + soils.Gwmx.ToString("F2").PadLeft(8)
-                records = records + soils.Rftt.ToString("F2").PadLeft(8)
-                records = records + soils.Rfpk.ToString("F2").PadLeft(8)
-                soilInfo.Add(records)
-                #Line 3 Column 1 to 7
+				soil.ffc = 0 unless !(soil.ffc==nil)
+                records = records + "%4s%.2f" %['', soil.ffc]
+				soil.wtmn = 0 unless !(soil.wtmn==nil)
+                records = records + "%4s%.2f" %['', soil.wtmn]
+				soil.wtmx = 0 unless !(soil.wtmx==nil)
+                records = records + "%4s%.2f" %['', soil.wtmx]
+				soil.wtbl = 0 unless !(soil.wtbl==nil)
+                records = records + "%4s%.2f" %['', soil.wtbl]
+				soil.gwst = 0 unless !(soil.gwst==nil)
+                records = records + "%4s%.2f" %['', soil.gwst]
+				soil.gwmx = 0 unless !(soil.gwmx==nil)
+                records = records + "%4s%.2f" %['', soil.gwmx]
+				soil.rft = 0 unless !(soil.rft==nil)
+                records = records + "%4s%.2f" %['', soil.rft]
+				soil.rfpk = 0 unless !(soil.rfpk==nil)
+                records = records + "%4s%.2f" %['', soil.rfpk]
+				@soil_info.push(records + "\n")
+				#Line 3 Column 1 to 7
                 records = ""
-                records = records + soils.Tsla.ToString("F2").PadLeft(8)
-                records = records + soils.Xids.ToString("F2").PadLeft(8)
-                records = records + soils.Rtn1.ToString("F2").PadLeft(8)
-                records = records + soils.Xidk.ToString("F2").PadLeft(8)
-                records = records + soils.Zqt.ToString("F2").PadLeft(8)
-                records = records + soils.Zf.ToString("F2").PadLeft(8)
-                records = records + soils.Ztk.ToString("F2").PadLeft(8)
-                soil_info.push(records)
-                records = ""
-				for layers in initialLayer..layer_number - 1
-                    records = records + (Depth[layers] / 100).ToString("F3").PadLeft(8)
+				soil.tsla = 0 unless !(soil.tsla==nil)
+                records = records + "%4s%.2f" %['', soil.tsla]
+				soil.xids = 0 unless !(soil.xids==nil)
+                records = records + "%4s%.2f" %['', soil.xids]
+				soil.rtn1 = 0 unless !(soil.rtn1==nil)
+                records = records + "%4s%.2f" %['', soil.rtn1]
+				soil.xidk = 0 unless !(soil.xidk==nil)
+                records = records + "%4s%.2f" %['', soil.xidk]
+				soil.zqt = 0 unless !(soil.zqt==nil)
+                records = records + "%4s%.2f" %['', soil.zqt]
+				soil.zf = 0 unless !(soil.zf==nil)
+                records = records + "%4s%.2f" %['', soil.zf]
+				soil.ztk = 0 unless !(soil.ztk==nil)
+                records = records + "%4s%.2f" %['', soil.ztk]
+                @soil_info.push(records + "\n")
+				records = ""
+				session[:layer_number] = layer_number
+				for layers in initial_layer..layer_number -1
+					records = records + sprintf("%8.3f", (depth[layers] / 100))
                 end
-                soilInfo.Add(records)
-                records = ""
-
-                for layers in initialLayer..layer_number - 1
-                    if bulk_density[layers] = 0
+                @soil_info.push(records + "\n")
+				records = ""
+                for layers in initial_layer..layer_number - 1
+                    if bulk_density[layers] == 0
 					  bulk_density[layers] = 1.3
 					end
-                    records = records + bulk_density[layers].ToString("F3").PadLeft(8)
+                    records = records + sprintf("%8.3f", bulk_density[layers])
                 end
-                soilInfo.Add(records)
-                records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + uw[layers].ToString("F3").PadLeft(8)
+                @soil_info.push(records + "\n")
+				records = ""
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.3f", uw[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + fc[layers].ToString("F3").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.3f", fc[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + sand[layers].ToString("F2").PadLeft(8)
-                    #records = records + Format(sand[layers], "    0.00").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", sand[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + silt[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", silt[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + wn[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", wn[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + ph[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", ph[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + smb[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", smb[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + woc[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", woc[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + cac[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", cac[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + cec[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", cec[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + Format(rok[layers], "    0.00").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", rok[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + cnds[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", cnds[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    if Depth[layers] > SoilPMaxForSoilDepth
+                for layers in initial_layer..layer_number - 1
+                    if depth[layers] > SoilPMaxForSoilDepth
 					  ssf[layers] = SoilPDefault
 					end
                     if ssf[layers] = 0
 					  ssf[layers] = SoilPDefault
 					end
-                    records = records + ssf[layers].ToString("F2").PadLeft(8)
+                    records = records + sprintf("%8.2f", ssf[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + rsd[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", rsd[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + bdd[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", bdd[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + psp[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", psp[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + satc[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", satc[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")                
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + hcl[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", hcl[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
-                for layers in initialLayer..layer_number - 1
-                    records = records + wpo[layers].ToString("F2").PadLeft(8)
+                for layers in initial_layer..layer_number - 1
+                    records = records + sprintf("%8.2f", wpo[layers])
                 end
-                soilInfo.Add(records)
+                @soil_info.push(records + "\n")
                 records = ""
                 #this lines are not added at this time to reduced the size of the information to be transmited to the server. The server will include them in blanks for now. 5/30/2014.
                 #INSERT LINES 25, 26, 27, 28
-                soil_list.push("  " + Format(last_soil1, "000").PadLeft(8) + " APEX" + Format(last_soil1, "000").PadLeft(3) + ".sol")
+                soil_list.push("  " + "%3s" %["",last_soil1] + " APEX" + "%3s" %["",last_soil1] + ".sol")
                 i += 1
-            end
-            last_soil = last_soil1
+				last_soil = last_soil1
+				path = File.join(APEX, soil_file_name)
+				content = @soil_info
+				File.open(path, "w+") do |f|
+					@soil_info.each do |row| f << row end
+				end  #{ |f| f.write(@soil_info)}
+			end  # end soils do
+		end  # end method create_soils
+
+
+		def cal_satc(sand_in, clay_in, org_matter_in, density_factor_in, gravels_in, salinity_in) 
+			wilt_out = -0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031 + 
+					0.14 * (-0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031) - 0.02
+
+			y = -0.251 * sand_in + 0.195 * clay_in + 0.011 * org_matter_in + 0.006 * sand_in * org_matter_in - 0.027 * clay_in * org_matter_in + 0.452 * sand_in * clay_in + 0.299
+
+			x = 0.278 * sand_in + 0.034 * clay_in + 0.022 * org_matter_in - 0.018 * sand_in * org_matter_in - 0.027 * clay_in * org_matter_in - 0.584 * sand_in * clay_in + 0.078 + 
+				(0.636 * (0.278 * sand_in + 0.034 * clay_in + 0.022 * org_matter_in - 0.018 * sand_in * org_matter_in - 0.027 * clay_in * org_matter_in - 0.584 * sand_in * clay_in + 0.078) - 0.107) + 
+				y + (1.283 * y * y - 0.374 * y - 0.015) + -0.097 * sand_in + 0.043
+
+			#I18=1.0
+			matric_den_out = (1 - x) * 2.65 * 1.0
+			field_cap_out = y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65))
+
+			saturation_out = 1 - (matric_den_out / 2.65)
+
+			plant_avail_out = (field_cap_out - wilt_out) * (1 - ((matric_den_out / 2.65) * gravels_in) / (1 - gravels_in * (1 - matric_den_out / 2.65)))
+
+			z = -0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031 + 
+				0.14 * (-0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031) - 0.02
+			i = (Math::log(y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65))) / Math::log(2.718281828) - Math::log(z) / Math::log(2.718281828)) / (Math::log(1500) / Math::log(2.718281828) - Math::log(33) / Math::log(2.718281828))
+			sat_cond_out = 1930 * ((1 - (matric_den_out / 2.65)) - (y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65)))) ** (3 - i) * (1 - gravels_in) / (1 - gravels_in * (1 - 1.5 * (matric_den_out / 2.65)))
+
+			j = 1 - (matric_den_out / 2.65) - (y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65)))
+			k = -21.674 * sand_in - 27.932 * clay_in - 81.975 * j + 71.121 * sand_in * j + 8.294 * clay_in * j + 14.05 * sand_in * clay_in + 27.161
+
+			air_entry_out = y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65)) - (10 - 33) * ((1 - (matric_den_out / 2.65)) - (y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65)))) / (33 - (k + (0.02 * k ** 2 - 0.113 * k - 0.7)))
+
+			gravels_out = ((matric_den_out / 2.65) * gravels_in) / (1 - gravels_in * (1 - matric_den_out / 2.65))
+
+			bulk_density_out = gravels_out * 2.65 + (1 - gravels_out) * matric_den_out
+			return sat_cond_out
 		end
-
-    def cal_satc(sand_in, clay_in, org_matter_in, density_factor_in, gravels_in, salinity_in) 
-        wilt_out = -0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031 + _
-        0.14 * (-0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031) - 0.02
-
-        y = -0.251 * sand_in + 0.195 * clay_in + 0.011 * org_matter_in + 0.006 * sand_in * org_matter_in - 0.027 * clay_in * org_matter_in + 0.452 * sand_in * clay_in + 0.299
-
-        x = 0.278 * sand_in + 0.034 * clay_in + 0.022 * org_matter_in - 0.018 * sand_in * org_matter_in - 0.027 * clay_in * org_matter_in - 0.584 * sand_in * clay_in + 0.078 + _
-        (0.636 * (0.278 * sand_in + 0.034 * clay_in + 0.022 * org_matter_in - 0.018 * sand_in * org_matter_in - 0.027 * clay_in * org_matter_in - 0.584 * sand_in * clay_in + 0.078) - 0.107) + _
-        y + (1.283 * y * y - 0.374 * y - 0.015) + -0.097 * sand_in + 0.043
-
-        #I18=1.0
-        matric_den_out = (1 - x) * 2.65 * 1.0
-        field_cap_out = y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65))
-
-        saturation_out = 1 - (matric_den_out / 2.65)
-
-        plant_avail_out = (field_cap_out - wilt_out) * (1 - ((matric_den_out / 2.65) * gravels_in) / (1 - gravels_in * (1 - matric_den_out / 2.65)))
-
-        z = -0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031 + _
-        0.14 * (-0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031) - 0.02
-        i = (Math.Log(y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65))) / Math.Log(2.718281828) - Math.Log(z) / Math.Log(2.718281828)) / (Math.Log(1500) / Math.Log(2.718281828) - Math.Log(33) / Math.Log(2.718281828))
-        sat_cond_out = 1930 * ((1 - (matric_den_out / 2.65)) - (y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65)))) ^ (3 - i) * (1 - gravels_in) / (1 - gravels_in * (1 - 1.5 * (matric_den_out / 2.65)))
-
-        j = 1 - (matric_den_out / 2.65) - (y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65)))
-        k = -21.674 * sand_in - 27.932 * clay_in - 81.975 * j + 71.121 * sand_in * j + 8.294 * clay_in * j + 14.05 * sand_in * clay_in + 27.161
-
-        air_entry_out = y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65)) - (10 - 33) * ((1 - (matric_den_out / 2.65)) - (y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65)))) / (33 - (k + (0.02 * k ^ 2 - 0.113 * k - 0.7)))
-
-        gravels_out = ((matric_den_out / 2.65) * gravels_in) / (1 - gravels_in * (1 - matric_den_out / 2.65))
-
-        bulk_density_out = gravels_out * 2.65 + (1 - gravels_out) * matric_den_out
-        return sat_cond_out
-    end
 
 	def create_subareas(fields)  # fields is used for subprojects as for now it is just 1 - todo
 	    last_soil1 = 0
@@ -709,7 +746,7 @@ class ScenariosController < ApplicationController
 
         soils.each do |soil|
             #create the operation file for this subarea.
-            nirr = createOperations(soil)
+            nirr = create_operations(soil)  #todo activate createOperations
             #create the subarea file
 			bmp = Bmp.where(:scenario_id => params[:id]).find_by_bmpsublist_id(15)
 			if !(bmp == nil)
@@ -749,6 +786,8 @@ class ScenariosController < ApplicationController
         #last_subarea += _fieldsInfo1(currentFieldNumber)._soilsInfo(i - 1)._scenariosInfo(currentScenarioNumber)._subareasInfo._line2(0).Iops
 
         return "OK"
-	
 	end 
+
+	def create_operations(soil)
+	end
 end
