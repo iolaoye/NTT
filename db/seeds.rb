@@ -389,9 +389,9 @@ CroppingSystem.create!({:id => 377, :name =>'WAWinter wheat-100-20', :crop =>'Wi
 CroppingSystem.create!({:id => 378, :name =>'WAWinter wheat-100-20', :crop =>'Winter wheat', :tillage =>'none', :var12 =>'Winter wheat-100-20_NT', :state_id => 48, :grazing => 0, :status => 1}, :without_protection => true)
 
 Way.delete_all
-Way.create!({:id => 1, :way_name => "Weather Information Using PRISM Data", :spanish_name => "Informacion del clima usando datos de Prism", way_value => "Prism"}, :without_protection => true)
-Way.create!({:id => 2, :way_name => "Load your Own Weather File", :spanish_name => "Usar su propio archivo del Clima", way_value => "Own"}, :without_protection => true)
-Way.create!({:id => 3, :way_name => "Load Using Specific Coordinates (USA only)", :spanish_name => "Usando el clima de coordenadas especificas (USA only)", way_value => "Coordinates"}, :without_protection => true)
+Way.create!({:id => 1, :way_name => "Weather Information Using PRISM Data", :spanish_name => "Informacion del clima usando datos de Prism", :way_value => "Prism"}, :without_protection => true)
+Way.create!({:id => 2, :way_name => "Load your Own Weather File", :spanish_name => "Usar su propio archivo del Clima", :way_value => "Own"}, :without_protection => true)
+Way.create!({:id => 3, :way_name => "Load Using Specific Coordinates (USA only)", :spanish_name => "Usando el clima de coordenadas especificas (USA only)", :way_value => "Coordinates"}, :without_protection => true)
 
 FertilizerType.delete_all
 FertilizerType.create!({:id => 1, :name => "Commercial Fertilizer", :spanish_name => "Fertilizante Comercial"}, :without_protection => true)
@@ -902,7 +902,7 @@ Crop.create!({:id => 200,:number => 358,:dndc => 999,:code => 'FSCW',:name => 'C
 
 
 State.delete_all
-states = [
+states = 
     {:id => 1, :state_name => 'Alabama', :state_abbreviation => 'AL', :state_code => '01', :status => 0},
     {:id => 2, :state_name => 'Alaska', :state_abbreviation => 'AK', :state_code => '02', :status => 0},
     {:id => 3, :state_name => 'Arizona', :state_abbreviation => 'AZ', :state_code => '04', :status => 0},
@@ -955,7 +955,7 @@ states = [
     {:id => 50, :state_name => 'Wisconsin', :state_abbreviation => 'WI', :state_code => '55', :status => 0},
     {:id => 51, :state_name => 'Wyoming', :state_abbreviation => 'WY', :state_code => '56', :status => 0}
     {:id => 52, :state_name => 'Puerto Rico', :state_abbreviation => 'PR', :state_code => '72', :status => 0}
-]
+
 states.each { |state| State.create state, :without_protection => true }
 
 County.delete_all

@@ -190,19 +190,30 @@ ActiveRecord::Schema.define(:version => 20160421192339) do
   end
 
   create_table "layers", :force => true do |t|
-    t.float "uw"
-    t.float "fc"
-    t.float "wn"
-    t.float "smb"
-    t.float "woc"
-    t.float "cac"
-    t.float "cec"
-    t.float "rok"
-    t.float "cnds"
-    t.float "rsd"
-    t.float "bdd"
-    t.float "psp"
-    t.float "satc"
+    t.float    "depth"
+    t.float    "soil_p"
+    t.float    "bulk_density"
+    t.float    "sand"
+    t.float    "silt"
+    t.float    "clay"
+    t.float    "organic_matter"
+    t.float    "ph"
+    t.integer  "soil_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.float    "uw"
+    t.float    "fc"
+    t.float    "wn"
+    t.float    "smb"
+    t.float    "woc"
+    t.float    "cac"
+    t.float    "cec"
+    t.float    "rok"
+    t.float    "cnds"
+    t.float    "rsd"
+    t.float    "bdd"
+    t.float    "psp"
+    t.float    "satc"
   end
 
   create_table "locations", :force => true do |t|
