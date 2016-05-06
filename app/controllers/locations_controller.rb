@@ -1,4 +1,5 @@
 class LocationsController < ApplicationController
+
   # GET /locations
   # GET /locations.json
   def location_fields
@@ -70,7 +71,14 @@ class LocationsController < ApplicationController
 		
 		#verify if this field aready has its soils. If not the soils coming from the map are added
 		if !(params["field#{i}error"] == 1) then
-		    create_soils(i, @field.id)
+			if @field.id == nil then
+				if Field.all.length == 0
+					@field.id = 1
+				else
+					@field.id = Field.last.id += 1
+				end 
+			end
+		    create_soils(i, @field.id, @field.field_type)
 		end
 		#find or create weather
 		if (@field.weather_id == nil) then
@@ -166,9 +174,10 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   # DELETE /locations/1.json
   def destroy
+  uuuu
     @location = Location.find(params[:id])
     @location.destroy
-
+	
     respond_to do |format|
       format.html { redirect_to locations_url }
       format.json { head :no_content }
@@ -183,16 +192,16 @@ class LocationsController < ApplicationController
     def location_params
       params.require(:location).permit(:county_id, :project_id, :state_id, :status)
     end
-
  ###################################### create_soil ######################################
  ## Create soils receiving from map for each field.
-  def create_soils(i, field_id)
+  def create_soils(i, field_id, forestry)
     #delete all of the soils for this field
-	soils = Soil.where(:field_id => field_id)
-	soils.delete_all
+	soils1 = Soil.where(:field_id => field_id)
+	soils1.delete_all
+	#since all of the soils are deleted all of the subareas need to be created again.
+	total_percentage = 0
     for j in 1..params["field#{i}soils"].to_i
   	   @soil = @field.soils.new
-
 	   @soil.key = params["field#{i}soil#{j}mukey"]
 	   @soil.symbol = params["field#{i}soil#{j}musym"]
        @soil.group = params["field#{i}soil#{j}hydgrpdcd"]
@@ -202,18 +211,30 @@ class LocationsController < ApplicationController
 	   @soil.percentage = params["field#{i}soil#{j}pct"]
  	   if @soil.save then
 		   if !(params["field#{i}soil#{j}error"] == 2) then
-			create_layers(i, j)		   
+			create_layers(i, j)				   
 		   end
-	   end	    
+	   end
 	end #end for create_soils
 	soils = Soil.where(:field_id => field_id).order(percentage: :desc)
 	i = 1
+	#total_percentage = soils.where(:selected => true).sum(:percentage)
+	if soils.count >= 3 then
+		total_selected = 3
+	else
+		total_selected = soils.count
+	end
+
 	soils.each do |soil|
 		if (i <= 3) then
 			soil.selected = true
-			soil.save
-			i = i + 1
-		end 
+			total_percentage += soil.percentage
+		end
+		i = i + 1
+		soil_area = (soil.percentage / total_percentage) * @field.field_area
+		Scenario.where(:field_id => @field.id).each do |scenario|)
+			create_subarea("Soil", i, soil_area, soil.slope, forestry, total_selected, @field.field_name, scenario.id, soil.id, soil.percentage, total_percentage, @field.field_area)
+		end #end Scenario each do
+  		soil.save
 	end
   end  
 

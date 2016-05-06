@@ -52,7 +52,7 @@ class OperationsController < ApplicationController
     @operation = Operation.find(params[:id])
   end
 
-################################  NEW  #################################
+################################  CREATE  #################################
   # POST /operations
   # POST /operations.json
   def create
@@ -60,6 +60,8 @@ class OperationsController < ApplicationController
     @operation.scenario_id = session[:scenario_id]
     respond_to do |format|
       if @operation.save
+		#operations should be created in soils too.
+		add_soil_operation()
         format.html { redirect_to list_operation_path(session[:scenario_id]), notice: 'Operation was successfully created.' }
         format.json { render json: @operation, status: :created, location: @operation }
       else
@@ -89,7 +91,9 @@ class OperationsController < ApplicationController
   # DELETE /operations/1.json
   def destroy
     @operation = Operation.find(params[:id])
+    @soil_operation = SoilOperation.find_by_operation_id(@operation.id)
     @operation.destroy
+	@soil_operation.destroy
 
     respond_to do |format|
       format.html { redirect_to list_operation_path(session[:scenario_id]) }
@@ -105,4 +109,26 @@ class OperationsController < ApplicationController
     def operation_params
       params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id)
     end
+
+	def add_soil_operation()
+		soils = 
+		soil_operation = Operation.new(operation_params)
+		soil_operation.scenario_id = session[:scenario_id]
+		soil_operation.operation_id = @operation.id
+		soil_operation.soil_id = Subarea.find_by_scenario_id(@operation.scenario_id).soil_id
+		soil_operation.year = @operation.year
+		soil_operation.month = @operation.month_id
+		soil_operation.day = @operation.day
+		soil_operation.tractor_id = 0
+		soil_operation.crop_id = @operation.crop_id
+		soil_operation.type_id = @operation.type_id
+		soil_operation.opv1 = @operation.amount
+		soil_operation.opv2 = @operation.depth
+		soil_operation.opv3 = 0
+		soil_operation.opv4 = 0
+		soil_operation.opv5 = 0
+		soil_operation.opv6 = 0
+		soil_operation.opv7 = 0
+	end
+
 end

@@ -3,6 +3,7 @@ class Soil < ActiveRecord::Base
   #associations
      belongs_to :field
 	 has_many :layers, :dependent => :destroy
+	 has_many :subareas, :dependent => :destroy
   #scopes
     default_scope :order => "percentage DESC"
 end

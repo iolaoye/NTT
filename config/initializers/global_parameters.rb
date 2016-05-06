@@ -25,3 +25,11 @@
 #folder for download project files
 	DOWNLOAD = 'public/download'
 
+#convertion values
+	AC_TO_HA = 0.404685646
+	FT_TO_M = 0.3048
+
+#field constants
+	SMZ = '_SMZ'
+	ROAD = '_Road'
+

@@ -4,5 +4,6 @@ class Bmp < ActiveRecord::Base
 			 :slope_reduction, :sides, :bmpsublist_id
   #associations
      has_many :crops
+	 has_many :subareas, :dependent => :destroy
      belongs_to :scenario
 end

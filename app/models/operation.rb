@@ -4,4 +4,6 @@ class Operation < ActiveRecord::Base
   has_many :crops
   has_many :activities
   belongs_to :scenario
+  #scopes
+     default_scope :order => "year, month_id, day, activity_id, id ASC"
 end
