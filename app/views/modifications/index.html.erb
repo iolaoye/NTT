@@ -1,21 +1,276 @@
-<h1>Listing modifications</h1>
+<center><h1><%= t('modifications.mod_title') %></h1></center>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
+
+<%= select_tag(:menu_select, options_for_select([ 'Control File', 'Parameters File', 'Subarea File', 'Soil File', 'Layer File', 'Operation File' ])) %>
+
+<div id="control">
+<h2>Control File</h2>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Value1</th>
+    <th>Range1</th>
+    <th>Range2</th>
   </tr>
 
 <% @modifications.each do |modification| %>
-  <tr>
-    <td><%= link_to 'Show', modification %></td>
-    <td><%= link_to 'Edit', edit_modification_path(modification) %></td>
-    <td><%= link_to 'Destroy', modification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <tr class="gvRowStyle">
+    <td></td>
+    <td></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
   </tr>
 <% end %>
 </table>
+</div>
 
-<br />
+<div id="parameters">
+<h2>Parameters File<h2>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Value1</th>
+    <th>Range1</th>
+    <th>Range2</th>
+  </tr>
 
-<%= link_to 'New Modification', new_modification_path %>
+<% @modifications.each do |modification| %>
+  <tr class="gvRowStyle">
+    <td></td>
+    <td></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+  </tr>
+<% end %>
+</table>
+</div>
+
+<div id="subarea">
+<h2>Subarea File</h2>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th>Type</th>
+    <th>#</th>
+    <th>Title</th>
+    <th>Action</th>
+    <th>Lines Detail</th>
+  </tr>
+
+  <% @modifications.each do |modification| %>
+  <tr class="gvRowStyle">
+    <td class="numbers"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+<% end %>
+</table>
+</div>
+
+<div id="soil">
+<h2>Soil File</h2>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th>Name</th>
+    <th>Soil #</th>
+    <th>Key</th>
+    <th>Albedo</th>
+    <th>Ffc</th>
+    <th>Wtmm</th>
+    <th>Wtbl</th>
+    <th>Gwst</th>
+    <th>Gwmx</th>
+    <th>Rftt</th>
+    <th>Rfpk</th>
+    <th>Xids</th>
+    <th>Rtnl</th>
+    <th>Xidk</th>
+    <th>Zqt</th>
+    <th>Zf</th>
+    <th>Ztk</th>
+    <th>Fbm</th>
+    <th>Fhp</th>
+  </tr>
+
+  <% @modifications.each do |modification| %>
+  <tr class="gvRowStyle">
+    <td></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+  </tr>
+<% end %>
+</table>
+</div>
+
+<div id="layer">
+<h2>Layer File</h2>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th>Layer Number</th>
+    <th>Depth</th>
+    <th>BD</th>
+    <th>UW</th>
+    <th>FC</th>
+    <th>Sand</th>
+    <th>Silt</th>
+    <th>WN</th>
+    <th>PH</th>
+    <th>SMB</th>
+    <th>WOC</th>
+    <th>CAC</th>
+    <th>CEC</th>
+    <th>ROK</th>
+    <th>CNDS</th>
+    <th>SoilP/SSF</th>
+    <th>RSD</th>
+    <th>BDD</th>
+    <th>PSP</th>
+    <th>SATC</th>
+  </tr>
+
+  <% @modifications.each do |modification| %>
+  <tr class="gvRowStyle">
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+  </tr>
+<% end %>
+</table>
+</div>
+
+<div id="operation">
+<h2>Operation File</h2>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th>Year</th>
+    <th>Month</th>
+    <th>Day</th>
+    <th>Year</th>
+    <th>Tractor ID</th>
+    <th>Crop</th>
+    <th>JX(7)/id</th>
+    <th>OPV1</th>
+    <th>OPV2</th>
+    <th>OPV3</th>
+    <th>OPV4</th>
+    <th>OPV5</th>
+    <th>OPV6</th>
+    <th>OPV7</th>
+  </tr>
+
+  <% @modifications.each do |modification| %>
+  <tr class="gvRowStyle">
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+    <td class="numbers"></td>
+  </tr>
+  <% end %>
+</table>
+</div>
+
+<script>
+$(document).ready(function () {
+    $("#parameters").hide();
+    $("#subarea").hide();
+    $("#soil").hide();
+    $("#layer").hide();
+    $("#operation").hide();
+    $('#menu_select').bind('change', function() {
+        var data = $("#menu_select").val()
+        if (data == "Control File") {
+            $("#control").show();
+            $("#parameters").hide();
+            $("#subarea").hide();
+            $("#soil").hide();
+            $("#layer").hide();
+            $("#operation").hide();
+        } else if (data == "Parameters File") {
+            $("#parameters").show();
+            $("#control").hide();
+            $("#subarea").hide();
+            $("#soil").hide();
+            $("#layer").hide();
+            $("#operation").hide();
+        } else if (data == "Subarea File") {
+            $("#subarea").show();
+            $("#parameters").hide();
+            $("#control").hide();
+            $("#soil").hide();
+            $("#layer").hide();
+            $("#operation").hide();
+        } else if (data == "Soil File") {
+            $("#soil").show();
+            $("#parameters").hide();
+            $("#subarea").hide();
+            $("#control").hide();
+            $("#layer").hide();
+            $("#operation").hide();
+        } else if (data == "Layer File") {
+            $("#layer").show();
+            $("#parameters").hide();
+            $("#subarea").hide();
+            $("#soil").hide();
+            $("#control").hide();
+            $("#operation").hide();
+        } else if (data == "Operation File") {
+            $("#operation").show();
+            $("#parameters").hide();
+            $("#subarea").hide();
+            $("#soil").hide();
+            $("#control").hide();
+            $("#layer").hide();
+        }
+      //window.location.pathname = 'modifications/' + $(this).val() 
+    });
+  });
+</script>

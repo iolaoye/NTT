@@ -104,13 +104,13 @@ class ProjectsController < ApplicationController
 		@data = Hash.from_xml(params[:project].read)
 		#detect project version
 		#todo check the name of the project. It should not exist.		
-		if (@data['Project'] == []) then 
+		if (@data['Project'] == nil) then 
 		    #new version
 			#step 1. save project information
 			upload_project_new_version
 			#step 2. Save location information
 			upload_location_new_version
-		else
+		elsif (@data["Project"]["StartInfo"]["StationWay"] != "Station")
 		    #old version
 			#step 1. save project information
 			upload_project_info
@@ -120,6 +120,10 @@ class ProjectsController < ApplicationController
 			for i in 0..@data["Project"]["FieldInfo"].size-1
 				upload_field_info(i)
 			end
+			#step 4. Save Weather Information
+		else
+			redirect_to upload_project_path(0)
+			flash[:notice] = "Unable to upload this file" and return false
 		end  
 		@projects = Project.where(:user_id => session[:user_id])
    	    render :action => "index"
@@ -282,7 +286,7 @@ class ProjectsController < ApplicationController
 	   }	 #project end
 	   end   #builder do end
 	   file_name = session[:session_id] + ".prj"
-  	   path = File.join('public/download', file_name)
+  	   path = File.join(DOWNLOAD, file_name)
 	   content = builder.to_xml
 	   File.open(path, "w") { |f| f.write(content)}
 	   #file.write(content)
@@ -341,7 +345,7 @@ class ProjectsController < ApplicationController
 		location.state_id = @data["project"]["location_state_id"]
 		location.county_id = @data["project"]["location_county_id"]
 		location.status = @data["project"]["Status"]
-		location.coordinates = @data["[project"]["Coordinates"]
+		location.coordinates = @data["project"]["Coordinates"]
 		location.save
 		session[:location_id] = location.id
 	end
@@ -420,6 +424,9 @@ class ProjectsController < ApplicationController
 		scenario.field_id = field_id
 		scenario.name = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Name"]
 		scenario.save
+		#array is nil so calling size method on it throws nomethoderror
+		#test in console w/tutorial: https://www.58bits.com/blog/2012/06/13/getting-started-nokogiri-xml-ruby
+		#array is not nil, but unable to get array/size from it
 		for k in 0..@data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"].size-1
 			upload_operation_info(scenario.id, i, j, k)
 		end
@@ -510,7 +517,7 @@ class ProjectsController < ApplicationController
 		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Sa"] == "True" then
 			upload_bmp_sa(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgCrop"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgCrop"].to_i > 0 then
 			upload_bmp_sdg(scenario_id, i, j)
 		end
 	end
