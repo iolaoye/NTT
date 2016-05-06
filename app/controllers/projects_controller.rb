@@ -424,6 +424,9 @@ class ProjectsController < ApplicationController
 		scenario.field_id = field_id
 		scenario.name = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Name"]
 		scenario.save
+		#array is nil so calling size method on it throws nomethoderror
+		#test in console w/tutorial: https://www.58bits.com/blog/2012/06/13/getting-started-nokogiri-xml-ruby
+		#array is not nil, but unable to get array/size from it
 		for k in 0..@data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"].size-1
 			upload_operation_info(scenario.id, i, j, k)
 		end
@@ -514,7 +517,7 @@ class ProjectsController < ApplicationController
 		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Sa"] == "True" then
 			upload_bmp_sa(scenario_id, i, j)
 		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgCrop"] > 0 then
+		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgCrop"].to_i > 0 then
 			upload_bmp_sdg(scenario_id, i, j)
 		end
 	end
