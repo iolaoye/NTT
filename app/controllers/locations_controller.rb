@@ -231,7 +231,7 @@ class LocationsController < ApplicationController
 		end
 		i = i + 1
 		soil_area = (soil.percentage / total_percentage) * @field.field_area
-		Scenario.where(:field_id => @field.id).each do |scenario|)
+		Scenario.where(:field_id => @field.id).each do |scenario|
 			create_subarea("Soil", i, soil_area, soil.slope, forestry, total_selected, @field.field_name, scenario.id, soil.id, soil.percentage, total_percentage, @field.field_area)
 		end #end Scenario each do
   		soil.save
