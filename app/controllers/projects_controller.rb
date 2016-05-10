@@ -346,8 +346,8 @@ class ProjectsController < ApplicationController
 		location.project_id = session[:project_id]
 		location.state_id = @data["project"]["location_state_id"]
 		location.county_id = @data["project"]["location_county_id"]
-		location.status = @data["project"]["Status"]
-		location.coordinates = @data["project"]["Coordinates"]
+		location.status = @data["project"]["status"]
+		location.coordinates = @data["project"]["coordinates"]
 		location.save
 		session[:location_id] = location.id
 	end
@@ -371,17 +371,48 @@ class ProjectsController < ApplicationController
 		end
 	end
 
+	def upload_field_new_version(i)
+		field = Field.new
+		field.location_id = session[:location_id]
+		field.field_name = @data["project"]["location"]["fields"][i]["field_name"]
+		field.field_area = @data["project"]["location"]["fields"][i]["field_area"]
+		field.field_average_slope = @data["project"]["location"]["fields"][i]["field_average_slope"]
+		field.field_type = @data["project"]["location"]["fields"][i]["field_type"]
+		field.coordinates = @data["project"]["location"]["fields"][i]["coordinates"]
+		field.save
+		# Step 5. save Weather Info
+		upload_weather_new_version(field.id)
+		for k in 0..@data["project"]["location"]["fields"][i]["soils"].size-1
+			upload_soil_new_version(field.id, i, k)
+		end
+		for j in 0..@data["project"]["location"]["fields"][i]["scenarios"].size-1
+			#scenario_id = upload_scenario_new_version(field.id, i, j)
+		end
+	end
+
 	def upload_weather_info(field_id)
 		weather = Weather.new
 		weather.field_id = field_id
 		weather.station_way =  @data["Project"]["StartInfo"]["StationWay"]
 		weather.simulation_initial_year =  @data["Project"]["StartInfo"]["StationInitialYear"]
 		weather.simulation_final_year =  @data["Project"]["StartInfo"]["StationFinalYear"]
-		weather.simulation_final_year =  @data["Project"]["StartInfo"]["StationFinalYear"]
 		weather.latitude =  @data["Project"]["StartInfo"]["WeatherLat"]
 		weather.longitude =  @data["Project"]["StartInfo"]["WeatherLon"]
 		weather.weather_file =  @data["Project"]["StartInfo"]["CurrentWeatherPath"]
 		weather.way_id = Way.find_by_way_value(@data["Project"]["StartInfo"]["StationWay"]).id
+		weather.save
+	end
+
+	def upload_weather_new_version(field_id)
+		weather = Weather.new
+		weather.field_id = field_id
+		weather.station_way = @data["project"]["location"]["fields"]["weather"]["station_way"]
+		weather.simulation_initial_year = @data["project"]["location"]["fields"]["weather"]["simulation_initial_year"]
+		weather.simulation_final_year = @data["project"]["location"]["fields"]["weather"]["simulation_final_year"]
+		weather.latitude = @data["project"]["location"]["fields"]["weather"]["weather_latitude"]
+		weather.longitude = @data["project"]["location"]["fields"]["weather"]["weather_longitude"]
+		weather.weather_file = @data["project"]["location"]["fields"]["weather"]["weather_file"]
+		weather.way_id = @data["project"]["location"]["fields"]["weather"]["way_id"]
 		weather.save
 	end
 
@@ -394,7 +425,6 @@ class ProjectsController < ApplicationController
 		if (@data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Selected"] == "True") then
 			soil.selected = true
 		end
-		soil.symbol = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Symbol"]
 		soil.group = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Group"]
 		soil.name = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Name"]
 		soil.albedo = @data["Project"]["FieldInfo"][i]["SoilInfo"][j]["Albedo"]
@@ -404,6 +434,27 @@ class ProjectsController < ApplicationController
 		soil.save
 		for k in 0..@data["Project"]["FieldInfo"][i]["SoilInfo"][j]["LayerInfo"].size-1
 			upload_layer_info(soil.id, i, j, k)
+		end
+	end
+
+	def upload_soil_new_version(field_id, i, j)
+		soil = Soil.new
+		soil.field_id = field_id
+		soil.selected = false
+		soil.symbol = @data["project"]["location"]["fields"][i]["soils"][j]["symbol"]
+		soil.key = @data["project"]["location"]["fields"][i]["soils"][j]["key"]
+		if (@data["project"]["location"]["fields"][i]["soils"][j]["selected"] == "true")
+			soil.selected = true
+		end
+		soil.group = @data["project"]["location"]["fields"][i]["soils"][j]["group"]
+		soil.name = @data["project"]["location"]["fields"][i]["soils"][j]["name"]
+		soil.albedo = @data["project"]["location"]["fields"][i]["soils"][j]["albedo"]
+		soil.slope = @data["project"]["location"]["fields"][i]["soils"][j]["slope"]
+		soil.percentage = @data["project"]["location"]["fields"][i]["soils"][j]["percentage"]
+		soil.drainage_type = @data["project"]["location"]["fields"][i]["soils"][j]["drainage_type"]
+		soil.save
+		for k in 0..@data["project"]["location"]["fields"][i]["soils"][j]["layers"].size-1
+			upload_layer_new_version(soil.id, i, j, k)
 		end
 	end 
 
@@ -421,6 +472,20 @@ class ProjectsController < ApplicationController
 		layer.save
 	end
 
+	def upload_layer_new_version(soil_id, i, j, k)
+		layer = Layer.new
+		layer.soil_id = soil_id
+		layer.depth = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["depth"]
+		layer.soil_p = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["soilp"]
+		layer.bulk_density = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["bd"]
+		layer.sand = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["sand"]
+		layer.silt = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["silt"]
+		layer.clay = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["clay"]
+		layer.organic_matter = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["om"]
+		layer.ph = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["ph"]
+		layer.save
+	end
+
 	def upload_scenario_info(field_id, i, j)
 		scenario = Scenario.new
 		scenario.field_id = field_id
@@ -428,11 +493,22 @@ class ProjectsController < ApplicationController
 		scenario.save
 		#array is nil so calling size method on it throws nomethoderror
 		#test in console w/tutorial: https://www.58bits.com/blog/2012/06/13/getting-started-nokogiri-xml-ruby
-		#array is not nil, but unable to get array/size from it
 		for k in 0..@data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"].size-1
 			upload_operation_info(scenario.id, i, j, k)
 		end
 		upload_bmp_info(scenario.id, i, j)
+		return scenario.id
+	end
+
+	def upload_scenario_new_version(field_id, i, j)
+		scenario = Scenario.new
+		scenario.field_id = field_id
+		scenario.name = @data["project"]["location"]["fields"][i]["scenarios"][j]["name"]
+		scenario.save
+		for k in 0..@data["project"]["location"]["fields"][i]["scenarios"][j]["operations"]
+			upload_operation_new_version(scenario.id, i, j, k)
+		end
+		#upload_bmp_info_new_version(scenario.id, i, j)
 		return scenario.id
 	end
 
@@ -453,6 +529,25 @@ class ProjectsController < ApplicationController
 		operation.org_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["OrgN"]
 		operation.org_p = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["OrgP"]
 		operation.nh3 = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["Nh3"]
+	end
+
+	def upload_operation_new_version(scenario_id, i, j, k)
+		operation = Operation.new
+		operation.scenario_id = scenario_id
+		operation.crop_id = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["crop_id"]
+		operation.activity_id = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["activity_id"]
+		operation.day = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["day"]
+		operation.month_id = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["month"]
+		operation.year = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["year"]
+		operation.type_id = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["type_id"]
+		operation.subtype_id = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["subtype_id"]
+		operation.amount = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["amout"] #typo in xml generated file
+		operation.depth = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["depth"]
+		operation.no3_n = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["no3_n"]
+		operation.po4_p = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["po4_p"]
+		operation.org_n = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["org_n"]
+		operation.org_p = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["org_p"]
+		operation.nh3 = @data["project"]["location"]["fields"][i]["scenarios"][j]["operations"][k]["nh3"]
 	end
 
 	def upload_bmp_info(scenario_id, i, j)
