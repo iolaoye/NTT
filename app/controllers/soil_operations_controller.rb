@@ -87,6 +87,6 @@ class SoilOperationsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def soil_operation_params
-      params.require(:soil_operation).permit()
+      params.require(:soil_operation).permit(:crop_id)
     end
 end

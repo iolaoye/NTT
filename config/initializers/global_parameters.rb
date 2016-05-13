@@ -13,6 +13,9 @@
 # URL to send information to NTT, which return the results
 	URL_NTT = 'http://nn.tarleton.edu/NttApex/NNRestService.ashx'
 
+# URL to get heat units
+	URL_HU = 'http://nn.tarleton.edu/NTTCalcHU/NTTService.asmx?WSDL'
+
 #APEX folders.
 	APEX = "C:/Borrar/NTTFiles"
 
@@ -26,10 +29,15 @@
 	DOWNLOAD = 'public/download'
 
 #convertion values
-	AC_TO_HA = 0.404685646
-	FT_TO_M = 0.3048
-
+	AC_TO_HA = 0.404685645
+	FT_TO_M = 0.093
+	FT_TO_HA = 0.0000093
+	IN_TO_MM = 25.4
+	THA_TO_TAC = 0.446
+	LBS_TO_KG = 0.453592
+	AC_TO_M2 = 4046.85645
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'
+	Crop_Road = 300  
 

@@ -1,3 +1,5 @@
 class SoilOperation < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :crop_id
+  #associations
+	  belongs_to :operation
 end

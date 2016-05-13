@@ -36,15 +36,16 @@
     <td class="gvCellStyleText"><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
     <td class="gvCellStyleNumber"><%= operation.day %></td>
     <% case operation.activity_id %>
-		  <% when 1, 3  # planting, liming %>
-        <td class="gvCellStyleText"><%= Tillage.find(operation.type_id).eqp %></td>
+		  <% when 1, 3  # planting, tillage %>
+    <session[:operation_type_id]=operation.type_id></session>
+        <td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
       <% when 2  # fertilizer %>
         <td class="gvCellStyleText"><%= Fertilizer.find(operation.subtype_id).name %></td>
-      <% when 6  # fertilizer %>
+      <% when 6  # irrigation %>
         <td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).name %></td>
       <% when 7  # grazing%>
         <td class="gvCellStyleText"><%= Fertilizer.find(operation.type_id).name %></td>
-      <% else # till, harvest, kill, stop grazin, burn%>
+      <% else # harvest, kill, stop grazin, burn, liming%>
         <td class="gvCellStyleText"><%= :"" %></td>
     <% end %>
     <td class="gvCellStyleNumber"><%= operation.amount %></td>

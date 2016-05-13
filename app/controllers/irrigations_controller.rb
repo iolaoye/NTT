@@ -87,6 +87,6 @@ class IrrigationsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def irrigation_params
-      params.require(:irrigation).permit(:name, :status)
+      params.require(:irrigation).permit(:name, :status, :code)
     end
 end

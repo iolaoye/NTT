@@ -4,7 +4,7 @@ class Subarea < ActiveRecord::Base
 	:bmp_id, :scenario_id
 
   #associations
+	  belongs_to :scenarios
 	  belongs_to :soil
 	  belongs_to :bmp
-	  belongs_to :scenarios
 end

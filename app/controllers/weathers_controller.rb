@@ -26,16 +26,17 @@ class WeathersController < ApplicationController
 	@weather = Weather.find_by_field_id(session[:field_id])
 	@project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
-	if !(@weather == :nil) # no empty array
+	if !(@weather == :nil) # no empty array	
+	ooo	
 	  if (@weather.way_id == nil)
 	     @way = ""
 	  else
 	     @way = Way.find(@weather.way_id)
-	  end 
-	  respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: @weather }
-      end
+	  end
+	end		 
+	respond_to do |format|
+		format.html # show.html.erb
+		format.json { render json: @weather }
     end
   end
 
@@ -60,6 +61,18 @@ class WeathersController < ApplicationController
 	  else
 	     @way = Way.find(@weather.way_id)
 	  end 
+	else
+		@weather = Weather.new
+		@weather.field_id = session[:field_id]
+		@weather.way_id = 0
+		@weather.simulation_initial_year = 0
+		@weather.simulation_final_year = 0
+		@weather.weather_initial_year = 0
+		@weather.weather_final_year = 0
+		@weather.longitude = 0
+		@weather.latitude = 0 
+		@weather.weather_file = ""
+		@weather.save
     end
   end
 

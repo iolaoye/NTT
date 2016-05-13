@@ -6,6 +6,7 @@ module ScenariosHelper
 		total_percentage = soils.where(:selected => true).sum(:percentage)
 		total_selected = soils.where(:selected => true).count
 		soils.each do |soil|
+			i+=1
 			soil_area = (soil.percentage / total_percentage) * field.field_area
 			create_subarea("Soil", i, soil_area, soil.slope, field.field_type, total_selected, field.field_name, scenario.id, soil.id, soil.percentage, total_percentage, field.field_area)
 		end #soils each do end
@@ -155,7 +156,7 @@ module ScenariosHelper
 			subarea.ny1 = 0
 			subarea.xtp1 = 0.0			
 		else
-			operations = Operation.find_by_scenario_id(scenario_id)
+			operations = Operation.where(:scenario_id => scenario_id)
 			if operations != nil then
 				operations.each do |operation|
 					if operation.activity_id == 7 then   #grazing
