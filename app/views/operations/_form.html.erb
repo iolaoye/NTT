@@ -36,7 +36,7 @@
 		<% when 1  # planting %>
 		    <div id="div_type"   >
 			   <%= label :type_id, 'Select One' %>
-			   <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => 'Select One'}, {:required => true} %>
+			   <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => 'Select One'}, {:required => true} %>
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 	           <%= f.label :type_id, 'Fertilizer Type' %>
@@ -106,11 +106,11 @@
 		<% when 3 # tillage %>
 		    <div id="div_type" >
 	           <%= label :type_id, 'Select One' %>
-	           <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => 'Select One'}, {:required => true} %>
+	           <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => 'Select One'}, {:required => true} %>
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 	           <%= f.label :type_id, 'Fertilizer Type' %>
-	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
+	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Method'} %>
 			</div>
   		    <div class="field" id="div_amount" style="display:none">
 			  <%= f.label :amount %>
@@ -246,7 +246,7 @@
 		<% else # harvest, kill, stop grazing, burn%>
 		    <div id="div_type"  style="display:none" >
 	           <%= label :type_id, 'Select One' %>
-	           <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => 'Select One'} %>
+	           <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => 'Select One'} %>
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 	           <%= f.label :type_id, 'Fertilizer Type' %>

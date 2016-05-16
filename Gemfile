@@ -39,3 +39,4 @@ gem 'breadcrumbs_on_rails'
 # gem 'bcrypt-ruby'
 # rest API for NTT call
 gem "nokogiri"
+gem 'savon', '>= 2.0'

@@ -14,6 +14,7 @@ class TillagesController < ApplicationController
   # GET /tillages.json
   def index
     @tillages = Tillage.where(:activity_id => params[:activity_id])
+    #@tillages = Tillage.all
 
     respond_to do |format|
       format.html # index.html.erb

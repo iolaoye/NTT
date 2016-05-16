@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Id</th>
     <th>Name</th>
     <th>Status</th>
     <th></th>
@@ -11,6 +12,7 @@
 
 <% @bmpsublists.each do |bmpsublist| %>
   <tr>
+    <td><%= bmpsublist.id %></td>
     <td><%= bmpsublist.name %></td>
     <td><%= bmpsublist.status %></td>
     <td><%= link_to 'Show', bmpsublist %></td>

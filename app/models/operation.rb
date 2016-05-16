@@ -3,6 +3,7 @@ class Operation < ActiveRecord::Base
   #associations
   has_many :crops
   has_many :activities
+  has_many :soil_operations, :dependent => :destroy
   belongs_to :scenario
   #scopes
      default_scope :order => "year, month_id, day, activity_id, id ASC"

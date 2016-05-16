@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Id</th>
     <th>Name</th>
     <th>Code</th>
     <th>Abbreviation</th>
@@ -15,21 +16,22 @@
     <th></th>
   </tr>
 
-<% @tillages.each do |tillage| %>
-  <tr>
-    <td><%= tillage.name %></td>
-    <td><%= tillage.code %></td>
-    <td><%= tillage.abbreviation %></td>
-    <td><%= tillage.spanish_name %></td>
-    <td><%= tillage.operation %></td>
-    <td><%= tillage.dndc %></td>
-    <td><%= tillage.eqp %></td>
-    <td><%= tillage.status %></td>
-    <td><%= link_to 'Show', tillage %></td>
-    <td><%= link_to 'Edit', edit_tillage_path(tillage) %></td>
-    <td><%= link_to 'Destroy', tillage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+  <% @tillages.each do |tillage| %>
+    <tr>
+      <td><%= tillage.id%></td>
+      <td><%= tillage.name %></td>
+      <td><%= tillage.code %></td>
+      <td><%= tillage.abbreviation %></td>
+      <td><%= tillage.spanish_name %></td>
+      <td><%= tillage.operation %></td>
+      <td><%= tillage.dndc %></td>
+      <td><%= tillage.eqp %></td>
+      <td><%= tillage.status %></td>
+      <td><%= link_to 'Show', tillage %></td>
+      <td><%= link_to 'Edit', edit_tillage_path(tillage) %></td>
+      <td><%= link_to 'Destroy', tillage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
 </table>
 
 <br />

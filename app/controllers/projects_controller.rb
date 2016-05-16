@@ -1,4 +1,9 @@
 class ProjectsController < ApplicationController
+	#rescue_from ::ActiveRecord::RecordNotFound, :with => :record_not_found
+	#rescue_from ::NameError, :with => :error_occurred
+	#rescue_from ::ActionController::RoutingError, :with => :error_occurred
+	#rescue_from ::Exception, :with => :error_occurred
+
   # GET /projects
   # GET /projects.json
   def index 
@@ -88,7 +93,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project = Project.find(params[:id])
 	location = Location.where(:project_id => params[:id])
-	location.destroy_all
+	location.destroy_all unless location == []
     @project.destroy
 
     respond_to do |format|
@@ -96,6 +101,16 @@ class ProjectsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+	def record_not_found(exception)
+	  render json: {error: exception.message}.to_json, status: 404
+	  return
+	end
+
+	def error_occurred(exception)
+	  render json: {error: exception.message}.to_json, status: 500
+	  return
+	end
 
   def upload 
 	#nothing to do here. Just render the upload view
@@ -106,10 +121,11 @@ class ProjectsController < ApplicationController
 		@data = Hash.from_xml(params[:project].read)
 		#detect project version
 		#todo check the name of the project. It should not exist.		
+		msg = "OK"
 		if (@data['Project'] == nil) then 
 		    #new version
 			#step 1. save project information
-			upload_project_new_version
+			msg = upload_project_new_version
 			#step 2. Save location information
 			upload_location_new_version
 		elsif (@data["Project"]["StartInfo"]["StationWay"] != "Station")
@@ -128,7 +144,7 @@ class ProjectsController < ApplicationController
 			flash[:notice] = "Unable to upload this file" and return false
 		end  
 		@projects = Project.where(:user_id => session[:user_id])
-   	    render :action => "index"
+   	    render :action => "index", notice: msg
 	end
 
 	########################################### DOWNLOAD PROJECT FILE IN XML FORMAT ##################
@@ -163,7 +179,7 @@ class ProjectsController < ApplicationController
 						xml.field_average_slope field.field_average_slope
 						xml.field_type field.field_type
 						xml.coordinates field.coordinates
-					    weather = Weather.find(field.id)
+					    weather = Weather.find_by_field_id(field.id)
 						xml.weather {
 							xml.station_way weather.station_way
 							xml.simulation_initial_year weather.simulation_initial_year
@@ -321,11 +337,15 @@ class ProjectsController < ApplicationController
 	def upload_project_new_version
 		project = Project.new
 		project.user_id = session[:user_id]
-		project.name = @data["project"]["project_Name"]
+		project.name = @data["project"]["project_name"]
 		project.description = @data["project"]["project_description"]
 		project.version = "NTTG3"
-		project.save
-		session[:project_id] = project.id
+		if project.save
+			session[:project_id] = project.id
+			return "OK"
+		else
+			return "project could not be saved"
+		end
 	end 
 
 	def upload_location_info
@@ -363,9 +383,11 @@ class ProjectsController < ApplicationController
 		field.save
 		# Step 5. save Weather Info
 		upload_weather_info(field.id)
+		# Step 6. save soil, layers, subareas, soil_operations information
 		for k in 0..@data["Project"]["FieldInfo"][i]["SoilInfo"].size-1
 			upload_soil_info(field.id, i, k)
 		end
+		# Ste p 7. save scenarios, operations, bmps information
 		for j in 0..@data["Project"]["FieldInfo"][i]["ScenarioInfo"].size-1
 			scenario_id = upload_scenario_info(field.id, i, j)
 		end
@@ -393,12 +415,14 @@ class ProjectsController < ApplicationController
 	def upload_weather_info(field_id)
 		weather = Weather.new
 		weather.field_id = field_id
-		weather.station_way =  @data["Project"]["StartInfo"]["StationWay"]
-		weather.simulation_initial_year =  @data["Project"]["StartInfo"]["StationInitialYear"]
-		weather.simulation_final_year =  @data["Project"]["StartInfo"]["StationFinalYear"]
-		weather.latitude =  @data["Project"]["StartInfo"]["WeatherLat"]
-		weather.longitude =  @data["Project"]["StartInfo"]["WeatherLon"]
-		weather.weather_file =  @data["Project"]["StartInfo"]["CurrentWeatherPath"]
+		weather.station_way = @data["Project"]["StartInfo"]["StationWay"]
+		weather.simulation_initial_year = @data["Project"]["StartInfo"]["StationInitialYear"]
+		weather.simulation_final_year = @data["Project"]["StartInfo"]["StationFinalYear"]
+		weather.weather_initial_year = @data["Project"]["StartInfo"]["WeatherInitialYear"]
+		weather.weather_final_year = @data["Project"]["StartInfo"]["WeatherFinalYear"]
+		weather.latitude = @data["Project"]["StartInfo"]["WeatherLat"]
+		weather.longitude = @data["Project"]["StartInfo"]["WeatherLon"]
+		weather.weather_file = @data["Project"]["StartInfo"]["CurrentWeatherPath"]
 		weather.way_id = Way.find_by_way_value(@data["Project"]["StartInfo"]["StationWay"]).id
 		weather.save
 	end

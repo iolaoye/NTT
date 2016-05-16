@@ -38,7 +38,7 @@ class ScenariosController < ApplicationController
   # GET /scenarios/1
   # GET /scenarios/1.json
   def show
-	session[scenario_id] = params[:id]	
+	session[:scenario_id] = params[:id]	
     #@doc = "Nothing"
     @scenario = Scenario.find(params[:id])
 	dir_name = APEX + "/APEX" + session[:session_id]
@@ -46,10 +46,17 @@ class ScenariosController < ApplicationController
 	if !File.exists?(dir_name)
 		Dir.mkdir(dir_name) 
 		FileUtils.cp_r(Dir['public/APEX1/*'], dir_name)
-	end 
+	end
+	#CREATE structure for nutrients that go with fert file
+	@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
+	@current_nutrients = Array.new
+	@new_fert_line = Array.new
+	@fem_list = Array.new
 	create_weather_file(dir_name)
 	create_soils()
 	create_subareas(1)
+	@depth_ant = Array.new
+	@opers = Array.new
 	#build_xml()
 	#@scenarios = Scenario.where(:field_id => session[:field_id])
 	#@project_name = Project.find(session[:project_id]).name
@@ -115,6 +122,7 @@ class ScenariosController < ApplicationController
     end
   end
 
+################################  DESTROY  #################################
   # DELETE /scenarios/1
   # DELETE /scenarios/1.json
   def destroy
@@ -151,17 +159,17 @@ class ScenariosController < ApplicationController
 	$last_soil_sub = 0
 	$last_subarea = 0
 	CropMixedGrass = 367
-
+	COMA = ", "
 
 #   def build_xml()
-#       require 'nokogiri'
-#   	   require 'open-uri'
-#	   require 'net/http'
-#	   require 'rubygems'
+#       require #nokogiri#
+#   	   require #open-uri#
+#	   require #net/http#
+#	   require #rubygems#
 #
 #	   project = Project.find(session[:project_id])
 #	   weather = Weather.find(session[:field_id])
-#	   soils = Soil.where(:field_id => session[:field_id], :selected => true)
+#	   soils = Soil.where(:field_id => session[:field_id]).where(:selected => true)
 #
 #	   builder = Nokogiri::XML::Builder.new do |xml|
 #		  xml.project {
@@ -217,9 +225,9 @@ class ScenariosController < ApplicationController
 #	   end   #builder end
 
 #	   content = builder.to_xml
-#	   xml_string = content.gsub('<', '[').gsub('>', ']')
+#	   xml_string = content.gsub(#<#, #[#).gsub(#>#, #]#)
 #	   uri = URI(URL_NTT)	   
-#       res = Net::HTTP.post_form(uri, 'input' => xml_string)
+#       res = Net::HTTP.post_form(uri, #input# => xml_string)
 #	   @doc = xml_string
 #	end
 
@@ -289,8 +297,8 @@ class ScenariosController < ApplicationController
         selected = false
 		soils.each do |soil|
             if soil.selected == true 
-            selected = true
-            break
+				selected = true
+				break
             end
         end
         #if no soils selected the soils are sorted by area and  selects up to the three most dominant soils.
@@ -298,8 +306,9 @@ class ScenariosController < ApplicationController
 			soils.each do |soil|
                 if i > 2 
 					break
+				else
+					soil.selected = true
 				end
-                soil.selected = true
             end
         end
 
@@ -327,9 +336,9 @@ class ScenariosController < ApplicationController
             end
             layers.each do |layer|
 				# try to find texture from texture description from database
-                #For j = 0 To texture.Length - 1
-                #    if layer("texture").Contains(texture(j))  Exit For
-                #Next
+                #for j = 0 To texture.Length - 1
+                #    if layer("texture").Contains(texture(j))  Exit for
+                #end
 
                 if layer_number == 1
                     #validate if this layer is going to be used for Agriculture Lands
@@ -346,7 +355,7 @@ class ScenariosController < ApplicationController
                 depth[layer_number] = layer.depth * IN_TO_CM
 
                 #if current layer is deeper than maxDept  no more layers are needed.
-                #if Depth[layer_number] > maxDepth(i) && maxDepth(i) > 0  Exit For
+                #if Depth[layer_number] > maxDepth(i) && maxDepth(i) > 0  Exit for
                 #These statements were added to control duplicated layers in the soil.
                 if layer_number > 1 
                     if depth[layer_number] == depth[layer_number - 1] 
@@ -537,12 +546,12 @@ class ScenariosController < ApplicationController
                 wpo[initial_layer] = wpo[initial_layer + 1]
                 cprv[initial_layer] = cprv[initial_layer + 1]
                 cprh[initial_layer] = cprh[initial_layer + 1]
-            end
+            end  #end depth
 			#Line 2 Column 1 and 2
             if albedo == 0 
 				albedo = 0.2
 			end
-            records = "%4s%.2f" %['',albedo]
+            records = sprintf("%8.2f", albedo)
             #records =  albedo.to_s
             case hsg
                 when "A"
@@ -554,39 +563,39 @@ class ScenariosController < ApplicationController
                 when "D"
                     records = records + "      4."
             end
-			soil.ffc = 0 unless !(soil.ffc==nil)
-            records = records + "%4s%.2f" %['', soil.ffc]
-			soil.wtmn = 0 unless !(soil.wtmn==nil)
-            records = records + "%4s%.2f" %['', soil.wtmn]
+			soil.ffc = 0 unless soil.ffc!=nil
+            records = records + sprintf("%8.2f", soil.ffc)
+			soil.wtmn = 0 unless soil.wtmn!=nil
+            records = records + sprintf("%8.2f", soil.wtmn)
 			soil.wtmx = 0 unless !(soil.wtmx==nil)
-            records = records + "%4s%.2f" %['', soil.wtmx]
+            records = records + sprintf("%8.2f", soil.wtmx)
 			soil.wtbl = 0 unless !(soil.wtbl==nil)
-            records = records + "%4s%.2f" %['', soil.wtbl]
+            records = records + sprintf("%8.2f", soil.wtbl)
 			soil.gwst = 0 unless !(soil.gwst==nil)
-            records = records + "%4s%.2f" %['', soil.gwst]
+            records = records + sprintf("%8.2f", soil.gwst)
 			soil.gwmx = 0 unless !(soil.gwmx==nil)
-            records = records + "%4s%.2f" %['', soil.gwmx]
+            records = records + sprintf("%8.2f", soil.gwmx)
 			soil.rft = 0 unless !(soil.rft==nil)
-            records = records + "%4s%.2f" %['', soil.rft]
+            records = records + sprintf("%8.2f", soil.rft)
 			soil.rfpk = 0 unless !(soil.rfpk==nil)
-            records = records + "%4s%.2f" %['', soil.rfpk]
+            records = records + sprintf("%8.2f", soil.rfpk)
 			soil_info.push(records + "\n")
 			#Line 3 Column 1 to 7
             records = ""
 			soil.tsla = 0 unless !(soil.tsla==nil)
-            records = records + "%4s%.2f" %['', soil.tsla]
+            records = records + sprintf("%8.2f", soil.tsla)
 			soil.xids = 0 unless !(soil.xids==nil)
-            records = records + "%4s%.2f" %['', soil.xids]
+            records = records + sprintf("%8.2f", soil.xids)
 			soil.rtn1 = 0 unless !(soil.rtn1==nil)
-            records = records + "%4s%.2f" %['', soil.rtn1]
+            records = records + sprintf("%8.2f", soil.rtn1)
 			soil.xidk = 0 unless !(soil.xidk==nil)
-            records = records + "%4s%.2f" %['', soil.xidk]
+            records = records + sprintf("%8.2f", soil.xidk)
 			soil.zqt = 0 unless !(soil.zqt==nil)
-            records = records + "%4s%.2f" %['', soil.zqt]
+            records = records + sprintf("%8.2f", soil.zqt)
 			soil.zf = 0 unless !(soil.zf==nil)
-            records = records + "%4s%.2f" %['', soil.zf]
+            records = records + sprintf("%8.2f", soil.zf)
 			soil.ztk = 0 unless !(soil.ztk==nil)
-            records = records + "%4s%.2f" %['', soil.ztk]
+            records = records + sprintf("%8.2f", soil.ztk)
             soil_info.push(records + "\n")
 			records = ""
 			session[:layer_number] = layer_number
@@ -763,19 +772,21 @@ class ScenariosController < ApplicationController
         i = 0
 		soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
 		@subarea_file = Array.new
+		@opcs_list_file = Array.new
         soils.each do |soil|
             #create the operation file for this subarea.
-            nirr = create_operations(soil)  
+            nirr = create_operations(soil, i)  
             #create the subarea file
 			bmp = Bmp.where(:scenario_id => params[:id]).find_by_bmpsublist_id(15)
 			if (bmp == nil)
             #if !(bmps.CBCWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBBWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBCrop > 0) then
                 #addSubareaFile(soil._scenariosInfo(currentScenarioNumber)._subareasInfo, operation_number, last_soil1, last_owner1, i, nirr, false)
 				#operation number is used to control subprojects. Therefore here is going to be 1.
-                add_subarea_file(Subarea.where(:soil_id => soil.id).find_by_scenario_id(@scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, soils.count)
+                add_subarea_file(Subarea.where(:soil_id == soil.id).find_by_scenario_id(@scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, soils.count)
                 i = i + 1
             end
         end
+
         if last_soil1 > 0 
             $last_soil_sub = last_soil1 - 1
         else
@@ -783,7 +794,7 @@ class ScenariosController < ApplicationController
         end
         $last_subarea = 0
 
-        #For Each buf In _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bufferInfo
+        #for Each buf In _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bufferInfo
 		#todo if buffer is used. Maybe just subarea are used means all of the buffer are created directly as subareas.
 		no = 1
 		if no != 1 then
@@ -795,21 +806,22 @@ class ScenariosController < ApplicationController
 					opcsFile.Add(".OPC " & buf.SubareaTitle + " file Operation:1  Date: " + Now.ToString)
 					opcsFile.Add(buf._operationsInfo(0).LuNumber.ToString.PadLeft(4))
 					operations = Operation.where(:scenario_id => params[:id])
-					#For Each oper In buf._operationsInfo
+					#for Each oper In buf._operationsInfo
 					operations.each do |oper|
-					   opcsFile.Add(oper.Year.ToString.PadLeft(3) + oper.Month.ToString.PadLeft(3) + oper.Day.ToString.PadLeft(3) + oper.ApexOp.ToString.PadLeft(5) + 0.to_s.PadLeft(5) + oper.ApexCrop.ToString.PadLeft(5) + oper.ApexOpType.ToString.PadLeft(5) + (oper.OpVal1.ToString + ".0").PadLeft(8) + (oper.OpVal2.ToString + ".0").PadLeft(8))
+					   opcsFile.Add(sprintf("%3d", oper.year) + sprintf("%3d", oper.month) + sprintf("%3d", oper) + sprintf("%5d", oper.apex_code) + sprintf("%5d", 0) + sprintf("%5d", oper.apex_crop) + sprintf("%5d", oper.subtype) + sprintf("%8.2f", oper.opv1) + sprintf("%8.2f", oper.opv2))
 					end
 					opcsFile.Add("End " & buf.SubareaTitle)
 				end 
 				add_subarea_file(buf, operation_number, last_soil1, last_owner1, 0, 0, True)
 			end
-		end #end if if no != 1
+		end #end if no != 1
 
         $last_soil_sub = last_soil1
         last_owner = last_owner1
         #todo check this one.
         #$last_subarea += _fieldsInfo1(currentFieldNumber)._soilsInfo(i - 1)._scenariosInfo(currentScenarioNumber)._subareasInfo_subarea_info..Iops
 		print_file(@subarea_file, "APEX.sub")				
+		print_file(@opcs_list_file, "OPCS.dat")
 
         return "OK"
 	end 
@@ -977,71 +989,407 @@ class ScenariosController < ApplicationController
         return "OK"
     end
 
-	def create_operations(soil)
+	def create_operations(soil, operation_number)
 	    #This suroutine create operation files for Baseline and Alternative using information entered by user.
         nirr = 0
 
-        #verify if _crops are empty. If so get them.
-        fertCode = 79
-        GrazingB = false
-		opcs_file = Array.new
-        opcs_file.push("Operation")
-
-        Case _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.AIType
-            when 0
-                irrigation_type = 0
-            when 1
-                irrigation_type = 500
-            when 2
-                irrigation_type = 502
-            when 3
-                irrigation_type = 530
-            when 4
-                irrigation_type = 533
-            when 5
-                irrigation_type = 534
-            when 6
-                irrigation_type = 0
-            when 7
-                irrigation_type = 502
-            when 8
-                irrigation_type = 502
-            when Else
-                irrigation_type = 0
-        end # end case
+        #verify if _crops are empty. if so get them.
+        @fert_code = 79
+        grazingb = false
+		@opcs_file = Array.new
+        #@opcs_file.push("Operation" + "\n")
+		irrigation_type = 0
+		bmp = Bmp.where(:scenario_id == session[:scenario_id] && :irrigation_id > 0).first		
+		irrigation_type = Irrigation.find(bmp.irrigation_id).code unless bmp == nil
         #SORT operation records by date (year, month, day)
         #Dim query As IEnumerable(Of OperationsData)
         #query = From r In soil._scenariosInfo(currentScenarioNumber)._operationsInfo Order By r.Year, r.Month, r.Day, r.ApexOpName, r.EventId
-        #check and fix the operation list                    
-        opeations = fix_operation_file(Operation.where(:soil_id => soil.id))
-        #line 1
-        opcs_file.push(" .Opc file created directly by the user. Date: " & Time.now.to_s + "\n")
+        #check and fix the operation list
+		@soil_operations = SoilOperation.where(:soil_id => soil.id)
+		if @soil_operations.count > 0 then
+			#fix_operation_file()
+			#line 1
+			@opcs_file.push(" .Opc file created directly by the user. Date: " + Time.now.to_s + "\n")
+			j = 0
 
-        j = 0
+			@soil_operations.each do |soil_operation|
+				# ask for 1=planting, 5=kill, 3=tillage
+				if soil_operation.apex_crop == CropMixedGrass && (soil_operation.activity_id == 1 || soil_operation.activity_id == 5 || soil_operation.activity_id == 3) then
+					#mixed_crops = operation.MixedCropData.Split(",")
+					#mixedCropsInfo(2) As String
+					#newOper As OperationsData
 
-        operations.each do |operation|
-			# ask for 1=panting, 5=kill, 3=till
-            if operation.apex_crop = CropMixedGrass && (operation.activity_id = 1 || operation.activity_id = 5 || operation.activity_id = 3) Then
-                #mixed_crops = operation.MixedCropData.Split(",")
-                #mixedCropsInfo(2) As String
-                #newOper As OperationsData
+					#for Each value In mixedCrops
+					#    newOper = New OperationsData
+					#    newOper = AddMixedOperations(operation)
+					#    mixedCropsInfo = value.Split("|")
+					#    newOper.ApexCrop = mixedCropsInfo(0)
+					#    newOper.OpVal5 = mixedCropsInfo(2) / ac_to_m2
+					#    newOper.setCN(newOper.ApexCrop, "", _fieldsInfo1.Count, soil.Group, currentFieldNumber, _startInfo, Session("UserGuide"))
+					#    AddOperation(newOper, irrigation_type, nirr, soil.Percentage, j)
+					#end
+				else
+					add_operation(soil_operation, irrigation_type, nirr, soil.percentage, j)
+				end # end if
+				j+=1
+			end #end query.each do
 
-                #For Each value In mixedCrops
-                #    newOper = New OperationsData
-                #    newOper = AddMixedOperations(operation)
-                #    mixedCropsInfo = value.Split("|")
-                #    newOper.ApexCrop = mixedCropsInfo(0)
-                #    newOper.OpVal5 = mixedCropsInfo(2) / ac_to_m2
-                #    newOper.setCN(newOper.ApexCrop, "", _fieldsInfo1.Count, soil.Group, currentFieldNumber, _startInfo, Session("UserGuide"))
-                #    AddOperation(newOper, irrigationType, nirr, soil.Percentage, j)
-                #Next
-            else
-                add_operation(operation, irrigation_type, nirr, soil.percentage, j)
-            end # end if operation
-		end #end query.each do
-
-        opcs_file.push("End Operation")
-
+			print_file(@opcs_file, "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc")
+			@opcs_list_file.push((operation_number+1).to_s.rjust(5, '0') + " " + "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
+		end #end if 
+        #@opcs_file.push("End Operation")
+		print_file(@subarea_file, "APEX.sub")
         return nirr
-	end
-end
+	end  #end Create Operations
+
+	def fix_operation_file()
+        #drOuts = SoilOperation.new
+		
+		if @soil_operations.count > 0 then
+			total_records = @soil_operations.count - 1
+			first_date = sprintf("%2d", @soil_operations[0].month) + sprintf("%2d",@soil_operations[0].day)
+			last_date = sprintf("%2d", @soil_operations[total_records].month) + sprintf("%2d",@soil_operations[total_records].day)
+			if first_date > last_date then
+				last_year = sprintf("%2d",@soil_operations[total_records].year)
+				#if this is the case the operation for the last year need to be put before the first record.
+				for i in 0..@soil_operations.count-1
+					if last_year = @soil_operations[i].year then
+						break
+					end
+				end
+				for j in i..@soil_operations.count - 1
+					#drOut = SoilOperation.new
+					#drOut = drIn(j)
+					@soil_operations[j].year = "1"
+					#drOuts.Add(drOut)
+				end
+				#if i > 0 then
+					#for j = 0 To i - 1
+						#drOut = drIn(j)
+						#drOuts.Add(drOut)
+					#next
+				#end
+				#Return drOuts
+			#else
+				#Return drIn
+			end
+		end
+    end
+
+    def add_operation(operation, irrigation_type, nirr, soil_percentage, j)
+		items = Array.new
+		values = Array.new
+        crop_ant = 0
+        oper_ant = 799
+        found = false
+        #Dim animalCode As Short = 0
+        #Dim cn As Single = 0
+
+        for i in 0..(8 - 1)
+            items[i] = ""
+            values[i] = 0
+        end
+        items[7] = "LATITUDE"
+        items[8] = "LONGITUDE"
+        apex_string = ""
+
+        if crop_ant != operation.apex_crop then
+			crop = Crop.find_by_number(operation.apex_crop)
+            if crop != nil then
+                #if crop.number == operation.apex_crop then
+                    lu_number = crop.lu_number
+                    harvest_code = crop.harvest_code
+                    filter_strip = crop.type1
+                #end
+            end
+            crop_ant = operation.apex_crop
+        end
+        #if the process is starting the lines 1, 2, and 3 should be created
+        if j == 0 then
+            if irrigation_type > 0 then
+                @opcs_file.push(sprintf("%4d", lu_number) + sprintf("%4d", irrigation_type) + "\n")
+            else
+                @opcs_file.push(sprintf("%4d", lu_number) + "\n")
+            end
+            if irrigation_type == 7 then #ADD BILD FURROW DIKE OPERATION for baseline
+                @opcs_file.push(sprintf("%3d", 1) + sprintf("%3d", 1) + sprintf("%3d", 2) + sprintf("%5d", 256) + sprintf("%5d", 0) + sprintf("%5d", operation.number) + "\n")
+            end
+        end
+
+        opv5 = "\s" + "\s" + "\s" + "\s" + "\s"
+        apex_string += sprintf("%3d", operation.year)           #Year
+        apex_string += sprintf("%3d", operation.month)          #Month
+        if operation.month == 12 && operation.day == 31 then
+            apex_string += sprintf("%3d" ,30)           #Day
+        else
+            apex_string += sprintf("%3d", operation.day)                 #Day
+        end
+		#planting =1, tillage = 3, harvest = 4
+        if operation.activity_id == 1 || operation.activity_id == 3 || operation.activity_id == 4 || operation.activity_id == 6 then
+			apex_string += sprintf("%5d", operation.apex_operation)    #Operation Code        #APEX0604			
+			#this is not neede beacuse the correct operation is comming in the apex_operation column
+            #case operation.ApexOpAbbreviation.Trim
+                #when harvest
+                    #if Field.find(session[:field_id]).forestry? then
+						#apex_string += sprintf("%5d", operation.apex_operation)    #Operation Code        #APEX0604
+                    #else
+                    #    apex_string += harvestCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
+                    #end
+                #when tillage
+                    #apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
+                #when irrigation
+                 #   apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
+                #when planting
+                #    if operation.ApexOp != 1 then
+                #        apex_string += operation.ApexOp.ToString.PadLeft(5))    #Operation Code        #APEX0604
+                #    else
+                #        apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
+                #    end
+                #when else
+                #    apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
+            #end
+        else
+            if operation.activity_id = 2 then #fertilizer 
+                found = false
+                if @depth_ant != nil then
+                    for n in 0..@depth_ant.count - 1
+                        if @depth_ant[n] = operation.opv2 then
+                            oper_ant = @opers[n]
+                            found = true
+                        end
+                    end
+                    num_of_depths= @depth_ant.count - 1
+                else
+                    num_of_depths= 0
+                end
+
+                if found == false then
+                    #ReDim Preserve @depth_ant[numOfDepths]
+                    #ReDim Preserve @opers[numOfDepths]
+                    oper_ant = oper_ant + 1
+                    @opers[@opers.length - 1] = oper_ant unless @opers == nil
+                    @depth_ant[@depth_ant.count - 1] = operation.opv2 unless @depth_ant == nil
+                    change_till_for_depth(oper_ant, @depth_ant[@depth_ant.count - 1]) unless @depth_ant == nil
+                end
+                apex_string += sprintf("%5d", oper_ant)    #Operation Code        #APEX0604
+            else
+                #apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
+				apex_string += sprintf("%5d", operation.apex_operation)    #Operation Code        #APEX0604			
+            end
+        end  #end if
+
+        apex_string += "     "                           #Tractor ID. Not Used  #APEX0604
+        apex_string += sprintf("%5d", operation.apex_crop)    #Crop Code             #APEX0604
+        case operation.activity_id
+            when 1   #planting
+                if operation.apex_crop == "18" then
+                    rice_crop = true
+                end
+                if lu_number == 28 then
+                    if operation.apex_crop == 108 || operation.apex_crop = 152 then
+
+                    end
+                    apex_string += sprintf("%5d", filter_strip)
+                else
+                    apex_string += sprintf("%5d", 0)    #TIME TO MATURITY       #APEX0604
+                end
+                #if operation.opv1 == 0 then
+					#uri = URI.parse(URL_HU +  "?op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + "&nlon=" + Weather.find_by_field_id(session[:field_id]).longitude.to_s)
+					#uri.open
+					#operation.opv1 = uri.read
+					#operation.opv1 = endpoint.post("op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(session[:field_id]).latitude + "&nlon=" + Weather.find_by_field_id(session[:field_id]).longitude)
+                    #Dim getHu As New GetHU
+                    #operation.opv1 = getHu.calcHU(operation.apex_crop, wp1Files + "\" + _startInfo.Wp1Name + ".WP1", folder + "\App_Data\PHUCRP.DAT")
+                    #operation.opv1 = calcHU(operation.apex_crop, _crops, _startInfo)
+                #end
+                apex_string += sprintf("%8.2f", operation.opv1)  #change to take heatunits from program using wp1 file.
+                items[0] = "Heat Units"
+                values[0] = operation.opv1
+				items[1] = "Curve Number"
+				values[1] = operation.opv2
+				bmps_count = Bmp.where(:bmpsublist_id == 4 || :bmpsublist_id == 5 || :bmpsublist_id == 6 || :bmpsublist_id == 7).count
+                #With _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo
+                    #if .PPNDWidth > 0 Or .PPDSWidth > 0 Or .PPDEWidth > 0 Or .PPTWWidth > 0 then
+					if bmps_count > 0 then
+                        apex_string += sprintf("%8.1f", (operation.opv2 * 0.9))   #curve number
+                    else
+                        apex_string += sprintf("%8.1f", operation.opv2)  #curve number
+                    end
+                #End With
+                apex_string += sprintf("%8.2f", operation.opv3)                      #Opv3. No entry needed.
+                apex_string += sprintf("%8.2f", operation.opv4)                      #Opv4. No entry needed.
+                if operation.opv5 < 0.01 then
+                    apex_string += sprintf("%8.6f", operation.opv5)                      #Opv 5 Plant Population.
+                else
+                    apex_string += sprintf("%8.2f", operation.opv5)                      #Opv 5 Plant Population.
+                end
+                #if operation.opv5 == 0 && operation.opv1 > 0 then
+                    #operation.setOpval1(0, "")
+                #end
+            when 6 #irrigation
+                apex_string += sprintf("%5d", 0)    #
+                items[0] = "Irrigation"
+                values[0] = operation.opv2
+                apex_string += sprintf("%8.2f", operation.opv1)  #Volume applied for irrigation in mm
+                nirr = 1
+                apex_string += sprintf("%8.2f", 0)             #opval2
+                apex_string += sprintf("%8.2f", 0)                      #Opv3. No entry needed.
+                apex_string += sprintf("%8.2f", 0) & sprintf("%8.2f", operation.opv2)  #Opv4 Irrigation Efficiency
+                apex_string += sprintf("%8.2f", 0)                      #Opv5. No entry neede.
+            when 2  # fertilizer            #fertilizer or fertilizer(folier)
+                #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
+					oper = Operation.where(:id => operation.operation_id).first
+                    add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, operation.type_id, oper.nh3, oper.subtype_id)
+                    apex_string += sprintf("%5d", @fert_code)    #Fertilizer Code       #APEX0604
+                    items[0] = @fert_code
+                #else
+                    #apex_string += sprintf("%5d", operation.subtype)    #Fertilizer Code       #APEX0604
+                    #items[0] = operation.subtype
+                #end
+                apex_string += sprintf("%8.2f", operation.opv1)  #kg/ha of fertilizer applied
+                values[0] = operation.opv1
+                apex_string += sprintf("%8.2f", operation.opv2)
+                items[1] = "Depth"
+                values[1] = operation.opv2
+                apex_string += sprintf("%8.2f", 0)                      #Opv3. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv4. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv5. No entry neede.
+            when 7 # grazing              #Grazing - kind and number of animals 
+                apex_string += sprintf("%5d", 0)    #
+                #if number of animals were enter in modify page and it is the first grazing operation
+                if grazingb == false then
+                    items[3] = "DryMatterIntake"
+                    values[3] = create_herd_file(operation.opv1, operation.opv2, operation.ApexTillName, soil_percentage)
+                    animalB = operation.ApexTillCode
+                    grazingb = true
+                    if operation.no3 != 0 || operation.po4 != 0 || operation.org_n != 0 || operation.org_p != 0 || operation.nh3 != 0 then
+                        animal_code = get_animal_code(operation.ApexTillCode)
+                        change_fert(operation.no3, operation.po4, operation.org_n, operation.org_p, animal_code, operation.nh3)
+                    end
+                end
+                apex_string += sprintf("%8.4f", operation.opv1)
+                items[0] = "Kind"
+                values[0] = operation.ApexTillCode
+                items[1] = "Animals"
+                values[1] = operation.ApexOpv1
+                items[2] = "Hours"
+                values[2] = operation.ApexOpv2
+                apex_string += sprintf("%8.2f", 0)             #opval2
+                apex_string += sprintf("%8.2f", 0)                      #Opv3. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv4. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv5. No entry neede.
+            when 3   #tillage
+                apex_string += sprintf("%5d", 0)
+                apex_string += sprintf("%8.2f", 0)
+                items[0] = "Tillage"
+                values[0] = 0
+                apex_string += sprintf("%8.2f", 0)            #opval2
+                apex_string += sprintf("%8.2f", 0)                      #Opv3. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv4. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv5. No entry neede.
+            when 4   #harvest
+                apex_string += sprintf("%5d", 0)    #
+                apex_string += sprintf("%8.2f", 0)
+                items[1] = "Curve Number"
+                values[1] = operation.opv2
+                if Field.find(session[:field_id]).field_type then
+                    change_till_for_HE(operation.ApexTillCode, operation.opv1)
+                end
+                apex_string += sprintf("%8.2f", 0)						#opval2
+                apex_string += sprintf("%8.2f", 0)                      #Opv3. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv4. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv5. No entry neede.
+            when 5   #kill
+                apex_string += sprintf("%5d", 0)    #
+                apex_string += sprintf("%8.2f", 0)
+                items[0] = "Curve Number"
+                values[0] = operation.opv2
+                items[1] = "Time of Operation"
+                values[1] = operation.opv2
+                apex_string += sprintf("%8.2f", 0)        #opval2
+                apex_string += sprintf("%8.2f", 0)                      #Opv3. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv4. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv5. No entry neede.
+            when 8   #stopGrazing
+                apex_string += sprintf("%5d", 0)    #
+                apex_string += sprintf("%8.2f", 0)
+                items[0] = "Stop Grazing"
+                values[0] = 0
+                apex_string += sprintf("%8.2f", 0)       #opval2
+                apex_string += sprintf("%8.2f", 0)                      #Opv3. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv4. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv5. No entry neede.
+            when 10   # liming
+                apex_string += sprintf("%5d", 0)    #
+                apex_string += sprintf("%8.2f", operation.opv1)  #kg/ha of fertilizer applied
+            else                                               #No entry needed.
+                apex_string += sprintf("%5d", 0)    #
+                apex_string += sprintf("%8.2f", 0)       #opval1
+                apex_string += sprintf("%8.2f", 0)       #opval2
+                apex_string += sprintf("%8.2f", 0)                      #Opv3. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv4. No entry needed.
+                apex_string += sprintf("%8.2f", 0)                      #Opv5. No entry neede.
+        end #end case true
+
+        apex_string += sprintf("%8.2f", operation.opv6)                    #Opv6
+        apex_string += sprintf("%8.2f", operation.opv7)                    #Opv7
+        j += 1
+        @opcs_file.push(apex_string + "\n")
+
+        #add operations in list for fem.
+		scenario = Scenario.find(params[:id])
+        #With _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)
+		operation_name = ""
+		case operation.activity_id
+			when 1, 3
+				operation_name = Tillage.find_by_code(operation.apex_operation).name
+			else
+				operation_name = Activity.find(operation.activity_id).name
+		end 
+        @fem_list.push(scenario.name + COMA + scenario.name + COMA + State.find(Location.find(session[:location_id]).state_id).state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+                COMA + Crop.find(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
+				values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
+        #End With
+    end  # end add_operation method
+
+	def add_fert(no3n, po4p, orgN, orgP, type, nh3, subtype)
+        k = 0
+        exist = false
+        count = 0
+
+        @current_nutrients.each do |current_nutrient|
+            if current_nutrient.no3 == no3n && current_nutrient.po4 == po4p && current_nutrient.orgn == orgN && current_nutrient.orgp == orgP then
+                exist = true
+                @fert_code = current_nutrient.code
+                break
+            end
+        end
+		
+        if !exist then
+            @fert_code += 1
+			@current_nutrients.push(@nutrients_structure.new(@fert_code, no3n, po4p, orgN, orgP))
+            newLine = sprintf("%5d", @fert_code)
+            newLine = newLine + " " + "Fert " + sprintf("%8d", @fert_code)
+            newLine = newLine + " " + sprintf("%7.4f", no3n)
+            newLine = newLine + " " + sprintf("%7.4f", po4p)
+            newLine = newLine + " " + sprintf("%7.4f", k)
+            newLine = newLine + " " + sprintf("%7.4f", orgN)
+            newLine = newLine + " " + sprintf("%7.4f", orgP)
+            orgC = 0
+            case type
+                when 1   #commercial
+                    nh3 = 0
+                when 2   #Manure
+					if subtype == 57 then
+						orgC = 0.15   #liquide
+					else
+						orgC = 0.35   #solid
+					end 
+            end
+            newLine = newLine + " " + sprintf("%7.4f", nh3)
+            newLine = newLine + " " + sprintf("%7.4f", orgC)
+            newLine = newLine + "   0.000   0.000"
+            @new_fert_line.push(newLine)
+        end
+    end  #end add_fert method
+end  #end class

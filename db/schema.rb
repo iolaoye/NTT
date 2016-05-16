@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160505194326) do
+ActiveRecord::Schema.define(:version => 20160510192352) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -144,6 +144,12 @@ ActiveRecord::Schema.define(:version => 20160505194326) do
     t.datetime "updated_at",          :null => false
   end
 
+  create_table "fertilizer_type", :force => true do |t|
+    t.string   "field_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "fertilizer_types", :force => true do |t|
     t.string   "name"
     t.string   "spanish_name"
@@ -187,6 +193,7 @@ ActiveRecord::Schema.define(:version => 20160505194326) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "spanish_name"
+    t.integer  "code"
   end
 
   create_table "layers", :force => true do |t|
@@ -291,14 +298,14 @@ ActiveRecord::Schema.define(:version => 20160505194326) do
   end
 
   create_table "soil_operations", :force => true do |t|
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "year"
     t.integer  "month"
     t.integer  "day"
     t.integer  "operation_id"
     t.integer  "tractor_id"
-    t.integer  "crop_id"
+    t.integer  "apex_crop"
     t.integer  "type_id"
     t.float    "opv1"
     t.float    "opv2"
@@ -309,6 +316,8 @@ ActiveRecord::Schema.define(:version => 20160505194326) do
     t.float    "opv7"
     t.integer  "scenario_id"
     t.integer  "soil_id"
+    t.integer  "activity_id"
+    t.integer  "apex_operation"
   end
 
   create_table "soils", :force => true do |t|

@@ -2,7 +2,9 @@
 
 <table>
   <tr>
+    <th>Id</th>
     <th>Name</th>
+    <th>Code</th>
     <th>Status</th>
     <th></th>
     <th></th>
@@ -11,7 +13,9 @@
 
 <% @irrigations.each do |irrigation| %>
   <tr>
+    <td><%= irrigation.id %></td>
     <td><%= irrigation.name %></td>
+    <td><%= irrigation.code %></td>
     <td><%= irrigation.status %></td>
     <td><%= link_to 'Show', irrigation %></td>
     <td><%= link_to 'Edit', edit_irrigation_path(irrigation) %></td>

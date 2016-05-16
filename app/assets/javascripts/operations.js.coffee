@@ -83,7 +83,7 @@ updateTypes = ->
         when "2", "6", "7"
           items.push "<option value=\"" + tillage.id + "\">" + tillage.name + "</option>"
         else
-          items.push "<option value=\"" + tillage.id + "\">" + tillage.eqp + "</option>"
+          items.push "<option value=\"" + tillage.code + "\">" + tillage.eqp + "</option>"
         
     $("#operation_type_id").html items.join("")
     $("#operation_type_id").removeAttr("disabled")
