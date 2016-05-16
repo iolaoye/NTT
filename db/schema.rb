@@ -152,12 +152,6 @@ ActiveRecord::Schema.define(:version => 20160513165033) do
     t.datetime "updated_at",          :null => false
   end
 
-  create_table "fertilizer_type", :force => true do |t|
-    t.string   "field_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "fertilizer_types", :force => true do |t|
     t.string   "name"
     t.string   "spanish_name"
