@@ -1,0 +1,41 @@
+<h1>Listing sites</h1>
+
+<table>
+  <tr>
+    <th>Ylat</th>
+    <th>Xlog</th>
+    <th>Elev</th>
+    <th>Apm</th>
+    <th>Co2x</th>
+    <th>Cqnx</th>
+    <th>Rfnx</th>
+    <th>Upr</th>
+    <th>Unr</th>
+    <th>Fir0</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sites.each do |site| %>
+  <tr>
+    <td><%= site.ylat %></td>
+    <td><%= site.xlog %></td>
+    <td><%= site.elev %></td>
+    <td><%= site.apm %></td>
+    <td><%= site.co2x %></td>
+    <td><%= site.cqnx %></td>
+    <td><%= site.rfnx %></td>
+    <td><%= site.upr %></td>
+    <td><%= site.unr %></td>
+    <td><%= site.fir0 %></td>
+    <td><%= link_to 'Show', site %></td>
+    <td><%= link_to 'Edit', edit_site_path(site) %></td>
+    <td><%= link_to 'Destroy', site, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Site', new_site_path %>

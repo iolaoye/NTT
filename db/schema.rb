@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160510192352) do
+ActiveRecord::Schema.define(:version => 20160513165033) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -84,8 +84,16 @@ ActiveRecord::Schema.define(:version => 20160510192352) do
   end
 
   create_table "controls", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "line"
+    t.integer  "column"
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.float    "range_low"
+    t.float    "range_high"
+    t.float    "default_value"
   end
 
   create_table "counties", :force => true do |t|
@@ -259,8 +267,15 @@ ActiveRecord::Schema.define(:version => 20160510192352) do
   end
 
   create_table "parameters", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "line"
+    t.integer  "number"
+    t.string   "name"
+    t.string   "description"
+    t.float    "range_low"
+    t.float    "range_high"
+    t.float    "default_value"
   end
 
   create_table "projects", :force => true do |t|
@@ -295,6 +310,22 @@ ActiveRecord::Schema.define(:version => 20160510192352) do
     t.string   "comments"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "sites", :force => true do |t|
+    t.float    "ylat"
+    t.float    "xlog"
+    t.float    "elev"
+    t.float    "apm"
+    t.float    "co2x"
+    t.float    "cqnx"
+    t.float    "rfnx"
+    t.float    "upr"
+    t.float    "unr"
+    t.float    "fir0"
+    t.integer  "field_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "soil_operations", :force => true do |t|

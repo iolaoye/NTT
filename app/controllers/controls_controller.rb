@@ -87,6 +87,6 @@ class ControlsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def control_params
-      params.require(:control).permit()
+      params.require(:control).permit(:line, :column, :code, :name, :description, :range_low, :range_high, :default_value, :id)
     end
 end

@@ -9,7 +9,8 @@
     <th><%= t('general.actions')%></th>
   </tr>
   <% i=1 %>
-
+    <%= session[:depth] %>
+    
 <% @scenarios.each do |scenario| %>
     <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">

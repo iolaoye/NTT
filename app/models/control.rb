@@ -1,3 +1,3 @@
 class Control < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :line, :column, :code, :name, :description, :range_low, :range_high, :default_value, :id
 end

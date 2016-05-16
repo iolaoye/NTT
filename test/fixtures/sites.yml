@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ylat: 1.5
+  xlog: 1.5
+  elev: 1.5
+  apm: 1.5
+  co2x: 1.5
+  cqnx: 1.5
+  rfnx: 1.5
+  upr: 1.5
+  unr: 1.5
+  fir0: 1.5
+
+two:
+  ylat: 1.5
+  xlog: 1.5
+  elev: 1.5
+  apm: 1.5
+  co2x: 1.5
+  cqnx: 1.5
+  rfnx: 1.5
+  upr: 1.5
+  unr: 1.5
+  fir0: 1.5

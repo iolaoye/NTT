@@ -69,8 +69,8 @@ class WeathersController < ApplicationController
 		@weather.simulation_final_year = 0
 		@weather.weather_initial_year = 0
 		@weather.weather_final_year = 0
-		@weather.longitude = 0
-		@weather.latitude = 0 
+		#@weather.longitude = 0
+		#@weather.latitude = 0 
 		@weather.weather_file = ""
 		@weather.save
     end

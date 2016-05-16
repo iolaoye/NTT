@@ -87,6 +87,6 @@ class SoilOperationsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def soil_operation_params
-      params.require(:soil_operation).permit(:crop_id)
+      params.require(:soil_operation).permit(:apex_crop, :opv1, :opv2, :opv3, :opv4, :opv5, :opv6, :opv7, :activity_id, :id, :year, :month, :day, :operation_id, :type_id, :scenario_id, soil_id, :apex_operation)
     end
 end

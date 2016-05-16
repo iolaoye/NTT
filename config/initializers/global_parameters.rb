@@ -36,6 +36,7 @@
 	THA_TO_TAC = 0.446
 	LBS_TO_KG = 0.453592
 	AC_TO_M2 = 4046.85645
+	IN_TO_CM = 2.54
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'
