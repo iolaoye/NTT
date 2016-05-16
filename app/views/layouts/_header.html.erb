@@ -8,8 +8,9 @@
 	           <% when /location/, /field/ %>
 				   <li><%= link_to t('menu.location'), location_path(session[:location_id]) %></li>
 				   <li><%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-			   <% when /weather/, /soil/, /scenario/, /layer/, /modifications/ %>
+			   <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /sites/ %>
 				   <li><%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></li>
+				   <li><%= link_to t('menu.site'), edit_site_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.modifications'), modifications_path %></li> 

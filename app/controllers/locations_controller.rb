@@ -240,16 +240,7 @@ class LocationsController < ApplicationController
 			soil.selected = true
   			soil.save
 		end
-<<<<<<< HEAD
-		i = i + 1
-		soil_area = (soil.percentage / total_percentage) * @field.field_area
-		Scenario.where(:field_id => @field.id).each do |scenario|
-			create_subarea("Soil", i, soil_area, soil.slope, forestry, total_selected, @field.field_name, scenario.id, soil.id, soil.percentage, total_percentage, @field.field_area)
-		end #end Scenario each do
-  		soil.save
-=======
 		i+=1
->>>>>>> bd1c9c866fb0e8f2da0d2f4a9c4b591b74fb6ec5
 	end
 	Scenario.where(:field_id => @field.id).each do |scenario|
 		#create_subarea("Soil", i, soil_area, soil.slope, forestry, total_selected, @field.field_name, scenario.id, soil.id, soil.percentage, total_percentage, @field.field_area)
@@ -275,9 +266,6 @@ class LocationsController < ApplicationController
 	end #end for create_layers
   end  
 
-<<<<<<< HEAD
-end
-=======
   def calculate_centroid() 
         #https://en.wikipedia.org/wiki/Centroid.
 		centroid_structure = Struct.new(:cy, :cx)
@@ -295,4 +283,3 @@ end
         return centroid
     end
 end
->>>>>>> bd1c9c866fb0e8f2da0d2f4a9c4b591b74fb6ec5

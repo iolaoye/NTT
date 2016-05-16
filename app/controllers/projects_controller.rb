@@ -191,6 +191,21 @@ class ProjectsController < ApplicationController
 							xml.weather_initial_year weather.simulation_initial_year
 							xml.weather_final_year weather.simulation_final_year
 						}  #weather info end
+						sites = Site.where(:field_id => field.id)
+						sites.each do |site|
+							xml.site {
+								xml.apm site.apm
+								xml.co2x site.co2x
+								xml.cqnx site.cqnx
+								xml.elev site.elev
+								xml.fir0 site.fir0
+								xml.rfnx site.rfnx
+								xml.unr site.unr
+								xml.upr site.upr
+								xml.xlog site.xlog
+								xml.ylat site.ylat
+							}
+						end  #site info end
 						soils = Soil.where(:field_id => field.id)
 						#soils and layers information
 						soils.each do |soil|
@@ -402,8 +417,9 @@ class ProjectsController < ApplicationController
 		field.field_type = @data["project"]["location"]["fields"][i]["field_type"]
 		field.coordinates = @data["project"]["location"]["fields"][i]["coordinates"]
 		field.save
-		# Step 5. save Weather Info
+		# Step 5. save Weather and Site Info
 		upload_weather_new_version(field.id)
+		upload_site_new_version(field.id)
 		for k in 0..@data["project"]["location"]["fields"][i]["soils"].size-1
 			upload_soil_new_version(field.id, i, k)
 		end
@@ -438,6 +454,22 @@ class ProjectsController < ApplicationController
 		weather.weather_file = @data["project"]["location"]["fields"]["weather"]["weather_file"]
 		weather.way_id = @data["project"]["location"]["fields"]["weather"]["way_id"]
 		weather.save
+	end
+
+	def upload_site_new_version(field_id)
+		site = Site.new
+		site.field_id = field_id
+		site.apm = @data["project"]["location"]["fields"]["site"]["apm"]
+		site.co2x = @data["project"]["location"]["fields"]["site"]["co2x"]
+		site.cqnx = @data["project"]["location"]["fields"]["site"]["cqnx"]
+		site.elev = @data["project"]["location"]["fields"]["site"]["elev"]
+		site.fir0 = @data["project"]["location"]["fields"]["site"]["fir0"]
+		site.rfnx = @data["project"]["location"]["fields"]["site"]["rfnx"]
+		site.unr = @data["project"]["location"]["fields"]["site"]["unr"]
+		site.upr = @data["project"]["location"]["fields"]["site"]["upr"]
+		site.xlog = @data["project"]["location"]["fields"]["site"]["xlog"]
+		site.ylat = @data["project"]["location"]["fields"]["site"]["ylat"]
+		site.save
 	end
 
 	def upload_soil_info(field_id, i, j)
