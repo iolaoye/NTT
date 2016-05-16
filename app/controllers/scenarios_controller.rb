@@ -52,6 +52,9 @@ class ScenariosController < ApplicationController
 	@current_nutrients = Array.new
 	@new_fert_line = Array.new
 	@fem_list = Array.new
+	@dtNow1  = Time.now.to_s
+	@opcs_list_file = Array.new
+	create_site_file()
 	create_weather_file(dir_name)
 	create_soils()
 	create_subareas(1)
@@ -146,7 +149,6 @@ class ScenariosController < ApplicationController
     end
 
 	#define constants to use in this controller.
-	IN_TO_CM = 2.54
 	PHMIN = 3.5
     PHMAX = 9.0
 	OCMIN = 0.0      #change from 0.5 to 0 according to Ali. APEX calculate it if 0.
@@ -286,7 +288,6 @@ class ScenariosController < ApplicationController
         satcs = [9.24, 11.4, 94.66, 48.01, 0.8, 15.55, 7.74, 5.29, 107.83, 19.98, 10.64, 2.1]
         bds = [1.49, 1.2, 1.44, 1.46, 1.49, 1.31, 1.33, 1.21, 1.45, 1.4, 1.42, 1.24]
         soil_file_name = ""
-        dtNow1  = Date.today.to_s
         last_soil1 = 0
 		last_soil = 0
 		soil_info = Array.new
@@ -324,7 +325,7 @@ class ScenariosController < ApplicationController
             soil_file_name = "APEX" + "00" + last_soil1.to_s + ".sol"
             #total_area = total_area + soil.percentage
             apex_scenarios += 1
-            records = " .sol file Soil: " + soil_file_name + " Date: " + dtNow1 + " Soil Name: " + soil.name
+            records = " .sol file Soil: " + soil_file_name + " Date: " + @dtNow1 + " Soil Name: " + soil.name
 			soil_info.push(records + "\n")                
             records = ""
             layer_number = 1
@@ -523,7 +524,7 @@ class ScenariosController < ApplicationController
             initial_layer = 1
             if (depth[initial_layer] / 100).round(3) > 0.100
                 initial_layer = 0
-                depth[initial_layer] = 10
+                depth[initial_layer] = 10.0
                 bulk_density[initial_layer] = bulk_density[initial_layer + 1]
                 uw[initial_layer] = uw[initial_layer + 1]
                 fc[initial_layer] = fc[initial_layer + 1]
@@ -597,10 +598,11 @@ class ScenariosController < ApplicationController
 			soil.ztk = 0 unless !(soil.ztk==nil)
             records = records + sprintf("%8.2f", soil.ztk)
             soil_info.push(records + "\n")
+			#line 4 to 24 Layers information
 			records = ""
-			session[:layer_number] = layer_number
 			for layers in initial_layer..layer_number -1
-				records = records + sprintf("%8.3f", (depth[layers] / 100))
+				depth_cm = depth[layers] / 100
+				records = records + sprintf("%8.3f", depth_cm)
             end
             soil_info.push(records + "\n")
 			records = ""
@@ -713,11 +715,14 @@ class ScenariosController < ApplicationController
             end
             soil_info.push(records + "\n")
             records = ""
+			(25..47).each do
+				soil_info.push(records + "\n")
+			end
             #this lines are not added at this time to reduced the size of the information to be transmited to the server. The server will include them in blanks for now. 5/30/2014.
             #INSERT LINES 25, 26, 27, 28
             soil_list.push("  " + sprintf("%3d",last_soil1) + " " + soil_file_name + "\n")
             i += 1
-			print_file(soil_info, soil_file_name)				
+			print_file(soil_info, soil_file_name)			
 			print_file(soil_list, "soil.dat")
 		end  # end soils do
 		last_soil = last_soil1
@@ -729,7 +734,8 @@ class ScenariosController < ApplicationController
 		path = File.join(path, file)
 		File.open(path, "w+") do |f|
 			data.each do |row| f << row end
-		end  
+			f.close  
+		end
 	end
 
 	def cal_satc(sand_in, clay_in, org_matter_in, density_factor_in, gravels_in, salinity_in) 
@@ -772,7 +778,7 @@ class ScenariosController < ApplicationController
         i = 0
 		soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
 		@subarea_file = Array.new
-		@opcs_list_file = Array.new
+		
         soils.each do |soil|
             #create the operation file for this subarea.
             nirr = create_operations(soil, i)  
@@ -803,7 +809,7 @@ class ScenariosController < ApplicationController
 					#create the operation file for this subarea.
 					$last_subarea += 1
 					opcsFile.Add(buf.SubareaTitle)
-					opcsFile.Add(".OPC " & buf.SubareaTitle + " file Operation:1  Date: " + Now.ToString)
+					opcsFile.Add(".OPC " & buf.SubareaTitle + " file Operation:1  Date: " + @dtNow1)
 					opcsFile.Add(buf._operationsInfo(0).LuNumber.ToString.PadLeft(4))
 					operations = Operation.where(:scenario_id => params[:id])
 					#for Each oper In buf._operationsInfo
@@ -820,7 +826,7 @@ class ScenariosController < ApplicationController
         last_owner = last_owner1
         #todo check this one.
         #$last_subarea += _fieldsInfo1(currentFieldNumber)._soilsInfo(i - 1)._scenariosInfo(currentScenarioNumber)._subareasInfo_subarea_info..Iops
-		print_file(@subarea_file, "APEX.sub")				
+		print_file(@subarea_file, "APEX.sub")	
 		print_file(@opcs_list_file, "OPCS.dat")
 
         return "OK"
@@ -885,9 +891,9 @@ class ScenariosController < ApplicationController
 		end
         #if (operation_number > 1 && i == 0) Or i > 0 then
         if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
-            sLine = sprintf("%8.2f", _subarea_info.rchl * 0.9)
+            sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
         else
-            sLine = sprintf("%8.2f", _subarea_info.rchl)
+            sLine = sprintf("%8.4f", _subarea_info.rchl)
         end
         sLine += sprintf("%8.2f", _subarea_info.rchd)
         sLine += sprintf("%8.2f", _subarea_info.rcbw)
@@ -1009,7 +1015,7 @@ class ScenariosController < ApplicationController
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
-			@opcs_file.push(" .Opc file created directly by the user. Date: " + Time.now.to_s + "\n")
+			@opcs_file.push(" .Opc file created directly by the user. Date: " + @dtNow1 + "\n")
 			j = 0
 
 			@soil_operations.each do |soil_operation|
@@ -1035,7 +1041,9 @@ class ScenariosController < ApplicationController
 			end #end query.each do
 
 			print_file(@opcs_file, "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc")
-			@opcs_list_file.push((operation_number+1).to_s.rjust(5, '0') + " " + "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
+			#@opcs_list_file.push((operation_number+1).to_s.rjust(5, '0') + " " + "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
+			@opcs_list_file.push("APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
+		session[:depth] = "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n"
 		end #end if 
         #@opcs_file.push("End Operation")
 		print_file(@subarea_file, "APEX.sub")
@@ -1149,7 +1157,7 @@ class ScenariosController < ApplicationController
                 #    apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
             #end
         else
-            if operation.activity_id = 2 then #fertilizer 
+            if operation.activity_id == 2 then #fertilizer 
                 found = false
                 if @depth_ant != nil then
                     for n in 0..@depth_ant.count - 1
@@ -1176,7 +1184,7 @@ class ScenariosController < ApplicationController
                 #apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
 				apex_string += sprintf("%5d", operation.apex_operation)    #Operation Code        #APEX0604			
             end
-        end  #end if
+        end  #end if 1, 3, or 4
 
         apex_string += "     "                           #Tractor ID. Not Used  #APEX0604
         apex_string += sprintf("%5d", operation.apex_crop)    #Crop Code             #APEX0604
@@ -1370,11 +1378,11 @@ class ScenariosController < ApplicationController
 			@current_nutrients.push(@nutrients_structure.new(@fert_code, no3n, po4p, orgN, orgP))
             newLine = sprintf("%5d", @fert_code)
             newLine = newLine + " " + "Fert " + sprintf("%8d", @fert_code)
-            newLine = newLine + " " + sprintf("%7.4f", no3n)
-            newLine = newLine + " " + sprintf("%7.4f", po4p)
-            newLine = newLine + " " + sprintf("%7.4f", k)
-            newLine = newLine + " " + sprintf("%7.4f", orgN)
-            newLine = newLine + " " + sprintf("%7.4f", orgP)
+            if no3n == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", no3n) end
+            if po4p == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", po4p) end
+            if k == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", k) end
+            if orgN == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", orgN) end
+            if orgP == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", orgP) end
             orgC = 0
             case type
                 when 1   #commercial
@@ -1386,10 +1394,25 @@ class ScenariosController < ApplicationController
 						orgC = 0.35   #solid
 					end 
             end
-            newLine = newLine + " " + sprintf("%7.4f", nh3)
-            newLine = newLine + " " + sprintf("%7.4f", orgC)
+			if nh3 == nil then newLine = newLine + " " + sprintf("%7.4f", 0) else newLine = newLine + " " + sprintf("%7.4f", nh3) end
+            if orgC == nil then newLine = newLine + " " + sprintf("%7.4f", 0) else newLine = newLine + " " + sprintf("%7.4f", orgC) end
             newLine = newLine + "   0.000   0.000"
             @new_fert_line.push(newLine)
         end
     end  #end add_fert method
+
+	def create_site_file()
+		site = Site.find_by_field_id(@scenario.field_id)
+		site_file = Array.new
+		site_file.push(" .sit file Subbasin:1  Date: " + @dtNow1 + "\n")
+		site_file.push("" + "\n")
+		site_file.push("" + "\n")
+		site_file.push(sprintf("%8.2f", site.ylat) + sprintf("%8.2f", site.xlog) + sprintf("%8.2f", site.elev) + 
+			sprintf("%8.2f", site.apm) + sprintf("%8.2f", site.co2x) + sprintf("%8.2f", site.cqnx) + sprintf("%8.2f", site.rfnx) +
+			sprintf("%8.2f", site.upr) + sprintf("%8.2f", site.unr) + sprintf("%8.2f", site.fir0))
+		for i in 5..25  #print 21 additonal lines in the site file, which do not need any information at this time.
+			site_file.push("" + "\n")
+		end
+		print_file(site_file, "APEX.sit")
+	end
 end  #end class

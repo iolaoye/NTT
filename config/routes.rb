@@ -1,5 +1,8 @@
 NTTG3::Application.routes.draw do
 
+  resources :sites
+
+
   resources :modifications
   resources :soil_operations
   resources :subareas

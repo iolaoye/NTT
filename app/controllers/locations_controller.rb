@@ -81,6 +81,25 @@ class LocationsController < ApplicationController
 			end
 		    create_soils(i, @field.id, @field.field_type)
 		end
+		#find or create site
+		site = Site.find_by_field_id(@field.id)
+		if (site == nil) then
+		   #create the site for this field
+		   site = Site.new
+		end   #end weather validation
+		centroid = calculate_centroid()
+		site.ylat = centroid.cy
+		site.xlog = centroid.cx
+		site.elev = 0
+		site.apm = 1
+		site.co2x = 0
+		site.cqnx = 0
+		site.rfnx = 0
+		site.upr = 0
+		site.unr = 0
+		site.fir0 = 0
+		site.field_id = @field.id
+		site.save
 		#find or create weather
 		if (@field.weather_id == nil) then
 		   #create the weather for this field
@@ -94,6 +113,8 @@ class LocationsController < ApplicationController
         @weather.simulation_final_year = params["field#{i}finalYear"]
         @weather.weather_initial_year = params["field#{i}initialYear"]
         @weather.weather_final_year = params["field#{i}finalYear"]
+		@weather.latitude = site.ylat
+		@weather.longitude = site.xlog
 		@weather.way_id = 1   #assign PRISM weather station to the weather way as default from map
 		@weather.station_way = "map"
 		if @weather.save then
@@ -101,9 +122,6 @@ class LocationsController < ApplicationController
 		end 
 		@field.save
 		@weather.field_id = @field.id
-		centroid = calculate_centroid()
-		@weather.latitude = centroid.cy
-		@weather.longitude = centroid.cx
 		@weather.save
       end # end for fields
 
