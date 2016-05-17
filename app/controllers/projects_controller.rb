@@ -675,11 +675,44 @@ class ProjectsController < ApplicationController
 		end
 	end
 
+	def upload_bmp_info_new_version(scenario_id, i, j)
+		bmp = Bmp.new
+		bmp.scenario_id = scenario_id
+		bmp.bmp_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["bmp_id"]
+		bmp.bmpsublist_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["bmpsublist_id"]
+		bmp.crop_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["crop_id"]
+		bmp.irrigation_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["irrigation_id"]
+		bmp.water_stress_factor = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["water_stress_factor"]
+		bmp.irrigation_efficiency = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["irrigation_efficiency"]
+		bmp.maximum_single_application = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["maximum_single_application"]
+		bmp.safety_factor = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["safety_factor"]
+		bmp.depth = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["depth"]
+		bmp.area = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["area"]
+		bmp.number_of_animals = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["number_of_animals"]
+		bmp.days = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["days"]
+		bmp.hours = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["hours"]
+		bmp.animal_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["animal_id"]
+		bmp.dry_manure = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["dry_manure"]
+		bmp.no3_n = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["no3_n"]
+		bmp.po4_p = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["po4_p"]
+		bmp.org_n = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["org_n"]
+		bmp.width = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["width"]
+		bmp.grass_field_portion = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["grass_field_portion"]
+		bmp.buffer_slope_upland = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["buffer_slope_upland"]
+		bmp.crop_width = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["crop_width"]
+		bmp.slope_reduction = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["slope_reduction"]
+		bmp.sides = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["sides"]
+		bmp.name = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["name"]
+		bmp.difference_max_temperature = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["difference_max_temperature"]
+		bmp.difference_min_temperature = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["difference_min_temperature"]
+		bmp.difference_precipitation = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["difference_precipitation"]
+	end
+
 	def upload_bmp_ai(scneario_id, i, j)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 1
-		bmpsublist_id = 1
+		bmp.bmpsublist_id = 1
 		bmp.irrigation_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIType"]
 		bmp.water_stress_factor = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIWaterStressFactor"]
 		bmp.irrigation_efficiency = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIEff"]
