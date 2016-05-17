@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-     <%= label :bmp_id, 'BMP' %>
+     <%= label :bmp_id, 'BMP Group' %>
      <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => 'Select BMP Group'}, {:required => false} %>
      <%= label :bmp_id, 'BMP' %>
      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
