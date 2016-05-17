@@ -6,4 +6,5 @@ class Field < ActiveRecord::Base
 	belongs_to :location
 	has_many :soils, :dependent => :destroy
 	has_many :scenarios, :dependent => :destroy
+	has_many :results, :dependent => :destroy
 end

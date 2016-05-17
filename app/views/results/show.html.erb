@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Watershed:</b>
+  <%= @result.watershed_id %>
+</p>
+
+<p>
+  <b>Field:</b>
+  <%= @result.field_id %>
+</p>
+
+<p>
+  <b>Soil:</b>
+  <%= @result.soil_id %>
+</p>
+
+<p>
+  <b>Scenario:</b>
+  <%= @result.scenario_id %>
+</p>
+
+<p>
+  <b>Detailed:</b>
+  <%= @result.detailed %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @result.description %>
+</p>
+
+<p>
+  <b>Spanish description:</b>
+  <%= @result.spanish_description %>
+</p>
+
+<p>
+  <b>Units:</b>
+  <%= @result.units %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @result.value %>
+</p>
+
+
+<%= link_to 'Edit', edit_result_path(@result) %> |
+<%= link_to 'Back', results_path %>

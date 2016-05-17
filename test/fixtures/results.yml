@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  watershed_id: 1
+  field_id: 1
+  soil_id: 1
+  scenario_id: 1
+  detailed: 
+  description: MyString
+  spanish_description: MyString
+  units: MyString
+  value: 1.5
+
+two:
+  watershed_id: 1
+  field_id: 1
+  soil_id: 1
+  scenario_id: 1
+  detailed: 
+  description: MyString
+  spanish_description: MyString
+  units: MyString
+  value: 1.5

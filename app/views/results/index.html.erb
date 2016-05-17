@@ -1,0 +1,39 @@
+<h1>Listing results</h1>
+
+<table>
+  <tr>
+    <th>Watershed</th>
+    <th>Field</th>
+    <th>Soil</th>
+    <th>Scenario</th>
+    <th>Detailed</th>
+    <th>Description</th>
+    <th>Spanish description</th>
+    <th>Units</th>
+    <th>Value</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @results.each do |result| %>
+  <tr>
+    <td><%= result.watershed_id %></td>
+    <td><%= result.field_id %></td>
+    <td><%= result.soil_id %></td>
+    <td><%= result.scenario_id %></td>
+    <td><%= result.detailed %></td>
+    <td><%= result.description %></td>
+    <td><%= result.spanish_description %></td>
+    <td><%= result.units %></td>
+    <td><%= result.value %></td>
+    <td><%= link_to 'Show', result %></td>
+    <td><%= link_to 'Edit', edit_result_path(result) %></td>
+    <td><%= link_to 'Destroy', result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Result', new_result_path %>
