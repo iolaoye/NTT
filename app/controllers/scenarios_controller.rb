@@ -1,5 +1,5 @@
 class ScenariosController < ApplicationController
-  include ScenariosHelper
+  include ScenariosHelper	
 ################################  list of bmps #################################
   # GET /scenarios/1
   # GET /1/scenarios.json
@@ -51,24 +51,18 @@ class ScenariosController < ApplicationController
 	@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
 	@current_nutrients = Array.new
 	@new_fert_line = Array.new
+	@change_fert_for_grazing_line = Array.new
 	@fem_list = Array.new
 	@dtNow1  = Time.now.to_s
 	@opcs_list_file = Array.new
+	@depth_ant = Array.new
+	@opers = Array.new
+	@change_till_depth = Array.new
 	create_site_file()
 	create_weather_file(dir_name)
 	create_soils()
 	create_subareas(1)
-	@depth_ant = Array.new
-	@opers = Array.new
-	#build_xml()
-	#@scenarios = Scenario.where(:field_id => session[:field_id])
-	#@project_name = Project.find(session[:project_id]).name
-	#@field_name = Field.find(session[:field_id]).field_name
-	redirect_to field_scenarios_field_path(session[:field_id], notice: "Scenario was successfully simulated")
-	#respond_to do |format|
-      #format.html # show.html.erb
-      #format.json { render json: @scenario }
-    #end
+	run_scenario()
   end
 ################################  NEW   #################################
   # GET /scenarios/new
@@ -728,6 +722,29 @@ class ScenariosController < ApplicationController
 		last_soil = last_soil1
 	end  # end method create_soils
 
+	def read_file(file)
+		data = File.read(File.join(APEX, "APEX" + session[:session_id], file))
+	end
+
+	def append_file(original_file, copy_file, target_file, file_type)
+		path = File.join(APEX, "APEX" + session[:session_id])
+		if copy_file then
+			FileUtils.cp(File.join(path, original_file), File.join(path, target_file))
+		else
+			target_file = original_file
+		end
+		case file_type
+			when "till"
+				File.open(File.join(path, target_file), "a+") do |f| 
+					@change_till_depth.each do |row| f << row end
+				end
+			when "fert"				
+				File.open(File.join(path, target_file), "a+") do |f| 
+					@new_fert_line.each do |row| f << row end
+				end
+		end #enc case file_type
+	end
+
 	def print_file(data, file)
 		path = File.join(APEX, "APEX" + session[:session_id])
 		FileUtils.mkdir(path) unless File.directory?(path)
@@ -998,7 +1015,6 @@ class ScenariosController < ApplicationController
 	def create_operations(soil, operation_number)
 	    #This suroutine create operation files for Baseline and Alternative using information entered by user.
         nirr = 0
-
         #verify if _crops are empty. if so get them.
         @fert_code = 79
         grazingb = false
@@ -1038,12 +1054,12 @@ class ScenariosController < ApplicationController
 					add_operation(soil_operation, irrigation_type, nirr, soil.percentage, j)
 				end # end if
 				j+=1
-			end #end query.each do
-
-			print_file(@opcs_file, "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc")
-			#@opcs_list_file.push((operation_number+1).to_s.rjust(5, '0') + " " + "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
-			@opcs_list_file.push("APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
-		session[:depth] = "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n"
+			end #end soil_operations.each do
+			# add to the tillage file the new fertilizer operations - one for eahc depth
+			append_file("tillOrg.dat", true, "till.dat", "till")
+			append_file("fertOrg.dat", true, "fert.dat", "fert")
+			print_file(@opcs_file, "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc")  #print operation files
+			@opcs_list_file.push((operation_number+1).to_s.rjust(5, '0') + " " + "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
 		end #end if 
         #@opcs_file.push("End Operation")
 		print_file(@subarea_file, "APEX.sub")
@@ -1175,9 +1191,15 @@ class ScenariosController < ApplicationController
                     #ReDim Preserve @depth_ant[numOfDepths]
                     #ReDim Preserve @opers[numOfDepths]
                     oper_ant = oper_ant + 1
-                    @opers[@opers.length - 1] = oper_ant unless @opers == nil
-                    @depth_ant[@depth_ant.count - 1] = operation.opv2 unless @depth_ant == nil
-                    change_till_for_depth(oper_ant, @depth_ant[@depth_ant.count - 1]) unless @depth_ant == nil
+                    #@opers[@opers.length - 1] = oper_ant unless @opers == nil
+                    @opers.push(oper_ant)
+					#if @depth_ant == nil then
+					#	@depth_ant[0] = operation.opv2 
+					#else
+					#	@depth_ant[@depth_ant.count - 1] = operation.opv2 
+					#end
+					@depth_ant.push(operation.opv2)
+                    change_till_for_depth(oper_ant, @depth_ant[@depth_ant.count - 1]) unless @depth_ant == nil					
                 end
                 apex_string += sprintf("%5d", oper_ant)    #Operation Code        #APEX0604
             else
@@ -1272,7 +1294,7 @@ class ScenariosController < ApplicationController
                     grazingb = true
                     if operation.no3 != 0 || operation.po4 != 0 || operation.org_n != 0 || operation.org_p != 0 || operation.nh3 != 0 then
                         animal_code = get_animal_code(operation.ApexTillCode)
-                        change_fert(operation.no3, operation.po4, operation.org_n, operation.org_p, animal_code, operation.nh3)
+                        change_fert_for_grazing(operation.no3, operation.po4, operation.org_n, operation.org_p, animal_code, operation.nh3)
                     end
                 end
                 apex_string += sprintf("%8.4f", operation.opv1)
@@ -1373,16 +1395,16 @@ class ScenariosController < ApplicationController
             end
         end
 		
-        if !exist then
+        if !exist then		
             @fert_code += 1
 			@current_nutrients.push(@nutrients_structure.new(@fert_code, no3n, po4p, orgN, orgP))
             newLine = sprintf("%5d", @fert_code)
-            newLine = newLine + " " + "Fert " + sprintf("%8d", @fert_code)
-            if no3n == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", no3n) end
-            if po4p == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", po4p) end
-            if k == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", k) end
-            if orgN == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", orgN) end
-            if orgP == nil then newLine += " " + sprintf("%7.4f", 0) else newLine += " " + sprintf("%7.4f", orgP) end
+            newLine = newLine + " " + "Fert    " 
+            if no3n == nil then newLine += sprintf("%8.4f", 0) else newLine += sprintf("%8.4f", no3n) end
+            if po4p == nil then newLine += sprintf("%8.4f", 0) else newLine += sprintf("%8.4f", po4p) end
+            if k == nil then newLine += sprintf("%8.4f", 0) else newLine += sprintf("%8.4f", k) end
+            if orgN == nil then newLine += sprintf("%8.4f", 0) else newLine += sprintf("%8.4f", orgN) end
+            if orgP == nil then newLine += sprintf("%8.4f", 0) else newLine += sprintf("%8.4f", orgP) end
             orgC = 0
             case type
                 when 1   #commercial
@@ -1396,8 +1418,9 @@ class ScenariosController < ApplicationController
             end
 			if nh3 == nil then newLine = newLine + " " + sprintf("%7.4f", 0) else newLine = newLine + " " + sprintf("%7.4f", nh3) end
             if orgC == nil then newLine = newLine + " " + sprintf("%7.4f", 0) else newLine = newLine + " " + sprintf("%7.4f", orgC) end
-            newLine = newLine + "   0.000   0.000"
+            newLine = newLine + "   0.000   0.000\n"
             @new_fert_line.push(newLine)
+			session[:depth] = newLine
         end
     end  #end add_fert method
 
@@ -1415,4 +1438,27 @@ class ScenariosController < ApplicationController
 		end
 		print_file(site_file, "APEX.sit")
 	end
+
+	def change_till_for_depth(oper, depthAnt)
+        newLine = "  " + oper.to_s	
+        newLine += " C:FERT 5 CUST      5.      0.      0.      0.      0.     0.0    0.00   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000"
+        newLine += sprintf("%8.2f", depthAnt * 25.4)
+        newLine += "   0.000   0.000   0.000   0.000   9.000   0.000   0.000   0.000   0.000   5.000   5.363  FERTILIZER APP        " + oper.to_s + "\n"
+        @change_till_depth.push(newLine)
+    end
+
+    def change_fert_for_grazing(no3n, po4p, org_n, org_p, fert, nh3)
+        newLine = sprintf("%5d", fert)
+        newLine = newLine + " " + "Manure  "
+        newLine = newLine + " " + sprintf("%7.4f", no3n)
+        newLine = newLine + " " + sprintf("%7.4f", po4p)
+        newLine = newLine + " " + sprintf("%7.4f", 0)
+        newLine = newLine + " " + sprintf("%7.4f", org_n)
+        newLine = newLine + " " + sprintf("%7.4f", org_p)
+        newLine = newLine + " " + sprintf("%7.4f", nh3)
+        newLine = newLine + "   0.350   0.000   0.000"
+        @change_fert_for_grazing_line.Add(newLine)
+    end
+
+
 end  #end class

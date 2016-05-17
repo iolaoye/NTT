@@ -8,9 +8,7 @@
     <th class="gvCellStyleTitle">Name</th>
     <th><%= t('general.actions')%></th>
   </tr>
-  <% i=1 %>
-    <%= session[:depth] %>
-    
+  <% i=1 %>    
 <% @scenarios.each do |scenario| %>
     <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">

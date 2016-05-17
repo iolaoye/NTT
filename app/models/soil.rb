@@ -4,6 +4,7 @@ class Soil < ActiveRecord::Base
      belongs_to :field
 	 has_many :layers, :dependent => :destroy
 	 has_many :subareas, :dependent => :destroy
+	 has_many :results, :dependent => :destroy
   #scopes
     default_scope :order => "percentage DESC"
 end

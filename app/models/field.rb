@@ -6,4 +6,8 @@ class Field < ActiveRecord::Base
 	belongs_to :location
 	has_many :soils, :dependent => :destroy
 	has_many :scenarios, :dependent => :destroy
+	has_many :results, :dependent => :destroy
+  #validations
+	 validates_uniqueness_of :field_name
+	 validates_presence_of :field_name	
 end
