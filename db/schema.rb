@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160516204138) do
+ActiveRecord::Schema.define(:version => 20160519182449) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -29,6 +29,22 @@ ActiveRecord::Schema.define(:version => 20160516204138) do
     t.integer  "apex_code"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "apex_controls", :force => true do |t|
+    t.integer  "control_id"
+    t.float    "value"
+    t.integer  "project_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "apex_parameters", :force => true do |t|
+    t.integer  "parameter_id"
+    t.float    "value"
+    t.integer  "project_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "bmplists", :force => true do |t|
@@ -297,9 +313,10 @@ ActiveRecord::Schema.define(:version => 20160516204138) do
     t.string   "spanish_description"
     t.string   "units"
     t.float    "value"
-    t.integer  "order"
+    t.integer  "position"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.float    "ci_value"
   end
 
   create_table "scenarios", :force => true do |t|

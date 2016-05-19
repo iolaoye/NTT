@@ -45,8 +45,11 @@ class ScenariosController < ApplicationController
 	#dir_name = "#{Rails.root}/data/#{session[:session_id]}"
 	if !File.exists?(dir_name)
 		Dir.mkdir(dir_name) 
-		FileUtils.cp_r(Dir['public/APEX1/*'], dir_name)
+	else
+		#FileUtils.rm_rf(Dir.glob(File.join(dir_name, "*")))
+		#File.delete(dir_name + "/*")
 	end
+	FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
 	#CREATE structure for nutrients that go with fert file
 	@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
 	@current_nutrients = Array.new
@@ -58,11 +61,16 @@ class ScenariosController < ApplicationController
 	@depth_ant = Array.new
 	@opers = Array.new
 	@change_till_depth = Array.new
+	create_control_file()
+	create_parameter_file()
 	create_site_file()
 	create_weather_file(dir_name)
 	create_soils()
 	create_subareas(1)
 	run_scenario()
+	read_apex_results()
+	@scenarios = Scenario.where(:field_id => session[:field_id])
+	render "list"
   end
 ################################  NEW   #################################
   # GET /scenarios/new
@@ -716,14 +724,14 @@ class ScenariosController < ApplicationController
             #INSERT LINES 25, 26, 27, 28
             soil_list.push("  " + sprintf("%3d",last_soil1) + " " + soil_file_name + "\n")
             i += 1
-			print_file(soil_info, soil_file_name)			
-			print_file(soil_list, "soil.dat")
+			print_array_to_file(soil_info, soil_file_name)			
+			print_array_to_file(soil_list, "soil.dat")
 		end  # end soils do
 		last_soil = last_soil1
 	end  # end method create_soils
 
 	def read_file(file)
-		data = File.read(File.join(APEX, "APEX" + session[:session_id], file))
+		return File.read(File.join(APEX, "APEX" + session[:session_id], file))
 	end
 
 	def append_file(original_file, copy_file, target_file, file_type)
@@ -745,12 +753,22 @@ class ScenariosController < ApplicationController
 		end #enc case file_type
 	end
 
-	def print_file(data, file)
+	def print_array_to_file(data, file)
 		path = File.join(APEX, "APEX" + session[:session_id])
 		FileUtils.mkdir(path) unless File.directory?(path)
 		path = File.join(path, file)
 		File.open(path, "w+") do |f|
 			data.each do |row| f << row end
+			f.close  
+		end
+	end
+
+	def print_string_to_file(data, file)
+		path = File.join(APEX, "APEX" + session[:session_id])
+		FileUtils.mkdir(path) unless File.directory?(path)
+		path = File.join(path, file)
+		File.open(path, "w+") do |f|
+			f << data
 			f.close  
 		end
 	end
@@ -843,8 +861,8 @@ class ScenariosController < ApplicationController
         last_owner = last_owner1
         #todo check this one.
         #$last_subarea += _fieldsInfo1(currentFieldNumber)._soilsInfo(i - 1)._scenariosInfo(currentScenarioNumber)._subareasInfo_subarea_info..Iops
-		print_file(@subarea_file, "APEX.sub")	
-		print_file(@opcs_list_file, "OPCS.dat")
+		print_array_to_file(@subarea_file, "APEX.sub")	
+		print_array_to_file(@opcs_list_file, "OPCS.dat")
 
         return "OK"
 	end 
@@ -1055,14 +1073,14 @@ class ScenariosController < ApplicationController
 				end # end if
 				j+=1
 			end #end soil_operations.each do
-			# add to the tillage file the new fertilizer operations - one for eahc depth
+			# add to the tillage file the new fertilizer operations - one for each depth
 			append_file("tillOrg.dat", true, "till.dat", "till")
 			append_file("fertOrg.dat", true, "fert.dat", "fert")
-			print_file(@opcs_file, "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc")  #print operation files
+			print_array_to_file(@opcs_file, "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc")  #print operation files
 			@opcs_list_file.push((operation_number+1).to_s.rjust(5, '0') + " " + "APEX" + (operation_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
 		end #end if 
         #@opcs_file.push("End Operation")
-		print_file(@subarea_file, "APEX.sub")
+		print_array_to_file(@subarea_file, "APEX.sub")
         return nirr
 	end  #end Create Operations
 
@@ -1420,7 +1438,6 @@ class ScenariosController < ApplicationController
             if orgC == nil then newLine = newLine + " " + sprintf("%7.4f", 0) else newLine = newLine + " " + sprintf("%7.4f", orgC) end
             newLine = newLine + "   0.000   0.000\n"
             @new_fert_line.push(newLine)
-			session[:depth] = newLine
         end
     end  #end add_fert method
 
@@ -1436,7 +1453,7 @@ class ScenariosController < ApplicationController
 		for i in 5..25  #print 21 additonal lines in the site file, which do not need any information at this time.
 			site_file.push("" + "\n")
 		end
-		print_file(site_file, "APEX.sit")
+		print_array_to_file(site_file, "APEX.sit")
 	end
 
 	def change_till_for_depth(oper, depthAnt)
@@ -1460,5 +1477,269 @@ class ScenariosController < ApplicationController
         @change_fert_for_grazing_line.Add(newLine)
     end
 
+	def read_apex_results()
+        #Dim tempa As String
+        #Dim m(0), apex_start_yearAs Integer
+        #Dim resultFS(11) As Single
+        #Dim rowLink As DataRow = Nothing
+        #Dim dsPagesUser As DataSet = Nothing
+        #Dim nYearRotation As Integer
+        #Dim ddNBYR1, start_year, nAvgyears As Short
+        #Dim irrigMin As Single = 9999999, irrigMax As Single = 0 'variables to hold irrigatin max and min
+        #Dim _cropYield As New List(Of ResultsACY)
+        #Dim cropYield As ResultsACY = Nothing
+        #Dim srFile1 As StreamReader = Nothing
+        ntt_apex_results = Array.new
+        #Dim _cropsInfo As New List(Of CropsInfo)
+        #Dim currentFieldNumberAnt = currentFieldNumber
+        #Dim currentScenarioNumberAnt = currentScenarioNumber
+        
+        #currentFieldNumber = _scenariosToRun(simulationsCount).FieldIndex
+        #currentScenarioNumber = _scenariosToRun(simulationsCount).ScenarioIndex
+		
+		#take start year
+        #srFile1 = New StreamReader(File.OpenRead(sAPEXBasLoc & "\Apexcont.dat"))
+        #tempa = srFile1.ReadLine()
+        #srFile1.Close()
+        #srFile1.Dispose()
+        #srFile1 = Nothing
+
+        #ddNBYR1 = CShort(tempa.Substring(4, 4))
+        start_year = Weather.find_by_field_id(Scenario.find(params[:id]).field_id).simulation_initial_year
+        #// get config values
+        #nAPEXYears = CShort(tempa.Substring(0, 4))
+        #start_year = CShort(tempa.Substring(4, 4))
+        #nAvgyears = nAPEXYears - 12 + start_year
+
+        #todo check that this is being received correctly from main
+        #nYearRotation = yearRotation
+        #If ddNBYR1 > 0 Then
+        #    apex_start_year= ddNBYR1 + nYearRotation
+        #Else
+        #    apex_start_year= start_year + nYearRotation
+        #End If
+        apex_start_year = start_year + 1
+        #take results from .NTT file for all but crops into ntt_apex_results
+        results_data = load_results(apex_start_year)
+        #inicialize results and average all of the totals but crops
+		#average_totals(results_data)
+        #take results from .ACY for crops into _cropsInfo
+			#load_crop_results(_cropsInfo, apex_start_year)
+        #if _scenariosToRun(simulationsCount).Scenario <> "Subproject" Then
+        #    AverageBySoil(ntt_apex_results, _cropsInfo)  'if there is a subproject not averages by soil.
+        #End If
+
+			#calculate_ci_total(ntt_apex_results)
+			#calculate_ci_by_soil(ntt_apex_results, _cropsInfo)
+		#todo add for subproject
+        #if ddlType.SelectedIndex == 0 Then
+            #load_month_values(apex_start_year, _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._results)
+        #else
+        #    LoadMonthValues(apex_start_year, _subprojectName(ddlSubproject.SelectedIndex)._results)
+        #end
+
+			#load_annual_values(ntt_apex_results, nAvgyears, _cropsInfo)
+
+        #currentFieldNumber = currentFieldNumberAnt
+        #currentScenarioNumber = currentScenarioNumberAnt
+    end
+
+	def run_scenario()
+		path = File.join(APEX, "APEX" + session[:session_id])
+		file_name = File.join(path, "APEX001.NTT")
+		if !File.exists?(path)
+			File.delete(path)					
+		end
+		curret_directory = Dir.pwd
+		Dir.chdir path
+		result = system("apex0806.exe")
+		Dir.chdir curret_directory
+	end
+
+	def create_control_file()
+		apex_string = ""
+        ApexControl.where(:project_id => session[:project_id]).each do |c|
+            case c.id
+                when 1..19        #line 1
+					apex_string += sprintf("%4d", c.value)
+                when 20
+					apex_string += sprintf("%4d", c.value) + "\n"
+                when 21..37       #line 2
+                    apex_string += sprintf("%4d", c.value)
+                when 38
+					apex_string += sprintf("%4d", c.value) + "\n"
+                when 39..47        #line 3
+                    apex_string += sprintf("%8.2f", c.value)
+                when 48
+					apex_string += sprintf("%8.2f", c.value) + "\n"
+                when 49..57        #line 4
+					apex_string += sprintf("%8.2f", c.value)
+                when 58
+					apex_string += sprintf("%8.2f", c.value) + "\n"
+                when 59..67		#line 5
+					apex_string += sprintf("%8.2f", c.value)
+                when 68
+					apex_string += sprintf("%8.2f", c.value) + "\n"
+                when 69..75		#line 6
+					apex_string += sprintf("%8.2f", c.value)
+                when 76
+					apex_string += sprintf("%8.2f", c.value) + "\n"
+            end
+        end
+		print_string_to_file(apex_string, "Apexcont.dat")
+	end
+
+	def create_parameter_file()
+        apex_string = ""       
+        apex_string +="  90.050  99.950" + "\n"
+        apex_string +="   10.50  100.95" + "\n"
+        apex_string +="   50.10   95.95" + "\n"
+        apex_string +="    0.00    0.00" + "\n"
+        apex_string +="   25.05   75.90" + "\n"
+        apex_string +="    5.10  100.95" + "\n"
+        apex_string +="    5.25   50.95" + "\n"
+        apex_string +="    20.5   80.99" + "\n"
+        apex_string +="    1.10   10.99" + "\n"
+        apex_string +="   10.05  100.90" + "\n"
+        apex_string +="    5.01   20.90" + "\n"
+        apex_string +="    5.05  100.50" + "\n"
+        apex_string +="    1.80    3.99" + "\n"
+        apex_string +="    5.10   20.95" + "\n"
+        apex_string +="   10.10  100.95" + "\n"
+        apex_string +="    3.10   20.99" + "\n"
+        apex_string +="   20.10   50.95" + "\n"
+        apex_string +="    5.10   50.30" + "\n"
+        apex_string +="   10.01   25.95" + "\n"
+        apex_string +="  400.05  600.80" + "\n"
+        apex_string +="    10.5   100.9" + "\n"
+        apex_string +="  100.01  1000.9" + "\n"
+        apex_string +="    1.50    3.99" + "\n"
+        apex_string +="    1.25    5.95" + "\n"
+        apex_string +="   50.10   55.90" + "\n"
+        apex_string +="                " + "\n"
+        apex_string +="                " + "\n"
+        apex_string +="                " + "\n"
+        apex_string +="                " + "\n"
+        apex_string +="   50.00   10.00" + "\n"
+		ApexParameter.where(:project_id => session[:project_id]).each do |p|
+			number = Parameter.find(p.parameter_id).number
+			case number
+				when 10, 20, 30, 50, 60, 70, 80, 90
+					apex_string += sprintf("%8.2f", p.value) + "\n"
+				when 36, 65, 76, 87, 88
+					apex_string += sprintf("%8.3f", p.value) 
+				when 40
+					apex_string += sprintf("%8.3f", p.value) + "\n"
+				when 23, 43, 55, 58, 84, 85
+					apex_string += sprintf("%8.4f", p.value) 
+				when 39
+					apex_string += sprintf("%8.5f", p.value) 
+				else 
+					apex_string += sprintf("%8.2f", p.value) 
+			end  #end case p.line
+		end #end each do p
+        apex_string +="\n"
+        apex_string +="    .044     31.     .51     .57     10." + "\n"
+        apex_string +=" " + "\n"
+		print_string_to_file(apex_string, "parm.dat")
+	end
+
+	def load_results(apex_start_year)
+		results_data = Array.new
+        oneResult = Struct.new(:sub1,:year,:flow,:qdr,:surface_flow,:sed,:ymnu,:orgp,:po4,:orgn,:no3,:qdrn,:qdrp,:qn,:dprk,:irri,:pcp)
+		sub_ant = 99
+        irri_sum = 0
+        dprk_sum = 0
+        total_subs = 0
+		data = read_file("APEX001.ntt")
+		i=1
+        data.each_line do |tempa|
+			if i > 3 then
+				year = tempa[7, 4].to_i
+				subs = tempa[0, 5].to_i
+				session[:depth] = "Year ->" + tempa[8, 4] + "subs->" + tempa[1, 5]
+
+				next if year < apex_start_year #take years greater or equal than ApexStartYear.
+				next if subs == sub_ant   #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
+				sub_ant = subs
+				one_result = oneResult.new
+				one_result.sub1 = subs
+				one_result.year = year
+				one_result.flow = tempa[31, 9].to_f * MM_TO_IN
+				one_result.qdr = tempa[126, 9].to_f * MM_TO_IN
+				one_result.surface_flow = tempa[254, 9].to_f * MM_TO_IN
+				one_result.sed = tempa[40, 9].to_f * THA_TO_TAC
+				one_result.ymnu = tempa[180, 9].to_f * THA_TO_TAC
+				one_result.orgp = tempa[58, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+				one_result.po4 = tempa[76, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+				one_result.orgn = tempa[49, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+				one_result.no3 = tempa[67, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+				one_result.qdrn = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+				one_result.qdrp = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+				one_result.qn = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+				one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
+				one_result.irri = tempa[237, 8].to_f * MM_TO_IN
+				if subs == 0 then
+					one_result.dprk = dprk_sum / total_subs
+					one_result.irri = irri_sum / total_subs
+					irri_sum = 0
+					dprk_sum = 0
+					total_subs = 0
+				else
+					irri_sum += one_result.irri.to_f
+					dprk_sum += one_result.dprk.to_f
+					total_subs += 1
+				end
+				one_result.pcp = tempa[229, 8] * MM_TO_IN
+
+				results_data.push(one_result)
+			else
+				i+=1
+			end
+			results_data
+			average_totals(results_data, 0)   # average totals
+			#Soil.where(:field_id => Scenario.find(params[:id]).field_id).where(:selected => true).each do |soil|
+				#average_totals(results_data, soil.id)   # average by soil selected
+			#end
+        end
+	end
+
+	def average_totals(results_data, i)
+		#average
+		flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).reduce(:+).fdiv(v.size.to_f)]}
+		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).reduce(:+).fdiv(v.size.to_f)]}
+		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_p = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).reduce(:+).fdiv(v.size.to_f)]}
+		orgp = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).reduce(:+).fdiv(v.size.to_f)]}
+		po4 = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).reduce(:+).fdiv(v.size.to_f)]}
+		runoff = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_flow = flow - runoff
+		tile_drain_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).reduce(:+).fdiv(v.size.to_f)]}
+		sediment = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).reduce(:+).fdiv(v.size.to_f)]}
+		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).reduce(:+).fdiv(v.size.to_f)]}
+		irrigation = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).reduce(:+).fdiv(v.size.to_f)]}
+		deep_percolation_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).reduce(:+).fdiv(v.size.to_f)]}
+		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario_id, :soil_id => 0).first
+        if result == nil then
+			result = Result.new
+			result.field_id = @scenario.field_id
+			result.scenario_id = @scenario.id
+			result.soil_id = 0
+		end
+
+		result.detailed = false
+		result.description = "Org N"
+		result.spanish_description = "Org N"
+		result.units = "lbs/ac"
+		#temp = orgn.find {|f| f[0] == 2 }
+		temp = orgn.assoc(0)
+		
+		#result.value = temp.size
+		#session[:depth] = result.value
+		session[:test] = temp
+		session[:depth] = temp.class
+	end
 
 end  #end class

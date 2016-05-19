@@ -28,6 +28,9 @@
 #folder for download project files
 	DOWNLOAD = 'public/download'
 
+#public folder
+	APEX_ORIGINAL = 'public/APEX1'
+
 #convertion values
 	AC_TO_HA = 0.404685645
 	FT_TO_M = 0.093
@@ -37,6 +40,10 @@
 	LBS_TO_KG = 0.453592
 	AC_TO_M2 = 4046.85645
 	IN_TO_CM = 2.54
+	MM_TO_IN = 0.03937007874
+	KG_TO_LBS = 2.204622621849
+	HA_TO_AC = 2.47105384
+
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'
