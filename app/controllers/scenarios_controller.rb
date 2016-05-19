@@ -1708,6 +1708,7 @@ class ScenariosController < ApplicationController
 		#average
 		flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).reduce(:+).fdiv(v.size.to_f)]}
 		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).reduce(:+).fdiv(v.size.to_f)]}
+		add_summary_to_results_table(orgn, true, "Org N", "Org N", "lbs/ac")
 		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).reduce(:+).fdiv(v.size.to_f)]}
 		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
 		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).reduce(:+).fdiv(v.size.to_f)]}
@@ -1721,7 +1722,10 @@ class ScenariosController < ApplicationController
 		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).reduce(:+).fdiv(v.size.to_f)]}
 		irrigation = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).reduce(:+).fdiv(v.size.to_f)]}
 		deep_percolation_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).reduce(:+).fdiv(v.size.to_f)]}
-		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario_id, :soil_id => 0).first
+	end
+
+	def add_summary_to_results_table(values, detailed, description, spanish, units)
+		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0).first
         if result == nil then
 			result = Result.new
 			result.field_id = @scenario.field_id
@@ -1729,17 +1733,16 @@ class ScenariosController < ApplicationController
 			result.soil_id = 0
 		end
 
-		result.detailed = false
-		result.description = "Org N"
-		result.spanish_description = "Org N"
-		result.units = "lbs/ac"
-		#temp = orgn.find {|f| f[0] == 2 }
-		temp = orgn.assoc(0)
+		result.detailed = detailed
+		result.description = description
+		result.spanish_description = spanish
+		result.units = units
+		#temp = values.find {|f| f[0] == 2 }
+		temp = values.assoc(0)
 		
 		#result.value = temp.size
 		#session[:depth] = result.value
 		session[:test] = temp
 		session[:depth] = temp.class
 	end
-
 end  #end class
