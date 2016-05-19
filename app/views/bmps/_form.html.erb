@@ -18,7 +18,7 @@
      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
   </div>
 
-  <div class="field" id="irrigation" style="display:none">
+  <div class="field" id="irrigation" style="display:none" onchange="showFields()">
     <%= label :irrigation_id, 'Irrigation' %>
     <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
   </div>
@@ -27,19 +27,19 @@
     <%= collection_select :bmp, :crop_id, Crop.all, :id, :name, {:prompt => 'Select Vegetation'}, {:required => true} %>
   </div>
   <div class="field" id = "water_stress_factor" style="display:none">
-	<%= f.label :water_stress_factor %><br />
+	<%= f.label :water_stress_factor %> (0.00 – 1.00)<br />
 	<%= f.text_field :water_stress_factor %>
   </div>
   <div class="field" id = "irrigation_efficiency" style="display:none">
-	<%= f.label :irrigation_efficiency %><br />
+	<%= f.label :irrigation_efficiency %> (0.00 – 1.00)<br />
 	<%= f.text_field :irrigation_efficiency %>
   </div>
   <div class="field" id="maximum_single_application" style="display:none">
-	<%= f.label :maximum_single_application %><br />
-	<%= f.text_field :maximum_single_application %>
+	<%= f.label :maximum_single_application %> (0.00 – 99999.00)<br />
+	<%= f.text_field :maximum_single_application %> inches
   </div>
   <div class="field" id="safety_factor" style="display:none">
-	<%= f.label :safety_factor %><br />
+	<%= f.label :safety_factor %>  (0.00 – 99999.00)<br />
 	<%= f.text_field :safety_factor %>
   </div>
   <div class="field" id="depth" style="display:none">
@@ -47,7 +47,7 @@
 	<%= f.text_field :depth %>
   </div>
     <div class="field" id = "area" style="display:none">
-	<%= f.label :area %><br />
+	<%= f.label :reservoir_area %> (0.00 – 99999.00)<br />
 	<%= f.text_field :area %>
   </div>
   <div class="field" id="number_of_animals" style="display:none">
@@ -55,7 +55,7 @@
 	<%= f.text_field :number_of_animals %>
   </div>
   <div class="field" id = "days" style="display:none">
-	<%= f.label :days %><br />
+	<%= f.label :days %> (0.00 – 365)<br />
 	<%= f.text_field :days %>
   </div>
   <div class="field" id="hours" style="display:none">
@@ -119,3 +119,26 @@
   </div>
 
 <% end %>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function(){ 
+    showFields();
+}, false);
+
+
+function showFields() {
+  var irrigation = document.getElementById("bmp_irrigation_id").value;
+  if(irrigation == 4) {
+    document.getElementById("safety_factor").style.display = "block";
+    document.getElementById("area").style.display = "none";
+  } else if(irrigation == 5) {
+    document.getElementById("safety_factor").style.display = "none";
+    document.getElementById("area").style.display = "block";
+  } else {
+    document.getElementById("safety_factor").style.display = "none";
+    document.getElementById("area").style.display = "none";
+  }
+
+}
+</script>

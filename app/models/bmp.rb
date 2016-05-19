@@ -6,4 +6,11 @@ class Bmp < ActiveRecord::Base
      has_many :crops
 	 has_many :subareas, :dependent => :destroy
      belongs_to :scenario
+
+     validates :water_stress_factor, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 1 }
+     validates :irrigation_efficiency, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 1 }
+     validates :days, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 365 }
+     validates :maximum_single_application, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 99999 }
+     validates :safety_factor, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 99999 }, :if => 'irrigation_id == 4'
+     validates :area, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 99999 }, :if => 'irrigation_id == 5'
 end

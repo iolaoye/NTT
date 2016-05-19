@@ -56,7 +56,8 @@ activate_bmp_controls = ->
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
             $("#safety_factor").toggle(true)
-            $('#bmp_irrigation_id').prop('required',true)   
+            $('#bmp_irrigation_id').prop('required',true)
+            $("#area").toggle(true)   
         when "2" #autofertigation
             $("#irrigation").toggle(true)
             $("#water_stress_factor").toggle(true)
