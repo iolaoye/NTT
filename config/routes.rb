@@ -1,5 +1,8 @@
 NTTG3::Application.routes.draw do
 
+  resources :descriptions
+
+
   resources :apex_parameters
 
 

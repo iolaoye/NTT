@@ -2,11 +2,11 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
-    @results = Result.all
+  ooo
+    @results = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id], :soil_id => 0).joins(:descriptions)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @results }
     end
   end
 
@@ -87,6 +87,6 @@ class ResultsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def result_params
-      params.require(:result).permit(:description, :detailed, :field_id, :scenario_id, :soil_id, :spanish_description, :units, :value, :watershed_id)
+      params.require(:result).permit(:field_id, :scenario_id, :soil_id, :value, :watershed_id, :description_id, :ci_value)
     end
 end

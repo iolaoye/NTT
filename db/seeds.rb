@@ -7,6 +7,26 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Description.delete_all
+Description.create!({:id => 20, :description => "Total N", :spanish_description => "Total N", :unit => "lbs/ac", :detail => false}, :without_protection => true)
+Description.create!({:id => 21, :description => "Org N", :spanish_description => "Org N", :unit => "lbs/ac", :detail => true}, :without_protection => true)
+Description.create!({:id => 22, :description => "Runoff N", :spanish_description => "N en Flujo", :unit => "lbs/ac", :detail => true}, :without_protection => true)
+Description.create!({:id => 23, :description => "Subsurface N", :spanish_description => "N en Subsuelo", :unit => "lbs/ac", :detail => true}, :without_protection => true)
+Description.create!({:id => 24, :description => "Tile Drain N", :spanish_description => "N en Sistema de Drenaje", :unit => "lbs/ac", :detail => true}, :without_protection => true)
+Description.create!({:id => 30, :description => "Total P", :spanish_description => "Total P", :unit => "lbs/ac", :detail => false}, :without_protection => true)
+Description.create!({:id => 31, :description => "Org P", :spanish_description => "Org P", :unit => "lbs/ac", :detail => true}, :without_protection => true)
+Description.create!({:id => 32, :description => "PO4_P", :spanish_description => "PO4_P", :unit => "lbs/ac", :detail => true}, :without_protection => true)
+Description.create!({:id => 33, :description => "Tile Drain P", :spanish_description => "P en Sistema de Drenaje", :unit => "lbs/ac", :detail => true}, :without_protection => true)
+Description.create!({:id => 40, :description => "Total Flow", :spanish_description => "Flujo Total", :unit => "in", :detail => false}, :without_protection => true)
+Description.create!({:id => 41, :description => "Surface Flow", :spanish_description => "Flujo en la Superficie", :unit => "in", :detail => true}, :without_protection => true)
+Description.create!({:id => 42, :description => "Susurface Flow", :spanish_description => "Flujo en Subsuelo", :unit => "in", :detail => true}, :without_protection => true)
+Description.create!({:id => 43, :description => "Tile Drain Flow", :spanish_description => "Flujo en Sistema de Drenaje", :unit => "in", :detail => true}, :without_protection => true)
+Description.create!({:id => 50, :description => "Other Water Information", :spanish_description => "Flujo Total", :unit => "in", :detail => false}, :without_protection => true)
+Description.create!({:id => 51, :description => "Irrigation", :spanish_description => "Irrigacion", :unit => "in", :detail => true}, :without_protection => true)
+Description.create!({:id => 52, :description => "Deep Percolation", :spanish_description => "Filtracion Profunda", :unit => "in", :detail => true}, :without_protection => true)
+Description.create!({:id => 60, :description => "Total Sediment", :spanish_description => "Total Sedimento", :unit => "t/ac", :detail => false}, :without_protection => true)
+Description.create!({:id => 61, :description => "Sediment", :spanish_description => "Sedimento", :unit => "t/ac", :detail => true}, :without_protection => true)
+Description.create!({:id => 62, :description => "Manure Erosion", :spanish_description => "Sedimento por Estiercol", :unit => "t/ac", :detail => true}, :without_protection => true)
 
 CroppingSystem.delete_all
 CroppingSystem.create!({:id => 1, :name =>'ALLBananas', :crop =>'Bananas', :tillage =>'none', :var12 =>'Bananas_NT', :state_id => 0, :grazing => 0, :status => 1}, :without_protection => true)
