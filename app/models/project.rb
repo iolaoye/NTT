@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
   #Associatons
     belongs_to :user
 	has_one :location, :dependent => :delete
+	has_many :apex_controls, :dependent => :destroy
   #validations
 	 validates_uniqueness_of :name
 	 validates_presence_of :name

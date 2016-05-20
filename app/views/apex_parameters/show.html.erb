@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Parameter:</b>
+  <%= @apex_parameter.parameter_id %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @apex_parameter.value %>
+</p>
+
+<p>
+  <b>Project:</b>
+  <%= @apex_parameter.project_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_apex_parameter_path(@apex_parameter) %> |
+<%= link_to 'Back', apex_parameters_path %>
