@@ -128,6 +128,10 @@ class ProjectsController < ApplicationController
 			msg = upload_project_new_version
 			#step 2. Save location information
 			upload_location_new_version
+			#step 3. Save field information
+			#for i in 0..@data["project"]["location"]["fields"].size-1
+			#	upload_field_new_version(i)
+			#end
 		elsif (@data["Project"]["StartInfo"]["StationWay"] != "Station")
 		    #old version
 			#step 1. save project information
@@ -379,10 +383,10 @@ class ProjectsController < ApplicationController
 	def upload_location_new_version
 		location = Location.new
 		location.project_id = session[:project_id]
-		location.state_id = @data["project"]["location_state_id"]
-		location.county_id = @data["project"]["location_county_id"]
-		location.status = @data["project"]["status"]
-		location.coordinates = @data["project"]["coordinates"]
+		location.state_id = @data["project"]["location"]["location_state_id"]
+		location.county_id = @data["project"]["location"]["location_county_id"]
+		location.status = @data["project"]["location"]["status"]
+		location.coordinates = @data["project"]["location"]["coordinates"]
 		location.save
 		session[:location_id] = location.id
 	end
@@ -424,7 +428,7 @@ class ProjectsController < ApplicationController
 			upload_soil_new_version(field.id, i, k)
 		end
 		for j in 0..@data["project"]["location"]["fields"][i]["scenarios"].size-1
-			#scenario_id = upload_scenario_new_version(field.id, i, j)
+			scenario_id = upload_scenario_new_version(field.id, i, j)
 		end
 	end
 
@@ -564,7 +568,7 @@ class ProjectsController < ApplicationController
 		for k in 0..@data["project"]["location"]["fields"][i]["scenarios"][j]["operations"]
 			upload_operation_new_version(scenario.id, i, j, k)
 		end
-		#upload_bmp_info_new_version(scenario.id, i, j)
+		upload_bmp_info_new_version(scenario.id, i, j)
 		return scenario.id
 	end
 
