@@ -1,10 +1,29 @@
 class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
-  def index
-  ooo
-    @results = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id], :soil_id => 0).joins(:descriptions)
+  def index   
+  
+	@total_area = Field.find(session[:field_id]).field_area
+    @project_name = Project.find(session[:project_id]).name
+    @field_name = Field.find(session[:field_id]).field_name
+	@scenario1 = 0
+	@scenario2 = 0
+	@scenario3 = 0
 
+	if params[:result1] != nil
+		if params[:result1][:scenario_id] != "" then
+			@scenario1 = params[:result1][:scenario_id]
+			@results1 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => params[:result1][:scenario_id], :soil_id => 0).joins(:description)
+		end
+		if params[:result2][:scenario_id] != "" then
+			@scenario2 = params[:result2][:scenario_id]
+			@results2 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => params[:result2][:scenario_id], :soil_id => 0).joins(:description)
+		end
+		if params[:result3][:scenario_id] != "" then
+			@scenario3 = params[:result3][:scenario_id]
+			@results3 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => params[:result3][:scenario_id], :soil_id => 0).joins(:description)
+		end
+	end
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -56,6 +75,7 @@ class ResultsController < ApplicationController
   # PATCH/PUT /results/1
   # PATCH/PUT /results/1.json
   def update
+  ooo
     @result = Result.find(params[:id])
 
     respond_to do |format|

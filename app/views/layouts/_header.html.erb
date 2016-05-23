@@ -32,7 +32,7 @@
 				<% else %>
 				    <li><%=">> Fields" %></li>
 				<% end %>				    
-	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/ %>
+	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
 			    <li><%=link_to "Projects", welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
 			    <li><%=link_to "Fields", list_field_path(session[:location_id]) %></li>
@@ -44,6 +44,8 @@
 						<li><%= ">> Soils" %></li>
 					<% when /scenario/ %>
 						<li><%= ">> Scenarios" %></li>
+					<% when /result/ %>
+						<li><%= ">> Results" %></li>
 					<% when /layer/ %>
 						<li><%= ">> Layers" %></li>
 					<% when /modification/ %>

@@ -1,5 +1,5 @@
 class Result < ActiveRecord::Base
-  attr_accessible :field_id, :scenario_id, :soil_id, :value, :watershed_id, :description_id, :ci_value
+  attr_accessible :watershed_id, :field_id, :soil_id, :scenario_id, :value, :ci_value, :description_id
   #associations
 	  belongs_to :field
 	  belongs_to :watershed
@@ -7,5 +7,5 @@ class Result < ActiveRecord::Base
 	  belongs_to :soil
 	  belongs_to :description
   #scopes
-	default_scope :order => "id ASC"
+	default_scope :order => "description_id ASC"
 end

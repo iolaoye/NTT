@@ -1756,7 +1756,6 @@ class ScenariosController < ApplicationController
 		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).reduce(:+).fdiv(v.size.to_f)]}
 		manure_erosion_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).confidence_interval]}
 		add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
-		session[:test] = sediment_ci
 	end
 
 	def add_summary(value, description_id, soil_id, i, ci)
@@ -1786,7 +1785,7 @@ class ScenariosController < ApplicationController
 		#total sediment = 60, sediment = 61, manure erosion = 62
 		add_summary(values.assoc(0)[1], description_id, 0, 0, cis.assoc(0)[1])
 		i=0
-		case description_id 
+		case description_id    #Total area for summary report is beeing calculated
 			when 4  #calculate total area
 				#todo	
 			when 24  #calculate total N
