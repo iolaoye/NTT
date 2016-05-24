@@ -53,14 +53,17 @@ before_filter :take_names
     end
   end
 
+################################  EDIT  #################################
   # GET /bmps/1/edit
   def edit
     @bmp = Bmp.find(params[:id])
   end
 
+################################  CREATE  #################################
   # POST /bmps
   # POST /bmps.json
   def create
+  
     @bmp = Bmp.new(bmp_params)
 	@bmp.scenario_id = session[:scenario_id]
     respond_to do |format|

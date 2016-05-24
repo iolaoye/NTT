@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160519182449) do
+ActiveRecord::Schema.define(:version => 20160520185519) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -168,6 +168,16 @@ ActiveRecord::Schema.define(:version => 20160519182449) do
     t.datetime "updated_at",          :null => false
   end
 
+  create_table "descriptions", :force => true do |t|
+    t.boolean  "detail"
+    t.string   "description"
+    t.string   "spanish_description"
+    t.string   "unit"
+    t.integer  "position"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
   create_table "fertilizer_types", :force => true do |t|
     t.string   "name"
     t.string   "spanish_name"
@@ -302,15 +312,11 @@ ActiveRecord::Schema.define(:version => 20160519182449) do
     t.integer  "field_id"
     t.integer  "soil_id"
     t.integer  "scenario_id"
-    t.boolean  "detailed"
-    t.string   "description"
-    t.string   "spanish_description"
-    t.string   "units"
     t.float    "value"
-    t.integer  "position"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.float    "ci_value"
+    t.integer  "description_id"
   end
 
   create_table "scenarios", :force => true do |t|

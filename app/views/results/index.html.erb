@@ -1,39 +1,79 @@
+<form id="myForm">
+  <div class="field">
+      <%= label :bmp_id, 'First Scenario ' %>
+      <%= collection_select :result1, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select First Scenario', :required => true, :selected => @scenario1} %>
+      <%= label :bmp_id, 'Second Scenario' %>
+      <%= collection_select :result2, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Second Scenario', :required => false, :selected => @scenario2} %>
+      <%= label :bmp_id, 'Third Scenario' %>
+      <%= collection_select :result3, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Third Scenario', :required => false, :selected => @scenario3} %>
+      <%= hidden_field(:language, :lenguage, :value => I18n.locale) %>
+      <button id="btnCompare" class="btn btn-primary">Compare</button>
+  </div>
+</form>
+
 <h1>Listing results</h1>
 
-<table>
-  <tr>
-    <th>Watershed</th>
-    <th>Field</th>
-    <th>Soil</th>
-    <th>Scenario</th>
-    <th>Detailed</th>
-    <th>Description</th>
-    <th>Spanish description</th>
-    <th>Units</th>
-    <th>Value</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @results.each do |result| %>
-  <tr>
-    <td><%= result.watershed_id %></td>
-    <td><%= result.field_id %></td>
-    <td><%= result.soil_id %></td>
-    <td><%= result.scenario_id %></td>
-    <td><%= result.detailed %></td>
-    <td><%= result.description %></td>
-    <td><%= result.spanish_description %></td>
-    <td><%= result.units %></td>
-    <td><%= result.value %></td>
-    <td><%= link_to 'Show', result %></td>
-    <td><%= link_to 'Edit', edit_result_path(result) %></td>
-    <td><%= link_to 'Destroy', result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table class='gvTableStyle'>
+    <tr class='gvHeaderStyle'>
+        <th class="gvCellStyleTitle">Description</th>
+        <% if @results1 == nil %> <th class="gvCellStyleTitle">First Scenario</th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results1[0].scenario_id).name%></th> <% end %>
+        <% if @results2 == nil %> <th class="gvCellStyleTitle">Second Scenario</th><% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results2[0].scenario_id).name%></th> <% end %>
+        <th class="gvCellStyleTitle">Difference</th>
+        <th class="gvCellStyleTitle">Reduction (%)</th>
+        <th class="gvCellStyleTitle">Total Area</th>
+        <% if @results3 == nil %> <th class="gvCellStyleTitle">Third Scenario</th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results3[0].scenario_id).name%></th> <% end %>
+        <th class="gvCellStyleTitle">Difference</th>
+        <th class="gvCellStyleTitle">Reduction (%)</th>
+        <th class="gvCellStyleTitle">Total Area</th>
+    </tr>
+    <% if @results1 != nil %>
+        <% @results1.each do |result| %>
+            <% value2 = 0 %>
+            <% if @results2 != nil %> <%value2 = @results2.find_by_description_id(result.description_id).value  %> <% end %>
+            <%difference1 = value2 - result.value%>
+            <%reduction1 = difference1 / result.value * 100%>
+            <%total_area1 = difference1 * @total_area%>          
+            <% value3 = 0 %>
+            <% if @results3 != nil %> <%value3 = @results3.find_by_description_id(result.description_id).value %> <% end %>
+            <%difference2 = value3- result.value%>
+            <%reduction2 = difference2 / result.value * 100%>
+            <%total_area2 = difference2 * @total_area%>
+            <% if (result.id % 10 == 0) %>
+              <tr class="gvRowStyleEven">
+                <td class="gvTotalText"><%= Description.find(result.description_id).description %></td>
+                <td class="gvTotalNumber"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+                <% if @results2 != nil %>
+                  <td class="gvTotalNumber"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                  <td class="gvTotalNumber"><%= sprintf("%8.2f", difference1) %></td>
+                  <td class="gvTotalNumber"><%= sprintf("%8.2f", reduction1) %></td>
+                  <td class="gvTotalNumber"><%= sprintf("%8.2f", total_area1) %></td>
+                <% end %>
+                <% if @results3 != nil %>
+                  <td class="gvTotalNumber"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                  <td class="gvTotalNumber"><%= sprintf("%8.2f", difference2) %></td>
+                  <td class="gvTotalNumber"><%= sprintf("%8.2f", reduction2) %></td>
+                  <td class="gvTotalNumber"><%= sprintf("%8.2f", total_area2) %></td>
+                <% end %>
+              </tr>
+            <% else %>
+              <tr class="gvRowStyleOdd">
+                <td class="gvDetailText"><%= Description.find(result.description_id).description %></td>
+                <td class="gvCellStyleNumber"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+                <% if @results2 != nil %>
+                  <td class="gvCellStyleNumber"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                  <td class="gvCellStyleNumber"><%= sprintf("%8.2f", difference1) %></td>
+                  <td class="gvCellStyleNumber"><%= sprintf("%8.2f", reduction1) %></td>
+                  <td class="gvCellStyleNumber"><%= sprintf("%8.2f", total_area1) %></td>
+                <% end %>
+                <% if @results3 != nil %>
+                  <td class="gvCellStyleNumber"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                  <td class="gvCellStyleNumber"><%= sprintf("%8.2f", difference2) %></td>
+                  <td class="gvCellStyleNumber"><%= sprintf("%8.2f", reduction2) %></td>
+                  <td class="gvCellStyleNumber"><%= sprintf("%8.2f", total_area2) %></td>
+                <% end %>
+                <%#td class="gvCellStyleCheckbox"%><%#= check_box_tag :result, "0", Description.find(result.description_id).detail, disabled: true %><%#/td%>
+              </tr>
+            <% end %>  
+        <% end %>  
+    <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Result', new_result_path %>

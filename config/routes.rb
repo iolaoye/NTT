@@ -1,17 +1,9 @@
 NTTG3::Application.routes.draw do
-
+  resources :descriptions
   resources :apex_parameters
-
-
   resources :apex_controls
-
-
   resources :results
-
-
   resources :sites
-
-
   resources :modifications
   resources :soil_operations
   resources :subareas

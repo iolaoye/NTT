@@ -65,6 +65,7 @@ class ScenariosController < ApplicationController
 	create_parameter_file()
 	create_site_file()
 	create_weather_file(dir_name)
+	@soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
 	create_soils()
 	create_subareas(1)
 	run_scenario()
@@ -294,11 +295,10 @@ class ScenariosController < ApplicationController
 		last_soil = 0
 		soil_info = Array.new
 		soil_list = Array.new
-		soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
 		#APEXStrings1 = 0
         #check to see if there are soils selected
         selected = false
-		soils.each do |soil|
+		@soils.each do |soil|
             if soil.selected == true 
 				selected = true
 				break
@@ -306,7 +306,7 @@ class ScenariosController < ApplicationController
         end
         #if no soils selected the soils are sorted by area and  selects up to the three most dominant soils.
         if selected == false 
-			soils.each do |soil|
+			@soils.each do |soil|
                 if i > 2 
 					break
 				else
@@ -317,7 +317,7 @@ class ScenariosController < ApplicationController
 
         apex_scenarios = 0
         i = 0
-		soils.each do |soil|
+		@soils.each do |soil|
 			soil_info.clear
 			if soil.selected == false 
 				next
@@ -811,10 +811,10 @@ class ScenariosController < ApplicationController
 	    last_soil1 = 0
         last_owner1 = 0
         i = 0
-		soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
+		#soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
 		@subarea_file = Array.new
 		
-        soils.each do |soil|
+        @soils.each do |soil|
             #create the operation file for this subarea.
             nirr = create_operations(soil, i)  
             #create the subarea file
@@ -823,7 +823,7 @@ class ScenariosController < ApplicationController
             #if !(bmps.CBCWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBBWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBCrop > 0) then
                 #addSubareaFile(soil._scenariosInfo(currentScenarioNumber)._subareasInfo, operation_number, last_soil1, last_owner1, i, nirr, false)
 				#operation number is used to control subprojects. Therefore here is going to be 1.
-                add_subarea_file(Subarea.where(:soil_id == soil.id).find_by_scenario_id(@scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, soils.count)
+                add_subarea_file(Subarea.where(:soil_id == soil.id).find_by_scenario_id(@scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, @soils.count)
                 i = i + 1
             end
         end
@@ -1520,13 +1520,17 @@ class ScenariosController < ApplicationController
         #End If
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops into ntt_apex_results
+
+
         results_data = load_results(apex_start_year)
-        #inicialize results and average all of the totals but crops
-		#average_totals(results_data)
+        
+		
+		#inicialize results and average all of the totals but crops
+		#average_totals(results_data)  done
         #take results from .ACY for crops into _cropsInfo
 			#load_crop_results(_cropsInfo, apex_start_year)
         #if _scenariosToRun(simulationsCount).Scenario <> "Subproject" Then
-        #    AverageBySoil(ntt_apex_results, _cropsInfo)  'if there is a subproject not averages by soil.
+        #done    AverageBySoil(ntt_apex_results, _cropsInfo)  'if there is a subproject not averages by soil.
         #End If
 
 			#calculate_ci_total(ntt_apex_results)
@@ -1657,7 +1661,6 @@ class ScenariosController < ApplicationController
 			if i > 3 then
 				year = tempa[7, 4].to_i
 				subs = tempa[0, 5].to_i
-				session[:depth] = "Year ->" + tempa[8, 4] + "subs->" + tempa[1, 5]
 
 				next if year < apex_start_year #take years greater or equal than ApexStartYear.
 				next if subs == sub_ant   #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
@@ -1696,53 +1699,133 @@ class ScenariosController < ApplicationController
 			else
 				i+=1
 			end
-			results_data
-			average_totals(results_data, 0)   # average totals
 			#Soil.where(:field_id => Scenario.find(params[:id]).field_id).where(:selected => true).each do |soil|
 				#average_totals(results_data, soil.id)   # average by soil selected
 			#end
         end
+		average_totals(results_data, 0)   # average totals
+
 	end
 
 	def average_totals(results_data, i)
-		#average
+	    #0:sub1,1:year,2:flow,3:qdr,4:surface_flow,5:sed,6:ymnu,7:orgp,8:po4,9:orgn,10:no3,11:qdrn,12:qdrp,13:qn,14:dprk,15:irri,16:pcp)
+		#Results description_ids
+		require 'enumerable/confidence_interval'
+		#calculate average and confidence interval
 		flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).reduce(:+).fdiv(v.size.to_f)]}
+		flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).confidence_interval]}
 		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).reduce(:+).fdiv(v.size.to_f)]}
-		add_summary_to_results_table(orgn, true, "Org N", "Org N", "lbs/ac")
-		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).reduce(:+).fdiv(v.size.to_f)]}
+		orgn_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).confidence_interval]}
+		add_summary_to_results_table(orgn, 21, orgn_ci)
 		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
+		runoff_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).confidence_interval]}
+		add_summary_to_results_table(runoff_n,  22, runoff_n_ci)
+		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).confidence_interval]}
+		add_summary_to_results_table(sub_surface_n, 23, sub_surface_n_ci)
 		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).reduce(:+).fdiv(v.size.to_f)]}
-		tile_drain_p = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).confidence_interval]}
+		add_summary_to_results_table(tile_drain_n, 24, tile_drain_n_ci)
 		orgp = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).reduce(:+).fdiv(v.size.to_f)]}
+		orgp_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).confidence_interval]}
+		add_summary_to_results_table(orgp, 31, orgp_ci)
 		po4 = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).reduce(:+).fdiv(v.size.to_f)]}
+		po4_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).confidence_interval]}
+		add_summary_to_results_table(po4, 32, po4_ci)
+		tile_drain_p = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_p_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).confidence_interval]}
+		add_summary_to_results_table(tile_drain_p, 33, tile_drain_p_ci)
 		runoff = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
+		runoff_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).confidence_interval]}
+		add_summary_to_results_table(runoff, 41, runoff_ci)
 		sub_surface_flow = flow - runoff
+		sub_surface_flow_ci = flow_ci - runoff_ci
+		add_summary_to_results_table(sub_surface_flow, 42, sub_surface_flow_ci)
 		tile_drain_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).reduce(:+).fdiv(v.size.to_f)]}
-		sediment = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).reduce(:+).fdiv(v.size.to_f)]}
-		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).confidence_interval]}
+		add_summary_to_results_table(tile_drain_flow, 43, tile_drain_flow_ci)
 		irrigation = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).reduce(:+).fdiv(v.size.to_f)]}
+		irrigation_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).confidence_interval]}
+		add_summary_to_results_table(irrigation, 51, irrigation_ci)
 		deep_percolation_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).reduce(:+).fdiv(v.size.to_f)]}
+		deep_percolation_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).confidence_interval]}
+		add_summary_to_results_table(deep_percolation_flow, 52, deep_percolation_flow_ci)
+		sediment = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).reduce(:+).fdiv(v.size.to_f)]}
+		sediment_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).confidence_interval]}
+		add_summary_to_results_table(sediment, 61, sediment_ci)		
+		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).reduce(:+).fdiv(v.size.to_f)]}
+		manure_erosion_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).confidence_interval]}
+		add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
 	end
 
-	def add_summary_to_results_table(values, detailed, description, spanish, units)
-		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0).first
+	def add_summary(value, description_id, soil_id, i, ci)
+		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id).first
         if result == nil then
 			result = Result.new
 			result.field_id = @scenario.field_id
 			result.scenario_id = @scenario.id
-			result.soil_id = 0
+			result.soil_id = soil_id
+			result.description_id = description_id
 		end
 
-		result.detailed = detailed
-		result.description = description
-		result.spanish_description = spanish
-		result.units = units
-		#temp = values.find {|f| f[0] == 2 }
-		temp = values.assoc(0)
-		
-		#result.value = temp.size
-		#session[:depth] = result.value
-		session[:test] = temp
-		session[:depth] = temp.class
+		result.watershed_id = 0
+		#temp = values.assoc(i)	
+		result.value = value
+		#temp = cis.assoc(i)
+		result.ci_value = ci
+		result.save
+	end
+
+	def add_summary_to_results_table(values, description_id, cis)
+		#total Area =10, main area= 11, additional area 12..19
+		#total N = 20, orgn=21, runoffn=22, subsurface n=23, tile drain n = 24
+		#total p = 30, orgp=31, po4_p=32, tile drain p = 33
+		#total Flow = 40, surface runoff = 41, subsurface runoff = 42, tile drain flow = 43
+		#other water info = 50, irrigation = 51, deep percolation = 52
+		#total sediment = 60, sediment = 61, manure erosion = 62
+		add_summary(values.assoc(0)[1], description_id, 0, 0, cis.assoc(0)[1])
+		i=0
+		case description_id    #Total area for summary report is beeing calculated
+			when 4  #calculate total area
+				#todo	
+			when 24  #calculate total N
+				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 20, 0, 0)
+			when 33  #calculate total P
+				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 30, 0, 0)
+			when 43 #calculate total flow
+				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 40, 0, 0)
+			when 52 #calculate total other water info
+				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 50, 0, 0)
+			when 62 #calculate total sediment
+				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 60, 0, 0)
+		end
+		@soils.each do |soil|
+			add_summary(values.assoc(i)[1], description_id, soil.id, i, cis.assoc(i)[1])
+			case description_id 
+				when 4  #calculate total area
+					#todo	
+				when 24  #calculate total N
+					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 20, i, soil.id)
+				when 33  #calculate total P
+					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 30, i, soil.id)
+				when 43 #calculate total flow
+					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 40, i, soil.id)
+				when 52 #calculate total other water info
+					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 50, i, soil.id)
+				when 62 #calculate total sediment
+					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 60, i, soil.id)
+			end
+			i+=1
+		end
+	end
+	
+	def add_totals(results, description_id, i, soil_id)	
+		total = 0
+		total_ci = 0
+		results.each do |result|
+			total += result.value
+			total_ci += result.ci_value
+		end
+		add_summary(total, description_id, 0, i, total_ci)
 	end
 end  #end class

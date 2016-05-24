@@ -3,9 +3,7 @@
 <%= link_to t('general.new')  + ' ' + t('scenario.scenario'), new_scenario_path %>
 &nbsp &nbsp
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), new_scenario_path %>
-<%=session[:depth]%>
-<%=session[:test]%>
-<table class='gvTableStyle'>
+  <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle">Name</th>
     <th><%= t('general.actions')%></th>
