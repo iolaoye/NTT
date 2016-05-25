@@ -12,21 +12,21 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find(params[:id])
-	@project_name = Project.find(session[:project_id]).name
+	  @project_name = Project.find(session[:project_id]).name
     session[:location_id] = params[:id]
-	respond_to do |format|		  
-		format.html # show.html.erb		  
-	end
+      respond_to do |format|		  
+		    format.html # show.html.erb		  
+	    end
   end
   ###################################### SHOWS ######################################
   # GET /locations/1
   # GET /locations/1.json
   def shows
     @location = Location.find(params[:id])
-	respond_to do |format|
-		format.html # show.html.erb
-		format.json { render json: @location }
-	end
+	  respond_to do |format|
+		  format.html # show.html.erb
+		  format.json { render json: @location }
+	  end
   end
   ###################################### send_to_mapping_site ######################################
   def send_to_mapping_site
