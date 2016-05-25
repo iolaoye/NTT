@@ -127,16 +127,16 @@ class LocationsController < ApplicationController
 
 	  # step 3: update location	  
 	  state_abbreviation = params[:state]
-		state = State.find_by_state_abbreviation(state_abbreviation) 
-		@location.state_id = state.id
-	    county_name = params[:county]
-	    county_name.slice! " County"
-	    county = County.find_by_county_name(county_name)
-	    @location.county_id = county.id
+	  state = State.find_by_state_abbreviation(state_abbreviation) 
+	  @location.state_id = state.id
+	  county_name = params[:county]
+	  county_name.slice! " County"
+	  county = County.find_by_county_name(county_name)
+	  @location.county_id = county.id
 	  @location.coordinates = params[:parcelcoords]
       @location.save
 	end # end if of session_id check
-  end
+  end  #end method receiving from map site
  
   # GET /locations/new
   # GET /locations/new.json
@@ -215,7 +215,7 @@ class LocationsController < ApplicationController
     #delete all of the soils for this field
 	soils1 = Soil.where(:field_id => field_id)
 	soils1.delete_all
-	#since all of the soils are deleted all of the subareas need to be created again.
+	#todo since all of the soils are deleted all of the subareas need to be created again. Also, the SoilOperation needs to be deleted and created again.
 	total_percentage = 0
     for j in 1..params["field#{i}soils"].to_i
   	   @soil = @field.soils.new
@@ -226,6 +226,32 @@ class LocationsController < ApplicationController
 	   @soil.albedo = params["field#{i}soil#{j}albedo"]
 	   @soil.slope = params["field#{i}soil#{j}slope"]
 	   @soil.percentage = params["field#{i}soil#{j}pct"]
+	   @soil.drainage_type = params["field#{i}soil#{j}drain"]
+	   @soil.tsla = 10
+	   @soil.xids = 1
+	   @soil.wtmn = 0
+	   @soil.wtbl = 0
+	   @soil.ztk = 1
+	   @soil.zqt = 2
+	   if @soil.drainage_type != nil then
+		   case true
+			  when @soil.drainage_type.downcase.include?("well") || @soil.drainage_type.downcase.include?("excessively")
+				@soil.wtmx = 0
+			  when @soil.drainage_type.downcase == ""
+				@soil.wtmx = 0
+			  when @soil.drainage_type.downcase == "very poorly drained" || @soil.drainage_type.downcase == "poorly drained"
+				@soil.wtmx = 4
+				@soil.wtmn = 1
+				@soil.wtbl = 2
+			  when @soil.drainage_type.downcase == "somewhat poorly drained"
+				@soil.wtmx = 4
+				@soil.wtmn = 1
+				@soil.wtbl = 2
+			  else
+				soil.wtmx = 0
+		   end 
+		end
+
  	   if @soil.save then
 		   if !(params["field#{i}soil#{j}error"] == 2) then
 			create_layers(i, j)				   
@@ -261,6 +287,8 @@ class LocationsController < ApplicationController
 	   layer.organic_matter = params["field#{i}soil#{j}layer#{l}om"]
 	   layer.ph = params["field#{i}soil#{j}layer#{l}ph"]
 	   layer.depth = params["field#{i}soil#{j}layer#{l}depth"]
+	   layer.depth /= IN_TO_CM
+	   layer.cec = params["field#{i}soil#{j}layer#{l}cec"]
 	   layer.soil_p = 0
  	   layer.save
 	end #end for create_layers

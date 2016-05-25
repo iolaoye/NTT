@@ -72,6 +72,7 @@ class OperationsController < ApplicationController
     end
   end
 
+################################  UPDATE  #################################
   # PATCH/PUT /operations/1
   # PATCH/PUT /operations/1.json
   def update
@@ -125,7 +126,7 @@ class OperationsController < ApplicationController
 
 	def update_soil_operation(soil_operation, soil_id)
 		soil_operation.activity_id = @operation.activity_id
-		soil_operation.scenario_id = session[:scenario_id]
+		soil_operation.scenario_id = @operation.scenario_id
 		soil_operation.operation_id = @operation.id
 		soil_operation.soil_id = soil_id
 		soil_operation.year = @operation.year
@@ -166,12 +167,12 @@ class OperationsController < ApplicationController
 						if @operation.apex_crop = Crop_Road then return 0 end
 					else
 						if @operation.amount / FT_TO_M < 1 then
-							return (@operation.amount / FT_TO_M).round(6)  #plant population converte from ac to m2 if it is not tree
+							return (@operation.amount / FT2_TO_M2).round(6)  #plant population converte from ft2 to m2 if it is not tree
 						else
-							return (@operation.amount / FT_TO_M).round(0)  #plant population converte from ac to m2 if it is not tree
+							return (@operation.amount / FT2_TO_M2).round(0)  #plant population converte from ft2 to m2 if it is not tree
 						end
 						if lu_number == 28 then
-							return (@operation.amount / FT_TO_HA).round(0)  #plant population converte from ac to ha if it is tree
+							return (@operation.amount / FT_TO_HA).round(0)  #plant population converte from ft2 to ha if it is tree
 						end
 					end
 				end

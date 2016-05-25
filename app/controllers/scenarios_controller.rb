@@ -34,45 +34,6 @@ class ScenariosController < ApplicationController
     render "list"
   end
 
-################################  SHOW - simulate the selected scenario  #################################
-  # GET /scenarios/1
-  # GET /scenarios/1.json
-  def show
-	session[:scenario_id] = params[:id]	
-    #@doc = "Nothing"
-    @scenario = Scenario.find(params[:id])
-	dir_name = APEX + "/APEX" + session[:session_id]
-	#dir_name = "#{Rails.root}/data/#{session[:session_id]}"
-	if !File.exists?(dir_name)
-		Dir.mkdir(dir_name) 
-	else
-		#FileUtils.rm_rf(Dir.glob(File.join(dir_name, "*")))
-		#File.delete(dir_name + "/*")
-	end
-	FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
-	#CREATE structure for nutrients that go with fert file
-	@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
-	@current_nutrients = Array.new
-	@new_fert_line = Array.new
-	@change_fert_for_grazing_line = Array.new
-	@fem_list = Array.new
-	@dtNow1  = Time.now.to_s
-	@opcs_list_file = Array.new
-	@depth_ant = Array.new
-	@opers = Array.new
-	@change_till_depth = Array.new
-	create_control_file()
-	create_parameter_file()
-	create_site_file()
-	create_weather_file(dir_name)
-	@soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
-	create_soils()
-	create_subareas(1)
-	run_scenario()
-	read_apex_results()
-	@scenarios = Scenario.where(:field_id => session[:field_id])
-	render "list"
-  end
 ################################  NEW   #################################
   # GET /scenarios/new
   # GET /scenarios/new.json
@@ -142,6 +103,47 @@ class ScenariosController < ApplicationController
     end
   end
 
+################################  SHOW - simulate the selected scenario  #################################
+  # GET /scenarios/1
+  # GET /scenarios/1.json
+  def show
+	session[:scenario_id] = params[:id]	
+    #@doc = "Nothing"
+    @scenario = Scenario.find(params[:id])
+	dir_name = APEX + "/APEX" + session[:session_id]
+	#dir_name = "#{Rails.root}/data/#{session[:session_id]}"
+	if !File.exists?(dir_name)
+		Dir.mkdir(dir_name) 
+	else
+		#FileUtils.rm_rf(Dir.glob(File.join(dir_name, "*")))
+		#File.delete(dir_name + "/*")
+	end
+	FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
+	#CREATE structure for nutrients that go with fert file
+	@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
+	@current_nutrients = Array.new
+	@new_fert_line = Array.new
+	@change_fert_for_grazing_line = Array.new
+	@fem_list = Array.new
+	@dtNow1  = Time.now.to_s
+	@opcs_list_file = Array.new
+	@depth_ant = Array.new
+	@opers = Array.new
+	@change_till_depth = Array.new
+	create_control_file()
+	create_parameter_file()
+	create_site_file()
+	create_weather_file(dir_name)
+	create_wind_wp1_files(dir_name)
+	@soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
+	create_soils()
+	create_subareas(1)
+	run_scenario()
+	read_apex_results()
+	@scenarios = Scenario.where(:field_id => session[:field_id])
+	render "list"
+  end
+
   private
 
     # Use this method to whitelist the permissible parameters. Example:
@@ -166,75 +168,20 @@ class ScenariosController < ApplicationController
 	CropMixedGrass = 367
 	COMA = ", "
 
-#   def build_xml()
-#       require #nokogiri#
-#   	   require #open-uri#
-#	   require #net/http#
-#	   require #rubygems#
-#
-#	   project = Project.find(session[:project_id])
-#	   weather = Weather.find(session[:field_id])
-#	   soils = Soil.where(:field_id => session[:field_id]).where(:selected => true)
-#
-#	   builder = Nokogiri::XML::Builder.new do |xml|
-#		  xml.project {
-#			xml.start_info {
-#				#start information
-##				xml.weather_file weather.weather_file 
-#				xml.weather_initial_year weather.simulation_initial_year
-#				xml.weather_final_year weather.simulation_final_year
-#				xml.weather_latitude weather.latitude
-#				xml.weather_longitude weather.longitude
-#				xml.county County.find(Location.find_by_project_id(project.id).county_id).county_state_code
-#				xml.project_type "Fields"
-#			}  #start info end
-#			#soils and layers information
-#			soils.each do |soil|
-#				layers = Layer.where(:soil_id => soil.id)
-#				xml.soils {
-#					xml.albedo soil.albedo
-#					xml.group soil.group
-#					xml.percentage soil.percentage
-#					xml.ffc soil.ffc
-#					xml.wtmn soil.wtmn
-#					xml.wtmx soil.wtmx
-#					xml.wtbl soil.wtbl
-#					xml.gwst soil.gwst
-#					xml.gwmx soil.gwmx
-#					xml.rft soil.rft
-#					xml.rfpk soil.rfpk
-#					xml.tsla soil.tsla
-#					xml.xids soil.xids
-#					xml.rtn1 soil.rtn1
-#					xml.xidk soil.xidk
-#					xml.zqt soil.zqt
-#					xml.zf soil.zf
-#					xml.ztk soil.ztk
-#					xml.fbm soil.fbm
-#					xml.fhp soil.fhp
-#					layers.each do |layer|
-#						xml.layers {
-#						xml.depth layer.depth
-#						xml.soilp layer.soil_p
-#						xml.bd layer.bulk_density
-#						xml.sand layer.sand
-#						xml.silt layer.silt
-#						xml.clay layer.clay
-#						xml.om layer.organic_matter
-#						xml.ph layer.ph
-#						}  
-#					end   #layers.each end
-#				}  #xml.soils end
-#			end  #soils each end
-#		}	 #project end
-#	   end   #builder end
-
-#	   content = builder.to_xml
-#	   xml_string = content.gsub(#<#, #[#).gsub(#>#, #]#)
-#	   uri = URI(URL_NTT)	   
-#       res = Net::HTTP.post_form(uri, #input# => xml_string)
-#	   @doc = xml_string
-#	end
+	def create_wind_wp1_files(dir_name)
+		county = County.find(Location.find(session[:location_id]).county_id)
+		apex_run_string = "APEX001   1IWPNIWND   1   0   0"
+		if county != nil then
+			path = File.join(WP1, county.wind_wp1_name + ".wp1")
+			FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
+			path = File.join(WIND, county.wind_wp1_name + ".wnd")
+			FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
+			apex_run_string["IWPN"] = sprintf("%4d", county.wind_wp1_code)
+			apex_run_string["IWND"] = sprintf("%4d", county.wind_wp1_code)
+		end
+		#create apex run file
+		print_string_to_file(apex_run_string, "Apexrun.dat")
+	end
 
 	def create_weather_file(dir_name)
 		weather = Weather.find_by_field_id(@scenario.field_id)
@@ -823,7 +770,7 @@ class ScenariosController < ApplicationController
             #if !(bmps.CBCWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBBWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBCrop > 0) then
                 #addSubareaFile(soil._scenariosInfo(currentScenarioNumber)._subareasInfo, operation_number, last_soil1, last_owner1, i, nirr, false)
 				#operation number is used to control subprojects. Therefore here is going to be 1.
-                add_subarea_file(Subarea.where(:soil_id == soil.id).find_by_scenario_id(@scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, @soils.count)
+                add_subarea_file(Subarea.where(:soil_id => soil.id).find_by_scenario_id(@scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, @soils.count)
                 i = i + 1
             end
         end
@@ -1039,13 +986,13 @@ class ScenariosController < ApplicationController
 		@opcs_file = Array.new
         #@opcs_file.push("Operation" + "\n")
 		irrigation_type = 0
-		bmp = Bmp.where(:scenario_id == session[:scenario_id] && :irrigation_id > 0).first		
+		bmp = Bmp.where("scenario_id = " + session[:scenario_id].to_s + " and irrigation_id > 0").first		
 		irrigation_type = Irrigation.find(bmp.irrigation_id).code unless bmp == nil
         #SORT operation records by date (year, month, day)
         #Dim query As IEnumerable(Of OperationsData)
         #query = From r In soil._scenariosInfo(currentScenarioNumber)._operationsInfo Order By r.Year, r.Month, r.Day, r.ApexOpName, r.EventId
         #check and fix the operation list
-		@soil_operations = SoilOperation.where(:soil_id => soil.id)
+		@soil_operations = SoilOperation.where("soil_id = " + soil.id.to_s + " and scenario_id = " + session[:scenario_id].to_s)
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
@@ -1250,7 +1197,7 @@ class ScenariosController < ApplicationController
                     #operation.opv1 = getHu.calcHU(operation.apex_crop, wp1Files + "\" + _startInfo.Wp1Name + ".WP1", folder + "\App_Data\PHUCRP.DAT")
                     #operation.opv1 = calcHU(operation.apex_crop, _crops, _startInfo)
                 #end
-                apex_string += sprintf("%8.2f", operation.opv1)  #change to take heatunits from program using wp1 file.
+                apex_string += sprintf("%8.2f", operation.opv1)  
                 items[0] = "Heat Units"
                 values[0] = operation.opv1
 				items[1] = "Curve Number"
@@ -1417,7 +1364,7 @@ class ScenariosController < ApplicationController
             @fert_code += 1
 			@current_nutrients.push(@nutrients_structure.new(@fert_code, no3n, po4p, orgN, orgP))
             newLine = sprintf("%5d", @fert_code)
-            newLine = newLine + " " + "Fert    " 
+            newLine = newLine + " " + "Fert " + sprintf("%2d", @fert_code) + " "
             if no3n == nil then newLine += sprintf("%8.4f", 0) else newLine += sprintf("%8.4f", no3n) end
             if po4p == nil then newLine += sprintf("%8.4f", 0) else newLine += sprintf("%8.4f", po4p) end
             if k == nil then newLine += sprintf("%8.4f", 0) else newLine += sprintf("%8.4f", k) end
@@ -1478,38 +1425,9 @@ class ScenariosController < ApplicationController
     end
 
 	def read_apex_results()
-        #Dim tempa As String
-        #Dim m(0), apex_start_yearAs Integer
-        #Dim resultFS(11) As Single
-        #Dim rowLink As DataRow = Nothing
-        #Dim dsPagesUser As DataSet = Nothing
-        #Dim nYearRotation As Integer
-        #Dim ddNBYR1, start_year, nAvgyears As Short
-        #Dim irrigMin As Single = 9999999, irrigMax As Single = 0 'variables to hold irrigatin max and min
-        #Dim _cropYield As New List(Of ResultsACY)
-        #Dim cropYield As ResultsACY = Nothing
-        #Dim srFile1 As StreamReader = Nothing
         ntt_apex_results = Array.new
-        #Dim _cropsInfo As New List(Of CropsInfo)
-        #Dim currentFieldNumberAnt = currentFieldNumber
-        #Dim currentScenarioNumberAnt = currentScenarioNumber
-        
-        #currentFieldNumber = _scenariosToRun(simulationsCount).FieldIndex
-        #currentScenarioNumber = _scenariosToRun(simulationsCount).ScenarioIndex
-		
-		#take start year
-        #srFile1 = New StreamReader(File.OpenRead(sAPEXBasLoc & "\Apexcont.dat"))
-        #tempa = srFile1.ReadLine()
-        #srFile1.Close()
-        #srFile1.Dispose()
-        #srFile1 = Nothing
 
-        #ddNBYR1 = CShort(tempa.Substring(4, 4))
         start_year = Weather.find_by_field_id(Scenario.find(params[:id]).field_id).simulation_initial_year
-        #// get config values
-        #nAPEXYears = CShort(tempa.Substring(0, 4))
-        #start_year = CShort(tempa.Substring(4, 4))
-        #nAvgyears = nAPEXYears - 12 + start_year
 
         #todo check that this is being received correctly from main
         #nYearRotation = yearRotation
@@ -1521,10 +1439,8 @@ class ScenariosController < ApplicationController
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops into ntt_apex_results
 
-
         results_data = load_results(apex_start_year)
         
-		
 		#inicialize results and average all of the totals but crops
 		#average_totals(results_data)  done
         #take results from .ACY for crops into _cropsInfo
@@ -1788,44 +1704,20 @@ class ScenariosController < ApplicationController
 		case description_id    #Total area for summary report is beeing calculated
 			when 4  #calculate total area
 				#todo	
-			when 24  #calculate total N
-				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 20, 0, 0)
+			when 24  #calculate total N		
+				add_totals(Result.where("soil_id = 0 AND field_id = " + session[:field_id].to_s + " AND scenario_id = " + session[:scenario_id].to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, i, 0)
 			when 33  #calculate total P
-				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 30, 0, 0)
+				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, i, 0)
 			when 43 #calculate total flow
-				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 40, 0, 0)
+				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, i, 0)
 			when 52 #calculate total other water info
-				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 50, 0, 0)
+				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, i, 0)
 			when 62 #calculate total sediment
-				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 60, 0, 0)
-		end
-		@soils.each do |soil|
-			add_summary(values.assoc(i)[1], description_id, soil.id, i, cis.assoc(i)[1])
-			case description_id 
-				when 4  #calculate total area
-					#todo	
-				when 24  #calculate total N
-					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 20, i, soil.id)
-				when 33  #calculate total P
-					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 30, i, soil.id)
-				when 43 #calculate total flow
-					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 40, i, soil.id)
-				when 52 #calculate total other water info
-					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 50, i, soil.id)
-				when 62 #calculate total sediment
-					add_totals(Result.where("soil_id = " + soil.id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s), 60, i, soil.id)
-			end
-			i+=1
+				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, i, 0)
 		end
 	end
 	
-	def add_totals(results, description_id, i, soil_id)	
-		total = 0
-		total_ci = 0
-		results.each do |result|
-			total += result.value
-			total_ci += result.ci_value
-		end
-		add_summary(total, description_id, 0, i, total_ci)
+	def add_totals(results, description_id, i, soil_id)					
+		add_summary(results.sum(:value), description_id, 0, i, results.sum(:ci_value))
 	end
 end  #end class

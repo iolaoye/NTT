@@ -43,8 +43,7 @@ module ScenariosHelper
         subarea.fw = 0
         subarea.angl = 0
 		#line 4
-		#subarea.wsa = soil_area * AC_TO_HA
-		subarea.wsa = soil_area
+		subarea.wsa = soil_area * AC_TO_HA
 		subarea.chl = Math::sqrt(subarea.wsa * 0.01)
 		#subarea.wsa *= -1 unless i == 1
         subarea.slp = slope / 100

@@ -22,8 +22,10 @@
 #folder for own weather files
 	OWN = 'public/weather'
 
-#folder for Prism weather files
+#folder for Prism weather, wind, and wp1 files
 	PRISM = 'X:/Weather/weatherFiles/US'
+	WP1 = 'X:/Weather/wp1File'
+	WIND = 'X:/Weather/wndFile'
 
 #folder for download project files
 	DOWNLOAD = 'public/download'
@@ -33,7 +35,7 @@
 
 #convertion values
 	AC_TO_HA = 0.404685645
-	FT_TO_M = 0.093
+	FT_TO_M = 0.3048
 	FT_TO_HA = 0.0000093
 	IN_TO_MM = 25.4
 	THA_TO_TAC = 0.446
@@ -44,6 +46,7 @@
 	KG_TO_LBS = 2.204622621849
 	HA_TO_AC = 2.47105384
 	T_STATISTIC_EVALUATED = 1.645
+	FT2_TO_M2 = 0.092903
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'

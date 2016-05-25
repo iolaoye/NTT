@@ -1,8 +1,7 @@
 class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
-  def index   
-  
+  def index     
 	@total_area = Field.find(session[:field_id]).field_area
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name

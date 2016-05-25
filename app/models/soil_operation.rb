@@ -3,5 +3,5 @@ class SoilOperation < ActiveRecord::Base
   #associations
 	  belongs_to :operation
   #scopes
-    default_scope :order => "year, month, day, id DESC"
+    default_scope :order => "year, month, day, activity_id, id ASC"
 end
