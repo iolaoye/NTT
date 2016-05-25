@@ -133,16 +133,11 @@ class ProjectsController < ApplicationController
 			msg = upload_project_new_version
 			#step 2. Save location information
 			upload_location_new_version
+			#step 3. Save field information
 			@data["project"]["location"]["fields"].each do |f|
-				session[:depth] = f[1]["field_name"]
+				#session[:depth] = f[1]["field_name"]
 				upload_field_new_version(f[1])
 			end
-			
-			#step 3. Save field information
-			
-			#for i in 0..@data["project"]["location"].length-5
-			#	upload_field_new_version(i)
-			#end
 		elsif (@data["Project"]["StartInfo"]["StationWay"] != "Station")
 		    #old version
 			#step 1. save project information
@@ -431,21 +426,17 @@ class ProjectsController < ApplicationController
 		field.field_average_slope = new_field["field_average_slope"]
 		field.field_type = new_field["field_type"]
 		field.coordinates = new_field["coordinates"]
-		if field.save then
-			session[:depth] = "no saved"
-		else			
-			session[:depth] = "saved"
-		end
+		field.save
 		# Step 5. save Weather and Site Info
-		#upload_weather_new_version(field.id, field)
+		upload_weather_new_version(field.id, new_field)
 		#session[:depth] = field["weather"]
-		#upload_site_new_version(field.id)
-		#for k in 0..@data["project"]["location"]["fields"][i]["soils"].size-1
-		#	upload_soil_new_version(field.id, i, k)
-		#end
-		#for j in 0..@data["project"]["location"]["fields"][i]["scenarios"].size-1
-		#	scenario_id = upload_scenario_new_version(field.id, i, j)
-		#end
+		upload_site_new_version(field.id, new_field)
+		for k in 0..new_field["soils"].size-1
+			upload_soil_new_version(field.id, i, k)
+		end
+		for j in 0..new_field["scenarios"].size-1
+			scenario_id = upload_scenario_new_version(field.id, i, j)
+		end
 	end
 
 	def upload_weather_info(field_id)
@@ -467,28 +458,28 @@ class ProjectsController < ApplicationController
 		weather = Weather.new
 		weather.field_id = field_id
 		weather.station_way = field["weather"]["station_way"]
-		weather.simulation_initial_year = @data["project"]["location"]["fields"]["weather"]["simulation_initial_year"]
-		weather.simulation_final_year = @data["project"]["location"]["fields"]["weather"]["simulation_final_year"]
-		weather.latitude = @data["project"]["location"]["fields"]["weather"]["weather_latitude"]
-		weather.longitude = @data["project"]["location"]["fields"]["weather"]["weather_longitude"]
-		weather.weather_file = @data["project"]["location"]["fields"]["weather"]["weather_file"]
-		weather.way_id = @data["project"]["location"]["fields"]["weather"]["way_id"]
+		weather.simulation_initial_year = field["weather"]["simulation_initial_year"]
+		weather.simulation_final_year = field["weather"]["simulation_final_year"]
+		weather.latitude = field["weather"]["weather_latitude"]
+		weather.longitude = field["weather"]["weather_longitude"]
+		weather.weather_file = field["weather"]["weather_file"]
+		weather.way_id = field["weather"]["way_id"]
 		weather.save
 	end
 
-	def upload_site_new_version(field_id)
+	def upload_site_new_version(field_id, field)
 		site = Site.new
 		site.field_id = field_id
-		site.apm = @data["project"]["location"]["fields"]["site"]["apm"]
-		site.co2x = @data["project"]["location"]["fields"]["site"]["co2x"]
-		site.cqnx = @data["project"]["location"]["fields"]["site"]["cqnx"]
-		site.elev = @data["project"]["location"]["fields"]["site"]["elev"]
-		site.fir0 = @data["project"]["location"]["fields"]["site"]["fir0"]
-		site.rfnx = @data["project"]["location"]["fields"]["site"]["rfnx"]
-		site.unr = @data["project"]["location"]["fields"]["site"]["unr"]
-		site.upr = @data["project"]["location"]["fields"]["site"]["upr"]
-		site.xlog = @data["project"]["location"]["fields"]["site"]["xlog"]
-		site.ylat = @data["project"]["location"]["fields"]["site"]["ylat"]
+		site.apm =field["site"]["apm"]
+		site.co2x =field["site"]["co2x"]
+		site.cqnx =field["site"]["cqnx"]
+		site.elev =field["site"]["elev"]
+		site.fir0 =field["site"]["fir0"]
+		site.rfnx =field["site"]["rfnx"]
+		site.unr =field["site"]["unr"]
+		site.upr =field["site"]["upr"]
+		site.xlog =field["site"]["xlog"]
+		site.ylat =field["site"]["ylat"]
 		site.save
 	end
 
