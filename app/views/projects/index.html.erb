@@ -1,5 +1,5 @@
   <h1><%= t('menu.projects') %></h1>
-
+<%= session[:depth] %>
   <%= link_to t('project.new_project'), new_project_path %>
   &nbsp &nbsp
   <%= link_to t('project.upload_project'), upload_project_path(0) %>

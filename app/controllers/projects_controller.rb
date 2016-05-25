@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+    require 'nokogiri'
+
 	#rescue_from ::ActiveRecord::RecordNotFound, :with => :record_not_found
 	#rescue_from ::NameError, :with => :error_occurred
 	#rescue_from ::ActionController::RoutingError, :with => :error_occurred
@@ -121,6 +123,7 @@ class ProjectsController < ApplicationController
 	########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
 	def upload_project
 		@data = Hash.from_xml(params[:project].read)
+		#@data = Nokogiri::XML(File.open(params[:project].path))
 		#detect project version
 		#todo check the name of the project. It should not exist.		
 		msg = "OK"
@@ -130,8 +133,14 @@ class ProjectsController < ApplicationController
 			msg = upload_project_new_version
 			#step 2. Save location information
 			upload_location_new_version
+			@data["project"]["location"]["fields"].each do |f|
+				session[:depth] = f[1]["field_name"]
+				upload_field_new_version(f[1])
+			end
+			
 			#step 3. Save field information
-			#for i in 0..@data["project"]["location"]["fields"].size-1
+			
+			#for i in 0..@data["project"]["location"].length-5
 			#	upload_field_new_version(i)
 			#end
 		elsif (@data["Project"]["StartInfo"]["StationWay"] != "Station")
@@ -155,7 +164,6 @@ class ProjectsController < ApplicationController
 
 	########################################### DOWNLOAD PROJECT FILE IN XML FORMAT ##################
 	def download
-       require 'nokogiri'
 	   #require 'open-uri'
 	   #require 'net/http'
 	   #require 'rubygems'
@@ -179,6 +187,7 @@ class ProjectsController < ApplicationController
 				fields = Field.where(:location_id => location.id)
 				fields.each do |field|
 					xml.fields {
+						xml.field {
 						#fields information
 						xml.field_name field.field_name
 						xml.field_area field.field_area
@@ -318,7 +327,7 @@ class ProjectsController < ApplicationController
 								end # bmps do end
 							} # xml scenarios end
 						end # scenarios do end
-
+					  } # end field (this is for each field)
 					} #fields end
 				end  #end fields do
 		  }  # location end
@@ -414,24 +423,29 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_field_new_version(i)
+	def upload_field_new_version(new_field)
 		field = Field.new
 		field.location_id = session[:location_id]
-		field.field_name = @data["project"]["location"]["fields"][i]["field_name"]
-		field.field_area = @data["project"]["location"]["fields"][i]["field_area"]
-		field.field_average_slope = @data["project"]["location"]["fields"][i]["field_average_slope"]
-		field.field_type = @data["project"]["location"]["fields"][i]["field_type"]
-		field.coordinates = @data["project"]["location"]["fields"][i]["coordinates"]
-		field.save
+		field.field_name = new_field["field_name"]
+		field.field_area = new_field["field_area"]
+		field.field_average_slope = new_field["field_average_slope"]
+		field.field_type = new_field["field_type"]
+		field.coordinates = new_field["coordinates"]
+		if field.save then
+			session[:depth] = "no saved"
+		else			
+			session[:depth] = "saved"
+		end
 		# Step 5. save Weather and Site Info
-		upload_weather_new_version(field.id)
-		upload_site_new_version(field.id)
-		for k in 0..@data["project"]["location"]["fields"][i]["soils"].size-1
-			upload_soil_new_version(field.id, i, k)
-		end
-		for j in 0..@data["project"]["location"]["fields"][i]["scenarios"].size-1
-			scenario_id = upload_scenario_new_version(field.id, i, j)
-		end
+		#upload_weather_new_version(field.id, field)
+		#session[:depth] = field["weather"]
+		#upload_site_new_version(field.id)
+		#for k in 0..@data["project"]["location"]["fields"][i]["soils"].size-1
+		#	upload_soil_new_version(field.id, i, k)
+		#end
+		#for j in 0..@data["project"]["location"]["fields"][i]["scenarios"].size-1
+		#	scenario_id = upload_scenario_new_version(field.id, i, j)
+		#end
 	end
 
 	def upload_weather_info(field_id)
@@ -449,10 +463,10 @@ class ProjectsController < ApplicationController
 		weather.save
 	end
 
-	def upload_weather_new_version(field_id)
+	def upload_weather_new_version(field_id, field)
 		weather = Weather.new
 		weather.field_id = field_id
-		weather.station_way = @data["project"]["location"]["fields"]["weather"]["station_way"]
+		weather.station_way = field["weather"]["station_way"]
 		weather.simulation_initial_year = @data["project"]["location"]["fields"]["weather"]["simulation_initial_year"]
 		weather.simulation_final_year = @data["project"]["location"]["fields"]["weather"]["simulation_final_year"]
 		weather.latitude = @data["project"]["location"]["fields"]["weather"]["weather_latitude"]
