@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  code: MyString
+  state_id: 1
+  event_order: 1
+  month: 1
+  day: 1
+  year: 1
+  event_type: MyString
+  apex_operation: 1
+  apex_crop: 1
+  apex_fertilizer: 1
+  apex_opv1: 1.5
+  apex_opv2: 1.5
+
+two:
+  code: MyString
+  state_id: 1
+  event_order: 1
+  month: 1
+  day: 1
+  year: 1
+  event_type: MyString
+  apex_operation: 1
+  apex_crop: 1
+  apex_fertilizer: 1
+  apex_opv1: 1.5
+  apex_opv2: 1.5

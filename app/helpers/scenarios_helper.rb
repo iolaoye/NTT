@@ -7,7 +7,7 @@ module ScenariosHelper
 		total_selected = soils.where(:selected => true).count
 		soils.each do |soil|
 			i+=1
-			soil_area = (soil.percentage / total_percentage) * field.field_area
+			soil_area = (soil.percentage * field.field_area / 100)
 			create_subarea("Soil", i, soil_area, soil.slope, field.field_type, total_selected, field.field_name, scenario.id, soil.id, soil.percentage, total_percentage, field.field_area)
 		end #soils each do end
 	end

@@ -1213,14 +1213,8 @@ class ScenariosController < ApplicationController
                 #End With
                 apex_string += sprintf("%8.2f", operation.opv3)                      #Opv3. No entry needed.
                 apex_string += sprintf("%8.2f", operation.opv4)                      #Opv4. No entry needed.
-                if operation.opv5 < 0.01 then
-                    apex_string += sprintf("%8.6f", operation.opv5)                      #Opv 5 Plant Population.
-                else
-                    apex_string += sprintf("%8.2f", operation.opv5)                      #Opv 5 Plant Population.
-                end
-                #if operation.opv5 == 0 && operation.opv1 > 0 then
-                    #operation.setOpval1(0, "")
-                #end
+				
+				operation.opv5 == nil ? apex_string += sprintf("%8.2f", 0) : operation.opv5 < 0.01 ? apex_string += sprintf("%8.6f", operation.opv5) : apex_string += sprintf("%8.2f", operation.opv5) #Opv 5 Plant Population.
             when 6 #irrigation
                 apex_string += sprintf("%5d", 0)    #
                 items[0] = "Irrigation"
@@ -1234,7 +1228,7 @@ class ScenariosController < ApplicationController
             when 2  # fertilizer            #fertilizer or fertilizer(folier)
                 #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
 					oper = Operation.where(:id => operation.operation_id).first
-                    add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, operation.type_id, oper.nh3, oper.subtype_id)
+                    add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
                     apex_string += sprintf("%5d", @fert_code)    #Fertilizer Code       #APEX0604
                     items[0] = @fert_code
                 #else
@@ -1620,7 +1614,6 @@ class ScenariosController < ApplicationController
 			#end
         end
 		average_totals(results_data, 0)   # average totals
-
 	end
 
 	def average_totals(results_data, i)
@@ -1674,7 +1667,7 @@ class ScenariosController < ApplicationController
 		add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
 	end
 
-	def add_summary(value, description_id, soil_id, i, ci)
+	def add_summary(value, description_id, soil_id, ci)
 		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id).first
         if result == nil then
 			result = Result.new
@@ -1685,9 +1678,7 @@ class ScenariosController < ApplicationController
 		end
 
 		result.watershed_id = 0
-		#temp = values.assoc(i)	
 		result.value = value
-		#temp = cis.assoc(i)
 		result.ci_value = ci
 		result.save
 	end
@@ -1698,26 +1689,30 @@ class ScenariosController < ApplicationController
 		#total p = 30, orgp=31, po4_p=32, tile drain p = 33
 		#total Flow = 40, surface runoff = 41, subsurface runoff = 42, tile drain flow = 43
 		#other water info = 50, irrigation = 51, deep percolation = 52
-		#total sediment = 60, sediment = 61, manure erosion = 62
-		add_summary(values.assoc(0)[1], description_id, 0, 0, cis.assoc(0)[1])
-		i=0
-		case description_id    #Total area for summary report is beeing calculated
-			when 4  #calculate total area
-				#todo	
-			when 24  #calculate total N		
-				add_totals(Result.where("soil_id = 0 AND field_id = " + session[:field_id].to_s + " AND scenario_id = " + session[:scenario_id].to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, i, 0)
-			when 33  #calculate total P
-				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, i, 0)
-			when 43 #calculate total flow
-				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, i, 0)
-			when 52 #calculate total other water info
-				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, i, 0)
-			when 62 #calculate total sediment
-				add_totals(Result.where("soil_id = 0 AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, i, 0)
-		end
+		#total sediment = 60, sediment = 61, manure erosion = 62		
+		
+		for i in 0..values.count-1
+			values[i][0] == 0 ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
+			add_summary(values[i][1], description_id, soil_id, cis[i][1])
+			case description_id    #Total area for summary report is beeing calculated
+				when 4  #calculate total area
+					#todo	
+				when 24  #calculate total N		
+				session[:deph] = soil_id.to_s + " " + description_id.to_s
+					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + session[:field_id].to_s + " AND scenario_id = " + session[:scenario_id].to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
+				when 33  #calculate total P
+					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
+				when 43 #calculate total flow
+					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
+				when 52 #calculate total other water info
+					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
+				when 62 #calculate total sediment
+					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
+			end
+		end #end for i
 	end
 	
-	def add_totals(results, description_id, i, soil_id)					
-		add_summary(results.sum(:value), description_id, 0, i, results.sum(:ci_value))
+	def add_totals(results, description_id, soil_id)					
+		add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value))
 	end
 end  #end class
