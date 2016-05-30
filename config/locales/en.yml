@@ -279,6 +279,8 @@ en:
   operation:
     new_operation: New Operation
     edit: Editing Operation
+    upload: 'Upload'
+    cropping_system: 'Cropping System'
   activity:
     edit: Editing Activity
     new_activity: New Activity
@@ -299,3 +301,7 @@ en:
       new_user: New User
   modifications:
     mod_title: Modify APEX Information
+  result:
+    summary: Summary
+    by_soil: By Soil
+    graph: Graph

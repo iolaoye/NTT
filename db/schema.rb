@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160524192508) do
+ActiveRecord::Schema.define(:version => 20160526192658) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -178,6 +178,28 @@ ActiveRecord::Schema.define(:version => 20160524192508) do
     t.integer  "position"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+  end
+
+  create_table "events", :force => true do |t|
+    t.integer  "event_order"
+    t.integer  "month"
+    t.integer  "day"
+    t.integer  "year"
+    t.integer  "activity_id"
+    t.integer  "apex_operation"
+    t.integer  "apex_crop"
+    t.integer  "apex_fertilizer"
+    t.float    "apex_opv1"
+    t.float    "apex_opv2"
+    t.integer  "cropping_system_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "fertilizer_type", :force => true do |t|
+    t.string   "field_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "fertilizer_types", :force => true do |t|

@@ -1,1 +1,25 @@
-﻿<%= pie_chart Result.group("soil_id").count %>
+﻿<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
+<%= column_chart [
+    { :name => "Baseline", :data =>
+	[["2002", 1.5],
+	["2003", 2.4],
+	[2004, 4.2],
+	[2005, 1.9],
+	[2006, 5.1]]},
+	
+	{ :name => "Alternative", :data =>
+	[["2002", 5.5],
+	["2003", 3.4],
+	[2004, 5.2],
+	[2005, 1],
+	[2006, 6.1]]}, 
+
+	{ :name => "Future", :data =>
+	[["2002", 5.5],
+	["2003", 3.4],
+	[2004, 5.2],
+	[2005, 1],
+	[2006, 6.1]]}
+	], { library: {hAxis: {title: "Year"}, vAxis: {title: "mm"}, title: {:title => "Flow"}}}
+	  %>

@@ -50,5 +50,5 @@
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'
-	Crop_Road = 300  
+	Crop_Road = 191  #191 is the crop id but the number is 300
 

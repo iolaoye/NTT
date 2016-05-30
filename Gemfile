@@ -40,3 +40,5 @@ gem 'breadcrumbs_on_rails'
 # rest API for NTT call
 gem "nokogiri"
 gem 'savon', '>= 2.0'
+
+gem 'chartkick', '~> 1.5', '>= 1.5.2'

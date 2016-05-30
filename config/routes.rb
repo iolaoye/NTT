@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :events
+
+
   resources :descriptions
   resources :apex_parameters
   resources :apex_controls
@@ -98,6 +101,7 @@ NTTG3::Application.routes.draw do
 
   resources :operations do
 	get :list, on: :member
+	get :cropping_system, on: :member
   end
 
   resources :bmps do
