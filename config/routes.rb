@@ -1,4 +1,10 @@
 NTTG3::Application.routes.draw do
+  resources :people
+
+
+  resources :charts
+
+
   resources :events
 
 

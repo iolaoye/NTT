@@ -87,6 +87,6 @@ class DescriptionsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def description_params
-      params.require(:description).permit(:description, :detail, :unit, :spanish_description, :id)
+      params.require(:description).permit(:description, :detail, :unit, :spanish_description, :id, :period, :position)
     end
 end

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  description_id: 1
+  scenario_id: 1
+  field_id: 1
+  soil_id: 1
+  month_year: 1
+  value: 1.5
+
+two:
+  description_id: 1
+  scenario_id: 1
+  field_id: 1
+  soil_id: 1
+  month_year: 1
+  value: 1.5

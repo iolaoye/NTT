@@ -1,5 +1,6 @@
 ﻿<p id="notice"><%= notice %></p>
 <h1>Listing Scenarios</h1>
+<%= session[:depth] %>
 <%= link_to t('general.new')  + ' ' + t('scenario.scenario'), new_scenario_path %>
 &nbsp &nbsp
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), new_scenario_path %>
@@ -19,7 +20,7 @@
   <tr class="gvRowStyle">
     <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
     <td>
-      <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait . . .'} %>
+      <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
         <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
       <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
     </td>
