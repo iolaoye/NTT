@@ -1,0 +1,43 @@
+<h1>Listing events</h1>
+
+<table>
+  <tr>
+    <th>Cropping System Id</th>
+    <th>Event order</th>
+    <th>Month</th>
+    <th>Day</th>
+    <th>Year</th>
+    <th>Activity Id</th>
+    <th>Apex operation</th>
+    <th>Apex crop</th>
+    <th>Apex fertilizer</th>
+    <th>Apex opv1</th>
+    <th>Apex opv2</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @events.each do |event| %>
+  <tr>
+    <td><%= event.cropping_system_id %></td>
+    <td><%= event.event_order %></td>
+    <td><%= event.month %></td>
+    <td><%= event.day %></td>
+    <td><%= event.year %></td>
+    <td><%= event.activity_id %></td>
+    <td><%= event.apex_operation %></td>
+    <td><%= event.apex_crop %></td>
+    <td><%= event.apex_fertilizer %></td>
+    <td><%= event.apex_opv1 %></td>
+    <td><%= event.apex_opv2 %></td>
+    <td><%= link_to 'Show', event %></td>
+    <td><%= link_to 'Edit', edit_event_path(event) %></td>
+    <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Event', new_event_path %>

@@ -1,0 +1,9 @@
+﻿
+<form id="myForm">
+  <div class="field">
+      <%= label "select", t('operation.cropping_system') %>
+      <%= collection_select :cropping_system, :id, @cropping_systems, :id, :crop, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id} %>    
+      <%= hidden_field(:language, :lenguage, :value => I18n.locale) %>
+  	  <%= button_to t('operation.upload'), cropping_system_operation_path, :class => "inbox-sf-add-btn tip", :method => :get, data: {disable_with: 'Please wait . . .'} %>
+      </div>
+</form>

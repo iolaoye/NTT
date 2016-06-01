@@ -24,7 +24,7 @@ class OperationsController < ApplicationController
       format.json { render json: @operations }
     end
   end
-
+################################  SHOW  #################################
   # GET /operations/1
   # GET /operations/1.json
   def show
@@ -108,6 +108,80 @@ class OperationsController < ApplicationController
     end
   end
 
+  def cropping_system
+	@cropping_systems = CroppingSystem.where(:state_id => Location.find(Field.find(Scenario.find(71).field_id).location_id).state_id)
+	if @cropping_systems == nil then
+		@cropping_systems = CroppingSystem.where(:state_id => "All")
+	end
+  	if params[:cropping_system] != nil
+		if params[:cropping_system][:id] != "" then
+			@cropping_system_id = params[:cropping_system][:id]
+			#Delete operations for the scenario selected
+			Operation.where(:scenario_id => params[:id]).delete_all
+			SoilOperation.where(:scenario_id => params[:id]).delete_all
+			#take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
+			events = Event.where(:cropping_system_id => params[:cropping_system][:id])
+			events.each do |event|
+				@operation = Operation.new
+				@operation.scenario_id = params[:id]
+				#get crop_id from croppingsystem and state_id
+				state_id = Location.find(session[:location_id]).state_id
+				crops = Crop.where(:number => event.apex_crop)
+				crop_id = event.apex_crop
+				crops.each do |crop|
+					if crop.state_id == state_id then
+						crop_id = crop.id
+						break
+					else
+						crop_id = crop.id
+					end
+				end
+				@operation.crop_id = crop_id
+				@operation.activity_id = event.activity_id
+				@operation.day = event.day
+				@operation.month_id = event.month
+				@operation.year = event.year
+				#type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
+				#note fertilizer id and code are the same so far. Try to keep them that way
+				@operation.type_id = 0
+				@operation.no3_n = 0
+				@operation.po4_p = 0
+				@operation.org_n = 0
+				@operation.org_p = 0
+				@operation.nh3 = 0
+				@operation.subtype_id = 0
+				case @operation.activity_id
+					when 1  #planting operation. Take planting code from crop table
+						@operation.type_id = Crop.find(crop_id).planting_code
+					when 2, 7
+						fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
+						if fertilizer != nil then
+							@operation.type_id = fertilizer.fertilizer_type_id
+							@operation.no3_n = fertilizer.qn
+							@operation.po4_p = fertilizer.qp
+							@operation.org_n = fertilizer.yn
+							@operation.org_p = fertilizer.yp
+							@operation.nh3 = fertilizer.nh3
+							@operation.subtype_id = event.apex_fertilizer
+						end						 
+					when 3
+						@operation.type_id = event.apex_operation
+				end  #end case
+				@operation.amount = event.apex_opv1
+				@operation.depth = event.apex_opv2
+				@operation.scenario_id = params[:id]
+				if @operation.save then
+					add_soil_operation()
+				end
+			end  # end events.each
+		end  #end if cropping_system_id != ""
+		@operations = Operation.where(:scenario_id => params[:id])
+		render action: 'list'
+	else
+		render action: 'upload'
+	end  # end if cropping_system_id != nil
+  end  # end method
+
   private
 
     # Use this method to whitelist the permissible parameters. Example:
@@ -164,7 +238,7 @@ class OperationsController < ApplicationController
 				lu_number = Crop.find(@operation.crop_id).lu_number
 				if lu_number != nil then
 					if @operation.amount == 0 then
-						if @operation.apex_crop = Crop_Road then return 0 end
+						if @operation.crop_id == Crop_Road then return 0 end
 					else
 						if @operation.amount / FT_TO_M < 1 then
 							return (@operation.amount / FT2_TO_M2).round(6)  #plant population converte from ft2 to m2 if it is not tree

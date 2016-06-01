@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= require chartkick
 
 function rbtnStation_onclick(way) {
     document.getElementById("fsetUploadWeatherFile").style.display = "none";

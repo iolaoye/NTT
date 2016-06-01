@@ -282,6 +282,8 @@
   operation:
     new_operation: Nueva Operación
     edit: Revisión de Operación
+    upload: 'Cargar'
+    cropping_system: 'Sistema de Cultivo' 
   activity:
     edit: Revisión de Actividad
     new_activity: Actividad Nuevo
@@ -302,3 +304,8 @@
       new_user: Usuario Nuevo
   modifications:
     mod_title: Modificar Información de APEX
+  result:
+    summary: Resumen
+    by_soil: Por Suelo
+    graph: Gráficas
+

@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Code:</b>
+  <%= @event.code %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @event.state_id %>
+</p>
+
+<p>
+  <b>Event order:</b>
+  <%= @event.event_order %>
+</p>
+
+<p>
+  <b>Month:</b>
+  <%= @event.month %>
+</p>
+
+<p>
+  <b>Day:</b>
+  <%= @event.day %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @event.year %>
+</p>
+
+<p>
+  <b>Event type:</b>
+  <%= @event.event_type %>
+</p>
+
+<p>
+  <b>Apex operation:</b>
+  <%= @event.apex_operation %>
+</p>
+
+<p>
+  <b>Apex crop:</b>
+  <%= @event.apex_crop %>
+</p>
+
+<p>
+  <b>Apex fertilizer:</b>
+  <%= @event.apex_fertilizer %>
+</p>
+
+<p>
+  <b>Apex opv1:</b>
+  <%= @event.apex_opv1 %>
+</p>
+
+<p>
+  <b>Apex opv2:</b>
+  <%= @event.apex_opv2 %>
+</p>
+
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
