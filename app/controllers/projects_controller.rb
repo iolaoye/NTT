@@ -219,7 +219,8 @@ class ProjectsController < ApplicationController
 						soils = Soil.where(:field_id => field.id)
 						#soils and layers information
 						soils.each do |soil|
-							xml.soils {
+							#xml.soils{
+								xml.soil {
 								xml.selected soil.selected
 								xml.key soil.key
 								xml.symbol soil.symbol
@@ -259,72 +260,77 @@ class ProjectsController < ApplicationController
 										xml.ph layer.ph
 									} #layers xml end
 								end   #layers.each end
-							} #end xml soils
-						end # end do soils
+							#} # soild end (for each soil)
+						} # soils end
+					end # end do soils
 
-						scenarios = Scenario.where(:field_id => field.id)
-						#scenarios and operations information
-						scenarios.each do |scenario|
-							xml.scenarios {
-								xml.name scenario.name
-								operations = Operation.where(:scenario_id => scenario.id)
-								operations.each do |operation|
-									xml.operations {
-										xml.crop_id operation.crop_id
-										xml.activity_id operation.activity_id
-										xml.day operation.day
-										xml.month operation.month_id
-										xml.year operation.year
-										xml.type_id operation.type_id
-										xml.amout operation.amount
-										xml.depth operation.depth
-										xml.no3_n operation.no3_n
-										xml.po4_p operation.po4_p
-										xml.org_n operation.org_n
-										xml.org_p operation.org_p
-										xml.nh3 operation.nh3
-										xml.subtype_id operation.subtype_id
-									} # xml operations end
-								end # operations do en
-								bmps = Bmp.where(:scenario_id => scenario.id)
-								bmps.each do |bmp|
-									xml.bmps {
-										xml.bmp_id bmp.bmp_id
-										xml.crop_id bmp.crop_id
-										xml.irrigation_id bmp.irrigation_id
-										xml.water_stress_factor bmp.water_stress_factor
-										xml.irrigation_efficiency bmp.irrigation_efficiency
-										xml.maximum_single_application bmp.maximum_single_application
-										xml.safety_factor bmp.safety_factor
-										xml.depth bmp.depth
-										xml.area bmp.area
-										xml.number_of_animals bmp.number_of_animals
-										xml.days bmp.days
-										xml.hours bmp.hours
-										xml.animal_id bmp.animal_id
-										xml.dry_manure bmp.dry_manure
-										xml.no3_n bmp.no3_n
-										xml.po4_p bmp.po4_p
-										xml.org_n bmp.org_n
-										xml.org_p bmp.org_p
-										xml.width bmp.width
-										xml.grass_field_portion bmp.grass_field_portion
-										xml.buffer_slope_upland bmp.buffer_slope_upland
-										xml.crop_width bmp.crop_width
-										xml.slope_reduction bmp.slope_reduction
-										xml.sides bmp.sides
-										xml.name bmp.name
-										xml.bmpsublist_id bmp.bmpsublist_id
-										xml.difference_max_temperature bmp.difference_max_temperature
-										xml.difference_min_temperature bmp.difference_min_temperature
-										xml.difference_precipitation bmp.difference_precipitation
-									} # xml bmp end
-								end # bmps do end
-							} # xml scenarios end
-						end # scenarios do end
-					  } # end field (this is for each field)
-					} #fields end
-				end  #end fields do
+					scenarios = Scenario.where(:field_id => field.id)
+					#scenarios and operations information
+					scenarios.each do |scenario|
+						xml.scenarios {
+							xml.scenario {
+							xml.name scenario.name
+							operations = Operation.where(:scenario_id => scenario.id)
+							operations.each do |operation|
+								xml.operations {
+									xml.operation {
+									xml.crop_id operation.crop_id
+									xml.activity_id operation.activity_id
+									xml.day operation.day
+									xml.month operation.month_id
+									xml.year operation.year
+									xml.type_id operation.type_id
+									xml.amout operation.amount
+									xml.depth operation.depth
+									xml.no3_n operation.no3_n
+									xml.po4_p operation.po4_p
+									xml.org_n operation.org_n
+									xml.org_p operation.org_p
+									xml.nh3 operation.nh3
+									xml.subtype_id operation.subtype_id
+									} # xml each operation end
+								} # xml operations end
+							end # operations do en
+							bmps = Bmp.where(:scenario_id => scenario.id)
+							bmps.each do |bmp|
+								xml.bmps {
+									xml.bmp_id bmp.bmp_id
+									xml.crop_id bmp.crop_id
+									xml.irrigation_id bmp.irrigation_id
+									xml.water_stress_factor bmp.water_stress_factor
+									xml.irrigation_efficiency bmp.irrigation_efficiency
+									xml.maximum_single_application bmp.maximum_single_application
+									xml.safety_factor bmp.safety_factor
+									xml.depth bmp.depth
+									xml.area bmp.area
+									xml.number_of_animals bmp.number_of_animals
+									xml.days bmp.days
+									xml.hours bmp.hours
+									xml.animal_id bmp.animal_id
+									xml.dry_manure bmp.dry_manure
+									xml.no3_n bmp.no3_n
+									xml.po4_p bmp.po4_p
+									xml.org_n bmp.org_n
+									xml.org_p bmp.org_p
+									xml.width bmp.width
+									xml.grass_field_portion bmp.grass_field_portion
+									xml.buffer_slope_upland bmp.buffer_slope_upland
+									xml.crop_width bmp.crop_width
+									xml.slope_reduction bmp.slope_reduction
+									xml.sides bmp.sides
+									xml.name bmp.name
+									xml.bmpsublist_id bmp.bmpsublist_id
+									xml.difference_max_temperature bmp.difference_max_temperature
+									xml.difference_min_temperature bmp.difference_min_temperature
+									xml.difference_precipitation bmp.difference_precipitation
+								} # xml bmp end
+							end # bmps do end
+							} # xml each scenario end
+						} #xml scenarios end
+					end # scenarios do end
+				  } # end field (this is for each field)
+				} #fields end
+			end  #end fields do
 		  }  # location end
 	   }	 #project end
 	   end   #builder do end
@@ -432,10 +438,10 @@ class ProjectsController < ApplicationController
 		#session[:depth] = field["weather"]
 		upload_site_new_version(field.id, new_field)
 		for k in 0..new_field["soils"].size-1
-			upload_soil_new_version(field.id, i, k)
+			upload_soil_new_version(field.id, new_field, k)
 		end
 		for j in 0..new_field["scenarios"].size-1
-			scenario_id = upload_scenario_new_version(field.id, i, j)
+			scenario_id = upload_scenario_new_version(field.id, new_field, j)
 		end
 	end
 
@@ -470,16 +476,16 @@ class ProjectsController < ApplicationController
 	def upload_site_new_version(field_id, field)
 		site = Site.new
 		site.field_id = field_id
-		site.apm =field["site"]["apm"]
-		site.co2x =field["site"]["co2x"]
-		site.cqnx =field["site"]["cqnx"]
-		site.elev =field["site"]["elev"]
-		site.fir0 =field["site"]["fir0"]
-		site.rfnx =field["site"]["rfnx"]
-		site.unr =field["site"]["unr"]
-		site.upr =field["site"]["upr"]
-		site.xlog =field["site"]["xlog"]
-		site.ylat =field["site"]["ylat"]
+		site.apm = field["site"]["apm"]
+		site.co2x = field["site"]["co2x"]
+		site.cqnx = field["site"]["cqnx"]
+		site.elev = field["site"]["elev"]
+		site.fir0 = field["site"]["fir0"]
+		site.rfnx = field["site"]["rfnx"]
+		site.unr = field["site"]["unr"]
+		site.upr = field["site"]["upr"]
+		site.xlog = field["site"]["xlog"]
+		site.ylat = field["site"]["ylat"]
 		site.save
 	end
 
@@ -504,24 +510,24 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_soil_new_version(field_id, i, j)
+	def upload_soil_new_version(field_id, field, j)
 		soil = Soil.new
 		soil.field_id = field_id
 		soil.selected = false
-		soil.symbol = @data["project"]["location"]["fields"][i]["soils"][j]["symbol"]
-		soil.key = @data["project"]["location"]["fields"][i]["soils"][j]["key"]
-		if (@data["project"]["location"]["fields"][i]["soils"][j]["selected"] == "true")
+		soil.symbol = field["soils"][j]["symbol"]
+		soil.key = field["soils"][j]["key"]
+		if (field["soils"][j]["selected"] == "true")
 			soil.selected = true
 		end
-		soil.group = @data["project"]["location"]["fields"][i]["soils"][j]["group"]
-		soil.name = @data["project"]["location"]["fields"][i]["soils"][j]["name"]
-		soil.albedo = @data["project"]["location"]["fields"][i]["soils"][j]["albedo"]
-		soil.slope = @data["project"]["location"]["fields"][i]["soils"][j]["slope"]
-		soil.percentage = @data["project"]["location"]["fields"][i]["soils"][j]["percentage"]
-		soil.drainage_type = @data["project"]["location"]["fields"][i]["soils"][j]["drainage_type"]
+		soil.group = field["soils"][j]["group"]
+		soil.name = field["soils"][j]["name"]
+		soil.albedo = field["soils"][j]["albedo"]
+		soil.slope = field["soils"][j]["slope"]
+		soil.percentage = field["soils"][j]["percentage"]
+		soil.drainage_type = field["soils"][j]["drainage_type"]
 		soil.save
-		for k in 0..@data["project"]["location"]["fields"][i]["soils"][j]["layers"].size-1
-			upload_layer_new_version(soil.id, i, j, k)
+		for k in 0..field["soils"][j]["layers"].size-1
+			upload_layer_new_version(soil.id, field, j, k)
 		end
 	end 
 
@@ -539,17 +545,17 @@ class ProjectsController < ApplicationController
 		layer.save
 	end
 
-	def upload_layer_new_version(soil_id, i, j, k)
+	def upload_layer_new_version(soil_id, field, j, k)
 		layer = Layer.new
 		layer.soil_id = soil_id
-		layer.depth = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["depth"]
-		layer.soil_p = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["soilp"]
-		layer.bulk_density = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["bd"]
-		layer.sand = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["sand"]
-		layer.silt = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["silt"]
-		layer.clay = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["clay"]
-		layer.organic_matter = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["om"]
-		layer.ph = @data["project"]["location"]["fields"][i]["soils"][j]["layers"][k]["ph"]
+		layer.depth = field["soils"][j]["layers"][k]["depth"]
+		layer.soil_p = field["soils"][j]["layers"][k]["soilp"]
+		layer.bulk_density = field["soils"][j]["layers"][k]["bd"]
+		layer.sand = field["soils"][j]["layers"][k]["sand"]
+		layer.silt = field["soils"][j]["layers"][k]["silt"]
+		layer.clay = field["soils"][j]["layers"][k]["clay"]
+		layer.organic_matter = field["soils"][j]["layers"][k]["om"]
+		layer.ph = field["soils"][j]["layers"][k]["ph"]
 		layer.save
 	end
 
@@ -567,15 +573,15 @@ class ProjectsController < ApplicationController
 		return scenario.id
 	end
 
-	def upload_scenario_new_version(field_id, i, j)
+	def upload_scenario_new_version(field_id, field, j)
 		scenario = Scenario.new
 		scenario.field_id = field_id
-		scenario.name = @data["project"]["location"]["fields"][i]["scenarios"][j]["name"]
+		scenario.name = field["scenarios"]["scenario"][j]["name"]
 		scenario.save
-		for k in 0..@data["project"]["location"]["fields"][i]["scenarios"][j]["operations"]
-			upload_operation_new_version(scenario.id, i, j, k)
+		for k in 0..field["scenarios"]["scenario"][j]["operations"]["operation"].size-1
+			upload_operation_new_version(scenario.id, field, j, k)
 		end
-		upload_bmp_info_new_version(scenario.id, i, j)
+		upload_bmp_info_new_version(scenario.id, field, j)
 		return scenario.id
 	end
 
