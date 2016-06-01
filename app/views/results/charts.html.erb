@@ -1,23 +1,25 @@
 ﻿<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-
+<form id="myForm">
+  <div class="field">
+	<%= collection_select :results, :description_id, Description.all, :id, :description, {:prompt => 'Select Kind of Chart', :required => true, :selected => @descrition} %>
+	<%= submit_tag t("result.update_chart"), name: "button"%>
+  </div>
+<form>
 <%= column_chart [
     { :name => "Baseline", :data =>
-	[["2002", 1.5],
-	["2003", 2.4],
-	[2004, 4.2],
-	[2005, 1.9],
-	[2006, 5.1]]},
 	
+	@charts1 },
+
 	{ :name => "Alternative", :data =>
-	[["2002", 5.5],
-	["2003", 3.4],
+	[[2002, 5.5],
+	[2003, 3.4],
 	[2004, 5.2],
 	[2005, 1],
 	[2006, 6.1]]}, 
 
 	{ :name => "Future", :data =>
-	[["2002", 5.5],
-	["2003", 3.4],
+	[[2002, 5.5],
+	[2003, 3.4],
 	[2004, 5.2],
 	[2005, 1],
 	[2006, 6.1]]}
