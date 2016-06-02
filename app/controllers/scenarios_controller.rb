@@ -1423,22 +1423,11 @@ class ScenariosController < ApplicationController
 
         start_year = Weather.find_by_field_id(Scenario.find(params[:id]).field_id).simulation_initial_year
 
-        #todo check that this is being received correctly from main
-        #nYearRotation = yearRotation
-        #If ddNBYR1 > 0 Then
-        #    apex_start_year= ddNBYR1 + nYearRotation
-        #Else
-        #    apex_start_year= start_year + nYearRotation
-        #End If
         apex_start_year = start_year + 1
-        #take results from .NTT file for all but crops into ntt_apex_results
-
+        #take results from .NTT file for all but crops
         results_data = load_results(apex_start_year)
         
-		#inicialize results and average all of the totals but crops
-		#average_totals(results_data)  done
-        #take results from .ACY for crops into _cropsInfo
-			#load_crop_results(_cropsInfo, apex_start_year)
+		load_crop_results(apex_start_year)
         #if _scenariosToRun(simulationsCount).Scenario <> "Subproject" Then
         #done    AverageBySoil(ntt_apex_results, _cropsInfo)  'if there is a subproject not averages by soil.
         #End If
@@ -1447,7 +1436,7 @@ class ScenariosController < ApplicationController
 			#calculate_ci_by_soil(ntt_apex_results, _cropsInfo)
 		#todo add for subproject
         #if ddlType.SelectedIndex == 0 Then
-            #load_month_values(apex_start_year, _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._results)
+            load_month_values(apex_start_year)
         #else
         #    LoadMonthValues(apex_start_year, _subprojectName(ddlSubproject.SelectedIndex)._results)
         #end
@@ -1458,12 +1447,57 @@ class ScenariosController < ApplicationController
         #currentScenarioNumber = currentScenarioNumberAnt
     end
 
+	def load_crop_results(apex_start_year)
+		crops_data = Array.new
+		oneCrop = Struct.new(:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
+
+		data = read_file("APEX001.acy")   #Anual values for crop yield
+		j = 1
+        data.each_line do |tempa|
+			if j >= 10 then
+				year1 = tempa[19, 4].to_i
+				subs = tempa[5, 5].to_i
+				next if year1 >= apex_start_year #take years greater or equal than ApexStartYear.
+				one_crop = oneCrop.new
+				one_crop.year = year1
+				one_crop.name = tempa[28,4]
+                conversion_factor = 1 * AC_TO_HA
+                dry_matter = 100
+				crop = Crop.find_by_code(one_crop.name)
+				if crop != nil then
+					conversion_factor = crop.conversion_factor * AC_TO_HA
+					dry_matter = crop.dry_matter
+				end #end if crop != nil
+				one_crop.yield = tempa[34,9].to_f * conversion_factor / (dry_matter/100)
+				one_crop.yield += (tempa[44,9].to_f * conversion_factor / (dry_matter/100)) unless (one_crop.name == "COTS" || one_crop.name == "COTP")
+				one_crop.ws = tempa[64,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.ns = tempa[74,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.ps = tempa[84,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.ts = tempa[94,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.as1 = tempa[104,9].to_f * conversion_factor / (dry_matter / 100)
+
+				crops_data.push(one_crop)
+			end # end if j>=10
+			j+=1
+		end #end data.each
+				session[:depth] = crops_data
+
+		crop_year = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
+		crop_yield = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
+		crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
+        #AverageCropsAll(_fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._results.SoilResults.Crops, _cropsInfo)
+    end  #end method
+
+
 	def run_scenario()
 		path = File.join(APEX, "APEX" + session[:session_id])
 		file_name = File.join(path, "APEX001.NTT")
-		if !File.exists?(path)
-			File.delete(path)					
-		end
+		File.delete(file_name) if File.exist?(file_name)				
+		file_name = File.join(path, "APEX001.msw")  #monthly values for flow, nutrients, and sediment
+		File.delete(file_name) if File.exist?(file_name)					
+		file_name = File.join(path, "APEX001.mws")  #monthly values for flow, nutrients, and sediment
+		File.delete(file_name) if File.exist?(file_name)
+
 		curret_directory = Dir.pwd
 		Dir.chdir path
 		result = system("apex0806.exe")
@@ -1558,15 +1592,101 @@ class ScenariosController < ApplicationController
 		print_string_to_file(apex_string, "parm.dat")
 	end
 
+	def fixed_array(size, other)
+		Array.new(size) { |i| other[i] }
+	end
+
+	def load_month_values(apex_start_year)
+		data = read_file("APEX001.msw")   #monthly values for sediment, flow, and nutrients
+
+        annual_flow = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
+        annual_sediment = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
+        annual_orgn = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
+        annual_orgp = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
+        annual_no3 = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
+        annual_po4 = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
+        annual_precipitation = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
+        annual_crop_yield = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
+		last_year = 0
+        #read titles 10 lines
+        #calculate monthly averages starting after first rotation.
+		j=1
+		data.each_line do |tempa|
+			if j >= 11 then
+				year = tempa[1, 4].to_i
+				if year > 0 && year >= apex_start_year then
+					#accumulate the monthly values of simulation for graphs.
+					i = tempa[6, 4].to_i
+					annual_flow[i-1] += tempa[12, 10].to_f * MM_TO_IN
+					annual_sediment[i-1] += tempa[23, 10].to_f * THA_TO_TAC
+					annual_orgn[i-1] += tempa[34, 10].to_f * 10 * KG_TO_LBS / HA_TO_AC  #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
+					annual_orgp[i-1] += tempa[45, 10].to_f * 20 * KG_TO_LBS / HA_TO_AC  #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
+					annual_no3[i-1] += tempa[56, 10].to_f * KG_TO_LBS / HA_TO_AC
+					annual_po4[i-1] += tempa[67, 10].to_f * KG_TO_LBS / HA_TO_AC
+					last_year = year
+				end # end if not end of data
+			end #end if 
+			j+=1
+		end # end data.each
+
+        last_year -= apex_start_year + 1
+
+		for i in 0..11
+            annual_flow[i] /= last_year
+			add_value_to_chart_table(annual_flow[i], 41, 0, i+1)
+            annual_sediment[i] /= last_year
+			add_value_to_chart_table(annual_sediment[i], 61, 0, i+1)
+            annual_orgn[i] /= last_year
+			add_value_to_chart_table(annual_orgn[i], 21, 0, i+1)
+            annual_orgp[i] /= last_year
+			add_value_to_chart_table(annual_orgp[i], 31, 0, i+1)
+            annual_no3[i] /= last_year
+			add_value_to_chart_table(annual_no3[i], 22, 0, i+1)
+            annual_po4[i] /= last_year
+			add_value_to_chart_table(annual_po4[i], 32, 0, i+1)
+            annual_precipitation[i] /= last_year
+			add_value_to_chart_table(annual_precipitation[i], 41, 0, i+1)
+        end  # end for
+
+		session[:depth] = annual_flow[i]		
+		data = read_file("APEX001.mws")   #monthly values for precipitation
+		i=1
+		data.each_line do |tempa|
+			if i > 9 then
+				if not tempa.nil? and tempa.strip.empty? then
+					break
+				else
+					month = 1
+					current_column = 5
+					output = tempa.strip.split /\s+/
+					if output[0].is_a? Numeric then
+						year = output[0].to_i
+						if year > 0 && year >= apex_start_year then
+							for i in 0..annual_precipitation.size - 1
+								annual_precipitation[i] += output[i+1].to_f								 
+							end 
+						end  # end if year ok
+						
+					end  # end if valid year
+				end  # end if tempa nil or empty
+			end #end if i>9
+			i += 1
+		end # end data.each file apex001.mws
+
+    end
+	
 	def load_results(apex_start_year)
 		results_data = Array.new
         oneResult = Struct.new(:sub1,:year,:flow,:qdr,:surface_flow,:sed,:ymnu,:orgp,:po4,:orgn,:no3,:qdrn,:qdrp,:qn,:dprk,:irri,:pcp)
 		sub_ant = 99
         irri_sum = 0
         dprk_sum = 0
+		pcp = 0
         total_subs = 0
 		data = read_file("APEX001.ntt")
 		i=1
+		apex_control = ApexControl.where(:project_id => session[:project_id])
+		initial_chart_year = apex_control[0].value - 12 + apex_control[1].value
         data.each_line do |tempa|
 			if i > 3 then
 				year = tempa[7, 4].to_i
@@ -1592,28 +1712,65 @@ class ScenariosController < ApplicationController
 				one_result.qn = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
 				one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
 				one_result.irri = tempa[237, 8].to_f * MM_TO_IN
+				one_result.pcp = tempa[229, 8].to_f * MM_TO_IN
 				if subs == 0 then
 					one_result.dprk = dprk_sum / total_subs
 					one_result.irri = irri_sum / total_subs
+					one_result.pcp = pcp / total_subs
 					irri_sum = 0
 					dprk_sum = 0
+					pcp = 0
 					total_subs = 0
+					if initial_chart_year <= year then
+						add_value_to_chart_table(one_result.orgn, 21, 0, year)
+						add_value_to_chart_table(one_result.qn, 22, 0, year)
+						add_value_to_chart_table(one_result.no3, 23, 0, year)
+						add_value_to_chart_table(one_result.qdrn, 24, 0, year)
+						add_value_to_chart_table(one_result.qn+one_result.qdrn+one_result.no3+one_result.orgn, 20, 0, year)
+						add_value_to_chart_table(one_result.orgp, 31, 0, year)
+						add_value_to_chart_table(one_result.po4, 32, 0, year)
+						add_value_to_chart_table(one_result.qdrp, 33, 0, year)
+						add_value_to_chart_table(one_result.po4+one_result.qdrp+one_result.orgp, 30, 0, year)
+						add_value_to_chart_table(one_result.surface_flow, 41, 0, year)
+						add_value_to_chart_table(one_result.flow - one_result.surface_flow, 42, 0, year)
+						add_value_to_chart_table(one_result.qdr, 33, 0, year)
+						add_value_to_chart_table(one_result.flow  + one_result.qdr, 40, 0, year)
+						add_value_to_chart_table(one_result.irri, 51, 0, year)
+						add_value_to_chart_table(one_result.dprk, 52, 0, year)
+						add_value_to_chart_table(one_result.irri + one_result.dprk, 50, 0, year)
+						add_value_to_chart_table(one_result.sed, 61, 0, year)
+						add_value_to_chart_table(one_result.ymnu, 62, 0, year)
+						add_value_to_chart_table(one_result.sed + one_result.ymnu, 60, 0, year)
+						add_value_to_chart_table(one_result.pcp, 100, 0, year)
+					end 
 				else
-					irri_sum += one_result.irri.to_f
-					dprk_sum += one_result.dprk.to_f
+					irri_sum += one_result.irri
+					dprk_sum += one_result.dprk
+					pcp += one_result.pcp
 					total_subs += 1
 				end
-				one_result.pcp = tempa[229, 8] * MM_TO_IN
 
 				results_data.push(one_result)
 			else
 				i+=1
 			end
-			#Soil.where(:field_id => Scenario.find(params[:id]).field_id).where(:selected => true).each do |soil|
-				#average_totals(results_data, soil.id)   # average by soil selected
-			#end
         end
 		average_totals(results_data, 0)   # average totals
+	end
+
+	def add_value_to_chart_table(value, description_id, soil_id, year)
+		chart = Chart.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id, :month_year => year ).first
+        if chart == nil then
+			chart = Chart.new
+			chart.month_year = year
+			chart.field_id = @scenario.field_id
+			chart.soil_id = soil_id
+			chart.watershed_id = 0
+			chart.scenario_id = @scenario.id
+			chart.description_id = description_id
+		end
+		chart.value = value
+		chart.save
 	end
 
 	def average_totals(results_data, i)
@@ -1698,7 +1855,6 @@ class ScenariosController < ApplicationController
 				when 4  #calculate total area
 					#todo	
 				when 24  #calculate total N		
-				session[:deph] = soil_id.to_s + " " + description_id.to_s
 					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + session[:field_id].to_s + " AND scenario_id = " + session[:scenario_id].to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
 				when 33  #calculate total P
 					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
@@ -1708,7 +1864,7 @@ class ScenariosController < ApplicationController
 					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
 				when 62 #calculate total sediment
 					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-			end
+			end #end case when
 		end #end for i
 	end
 	

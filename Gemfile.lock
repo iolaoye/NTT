@@ -28,18 +28,13 @@ GEM
     activesupport (3.2.21)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
-<<<<<<< HEAD
-    akami (1.2.0)
-      gyoku (>= 0.4.0)
-      nokogiri (>= 1.4.0)
-=======
     akami (1.3.1)
       gyoku (>= 0.4.0)
       nokogiri
->>>>>>> f15e43507544e95a932eab094de88d0896cff59b
     arel (3.0.3)
     breadcrumbs_on_rails (2.3.0)
     builder (3.0.4)
+    chartkick (1.5.2)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -49,20 +44,12 @@ GEM
     coffee-script-source (1.8.0)
     erubis (2.7.0)
     execjs (2.6.0)
-<<<<<<< HEAD
-    gyoku (1.0.0)
-      builder (>= 2.1.2)
-    hike (1.2.3)
-    httpi (2.0.2)
-      rack
-=======
     gyoku (1.3.1)
       builder (>= 2.1.2)
     hike (1.2.3)
     httpi (2.4.2)
       rack
       socksify
->>>>>>> f15e43507544e95a932eab094de88d0896cff59b
     i18n (0.7.0)
     journey (1.0.4)
     jquery-rails (3.1.4)
@@ -77,11 +64,7 @@ GEM
     multi_json (1.11.2)
     nokogiri (1.6.7.2-x86-mingw32)
       mini_portile2 (~> 2.0.0.rc2)
-<<<<<<< HEAD
-    nori (2.1.0)
-=======
     nori (2.6.0)
->>>>>>> f15e43507544e95a932eab094de88d0896cff59b
     polyglot (0.3.5)
     rack (1.4.7)
     rack-cache (1.6.1)
@@ -113,16 +96,6 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-<<<<<<< HEAD
-    savon (2.2.0)
-      akami (~> 1.2.0)
-      builder (>= 2.1.2)
-      gyoku (~> 1.0.0)
-      httpi (~> 2.0.2)
-      nokogiri (>= 1.4.0)
-      nori (~> 2.1.0)
-      wasabi (~> 3.1.0)
-=======
     savon (2.11.1)
       akami (~> 1.2)
       builder (>= 2.1.2)
@@ -132,7 +105,6 @@ GEM
       nori (~> 2.4)
       wasabi (~> 3.4)
     socksify (1.7.0)
->>>>>>> f15e43507544e95a932eab094de88d0896cff59b
     sprockets (2.2.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -153,15 +125,9 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-<<<<<<< HEAD
-    wasabi (3.1.0)
-      httpi (~> 2.0)
-      nokogiri (>= 1.4.0)
-=======
     wasabi (3.5.0)
       httpi (~> 2.0)
       nokogiri (>= 1.4.2)
->>>>>>> f15e43507544e95a932eab094de88d0896cff59b
     will_paginate (3.0.3)
 
 PLATFORMS
@@ -169,6 +135,7 @@ PLATFORMS
 
 DEPENDENCIES
   breadcrumbs_on_rails
+  chartkick (~> 1.5, >= 1.5.2)
   coffee-rails (~> 3.2.1)
   coffee-script-source (= 1.8.0)
   jquery-rails
@@ -179,5 +146,5 @@ DEPENDENCIES
   sqlite3
   strong_parameters
   therubyracer
-  will_paginate (= 3.0.3)
   uglifier (>= 1.0.3)
+  will_paginate (= 3.0.3)

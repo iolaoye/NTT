@@ -1,0 +1,33 @@
+<h1>Listing charts</h1>
+
+<table>
+  <tr>
+    <th>Description</th>
+    <th>Scenario</th>
+    <th>Field</th>
+    <th>Soil</th>
+    <th>Month year</th>
+    <th>Value</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @charts.each do |chart| %>
+  <tr>
+    <td><%= chart.description_id %></td>
+    <td><%= chart.scenario_id %></td>
+    <td><%= chart.field_id %></td>
+    <td><%= chart.soil_id %></td>
+    <td><%= chart.month_year %></td>
+    <td><%= chart.value %></td>
+    <td><%= link_to 'Show', chart %></td>
+    <td><%= link_to 'Edit', edit_chart_path(chart) %></td>
+    <td><%= link_to 'Destroy', chart, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Chart', new_chart_path %>

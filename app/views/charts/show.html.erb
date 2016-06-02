@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Description:</b>
+  <%= @chart.description_id %>
+</p>
+
+<p>
+  <b>Scenario:</b>
+  <%= @chart.scenario_id %>
+</p>
+
+<p>
+  <b>Field:</b>
+  <%= @chart.field_id %>
+</p>
+
+<p>
+  <b>Soil:</b>
+  <%= @chart.soil_id %>
+</p>
+
+<p>
+  <b>Month year:</b>
+  <%= @chart.month_year %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @chart.value %>
+</p>
+
+
+<%= link_to 'Edit', edit_chart_path(@chart) %> |
+<%= link_to 'Back', charts_path %>

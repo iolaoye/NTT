@@ -8,30 +8,76 @@ class ResultsController < ApplicationController
 	@scenario1 = 0
 	@scenario2 = 0
 	@scenario3 = 0
+	@descrition = 0
 	@soil = "0"
-		
-	params[:button] == t("result.by_soil") ? @soil = params[:result4][:soil_id] : @soil = "0"
-	if params[:result1] != nil
-		if params[:result1][:scenario_id] != "" then
-			@scenario1 = params[:result1][:scenario_id] 			
-			@results1 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => params[:result1][:scenario_id], :soil_id => @soil).joins(:description)
-		end
-		if params[:result2][:scenario_id] != "" then
-			@scenario2 = params[:result2][:scenario_id]
-			@results2 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => params[:result2][:scenario_id], :soil_id => @soil).joins(:description)
-		end
-		if params[:result3][:scenario_id] != "" then
-			@scenario3 = params[:result3][:scenario_id]
-			@results3 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => params[:result3][:scenario_id], :soil_id => @soil).joins(:description)
+	@result_selected = t("result.by_soil")
+	@title = ""
+	if params[:button] != nil then
+		params[:button] == t('result.summary') + " " + t("result.by_soil") ? @soil = params[:result4][:soil_id] : @soil = "0"
+		if params[:button].include?(t('result.summary')) then
+			@result_selected = t('result.summary') unless params[:button].include?(t('result.by_soil'))
+			if params[:result1] != nil
+				if params[:result1][:scenario_id] != "" then
+					@scenario1 = params[:result1][:scenario_id] 			
+					@results1 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil).joins(:description)
+				end
+				if params[:result2][:scenario_id] != "" then
+					@scenario2 = params[:result2][:scenario_id]
+					@results2 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil).joins(:description)
+				end
+				if params[:result3][:scenario_id] != "" then
+					@scenario3 = params[:result3][:scenario_id]
+					@results3 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil).joins(:description)
+				end
+			end
+		end  #end if params button summary
+	end # if params nil
+	
+    if params[:button] == t('result.annual') then
+		@x = "Year"
+		@result_selected = t('result.annual')
+		@description = params[:result5][:description_id]
+		@title = Description.find(@description).description
+		@y = Description.find(@description).unit
+		if params[:result1] != nil
+			if params[:result1][:scenario_id] != "" then
+				@scenario1 = params[:result1][:scenario_id] 	
+				@charts1 = get_chart_serie(@scenario1, 1)
+			end
+			if params[:result2][:scenario_id] != "" then
+				@scenario2 = params[:result2][:scenario_id]
+				@charts2 = get_chart_serie(@scenario2, 1)
+			end
+			if params[:result3][:scenario_id] != "" then
+				@scenario3 = params[:result3][:scenario_id]
+				@charts3 = get_chart_serie(@scenario3, 1)
+			end
 		end
 	end
-   
-    if params[:button] == t('result.graph') then
-		render "charts"
-	else
-		respond_to do |format|
-		  format.html # index.html.erb
+
+    if params[:button] == t('result.monthly') then
+		@x = "Month"
+		@result_selected = t('result.monthly')
+		@description = params[:result6][:description_id]
+		@title = Description.find(@description).description
+		@y = Description.find(@description).unit
+		if params[:result1] != nil
+			if params[:result1][:scenario_id] != "" then
+				@scenario1 = params[:result1][:scenario_id] 	
+				@charts1 = get_chart_serie(@scenario1, 2)
+			end
+			if params[:result2][:scenario_id] != "" then
+				@scenario2 = params[:result2][:scenario_id]
+				@charts2 = get_chart_serie(@scenario2, 2)
+			end
+			if params[:result3][:scenario_id] != "" then
+				@scenario3 = params[:result3][:scenario_id]
+				@charts3 = get_chart_serie(@scenario3, 2)
+			end
 		end
+	end
+	respond_to do |format|
+		format.html # index.html.erb
 	end
   end
 
@@ -115,4 +161,20 @@ class ResultsController < ApplicationController
     def result_params
       params.require(:result).permit(:field_id, :scenario_id, :soil_id, :value, :watershed_id, :description_id, :ci_value)
     end
+
+	def get_chart_serie(scenario_id, month_or_year)
+		if month_or_year == 1 then   #means chart is annual
+			chart_values = Chart.select("month_year, value").where("field_id == " + session[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12")
+		else  #means chart is monthly average
+			chart_values = Chart.select("month_year, value").where("field_id == " + session[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")
+		end
+		charts = Array.new
+		chart_values.each do |c|
+			chart = Array.new
+			chart.push(c.month_year)
+			chart.push(c.value)
+			charts.push(chart)
+		end
+		return charts
+	end #end method get_chart_serie
 end

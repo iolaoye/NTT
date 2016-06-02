@@ -47,6 +47,7 @@ class LocationsController < ApplicationController
 	if !(params[:error] == "") then
 		notice = params[:error]
 		render shows
+		return
 	end 
 	
 	if (session[:session_id] == params[:source_id]) then
