@@ -6,8 +6,10 @@
 
   <label for="project"><%= t('project.upload_button_desc')%></label> 
   <%= file_field_tag "project" %>
-  <%= submit_tag(value = t('submit.save')) %>
 
-  <br />
+
+  <p><%= submit_tag(value = t('submit.save')) %></p>
+
+  <%= link_to 'Back', welcomes_path %>
 
 <% end %>
