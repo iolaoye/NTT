@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160531134358) do
+ActiveRecord::Schema.define(:version => 20160601154241) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -327,6 +327,14 @@ ActiveRecord::Schema.define(:version => 20160531134358) do
     t.float    "range_low"
     t.float    "range_high"
     t.float    "default_value"
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "name"
+    t.integer  "age"
+    t.string   "last_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "projects", :force => true do |t|
