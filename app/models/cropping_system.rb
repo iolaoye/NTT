@@ -3,8 +3,8 @@ class CroppingSystem < ActiveRecord::Base
   #Associatons
 	has_many :events
   #validations
-	 validates_uniqueness_of :var12
-	 validates_presence_of :var12, :crop
+	 validates_uniqueness_of :var12, :scope => :name
+	 validates_presence_of :var12, :crop, :name
   #scopes
      default_scope :order => "crop ASC"
 end

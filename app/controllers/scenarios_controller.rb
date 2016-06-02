@@ -1475,7 +1475,7 @@ class ScenariosController < ApplicationController
 				one_crop.ps = tempa[84,9].to_f * conversion_factor / (dry_matter / 100)
 				one_crop.ts = tempa[94,9].to_f * conversion_factor / (dry_matter / 100)
 				one_crop.as1 = tempa[104,9].to_f * conversion_factor / (dry_matter / 100)
-				ooo
+
 				crops_data.push(one_crop)
 			end # end if j>=10
 			j+=1
