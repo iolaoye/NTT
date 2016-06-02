@@ -469,8 +469,7 @@ class ProjectsController < ApplicationController
 		if field.save then
 			session[:field_id] = field.id
 		else
-			return e
-			#return "field could not be saved"
+			return "field could not be saved"
 		end
 		 
 		# Step 5. save Weather and Site Info
