@@ -188,7 +188,7 @@ class OperationsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def operation_params
-      params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id)
+      params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id, :moisture)
     end
 
 	def add_soil_operation()
@@ -271,7 +271,7 @@ class OperationsController < ApplicationController
 				if @operation.subtype_id == 57  then
 					#8.25=lbs/gal, 0.5% dry matter, and 1121.8 kg/ha
 					opv1 = (@operation.amount * 8.25 * 0.005 * 1121.8).round(2)  #kg/ha of fertilizer applied converted from liquid manure
-				else
+                else
 					opv1 = (@operation.amount * LBS_TO_KG / AC_TO_HA).round(2)  #kg/ha of fertilizer applied converted from lbs/ac
 				end
 			when 6   #irrigation
