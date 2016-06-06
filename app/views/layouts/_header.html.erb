@@ -31,11 +31,8 @@
 				<% if request.original_url.include? "location" %>
 				    <li><%= t('menu.location') %></li>
 				<% else %>
-<<<<<<< HEAD
 				    <li><%=">> " + t('menu.fields') %></li>
-=======
 				    <li><%= t('menu.fields') %></li>
->>>>>>> a8fd733250b74ca5fbfb1071f98a19e1c3caabc2
 				<% end %>				    
 	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
