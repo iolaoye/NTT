@@ -14,6 +14,7 @@ updateNutrients = (animal) ->
      url = "/fertilizers/" + $("#operation_type_id").val() + ".json"
 
   $.getJSON url, (fertilizer) ->
+    $("#operation_moisture").val(100-fertilizer.dry_matter)
     $("#operation_no3_n").val(fertilizer.qn)
     $("#operation_po4_p").val(fertilizer.qp)
     $("#operation_org_n").val(fertilizer.yn)
@@ -23,6 +24,7 @@ updateTypes = ->
   $("#div_amount").hide()
   $("#div_depth").hide()
   $("#div_nutrients").hide()
+  $("#div_moisture").hide()
   $("#div_type").hide()
   $("#div_tillage").hide()
   switch $("#operation_activity_id").val()
@@ -40,6 +42,7 @@ updateTypes = ->
       $("#div_fertilizer").show()
       $("#div_amount").show()
       $("#div_depth").show()
+      $("#div_moisture").hide;
       $("#div_nutrients").show()
       $("#div_tillage").show()
       $("#div_type").show()
@@ -89,6 +92,10 @@ updateTypes = ->
     $("#operation_type_id").removeAttr("disabled")
 
 updateFerts = ->
+  if ($("#operation_type_id").val() == "2")
+    $("#div_moisture").show();
+  else
+    $("#div_moisture").hide();
   url = "/fertilizer_types/" + $("#operation_type_id").val() + "/fertilizers.json"
   $.getJSON url, (fertilizers) ->
     items = []
@@ -111,7 +118,11 @@ updateAnimals = ->
         
     $("#operation_subtype_id").html items.join("")
     $("#operation_subtype_id").removeAttr("disabled")
-
+	
+updateTitles = ->
+  title = t 'operations.fertilizer'
+  $("#typeTitle").text(title)
+	
 $(document).ready ->
     $("#operation_activity_id").change ->
       updateTypes()
@@ -125,3 +136,8 @@ $(document).ready ->
     $("#operation_crop_id").change ->
       updatePlantPopulation() 
 
+    $("#rowIdOdd").click ->
+      updateTitles()
+
+    $("#rowIdEven").click ->
+      updateTitles()

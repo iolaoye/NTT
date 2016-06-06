@@ -5,9 +5,9 @@
 <%= link_to t('operation.upload') + " " + t('operation.cropping_system'), cropping_system_operation_path(session[:scenario_id]) %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th colspan="8" class="gvCellStyleTitle"></th>
-    <th colspan="5">Nutrients Distribution (fraction)</th>
-    <th ></th>
+    <th colspan="9" class="gvCellStyleTitle"></th>
+    <th colspan="4" class="gvCellSytleTitle">Nutrients Distribution (fraction)</th>
+    <th colspan="2" class="gvCellSytleTitle"></th>
   </tr>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle">Crop</th>
@@ -15,9 +15,10 @@
     <th class="gvCellStyleTitle">Year</th>
     <th class="gvCellStyleTitle">Month</th>
     <th class="gvCellStyleTitle">Day</th>
-    <th class="gvCellStyleTitle">Type</th>
+    <th id="typeTitle" class="gvCellStyleTitle">Type</th>
     <th class="gvCellStyleTitle">Value 1</th>
     <th class="gvCellStyleTitle">Value 2</th>
+    <th class="gvCellStyleTitle">Moisture</th>
     <th class="gvCellStyleTitle">No3 N</th>
     <th class="gvCellStyleTitle">Po4 P</th>
     <th class="gvCellStyleTitle">Org N</th>
@@ -27,13 +28,13 @@
   <% i=1 %>
   <% @operations.each do |operation| %>
     <% if (i % 2  == 0) %>
-      <tr class="gvRowStyleEven">
+      <tr id="rowIdEven" class="gvRowStyleEven">
     <% else %>
-      <tr class="gvRowStyleOdd">
+      <tr id="rowIdOdd" class="gvRowStyleOdd">
     <% end %>
     <% i = i + 1 %>
     <td class="gvCellStyleText"><%= Crop.find(operation.crop_id).name %></td>
-    <td class="gvCellStyleText"><%= Activity.find(operation.activity_id).name %></td>
+    <td id="operationType" class="gvCellStyleText"><%= Activity.find(operation.activity_id).name %></td>
     <td class="gvCellStyleText"><%= listYears.detect { |val, index| index == operation.year}[0] %></td>
     <td class="gvCellStyleText"><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
     <td class="gvCellStyleNumber"><%= operation.day %></td>
@@ -52,6 +53,7 @@
     <% end %>
     <td class="gvCellStyleNumber"><%= operation.amount %></td>
     <td class="gvCellStyleNumber"><%= operation.depth %></td>
+    <td class="gvCellStyleNumber"><%= operation.moisture %></td>
     <td class="gvCellStyleNumber"><%= operation.no3_n %></td>
     <td class="gvCellStyleNumber"><%= operation.po4_p %></td>
     <td class="gvCellStyleNumber"><%= operation.org_n %></td>
