@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160531134358) do
+ActiveRecord::Schema.define(:version => 20160605190931) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(:version => 20160531134358) do
     t.float    "range_low"
     t.float    "range_high"
     t.float    "default_value"
+    t.integer  "state_id"
   end
 
   create_table "counties", :force => true do |t|
@@ -207,6 +208,12 @@ ActiveRecord::Schema.define(:version => 20160531134358) do
     t.integer  "cropping_system_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "fertilizer_type", :force => true do |t|
+    t.string   "field_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "fertilizer_types", :force => true do |t|
@@ -327,6 +334,15 @@ ActiveRecord::Schema.define(:version => 20160531134358) do
     t.float    "range_low"
     t.float    "range_high"
     t.float    "default_value"
+    t.integer  "state_id"
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "name"
+    t.integer  "age"
+    t.string   "last_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "projects", :force => true do |t|

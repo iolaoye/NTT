@@ -26,12 +26,12 @@
         <% case request.original_url %>
 	        <% when /project/, /welcome/ %>
 	        <% when /location/, /field/ %>
-		        <li><%=link_to "Projects", welcomes_path %></li>
+		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
 		        <li><%=">>"%><%=@project_name%></li>
 				<% if request.original_url.include? "location" %>
 				    <li><%=">> Locations" %></li>
 				<% else %>
-				    <li><%=">> Fields" %></li>
+				    <li><%=">> " + t('menu.fields') %></li>
 				<% end %>				    
 	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
 			    <li><%=link_to "Projects", welcomes_path %></li>

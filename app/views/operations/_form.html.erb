@@ -31,7 +31,6 @@
         <%= f.select :day, options_for_select(listDays, :selected => @operation.day), {:prompt => 'Day'}, {:required => true, :style => 'width:50px'} %>
     </li>
   </div>
-
 	<% case @operation.activity_id %>
 		<% when 1  # planting %>
 		    <div id="div_type"   >
@@ -84,7 +83,6 @@
 		    <div class="field" id="div_depth">
 			  <%= f.label :depth %>
 			  <%= f.text_field :depth %>
-		    </div>
 		    <div class="field" id="div_nutrients" >
 			  <div class="field" >
 				<%= f.label :no3_n %>

@@ -1569,7 +1569,7 @@ class ScenariosController < ApplicationController
         apex_string +="                " + "\n"
         apex_string +="                " + "\n"
         apex_string +="   50.00   10.00" + "\n"
-		ApexParameter.where(:project_id => session[:project_id]).each do |p|
+		ApexParameter.where(:project_id => session[:project_id] ).each do |p|
 			number = Parameter.find(p.parameter_id).number
 			case number
 				when 10, 20, 30, 50, 60, 70, 80, 90
@@ -1778,16 +1778,17 @@ class ScenariosController < ApplicationController
 		#Results description_ids
 		require 'enumerable/confidence_interval'
 		#calculate average and confidence interval
-		flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).reduce(:+).fdiv(v.size.to_f)]}
-		flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).confidence_interval]}
+		results_data.each do |r|
+			
+		end
 		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).reduce(:+).fdiv(v.size.to_f)]}
 		orgn_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).confidence_interval]}
 		add_summary_to_results_table(orgn, 21, orgn_ci)
 		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
 		runoff_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).confidence_interval]}
 		add_summary_to_results_table(runoff_n,  22, runoff_n_ci)
-		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).reduce(:+).fdiv(v.size.to_f)]}
-		sub_surface_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).confidence_interval]}
+		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).reduce(:+).fdiv(v.size.to_f) - v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).confidence_interval - v.map(&:qn).confidence_interval]}		
 		add_summary_to_results_table(sub_surface_n, 23, sub_surface_n_ci)
 		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).reduce(:+).fdiv(v.size.to_f)]}
 		tile_drain_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).confidence_interval]}
@@ -1804,8 +1805,10 @@ class ScenariosController < ApplicationController
 		runoff = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
 		runoff_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).confidence_interval]}
 		add_summary_to_results_table(runoff, 41, runoff_ci)
-		sub_surface_flow = flow - runoff
-		sub_surface_flow_ci = flow_ci - runoff_ci
+		sub_surface_flow= results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).reduce(:+).fdiv(v.size.to_f) - v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).confidence_interval - v.map(&:surface_flow).confidence_interval]}
+		#sub_surface_flow = flow - runoff
+		#sub_surface_flow_ci = flow_ci - runoff_ci
 		add_summary_to_results_table(sub_surface_flow, 42, sub_surface_flow_ci)
 		tile_drain_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).reduce(:+).fdiv(v.size.to_f)]}
 		tile_drain_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).confidence_interval]}
