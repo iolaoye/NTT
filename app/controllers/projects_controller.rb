@@ -128,9 +128,8 @@ class ProjectsController < ApplicationController
 			#step 2. Save location information
 			msg = upload_location_new_version
 			#step 3. Save field information
-			@data["project"]["location"]["fields"].each do |f|
-				#session[:depth] = f[1]["field_name"]
-				msg = upload_field_new_version(f[1])
+			for i in 0..@data["project"]["location"]["fields"]["field"].size-1
+				msg = upload_field_new_version(i)
 			end
 			session[:depth] = msg
 		elsif (@data["Project"]["StartInfo"]["StationWay"] != "Station")
@@ -458,44 +457,52 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_field_new_version(new_field)
+	def upload_field_new_version(i)
 		field = Field.new
 		field.location_id = session[:location_id]
-		field.field_name = new_field["field_name"]
-		field.field_area = new_field["field_area"]
-		field.field_average_slope = new_field["field_average_slope"]
-		field.field_type = new_field["field_type"]
-		field.coordinates = new_field["coordinates"]
-		if field.save then
+		if @data["project"]["location"]["fields"]["field"][0] != nil
+			field.field_name = @data["project"]["location"]["fields"]["field"][i]["field_name"]
+			field.field_area = @data["project"]["location"]["fields"]["field"][i]["field_area"]
+			field.field_average_slope = @data["project"]["location"]["fields"]["field"][i]["field_average_slope"]
+			field.field_type = @data["project"]["location"]["fields"]["field"][i]["field_type"]
+			field.coordinates = @data["project"]["location"]["fields"]["field"][i]["coordinates"]
+		else
+			field.field_name = @data["project"]["location"]["fields"]["field"]["field_name"]
+			field.field_area = @data["project"]["location"]["fields"]["field"]["field_area"]
+			field.field_average_slope = @data["project"]["location"]["fields"]["field"]["field_average_slope"]
+			field.field_type = @data["project"]["location"]["fields"]["field"]["field_type"]
+			field.coordinates = @data["project"]["location"]["fields"]["field"]["coordinates"]
+		end
+		if field.save!
 			session[:field_id] = field.id
 		else
 			return "field could not be saved"
 		end
 		 
 		# Step 5. save Weather and Site Info
-		msg = upload_weather_new_version(field.id, new_field)
-		if msg != "OK" then
-			return msg
-		end
-		msg = upload_site_new_version(field.id, new_field)
-		if msg != "OK" then
-			return msg
-		end
+		#msg = upload_weather_new_version(field.id, new_field)
+		#if msg != "OK" then
+		#	return msg
+		#end
+		#msg = upload_site_new_version(field.id, new_field)
+		#if msg != "OK" then
+		#	return msg
+		#end
 
-		new_field["soils"].each do |s|
-			session[:depth] = s[1]["field_name"]
-			msg = upload_soil_new_version(field.id, s[1])
-			if msg != "OK" then
-				return msg
-			end
-		end
+		#new_field["soils"].each do |s|
+		#	session[:depth] = s[1]["field_name"]
+		#	msg = upload_soil_new_version(field.id, s[1])
+		#	if msg != "OK" then
+		#		return msg
+		#	end
+		#end
 
-		new_field["scenarios"].each do |sc|
-			scenario_id = upload_scenario_new_version(field.id, sc)
-			if scenario_id == nil then
-				return "scenario could not be saved"
-			end
-		end
+		#new_field["scenarios"].each do |sc|
+		#	scenario_id = upload_scenario_new_version(field.id, sc)
+		#	if scenario_id == nil then
+		#		return "scenario could not be saved"
+		#	end
+		#end
 		return "OK"
 	end
 
