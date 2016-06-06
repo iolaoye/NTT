@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160601154241) do
+ActiveRecord::Schema.define(:version => 20160605190931) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(:version => 20160601154241) do
     t.float    "range_low"
     t.float    "range_high"
     t.float    "default_value"
+    t.integer  "state_id"
   end
 
   create_table "counties", :force => true do |t|
@@ -315,6 +316,7 @@ ActiveRecord::Schema.define(:version => 20160601154241) do
     t.datetime "updated_at",  :null => false
     t.integer  "scenario_id"
     t.integer  "subtype_id"
+    t.float    "moisture"
   end
 
   create_table "parameters", :force => true do |t|
@@ -327,6 +329,7 @@ ActiveRecord::Schema.define(:version => 20160601154241) do
     t.float    "range_low"
     t.float    "range_high"
     t.float    "default_value"
+    t.integer  "state_id"
   end
 
   create_table "people", :force => true do |t|

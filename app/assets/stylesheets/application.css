@@ -331,6 +331,14 @@
   text-align: center;   
 }
 
+.gvCellStyleActions {
+    border-right: 1px solid #ddd;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: green;
+    text-align: center;
+}   
+
 .gvCellStyleText { 
   border-right: 1px solid #ddd;
   border-right-style: solid;
@@ -340,11 +348,15 @@
 }
 
 .gvCellStyleTitle { 
-  border-right: 1px solid #ddd;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-left-color: green;
+  overflow: hidden;
   border-right-style: solid;
   border-right-width: 1px;
   border-right-color: green;
 }
+
 
 .gvRowStyle { 
   color:Black;

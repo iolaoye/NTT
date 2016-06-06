@@ -8,9 +8,9 @@
 	           <% when /location/, /field/ %>
 				   <li><%= link_to t('menu.location'), location_path(session[:location_id]) %></li>
 				   <li><%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-			   <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
+			   <% when /weather/, /site/,  /soil/, /scenario/, /layer/, /modifications/, /results/ %>
 				   <li><%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></li>
-				   <li><%= link_to t('menu.site'), edit_site_path(session[:field_id]) %></li>
+				   <li><%= link_to t('menu.site'), site_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.results'), results_path %></li>
@@ -26,43 +26,43 @@
         <% case request.original_url %>
 	        <% when /project/, /welcome/ %>
 	        <% when /location/, /field/ %>
-		        <li><%=link_to "Projects", welcomes_path %></li>
+		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
 		        <li><%=">>"%><%=@project_name%></li>
 				<% if request.original_url.include? "location" %>
-				    <li><%=">> Locations" %></li>
+				    <li><%= t('menu.location') %></li>
 				<% else %>
-				    <li><%=">> Fields" %></li>
+				    <li><%= t('menu.fields') %></li>
 				<% end %>				    
 	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
-			    <li><%=link_to "Projects", welcomes_path %></li>
+			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
-			    <li><%=link_to "Fields", list_field_path(session[:location_id]) %></li>
+			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 			    <li><%=">>"%><%=@field_name%></li>
 				<% case request.original_url %>
 					<% when /weather/ %>
-						<li><%= ">> Weather" %></li>
+						<li><%= t('menu.weather') %></li>
 					<% when /soil/ %>
-						<li><%= ">> Soils" %></li>
+						<li><%= t('menu.site') %></li>
 					<% when /scenario/ %>
-						<li><%= ">> Scenarios" %></li>
+						<li><%= t('menu.soils') %></li>
 					<% when /result/ %>
-						<li><%= ">> Results" %></li>
+						<li><%= t('menu.scenarios') %></li>
 					<% when /layer/ %>
-						<li><%= ">> Layers" %></li>
+						<li><%= t('menu.results') %></li>
 					<% when /modification/ %>
-						<li><%= "Modifications" %></li>
+						<li><%= t('menu.modifications') %></li>
 				<% end %>
 			<% when /operation/, /bmp/ %>	
-			    <li><%=link_to "Projects", welcomes_path %></li>
+			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
-			    <li><%=link_to "Fields", list_field_path(session[:location_id]) %></li>
+			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 			    <li><%=">>"%><%=@field_name%></li>
-			    <li><%=link_to "Scenarios", field_scenarios_field_path(session[:field_id]) %></li>
+			    <li><%=link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
 			    <li><%=">>"%><%=@scenario_name%></li>
 				<% if request.original_url.include? "operation" %>
-				    <li><%=">> Operations" %></li>
+				    <li><%=t('menu.operations') %></li>
 				<% else %>
-				    <li><%=">> BMPs" %></li>
+				    <li><%=t('menu.bmps') %></li>
 				<% end %>				    
 		<% end %>
 	</ul>
