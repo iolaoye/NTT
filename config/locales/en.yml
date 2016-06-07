@@ -924,7 +924,7 @@ en:
     item7: 'Water quality in terms of <b>nitrogen</b> (ammonium, nitrate, and organic), <b>phosphorus</b> (soluble and adsorbed/mineral and organic), and <b>pesticides concentrations</b> may be estimated for each subarea and at the watershed outlet.'
     item8: 'Commercial or manure may be applied at any rate and depth on specified dates or automatically.'
     reference:
-        header: Refernce
+        header: Reference
         body1: 'Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
   disclaimerpage:
     header: NTT Disclaimer
