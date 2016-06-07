@@ -114,9 +114,24 @@ class ProjectsController < ApplicationController
 	#nothing to do here. Just render the upload view
   end
 
-	########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
+  ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
 	def upload_project
-		@data = Hash.from_xml(params[:project].read)
+		@data = Nokogiri::XML(params[:project])
+		@data.root.elements.each do |node|
+			if node.name.eql? "project" then
+				msg = upload_project_new_version(node)
+			else
+				msg = "File does not have a project"
+			end
+
+			if node.name.eql? "location" then
+				msg = upload_location_new_version(node)
+			else
+				msg = "File does not have a location"
+			end
+
+		end
+		#@data = Hash.from_xml(params[:project].read)
 		#@data = Nokogiri::XML(File.open(params[:project].path))
 		#detect project version
 		#todo check the name of the project. It should not exist.		
@@ -124,15 +139,14 @@ class ProjectsController < ApplicationController
 		if (@data['Project'] == nil) then 
 		    #new version
 			#step 1. save project information
-			msg = upload_project_new_version
+			#msg = upload_project_new_version
 			#step 2. Save location information
-			msg = upload_location_new_version
+			#msg = upload_location_new_version
 			#step 3. Save field information
-			@data["project"]["location"]["fields"].each do |f|
-				#session[:depth] = f[1]["field_name"]
-				msg = upload_field_new_version(f[1])
-			end
-			session[:depth] = msg
+			#@data["project"]["location"]["fields"].each do |f|
+				
+			#	msg = upload_field_new_version(f["field"])
+			#end
 		elsif (@data["Project"]["StartInfo"]["StationWay"] != "Station")
 		    #old version
 			#step 1. save project information
@@ -183,8 +197,8 @@ class ProjectsController < ApplicationController
 		xml.location {
 			#location information
 			location = Location.find_by_project_id(project_id)
-			xml.location_state_id location.state_id
-			xml.location_county_id location.county_id
+			xml.state_id location.state_id
+			xml.county_id location.county_id
 			xml.status location.status
 			xml.coordinates location.coordinates
 			xml.fields {
@@ -230,8 +244,8 @@ class ProjectsController < ApplicationController
 			xml.station_way weather.station_way
 			xml.simulation_initial_year weather.simulation_initial_year
 			xml.simulation_final_year weather.simulation_final_year
-			xml.weather_longitude weather.longitude
-			xml.weather_latitude weather.latitude
+			xml.longitude weather.longitude
+			xml.latitude weather.latitude
 			xml.weather_file weather.weather_file 
 			xml.way_id weather.way_id
 			xml.weather_initial_year weather.simulation_initial_year
@@ -395,11 +409,17 @@ class ProjectsController < ApplicationController
 		session[:project_id] = project.id
 	end 
 
-	def upload_project_new_version
+	def upload_project_new_version(node)
 		project = Project.new
 		project.user_id = session[:user_id]
-		project.name = @data["project"]["project_name"]
-		project.description = @data["project"]["project_description"]
+		node.elements.each do |p|
+			case p.name
+				when "project_name"
+					project.name = p.text
+				when "project_description"
+					project.description = p.text					
+			end
+		end
 		project.version = "NTTG3"
 		if project.save
 			session[:project_id] = project.id
@@ -422,18 +442,30 @@ class ProjectsController < ApplicationController
 		session[:location_id] = location.id
 	end
 
-	def upload_location_new_version
+	def upload_location_new_version(node)
+		msg = "OK"
 		location = Location.new
 		location.project_id = session[:project_id]
-		location.state_id = @data["project"]["location"]["location_state_id"]
-		location.county_id = @data["project"]["location"]["location_county_id"]
-		location.status = @data["project"]["location"]["status"]
-		location.coordinates = @data["project"]["location"]["coordinates"]
-		if location.save
-			session[:location_id] = location.id
-			return "OK"
-		else
-			return "location could not be saved"
+		node.elements.each do |p|
+			case p.name
+				when "state_id"
+					location.state_id = p.text
+				when "county_id"
+					location.county_id = p.text					
+				when "status"
+					location.status = p.text					
+				when "coordinates"
+					location.coordinates = p.text
+				when "fields"
+					if location.save
+						session[:location_id] = location.id
+						p.elements.each do |f|
+							msg = upload_field_new_version(f)				
+						end
+					else
+						return "location could not be saved"
+					end
+			end
 		end
 	end
 
@@ -458,44 +490,60 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_field_new_version(new_field)
+	def upload_field_new_version(node)
 		field = Field.new
 		field.location_id = session[:location_id]
-		field.field_name = new_field["field_name"]
-		field.field_area = new_field["field_area"]
-		field.field_average_slope = new_field["field_average_slope"]
-		field.field_type = new_field["field_type"]
-		field.coordinates = new_field["coordinates"]
-		if field.save then
-			session[:field_id] = field.id
-		else
-			return "field could not be saved"
+		node.elements.each do |p|
+			case p.name
+				when "field_name"
+					field.field_name = p.text
+				when "field_area"
+					field.field_area = p.text
+				when "field_average_slope"
+				session[:depth] = p.text
+					field.field_average_slope = p.text
+				when "field_type"
+					field.field_type = p.text
+				when "coordinates"
+					field.coordinates = p.text
+					if field.save! then
+						session[:field_id] = field.id
+					else
+						return "field could not be saved"
+					end
+				when "weather"
+					msg = upload_weather_new_version(p, field.id)
+				when "site"
+					msg = upload_site_new_version(p, field.id)
+				when "soils"
+					upload_soil_new_version(field.id, p)
+				when "scenarios"
+					scenario_id = upload_scenario_new_version(field.id, p)
+					if scenario_id == nil then
+						return "scenario could not be saved"
+					end
+			end
 		end
 		 
 		# Step 5. save Weather and Site Info
-		msg = upload_weather_new_version(field.id, new_field)
-		if msg != "OK" then
-			return msg
-		end
-		msg = upload_site_new_version(field.id, new_field)
-		if msg != "OK" then
-			return msg
-		end
+		#msg = upload_weather_new_version(field.id, new_field)
+		#if msg != "OK" then
+		#	return msg
+		#end
+		#msg = upload_site_new_version(field.id, new_field)
+		#if msg != "OK" then
+		#	return msg
+		#end
 
-		new_field["soils"].each do |s|
-			session[:depth] = s[1]["field_name"]
-			msg = upload_soil_new_version(field.id, s[1])
-			if msg != "OK" then
-				return msg
-			end
-		end
+		#new_field["soils"]["soil"].each do |s|
+			#msg = upload_soil_new_version(field.id, s)
+		#	if msg != "OK" then
+		#		return msg
+		#	end
+		#end
 
-		new_field["scenarios"].each do |sc|
-			scenario_id = upload_scenario_new_version(field.id, sc)
-			if scenario_id == nil then
-				return "scenario could not be saved"
-			end
-		end
+		#new_field["scenarios"]["scenario"].each do |sc|
+		#end
 		return "OK"
 	end
 
@@ -514,16 +562,27 @@ class ProjectsController < ApplicationController
 		weather.save
 	end
 
-	def upload_weather_new_version(field_id, field)
+	def upload_weather_new_version(node, field_id)
 		weather = Weather.new
 		weather.field_id = field_id
-		weather.station_way = field["weather"]["station_way"]
-		weather.simulation_initial_year = field["weather"]["simulation_initial_year"]
-		weather.simulation_final_year = field["weather"]["simulation_final_year"]
-		weather.latitude = field["weather"]["weather_latitude"]
-		weather.longitude = field["weather"]["weather_longitude"]
-		weather.weather_file = field["weather"]["weather_file"]
-		weather.way_id = field["weather"]["way_id"]
+		node.elements.each do |p|
+			case p.name
+				when "station_way"
+					weather.station_way = p.text
+				when "simulation_initial_year"
+					weather.simulation_initial_year = p.text
+				when "simulation_final_year"
+					weather.simulation_final_year = p.text
+				when "latitude"
+					weather.weather_latitude = p.text
+				when "longitude"
+					weather.longitude = p.text
+				when "weather_file"
+					weather.weather_file = p.text
+				when "way_id"
+					weather.way_id = p.text
+			end
+		end
 		if weather.save then
 			return "OK"
 		else
@@ -531,19 +590,33 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_site_new_version(field_id, field)
+	def upload_site_new_version(node, field_id)
 		site = Site.new
 		site.field_id = field_id
-		site.apm = field["site"]["apm"]
-		site.co2x = field["site"]["co2x"]
-		site.cqnx = field["site"]["cqnx"]
-		site.elev = field["site"]["elev"]
-		site.fir0 = field["site"]["fir0"]
-		site.rfnx = field["site"]["rfnx"]
-		site.unr = field["site"]["unr"]
-		site.upr = field["site"]["upr"]
-		site.xlog = field["site"]["xlog"]
-		site.ylat = field["site"]["ylat"]
+		node.elements.each do |p|
+			case p.name
+				when "apm"
+					site.apm = p.text
+				when "co2x"
+					site.co2x = p.text
+				when "cqnx"
+					site.cqnx = p.text
+				when "elev"
+					site.elev = p.text
+				when "fir0"
+					site.fir0 = p.text
+				when "rfnx"
+					site.rfnx = p.text
+				when "unr"
+					site.unr = p.text
+				when "upr"
+					site.upr = p.text
+				when "xlog"
+					site.xlog = p.text
+				when "ylat"
+					site.ylat = p.text
+			end
+		end
 		if site.save then
 			return "OK"
 		else
@@ -591,8 +664,8 @@ class ProjectsController < ApplicationController
 			return "Soil could not be saved"
 		end
 	
-		new_soil["layers"].each do |l|
-			return upload_layer_new_version(soil.id, l[1])
+		new_soil["layers"]["layer"].each do |l|
+			return upload_layer_new_version(soil.id, l)
 		end
 	end 
 
@@ -643,6 +716,7 @@ class ProjectsController < ApplicationController
 	end
 
 	def upload_scenario_new_version(field_id, new_scenario)
+		msg = "OK"
 		scenario = Scenario.new
 		scenario.field_id = field_id
 		scenario.name = new_scenario["name"]
@@ -650,14 +724,20 @@ class ProjectsController < ApplicationController
 			return "scenario could not be save"
 		end
 
-		new_scenario["operations"].each do |o|
+		new_scenario["operations"]["operation"].each do |o|
 			msg = upload_operation_new_version(scenario.id, o)
 			if msg != "OK" then
 				return msg
 			end
 		end
-		upload_bmp_info_new_version(scenario.id, field, j)
-		return scenario.id
+
+		new_scenario["bmps"]["bmp"].each do |b|
+			msg = upload_bmp_info_new_version(scenario.id, b)
+			if msg != "OK" then
+				return msg
+			end
+		end
+		return msg
 	end
 
 	def upload_operation_info(scenario_id, i, j, k)
