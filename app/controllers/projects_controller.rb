@@ -175,14 +175,16 @@ class ProjectsController < ApplicationController
 	   project = Project.find(params[:id])
 
 	   builder = Nokogiri::XML::Builder.new do |xml|
+	     xml.projects {
 			xml.project {
 				#save project information
 				xml.project_name project.name
 				xml.project_description project.description
 				xml.project_version project.version
-				#save location information
-				save_location_information(xml, params[:id])
 			} # end xml.project
+			#save location information
+			save_location_information(xml, params[:id])
+		} # end xml.projects
 	   end   #builder do end
 
 	   file_name = session[:session_id] + ".prj"
