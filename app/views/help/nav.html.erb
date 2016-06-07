@@ -1,0 +1,47 @@
+<div class="main">
+	<div class="container">
+		<h1><%= t('nav.header') %></h1>
+		<h2><%= t('nav.overview.header') %></h2>
+		<p><%= t('nav.overview.statement') %></p>
+		<%= image_tag("navpage/image002.jpg", :alt => "Header Bar") %>
+		<p><%= raw t('nav.overview.project') %></p>
+		<p><%= raw t('nav.overview.location') %></p>
+		<p><%= raw t('nav.overview.weather') %></p>
+		<p><%= raw t('nav.overview.fields') %></p>
+		<p><%= raw t('nav.overview.soils') %></p>
+		<p><%= raw t('nav.overview.management') %></p>
+		<p><%= raw t('nav.overview.subproject') %></p>
+		<p><%= raw t('nav.overview.simulation') %></p>
+		<p><%= raw t('nav.overview.results') %></p>
+		<p><%= raw t('nav.overview.modifications') %></p><br>
+		<p><%= raw t('nav.overview.advance') %></p>
+		<br>
+		
+		<h2><%= t('nav.dataentrybasics.header') %></h2>
+		<p><%= raw t('nav.dataentrybasics.body') %></p>
+		<br>
+		
+		<h2><%= t('nav.dataentryfield.header') %></h2>
+		<p><%= t('nav.dataentryfield.body') %></p>
+		<%= image_tag("navpage/image008.jpg", :alt => "Data Entry") %>
+		<br><br>
+		
+		<h2><%= t('nav.dropdownlist.header') %></h2>
+		<p><%= t('nav.dropdownlist.body') %></p>
+		<%= image_tag("navpage/image009.png", :alt => "Drop Down List") %>
+		<br><br>
+		
+		<h2><%= t('nav.textbox.header') %></h2>
+		<p><%= t('nav.textbox.body') %></p>
+		<%= image_tag("navpage/image011.jpg", :alt => "Text Box") %>
+		<br><br>
+		
+		<h2><%= t('nav.textarea.header') %></h2>
+		<p><%= t('nav.textarea.body') %></p>
+		<%= image_tag("navpage/image013.jpg", :alt => "Text Area") %>
+		<br><br>
+		
+		<%= link_to "< Prev", help_path("sysreq") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("projpage") %><br>
+		<%= link_to "<< Return to Table of Contents", help_path("index") %>
+	</div>
+</div>

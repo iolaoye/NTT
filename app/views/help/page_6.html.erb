@@ -1,0 +1,23 @@
+<div class="main">
+	<div class="container">
+		<h1><%= t('fieldpage.header') %></h1>
+		<h2><%= t('fieldpage.overview.header') %></h2>
+			<p><%= raw t('fieldpage.overview.body1') %></p>
+			<p><%= raw t('fieldpage.overview.body2') %></p>
+		<h2><%= t('fieldpage.createdel.header') %></h2>
+			<h3><%= raw t('fieldpage.createdel.create.header') %></h3>
+				<p><%= raw t('fieldpage.createdel.create.body') %></p>
+				<h3><%= raw t('fieldpage.createdel.delete.header') %></h3>
+				<p><%= raw t('fieldpage.createdel.delete.body') %></p>
+		<h2><%= t('fieldpage.characteristics.header') %></h2>
+			<h3><%= t('fieldpage.characteristics.name.header') %></h3>
+				<p><%= raw t('fieldpage.characteristics.name.body') %></p>
+				<h3><%= t('fieldpage.characteristics.area.header') %></h3>
+				<p><%= raw t('fieldpage.characteristics.area.body') %></p>
+		<h2><%= t('fieldpage.advance.header') %></h2>
+			<p><%= raw t('fieldpage.advance.body') %></p>
+		<br>
+		<%= link_to "< Prev", help_path("page_5") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_7") %><br>
+		<%= link_to "<< Return to Table of Contents", help_path("index") %>
+	</div>
+</div>

@@ -17,6 +17,11 @@
 
 	  <% if signed_in? %>
 		<%= render 'layouts/header' %>
+	<% else %>
+		<% case request.original_url %>
+			<% when /about/, /contact/, /help/ %>
+				<%= render 'layouts/header' %>
+			<% end %>
 	  <% end %>
 
 	  <!-- main body -->
