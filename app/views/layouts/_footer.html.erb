@@ -1,14 +1,14 @@
 ﻿<div id='cssmenu'>
     <ul id="mnuFooter" >
       <li><a <%= link_to t('footer.instructions') %> </a></li>
-          <li><a <%= link_to t("footer.contact_us") %></a></li>
-          <li><a <%= link_to t("footer.about_ntt")  %></a></li>
-          <li><a <%= link_to t("footer.help") %></a></li>
-          <li class='active has-sub'><%= link_to t("footer.Language") %>
-            <ul id="cssSubMenu" >
-              <li><%= link_to t("languages.english"), :locale=>'en'%></li>
-              <li><%= link_to t("languages.spanish"), :locale=>'es'%></li>
-            </ul>
+	  <li><a <%= link_to t("footer.contact_us"), contact_path %></a></li>
+	  <li><a <%= link_to t("footer.about_ntt"), about_path %></a></li>
+	  <li><a <%= link_to t("footer.help"), help_path("index") %></a></li>
+	  <li class='active has-sub'><%= link_to t("footer.Language") %>
+		<ul id="cssSubMenu" >
+		  <li><%= link_to t("languages.english"), :locale=>'en'%></li>
+		  <li><%= link_to t("languages.spanish"), :locale=>'es'%></li>
+		</ul>
         </li>
     </ul>
 </div>
