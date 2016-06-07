@@ -313,4 +313,6 @@
     annual: Anual
     update_chart: Actualizar Gráfica
     result: Resultado
+  users:
+    confirmation: Confirmación de la contraseña
 

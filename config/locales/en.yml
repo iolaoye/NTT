@@ -310,3 +310,5 @@ en:
     annual: Annual
     update_chart: Update Chart
     result: Result
+  users:
+    confirmation: Password confirmation
