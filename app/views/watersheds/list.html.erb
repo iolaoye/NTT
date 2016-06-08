@@ -1,12 +1,12 @@
 ﻿<div class="field">
     <table>
       <tr>
-        <td><%= label :bmp_id, 'Fields' %></td>
-        <td><%= label :bmp_id, 'Scenarios' %></td>
+        <td><%= label :bmp_id, t('menu.fields') %></td>
+        <td><%= label :bmp_id, t('scenario.scenario') %></td>
       </tr>
       <tr>
-        <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field', :required => true} %></td>
-        <td><%= collection_select :watershed, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
+        <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.select_field'), :required => true} %></td>
+        <td><%= collection_select :watershed, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('helpers.select.select_scenario'), :required => true} %></td>
       </tr>
     </table>
   </div>
@@ -39,5 +39,5 @@
 
 <br />
 
-<%= link_to 'New Watershed', new_watershed_path %>
+<%= link_to t('watershed.new_watershed'), new_watershed_path %>
 
