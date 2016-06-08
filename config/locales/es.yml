@@ -314,6 +314,7 @@
     annual: Anual
     update_chart: Actualizar Gráfica
     result: Resultado
+    submit: Enviar
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa
