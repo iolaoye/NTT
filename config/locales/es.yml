@@ -316,4 +316,41 @@
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa
-
+  about:
+    overview0: 'Visión General'
+    overview1: 'Nutrient Tracking Tool (NTT) fue diseñado y desarrollado por Texas Institute for Applied Environmental Research (TIAER), Tarleton State University con fondos del programa Conservation Innovation Grants de USDA-NRCS y varias agencias del estado.'
+    overview2: 'La aplicación on-line <b>NTT</b> compara sistemas de manejo agrícolas para calcular cambios en perdida de nutrientes esperado.'
+    overview3: 'Los productores agrícolas y adminstradores de tierras pueden definir un número de escenarios y producir un reporte mostrando las diferencias de perdida de nutriente esperado entre cualquiera de los escenarios seleccionados. Para mas información acerca de NTT, puede se consultada en Saleh et al. (2011).'
+    process0: 'Proceso'
+    process: 'La información suminstrada por el usuario es procesada usando un modelo de simulación biofísico, el programa Agricultural Policy Environmental eXtender (APEX; Williams et al., 2000).'
+    disclaimer0: 'Descargo'
+    disclaimer1: 'Aunque NTT ha sido probado por sus desarrolladores, NO garantía, expresa o implícita, es dada a la validez de los resultados y la funcionalidad del programa y material relacionado al programa, ni deberá el echo de la distribución constituir ninguna de tales garantías, y NINGUNA responsabilidad es es asumida por los desarrolladores en conección con ello. El usuario asume todos los riesgos y responsabilidades por el uso y aplicación de NTT y la interpretación de los resultados generados por la herramienta.'
+    disclaimer2: 'Los autores y su institución afiliada, TIAER, y cualquier otra agencia del govierno de los Estados Unidos no será responsable por posibles daños a los usiarios de NTT, incluyendo perdida de utilidades, perdida de ahorros, perdida de tiempo, accines de las agencias reguladoras, o cualquier otro incidente o daño generado directo o indirecto ocurrido por el uso o la imposibilidad de usar NTT, sus bases de datos, sus resultados, o su documentación por cualquier proposito.'
+    selections0: 'Selecciiones Disponibles'
+    selections1: '<b>Nutrient Tracking Tool (NTT)</b> compara compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield.'
+    selections2: '<b>NTT</b> requires regional soils, climate and crop parameters. As a new application, <b>NTT</b> currently provides selections for <b>every U.S. county</b>, but it has only been validated for a limited number of states and counties.'
+    note1: '* A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading.  Soil and Water Conservation Society.  November/December 2011 vol. 66 no. 6 400-410.'
+    note2: '** Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+  contact1:
+    header: 'Información de Contacto'
+    statement: 'Para preguntas o comentarios acerca de la Herramient de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
+    name: 'Ali Saleh'
+    position: 'Associate Director'
+    dept: 'Texas Institute for Applied Environmental Research (TIAER)'
+    uni: 'Tarleton State University'
+    box: 'P.O. Box T410'
+    city: 'Stephenville, TX 76402'
+    phone: '(254)968-9079 (Teléfono)'
+    fax: '(254)968-9790 (Fax)'
+    email: 'saleh@tarleton.edu'
+  contact2:
+    statement: 'Para preguntas <b>técnicas</b> o comentarios acerca de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
+    name: 'Oscar Gallego'
+    position: 'Senior Research Associate'
+    dept: 'Texas Institute for Applied Environmental Research (TIAER)'
+    uni: 'Tarleton State University'
+    box: 'P.O. Box T410'
+    city: 'Stephenville, TX 76402'
+    phone: '(254)968-9787 (Phone)'
+    fax: '(254)968-9790 (Fax)'
+    email: 'gallego@tiaer.tarleton.edu'
