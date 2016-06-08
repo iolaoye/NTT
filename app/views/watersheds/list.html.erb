@@ -6,7 +6,7 @@
       </tr>
       <tr>
         <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field', :required => true} %></td>
-        <td><%= collection_select :watershed, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
+        <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
       </tr>
     </table>
   </div>
