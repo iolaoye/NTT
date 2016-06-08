@@ -249,6 +249,7 @@
     results: Resultados
     modifications: Modificaciones
     signout: Salir
+    site: Sitio
   project:
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'

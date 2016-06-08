@@ -12,10 +12,14 @@
 # It's strongly recommended to check this file into your version control system.
 
 <<<<<<< HEAD
+ActiveRecord::Schema.define(:version => 20160607154612) do
+=======
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20160605190931) do
 =======
 ActiveRecord::Schema.define(:version => 20160603151501) do
 >>>>>>> a8fd733250b74ca5fbfb1071f98a19e1c3caabc2
+>>>>>>> 776e3fa654128f548618932b178b244157c0d6d3
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -638,6 +642,15 @@ ActiveRecord::Schema.define(:version => 20160603151501) do
     t.string   "company"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "watersheds", :force => true do |t|
+    t.string   "name"
+    t.integer  "field_id"
+    t.integer  "scenario_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "location_id"
   end
 
   create_table "ways", :force => true do |t|

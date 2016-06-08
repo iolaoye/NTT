@@ -1,0 +1,43 @@
+﻿<div class="field">
+    <table>
+      <tr>
+        <td><%= label :bmp_id, 'Fields' %></td>
+        <td><%= label :bmp_id, 'Scenarios' %></td>
+      </tr>
+      <tr>
+        <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field', :required => true} %></td>
+        <td><%= collection_select :watershed, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
+      </tr>
+    </table>
+  </div>
+
+<h1><%= t('watershed.watershed_title')%></h1>
+
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th class="gvCellStyleTitle"><%= t('watershed.watershed_name')%></th>
+    <th class="gvCellStyleTitle"><%= t('watershed.watershed_field')%></th>
+    <th class="gvCellStyleTitle"><%= t('watershed.watershed_scenario')%></th>
+    <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+  </tr>
+
+<% i=1 %>
+<% @watersheds.each do |watershed| %>
+<% if (i % 2  == 0) %>
+   <tr class="gvRowStyleEven">
+    <% else %>
+   <tr class="gvRowStyleOdd">
+    <% end %>
+    <% i = i + 1 %>
+  <tr class="gvRowStyle">
+    <td class="gvCellStyleText"><%= watershed.name %></td>
+    <td class="gvCellStyleNumber"><%= watershed.field_id %></td>
+    <td class="gvCellStyleNumber"><%= watershed.scenario_id %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Watershed', new_watershed_path %>
+
