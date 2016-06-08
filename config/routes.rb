@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :watersheds
+
+
   resources :people
 
 
@@ -87,6 +90,10 @@ NTTG3::Application.routes.draw do
 	resources :weathers
 	get :field_soils, on: :member
 	get :field_scenarios, on: :member
+  end
+
+  resources :watersheds do
+	get :list, on: :member
   end
 
   resources :soils do

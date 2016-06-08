@@ -235,6 +235,7 @@ en:
     welcome: Welcome
     projects: Projects
     location: Location
+    watershed: Watersheds
     weather: Weather
     fields: Fields
     soils: Soils
@@ -246,6 +247,7 @@ en:
     results: Results
     modifications: Modifications
     signout: Sign Out
+    site: Site
   project:
     new_project: 'New Project'
     upload_project: 'Upload Project'
@@ -282,6 +284,7 @@ en:
     edit: Editing Operation
     upload: 'Upload'
     cropping_system: 'Cropping System'
+    fertilizer: Fertilizer Type
   activity:
     edit: Editing Activity
     new_activity: New Activity
@@ -292,6 +295,12 @@ en:
     field_avg_slope: Field Average Slope
     new_field: New Field
     field_title: Listing Fields
+  watershed:
+    watershed_name: Watershed Name
+    watershed_field: Field
+    watershed_scenario: Watershed Scenario
+    new_watershed: New Watershed
+    watershed_title: Listing Watershed
   submit:
     save: Save Changes
     login: Sign in

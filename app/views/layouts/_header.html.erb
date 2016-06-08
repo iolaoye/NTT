@@ -5,9 +5,10 @@
 	           <% when /project/, /welcome/ %>
 			       <li><%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></li>
    			       <li><%= link_to t('menu.projects'), welcomes_path %></li>
-	           <% when /location/, /field/ %>
+	           <% when /location/, /field/, /watershed/ %>
 				   <li><%= link_to t('menu.location'), location_path(session[:location_id]) %></li>
 				   <li><%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
+				   <li><%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
 			   <% when /weather/, /site/,  /soil/, /scenario/, /layer/, /modifications/, /results/ %>
 				   <li><%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.site'), site_path(session[:field_id]) %></li>
@@ -25,14 +26,17 @@
     <ul class="crumbs">
         <% case request.original_url %>
 	        <% when /project/, /welcome/ %>
-	        <% when /location/, /field/ %>
+	        <% when /location/, /field/, /watershed/ %>
 		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
 		        <li><%=">>"%><%=@project_name%></li>
-				<% if request.original_url.include? "location" %>
-				    <li><%= t('menu.location') %></li>
-				<% else %>
-				    <li><%= t('menu.fields') %></li>
-				<% end %>				    
+				<% case request.original_url %>
+					<% when /location/ %>
+						<li><%= t('menu.location') %></li>
+					<% when /field/ %>
+						<li><%= t('menu.fields') %></li>
+					<% when /watershed/ %>
+						<li><%= t('menu.watershed') %></li>
+				<% end %>
 	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>

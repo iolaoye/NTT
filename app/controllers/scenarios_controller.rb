@@ -23,7 +23,7 @@ class ScenariosController < ApplicationController
 	@field_name = Field.find(session[:field_id]).field_name
 		respond_to do |format|
 		  format.html # list.html.erb
-		  format.json { render json: @fields }
+		  format.json { render json: @scenarios }
 		end
   end
 ################################  index  #################################
