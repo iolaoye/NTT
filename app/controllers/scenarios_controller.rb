@@ -992,7 +992,8 @@ class ScenariosController < ApplicationController
         #Dim query As IEnumerable(Of OperationsData)
         #query = From r In soil._scenariosInfo(currentScenarioNumber)._operationsInfo Order By r.Year, r.Month, r.Day, r.ApexOpName, r.EventId
         #check and fix the operation list
-		@soil_operations = SoilOperation.where("soil_id = " + soil.id.to_s + " and scenario_id = " + session[:scenario_id].to_s)
+		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + session[:scenario_id].to_s)
+		session[:depth] = soil.id 
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
