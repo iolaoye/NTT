@@ -2,7 +2,7 @@
     <div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
             <% case request.original_url %>
-	           <% when /project/, /welcome/ %>
+	           <% when /project/, /welcome/, /about/, /contact/, /help/  %>
 			       <li><%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></li>
    			       <li><%= link_to t('menu.projects'), welcomes_path %></li>
 	           <% when /location/, /field/ %>
@@ -67,4 +67,10 @@
 				<% end %>				    
 		<% end %>
 	</ul>
+<% else %>
+	<div class="navbar navbar-default" style="line-height:0px" id="div1">
+        <ul class="nav navbar-nav">
+    			   <li><%= link_to t('menu.signin'), logout_path %></li>
+	    </ul>      
+    </div>
 <% end %>

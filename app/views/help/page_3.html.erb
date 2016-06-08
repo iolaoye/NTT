@@ -1,0 +1,51 @@
+<div class="main">
+	<div class="container">
+		<h1><%= t('projpage.header') %></h1>
+		<p><%= raw t('projpage.statement') %></p>
+		<table>
+			<th>See <%= link_to 'Navigation Basics', help_path("nav") %> <%= raw t('projpage.navredir') %></th>
+		</table>
+		<h2><%= t('projpage.initial.header') %></h2>
+		<p><%= raw t('projpage.initial.statement') %></p>
+		<ol>
+			<li><%= raw t('projpage.initial.item1') %></li>
+			<li><%= raw t('projpage.initial.item2') %></li>
+			<li><%= raw t('projpage.initial.item3') %></li>
+		</ol>
+		<br>
+		<!-- options image -->
+		
+		<h2><%= t('projpage.create.header') %></h2>
+		<p><%= raw t('projpage.create.body1') %></p>
+		<p><%= raw t('projpage.create.body2') %></p>
+		<br>
+		<!-- create image -->
+		
+		<h2><%= t('projpage.open.header') %></h2>
+		<p><%= raw t('projpage.open.body1') %></p>
+		<p><%= raw t('projpage.open.body2') %></p>
+		<br>
+		<!-- open image -->
+		
+		<h2><%= t('projpage.example.header') %></h2>
+		<p><%= raw t('projpage.example.body1') %></p>
+		<p><%= raw t('projpage.example.body2') %></p>
+		<br>
+		<!-- example image -->
+		
+		<h2><%= t('projpage.save.header') %></h2>
+		<p><%= raw t('projpage.save.body') %></p>
+		<p><%= raw t('projpage.save.note') %></p>
+		<br>
+		
+		<h2><%= t('projpage.close.header') %></h2>
+		<p><%= raw t('projpage.close.body1') %></p>
+		<p><%= raw t('projpage.close.body2') %></p>
+		<!-- warning image -->
+		<p><%= raw t('projpage.close.body3') %></p>
+		<br>
+		
+		<%= link_to "< Prev", help_path("nav") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_4") %><br>
+		<%= link_to "<< Return to Table of Contents", help_path("index") %>
+	</div>
+</div>

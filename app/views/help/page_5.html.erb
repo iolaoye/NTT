@@ -1,0 +1,43 @@
+<div class="main">
+	<div class="container">
+		<h1><%= t('weathpage.header') %></h1>
+		<h2><%= t('weathpage.overview.header') %></h2>
+			<p><%= raw t('weathpage.overview.body') %></p>
+		
+		<h2><%= t('weathpage.selectinfo.header') %></h2>
+			<p><%= raw t('weathpage.selectinfo.body') %></p>
+			<h3><%= t('weathpage.selectinfo.method1.header') %></h3>
+				<p><%= raw t('weathpage.selectinfo.method1.body') %></p>
+			<h3><%= t('weathpage.selectinfo.method2.header') %></h3>
+				<p><%= raw t('weathpage.selectinfo.method2.body1') %></p>
+				<!-- image -->
+				<p><%= raw t('weathpage.selectinfo.method2.body2') %></p>
+			<h3><%= t('weathpage.selectinfo.method3.header') %></h3>
+				<p><%= raw t('weathpage.selectinfo.method3.body') %></p>
+				<ol>
+					<li>
+						<p><%= raw t('weathpage.selectinfo.method3.item1.body1') %></p>
+						<!-- image -->
+						<p><%= raw t('weathpage.selectinfo.method3.item1.body2') %></p>
+						<p><%= raw t('weathpage.selectinfo.method3.item1.body3') %></p>
+						<!-- image -->
+						<p><%= raw t('weathpage.selectinfo.method3.item1.body4') %></p>
+					</li>
+					<li>
+						<p><%= raw t('weathpage.selectinfo.method3.item2.body1') %></p>
+						<!-- image -->
+						<p><%= raw t('weathpage.selectinfo.method3.item2.body2') %></p>
+					</li>
+					<li><p><%= raw t('weathpage.selectinfo.method3.item3') %></p></li>
+				</ol>
+			<h3><%= t('weathpage.selectinfo.method4.header') %></h3>
+				<p><%= raw t('weathpage.selectinfo.method4.body1') %></p>
+				<p><%= raw t('weathpage.selectinfo.method4.body2') %></p>
+			<h2><%= t('weathpage.simulate.header') %></h2>
+				<p><%= raw t('weathpage.simulate.body') %></p>
+				<!-- image -->
+		<br>
+		<%= link_to "< Prev", help_path("page_4") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_6") %><br>
+		<%= link_to "<< Return to Table of Contents", help_path("index") %>
+	</div>
+</div>
