@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :watershed_scenarios
+
+
   resources :watersheds
 
 

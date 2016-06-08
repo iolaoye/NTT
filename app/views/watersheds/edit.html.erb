@@ -1,36 +1,5 @@
-<%= form_for(@watershed) do |f| %>
-  <% if @watershed.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@watershed.errors.count, "error") %> prohibited this watershed from being saved:</h2>
-
-      <ul>
-      <% @watershed.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
 <h1>Editing watershed</h1>
 
-<table>
-  <tr>
-    <td><%= label :name, 'Name' %></td>
-    <td><%= label :fields, 'Fields' %></td>
-    <td><%= label :scenarios, 'Scenarios' %></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><%= f.text_field :name %>
-    <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field', :required => true} %></td>
-    <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
-    <td><%= submit_tag t("result.submit"), name: "button"%></td>
-  </tr>
-</table>
+<%= render 'form' %>
 
-<div class="actions"><%= f.submit %></div>
-    
-<%= link_to 'Show', @watershed %> |
-<%= link_to 'Back', list_watershed_path(session[:location_id]) %>.
-
-<% end %>
+<%= link_to 'Back', list_watershed_path(session[:location_id]) %>

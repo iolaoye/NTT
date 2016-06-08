@@ -1,21 +1,4 @@
-<<<<<<< HEAD
 ﻿<h1><%= t('watershed.watershed_title')%></h1>
-=======
-﻿<div class="field">
-    <table>
-      <tr>
-        <td><%= label :bmp_id, 'Fields' %></td>
-        <td><%= label :bmp_id, 'Scenarios' %></td>
-      </tr>
-      <tr>
-        <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field', :required => true} %></td>
-        <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
-      </tr>
-    </table>
-  </div>
-
-<h1><%= t('watershed.watershed_title')%></h1>
->>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
@@ -32,7 +15,7 @@
     <% end %>
     <% i = i + 1 %>
   <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= watershed.name %></td>
+    <td class="gvCellStyleText"><%= link_to watershed.name, watershed_scenarios_path %></td>
     <td class="gvCellStyleCheckbox">
       <%#= link_to image_tag("view.png"), watershed %>
       <%= link_to image_tag("edit.png"), edit_watershed_path(watershed), title: t('general.edit') %>
@@ -45,4 +28,3 @@
 <br />
 
 <%= link_to 'New Watershed', new_watershed_path %>
-
