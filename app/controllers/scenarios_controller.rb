@@ -18,6 +18,11 @@ class ScenariosController < ApplicationController
   # GET /scenarios/1
   # GET /1/scenarios.json
   def list
+<<<<<<< HEAD
+=======
+  
+    @scenarios = Scenario.where(:field_id => params[:id])
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(session[:field_id]).field_name
 		respond_to do |format|
@@ -1431,12 +1436,17 @@ class ScenariosController < ApplicationController
     end
 
 	def load_crop_results(apex_start_year)
+<<<<<<< HEAD
 
 		crops_data = Array.new
 
 		msg = "OK"
 		crops_data = Array.new
 
+=======
+		msg = "OK"
+		crops_data = Array.new
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 		oneCrop = Struct.new(:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
 
 		data = read_file("APEX001.acy")   #Anual values for crop yield
@@ -1468,6 +1478,7 @@ class ScenariosController < ApplicationController
 			end # end if j>=10
 			j+=1
 		end #end data.each
+<<<<<<< HEAD
 
 				session[:depth] = crops_data
 
@@ -1495,6 +1506,8 @@ class ScenariosController < ApplicationController
 
 	def create_control_file()
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 				
 		#crop_year = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
 		crop_yield = crops_data.group_by("name").map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
@@ -1518,7 +1531,10 @@ class ScenariosController < ApplicationController
 	end
 
 	def create_control_file()
+<<<<<<< HEAD
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 		apex_string = ""
         ApexControl.where(:project_id => session[:project_id]).each do |c|
             case c.id
@@ -1687,16 +1703,22 @@ class ScenariosController < ApplicationController
 		end # end data.each file apex001.mws
 
     end
+<<<<<<< HEAD
 
 	
 	def load_results(apex_start_year)
 		results_data = Array.new
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 	
 	def load_results(apex_start_year)
 		msg = "OK"
 		results_data = Array.new
+<<<<<<< HEAD
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
         oneResult = Struct.new(:sub1,:year,:flow,:qdr,:surface_flow,:sed,:ymnu,:orgp,:po4,:orgn,:no3,:qdrn,:qdrp,:qn,:dprk,:irri,:pcp)
 		sub_ant = 99
         irri_sum = 0
@@ -1775,6 +1797,7 @@ class ScenariosController < ApplicationController
 				i+=1
 			end
         end
+<<<<<<< HEAD
 
 		average_totals(results_data, 0)   # average totals
 	end
@@ -1782,13 +1805,18 @@ class ScenariosController < ApplicationController
 	def add_value_to_chart_table(value, description_id, soil_id, year)
 		chart = Chart.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id, :month_year => year ).first
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 		msg = average_totals(results_data, 0)   # average totals
 		return msg
 	end
 
 	def add_value_to_chart_table(value, description_id, soil_id, year)
 		chart = Chart.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id, :month_year => year ).first
+<<<<<<< HEAD
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
         if chart == nil then
 			chart = Chart.new
 			chart.month_year = year
@@ -1805,6 +1833,7 @@ class ScenariosController < ApplicationController
 	def average_totals(results_data, i)
 	    #0:sub1,1:year,2:flow,3:qdr,4:surface_flow,5:sed,6:ymnu,7:orgp,8:po4,9:orgn,10:no3,11:qdrn,12:qdrp,13:qn,14:dprk,15:irri,16:pcp)
 		#Results description_ids
+<<<<<<< HEAD
 
 		require 'enumerable/confidence_interval'
 		#calculate average and confidence interval
@@ -1857,6 +1886,8 @@ class ScenariosController < ApplicationController
 	def add_summary(value, description_id, soil_id, ci)
 		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id).first
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 		require 'enumerable/confidence_interval'
 		#calculate average and confidence interval
 		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).reduce(:+).fdiv(v.size.to_f)]}
@@ -1908,7 +1939,10 @@ class ScenariosController < ApplicationController
 
 	def add_summary(value, description_id, soil_id, ci)
 		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id).first
+<<<<<<< HEAD
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
         if result == nil then
 			result = Result.new
 			result.field_id = @scenario.field_id
@@ -1916,6 +1950,7 @@ class ScenariosController < ApplicationController
 			result.soil_id = soil_id
 			result.description_id = description_id
 		end
+<<<<<<< HEAD
 
 
 		result.watershed_id = 0
@@ -1926,6 +1961,8 @@ class ScenariosController < ApplicationController
 
 	def add_summary_to_results_table(values, description_id, cis)
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 
 		result.watershed_id = 0
 		result.value = value
@@ -1938,7 +1975,10 @@ class ScenariosController < ApplicationController
 	end
 
 	def add_summary_to_results_table(values, description_id, cis)
+<<<<<<< HEAD
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 		#total Area =10, main area= 11, additional area 12..19
 		#total N = 20, orgn=21, runoffn=22, subsurface n=23, tile drain n = 24
 		#total p = 30, orgp=31, po4_p=32, tile drain p = 33
@@ -1947,6 +1987,7 @@ class ScenariosController < ApplicationController
 		#total sediment = 60, sediment = 61, manure erosion = 62		
 		
 		for i in 0..values.count-1
+<<<<<<< HEAD
 
 			values[i][0] == 0 ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
 			add_summary(values[i][1], description_id, soil_id, cis[i][1])
@@ -1972,6 +2013,8 @@ class ScenariosController < ApplicationController
 	end
 end  #end class
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
 			values[i][0] == 0  ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
 			add_summary(values[i][1], description_id, soil_id, cis[i][1])
 			case description_id    #Total area for summary report is beeing calculated
@@ -1996,4 +2039,7 @@ end  #end class
 		msg = add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value))		
 	end
 end  #end class
+<<<<<<< HEAD
 
+=======
+>>>>>>> ae3b1e77184c9561efb0e85471fb4a91f5c786e7
