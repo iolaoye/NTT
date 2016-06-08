@@ -135,6 +135,12 @@ NTTG3::Application.routes.draw do
   post 'projects/upload_project'
   post 'weathers/upload_weather'
   root to: 'sessions#index'
+  
+  get '/about' => "about#index", :as => "about"
+  get '/contact' => "contact#index", :as => "contact"
+  
+  get '/help/' => redirect('/help/index')
+  get '/help/:page' => "help#show", :as => "help"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

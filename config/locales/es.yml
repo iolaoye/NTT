@@ -270,6 +270,7 @@
     note: 'El periodo a simular es el mismo periodo contenido en la información de clima seleccionado. Usted puede cambiar el periodo a simular pero el programa va a adicionar cinco años antes como inicialización. Los últimos doce años son los que se muestran en las gráficas en la página de resultados. Si el periodo es menos que doce años, todos los años serán presentados en la página de resultados.'
     years_of_simulation: Periodo a simular
     update: 'Actualizar el Clima'
+    legend: Seleccione la clase de clima que quiere usar
   soil:
     layers: Capas
     soil: Suelo
@@ -291,11 +292,11 @@
     new_activity: Actividad Nuevo
     activity_title: Lista de Actividades
   field:
-    field_name: Nombre del Parcela
-    field_area: Área del Parcela
-    field_avg_slope: Promedio inclinación del Parcela
+    field_name: Nombre Parcela
+    field_area: Área Parcela
+    field_avg_slope: Promedio inclinación Parcela
     new_field: Parcela Nueva
-    field_title: Lista de Parcelas 
+    field_title: Lista Parcelas 
   submit:
     save: Guardar
     login: Iniciar sesión
@@ -312,4 +313,8 @@
     monthly: Mensual
     annual: Anual
     update_chart: Actualizar Gráfica
+    result: Resultado
+  users:
+    confirmation: Confirmación de la contraseña
+    company: Empresa
 

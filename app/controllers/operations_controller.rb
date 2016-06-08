@@ -8,10 +8,10 @@ class OperationsController < ApplicationController
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(session[:field_id]).field_name
 	@scenario_name = Scenario.find(session[:scenario_id]).name
-		respond_to do |format|
-		  format.html # list.html.erb
-		  format.json { render json: @fields }
-		end
+	respond_to do |format|
+		format.html # list.html.erb
+		format.json { render json: @fields }
+	end
   end
 ################################  INDEX  #################################
   # GET /operations
@@ -41,7 +41,6 @@ class OperationsController < ApplicationController
   # GET /operations/new.json
   def new
     @operation = Operation.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @operation }
@@ -269,7 +268,6 @@ class OperationsController < ApplicationController
 				#opv1 = 2.2
 			when 2   #fertilizer - converte amount applied
 				if @operation.subtype_id == 57  then
-					#8.25=lbs/gal, 0.5% dry matter, and 1121.8 kg/ha
 					opv1 = (@operation.amount * 8.25 * 0.005 * 1121.8).round(2)  #kg/ha of fertilizer applied converted from liquid manure
                 else
 					opv1 = (@operation.amount * LBS_TO_KG / AC_TO_HA).round(2)  #kg/ha of fertilizer applied converted from lbs/ac

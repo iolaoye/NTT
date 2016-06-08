@@ -15,7 +15,7 @@
   <% end %>
 
  <fieldset class="section">
-    <legend>Select the kind of weather you want to use</legend>
+    <legend><%= t('weather.legend') %></legend>
     <% for way in Way.find(:all) %>
 	   <div>
            <%= way.id %>

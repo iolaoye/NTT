@@ -2,7 +2,7 @@
     <div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
             <% case request.original_url %>
-	           <% when /project/, /welcome/ %>
+	           <% when /project/, /welcome/, /about/, /contact/, /help/  %>
 			       <li><%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></li>
    			       <li><%= link_to t('menu.projects'), welcomes_path %></li>
 	           <% when /location/, /field/, /watershed/ %>
@@ -29,6 +29,7 @@
 	        <% when /location/, /field/, /watershed/ %>
 		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
 		        <li><%=">>"%><%=@project_name%></li>
+<<<<<<< HEAD
 				<% case request.original_url %>
 					<% when /location/ %>
 						<li><%= t('menu.location') %></li>
@@ -37,6 +38,14 @@
 					<% when /watershed/ %>
 						<li><%= t('menu.watershed') %></li>
 				<% end %>
+=======
+				<% if request.original_url.include? "location" %>
+				    <li><%= t('menu.location') %></li>
+				<% else %>
+				    <li><%=">> " + t('menu.fields') %></li>
+				    <li><%= t('menu.fields') %></li>
+				<% end %>				    
+>>>>>>> 776e3fa654128f548618932b178b244157c0d6d3
 	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
@@ -70,4 +79,10 @@
 				<% end %>				    
 		<% end %>
 	</ul>
+<% else %>
+	<div class="navbar navbar-default" style="line-height:0px" id="div1">
+        <ul class="nav navbar-nav">
+    			   <li><%= link_to t('menu.signin'), logout_path %></li>
+	    </ul>      
+    </div>
 <% end %>

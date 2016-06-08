@@ -31,7 +31,6 @@
         <%= f.select :day, options_for_select(listDays, :selected => @operation.day), {:prompt => 'Day'}, {:required => true, :style => 'width:50px'} %>
     </li>
   </div>
-
 	<% case @operation.activity_id %>
 		<% when 1  # planting %>
 		    <div id="div_type"   >

@@ -32,34 +32,34 @@
     <% else %>
       <tr id="rowIdOdd" class="gvRowStyleOdd">
     <% end %>
-    <% i = i + 1 %>
-    <td class="gvCellStyleText"><%= Crop.find(operation.crop_id).name %></td>
-    <td id="operationType" class="gvCellStyleText"><%= Activity.find(operation.activity_id).name %></td>
-    <td class="gvCellStyleText"><%= listYears.detect { |val, index| index == operation.year}[0] %></td>
-    <td class="gvCellStyleText"><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
-    <td class="gvCellStyleNumber"><%= operation.day %></td>
-    <% case operation.activity_id %>
-		  <% when 1, 3  # planting, tillage %>
-    <session[:operation_type_id]=operation.type_id></session>
-        <td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
-      <% when 2  # fertilizer %>
-        <td class="gvCellStyleText"><%= Fertilizer.find(operation.subtype_id).name %></td>
-      <% when 6  # irrigation %>
-        <td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).name %></td>
-      <% when 7  # grazing%>
-        <td class="gvCellStyleText"><%= Fertilizer.find(operation.type_id).name %></td>
-      <% else # harvest, kill, stop grazin, burn, liming%>
-        <td class="gvCellStyleText"><%= :"" %></td>
-    <% end %>
-    <td class="gvCellStyleNumber"><%= operation.amount %></td>
-    <td class="gvCellStyleNumber"><%= operation.depth %></td>
-    <td class="gvCellStyleNumber"><%= operation.moisture %></td>
-    <td class="gvCellStyleNumber"><%= operation.no3_n %></td>
-    <td class="gvCellStyleNumber"><%= operation.po4_p %></td>
-    <td class="gvCellStyleNumber"><%= operation.org_n %></td>
-    <td class="gvCellStyleNumber"><%= operation.org_p %></td>
-    <td ><%= link_to image_tag("edit.png"), edit_operation_path(operation), title: t('general.edit') %>
-        <%= link_to image_tag("delete.png"), operation, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+      <% i = i + 1 %>
+      <td class="gvCellStyleText"><%= Crop.find(operation.crop_id).name %></td>
+      <td id="operationType" class="gvCellStyleText"><%= Activity.find(operation.activity_id).name %></td>
+      <td class="gvCellStyleText"><%= listYears.detect { |val, index| index == operation.year}[0] %></td>
+      <td class="gvCellStyleText"><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
+      <td class="gvCellStyleNumber"><%= operation.day %></td>
+      <% case operation.activity_id %>
+		    <% when 1, 3  # planting, tillage %>
+      <session[:operation_type_id]=operation.type_id></session>
+          <td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
+        <% when 2  # fertilizer %>
+          <td class="gvCellStyleText"><%= Fertilizer.find(operation.subtype_id).name %></td>
+        <% when 6  # irrigation %>
+          <td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).name %></td>
+        <% when 7  # grazing%>
+          <td class="gvCellStyleText"><%= Fertilizer.find(operation.type_id).name %></td>
+        <% else # harvest, kill, stop grazin, burn, liming%>
+          <td class="gvCellStyleText"><%= :"" %></td>
+      <% end %>
+      <td class="gvCellStyleNumber"><%= operation.amount %></td>
+      <td class="gvCellStyleNumber"><%= operation.depth %></td>
+      <td class="gvCellStyleNumber"><%= operation.moisture %></td>
+      <td class="gvCellStyleNumber"><%= operation.no3_n %></td>
+      <td class="gvCellStyleNumber"><%= operation.po4_p %></td>
+      <td class="gvCellStyleNumber"><%= operation.org_n %></td>
+      <td class="gvCellStyleNumber"><%= operation.org_p %></td>
+      <td ><%= link_to image_tag("edit.png"), edit_operation_path(operation), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), operation, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
   <% end %>
 </table>
