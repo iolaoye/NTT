@@ -4,6 +4,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /1/watersheds.json
   def list
+	@scenarios = Scenario.where(:field_id => 0)  # make @scnearions empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => params[:id])
 	@project_name = Project.find(session[:project_id]).name
 
@@ -48,6 +49,7 @@ class WatershedsController < ApplicationController
 
   # GET /watersheds/1/edit
   def edit
+    @scenarios = Scenario.where(:field_id => 0)
     @watershed = Watershed.find(params[:id])
   end
 
