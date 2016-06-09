@@ -299,6 +299,7 @@ en:
     field_avg_slope: Field Average Slope
     new_field: New Field
     field_title: Listing Fields
+    field_type: Field Type
   watershed:
     watershed_name: Watershed Name
     new_watershed: New Watershed
@@ -371,6 +372,7 @@ en:
     email: 'gallego@tiaer.tarleton.edu'
   help:
     header: NTT Table of Contents
+    return_to_table: t('help.return_to_table')
     overview: Overview
     overview1: About NTT
     overview2: Contact Information
@@ -382,7 +384,7 @@ en:
     getstarted5: Weather Page
     getstarted6: Fields Page
     getstarted7: Soils Page
-    getstarted8: Managment Page
+    getstarted8: Management Page
     getstarted9: Subproject Page
     getstarted10: Simulation Page
     getstarted11: Results Page
