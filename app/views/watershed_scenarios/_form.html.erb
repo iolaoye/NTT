@@ -1,10 +1,10 @@
 <%= form_for(@watershed_scenarios) do |f| %>
-  <% if @watershed_scenario.errors.any? %>
+  <% if @watershed_scenarios.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@watershed_scenario.errors.count, "error") %> prohibited this watershed_scenario from being saved:</h2>
+      <h2><%= pluralize(@watershed_scenarios.errors.count, "error") %> prohibited this watershed_scenario from being saved:</h2>
 
       <ul>
-      <% @watershed_scenario.errors.full_messages.each do |msg| %>
+      <% @watershed_scenarios.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
