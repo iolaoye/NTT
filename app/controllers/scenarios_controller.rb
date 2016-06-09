@@ -1461,11 +1461,16 @@ class ScenariosController < ApplicationController
 			j+=1
 		end #end data.each
 				
+
 		#average_crops_result()
 		#crop_year = crops_data.group_by("name", ").map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
 		#MyClass.count(:all, :group => 'column1, column2')
 		crop_yield = average_crops_result(crops_data)
 		#crop_yield = crops_data.group_by(&:name").map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
+
+		#crop_year = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
+		crop_yield = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
+
 		crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
 		add_summary_to_results_table(crop_yield, 70, crop_yield_ci)
     end  #end method

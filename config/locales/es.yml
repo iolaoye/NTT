@@ -143,6 +143,8 @@
   helpers:
     select:
       prompt: Por favor seleccione
+      select_field: Seleccione la Parcela
+      select_scenario: Seleccione el Escenario
     submit:
       create: Crear %{model}
       submit: Guardar %{model}
@@ -238,7 +240,9 @@
     welcome: Bienvenido
     projects: Proyectos
     location: Ubicación
+    watershed: Watershed
     weather: Clima
+    field: Parcela
     fields: Parcelas
     soils: Suelos
     scenarios: Escenarios
@@ -291,15 +295,24 @@
     edit: Revisión de Actividad
     new_activity: Actividad Nuevo
     activity_title: Lista de Actividades
+    table_of_contents: << Regresar a la Tabla de Contenidos
   field:
-    field_name: Nombre Parcela
-    field_area: Área Parcela
+    field_name: Nombre de Parcela
+    field_area: Área de Parcela
     field_avg_slope: Promedio inclinación Parcela
     new_field: Parcela Nueva
-    field_title: Lista Parcelas 
+    field_title: Lista Parcelas
+    field_type: Tipo de Campo
+  watershed:
+    watershed_name: Nombre de Watershed
+    watershed_field: Parcela
+    watershed_scenario: Escenario de Watershed
+    new_watershed: Nuevo Watershed
+    watershed_title: Listado de Watershed 
   submit:
     save: Guardar
     login: Iniciar sesión
+    create_project: Crear el Proyecto
   sessions:
     index:
       email: Correo Electrónico
@@ -314,6 +327,7 @@
     annual: Anual
     update_chart: Actualizar Gráfica
     result: Resultado
+    submit: Enviar
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa
@@ -352,6 +366,6 @@
     uni: 'Tarleton State University'
     box: 'P.O. Box T410'
     city: 'Stephenville, TX 76402'
-    phone: '(254)968-9787 (Phone)'
+    phone: '(254)968-9787 (Teléfono)'
     fax: '(254)968-9790 (Fax)'
     email: 'gallego@tiaer.tarleton.edu'

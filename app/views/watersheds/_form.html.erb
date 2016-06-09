@@ -12,17 +12,19 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label t('general.name') %><br />
     <%= f.text_field :name %>
   </div>
+
   <div class="field">
-    <%= f.label :field_id %><br />
+    <%= f.label t('menu.field') %><br />
     <%= f.number_field :field_id %>
   </div>
   <div class="field">
-    <%= f.label :scenario_id %><br />
+    <%= f.label t('scenario.scenario') %><br />
     <%= f.number_field :scenario_id %>
   </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

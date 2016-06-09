@@ -5,16 +5,6 @@
   <%= @watershed.name %>
 </p>
 
-<p>
-  <b>Field:</b>
-  <%= @watershed.field_id %>
-</p>
-
-<p>
-  <b>Scenario:</b>
-  <%= @watershed.scenario_id %>
-</p>
-
 
 <%= link_to 'Edit', edit_watershed_path(@watershed) %> |
-<%= link_to 'Back', list_watershed_path(session[:location_id]) %>
+<%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
