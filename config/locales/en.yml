@@ -145,6 +145,8 @@ en:
   helpers:
     select:
       prompt: Please select
+      select_field: Select Field
+      select_scenario: Select Scenario
     submit:
       create: Create %{model}
       submit: Save %{model}
@@ -237,6 +239,7 @@ en:
     location: Location
     watershed: Watersheds
     weather: Weather
+    field: Field
     fields: Fields
     soils: Soils
     scenarios: Scenarios
@@ -290,21 +293,28 @@ en:
     edit: Editing Activity
     new_activity: New Activity
     activity_title: Listing Activities
+    table_of_contents: << Return to Table of Contents
   field:
     field_name: Field Name
     field_area: Field Area
     field_avg_slope: Field Average Slope
     new_field: New Field
     field_title: Listing Fields
+    field_type: Field Type
   watershed:
     watershed_name: Watershed Name
-    watershed_field: Field
-    watershed_scenario: Watershed Scenario
     new_watershed: New Watershed
     watershed_title: Listing Watershed
+  watershed_scenario:
+    watershed_scenario_name: Watershed Name
+    watershed_scenario_field: Watershed Field
+    watershed_scenario: Watershed Scenario
+    new_watershed: New Watershed Scenario
+    watershed_scenario_title: Listing Watershed Scenarios
   submit:
     save: Save Changes
     login: Sign in
+    create_project: Create Project
   sessions:
     index:
       email: Email
@@ -317,12 +327,11 @@ en:
     by_soil: By Soil
     monthly: Monthly
     annual: Annual
-
-
     update_chart: Update Chart
-apex_start_year
+    update_chart: Update Chart
     update_chart: Update Chart
     result: Result
+    add: Add
     submit: Submit
   users:
     confirmation: Password confirmation
@@ -942,8 +951,11 @@ apex_start_year
         body1: 'Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
   disclaimerpage:
     header: NTT Disclaimer
-
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
-
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
+    body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
+    body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
+    body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
+
+

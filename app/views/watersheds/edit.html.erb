@@ -1,18 +1,10 @@
-<%= form_for(@watershed) do |f| %>
-  <% if @watershed.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@watershed.errors.count, "error") %> prohibited this watershed from being saved:</h2>
-
-      <ul>
-      <% @watershed.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
 <h1>Editing watershed</h1>
 
+<<<<<<< HEAD
+<%= render 'form' %>
+
+<%= link_to 'Back', list_watershed_path(session[:location_id]) %>
+=======
 <table>
   <tr>
     <td><%= label :name, 'Name' %></td>
@@ -31,6 +23,11 @@
 <div class="actions"><%= f.submit %></div>
     
 <%= link_to 'Show', @watershed %> |
+
+<%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
+
 <%= link_to 'Back', list_watershed_path(session[:location_id]) %>.
 
 <% end %>
+
+>>>>>>> b2b77f74bb8113d39ff443fdf051cc57478c8667

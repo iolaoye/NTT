@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Watershed:</b>
+  <%= @watershed_scenario.watershed_id %>
+</p>
+
+<p>
+  <b>Field:</b>
+  <%= @watershed_scenario.field_id %>
+</p>
+
+<p>
+  <b>Scenario:</b>
+  <%= @watershed_scenario.scenario_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_watershed_scenario_path(@watershed_scenario) %> |
+<%= link_to 'Back', watershed_scenarios_path %>

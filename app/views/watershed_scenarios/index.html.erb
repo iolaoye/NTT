@@ -1,0 +1,46 @@
+<%= form_for(@watershed_scenarios) do |f| %>
+<table>
+  <tr>
+    <td><%= label :fields, 'Fields' %></td>
+    <td><%= label :scenarios, 'Scenarios' %></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field', :required => true} %></td>
+    <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
+    <td><%= f.submit %></td>
+  </tr>
+
+</table>
+
+<% end %>
+
+<h1><%= t('watershed.watershed_title')%></h1>
+
+
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th class="gvCellStyleTitle"><%= t('watershed.watershed_name')%></th>
+    <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+  </tr>
+
+<% i=1 %>
+<% @watershed_scenarios.each do |watershed_scenario| %>
+<% if (i % 2  == 0) %>
+   <tr class="gvRowStyleEven">
+    <% else %>
+   <tr class="gvRowStyleOdd">
+    <% end %>
+    <% i = i + 1 %>
+  <tr class="gvRowStyle">
+    <td class="gvCellStyleText"><%= watershed_scenario.watershed_id %></td>
+    <td class="gvCellStyleText"><%= watershed_scenario.field_id %></td>
+    <td class="gvCellStyleText"><%= watershed_scenario.scenario_id %></td>
+    <td class="gvCellStyleCheckbox">
+      <%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />

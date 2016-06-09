@@ -49,7 +49,6 @@ class WatershedsController < ApplicationController
 
   # GET /watersheds/1/edit
   def edit
-    @scenarios = Scenario.where(:field_id => 0)
     @watershed = Watershed.find(params[:id])
   end
 
