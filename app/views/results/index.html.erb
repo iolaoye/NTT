@@ -65,7 +65,7 @@
               <%difference2 = value3- result.value%>
               <%reduction2 = difference2 / result.value * 100%>
               <%total_area2 = difference2 * @total_area%>
-              <% if (result.id % 10 == 0) %>
+              <% if (result.description_id % 10 == 0) %>
                 <tr class="gvRowStyleEven">
                   <td class="gvTotalText"><%= Description.find(result.description_id).description %></td>
                   <td class="gvTotalNumber"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>

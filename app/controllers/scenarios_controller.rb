@@ -1477,38 +1477,32 @@ class ScenariosController < ApplicationController
 
 	def average_crops_result(items)		
 		yield_by_name = Array.new
-		yield_by_year = Array.new
-		first = true
+		description_id = 70
 		items.each do |item|			
 			found = false
-			if first then
-				#create new hash to add to the array
-				yield_by_name.push(create_hash_by_name(item))
-			else
-				yield_by_name.each do |array|
-				session[:depth] = yield_by_name
-					if array["name"] == item.name then
-						found = true
-						array["yield"] += item.yield
-						array["total"] += 1
-						break
-					end # end if same crop
-				end  # end each name
-				if found == false then
-					yield_by_name.push(create_hash_by_name(item))
-				end  # end if found
-			end  # end if first
+			yield_by_name.each do |array|
+				if array["name"] == item.name then
+					found = true
+					array["yield"] += item.yield
+					array["total"] += 1
+					add_value_to_chart_table(item.yield * array["conversion"], description_id, 0, item.year)
+					break
+				end # end if same crop
+			end  # end each name
+			if found == false then
+				description_id += 1				
+				yield_by_name.push(create_hash_by_name(item, description_id))
+			end  # end if found
 			first = false
 		end
 		yield_by_name.each do |crop|
-			crop["yield"] = (crop["yield"] * yield["conversion"]) / yield["total"]
+			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
+			add_summary(crop["yield"], crop["description_id"], 0, 0)
 		end
-		session[:depth] = yield_by_name
-		ooo
 		return yield_by_name
 	end
 
-	def create_hash_by_name(item)
+	def create_hash_by_name(item, crop_count)
         conversion_factor = 1 * AC_TO_HA
         dry_matter = 100
 		#find the crop to take conversion_faactor and dry_matter
@@ -1522,6 +1516,7 @@ class ScenariosController < ApplicationController
 		new_hash["yield"] = item.yield
 		new_hash["conversion"] = conversion_factor / (dry_matter/100)
 		new_hash["total"] = 1
+		new_hash["description_id"] = crop_count
 		return new_hash
 	end
 
