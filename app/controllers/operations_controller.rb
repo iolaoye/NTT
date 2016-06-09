@@ -8,10 +8,10 @@ class OperationsController < ApplicationController
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(session[:field_id]).field_name
 	@scenario_name = Scenario.find(session[:scenario_id]).name
-		respond_to do |format|
-		  format.html # list.html.erb
-		  format.json { render json: @fields }
-		end
+	respond_to do |format|
+		format.html # list.html.erb
+		format.json { render json: @fields }
+	end
   end
 ################################  INDEX  #################################
   # GET /operations

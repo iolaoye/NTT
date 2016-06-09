@@ -19,10 +19,15 @@ pre {
 }
 
 a {
-  color: #6699ff;
+  color: #000;
+
+  &:visited {
+    color: #666;
+  }
 
   &:hover {
-    color: #660066;
+    color: #fff;
+    background-color: #000;
   }
 }
 
@@ -65,14 +70,4 @@ div {
     font-size: 12px;
     list-style: square;
   }
-}
-
-th {
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: normal;
-}
-
-tr:last-child {
-  border-bottom: 1px solid #A29D9D;
 }

@@ -1,4 +1,10 @@
 NTTG3::Application.routes.draw do
+  resources :watershed_scenarios
+
+
+  resources :watersheds
+
+
   resources :people
 
 
@@ -89,6 +95,10 @@ NTTG3::Application.routes.draw do
 	get :field_scenarios, on: :member
   end
 
+  resources :watersheds do
+	get :list, on: :member
+  end
+
   resources :soils do
     get :list, on: :member
     resources :layers
@@ -128,6 +138,12 @@ NTTG3::Application.routes.draw do
   post 'projects/upload_project'
   post 'weathers/upload_weather'
   root to: 'sessions#index'
+  
+  get '/about' => "about#index", :as => "about"
+  get '/contact' => "contact#index", :as => "contact"
+  
+  get '/help/' => redirect('/help/index')
+  get '/help/:page' => "help#show", :as => "help"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

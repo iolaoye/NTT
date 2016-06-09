@@ -18,12 +18,13 @@ class ScenariosController < ApplicationController
   # GET /scenarios/1
   # GET /1/scenarios.json
   def list
+  
     @scenarios = Scenario.where(:field_id => params[:id])
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(session[:field_id]).field_name
 		respond_to do |format|
 		  format.html # list.html.erb
-		  format.json { render json: @fields }
+		  format.json { render json: @scenarios }
 		end
   end
 ################################  index  #################################
@@ -992,7 +993,8 @@ class ScenariosController < ApplicationController
         #Dim query As IEnumerable(Of OperationsData)
         #query = From r In soil._scenariosInfo(currentScenarioNumber)._operationsInfo Order By r.Year, r.Month, r.Day, r.ApexOpName, r.EventId
         #check and fix the operation list
-		@soil_operations = SoilOperation.where("soil_id = " + soil.id.to_s + " and scenario_id = " + session[:scenario_id].to_s)
+		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + session[:scenario_id].to_s)
+		session[:depth] = soil.id 
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
@@ -1425,29 +1427,13 @@ class ScenariosController < ApplicationController
 
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
-        results_data = load_results(apex_start_year)
+        msg = load_results(apex_start_year)
         
-		load_crop_results(apex_start_year)
-        #if _scenariosToRun(simulationsCount).Scenario <> "Subproject" Then
-        #done    AverageBySoil(ntt_apex_results, _cropsInfo)  'if there is a subproject not averages by soil.
-        #End If
-
-			#calculate_ci_total(ntt_apex_results)
-			#calculate_ci_by_soil(ntt_apex_results, _cropsInfo)
-		#todo add for subproject
-        #if ddlType.SelectedIndex == 0 Then
-            load_month_values(apex_start_year)
-        #else
-        #    LoadMonthValues(apex_start_year, _subprojectName(ddlSubproject.SelectedIndex)._results)
-        #end
-
-			#load_annual_values(ntt_apex_results, nAvgyears, _cropsInfo)
-
-        #currentFieldNumber = currentFieldNumberAnt
-        #currentScenarioNumber = currentScenarioNumberAnt
+		msg = load_crop_results(apex_start_year)
     end
 
 	def load_crop_results(apex_start_year)
+		msg = "OK"
 		crops_data = Array.new
 		oneCrop = Struct.new(:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
 
@@ -1455,9 +1441,9 @@ class ScenariosController < ApplicationController
 		j = 1
         data.each_line do |tempa|
 			if j >= 10 then
-				year1 = tempa[19, 4].to_i
+				year1 = tempa[18, 4].to_i
 				subs = tempa[5, 5].to_i
-				next if year1 >= apex_start_year #take years greater or equal than ApexStartYear.
+				next if year1 < apex_start_year #take years greater or equal than ApexStartYear.
 				one_crop = oneCrop.new
 				one_crop.year = year1
 				one_crop.name = tempa[28,4]
@@ -1468,26 +1454,24 @@ class ScenariosController < ApplicationController
 					conversion_factor = crop.conversion_factor * AC_TO_HA
 					dry_matter = crop.dry_matter
 				end #end if crop != nil
-				one_crop.yield = tempa[34,9].to_f * conversion_factor / (dry_matter/100)
-				one_crop.yield += (tempa[44,9].to_f * conversion_factor / (dry_matter/100)) unless (one_crop.name == "COTS" || one_crop.name == "COTP")
-				one_crop.ws = tempa[64,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.ns = tempa[74,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.ps = tempa[84,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.ts = tempa[94,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.as1 = tempa[104,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.yield = tempa[33,9].to_f * conversion_factor / (dry_matter/100)
+				one_crop.yield += (tempa[43,9].to_f * conversion_factor / (dry_matter/100)) unless (one_crop.name == "COTS" || one_crop.name == "COTP")
+				one_crop.ws = tempa[63,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.ns = tempa[73,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.ps = tempa[83,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.ts = tempa[93,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.as1 = tempa[103,9].to_f * conversion_factor / (dry_matter / 100)
 
 				crops_data.push(one_crop)
 			end # end if j>=10
 			j+=1
 		end #end data.each
-				session[:depth] = crops_data
-
-		crop_year = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
+				
+		#crop_year = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
 		crop_yield = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
 		crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
-        #AverageCropsAll(_fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._results.SoilResults.Crops, _cropsInfo)
+		add_summary_to_results_table(crop_yield, 70, crop_yield_ci)
     end  #end method
-
 
 	def run_scenario()
 		path = File.join(APEX, "APEX" + session[:session_id])
@@ -1648,7 +1632,6 @@ class ScenariosController < ApplicationController
 			add_value_to_chart_table(annual_precipitation[i], 41, 0, i+1)
         end  # end for
 
-		session[:depth] = annual_flow[i]		
 		data = read_file("APEX001.mws")   #monthly values for precipitation
 		i=1
 		data.each_line do |tempa|
@@ -1676,6 +1659,7 @@ class ScenariosController < ApplicationController
     end
 	
 	def load_results(apex_start_year)
+		msg = "OK"
 		results_data = Array.new
         oneResult = Struct.new(:sub1,:year,:flow,:qdr,:surface_flow,:sed,:ymnu,:orgp,:po4,:orgn,:no3,:qdrn,:qdrp,:qn,:dprk,:irri,:pcp)
 		sub_ant = 99
@@ -1755,7 +1739,8 @@ class ScenariosController < ApplicationController
 				i+=1
 			end
         end
-		average_totals(results_data, 0)   # average totals
+		msg = average_totals(results_data, 0)   # average totals
+		return msg
 	end
 
 	def add_value_to_chart_table(value, description_id, soil_id, year)
@@ -1778,9 +1763,6 @@ class ScenariosController < ApplicationController
 		#Results description_ids
 		require 'enumerable/confidence_interval'
 		#calculate average and confidence interval
-		results_data.each do |r|
-			
-		end
 		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).reduce(:+).fdiv(v.size.to_f)]}
 		orgn_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).confidence_interval]}
 		add_summary_to_results_table(orgn, 21, orgn_ci)
@@ -1825,6 +1807,7 @@ class ScenariosController < ApplicationController
 		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).reduce(:+).fdiv(v.size.to_f)]}
 		manure_erosion_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).confidence_interval]}
 		add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
+		return "OK"
 	end
 
 	def add_summary(value, description_id, soil_id, ci)
@@ -1840,7 +1823,11 @@ class ScenariosController < ApplicationController
 		result.watershed_id = 0
 		result.value = value
 		result.ci_value = ci
-		result.save
+		if result.save then 
+			return "OK"
+		else
+			return "Results couldn't be saved"
+		end
 	end
 
 	def add_summary_to_results_table(values, description_id, cis)
@@ -1852,7 +1839,7 @@ class ScenariosController < ApplicationController
 		#total sediment = 60, sediment = 61, manure erosion = 62		
 		
 		for i in 0..values.count-1
-			values[i][0] == 0 ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
+			values[i][0] == 0  ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
 			add_summary(values[i][1], description_id, soil_id, cis[i][1])
 			case description_id    #Total area for summary report is beeing calculated
 				when 4  #calculate total area
@@ -1869,9 +1856,10 @@ class ScenariosController < ApplicationController
 					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
 			end #end case when
 		end #end for i
+		return "OK"
 	end
 	
 	def add_totals(results, description_id, soil_id)					
-		add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value))
+		msg = add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value))		
 	end
 end  #end class

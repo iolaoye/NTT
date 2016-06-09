@@ -1,0 +1,27 @@
+<h1>Listing watersheds</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Field</th>
+    <th>Scenario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @watersheds.each do |watershed| %>
+  <tr>
+    <td><%= watershed.name %></td>
+    <td><%= watershed.field_id %></td>
+    <td><%= watershed.scenario_id %></td>
+    <td><%= link_to 'Show', watershed %></td>
+    <td><%= link_to 'Edit', edit_watershed_path(watershed) %></td>
+    <td><%= link_to 'Destroy', watershed, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to t('watershed.new_watershed'), new_watershed_path %>

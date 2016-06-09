@@ -1,0 +1,26 @@
+<h1>Editing watershed</h1>
+
+<table>
+  <tr>
+    <td><%= label :name, 'Name' %></td>
+    <td><%= label :fields, 'Fields' %></td>
+    <td><%= label :scenarios, 'Scenarios' %></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><%= f.text_field :name %>
+    <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field', :required => true} %></td>
+    <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
+    <td><%= submit_tag t("result.submit"), name: "button"%></td>
+  </tr>
+</table>
+
+<div class="actions"><%= f.submit %></div>
+    
+<%= link_to 'Show', @watershed %> |
+
+<%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
+
+<%= link_to 'Back', list_watershed_path(session[:location_id]) %>.
+
+<% end %>
