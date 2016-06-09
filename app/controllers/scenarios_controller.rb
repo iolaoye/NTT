@@ -1435,43 +1435,95 @@ class ScenariosController < ApplicationController
 	def load_crop_results(apex_start_year)
 		msg = "OK"
 		crops_data = Array.new
-		oneCrop = Struct.new(:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
+		oneCrop = Struct.new(:sub1,:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
 
 		data = read_file("APEX001.acy")   #Anual values for crop yield
 		j = 1
         data.each_line do |tempa|
-			if j >= 10 then
+			if j >= 10 then				
 				year1 = tempa[18, 4].to_i
 				subs = tempa[5, 5].to_i
 				next if year1 < apex_start_year #take years greater or equal than ApexStartYear.
 				one_crop = oneCrop.new
+				one_crop.sub1 = subs
 				one_crop.year = year1
 				one_crop.name = tempa[28,4]
-                conversion_factor = 1 * AC_TO_HA
-                dry_matter = 100
-				crop = Crop.find_by_code(one_crop.name)
-				if crop != nil then
-					conversion_factor = crop.conversion_factor * AC_TO_HA
-					dry_matter = crop.dry_matter
-				end #end if crop != nil
-				one_crop.yield = tempa[33,9].to_f * conversion_factor / (dry_matter/100)
-				one_crop.yield += (tempa[43,9].to_f * conversion_factor / (dry_matter/100)) unless (one_crop.name == "COTS" || one_crop.name == "COTP")
-				one_crop.ws = tempa[63,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.ns = tempa[73,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.ps = tempa[83,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.ts = tempa[93,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.as1 = tempa[103,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.yield = tempa[33,9].to_f
+				one_crop.yield += tempa[43,9].to_f unless (one_crop.name == "COTS" || one_crop.name == "COTP")
+				one_crop.ws = tempa[63,9].to_f 
+				one_crop.ns = tempa[73,9].to_f
+				one_crop.ps = tempa[83,9].to_f
+				one_crop.ts = tempa[93,9].to_f
+				one_crop.as1 = tempa[103,9].to_f
 
 				crops_data.push(one_crop)
 			end # end if j>=10
 			j+=1
 		end #end data.each
 				
+
+		#average_crops_result()
+		#crop_year = crops_data.group_by("name", ").map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
+		#MyClass.count(:all, :group => 'column1, column2')
+		crop_yield = average_crops_result(crops_data)
+		#crop_yield = crops_data.group_by(&:name").map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
+
 		#crop_year = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
 		crop_yield = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
+
 		crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
 		add_summary_to_results_table(crop_yield, 70, crop_yield_ci)
     end  #end method
+
+	def average_crops_result(items)		
+		yield_by_name = Array.new
+		yield_by_year = Array.new
+		first = true
+		items.each do |item|			
+			found = false
+			if first then
+				#create new hash to add to the array
+				yield_by_name.push(create_hash_by_name(item))
+			else
+				yield_by_name.each do |array|
+				session[:depth] = yield_by_name
+					if array["name"] == item.name then
+						found = true
+						array["yield"] += item.yield
+						array["total"] += 1
+						break
+					end # end if same crop
+				end  # end each name
+				if found == false then
+					yield_by_name.push(create_hash_by_name(item))
+				end  # end if found
+			end  # end if first
+			first = false
+		end
+		yield_by_name.each do |crop|
+			crop["yield"] = (crop["yield"] * yield["conversion"]) / yield["total"]
+		end
+		session[:depth] = yield_by_name
+		ooo
+		return yield_by_name
+	end
+
+	def create_hash_by_name(item)
+        conversion_factor = 1 * AC_TO_HA
+        dry_matter = 100
+		#find the crop to take conversion_faactor and dry_matter
+		crop = Crop.find_by_code(item.name)
+		if crop != nil then
+			conversion_factor = crop.conversion_factor * AC_TO_HA
+			dry_matter = crop.dry_matter
+		end #end if crop != nil
+		new_hash = Hash.new
+		new_hash["name"] = item.name
+		new_hash["yield"] = item.yield
+		new_hash["conversion"] = conversion_factor / (dry_matter/100)
+		new_hash["total"] = 1
+		return new_hash
+	end
 
 	def run_scenario()
 		path = File.join(APEX, "APEX" + session[:session_id])

@@ -29,10 +29,13 @@
 	        <% when /location/, /field/, /watershed/ %>
 		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
 		        <li><%=">>"%><%=@project_name%></li>
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 0f295bc6239a7b98d9bd166ad4528aef6067bb74
 				<% case request.original_url %>
 					<% when /location/ %>
 						<li><%= t('menu.location') %></li>
@@ -41,6 +44,7 @@
 					<% when /watershed/ %>
 						<li><%= t('menu.watershed') %></li>
 				<% end %>
+<<<<<<< HEAD
 
 
 
@@ -55,6 +59,8 @@
 
 
 
+=======
+>>>>>>> 0f295bc6239a7b98d9bd166ad4528aef6067bb74
 	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
