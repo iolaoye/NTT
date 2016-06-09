@@ -10,8 +10,10 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
-
+ActiveRecord::Schema.define(:version => 20160607154612) do
 ActiveRecord::Schema.define(:version => 20160605190931) do
+ActiveRecord::Schema.define(:version => 20160603151501) do
+ActiveRecord::Schema.define(:version => 20160607154612) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -620,6 +622,15 @@ ActiveRecord::Schema.define(:version => 20160605190931) do
     t.string   "company"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "watersheds", :force => true do |t|
+    t.string   "name"
+    t.integer  "field_id"
+    t.integer  "scenario_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "location_id"
   end
 
   create_table "ways", :force => true do |t|
