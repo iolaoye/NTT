@@ -351,7 +351,7 @@
     header: 'Información de Contacto'
     statement: 'Para preguntas o comentarios acerca de la Herramient de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
     name: 'Ali Saleh'
-    position: 'Associate Director'
+    position: 'Director Asociado'
     dept: 'Texas Institute for Applied Environmental Research (TIAER)'
     uni: 'Tarleton State University'
     box: 'P.O. Box T410'
@@ -362,7 +362,7 @@
   contact2:
     statement: 'Para preguntas <b>técnicas</b> o comentarios acerca de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
     name: 'Oscar Gallego'
-    position: 'Senior Research Associate'
+    position: 'Asociado Senior de Investigación'
     dept: 'Texas Institute for Applied Environmental Research (TIAER)'
     uni: 'Tarleton State University'
     box: 'P.O. Box T410'

@@ -255,6 +255,7 @@ en:
     new_project: 'New Project'
     upload_project: 'Upload Project'
     upload_button_desc: 'Project to Upload'
+    editing_project: 'Editing Project'
   footer:
     instructions: Instructions
     contact_us: 'Contact Us'
