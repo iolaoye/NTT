@@ -2,19 +2,19 @@
 
 <p>
   <b>Watershed:</b>
-  <%= @watershed_scenario.watershed_id %>
+  <%= @watershed_scenarios.watershed_id %>
 </p>
 
 <p>
   <b>Field:</b>
-  <%= @watershed_scenario.field_id %>
+  <%= @watershed_scenarios.field_id %>
 </p>
 
 <p>
   <b>Scenario:</b>
-  <%= @watershed_scenario.scenario_id %>
+  <%= @watershed_scenarios.scenario_id %>
 </p>
 
 
-<%= link_to 'Edit', edit_watershed_scenario_path(@watershed_scenario) %> |
-<%= link_to 'Back', watershed_scenarios_path %>
+<%= link_to 'Edit', edit_watershed_scenario_path(@watershed_scenarios) %> |
+<%= link_to t('general.back'), watershed_scenarios_path %>
