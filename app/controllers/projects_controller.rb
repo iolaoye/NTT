@@ -118,7 +118,7 @@ class ProjectsController < ApplicationController
 	def upload_project
 		@data = Nokogiri::XML(params[:project])
 		@data.root.elements.each do |node|
-			if node.name.eql? "project"
+			if node.name.eql? "project" #appears to return false, thus goes to else
 				msg = upload_project_new_version(node)
 			else
 				msg = "File does not have a project"
@@ -416,20 +416,19 @@ class ProjectsController < ApplicationController
 		project.user_id = session[:user_id]
 		node.elements.each do |p|
 			case p.name
-				when "project_name"
+				when "project_name" #no value receieved/saved
 					project.name = p.text
 				when "project_description"
 					project.description = p.text					
 			end
 		end
 		project.version = "NTTG3"
-		project.save!
-		#if project.save
-		#	session[:project_id] = project.id
-		#	return "OK"
-		#else
-		#	return "project could not be saved"
-		#end
+		if project.save
+			session[:project_id] = project.id
+			return "OK"
+		else
+			return "project could not be saved"
+		end
 	end 
 
 	def upload_location_info
