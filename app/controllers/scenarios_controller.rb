@@ -994,7 +994,6 @@ class ScenariosController < ApplicationController
         #query = From r In soil._scenariosInfo(currentScenarioNumber)._operationsInfo Order By r.Year, r.Month, r.Day, r.ApexOpName, r.EventId
         #check and fix the operation list
 		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + session[:scenario_id].to_s)
-		session[:depth] = soil.id 
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
@@ -1463,16 +1462,8 @@ class ScenariosController < ApplicationController
 				
 
 		#average_crops_result()
-		#crop_year = crops_data.group_by("name", ").map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-		#MyClass.count(:all, :group => 'column1, column2')
 		crop_yield = average_crops_result(crops_data)
-		#crop_yield = crops_data.group_by(&:name").map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-
-		#crop_year = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-		crop_yield = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-
 		crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
-		add_summary_to_results_table(crop_yield, 70, crop_yield_ci)
     end  #end method
 
 	def average_crops_result(items)		
@@ -1497,9 +1488,9 @@ class ScenariosController < ApplicationController
 		end
 		yield_by_name.each do |crop|
 			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
-			add_summary(crop["yield"], crop["description_id"], 0, 0)
+			add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
 		end
-		return yield_by_name
+		add_summary(0, 70,0,0,0)
 	end
 
 	def create_hash_by_name(item, crop_count)
@@ -1517,6 +1508,7 @@ class ScenariosController < ApplicationController
 		new_hash["conversion"] = conversion_factor / (dry_matter/100)
 		new_hash["total"] = 1
 		new_hash["description_id"] = crop_count
+		new_hash["crop_id"] = crop.id
 		return new_hash
 	end
 
@@ -1857,7 +1849,7 @@ class ScenariosController < ApplicationController
 		return "OK"
 	end
 
-	def add_summary(value, description_id, soil_id, ci)
+	def add_summary(value, description_id, soil_id, ci, crop_id)
 		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id).first
         if result == nil then
 			result = Result.new
@@ -1865,11 +1857,13 @@ class ScenariosController < ApplicationController
 			result.scenario_id = @scenario.id
 			result.soil_id = soil_id
 			result.description_id = description_id
+			result.crop_id = crop_id
 		end
 
 		result.watershed_id = 0
 		result.value = value
 		result.ci_value = ci
+    	result.crop_id = crop_id
 		if result.save then 
 			return "OK"
 		else
@@ -1887,7 +1881,7 @@ class ScenariosController < ApplicationController
 		
 		for i in 0..values.count-1
 			values[i][0] == 0  ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
-			add_summary(values[i][1], description_id, soil_id, cis[i][1])
+			add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
 			case description_id    #Total area for summary report is beeing calculated
 				when 4  #calculate total area
 					#todo	
@@ -1907,6 +1901,6 @@ class ScenariosController < ApplicationController
 	end
 	
 	def add_totals(results, description_id, soil_id)					
-		msg = add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value))		
+		msg = add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value), 0)		
 	end
 end  #end class

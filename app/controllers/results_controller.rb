@@ -12,6 +12,7 @@ class ResultsController < ApplicationController
 	@soil = "0"
 	@result_selected = t("result.by_soil")
 	@title = ""
+	@descriptions = Description.select("id, description").where("id < 70 OR id > 79")
 	if params[:button] != nil then
 		params[:button] == t('result.summary') + " " + t("result.by_soil") ? @soil = params[:result4][:soil_id] : @soil = "0"
 		if params[:button].include?(t('result.summary')) then
@@ -19,20 +20,19 @@ class ResultsController < ApplicationController
 			if params[:result1] != nil
 				if params[:result1][:scenario_id] != "" then
 					@scenario1 = params[:result1][:scenario_id] 			
-					@results1 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil).joins(:description)
+					@results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
 				end
 				if params[:result2][:scenario_id] != "" then
 					@scenario2 = params[:result2][:scenario_id]
-					@results2 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil).joins(:description)
+					@results2 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
 				end
 				if params[:result3][:scenario_id] != "" then
 					@scenario3 = params[:result3][:scenario_id]
-					@results3 = Result.select("results.*, descriptions.*").where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil).joins(:description)
+					@results3 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
 				end
 			end
 		end  #end if params button summary
 	end # if params nil
-	
     if params[:button] == t('result.annual') then
 		@x = "Year"
 		@result_selected = t('result.annual')
@@ -127,7 +127,6 @@ class ResultsController < ApplicationController
   # PATCH/PUT /results/1
   # PATCH/PUT /results/1.json
   def update
-  ooo
     @result = Result.find(params[:id])
 
     respond_to do |format|
@@ -150,6 +149,15 @@ class ResultsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to results_url }
       format.json { head :no_content }
+    end
+  end
+
+  def sel  
+	@result = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2], :scenario_id => params[:scenario3], :soil_id => 0).where("crop_id > 0")
+	
+    respond_to do |format|
+      format.html # sel.html.erb
+      format.json { render json: @result }
     end
   end
 
