@@ -50,8 +50,10 @@ NTTG3::Application.routes.draw do
   resource :session
   #resources :users
   resources :welcomes
-  #resources :fields 
-
+  #resources :fields
+  resources :watershed_scenarios do
+     post 'new_scenario', on: :member
+  end
   resources :users do
 	  resources :projects 
   end
