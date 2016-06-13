@@ -1,5 +1,5 @@
-<h1><%= t('watershed.new_watershed') %></h1>
+<h1>New watershed</h1>
 
 <%= render 'form' %>
 
-<%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
+<%= link_to 'Back', list_watershed_path(session[:location_id]) %>
