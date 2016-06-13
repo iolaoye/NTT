@@ -322,6 +322,14 @@ en:
     monthly: Monthly
     annual: Annual
     update_chart: Update Chart
+<<<<<<< HEAD
+=======
+
+
+    update_chart: Update Chart
+
+    update_chart: Update Chart
+>>>>>>> 38da8a65266e52834da14d7fcc0aebfb6b31c55e
     result: Result
     add: Add
     submit: Submit
