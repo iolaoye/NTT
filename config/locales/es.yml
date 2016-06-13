@@ -299,7 +299,6 @@
     field_area: Área Parcela
     field_avg_slope: Promedio inclinación Parcela
     new_field: Parcela Nueva
-<<<<<<< HEAD
     field_title: Lista Parcelas
     field_type: Tipo de Parcela
   watershed:
@@ -312,9 +311,6 @@
     watershed_scenario: Watershed Scenario
     new_watershed: New Watershed Scenario
     watershed_scenario_title: Listing Watershed Scenarios
-=======
-    field_title: Lista Parcelas 
->>>>>>> master
   submit:
     save: Guardar
     login: Iniciar sesión
