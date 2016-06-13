@@ -15,20 +15,24 @@ class ResultsController < ApplicationController
 	@descriptions = Description.select("id, description").where("id < 70 OR id > 79")
 	#load crop for each scenario selected
 	i = 70
-	result = Result.new
+	results = Result.new
 	case true
 		when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
-			@result = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2], :scenario_id => params[:scenario3], :soil_id => 0).where("crop_id > 0")
+			results = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2], :scenario_id => params[:scenario3], :soil_id => 0).where("crop_id > 0")
 		when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" 
-			@result = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2]).where("crop_id > 0")
+			results = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2]).where("crop_id > 0")
 		when params[:result1][:scenario_id] != "" 
-			@result = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1]).where("crop_id > 0")
+			results = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1]).where("crop_id > 0")
 	end # end case true
 
-    @result.each 
+    results.each do |result|
+		i+=1
+		#get crops name for each result to add to description list 
+		crop = Crop.find(result.crop_id)
+
+	end # end results.each
 	
         $.each result_list, (key, result) ->
-           i = i + 1
            url = "/crops/" + result.crop_id + ".json"
            $.getJSON url, (crop) ->
                items.push "<option value=\"" + i + "\">" + crop.name + " Yield </option>"

@@ -47,6 +47,7 @@
 	HA_TO_AC = 2.47105384
 	T_STATISTIC_EVALUATED = 1.645
 	FT2_TO_M2 = 0.092903
+	FT_TO_MM = 304.8
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'

@@ -6,4 +6,11 @@ class Bmp < ActiveRecord::Base
      has_many :crops
 	 has_many :subareas, :dependent => :destroy
      belongs_to :scenario
+  #validations
+	validates_numericality_of :depth, greater_than: 0, :if => :conditions
+	validates_uniqueness_of :bmpsublist_id
+
+  def conditions
+	:bmpsublist_id == 3
+  end
 end

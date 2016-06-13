@@ -57,6 +57,7 @@ before_filter :take_names
   # GET /bmps/1/edit
   def edit
     @bmp = Bmp.find(params[:id])
+	@bmp_id = @bmp.bmp_id
   end
 
 ################################  CREATE  #################################
@@ -66,16 +67,25 @@ before_filter :take_names
     @bmp = Bmp.new
 	@bmp.scenario_id = session[:scenario_id]
 	@bmp.bmpsublist_id = params[:bmp][:bmpsublist_id]
-	tile_drain()
-    respond_to do |format|
-      if @bmp.save
-        format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
-        format.json { render json: @bmp, status: :created, location: @bmp }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @bmp.errors, status: :unprocessable_entity }
-      end
-    end
+	@bmp.bmp_id = params[:bmp][:bmp_id]
+	msg = tile_drain()
+	respond_to do |format|
+		if msg == "OK" 
+			  if @bmp.save
+				format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
+				format.json { render json: @bmp, status: :created, location: @bmp }
+			  else
+				format.html { render action: "new" }
+				format.json { render json: @bmp.errors, status: :unprocessable_entity }
+			  end
+		else
+			#@bmp.errors.messages[0] = msg
+			#session[:depth] = @bmp.errors.full_messages
+			#ooo
+			format.html { render action: "new" }
+			format.json { render json: @bmp.errors, status: :unprocessable_entity }		
+		end
+	end
   end
 
 ################################  UPDATE  #################################
@@ -118,17 +128,19 @@ before_filter :take_names
     end
 
 	def tile_drain
-	asd
-      @soils = Soil.where(:field_id => session[:field_id]) 
-
-      @soils.each do |soil|
-        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
 		item = Bmp.where(:bmpsublist_id => params[:bmp][:bmpsublist_id]).first
-        input = params[:depth]
-        
-        if item == nil and !input.blank? and input > 0
-          @bmp.depth = params[:depth]
-        end
-	  end
-    end
-end
+		
+		input = params[:bmp][:depth]
+            @bmp.depth = params[:depth].to_f
+
+			@soils = Soil.where(:field_id => session[:field_id]) 
+			@soils.each do |soil|
+				subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+				if subarea != nil then
+					subarea.idr = @bmp.depth * FT_TO_MM
+					#if !subarea.save then return "Enable to save value in the subarea file" end
+				end  #end if subarea !nil
+			end # end soils.each
+		return "OK"
+    end # end method
+end  # end class
