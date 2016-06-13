@@ -322,11 +322,6 @@ en:
     monthly: Monthly
     annual: Annual
     update_chart: Update Chart
-<<<<<<< HEAD
-=======
-    update_chart: Update Chart
->>>>>>> 0f295bc6239a7b98d9bd166ad4528aef6067bb74
-    update_chart: Update Chart
     result: Result
     add: Add
     submit: Submit
@@ -559,10 +554,10 @@ en:
         body: 'There are four different methods to select the weather information. However, the options available depend on the selection made for the Location method in the previous page.'
         method1:
             header: Use Weather Information Close to your Location
-            body: 'This method of weather selection is only available when the user used the <a href=/getstarted/loc_help>Mapping System</a> to select the area of interest in the Location page. Using this method allows the user to simply confirm the weather that was already chosen by the model. After selecting the period to simulate (which is explained below under Period to Simulate) the user can simply click <b>Save and Continue</b> to verify the information, save it, and advance to the next page.'
+            body: 'This method of weather selection is only available when the user used the <a href=/help/page_4>Mapping System</a> to select the area of interest in the Location page. Using this method allows the user to simply confirm the weather that was already chosen by the model. After selecting the period to simulate (which is explained below under Period to Simulate) the user can simply click <b>Save and Continue</b> to verify the information, save it, and advance to the next page.'
         method2:
             header: Weather Station Using PRISM Data
-            body1: 'This method is available only when the <a href=/getstarted/loc_help>State/County</a> method was chosen to select the area of interest in the preceding page. This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <b>Weather Station Using PRISM Data</b> and then select the preferred weather station:'
+            body1: 'This method is available only when the <a href=/help/page_4>State/County</a> method was chosen to select the area of interest in the preceding page. This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <b>Weather Station Using PRISM Data</b> and then select the preferred weather station:'
             body2: 'Finally, once the station has been selected, click <b>Save and Continue</b> to save the information and continue to the next page.'
         method3:
             header: Load Your Own Weather File
@@ -578,7 +573,7 @@ en:
             item3: '<b>NOTE:</b> It is important to note that when you click <b>Save and Continue</b> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <b>IS NOT SAVED</b> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate run the any simulations again.'
         method4:
             header: Load Using Specific Coordinates (U.S.A only)
-            body1: 'This method of weather selection will always appear as available regardless of the location method that was selected in the <a href=/getstarted/loc_help>Location</a> page (this method will work for the User Input method). However, the coordinates selected must be coordinates within the United States. This means that while the option will appear as available if the user selected “User Input” in the <a href=/getstarted/loc_help>Location</a> page, if they are looking at an area of interest that is outside the mainland United States an error message will come up.'
+            body1: 'This method of weather selection will always appear as available regardless of the location method that was selected in the <a href=/help/page_4>Location</a> page (this method will work for the User Input method). However, the coordinates selected must be coordinates within the United States. This means that while the option will appear as available if the user selected “User Input” in the <a href=/help/page_4>Location</a> page, if they are looking at an area of interest that is outside the mainland United States an error message will come up.'
             body2: 'To use this method, first select <b>Load Using Specific Coordinates (U.S.A only)</b> and then enter the desired coordinates and click the <b>Save Coordinates</b> button. You will (like in all the other methods) need to select a period to simulate (which is discussed below) but after this has been done, you can click <b>Save and Continue</b> to save the information and continue.'
     simulate:
         header: Period to Simulate
@@ -587,13 +582,13 @@ en:
     header: Fields Page
     overview:
         header: Overview
-        body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/getstarted/loc_help>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
+        body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
         body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
     createdel:
         header: Creating/Deleting a Field
         create:
-            header: 'Creating a field (only for State/County and User Input <a href=/getstarted/loc_help>Location</a> Methods)'
-            body: 'In order to create a field, click the <b>Add New Field</b> button on the top left part of the screen. This will bring up a field with the NTT standard field characteristics. Users can then edit the field information. Instructions to do this are also on the <a href=/getstarted/loc_help>Location</a> page.'
+            header: 'Creating a field (only for State/County and User Input <a href=/help/page_4>Location</a> Methods)'
+            body: 'In order to create a field, click the <b>Add New Field</b> button on the top left part of the screen. This will bring up a field with the NTT standard field characteristics. Users can then edit the field information. Instructions to do this are also on the <a href=/help/page_4>Location</a> page.'
         delete:
             header: Deleting a Field
             body: 'To delete a field, simply click the <b>Delete</b> button on the left most part of the field characteristics.'
@@ -604,22 +599,22 @@ en:
             body: 'In order to change field’s name, simply click on the current name of the field (in this case Field 1) and type in the name of the field.'
         area:
             header: Changing the Field Area
-            body: The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 0.00) and type in the correct area, as shown below:'
+            body: 'The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 0.00) and type in the correct area, as shown below:'
     advance:
         header: Advancing
-        body: The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. Once all of the fields and corresponding information has been entered, the user can click <b>Save and Continue</b> to save the information and continue to the Soils page.'
+        body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. Once all of the fields and corresponding information has been entered, the user can click <b>Save and Continue</b> to save the information and continue to the Soils page.'
   soilpage:
     header: Soils Page
     overview:
         header: Overview
-        body: 'The Soils page allows the user to verify, select, or create the soils that he or she would like to use for the simulation. Depending on the <a href=/getstarted/loc_help>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/getstarted/loc_help>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
+        body: 'The Soils page allows the user to verify, select, or create the soils that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
         item1: 'The user can select a <b>minimum of one</b> soil and a <b>maximum of three</b> soils.'
         item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics, as shown circled in red below. To find the total soil percentage of the selected soils, add the percentages of the soils which are selected. Selected soils will have a check mark next to them (as shown below circled in yellow).'
         item3: ' However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will give the user the following error message:'
         item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the particular soil of interest. This will show the layers information for this particular soil in Layers information. The heading Soil in the Layers Information will tell you what soil’s layers you are looking at. This is shown in below as circled in red. If the Soil does not have layers, the user needs to manually enter them.'
     mapsystem:
         header: Soil Information When Using Mapping System
-        body: 'If the user selected Mapping System in the <a href=/getstarted/loc_help>Location</a> page, the user simply has to select or verify the soils that they would like to use for the simulation. The user can also change the Albedo, Slope, and Percentage of each soil. Finally, the user is able to add layers to soils. Using the Mapping System basically ensures that all the soils will have corresponding layers; but the user can add layers to any soil if they decide to do so.'
+        body: 'If the user selected Mapping System in the <a href=/help/page_4>Location</a> page, the user simply has to select or verify the soils that they would like to use for the simulation. The user can also change the Albedo, Slope, and Percentage of each soil. Finally, the user is able to add layers to soils. Using the Mapping System basically ensures that all the soils will have corresponding layers; but the user can add layers to any soil if they decide to do so.'
         select:
             header: Selecting the Field
             body1: 'The first step in verifying or selecting the correct soils is to be able to view all the soils for all the fields. In order to be able to change between fields, the user needs to click on the <b>Select Field</b> drop down menu. This will present all the available fields, as shown below:'
@@ -948,13 +943,6 @@ en:
         body1: 'Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
   disclaimerpage:
     header: NTT Disclaimer
-<<<<<<< HEAD
-
-    body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
-
-=======
-    body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
->>>>>>> 0f295bc6239a7b98d9bd166ad4528aef6067bb74
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
