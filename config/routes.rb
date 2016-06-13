@@ -1,19 +1,9 @@
 NTTG3::Application.routes.draw do
   resources :watershed_scenarios
-
-
   resources :watersheds
-
-
   resources :people
-
-
   resources :charts
-
-
   resources :events
-
-
   resources :descriptions
   resources :apex_parameters
   resources :apex_controls
@@ -51,6 +41,9 @@ NTTG3::Application.routes.draw do
   #resources :users
   resources :welcomes
   #resources :fields
+  resources :results do
+	get 'sel', on: :member
+  end 
   resources :watershed_scenarios do
      post 'new_scenario', on: :member
   end
