@@ -145,6 +145,11 @@ en:
   helpers:
     select:
       prompt: Please select
+<<<<<<< HEAD
+      field: Select Field
+      scenario: Select Scenario
+=======
+>>>>>>> master
     submit:
       create: Create %{model}
       submit: Save %{model}
@@ -252,6 +257,7 @@ en:
     new_project: 'New Project'
     upload_project: 'Upload Project'
     upload_button_desc: 'Project to Upload'
+    editing_project: 'Editing Project'
   footer:
     instructions: Instructions
     contact_us: 'Contact Us'
@@ -322,11 +328,14 @@ en:
     monthly: Monthly
     annual: Annual
     update_chart: Update Chart
+<<<<<<< HEAD
+=======
 
 
     update_chart: Update Chart
 
     update_chart: Update Chart
+>>>>>>> master
     result: Result
     add: Add
     submit: Submit
@@ -373,6 +382,7 @@ en:
     email: 'gallego@tiaer.tarleton.edu'
   help:
     header: NTT Table of Contents
+    return_to_table: t('help.return_to_table')
     overview: Overview
     overview1: About NTT
     overview2: Contact Information
@@ -384,7 +394,7 @@ en:
     getstarted5: Weather Page
     getstarted6: Fields Page
     getstarted7: Soils Page
-    getstarted8: Managment Page
+    getstarted8: Management Page
     getstarted9: Subproject Page
     getstarted10: Simulation Page
     getstarted11: Results Page
@@ -951,6 +961,8 @@ en:
 
 
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
+<<<<<<< HEAD
+=======
 
 
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
@@ -959,6 +971,6 @@ en:
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
+>>>>>>> master
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
-
-
+   
