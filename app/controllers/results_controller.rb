@@ -13,6 +13,29 @@ class ResultsController < ApplicationController
 	@result_selected = t("result.by_soil")
 	@title = ""
 	@descriptions = Description.select("id, description").where("id < 70 OR id > 79")
+	#load crop for each scenario selected
+	i = 70
+	result = Result.new
+	case true
+		when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
+			@result = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2], :scenario_id => params[:scenario3], :soil_id => 0).where("crop_id > 0")
+		when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" 
+			@result = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2]).where("crop_id > 0")
+		when params[:result1][:scenario_id] != "" 
+			@result = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1]).where("crop_id > 0")
+	end # end case true
+
+    @result.each 
+	
+        $.each result_list, (key, result) ->
+           i = i + 1
+           url = "/crops/" + result.crop_id + ".json"
+           $.getJSON url, (crop) ->
+               items.push "<option value=\"" + i + "\">" + crop.name + " Yield </option>"
+               $("#result5_description_id").html items.join("")
+
+
+
 	if params[:button] != nil then
 		params[:button] == t('result.summary') + " " + t("result.by_soil") ? @soil = params[:result4][:soil_id] : @soil = "0"
 		if params[:button].include?(t('result.summary')) then

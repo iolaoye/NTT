@@ -30,6 +30,7 @@
     </table>
   </div>
 </form>
+
 <h1><%=@result_selected + " " + @title%></h1>
 <% if @result_selected == t('result.annual') || @result_selected == t('result.monthly') then %>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>

@@ -22,6 +22,7 @@ class ScenariosController < ApplicationController
     @scenarios = Scenario.where(:field_id => params[:id])
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(session[:field_id]).field_name
+	session[:scenario_id] = params[:id]
 		respond_to do |format|
 		  format.html # list.html.erb
 		  format.json { render json: @scenarios }
@@ -1459,11 +1460,10 @@ class ScenariosController < ApplicationController
 			end # end if j>=10
 			j+=1
 		end #end data.each
-				
 
 		#average_crops_result()
-		crop_yield = average_crops_result(crops_data)
-		crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
+		average_crops_result(crops_data)
+		#crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
     end  #end method
 
 	def average_crops_result(items)		
@@ -1486,9 +1486,16 @@ class ScenariosController < ApplicationController
 			end  # end if found
 			first = false
 		end
+
 		yield_by_name.each do |crop|
+			crop_ci = Chart.select(:value).where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
+			ci = Array.new
+			crop_ci.each do |c|
+				ci.push c.value
+			end 
+			
 			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
-			add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
+			add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
 		end
 		add_summary(0, 70,0,0,0)
 	end
@@ -1802,48 +1809,48 @@ class ScenariosController < ApplicationController
 		#Results description_ids
 		require 'enumerable/confidence_interval'
 		#calculate average and confidence interval
-		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).reduce(:+).fdiv(v.size.to_f)]}
+		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).mean]}
 		orgn_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).confidence_interval]}
 		add_summary_to_results_table(orgn, 21, orgn_ci)
-		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
+		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).mean]}
 		runoff_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).confidence_interval]}
 		add_summary_to_results_table(runoff_n,  22, runoff_n_ci)
-		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).reduce(:+).fdiv(v.size.to_f) - v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).mean - v.map(&:qn).mean]}
 		sub_surface_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).confidence_interval - v.map(&:qn).confidence_interval]}		
 		add_summary_to_results_table(sub_surface_n, 23, sub_surface_n_ci)
-		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).mean]}
 		tile_drain_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).confidence_interval]}
 		add_summary_to_results_table(tile_drain_n, 24, tile_drain_n_ci)
-		orgp = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).reduce(:+).fdiv(v.size.to_f)]}
+		orgp = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).mean]}
 		orgp_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).confidence_interval]}
 		add_summary_to_results_table(orgp, 31, orgp_ci)
-		po4 = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).reduce(:+).fdiv(v.size.to_f)]}
+		po4 = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).mean]}
 		po4_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).confidence_interval]}
 		add_summary_to_results_table(po4, 32, po4_ci)
-		tile_drain_p = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_p = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).mean]}
 		tile_drain_p_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).confidence_interval]}
 		add_summary_to_results_table(tile_drain_p, 33, tile_drain_p_ci)
-		runoff = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
+		runoff = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).mean]}
 		runoff_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).confidence_interval]}
 		add_summary_to_results_table(runoff, 41, runoff_ci)
-		sub_surface_flow= results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).reduce(:+).fdiv(v.size.to_f) - v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_flow= results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).mean - v.map(&:surface_flow).mean]}
 		sub_surface_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).confidence_interval - v.map(&:surface_flow).confidence_interval]}
 		#sub_surface_flow = flow - runoff
 		#sub_surface_flow_ci = flow_ci - runoff_ci
 		add_summary_to_results_table(sub_surface_flow, 42, sub_surface_flow_ci)
-		tile_drain_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).mean]}
 		tile_drain_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).confidence_interval]}
 		add_summary_to_results_table(tile_drain_flow, 43, tile_drain_flow_ci)
-		irrigation = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).reduce(:+).fdiv(v.size.to_f)]}
+		irrigation = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).mean]}
 		irrigation_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).confidence_interval]}
 		add_summary_to_results_table(irrigation, 51, irrigation_ci)
-		deep_percolation_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).reduce(:+).fdiv(v.size.to_f)]}
+		deep_percolation_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).mean]}
 		deep_percolation_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).confidence_interval]}
 		add_summary_to_results_table(deep_percolation_flow, 52, deep_percolation_flow_ci)
-		sediment = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).reduce(:+).fdiv(v.size.to_f)]}
+		sediment = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).mean]}
 		sediment_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).confidence_interval]}
 		add_summary_to_results_table(sediment, 61, sediment_ci)		
-		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).reduce(:+).fdiv(v.size.to_f)]}
+		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).mean]}
 		manure_erosion_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).confidence_interval]}
 		add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
 		return "OK"
