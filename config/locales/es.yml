@@ -143,11 +143,8 @@
   helpers:
     select:
       prompt: Por favor seleccione
-<<<<<<< HEAD
       field: Seleccione la Parcela 
       scenario: Seleccione el Scenario
-=======
->>>>>>> master
     submit:
       create: Crear %{model}
       submit: Guardar %{model}
