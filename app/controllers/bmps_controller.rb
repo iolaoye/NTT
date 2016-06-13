@@ -63,9 +63,10 @@ before_filter :take_names
   # POST /bmps
   # POST /bmps.json
   def create
-  
-    @bmp = Bmp.new(bmp_params)
+    @bmp = Bmp.new
 	@bmp.scenario_id = session[:scenario_id]
+	@bmp.bmpsublist_id = params[:bmp][:bmpsublist_id]
+	tile_drain()
     respond_to do |format|
       if @bmp.save
         format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
@@ -114,5 +115,20 @@ before_filter :take_names
       params.require(:bmp).permit(:scenario_id, :bmp_id, :crop_id, :irrigation_id, :water_stress_factor, :irrigation_efficiency, :maximum_single_application, :safety_factor, :depth, 
 	         :area, :number_of_animals, :days, :hours, :animal_id, :dry_manure, :no3_n, :po4_p, :org_n, :org_p, :width, :grass_field_portion, :buffer_slope_upland, :crop_width,
 			 :slope_reduction, :sides, :bmpsublist_id)
+    end
+
+	def tile_drain
+	asd
+      @soils = Soil.where(:field_id => session[:field_id]) 
+
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+		item = Bmp.where(:bmpsublist_id => params[:bmp][:bmpsublist_id]).first
+        input = params[:depth]
+        
+        if item == nil and !input.blank? and input > 0
+          @bmp.depth = params[:depth]
+        end
+	  end
     end
 end
