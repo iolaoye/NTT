@@ -143,11 +143,8 @@
   helpers:
     select:
       prompt: Por favor seleccione
-<<<<<<< HEAD
       field: Seleccione la Parcela 
       scenario: Seleccione el Scenario
-=======
->>>>>>> master
     submit:
       create: Crear %{model}
       submit: Guardar %{model}
@@ -156,7 +153,6 @@
       project:
         name: Nombre
         description: Descripción
-      
   number:
     currency:
       format:
@@ -302,7 +298,6 @@
     field_area: Área Parcela
     field_avg_slope: Promedio inclinación Parcela
     new_field: Parcela Nueva
-<<<<<<< HEAD
     field_title: Lista Parcelas
     field_type: Tipo de Parcela
   watershed:
@@ -315,9 +310,6 @@
     watershed_scenario: Watershed Scenario
     new_watershed: New Watershed Scenario
     watershed_scenario_title: Listing Watershed Scenarios
-=======
-    field_title: Lista Parcelas 
->>>>>>> master
   submit:
     save: Guardar
     login: Iniciar sesión

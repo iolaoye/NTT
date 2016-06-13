@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%= form_for(@watershed_scenarios) do |f| %>
 
 <table>
@@ -12,9 +11,9 @@
     <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
 	<td class="actions"><%= f.submit %></td>
   </tr>
-=======
+
 <%= form_for :watershed_scenarios, url: new_scenario_watershed_scenario_path do |f| %>
->>>>>>> master
+
 
 
 <table>
