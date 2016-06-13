@@ -22,6 +22,7 @@ class ScenariosController < ApplicationController
     @scenarios = Scenario.where(:field_id => params[:id])
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(session[:field_id]).field_name
+	session[:scenario_id] = params[:id]
 		respond_to do |format|
 		  format.html # list.html.erb
 		  format.json { render json: @scenarios }
@@ -994,7 +995,6 @@ class ScenariosController < ApplicationController
         #query = From r In soil._scenariosInfo(currentScenarioNumber)._operationsInfo Order By r.Year, r.Month, r.Day, r.ApexOpName, r.EventId
         #check and fix the operation list
 		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + session[:scenario_id].to_s)
-		session[:depth] = soil.id 
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
@@ -1435,43 +1435,89 @@ class ScenariosController < ApplicationController
 	def load_crop_results(apex_start_year)
 		msg = "OK"
 		crops_data = Array.new
-		oneCrop = Struct.new(:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
+		oneCrop = Struct.new(:sub1,:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
 
 		data = read_file("APEX001.acy")   #Anual values for crop yield
 		j = 1
         data.each_line do |tempa|
-			if j >= 10 then
+			if j >= 10 then				
 				year1 = tempa[18, 4].to_i
 				subs = tempa[5, 5].to_i
 				next if year1 < apex_start_year #take years greater or equal than ApexStartYear.
 				one_crop = oneCrop.new
+				one_crop.sub1 = subs
 				one_crop.year = year1
 				one_crop.name = tempa[28,4]
-                conversion_factor = 1 * AC_TO_HA
-                dry_matter = 100
-				crop = Crop.find_by_code(one_crop.name)
-				if crop != nil then
-					conversion_factor = crop.conversion_factor * AC_TO_HA
-					dry_matter = crop.dry_matter
-				end #end if crop != nil
-				one_crop.yield = tempa[33,9].to_f * conversion_factor / (dry_matter/100)
-				one_crop.yield += (tempa[43,9].to_f * conversion_factor / (dry_matter/100)) unless (one_crop.name == "COTS" || one_crop.name == "COTP")
-				one_crop.ws = tempa[63,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.ns = tempa[73,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.ps = tempa[83,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.ts = tempa[93,9].to_f * conversion_factor / (dry_matter / 100)
-				one_crop.as1 = tempa[103,9].to_f * conversion_factor / (dry_matter / 100)
+				one_crop.yield = tempa[33,9].to_f
+				one_crop.yield += tempa[43,9].to_f unless (one_crop.name == "COTS" || one_crop.name == "COTP")
+				one_crop.ws = tempa[63,9].to_f 
+				one_crop.ns = tempa[73,9].to_f
+				one_crop.ps = tempa[83,9].to_f
+				one_crop.ts = tempa[93,9].to_f
+				one_crop.as1 = tempa[103,9].to_f
 
 				crops_data.push(one_crop)
 			end # end if j>=10
 			j+=1
 		end #end data.each
-				
-		#crop_year = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-		crop_yield = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-		crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
-		add_summary_to_results_table(crop_yield, 70, crop_yield_ci)
+
+		#average_crops_result()
+		average_crops_result(crops_data)
+		#crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
     end  #end method
+
+	def average_crops_result(items)		
+		yield_by_name = Array.new
+		description_id = 70
+		items.each do |item|			
+			found = false
+			yield_by_name.each do |array|
+				if array["name"] == item.name then
+					found = true
+					array["yield"] += item.yield
+					array["total"] += 1
+					add_value_to_chart_table(item.yield * array["conversion"], description_id, 0, item.year)
+					break
+				end # end if same crop
+			end  # end each name
+			if found == false then
+				description_id += 1				
+				yield_by_name.push(create_hash_by_name(item, description_id))
+			end  # end if found
+			first = false
+		end
+
+		yield_by_name.each do |crop|
+			crop_ci = Chart.select(:value).where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
+			ci = Array.new
+			crop_ci.each do |c|
+				ci.push c.value
+			end 
+			
+			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
+			add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+		end
+		add_summary(0, 70,0,0,0)
+	end
+
+	def create_hash_by_name(item, crop_count)
+        conversion_factor = 1 * AC_TO_HA
+        dry_matter = 100
+		#find the crop to take conversion_faactor and dry_matter
+		crop = Crop.find_by_code(item.name)
+		if crop != nil then
+			conversion_factor = crop.conversion_factor * AC_TO_HA
+			dry_matter = crop.dry_matter
+		end #end if crop != nil
+		new_hash = Hash.new
+		new_hash["name"] = item.name
+		new_hash["yield"] = item.yield
+		new_hash["conversion"] = conversion_factor / (dry_matter/100)
+		new_hash["total"] = 1
+		new_hash["description_id"] = crop_count
+		new_hash["crop_id"] = crop.id
+		return new_hash
+	end
 
 	def run_scenario()
 		path = File.join(APEX, "APEX" + session[:session_id])
@@ -1763,54 +1809,54 @@ class ScenariosController < ApplicationController
 		#Results description_ids
 		require 'enumerable/confidence_interval'
 		#calculate average and confidence interval
-		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).reduce(:+).fdiv(v.size.to_f)]}
+		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).mean]}
 		orgn_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).confidence_interval]}
 		add_summary_to_results_table(orgn, 21, orgn_ci)
-		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
+		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).mean]}
 		runoff_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).confidence_interval]}
 		add_summary_to_results_table(runoff_n,  22, runoff_n_ci)
-		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).reduce(:+).fdiv(v.size.to_f) - v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).mean - v.map(&:qn).mean]}
 		sub_surface_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).confidence_interval - v.map(&:qn).confidence_interval]}		
 		add_summary_to_results_table(sub_surface_n, 23, sub_surface_n_ci)
-		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).mean]}
 		tile_drain_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).confidence_interval]}
 		add_summary_to_results_table(tile_drain_n, 24, tile_drain_n_ci)
-		orgp = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).reduce(:+).fdiv(v.size.to_f)]}
+		orgp = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).mean]}
 		orgp_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).confidence_interval]}
 		add_summary_to_results_table(orgp, 31, orgp_ci)
-		po4 = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).reduce(:+).fdiv(v.size.to_f)]}
+		po4 = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).mean]}
 		po4_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).confidence_interval]}
 		add_summary_to_results_table(po4, 32, po4_ci)
-		tile_drain_p = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_p = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).mean]}
 		tile_drain_p_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).confidence_interval]}
 		add_summary_to_results_table(tile_drain_p, 33, tile_drain_p_ci)
-		runoff = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
+		runoff = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).mean]}
 		runoff_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).confidence_interval]}
 		add_summary_to_results_table(runoff, 41, runoff_ci)
-		sub_surface_flow= results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).reduce(:+).fdiv(v.size.to_f) - v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_flow= results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).mean - v.map(&:surface_flow).mean]}
 		sub_surface_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).confidence_interval - v.map(&:surface_flow).confidence_interval]}
 		#sub_surface_flow = flow - runoff
 		#sub_surface_flow_ci = flow_ci - runoff_ci
 		add_summary_to_results_table(sub_surface_flow, 42, sub_surface_flow_ci)
-		tile_drain_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).mean]}
 		tile_drain_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).confidence_interval]}
 		add_summary_to_results_table(tile_drain_flow, 43, tile_drain_flow_ci)
-		irrigation = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).reduce(:+).fdiv(v.size.to_f)]}
+		irrigation = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).mean]}
 		irrigation_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).confidence_interval]}
 		add_summary_to_results_table(irrigation, 51, irrigation_ci)
-		deep_percolation_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).reduce(:+).fdiv(v.size.to_f)]}
+		deep_percolation_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).mean]}
 		deep_percolation_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).confidence_interval]}
 		add_summary_to_results_table(deep_percolation_flow, 52, deep_percolation_flow_ci)
-		sediment = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).reduce(:+).fdiv(v.size.to_f)]}
+		sediment = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).mean]}
 		sediment_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).confidence_interval]}
 		add_summary_to_results_table(sediment, 61, sediment_ci)		
-		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).reduce(:+).fdiv(v.size.to_f)]}
+		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).mean]}
 		manure_erosion_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).confidence_interval]}
 		add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
 		return "OK"
 	end
 
-	def add_summary(value, description_id, soil_id, ci)
+	def add_summary(value, description_id, soil_id, ci, crop_id)
 		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id).first
         if result == nil then
 			result = Result.new
@@ -1818,11 +1864,13 @@ class ScenariosController < ApplicationController
 			result.scenario_id = @scenario.id
 			result.soil_id = soil_id
 			result.description_id = description_id
+			result.crop_id = crop_id
 		end
 
 		result.watershed_id = 0
 		result.value = value
 		result.ci_value = ci
+    	result.crop_id = crop_id
 		if result.save then 
 			return "OK"
 		else
@@ -1840,7 +1888,7 @@ class ScenariosController < ApplicationController
 		
 		for i in 0..values.count-1
 			values[i][0] == 0  ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
-			add_summary(values[i][1], description_id, soil_id, cis[i][1])
+			add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
 			case description_id    #Total area for summary report is beeing calculated
 				when 4  #calculate total area
 					#todo	
@@ -1860,6 +1908,6 @@ class ScenariosController < ApplicationController
 	end
 	
 	def add_totals(results, description_id, soil_id)					
-		msg = add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value))		
+		msg = add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value), 0)		
 	end
 end  #end class

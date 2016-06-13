@@ -143,8 +143,8 @@
   helpers:
     select:
       prompt: Por favor seleccione
-      select_field: Seleccione la Parcela
-      select_scenario: Seleccione el Escenario
+      field: Seleccione la Parcela 
+      scenario: Seleccione el Scenario
     submit:
       create: Crear %{model}
       submit: Guardar %{model}
@@ -240,9 +240,7 @@
     welcome: Bienvenido
     projects: Proyectos
     location: Ubicación
-    watershed: Watershed
     weather: Clima
-    field: Parcela
     fields: Parcelas
     soils: Suelos
     scenarios: Escenarios
@@ -258,6 +256,7 @@
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'
     upload_button_desc: 'Proyecto a Subir'
+    editing_project: 'Revisión de Proyecto'
   footer:
     instructions: Instrucciones
     contact_us: 'Contactarnos'
@@ -295,24 +294,26 @@
     edit: Revisión de Actividad
     new_activity: Actividad Nuevo
     activity_title: Lista de Actividades
-    table_of_contents: << Regresar a la Tabla de Contenidos
   field:
-    field_name: Nombre de Parcela
-    field_area: Área de Parcela
+    field_name: Nombre Parcela
+    field_area: Área Parcela
     field_avg_slope: Promedio inclinación Parcela
     new_field: Parcela Nueva
     field_title: Lista Parcelas
-    field_type: Tipo de Campo
+    field_type: Tipo de Parcela
   watershed:
     watershed_name: Nombre de Watershed
-    watershed_field: Parcela
-    watershed_scenario: Escenario de Watershed
     new_watershed: Nuevo Watershed
-    watershed_title: Listado de Watershed 
+    watershed_title: listado de Watershed
+  watershed_scenario:
+    watershed_scenario_name: Watershed Name
+    watershed_scenario_field: Watershed Field
+    watershed_scenario: Watershed Scenario
+    new_watershed: New Watershed Scenario
+    watershed_scenario_title: Listing Watershed Scenarios
   submit:
     save: Guardar
     login: Iniciar sesión
-    create_project: Crear el Proyecto
   sessions:
     index:
       email: Correo Electrónico
@@ -350,7 +351,7 @@
     header: 'Información de Contacto'
     statement: 'Para preguntas o comentarios acerca de la Herramient de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
     name: 'Ali Saleh'
-    position: 'Associate Director'
+    position: 'Director Asociado'
     dept: 'Texas Institute for Applied Environmental Research (TIAER)'
     uni: 'Tarleton State University'
     box: 'P.O. Box T410'
@@ -361,11 +362,64 @@
   contact2:
     statement: 'Para preguntas <b>técnicas</b> o comentarios acerca de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
     name: 'Oscar Gallego'
-    position: 'Senior Research Associate'
+    position: 'Asociado Principal de Investigación'
     dept: 'Texas Institute for Applied Environmental Research (TIAER)'
     uni: 'Tarleton State University'
     box: 'P.O. Box T410'
     city: 'Stephenville, TX 76402'
-    phone: '(254)968-9787 (Teléfono)'
+    phone: '(254)968-9787 (Phone)'
     fax: '(254)968-9790 (Fax)'
     email: 'gallego@tiaer.tarleton.edu'
+  help:
+    header: NTT Tabla de Contenidos
+    return_to_table: '<< Regresar a la Tabla de Contenidos'
+    overview: Visión General
+    overview1: Acerca de NTT
+    overview2: Información del Contacto
+    getstarted: Empezando
+    getstarted1: Requisitos de Sistema
+    getstarted2: Conceptos Básicos de Navegación
+    getstarted3: Página del Proyecto
+    getstarted4: Página de Ubicación 
+    getstarted5: Página del Clima 
+    getstarted6: Página de Parcela 
+    getstarted7: Página de Suelos 
+    getstarted8: Página del Gestión
+    getstarted9: Página del Sub-Proyecto
+    getstarted10: Página del Simulación
+    getstarted11: Página de resultados 
+    getstarted12: Página de modificaciones
+    understanding: La Comprensión de NTT
+    understanding1: APEX
+    understanding2: Descargo de responsabilidad del NTT
+  sysreq:
+    header: Requisitos del Sistema
+    minreq:
+        header: Requisitos mínimos
+        windows: '<b>Windows:</b> X86 o X64 1.6 GHz o con un procesador más alto de 512-MB de RAM'
+        mac: '<b>Macintosh (Intel-based):</b> Intel Core Duo 1.86 GHz o con un procesador más alto de 512-MB de RAM'
+    webbrowsers:
+        header: Supported Web Browsers
+        statement: 'la Nutrient Tracking Tool <b>(NTT)</b> ha sido probado en los siguientes navegadores:'
+        mac: 'Apple Macintosh OS 10.5.7+ (Intel-based):'
+        win81: 'Microsoft Windows 8.1 Desktop:'
+        win8: 'Microsoft Windows 8 Desktop:'
+        win7: 'Microsoft Windows 7:'
+        win7sp1: 'Microsoft Windows 7 SP1:'
+        win2012r2: 'Microsoft Windows Server 2012 R2:'
+        win2012: 'Microsoft Windows Server 2012:'
+        win2008sp2: 'Microsoft Windows Server 2008 SP2:'
+        win2008r2sp1: 'Microsoft Windows Server 2008 R2 SP1:'
+        winvista: 'Microsoft Windows Vista:'
+        winxp: 'Microsoft Windows Server 2003/Windows XP:'
+        firefox: 'Firefox 12+'
+        chrome: 'Chrome 12+'
+        safari: 'Safari 4+'
+        ie78: 'Internet Explorer 7 and 8'
+        ie789: 'Internet Explorer 7, 8, and 9'
+        ie89: 'Internet Explorer 8 and 9'
+        ie8911: 'Internet Explorer 8, 9, and 11'
+        ie891011: 'Internet Explorer 8, 9, 10, and 11'
+        ie10: 'Internet Explorer 10'
+        ie11: 'internet Explorer 11'
+        netscape: 'Netscape 9.0'

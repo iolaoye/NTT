@@ -1,5 +1,14 @@
 <h1>Editing watershed</h1>
 
+<%= render 'form' %>
+
+<%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
+
+
+<%= render 'form' %>
+
+<%= link_to 'Back', list_watershed_path(session[:location_id]) %>
+
 <table>
   <tr>
     <td><%= label :name, 'Name' %></td>
@@ -19,8 +28,8 @@
     
 <%= link_to 'Show', @watershed %> |
 
-<%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
-
-<%= link_to 'Back', list_watershed_path(session[:location_id]) %>.
+<%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>.
 
 <% end %>
+
+

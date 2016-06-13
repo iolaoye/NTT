@@ -1,3 +1,4 @@
+<h1><%= t('watershed.watershed_title')%></h1>
 <div class="field">
     <table>
       <tr>
@@ -6,14 +7,14 @@
       </tr>
       <tr>
 
-        <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.select_field'), :required => true} %></td>
-        <td><%= collection_select :watershed, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('helpers.select.select_scenario'), :required => true} %></td>
+        <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.field'), :required => true} %></td>
+        <td><%= collection_select :watershed, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('helpers.select.scenario'), :required => true} %></td>
 
       </tr>
     </table>
   </div>
 
-<h1><%= t('watershed.watershed_title')%></h1>
+<%= link_to t('watershed.new_watershed'), new_watershed_path %>
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
@@ -30,7 +31,7 @@
     <% end %>
     <% i = i + 1 %>
   <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= link_to watershed.name, watershed_scenarios_path %></td>
+    <td class="gvCellStyleText"><%= link_to watershed.name, watershed_scenario_path(watershed.id) %></td>
     <td class="gvCellStyleCheckbox">
       <%#= link_to image_tag("view.png"), watershed %>
       <%= link_to image_tag("edit.png"), edit_watershed_path(watershed), title: t('general.edit') %>
@@ -41,5 +42,3 @@
 </table>
 
 <br />
-
-<%= link_to t('watershed.new_watershed'), new_watershed_path %>
