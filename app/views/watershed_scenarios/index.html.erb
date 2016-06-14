@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 <%= form_for :watershed, url: new_scenario_watershed_scenario_path do |f| %>
-=======
-<%= form_for(@watershed_scenarios) do |f| %>
->>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
-
 <table>
   <tr>
     <td><%= f.label :fields, 'Fields' %></td>
@@ -15,27 +10,7 @@
     <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'SGIT PUSHelect Scenarios'}, {:required => true} %></td>
     <td class='action'><%= f.submit %></td>
   </tr>
-<<<<<<< HEAD
 </table>  
-=======
-
-<%= form_for :watershed_scenarios, url: new_scenario_watershed_scenario_path do |f| %>
-
-
-
-<table>
-    <tr>
-      <td><%= f.label :fields, 'Fields' %></td>
-      <td><%= f.label :scenarios, 'Scenarios' %></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field'}, {:required => true} %></td>
-      <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenario'}, {:required => true} %></td>
-      <td class='action'><%= f.submit %></td>
-    </tr>
-  </table>  
->>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
 <% end %>
  
 <h1><%= t('watershed_scenarios.watershed_scenarios_title')%></h1>
