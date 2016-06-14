@@ -4,16 +4,9 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios.json
   def index
     @watershed_scenarios = WatershedScenario.all
-<<<<<<< HEAD
     @scenarios = Scenario.where(:field_id => 0)
 
     respond_to do |format|
-=======
-
-    @scenarios = Scenario.where(:field_id => 0)
-
-      respond_to do |format|
->>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
       format.html # index.html.erb
       format.json { render json: @watershed_scenarios }
     end
@@ -22,32 +15,18 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios/1
   # GET /watershed_scenarios/1.json
   def show
-<<<<<<< HEAD
-=======
-
->>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
     @watershed_scenarios = WatershedScenario.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @watershed_scenarios }
     end
-<<<<<<< HEAD
-=======
-
->>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
     session[:watershed_id] = params[:id]
     item = WatershedScenario.where(:field_id => params[:field_id], :scenario_id => params[:scenario_id]).first
     @watershed_name = Watershed.find(params[:id]).name
     @watershed_scenarios = WatershedScenario.where(:watershed_id => params[:id])
-	@scenarios = Scenario.where(:field_id => 0)
-
-
+    @scenarios = Scenario.where(:field_id => 0)
     render "index"
-<<<<<<< HEAD
-=======
-
->>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
   end
 
   # GET /watershed_scenarios/new
@@ -103,18 +82,8 @@ class WatershedScenariosController < ApplicationController
   def destroy
     @watershed_scenarios = WatershedScenario.find(params[:id])
     @watershed_scenarios.destroy
-<<<<<<< HEAD
-    
-	redirect_to watershed_scenario_path(session[:watershed_id])
+    redirect_to watershed_scenario_path(session[:watershed_id])
   end
-=======
-
-
-    
-	redirect_to watershed_scenario_path(session[:watershed_id])
-  end
-
->>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
 
   def new_scenario
     @scenarios = Scenario.where(:field_id => 0)
