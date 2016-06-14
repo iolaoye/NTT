@@ -79,9 +79,6 @@ before_filter :take_names
 				format.json { render json: @bmp.errors, status: :unprocessable_entity }
 			  end
 		else
-			#@bmp.errors.messages[0] = msg
-			#session[:depth] = @bmp.errors.full_messages
-			#ooo
 			format.html { render action: "new" }
 			format.json { render json: @bmp.errors, status: :unprocessable_entity }		
 		end
