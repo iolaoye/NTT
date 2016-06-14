@@ -100,15 +100,15 @@ class ProjectsController < ApplicationController
     end
   end
 
-	def record_not_found(exception)
-	  render json: {error: exception.message}.to_json, status: 404
-	  return
-	end
+  	#def record_not_found(exception)
+	#  render json: {error: exception.message}.to_json, status: 404
+	#  return
+	#end
 
-	def error_occurred(exception)
-	  render json: {error: exception.message}.to_json, status: 500
-	  return
-	end
+	#def error_occurred(exception)
+	#  render json: {error: exception.message}.to_json, status: 500
+	#  return
+	#end
 
   def upload 
 	#nothing to do here. Just render the upload view
@@ -502,7 +502,6 @@ class ProjectsController < ApplicationController
 				when "field_area"
 					field.field_area = p.text
 				when "field_average_slope"
-				session[:depth] = p.text
 					field.field_average_slope = p.text
 				when "field_type"
 					field.field_type = p.text

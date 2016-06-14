@@ -3,23 +3,25 @@
 <table>
   <tr>
     <th>Control</th>
+    <th>Code</th>
+    <th>Line</th>
+    <th>Column</th>
     <th>Value</th>
-    <th></th>
-    <th></th>
+    <th>Low Range</th>
+    <th>High Range</th>
     <th></th>
   </tr>
 
 <% @apex_controls.each do |apex_control| %>
   <tr>
+    <td><%= apex_control.control.code %></td>
     <td><%= apex_control.control_id %></td>
+    <td><%= apex_control.control.line %></td>
+    <td><%= apex_control.control.column %></td>
     <td><%= apex_control.value %></td>
-    <td><%= link_to 'Show', apex_control %></td>
+    <td><%= apex_control.control.range_low %></td>
+    <td><%= apex_control.control.range_high %></td>
     <td><%= link_to 'Edit', edit_apex_control_path(apex_control) %></td>
-    <td><%= link_to 'Destroy', apex_control, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Apex control', new_apex_control_path %>

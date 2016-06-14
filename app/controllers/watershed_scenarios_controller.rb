@@ -4,10 +4,16 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios.json
   def index
     @watershed_scenarios = WatershedScenario.all
+<<<<<<< HEAD
+    @scenarios = Scenario.where(:field_id => 0)
+
+    respond_to do |format|
+=======
 
     @scenarios = Scenario.where(:field_id => 0)
 
       respond_to do |format|
+>>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
       format.html # index.html.erb
       format.json { render json: @watershed_scenarios }
     end
@@ -16,14 +22,20 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios/1
   # GET /watershed_scenarios/1.json
   def show
+<<<<<<< HEAD
+=======
 
+>>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
     @watershed_scenarios = WatershedScenario.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @watershed_scenarios }
     end
+<<<<<<< HEAD
+=======
 
+>>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
     session[:watershed_id] = params[:id]
     item = WatershedScenario.where(:field_id => params[:field_id], :scenario_id => params[:scenario_id]).first
     @watershed_name = Watershed.find(params[:id]).name
@@ -32,7 +44,10 @@ class WatershedScenariosController < ApplicationController
 
 
     render "index"
+<<<<<<< HEAD
+=======
 
+>>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
   end
 
   # GET /watershed_scenarios/new
@@ -70,7 +85,6 @@ class WatershedScenariosController < ApplicationController
   # PATCH/PUT /watershed_scenarios/1
   # PATCH/PUT /watershed_scenarios/1.json
   def update
-  afas
     @watershed_scenarios = WatershedScenario.find(params[:id])
 
     respond_to do |format|
@@ -89,25 +103,35 @@ class WatershedScenariosController < ApplicationController
   def destroy
     @watershed_scenarios = WatershedScenario.find(params[:id])
     @watershed_scenarios.destroy
+<<<<<<< HEAD
+    
+	redirect_to watershed_scenario_path(session[:watershed_id])
+  end
+=======
 
 
     
 	redirect_to watershed_scenario_path(session[:watershed_id])
   end
 
+>>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
 
   def new_scenario
     @scenarios = Scenario.where(:field_id => 0)
     @watershed_name = Watershed.find(params[:id]).name
-    item = WatershedScenario.where(:field_id => params[:watershed][:field_id], :scenario_id => params[:watershed][:scenario_id]).first
-    if item == nil
-      @new_watershed_scenario = WatershedScenario.new
-      @new_watershed_scenario.field_id = params[:watershed][:field_id]
-      @new_watershed_scenario.scenario_id = params[:watershed][:scenario_id]
-      @new_watershed_scenario.watershed_id = params[:id]
-      @new_watershed_scenario.save
+    item = WatershedScenario.where(:field_id => params[:watershed][:field_id], :scenario_id => params[:watershed][:scenario_id], :watershed_id => params[:id]).first
+    respond_to do |format|
+      if item == nil
+        @new_watershed_scenario = WatershedScenario.new
+        @new_watershed_scenario.field_id = params[:watershed][:field_id]
+        @new_watershed_scenario.scenario_id = params[:watershed][:scenario_id]
+        @new_watershed_scenario.watershed_id = params[:id]
+        @new_watershed_scenario.save
+        format.html { redirect_to watershed_scenario_path(params[:id]) }
+      else
+        format.html { redirect_to watershed_scenario_path(params[:id]), notice: 'That field/scenario combination has already been selected for this watershed. Please choose again.' }
+      end
     end
-    redirect_to watershed_scenario_path(params[:id])
   end
 
   private
