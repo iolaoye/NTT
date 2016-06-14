@@ -18,9 +18,9 @@
 			   <% when /operation/, /bmp/ %>
 				   <li><%= link_to t('menu.operations'), scenario_operations_scenario_path(session[:scenario_id]) %></li>
 				   <li><%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></li>
-			   <% when /modifications/ %>
-			       <li><%= link_to t('menu.control_file'), edit_weather_path(session[:field_id]) %></li>
-				   <li><%= link_to t('menu.parameters_file'), edit_weather_path(session[:field_id]) %></li>
+			   <% when /modifications/, /apex_control/, /apex_parameters/ %>
+			       <li><%= link_to t('menu.control_file'), apex_controls_path %></li>
+				   <li><%= link_to t('menu.parameters_file'), apex_parameters_path %></li>
 				   <li><%= link_to t('menu.subarea_file'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.soil_file'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.layer_file'), edit_weather_path(session[:field_id]) %></li>
@@ -49,8 +49,6 @@
 			    <li><%=">>"%><%=@project_name%></li>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 			    <li><%=">>"%><%=@field_name%></li>
-                <li><%=link_to t('menu.projects'), welcomes_path %></li>
-			    <li><%=">>"%><%=@project_name%></li>
 				<% case request.original_url %>
 					<% when /weather/ %>
 						<li><%= t('menu.weather') %></li>
@@ -62,10 +60,21 @@
 						<li><%= t('menu.results') %></li>
 					<% when /layer/ %>
 						<li><%= t('menu.layer') %></li>
-					<% when /modification/ %>
-						<li><%= t('menu.modifications') %></li>
-                <li><%=link_to t('menu.projects'), welcomes_path %></li>
+				<% end %>
+		    <% when /apex_control/, /apex_parameters/  %>
+			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
+			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
+			    <li><%=">>"%><%=@field_name%></li>
+				<li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
+			    <li><%=">>"%><%=@field_name%></li>
+				<li><%=link_to t('menu.modifications'), modifications_path %></li>
+			    <li><%=">>"%><%=@field_name%></li>
+				<% case request.original_url %>
+					<% when /apex_control/ %>
+						<li><%= t('menu.control_file') %></li>
+					<% when /apex_parameters/ %>
+						<li><%= t('menu.parameters_file') %></li>
 				<% end %>
 			<% when /operation/, /bmp/ %>	
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
