@@ -1,3 +1,4 @@
+
 class BmpsController < ApplicationController
 before_filter :take_names
 
@@ -14,7 +15,7 @@ before_filter :take_names
     @bmps = Bmp.where(:scenario_id => params[:id])
 		respond_to do |format|
 		  format.html # list.html.erb
-		  format.json { render json: @fields }
+		  format.json { render json: @bmps }
 		end
   end
 ################################  INDEX  #################################
@@ -68,24 +69,26 @@ before_filter :take_names
 	@bmp.scenario_id = session[:scenario_id]
 	@bmp.bmpsublist_id = params[:bmp][:bmpsublist_id]
 	@bmp.bmp_id = params[:bmp][:bmp_id]
-	msg = tile_drain()
+
+	msg = input_fields()
+	
 	respond_to do |format|
-		if msg == "OK" 
-			  if @bmp.save
-				format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
-				format.json { render json: @bmp, status: :created, location: @bmp }
-			  else
-				format.html { render action: "new" }
-				format.json { render json: @bmp.errors, status: :unprocessable_entity }
-			  end
-		else
-			#@bmp.errors.messages[0] = msg
-			#session[:depth] = @bmp.errors.full_messages
-			#ooo
-			format.html { render action: "new" }
-			format.json { render json: @bmp.errors, status: :unprocessable_entity }		
-		end
-	end
+      if msg == "OK" 
+        if @bmp.save
+          format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
+          format.json { render json: @bmp, status: :created, location: @bmp }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @bmp.errors, status: :unprocessable_entity }
+        end
+      else
+        #@bmp.errors.messages[0] = msg
+        #session[:depth] = @bmp.errors.full_messages
+        #ooo
+        format.html { render action: "new" }
+        format.json { render json: @bmp.errors, status: :unprocessable_entity }		
+      end
+    end
   end
 
 ################################  UPDATE  #################################
@@ -93,14 +96,19 @@ before_filter :take_names
   # PATCH/PUT /bmps/1.json
   def update
     @bmp = Bmp.find(params[:id])
+
+	msg = input_fields()
+
     respond_to do |format|
-      if @bmp.update_attributes(bmp_params)
-        format.html { redirect_to @bmp, notice: 'Bmp was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @bmp.errors, status: :unprocessable_entity }
-      end
+	  if msg == "OK"
+        if @bmp.update_attributes(bmp_params)
+          format.html { redirect_to @bmp, notice: 'Bmp was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @bmp.errors, status: :unprocessable_entity }
+        end
+	  end
     end
   end
 
@@ -116,6 +124,57 @@ before_filter :take_names
     end
   end
 
+  ##############################  INPUT FIELDS  ###############################
+
+  def input_fields
+
+	case @bmp.bmpsublist_id 
+      when 3
+        return tile_drain()
+      when 9
+        return pond()
+      else
+        ## DO NOTHING
+    end
+  end
+
+
+  ####################### INDIVIDUAL SUBLIST ACTIONS #######################
+
+  def tile_drain
+    item = Bmp.where(:bmpsublist_id => params[:bmp][:bmpsublist_id]).first
+    	
+    input = params[:bmp][:depth]
+      @bmp.depth = params[:bmp][:depth].to_f
+      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+        if subarea != nil then
+          subarea.idr = @bmp.depth * FT_TO_MM
+          #if !subarea.save then return "Enable to save value in the subarea file" end
+        end  #end if subarea !nil
+      end # end soils.each
+    return "OK"
+  end # end method
+
+  
+ def pond
+    item = Bmp.where(:bmpsublist_id => params[:bmp][:bmpsublist_id]).first
+    	
+    input = params[:bmp][:irrigation_efficiency]
+      @bmp.irrigation_efficiency = params[:bmp][:irrigation_efficiency].to_f
+
+      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+        if subarea != nil then
+          subarea.pcof = @bmp.irrigation_efficiency
+          #if !subarea.save then return "Enable to save value in the subarea file" end
+        end  #end if subarea !nil
+      end # end soils.each
+    return "OK"
+  end # end method
+
   private
 
     # Use this method to whitelist the permissible parameters. Example:
@@ -126,21 +185,4 @@ before_filter :take_names
 	         :area, :number_of_animals, :days, :hours, :animal_id, :dry_manure, :no3_n, :po4_p, :org_n, :org_p, :width, :grass_field_portion, :buffer_slope_upland, :crop_width,
 			 :slope_reduction, :sides, :bmpsublist_id)
     end
-
-	def tile_drain
-		item = Bmp.where(:bmpsublist_id => params[:bmp][:bmpsublist_id]).first
-		
-		input = params[:bmp][:depth]
-            @bmp.depth = params[:depth].to_f
-
-			@soils = Soil.where(:field_id => session[:field_id]) 
-			@soils.each do |soil|
-				subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
-				if subarea != nil then
-					subarea.idr = @bmp.depth * FT_TO_MM
-					#if !subarea.save then return "Enable to save value in the subarea file" end
-				end  #end if subarea !nil
-			end # end soils.each
-		return "OK"
-    end # end method
 end  # end class
