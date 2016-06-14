@@ -65,17 +65,15 @@ before_filter :take_names
   # POST /bmps
   # POST /bmps.json
   def create
-    @bmp = Bmp.new
+    @bmp = Bmp.new(bmp_params)
 	@bmp.scenario_id = session[:scenario_id]
-	@bmp.bmpsublist_id = params[:bmp][:bmpsublist_id]
-	@bmp.bmp_id = params[:bmp][:bmp_id]
-
+	@bmp.depth = 1
 	msg = input_fields()
-	
+	session[:depth] = msg
 	respond_to do |format|
 		if msg == "OK" 
-			  if @bmp.save!
-				format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
+		      if @bmp.save
+  			    format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
 				format.json { render json: @bmp, status: :created, location: @bmp }
 			  else
 				format.html { render action: "new" }
@@ -139,10 +137,6 @@ before_filter :take_names
   ####################### INDIVIDUAL SUBLIST ACTIONS #######################
 
   def tile_drain
-    item = Bmp.where(:bmpsublist_id => params[:bmp][:bmpsublist_id]).first
-    	
-    input = params[:bmp][:depth]
-      @bmp.depth = params[:bmp][:depth].to_f
       @soils = Soil.where(:field_id => session[:field_id]) 
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
@@ -156,11 +150,6 @@ before_filter :take_names
 
   
  def pond
-    item = Bmp.where(:bmpsublist_id => params[:bmp][:bmpsublist_id]).first
-    	
-    input = params[:bmp][:irrigation_efficiency]
-      @bmp.irrigation_efficiency = params[:bmp][:irrigation_efficiency].to_f
-
       @soils = Soil.where(:field_id => session[:field_id]) 
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
