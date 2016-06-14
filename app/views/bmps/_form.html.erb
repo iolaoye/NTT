@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field" onchange="showFields()">
      <%= label :bmp_id, 'BMP Group' %>
      <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => 'Select BMP Group'}, {:required => false} %>
      <%= label :bmp_id, 'BMP' %>
@@ -32,10 +32,6 @@
   </div>
   <div class="field" id = "irrigation_efficiency" style="display:none">
 	<%= f.label :irrigation_efficiency %> (0.00 – 1.00)<br />
-	<%= f.text_field :irrigation_efficiency %>
-  </div>
-  <div class="field" id = "fraction_of_pond_area" style="display:none">
-	<%= f.label :fraction_of_pond_area %> (0.00 – 1.00)<br />
 	<%= f.text_field :irrigation_efficiency %>
   </div>
   <div class="field" id="maximum_single_application" style="display:none">
@@ -133,16 +129,16 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function showFields() {
   var irrigation = document.getElementById("bmp_irrigation_id").value;
-  if(irrigation == 4) {
+  if(irrigation == 7) {
     document.getElementById("safety_factor").style.display = "block";
     document.getElementById("area").style.display = "none";
-  } else if(irrigation == 5) {
+  } else if(irrigation == 8) {
     document.getElementById("safety_factor").style.display = "none";
     document.getElementById("area").style.display = "block";
   } else {
     document.getElementById("safety_factor").style.display = "none";
     document.getElementById("area").style.display = "none";
   }
-
 }
+
 </script>

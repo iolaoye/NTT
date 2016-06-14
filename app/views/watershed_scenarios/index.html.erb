@@ -7,13 +7,8 @@
   </tr>
   <tr>
     <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field'}, {:required => true} %></td>
-<<<<<<< HEAD
     <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenarios'}, {:required => true} %></td>
     <td class='action'><%= f.submit "Add to watershed" %></td>
-=======
-    <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'SGIT PUSHelect Scenarios'}, {:required => true} %></td>
-    <td class='action'><%= f.submit %></td>
->>>>>>> Fetch_HEAD
   </tr>
 </table>  
 <% end %>
