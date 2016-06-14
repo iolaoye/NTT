@@ -2,7 +2,8 @@ class ApexControlsController < ApplicationController
   # GET /apex_controls
   # GET /apex_controls.json
   def index
-    @apex_controls = ApexControl.all
+	@apex_controls = ApexControl.includes(:control).where(:project_id => session[:project_id])
+    #@apex_controls = ApexControl.where(:project_id => session[:project_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +14,7 @@ class ApexControlsController < ApplicationController
   # GET /apex_controls/1
   # GET /apex_controls/1.json
   def show
-    @apex_control = ApexControl.find(params[:id])
+    @apex_control = ApexControl.where(:project_id => session[:project_id]).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +35,11 @@ class ApexControlsController < ApplicationController
 
   # GET /apex_controls/1/edit
   def edit
-    @apex_control = ApexControl.find(params[:id])
+	@apex_control = ApexControl.includes(:control).where(:project_id => session[:project_id]).find(params[:id])
+	@control_code = @apex_control.control.code
+	@low_range = @apex_control.control.range_low
+	@high_range = @apex_control.control.range_high
+    #@apex_control = ApexControl.where(:project_id => session[:project_id]).find(params[:id])
   end
 
   # POST /apex_controls
@@ -56,7 +61,7 @@ class ApexControlsController < ApplicationController
   # PATCH/PUT /apex_controls/1
   # PATCH/PUT /apex_controls/1.json
   def update
-    @apex_control = ApexControl.find(params[:id])
+    @apex_control = ApexControl.where(:project_id => session[:project_id]).find(params[:id])
 
     respond_to do |format|
       if @apex_control.update_attributes(apex_control_params)
@@ -72,7 +77,7 @@ class ApexControlsController < ApplicationController
   # DELETE /apex_controls/1
   # DELETE /apex_controls/1.json
   def destroy
-    @apex_control = ApexControl.find(params[:id])
+    @apex_control = ApexControl.where(:project_id => session[:project_id]).find(params[:id])
     @apex_control.destroy
 
     respond_to do |format|

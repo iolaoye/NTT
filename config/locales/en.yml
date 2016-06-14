@@ -250,6 +250,12 @@ en:
     modifications: Modifications
     signout: Sign Out
     site: Site
+    control_file: Control File
+    parameters_file: Parameters File
+    subarea_file: Subarea File
+    soil_file: Soil File
+    layer_file: Layer File
+    operation_file: Operation File
   project:
     new_project: 'New Project'
     upload_project: 'Upload Project'
@@ -299,6 +305,7 @@ en:
     field_avg_slope: Field Average Slope
     new_field: New Field
     field_title: Listing Fields
+    field_type: Field Type
   watershed:
     watershed_name: Watershed Name
     new_watershed: New Watershed
@@ -331,6 +338,13 @@ en:
   users:
     confirmation: Password confirmation
     company: Company
+  modifications:
+    control_file: Control File
+    parameters_file: Parameters File
+    subarea_file: Subarea File
+    soil_file: Soil File
+    layer_file: Layer File
+    operation_file: Operation File
   about:
     overview0: 'Overview'
     overview1: 'The Nutrient Tracking Tool (NTT) was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from the USDA-NRCS Conservation Innovation Grants program and various state agencies.'
@@ -949,4 +963,4 @@ en:
     header: NTT Disclaimer
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
-   
+  

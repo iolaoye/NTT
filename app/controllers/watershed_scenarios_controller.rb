@@ -25,9 +25,7 @@ class WatershedScenariosController < ApplicationController
     item = WatershedScenario.where(:field_id => params[:field_id], :scenario_id => params[:scenario_id]).first
     @watershed_name = Watershed.find(params[:id]).name
     @watershed_scenarios = WatershedScenario.where(:watershed_id => params[:id])
-	@scenarios = Scenario.where(:field_id => 0)
-
-
+    @scenarios = Scenario.where(:field_id => 0)
     render "index"
   end
 
@@ -84,8 +82,7 @@ class WatershedScenariosController < ApplicationController
   def destroy
     @watershed_scenarios = WatershedScenario.find(params[:id])
     @watershed_scenarios.destroy
-    
-	redirect_to watershed_scenario_path(session[:watershed_id])
+    redirect_to watershed_scenario_path(session[:watershed_id])
   end
 
   def new_scenario
