@@ -34,6 +34,10 @@
 	<%= f.label :irrigation_efficiency %> (0.00 – 1.00)<br />
 	<%= f.text_field :irrigation_efficiency %>
   </div>
+  <div class="field" id = "fraction_of_pond_area" style="display:none">
+	<%= f.label :fraction_of_pond_area %> (0.00 – 1.00)<br />
+	<%= f.text_field :irrigation_efficiency %>
+  </div>
   <div class="field" id="maximum_single_application" style="display:none">
 	<%= f.label :maximum_single_application %> (0.00 – 99999.00)<br />
 	<%= f.text_field :maximum_single_application %> inches
@@ -43,7 +47,7 @@
 	<%= f.text_field :safety_factor %>
   </div>
   <div class="field" id="depth" style="display:none">
-	<%= f.label :depth %><br />
+	<%= f.label :depth %> ft<br />
 	<%= f.text_field :depth %>
   </div>
     <div class="field" id = "area" style="display:none">

@@ -56,7 +56,7 @@ class WatershedsController < ApplicationController
   # POST /watersheds.json
   def create
     @watershed = Watershed.new(watershed_params)
-    @watershed.location_id
+    @watershed.location_id = session[:location_id]
 
     respond_to do |format|
       if @watershed.save

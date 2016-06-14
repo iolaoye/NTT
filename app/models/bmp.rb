@@ -6,11 +6,18 @@ class Bmp < ActiveRecord::Base
      has_many :crops
 	 has_many :subareas, :dependent => :destroy
      belongs_to :scenario
+  #validations
+<<<<<<< HEAD
+	validates_numericality_of :depth, greater_than: 0, :if => :conditions
+	validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id
 
-     validates :water_stress_factor, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 1 }
-     validates :irrigation_efficiency, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 1 }
-     validates :days, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 365 }
-     validates :maximum_single_application, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 99999 }
-     validates :safety_factor, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 99999 }, :if => 'irrigation_id == 4'
-     validates :area, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 99999 }, :if => 'irrigation_id == 5'
+
+  def conditions
+	:bmpsublist_id == 3
+  end
+=======
+	validates_uniqueness_of :bmpsublist_id
+	validates :depth, numericality: { greater_than: 0 }, if: "bmpsublist_id == 3"
+	validates :irrigation_efficiency, numericality: { greater_than: 0, less_than_or_equal_to: 1 }, if: "bmpsublist_id == 9"
+>>>>>>> Fetch_HEAD
 end

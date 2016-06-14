@@ -17,6 +17,7 @@ switch_all_to_off = ->
      $("#irrigation").toggle(false)
      $("#water_stress_factor").toggle(false)
      $("#irrigation_efficiency").toggle(false)
+     $("#fraction_of_pond_area").toggle(false)
      $("#maximum_single_application").toggle(false)
      $("#days").toggle(false)
      $("#safety_factor").toggle(false)
@@ -24,6 +25,7 @@ switch_all_to_off = ->
      $('#bmp_animal_id').prop('required',false)   
      $('#bmp_irrigation_id').prop('required',false)   
      $("#depth").toggle(false)
+     $("#depth_ft_label").toggle(false)
      $("#width").toggle(false)
      $("#sides").toggle(false)
      $("#area").toggle(false)
@@ -40,7 +42,7 @@ switch_all_to_off = ->
      $("#buffer_slope_upland").toggle(false)
      $("#crop").toggle(false)
      $("#no_input").toggle(false)
-     $("#crop_width").toggle(true)
+     $("#crop_width").toggle(false)
      $("#difference_max_temperature").toggle(false)
      $("#difference_min_temperature").toggle(false)
      $("#difference_precipitation").toggle(false)
@@ -68,6 +70,7 @@ activate_bmp_controls = ->
             $('#irrigation_id').prop('required',true)   
         when "3" #Tile Drain
             $("#depth").toggle(true)
+            $("#depth_ft_label").toggle(true)
         when "4", "5" #Pad and pipes - No Ditch Improvement, Two-stage ditch system
             $("#width").toggle(true)
             $("#sides").toggle(true)
@@ -78,7 +81,7 @@ activate_bmp_controls = ->
         when "8" #wetland
             $("#area").toggle(true)
         when "9" #ponds
-            $("#no3_n").toggle(true)
+            $("#fraction_of_pond_area").toggle(true)
         when "10" #stream fencing
             $("#number_of_animals").toggle(true)
             $("#animal_id").toggle(true)
