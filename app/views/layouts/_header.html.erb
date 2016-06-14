@@ -36,8 +36,21 @@
 						<li><%= t('menu.fields') %></li>
 					<% when /watershed/ %>
 						<li><%= t('menu.watershed') %></li>
+<<<<<<< HEAD
 				<% end %>		    
 
+=======
+
+				<% end %>		    
+
+
+						<% if request.original_url.include? "watershed_scenario" %>
+							<li><%=link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
+							<li><%=">>"%><%=@watershed_name%></li>
+						<% end %>
+				<% end %>
+
+>>>>>>> d98b0c1fc7ae45ebf5f566203602e5f1ba6da038
 	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
