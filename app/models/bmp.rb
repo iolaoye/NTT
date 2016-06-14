@@ -8,7 +8,8 @@ class Bmp < ActiveRecord::Base
      belongs_to :scenario
   #validations
 	validates_numericality_of :depth, greater_than: 0, :if => :conditions
-	validates_uniqueness_of :bmpsublist_id
+	validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id
+
 
   def conditions
 	:bmpsublist_id == 3

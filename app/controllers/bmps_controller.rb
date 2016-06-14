@@ -71,7 +71,7 @@ before_filter :take_names
 	msg = tile_drain()
 	respond_to do |format|
 		if msg == "OK" 
-			  if @bmp.save
+			  if @bmp.save!
 				format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
 				format.json { render json: @bmp, status: :created, location: @bmp }
 			  else

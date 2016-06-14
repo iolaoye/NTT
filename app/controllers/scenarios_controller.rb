@@ -1461,9 +1461,7 @@ class ScenariosController < ApplicationController
 			j+=1
 		end #end data.each
 
-		#average_crops_result()
 		average_crops_result(crops_data)
-		#crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
     end  #end method
 
 	def average_crops_result(items)		
@@ -1495,7 +1493,7 @@ class ScenariosController < ApplicationController
 			end 
 			
 			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
-			add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+			add_summary(crop["yield"], crop["description_id"], 0, crop_ci.confidence_interval, crop["crop_id"])
 		end
 		add_summary(0, 70,0,0,0)
 	end
