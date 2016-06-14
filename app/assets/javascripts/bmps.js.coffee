@@ -17,6 +17,7 @@ switch_all_to_off = ->
      $("#irrigation").toggle(false)
      $("#water_stress_factor").toggle(false)
      $("#irrigation_efficiency").toggle(false)
+     $("#fraction_of_pond_area").toggle(false)
      $("#maximum_single_application").toggle(false)
      $("#days").toggle(false)
      $("#safety_factor").toggle(false)
@@ -80,7 +81,7 @@ activate_bmp_controls = ->
         when "8" #wetland
             $("#area").toggle(true)
         when "9" #ponds
-            $("#no3_n").toggle(true)
+            $("#fraction_of_pond_area").toggle(true)
         when "10" #stream fencing
             $("#number_of_animals").toggle(true)
             $("#animal_id").toggle(true)
