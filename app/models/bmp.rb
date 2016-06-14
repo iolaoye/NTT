@@ -7,6 +7,7 @@ class Bmp < ActiveRecord::Base
 	 has_many :subareas, :dependent => :destroy
      belongs_to :scenario
   #validations
+<<<<<<< HEAD
 	validates_numericality_of :depth, greater_than: 0, :if => :conditions
 	validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id
 
@@ -14,4 +15,9 @@ class Bmp < ActiveRecord::Base
   def conditions
 	:bmpsublist_id == 3
   end
+=======
+	validates_uniqueness_of :bmpsublist_id
+	validates :depth, numericality: { greater_than: 0 }, if: "bmpsublist_id == 3"
+	validates :irrigation_efficiency, numericality: { greater_than: 0, less_than_or_equal_to: 1 }, if: "bmpsublist_id == 9"
+>>>>>>> Fetch_HEAD
 end
