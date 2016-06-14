@@ -73,24 +73,6 @@ before_filter :take_names
 	msg = input_fields()
 	
 	respond_to do |format|
-<<<<<<< HEAD
-      if msg == "OK" 
-        if @bmp.save
-          format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
-          format.json { render json: @bmp, status: :created, location: @bmp }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @bmp.errors, status: :unprocessable_entity }
-        end
-      else
-        #@bmp.errors.messages[0] = msg
-        #session[:depth] = @bmp.errors.full_messages
-        #ooo
-        format.html { render action: "new" }
-        format.json { render json: @bmp.errors, status: :unprocessable_entity }		
-      end
-    end
-=======
 		if msg == "OK" 
 			  if @bmp.save
 				format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
@@ -104,7 +86,6 @@ before_filter :take_names
 			format.json { render json: @bmp.errors, status: :unprocessable_entity }		
 		end
 	end
->>>>>>> master
   end
 
 ################################  UPDATE  #################################
