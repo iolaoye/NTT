@@ -1,4 +1,5 @@
 <%= form_for(@bmp) do |f| %>
+	<%= @bmp.errors.full_messages %>
   <% if @bmp.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@bmp.errors.count, "error") %> prohibited this bmp from being saved:</h2>
@@ -13,9 +14,9 @@
 
   <div class="field">
      <%= label :bmp_id, 'BMP Group' %>
-     <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => 'Select BMP Group'}, {:required => false} %>
+     <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => 'Select BMP Group'}, {:required => true, :selected => @bmp_id} %>
      <%= label :bmp_id, 'BMP' %>
-     <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
+     <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => true, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
   </div>
 
   <div class="field" id="irrigation" style="display:none" onchange="showFields()">
@@ -43,7 +44,7 @@
 	<%= f.text_field :safety_factor %>
   </div>
   <div class="field" id="depth" style="display:none">
-	<%= f.label :depth %><br />
+	<%= f.label :depth %><span id="depth_ft_label" style="display:none"> ft</span><br />
 	<%= f.text_field :depth %>
   </div>
     <div class="field" id = "area" style="display:none">

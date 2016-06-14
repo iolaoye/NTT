@@ -24,6 +24,7 @@ switch_all_to_off = ->
      $('#bmp_animal_id').prop('required',false)   
      $('#bmp_irrigation_id').prop('required',false)   
      $("#depth").toggle(false)
+     $("#depth_ft_label").toggle(false)
      $("#width").toggle(false)
      $("#sides").toggle(false)
      $("#area").toggle(false)
@@ -40,7 +41,7 @@ switch_all_to_off = ->
      $("#buffer_slope_upland").toggle(false)
      $("#crop").toggle(false)
      $("#no_input").toggle(false)
-     $("#crop_width").toggle(true)
+     $("#crop_width").toggle(false)
      $("#difference_max_temperature").toggle(false)
      $("#difference_min_temperature").toggle(false)
      $("#difference_precipitation").toggle(false)
@@ -68,6 +69,7 @@ activate_bmp_controls = ->
             $('#irrigation_id').prop('required',true)   
         when "3" #Tile Drain
             $("#depth").toggle(true)
+            $("#depth_ft_label").toggle(true)
         when "4", "5" #Pad and pipes - No Ditch Improvement, Two-stage ditch system
             $("#width").toggle(true)
             $("#sides").toggle(true)

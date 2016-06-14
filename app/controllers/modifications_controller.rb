@@ -2,8 +2,8 @@ class ModificationsController < ApplicationController
   # GET /modifications
   # GET /modifications.json
   def index
-    @modifications = Modification.all
 
+    @modifications = Modification.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @modifications }
