@@ -250,6 +250,12 @@ en:
     modifications: Modifications
     signout: Sign Out
     site: Site
+    control_file: Control File
+    parameters_file: Parameters File
+    subarea_file: Subarea File
+    soil_file: Soil File
+    layer_file: Layer File
+    operation_file: Operation File
   project:
     new_project: 'New Project'
     upload_project: 'Upload Project'
@@ -332,6 +338,13 @@ en:
   users:
     confirmation: Password confirmation
     company: Company
+  modifications:
+    control_file: Control File
+    parameters_file: Parameters File
+    subarea_file: Subarea File
+    soil_file: Soil File
+    layer_file: Layer File
+    operation_file: Operation File
   about:
     overview0: 'Overview'
     overview1: 'The Nutrient Tracking Tool (NTT) was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from the USDA-NRCS Conservation Innovation Grants program and various state agencies.'

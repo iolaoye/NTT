@@ -1,10 +1,9 @@
+<<<<<<< HEAD
+=======
 <h1><%= t('watershed.watershed_title')%></h1>
+>>>>>>> b7193baf90a67a2d8c4847e4118cf3c142d393a7
 <div class="field">
     <table>
-      <tr>
-        <td><%= label :bmp_id, t('menu.fields') %></td>
-        <td><%= label :bmp_id, t('scenario.scenario') %></td>
-      </tr>
       <tr>
 
         <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.field'), :required => true} %></td>
@@ -14,6 +13,11 @@
     </table>
   </div>
 
+<<<<<<< HEAD
+<h1><%= t('watershed.watershed_title')%></h1>
+
+=======
+>>>>>>> b7193baf90a67a2d8c4847e4118cf3c142d393a7
 <%= link_to t('watershed.new_watershed'), new_watershed_path %>
 
 <table class='gvTableStyle'>
