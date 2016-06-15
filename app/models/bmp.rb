@@ -7,7 +7,7 @@ class Bmp < ActiveRecord::Base
 	 has_many :subareas, :dependent => :destroy
      belongs_to :scenario
   #validations
-	validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id
+	validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id, :message => "already exist"
 	validates :depth, numericality: { greater_than: 0 }, if: "bmpsublist_id == 3"
 	validates :irrigation_efficiency, numericality: { greater_than: 0, less_than_or_equal_to: 1 }, if: "bmpsublist_id == 9 || bmpsublist_id == 1 || bmpsublist_id == 2"
 end
