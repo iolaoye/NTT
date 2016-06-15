@@ -129,7 +129,7 @@ before_filter :take_names
       when 9
         return pond()
       else
-        ## DO NOTHING
+        return "OK"
     end
   end
 
