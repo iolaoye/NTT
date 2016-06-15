@@ -1,4 +1,4 @@
-<%= form_for(@bmp) do |f| %>
+  <%= form_for(@bmp) do |f| %>
   <% if @bmp.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@bmp.errors.count, "error") %> prohibited this bmp from being saved:</h2>
@@ -17,10 +17,16 @@
      <%= label :bmp_id, 'BMP' %>
      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
   </div>
-
   <div class="field" id="irrigation" style="display:none" onchange="showFields()">
-    <%= label :irrigation_id, 'Irrigation' %>
-    <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
+    <% if (@bmp.bmpsublist_id == 2) %>
+      <p>TRUE<%= @bmp.bmpsublist_id %></p>
+      <%= label :irrigation_id, 'Irrigation' %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.where(@bmp.irrigation_id != 8), :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
+    <% else %>
+      <p>FALSE<%= @bmp.bmpsublist_id %></p>
+      <%= label :irrigation_id, 'Irrigation' %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
+    <% end %>
   </div>
   <div class="field" id="crop"  style="display:none">
     <%= label :crop_id, 'Crop' %>

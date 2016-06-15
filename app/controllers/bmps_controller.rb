@@ -67,8 +67,7 @@ before_filter :take_names
   def create
     @bmp = Bmp.new(bmp_params)
 	@bmp.scenario_id = session[:scenario_id]
-	@bmp.depth = 1
-	msg = input_fields()
+	msg = input_fields("create")
 	session[:depth] = msg
 	respond_to do |format|
 		if msg == "OK" 
@@ -92,7 +91,7 @@ before_filter :take_names
   def update
     @bmp = Bmp.find(params[:id])
 
-	msg = input_fields()
+	msg = input_fields("update")
 
     respond_to do |format|
 	  if msg == "OK"
@@ -107,11 +106,15 @@ before_filter :take_names
     end
   end
 
+  ################################  DESTROY  #################################
+
   # DELETE /bmps/1
   # DELETE /bmps/1.json
   def destroy
     @bmp = Bmp.find(params[:id])
     @bmp.destroy
+
+	msg = input_fields("delete")
 
     respond_to do |format|
       format.html { redirect_to list_bmp_path(session[:scenario_id]) }
@@ -121,13 +124,23 @@ before_filter :take_names
 
   ##############################  INPUT FIELDS  ###############################
 
-  def input_fields
+  def input_fields(type)
 
 	case @bmp.bmpsublist_id 
       when 3
-        return tile_drain()
+        return tile_drain(type)
       when 9
-        return pond()
+        return pond(type)
+      when 16
+        return land_leveling(type)
+      when 17
+	    return terrace_system(type)
+      when 20
+        return asphalt_concrete(type)
+      when 21
+        return grass_cover(type)
+      when 22
+	    return slope_adjustment(type)
       else
         return "OK"
     end
@@ -136,30 +149,178 @@ before_filter :take_names
 
   ####################### INDIVIDUAL SUBLIST ACTIONS #######################
 
-  def tile_drain
+  ### ID: 3
+  def tile_drain(type)
       @soils = Soil.where(:field_id => session[:field_id]) 
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-          subarea.idr = @bmp.depth * FT_TO_MM
+		  case type
+            when "create"
+              subarea.idr = @bmp.depth * FT_TO_MM
+            when "update"
+		      subarea.idr = @bmp.depth * FT_TO_MM
+            when "delete"
+		      subarea.idr = 0
+            else
+		      # DO NOTHING
+		  end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
     return "OK"
   end # end method
 
-  
- def pond
+
+  ### ID: 9
+  def pond(type)
       @soils = Soil.where(:field_id => session[:field_id]) 
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-          subarea.pcof = @bmp.irrigation_efficiency
+		  case type
+            when "create"
+              subarea.pcof = @bmp.irrigation_efficiency
+            when "update"
+              subarea.pcof = @bmp.irrigation_efficiency
+            when "delete"
+              subarea.pcof = 0
+            else
+		  end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
     return "OK"
   end # end method
+
+
+  ### ID: 16
+  def land_leveling(type)
+      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+        if subarea != nil then
+		  case type
+            when "create"
+              subarea.slp = subarea.slp - (subarea.slp * (@bmp.slope_reduction / 100))
+              session[:old_percentage] = @bmp.slope_reduction / 100
+            when "update"
+              subarea.slp = (subarea.slp / (1 - @old_percentage)) - (subarea.slp * (@bmp.slope_reduction / 100))
+              session[:old_percentage] = @bmp.slope_reduction / 100
+            when "delete"
+              subarea.slp = subarea.slp / (1 - session[:old_percentage])
+            else
+		  end
+          #if !subarea.save then return "Enable to save value in the subarea file" end
+        end  #end if subarea !nil
+      end # end soils.each
+    return "OK"
+  end # end method
+
+
+  ### ID: 17
+  def terrace_system(type)
+	terrace_and_slope(type)
+  end
+
+
+  ### ID: 20
+  def asphalt_concrete(type)
+      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+		if subarea != nil then
+		  case type
+		    when "create" || "update"
+              if subarea.rchk > 0.01
+                subarea.rchk = 0.01
+				subarea.rchn = 0.05
+				subarea.upn = 0.1
+				subarea.pec = 0.05
+              end
+			when "delete"
+			  # TODO check values for deletion to see if other questions to set values may need to be asked
+			  subarea.rchk = 0.2
+			  subarea.rchc = 0.2
+			  subarea.upn = 0.2
+			  subarea.pec = 1.0
+		  end
+          #if !subarea.save then return "Enable to save value in the subarea file" end
+        end  #end if subarea !nil
+      end # end soils.each
+    return "OK"
+  end # end method
+
+
+  ### ID: 21
+  def grass_cover(type)
+      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+		if subarea != nil then
+		  case type
+		    when "create" || "update"
+              if subarea.rchc > 0.01
+                subarea.rchc = 0.01
+				subarea.upn = 0.4
+				subarea.pec = 0.1
+              end
+			when "delete"
+			  # TODO check values for deletion to see if other questions to set values may need to be asked
+			  subarea.rchc = 0.2
+			  subarea.upn = 0.2
+			  subarea.pec = 1.0
+		  end
+          #if !subarea.save then return "Enable to save value in the subarea file" end
+        end  #end if subarea !nil
+      end # end soils.each
+    return "OK"
+  end # end method
+
+
+  ### ID: 22
+  def slope_adjustment(type)
+	terrace_and_slope(type)
+  end
+
+  ################### METHODS FOR INDIVIDUAL SUBLIST ACTIONS ###################
+
+  ## USED FOR TERRACE SYSTEM(ID: 17) AND FOR SLOP ADJUSTEMNT(ID: 22)
+  def terrace_and_slope(type)
+      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+		if subarea != nil then
+		  case type
+		    when "create" || "update"
+              case subarea.slp
+                when 0..0.02
+                  subarea.pec = 0.6
+                when 0.021..0.08
+                  subarea.pec = 0.5
+                when 0.081..0.12
+                  subarea.pec = 0.6
+                when 0.121..0.16
+                  subarea.pec = 0.7
+                when 0.161..0.20
+                  subarea.pec = 0.8
+                when 0.201..0.25
+                  subarea.pec = 0.9 
+                else
+                  subarea.pec = 1.0
+              end
+			when "delete"
+			  # TODO check values for deletion to see if other questions to set values may need to be asked
+			  subarea.pec = 1.0
+		  end
+          #if !subarea.save then return "Enable to save value in the subarea file" end
+        end  #end if subarea !nil
+      end # end soils.each
+    return "OK"
+  end # end method
+
+
+  ##############################  PRIVATE  ###############################
 
   private
 

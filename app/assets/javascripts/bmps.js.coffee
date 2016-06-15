@@ -115,17 +115,17 @@ activate_bmp_controls = ->
             $("#slope_reduction").toggle(true)
         when "17" #Terrace system
             $("#no_input").toggle(true)
-        when "22" #climate change
+        when "19" #climate change
             $("#difference_max_temperature").toggle(true)
             $("#difference_min_temperature").toggle(true)
             $("#difference_precipitation").toggle(true)
-        when "23" #asfalt or concrete
+        when "20" #asphalt or concrete
             $("#no_input").toggle(true)
-        when "24" #grass cover
+        when "21" #grass cover
             $("#no_input").toggle(true)
-        when "23" #slope adjustmen
+        when "22" #slope adjustment
             $("#no_input").toggle(true)
-        when "13" #Shading
+        when "23" #Shading
             $("#area").toggle(true)
             $("#width").toggle(true)
             $("#crop").toggle(true)

@@ -10,4 +10,10 @@ class Bmp < ActiveRecord::Base
 	validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id, :message => "already exist"
 	validates :depth, numericality: { greater_than: 0 }, if: "bmpsublist_id == 3"
 	validates :irrigation_efficiency, numericality: { greater_than: 0, less_than_or_equal_to: 1 }, if: "bmpsublist_id == 9 || bmpsublist_id == 1 || bmpsublist_id == 2"
+    validates :slope_reduction, numericality: { greater_than: 0,  less_than_or_equal_to: 100 }, if: "bmpsublist_id == 16"
+	validates :water_stress_factor, numericality: { greater_than: 0,  less_than_or_equal_to: 1 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
+	validates :maximum_single_application, numericality: { greater_than: 0,  less_than: 100000 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
+	validates :days, numericality: { greater_than: 0,  less_than_or_equal_to: 365 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
+	validates :safety_factor, numericality: { greater_than: 0,  less_than_or_equal_to: 100000 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2 && irrigation_id == 7"
+	validates :area, numericality: { greater_than: 0,  less_than_or_equal_to: 100000 }, if: "bmpsublist_id == 1 && irrigation_id == 8"
 end
