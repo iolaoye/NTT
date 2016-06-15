@@ -21,14 +21,14 @@
     <% end %>
     <% i = i + 1 %>
     <tr class="gvRowStyle">
-      <td class="gvCellStyleText"><%= apex_control.control.code %></td>
       <td class="gvCellStyleNumber"><%= apex_control.control_id %></td>
+      <td class="gvCellStyleText"><%= apex_control.control.code %></td>
       <td class="gvCellStyleNumber"><%= apex_control.control.line %></td>
       <td class="gvCellStyleNumber"><%= apex_control.control.column %></td>
       <td class="gvCellStyleNumber"><%= apex_control.value %></td>
       <td class="gvCellStyleNumber"><%= apex_control.control.range_low %></td>
       <td class="gvCellStyleNumber"><%= apex_control.control.range_high %></td>
-      <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control) %></td>
+      <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control), title: t('general.edit') %></td>
   </tr>
 <% end %>
 </table>

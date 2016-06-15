@@ -6,8 +6,8 @@
 </p>
 
 <p>
-  <b>Value:</b>
-  <%= @apex_parameter.value %>
+  <b>Name:</b>
+  <%= @apex_parameter.parameter.name %>
 </p>
 
 <p>
@@ -15,6 +15,25 @@
   <%= @apex_parameter.project_id %>
 </p>
 
+<p>
+  <b>line:</b>
+  <%= @apex_parameter.parameter.line %>
+</p>
+
+<p>
+  <b>Low Range:</b>
+  <%= @apex_parameter.parameter.range_low %>
+</p>
+
+<p>
+  <b>High Range:</b>
+  <%= @apex_parameter.parameter.range_high %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @apex_parameter.value %>
+</p>
 
 <%= link_to 'Edit', edit_apex_parameter_path(@apex_parameter) %> |
 <%= link_to 'Back', apex_parameters_path %>

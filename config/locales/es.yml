@@ -263,7 +263,7 @@
     parameters_file: Archivo de Parámetros
     subarea_file: Archivo de la Subárea
     soil_file: Archivo de Suelos
-    layer_file: Archivo de Capa
+    layer_file: Archivo de Capas
     operation_file: Archivo de Operación
   project:
     new_project: 'Proyecto Nuevo'
