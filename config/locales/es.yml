@@ -257,6 +257,7 @@
     soil_file: Archivo de Suelos
     layer_file: Archivo de Capas
     operation_file: Archivo de Operación
+    apex_file: Archivo de APEX
   project:
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'
