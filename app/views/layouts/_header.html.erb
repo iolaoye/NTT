@@ -14,14 +14,14 @@
 				   <li><%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.results'), results_path %></li>
-				   <li><%= link_to t('menu.modifications'), modifications_path %></li> 
+				   <li><%= link_to t('menu.apex_file'), apex_controls_path %></li> 
 			   <% when /operation/, /bmp/ %>
 				   <li><%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></li>
 				   <li><%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></li>
-			   <% when /modifications/, /apex_control/, /apex_parameters/ %>
+			   <% when /modifications/, /apex_control/, /apex_parameters/, /subarea/ %>
 			       <li><%= link_to t('menu.control_file'), apex_controls_path %></li>
 				   <li><%= link_to t('menu.parameters_file'), apex_parameters_path %></li>
-				   <li><%= link_to t('menu.subarea_file'), edit_weather_path(session[:field_id]) %></li>
+				   <li><%= link_to t('menu.subarea_file'), subareas_path %></li>
 				   <li><%= link_to t('menu.soil_file'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.layer_file'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.operation_file'), edit_weather_path(session[:field_id]) %></li>
@@ -44,7 +44,7 @@
 					<% when /watershed/ %>
 						<li><%= t('menu.watershed') %></li>
 				<% end %>
-	        <% when /weather/, /soil/, /scenario/, /layer/, /modifications/, /results/ %>
+	        <% when /weather/, /soil/, /scenario/, /layer/, /results/ %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
@@ -61,14 +61,12 @@
 					<% when /layer/ %>
 						<li><%= t('soil.layer') %></li>
 				<% end %>
-		    <% when /apex_control/, /apex_parameters/  %>
+		    <% when /apex_control/, /apex_parameters/, /subarea/  %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=@project_name%></li>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 			    <li><%=">>"%><%=@field_name%></li>
-				<li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-			    <li><%=">>"%><%=@field_name%></li>
-				<li><%=link_to t('menu.modifications'), modifications_path %></li>
+				<li><%=link_to t('menu.fields'), edit_weather_path(session[:field_id]) %></li>
 			    <li><%=">>"%><%=@field_name%></li>
 				<% case request.original_url %>
 					<% when /apex_control/ %>

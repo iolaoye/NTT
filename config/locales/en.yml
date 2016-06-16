@@ -264,6 +264,7 @@ en:
     soil_file: Soil File
     layer_file: Layer File
     operation_file: Operation File
+    apex_file: APEX Files
   project:
     new_project: 'New Project'
     upload_project: 'Upload Project'
