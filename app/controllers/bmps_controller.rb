@@ -1,4 +1,3 @@
-
 class BmpsController < ApplicationController
 before_filter :take_names
 

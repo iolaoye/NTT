@@ -2,7 +2,7 @@ class SubareasController < ApplicationController
   # GET /subareas
   # GET /subareas.json
   def index
-    @subareas = Subarea.all
+    @subareas = Subarea.where(:soil_id => params[:soil_id], :scenario_id => params[:scenario_id])
 
     respond_to do |format|
       format.html # index.html.erb

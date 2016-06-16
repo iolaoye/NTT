@@ -14,13 +14,14 @@ module ScenariosHelper
 
  ###################################### create_subarea ######################################
  ## Create subareas from soils receiving from map for each field and for each scenario ###
-	def create_subarea(sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area)
+	def create_subarea(sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id)
 		subarea = Subarea.new
 		subarea.scenario_id = scenario_id
 		subarea.soil_id = soil_id
+		subarea.bmp_id = bmp_id
 		subarea.type = sub_type
 		subarea.number = 0  # this number should be just included in the simulation because I do not know what soils are selected
-		subarea.description = "0000000000000000  .sub file Subbasin:1  Date: " + Time.now.to_s
+		subarea.description = "0000000000000000  .sub file Subbasin:1 " + subtype + "  Date: " + Time.now.to_s
 		#line 2
 		subarea.inps = i  
 		subarea.iops = i  
@@ -33,7 +34,7 @@ module ScenariosHelper
         subarea.isao = 0
         subarea.luns = 0
         subarea.imw = 0
-		# line 3. get all of the default values fro model
+		# line 3. get all of the default values from model
 		subarea.sno = 0
         subarea.stdo = 0
         subarea.yct = 0
@@ -150,6 +151,59 @@ module ScenariosHelper
         subarea.xtp8 = 0
         subarea.xtp9 = 0
         subarea.xtp10 = 0
+
+		buffer_length = field_area
+		#the default values are going to be overwritten if the addition is a buffer
+		case Bmp.find(bmp_id).bmpsublist
+			when 6    #PPDE
+				#line 2
+				subarea.number = 106
+				subarea.inps = ?
+				subarea.iops = ?
+				subarea.iow = 1
+				#line 5
+				subarea.rchl = soil_area * AC_TO_KM2 / buffer_length    #soil_area here is the reservior area
+				#line 4
+				subarea.was = soil_area * AC_TO_HA       #soil_area here is the reservior area
+				subarea.chl = Math.sqrt((subarea.rchl**2) + (buffer_length/2) ** 2))
+				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
+				subarea.chs = slp
+				subarea.chn = 0.05
+				subarea.upn = 0.41
+				subarea.ffpq = 0.8
+				#line 5
+				subarea.rchd = 0.1
+				subarea.rcbw = 0.1
+				subarea.rctw = 0.1
+				subarea.rchs = slp
+				subarea.rchn = 0.15
+				subarea.rchk = 0.01
+				#line 6
+				subarea.rsee = 0.01
+				subarea.rsae = wsa
+				subarea.rsve = 75
+				subarea.rsep = 0.1
+				subarea.rsap = wsa
+				subarea.rsvp = 25
+				subarea.srr = 1
+				subarea.rsys = 300
+				subarea.rsyn = 300
+				#line 7
+				subarea.rshc = 0.001
+				subarea.rsdp = 360
+				subarea.sbd = 0.8
+				#line 8 and 9 are overwritten if there are Bmps for AI, AF, and TD
+				bmps = BMP.where(:bmpsublist => 1, :bmpsublist => 2, :bmpsublist => 3)
+				bmps.each do |bmp|
+					case bmp.bmpsublist
+						when 1,2
+							subarea.nirr = bmp.
+						when 3
+							subarea.idr = @bmp.depth * FT_TO_MM
+				end
+				#line 10
+				subarea.pec = 1
+
 		#this is when the subarea is added from a scenario
 		if scenario_id == 0 then
 			subarea.ny1 = 0

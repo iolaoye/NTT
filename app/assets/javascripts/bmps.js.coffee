@@ -4,7 +4,8 @@
 
 #update bmp sublist depending on the bmp selected.
 update_bmpsublist = ->
-  $.getJSON "/bmplists/" + $("#bmp_bmp_id").val() + "/bmpsublists.json", (bmpsublists) ->
+  url = "/bmplists/" + $("#bmp_bmp_id").val() + "/bmpsublists.json"
+  $.getJSON url, (bmpsublists) ->
     items = []
     items.push "<option value>Select One</option>"
     $.each bmpsublists, (key, bmpsublist) ->
