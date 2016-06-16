@@ -2,7 +2,8 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters
   # GET /apex_parameters.json
   def index
-    @apex_parameters = ApexParameter.all
+    @apex_parameters = ApexParameter.includes(:parameter).where(:project_id => session[:project_id])
+	#@apex_parameters = ApexParameter.where(:project_id => session[:project_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +14,7 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters/1
   # GET /apex_parameters/1.json
   def show
-    @apex_parameter = ApexParameter.find(params[:id])
+    @apex_parameter = ApexParameter.where(:project_id => session[:project_id]).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +35,11 @@ class ApexParametersController < ApplicationController
 
   # GET /apex_parameters/1/edit
   def edit
-    @apex_parameter = ApexParameter.find(params[:id])
+    @apex_parameter = ApexParameter.includes(:parameter).where(:project_id => session[:project_id]).find(params[:id])
+	@parameter_name = @apex_parameter.parameter.name
+	@low_range = @apex_parameter.parameter.range_low
+	@high_range = @apex_parameter.parameter.range_high
+    #@apex_parameter = ApexParameter.where(:project_id => session[:project_id]).find(params[:id])
   end
 
   # POST /apex_parameters
@@ -56,7 +61,7 @@ class ApexParametersController < ApplicationController
   # PATCH/PUT /apex_parameters/1
   # PATCH/PUT /apex_parameters/1.json
   def update
-    @apex_parameter = ApexParameter.find(params[:id])
+    @apex_parameter = ApexParameter.where(:project_id => session[:project_id]).find(params[:id])
 
     respond_to do |format|
       if @apex_parameter.update_attributes(apex_parameter_params)
@@ -72,7 +77,7 @@ class ApexParametersController < ApplicationController
   # DELETE /apex_parameters/1
   # DELETE /apex_parameters/1.json
   def destroy
-    @apex_parameter = ApexParameter.find(params[:id])
+    @apex_parameter = ApexParameter.where(:project_id => session[:project_id]).find(params[:id])
     @apex_parameter.destroy
 
     respond_to do |format|
