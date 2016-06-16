@@ -14,6 +14,24 @@ class Bmp < ActiveRecord::Base
 	validates :water_stress_factor, numericality: { greater_than: 0,  less_than_or_equal_to: 1 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
 	validates :maximum_single_application, numericality: { greater_than: 0,  less_than: 100000 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
 	validates :days, numericality: { greater_than: 0,  less_than_or_equal_to: 365 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
-	validates :safety_factor, numericality: { greater_than: 0,  less_than_or_equal_to: 100000 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2 && irrigation_id == 7"
+	validates :safety_factor, numericality: { greater_than: 0,  less_than_or_equal_to: 100000 }, if: "irrigation_id == 7"
 	validates :area, numericality: { greater_than: 0,  less_than_or_equal_to: 100000 }, if: "bmpsublist_id == 1 && irrigation_id == 8"
+	validates_uniqueness_of :bmp_id, :message => "of this group already exists", if: "bmp_id == 1 || bmp_id == 8"
+	validates_uniqueness_of :bmp_id, :message => "TODO", if: :pad_and_pipes_exists
+
+
+  def pad_and_pipes_exists
+    if bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7
+	  sublist_ids = Array.wrap([4, 5, 6, 7])
+	  pads_exists = false
+	  sublist_ids.each do |sublist_id|
+	    if Bmp.find_by_bmpsublist_id(sublist_id) != nil
+		  pads_exists = true
+		end #end if
+	  end #end each
+	end #end first if
+	return pads_exists
+  end #end function
+
 end
+
