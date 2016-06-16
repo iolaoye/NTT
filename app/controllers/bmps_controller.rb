@@ -125,12 +125,25 @@ before_filter :take_names
   ##############################  INPUT FIELDS  ###############################
 
   def input_fields(type)
-
 	case @bmp.bmpsublist_id 
+      when 1
+        return autoirrigation(type)
+      when 2
+        return fertigation(type)
       when 3
         return tile_drain(type)
+      when 4
+        return ppds(type)
+      when 5
+        return ppde(type)
+      when 6
+        return pptw(type)
+      when 7
+	    return ppnd(type)
       when 9
         return pond(type)
+      when 11
+        return streambank_stabilization(type)
       when 16
         return land_leveling(type)
       when 17
@@ -149,6 +162,18 @@ before_filter :take_names
 
   ####################### INDIVIDUAL SUBLIST ACTIONS #######################
 
+  ### ID: 1
+  def autoirrigation(type)
+    irrigation_fertigation(type)
+  end # end method
+
+
+  ### ID: 2
+  def fertigation(type)
+    irrigation_fertigation(type)
+  end # end method
+  
+
   ### ID: 3
   def tile_drain(type)
       @soils = Soil.where(:field_id => session[:field_id]) 
@@ -156,10 +181,8 @@ before_filter :take_names
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
 		  case type
-            when "create"
+            when "create" || "update"
               subarea.idr = @bmp.depth * FT_TO_MM
-            when "update"
-		      subarea.idr = @bmp.depth * FT_TO_MM
             when "delete"
 		      subarea.idr = 0
             else
@@ -172,6 +195,30 @@ before_filter :take_names
   end # end method
 
 
+  ### ID: 4
+  def ppds(type)
+    pads_pipes(type)
+  end # end method
+
+
+  ### ID: 5
+  def ppde(type)
+    pads_pipes(type)
+  end # end method
+
+
+  ### ID: 6
+  def pptw(type)
+    pads_pipes(type)
+  end # end method
+
+
+  ### ID: 7
+  def ppnd (type)
+    pads_pipes(type)
+  end # end method
+
+
   ### ID: 9
   def pond(type)
       @soils = Soil.where(:field_id => session[:field_id]) 
@@ -179,13 +226,30 @@ before_filter :take_names
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
 		  case type
-            when "create"
-              subarea.pcof = @bmp.irrigation_efficiency
-            when "update"
+            when "create" || "update"
               subarea.pcof = @bmp.irrigation_efficiency
             when "delete"
               subarea.pcof = 0
             else
+		  end
+          #if !subarea.save then return "Enable to save value in the subarea file" end
+        end  #end if subarea !nil
+      end # end soils.each
+    return "OK"
+  end # end method
+
+
+  ### ID: 11
+  def streambank_stabilization(type)
+      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+		if subarea != nil then
+		  case type
+		    when "create" || "update"
+              subarea.pec = 0.85
+			when "delete"
+			  # TODO check values for deletion to see if other questions to set values may need to be asked
 		  end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
@@ -283,6 +347,8 @@ before_filter :take_names
 	terrace_and_slope(type)
   end
 
+
+
   ################### METHODS FOR INDIVIDUAL SUBLIST ACTIONS ###################
 
   ## USED FOR TERRACE SYSTEM(ID: 17) AND FOR SLOP ADJUSTEMNT(ID: 22)
@@ -319,6 +385,91 @@ before_filter :take_names
     return "OK"
   end # end method
 
+
+  ## USED FOR PADS AND PIPES FIELDS (ID: 4 - ID: 7)
+  def pads_pipes(type)
+      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+        if subarea != nil then
+		  case type
+            when "create" || "update"
+              if @bmp.bmpsublist_id == 7
+				subarea.pcof = 0.0
+			  else
+			    subarea.pcof = 0.5
+		      end
+            when "delete"
+              subarea.pcof = 0.0
+		  end # switch statement
+          #if !subarea.save then return "Enable to save value in the subarea file" end
+        end  #end if subarea !nil
+		soil_ops = SoilOperation.where(:soil_id => soil.id, :scenario_id => session[:scenario_id], :activity_id => 1)
+		soil_ops.each do |soil_op|
+		  case type
+            when "create" || 
+              soil_op.opv2 = soil_op.opv2 * 0.9
+            when "update"
+              # TODO
+            when "delete"
+              soil_op.opv2 = soil_op.opv2 / 0.9 #return back to 100%
+            else
+		  end # switch statement
+		end # end soil_ops.each
+      end # end soils.each   
+    return "OK"
+  end # end method
+
+
+  def irrigation_fertigation(type)
+      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils.each do |soil|
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+        if subarea != nil then
+		  case type
+            when "create" || "update"
+              case @bmp.irrigation_id
+			    when 1
+				  subarea.nirr = 1.0
+				when 2 || 7 || 8
+				  subarea.nirr = 2.0
+				when 3
+				  subarea.nirr = 5.0
+			  end
+			  subarea.vimx = 5000
+			  subarea.bir = 0.8
+			  subarea.armx = 3.0 * IN_TO_MM
+			  subarea.iri = @bmp.days
+			  subarea.bir = @bmp.water_stress_factor
+			  subarea.efi = 1 - @bmp.irrigation_efficiency
+			  subarea.armx = @bmp.maximum_single_application
+			  subarea.fdsf = @bmp.safety_factor
+			  if @bmp.bmpsublist_id == 2
+			    subarea.idf4 = 1.0
+				subarea.bft = 0.8
+			  end
+            when "delete"
+		      subarea.nirr = 0.0
+			  subarea.vimx = 0.0
+			  subarea.bir = 0.0
+			  subarea.armx = 0.0
+			  subarea.iri = 0.0
+			  subarea.bir = 0.0
+			  subarea.efi = 0.0
+			  subarea.armx = 0.0
+			  subarea.fdsf = 0.0
+			  if @bmp.bmpsublist_id == 2
+			    subarea.idf4 = 0.0
+				subarea.bft = 0.0
+			  end
+            else
+		      # DO NOTHING
+		  end
+          #if !subarea.save then return "Enable to save value in the subarea file" end
+        end  #end if subarea !nil
+      end # end soils.each
+    return "OK"
+  end # end method
 
   ##############################  PRIVATE  ###############################
 
