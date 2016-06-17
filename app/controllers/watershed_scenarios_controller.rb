@@ -15,12 +15,6 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios/1
   # GET /watershed_scenarios/1.json
   def show
-    @watershed_scenarios = WatershedScenario.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @watershed_scenarios }
-    end
     session[:watershed_id] = params[:id]
     item = WatershedScenario.where(:field_id => params[:field_id], :scenario_id => params[:scenario_id]).first
     @watershed_name = Watershed.find(params[:id]).name

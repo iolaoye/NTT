@@ -18,41 +18,36 @@
     <legend><%= t('weather.legend') %></legend>
     <% for way in Way.find(:all) %>
 	   <div>
-           <%= way.id %>
 		   <%= f.radio_button :way_id, way.id, onchange: "rbtnStation_onclick(" + "'" + way.way_value + "'" + ")" %>
-		   <% if NTTG3::Application.config.language == "en" %>
-			  <%= f.label way.way_name %>
+		   <% if locale == "en" %>
+			  <%= f.label :way, way.way_name %>
 		   <% else %>
-			  <%= f.label way.spanish_name %>
+			  <%= f.label :way, way.spanish_name %>
 		   <% end %>
 	   </div>
 	<% end %>
   </fieldset>
 
-  <% if :way_id == 3 %>
-	  <fieldset id="fsetCoordinates" class="section" >
-		  <legend id="lblCoordinates1" runat="server">Enter Coordinates</legend>
-		  <div class="field">
-			<%= f.label :latitude %>
-			<%= f.text_field :latitude %>
-			<%= f.label :longitude %>
-			<%= f.text_field :longitude %>
-		  </div>
-	  </fieldset>	
+  <% if @weather.way_id == 2 %>
+	  <fieldset id="fsetCoordinates" class="section">
   <% else %>
 	  <fieldset id="fsetCoordinates" class="section" style="display:none">
-		  <legend>Enter Coordinates</legend>
-		  <div class="field">
-			<%= f.label :latitude %>
+  <% end %>
+        <legend><%= t('weather.enter_coordinates') %></legend>
+        <div class="field">
+			<%= f.label t('weather.latitude')%>
 			<%= f.text_field :latitude %>
-			<%= f.label :longitude %>
+			<%= f.label t('weather.longitude') %>
 			<%= f.text_field :longitude %>
-		  </div>
-	  </fieldset>	
-  <% end %> 
+		</div>
+    </fieldset>	
 
-  <fieldset id="fsetUploadWeatherFile" class="section">
-	<legend>Choose the file to Upload and then click Save Changes button</legend>
+  <% if @weather.way_id == 3 %>
+	<fieldset id="fsetUploadWeatherFile" class="section">
+  <% else %>
+	<fieldset id="fsetUploadWeatherFile" class="section" style="display:none">
+  <% end %>
+	<legend><%= t('weather.choose_file_lenged') %></legend>
 	  <%= f.file_field :weather_file %>
   </fieldset>
 
@@ -64,12 +59,13 @@
 		<%= f.label @weather.weather_final_year %>
 	  </div>
   </p>
+
   <fieldset class="section">
 	  <div class="field">
         <p><%= t('weather.note') %></p>
-		<%= f.label :simulation_initial_year %>
+		<%= f.label t('weather.years_of_simulation') + " " + t('weather.initial_year') %>
 		<%= f.number_field :simulation_initial_year %>
-		<%= f.label :simulation_final_year %>
+		<%= f.label " " + t('weather.final_year') %>
 		<%= f.number_field :simulation_final_year %>
 	  </div>
   </fieldset>

@@ -1,17 +1,16 @@
-<h1>Listing layers</h1>
+<h1><%= t('general.listing') + " " + t('soil.layers') %></h1>
 <%= link_to t('general.new') + ' ' + t('soil.layer'), new_layer_path %>
-<%= link_to t('general.back'), field_soils_field_path(session[:field_id]) %>
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th>Depth</th>
-    <th>Soil p</th>
-    <th>Bulk Density</th>
-    <th>Sand</th>
-    <th>Silt</th>
-    <th>Clay</th>
-    <th>Organic Matter</th>
-    <th>Ph</th>
+    <th><%= t('soil.depth') %></th>
+    <th><%= t('soil.soilp') %></th>
+    <th><%= t('soil.bulk_density') %></th>
+    <th><%= t('soil.sand') %></th>
+    <th><%= t('soil.silt') %></th>
+    <th><%= t('soil.clay') %></th>
+    <th><%= t('soil.organic_matter') %></th>
+    <th><%= t('soil.ph') %></th>
     <th><%=t('general.actions')%></th>
   </tr>
 

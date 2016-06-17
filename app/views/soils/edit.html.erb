@@ -1,6 +1,5 @@
-<h1>Editing soil</h1>
+<h1><%= t('general.editing')  + " " + t('menu.soils') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @soil %> |
-<%= link_to 'Back', soils_path %>
+<%= link_to t('general.back'), field_soils_field_path(session[:field_id]) %>

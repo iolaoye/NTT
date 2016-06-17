@@ -1,5 +1,5 @@
-<h1>New soil</h1>
+<h1><%= t('general.new') + " " + t('soil.soil') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', soils_path %>
+<%= link_to t('general.back'), field_soils_field_path(session[:field_id]) %>

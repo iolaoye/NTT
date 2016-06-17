@@ -1,6 +1,5 @@
-<h1>Editing layer</h1>
+<h1><%= t('general.editing')  + " " + t('soil.layer') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @layer %> |
-<%= link_to 'Back', layers_path %>
+<%= link_to t('general.back'), soil_layers_soil_path(session[:soil_id]) %>
