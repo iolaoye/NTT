@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160609193715) do
+ActiveRecord::Schema.define(:version => 20160617163642) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -484,12 +484,12 @@ ActiveRecord::Schema.define(:version => 20160609193715) do
   end
 
   create_table "subareas", :force => true do |t|
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "soil_id"
     t.integer  "bmp_id"
     t.integer  "scenario_id"
-    t.string   "type"
+    t.string   "subarea_type"
     t.string   "description"
     t.integer  "number"
     t.integer  "inps"
