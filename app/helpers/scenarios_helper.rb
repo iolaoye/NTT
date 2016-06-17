@@ -153,19 +153,20 @@ module ScenariosHelper
         subarea.xtp10 = 0
 
 		buffer_length = field_area
+		bmps = BMP.where(:bmpsublist => 1, :bmpsublist => 2, :bmpsublist => 3)
+
 		#the default values are going to be overwritten if the addition is a buffer
 		case Bmp.find(bmp_id).bmpsublist
 			when 6    #PPDE
 				#line 2
 				subarea.number = 106
-				subarea.inps = ?
-				subarea.iops = ?
+				subarea.iops = 
 				subarea.iow = 1
 				#line 5
 				subarea.rchl = soil_area * AC_TO_KM2 / buffer_length    #soil_area here is the reservior area
 				#line 4
 				subarea.was = soil_area * AC_TO_HA       #soil_area here is the reservior area
-				subarea.chl = Math.sqrt((subarea.rchl**2) + (buffer_length/2) ** 2))
+				subarea.chl = Math.sqrt((subarea.rchl**2) + ((buffer_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 				subarea.chs = slp
 				subarea.chn = 0.05
@@ -193,16 +194,35 @@ module ScenariosHelper
 				subarea.rsdp = 360
 				subarea.sbd = 0.8
 				#line 8 and 9 are overwritten if there are Bmps for AI, AF, and TD
-				bmps = BMP.where(:bmpsublist => 1, :bmpsublist => 2, :bmpsublist => 3)
 				bmps.each do |bmp|
 					case bmp.bmpsublist
 						when 1,2
-							subarea.nirr = bmp.
+						  case bmp.irrigation_id
+							when 1
+							  subarea.nirr = 1.0
+							when 2 || 7 || 8
+							  subarea.nirr = 2.0
+							when 3
+							  subarea.nirr = 5.0
+						  end  # end case bmp.irrigation_id
+						  subarea.vimx = 5000
+						  subarea.bir = 0.8
+						  subarea.iri = bmp.days
+						  subarea.bir = bmp.water_stress_factor
+						  subarea.efi = 1 - bmp.irrigation_efficiency
+						  subarea.armx = bmp.maximum_single_application * IN_TO_MM
+						  subarea.fdsf = bmp.safety_factor
+						  if bmp.bmpsublist_id == 2
+							subarea.idf4 = 1.0
+							subarea.bft = 0.8
+						  end
 						when 3
-							subarea.idr = @bmp.depth * FT_TO_MM
-				end
+							subarea.idr = bmp.depth * FT_TO_MM
+					end  #end case bmp.bmpsublist
+				end # end bmp.each
 				#line 10
 				subarea.pec = 1
+		end # end Bmp.find(bmp_id).bmpsublist
 
 		#this is when the subarea is added from a scenario
 		if scenario_id == 0 then
@@ -262,5 +282,4 @@ module ScenariosHelper
 
         return slope_length
     end
-
 end
