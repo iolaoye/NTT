@@ -1,4 +1,3 @@
-
 class BmpsController < ApplicationController
 before_filter :take_names
 
@@ -65,6 +64,7 @@ before_filter :take_names
   # POST /bmps
   # POST /bmps.json
   def create
+    @slope = 100
     @bmp = Bmp.new(bmp_params)
 	@bmp.scenario_id = session[:scenario_id]
 	msg = input_fields("create")
@@ -203,7 +203,8 @@ before_filter :take_names
 
   ### ID: 5
   def ppde(type)
-    pads_pipes(type)
+    pads_pipes(type)	
+	create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id].field_area, @bmp.id))
   end # end method
 
 
@@ -238,7 +239,6 @@ before_filter :take_names
     return "OK"
   end # end method
 
-
   ### ID: 11
   def streambank_stabilization(type)
       @soils = Soil.where(:field_id => session[:field_id]) 
@@ -256,7 +256,6 @@ before_filter :take_names
       end # end soils.each
     return "OK"
   end # end method
-
 
   ### ID: 16
   def land_leveling(type)
@@ -281,12 +280,10 @@ before_filter :take_names
     return "OK"
   end # end method
 
-
   ### ID: 17
   def terrace_system(type)
 	terrace_and_slope(type)
   end
-
 
   ### ID: 20
   def asphalt_concrete(type)
@@ -315,7 +312,6 @@ before_filter :take_names
     return "OK"
   end # end method
 
-
   ### ID: 21
   def grass_cover(type)
       @soils = Soil.where(:field_id => session[:field_id]) 
@@ -341,13 +337,10 @@ before_filter :take_names
     return "OK"
   end # end method
 
-
   ### ID: 22
   def slope_adjustment(type)
 	terrace_and_slope(type)
   end
-
-
 
   ################### METHODS FOR INDIVIDUAL SUBLIST ACTIONS ###################
 
@@ -388,10 +381,25 @@ before_filter :take_names
 
   ## USED FOR PADS AND PIPES FIELDS (ID: 4 - ID: 7)
   def pads_pipes(type)
-      @soils = Soil.where(:field_id => session[:field_id]) 
+      @soils = Soil.where(:field_id => session[:field_id])
+	  i = 0
       @soils.each do |soil|
+		if soil.selected
+		session[:depth] = @slope
+			if @slope > soil.slope then
+				@slope = soil.slope
+			end
+		end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
+		  if i = 0 then 
+			@inps = subarea.inps   #select the first soil, which is with bigest area
+			i += 1
+		  end
+		  if soil.selected
+			@iops = subarea.iops   #selected the last iops to inform the subarea the folowing iops to create.
+		  end
+		  
 		  case type
             when "create" || "update"
               if @bmp.bmpsublist_id == 7
@@ -438,11 +446,10 @@ before_filter :take_names
 			  end
 			  subarea.vimx = 5000
 			  subarea.bir = 0.8
-			  subarea.armx = 3.0 * IN_TO_MM
 			  subarea.iri = @bmp.days
 			  subarea.bir = @bmp.water_stress_factor
 			  subarea.efi = 1 - @bmp.irrigation_efficiency
-			  subarea.armx = @bmp.maximum_single_application
+			  subarea.armx = @bmp.maximum_single_application * IN_TO_MM
 			  subarea.fdsf = @bmp.safety_factor
 			  if @bmp.bmpsublist_id == 2
 			    subarea.idf4 = 1.0

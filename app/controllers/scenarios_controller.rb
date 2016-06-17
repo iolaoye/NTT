@@ -760,9 +760,8 @@ class ScenariosController < ApplicationController
 	    last_soil1 = 0
         last_owner1 = 0
         i = 0
-		#soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
+		soils = Soil.where(:field_id => @scenario.field_id, :selected => true)
 		@subarea_file = Array.new
-		
         @soils.each do |soil|
             #create the operation file for this subarea.
             nirr = create_operations(soil, i)  
@@ -995,6 +994,7 @@ class ScenariosController < ApplicationController
         #query = From r In soil._scenariosInfo(currentScenarioNumber)._operationsInfo Order By r.Year, r.Month, r.Day, r.ApexOpName, r.EventId
         #check and fix the operation list
 		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + session[:scenario_id].to_s)
+		#todo when the map is saved again the number of soils in SoilOperation are not updated we can use something like SoilOperation.where(:soil_id => 1698).update_all(:soil_id => 1703)
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
@@ -1095,7 +1095,7 @@ class ScenariosController < ApplicationController
             end
             crop_ant = operation.apex_crop
         end
-        #if the process is starting the lines 1, 2, and 3 should be created
+        #if the process is starting the lines 1, 2 should be created
         if j == 0 then
             if irrigation_type > 0 then
                 @opcs_file.push(sprintf("%4d", lu_number) + sprintf("%4d", irrigation_type) + "\n")
@@ -1118,27 +1118,6 @@ class ScenariosController < ApplicationController
 		#planting =1, tillage = 3, harvest = 4
         if operation.activity_id == 1 || operation.activity_id == 3 || operation.activity_id == 4 || operation.activity_id == 6 then
 			apex_string += sprintf("%5d", operation.apex_operation)    #Operation Code        #APEX0604			
-			#this is not neede beacuse the correct operation is comming in the apex_operation column
-            #case operation.ApexOpAbbreviation.Trim
-                #when harvest
-                    #if Field.find(session[:field_id]).forestry? then
-						#apex_string += sprintf("%5d", operation.apex_operation)    #Operation Code        #APEX0604
-                    #else
-                    #    apex_string += harvestCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                    #end
-                #when tillage
-                    #apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                #when irrigation
-                 #   apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                #when planting
-                #    if operation.ApexOp != 1 then
-                #        apex_string += operation.ApexOp.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                #    else
-                #        apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                #    end
-                #when else
-                #    apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-            #end
         else
             if operation.activity_id == 2 then #fertilizer 
                 found = false
@@ -1155,16 +1134,8 @@ class ScenariosController < ApplicationController
                 end
 
                 if found == false then
-                    #ReDim Preserve @depth_ant[numOfDepths]
-                    #ReDim Preserve @opers[numOfDepths]
                     oper_ant = oper_ant + 1
-                    #@opers[@opers.length - 1] = oper_ant unless @opers == nil
                     @opers.push(oper_ant)
-					#if @depth_ant == nil then
-					#	@depth_ant[0] = operation.opv2 
-					#else
-					#	@depth_ant[@depth_ant.count - 1] = operation.opv2 
-					#end
 					@depth_ant.push(operation.opv2)
                     change_till_for_depth(oper_ant, @depth_ant[@depth_ant.count - 1]) unless @depth_ant == nil					
                 end
@@ -1493,7 +1464,7 @@ class ScenariosController < ApplicationController
 			end 
 			
 			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
-			add_summary(crop["yield"], crop["description_id"], 0, crop_ci.confidence_interval, crop["crop_id"])
+			add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
 		end
 		add_summary(0, 70,0,0,0)
 	end
