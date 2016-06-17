@@ -15,7 +15,7 @@ class SoilsController < ApplicationController
 
 	respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @fields }
+      format.json { render json: @soils }
     end
   end
 ################################  INDEX   #################################

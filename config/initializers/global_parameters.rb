@@ -48,6 +48,7 @@
 	T_STATISTIC_EVALUATED = 1.645
 	FT2_TO_M2 = 0.092903
 	FT_TO_MM = 304.8
+	AC_TO_KM2 = 0.004685643
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'
