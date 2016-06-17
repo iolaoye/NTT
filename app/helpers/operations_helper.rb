@@ -1,11 +1,10 @@
 module OperationsHelper
-  def listYears
-    [
-        ['Year 1', 1], ['Year 2', 2], ['Year 3', 3], ['Year 4', 4], ['Year 5', 5], ['Year 6', 6], ['Year 7', 7], ['Year 8', 8], ['Year 9', 9], ['Year 10', 10]
-    ]
-  end
-
-  if (NTTG3::Application.config.language == "en") then
+	def listYears
+	[
+		['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5], ['6', 6], ['7', 7], ['8', 8], ['9', 9], ['10', 10]
+	]
+	end
+  if (I18n.locale == "en") then
 	  def listMonths
 		[
 			['January', 1], ['February', 2], ['March', 3], ['April', 4], ['May', 5], ['June', 6], ['July', 7], ['August', 8], ['September', 9], ['October', 10], ['November', 11], ['December', 12]

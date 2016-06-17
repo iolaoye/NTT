@@ -12,40 +12,36 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :depth %><br />
+    <%= f.label :depth, t('soil.depth') %>
     <%= f.text_field :depth %>
   </div>
   <div class="field">
-    <%= f.label :soil_p %><br />
+    <%= f.label :soil_p, t('soil.soilp') %>
     <%= f.text_field :soil_p %>
   </div>
   <div class="field">
-    <%= f.label :bulk_density %><br />
+    <%= f.label :bulk_density, t('soil.bulk_density') %>
     <%= f.text_field :bulk_density %>
   </div>
   <div class="field">
-    <%= f.label :sand %><br />
+    <%= f.label :sand, t('soil.sand') %>
     <%= f.text_field :sand %>
   </div>
   <div class="field">
-    <%= f.label :silt %><br />
+    <%= f.label :silt, t('soil.silt') %>
     <%= f.text_field :silt %>
   </div>
   <div class="field">
-    <%= f.label :clay %><br />
+    <%= f.label :clay, t('soil.clay') %>
     <%= f.text_field :clay %>
   </div>
   <div class="field">
-    <%= f.label :organic_matter %><br />
+    <%= f.label :organic_matter, t('soil.organic_matter') %>
     <%= f.text_field :organic_matter %>
   </div>
   <div class="field">
-    <%= f.label :ph %><br />
+    <%= f.label :ph, t('soil.ph') %>
     <%= f.text_field :ph %>
-  </div>
-  <div class="field">
-    <%= f.label :soil_id %><br />
-    <%= f.number_field :soil_id %>
   </div>
   <div class="actions">
     <%= f.submit %>
