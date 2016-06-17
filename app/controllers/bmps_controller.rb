@@ -203,8 +203,8 @@ before_filter :take_names
 
   ### ID: 5
   def ppde(type)
-    pads_pipes(type)	
-	create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id].field_area, @bmp.id))
+    pads_pipes(type)
+	create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id)
   end # end method
 
 
