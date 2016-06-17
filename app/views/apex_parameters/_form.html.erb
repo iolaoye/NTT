@@ -16,12 +16,20 @@
     <%= f.number_field :parameter_id %>
   </div>
   <div class="field">
+    <%= "name:" %>
+    <%= @parameter_name %>
+  </div>
+  <div class="field">
     <%= f.label :value %><br />
     <%= f.text_field :value %>
   </div>
   <div class="field">
-    <%= f.label :project_id %><br />
-    <%= f.number_field :project_id %>
+    <%= "Low Range:" %>
+    <%= @low_range %>
+  </div>
+  <div class="field">
+    <%= "High Range:" %>
+    <%=  @high_range %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -229,6 +229,13 @@
     new: Adicionar
     all: Todos
     listing: Lista de
+    editing: Editando
+    type: Clase
+    value: Valor
+    fraction: fracción
+    date: Fecha
+    select: Seleccione
+    one: Uno
   welcome_note: 
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
@@ -239,12 +246,13 @@
     welcome: Bienvenido
     projects: Proyectos
     location: Ubicación
+    watershed: Cuencas
     weather: Clima
     fields: Parcelas
     soils: Suelos
     scenarios: Escenarios
+    bmps: Mejores Prácticas de Gestión
     managements: Operaciones
-    subprojects: Subproyectos
     economics: Costos
     simulations: Simulaciones
     results: Resultados
@@ -255,8 +263,9 @@
     parameters_file: Archivo de Parámetros
     subarea_file: Archivo de la Subárea
     soil_file: Archivo de Suelos
-    layer_file: Archivo de Capa
+    layer_file: Archivo de Capas
     operation_file: Archivo de Operación
+    apex_file: Archivo de APEX
   project:
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'
@@ -272,18 +281,40 @@
     english: Inglés
     spanish: Español
   weather:
-    longitude: Longitude
-    latitude: Latitude
+    longitude: Longitud
+    latitude: Latitud
     years_of_weather: Años de Información del Clima
     note: 'El periodo a simular es el mismo periodo contenido en la información de clima seleccionado. Usted puede cambiar el periodo a simular pero el programa va a adicionar cinco años antes como inicialización. Los últimos doce años son los que se muestran en las gráficas en la página de resultados. Si el periodo es menos que doce años, todos los años serán presentados en la página de resultados.'
     years_of_simulation: Periodo a simular
     update: 'Actualizar el Clima'
     legend: Seleccione la clase de clima que quiere usar
+    choose_file_lenged: Elija el archivo para subir
+    enter_coordinates: Entre las coordenadas
+    initial_year: año inicial
+    final_year: año final
   soil:
     layers: Capas
     soil: Suelo
     layer: Capa
+    selected: Seleccionado
+    key: Clave
+    symbol: Símbolo
+    group: Grupo
+    name: Nombre
+    albedo: Albedo
+    slope: Inclinación
+    percentage: Porcentaje
+    drainage_type: Tipo de drenaje
+    depth: Profundidad
+    soilp: P en el Suelo
+    bulk_density: Densidad de la masa
+    sand: Arena
+    silt: Limo
+    clay: Arcilla
+    organic_matter: Materia Orgánica
+    ph: PH    
   scenario:
+    scenario_name: Nombre Escenario
     scenario: Escenario
     simulate: Simular
     operation: Operación
@@ -294,7 +325,15 @@
     new_operation: Nueva Operación
     edit: Revisión de Operación
     upload: 'Cargar'
-    cropping_system: 'Sistema de Cultivo' 
+    cropping_system: 'Sistema de Cultivo'
+    crop: Cultivo
+    moisture: Humedad
+    nutrients: Nutrientes
+    distribution: Distribución
+    fertilizer: Fertilizante
+    amount: Cantidad
+    bmp: MPG
+    irrigation: Irrigación
   activity:
     edit: Revisión de Actividad
     new_activity: Actividad Nuevo
@@ -302,20 +341,18 @@
   field:
     field_name: Nombre Parcela
     field_area: Área Parcela
-    field_avg_slope: Promedio inclinación Parcela
+    field_avg_slope: Inclinación promedio parcela
     new_field: Parcela Nueva
     field_title: Lista Parcelas
-    field_type: Tipo de Parcela
+    field_type: Bosque?
   watershed:
-    watershed_name: Nombre de Watershed
-    new_watershed: Nuevo Watershed
-    watershed_title: listado de Watershed
+    watershed_name: Nombre de la Cuenca
+    new_watershed: Nueva Cuenca
+    watershed_title: Listado de Cuencas
   watershed_scenario:
-    watershed_scenario_name: Watershed Name
-    watershed_scenario_field: Watershed Field
-    watershed_scenario: Watershed Scenario
-    new_watershed: New Watershed Scenario
+    watershed_scenario_name: Nombre de la cuenca
     watershed_scenario_title: Listing Watershed Scenarios
+    add_to_watershed: Adicionar a la cuenca
   submit:
     save: Guardar
     login: Iniciar sesión
