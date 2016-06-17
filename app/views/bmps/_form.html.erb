@@ -52,7 +52,7 @@
 	<%= f.label :depth %> ft<br />
 	<%= f.text_field :depth %>
   </div>
-    <div class="field" id = "area" style="display:none">
+    <div class="field" id="area" style="display:none">
 	<%= f.label :reservoir_area %> (0.00 – 99999.00)<br />
 	<%= f.text_field :area %>
   </div>
@@ -142,8 +142,11 @@ function showFields() {
     document.getElementById("safety_factor").style.display = "none";
     document.getElementById("area").style.display = "block";
   } else {
-    document.getElementById("safety_factor").style.display = "none";
-    document.getElementById("area").style.display = "none";
+    var bmplist_id = document.getElementById("bmp_bmp_id").value;
+	if(bmplist_id == 1) {
+		document.getElementById("safety_factor").style.display = "none";
+		document.getElementById("area").style.display = "none";
+		}
   }
 }
 
