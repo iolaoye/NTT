@@ -1,5 +1,5 @@
 ﻿<% if signed_in? %>
-	<% project_name = Project.find(session[:project_id]).name %>
+	<% project_name = "" %>
 	<% field_name = "" %>
 	<% scenario_name = "" %>
     <div class="navbar navbar-default" style="line-height:0px" id="div1">
@@ -37,6 +37,7 @@
         <% case request.original_url %>
 	        <% when /project/, /welcome/ %>
 	        <% when /weather/, /soil/, /scenario/, /layer/, /results/ %>
+				<% project_name = Project.find(session[:project_id]).name %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=project_name%></li>
@@ -55,6 +56,7 @@
 						<li><%= t('soil.layer') %></li>
 				<% end %>
 	        <% when /location/, /field/, /watershed/ %>
+				<% project_name = Project.find(session[:project_id]).name %>
 		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
 		        <li><%=">>"%><%=project_name%></li>
 				<% case request.original_url %>
@@ -66,6 +68,7 @@
 						<li><%= t('menu.watershed') %></li>
 				<% end %>
 			<% when /operation/, /bmp/ %>	
+				<% project_name = Project.find(session[:project_id]).name %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
 				<% scenario_name = Scenario.find(session[:scenario_id]).name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
@@ -80,6 +83,7 @@
 				    <li><%=">>"%><%=t('operation.bmp') %></li>
 				<% end %>								    
 		    <% when /apex_control/, /apex_parameters/, /subarea/  %>
+				<% project_name = Project.find(session[:project_id]).name %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=project_name%></li>
