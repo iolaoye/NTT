@@ -85,11 +85,14 @@
 			    <li><%=">>"%><%=project_name%></li>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+				<li><%=">>"%></li>
 				<% case request.original_url %>
 					<% when /apex_control/ %>
 						<li><%= t('menu.control_file') %></li>
 					<% when /apex_parameters/ %>
 						<li><%= t('menu.parameters_file') %></li>
+					<% when /subarea/ %>
+						<li><%= t('menu.subarea_file') %></li>
 				<% end %>
 		<% end %>
 	</ul>

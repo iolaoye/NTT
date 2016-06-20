@@ -153,7 +153,7 @@ module ScenariosHelper
         subarea.xtp10 = 0
 
 		buffer_length = field_area   #total Area
-		bmps = BMP.where(:bmpsublist => 1, :bmpsublist => 2, :bmpsublist => 3)
+		bmps = Bmp.where(:bmpsublist => 1, :bmpsublist => 2, :bmpsublist => 3)
 		temp_length = Math.sqrt(buffer_length)
 
 		#the default values are going to be overwritten if the addition is a buffer
