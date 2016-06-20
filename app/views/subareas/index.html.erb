@@ -1,12 +1,12 @@
 <%= form_for :subarea do |f| %>
 <table>
 <tr>
-<td><%= collection_select :scenario, :id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenarios'}, {:required => true} %></td>
+<td><%= collection_select :subarea, :id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenarios'}, {:required => true} %></td>
 </tr>
 </table>
 <% end %>
 
-<h1>Listing subareas</h1>
+<h1><%= t('general.listing')  + " " + t('menu.subarea_file') %></h1>
 
 <table>
   <tr>
@@ -30,6 +30,3 @@
   <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Subarea', new_subarea_path %>

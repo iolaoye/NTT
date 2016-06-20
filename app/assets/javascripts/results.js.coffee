@@ -8,8 +8,7 @@
 update_crops = ->
   # take the descriptions and populate the items with period = 2 Annual
   items = []
-  #items = $("#result5_description_id")
-  items.push "<option value>Select One</option>"
+  items.push "<option value>Select Kind of Chart</option>"
   if ($("#result1_scenario_id").val() != "")
      url = "/descriptions.json"
      $.getJSON url, (description_list) ->
