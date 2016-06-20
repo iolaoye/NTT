@@ -258,12 +258,13 @@ en:
     modifications: Modifications
     signout: Sign Out
     site: Site
-    control_file: Control File
-    parameters_file: Parameters File
-    subarea_file: Subarea File
-    soil_file: Soil File
-    layer_file: Layer File
-    operation_file: Operation File
+    control_file: Control
+    parameters_file: Parameters
+    subarea_file: Subareas
+    soil_file: Soils
+    layer_file: Layers
+    operation_file: Operations
+    site_file: Site
     apex_file: APEX Files
   project:
     new_project: 'New Project'
@@ -368,7 +369,7 @@ en:
     mod_title: Modify APEX Information
   result:
     summary: Summary
-    by_soil: By Soil
+    by_soil: by Soil
     monthly: Monthly
     annual: Annual
     update_chart: Update Chart
@@ -379,12 +380,12 @@ en:
     confirmation: Password confirmation
     company: Company
   modifications:
-    control_file: Control File
-    parameters_file: Parameters File
-    subarea_file: Subarea File
-    soil_file: Soil File
-    layer_file: Layer File
-    operation_file: Operation File
+    control_file: Control
+    parameters_file: Parameters
+    subarea_file: Subarea
+    soil_file: Soil
+    layer_file: Layer
+    operation_file: Operation
   about:
     overview0: 'Overview'
     overview1: 'The Nutrient Tracking Tool (NTT) was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from the USDA-NRCS Conservation Innovation Grants program and various state agencies.'

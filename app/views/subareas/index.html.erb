@@ -11,7 +11,7 @@
 </table>
 <% end %>
 
-<h1>Listing subareas</h1>
+<h1><%= t('general.listing')  + " " + t('menu.subarea_file') %></h1>
 
 <table>
   <tr>
@@ -35,6 +35,3 @@
   <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Subarea', new_subarea_path %>

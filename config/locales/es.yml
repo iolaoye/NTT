@@ -259,13 +259,14 @@
     modifications: Modificaciones
     signout: Salir
     site: Sitio
-    control_file: Archivo de Control
-    parameters_file: Archivo de Parámetros
-    subarea_file: Archivo de la Subárea
-    soil_file: Archivo de Suelos
-    layer_file: Archivo de Capas
-    operation_file: Archivo de Operación
-    apex_file: Archivo de APEX
+    control_file: Control
+    parameters_file: Parámetros
+    subarea_file: Subáreas
+    soil_file: Suelos
+    layer_file: Capas
+    operation_file: Operaciones
+    site_file: Sitio
+    apex_file: Archivos APEX
   project:
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'
@@ -365,7 +366,7 @@
     mod_title: Modificar Información de APEX
   result:
     summary: Resumen
-    by_soil: Por Suelo
+    by_soil: por Suelo
     monthly: Mensual
     annual: Anual
     update_chart: Actualizar Gráfica
