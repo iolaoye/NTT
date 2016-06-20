@@ -1,8 +1,13 @@
 <%= form_for :subarea do |f| %>
 <table>
-<tr>
-<td><%= collection_select :scenario, :id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenarios'}, {:required => true} %></td>
-</tr>
+  <tr>
+    <td>
+      <%= label :bmp_id, 'Scenario' %>
+      <%= label :bmp_id, 'Subarea' %>
+    </td>
+  <tr>
+    <td><%= collection_select :scenario, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenarios'}, {:required => true} %></td>
+  </tr>
 </table>
 <% end %>
 

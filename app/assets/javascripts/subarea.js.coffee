@@ -1,6 +1,6 @@
 ﻿
 update_soilslist = ->
-  url = "/soils/" + $("#subarea_field").val() + "/list.json"
+  url = "/soils/" + $("hidden_field_id").val() + "/list.json"
   $.getJSON url, (soilslist) ->
     items = []
     $.each soilslist, (key,soil) ->
