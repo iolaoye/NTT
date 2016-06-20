@@ -1,9 +1,15 @@
 <%= form_for :subarea do |f| %>
 <table>
-<tr>
-<td><%= collection_select :scenario, :id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenarios'}, {:required => true} %></td>
-</tr>
-</table>
+  <%= hidden_field(:field, :id, :value => session[:field_id]) %>
+    <tr>
+    <td><%= label :bmp_id, 'Scenario' %></td>
+    <td><%= label :bmp_id, 'Subarea' %></td>
+  <tr>
+    <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenarios'}, {:required => true} %></td>
+    <td><%= collection_select :subarea, :subarea_id, Subarea.all, :id, :discription, {:prompt => 'Select Subarea'}, {:required => true} %></td>
+  </tr>
+
+  </table>
 <% end %>
 
 <h1>Listing subareas</h1>
