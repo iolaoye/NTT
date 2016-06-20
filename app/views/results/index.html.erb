@@ -19,7 +19,7 @@
         <td><%= collection_select :result6, :description_id, Description.where("period == 3 OR period == 1"), :id, :description, {:prompt => 'Select Kind of Chart', :required => true, :selected => @description} %></td>
         <td><%= submit_tag t("result.monthly"), name: "button" %></td>
       </tr>
-      <%= hidden_field(:language, :lenguage, :value => I18n.locale) %>
+        <%= hidden_field(:language, :language, :value => I18n.locale) %>
       <%= hidden_field(:field, :id, :value => session[:field_id]) %>
     </table>
     <table>
