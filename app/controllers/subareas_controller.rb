@@ -2,6 +2,8 @@ class SubareasController < ApplicationController
   # GET /subareas
   # GET /subareas.json
   def index
+
+  ooo
     @subareas = Subarea.where(:soil_id => params[:soil_id], :scenario_id => params[:scenario_id])
 
     respond_to do |format|
@@ -24,6 +26,7 @@ class SubareasController < ApplicationController
   # GET /subareas/new
   # GET /subareas/new.json
   def new
+  lll
     @subarea = Subarea.new
 
     respond_to do |format|
@@ -40,6 +43,7 @@ class SubareasController < ApplicationController
   # POST /subareas
   # POST /subareas.json
   def create
+  ppp
     @subarea = Subarea.new(subarea_params)
 
     respond_to do |format|

@@ -19,7 +19,6 @@ class Bmp < ActiveRecord::Base
 	validates_uniqueness_of :bmp_id, :message => "of this group already exists", if: "bmp_id == 1 || bmp_id == 8"
 	validates_uniqueness_of :bmp_id, :message => "TODO", if: :pad_and_pipes_exists
 
-
   def pad_and_pipes_exists
     if bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7
 	  sublist_ids = Array.wrap([4, 5, 6, 7])
