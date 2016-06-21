@@ -25,7 +25,7 @@
 				   <li><%= link_to t('menu.control_file'), apex_controls_path %></li>
 				   <li><%= link_to t('menu.parameters_file'), apex_parameters_path %></li>
 				   <li><%= link_to t('menu.subarea_file'), subareas_path %></li>
-				   <li><%= link_to t('menu.soil_file'), edit_weather_path(session[:field_id]) %></li>
+				   <li><%= link_to t('menu.soil_file'), soils_path %></li>
 				   <li><%= link_to t('menu.layer_file'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.operation_file'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.site'), site_path(session[:field_id]) %></li>
@@ -82,8 +82,7 @@
 				<% else %>
 				    <li><%=">>"%><%=t('operation.bmp') %></li>
 				<% end %>								    
-		    <% when /apex_control/, /apex_parameters/, /subarea/  %>
-				<% project_name = Project.find(session[:project_id]).name %>
+		    <% when /apex_control/, /apex_parameters/, /subarea/, /soils/  %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=project_name%></li>
@@ -97,6 +96,8 @@
 						<li><%= t('menu.parameters_file') %></li>
 					<% when /subarea/ %>
 						<li><%= t('menu.subarea_file') %></li>
+                    <% when /soils/ %>
+					    <li><%= t('menu.soil_file') %></li>
 				<% end %>
 		<% end %>
 	</ul>
