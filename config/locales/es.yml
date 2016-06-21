@@ -1,6 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
+
 ﻿es:
   activerecord:
     errors:
@@ -472,7 +472,7 @@
         ie10: 'Internet Explorer 10'
         ie11: 'internet Explorer 11'
         netscape: 'Netscape 9.0'
-=======
+
 ﻿es:
   activerecord:
     errors:
@@ -944,8 +944,8 @@
         ie10: 'Internet Explorer 10'
         ie11: 'internet Explorer 11'
         netscape: 'Netscape 9.0'
->>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
-=======
+
+
 ﻿es:
   activerecord:
     errors:
@@ -1417,8 +1417,8 @@
         ie10: 'Internet Explorer 10'
         ie11: 'internet Explorer 11'
         netscape: 'Netscape 9.0'
->>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
-=======
+
+
 ﻿es:
   activerecord:
     errors:
@@ -1890,4 +1890,4 @@
         ie10: 'Internet Explorer 10'
         ie11: 'internet Explorer 11'
         netscape: 'Netscape 9.0'
->>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
+

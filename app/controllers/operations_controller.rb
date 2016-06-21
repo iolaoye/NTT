@@ -1,6 +1,5 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
 class OperationsController < ApplicationController
   require "open-uri"
 ################################  operations list   #################################
@@ -231,7 +230,7 @@ class OperationsController < ApplicationController
 			when 4   #Harvest. Take harvest operation from crop table
 				soil_operation.apex_operation = Crop.find(@operation.crop_id).harvest_code
 				soil_operation.type_id = @operation.subtype_id
-=======
+
 class OperationsController < ApplicationController
   require "open-uri"
 ################################  operations list   #################################
@@ -417,7 +416,7 @@ class OperationsController < ApplicationController
 		if params[:language] != nil then
 			if params[:language][:language].eql?("es") 
 				I18n.locale = :es 
->>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
+
 			else
 				I18n.locale = :en			
 			end
@@ -463,7 +462,7 @@ class OperationsController < ApplicationController
 			when 4   #Harvest. Take harvest operation from crop table
 				soil_operation.apex_operation = Crop.find(@operation.crop_id).harvest_code
 				soil_operation.type_id = @operation.subtype_id
-=======
+
 class OperationsController < ApplicationController
   require "open-uri"
 ################################  operations list   #################################
@@ -649,7 +648,7 @@ class OperationsController < ApplicationController
 		if params[:language] != nil then
 			if params[:language][:language].eql?("es") 
 				I18n.locale = :es 
->>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
+
 			else
 				I18n.locale = :en			
 			end
@@ -695,7 +694,7 @@ class OperationsController < ApplicationController
 			when 4   #Harvest. Take harvest operation from crop table
 				soil_operation.apex_operation = Crop.find(@operation.crop_id).harvest_code
 				soil_operation.type_id = @operation.subtype_id
-=======
+
 class OperationsController < ApplicationController
   require "open-uri"
 ################################  operations list   #################################
@@ -881,7 +880,7 @@ class OperationsController < ApplicationController
 		if params[:language] != nil then
 			if params[:language][:language].eql?("es") 
 				I18n.locale = :es 
->>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
+
 			else
 				I18n.locale = :en			
 			end

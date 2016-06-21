@@ -1,6 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
+
 ﻿# Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 en:
@@ -1010,7 +1010,7 @@ en:
     header: NTT Disclaimer
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
-=======
+
 ﻿# Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 en:
@@ -2020,8 +2020,8 @@ en:
     header: NTT Disclaimer
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
->>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
-=======
+
+
 ﻿# Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 en:
@@ -3031,8 +3031,8 @@ en:
     header: NTT Disclaimer
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
->>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
-=======
+
+
 ﻿# Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 en:
@@ -4042,5 +4042,5 @@ en:
     header: NTT Disclaimer
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
->>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
+
   
