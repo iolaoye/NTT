@@ -17,7 +17,7 @@
 
   <div class="field">
     <%= label :crop_id, t('operation.crop') %>
-	<% if locale == "en" %>
+	<% if (params[:locale] == "en") %>
 		<%= collection_select :operation, :crop_id, Crop.all, :id, :name, {:prompt => 'Select crop'}, {:required => true} %>
 	<% else %>
 		<%= collection_select :operation, :crop_id, Crop.all, :id, :spanish_name, {:prompt => 'Seleccione Cultivo'}, {:required => true} %>
@@ -25,7 +25,7 @@
   </div>
   <div class="field">
     <%= label :activity_id, t('scenario.operation') %>
-	<% if locale == "en" %>
+	<% if (params[:locale] == "en") %>
 		<%= collection_select :operation, :activity_id, Activity.all, :id, :name, {:prompt => 'Select Operation'}, {:required => true} %>
 	<% else %>
 		<%= collection_select :operation, :activity_id, Activity.all, :id, :spanish_name, {:prompt => 'Seleccione Operacion'}, {:required => true} %>
@@ -43,7 +43,7 @@
 		<% when 1  # planting %>
 		    <div id="div_type" class="field" >
 			   <%= label :type_id, t('general.select') + " " + t('general.one') %>
-				<% if locale == "en" %>
+				<% if (params[:locale] == "en") %>
 					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
 				<% else %>
 					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :spanish_name, {:prompt => 'Seleccione Uno'}, {:required => true} %>
@@ -86,7 +86,7 @@
 		<% when 2 # fertilizer %>
 		    <div class="field" id="div_type"  >
 				<%= label :type_id, t('general.type') %>
-				<% if locale == "en" %>
+				<% if (params[:locale] == "en") %>
 				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => 'Select Fertilizer Type'}, {:required => true} %>
 				<% else %>
 				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :spanish_name, {:prompt => 'Seleccione Tipo de Fertilizante'}, {:required => true} %>
@@ -94,7 +94,7 @@
 			</div>
 			<div class="field" id="div_fertilizer" >
 	           <%= f.label :type_id, t('operation.fertilizer') %>
-				<% if locale == "en" %>
+				<% if (params[:locale] == "en") %>
 					<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
 				<% else %>
 					<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante'} %>
@@ -133,7 +133,7 @@
 		<% when 3 # tillage %>
 		    <div id="div_type" >
 	           <%= label :type_id, t('general.select') + " " + t('general.one') %>
-			    <% if locale == "en" %>
+			    <% if (params[:locale] == "en") %>
 					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
 				<% else %>
 					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :spanish_name, {:prompt => 'Seleccione Uno'}, {:required => true} %>
@@ -176,7 +176,7 @@
 		<% when 6 # irrigation%>
 		    <div id="div_type" >
 	           <%= label :irrigation, t('general.select') + " " + t('general.one') %>
-				<% if locale == "en" %>
+				<% if (params[:locale] == "en") %>
 					<%= collection_select :operation, :type_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
 				<% else %>
 					<%= collection_select :operation, :type_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
