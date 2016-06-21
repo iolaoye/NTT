@@ -10,10 +10,8 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
-ActiveRecord::Schema.define(:version => 20160607154612) do
-ActiveRecord::Schema.define(:version => 20160605190931) do
-ActiveRecord::Schema.define(:version => 20160603151501) do
-ActiveRecord::Schema.define(:version => 20160607154612) do
+
+ActiveRecord::Schema.define(:version => 20160617163642) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -361,6 +359,7 @@ ActiveRecord::Schema.define(:version => 20160607154612) do
     t.datetime "updated_at",     :null => false
     t.float    "ci_value"
     t.integer  "description_id"
+    t.integer  "crop_id"
   end
 
   create_table "scenarios", :force => true do |t|
@@ -485,12 +484,12 @@ ActiveRecord::Schema.define(:version => 20160607154612) do
   end
 
   create_table "subareas", :force => true do |t|
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "soil_id"
     t.integer  "bmp_id"
     t.integer  "scenario_id"
-    t.string   "type"
+    t.string   "subarea_type"
     t.string   "description"
     t.integer  "number"
     t.integer  "inps"
@@ -624,10 +623,16 @@ ActiveRecord::Schema.define(:version => 20160607154612) do
     t.datetime "updated_at",      :null => false
   end
 
-  create_table "watersheds", :force => true do |t|
-    t.string   "name"
+  create_table "watershed_scenarios", :force => true do |t|
+    t.integer  "watershed_id"
     t.integer  "field_id"
     t.integer  "scenario_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "watersheds", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "location_id"

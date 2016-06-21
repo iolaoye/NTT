@@ -1,4 +1,4 @@
-<%= form_for(@bmp) do |f| %>
+  <%= form_for(@bmp) do |f| %>
   <% if @bmp.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@bmp.errors.count, "error") %> prohibited this bmp from being saved:</h2>
@@ -11,16 +11,22 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field" onchange="showFields()">
      <%= label :bmp_id, 'BMP Group' %>
      <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => 'Select BMP Group'}, {:required => false} %>
      <%= label :bmp_id, 'BMP' %>
      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
   </div>
-
   <div class="field" id="irrigation" style="display:none" onchange="showFields()">
-    <%= label :irrigation_id, 'Irrigation' %>
-    <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
+    <% if (@bmp.bmpsublist_id  == 2) %>
+      <p>TRUE<%= @bmp.bmpsublist_id %></p>
+      <%= label :irrigation_id, 'Irrigation' %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.where(@bmp.irrigation_id != 8), :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
+    <% else %>
+      <p>FALSE<%= @bmp.bmpsublist_id %></p>
+      <%= label :irrigation_id, 'Irrigation' %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
+    <% end %>
   </div>
   <div class="field" id="crop"  style="display:none">
     <%= label :crop_id, 'Crop' %>
@@ -43,10 +49,10 @@
 	<%= f.text_field :safety_factor %>
   </div>
   <div class="field" id="depth" style="display:none">
-	<%= f.label :depth %><br />
+	<%= f.label :depth %> ft<br />
 	<%= f.text_field :depth %>
   </div>
-    <div class="field" id = "area" style="display:none">
+    <div class="field" id="area" style="display:none">
 	<%= f.label :reservoir_area %> (0.00 – 99999.00)<br />
 	<%= f.text_field :area %>
   </div>
@@ -55,7 +61,7 @@
 	<%= f.text_field :number_of_animals %>
   </div>
   <div class="field" id = "days" style="display:none">
-	<%= f.label :days %> (0.00 – 365)<br />
+	<%= f.label :irrigation_frequency %> (Days: 0.00 – 365)<br />
 	<%= f.text_field :days %>
   </div>
   <div class="field" id="hours" style="display:none">
@@ -95,7 +101,7 @@
 	<%= f.text_field :grass_field_portion %>
   </div>
   <div class="field" id="buffer_slope_upland" style="display:none">
-	<%= f.label :buffer_slope_upland %><br />
+	<%= f.label :slope_ratio %><br />
 	<%= f.text_field :buffer_slope_upland %>
   </div>
   <div class="field" id="crop_width" style="display:none">
@@ -129,16 +135,19 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function showFields() {
   var irrigation = document.getElementById("bmp_irrigation_id").value;
-  if(irrigation == 4) {
+  if(irrigation == 7) {
     document.getElementById("safety_factor").style.display = "block";
     document.getElementById("area").style.display = "none";
-  } else if(irrigation == 5) {
+  } else if(irrigation == 8) {
     document.getElementById("safety_factor").style.display = "none";
     document.getElementById("area").style.display = "block";
   } else {
-    document.getElementById("safety_factor").style.display = "none";
-    document.getElementById("area").style.display = "none";
+    var bmplist_id = document.getElementById("bmp_bmp_id").value;
+	if(bmplist_id == 1) {
+		document.getElementById("safety_factor").style.display = "none";
+		document.getElementById("area").style.display = "none";
+		}
   }
-
 }
+
 </script>

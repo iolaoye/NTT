@@ -1,27 +1,36 @@
-<h1>Listing apex_parameters</h1>
+<h1><%= t('general.listing')  + " " + t('menu.parameters_file') %></h1>
 
-<table>
-  <tr>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
     <th>Parameter</th>
+    <th>Name</th>
+    <th></th>
+    <th>Line</th>
     <th>Value</th>
-    <th>Project</th>
-    <th></th>
-    <th></th>
+    <th>Low Range</th>
+    <th>High Range</th>
     <th></th>
   </tr>
 
+<% i=1 %>
 <% @apex_parameters.each do |apex_parameter| %>
-  <tr>
-    <td><%= apex_parameter.parameter_id %></td>
-    <td><%= apex_parameter.value %></td>
-    <td><%= apex_parameter.project_id %></td>
-    <td><%= link_to 'Show', apex_parameter %></td>
-    <td><%= link_to 'Edit', edit_apex_parameter_path(apex_parameter) %></td>
-    <td><%= link_to 'Destroy', apex_parameter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% if (i % 2  == 0) %>
+<tr class="gvRowStyleEven">
+  <% else %>
+  <tr class="gvRowStyleOdd">
+    <% end %>
+    <% i = i + 1 %>
+    <tr class="gvRowStyle">
+    <td class="gvCellStyleNumber"><%= apex_parameter.parameter.number %></td>
+    <td class="gvCellStyleString"><%= apex_parameter.parameter.name %></td>
+    <td class="gvCellStyleNumber"></td>
+    <td class="gvCellStyleNumber"><%= apex_parameter.parameter.line %></td>
+    <td class="gvCellStyleNumber"><%= apex_parameter.value %></td>
+    <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_low %></td>
+    <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_high %></td>
+    <td><%= link_to image_tag("edit.png"), edit_apex_parameter_path(apex_parameter), title: t('general.edit') %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
 
-<%= link_to 'New Apex parameter', new_apex_parameter_path %>

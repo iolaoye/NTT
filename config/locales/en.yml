@@ -227,6 +227,13 @@ en:
     new: New
     all: All
     listing: Listing
+    editing: Editing
+    type: Type
+    value: Value
+    fraction: fraction
+    date: Date
+    select: Seleccionar
+    one: Uno
   welcome_note: 
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the filed or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -242,7 +249,8 @@ en:
     fields: Fields
     soils: Soils
     scenarios: Scenarios
-    managements: Managements
+    managements: Operations
+    bmps: Best Management Practices
     subprojects: Subprojects
     economics: Economics
     simulations: Simulations
@@ -250,6 +258,14 @@ en:
     modifications: Modifications
     signout: Sign Out
     site: Site
+    control_file: Control
+    parameters_file: Parameters
+    subarea_file: Subareas
+    soil_file: Soils
+    layer_file: Layers
+    operation_file: Operations
+    site_file: Site
+    apex_file: APEX Files
   project:
     new_project: 'New Project'
     upload_project: 'Upload Project'
@@ -272,11 +288,33 @@ en:
     years_of_simulation: Simulation period
     update: 'Update Weather'
     legend: Select the kind of weather you want to use
+    choose_file_lenged: Choose the file to Upload
+    enter_coordinates: Enter Coordinates
+    initial_year: initial year
+    final_year: final year
   soil:
     layers: Layers
     soil: Soil
     layer: Layer
+    selected: Selected
+    key: Key
+    symbol: Symbol
+    group: Group
+    name: Name
+    albedo: Albedo
+    slope: Slope
+    percentage: Percentage
+    drainage_type: Drainage type
+    depth: Depth
+    soilp: Soil P
+    bulk_density: Bulk Density
+    sand: Sand
+    silt: Silt
+    clay: Clay
+    organic_matter: Organic Matter
+    ph: PH    
   scenario:
+    scenario_name: Scenario Name
     scenario: Scenario
     simulate: Simulate
     operation: Operation
@@ -289,6 +327,14 @@ en:
     upload: 'Upload'
     cropping_system: 'Cropping System'
     fertilizer: Fertilizer Type
+    crop: Crop
+    moisture: Moisture
+    nutrients: Nutrients
+    distribution: Distribution
+    fertilizer: Fertilizer
+    amount: Amount
+    bmp: BMP
+    irrigation: Irrigation
   activity:
     edit: Editing Activity
     new_activity: New Activity
@@ -299,6 +345,7 @@ en:
     field_avg_slope: Field Average Slope
     new_field: New Field
     field_title: Listing Fields
+    field_type: Forestry?
   watershed:
     watershed_name: Watershed Name
     new_watershed: New Watershed
@@ -309,6 +356,7 @@ en:
     watershed_scenario: Watershed Scenario
     new_watershed: New Watershed Scenario
     watershed_scenario_title: Listing Watershed Scenarios
+    add_to_watershed: Add to watershed
   submit:
     save: Save Changes
     login: Sign in
@@ -321,28 +369,23 @@ en:
     mod_title: Modify APEX Information
   result:
     summary: Summary
-    by_soil: By Soil
+    by_soil: by Soil
     monthly: Monthly
     annual: Annual
     update_chart: Update Chart
-<<<<<<< HEAD
-=======
-
-
-    update_chart: Update Chart
-
-    update_chart: Update Chart
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> 38da8a65266e52834da14d7fcc0aebfb6b31c55e
->>>>>>> a030f1daa2b21f30d90713cd66ed464497b3d472
     result: Result
     add: Add
     submit: Submit
   users:
     confirmation: Password confirmation
     company: Company
+  modifications:
+    control_file: Control
+    parameters_file: Parameters
+    subarea_file: Subarea
+    soil_file: Soil
+    layer_file: Layer
+    operation_file: Operation
   about:
     overview0: 'Overview'
     overview1: 'The Nutrient Tracking Tool (NTT) was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from the USDA-NRCS Conservation Innovation Grants program and various state agencies.'
@@ -960,10 +1003,5 @@ en:
   disclaimerpage:
     header: NTT Disclaimer
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
-    body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
-    body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
-    body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
-    body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
-    body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
-   
+  

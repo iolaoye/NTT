@@ -1,45 +1,27 @@
-<<<<<<< HEAD
-<%= form_for(@watershed_scenarios) do |f| %>
-
+<%= form_for :watershed, url: new_scenario_watershed_scenario_path do |f| %>
 <table>
   <tr>
-    <td><%= label :fields, 'Fields' %></td>
-    <td><%= label :scenarios, 'Scenarios' %></td>
+    <td><%= f.label t('menu.fields') %></td>
+    <td><%= f.label t('menu.scenarios') %></td>
     <td></td>
   </tr>
   <tr>
-    <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field', :required => true} %></td>
-    <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenario', :required => true} %></td>
-	<td class="actions"><%= f.submit %></td>
+    <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
+    <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
+    <td class='action'><%= f.submit t('watershed_scenario.add_to_watershed') %></td>
   </tr>
-=======
-<%= form_for :watershed_scenarios, url: new_scenario_watershed_scenario_path do |f| %>
->>>>>>> master
-
-
-<table>
-    <tr>
-      <td><%= f.label :fields, 'Fields' %></td>
-      <td><%= f.label :scenarios, 'Scenarios' %></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => 'Select Field'}, {:required => true} %></td>
-      <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => 'Select Scenario'}, {:required => true} %></td>
-      <td class='action'><%= f.submit %></td>
-    </tr>
-  </table>  
+</table>  
 <% end %>
-  
-<p id="notice"><%= notice %></p>
-  
-<h1><%= t('watershed_scenarios.watershed_scenarios_title')%></h1>
+ 
+<p id="error_notice"><%= notice %></p>
+
+<h1><%= t('watershed_scenarios.watershed_scenarios_title')%></h1> 
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle"><%= t('watershed.watershed_name')%></th>
-    <th class="gvCellStyleTitle"><%= t('watershed.field_id')%></th>
-    <th class="gvCellStyleTitle"><%= t('watershed.scenario_id')%></th>
+    <th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
+    <th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
 
@@ -47,7 +29,7 @@
 <% @watershed_scenarios.each do |watershed_scenario| %>
 <% if (i % 2  == 0) %>
    <tr class="gvRowStyleEven">
-    <% else %>s
+    <% else %>
    <tr class="gvRowStyleOdd">
     <% end %>
     <% i = i + 1 %>

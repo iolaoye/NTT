@@ -1,3 +1,17 @@
+<%= form_for :subarea do |f| %>
+<table>
+  <%= hidden_field(:field, :id, :value => session[:field_id]) %>
+    <tr>
+    <td><%= label :bmp_id, 'Scenario' %></td>
+    <td><%= label :bmp_id, 'Subarea' %></td>
+  <tr>
+    <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenarios'}, {:required => true} %></td>
+    <td><%= collection_select :subarea, :subarea_id, Subarea.all, :id, :discription, {:prompt => 'Select Subarea'}, {:required => true} %></td>
+  </tr>
+
+  </table>
+<% end %>
+
 <h1>Listing subareas</h1>
 
 <table>
@@ -7,15 +21,18 @@
     <th></th>
   </tr>
 
-<% @subareas.each do |subarea| %>
+  <% @subareas.each do |subarea| %>
   <tr>
-    <td><%= link_to 'Show', subarea %></td>
-    <td><%= link_to 'Edit', edit_subarea_path(subarea) %></td>
-    <td><%= link_to 'Destroy', subarea, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td>
+      <%= link_to 'Show', subarea %>
+    </td>
+    <td>
+      <%= link_to 'Edit', edit_subarea_path(subarea) %>
+    </td>
+    <td>
+      <%= link_to 'Destroy', subarea, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </td>
   </tr>
-<% end %>
+  <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Subarea', new_subarea_path %>
