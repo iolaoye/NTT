@@ -21,7 +21,7 @@
 			    <% when request.original_url.include?("operation") || request.original_url.include?("bmp")%>
 				   <li><%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></li>
 				   <li><%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></li>
-	           <% when request.original_url.include?("modifications") || request.original_url.include?("apex_control") ||  request.original_url.include?("apex_parameter") || request.original_url.include?("subarea") || request.original_url.include?("site")%>
+	           <% when request.original_url.include?("modifications") || request.original_url.include?("apex_control") ||  request.original_url.include?("apex_parameter") || request.original_url.include?("subarea") || request.original_url.include?("soils") || request.original_url.include?("site")%>
 				   <li><%= link_to t('menu.control_file'), apex_controls_path %></li>
 				   <li><%= link_to t('menu.parameters_file'), apex_parameters_path %></li>
 				   <li><%= link_to t('menu.subarea_file'), subareas_path %></li>
