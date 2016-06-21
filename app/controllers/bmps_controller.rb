@@ -481,9 +481,9 @@ before_filter :take_names
       @soils.each do |soil|
 		if soil.selected
 			session[:depth] = @slope
-			#if session[:depth] > soil.slope then
-			#	@slope = soil.slope
-			#end
+			if session[:depth] > soil.slope then
+				@slope = soil.slope
+			end
 		end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then

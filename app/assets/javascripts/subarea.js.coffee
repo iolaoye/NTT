@@ -1,10 +1,4 @@
 
-﻿load_subareas = ->
-    url = "/soils/" + $("#field_id").val() + "/list.json"
-    items = []
-    items.push "<option value>Select Subarea</option>"
-
-﻿
 load_subareas = ->
     url = "/soils/" + $("#field_id").val() + "/list.json"
     items = []
@@ -14,9 +8,8 @@ load_subareas = ->
        $.each soils_list, (key, soil) ->
            url = "/subareas.json?soil_id=" + soil.id + "&scenario_id=" + $("#subarea_scenario_id").val()
            $.getJSON url, (subareas_list) ->
-              $.each subareas_list, (key, subarea) ->                 items.push "<option value=\"" + subarea.id + "\">" + subarea.description + "</option>"
-
-                 items.push "option value=\"" + subarea.id + "\">" + subarea.description + "</option>" 
+              $.each subareas_list, (key, subarea) -> 
+			  items.push "option value=\"" + subarea.id + "\">" + subarea.description + "</option>" 
 
               $("#subarea_subarea_id").html(items.join(""))
 
