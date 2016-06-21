@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <h1>Listing crops</h1>
 
 <table>
@@ -76,6 +77,85 @@
 <br />
 
 <%= link_to 'New Crop', new_crop_path %>
+=======
+<h1>Listing crops</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Number</th>
+    <th>Dndc</th>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Plant population mt</th>
+    <th>Plant population ac</th>
+    <th>Plant population ft</th>
+    <th>Heat units</th>
+    <th>Lu number</th>
+    <th>Soil group a</th>
+    <th>Soil group b</th>
+    <th>Soil group c</th>
+    <th>Soil group d</th>
+    <th>Type1</th>
+    <th>Yield unit</th>
+    <th>Bushel weight</th>
+    <th>Conversion factor</th>
+    <th>Dry matter</th>
+    <th>Harvest code</th>
+    <th>Planting code</th>
+    <th>State</th>
+    <th>Itil</th>
+    <th>To1</th>
+    <th>Tb</th>
+    <th>Dd</th>
+    <th>Dyam</th>
+    <th>Spanish name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @crops.each do |crop| %>
+  <tr>
+    <td><%= crop.id %></td>
+    <td><%= crop.number %></td>
+    <td><%= crop.dndc %></td>
+    <td><%= crop.code %></td>
+    <td><%= crop.name %></td>
+    <td><%= crop.plant_population_mt %></td>
+    <td><%= crop.plant_population_ac %></td>
+    <td><%= crop.plant_population_ft %></td>
+    <td><%= crop.heat_units %></td>
+    <td><%= crop.lu_number %></td>
+    <td><%= crop.soil_group_a %></td>
+    <td><%= crop.soil_group_b %></td>
+    <td><%= crop.soil_group_c %></td>
+    <td><%= crop.soil_group_d %></td>
+    <td><%= crop.type1 %></td>
+    <td><%= crop.yield_unit %></td>
+    <td><%= crop.bushel_weight %></td>
+    <td><%= crop.conversion_factor %></td>
+    <td><%= crop.dry_matter %></td>
+    <td><%= crop.harvest_code %></td>
+    <td><%= crop.planting_code %></td>
+    <td><%= crop.state_id %></td>
+    <td><%= crop.itil %></td>
+    <td><%= crop.to1 %></td>
+    <td><%= crop.tb %></td>
+    <td><%= crop.dd %></td>
+    <td><%= crop.dyam %></td>
+    <td><%= crop.spanish_name %></td>
+    <td><%= link_to 'Show', crop %></td>
+    <td><%= link_to 'Edit', edit_crop_path(crop) %></td>
+    <td><%= link_to 'Destroy', crop, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Crop', new_crop_path %>
+>>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
 =======
 <h1>Listing crops</h1>
 
