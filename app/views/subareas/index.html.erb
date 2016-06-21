@@ -6,7 +6,7 @@
     <td><%= label :bmp_id, 'Subarea' %></td>
   <tr>
     <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => 'Select Scenarios'}, {:required => true} %></td>
-    <td><%= collection_select :subarea, :subarea_id, Subarea.all, :id, :discription, {:prompt => 'Select Subarea'}, {:required => true} %></td>
+    <td><%= collection_select :subarea, :subarea_id, Subarea.where(:id => -1), :id, :description, {:prompt => 'Select Subarea'}, {:required => true} %></td>
   </tr>
 
   </table>
