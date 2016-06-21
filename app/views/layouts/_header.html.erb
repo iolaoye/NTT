@@ -1,25 +1,28 @@
 ﻿<% if signed_in? %>
+	<% project_name = "" %>
+	<% field_name = "" %>
+	<% scenario_name = "" %>
     <div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
-            <% case request.original_url %>
-	           <% when /project/, /welcome/, /about/, /contact/, /help/  %>
+            <% case  %>
+	           <% when request.original_url.include?("project") || request.original_url.include?("welcome") ||  request.original_url.include?("about") || request.original_url.include?("contact") || request.original_url.include?("help")  %>
 			       <li><%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></li>
    			       <li><%= link_to t('menu.projects'), welcomes_path %></li>
-	           <% when /location/, /field/, /watershed/ %>
-				   <li><%= link_to t('menu.location'), location_path(session[:location_id]) %></li>
-				   <li><%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-				   <li><%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
-			   <% when /weather/, /soil/, /scenario/, /layer/, /results/ %>
+	           <% when request.original_url.include?("weather") || request.original_url.include?("soil") ||  request.original_url.include?("scenario") || request.original_url.include?("layer") || request.original_url.include?("results")  %>
 				   <li><%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.results'), results_path %></li>
 				   <li><%= link_to t('menu.apex_file'), apex_controls_path %></li> 
-			   <% when /operation/, /bmp/ %>
+			    <% when request.original_url.include?("location") || request.original_url.include?("field") ||  request.original_url.include?("watershed")%>
+				   <li><%= link_to t('menu.location'), location_path(session[:location_id]) %></li>
+				   <li><%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
+				   <li><%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
+			    <% when request.original_url.include?("operation") || request.original_url.include?("bmp")%>
 				   <li><%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></li>
 				   <li><%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></li>
-			   <% when /modifications/, /apex_control/, /apex_parameters/, /subarea/ %>
-			       <li><%= link_to t('menu.control_file'), apex_controls_path %></li>
+	           <% when request.original_url.include?("modifications") || request.original_url.include?("apex_control") ||  request.original_url.include?("apex_parameter") || request.original_url.include?("subarea") || request.original_url.include?("site")%>
+				   <li><%= link_to t('menu.control_file'), apex_controls_path %></li>
 				   <li><%= link_to t('menu.parameters_file'), apex_parameters_path %></li>
 				   <li><%= link_to t('menu.subarea_file'), subareas_path %></li>
 				   <li><%= link_to t('menu.soil_file'), edit_weather_path(session[:field_id]) %></li>
@@ -27,28 +30,19 @@
 				   <li><%= link_to t('menu.operation_file'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.site'), site_path(session[:field_id]) %></li>
 			<% end %>
-    			   <li><%= link_to t('menu.signout'), logout_path %></li>
+    		<li><%= link_to t('menu.signout'), logout_path %></li>
 	    </ul>      
     </div>
     <ul class="crumbs">
         <% case request.original_url %>
 	        <% when /project/, /welcome/ %>
-	        <% when /location/, /field/, /watershed/ %>
-		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
-		        <li><%=">>"%><%=@project_name%></li>
-				<% case request.original_url %>
-					<% when /location/ %>
-						<li><%= t('menu.location') %></li>
-					<% when /field/ %>
-						<li><%= t('menu.fields') %></li>
-					<% when /watershed/ %>
-						<li><%= t('menu.watershed') %></li>
-				<% end %>
 	        <% when /weather/, /soil/, /scenario/, /layer/, /results/ %>
+				<% project_name = Project.find(session[:project_id]).name %>
+				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
-			    <li><%=">>"%><%=@project_name%></li>
+			    <li><%=">>"%><%=project_name%></li>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-			    <li><%=">>"%><%=@field_name%></li>
+			    <li><%=">>"%><%=field_name%></li>
 				<% case request.original_url %>
 					<% when /weather/ %>
 						<li><%= t('menu.weather') %></li>
@@ -61,33 +55,49 @@
 					<% when /layer/ %>
 						<li><%= t('soil.layer') %></li>
 				<% end %>
-		    <% when /apex_control/, /apex_parameters/, /subarea/  %>
+	        <% when /location/, /field/, /watershed/ %>
+				<% project_name = Project.find(session[:project_id]).name %>
+		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
+		        <li><%=">>"%><%=project_name%></li>
+				<% case request.original_url %>
+					<% when /location/ %>
+						<li><%= t('menu.location') %></li>
+					<% when /field/ %>
+						<li><%= t('menu.fields') %></li>
+					<% when /watershed/ %>
+						<li><%= t('menu.watershed') %></li>
+				<% end %>
+			<% when /operation/, /bmp/ %>	
+				<% project_name = Project.find(session[:project_id]).name %>
+				<% field_name = Field.find(session[:field_id]).field_name %>
+				<% scenario_name = Scenario.find(session[:scenario_id]).name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
-			    <li><%=">>"%><%=@project_name%></li>
+			    <li><%=">>"%><%=project_name%></li>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-			    <li><%=">>"%><%=@field_name%></li>
-				<li><%=link_to t('menu.fields'), edit_weather_path(session[:field_id]) %></li>
-			    <li><%=">>"%><%=@field_name%></li>
+			    <li><%=">>"%><%=field_name%></li>
+			    <li><%=link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
+			    <li><%=">>"%><%=scenario_name%></li>
+				<% if request.original_url.include? "operation" %>
+				    <li><%=">>"%><%=t('menu.managements') %></li>
+				<% else %>
+				    <li><%=">>"%><%=t('operation.bmp') %></li>
+				<% end %>								    
+		    <% when /apex_control/, /apex_parameters/, /subarea/  %>
+				<% project_name = Project.find(session[:project_id]).name %>
+				<% field_name = Field.find(session[:field_id]).field_name %>
+			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
+			    <li><%=">>"%><%=project_name%></li>
+			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
+				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+				<li><%=">>"%></li>
 				<% case request.original_url %>
 					<% when /apex_control/ %>
 						<li><%= t('menu.control_file') %></li>
 					<% when /apex_parameters/ %>
 						<li><%= t('menu.parameters_file') %></li>
+					<% when /subarea/ %>
+						<li><%= t('menu.subarea_file') %></li>
 				<% end %>
-			<% when /operation/, /bmp/ %>	
-			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
-			    <li><%=">>"%><%=@project_name%></li>
-			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-			    <li><%=">>"%><%=@field_name%></li>
-			    <li><%=link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
-			    <li><%=">>"%><%=@scenario_name%></li>
-				<% if request.original_url.include? "operation" %>
-				    <li><%=">>"%><%=t('menu.managements') %></li>
-				<% else %>
-				    <li><%=">>"%><%=t('operation.bmp') %></li>
-				<% end %>
-
-								    
 		<% end %>
 	</ul>
 <% else %>

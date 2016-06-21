@@ -2,6 +2,13 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
+	if params[:language] != nil then
+		if params[:language][:language].eql?("es") 
+			I18n.locale = :es 
+		else
+			I18n.locale = :en			
+		end
+	end 
 	@total_area = Field.find(session[:field_id]).field_area
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
@@ -19,11 +26,11 @@ class ResultsController < ApplicationController
 		results = Result.new
 		case true
 			when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
-				results = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2], :scenario_id => params[:scenario3], :soil_id => 0).where("crop_id > 0")
+				results = Result.where(:field_id == params[:field][:id], :scenario_id => params[:result1][:scenario1], :scenario_id => params[:result2][:scenario2], :scenario_id => params[:result3][:scenario3], :soil_id => 0).where("crop_id > 0")
 			when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" 
-				results = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2]).where("crop_id > 0")
+				results = Result.where(:field_id == params[:field][:id], :scenario_id => params[:result1][:scenario1], :scenario_id => params[:result2][:scenario2]).where("crop_id > 0")
 			when params[:result1][:scenario_id] != "" 
-				results = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1]).where("crop_id > 0")
+				results = Result.where(:field_id == params[:field][:id], :scenario_id => params[:result1][:scenario1]).where("crop_id > 0")
 		end # end case true
 
 		results.each do |result|
@@ -32,13 +39,13 @@ class ResultsController < ApplicationController
 			crop = Crop.find(result.crop_id)
 		end # end results.each
 	end # end if 
-		
+
 	if params[:button] != nil then
-		params[:button] == t('result.summary') + " " + t("result.by_soil") ? @soil = params[:result4][:soil_id] : @soil = "0"
-		if params[:button].include?(t('result.summary')) then
-			@result_selected = t('result.summary') unless params[:button].include?(t('result.by_soil'))
+		params[:button].eql?(t("result.summary") + " " + t("result.by_soil"))? @soil = params[:result4][:soil_id] : @soil = "0"
+		if params[:button].include? t('result.summary') then
+			@result_selected = t('result.summary')
 			if params[:result1] != nil
-				if params[:result1][:scenario_id] != "" then
+				if !params[:result1][:scenario_id].eql?("") then
 					@scenario1 = params[:result1][:scenario_id] 			
 					@results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
 				end
@@ -173,7 +180,7 @@ class ResultsController < ApplicationController
   end
 
   def sel  
-	@result = Result.where(:field_id == params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2], :scenario_id => params[:scenario3], :soil_id => 0).where("crop_id > 0")
+	@result = Result.where(:field_id => params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2], :scenario_id => params[:scenario3], :soil_id => 0).where("crop_id > 0")
 	
     respond_to do |format|
       format.html # sel.html.erb
