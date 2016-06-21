@@ -90,6 +90,7 @@ before_filter :take_names
   # PATCH/PUT /bmps/1
   # PATCH/PUT /bmps/1.json
   def update
+	@slope = 100
     @bmp = Bmp.find(params[:id])
 
 	msg = input_fields("update")
@@ -112,10 +113,10 @@ before_filter :take_names
   # DELETE /bmps/1
   # DELETE /bmps/1.json
   def destroy
+    @slope = 100
     @bmp = Bmp.find(params[:id])
-    @bmp.destroy
-
 	msg = input_fields("delete")
+    @bmp.destroy
 
     respond_to do |format|
       format.html { redirect_to list_bmp_path(session[:scenario_id]) }
@@ -145,20 +146,32 @@ before_filter :take_names
 	    return wetlands(type)
       when 9
         return pond(type)
+      when 10
+		# TODO
       when 11
         return streambank_stabilization(type)
+      when 12
+		riparian_forest(type)
       when 13
 	    return filter_strip(type)
+      when 14
+	    return waterway(type)
       when 16
         return land_leveling(type)
       when 17
 	    return terrace_system(type)
+      when 18
+	    # TODO
+      when 19
+        # TODO
       when 20
         return asphalt_concrete(type)
       when 21
         return grass_cover(type)
       when 22
 	    return slope_adjustment(type)
+      when 23
+		return shading(type)
       else
         return "OK"
     end
@@ -214,8 +227,15 @@ before_filter :take_names
 
   ### ID: 6
   def ppde(type)
-    msg = pads_pipes(type)
-	create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id)
+    msg = pads_pipes(type)    
+	case type
+      when "create"
+	    create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "create")
+	  when "update"
+		update_existing_subarea("PPDE")
+	  when "delete"
+		delete_existing_subarea("PPDE")
+	end
     return msg
   end # end method
 
@@ -228,7 +248,17 @@ before_filter :take_names
 
   ### ID: 8
   def wetlands(type)
-	return create_new_subarea
+    case type
+      when "create"
+	    return create_new_subarea("WL")
+	  when "update"
+		subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first
+		update_existing_subarea("WL", subarea)
+	  when "delete"
+		subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first
+	    update_wsa("-", subarea.wsa)
+	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first.delete
+	end
   end # end method
 
 
@@ -269,10 +299,45 @@ before_filter :take_names
     return "OK"
   end # end method
 
+
+  ### ID: 12
+  def riparian_forest(type)
+    case type
+      when "create", "update"
+	    return create_new_subarea("RF")
+	  when "delete"
+	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first
+	    update_wsa("-", subarea.wsa)
+	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first.delete
+    end
+  end
+
+
   ### ID: 13
   def filter_strip(type)
-	return create_new_subarea
+    case type
+      when "create", "update"
+	    return create_new_subarea("FS")
+	  when "delete"
+	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first
+	    update_wsa("-", subarea.wsa)
+	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first.delete
+    end
   end # end method
+
+
+  ### ID: 14
+  def waterway(type)
+    case type
+      when "create", "update"
+	    return create_new_subarea("WW")
+	  when "delete"
+	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first
+	    update_wsa("-", subarea.wsa)
+	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first.delete
+    end
+  end # end method
+
 
   ### ID: 16
   def land_leveling(type)
@@ -359,6 +424,19 @@ before_filter :take_names
 	terrace_and_slope(type)
   end
 
+
+  ### ID: 23
+  def shading(type)
+    case type
+      when "create", "update"
+	    return create_new_subarea("Sdg")
+	  when "delete"
+	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first
+	    update_wsa("-", subarea.wsa)
+	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first.delete
+    end
+  end # end method
+
   ################### METHODS FOR INDIVIDUAL SUBLIST ACTIONS ###################
 
   ## USED FOR TERRACE SYSTEM(ID: 17) AND FOR SLOP ADJUSTEMNT(ID: 22)
@@ -402,10 +480,10 @@ before_filter :take_names
 	  i = 0
       @soils.each do |soil|
 		if soil.selected
-		session[:depth] = @slope
-			if session[:depth] > soil.slope then
-				@slope = soil.slope
-			end
+			session[:depth] = @slope
+			#if session[:depth] > soil.slope then
+			#	@slope = soil.slope
+			#end
 		end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
@@ -496,7 +574,7 @@ before_filter :take_names
   end # end method
 
 
-  def create_new_subarea
+  def create_new_subarea(name)
     @soils = Soil.where(:field_id => session[:field_id])
     i = 0
     @soils.each do |soil|
@@ -516,8 +594,39 @@ before_filter :take_names
         end
       end
     end
-	create_subarea("Filter Strip", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id)
+	create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "create")
     return "OK"
+  end
+
+  def update_existing_subarea(name)
+    @soils = Soil.where(:field_id => session[:field_id])
+    i = 0
+    @soils.each do |soil|
+      if soil.selected
+        if @slope > soil.slope then
+          @slope = soil.slope
+        end
+      end
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      if subarea != nil then
+        if i = 0 then 
+          @inps = subarea.inps   #select the first soil, which is with bigest area
+          i += 1
+        end
+        if soil.selected
+          @iops = subarea.iops   #selected the last iops to inform the subarea the folowing iops to create.
+        end
+      end
+    end
+	subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => name).first
+	update_wsa("-", subarea.wsa)
+	update_subarea(subarea, "PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "update")
+  end
+
+  def delete_existing_subarea(name)
+	subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => name).first
+	update_wsa("-", subarea.wsa)
+	subarea.delete
   end
 
   ##############################  PRIVATE  ###############################

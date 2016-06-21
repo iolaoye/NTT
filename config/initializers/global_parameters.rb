@@ -51,6 +51,8 @@
 	FT_TO_MM = 304.8
 	AC_TO_KM2 = 0.0040468564224
 	KM2_TO_HA = 247.10538147
+	HA_TO_M2 = 10000
+	KM_TO_M = 1000
 	FSEFF = 0.9
 #field constants
 	SMZ = '_SMZ'
