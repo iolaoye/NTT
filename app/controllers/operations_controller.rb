@@ -127,6 +127,7 @@ class OperationsController < ApplicationController
 				state_id = Location.find(session[:location_id]).state_id
 				crops = Crop.where(:number => event.apex_crop)
 				crop_id = event.apex_crop
+				session[:depth] = event.apex_crop
 				plant_population = crops[0].plant_population_ft
 				crops.each do |crop|
 					if crop.state_id == state_id then
@@ -179,6 +180,14 @@ class OperationsController < ApplicationController
 			end  # end events.each
 		end  #end if cropping_system_id != ""
 		@operations = Operation.where(:scenario_id => params[:id])
+		if params[:language] != nil then
+			if params[:language][:language].eql?("es") 
+				I18n.locale = :es 
+			else
+				I18n.locale = :en			
+			end
+		end 
+
 		render action: 'list'
 	else
 		render action: 'upload'
