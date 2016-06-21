@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿es:
   activerecord:
     errors:
@@ -469,3 +470,476 @@
         ie10: 'Internet Explorer 10'
         ie11: 'internet Explorer 11'
         netscape: 'Netscape 9.0'
+=======
+﻿es:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "La validación falló: %{errors}"
+        restrict_dependent_destroy:
+          has_one: No se puede eliminar el registro porque existe un %{record} dependiente
+          has_many: No se puede eliminar el registro porque existen %{record} dependientes
+  date:
+    abbr_day_names:
+    - dom
+    - lun
+    - mar
+    - mié
+    - jue
+    - vie
+    - sáb
+    abbr_month_names:
+    -
+    - ene
+    - feb
+    - mar
+    - abr
+    - may
+    - jun
+    - jul
+    - ago
+    - sep
+    - oct
+    - nov
+    - dic
+    day_names:
+    - domingo
+    - lunes
+    - martes
+    - miércoles
+    - jueves
+    - viernes
+    - sábado
+    formats:
+      default: "%d/%m/%Y"
+      long: "%d de %B de %Y"
+      short: "%d de %b"
+    month_names:
+    -
+    - enero
+    - febrero
+    - marzo
+    - abril
+    - mayo
+    - junio
+    - julio
+    - agosto
+    - septiembre
+    - octubre
+    - noviembre
+    - diciembre
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: alrededor de 1 hora
+        other: alrededor de %{count} horas
+      about_x_months:
+        one: alrededor de 1 mes
+        other: alrededor de %{count} meses
+      about_x_years:
+        one: alrededor de 1 año
+        other: alrededor de %{count} años
+      almost_x_years:
+        one: casi 1 año
+        other: casi %{count} años
+      half_a_minute: medio minuto
+      less_than_x_minutes:
+        one: menos de 1 minuto
+        other: menos de %{count} minutos
+      less_than_x_seconds:
+        one: menos de 1 segundo
+        other: menos de %{count} segundos
+      over_x_years:
+        one: más de 1 año
+        other: más de %{count} años
+      x_days:
+        one: 1 día
+        other: "%{count} días"
+      x_minutes:
+        one: 1 minuto
+        other: "%{count} minutos"
+      x_months:
+        one: 1 mes
+        other: "%{count} meses"
+      x_seconds:
+        one: 1 segundo
+        other: "%{count} segundos"
+    prompts:
+      day: Día
+      hour: Hora
+      minute: Minutos
+      month: Mes
+      second: Segundos
+      year: Año
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: debe ser aceptado
+      blank: no puede estar en blanco
+      present: debe estar en blanco
+      confirmation: no coincide
+      empty: no puede estar vacío
+      equal_to: debe ser igual a %{count}
+      even: debe ser par
+      exclusion: está reservado
+      greater_than: debe ser mayor que %{count}
+      greater_than_or_equal_to: debe ser mayor que o igual a %{count}
+      inclusion: no está incluido en la lista
+      invalid: no es válido
+      less_than: debe ser menor que %{count}
+      less_than_or_equal_to: debe ser menor que o igual a %{count}
+      model_invalid: "La validación falló: %{errors}"
+      not_a_number: no es un número
+      not_an_integer: debe ser un entero
+      odd: debe ser impar
+      required: debe existir
+      taken: ya está en uso
+      too_long:
+        one: "es demasiado largo (1 carácter máximo)"
+        other: "es demasiado largo (%{count} caracteres máximo)"
+      too_short:
+        one: "es demasiado corto (1 carácter mínimo)"
+        other: "es demasiado corto (%{count} caracteres mínimo)"
+      wrong_length:
+        one: "no tiene la longitud correcta (1 carácter exactos)"
+        other: "no tiene la longitud correcta (%{count} caracteres exactos)"
+      other_than: debe ser distinto de %{count}
+    template:
+      body: 'Se encontraron problemas con los siguientes campos:'
+      header:
+        one: No se pudo guardar este/a %{model} porque se encontró 1 error
+        other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
+  helpers:
+    select:
+      prompt: Por favor seleccione
+      field: Seleccione la Parcela 
+      scenario: Seleccione el Scenario
+    submit:
+      create: Crear %{model}
+      submit: Guardar %{model}
+      update: Actualizar %{model}
+    label:
+      project:
+        name: Nombre
+        description: Descripción
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "€"
+    format:
+      delimiter: "."
+      precision: 3
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: mil millones
+          million:
+            one: millón
+            other: millones
+          quadrillion: mil billones
+          thousand: mil
+          trillion:
+            one: billón
+            other: billones
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n %"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: " y "
+      two_words_connector: " y "
+      words_connector: ", "
+  time:
+    am: am
+    formats:
+      default: "%A, %d de %B de %Y %H:%M:%S %z"
+      long: "%d de %B de %Y %H:%M"
+      short: "%d de %b %H:%M"
+    pm: pm
+  general:
+    note: 'NOTA:'
+    name: Nombre
+    description: Descripción
+    show: Mostrar
+    edit: Editar
+    delete: Borrar
+    back: Regresar
+    actions: Opciones
+    new: Adicionar
+    all: Todos
+    listing: Lista de
+    editing: Editando
+    type: Clase
+    value: Valor
+    fraction: fracción
+    date: Fecha
+    select: Seleccione
+    one: Uno
+    please: Please
+    wait: wait
+    loading: Cargando
+  welcome_note: 
+    thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
+    note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
+    note2: '2.	Esta versión de NTT esta escrita tanto en el idioma Inglés como en Expañol.'
+    final: 'Finalment, como líder del proyecto NTT y con mi equipo de proyecto (Oscar Gallego y Edward Osei), nos gustaría darle las gracias a las fuentes de financiación y nuestros colegas, en particular, los agricultores y productores, por su contribución en el diseño de este programa.'
+    name: 'Dr. Ali Saleh'
+  menu:
+    welcome: Bienvenido
+    projects: Proyectos
+    location: Ubicación
+    watershed: Cuencas
+    weather: Clima
+    fields: Parcelas
+    soils: Suelos
+    scenarios: Escenarios
+    bmps: Mejores Prácticas de Gestión
+    managements: Operaciones
+    economics: Costos
+    simulations: Simulaciones
+    results: Resultados
+    modifications: Modificaciones
+    signout: Salir
+    site: Sitio
+    control_file: Control
+    parameters_file: Parámetros
+    subarea_file: Subáreas
+    soil_file: Suelos
+    layer_file: Capas
+    operation_file: Operaciones
+    site_file: Sitio
+    apex_file: Archivos APEX
+  project:
+    new_project: 'Proyecto Nuevo'
+    upload_project: 'Subir Proyecto'
+    upload_button_desc: 'Proyecto a Subir'
+    editing_project: 'Revisión de Proyecto'
+  footer:
+    instructions: Instrucciones
+    contact_us: 'Contactarnos'
+    about_ntt: 'Acerca de NTT'
+    help: Ayuda
+    Language: Idioma
+  languages:
+    english: Inglés
+    spanish: Español
+  weather:
+    longitude: Longitud
+    latitude: Latitud
+    years_of_weather: Años de Información del Clima
+    note: 'El periodo a simular es el mismo periodo contenido en la información de clima seleccionado. Usted puede cambiar el periodo a simular pero el programa va a adicionar cinco años antes como inicialización. Los últimos doce años son los que se muestran en las gráficas en la página de resultados. Si el periodo es menos que doce años, todos los años serán presentados en la página de resultados.'
+    years_of_simulation: Periodo a simular
+    update: 'Actualizar el Clima'
+    legend: Seleccione la clase de clima que quiere usar
+    choose_file_lenged: Elija el archivo para subir
+    enter_coordinates: Entre las coordenadas
+    initial_year: año inicial
+    final_year: año final
+  soil:
+    layers: Capas
+    soil: Suelo
+    layer: Capa
+    selected: Seleccionado
+    key: Clave
+    symbol: Símbolo
+    group: Grupo
+    name: Nombre
+    albedo: Albedo
+    slope: Inclinación
+    percentage: Porcentaje
+    drainage_type: Tipo de drenaje
+    depth: Profundidad
+    soilp: P en el Suelo
+    bulk_density: Densidad de la masa
+    sand: Arena
+    silt: Limo
+    clay: Arcilla
+    organic_matter: Materia Orgánica
+    ph: PH    
+  scenario:
+    scenario_name: Nombre Escenario
+    scenario: Escenario
+    simulate: Simular
+    operation: Operación
+  location:
+    new_location: Localización Nuevo
+    edit: Revisión de Localización
+  operation:
+    new_operation: Nueva Operación
+    edit: Revisión de Operación
+    upload: 'Cargar'
+    cropping_system: 'Sistema de Cultivo'
+    crop: Cultivo
+    moisture: Humedad
+    nutrients: Nutrientes
+    distribution: Distribución
+    fertilizer: Fertilizante
+    amount: Cantidad
+    bmp: MPG
+    irrigation: Irrigación
+  activity:
+    edit: Revisión de Actividad
+    new_activity: Actividad Nuevo
+    activity_title: Lista de Actividades
+  field:
+    field_name: Nombre Parcela
+    field_area: Área Parcela
+    field_avg_slope: Inclinación promedio parcela
+    new_field: Parcela Nueva
+    field_title: Lista Parcelas
+    field_type: Bosque?
+  watershed:
+    watershed_name: Nombre de la Cuenca
+    new_watershed: Nueva Cuenca
+    watershed_title: Listado de Cuencas
+  watershed_scenario:
+    watershed_scenario_name: Nombre de la cuenca
+    watershed_scenario_title: Listing Watershed Scenarios
+    add_to_watershed: Adicionar a la cuenca
+  submit:
+    save: Guardar
+    login: Iniciar sesión
+  sessions:
+    index:
+      email: Correo Electrónico
+      password: Contraseña
+      new_user: Usuario Nuevo
+  modifications:
+    mod_title: Modificar Información de APEX
+  result:
+    summary: Resumen
+    by_soil: por Suelo
+    monthly: Mensual
+    annual: Anual
+    update_chart: Actualizar Gráfica
+    result: Resultado
+    submit: Enviar
+  users:
+    confirmation: Confirmación de la contraseña
+    company: Empresa
+  about:
+    overview0: 'Visión General'
+    overview1: 'Nutrient Tracking Tool (NTT) fue diseñado y desarrollado por Texas Institute for Applied Environmental Research (TIAER), Tarleton State University con fondos del programa Conservation Innovation Grants de USDA-NRCS y varias agencias del estado.'
+    overview2: 'La aplicación on-line <b>NTT</b> compara sistemas de manejo agrícolas para calcular cambios en perdida de nutrientes esperado.'
+    overview3: 'Los productores agrícolas y adminstradores de tierras pueden definir un número de escenarios y producir un reporte mostrando las diferencias de perdida de nutriente esperado entre cualquiera de los escenarios seleccionados. Para mas información acerca de NTT, puede se consultada en Saleh et al. (2011).'
+    process0: 'Proceso'
+    process: 'La información suminstrada por el usuario es procesada usando un modelo de simulación biofísico, el programa Agricultural Policy Environmental eXtender (APEX; Williams et al., 2000).'
+    disclaimer0: 'Descargo'
+    disclaimer1: 'Aunque NTT ha sido probado por sus desarrolladores, NO garantía, expresa o implícita, es dada a la validez de los resultados y la funcionalidad del programa y material relacionado al programa, ni deberá el echo de la distribución constituir ninguna de tales garantías, y NINGUNA responsabilidad es es asumida por los desarrolladores en conección con ello. El usuario asume todos los riesgos y responsabilidades por el uso y aplicación de NTT y la interpretación de los resultados generados por la herramienta.'
+    disclaimer2: 'Los autores y su institución afiliada, TIAER, y cualquier otra agencia del govierno de los Estados Unidos no será responsable por posibles daños a los usiarios de NTT, incluyendo perdida de utilidades, perdida de ahorros, perdida de tiempo, accines de las agencias reguladoras, o cualquier otro incidente o daño generado directo o indirecto ocurrido por el uso o la imposibilidad de usar NTT, sus bases de datos, sus resultados, o su documentación por cualquier proposito.'
+    selections0: 'Selecciiones Disponibles'
+    selections1: '<b>Nutrient Tracking Tool (NTT)</b> compara compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield.'
+    selections2: '<b>NTT</b> requires regional soils, climate and crop parameters. As a new application, <b>NTT</b> currently provides selections for <b>every U.S. county</b>, but it has only been validated for a limited number of states and counties.'
+    note1: '* A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading.  Soil and Water Conservation Society.  November/December 2011 vol. 66 no. 6 400-410.'
+    note2: '** Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+  contact1:
+    header: 'Información de Contacto'
+    statement: 'Para preguntas o comentarios acerca de la Herramient de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
+    name: 'Ali Saleh'
+    position: 'Director Asociado'
+    dept: 'Texas Institute for Applied Environmental Research (TIAER)'
+    uni: 'Tarleton State University'
+    box: 'P.O. Box T410'
+    city: 'Stephenville, TX 76402'
+    phone: '(254)968-9079 (Teléfono)'
+    fax: '(254)968-9790 (Fax)'
+    email: 'saleh@tarleton.edu'
+  contact2:
+    statement: 'Para preguntas <b>técnicas</b> o comentarios acerca de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
+    name: 'Oscar Gallego'
+    position: 'Asociado Principal de Investigación'
+    dept: 'Texas Institute for Applied Environmental Research (TIAER)'
+    uni: 'Tarleton State University'
+    box: 'P.O. Box T410'
+    city: 'Stephenville, TX 76402'
+    phone: '(254)968-9787 (Phone)'
+    fax: '(254)968-9790 (Fax)'
+    email: 'gallego@tiaer.tarleton.edu'
+  help:
+    header: NTT Tabla de Contenidos
+    return_to_table: '<< Regresar a la Tabla de Contenidos'
+    overview: Visión General
+    overview1: Acerca de NTT
+    overview2: Información del Contacto
+    getstarted: Empezando
+    getstarted1: Requisitos de Sistema
+    getstarted2: Conceptos Básicos de Navegación
+    getstarted3: Página del Proyecto
+    getstarted4: Página de Ubicación 
+    getstarted5: Página del Clima 
+    getstarted6: Página de Parcela 
+    getstarted7: Página de Suelos 
+    getstarted8: Página del Gestión
+    getstarted9: Página del Sub-Proyecto
+    getstarted10: Página del Simulación
+    getstarted11: Página de resultados 
+    getstarted12: Página de modificaciones
+    understanding: La Comprensión de NTT
+    understanding1: APEX
+    understanding2: Descargo de responsabilidad del NTT
+  sysreq:
+    header: Requisitos del Sistema
+    minreq:
+        header: Requisitos mínimos
+        windows: '<b>Windows:</b> X86 o X64 1.6 GHz o con un procesador más alto de 512-MB de RAM'
+        mac: '<b>Macintosh (Intel-based):</b> Intel Core Duo 1.86 GHz o con un procesador más alto de 512-MB de RAM'
+    webbrowsers:
+        header: Supported Web Browsers
+        statement: 'la Nutrient Tracking Tool <b>(NTT)</b> ha sido probado en los siguientes navegadores:'
+        mac: 'Apple Macintosh OS 10.5.7+ (Intel-based):'
+        win81: 'Microsoft Windows 8.1 Desktop:'
+        win8: 'Microsoft Windows 8 Desktop:'
+        win7: 'Microsoft Windows 7:'
+        win7sp1: 'Microsoft Windows 7 SP1:'
+        win2012r2: 'Microsoft Windows Server 2012 R2:'
+        win2012: 'Microsoft Windows Server 2012:'
+        win2008sp2: 'Microsoft Windows Server 2008 SP2:'
+        win2008r2sp1: 'Microsoft Windows Server 2008 R2 SP1:'
+        winvista: 'Microsoft Windows Vista:'
+        winxp: 'Microsoft Windows Server 2003/Windows XP:'
+        firefox: 'Firefox 12+'
+        chrome: 'Chrome 12+'
+        safari: 'Safari 4+'
+        ie78: 'Internet Explorer 7 and 8'
+        ie789: 'Internet Explorer 7, 8, and 9'
+        ie89: 'Internet Explorer 8 and 9'
+        ie8911: 'Internet Explorer 8, 9, and 11'
+        ie891011: 'Internet Explorer 8, 9, 10, and 11'
+        ie10: 'Internet Explorer 10'
+        ie11: 'internet Explorer 11'
+        netscape: 'Netscape 9.0'
+>>>>>>> ad6be7a0bb584289464569b4d72ef49c56771983
