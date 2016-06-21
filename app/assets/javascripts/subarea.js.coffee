@@ -1,4 +1,3 @@
-﻿
 load_subareas = ->
     url = "/soils/" + $("#field_id").val() + "/list.json"
     items = []
