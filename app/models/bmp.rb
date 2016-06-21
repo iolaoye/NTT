@@ -1,3 +1,4 @@
+
 class Bmp < ActiveRecord::Base
   attr_accessible :scenario_id, :bmp_id, :crop_id, :irrigation_id, :water_stress_factor, :irrigation_efficiency, :maximum_single_application, :safety_factor, :depth, 
 	         :area, :number_of_animals, :days, :hours, :animal_id, :dry_manure, :no3_n, :po4_p, :org_n, :org_p, :width, :grass_field_portion, :buffer_slope_upland, :crop_width,
@@ -17,7 +18,8 @@ class Bmp < ActiveRecord::Base
 	validates :safety_factor, numericality: { greater_than: 0,  less_than_or_equal_to: 100000 }, if: "irrigation_id == 7"
 	validates :area, numericality: { greater_than: 0,  less_than_or_equal_to: 100000 }, if: "bmpsublist_id == 1 && irrigation_id == 8"
 	validates_uniqueness_of :bmp_id, :message => "of this group already exists", if: "bmp_id == 1 || bmp_id == 8"
-	validates_uniqueness_of :bmp_id, :message => "TODO", if: :pad_and_pipes_exists
+	validates_uniqueness_of :bmp_id, if: :pad_and_pipes_exists
+
 
   def pad_and_pipes_exists
     if bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7
@@ -33,4 +35,3 @@ class Bmp < ActiveRecord::Base
   end #end function
 
 end
-
