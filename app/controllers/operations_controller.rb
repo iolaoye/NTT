@@ -108,7 +108,7 @@ class OperationsController < ApplicationController
   end
 
   def cropping_system
-	@cropping_systems = CroppingSystem.where(:state_id => Location.find(Field.find(Scenario.find(71).field_id).location_id).state_id)
+	@cropping_systems = CroppingSystem.where(:state_id => Location.find(Field.find(Scenario.find(params[:id]).field_id).location_id).state_id)
 	if @cropping_systems == nil then
 		@cropping_systems = CroppingSystem.where(:state_id => "All")
 	end
