@@ -182,9 +182,9 @@ class OperationsController < ApplicationController
 		@operations = Operation.where(:scenario_id => params[:id])
 		if params[:language] != nil then
 			if params[:language][:language].eql?("es") 
-				I18n.locale = :es 
+				I18n.locale = :es
 			else
-				I18n.locale = :en			
+				I18n.locale = :en
 			end
 		end 
 
