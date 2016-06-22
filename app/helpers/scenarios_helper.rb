@@ -20,6 +20,8 @@ module ScenariosHelper
 	end
 
 	def update_subarea(subarea, sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type)
+		rchc_buff = 0.01
+		rchk_buff = 0.2
 		subarea.scenario_id = scenario_id
 		subarea.soil_id = soil_id
 		subarea.bmp_id = bmp_id
