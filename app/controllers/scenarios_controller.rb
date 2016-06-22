@@ -1755,6 +1755,7 @@ class ScenariosController < ApplicationController
 			end
         end
 		msg = average_totals(results_data, 0)   # average totals
+
 		return msg
 	end
 

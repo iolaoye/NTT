@@ -93,9 +93,13 @@ class SubareasController < ApplicationController
 		soils.each do |soil|
 			subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
 			@subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
-			#@subareas.push(Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id]).description)
 			i+=1
 		end
+	end
+	subareas = Subarea.where(:scenario_id => session[:scenario_id]).where("bmp_id > 0")
+	subareas.each do |subarea|
+		@subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+		i+=1
 	end
   end
 
