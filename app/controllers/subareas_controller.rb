@@ -3,8 +3,8 @@ class SubareasController < ApplicationController
   # GET /subareas.json
   def index
 
-  ooo
-    @subareas = Subarea.where(:soil_id => params[:soil_id], :scenario_id => params[:scenario_id])
+    #@subareas = Subarea.where(:soil_id => params[:soil_id], :scenario_id => params[:scenario_id])
+	get_subareas()
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,7 +26,6 @@ class SubareasController < ApplicationController
   # GET /subareas/new
   # GET /subareas/new.json
   def new
-  lll
     @subarea = Subarea.new
 
     respond_to do |format|
@@ -43,18 +42,9 @@ class SubareasController < ApplicationController
   # POST /subareas
   # POST /subareas.json
   def create
-  ppp
-    @subarea = Subarea.new(subarea_params)
-
-    respond_to do |format|
-      if @subarea.save
-        format.html { redirect_to @subarea, notice: 'Subarea was successfully created.' }
-        format.json { render json: @subarea, status: :created, location: @subarea }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @subarea.errors, status: :unprocessable_entity }
-      end
-    end
+    session[:scenario_id] = params[:subarea][:scenario_id]
+	get_subareas()
+	render "index"
   end
 
   # PATCH/PUT /subareas/1
@@ -83,6 +73,18 @@ class SubareasController < ApplicationController
       format.html { redirect_to subareas_url }
       format.json { head :no_content }
     end
+  end
+
+  def get_subareas()
+    @subareas = []
+	soils = Soil.where(:field_id => session[:field_id], :selected => true)
+	i=1
+	soils.each do |soil|
+		subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
+		@subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+		#@subareas.push(Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id]).description)
+		i+=1
+	end
   end
 
   private
