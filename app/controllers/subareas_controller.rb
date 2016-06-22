@@ -23,6 +23,8 @@ class SubareasController < ApplicationController
   # GET /subareas/1
   # GET /subareas/1.json
   def show
+
+
     @subarea = Subarea.find(params[:id])
 
     respond_to do |format|
