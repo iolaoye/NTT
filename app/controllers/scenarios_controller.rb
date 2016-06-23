@@ -1769,6 +1769,17 @@ class ScenariosController < ApplicationController
 		msg = average_totals(results_data, 0)   # average totals
 
 		return msg
+	
+		total_manure = 0
+		no3 = 0
+		po4 = 0
+		org_n = 0
+		org_p = 0
+
+		soils = Soil.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
+		soils.each do |soil|
+			# TODO
+		end
 	end
 
 	def add_value_to_chart_table(value, description_id, soil_id, year)

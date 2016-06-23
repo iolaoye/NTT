@@ -56,6 +56,10 @@
 	<%= f.label :reservoir_area %> (0.00 – 99999.00)<br />
 	<%= f.text_field :area %>
   </div>
+  <div class="field" id="animals" style="display:none">
+    <%= label :animal_id, 'Animals' %>
+    <%= collection_select :bmp, :animal_id, @animals, :id, :name, {:prompt => 'Select Animal Type', :selected => @bmp.animal_id}, {:required => true} %>
+  </div>
   <div class="field" id="number_of_animals" style="display:none">
 	<%= f.label :number_of_animals %><br />
 	<%= f.text_field :number_of_animals %>
@@ -67,10 +71,6 @@
   <div class="field" id="hours" style="display:none">
 	<%= f.label :hours %><br />
 	<%= f.text_field :hours %>
-  </div>
-  <div class="field" id="animals" style="display:none">
-    <%= label :animal_id, 'Animals' %>
-    <%= collection_select :bmp, :animal_id, Animal.all, :id, :name, {:prompt => 'Select Animal Type'}, {:required => true} %>
   </div>
   <div class="field" id="dry_manure" style="display:none">
 	<%= f.label :dry_manure %><br />
