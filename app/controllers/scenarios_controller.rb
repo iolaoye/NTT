@@ -174,10 +174,18 @@ class ScenariosController < ApplicationController
 		county = County.find(Location.find(session[:location_id]).county_id)
 		apex_run_string = "APEX001   1IWPNIWND   1   0   0"
 		if county != nil then
-			path = File.join(WP1, county.wind_wp1_name + ".wp1")
-			FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
-			path = File.join(WIND, county.wind_wp1_name + ".wnd")
-			FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
+			client = Savon.client(wsdl: URL_Weather)
+			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
+			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			print_array_to_file(weather_data, county.wind_wp1_name + ".wp1")
+			#path = File.join(WP1, county.wind_wp1_name + ".wp1")
+			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
+			client = Savon.client(wsdl: URL_Weather)
+			response = client.call(:get_weather, message:{"path" => WIND + "/" + county.wind_wp1_name + ".wnd"})
+			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			print_array_to_file(weather_data, county.wind_wp1_name + ".wnd")
+			#path = File.join(WIND, county.wind_wp1_name + ".wnd")
+			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
 			apex_run_string["IWPN"] = sprintf("%4d", county.wind_wp1_code)
 			apex_run_string["IWND"] = sprintf("%4d", county.wind_wp1_code)
 		end
@@ -190,10 +198,14 @@ class ScenariosController < ApplicationController
 		if (weather.way_id == 2)
 			#copy the file path
 			path = File.join(OWN,weather.weather_file)
+		    FileUtils.cp_r(path, dir_name + "/APEX.wth")
 		else
-			path = File.join(PRISM,weather.weather_file)
+			#path = File.join(PRISM,weather.weather_file)
+			client = Savon.client(wsdl: URL_Weather)
+			response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
+			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			print_array_to_file(weather_data, "APEX.wth")
 		end
-		FileUtils.cp_r(path, dir_name + "/APEX.wth")
 		#todo after file is copied if climate bmp is in place modified the weather file.
 	end
 
