@@ -17,7 +17,8 @@
 	URL_HU = 'http://nn.tarleton.edu/NTTCalcHU/NTTService.asmx?WSDL'
 
 #APEX folders.
-	APEX = "C:/Borrar/NTTFiles"
+#todo create a process to delete old folders
+	APEX = "public/NTTFiles"
 
 #folder for own weather files
 	OWN = 'public/weather'

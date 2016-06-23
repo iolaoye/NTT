@@ -3759,7 +3759,7 @@ Description.create!({:id => 72, :description => "Crop 2", :spanish_description =
 Description.create!({:id => 73, :description => "Crop 3", :spanish_description => "Crop 3", :unit => "", :detail => true, :period => 2}, :without_protection => true)
 Description.create!({:id => 74, :description => "Crop 4", :spanish_description => "Crop 4", :unit => "", :detail => true, :period => 2}, :without_protection => true)
 Description.create!({:id => 75, :description => "Crop 5", :spanish_description => "Crop 5", :unit => "", :detail => true, :period => 2}, :without_protection => true)
-Description.create!({:id => 100, :description => "Precipitation", :spanish_description => "Precipitación", :unit => "in", :detail => false, :period => 1}, :without_protection => true)
+Description.create!({:id => 100, :description => "Precipitation", :spanish_description => "Precipitacion", :unit => "in", :detail => false, :period => 1}, :without_protection => true)
 
 CroppingSystem.delete_all
 CroppingSystem.create!({:id => 1, :name =>'ALLBananas', :crop =>'Bananas', :tillage =>'none', :var12 =>'Bananas_NT', :state_id => 0, :grazing => 0, :status => 1}, :without_protection => true)

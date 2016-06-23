@@ -192,7 +192,9 @@ class ScenariosController < ApplicationController
 			path = File.join(OWN,weather.weather_file)
 		else
 			path = File.join(PRISM,weather.weather_file)
-		end 
+		end
+		session[:depth] = path
+		ooo
 		FileUtils.cp_r(path, dir_name + "/APEX.wth")
 		#todo after file is copied if climate bmp is in place modified the weather file.
 	end
@@ -1755,6 +1757,7 @@ class ScenariosController < ApplicationController
 			end
         end
 		msg = average_totals(results_data, 0)   # average totals
+
 		return msg
 	end
 
