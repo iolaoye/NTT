@@ -193,8 +193,6 @@ class ScenariosController < ApplicationController
 		else
 			path = File.join(PRISM,weather.weather_file)
 		end
-		session[:depth] = path
-		ooo
 		FileUtils.cp_r(path, dir_name + "/APEX.wth")
 		#todo after file is copied if climate bmp is in place modified the weather file.
 	end
