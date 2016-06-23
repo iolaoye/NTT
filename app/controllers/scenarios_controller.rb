@@ -375,7 +375,7 @@ class ScenariosController < ApplicationController
 				end
 				ph[layer_number] = PHMIN if ph[layer_number] < PHMIN
 				ph[layer_number] = PHMAX if ph[layer_number] > PHMAX
-
+				
 				cec[layer_number] = 0
                 if layer.cec == 0 
                     cec[layer_number] = cec[layer_number - 1]
@@ -1545,6 +1545,9 @@ class ScenariosController < ApplicationController
 					apex_string += sprintf("%8.2f", c.value) + "\n"
             end
         end
+					session[:depth] = apex_string
+			ooo
+
 		print_string_to_file(apex_string, "Apexcont.dat")
 	end
 
