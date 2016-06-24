@@ -175,6 +175,7 @@ class ScenariosController < ApplicationController
 		apex_run_string = "APEX001   1IWPNIWND   1   0   0"
 		if county != nil then
 			client = Savon.client(wsdl: URL_Weather)
+			session[:depth] = county.wind_wp1_name
 			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
 			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
 			print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
