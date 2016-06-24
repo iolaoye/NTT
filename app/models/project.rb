@@ -4,6 +4,7 @@ class Project < ActiveRecord::Base
     belongs_to :user
 	has_one :location, :dependent => :destroy
 	has_many :apex_controls, :dependent => :destroy
+	has_many :apex_parameters, :dependent => :destroy
   #validations
 	 validates_uniqueness_of :name
 	 validates_presence_of :name

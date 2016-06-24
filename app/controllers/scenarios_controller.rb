@@ -306,7 +306,7 @@ class ScenariosController < ApplicationController
 
                 if layer_number == 1
                     #validate if this layer is going to be used for Agriculture Lands
-                    if layer.depth <= 5 && layer.sand = 0 && layer.silt = 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
+                    if layer.depth <= 5 && layer.sand == 0 && layer.silt == 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
                         next
                     end
                     if soil.albedo > 0 
@@ -783,7 +783,7 @@ class ScenariosController < ApplicationController
             #if !(bmps.CBCWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBBWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBCrop > 0) then
                 #addSubareaFile(soil._scenariosInfo(currentScenarioNumber)._subareasInfo, operation_number, last_soil1, last_owner1, i, nirr, false)
 				#operation number is used to control subprojects. Therefore here is going to be 1.
-                add_subarea_file(Subarea.where(:soil_id => soil.id).find_by_scenario_id(@scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, @soils.count)
+                add_subarea_file(Subarea.find_by_soil_id_and_scenario_id(soil.id, @scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, @soils.count)
                 i = i + 1
             end
         end
@@ -1517,8 +1517,9 @@ class ScenariosController < ApplicationController
 
 	def create_control_file()
 		apex_string = ""
-        ApexControl.where(:project_id => session[:project_id]).each do |c|
-            case c.id
+		apex_control = ApexControl.where(:project_id => session[:project_id])
+        apex_control.each do |c|
+            case c.control_id
                 when 1..19        #line 1
 					apex_string += sprintf("%4d", c.value)
                 when 20
@@ -1545,9 +1546,6 @@ class ScenariosController < ApplicationController
 					apex_string += sprintf("%8.2f", c.value) + "\n"
             end
         end
-					session[:depth] = apex_string
-			ooo
-
 		print_string_to_file(apex_string, "Apexcont.dat")
 	end
 
@@ -1583,9 +1581,10 @@ class ScenariosController < ApplicationController
         apex_string +="                " + "\n"
         apex_string +="                " + "\n"
         apex_string +="   50.00   10.00" + "\n"
-		ApexParameter.where(:project_id => session[:project_id] ).each do |p|
-			number = Parameter.find(p.parameter_id).number
-			case number
+		apex_parameter = ApexParameter.where(:project_id => session[:project_id])
+		apex_parameter.each do |p|
+			#number = Parameter.find(p.parameter_id).number
+			case p.parameter_id
 				when 10, 20, 30, 50, 60, 70, 80, 90
 					apex_string += sprintf("%8.2f", p.value) + "\n"
 				when 36, 65, 76, 87, 88

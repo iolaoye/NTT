@@ -135,7 +135,7 @@ class LocationsController < ApplicationController
 			@location.coordinates = params[:parcelcoords]
 			@location.save
 		end # end if of session_id check
-		format.html # new.html.erb
+		format.html # Runs receive_from_mapping_site.html.erb view
       end  # end if error
 	end
   end  #end method receiving from map site
