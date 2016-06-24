@@ -1788,16 +1788,51 @@ class ScenariosController < ApplicationController
 		msg = average_totals(results_data, 0)   # average totals
 
 		return msg
-	
-		total_manure = 0
-		no3 = 0
-		po4 = 0
-		org_n = 0
-		org_p = 0
 
-		soils = Soil.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
+		update_results_table
+	end
+
+	def update_results_table
+		bmp = Bmp.where(:scenario_id => session[:scenario_id], :bmpsublist_id => 10)
+	
+		total_manure = bmp.number_of_animals * bmp.hours / 24 * bmp.dry_manure
+		no3 = total_manure * bmp.days * bmp.no3_n
+		po4 = total_manure * bmp.days * bmp.po4_p
+		org_n = total_manure * bmp.days * bmp.org_n
+		org_p = total_manure * bmp.days * bmp.org_p
+
+		soils = Soil.where(:field_id => session[:field_id], :soil_selected => true)
 		soils.each do |soil|
-			# TODO
+			results = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
+			results.each do |result|
+				update_value_of_results(result, false)
+			end
+		end
+		results = Result.where(:soil_id => 0, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+        results.each do |result|
+            update_value_of_results(result, true)
+        end
+	end
+
+	def update_value_of_results(result, is_total)
+		if is_total
+			percentage = 1
+		else
+			percentage = soil.percentage / 100
+		end
+		case result.description_id
+			when 20
+				result.value += no3 * percentage + org_n * percentage
+			when 21
+				result.value += org_n * percentage
+			when 22
+				result.value += no3 * percentage
+			when 30
+				result.value += po4 * percentage + org_p * percentage
+			when 31
+				result.value += org_p * percentage
+			when 32
+				result.value += po4 * percentage
 		end
 	end
 

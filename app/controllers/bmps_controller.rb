@@ -68,10 +68,11 @@ before_filter :take_names
   def create
     @slope = 100
     @bmp = Bmp.new(bmp_params)
-	@bmp.scenario_id = session[:scenario_id]
-	msg = input_fields("create")
-	session[:depth] = msg
-	respond_to do |format|
+	  @bmp.scenario_id = session[:scenario_id]
+    @animals = Fertilizer.where(:fertilizer_type_id => 2)
+	  msg = input_fields("create")
+	  session[:msg] = msg
+	  respond_to do |format|
 		if msg == "OK" 
 		      if @bmp.save
   			    format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
@@ -142,27 +143,27 @@ before_filter :take_names
       when 6
         return ppde(type)
       when 7
-	    return pptw(type)
+        return pptw(type)
       when 8
-	    return wetlands(type)
+        return wetlands(type)
       when 9
         return pond(type)
       when 10
-		# @animals = Fertilizer.where(:fertilizer_type_id => 2)
+        return "OK"
       when 11
         return streambank_stabilization(type)
       when 12
-		riparian_forest(type)
+        riparian_forest(type)
       when 13
-	    return filter_strip(type)
+        return filter_strip(type)
       when 14
-	    return waterway(type)
+        return waterway(type)
       when 16
         return land_leveling(type)
       when 17
-	    return terrace_system(type)
+        return terrace_system(type)
       when 18
-	    # TODO
+        # TODO
       when 19
         # TODO
       when 20
@@ -170,9 +171,9 @@ before_filter :take_names
       when 21
         return grass_cover(type)
       when 22
-	    return slope_adjustment(type)
+        return slope_adjustment(type)
       when 23
-		return shading(type)
+        return shading(type)
       else
         return "OK"
     end
@@ -183,6 +184,7 @@ before_filter :take_names
 
   ### ID: 1
   def autoirrigation(type)
+
     return irrigation_fertigation(type)
   end # end method
 
@@ -199,14 +201,14 @@ before_filter :take_names
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-		  case type
+        case type
             when "create", "update"
               subarea.idr = @bmp.depth * FT_TO_MM
             when "delete"
-		      subarea.idr = 0
+              subarea.idr = 0
             else
-		      # DO NOTHING
-		  end
+              # DO NOTHING
+         end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
@@ -230,12 +232,12 @@ before_filter :take_names
   def ppde(type)
     msg = pads_pipes(type)    
 	case type
-      when "create"
+	  when "create"
 	    create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "create")
 	  when "update"
-		update_existing_subarea("PPDE")
+      update_existing_subarea("PPDE")
 	  when "delete"
-		delete_existing_subarea("PPDE")
+      delete_existing_subarea("PPDE")
 	end
     return msg
   end # end method
@@ -251,15 +253,15 @@ before_filter :take_names
   def wetlands(type)
     case type
       when "create"
-	    return create_new_subarea("WL")
-	  when "update"
-		subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first
-		update_existing_subarea("WL", subarea)
-	  when "delete"
-		subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first
-	    update_wsa("-", subarea.wsa)
-	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first.delete
-	end
+        return create_new_subarea("WL")
+	    when "update"
+        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WL").first
+        update_existing_subarea("WL", subarea)
+  	  when "delete"
+        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WL").first
+        update_wsa("-", subarea.wsa)
+        #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first.delete
+  	end
   end # end method
 
 
@@ -269,13 +271,13 @@ before_filter :take_names
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-		  case type
+		      case type
             when "create", "update"
               subarea.pcof = @bmp.irrigation_efficiency
             when "delete"
               subarea.pcof = 0
             else
-		  end
+		      end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
@@ -287,13 +289,13 @@ before_filter :take_names
       @soils = Soil.where(:field_id => session[:field_id]) 
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
-		if subarea != nil then
-		  case type
-		    when "create", "update"
+	    	if subarea != nil then
+	    	  case type
+		        when "create", "update"
               subarea.pec = 0.85
-			when "delete"
-			  # TODO check values for deletion to see if other questions to set values may need to be asked
-		  end
+	      		when "delete"
+	      		  # TODO check values for deletion to see if other questions to set values may need to be asked
+	      	  end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
@@ -481,8 +483,7 @@ before_filter :take_names
 	  i = 0
       @soils.each do |soil|
 		if soil.selected
-			session[:depth] = @slope
-			if session[:depth] > soil.slope then
+			if @slope > soil.slope then
 				@slope = soil.slope
 			end
 		end
@@ -578,6 +579,7 @@ before_filter :take_names
   def create_new_subarea(name)
     @soils = Soil.where(:field_id => session[:field_id])
     i = 0
+    @inps = i
     @soils.each do |soil|
       if soil.selected
         if @slope > soil.slope then
@@ -595,7 +597,7 @@ before_filter :take_names
         end
       end
     end
-	create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "create")
+	  create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "create")
     return "OK"
   end
 
