@@ -47,6 +47,7 @@ before_filter :take_names
   # GET /bmps/new.json
   def new
     @bmp = Bmp.new
+	@animals = Fertilizer.where(:fertilizer_type_id => 2)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -147,7 +148,7 @@ before_filter :take_names
       when 9
         return pond(type)
       when 10
-		# TODO
+		# @animals = Fertilizer.where(:fertilizer_type_id => 2)
       when 11
         return streambank_stabilization(type)
       when 12
@@ -304,7 +305,7 @@ before_filter :take_names
   def riparian_forest(type)
     case type
       when "create", "update"
-	    return create_new_subarea("RF")
+	    return create_new_subarea("RFFS")
 	  when "delete"
 	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first
 	    update_wsa("-", subarea.wsa)

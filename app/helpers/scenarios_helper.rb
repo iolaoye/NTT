@@ -23,8 +23,13 @@ module ScenariosHelper
 		rchc_buff = 0.01
 		rchk_buff = 0.2
 		subarea.scenario_id = scenario_id
-		subarea.soil_id = soil_id
-		subarea.bmp_id = bmp_id
+		if bmp_id == 0
+			subarea.soil_id = soil_id
+			subarea.bmp_id = 0
+		else
+			subarea.bmp_id = bmp_id
+			subarea.soil_id = 0
+		end
 		subarea.subarea_type = sub_type
 		subarea.number = 0  # this number should be just included in the simulation because I do not know what soils are selected
 		subarea.description = "0000000000000000  .sub file Subbasin:1 " + sub_type + "  Date: " + Time.now.to_s
@@ -242,6 +247,7 @@ module ScenariosHelper
 				subarea.rsbd = 0.8
 				#line 10
 				subarea.pec = 1
+				add_buffer_operation(subarea, 139, 139, 0, 2000, 0, 33, true, scenario_id)
 			when 12    #Riperian Forest
 				if !checker
 					#line 2
@@ -288,11 +294,12 @@ module ScenariosHelper
 					#line 10
 					subarea.pec = 1.0
 					if type == "create"
-						create_subarea("RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "create")
+						create_subarea("RF", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "create")
 					else
 						update_wsa("-", subarea.wsa)
-						update_subarea(subarea, "RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
+						update_subarea(subarea, "RF", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
 					end
+					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, true, scenario_id)
 				else
 					#line 2
 					subarea.number = 103
@@ -335,6 +342,8 @@ module ScenariosHelper
 					subarea.rfpl = subarea.rchl
 					#line 10
 					subarea.pec = 1.0
+					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, true, scenario_id)
+					add_buffer_operation(subarea, 136, 49, 0, 1400, 0, 22, false, scenario_id)
 				end
 			when 13    #Filter Strip
 				#line 2
@@ -375,6 +384,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
+				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, true, scenario_id)
 			when 14    #Waterway
 				#line 2
 				subarea.number = 104
@@ -408,6 +418,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
+				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, true, scenario_id)
 			when 23    #Shading
 				#line 2
 				subarea.number = 101
@@ -446,6 +457,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
+				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, true, scenario_id)
 		end # end bmpsublist_id
 
 		#this is when the subarea is added from a scenario
@@ -518,5 +530,17 @@ module ScenariosHelper
 			end
 			subarea.save
 		end
+	end
+
+	def add_buffer_operation(subarea, operation, crop, years_cult, opv1, opv2, lunum, add_buffer, scenario_info)
+		operation = SoilOperation.new
+		operation.day = 15
+		operation.month = 1
+		operation.year = 1
+		operation.apex_crop = crop
+		operation.opv1 = opv1
+		operation.opv2 = opv2
+		operation.apex_operation = years_cult
+		#TODO oper.LuNumber = lunum <- visual basic code
 	end
 end

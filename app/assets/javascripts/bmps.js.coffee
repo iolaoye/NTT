@@ -2,6 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+update_animal_options = ->
+  url = "/fertilizers/" + $("#bmp_animal_id").val() + ".json"
+  $.getJSON url, (fertilizer) ->
+     $("#bmp_dry_manure").val(fertilizer.dry_matter)
+     $("#bmp_no3_n").val(fertilizer.qn)
+     $("#bmp_po4_p").val(fertilizer.qp)
+     $("#bmp_org_n").val(fertilizer.yn)
+     $("#bmp_org_p").val(fertilizer.yp)
+
 #update bmp sublist depending on the bmp selected.
 update_bmpsublist = ->
   url = "/bmplists/" + $("#bmp_bmp_id").val() + "/bmpsublists.json"
@@ -30,7 +39,7 @@ switch_all_to_off = ->
      $("#sides").toggle(false)
      $("#area").toggle(false)
      $("#number_of_animals").toggle(false)
-     $("#animal_id").toggle(false)
+     $("#animals").toggle(false)
      $("#days").toggle(false)
      $("#hours").toggle(false)
      $("#dry_manure").toggle(false)
@@ -83,8 +92,8 @@ activate_bmp_controls = ->
         when "9" #ponds
             $("#irrigation_efficiency").toggle(true)
         when "10" #stream fencing
+            $("#animals").toggle(true)
             $("#number_of_animals").toggle(true)
-            $("#animal_id").toggle(true)
             $("#days").toggle(true)
             $("#hours").toggle(true)
             $("#dry_manure").toggle(true)
@@ -140,3 +149,5 @@ $(document).ready ->
        update_bmpsublist()
     $("#bmp_bmpsublist_id").change ->
        activate_bmp_controls()
+    $("#bmp_animal_id").change ->
+       update_animal_options()
