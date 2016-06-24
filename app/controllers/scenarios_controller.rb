@@ -207,6 +207,7 @@ class ScenariosController < ApplicationController
 			print_array_to_file(weather_data, "APEX.wth")
 		end
 		#todo after file is copied if climate bmp is in place modified the weather file.
+		#todo fix widn and wp1 files with the real name
 	end
 
     def create_soils()
