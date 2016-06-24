@@ -18,7 +18,7 @@
      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
   </div>
   <div class="field" id="irrigation" style="display:none" onchange="showFields()">
-    <% if (@bmp.bmpsublist_id  == 2) %>
+    <% if (@bmp.bmpsublist_id == 2) %>
       <p>TRUE<%= @bmp.bmpsublist_id %></p>
       <%= label :irrigation_id, 'Irrigation' %>
       <%= collection_select :bmp, :irrigation_id, Irrigation.where(@bmp.irrigation_id != 8), :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
