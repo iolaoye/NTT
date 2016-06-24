@@ -17,6 +17,7 @@ class FertilizersController < ApplicationController
   # GET /fertilizers/1
   # GET /fertilizers/1.json
   def show
+  
     @fertilizer = Fertilizer.find(params[:id])
 
     respond_to do |format|

@@ -174,10 +174,18 @@ class ScenariosController < ApplicationController
 		county = County.find(Location.find(session[:location_id]).county_id)
 		apex_run_string = "APEX001   1IWPNIWND   1   0   0"
 		if county != nil then
-			path = File.join(WP1, county.wind_wp1_name + ".wp1")
-			FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
-			path = File.join(WIND, county.wind_wp1_name + ".wnd")
-			FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
+			client = Savon.client(wsdl: URL_Weather)
+			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
+			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
+			#path = File.join(WP1, county.wind_wp1_name + ".wp1")
+			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
+			client = Savon.client(wsdl: URL_Weather)
+			response = client.call(:get_weather, message:{"path" => WIND + "/" + county.wind_wp1_name + ".wnd"})
+			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			print_wind_to_file(weather_data, county.wind_wp1_name + ".wnd")
+			#path = File.join(WIND, county.wind_wp1_name + ".wnd")
+			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
 			apex_run_string["IWPN"] = sprintf("%4d", county.wind_wp1_code)
 			apex_run_string["IWND"] = sprintf("%4d", county.wind_wp1_code)
 		end
@@ -190,13 +198,16 @@ class ScenariosController < ApplicationController
 		if (weather.way_id == 2)
 			#copy the file path
 			path = File.join(OWN,weather.weather_file)
+		    FileUtils.cp_r(path, dir_name + "/APEX.wth")
 		else
-			path = File.join(PRISM,weather.weather_file)
+			#path = File.join(PRISM,weather.weather_file)
+			client = Savon.client(wsdl: URL_Weather)
+			response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
+			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			print_array_to_file(weather_data, "APEX.wth")
 		end
-		session[:depth] = path
-		ooo
-		FileUtils.cp_r(path, dir_name + "/APEX.wth")
 		#todo after file is copied if climate bmp is in place modified the weather file.
+		#todo fix widn and wp1 files with the real name
 	end
 
     def create_soils()
@@ -296,7 +307,7 @@ class ScenariosController < ApplicationController
 
                 if layer_number == 1
                     #validate if this layer is going to be used for Agriculture Lands
-                    if layer.depth <= 5 && layer.sand = 0 && layer.silt = 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
+                    if layer.depth <= 5 && layer.sand == 0 && layer.silt == 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
                         next
                     end
                     if soil.albedo > 0 
@@ -365,7 +376,7 @@ class ScenariosController < ApplicationController
 				end
 				ph[layer_number] = PHMIN if ph[layer_number] < PHMIN
 				ph[layer_number] = PHMAX if ph[layer_number] > PHMAX
-
+				
 				cec[layer_number] = 0
                 if layer.cec == 0 
                     cec[layer_number] = cec[layer_number - 1]
@@ -709,7 +720,22 @@ class ScenariosController < ApplicationController
 		FileUtils.mkdir(path) unless File.directory?(path)
 		path = File.join(path, file)
 		File.open(path, "w+") do |f|
-			data.each do |row| f << row end
+			data.each do |row| 
+				f << row
+			end
+			f.close  
+		end
+	end
+
+	def print_wind_to_file(data, file)
+		path = File.join(APEX, "APEX" + session[:session_id])
+		FileUtils.mkdir(path) unless File.directory?(path)
+		path = File.join(path, file)
+		File.open(path, "w+") do |f|
+			data.each do |row| 
+				f << row 
+				f << "\n"
+			end
 			f.close  
 		end
 	end
@@ -773,7 +799,7 @@ class ScenariosController < ApplicationController
             #if !(bmps.CBCWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBBWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBCrop > 0) then
                 #addSubareaFile(soil._scenariosInfo(currentScenarioNumber)._subareasInfo, operation_number, last_soil1, last_owner1, i, nirr, false)
 				#operation number is used to control subprojects. Therefore here is going to be 1.
-                add_subarea_file(Subarea.where(:soil_id => soil.id).find_by_scenario_id(@scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, @soils.count)
+                add_subarea_file(Subarea.find_by_soil_id_and_scenario_id(soil.id, @scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, @soils.count)
                 i = i + 1
             end
         end
@@ -1006,6 +1032,7 @@ class ScenariosController < ApplicationController
 			@soil_operations.each do |soil_operation|
 				# ask for 1=planting, 5=kill, 3=tillage
 				if soil_operation.apex_crop == CropMixedGrass && (soil_operation.activity_id == 1 || soil_operation.activity_id == 5 || soil_operation.activity_id == 3) then
+				    #todo check this one
 					#mixed_crops = operation.MixedCropData.Split(",")
 					#mixedCropsInfo(2) As String
 					#newOper As OperationsData
@@ -1507,8 +1534,9 @@ class ScenariosController < ApplicationController
 
 	def create_control_file()
 		apex_string = ""
-        ApexControl.where(:project_id => session[:project_id]).each do |c|
-            case c.id
+		apex_control = ApexControl.where(:project_id => session[:project_id])
+        apex_control.each do |c|
+            case c.control_id
                 when 1..19        #line 1
 					apex_string += sprintf("%4d", c.value)
                 when 20
@@ -1570,9 +1598,10 @@ class ScenariosController < ApplicationController
         apex_string +="                " + "\n"
         apex_string +="                " + "\n"
         apex_string +="   50.00   10.00" + "\n"
-		ApexParameter.where(:project_id => session[:project_id] ).each do |p|
-			number = Parameter.find(p.parameter_id).number
-			case number
+		apex_parameter = ApexParameter.where(:project_id => session[:project_id])
+		apex_parameter.each do |p|
+			#number = Parameter.find(p.parameter_id).number
+			case p.parameter_id
 				when 10, 20, 30, 50, 60, 70, 80, 90
 					apex_string += sprintf("%8.2f", p.value) + "\n"
 				when 36, 65, 76, 87, 88
