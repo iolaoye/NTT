@@ -4,5 +4,6 @@ class Location < ActiveRecord::Base
     has_one :state
 	has_one :county
 	has_many :fields, :dependent => :destroy
+	has_many :watershed, :dependent => :destroy
 	belongs_to :project
 end

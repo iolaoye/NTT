@@ -2,10 +2,18 @@ class SubareasController < ApplicationController
   # GET /subareas
   # GET /subareas.json
   def index
-
-    #@subareas = Subarea.where(:soil_id => params[:soil_id], :scenario_id => params[:scenario_id])
+	soils = Soil.where(:field_id => session[:field_id], :selected => true)
+	if soils != nil then
+		subarea = Subarea.where(:soil_id => soils[0].id).first
+		if subarea != nil then
+			session[:scenario_id] = subarea.scenario_id
+		else
+		    session[:scenario_id] = 0
+		end
+	else
+		session[:scenario_id] = 0
+	end
 	get_subareas()
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @subareas }
@@ -15,6 +23,8 @@ class SubareasController < ApplicationController
   # GET /subareas/1
   # GET /subareas/1.json
   def show
+
+
     @subarea = Subarea.find(params[:id])
 
     respond_to do |format|
@@ -79,10 +89,16 @@ class SubareasController < ApplicationController
     @subareas = []
 	soils = Soil.where(:field_id => session[:field_id], :selected => true)
 	i=1
-	soils.each do |soil|
-		subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
+	if session[:scenario_id] != 0 then
+		soils.each do |soil|
+			subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
+			@subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+			i+=1
+		end
+	end
+	subareas = Subarea.where(:scenario_id => session[:scenario_id]).where("bmp_id > 0")
+	subareas.each do |subarea|
 		@subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
-		#@subareas.push(Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id]).description)
 		i+=1
 	end
   end

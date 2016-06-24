@@ -1,0 +1,25 @@
+﻿<h1><%= t('menu.apex_soil')%></h1>
+<table class='gvTableStyle'>
+    <tr class='gvHeaderStyle'>
+	  <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
+      <th class="gvCellStyleTitle"><%= t('soil.key') %></th>
+      <th class="gvCellStyleTitle"><%= t('soil.symbol') %></th>
+      <th class="gvCellStyleTitle"><%= t('soil.group') %></th>
+      <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
+      <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+    </tr>
+
+  <% for soil in @soils %>
+    <tr class="gvRowStyle">
+        <td class="gvCellStyleCheckbox"><%= check_box_tag :soil, "1", soil.selected, disabled: true %></td>
+        <td class="gvCellStyleText"><%= soil.key %></td>
+        <td class="gvCellStyleText"><%= soil.symbol %></td>
+        <td class="gvCellStyleText"><%= soil.group %></td>
+        <td class="gvCellStyleText"><%= soil.name %></td>
+        <td>
+          <%= link_to image_tag("view.png"), soil_path(soil), title: t('general.show') %>
+          <%= link_to image_tag("edit.png"), edit_soil_path(soil), title: t('general.edit')%>
+        </td>
+    </tr>
+  <% end %>
+</table>

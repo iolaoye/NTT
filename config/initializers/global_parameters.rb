@@ -16,16 +16,20 @@
 # URL to get heat units
 	URL_HU = 'http://nn.tarleton.edu/NTTCalcHU/NTTService.asmx?WSDL'
 
+# URL to get weather information
+	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
+
 #APEX folders.
-	APEX = "C:/Borrar/NTTFiles"
+#todo create a process to delete old folders
+	APEX = "public/NTTFiles"
 
 #folder for own weather files
 	OWN = 'public/weather'
 
 #folder for Prism weather, wind, and wp1 files
-	PRISM = 'X:/Weather/weatherFiles/US'
-	WP1 = 'X:/Weather/wp1File'
-	WIND = 'X:/Weather/wndFile'
+	PRISM = 'E:/Weather/weatherFiles/US'
+	WP1 = 'E:/Weather/wp1File'
+	WIND = 'E:/Weather/wndFile'
 
 #folder for download project files
 	DOWNLOAD = 'public/download'

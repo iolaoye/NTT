@@ -47,6 +47,7 @@ before_filter :take_names
   # GET /bmps/new.json
   def new
     @bmp = Bmp.new
+	@animals = Fertilizer.where(:fertilizer_type_id => 2)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -147,7 +148,7 @@ before_filter :take_names
       when 9
         return pond(type)
       when 10
-		# TODO
+		# @animals = Fertilizer.where(:fertilizer_type_id => 2)
       when 11
         return streambank_stabilization(type)
       when 12
@@ -257,7 +258,7 @@ before_filter :take_names
 	  when "delete"
 		subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first
 	    update_wsa("-", subarea.wsa)
-	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first.delete
+	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first.delete
 	end
   end # end method
 
@@ -304,11 +305,11 @@ before_filter :take_names
   def riparian_forest(type)
     case type
       when "create", "update"
-	    return create_new_subarea("RF")
+	    return create_new_subarea("RFFS")
 	  when "delete"
 	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first
 	    update_wsa("-", subarea.wsa)
-	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first.delete
+	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first.delete
     end
   end
 
@@ -321,7 +322,7 @@ before_filter :take_names
 	  when "delete"
 	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first
 	    update_wsa("-", subarea.wsa)
-	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first.delete
+	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first.delete
     end
   end # end method
 
@@ -334,7 +335,7 @@ before_filter :take_names
 	  when "delete"
 	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first
 	    update_wsa("-", subarea.wsa)
-	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first.delete
+	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first.delete
     end
   end # end method
 
@@ -433,7 +434,7 @@ before_filter :take_names
 	  when "delete"
 	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first
 	    update_wsa("-", subarea.wsa)
-	    Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first.delete
+	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first.delete
     end
   end # end method
 
@@ -626,7 +627,7 @@ before_filter :take_names
   def delete_existing_subarea(name)
 	subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => name).first
 	update_wsa("-", subarea.wsa)
-	subarea.delete
+	#subarea.delete
   end
 
   ##############################  PRIVATE  ###############################
