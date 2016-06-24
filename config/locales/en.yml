@@ -261,10 +261,10 @@ en:
     modifications: Modifications
     signout: Sign Out
     site: Site
-    control_file: Control
+    control_file: Controls
     parameters_file: Parameters
     subarea_file: Subareas
-    soil_file: Soils
+    apex_soil: Soils
     layer_file: Layers
     operation_file: Operations
     site_file: Site
