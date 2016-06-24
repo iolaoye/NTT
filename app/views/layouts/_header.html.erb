@@ -35,8 +35,9 @@
     </div>
     <ul class="crumbs">
         <% case request.original_url %>
-	        <% when /project/, /welcome/ %>
+	        <% when /project/, /welcome/, /receive_from_mapping_site/ %>
 	        <% when /apex_controls/, /apex_parameters/, /subarea/, /apex_soils/, /site/  %>
+			<% session[:depth] = request.original_url %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=project_name%></li>
