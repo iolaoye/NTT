@@ -80,7 +80,7 @@ class LocationsController < ApplicationController
 				end
 				create_soils(i, @field.id, @field.field_type)
 			end
-			#find or create site
+			#step 3 find or create site
 			site = Site.find_by_field_id(@field.id)
 			if (site == nil) then
 				#create the site for this field
@@ -99,7 +99,7 @@ class LocationsController < ApplicationController
 			site.fir0 = 0
 			site.field_id = @field.id
 			site.save
-			#find or create weather
+			#step 4 find or create weather
 			if (@field.weather_id == nil) then
 				#create the weather for this field
 				@weather = Weather.new
@@ -124,7 +124,7 @@ class LocationsController < ApplicationController
 			@weather.save
 			end # end for fields
 
-			# step 3: update location	  
+			# step 5: update location	  
 			state_abbreviation = params[:state]
 			state = State.find_by_state_abbreviation(state_abbreviation) 
 			@location.state_id = state.id
@@ -134,8 +134,12 @@ class LocationsController < ApplicationController
 			@location.county_id = county.id
 			@location.coordinates = params[:parcelcoords]
 			@location.save
+			# step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
+			load_controls()
+			load_parameters()
+
 		end # end if of session_id check
-		format.html # new.html.erb
+		format.html # Runs receive_from_mapping_site.html.erb view
       end  # end if error
 	end
   end  #end method receiving from map site
@@ -312,4 +316,31 @@ class LocationsController < ApplicationController
         centroid.cy = centroid.cy / (i)
         return centroid
     end
+
+	#todo Update years of simulation + initialyear in weather. Also, update for state. Now is just one without state
+	def load_controls()
+		Control.all.each do |c|
+			apex_control = ApexControl.new
+			apex_control.control_id = c.id
+			apex_control.value = c.default_value
+			apex_control.project_id = @project.id
+			if apex_control_id == 1 then
+				apex_control[0] =  @weather.simulation_final_year - @weather.simulation_initial_year + 1
+			end
+			if apex_control_id == 2 then
+				apex_control[1] = @weather.simulation_initial_year
+			end
+			apex_control.save
+		end
+	end
+
+	def load_parameters()
+		Parameter.all.each do |c|
+			apex_parameter = ApexParameter.new
+			apex_parameter.parameter_id = c.id
+			apex_parameter.value = c.default_value
+			apex_parameter.project_id = @project.id
+			apex_parameter.save
+		end
+	end
 end
