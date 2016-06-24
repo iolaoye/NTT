@@ -177,13 +177,13 @@ class ScenariosController < ApplicationController
 			client = Savon.client(wsdl: URL_Weather)
 			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
 			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-			print_array_to_file(weather_data, county.wind_wp1_name + ".wp1")
+			print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
 			#path = File.join(WP1, county.wind_wp1_name + ".wp1")
 			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
 			client = Savon.client(wsdl: URL_Weather)
 			response = client.call(:get_weather, message:{"path" => WIND + "/" + county.wind_wp1_name + ".wnd"})
 			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-			print_array_to_file(weather_data, county.wind_wp1_name + ".wnd")
+			print_wind_to_file(weather_data, county.wind_wp1_name + ".wnd")
 			#path = File.join(WIND, county.wind_wp1_name + ".wnd")
 			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
 			apex_run_string["IWPN"] = sprintf("%4d", county.wind_wp1_code)
@@ -719,7 +719,22 @@ class ScenariosController < ApplicationController
 		FileUtils.mkdir(path) unless File.directory?(path)
 		path = File.join(path, file)
 		File.open(path, "w+") do |f|
-			data.each do |row| f << row end
+			data.each do |row| 
+				f << row
+			end
+			f.close  
+		end
+	end
+
+	def print_wind_to_file(data, file)
+		path = File.join(APEX, "APEX" + session[:session_id])
+		FileUtils.mkdir(path) unless File.directory?(path)
+		path = File.join(path, file)
+		File.open(path, "w+") do |f|
+			data.each do |row| 
+				f << row 
+				f << "\n"
+			end
 			f.close  
 		end
 	end
@@ -1016,6 +1031,7 @@ class ScenariosController < ApplicationController
 			@soil_operations.each do |soil_operation|
 				# ask for 1=planting, 5=kill, 3=tillage
 				if soil_operation.apex_crop == CropMixedGrass && (soil_operation.activity_id == 1 || soil_operation.activity_id == 5 || soil_operation.activity_id == 3) then
+				    #todo check this one
 					#mixed_crops = operation.MixedCropData.Split(",")
 					#mixedCropsInfo(2) As String
 					#newOper As OperationsData
