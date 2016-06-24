@@ -265,7 +265,7 @@
     control_file: Control
     parameters_file: Parámetros
     subarea_file: Subáreas
-    soil_file: Suelos
+    apex_soil: Suelos
     layer_file: Capas
     operation_file: Operaciones
     site_file: Sitio
