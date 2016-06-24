@@ -23,7 +23,7 @@ module ScenariosHelper
 		rchc_buff = 0.01
 		rchk_buff = 0.2
 		subarea.scenario_id = scenario_id
-		if bmp_id != 0
+		if bmp_id == 0
 			subarea.soil_id = soil_id
 			subarea.bmp_id = 0
 		else
