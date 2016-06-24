@@ -6,8 +6,8 @@
       <td><%#= label :bmp_id, 'Subarea' %></td>
     </tr>
     <tr>
-      <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('subarea.select_subarea')}, {:required => true} %></td>
-      <td><%= button_to t('subarea.load_subarea'), subareas_path, :id => "to-subareas-btn",:class => "button", :method => :get %></td>
+      <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('subarea.select_scenario'), :selected => session[:scenario_id]}, {:required => true} %></td>
+      <td><%= button_to t('subarea.load_subarea'), subareas_path%></td>
 	  <td><%#= collection_select :subarea, :subarea_id, Subarea.where(:id => -1), :id, :description, {:prompt => 'Select Subarea'}, {:required => true} %></td>
     </tr>
   </table>
@@ -17,13 +17,15 @@
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
+    <th class="gvCellStyleTitle"><%= 'Subarea Type'%></th>
+    <th class="gvCellStyleTitle"><%= 'Subarea Number'%></th>
     <th class="gvCellStyleTitle"><%= 'Subarea Description'%></th>
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
     <th></th>
   </tr>
 
 <% i=1 %>
-<% @subareas.each do |subarea| %>
+<% @subareas.each do |sub| %>
   <% if (i % 2  == 0) %>
     <tr class="gvRowStyleEven">
   <% else %>
@@ -31,9 +33,12 @@
   <% end %>
   <% i = i + 1 %>
   <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= subarea.description %></td>
+    <td class="gvCellStyleText"><%= sub[:subarea_type] %></td>
+    <td class="gvCellStyleText"><%= sub[:subarea_number] %></td>
+    <td class="gvCellStyleText"><%= sub[:subarea_description] %></td>
     <td class="gvCellStyleCheckbox">
-      <%#= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
+      <%= link_to image_tag("view.png"), Subarea.find(sub[:subarea_id]), title: t('general.show') %>
+      <%= link_to image_tag("edit.png"), edit_subarea_path(sub[:subarea_id]), title: t('general.edit') %>
 	</td>
   </tr>
   <% end %>
