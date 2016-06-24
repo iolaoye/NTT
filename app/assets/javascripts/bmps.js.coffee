@@ -2,9 +2,19 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+update_animal_options = ->
+  url = "/fertilizers/" + $("#bmp_animal_id").val() + ".json"
+  $.getJSON url, (fertilizer) ->
+     $("#bmp_dry_manure").val(fertilizer.dry_matter)
+     $("#bmp_no3_n").val(fertilizer.qn)
+     $("#bmp_po4_p").val(fertilizer.qp)
+     $("#bmp_org_n").val(fertilizer.yn)
+     $("#bmp_org_p").val(fertilizer.yp)
+
 #update bmp sublist depending on the bmp selected.
 update_bmpsublist = ->
-  $.getJSON "/bmplists/" + $("#bmp_bmp_id").val() + "/bmpsublists.json", (bmpsublists) ->
+  url = "/bmplists/" + $("#bmp_bmp_id").val() + "/bmpsublists.json"
+  $.getJSON url, (bmpsublists) ->
     items = []
     items.push "<option value>Select One</option>"
     $.each bmpsublists, (key, bmpsublist) ->
@@ -24,11 +34,12 @@ switch_all_to_off = ->
      $('#bmp_animal_id').prop('required',false)   
      $('#bmp_irrigation_id').prop('required',false)   
      $("#depth").toggle(false)
+     $("#depth_ft_label").toggle(false)
      $("#width").toggle(false)
      $("#sides").toggle(false)
      $("#area").toggle(false)
      $("#number_of_animals").toggle(false)
-     $("#animal_id").toggle(false)
+     $("#animals").toggle(false)
      $("#days").toggle(false)
      $("#hours").toggle(false)
      $("#dry_manure").toggle(false)
@@ -40,7 +51,7 @@ switch_all_to_off = ->
      $("#buffer_slope_upland").toggle(false)
      $("#crop").toggle(false)
      $("#no_input").toggle(false)
-     $("#crop_width").toggle(true)
+     $("#crop_width").toggle(false)
      $("#difference_max_temperature").toggle(false)
      $("#difference_min_temperature").toggle(false)
      $("#difference_precipitation").toggle(false)
@@ -68,6 +79,7 @@ activate_bmp_controls = ->
             $('#irrigation_id').prop('required',true)   
         when "3" #Tile Drain
             $("#depth").toggle(true)
+            $("#depth_ft_label").toggle(true)
         when "4", "5" #Pad and pipes - No Ditch Improvement, Two-stage ditch system
             $("#width").toggle(true)
             $("#sides").toggle(true)
@@ -78,10 +90,10 @@ activate_bmp_controls = ->
         when "8" #wetland
             $("#area").toggle(true)
         when "9" #ponds
-            $("#no3_n").toggle(true)
+            $("#irrigation_efficiency").toggle(true)
         when "10" #stream fencing
+            $("#animals").toggle(true)
             $("#number_of_animals").toggle(true)
-            $("#animal_id").toggle(true)
             $("#days").toggle(true)
             $("#hours").toggle(true)
             $("#dry_manure").toggle(true)
@@ -113,22 +125,23 @@ activate_bmp_controls = ->
             $("#slope_reduction").toggle(true)
         when "17" #Terrace system
             $("#no_input").toggle(true)
-        when "22" #climate change
+        when "19" #climate change
             $("#difference_max_temperature").toggle(true)
             $("#difference_min_temperature").toggle(true)
             $("#difference_precipitation").toggle(true)
-        when "23" #asfalt or concrete
+        when "20" #asphalt or concrete
             $("#no_input").toggle(true)
-        when "24" #grass cover
+        when "21" #grass cover
             $("#no_input").toggle(true)
-        when "23" #slope adjustmen
+        when "22" #slope adjustment
             $("#no_input").toggle(true)
-        when "13" #Shading
+        when "23" #Shading
             $("#area").toggle(true)
             $("#width").toggle(true)
             $("#crop").toggle(true)
             $("#buffer_slope_upland").toggle(true)
             $("#bmp_crop_id").prop('required',true)
+
 
 $(document).ready ->
     activate_bmp_controls()
@@ -136,3 +149,5 @@ $(document).ready ->
        update_bmpsublist()
     $("#bmp_bmpsublist_id").change ->
        activate_bmp_controls()
+    $("#bmp_animal_id").change ->
+       update_animal_options()

@@ -16,16 +16,20 @@
 # URL to get heat units
 	URL_HU = 'http://nn.tarleton.edu/NTTCalcHU/NTTService.asmx?WSDL'
 
+# URL to get weather information
+	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
+
 #APEX folders.
-	APEX = "C:/Borrar/NTTFiles"
+#todo create a process to delete old folders
+	APEX = "public/NTTFiles"
 
 #folder for own weather files
 	OWN = 'public/weather'
 
 #folder for Prism weather, wind, and wp1 files
-	PRISM = 'X:/Weather/weatherFiles/US'
-	WP1 = 'X:/Weather/wp1File'
-	WIND = 'X:/Weather/wndFile'
+	PRISM = 'E:/Weather/weatherFiles/US'
+	WP1 = 'E:/Weather/wp1File'
+	WIND = 'E:/Weather/wndFile'
 
 #folder for download project files
 	DOWNLOAD = 'public/download'
@@ -36,6 +40,7 @@
 #convertion values
 	AC_TO_HA = 0.404685645
 	FT_TO_M = 0.3048
+	FT_TO_KM = 0.0003048
 	FT_TO_HA = 0.0000093
 	IN_TO_MM = 25.4
 	THA_TO_TAC = 0.446
@@ -44,9 +49,15 @@
 	IN_TO_CM = 2.54
 	MM_TO_IN = 0.03937007874
 	KG_TO_LBS = 2.204622621849
-	HA_TO_AC = 2.47105384
+	HA_TO_AC = 2.4710538147
 	T_STATISTIC_EVALUATED = 1.645
 	FT2_TO_M2 = 0.092903
+	FT_TO_MM = 304.8
+	AC_TO_KM2 = 0.0040468564224
+	KM2_TO_HA = 247.10538147
+	HA_TO_M2 = 10000
+	KM_TO_M = 1000
+	FSEFF = 0.9
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'

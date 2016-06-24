@@ -2,8 +2,18 @@ class SubareasController < ApplicationController
   # GET /subareas
   # GET /subareas.json
   def index
-    @subareas = Subarea.all
-
+	soils = Soil.where(:field_id => session[:field_id], :selected => true)
+	if soils != nil then
+		subarea = Subarea.where(:soil_id => soils[0].id).first
+		if subarea != nil then
+			session[:scenario_id] = subarea.scenario_id
+		else
+		    session[:scenario_id] = 0
+		end
+	else
+		session[:scenario_id] = 0
+	end
+	get_subareas()
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @subareas }
@@ -13,6 +23,8 @@ class SubareasController < ApplicationController
   # GET /subareas/1
   # GET /subareas/1.json
   def show
+
+
     @subarea = Subarea.find(params[:id])
 
     respond_to do |format|
@@ -40,17 +52,9 @@ class SubareasController < ApplicationController
   # POST /subareas
   # POST /subareas.json
   def create
-    @subarea = Subarea.new(subarea_params)
-
-    respond_to do |format|
-      if @subarea.save
-        format.html { redirect_to @subarea, notice: 'Subarea was successfully created.' }
-        format.json { render json: @subarea, status: :created, location: @subarea }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @subarea.errors, status: :unprocessable_entity }
-      end
-    end
+    session[:scenario_id] = params[:subarea][:scenario_id]
+	get_subareas()
+	render "index"
   end
 
   # PATCH/PUT /subareas/1
@@ -79,6 +83,24 @@ class SubareasController < ApplicationController
       format.html { redirect_to subareas_url }
       format.json { head :no_content }
     end
+  end
+
+  def get_subareas()
+    @subareas = []
+	soils = Soil.where(:field_id => session[:field_id], :selected => true)
+	i=1
+	if session[:scenario_id] != 0 then
+		soils.each do |soil|
+			subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
+			@subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+			i+=1
+		end
+	end
+	subareas = Subarea.where(:scenario_id => session[:scenario_id]).where("bmp_id > 0")
+	subareas.each do |subarea|
+		@subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+		i+=1
+	end
   end
 
   private

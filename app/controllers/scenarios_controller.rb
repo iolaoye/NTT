@@ -22,6 +22,7 @@ class ScenariosController < ApplicationController
     @scenarios = Scenario.where(:field_id => params[:id])
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(session[:field_id]).field_name
+	session[:scenario_id] = params[:id]
 		respond_to do |format|
 		  format.html # list.html.erb
 		  format.json { render json: @scenarios }
@@ -173,10 +174,18 @@ class ScenariosController < ApplicationController
 		county = County.find(Location.find(session[:location_id]).county_id)
 		apex_run_string = "APEX001   1IWPNIWND   1   0   0"
 		if county != nil then
-			path = File.join(WP1, county.wind_wp1_name + ".wp1")
-			FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
-			path = File.join(WIND, county.wind_wp1_name + ".wnd")
-			FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
+			client = Savon.client(wsdl: URL_Weather)
+			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
+			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
+			#path = File.join(WP1, county.wind_wp1_name + ".wp1")
+			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
+			client = Savon.client(wsdl: URL_Weather)
+			response = client.call(:get_weather, message:{"path" => WIND + "/" + county.wind_wp1_name + ".wnd"})
+			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			print_wind_to_file(weather_data, county.wind_wp1_name + ".wnd")
+			#path = File.join(WIND, county.wind_wp1_name + ".wnd")
+			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
 			apex_run_string["IWPN"] = sprintf("%4d", county.wind_wp1_code)
 			apex_run_string["IWND"] = sprintf("%4d", county.wind_wp1_code)
 		end
@@ -189,11 +198,16 @@ class ScenariosController < ApplicationController
 		if (weather.way_id == 2)
 			#copy the file path
 			path = File.join(OWN,weather.weather_file)
+		    FileUtils.cp_r(path, dir_name + "/APEX.wth")
 		else
-			path = File.join(PRISM,weather.weather_file)
-		end 
-		FileUtils.cp_r(path, dir_name + "/APEX.wth")
+			#path = File.join(PRISM,weather.weather_file)
+			client = Savon.client(wsdl: URL_Weather)
+			response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
+			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			print_array_to_file(weather_data, "APEX.wth")
+		end
 		#todo after file is copied if climate bmp is in place modified the weather file.
+		#todo fix widn and wp1 files with the real name
 	end
 
     def create_soils()
@@ -293,7 +307,7 @@ class ScenariosController < ApplicationController
 
                 if layer_number == 1
                     #validate if this layer is going to be used for Agriculture Lands
-                    if layer.depth <= 5 && layer.sand = 0 && layer.silt = 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
+                    if layer.depth <= 5 && layer.sand == 0 && layer.silt == 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
                         next
                     end
                     if soil.albedo > 0 
@@ -362,7 +376,7 @@ class ScenariosController < ApplicationController
 				end
 				ph[layer_number] = PHMIN if ph[layer_number] < PHMIN
 				ph[layer_number] = PHMAX if ph[layer_number] > PHMAX
-
+				
 				cec[layer_number] = 0
                 if layer.cec == 0 
                     cec[layer_number] = cec[layer_number - 1]
@@ -706,7 +720,22 @@ class ScenariosController < ApplicationController
 		FileUtils.mkdir(path) unless File.directory?(path)
 		path = File.join(path, file)
 		File.open(path, "w+") do |f|
-			data.each do |row| f << row end
+			data.each do |row| 
+				f << row
+			end
+			f.close  
+		end
+	end
+
+	def print_wind_to_file(data, file)
+		path = File.join(APEX, "APEX" + session[:session_id])
+		FileUtils.mkdir(path) unless File.directory?(path)
+		path = File.join(path, file)
+		File.open(path, "w+") do |f|
+			data.each do |row| 
+				f << row 
+				f << "\n"
+			end
 			f.close  
 		end
 	end
@@ -759,9 +788,8 @@ class ScenariosController < ApplicationController
 	    last_soil1 = 0
         last_owner1 = 0
         i = 0
-		#soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
+		soils = Soil.where(:field_id => @scenario.field_id, :selected => true)
 		@subarea_file = Array.new
-		
         @soils.each do |soil|
             #create the operation file for this subarea.
             nirr = create_operations(soil, i)  
@@ -771,7 +799,7 @@ class ScenariosController < ApplicationController
             #if !(bmps.CBCWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBBWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBCrop > 0) then
                 #addSubareaFile(soil._scenariosInfo(currentScenarioNumber)._subareasInfo, operation_number, last_soil1, last_owner1, i, nirr, false)
 				#operation number is used to control subprojects. Therefore here is going to be 1.
-                add_subarea_file(Subarea.where(:soil_id => soil.id).find_by_scenario_id(@scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, @soils.count)
+                add_subarea_file(Subarea.find_by_soil_id_and_scenario_id(soil.id, @scenario.id), operation_number, last_soil1, last_owner1, i, nirr, false, @soils.count)
                 i = i + 1
             end
         end
@@ -994,7 +1022,7 @@ class ScenariosController < ApplicationController
         #query = From r In soil._scenariosInfo(currentScenarioNumber)._operationsInfo Order By r.Year, r.Month, r.Day, r.ApexOpName, r.EventId
         #check and fix the operation list
 		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + session[:scenario_id].to_s)
-		session[:depth] = soil.id 
+		#todo when the map is saved again the number of soils in SoilOperation are not updated we can use something like SoilOperation.where(:soil_id => 1698).update_all(:soil_id => 1703)
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
@@ -1004,6 +1032,7 @@ class ScenariosController < ApplicationController
 			@soil_operations.each do |soil_operation|
 				# ask for 1=planting, 5=kill, 3=tillage
 				if soil_operation.apex_crop == CropMixedGrass && (soil_operation.activity_id == 1 || soil_operation.activity_id == 5 || soil_operation.activity_id == 3) then
+				    #todo check this one
 					#mixed_crops = operation.MixedCropData.Split(",")
 					#mixedCropsInfo(2) As String
 					#newOper As OperationsData
@@ -1095,7 +1124,7 @@ class ScenariosController < ApplicationController
             end
             crop_ant = operation.apex_crop
         end
-        #if the process is starting the lines 1, 2, and 3 should be created
+        #if the process is starting the lines 1, 2 should be created
         if j == 0 then
             if irrigation_type > 0 then
                 @opcs_file.push(sprintf("%4d", lu_number) + sprintf("%4d", irrigation_type) + "\n")
@@ -1118,27 +1147,6 @@ class ScenariosController < ApplicationController
 		#planting =1, tillage = 3, harvest = 4
         if operation.activity_id == 1 || operation.activity_id == 3 || operation.activity_id == 4 || operation.activity_id == 6 then
 			apex_string += sprintf("%5d", operation.apex_operation)    #Operation Code        #APEX0604			
-			#this is not neede beacuse the correct operation is comming in the apex_operation column
-            #case operation.ApexOpAbbreviation.Trim
-                #when harvest
-                    #if Field.find(session[:field_id]).forestry? then
-						#apex_string += sprintf("%5d", operation.apex_operation)    #Operation Code        #APEX0604
-                    #else
-                    #    apex_string += harvestCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                    #end
-                #when tillage
-                    #apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                #when irrigation
-                 #   apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                #when planting
-                #    if operation.ApexOp != 1 then
-                #        apex_string += operation.ApexOp.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                #    else
-                #        apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-                #    end
-                #when else
-                #    apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
-            #end
         else
             if operation.activity_id == 2 then #fertilizer 
                 found = false
@@ -1155,16 +1163,8 @@ class ScenariosController < ApplicationController
                 end
 
                 if found == false then
-                    #ReDim Preserve @depth_ant[numOfDepths]
-                    #ReDim Preserve @opers[numOfDepths]
                     oper_ant = oper_ant + 1
-                    #@opers[@opers.length - 1] = oper_ant unless @opers == nil
                     @opers.push(oper_ant)
-					#if @depth_ant == nil then
-					#	@depth_ant[0] = operation.opv2 
-					#else
-					#	@depth_ant[@depth_ant.count - 1] = operation.opv2 
-					#end
 					@depth_ant.push(operation.opv2)
                     change_till_for_depth(oper_ant, @depth_ant[@depth_ant.count - 1]) unless @depth_ant == nil					
                 end
@@ -1460,19 +1460,8 @@ class ScenariosController < ApplicationController
 			end # end if j>=10
 			j+=1
 		end #end data.each
-				
 
-		#average_crops_result()
-		#crop_year = crops_data.group_by("name", ").map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-		#MyClass.count(:all, :group => 'column1, column2')
-		crop_yield = average_crops_result(crops_data)
-		#crop_yield = crops_data.group_by(&:name").map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-
-		#crop_year = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-		crop_yield = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).reduce(:+).fdiv(v.size.to_f)]}
-
-		crop_yield_ci = crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}
-		add_summary_to_results_table(crop_yield, 70, crop_yield_ci)
+		average_crops_result(crops_data)
     end  #end method
 
 	def average_crops_result(items)		
@@ -1495,11 +1484,18 @@ class ScenariosController < ApplicationController
 			end  # end if found
 			first = false
 		end
+
 		yield_by_name.each do |crop|
+			crop_ci = Chart.select(:value).where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
+			ci = Array.new
+			crop_ci.each do |c|
+				ci.push c.value
+			end 
+			
 			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
-			add_summary(crop["yield"], crop["description_id"], 0, 0)
+			add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
 		end
-		return yield_by_name
+		add_summary(0, 70,0,0,0)
 	end
 
 	def create_hash_by_name(item, crop_count)
@@ -1517,6 +1513,7 @@ class ScenariosController < ApplicationController
 		new_hash["conversion"] = conversion_factor / (dry_matter/100)
 		new_hash["total"] = 1
 		new_hash["description_id"] = crop_count
+		new_hash["crop_id"] = crop.id
 		return new_hash
 	end
 
@@ -1537,8 +1534,9 @@ class ScenariosController < ApplicationController
 
 	def create_control_file()
 		apex_string = ""
-        ApexControl.where(:project_id => session[:project_id]).each do |c|
-            case c.id
+		apex_control = ApexControl.where(:project_id => session[:project_id])
+        apex_control.each do |c|
+            case c.control_id
                 when 1..19        #line 1
 					apex_string += sprintf("%4d", c.value)
                 when 20
@@ -1600,9 +1598,10 @@ class ScenariosController < ApplicationController
         apex_string +="                " + "\n"
         apex_string +="                " + "\n"
         apex_string +="   50.00   10.00" + "\n"
-		ApexParameter.where(:project_id => session[:project_id] ).each do |p|
-			number = Parameter.find(p.parameter_id).number
-			case number
+		apex_parameter = ApexParameter.where(:project_id => session[:project_id])
+		apex_parameter.each do |p|
+			#number = Parameter.find(p.parameter_id).number
+			case p.parameter_id
 				when 10, 20, 30, 50, 60, 70, 80, 90
 					apex_string += sprintf("%8.2f", p.value) + "\n"
 				when 36, 65, 76, 87, 88
@@ -1787,7 +1786,19 @@ class ScenariosController < ApplicationController
 			end
         end
 		msg = average_totals(results_data, 0)   # average totals
+
 		return msg
+	
+		total_manure = 0
+		no3 = 0
+		po4 = 0
+		org_n = 0
+		org_p = 0
+
+		soils = Soil.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
+		soils.each do |soil|
+			# TODO
+		end
 	end
 
 	def add_value_to_chart_table(value, description_id, soil_id, year)
@@ -1810,54 +1821,54 @@ class ScenariosController < ApplicationController
 		#Results description_ids
 		require 'enumerable/confidence_interval'
 		#calculate average and confidence interval
-		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).reduce(:+).fdiv(v.size.to_f)]}
+		orgn = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).mean]}
 		orgn_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgn).confidence_interval]}
 		add_summary_to_results_table(orgn, 21, orgn_ci)
-		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
+		runoff_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).mean]}
 		runoff_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qn).confidence_interval]}
 		add_summary_to_results_table(runoff_n,  22, runoff_n_ci)
-		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).reduce(:+).fdiv(v.size.to_f) - v.map(&:qn).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).mean - v.map(&:qn).mean]}
 		sub_surface_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:no3).confidence_interval - v.map(&:qn).confidence_interval]}		
 		add_summary_to_results_table(sub_surface_n, 23, sub_surface_n_ci)
-		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_n = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).mean]}
 		tile_drain_n_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrn).confidence_interval]}
 		add_summary_to_results_table(tile_drain_n, 24, tile_drain_n_ci)
-		orgp = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).reduce(:+).fdiv(v.size.to_f)]}
+		orgp = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).mean]}
 		orgp_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:orgp).confidence_interval]}
 		add_summary_to_results_table(orgp, 31, orgp_ci)
-		po4 = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).reduce(:+).fdiv(v.size.to_f)]}
+		po4 = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).mean]}
 		po4_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:po4).confidence_interval]}
 		add_summary_to_results_table(po4, 32, po4_ci)
-		tile_drain_p = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_p = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).mean]}
 		tile_drain_p_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdrp).confidence_interval]}
 		add_summary_to_results_table(tile_drain_p, 33, tile_drain_p_ci)
-		runoff = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
+		runoff = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).mean]}
 		runoff_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:surface_flow).confidence_interval]}
 		add_summary_to_results_table(runoff, 41, runoff_ci)
-		sub_surface_flow= results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).reduce(:+).fdiv(v.size.to_f) - v.map(&:surface_flow).reduce(:+).fdiv(v.size.to_f)]}
+		sub_surface_flow= results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).mean - v.map(&:surface_flow).mean]}
 		sub_surface_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:flow).confidence_interval - v.map(&:surface_flow).confidence_interval]}
 		#sub_surface_flow = flow - runoff
 		#sub_surface_flow_ci = flow_ci - runoff_ci
 		add_summary_to_results_table(sub_surface_flow, 42, sub_surface_flow_ci)
-		tile_drain_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).reduce(:+).fdiv(v.size.to_f)]}
+		tile_drain_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).mean]}
 		tile_drain_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:qdr).confidence_interval]}
 		add_summary_to_results_table(tile_drain_flow, 43, tile_drain_flow_ci)
-		irrigation = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).reduce(:+).fdiv(v.size.to_f)]}
+		irrigation = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).mean]}
 		irrigation_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:irri).confidence_interval]}
 		add_summary_to_results_table(irrigation, 51, irrigation_ci)
-		deep_percolation_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).reduce(:+).fdiv(v.size.to_f)]}
+		deep_percolation_flow = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).mean]}
 		deep_percolation_flow_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:dprk).confidence_interval]}
 		add_summary_to_results_table(deep_percolation_flow, 52, deep_percolation_flow_ci)
-		sediment = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).reduce(:+).fdiv(v.size.to_f)]}
+		sediment = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).mean]}
 		sediment_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:sed).confidence_interval]}
 		add_summary_to_results_table(sediment, 61, sediment_ci)		
-		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).reduce(:+).fdiv(v.size.to_f)]}
+		manure_erosion = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).mean]}
 		manure_erosion_ci = results_data.group_by(&:sub1).map { |k,v| [k, v.map(&:ymnu).confidence_interval]}
 		add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
 		return "OK"
 	end
 
-	def add_summary(value, description_id, soil_id, ci)
+	def add_summary(value, description_id, soil_id, ci, crop_id)
 		result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id).first
         if result == nil then
 			result = Result.new
@@ -1865,11 +1876,13 @@ class ScenariosController < ApplicationController
 			result.scenario_id = @scenario.id
 			result.soil_id = soil_id
 			result.description_id = description_id
+			result.crop_id = crop_id
 		end
 
 		result.watershed_id = 0
 		result.value = value
 		result.ci_value = ci
+    	result.crop_id = crop_id
 		if result.save then 
 			return "OK"
 		else
@@ -1887,7 +1900,7 @@ class ScenariosController < ApplicationController
 		
 		for i in 0..values.count-1
 			values[i][0] == 0  ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
-			add_summary(values[i][1], description_id, soil_id, cis[i][1])
+			add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
 			case description_id    #Total area for summary report is beeing calculated
 				when 4  #calculate total area
 					#todo	
@@ -1907,6 +1920,6 @@ class ScenariosController < ApplicationController
 	end
 	
 	def add_totals(results, description_id, soil_id)					
-		msg = add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value))		
+		msg = add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value), 0)		
 	end
 end  #end class

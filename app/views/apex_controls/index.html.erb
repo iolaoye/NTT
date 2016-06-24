@@ -1,25 +1,34 @@
-<h1>Listing apex_controls</h1>
+<h1><%= t('general.listing')  + " " + t('menu.control_file') %></h1>
 
-<table>
-  <tr>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
     <th>Control</th>
+    <th>Code</th>
+    <th>Line</th>
+    <th>Column</th>
     <th>Value</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Low Range</th>
+    <th>High Range</th>
+    <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
 
+<% i=1 %>
 <% @apex_controls.each do |apex_control| %>
-  <tr>
-    <td><%= apex_control.control_id %></td>
-    <td><%= apex_control.value %></td>
-    <td><%= link_to 'Show', apex_control %></td>
-    <td><%= link_to 'Edit', edit_apex_control_path(apex_control) %></td>
-    <td><%= link_to 'Destroy', apex_control, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% if (i % 2  == 0) %>
+<tr class="gvRowStyleEven">
+  <% else %>
+  <tr class="gvRowStyleOdd">
+    <% end %>
+    <% i = i + 1 %>
+    <tr class="gvRowStyle">
+      <td class="gvCellStyleNumber"><%= apex_control.control_id %></td>
+      <td class="gvCellStyleText"><%= apex_control.control.code %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.control.line %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.control.column %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.value %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.control.range_low %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.control.range_high %></td>
+      <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control), title: t('general.edit') %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Apex control', new_apex_control_path %>

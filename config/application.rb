@@ -1,4 +1,5 @@
 require File.expand_path('../boot', __FILE__)
+#require 'pdfkit'
 
 require 'rails/all'
 if defined?(Bundler)
@@ -19,7 +20,7 @@ module NTTG3
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
-    # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
+    # config.plugins = [ :exception_not ification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
@@ -60,5 +61,6 @@ module NTTG3
 
 	#define the lenguage varible
 	config.language = "en"
+	#config.middleware.use "PDFKit::Middleware", :print_media_type => true
   end
 end

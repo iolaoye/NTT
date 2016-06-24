@@ -59,8 +59,6 @@ class ProjectsController < ApplicationController
 		location = Location.new
 		location.project_id = @project.id
 		location.save
-		load_controls()
-		load_parameters()
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else
@@ -100,15 +98,15 @@ class ProjectsController < ApplicationController
     end
   end
 
-	def record_not_found(exception)
-	  render json: {error: exception.message}.to_json, status: 404
-	  return
-	end
+  	#def record_not_found(exception)
+	#  render json: {error: exception.message}.to_json, status: 404
+	#  return
+	#end
 
-	def error_occurred(exception)
-	  render json: {error: exception.message}.to_json, status: 500
-	  return
-	end
+	#def error_occurred(exception)
+	#  render json: {error: exception.message}.to_json, status: 500
+	#  return
+	#end
 
   def upload 
 	#nothing to do here. Just render the upload view
@@ -118,7 +116,7 @@ class ProjectsController < ApplicationController
 	def upload_project
 		@data = Nokogiri::XML(params[:project])
 		@data.root.elements.each do |node|
-			if node.name.eql? "project" then
+			if node.name.eql? "project" #appears to return false, thus goes to else
 				msg = upload_project_new_version(node)
 			else
 				msg = "File does not have a project"
@@ -416,7 +414,7 @@ class ProjectsController < ApplicationController
 		project.user_id = session[:user_id]
 		node.elements.each do |p|
 			case p.name
-				when "project_name"
+				when "project_name" #no value receieved/saved
 					project.name = p.text
 				when "project_description"
 					project.description = p.text					
@@ -502,7 +500,6 @@ class ProjectsController < ApplicationController
 				when "field_area"
 					field.field_area = p.text
 				when "field_average_slope"
-				session[:depth] = p.text
 					field.field_average_slope = p.text
 				when "field_type"
 					field.field_type = p.text
@@ -518,11 +515,15 @@ class ProjectsController < ApplicationController
 				when "site"
 					msg = upload_site_new_version(p, field.id)
 				when "soils"
-					upload_soil_new_version(field.id, p)
+					p.elements.each do |f|
+						msg = upload_soil_new_version(field.id, f)
+					end
 				when "scenarios"
-					scenario_id = upload_scenario_new_version(field.id, p)
-					if scenario_id == nil then
-						return "scenario could not be saved"
+					p.elements.each do |f|
+						scenario_id = upload_scenario_new_version(field.id, f)
+						if scenario_id == nil then
+							return "scenario could not be saved"
+						end
 					end
 			end
 		end
@@ -575,8 +576,12 @@ class ProjectsController < ApplicationController
 					weather.simulation_initial_year = p.text
 				when "simulation_final_year"
 					weather.simulation_final_year = p.text
+				when "weather_initial_year"
+					weather.weather_initial_year = p.text
+				when "weather_final_year"
+					weather.weather_final_year = p.text
 				when "latitude"
-					weather.weather_latitude = p.text
+					weather.latitude = p.text
 				when "longitude"
 					weather.longitude = p.text
 				when "weather_file"
@@ -647,27 +652,41 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_soil_new_version(field_id, new_soil)
+	def upload_soil_new_version(field_id, node)
 		soil = Soil.new
 		soil.field_id = field_id
 		soil.selected = false
-		soil.key = new_soil["key"]
-		soil.symbol = new_soil["symbol"]
-		if (new_soil["selected"] == "true")
-			soil.selected = true
-		end
-		soil.group = new_soil["group"]
-		soil.name = new_soil["name"]
-		soil.albedo = new_soil["albedo"]
-		soil.slope = new_soil["slope"]
-		soil.percentage = new_soil["percentage"]
-		soil.drainage_type = new_soil["drainage_type"]
-		if !soil.save then
-			return "Soil could not be saved"
-		end
-	
-		new_soil["layers"]["layer"].each do |l|
-			return upload_layer_new_version(soil.id, l)
+		node.elements.each do |p|
+			case p.name
+				when "key"
+					soil.key = p.text
+				when "symbol"
+					soil.symbol = p.text
+				when "selected"
+					if p.text == "true"
+						soil.selected = true
+					end
+				when "group"
+					soil.group = p.text
+				when "name"	
+					soil.name = p.text
+				when "albedo"
+					soil.albedo = p.text
+				when "slope"
+					soil.slope = p.text
+				when "percentage"
+					soil.percentage = p.text
+				when "drainage_type"
+					soil.drainage_type = p.text
+				when "layers"
+					if soil.save
+						p.elements.each do |f|
+							msg = upload_layer_new_version(soil.id, p)
+						end
+					else
+						return "Soil could not be saved"
+					end
+			end
 		end
 	end 
 
@@ -685,21 +704,33 @@ class ProjectsController < ApplicationController
 		layer.save
 	end
 
-	def upload_layer_new_version(soil_id, new_layer)
+	def upload_layer_new_version(soil_id, node)
 		layer = Layer.new
 		layer.soil_id = soil_id
-		layer.depth = new_layer["depth"]
-		layer.soil_p = new_layer["soilp"]
-		layer.bulk_density = new_layer["bd"]
-		layer.sand = new_layer["sand"]
-		layer.silt = new_layer["silt"]
-		layer.clay = new_layer["clay"]
-		layer.organic_matter = new_layer["om"]
-		layer.ph = new_layer["ph"]
-		if layer.save then
+		node.elements.each do |p|
+			case p.name
+				when "depth"
+					layer.depth = p.text
+				when "soilp"
+					layer.soil_p = p.text
+				when "bd"
+					layer.bulk_density = p.text
+				when "sand"
+					layer.sand = p.text
+				when "silt"
+					layer.silt = p.text
+				when "clay"
+					layer.clay = p.text
+				when "om"
+					layer.organic_matter = p.text
+				when "ph"
+					layer.ph = p.text
+			end
+		end
+		if layer.save
 			return "OK"
 		else
-			return "layers could not be saved"
+			return "Layers could not be saved"
 		end 
 	end
 
@@ -721,23 +752,28 @@ class ProjectsController < ApplicationController
 		msg = "OK"
 		scenario = Scenario.new
 		scenario.field_id = field_id
-		scenario.name = new_scenario["name"]
+		new_scenario.elements.each do |p|
+			case p.name
+				when "name"
+					scenario.name = p.text
+				when "operations"
+					p.elements.each do |o|
+						msg = upload_operation_new_version(scenario.id, o)
+						if msg != "OK"
+							return msg
+						end
+					end
+				when "bmps"
+					p.elements.each do |b|
+						msg = upload_bmp_info_new_version(scenario.id, b)
+						if msg != "OK"
+							return msg
+						end
+					end
+			end
+		end
 		if !scenario.save then
-			return "scenario could not be save"
-		end
-
-		new_scenario["operations"]["operation"].each do |o|
-			msg = upload_operation_new_version(scenario.id, o)
-			if msg != "OK" then
-				return msg
-			end
-		end
-
-		new_scenario["bmps"]["bmp"].each do |b|
-			msg = upload_bmp_info_new_version(scenario.id, b)
-			if msg != "OK" then
-				return msg
-			end
+			return "scenario could not be saved"
 		end
 		return msg
 	end
@@ -764,24 +800,42 @@ class ProjectsController < ApplicationController
 	def upload_operation_new_version(scenario_id, new_operation)
 		operation = Operation.new
 		operation.scenario_id = scenario_id
-		operation.crop_id = operation["crop_id"]
-		operation.activity_id = operation["activity_id"]
-		operation.day = operation["day"]
-		operation.month_id = operation["month"]
-		operation.year = operation["year"]
-		operation.type_id = operation["type_id"]
-		operation.subtype_id = operation["subtype_id"]
-		operation.amount = operation["amout"] #typo in xml generated file
-		operation.depth = operation["depth"]
-		operation.no3_n = operation["no3_n"]
-		operation.po4_p = operation["po4_p"]
-		operation.org_n = operation["org_n"]
-		operation.org_p = operation["org_p"]
-		operation.nh3 = operation["nh3"]
+		new_operation.elements.each do |p|
+			case p.name
+				when "crop_id"
+					operation.crop_id = p.text
+				when "activity_id"
+					operation.activity_id = p.text
+				when "day"
+					operation.day = p.text
+				when "month"
+					operation.month_id = p.text
+				when "year"
+					operation.year = p.text
+				when "type_id"
+					operation.type_id = p.text
+				when "subtype_id"
+					operation.subtype_id = p.text
+				when "amout" #typo in xml download
+					operation.amount = p.text
+				when "depth"
+					operation.depth = p.text
+				when "no3_n"
+					operation.no3_n = p.text
+				when "po4_p"
+					operation.po4_p = p.text
+				when "org_n"
+					operation.org_n = p.text
+				when "org_p"
+					operation.org_p = p.text
+				when "nh3"
+					operation.nh3 = p.text
+			end
+		end
 		if operation.save then
 			return "OK"
 		else
-			return "operation could ot be saved"
+			return "operation could not be saved"
 		end
 	end
 
@@ -854,37 +908,74 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_bmp_info_new_version(scenario_id, i, j)
+	def upload_bmp_info_new_version(scenario_id, new_bmp)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
-		bmp.bmp_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["bmp_id"]
-		bmp.bmpsublist_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["bmpsublist_id"]
-		bmp.crop_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["crop_id"]
-		bmp.irrigation_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["irrigation_id"]
-		bmp.water_stress_factor = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["water_stress_factor"]
-		bmp.irrigation_efficiency = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["irrigation_efficiency"]
-		bmp.maximum_single_application = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["maximum_single_application"]
-		bmp.safety_factor = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["safety_factor"]
-		bmp.depth = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["depth"]
-		bmp.area = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["area"]
-		bmp.number_of_animals = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["number_of_animals"]
-		bmp.days = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["days"]
-		bmp.hours = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["hours"]
-		bmp.animal_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["animal_id"]
-		bmp.dry_manure = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["dry_manure"]
-		bmp.no3_n = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["no3_n"]
-		bmp.po4_p = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["po4_p"]
-		bmp.org_n = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["org_n"]
-		bmp.width = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["width"]
-		bmp.grass_field_portion = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["grass_field_portion"]
-		bmp.buffer_slope_upland = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["buffer_slope_upland"]
-		bmp.crop_width = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["crop_width"]
-		bmp.slope_reduction = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["slope_reduction"]
-		bmp.sides = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["sides"]
-		bmp.name = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["name"]
-		bmp.difference_max_temperature = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["difference_max_temperature"]
-		bmp.difference_min_temperature = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["difference_min_temperature"]
-		bmp.difference_precipitation = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["difference_precipitation"]
+		new_bmp.elements.each do |p|
+			case p.name
+				when "bmp_id"
+					bmp.bmp_id = p.text
+				when "bmpsublist_id"
+					bmp.bmpsublist_id = p.text
+				when "crop_id"
+					bmp.crop_id = p.text
+				when "irrigation_id"
+					bmp.irrigation_id = p.text
+				when "water_stress_factor"
+					bmp.water_stress_factor = p.text
+				when "irrigation_efficiency"
+					bmp.irrigation_efficiency = p.text
+				when "maximum_single_application"
+					bmp.maximum_single_application = p.text
+				when "safety_factor"
+					bmp.safety_factor = p.text
+				when "depth"
+					bmp.depth = p.text
+				when "area"
+					bmp.area = p.text
+				when "number_of_animals"
+					bmp.number_of_animals = p.text
+				when "days"
+					bmp.days = p.text
+				when "hours"
+					bmp.hours = p.text
+				when "animal_id"
+					bmp.animal_id = p.text
+				when "dry_manure"
+					bmp.dry_manure = p.text
+				when "no3_n"
+					bmp.no3_n = p.text
+				when "po4_p"
+					bmp.po4_p = p.text
+				when "org_n"
+					bmp.org_n = p.text
+				when "width"
+					bmp.width = p.text
+				when "grass_field_portion"
+					bmp.grass_field_portion = p.text
+				when "buffer_slope_upland"
+					bmp.buffer_slope_upland = p.text
+				when "crop_width"
+					bmp.crop_width = p.text
+				when "slope_reduction"
+					bmp.slope_reduction = p.text
+				when "sides"
+					bmp.sides = p.text
+				when "name"
+					bmp.name = p.text
+				when "difference_max_temperature"
+					bmp.difference_max_temperature = p.text
+				when "difference_min_temperature"
+					bmp.difference_min_temperature = p.text
+				when "difference_precipitation"
+					bmp.difference_precipitation = p.text
+			end
+		end
+		if bmp.save
+			return "OK"
+		else
+			return "bmp could not be saved"
+		end
 	end
 
 	def upload_bmp_ai(scneario_id, i, j)
@@ -1094,25 +1185,5 @@ class ProjectsController < ApplicationController
 		bmp.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SggCrop"]
 		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgslopeRatio"]
 		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgWidth"]
-	end
-	#todo move this two methods to fields or location when the state is known. Also update years of simulation + initialyear in weather
-	def load_controls()
-		Control.all.each do |c|
-			apex_control = ApexControl.new
-			apex_control.control_id = c.id
-			apex_control.value = c.default_value
-			apex_control.project_id = @project.id
-			apex_control.save
-		end
-	end
-
-	def load_parameters()
-		Parameter.all.each do |c|
-			apex_parameter = ApexParameter.new
-			apex_parameter.parameter_id = c.id
-			apex_parameter.value = c.default_value
-			apex_parameter.project_id = @project.id
-			apex_parameter.save
-		end
 	end
 end

@@ -108,7 +108,7 @@ class OperationsController < ApplicationController
   end
 
   def cropping_system
-	@cropping_systems = CroppingSystem.where(:state_id => Location.find(Field.find(Scenario.find(71).field_id).location_id).state_id)
+	@cropping_systems = CroppingSystem.where(:state_id => Location.find(Field.find(Scenario.find(params[:id]).field_id).location_id).state_id)
 	if @cropping_systems == nil then
 		@cropping_systems = CroppingSystem.where(:state_id => "All")
 	end
@@ -127,6 +127,8 @@ class OperationsController < ApplicationController
 				state_id = Location.find(session[:location_id]).state_id
 				crops = Crop.where(:number => event.apex_crop)
 				crop_id = event.apex_crop
+				session[:depth] = event.apex_crop
+				plant_population = crops[0].plant_population_ft
 				crops.each do |crop|
 					if crop.state_id == state_id then
 						crop_id = crop.id
@@ -150,10 +152,12 @@ class OperationsController < ApplicationController
 				@operation.nh3 = 0
 				@operation.subtype_id = 0
 				case @operation.activity_id
-					when 1  #planting operation. Take planting code from crop table
+					when 1  #planting operation. Take planting code from crop table and plant population as well
 						@operation.type_id = Crop.find(crop_id).planting_code
+						@operation.amount = plant_population
 					when 2, 7
 						fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
+						@operation.amount = event.apex_opv1
 						if fertilizer != nil then
 							@operation.type_id = fertilizer.fertilizer_type_id
 							@operation.no3_n = fertilizer.qn
@@ -165,8 +169,9 @@ class OperationsController < ApplicationController
 						end						 
 					when 3
 						@operation.type_id = event.apex_operation
+					else
+						@operation.amount = event.apex_opv1
 				end  #end case
-				@operation.amount = event.apex_opv1
 				@operation.depth = event.apex_opv2
 				@operation.scenario_id = params[:id]
 				if @operation.save then
@@ -175,6 +180,14 @@ class OperationsController < ApplicationController
 			end  # end events.each
 		end  #end if cropping_system_id != ""
 		@operations = Operation.where(:scenario_id => params[:id])
+		if params[:language] != nil then
+			if params[:language][:language].eql?("es") 
+				I18n.locale = :es
+			else
+				I18n.locale = :en
+			end
+		end 
+
 		render action: 'list'
 	else
 		render action: 'upload'
