@@ -59,8 +59,6 @@ class ProjectsController < ApplicationController
 		location = Location.new
 		location.project_id = @project.id
 		location.save
-		load_controls()
-		load_parameters()
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else
@@ -578,8 +576,12 @@ class ProjectsController < ApplicationController
 					weather.simulation_initial_year = p.text
 				when "simulation_final_year"
 					weather.simulation_final_year = p.text
+				when "weather_initial_year"
+					weather.weather_initial_year = p.text
+				when "weather_final_year"
+					weather.weather_final_year = p.text
 				when "latitude"
-					weather.weather_latitude = p.text
+					weather.latitude = p.text
 				when "longitude"
 					weather.longitude = p.text
 				when "weather_file"
@@ -906,37 +908,74 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_bmp_info_new_version(scenario_id, i, j)
+	def upload_bmp_info_new_version(scenario_id, new_bmp)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
-		bmp.bmp_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["bmp_id"]
-		bmp.bmpsublist_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["bmpsublist_id"]
-		bmp.crop_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["crop_id"]
-		bmp.irrigation_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["irrigation_id"]
-		bmp.water_stress_factor = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["water_stress_factor"]
-		bmp.irrigation_efficiency = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["irrigation_efficiency"]
-		bmp.maximum_single_application = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["maximum_single_application"]
-		bmp.safety_factor = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["safety_factor"]
-		bmp.depth = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["depth"]
-		bmp.area = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["area"]
-		bmp.number_of_animals = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["number_of_animals"]
-		bmp.days = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["days"]
-		bmp.hours = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["hours"]
-		bmp.animal_id = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["animal_id"]
-		bmp.dry_manure = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["dry_manure"]
-		bmp.no3_n = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["no3_n"]
-		bmp.po4_p = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["po4_p"]
-		bmp.org_n = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["org_n"]
-		bmp.width = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["width"]
-		bmp.grass_field_portion = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["grass_field_portion"]
-		bmp.buffer_slope_upland = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["buffer_slope_upland"]
-		bmp.crop_width = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["crop_width"]
-		bmp.slope_reduction = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["slope_reduction"]
-		bmp.sides = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["sides"]
-		bmp.name = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["name"]
-		bmp.difference_max_temperature = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["difference_max_temperature"]
-		bmp.difference_min_temperature = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["difference_min_temperature"]
-		bmp.difference_precipitation = @data["project"]["fields"][i]["scenarios"][j]["bmps"]["difference_precipitation"]
+		new_bmp.elements.each do |p|
+			case p.name
+				when "bmp_id"
+					bmp.bmp_id = p.text
+				when "bmpsublist_id"
+					bmp.bmpsublist_id = p.text
+				when "crop_id"
+					bmp.crop_id = p.text
+				when "irrigation_id"
+					bmp.irrigation_id = p.text
+				when "water_stress_factor"
+					bmp.water_stress_factor = p.text
+				when "irrigation_efficiency"
+					bmp.irrigation_efficiency = p.text
+				when "maximum_single_application"
+					bmp.maximum_single_application = p.text
+				when "safety_factor"
+					bmp.safety_factor = p.text
+				when "depth"
+					bmp.depth = p.text
+				when "area"
+					bmp.area = p.text
+				when "number_of_animals"
+					bmp.number_of_animals = p.text
+				when "days"
+					bmp.days = p.text
+				when "hours"
+					bmp.hours = p.text
+				when "animal_id"
+					bmp.animal_id = p.text
+				when "dry_manure"
+					bmp.dry_manure = p.text
+				when "no3_n"
+					bmp.no3_n = p.text
+				when "po4_p"
+					bmp.po4_p = p.text
+				when "org_n"
+					bmp.org_n = p.text
+				when "width"
+					bmp.width = p.text
+				when "grass_field_portion"
+					bmp.grass_field_portion = p.text
+				when "buffer_slope_upland"
+					bmp.buffer_slope_upland = p.text
+				when "crop_width"
+					bmp.crop_width = p.text
+				when "slope_reduction"
+					bmp.slope_reduction = p.text
+				when "sides"
+					bmp.sides = p.text
+				when "name"
+					bmp.name = p.text
+				when "difference_max_temperature"
+					bmp.difference_max_temperature = p.text
+				when "difference_min_temperature"
+					bmp.difference_min_temperature = p.text
+				when "difference_precipitation"
+					bmp.difference_precipitation = p.text
+			end
+		end
+		if bmp.save
+			return "OK"
+		else
+			return "bmp could not be saved"
+		end
 	end
 
 	def upload_bmp_ai(scneario_id, i, j)
@@ -1146,25 +1185,5 @@ class ProjectsController < ApplicationController
 		bmp.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SggCrop"]
 		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgslopeRatio"]
 		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgWidth"]
-	end
-	#todo move this two methods to fields or location when the state is known. Also update years of simulation + initialyear in weather
-	def load_controls()
-		Control.all.each do |c|
-			apex_control = ApexControl.new
-			apex_control.control_id = c.id
-			apex_control.value = c.default_value
-			apex_control.project_id = @project.id
-			apex_control.save
-		end
-	end
-
-	def load_parameters()
-		Parameter.all.each do |c|
-			apex_parameter = ApexParameter.new
-			apex_parameter.parameter_id = c.id
-			apex_parameter.value = c.default_value
-			apex_parameter.project_id = @project.id
-			apex_parameter.save
-		end
 	end
 end

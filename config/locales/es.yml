@@ -236,6 +236,9 @@
     date: Fecha
     select: Seleccione
     one: Uno
+    please: Please
+    wait: wait
+    loading: Cargando
   welcome_note: 
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
@@ -259,13 +262,14 @@
     modifications: Modificaciones
     signout: Salir
     site: Sitio
-    control_file: Archivo de Control
-    parameters_file: Archivo de Parámetros
-    subarea_file: Archivo de la Subárea
-    soil_file: Archivo de Suelos
-    layer_file: Archivo de Capas
-    operation_file: Archivo de Operación
-    apex_file: Archivo de APEX
+    control_file: Control
+    parameters_file: Parámetros
+    subarea_file: Subáreas
+    apex_soil: Suelos
+    layer_file: Capas
+    operation_file: Operaciones
+    site_file: Sitio
+    apex_file: Archivos APEX
   project:
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'
@@ -363,9 +367,15 @@
       new_user: Usuario Nuevo
   modifications:
     mod_title: Modificar Información de APEX
+    control_file: Control
+    parameters_file: Parámetros
+    subarea_file: Subárea
+    soil_file: Suelos
+    layer_file: Capas
+    operation_file: Operación
   result:
     summary: Resumen
-    by_soil: Por Suelo
+    by_soil: por Suelo
     monthly: Mensual
     annual: Anual
     update_chart: Actualizar Gráfica
@@ -374,6 +384,9 @@
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa
+  subarea:
+    select_subarea: Seleccione Subárea
+    load_subarea: Cargar Subárea
   about:
     overview0: 'Visión General'
     overview1: 'Nutrient Tracking Tool (NTT) fue diseñado y desarrollado por Texas Institute for Applied Environmental Research (TIAER), Tarleton State University con fondos del programa Conservation Innovation Grants de USDA-NRCS y varias agencias del estado.'

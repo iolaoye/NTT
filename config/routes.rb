@@ -84,6 +84,7 @@ NTTG3::Application.routes.draw do
   resources :fields do
     get :list, on: :member 
     resources :soils
+	resources :apex_soils
     resources :scenarios
 	resources :weathers
 	get :field_soils, on: :member

@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Id</th>
     <th>Number</th>
     <th>Dndc</th>
     <th>Code</th>
@@ -36,6 +37,7 @@
 
 <% @crops.each do |crop| %>
   <tr>
+    <td><%= crop.id %></td>
     <td><%= crop.number %></td>
     <td><%= crop.dndc %></td>
     <td><%= crop.code %></td>

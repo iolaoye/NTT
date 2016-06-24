@@ -11,8 +11,469 @@
     </div>
   <% end %>
 
-  <%= hidden_field_tag "subarea_field", session[:field_id] %>
-
+  <table class='gvTableStyle'>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :inps %><br />
+        <%= f.number_field :inps, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :iops %><br />
+        <%= f.number_field :iops, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :iow %><br />
+        <%= f.number_field :iow, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ii %><br />
+        <%= f.number_field :ii, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :iapl %><br />
+        <%= f.number_field :iapl, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :nvcn %><br />
+        <%= f.number_field :nvcn, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :iwth %><br />
+        <%= f.number_field :iwth, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ipts %><br />
+        <%= f.number_field :ipts, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :isao %><br />
+        <%= f.number_field :isao, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :luns %><br />
+        <%= f.number_field :luns, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :imw %><br />
+        <%= f.number_field :imw, :class => "fieldNumbers" %>
+    </div></td>
+  </tr>
+  <tr class='gvRowStyleOdd''>
+    <td><div class="field">
+      <%= f.label :sno %><br />
+      <%= f.number_field :sno, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+      <%= f.label :stdo %><br />
+      <%= f.number_field :stdo, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+      <%= f.label :yct %><br />
+      <%= f.number_field :yct, :class => "fieldNumbers" %>
+    </div></td>
+     <td><div class="field">
+      <%= f.label :xct %><br />
+      <%= f.number_field :xct, :class => "fieldNumbers" %>
+    </div></td> 
+     <td><div class="field">
+      <%= f.label :azm %><br />
+      <%= f.number_field :azm, :class => "fieldNumbers" %>
+    </div></td> 
+      <td><div class="field">
+      <%= f.label :fl %><br />
+      <%= f.number_field :fl, :class => "fieldNumbers" %>
+    </div></td>
+     <td><div class="field">
+      <%= f.label :fw %><br />
+      <%= f.number_field :fw, :class => "fieldNumbers" %>
+    </div></td>
+     <td><div class="field">
+      <%= f.label :angl %><br />
+      <%= f.number_field :angl, :class => "fieldNumbers" %>
+    <td></td>
+	<td></td>
+	<td></td>
+    </div></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :wsa %><br />
+        <%= f.number_field :wsa, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :chl %><br />
+        <%= f.number_field :chl, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :chd %><br />
+        <%= f.number_field :chd, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :chs %><br />
+        <%= f.number_field :chs, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :chn %><br />
+        <%= f.number_field :chn, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :slp %><br />
+        <%= f.number_field :slp, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :splg %><br />
+        <%= f.number_field :splg, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :upn %><br />
+        <%= f.number_field :upn, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ffpq %><br />
+        <%= f.number_field :ffpq, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :urbf %><br />
+        <%= f.number_field :urbf, :class => "fieldNumbers" %>
+    </div></td>
+	<td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :rchl %><br />
+        <%= f.number_field :rchl, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rchd %><br />
+        <%= f.number_field :rchd, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rcbw %><br />
+        <%= f.number_field :rcbw, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rctw %><br />
+        <%= f.number_field :rctw, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rchs %><br />
+        <%= f.number_field :rchs, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rchn %><br />
+        <%= f.number_field :rchn, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rchc %><br />
+        <%= f.number_field :rchc, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rchk %><br />
+        <%= f.number_field :rchk, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rfpw %><br />
+        <%= f.number_field :rfpw, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rfpl %><br />
+        <%= f.number_field :rfpl, :class => "fieldNumbers" %>
+    </div></td>
+	<td></td>
+  </tr> 
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :rsee %><br />
+        <%= f.number_field :rsee, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsae %><br />
+        <%= f.number_field :rsae, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsve %><br />
+        <%= f.number_field :rsve, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsep %><br />
+        <%= f.number_field :rsep, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsap %><br />
+        <%= f.number_field :rsap, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsvp %><br />
+        <%= f.number_field :rsvp, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsv %><br />
+        <%= f.number_field :rsv, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsrr %><br />
+        <%= f.number_field :rsrr, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsys %><br />
+        <%= f.number_field :rsys, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsyn %><br />
+        <%= f.number_field :rsyn, :class => "fieldNumbers" %>
+    </div></td>
+	<td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :rshc %><br />
+        <%= f.number_field :rshc, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsdp %><br />
+        <%= f.number_field :rsdp, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rsbd %><br />
+        <%= f.number_field :rsbd, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :pcof %><br />
+        <%= f.number_field :pcof, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :bcof %><br />
+        <%= f.number_field :bcof, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :bffl %><br />
+        <%= f.number_field :bffl, :class => "fieldNumbers" %>
+    </div></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :nirr %><br />
+        <%= f.number_field :nirr, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :iri %><br />
+        <%= f.number_field :iri, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ira %><br />
+        <%= f.number_field :ira, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :lm %><br />
+        <%= f.number_field :lm, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ifd %><br />
+        <%= f.number_field :ifd, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :idr %><br />
+        <%= f.number_field :idr, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :idf1 %><br />
+        <%= f.number_field :idf1, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :idf2 %><br />
+        <%= f.number_field :idf2, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :idf3 %><br />
+        <%= f.number_field :idf3, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :idf4 %><br />
+        <%= f.number_field :idf4, :class => "fieldNumbers"%>
+    </div></td>
+	<td><div class="field">
+        <%= f.label :idf5 %><br />
+        <%= f.number_field :idf5, :class => "fieldNumbers"%>
+    </div></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :bir %><br />
+        <%= f.number_field :bir, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :efi %><br />
+        <%= f.number_field :efi, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :vimx %><br />
+        <%= f.number_field :vimx, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :armn %><br />
+        <%= f.number_field :armn, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :armx %><br />
+        <%= f.number_field :armx, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :bft %><br />
+        <%= f.number_field :bft, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :fnp4 %><br />
+        <%= f.number_field :fnp4, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :fmx %><br />
+        <%= f.number_field :fmx, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :drt %><br />
+        <%= f.number_field :drt, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :fdsf %><br />
+        <%= f.number_field :fdsf, :class => "fieldNumbers" %>
+    </div></td>
+	<td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :pec %><br />
+        <%= f.number_field :pec, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :dalg %><br />
+        <%= f.number_field :dalg, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :vlgn %><br />
+        <%= f.number_field :vlgn, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :coww %><br />
+        <%= f.number_field :coww, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ddlg %><br />
+        <%= f.number_field :ddlg, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :solq %><br />
+        <%= f.number_field :solq, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :sflg %><br />
+        <%= f.number_field :sflg, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :fnp2 %><br />
+        <%= f.number_field :fnp2, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :fnp5 %><br />
+        <%= f.number_field :fnp5, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :firg %><br />
+        <%= f.number_field :firg, :class => "fieldNumbers" %>
+    </div></td>
+	<td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :ny1 %><br />
+        <%= f.number_field :ny1, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ny2 %><br />
+        <%= f.number_field :ny2, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ny3 %><br />
+        <%= f.number_field :ny3, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ny4 %><br />
+        <%= f.number_field :ny4, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ny5 %><br />
+        <%= f.number_field :ny5, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ny6 %><br />
+        <%= f.number_field :ny6, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ny7 %><br />
+        <%= f.number_field :ny7, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ny8 %><br />
+        <%= f.number_field :ny8, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ny9 %><br />
+        <%= f.number_field :ny9, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :ny10 %><br />
+        <%= f.number_field :ny10, :class => "fieldNumbers" %>
+    </div></td>
+	<td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :xtp1 %><br />
+        <%= f.number_field :xtp1, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xtp2 %><br />
+        <%= f.number_field :xtp2, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xtp3 %><br />
+        <%= f.number_field :xtp3, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xtp4 %><br />
+        <%= f.number_field :xtp4, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xtp5 %><br />
+        <%= f.number_field :xtp5, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xtp6 %><br />
+        <%= f.number_field :xtp6, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xtp7 %><br />
+        <%= f.number_field :xtp7, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xtp8 %><br />
+        <%= f.number_field :xtp8, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xtp9 %><br />
+        <%= f.number_field :xtp9, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xtp10 %><br />
+        <%= f.number_field :xtp10, :class => "fieldNumbers" %>
+    </div></td>
+	<td></td>
+  </tr>
+  </table>
   <div class="actions">
     <%= f.submit %>
   </div>
