@@ -68,22 +68,21 @@ before_filter :take_names
   def create
     @slope = 100
     @bmp = Bmp.new(bmp_params)
-	  @bmp.scenario_id = session[:scenario_id]
+	@bmp.scenario_id = session[:scenario_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
-	  msg = input_fields("create")
-	  session[:msg] = msg
-	  respond_to do |format|
-		if msg == "OK" 
-		      if @bmp.save
-  			    format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
+	respond_to do |format|
+		if @bmp.save
+			msg = input_fields("create")
+			if msg == "OK" 
+	  			format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
 				format.json { render json: @bmp, status: :created, location: @bmp }
-			  else
+			else
 				format.html { render action: "new" }
-				format.json { render json: @bmp.errors, status: :unprocessable_entity }
-			  end
+				format.json { render json: @bmp.errors, status: :unprocessable_entity }		
+			end
 		else
 			format.html { render action: "new" }
-			format.json { render json: @bmp.errors, status: :unprocessable_entity }		
+			format.json { render json: @bmp.errors, status: :unprocessable_entity }
 		end
 	end
   end
@@ -597,7 +596,7 @@ before_filter :take_names
         end
       end
     end
-	  create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "create")
+	create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
     return "OK"
   end
 
