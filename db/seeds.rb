@@ -1,4 +1,4 @@
-﻿#!/bin/env ruby
+#!/bin/env ruby
 # encoding: utf-8
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
@@ -3759,7 +3759,7 @@ Description.create!({:id => 72, :description => "Crop 2", :spanish_description =
 Description.create!({:id => 73, :description => "Crop 3", :spanish_description => "Crop 3", :unit => "", :detail => true, :period => 2}, :without_protection => true)
 Description.create!({:id => 74, :description => "Crop 4", :spanish_description => "Crop 4", :unit => "", :detail => true, :period => 2}, :without_protection => true)
 Description.create!({:id => 75, :description => "Crop 5", :spanish_description => "Crop 5", :unit => "", :detail => true, :period => 2}, :without_protection => true)
-Description.create!({:id => 100, :description => "Precipitation", :spanish_description => "Precipitación", :unit => "in", :detail => false, :period => 1}, :without_protection => true)
+Description.create!({:id => 100, :description => "Precipitation", :spanish_description => "Precipitacion", :unit => "in", :detail => false, :period => 1}, :without_protection => true)
 
 CroppingSystem.delete_all
 CroppingSystem.create!({:id => 1, :name =>'ALLBananas', :crop =>'Bananas', :tillage =>'none', :var12 =>'Bananas_NT', :state_id => 0, :grazing => 0, :status => 1}, :without_protection => true)
@@ -5281,7 +5281,7 @@ County.create!({:id => 568, :county_name => 'Bulloch', :state_id => 11, :county_
 County.create!({:id => 569, :county_name => 'Burke', :state_id => 11, :county_code => '13033', :status => 0, :county_state_code => 'GA033', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)
 County.create!({:id => 570, :county_name => 'Butts', :state_id => 11, :county_code => '13035', :status => 0, :county_state_code => 'GA035', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)
 County.create!({:id => 571, :county_name => 'Calhoun', :state_id => 11, :county_code => '13037', :status => 0, :county_state_code => 'GA037', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)
-County.create!({:id => 572, :county_name => 'Camdn', :state_id => 11, :county_code => '13039', :status => 0, :county_state_code => 'GA039', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)
+County.create!({:id => 572, :county_name => 'Camden', :state_id => 11, :county_code => '13039', :status => 0, :county_state_code => 'GA039', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)
 County.create!({:id => 573, :county_name => 'Candler', :state_id => 11, :county_code => '13043', :status => 0, :county_state_code => 'GA043', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)
 County.create!({:id => 574, :county_name => 'Carroll', :state_id => 11, :county_code => '13045', :status => 0, :county_state_code => 'GA045', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)
 County.create!({:id => 575, :county_name => 'Catoosa', :state_id => 11, :county_code => '13047', :status => 0, :county_state_code => 'GA047', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)

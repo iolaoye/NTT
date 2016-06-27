@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160617163642) do
+ActiveRecord::Schema.define(:version => 20160623151141) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -424,6 +424,7 @@ ActiveRecord::Schema.define(:version => 20160617163642) do
     t.integer  "soil_id"
     t.integer  "activity_id"
     t.integer  "apex_operation"
+    t.integer  "bmp_id"
   end
 
   create_table "soils", :force => true do |t|
