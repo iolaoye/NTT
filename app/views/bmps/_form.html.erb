@@ -21,7 +21,7 @@
     <% if (:bmpsublist_id == 2) %>
       <p>TRUE<%= :bmpsublist_id %></p>
       <%= label :irrigation_id, 'Irrigation' %>
-      <%= collection_select :bmp, :irrigation_id, Irrigation.where(@bmp.irrigation_id != 8), :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.where(:id != 8), :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
     <% else %>
       <p>FALSE<%= :bmpsublist_id %></p>
       <%= label :irrigation_id, 'Irrigation' %>
