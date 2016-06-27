@@ -431,7 +431,7 @@ en:
     email: 'gallego@tiaer.tarleton.edu'
   help:
     header: NTT Table of Contents
-    return_to_table: t('help.return_to_table')
+    return_to_table: '<< Return to Table of Contents'
     overview: Overview
     overview1: About NTT
     overview2: Contact Information
@@ -1009,4 +1009,26 @@ en:
     header: NTT Disclaimer
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
     body2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
-  
+  instructionbox:
+    projects: >
+                To Start a Project you have a couple of options:
+                <ol>
+                  <li>Click <b><i>New Project</i></b> to start a project from scratch.</li>
+                  <li>Click <b><i>Upload Project</i></b> to open a previously saved project.</li>
+                </ol>
+                To <b>Download</b> a project, click the blue arrow icon under <b>Actions</b>.<br>
+                To <b>Edit</b> a project, click the pencil icon under <b>Actions</b>.
+                To <b>Delete</b> a project, click the red "x" icon under <b>Actions</b>.
+    locations: >
+                There are three choices to select location for a project:
+                <ol>
+                  <li>Click the <b><i>Map System</i></b> option to draw the area of interest (farm) and the fields using a web map. You draw the farm and inside the farm the fields. Do not worry if the fields are not completly inside the farm, the farm is just for reference. Fields are the ones used.</li>
+                  <li>Click the <b><i>State/County</b></i> option to select an area of interest by state, county, and dominant soils. Max of three soils for field.</li>
+                  <li>Click <b><i>User Input</b></i> to enter all of the information needed to run the model manually.</li>
+                </ol>
+                After you are done click <b><i>Save and Continue</b></i> button to save the information and continue.
+    fields: >
+                The Fields page allows user to define the fields in the area of interest (farm).<br>
+                <p>If user selected <b>Mapping System</b>, the fields shown are those drawn in the map and the user is not allowed to add fields through this page (to delete fields in this case user needs to go back to location and do it on the web map). However, user is allowed to modify other field characteristics.</p>
+                <p>If <b>State/County</b> or <b>User Input</b> was selected, user is able to add, modify, and delete them from the list. To change the Channel Vegetation Condition or Channel Erodibily just click the specific field/column and a new window will pop up where user can select the new choice from the list. After the selection was made the pop-up window will close and the new selection is shown in the field/column. If no change is needed in the pop-up window just click the close button to go back to the main window.</p>
+                After you are done click <b><i>Save and Continue</b></i> button to save the information and continue.
