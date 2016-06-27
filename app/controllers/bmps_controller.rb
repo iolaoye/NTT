@@ -47,7 +47,7 @@ before_filter :take_names
   # GET /bmps/new.json
   def new
     @bmp = Bmp.new
-	@animals = Fertilizer.where(:fertilizer_type_id => 2)
+  	@animals = Fertilizer.where(:fertilizer_type_id => 2)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -59,7 +59,8 @@ before_filter :take_names
   # GET /bmps/1/edit
   def edit
     @bmp = Bmp.find(params[:id])
-	@bmp_id = @bmp.bmp_id
+	  @bmp_id = @bmp.bmp_id
+    @animals = Fertilizer.where(:fertilizer_type_id => 2)
   end
 
 ################################  CREATE  #################################
@@ -93,8 +94,9 @@ before_filter :take_names
   def update
 	@slope = 100
     @bmp = Bmp.find(params[:id])
+    @animals = Fertilizer.where(:fertilizer_type_id => 2)
 
-	msg = input_fields("update")
+	  msg = input_fields("update")
 
     respond_to do |format|
 	  if msg == "OK"
@@ -116,7 +118,7 @@ before_filter :take_names
   def destroy
     @slope = 100
     @bmp = Bmp.find(params[:id])
-	msg = input_fields("delete")
+	  msg = input_fields("delete")
     @bmp.destroy
 
     respond_to do |format|
@@ -183,7 +185,6 @@ before_filter :take_names
 
   ### ID: 1
   def autoirrigation(type)
-
     return irrigation_fertigation(type)
   end # end method
 
@@ -196,21 +197,21 @@ before_filter :take_names
 
   ### ID: 3
   def tile_drain(type)
-      @soils = Soil.where(:field_id => session[:field_id]) 
-      @soils.each do |soil|
-        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
-        if subarea != nil then
-        case type
-            when "create", "update"
-              subarea.idr = @bmp.depth * FT_TO_MM
-            when "delete"
-              subarea.idr = 0
-            else
-              # DO NOTHING
-         end
-          #if !subarea.save then return "Enable to save value in the subarea file" end
-        end  #end if subarea !nil
-      end # end soils.each
+    @soils = Soil.where(:field_id => session[:field_id]) 
+    @soils.each do |soil|
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      if subarea != nil then
+      case type
+          when "create", "update"
+            subarea.idr = @bmp.depth * FT_TO_MM
+          when "delete"
+            subarea.idr = 0
+          else
+            # DO NOTHING
+        end
+        #if !subarea.save then return "Enable to save value in the subarea file" end
+      end  #end if subarea !nil
+    end # end soils.each
     return "OK"
   end # end method
 
@@ -230,14 +231,18 @@ before_filter :take_names
   ### ID: 6
   def ppde(type)
     msg = pads_pipes(type)    
-	case type
-	  when "create"
-	    create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "create")
-	  when "update"
-      update_existing_subarea("PPDE")
-	  when "delete"
-      delete_existing_subarea("PPDE")
-	end
+    case type
+      when "create"
+        if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
+          create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "create")
+        end
+      when "update"
+        if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
+          update_existing_subarea("PPDE")
+        end
+      when "delete"
+        delete_existing_subarea("PPDE")
+    end
     return msg
   end # end method
 
@@ -252,12 +257,12 @@ before_filter :take_names
   def wetlands(type)
     case type
       when "create"
-        return create_new_subarea("WL")
+        return create_new_subarea("WL", 8)
 	    when "update"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WL").first
-        update_existing_subarea("WL", subarea)
+        update_existing_subarea("WL", 8)
   	  when "delete"
         subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WL").first
+        session[:wsa] = subarea.wsa
         update_wsa("-", subarea.wsa)
         #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first.delete
   	end
@@ -294,7 +299,7 @@ before_filter :take_names
               subarea.pec = 0.85
 	      		when "delete"
 	      		  # TODO check values for deletion to see if other questions to set values may need to be asked
-	      	  end
+	      	end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
@@ -305,12 +310,14 @@ before_filter :take_names
   ### ID: 12
   def riparian_forest(type)
     case type
-      when "create", "update"
-	    return create_new_subarea("RFFS")
-	  when "delete"
-	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first
-	    update_wsa("-", subarea.wsa)
-	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first.delete
+      when "create"
+        return create_new_subarea("RFFS", 12)
+      when "update"
+        update_existing_subarea("RFFS", 12)
+	    when "delete"
+        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first
+        update_wsa("-", subarea.wsa)
+        #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first.delete
     end
   end
 
@@ -318,12 +325,14 @@ before_filter :take_names
   ### ID: 13
   def filter_strip(type)
     case type
-      when "create", "update"
-	    return create_new_subarea("FS")
-	  when "delete"
-	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first
-	    update_wsa("-", subarea.wsa)
-	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first.delete
+      when "create"
+        return create_new_subarea("FS", 13)
+      when "update"
+        update_existing_subarea("FS", 13)
+	    when "delete"
+        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first
+        update_wsa("-", subarea.wsa)
+        #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first.delete
     end
   end # end method
 
@@ -331,12 +340,14 @@ before_filter :take_names
   ### ID: 14
   def waterway(type)
     case type
-      when "create", "update"
-	    return create_new_subarea("WW")
-	  when "delete"
-	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first
-	    update_wsa("-", subarea.wsa)
-	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first.delete
+      when "create"
+        return create_new_subarea("WW", 14)
+      when "update"
+        update_existing_subarea("WW", 14)
+      when "delete"
+        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first
+        update_wsa("-", subarea.wsa)
+        #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first.delete
     end
   end # end method
 
@@ -347,18 +358,18 @@ before_filter :take_names
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-		  case type
-            when "create"
-              subarea.slp = subarea.slp - (subarea.slp * (@bmp.slope_reduction / 100))
-              session[:old_percentage] = @bmp.slope_reduction / 100
-            when "update"
-              subarea.slp = (subarea.slp / (1 - @old_percentage)) - (subarea.slp * (@bmp.slope_reduction / 100))
-              session[:old_percentage] = @bmp.slope_reduction / 100
-            when "delete"
-              subarea.slp = subarea.slp / (1 - session[:old_percentage])
-            else
-		  end
-          #if !subarea.save then return "Enable to save value in the subarea file" end
+          case type
+                when "create"
+                  subarea.slp = subarea.slp - (subarea.slp * (@bmp.slope_reduction / 100))
+                  session[:old_percentage] = @bmp.slope_reduction / 100
+                when "update"
+                  subarea.slp = (subarea.slp / (1 - @old_percentage)) - (subarea.slp * (@bmp.slope_reduction / 100))
+                  session[:old_percentage] = @bmp.slope_reduction / 100
+                when "delete"
+                  subarea.slp = subarea.slp / (1 - session[:old_percentage])
+                else
+          end
+              #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
     return "OK"
@@ -366,7 +377,7 @@ before_filter :take_names
 
   ### ID: 17
   def terrace_system(type)
-	terrace_and_slope(type)
+	  terrace_and_slope(type)
   end
 
   ### ID: 20
@@ -374,22 +385,22 @@ before_filter :take_names
       @soils = Soil.where(:field_id => session[:field_id]) 
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
-		if subarea != nil then
-		  case type
-		    when "create", "update"
+        if subarea != nil then
+          case type
+            when "create", "update"
               if subarea.rchk > 0.01
                 subarea.rchk = 0.01
-				subarea.rchn = 0.05
-				subarea.upn = 0.1
-				subarea.pec = 0.05
+                subarea.rchn = 0.05
+                subarea.upn = 0.1
+                subarea.pec = 0.05
               end
-			when "delete"
-			  # TODO check values for deletion to see if other questions to set values may need to be asked
-			  subarea.rchk = 0.2
-			  subarea.rchc = 0.2
-			  subarea.upn = 0.2
-			  subarea.pec = 1.0
-		  end
+            when "delete"
+              # TODO check values for deletion to see if other questions to set values may need to be asked
+              subarea.rchk = 0.2
+              subarea.rchc = 0.2
+              subarea.upn = 0.2
+              subarea.pec = 1.0
+          end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
@@ -401,20 +412,20 @@ before_filter :take_names
       @soils = Soil.where(:field_id => session[:field_id]) 
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
-		if subarea != nil then
-		  case type
-		    when "create", "update"
+        if subarea != nil then
+          case type
+            when "create", "update"
               if subarea.rchc > 0.01
                 subarea.rchc = 0.01
-				subarea.upn = 0.4
-				subarea.pec = 0.1
+                subarea.upn = 0.4
+                subarea.pec = 0.1
               end
-			when "delete"
-			  # TODO check values for deletion to see if other questions to set values may need to be asked
-			  subarea.rchc = 0.2
-			  subarea.upn = 0.2
-			  subarea.pec = 1.0
-		  end
+            when "delete"
+              # TODO check values for deletion to see if other questions to set values may need to be asked
+              subarea.rchc = 0.2
+              subarea.upn = 0.2
+              subarea.pec = 1.0
+          end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
@@ -423,19 +434,21 @@ before_filter :take_names
 
   ### ID: 22
   def slope_adjustment(type)
-	terrace_and_slope(type)
+	  terrace_and_slope(type)
   end
 
 
   ### ID: 23
   def shading(type)
     case type
-      when "create", "update"
-	    return create_new_subarea("Sdg")
-	  when "delete"
-	    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first
-	    update_wsa("-", subarea.wsa)
-	    #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first.delete
+      when "create"
+        return create_new_subarea("Sdg", 23)
+      when "update"
+        update_existing_subarea("Sdg", 23)
+      when "delete"
+        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first
+        update_wsa("-", subarea.wsa)
+        #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first.delete
     end
   end # end method
 
@@ -446,29 +459,29 @@ before_filter :take_names
       @soils = Soil.where(:field_id => session[:field_id]) 
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
-		if subarea != nil then
-		  case type
-		    when "create", "update"
-              case subarea.slp
-                when 0..0.02
-                  subarea.pec = 0.6
-                when 0.021..0.08
-                  subarea.pec = 0.5
-                when 0.081..0.12
-                  subarea.pec = 0.6
-                when 0.121..0.16
-                  subarea.pec = 0.7
-                when 0.161..0.20
-                  subarea.pec = 0.8
-                when 0.201..0.25
-                  subarea.pec = 0.9 
-                else
-                  subarea.pec = 1.0
-              end
-			when "delete"
-			  # TODO check values for deletion to see if other questions to set values may need to be asked
-			  subarea.pec = 1.0
-		  end
+        if subarea != nil then
+          case type
+            when "create", "update"
+                  case subarea.slp
+                    when 0..0.02
+                      subarea.pec = 0.6
+                    when 0.021..0.08
+                      subarea.pec = 0.5
+                    when 0.081..0.12
+                      subarea.pec = 0.6
+                    when 0.121..0.16
+                      subarea.pec = 0.7
+                    when 0.161..0.20
+                      subarea.pec = 0.8
+                    when 0.201..0.25
+                      subarea.pec = 0.9 
+                    else
+                      subarea.pec = 1.0
+                  end
+            when "delete"
+              # TODO check values for deletion to see if other questions to set values may need to be asked
+              subarea.pec = 1.0
+          end
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
@@ -479,38 +492,38 @@ before_filter :take_names
   ## USED FOR PADS AND PIPES FIELDS (ID: 4 - ID: 7)
   def pads_pipes(type)
       @soils = Soil.where(:field_id => session[:field_id])
-	  i = 0
+	    i = 0
       @soils.each do |soil|
-		if soil.selected
-			if @slope > soil.slope then
-				@slope = soil.slope
-			end
-		end
+        if soil.selected
+          if @slope > soil.slope then
+            @slope = soil.slope
+          end
+        end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-		  if i = 0 then 
-			@inps = subarea.inps   #select the first soil, which is with bigest area
-			i += 1
-		  end
-		  if soil.selected
-			@iops = subarea.iops   #selected the last iops to inform the subarea the folowing iops to create.
-		  end
+          if i = 0 then 
+            @inps = subarea.inps   #select the first soil, which is with bigest area
+            i += 1
+          end
+          if soil.selected
+            @iops = subarea.iops   #selected the last iops to inform the subarea the folowing iops to create.
+          end
 		  
-		  case type
+          case type
             when "create", "update"
               if @bmp.bmpsublist_id == 4
-				subarea.pcof = 0.0
-			  else
-			    subarea.pcof = 0.5
-		      end
+                subarea.pcof = 0.0
+              else
+                subarea.pcof = 0.5
+              end
             when "delete"
               subarea.pcof = 0.0
-		  end # switch statement
+          end # switch statement
           #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
-		soil_ops = SoilOperation.where(:soil_id => soil.id, :scenario_id => session[:scenario_id], :activity_id => 1)
-		soil_ops.each do |soil_op|
-		  case type
+        soil_ops = SoilOperation.where(:soil_id => soil.id, :scenario_id => session[:scenario_id], :activity_id => 1)
+        soil_ops.each do |soil_op|
+          case type
             when "create"
               soil_op.opv2 = soil_op.opv2 * 0.9
             when "update"
@@ -518,8 +531,8 @@ before_filter :take_names
             when "delete"
               soil_op.opv2 = soil_op.opv2 / 0.9 #return back to 100%
             else
-		  end # switch statement
-		end # end soil_ops.each
+          end # switch statement
+		    end # end soil_ops.each
       end # end soils.each   
     return "OK"
   end # end method
@@ -530,105 +543,163 @@ before_filter :take_names
       @soils.each do |soil|
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-		  case type
+          case type
             when "create", "update"
               case @bmp.irrigation_id
-			    when 1
-				  subarea.nirr = 1.0
-				when 2, 7, 8
-				  subarea.nirr = 2.0
-				when 3
-				  subarea.nirr = 5.0
-			  end
-			  subarea.vimx = 5000
-			  subarea.bir = 0.8
-			  subarea.iri = @bmp.days
-			  subarea.bir = @bmp.water_stress_factor
-			  subarea.efi = 1 - @bmp.irrigation_efficiency
-			  subarea.armx = @bmp.maximum_single_application * IN_TO_MM
-			  subarea.fdsf = @bmp.safety_factor
-			  if @bmp.bmpsublist_id == 2
-			    subarea.idf4 = 1.0
-				subarea.bft = 0.8
-			  end
+                when 1
+                  subarea.nirr = 1.0
+                when 2, 7, 8
+                  subarea.nirr = 2.0
+                when 3
+                  subarea.nirr = 5.0
+              end
+              subarea.vimx = 5000
+              subarea.bir = 0.8
+              subarea.iri = @bmp.days
+              subarea.bir = @bmp.water_stress_factor
+              subarea.efi = 1 - @bmp.irrigation_efficiency
+              subarea.armx = @bmp.maximum_single_application * IN_TO_MM
+              subarea.fdsf = @bmp.safety_factor
+              if @bmp.bmpsublist_id == 2
+                subarea.idf4 = 1.0
+                subarea.bft = 0.8
+              end
             when "delete"
-		      subarea.nirr = 0.0
-			  subarea.vimx = 0.0
-			  subarea.bir = 0.0
-			  subarea.armx = 0.0
-			  subarea.iri = 0.0
-			  subarea.bir = 0.0
-			  subarea.efi = 0.0
-			  subarea.armx = 0.0
-			  subarea.fdsf = 0.0
-			  if @bmp.bmpsublist_id == 2
-			    subarea.idf4 = 0.0
-				subarea.bft = 0.0
-			  end
+              subarea.nirr = 0.0
+              subarea.vimx = 0.0
+              subarea.bir = 0.0
+              subarea.armx = 0.0
+              subarea.iri = 0.0
+              subarea.bir = 0.0
+              subarea.efi = 0.0
+              subarea.armx = 0.0
+              subarea.fdsf = 0.0
+              if @bmp.bmpsublist_id == 2
+                subarea.idf4 = 0.0
+                subarea.bft = 0.0
+              end
             else
-		      # DO NOTHING
-		  end
-          #if !subarea.save then return "Enable to save value in the subarea file" end
+              #DO NOTHING  
+          end
+            #if !subarea.save then return "Enable to save value in the subarea file" end
         end  #end if subarea !nil
       end # end soils.each
     return "OK"
   end # end method
 
 
-  def create_new_subarea(name)
-    @soils = Soil.where(:field_id => session[:field_id])
-    i = 0
-    @inps = i
-    @soils.each do |soil|
-      if soil.selected
-        if @slope > soil.slope then
-          @slope = soil.slope
+  def create_new_subarea(name, id)
+    is_filled = false
+    case id
+      when 8
+        if @bmp.area != nil
+          is_filled = true;
         end
-      end
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
-      if subarea != nil then
-        if i = 0 then 
-          @inps = subarea.inps   #select the first soil, which is with bigest area
-          i += 1
+      when 12
+        if @bmp.area != nil && @bmp.width != nil && @bmp.grass_field_portion != nil && bmp.buffer_slope_upland != nil
+          is_filled = true;
         end
-        if soil.selected
-          @iops = subarea.iops   #selected the last iops to inform the subarea the folowing iops to create.
+      when 13
+        if @bmp.area != nil && @bmp.width != nil && @bmp.buffer_slope_upland != nil
+          is_filled = true;
         end
-      end
+      when 14
+        if @bmp.width != nil
+          is_filled = true;
+        end
+      when 23
+        if @bmp.area != nil && @bmp.width != nil && @bmp.buffer_slope_upland != nil
+          is_filled = true;
+        end
     end
-	create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
-    return "OK"
+
+    if is_filled
+      @soils = Soil.where(:field_id => session[:field_id])
+      i = 0
+      #@inps = i
+      @soils.each do |soil|
+        if soil.selected
+          if @slope > soil.slope then
+            @slope = soil.slope
+          end
+        end
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+        if subarea != nil then
+          if i = 0 then 
+            @inps = subarea.inps   #select the first soil, which is with bigest area
+            i += 1
+          end
+          if soil.selected
+            @iops = subarea.iops   #selected the last iops to inform the subarea the folowing iops to create.
+          end
+        end
+      end
+	  create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
+	  return "OK"
+    else
+      return "OK"
+    end
   end
 
-  def update_existing_subarea(name)
-    @soils = Soil.where(:field_id => session[:field_id])
-    i = 0
-    @soils.each do |soil|
-      if soil.selected
-        if @slope > soil.slope then
-          @slope = soil.slope
+  def update_existing_subarea(name, id)
+    is_filled = false
+    case id
+      when 8
+        if @bmp.area != nil
+          is_filled = true;
         end
-      end
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
-      if subarea != nil then
-        if i = 0 then 
-          @inps = subarea.inps   #select the first soil, which is with bigest area
-          i += 1
+      when 12
+        if @bmp.area != nil && @bmp.width != nil && @bmp.grass_field_portion != nil && bmp.buffer_slope_upland != nil
+          is_filled = true;
         end
-        if soil.selected
-          @iops = subarea.iops   #selected the last iops to inform the subarea the folowing iops to create.
+      when 13
+        if @bmp.area != nil && @bmp.width != nil && @bmp.buffer_slope_upland != nil
+          is_filled = true;
         end
-      end
+      when 14
+        if @bmp.width != nil
+          is_filled = true;
+        end
+      when 23
+        if @bmp.area != nil && @bmp.width != nil && @bmp.buffer_slope_upland != nil
+          is_filled = true;
+        end
     end
-	subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => name).first
-	update_wsa("-", subarea.wsa)
-	update_subarea(subarea, "PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "update")
+
+    if is_filled
+      @soils = Soil.where(:field_id => session[:field_id])
+      i = 0
+      @soils.each do |soil|
+        if soil.selected
+          if @slope > soil.slope then
+            @slope = soil.slope
+          end
+        end
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+        if subarea != nil then
+          if i = 0 then 
+            @inps = subarea.inps   #select the first soil, which is with bigest area
+            i += 1
+          end
+          if soil.selected
+            @iops = subarea.iops   #selected the last iops to inform the subarea the folowing iops to create.
+          end
+        end
+      end
+      subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => name).first
+      session[:subarea] = subarea
+      update_wsa("-", subarea.wsa)
+      update_subarea(subarea, name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "update")
+      return "OK"
+    else
+      return "OK"
+    end
   end
 
   def delete_existing_subarea(name)
-	subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => name).first
-	update_wsa("-", subarea.wsa)
-	#subarea.delete
+    subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => name).first
+    update_wsa("-", subarea.wsa)
+    #subarea.delete
   end
 
   ##############################  PRIVATE  ###############################

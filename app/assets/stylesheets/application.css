@@ -283,6 +283,12 @@
   transform: rotateY(180deg);
 }
 
+#instructionBox {
+    background: #4F2D7F;
+    color: #f2f2f2;
+    padding: 5px 10px;
+}
+
 /*Table styles  */
 .gvHeaderStyle {
   color:White;
