@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :climates
+
+
   resources :watershed_scenarios
   resources :watersheds
   resources :people
@@ -41,6 +44,8 @@ NTTG3::Application.routes.draw do
   #resources :users
   resources :welcomes
   #resources :fields
+  resources :apex_soils
+  resources :apex_layers
   resources :results do
 	get 'sel', on: :member
   end 

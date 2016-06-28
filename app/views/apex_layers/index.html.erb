@@ -1,0 +1,72 @@
+﻿<%= form_for :apex_layer, url: url_for( :controller => :apex_layers, :action => :index ) do |f| %>  <table>  
+    <tr>
+      <td><%= label :soil, 'Soil' %></td>
+    </tr>
+    <tr>
+      <td><%= f.collection_select :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil')}, {:required => true} %></td>
+      <td>
+        <%= f.label :lbl, "Conference " %>:
+      </td>
+      <td>
+        <%= f.collection_select :apex_layer, @Soil, :id , :name, :prompt =>"select Conference" ,:class => 'form-control' %>
+      </td>
+    </tr>      <td><%= link_to t('soil.load_soil'), apex_layers_path %></td>
+      <td><%= submit_tag "Submit" %></td>
+    </tr>
+  </table>
+ <% end %> 
+
+<h1><%= t('menu.layer_file') %></h1>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th>Layer Number</th>
+    <th><%= t('soil.depth') %></th>
+    <th><%= t('soil.bulk_density') %></th>
+    <th>UW</th>
+    <th>FC</th>
+    <th><%= t('soil.sand') %></th>
+    <th><%= t('soil.silt') %></th>
+    <th>WN</th>
+    <th><%= t('soil.ph') %></th>
+    <th>SMB</th>
+    <th>CAC</th>
+    <th>CEC</th>
+    <th>ROK</th>
+    <th>CNDS</th>
+    <th><%= t('soil.soilp') %></th>
+    <th>RSD</th>
+    <th>BDD</th>
+    <th>PSP</th>
+    <th>SATC</th>
+    <th class="gvCellStyleTitle">
+      <%= t('general.actions')%>
+    </th>
+  </tr>
+
+  <% i = 1 %>
+  <% @layers.each do |layer| %>
+      <td><%= i %></td>
+      <td><%= layer.depth %></td>
+      <td><%= layer.bulk_density %></td>
+      <td><%= layer.uw %></td>
+      <td><%= layer.fc %></td>
+      <td><%= layer.sand %></td>
+      <td><%= layer.silt %></td>
+      <td><%= layer.wn %></td>
+      <td><%= layer.ph %></td>
+      <td><%= layer.smb %></td>
+      <td><%= layer.cac %></td>
+      <td><%= layer.cec %></td>
+      <td><%= layer.rok %></td>
+      <td><%= layer.cnds %></td>
+      <td><%= layer.soil_p %></td>
+      <td><%= layer.rsd %></td>
+      <td><%= layer.bdd %></td>
+      <td><%= layer.psp %></td>
+      <td><%= layer.satc %></td>
+      <td>
+      </td>
+      <% i = i + 1 %> 
+    </tr>
+  <% end %>
+</table>  
