@@ -3,7 +3,6 @@
   # GET /layers
   # GET /layers.json
   def index
- 
     @layers = Layer.where(:soil_id => params[:id])
 
     respond_to do |format|
@@ -15,8 +14,8 @@
   # GET /layers/1
   # GET /layers/1.json
   def show
- 
-    @layer = Layer.where(:soil_id => params[:id])
+    @layer_id = params[:id]
+    @layer = Layer.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,7 +36,8 @@
 
   # GET /layers/1/edit
   def edit
-    @layer = Layer.find(params[:id])
+    @layer_id = params[:id]
+    @apex_layer = Layer.find(params[:id])
   end
 
   # POST /layers
