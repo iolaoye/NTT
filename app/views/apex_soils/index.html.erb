@@ -1,4 +1,5 @@
 ﻿<h1><%= t('menu.apex_soil')%></h1>
+
 <table class='gvTableStyle'>
     <tr class='gvHeaderStyle'>
 	  <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
@@ -8,17 +9,19 @@
       <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
       <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
     </tr>
+    <%= hidden_field(:layer_id, :id, :value => @field_id) %>
 
-  <% for soil in @soils %>
+  <% for apex_soil in @soils %>
     <tr class="gvRowStyle">
-        <td class="gvCellStyleCheckbox"><%= check_box_tag :soil, "1", soil.selected, disabled: true %></td>
-        <td class="gvCellStyleText"><%= soil.key %></td>
-        <td class="gvCellStyleText"><%= soil.symbol %></td>
-        <td class="gvCellStyleText"><%= soil.group %></td>
-        <td class="gvCellStyleText"><%= soil.name %></td>
+        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", disabled: true %></td>
+        <td class="gvCellStyleText"><%= apex_soil.key %></td>
+        <td class="gvCellStyleText"><%= apex_soil.symbol %></td>
+        <td class="gvCellStyleText"><%= apex_soil.group %></td>
+        <td class="gvCellStyleText"><%= apex_soil.name %></td>
         <td>
-          <%= link_to image_tag("view.png"), soil_path(soil), title: t('general.show') %>
-          <%= link_to image_tag("edit.png"), edit_soil_path(soil), title: t('general.edit')%>
+          <%= link_to image_tag("layers.png"), controller: "apex_layers", action: "index", id: apex_soil.id, title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
+          <%= link_to image_tag("view.png"), apex_soil_path(apex_soil.id), title: t('general.show') %>
+          <%= link_to image_tag("edit.png"), edit_apex_soil_path(apex_soil.id), title: t('general.edit') %>
         </td>
     </tr>
   <% end %>

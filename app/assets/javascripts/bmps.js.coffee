@@ -52,9 +52,7 @@ switch_all_to_off = ->
      $("#crop").toggle(false)
      $("#no_input").toggle(false)
      $("#crop_width").toggle(false)
-     $("#difference_max_temperature").toggle(false)
-     $("#difference_min_temperature").toggle(false)
-     $("#difference_precipitation").toggle(false)
+     $("#climate_table").toggle(false)
      $("#slope_reduction").toggle(false)
 
 #activate elements on the bmp screen according to the bmp sublist selected
@@ -123,9 +121,7 @@ activate_bmp_controls = ->
         when "17" #Terrace system
             $("#no_input").toggle(true)
         when "19" #climate change
-            $("#difference_max_temperature").toggle(true)
-            $("#difference_min_temperature").toggle(true)
-            $("#difference_precipitation").toggle(true)
+            $("#climate_table").toggle(true)
         when "20" #asphalt or concrete
             $("#no_input").toggle(true)
         when "21" #grass cover
