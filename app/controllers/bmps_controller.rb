@@ -3,9 +3,9 @@ class BmpsController < ApplicationController
 before_filter :take_names
 
   def take_names
-	@project_name = Project.find(session[:project_id]).name
-	@field_name = Field.find(session[:field_id]).field_name
-	@scenario_name = Scenario.find(session[:scenario_id]).name      
+    @project_name = Project.find(session[:project_id]).name
+    @field_name = Field.find(session[:field_id]).field_name
+    @scenario_name = Scenario.find(session[:scenario_id]).name
   end
 
 ################################  BMPs list   #################################
