@@ -119,6 +119,23 @@
   <div class="field" id="no_input" style="display:none">
     <%= "This BMP does not require any input" %>
   </div>
+  <div class="field" id="climate_table" style="display:none">
+	<table>
+	    <tr><th>Month</th><th>Max. Temp.</th><th>Min. Temp.</th><th>Precipitation</th></tr>
+		<tr><td>1</td><td><%= number_field :max_1, :step => 'any' %></td><td><%= number_field :min_1, :step => 'any' %></td><td><%= number_field :pcp_1, :step => 'any' %></td></tr>
+		<tr><td>2</td><td><%= number_field :max_2, :step => 'any' %></td><td><%= number_field :min_2, :step => 'any' %></td><td><%= number_field :pcp_2, :step => 'any' %></td></tr>
+		<tr><td>3</td><td><%= number_field :max_3, :step => 'any' %></td><td><%= number_field :min_3, :step => 'any' %></td><td><%= number_field :pcp_3, :step => 'any' %></td></tr>
+		<tr><td>4</td><td><%= number_field :max_4, :step => 'any' %></td><td><%= number_field :min_4, :step => 'any' %></td><td><%= number_field :pcp_4, :step => 'any' %></td></tr>
+		<tr><td>5</td><td><%= number_field :max_5, :step => 'any' %></td><td><%= number_field :min_5, :step => 'any' %></td><td><%= number_field :pcp_5, :step => 'any' %></td></tr>
+		<tr><td>6</td><td><%= number_field :max_6, :step => 'any' %></td><td><%= number_field :min_6, :step => 'any' %></td><td><%= number_field :pcp_6, :step => 'any' %></td></tr>
+		<tr><td>7</td><td><%= number_field :max_7, :step => 'any' %></td><td><%= number_field :min_7, :step => 'any' %></td><td><%= number_field :pcp_7, :step => 'any' %></td></tr>
+		<tr><td>8</td><td><%= number_field :max_8, :step => 'any' %></td><td><%= number_field :min_8, :step => 'any' %></td><td><%= number_field :pcp_8, :step => 'any' %></td></tr>
+		<tr><td>9</td><td><%= number_field :max_9, :step => 'any' %></td><td><%= number_field :min_9, :step => 'any' %></td><td><%= number_field :pcp_9, :step => 'any' %></td></tr>
+		<tr><td>10</td><td><%= number_field :max_11, :step => 'any' %></td><td><%= number_field :min_10, :step => 'any' %></td><td><%= number_field :pcp_10, :step => 'any' %></td></tr>
+		<tr><td>11</td><td><%= number_field :max_11, :step => 'any' %></td><td><%= number_field :min_11, :step => 'any' %></td><td><%= number_field :pcp_11, :step => 'any' %></td></tr>
+		<tr><td>12</td><td><%= number_field :max_12, :step => 'any' %></td><td><%= number_field :min_12, :step => 'any' %></td><td><%= number_field :pcp_12, :step => 'any' %></td></tr>
+	</table>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
