@@ -3,7 +3,8 @@
   # GET /layers
   # GET /layers.json
   def index
-    @layers = Layer.where(:soil_id => params[:soil_id])
+ 
+    @layers = Layer.where(:soil_id => params[:id])
 
     respond_to do |format|
       format.html # index.html.erb
