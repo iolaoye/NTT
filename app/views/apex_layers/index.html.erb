@@ -1,0 +1,56 @@
+﻿<h1><%= t('menu.layer_file') %></h1>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th>Layer Number</th>
+    <th><%= t('soil.depth') %></th>
+    <th><%= t('soil.bulk_density') %></th>
+    <th>UW</th>
+    <th>FC</th>
+    <th><%= t('soil.sand') %></th>
+    <th><%= t('soil.silt') %></th>
+    <th>WN</th>
+    <th><%= t('soil.ph') %></th>
+    <th>SMB</th>
+    <th>CAC</th>
+    <th>CEC</th>
+    <th>ROK</th>
+    <th>CNDS</th>
+    <th><%= t('soil.soilp') %></th>
+    <th>RSD</th>
+    <th>BDD</th>
+    <th>PSP</th>
+    <th>SATC</th>
+    <th class="gvCellStyleTitle">
+      <%= t('general.actions')%>
+    </th>
+  </tr>
+
+  <% i = 1 %>
+  <% @layers.each do |layer| %>
+      <td><%= i %></td>
+      <td><%= layer.depth %></td>
+      <td><%= layer.bulk_density %></td>
+      <td><%= layer.uw %></td>
+      <td><%= layer.fc %></td>
+      <td><%= layer.sand %></td>
+      <td><%= layer.silt %></td>
+      <td><%= layer.wn %></td>
+      <td><%= layer.ph %></td>
+      <td><%= layer.smb %></td>
+      <td><%= layer.cac %></td>
+      <td><%= layer.cec %></td>
+      <td><%= layer.rok %></td>
+      <td><%= layer.cnds %></td>
+      <td><%= layer.soil_p %></td>
+      <td><%= layer.rsd %></td>
+      <td><%= layer.bdd %></td>
+      <td><%= layer.psp %></td>
+      <td><%= layer.satc %></td>
+      <td>
+          <%= link_to image_tag("view.png"), apex_layer_path(layer.id), title: t('general.show') %>
+          <%= link_to image_tag("edit.png"), edit_apex_layer_path(layer.id), title: t('general.edit') %>
+      </td>
+      <% i = i + 1 %> 
+    </tr>
+  <% end %>
+</table>  
