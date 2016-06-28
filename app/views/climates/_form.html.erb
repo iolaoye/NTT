@@ -1,0 +1,41 @@
+<%= form_for(@climate) do |f| %>
+  <% if @climate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@climate.errors.count, "error") %> prohibited this climate from being saved:</h2>
+
+      <ul>
+      <% @climate.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :bmp_id %><br />
+    <%= f.number_field :bmp_id %>
+  </div>
+  <div class="field">
+    <%= f.label :month %><br />
+    <%= f.text_field :month %>
+  </div>
+  <div class="field">
+    <%= f.label :spanish_month %><br />
+    <%= f.text_field :spanish_month %>
+  </div>
+  <div class="field">
+    <%= f.label :max_temp %><br />
+    <%= f.text_field :max_temp %>
+  </div>
+  <div class="field">
+    <%= f.label :min_temp %><br />
+    <%= f.text_field :min_temp %>
+  </div>
+  <div class="field">
+    <%= f.label :precipitation %><br />
+    <%= f.text_field :precipitation %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

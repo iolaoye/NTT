@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :climates
+
+
   resources :watershed_scenarios
   resources :watersheds
   resources :people
