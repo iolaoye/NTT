@@ -316,7 +316,9 @@
     silt: Limo
     clay: Arcilla
     organic_matter: Materia Orgánica
-    ph: PH    
+    ph: PH  
+    select_soil: Seleccione Capas 
+    load_soil: Cargar Capas
   scenario:
     scenario_name: Nombre Escenario
     scenario: Escenario
