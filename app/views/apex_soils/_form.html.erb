@@ -12,26 +12,6 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :selected, t('soil.selected') %>
-    <%= f.check_box :selected %>
-  </div>
-  <div class="field">
-    <%= f.label :key, t('soil.key') %>
-    <%= f.text_field :key %>
-  </div>
-  <div class="field">
-    <%= f.label :symbol, t('soil.symbol') %>
-    <%= f.text_field :symbol %>
-  </div>
-  <div class="field">
-    <%= f.label :group, t('soil.group') %>
-    <%= f.text_field :group %>
-  </div>
-  <div class="field">
-    <%= f.label :name, t('soil.name') %>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
     <%= f.label :albedo, t('soil.albedo') %>
     <%= f.text_field :albedo %>
   </div>
@@ -47,6 +27,81 @@
     <%= f.label :drainage_type, t('soil.drainage_type') %>
     <%= f.text_field :drainage_type %>
   </div>
+<table class='gvTableStyle'>
+  <tr class='gvRowStyleOdd'>
+    <td><div class="field">
+        <%= f.label :ffc %><br />
+        <%= f.number_field :ffc, :class => "fieldNumbers"%>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :wtmn %><br />
+        <%= f.number_field :wtmn, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :wtmx %><br />
+        <%= f.number_field :wtmx, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :wtbl %><br />
+        <%= f.number_field :wtbl, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :gwst %><br />
+        <%= f.number_field :gwst, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :gwmx %><br />
+        <%= f.number_field :gwmx, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rft %><br />
+        <%= f.number_field :rft, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rfpk %><br />
+        <%= f.number_field :rfpk, :class => "fieldNumbers" %> 
+    <td></td>
+  </tr>
+  <tr class='gvRowStyleOdd''>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :tsla %><br />
+        <%= f.number_field :tsla, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :xids %><br />
+        <%= f.number_field :xids, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+        <%= f.label :rtn1 %><br />
+        <%= f.number_field :rtn1, :class => "fieldNumbers" %>
+    </div></td>
+	<td><div class="field">
+      <%= f.label :xidk %><br />
+      <%= f.number_field :xidk, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+      <%= f.label :zqt %><br />
+      <%= f.number_field :zqt, :class => "fieldNumbers" %>
+    </div></td>
+    <td><div class="field">
+      <%= f.label :zf %><br />
+      <%= f.number_field :zf, :class => "fieldNumbers" %>
+    </div></td>
+     <td><div class="field">
+      <%= f.label :ztk %><br />
+      <%= f.number_field :ztk, :class => "fieldNumbers" %>
+    </div></td> 
+     <td><div class="field">
+      <%= f.label :fbm %><br />
+      <%= f.number_field :fbm, :class => "fieldNumbers" %>
+    </div></td> 
+      <td><div class="field">
+      <%= f.label :fhp %><br />
+      <%= f.number_field :fhp, :class => "fieldNumbers" %>
+    </div></td>
+  </tr>
+</table>
   <div class="actions">
     <%= f.submit %>
   </div>
