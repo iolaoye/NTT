@@ -67,6 +67,7 @@ before_filter :take_names
   # POST /bmps
   # POST /bmps.json
   def create
+  ooo
     @slope = 100
     @bmp = Bmp.new(bmp_params)
 	@bmp.scenario_id = session[:scenario_id]
