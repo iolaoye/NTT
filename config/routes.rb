@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :climates
+
+
   resources :watershed_scenarios
   resources :watersheds
   resources :people
@@ -81,7 +84,11 @@ NTTG3::Application.routes.draw do
     get :send_to_mapping_site, on: :member
     post :receive_from_mapping_site, on: :member
     get :location_fields, on: :member 
-  end  
+  end
+
+  resources :apex_soils do
+	resources :apex_layers
+  end
 
   resources :fields do
     get :list, on: :member 

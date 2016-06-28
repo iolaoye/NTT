@@ -2,4 +2,4 @@
 
 <%= render 'form' %>
 
-<%= link_to t('general.back'), apex_layers_path %>
+<%= link_to t('general.back'), controller: "apex_layers", action: "index", id: @apex_layer.soil_id %>
