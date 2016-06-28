@@ -116,12 +116,12 @@ class LocationsController < ApplicationController
 				@weather.longitude = site.xlog
 				@weather.way_id = 1   #assign PRISM weather station to the weather way as default from map
 				@weather.station_way = "map"
-			if @weather.save then
-				@field.weather_id = @weather.id
-			end 
-			@field.save
-			@weather.field_id = @field.id
-			@weather.save
+				if @weather.save then
+					@field.weather_id = @weather.id
+				end 
+				@field.save
+				@weather.field_id = @field.id
+				@weather.save
 			end # end for fields
 
 			# step 5: update location	  
