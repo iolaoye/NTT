@@ -316,7 +316,7 @@ en:
     clay: Clay
     organic_matter: Organic Matter
     ph: PH
-    select_soil: Selcet Soil
+    select_soil: Select Soil
     load_soil: Load Soil 
   scenario:
     scenario_name: Scenario Name
