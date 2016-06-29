@@ -33,7 +33,7 @@
 
 .numbers { 
   text-align: right; 
-  padding-right: 5%;
+  width: 100px;
 }
 
 .crumbs li { display: inline; color:Blue}
