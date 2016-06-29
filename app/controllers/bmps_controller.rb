@@ -71,7 +71,10 @@ before_filter :take_names
   # POST /bmps
   # POST /bmps.json
   def create
+<<<<<<< HEAD
     @climate_array = session[:climate_array]
+=======
+>>>>>>> 3e3c41d9bb46ce830ff4dc18b9661aa26be0aca5
     @slope = 100
     @bmp = Bmp.new(bmp_params)
     @bmp.id = session[:bmp_id]

@@ -13,7 +13,6 @@
 				   <li><%= link_to t('menu.parameters_file'), apex_parameters_path %></li>
 				   <li><%= link_to t('menu.subarea_file'), subareas_path %></li>
 				   <li><%= link_to t('menu.apex_soil'), field_apex_soils_path(session[:field_id]) %></li>
-				   <li><%= link_to t('menu.layer_file'), apex_layers_path %></li>
 				   <li><%= link_to t('menu.operation_file'), edit_weather_path(session[:field_id]) %></li>
 				   <li><%= link_to t('menu.site'), site_path(session[:field_id]) %></li>
 	           <% when request.original_url.include?("weather") || request.original_url.include?("soil") ||  request.original_url.include?("scenario") || request.original_url.include?("layer") || request.original_url.include?("results")  %>

@@ -1,10 +1,10 @@
-<%= form_for(@layer) do |f| %>
-  <% if @layer.errors.any? %>
+<%= form_for(@apex_layer) do |f| %>
+  <% if @apex_layer.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
 
       <ul>
-      <% @layer.errors.full_messages.each do |msg| %>
+      <% @apex_layer.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -44,6 +44,6 @@
     <%= f.text_field :ph %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= link_to "Update", { controller: "apex_layers", action: "index", id: @apex_layer.soil_id}, :class => "button" %>
   </div>
 <% end %>
