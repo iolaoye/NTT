@@ -2,6 +2,18 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+update_max_row = ->
+    top = $("#climate_max_1").val()
+    $(".max").val(top)
+
+update_min_row = ->
+    top = $("#climate_min_1").val()
+    $(".min").val(top)
+
+update_pcp_row = ->
+    top = $("#climate_pcp_1").val()
+    $(".pcp").val(top)
+
 update_animal_options = ->
   url = "/fertilizers/" + $("#bmp_animal_id").val() + ".json"
   $.getJSON url, (fertilizer) ->
@@ -175,3 +187,10 @@ $(document).ready ->
 	    update_animal_options()
     $("#bmp_irrigation_id").change ->
         update_irrigation_options()
+    $("#fill_max").click ->
+        update_max_row()
+    $("#fill_min").click ->
+        update_min_row()
+    $("#fill_pcp").click ->
+        update_pcp_row()
+

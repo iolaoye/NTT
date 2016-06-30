@@ -46,8 +46,11 @@ before_filter :take_names
   # GET /bmps/new
   # GET /bmps/new.json
   def new
+    @climate_array = create_hash()
+    session[:climate_array] = @climate_array
     @bmp = Bmp.new
   	@animals = Fertilizer.where(:fertilizer_type_id => 2)
+    session.delete(:subarea)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -61,6 +64,7 @@ before_filter :take_names
     @bmp = Bmp.find(params[:id])
 	  @bmp_id = @bmp.bmp_id
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
+    @climate_array = session[:climate_array]
   end
 
 ################################  CREATE  #################################
@@ -69,32 +73,38 @@ before_filter :take_names
   def create
     @slope = 100
     @bmp = Bmp.new(bmp_params)
-	@bmp.scenario_id = session[:scenario_id]
+    @bmp.id = session[:bmp_id]
+	  @bmp.scenario_id = session[:scenario_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
-	respond_to do |format|
-		if @bmp.save
-			msg = input_fields("create")
-			if msg == "OK" 
-	  			format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
-				format.json { render json: @bmp, status: :created, location: @bmp }
-			else
-				format.html { render action: "new" }
-				format.json { render json: @bmp.errors, status: :unprocessable_entity }		
-			end
-		else
-			format.html { render action: "new" }
-			format.json { render json: @bmp.errors, status: :unprocessable_entity }
-		end
-	end
+    @climate_array = session[:climate_array]
+
+    respond_to do |format|
+      if @bmp.save
+        msg = input_fields("create")
+        if msg == "OK"
+          format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
+          format.json { render json: @bmp, status: :created, location: @bmp }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @bmp.errors, status: :unprocessable_entity }		
+        end
+      else
+        format.html { render action: "new" }
+        format.json { render json: @bmp.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 ################################  UPDATE  #################################
   # PATCH/PUT /bmps/1
   # PATCH/PUT /bmps/1.json
   def update
-	@slope = 100
+	  @slope = 100
     @bmp = Bmp.find(params[:id])
+    @bmp.id = session[:bmp_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
+    @climates = Climate.where(:bmp_id => @bmp.id)
+    @climate_array = session[:climate_array]
 
 	  msg = input_fields("update")
 
@@ -154,7 +164,7 @@ before_filter :take_names
       when 11
         return streambank_stabilization(type)
       when 12
-        riparian_forest(type)
+        return riparian_forest(type)
       when 13
         return filter_strip(type)
       when 14
@@ -166,7 +176,7 @@ before_filter :take_names
       when 18
         # TODO
       when 19
-        # TODO
+        return create_climate(type)
       when 20
         return asphalt_concrete(type)
       when 21
@@ -180,6 +190,30 @@ before_filter :take_names
     end
   end
 
+  ########################### CLIMATE FUNCTIONS ########################### 
+
+  def create_hash
+    i = 0
+    climate_array = Array.new
+    while i < 12 do
+      hash = Hash.new
+      hash["max"] = 0.0
+      hash["min"] = 0.0
+      hash["pcp"] = 0.0
+      climate_array.push(hash)
+      i+=1
+    end
+    return climate_array
+  end
+
+
+  def update_hash(climate)
+    hash = Hash.new
+    hash["max"] = climate.max_temp
+    hash["min"] = climate.min_temp
+    hash["pcp"] = climate.precipitation / 100
+    @climate_array.push(hash)
+  end
 
   ####################### INDIVIDUAL SUBLIST ACTIONS #######################
 
@@ -262,7 +296,6 @@ before_filter :take_names
         update_existing_subarea("WL", 8)
   	  when "delete"
         subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WL").first
-        session[:wsa] = subarea.wsa
         update_wsa("-", subarea.wsa)
         #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first.delete
   	end
@@ -375,10 +408,42 @@ before_filter :take_names
     return "OK"
   end # end method
 
+  
   ### ID: 17
   def terrace_system(type)
 	  terrace_and_slope(type)
   end
+
+
+  ### ID: 19
+  def create_climate(type)
+    case type
+      when "create"
+        i = 0
+        @climate_array.clear
+        while i < 12 do
+          climate = Climate.new
+          climate.bmp_id = session[:bmp_id]
+          climate.month = i + 1
+          climate.max_temp = 0.0
+          climate.min_temp = 0.0
+          climate.precipitation = 0.0
+          edit_climate(climate, i + 1)
+          update_hash(climate)
+          i += 1
+        end
+      when "update"
+        i = 0
+        @climates = Climate.where(:bmp_id => session[:bmp_id])
+        @climates.each do |climate|
+          edit_climate(climate, i + 1)
+          update_hash(climate)
+          i += 1
+        end
+      end
+    return "OK"
+  end
+
 
   ### ID: 20
   def asphalt_concrete(type)
@@ -453,6 +518,73 @@ before_filter :take_names
   end # end method
 
   ################### METHODS FOR INDIVIDUAL SUBLIST ACTIONS ###################
+
+
+  def edit_climate(climate, i)
+    case i
+      when 1
+        climate.max_temp = params[:climate][:max_1] unless params[:climate][:max_1] == ""
+        climate.min_temp = params[:climate][:min_1] unless params[:climate][:min_1] == ""
+        climate.precipitation = params[:climate][:pcp_1] unless params[:climate][:pcp_1] == ""
+        climate.save
+      when 2
+        climate.max_temp = params[:climate][:max_2] unless params[:climate][:max_2] == ""
+        climate.min_temp = params[:climate][:min_2] unless params[:climate][:min_2] == ""
+        climate.precipitation = params[:climate][:pcp_2] unless params[:climate][:pcp_2] == ""
+        climate.save
+      when 3
+        climate.max_temp = params[:climate][:max_3] unless params[:climate][:max_3] == ""
+        climate.min_temp = params[:climate][:min_3] unless params[:climate][:min_3] == ""
+        climate.precipitation = params[:climate][:pcp_3] unless params[:climate][:pcp_3] == ""
+        climate.save
+      when 4
+        climate.max_temp = params[:climate][:max_4] unless params[:climate][:max_4] == ""
+        climate.min_temp = params[:climate][:min_4] unless params[:climate][:min_4] == ""
+        climate.precipitation = params[:climate][:pcp_4] unless params[:climate][:pcp_4] == ""
+        climate.save
+      when 5
+        climate.max_temp = params[:climate][:max_5] unless params[:climate][:max_5] == ""
+        climate.min_temp = params[:climate][:min_5] unless params[:climate][:min_5] == ""
+        climate.precipitation = params[:climate][:pcp_5] unless params[:climate][:pcp_5] == ""
+        climate.save
+      when 6
+        climate.max_temp = params[:climate][:max_6] unless params[:climate][:max_6] == ""
+        climate.min_temp = params[:climate][:min_6] unless params[:climate][:min_6] == ""
+        climate.precipitation = params[:climate][:pcp_6] unless params[:climate][:pcp_6] == ""
+        climate.save
+      when 7
+        climate.max_temp = params[:climate][:max_7] unless params[:climate][:max_7] == ""
+        climate.min_temp = params[:climate][:min_7] unless params[:climate][:min_7] == ""
+        climate.precipitation = params[:climate][:pcp_7] unless params[:climate][:pcp_7] == ""
+        climate.save
+      when 8
+        climate.max_temp = params[:climate][:max_8] unless params[:climate][:max_8] == ""
+        climate.min_temp = params[:climate][:min_8] unless params[:climate][:min_8] == ""
+        climate.precipitation = params[:climate][:pcp_8] unless params[:climate][:pcp_8] == ""
+        climate.save
+      when 9
+        climate.max_temp = params[:climate][:max_9] unless params[:climate][:max_9] == ""
+        climate.min_temp = params[:climate][:min_9] unless params[:climate][:min_9] == ""
+        climate.precipitation = params[:climate][:pcp_9] unless params[:climate][:pcp_9] == ""
+        climate.save
+      when 10
+        climate.max_temp = params[:climate][:max_10] unless params[:climate][:max_10] == ""
+        climate.min_temp = params[:climate][:min_10] unless params[:climate][:min_10] == ""
+        climate.precipitation = params[:climate][:pcp_10] unless params[:climate][:pcp_10] == ""
+        climate.save
+      when 11
+        climate.max_temp = params[:climate][:max_11] unless params[:climate][:max_11] == ""
+        climate.min_temp = params[:climate][:min_11] unless params[:climate][:min_11] == ""
+        climate.precipitation = params[:climate][:pcp_11] unless params[:climate][:pcp_11] == ""
+        climate.save
+      when 12
+        climate.max_temp = params[:climate][:max_12] unless params[:climate][:max_12] == ""
+        climate.min_temp = params[:climate][:min_12] unless params[:climate][:min_12] == ""
+        climate.precipitation = params[:climate][:pcp_12] unless params[:climate][:pcp_12] == ""
+        climate.save
+    end
+  end
+
 
   ## USED FOR TERRACE SYSTEM(ID: 17) AND FOR SLOP ADJUSTEMNT(ID: 22)
   def terrace_and_slope(type)
@@ -596,7 +728,7 @@ before_filter :take_names
           is_filled = true;
         end
       when 12
-        if @bmp.area != nil && @bmp.width != nil && @bmp.grass_field_portion != nil && bmp.buffer_slope_upland != nil
+        if @bmp.area != nil && @bmp.width != nil && @bmp.grass_field_portion != nil && @bmp.buffer_slope_upland != nil
           is_filled = true;
         end
       when 13
@@ -687,7 +819,6 @@ before_filter :take_names
         end
       end
       subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => name).first
-      session[:subarea] = subarea
       update_wsa("-", subarea.wsa)
       update_subarea(subarea, name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "update")
       return "OK"
