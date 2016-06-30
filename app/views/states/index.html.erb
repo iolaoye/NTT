@@ -20,7 +20,7 @@
     <td><%= state.state_abbreviation %></td>
     <td><%= state.status %></td>
     <td><%= link_to 'Show', state %></td>
-    <td><%= link_to 'Edit', edit_state_path(state) %></td>
+    <td><%= link_to t('general.edit'), edit_state_path(state) %></td>
     <td><%= link_to 'Destroy', state, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
