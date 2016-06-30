@@ -244,7 +244,7 @@ class ScenariosController < ApplicationController
                     end
                     data[32, 7] = pcp
                 end
-                #climate_array[month]["key"]
+                #climate_array[month]["key"] 
                 #session[:month] = str[6, 4].to_i
                 #session[:max] = str[20, 6].to_f
                 #session[:min] = str[26, 6].to_f

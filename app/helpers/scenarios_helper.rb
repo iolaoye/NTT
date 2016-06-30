@@ -12,7 +12,7 @@ module ScenariosHelper
 		end #soils each do end
 	end
 
- ###################################### create_subarea ######################################
+ ###################################### create_subarea ###################################### 
  ## Create subareas from soils receiving from map for each field and for each scenario ###
 	def create_subarea(sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type)
 		subarea = Subarea.new
