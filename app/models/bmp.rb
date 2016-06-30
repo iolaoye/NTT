@@ -4,10 +4,10 @@ class Bmp < ActiveRecord::Base
 	         :area, :number_of_animals, :days, :hours, :animal_id, :dry_manure, :no3_n, :po4_p, :org_n, :org_p, :width, :grass_field_portion, :buffer_slope_upland, :crop_width,
 			 :slope_reduction, :sides, :bmpsublist_id
   #associations 
-     has_many :crops
-     has_many :subareas, :dependent => :destroy
-     has_many :climates, :dependent => :destroy
-     belongs_to :scenario
+	  has_many :crops
+	  has_many :subareas, :dependent => :destroy
+	  has_many :climates, :dependent => :destroy
+	  belongs_to :scenario
   #validations
     validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id, :message => "already exist"
     validates :water_stress_factor, numericality: { greater_than: 0,  less_than_or_equal_to: 1 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
