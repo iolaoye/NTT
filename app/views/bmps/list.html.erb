@@ -1,9 +1,9 @@
-﻿<h1>Listing Best Management Practices</h1>
+﻿<h1><%= t('general.listing') + " " + t('menu.bmps') %></h1>
 
-<%= link_to 'New Bmp', new_bmp_path %>
+<%= link_to t('general.new') + " " + t('operation.bmp'), new_bmp_path %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th class="gvCellStyleTitle">BMP</th>
+    <th class="gvCellStyleTitle"><%= t('operation.bmp') %></th>
     <th><%= t('general.actions') %></th>
   </tr>
 
