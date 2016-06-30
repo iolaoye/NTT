@@ -8,13 +8,12 @@
 	           <% when request.original_url.include?("project") || request.original_url.include?("welcome") ||  request.original_url.include?("about") || request.original_url.include?("contact") || request.original_url.include?("help")  %>
 			       <li><%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></li>
    			       <li><%= link_to t('menu.projects'), welcomes_path %></li>
-	           <% when request.original_url.include?("modifications") || request.original_url.include?("apex_controls") ||  request.original_url.include?("apex_parameters") || request.original_url.include?("subarea") || request.original_url.include?("apex_soil") || request.original_url.include?("site")%>
+	           <% when request.original_url.include?("modifications") || request.original_url.include?("apex_controls") ||  request.original_url.include?("apex_parameters") || request.original_url.include?("subarea") || request.original_url.include?("apex_soil") || request.original_url.include?("apex_layer") || request.original_url.include?("soil_operation") || request.original_url.include?("site")%>
 				   <li><%= link_to t('menu.control_file'), apex_controls_path %></li>
 				   <li><%= link_to t('menu.parameters_file'), apex_parameters_path %></li>
 				   <li><%= link_to t('menu.subarea_file'), subareas_path %></li>
 				   <li><%= link_to t('menu.apex_soil'), field_apex_soils_path(session[:field_id]) %></li>
-				   <li><%= link_to t('menu.layer_file'), edit_weather_path(session[:field_id]) %></li>
-				   <li><%= link_to t('menu.operation_file'), edit_weather_path(session[:field_id]) %></li>
+				   <li><%= link_to t('menu.operation_file'), soil_operations_path %></li>
 				   <li><%= link_to t('menu.site'), site_path(session[:field_id]) %></li>
 	           <% when request.original_url.include?("weather") || request.original_url.include?("soil") ||  request.original_url.include?("scenario") || request.original_url.include?("layer") || request.original_url.include?("results")  %>
 				   <li><%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></li>
@@ -35,8 +34,8 @@
     </div>
     <ul class="crumbs">
         <% case request.original_url %>
-	        <% when /project/, /welcome/ %>
-	        <% when /apex_controls/, /apex_parameters/, /subarea/, /apex_soils/, /site/  %>
+	        <% when /project/, /welcome/, /receive_from_mapping_site/ %>
+	        <% when /apex_controls/, /apex_parameters/, /subarea/, /apex_soils/, /soil_operation/, /site/ %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=project_name%></li>
@@ -52,9 +51,23 @@
 						<li><%= t('menu.subarea_file') %></li>
                     <% when /apex_soils/ %>
 					    <li><%= t('menu.apex_soil') %></li>
-                    <% when /site/ %>
-					    <li><%= t('menu.site') %></li>
-				<% end %>
+					<% when /soil_operation/ %>
+					    <li><%= t('menu.operation_file') %></li>
+					<% when /site/ %>
+					    <li><%= t('menu.site') %></li>	                  
+                <% end %>
+			<% when /apex_layer/ %>
+			    <% field_name = Field.find(session[:field_id]).field_name %>
+			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
+			    <li><%=">>"%><%=project_name%></li>
+			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
+				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+				<li><%=">>"%><%= t('menu.apex_soil') %></li>
+				<li><%=">>"%></li>
+				<% case request.original_url %>
+					<% when /apex_layer/ %>
+						<li><%= t('menu.layer_file') %></li>
+                <% end %>
 			<% when /weather/, /soil/, /scenario/, /layer/, /results/ %>
 				<% project_name = Project.find(session[:project_id]).name %>
 				<% field_name = Field.find(session[:field_id]).field_name %>

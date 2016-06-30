@@ -2,6 +2,18 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+update_max_row = ->
+    top = $("#climate_max_1").val()
+    $(".max").val(top)
+
+update_min_row = ->
+    top = $("#climate_min_1").val()
+    $(".min").val(top)
+
+update_pcp_row = ->
+    top = $("#climate_pcp_1").val()
+    $(".pcp").val(top)
+
 update_animal_options = ->
   url = "/fertilizers/" + $("#bmp_animal_id").val() + ".json"
   $.getJSON url, (fertilizer) ->
@@ -52,9 +64,8 @@ switch_all_to_off = ->
      $("#crop").toggle(false)
      $("#no_input").toggle(false)
      $("#crop_width").toggle(false)
-     $("#difference_max_temperature").toggle(false)
-     $("#difference_min_temperature").toggle(false)
-     $("#difference_precipitation").toggle(false)
+     $("#climate_table").toggle(false)
+     $("#slope_reduction").toggle(false)
 
 #activate elements on the bmp screen according to the bmp sublist selected
 activate_bmp_controls = ->
@@ -66,20 +77,16 @@ activate_bmp_controls = ->
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
-            $("#safety_factor").toggle(true)
-            $('#bmp_irrigation_id').prop('required',true)
-            $("#area").toggle(true)   
         when "2" #autofertigation
             $("#irrigation").toggle(true)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
-            $("#days").toggle(true)
-            $("#safety_factor").toggle(true)
-            $('#irrigation_id').prop('required',true)   
+            $("#days").toggle(true) 
         when "3" #Tile Drain
             $("#depth").toggle(true)
             $("#depth_ft_label").toggle(true)
+            $("#safety_factor").toggle(false)
         when "4", "5" #Pad and pipes - No Ditch Improvement, Two-stage ditch system
             $("#width").toggle(true)
             $("#sides").toggle(true)
@@ -126,9 +133,7 @@ activate_bmp_controls = ->
         when "17" #Terrace system
             $("#no_input").toggle(true)
         when "19" #climate change
-            $("#difference_max_temperature").toggle(true)
-            $("#difference_min_temperature").toggle(true)
-            $("#difference_precipitation").toggle(true)
+            $("#climate_table").toggle(true)
         when "20" #asphalt or concrete
             $("#no_input").toggle(true)
         when "21" #grass cover
@@ -141,13 +146,51 @@ activate_bmp_controls = ->
             $("#crop").toggle(true)
             $("#buffer_slope_upland").toggle(true)
             $("#bmp_crop_id").prop('required',true)
+    
+#activate elements on the bmp screen according to the bmp sublist selected
+update_irrigation_options = ->
+    switch $("#bmp_irrigation_id").val()
+        when "7" #furrow diking
+            $("#safety_factor").toggle(true)
+            $("#area").toggle(false)
+            $("#irrigation").toggle(true)
+            $("#water_stress_factor").toggle(true)
+            $("#irrigation_efficiency").toggle(true)
+            $("#maximum_single_application").toggle(true)
+            $("#days").toggle(true)
+        when "8" #pads and pipes
+            $("#safety_factor").toggle(false)
+            $("#area").toggle(true)
+            $("#irrigation").toggle(true)
+            $("#water_stress_factor").toggle(true)
+            $("#irrigation_efficiency").toggle(true)
+            $("#maximum_single_application").toggle(true)
+            $("#days").toggle(true)
+        else
+            $("#safety_factor").toggle(false)
+            $("#area").toggle(false)
+            $("#irrigation").toggle(true)
+            $("#water_stress_factor").toggle(true)
+            $("#irrigation_efficiency").toggle(true)
+            $("#maximum_single_application").toggle(true)
+            $("#days").toggle(true)
+
 
 
 $(document).ready ->
     activate_bmp_controls()
     $("#bmp_bmp_id").change ->
-       update_bmpsublist()
+	    update_bmpsublist()
     $("#bmp_bmpsublist_id").change ->
-       activate_bmp_controls()
+	    activate_bmp_controls()
     $("#bmp_animal_id").change ->
-       update_animal_options()
+	    update_animal_options()
+    $("#bmp_irrigation_id").change ->
+        update_irrigation_options()
+    $("#fill_max").click ->
+        update_max_row()
+    $("#fill_min").click ->
+        update_min_row()
+    $("#fill_pcp").click ->
+        update_pcp_row()
+

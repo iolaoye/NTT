@@ -12,7 +12,7 @@ module ScenariosHelper
 		end #soils each do end
 	end
 
- ###################################### create_subarea ######################################
+ ###################################### create_subarea ###################################### 
  ## Create subareas from soils receiving from map for each field and for each scenario ###
 	def create_subarea(sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type)
 		subarea = Subarea.new
@@ -56,7 +56,8 @@ module ScenariosHelper
         subarea.angl = 0
 		#line 4
 		subarea.wsa = soil_area * AC_TO_HA
-		subarea.chl = Math::sqrt(subarea.wsa * 0.01)
+		subarea.chl = 0
+		subarea.chl = Math::sqrt(subarea.wsa * 0.01) unless subarea.wsa < 0
 		#subarea.wsa *= -1 unless i == 1
 		session[:slope] = slope
         subarea.slp = slope / 100
@@ -74,6 +75,7 @@ module ScenariosHelper
 		end
 		#line 5
 		subarea.rchl = subarea.chl
+		session[:i] = i
 		subarea.rchl *= 0.9 unless i < total_selected  #just the last subarea is going to have different chl and rchl
 		subarea.rchd = 0.0
 		subarea.rcbw = 0.0

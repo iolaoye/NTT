@@ -175,6 +175,7 @@ class ScenariosController < ApplicationController
 		apex_run_string = "APEX001   1IWPNIWND   1   0   0"
 		if county != nil then
 			client = Savon.client(wsdl: URL_Weather)
+			session[:depth] = county.wind_wp1_name
 			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
 			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
 			print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
@@ -207,6 +208,56 @@ class ScenariosController < ApplicationController
 			print_array_to_file(weather_data, "APEX.wth")
 		end
 		#todo after file is copied if climate bmp is in place modified the weather file.
+        bmp_id = Bmp.select(:id).where(:scenario_id => session[:scenario_id])
+        climate = Climate.where(:bmp_id => bmp_id)
+        if climate.first != nil
+            data = read_file("Apex.wth")
+            data.each_line do |day|
+                month = data[6, 4].to_i
+                max_input = climate_array[month]["max"]
+                min_input = climate_array[month]["min"]
+                pcp_input = climate_array[month]["pcp"]
+                max_file = data[20, 6].to_f
+                min_file = data[26, 6].to_f
+                pcp_file = data[32, 7].to_f
+                if max_input != 0
+                    max = max_file + max_input
+                    max = sprintf("%.1f", max)
+                    while max.length < 6
+                        max = " " + max
+                    end
+                    data[20, 6] = max
+                end
+                if min_input != 0
+                    min = min_file + min_input
+                    min = sprintf("%.1f", min)
+                    while min.length < 6
+                        min = " " + min
+                    end
+                    data[26, 6] = min
+                end
+                if pcp_input != 0
+                    pcp = pcp_file + pcp_file * pcp_input
+                    pcp = sprintf("%.2f", pcp)
+                    while pcp.length < 7
+                        pcp = " " + pcp
+                    end
+                    data[32, 7] = pcp
+                end
+                #climate_array[month]["key"] 
+                #session[:month] = str[6, 4].to_i
+                #session[:max] = str[20, 6].to_f
+                #session[:min] = str[26, 6].to_f
+                #session[:pcp] = str[32, 7].to_f
+            end
+            print_array_to_file(data, "Apex.wth")
+	        #@climate_file_array = Array.new
+	        #newLine = "  " + oper.to_s	
+	        #newLine += " C:FERT 5 CUST      5.      0.      0.      0.      0.     0.0    0.00   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000"
+            #newLine += sprintf("%8.2f", depthAnt * 25.4)
+            #newLine += "   0.000   0.000   0.000   0.000   9.000   0.000   0.000   0.000   0.000   5.000   5.363  FERTILIZER APP        " + oper.to_s + "\n"
+            #@change_till_depth.push(newLine)
+        end
 		#todo fix widn and wp1 files with the real name
 	end
 
@@ -1788,16 +1839,51 @@ class ScenariosController < ApplicationController
 		msg = average_totals(results_data, 0)   # average totals
 
 		return msg
-	
-		total_manure = 0
-		no3 = 0
-		po4 = 0
-		org_n = 0
-		org_p = 0
 
-		soils = Soil.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
+		update_results_table
+	end
+
+	def update_results_table
+		bmp = Bmp.where(:scenario_id => session[:scenario_id], :bmpsublist_id => 10)
+	
+		total_manure = bmp.number_of_animals * bmp.hours / 24 * bmp.dry_manure
+		no3 = total_manure * bmp.days * bmp.no3_n
+		po4 = total_manure * bmp.days * bmp.po4_p
+		org_n = total_manure * bmp.days * bmp.org_n
+		org_p = total_manure * bmp.days * bmp.org_p
+
+		soils = Soil.where(:field_id => session[:field_id], :soil_selected => true)
 		soils.each do |soil|
-			# TODO
+			results = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
+			results.each do |result|
+				update_value_of_results(result, false)
+			end
+		end
+		results = Result.where(:soil_id => 0, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+        results.each do |result|
+            update_value_of_results(result, true)
+        end
+	end
+
+	def update_value_of_results(result, is_total)
+		if is_total
+			percentage = 1
+		else
+			percentage = soil.percentage / 100
+		end
+		case result.description_id
+			when 20
+				result.value += no3 * percentage + org_n * percentage
+			when 21
+				result.value += org_n * percentage
+			when 22
+				result.value += no3 * percentage
+			when 30
+				result.value += po4 * percentage + org_p * percentage
+			when 31
+				result.value += org_p * percentage
+			when 32
+				result.value += po4 * percentage
 		end
 	end
 

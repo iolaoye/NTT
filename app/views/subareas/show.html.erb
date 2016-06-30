@@ -1,6 +1,468 @@
 <p id="notice"><%= notice %></p>
 
-<%= render 'form' %>
+<table class='gvTableStyle'>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>INPS</b><br /><br />
+      <%= @subarea.inps %></p>
+    </td>
+    <td>
+      <p><b>IOPS</b><br />
+      <%= @subarea.iops %></p>
+    </td>
+    <td>
+      <p><b>IOW</b><br />
+      <%= @subarea.iow %></p>
+    </td>
+    <td>
+      <p><b>II</b><br />
+      <%= @subarea.ii %></p>
+    </td>
+    <td>
+      <p><b>IAPL</b><br />
+      <%= @subarea.iapl %></p>
+    </td>
+    <td>
+      <p><b>NVCN</b><br />
+      <%= @subarea.nvcn %></p>
+    </td>
+    <td>
+      <p><b>IWTH</b><br />
+      <%= @subarea.iwth %></p>
+    </td>
+    <td>
+      <p><b>IPTS</b><br />
+      <%= @subarea.ipts %></p>
+    </td>
+    <td>
+      <p><b>ISAO</b><br />
+      <%= @subarea.isao %></p>
+    </td>
+    <td>
+      <p><b>LUNS</b><br />
+      <%= @subarea.luns %></p>
+    </td>
+    <td>
+      <p><b>IMW</b><br />
+      <%= @subarea.imw %></p>
+    </td>
+  </tr>
+  <tr class='gvRowStyleOdd''>
+    <td>
+      <p><b>SNO</b><br />
+      <%= @subarea.sno %></p>
+    </td>
+    <td>
+      <p><b>STDO</b><br />
+      <%= @subarea.stdo %></p>
+    </td>
+    <td>
+      <p><b>YCT</b><br />
+      <%= @subarea.yct %></p>
+    </td>
+    <td>
+      <p><b>XCT</b><br />
+      <%= @subarea.xct %></p>
+    </td>
+    <td>
+      <p><b>AZM</b><br />
+      <%= @subarea.azm %></p>
+    </td>
+    <td>
+      <p><b>FL</b><br />
+      <%= @subarea.fl %></p>
+    </td>
+    <td>
+      <p><b>FW</b><br />
+      <%= @subarea.fw %></p>
+    </td>
+    <td>
+      <p><b>ANGL</b><br />
+      <%= @subarea.angl %></p>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>WSA</b><br />
+      <%= @subarea.wsa %></p>
+    </td>
+    <td>
+      <p><b>CHL</b><br />
+      <%= @subarea.chl %></p>
+    </td>
+    <td>
+      <p><b>CHD</b><br />
+      <%= @subarea.chd %></p>
+    </td>
+    <td>
+      <p><b>CHS</b><br />
+      <%= @subarea.chs %></p>
+    </td>
+    <td>
+      <p><b>CHN</b><br />
+      <%= @subarea.chn %></p>
+    </td>
+    <td>
+      <p><b>SLP</b><br />
+      <%= @subarea.slp %></p>
+    </td>
+    <td>
+      <p><b>SPLG</b><br />
+      <%= @subarea.splg %></p>
+    </td>
+    <td>
+      <p><b>UPN</b><br />
+      <%= @subarea.upn %></p>
+    </td>
+    <td>
+      <p><b>FFPQ</b><br />
+      <%= @subarea.ffpq %></p>
+    </td>
+    <td>
+      <p><b>URBF</b><br />
+      <%= @subarea.urbf %></p>
+    </td>
+    <td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>RCHL</b><br />
+      <%= @subarea.rchl %></p>
+    </td>
+    <td>
+      <p><b>RCHD</b><br />
+      <%= @subarea.rchd %></p>
+    </td>
+    <td>
+      <p><b>RCBW</b><br />
+      <%= @subarea.rcbw %></p>
+    </td>
+    <td>
+      <p><b>RCTW</b><br />
+      <%= @subarea.rctw %></p>
+    </td>
+    <td>
+      <p><b>RCHS</b><br />
+      <%= @subarea.rchs %></p>
+    </td>
+    <td>
+      <p><b>RCHN</b><br />
+      <%= @subarea.rchn %></p>
+    </td>
+    <td>
+      <p><b>RCHC</b><br />
+      <%= @subarea.rchc %></p>
+    </td>
+    <td>
+      <p><b>RCHK</b><br />
+      <%= @subarea.rchk %></p>
+    </td>
+    <td>
+      <p><b>RFPW</b><br />
+      <%= @subarea.rfpw %></p>
+    </td>
+    <td>
+      <p><b>RFPL</b><br />
+      <%= @subarea.rfpl %></p>
+    </td>
+    <td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>RSEE</b><br />
+      <%= @subarea.rsee %></p>
+    </td>
+    <td>
+      <p><b>RSAE</b><br />
+      <%= @subarea.rsae %></p>
+    </td>
+    <td>
+      <p><b>RSVE</b><br />
+      <%= @subarea.rsve %></p>
+    </td>
+    <td>
+      <p><b>RSEP</b><br />
+      <%= @subarea.rsep %></p>
+    </td>
+    <td>
+      <p><b>RSAP</b><br />
+      <%= @subarea.rsap %></p>
+    </td>
+    <td>
+      <p><b>RSVP</b><br />
+      <%= @subarea.rsvp %></p>
+    </td>
+    <td>
+      <p><b>RSV</b><br />
+      <%= @subarea.rsv %></p>
+    </td>
+    <td>
+      <p><b>RSRR</b><br />
+      <%= @subarea.rsrr %></p>
+    </td>
+    <td>
+      <p><b>RSYS</b><br />
+      <%= @subarea.rsys %></p>
+    </td>
+    <td>
+      <p><b>RSYN</b><br />
+      <%= @subarea.rsyn %></p>
+    </td>
+    <td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>RSHC</b><br />
+      <%= @subarea.rshc %></p>
+    </td>
+    <td>
+      <p><b>RSDP</b><br />
+      <%= @subarea.rsdp %></p>
+    </td>
+    <td>
+      <p><b>RSBD</b><br />
+      <%= @subarea.rsbd %></p>
+    </td>
+    <td>
+      <p><b>PCOF</b><br />
+      <%= @subarea.pcof %></p>
+    </td>
+    <td>
+      <p><b>BCOF</b><br />
+      <%= @subarea.bcof %></p>
+    </td>
+    <td>
+      <p><b>BFFL</b><br />
+      <%= @subarea.bffl %></p>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>NIRR</b><br />
+      <%= @subarea.nirr %></p>
+    </td>
+    <td>
+      <p><b>IRI</b><br />
+      <%= @subarea.iri %></p>
+    </td>
+    <td>
+      <p><b>IRA</b><br />
+      <%= @subarea.ira %></p>
+    </td>
+    <td>
+      <p><b>LM</b><br />
+      <%= @subarea.lm %></p>
+    </td>
+    <td>
+      <p><b>IFD</b><br />
+      <%= @subarea.ifd %></p>
+    </td>
+    <td>
+      <p><b>IDR</b><br />
+      <%= @subarea.idr %></p>
+    </td>
+    <td>
+      <p><b>IDF1</b><br />
+      <%= @subarea.idf1 %></p>
+    </td>
+    <td>
+      <p><b>IDF2</b><br />
+      <%= @subarea.idf2 %></p>
+    </td>
+    <td>
+      <p><b>IDF3</b><br />
+      <%= @subarea.idf3 %></p>
+    </td>
+    <td>
+      <p><b>IDF4</b><br />
+      <%= @subarea.idf4 %></p>
+    </td>
+    <td>
+      <p><b>IDF5</b><br />
+      <%= @subarea.idf5 %></p>
+    </td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>BIR</b><br />
+      <%= @subarea.bir %></p>
+    </td>
+    <td>
+      <p><b>EFI</b><br />
+      <%= @subarea.efi %></p>
+    </td>
+    <td>
+      <p><b>VIMX</b><br />
+      <%= @subarea.vimx %></p>
+    </td>
+    <td>
+      <p><b>ARMN</b><br />
+      <%= @subarea.armn %></p>
+    </td>
+    <td>
+      <p><b>ARMX</b><br />
+      <%= @subarea.armx %></p>
+    </td>
+    <td>
+      <p><b>BFT</b><br />
+      <%= @subarea.bft %></p>
+    </td>
+    <td>
+      <p><b>FNP4</b><br />
+      <%= @subarea.fnp4 %></p>
+    </td>
+    <td>
+      <p><b>FMX</b><br />
+      <%= @subarea.fmx %></p>
+    </td>
+    <td>
+      <p><b>DRT</b><br />
+      <%= @subarea.drt %></p>
+    </td>
+    <td>
+      <p><b>FDSF</b><br />
+      <%= @subarea.fdsf %></p>
+    </td>
+    <td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>PEC</b><br />
+      <%= @subarea.pec %></p>
+    </td>
+    <td>
+      <p><b>DALG</b><br />
+      <%= @subarea.dalg %></p>
+    </td>
+    <td>
+      <p><b>VLGN</b><br />
+      <%= @subarea.vlgn %></p>
+    </td>
+    <td>
+      <p><b>COWW</b><br />
+      <%= @subarea.coww %></p>
+    </td>
+    <td>
+      <p><b>DDLG</b><br />
+      <%= @subarea.ddlg %></p>
+    </td>
+    <td>
+      <p><b>SOLQ</b><br />
+      <%= @subarea.solq %></p>
+    </td>
+    <td>
+      <p><b>SFLG</b><br />
+      <%= @subarea.sflg %></p>
+    </td>
+    <td>
+      <p><b>FNP2</b><br />
+      <%= @subarea.fnp2 %></p>
+    </td>
+    <td>
+      <p><b>FNP5</b><br />
+      <%= @subarea.fnp5 %></p>
+    </td>
+    <td>
+      <p><b>FIRG</b><br />
+      <%= @subarea.firg %></p>
+    </td>
+    <td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>NY1</b><br />
+      <%= @subarea.ny1 %></p>
+    </td>
+    <td>
+      <p><b>NY2</b><br />
+      <%= @subarea.ny2 %></p>
+    </td>
+    <td>
+      <p><b>NY3</b><br />
+      <%= @subarea.ny3 %></p>
+    </td>
+    <td>
+      <p><b>NY4</b><br />
+      <%= @subarea.ny4 %></p>
+    </td>
+    <td>
+      <p><b>NY5</b><br />
+      <%= @subarea.ny5 %></p>
+    </td>
+    <td>
+      <p><b>NY6</b><br />
+      <%= @subarea.ny6 %></p>
+    </td>
+    <td>
+      <p><b>NY7</b><br />
+      <%= @subarea.ny7 %></p>
+    </td>
+    <td>
+      <p><b>NY8</b><br />
+      <%= @subarea.ny8 %></p>
+    </td>
+    <td>
+      <p><b>NY9</b><br />
+      <%= @subarea.ny9 %></p>
+    </td>
+    <td>
+      <p><b>NY10</b><br />
+      <%= @subarea.ny10 %></p>
+    </td>
+    <td></td>
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td>
+      <p><b>XTP1</b><br />
+      <%= @subarea.xtp1 %></p>
+    </td>
+    <td>
+      <p><b>XTP2</b><br />
+      <%= @subarea.xtp2 %></p>
+    </td>
+    <td>
+      <p><b>XTP3</b><br />
+      <%= @subarea.xtp3 %></p>
+    </td>
+    <td>
+      <p><b>XTP4</b><br />
+      <%= @subarea.xtp4 %></p>
+    </td>
+    <td>
+      <p><b>XTP5</b><br />
+      <%= @subarea.xtp5 %></p>
+    </td>
+    <td>
+      <p><b>XTP6</b><br />
+      <%= @subarea.xtp6 %></p>
+    </td>
+    <td>
+      <p><b>XTP7</b><br />
+      <%= @subarea.xtp7 %></p>
+    </td>
+    <td>
+      <p><b>XTP8</b><br />
+      <%= @subarea.xtp8 %></p>
+    </td>
+    <td>
+      <p><b>XTP9</b><br />
+      <%= @subarea.xtp9 %></p>
+    </td>
+    <td>
+      <p><b>XTP10</b><br />
+      <%= @subarea.xtp10 %></p>
+    </td>
+    <td></td>
+  </tr>
+</table>
 
 <%= link_to 'Edit', edit_subarea_path(@subarea) %> |
 <%= link_to 'Back', subareas_path %>
