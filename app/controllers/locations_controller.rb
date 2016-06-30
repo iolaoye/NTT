@@ -39,7 +39,7 @@ class LocationsController < ApplicationController
 
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site	 
-    @location = Location.find_by_project_id(params[:id])
+  @location = Location.find_by_project_id(params[:id])
 	@project_name = Project.find(params[:id]).name
 	session[:project_id] = params[:id]
 	session[:location_id] = @location.id
@@ -121,6 +121,7 @@ class LocationsController < ApplicationController
 				end 
 				@field.save
 				@weather.field_id = @field.id
+				session[:field_id] = @field.id
 				@weather.save
 			end # end for fields
 
