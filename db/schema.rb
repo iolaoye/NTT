@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160628144936) do
+ActiveRecord::Schema.define(:version => 20160628170915) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -113,13 +113,12 @@ ActiveRecord::Schema.define(:version => 20160628144936) do
 
   create_table "climates", :force => true do |t|
     t.integer  "bmp_id"
-    t.string   "month"
-    t.string   "spanish_month"
     t.float    "max_temp"
     t.float    "min_temp"
     t.float    "precipitation"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "month"
   end
 
   create_table "controls", :force => true do |t|
