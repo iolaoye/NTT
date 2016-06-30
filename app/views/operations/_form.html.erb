@@ -54,7 +54,7 @@
 	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
 			</div>
 		    <div class="field" id="div_amount">
-			  <%= f.label :plant_population %>
+			  <%= f.label t('operation.plant_population') %>
 			  <%= f.text_field :amount %>
 		    </div>
 		    <div class="field" id="div_depth" style="display:none">
@@ -336,6 +336,6 @@
 	<% end %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('operation.create_operation') %>
   </div>
 <% end %>

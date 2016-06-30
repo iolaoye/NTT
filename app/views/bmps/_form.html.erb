@@ -12,10 +12,24 @@
   <% end %>
 
   <div class="field">
-     <%= label :bmp_id, 'BMP Group' %>
-     <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => 'Select BMP Group'}, {:required => false} %>
-     <%= label :bmp_id, 'BMP' %>
-     <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
+<<<<<<< HEAD
+    <% if (@type == "create") %>
+      <%= label :bmp_id, 'BMP Group' %>
+      <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => 'Select BMP Group'}, {:required => false} %>
+      <%= label :bmp_id, 'BMP' %>
+      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
+    <% else %>
+      <%= label :bmp_id, 'BMP Group' %>
+      <%= collection_select :bmp, :bmp_id, Bmplist.where(:id => @bmp.bmp_id), :id, :name, {:prompt => 'Select BMP Group'}, {:required => false} %>
+      <%= label :bmp_id, 'BMP' %>
+      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:id => @bmp.bmpsublist_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id } %>
+    <% end %>
+=======
+     <%= label :bmp_id, t('bmp.bmp_group') %>
+     <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+     <%= label :bmp_id, t('operation.bmp') %>
+     <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+>>>>>>> 0c9d6ba4355f49e01c1308890b1c4e355c75bde6
   </div>
   <div class="field" id="irrigation" style="display:none">
     <% if (:bmpsublist_id == 2) %>
@@ -23,7 +37,7 @@
       <%= label :irrigation_id, 'Irrigation' %>
       <%= collection_select :bmp, :irrigation_id, Irrigation.where(:id != 8), :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
     <% else %>
-      <p>FALSE<%= :bmpsublist_id %></p>
+      <p>FALSE<%= @bmp_selection %></p>
       <%= label :irrigation_id, 'Irrigation' %>
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
     <% end %>
@@ -121,23 +135,62 @@
   </div>
   <div class="field" id="climate_table" style="display:none">
 	<table>
-	    <tr><th>Month</th><th>Max. Temp.</th><th>Min. Temp.</th><th>Precipitation</th></tr>
-		<tr><td>1</td><td><%= number_field :max_1, :step => 'any' %></td><td><%= number_field :min_1, :step => 'any' %></td><td><%= number_field :pcp_1, :step => 'any' %></td></tr>
-		<tr><td>2</td><td><%= number_field :max_2, :step => 'any' %></td><td><%= number_field :min_2, :step => 'any' %></td><td><%= number_field :pcp_2, :step => 'any' %></td></tr>
-		<tr><td>3</td><td><%= number_field :max_3, :step => 'any' %></td><td><%= number_field :min_3, :step => 'any' %></td><td><%= number_field :pcp_3, :step => 'any' %></td></tr>
-		<tr><td>4</td><td><%= number_field :max_4, :step => 'any' %></td><td><%= number_field :min_4, :step => 'any' %></td><td><%= number_field :pcp_4, :step => 'any' %></td></tr>
-		<tr><td>5</td><td><%= number_field :max_5, :step => 'any' %></td><td><%= number_field :min_5, :step => 'any' %></td><td><%= number_field :pcp_5, :step => 'any' %></td></tr>
-		<tr><td>6</td><td><%= number_field :max_6, :step => 'any' %></td><td><%= number_field :min_6, :step => 'any' %></td><td><%= number_field :pcp_6, :step => 'any' %></td></tr>
-		<tr><td>7</td><td><%= number_field :max_7, :step => 'any' %></td><td><%= number_field :min_7, :step => 'any' %></td><td><%= number_field :pcp_7, :step => 'any' %></td></tr>
-		<tr><td>8</td><td><%= number_field :max_8, :step => 'any' %></td><td><%= number_field :min_8, :step => 'any' %></td><td><%= number_field :pcp_8, :step => 'any' %></td></tr>
-		<tr><td>9</td><td><%= number_field :max_9, :step => 'any' %></td><td><%= number_field :min_9, :step => 'any' %></td><td><%= number_field :pcp_9, :step => 'any' %></td></tr>
-		<tr><td>10</td><td><%= number_field :max_11, :step => 'any' %></td><td><%= number_field :min_10, :step => 'any' %></td><td><%= number_field :pcp_10, :step => 'any' %></td></tr>
-		<tr><td>11</td><td><%= number_field :max_11, :step => 'any' %></td><td><%= number_field :min_11, :step => 'any' %></td><td><%= number_field :pcp_11, :step => 'any' %></td></tr>
-		<tr><td>12</td><td><%= number_field :max_12, :step => 'any' %></td><td><%= number_field :min_12, :step => 'any' %></td><td><%= number_field :pcp_12, :step => 'any' %></td></tr>
+	  <tr><th>Month</th>
+      <th>Max. Temp. ±(°C)<button type="button" class="fillButton" id="fill_max">Fill</button></th>
+      <th>Min. Temp. ±(°C)<button type="button" class="fillButton" id="fill_min">Fill</button></th>
+      <th>Precipitation (%)<button type="button" class="fillButton" id="fill_pcp">Fill</button></th></tr>
+    <tr><td>1</td>
+      <td><%= number_field :climate, :max_1, :step => 'any', :value => @climate_array[0]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_1, :step => 'any', :value => @climate_array[0]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_1, :step => 'any', :value => @climate_array[0]["pcp"].inspect %></td></tr>
+		<tr><td>2</td>
+      <td><%= number_field :climate, :max_2, :step => 'any', :class => 'max', :value => @climate_array[1]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_2, :step => 'any', :class => 'min', :value => @climate_array[1]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_2, :step => 'any', :class => 'pcp', :value => @climate_array[1]["pcp"].inspect %></td></tr>
+		<tr><td>3</td>
+      <td><%= number_field :climate, :max_3, :step => 'any', :class => 'max', :value => @climate_array[2]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_3, :step => 'any', :class => 'min', :value => @climate_array[2]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_3, :step => 'any', :class => 'pcp', :value => @climate_array[2]["pcp"].inspect %></td></tr>
+		<tr><td>4</td>
+      <td><%= number_field :climate, :max_4, :step => 'any', :class => 'max', :value => @climate_array[3]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_4, :step => 'any', :class => 'min', :value => @climate_array[3]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_4, :step => 'any', :class => 'pcp', :value => @climate_array[3]["pcp"].inspect %></td></tr>
+		<tr><td>5</td>
+      <td><%= number_field :climate, :max_5, :step => 'any', :class => 'max', :value => @climate_array[4]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_5, :step => 'any', :class => 'min', :value => @climate_array[4]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_5, :step => 'any', :class => 'pcp', :value => @climate_array[4]["pcp"].inspect %></td></tr>
+  	<tr><td>6</td>
+      <td><%= number_field :climate, :max_6, :step => 'any', :class => 'max', :value => @climate_array[5]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_6, :step => 'any', :class => 'min', :value => @climate_array[5]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_6, :step => 'any', :class => 'pcp', :value => @climate_array[5]["pcp"].inspect %></td></tr>
+		<tr><td>7</td>
+      <td><%= number_field :climate, :max_7, :step => 'any', :class => 'max', :value => @climate_array[6]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_7, :step => 'any', :class => 'min', :value => @climate_array[6]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_7, :step => 'any', :class => 'pcp', :value => @climate_array[6]["pcp"].inspect %></td></tr>
+		<tr><td>8</td>
+      <td><%= number_field :climate, :max_8, :step => 'any', :class => 'max', :value => @climate_array[7]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_8, :step => 'any', :class => 'min', :value => @climate_array[7]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_8, :step => 'any', :class => 'pcp', :value => @climate_array[7]["pcp"].inspect %></td></tr>
+		<tr><td>9</td>
+      <td><%= number_field :climate, :max_9, :step => 'any', :class => 'max', :value => @climate_array[8]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_9, :step => 'any', :class => 'min', :value => @climate_array[8]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_9, :step => 'any', :class => 'pcp', :value => @climate_array[8]["pcp"].inspect %></td></tr>
+		<tr><td>10</td>
+      <td><%= number_field :climate, :max_10, :step => 'any', :class => 'max', :value => @climate_array[9]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_10, :step => 'any', :class => 'min', :value => @climate_array[9]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_10, :step => 'any', :class => 'pcp', :value => @climate_array[9]["pcp"].inspect %></td></tr>
+		<tr><td>11</td>
+      <td><%= number_field :climate, :max_11, :step => 'any', :class => 'max', :value => @climate_array[10]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_11, :step => 'any', :class => 'min', :value => @climate_array[10]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_11, :step => 'any', :class => 'pcp', :value => @climate_array[10]["pcp"].inspect %></td></tr>
+		<tr><td>12</td>
+      <td><%= number_field :climate, :max_12, :step => 'any', :class => 'max', :value => @climate_array[11]["max"].inspect %></td>
+      <td><%= number_field :climate, :min_12, :step => 'any', :class => 'min', :value => @climate_array[11]["min"].inspect %></td>
+      <td><%= number_field :climate, :pcp_12, :step => 'any', :class => 'pcp', :value => @climate_array[11]["pcp"].inspect %></td></tr>
 	</table>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('bmp.create_bmp') %>
   </div>
 
 <% end %>
@@ -168,7 +221,7 @@ function showFields() {
       document.getElementById("safety_factor").style.display = "none";
       document.getElementById("area").style.display = "none";
       }
-    }
+    } 
   }
 }
 

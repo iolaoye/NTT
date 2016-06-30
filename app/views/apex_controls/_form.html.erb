@@ -12,19 +12,19 @@
   <% end %>
 
   <div class="field">
-    <%= "Code:" %>
+    <%= t('apex.code') + " " + ':' %>
     <%= f.label @control_code %>
   </div>
   <div class="field">
-    <%= f.label :value %><br />
+    <%= f.label t('apex.value') %><br />
     <%= f.text_field :value %>
   </div>
   <div class="field">
-    <%= "Low Range:" %>
+    <%= t('apex.low_range') + " " + ':' %>
     <%= @low_range %>
   </div>
   <div class="field">
-    <%= "High Range:" %>
+    <%= t('apex.high_range') + " " + ':' %>
     <%=  @high_range %>
   </div>
 

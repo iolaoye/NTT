@@ -1,123 +1,86 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Albedo:</b>
-  <%= @soil.albedo %>
-</p>
-
-<p>
-  <b>Slope:</b>
-  <%= @soil.slope %>
-</p>
-
-<p>
-  <b>Percentage:</b>
-  <%= @soil.percentage %>
-</p>
-
-<p>
-  <b>Field:</b>
-  <%= @soil.field_id %>
-</p>
-
-<p>
-  <b>Drainage type:</b>
-  <%= @soil.drainage_type %>
-</p>
 
 <table class='gvTableStyle'>
   <tr class='gvRowStyleOdd'>
-    <td>
-      <p>
-        <b>ffc:</b><%= @soil.ffc %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>wtmn:</b><%= @soil.wtmn %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>wtmx:</b><%= @soil.wtmx %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>wtbl:</b><%= @soil.wtbl %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>gwst:</b><%= @soil.gwst %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>gwmx:</b><%= @soil.gwmx %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>rft:</b><%= @soil.rft %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>rfpk:</b><%= @soil.rfpk %>
-      </p>
-    </td>
-    <td></td>
+    <td><p>
+        <b>SALB</b><br />
+        <%= @soil.albedo %>
+    </p></td>
+    <td><p>
+        <b>FFC</b><br />
+        <%= @soil.ffc %>
+    </p></td>
+    <td><p>
+        <b>WTMN</b><br />
+        <%= @soil.wtmn %>
+    </p></td>
+    <td><p>
+        <b>WTMX</b><br />
+        <%= @soil.wtmx %>
+    </p></td>
+    <td><p>
+        <b>WTBL</b><br />
+        <%= @soil.wtbl %>
+    </p></td>
+    <td><p>
+        <b>GWST</b><br />
+        <%= @soil.gwst %>
+    </p></td>
+    <td><p>
+        <b>GWMX</b><br />
+        <%= @soil.gwmx %>
+    </p></td>
+    <td><p>
+        <b>RFT</b><br />
+        <%= @soil.rft %>
+    </p></td>
+    <td><p>
+        <b>RFPK</b><br />
+        <%= @soil.rfpk %>
+    </p></td>
+  
   </tr>
   <tr class='gvRowStyleOdd''>
-    <td>
-      <p>
-        <b>tsla:</b><%= @soil.tsla %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>xids:</b><%= @soil.xids %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>rtn1:</b><%= @soil.rtn1 %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>xidk:</b><%= @soil.xidk %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>zqt:</b><%= @soil.zqt %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>zf:</b><%= @soil.zf %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>ztk:</b><%= @soil.ztk %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>fbm:</b><%= @soil.fhp %>
-      </p>
-    </td>
-    <td>
-      <p>
-        <b>fhp:</b><%= @soil.fhp %>
-      </p>
-    </td>
+    <td><p>
+        <b>TSLA</b><br />
+        <%= @soil.tsla %>
+    </p></td>
+    <td><p>
+        <b>XIDS</b><br />
+        <%= @soil.xids %>
+    </p></td>
+    <td><p>
+        <b>RTN1</b><br />
+        <%= @soil.rtn1 %>
+    </p></td>
+    <td><p>
+        <b>XIDK</b><br />
+        <%= @soil.xidk %>
+    </p></td>
+    <td><p>
+        <b>ZQT</b><br />
+        <%= @soil.zqt %>
+    </p></td>
+    <td><p>
+        <b>ZF</b><br />
+        <%= @soil.zf %>
+    </p></td>
+    <td><p>
+        <b>ZTK</b><br />
+        <%= @soil.ztk %>
+    </p></td>
+    <td><p>
+        <b>FBM</b><br />
+        <%= @soil.fbm %>
+    </p></td>
+    <td><p>
+        <b>FHP</b><br />
+        <%= @soil.fhp %>
+    </p></td>
   </tr>
 </table>
 
 
-<%= link_to 'Edit', edit_apex_soil_path(@soil) %> |
-<%= link_to 'Back', apex_soils_path %>
+<%= link_to t('general.edit'), edit_apex_soil_path(@soil) %> |
+<%= link_to t('general.back'), apex_soils_path %>

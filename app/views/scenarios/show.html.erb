@@ -5,5 +5,5 @@
   <%= @scenario.name %>
   </p>
 
-<%= link_to 'Edit', edit_scenario_path(@scenario) %> |
-<%= link_to 'Back', field_scenarios_field_path(session[:field_id]) %>
+<%= link_to t('general.edit'), edit_scenario_path(@scenario) %> |
+<%= link_to t('general.back'), field_scenarios_field_path(session[:field_id]) %>

@@ -1,5 +1,75 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <b>Year:</b>
+  <%= @soil_operation.year %>
+  </p>
 
-<%= link_to 'Edit', edit_soil_operation_path(@soil_operation) %> |
-<%= link_to 'Back', soil_operations_path %>
+<p>
+  <b>Month:</b>
+  <%= @soil_operation.month %>
+  </p>
+
+<p>
+  <b>Day:</b>
+  <%= @soil_operation.day %>
+</p>
+
+<p>
+  <b>Operation:</b>
+  <%= @soil_operation.apex_operation %>
+</p>
+
+<p>
+  <b>Tractor:</b>
+  <%= @soil_operation.tractor_id %>
+</p>
+
+<p>
+  <b>Crop:</b>
+  <%= @soil_operation.apex_crop %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @soil_operation.type_id %>
+</p>
+
+<p>
+  <b>OPV1:</b>
+  <%= @soil_operation.opv1 %>
+</p>
+
+<p>
+  <b>OPV2:</b>
+  <%= @soil_operation.opv2 %>
+  </p>
+
+<p>
+  <b>OPV3:</b>
+  <%= @soil_operation.opv3 %>
+  </p>
+
+<p>
+  <b>OPV4:</b>
+  <%= @soil_operation.opv4 %>
+  </p>
+
+<p>
+  <b>OPV5:</b>
+  <%= @soil_operation.opv5 %>
+  </p>
+
+<p>
+  <b>OPV6:</b>
+  <%= @soil_operation.opv6 %>
+  </p>
+
+<p>
+  <b>OPV7:</b>
+  <%= @soil_operation.opv7 %>
+  </p>
+
+
+<%= link_to t('general.edit'), edit_soil_operation_path(@soil_operation) %> |
+<%= link_to t('general.back'), soil_operations_path %>
