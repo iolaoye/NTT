@@ -1,21 +1,21 @@
 <%= form_for :soil_operations do |f| %>
 <table>
   <tr>
-    <td><%= label :bmp_id, 'Soil' %></td>
-    <td><%= label :bmp_id, 'Scenario' %></td>
+    <td><%= label :bmp_id, t('soil.soil') %></td>
+    <td><%= label :bmp_id, t('scenario.scenario') %></td>
   </tr>
   <tr>
     <td>
       <%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil')}, {:required => true} %>
     </td>    
     <td>
-      <%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('subarea.select_scenario')}, {:required => true} %>
+      <%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario')}, {:required => true} %>
     </td>
   </tr>
 </table>
 <% end %>
 
-<h1>Listing soil_operations</h1>
+<h1><%= t('general.listing') + " " + t('menu.operation_file') %></h1>
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>

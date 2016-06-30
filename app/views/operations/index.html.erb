@@ -38,7 +38,7 @@
     <td><%= operation.org_p %></td>
     <td><%= operation.nh3 %></td>
     <td><%= link_to 'Show', operation %></td>
-    <td><%= link_to 'Edit', edit_operation_path(operation) %></td>
+    <td><%= link_to t('general.edit'), edit_operation_path(operation) %></td>
     <td><%= link_to 'Destroy', operation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
