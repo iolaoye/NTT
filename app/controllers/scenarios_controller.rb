@@ -208,7 +208,74 @@ class ScenariosController < ApplicationController
 			print_array_to_file(weather_data, "APEX.wth")
 		end
 		#todo after file is copied if climate bmp is in place modified the weather file.
+<<<<<<< HEAD
+        bmp_id = Bmp.select(:id).where(:scenario_id => session[:scenario_id])
+        climate_array = Array.new
+        climates = Climate.where(:bmp_id => bmp_id)
+        climates.each do |climate|
+            climate_array = update_hash(climate, climate_array)
+        end
+        if climates.first != nil
+            data = read_file("Apex.wth")
+            data.each_line do |day|
+                month = data[6, 4].to_i
+                max_input = climate_array[month]["max"]
+                min_input = climate_array[month]["min"]
+                pcp_input = climate_array[month]["pcp"] / 100
+                max_file = data[20, 6].to_f
+                min_file = data[26, 6].to_f
+                pcp_file = data[32, 7].to_f
+                if max_input != 0
+                    max = max_file + max_input
+                    max = sprintf("%.1f", max)
+                    while max.length < 6
+                        max = " " + max
+                    end
+                    data[20, 6] = max
+                end
+                if min_input != 0
+                    min = min_file + min_input
+                    min = sprintf("%.1f", min)
+                    while min.length < 6
+                        min = " " + min
+                    end
+                    data[26, 6] = min
+                end
+                if pcp_input != 0
+                    pcp = pcp_file + pcp_file * pcp_input
+                    pcp = sprintf("%.2f", pcp)
+                    while pcp.length < 7
+                        pcp = " " + pcp
+                    end
+                    data[32, 7] = pcp
+                end
+                #climate_array[month]["key"] 
+                #session[:month] = str[6, 4].to_i
+                #session[:max] = str[20, 6].to_f
+                #session[:min] = str[26, 6].to_f
+                #session[:pcp] = str[32, 7].to_f
+            end
+            print_array_to_file(data, "Apex.wth")
+	        #@climate_file_array = Array.new
+	        #newLine = "  " + oper.to_s	
+	        #newLine += " C:FERT 5 CUST      5.      0.      0.      0.      0.     0.0    0.00   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000"
+            #newLine += sprintf("%8.2f", depthAnt * 25.4)
+            #newLine += "   0.000   0.000   0.000   0.000   9.000   0.000   0.000   0.000   0.000   5.000   5.363  FERTILIZER APP        " + oper.to_s + "\n"
+            #@change_till_depth.push(newLine)
+        end
+		#todo fix widn and wp1 files with the real name
+=======
+>>>>>>> master
 	end
+
+    def update_hash(climate, climate_array)
+        hash = Hash.new
+        hash["max"] = climate.max_temp
+        hash["min"] = climate.min_temp
+        hash["pcp"] = climate.precipitation
+        climate_array.push(hash)
+        return climate_array
+    end
 
     def create_soils()
         #APEXStrings1 As New System.Text.StringBuilder
