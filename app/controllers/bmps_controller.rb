@@ -92,8 +92,9 @@ before_filter :take_names
           format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
           format.json { render json: @bmp, status: :created, location: @bmp }
         else
+          @bmp.errors.add(msg[0], msg[1])
           format.html { render action: "new" }
-          format.json { render json: @bmp.errors, status: :unprocessable_entity }		
+          format.json { render json: @bmp.errors, status: :unprocessable_entity }
         end
       else
         format.html { render action: "new" }
@@ -119,7 +120,7 @@ before_filter :take_names
 	  msg = input_fields("update")
 
     respond_to do |format|
-	  if msg == "OK"
+      if msg == "OK"
         if @bmp.update_attributes(bmp_params)
           format.html { redirect_to @bmp, notice: 'Bmp was successfully updated.' }
           format.json { head :no_content }
@@ -127,7 +128,11 @@ before_filter :take_names
           format.html { render action: "edit" }
           format.json { render json: @bmp.errors, status: :unprocessable_entity }
         end
-	  end
+      else
+        @bmp.errors.add(msg[0], msg[1])
+        format.html { render action: "edit" }
+        format.json { render json: @bmp.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -234,7 +239,7 @@ before_filter :take_names
     end
     return climate_array
   end
-
+  
   ####################### INDIVIDUAL SUBLIST ACTIONS #######################
 
   ### ID: 1
@@ -451,6 +456,14 @@ before_filter :take_names
           edit_climate(climate, i + 1)
           @climate_array = update_hash(climate, @climate_array)
           i += 1
+          if(climate.errors.first != nil)
+            @climate_errors = climate.errors.first
+          end
+        end
+        if(@climate_errors != nil)
+          Bmp.where(:id => @bmp.id).destroy_all
+          Climate.delete_all
+          return @climate_errors
         end
       when "update"
         i = 0
