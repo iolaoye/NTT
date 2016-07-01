@@ -176,13 +176,26 @@ update_irrigation_options = ->
             $("#days").toggle(true)
 
 
+bmpsublist_irrigation_selector = ->
+    bmp_collection = $('#bmp_bmpsublist_id')
+    # Edit the selector to match the actual generated "id" for the collection
+    bmp_collection.change ->
+    value = bmp_collection.val()
+    if value == 2
+        use_this_list()
+    else
+        use_this_other_list()
 
+
+#bmp_irrigation_id
+#bmp_bmpsublist_id
 $(document).ready ->
     activate_bmp_controls()
     $("#bmp_bmp_id").change ->
 	    update_bmpsublist()
     $("#bmp_bmpsublist_id").change ->
 	    activate_bmp_controls()
+    	bmpsublist_irrigation_selector()
     $("#bmp_animal_id").change ->
 	    update_animal_options()
     $("#bmp_irrigation_id").change ->
