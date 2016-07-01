@@ -16,7 +16,7 @@
     <td><%= watershed.field_id %></td>
     <td><%= watershed.scenario_id %></td>
     <td><%= link_to 'Show', watershed %></td>
-    <td><%= link_to 'Edit', edit_watershed_path(watershed) %></td>
+    <td><%= link_to t('general.edit'), edit_watershed_path(watershed) %></td>
     <td><%= link_to 'Destroy', watershed, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
@@ -24,4 +24,4 @@
 
 <br />
 
-<%= link_to 'New Watershed', new_watershed_path %>
+<%= link_to t('watershed.new_watershed'), new_watershed_path %>

@@ -12,6 +12,7 @@
   <% end %>
 
   <div class="field">
+<<<<<<< HEAD
     <% if (@type == "create") %>
       <%= label :bmp_id, 'BMP Group' %>
       <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => 'Select BMP Group'}, {:required => false} %>
@@ -23,6 +24,12 @@
       <%= label :bmp_id, 'BMP' %>
       <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:id => @bmp.bmpsublist_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id } %>
     <% end %>
+=======
+     <%= label :bmp_id, t('bmp.bmp_group') %>
+     <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+     <%= label :bmp_id, t('operation.bmp') %>
+     <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+>>>>>>> 0c9d6ba4355f49e01c1308890b1c4e355c75bde6
   </div>
   <div class="field" id="irrigation" style="display:none">
     <% if (:bmpsublist_id == 2) %>
@@ -183,7 +190,7 @@
 	</table>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('bmp.create_bmp') %>
   </div>
 
 <% end %>
