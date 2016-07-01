@@ -52,6 +52,7 @@ before_filter :take_names
     #session[:climate_array] = @climate_array
     @bmp = Bmp.new
   	@animals = Fertilizer.where(:fertilizer_type_id => 2)
+    @irrigation = Irrigation.arel_table
     session.delete(:subarea)
     @type = "create"
     respond_to do |format|
@@ -67,6 +68,7 @@ before_filter :take_names
     @bmp = Bmp.find(params[:id])
 	  @bmp_id = @bmp.bmp_id
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
+    @irrigation = Irrigation.arel_table
     @climate_array = create_hash
     @climates = Climate.where(:bmp_id => @bmp.id)
     if @bmp.bmpsublist_id == 19
@@ -84,7 +86,10 @@ before_filter :take_names
     @bmp = Bmp.new(bmp_params)
 	  @bmp.scenario_id = session[:scenario_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
+    @irrigation = Irrigation.arel_table
     @climate_array = create_hash()
+    session[:bmp] = @bmp
+    ooo
     respond_to do |format|
       if @bmp.save
         msg = input_fields("create")
@@ -112,6 +117,7 @@ before_filter :take_names
     #@bmp.id = session[:bmp_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @climates = Climate.where(:bmp_id => @bmp.id)
+    @irrigation = Irrigation.arel_table
     #@climate_array = session[:climate_array]
     #@climate_array = create_hash()
     @climate_array = create_hash
@@ -461,7 +467,7 @@ before_filter :take_names
           end
         end
         if(@climate_errors != nil)
-          Bmp.where(:id => @bmp.id).destroy_all
+          #Bmp.where(:id => @bmp.id).destroy_all
           Climate.delete_all
           return @climate_errors
         end
