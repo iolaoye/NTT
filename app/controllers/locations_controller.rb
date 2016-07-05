@@ -22,7 +22,7 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def shows
-    @location = Location.find(params[:id])
+    @location = Location.find_by_project_id(params[:id])
 	  respond_to do |format|
 		  format.html # show.html.erb
 		  format.json { render json: @location }
@@ -30,7 +30,6 @@ class LocationsController < ApplicationController
   end
   ###################################### send_to_mapping_site ######################################
   def send_to_mapping_site
-    #@location = Location.where(:project_id => session[:project_id]).first
     @location = Location.find_by_project_id(params[:id])
 	if !(@location.county_id == nil) and !(@location.county_id == 0)
 	   @county = County.find(@location.county_id)
@@ -40,103 +39,109 @@ class LocationsController < ApplicationController
 
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site	 
-    @location = Location.find_by_project_id(params[:id])
+  @location = Location.find_by_project_id(params[:id])
 	@project_name = Project.find(params[:id]).name
 	session[:project_id] = params[:id]
 	session[:location_id] = @location.id
-	if !(params[:error] == "") then
-		notice = params[:error]
-		render shows
-		return
-	end 
-	
-	if (session[:session_id] == params[:source_id]) then
-      # step 1: delete fields not found
-      @location.fields.each do |field|
-        isFound = false
-        for i in 1..params[:fieldnum].to_i
-          if (field.field_name == params["field#{i}id"]) then
-            isFound = true
-          end
-        end
-        if (!isFound) then
-          field.destroy()
-        end  # end if isFound
-      end # end Location do
 
-	  # step 2: update or create remaining fields
-      for i in 1..params[:fieldnum].to_i
-        # find or create field
-        @field = @location.fields.where(:field_name => params["field#{i}id"]).first || @location.fields.build(:field_name => params["field#{i}id"])
-        @field.coordinates = params["field#{i}coords"]
-        @field.field_area = params["field#{i}acres"]
-		
-		#verify if this field aready has its soils. If not the soils coming from the map are added
-		if !(params["field#{i}error"] == 1) then
-			if @field.id == nil then
-				if Field.all.length == 0
-					@field.id = 1
-				else
-					@field.id = Field.last.id += 1
-				end 
+	respond_to do |format|
+  	  if !(params[:error] == "") then
+        format.html { redirect_to location_path(@location.id), notice: params[:error] }
+      else
+		if (session[:session_id] == params[:source_id]) then
+			# step 1: delete fields not found
+			@location.fields.each do |field|
+			isFound = false
+			for i in 1..params[:fieldnum].to_i
+				if (field.field_name == params["field#{i}id"]) then
+				isFound = true
+				end
 			end
-		    create_soils(i, @field.id, @field.field_type)
-		end
-		#find or create site
-		site = Site.find_by_field_id(@field.id)
-		if (site == nil) then
-		   #create the site for this field
-		   site = Site.new
-		end   #end weather validation
-		centroid = calculate_centroid()
-		site.ylat = centroid.cy
-		site.xlog = centroid.cx
-		site.elev = 0
-		site.apm = 1
-		site.co2x = 0
-		site.cqnx = 0
-		site.rfnx = 0
-		site.upr = 0
-		site.unr = 0
-		site.fir0 = 0
-		site.field_id = @field.id
-		site.save
-		#find or create weather
-		if (@field.weather_id == nil) then
-		   #create the weather for this field
-		   @weather = Weather.new
-		else
-		   #update the weather for this field
-		   @weather = Weather.find(@field.weather_id)
-		end   #end weather validation
-        @weather.weather_file = params["field#{i}parcelweather"]
-        @weather.simulation_initial_year = params["field#{i}initialYear"]
-        @weather.simulation_final_year = params["field#{i}finalYear"]
-        @weather.weather_initial_year = params["field#{i}initialYear"]
-        @weather.weather_final_year = params["field#{i}finalYear"]
-		@weather.latitude = site.ylat
-		@weather.longitude = site.xlog
-		@weather.way_id = 1   #assign PRISM weather station to the weather way as default from map
-		@weather.station_way = "map"
-		if @weather.save then
-		   @field.weather_id = @weather.id
-		end 
-		@field.save
-		@weather.field_id = @field.id
-		@weather.save
-      end # end for fields
+			if (!isFound) then
+				field.destroy()
+			end  # end if isFound
+			end # end Location do
 
-	  # step 3: update location	  
-	  state_abbreviation = params[:state]
-	  state = State.find_by_state_abbreviation(state_abbreviation) 
-	  @location.state_id = state.id
-	  county_name = params[:county]
-	  county_name.slice! " County"
-	  county = County.find_by_county_name(county_name)
-	  @location.county_id = county.id
-	  @location.coordinates = params[:parcelcoords]
-      @location.save
-	end # end if of session_id check
+			# step 2: update or create remaining fields
+			for i in 1..params[:fieldnum].to_i
+				# find or create field
+				@field = @location.fields.where(:field_name => params["field#{i}id"]).first || @location.fields.build(:field_name => params["field#{i}id"])
+				@field.coordinates = params["field#{i}coords"]
+				@field.field_area = params["field#{i}acres"]
+		
+				#verify if this field aready has its soils. If not the soils coming from the map are added
+				if !(params["field#{i}error"] == 1) then
+					if @field.id == nil then
+						if Field.all.length == 0
+							@field.id = 1
+						else
+							@field.id = Field.last.id += 1
+						end 
+					end
+					create_soils(i, @field.id, @field.field_type)
+				end
+				#step 3 find or create site
+				site = Site.find_by_field_id(@field.id)
+				if (site == nil) then
+					#create the site for this field
+					site = Site.new
+				end   #end weather validation
+				centroid = calculate_centroid()
+				site.ylat = centroid.cy
+				site.xlog = centroid.cx
+				site.elev = 0
+				site.apm = 1
+				site.co2x = 0
+				site.cqnx = 0
+				site.rfnx = 0
+				site.upr = 0
+				site.unr = 0
+				site.fir0 = 0
+				site.field_id = @field.id
+				site.save
+				#step 4 find or create weather
+				if (@field.weather_id == nil) then
+					#create the weather for this field
+					@weather = Weather.new
+				else
+					#update the weather for this field
+					@weather = Weather.find(@field.weather_id)
+				end   #end weather validation
+				@weather.weather_file = params["field#{i}parcelweather"]
+				@weather.simulation_initial_year = params["field#{i}initialYear"]
+				@weather.simulation_final_year = params["field#{i}finalYear"]
+				@weather.weather_initial_year = params["field#{i}initialYear"]
+				@weather.weather_final_year = params["field#{i}finalYear"]
+				@weather.latitude = site.ylat
+				@weather.longitude = site.xlog
+				@weather.way_id = 1   #assign PRISM weather station to the weather way as default from map
+				@weather.station_way = "map"
+				if @weather.save then
+					@field.weather_id = @weather.id
+				end 
+				@field.save
+				@weather.field_id = @field.id
+				session[:field_id] = @field.id
+				@weather.save
+			end # end for fields
+
+			# step 5: update location	  
+			state_abbreviation = params[:state]
+			state = State.find_by_state_abbreviation(state_abbreviation) 
+			@location.state_id = state.id
+			county_name = params[:county]
+			county_name.slice! " County"
+			county = County.find_by_county_name(county_name)
+			@location.county_id = county.id
+			@location.coordinates = params[:parcelcoords]
+			@location.save
+			# step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
+			load_controls()
+			load_parameters()
+		end # end if of session_id check
+		format.html # Runs receive_from_mapping_site.html.erb view
+      end  # end if error
+	end
   end  #end method receiving from map site
  
   # GET /locations/new
@@ -311,4 +316,31 @@ class LocationsController < ApplicationController
         centroid.cy = centroid.cy / (i)
         return centroid
     end
+
+	#todo Update years of simulation + initialyear in weather. Also, update for state. Now is just one without state
+	def load_controls()
+		Control.all.each do |c|
+			apex_control = ApexControl.new
+			apex_control.control_id = c.id
+			apex_control.value = c.default_value
+			apex_control.project_id = session[:project_id]
+			if apex_control.control_id == 1 then
+				apex_control.value =  @weather.simulation_final_year - @weather.simulation_initial_year + 1
+			end
+			if apex_control.control_id == 2 then
+				apex_control.value = @weather.simulation_initial_year
+			end
+			apex_control.save
+		end
+	end
+
+	def load_parameters()
+		Parameter.all.each do |c|
+			apex_parameter = ApexParameter.new
+			apex_parameter.parameter_id = c.id
+			apex_parameter.value = c.default_value
+			apex_parameter.project_id = session[:project_id]
+			apex_parameter.save
+		end
+	end
 end

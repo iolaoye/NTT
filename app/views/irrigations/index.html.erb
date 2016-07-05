@@ -17,8 +17,8 @@
     <td><%= irrigation.name %></td>
     <td><%= irrigation.code %></td>
     <td><%= irrigation.status %></td>
-    <td><%= link_to 'Show', irrigation %></td>
-    <td><%= link_to 'Edit', edit_irrigation_path(irrigation) %></td>
+    <td><%= link_to t('general.show'), irrigation %></td>
+    <td><%= link_to t('general.edit'), edit_irrigation_path(irrigation) %></td>
     <td><%= link_to 'Destroy', irrigation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>

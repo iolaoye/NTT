@@ -242,7 +242,7 @@
   welcome_note: 
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
-    note2: '2.	Esta versión de NTT esta escrita tanto en el idioma Inglés como en Expañol.'
+    note2: '2.	Esta versión de NTT esta escrita tanto en el idioma Inglés como en Español.'
     final: 'Finalment, como líder del proyecto NTT y con mi equipo de proyecto (Oscar Gallego y Edward Osei), nos gustaría darle las gracias a las fuentes de financiación y nuestros colegas, en particular, los agricultores y productores, por su contribución en el diseño de este programa.'
     name: 'Dr. Ali Saleh'
   menu:
@@ -265,12 +265,13 @@
     control_file: Control
     parameters_file: Parámetros
     subarea_file: Subáreas
-    soil_file: Suelos
+    apex_soil: Suelos
     layer_file: Capas
     operation_file: Operaciones
     site_file: Sitio
     apex_file: Archivos APEX
   project:
+    project: Proyecto
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'
     upload_button_desc: 'Proyecto a Subir'
@@ -316,18 +317,28 @@
     silt: Limo
     clay: Arcilla
     organic_matter: Materia Orgánica
-    ph: PH    
+    ph: PH  
+    select_soil: Seleccione Suelo 
+    load_soil: Cargar Suelo
+    create_soil: Crear Suelo
+  layer:
+    new_layer: Nueva Capa
+    create_layer: Crear Capa
   scenario:
     scenario_name: Nombre Escenario
     scenario: Escenario
     simulate: Simular
     operation: Operación
+    create_scenario: Crear Escenario
+    select_scenario: Seleccione Escenario
+    load_scenario: Cargar Escenario
   location:
     new_location: Localización Nuevo
     edit: Revisión de Localización
   operation:
     new_operation: Nueva Operación
     edit: Revisión de Operación
+    create_operation: Crear Operación
     upload: 'Cargar'
     cropping_system: 'Sistema de Cultivo'
     crop: Cultivo
@@ -338,28 +349,40 @@
     amount: Cantidad
     bmp: MPG
     irrigation: Irrigación
+    plant_population: Población de Planta
+  bmp:
+    bmp_group: Grupo de MPG
+    select_bmp:  Seleccione Grupo de MPG   
+    create_bmp: Crear MPG
   activity:
     edit: Revisión de Actividad
     new_activity: Actividad Nuevo
     activity_title: Lista de Actividades
   field:
+    field: Parcela
     field_name: Nombre Parcela
     field_area: Área Parcela
     field_avg_slope: Inclinación promedio parcela
     new_field: Parcela Nueva
     field_title: Lista Parcelas
     field_type: Bosque?
+    edit_field: Editando Parcela
+    type: Tipo de Parcela
+    coordinate: Coordenadas 
   watershed:
     watershed_name: Nombre de la Cuenca
     new_watershed: Nueva Cuenca
     watershed_title: Listado de Cuencas
+    create_watershed: Crear Cuenca
   watershed_scenario:
     watershed_scenario_name: Nombre de la cuenca
     watershed_scenario_title: Listing Watershed Scenarios
     add_to_watershed: Adicionar a la cuenca
   submit:
+    create: Crear
     save: Guardar
     login: Iniciar sesión
+    update: Actualizar
   sessions:
     index:
       email: Correo Electrónico
@@ -367,6 +390,12 @@
       new_user: Usuario Nuevo
   modifications:
     mod_title: Modificar Información de APEX
+    control_file: Control
+    parameters_file: Parámetros
+    subarea_file: Subárea
+    soil_file: Suelos
+    layer_file: Capas
+    operation_file: Operación
   result:
     summary: Resumen
     by_soil: por Suelo
@@ -374,10 +403,38 @@
     annual: Anual
     update_chart: Actualizar Gráfica
     result: Resultado
+    add: Añadir
     submit: Enviar
+    scenario1: Primer Escenario
+    scenario2: Segundo Escenario
+    scenario3: Tercer Escenario
+    last: (últimos 12 años)
+    avg: Promedio Mensual (Todo el Periodo)
+    select_scenario1: Seleccione Primer Escenario
+    select_scenario2: Seleccione Segundo Escenario
+    select_scenario3: Seleccione Tercer Escenario
+    select_chart: Seleccione tipo de Gráfico
+    description: Descripción
+    difference: Diferencia
+    reduction: Reducción (%)
+    total_area: Área total
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa
+  subarea:
+    subarea_type: Tipo de Subárea
+    subarea_number: Número Subárea 
+    subarea_description: Descripción de subárea
+    select_subarea: Seleccione Subárea
+    load_subarea: Cargar Subárea
+  apex:
+    parameter: Parámetros
+    code: Código
+    line: Línea
+    column: Columna
+    value: Valor
+    low_range: Bajo Alcance
+    high_range: Alto Alcance
   about:
     overview0: 'Visión General'
     overview1: 'Nutrient Tracking Tool (NTT) fue diseñado y desarrollado por Texas Institute for Applied Environmental Research (TIAER), Tarleton State University con fondos del programa Conservation Innovation Grants de USDA-NRCS y varias agencias del estado.'

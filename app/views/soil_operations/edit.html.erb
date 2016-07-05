@@ -1,6 +1,6 @@
-<h1>Editing soil_operation</h1>
+<h1><%= t('general.editing') + " " + t('scenario.operation') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @soil_operation %> |
-<%= link_to 'Back', soil_operations_path %>
+<%= link_to t('general.show'), @soil_operation %> |
+<%= link_to t('general.back'), soil_operations_path %>

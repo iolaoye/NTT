@@ -1,0 +1,90 @@
+<%= form_for(@apex_layer) do |f| %>
+  <% if @apex_layer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
+
+      <ul>
+      <% @apex_layer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :Z %>
+    <%= f.number_field :depth, :class => "numbers", :value => (number_with_precision(f.object.depth, :precision => 2) || 0) %>
+  </div>
+  <div class="field">
+    <%= f.label :BD %>
+    <%= f.number_field :bulk_density, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :UW %>
+    <%= f.number_field :uw, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :FC %>
+    <%= f.number_field :fc, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :SAN %>
+    <%= f.number_field :sand, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :SIL %>
+    <%= f.number_field :silt, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :WN %>
+    <%= f.number_field :wn, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :ph, t('soil.ph') %>
+    <%= f.number_field :ph, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :SMB %>
+    <%= f.number_field :smb, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :CAC %>
+    <%= f.number_field :cac, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :CEC %>
+    <%= f.number_field :cec, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :Rok %>
+    <%= f.number_field :rok, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :CNDS %>
+    <%= f.number_field :cnds, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :SSF %>
+    <%= f.number_field :soil_p, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :RSD %>
+    <%= f.number_field :rsd, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :BDD %>
+    <%= f.number_field :bdd, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :PSP %>
+    <%= f.number_field :psp, :class => "numbers" %>
+  </div>
+  <div class="field">
+    <%= f.label :Satc %>
+    <%= f.number_field :satc, :class => "numbers" %>
+  </div>
+  
+  <div class="actions">
+    <%= link_to t('submit.update'), { controller: "apex_layers", action: "index", id: @apex_layer.soil_id}, :class => "button" %>
+  </div>
+<% end %>

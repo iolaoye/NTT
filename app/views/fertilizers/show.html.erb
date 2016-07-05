@@ -1,45 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Abbreviation:</b>
-  <%= @fertilizer.abbreviation %>
-</p>
+<%= render 'form' %>
 
-<p>
-  <b>Code:</b>
-  <%= @fertilizer.code %>
-</p>
-
-<p>
-  <b>Dndc:</b>
-  <%= @fertilizer.dndc %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @fertilizer.name %>
-</p>
-
-<p>
-  <b>Operation:</b>
-  <%= @fertilizer.operation %>
-</p>
-
-<p>
-  <b>Spinsh name:</b>
-  <%= @fertilizer.spinsh_name %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @fertilizer.status %>
-</p>
-
-<p>
-  <b>Activity:</b>
-  <%= @fertilizer.activity_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_fertilizer_path(@fertilizer) %> |
-<%= link_to 'Back', fertilizers_path %>
+<%= link_to t('general.edit'), edit_fertilizer_path(@fertilizer) %> |
+<%= link_to t('general.back'), fertilizers_path %>

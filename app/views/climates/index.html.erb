@@ -1,0 +1,33 @@
+<h1>Listing climates</h1>
+
+<table>
+  <tr>
+    <th>Bmp</th>
+    <th>Month</th>
+    <th>Spanish month</th>
+    <th>Max temp</th>
+    <th>Min temp</th>
+    <th>Precipitation</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @climates.each do |climate| %>
+  <tr>
+    <td><%= climate.bmp_id %></td>
+    <td><%= climate.month %></td>
+    <td><%= climate.spanish_month %></td>
+    <td><%= climate.max_temp %></td>
+    <td><%= climate.min_temp %></td>
+    <td><%= climate.precipitation %></td>
+    <td><%= link_to t('general.show'), climate %></td>
+    <td><%= link_to t('general.edit'), edit_climate_path(climate) %></td>
+    <td><%= link_to 'Destroy', climate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Climate', new_climate_path %>

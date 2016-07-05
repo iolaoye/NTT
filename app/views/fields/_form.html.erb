@@ -12,27 +12,27 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :field_name %><br />
+    <%= f.label t('field.field_name') %><br />
     <%= f.text_field :field_name %>
   </div>
   <div class="field">
-    <%= f.label :field_area %><br />
+    <%= f.label t('field.field_area') %><br />
     <%= f.text_field :field_area %>
   </div>
   <div class="field">
-	<%= f.label :field_average_slope %><br />
+	<%= f.label t('field.field_avg_slope') %><br />
     <%= f.text_field :field_average_slope %>
   </div>
   <div class="field">
-    <%= f.label :field_type %><br />
+    <%= f.label t('field.type') %><br />
     <%= f.text_field :field_type %>
   </div>
   <div class="field">
-    <%= f.label :coordinates %><br />
+    <%= f.label t('field.coordinate') %><br />
     <%= f.text_field :coordinates %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('submit.update') + " " + t('field.field') %>
   </div>
   <!--<p>This is a test</p>-->
 <% end %>

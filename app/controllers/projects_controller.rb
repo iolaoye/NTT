@@ -59,8 +59,6 @@ class ProjectsController < ApplicationController
 		location = Location.new
 		location.project_id = @project.id
 		location.save
-		load_controls()
-		load_parameters()
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else
@@ -832,12 +830,58 @@ class ProjectsController < ApplicationController
 					operation.org_p = p.text
 				when "nh3"
 					operation.nh3 = p.text
+				when "soil_operation"
+					p.elements.each do |s|
+						upload_soil_operation_new(scenario_id, s)
+						if msg != "OK"
+							return msg
+						end
+					end
 			end
 		end
 		if operation.save then
 			return "OK"
 		else
 			return "operation could not be saved"
+		end
+	end
+
+	def upload_soil_operation_new(scenario_id, operation)
+		soil_operation = SoilOperation.new
+		soil_operation.scenario_id = scenario_id
+		soil_operation.operation_id = operation.id
+		#soil_operation.soil_id = ??
+		operation.elements.each do |p|
+			case p.name
+				when "apex_crop"
+					soil_operation.apex_crop = p.text
+				when "opv1"
+					soil_operation.opv1 = p.text
+				when "opv2"
+					soil_operation.opv2 = p.text
+				when "opv3"
+					soil_operation.opv3 = p.text
+				when "opv4"
+					soil_operation.opv4 = p.text
+				when "opv5"
+					soil_operation.opv5 = p.text
+				when "opv6"
+					soil_operation.opv6 = p.text
+				when "opv7"
+					soil_operation.opv7 = p.text
+				when "activity_id"
+					soil_operation.activity_id = p.text
+				when "year"
+					soil_operation.year = p.text
+				when "month"
+					soil_operation.month = p.text
+				when "day"
+					soil_operation.day = p.text
+				when "type_id"
+					soil_operation.type_id = p.text
+				when "apex_operation"
+					soil_operation.apex_operation = p.text
+			end
 		end
 	end
 
@@ -1187,25 +1231,5 @@ class ProjectsController < ApplicationController
 		bmp.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SggCrop"]
 		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgslopeRatio"]
 		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgWidth"]
-	end
-	#todo move this two methods to fields or location when the state is known. Also update years of simulation + initialyear in weather
-	def load_controls()
-		Control.all.each do |c|
-			apex_control = ApexControl.new
-			apex_control.control_id = c.id
-			apex_control.value = c.default_value
-			apex_control.project_id = @project.id
-			apex_control.save
-		end
-	end
-
-	def load_parameters()
-		Parameter.all.each do |c|
-			apex_parameter = ApexParameter.new
-			apex_parameter.parameter_id = c.id
-			apex_parameter.value = c.default_value
-			apex_parameter.project_id = @project.id
-			apex_parameter.save
-		end
 	end
 end
