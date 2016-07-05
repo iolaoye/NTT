@@ -46,12 +46,14 @@ before_filter :take_names
   # GET /bmps/new
   # GET /bmps/new.json
   def new
+    session.delete(:bmp)
+    session.delete(:climate_array)
     @climate_array = create_hash()
-    session[:climate_array] = @climate_array
+    #session[:climate_array] = @climate_array
     @bmp = Bmp.new
   	@animals = Fertilizer.where(:fertilizer_type_id => 2)
     session.delete(:subarea)
-
+    @type = "create"
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @bmp }
@@ -61,10 +63,17 @@ before_filter :take_names
 ################################  EDIT  #################################
   # GET /bmps/1/edit
   def edit
+    @type = "edit"
     @bmp = Bmp.find(params[:id])
 	  @bmp_id = @bmp.bmp_id
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
-    @climate_array = session[:climate_array]
+    @climate_array = create_hash
+    @climates = Climate.where(:bmp_id => @bmp.id)
+    if @bmp.bmpsublist_id == 19
+      @climate_array = populate_array(@climates, @climate_array)
+    end
+    @bmp_group = Bmplist.where(:id => @bmp.bmp_id).first.name.to_s
+    @bmp_selection = Bmpsublist.where(:id => @bmp.bmpsublist_id).first.name.to_s
   end
 
 ################################  CREATE  #################################
@@ -73,11 +82,9 @@ before_filter :take_names
   def create
     @slope = 100
     @bmp = Bmp.new(bmp_params)
-    @bmp.id = session[:bmp_id]
 	  @bmp.scenario_id = session[:scenario_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
-    @climate_array = session[:climate_array]
-
+    @climate_array = create_hash()
     respond_to do |format|
       if @bmp.save
         msg = input_fields("create")
@@ -85,8 +92,9 @@ before_filter :take_names
           format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
           format.json { render json: @bmp, status: :created, location: @bmp }
         else
+          @bmp.errors.add(msg[0], msg[1])
           format.html { render action: "new" }
-          format.json { render json: @bmp.errors, status: :unprocessable_entity }		
+          format.json { render json: @bmp.errors, status: :unprocessable_entity }
         end
       else
         format.html { render action: "new" }
@@ -101,15 +109,18 @@ before_filter :take_names
   def update
 	  @slope = 100
     @bmp = Bmp.find(params[:id])
-    @bmp.id = session[:bmp_id]
+    #@bmp.id = session[:bmp_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @climates = Climate.where(:bmp_id => @bmp.id)
-    @climate_array = session[:climate_array]
+    #@climate_array = session[:climate_array]
+    #@climate_array = create_hash()
+    @climate_array = create_hash
+    @climate_array = populate_array(@climates, @climate_array)
 
 	  msg = input_fields("update")
 
     respond_to do |format|
-	  if msg == "OK"
+      if msg == "OK"
         if @bmp.update_attributes(bmp_params)
           format.html { redirect_to @bmp, notice: 'Bmp was successfully updated.' }
           format.json { head :no_content }
@@ -117,7 +128,11 @@ before_filter :take_names
           format.html { render action: "edit" }
           format.json { render json: @bmp.errors, status: :unprocessable_entity }
         end
-	  end
+      else
+        @bmp.errors.add(msg[0], msg[1])
+        format.html { render action: "edit" }
+        format.json { render json: @bmp.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -207,14 +222,24 @@ before_filter :take_names
   end
 
 
-  def update_hash(climate)
+  def update_hash(climate, climate_array)
     hash = Hash.new
     hash["max"] = climate.max_temp
     hash["min"] = climate.min_temp
-    hash["pcp"] = climate.precipitation / 100
-    @climate_array.push(hash)
+    hash["pcp"] = climate.precipitation
+    climate_array.push(hash)
+    return climate_array
   end
 
+
+  def populate_array(climates, climate_array)
+    climate_array.clear
+    climates.each do |climate|
+      climate_array = update_hash(climate, climate_array)
+    end
+    return climate_array
+  end
+  
   ####################### INDIVIDUAL SUBLIST ACTIONS #######################
 
   ### ID: 1
@@ -423,21 +448,29 @@ before_filter :take_names
         @climate_array.clear
         while i < 12 do
           climate = Climate.new
-          climate.bmp_id = session[:bmp_id]
+          climate.bmp_id = @bmp.id
           climate.month = i + 1
           climate.max_temp = 0.0
           climate.min_temp = 0.0
           climate.precipitation = 0.0
           edit_climate(climate, i + 1)
-          update_hash(climate)
+          @climate_array = update_hash(climate, @climate_array)
           i += 1
+          if(climate.errors.first != nil)
+            @climate_errors = climate.errors.first
+          end
+        end
+        if(@climate_errors != nil)
+          Bmp.where(:id => @bmp.id).destroy_all
+          Climate.delete_all
+          return @climate_errors
         end
       when "update"
         i = 0
-        @climates = Climate.where(:bmp_id => session[:bmp_id])
+        @climates = Climate.where(:bmp_id => @bmp.id)
         @climates.each do |climate|
           edit_climate(climate, i + 1)
-          update_hash(climate)
+          @climate_array = update_hash(climate, @climate_array)
           i += 1
         end
       end

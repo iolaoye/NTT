@@ -208,15 +208,20 @@ class ScenariosController < ApplicationController
 			print_array_to_file(weather_data, "APEX.wth")
 		end
 		#todo after file is copied if climate bmp is in place modified the weather file.
+<<<<<<< HEAD
         bmp_id = Bmp.select(:id).where(:scenario_id => session[:scenario_id])
-        climate = Climate.where(:bmp_id => bmp_id)
-        if climate.first != nil
+        climate_array = Array.new
+        climates = Climate.where(:bmp_id => bmp_id)
+        climates.each do |climate|
+            climate_array = update_hash(climate, climate_array)
+        end
+        if climates.first != nil
             data = read_file("Apex.wth")
             data.each_line do |day|
                 month = data[6, 4].to_i
                 max_input = climate_array[month]["max"]
                 min_input = climate_array[month]["min"]
-                pcp_input = climate_array[month]["pcp"]
+                pcp_input = climate_array[month]["pcp"] / 100
                 max_file = data[20, 6].to_f
                 min_file = data[26, 6].to_f
                 pcp_file = data[32, 7].to_f
@@ -259,7 +264,18 @@ class ScenariosController < ApplicationController
             #@change_till_depth.push(newLine)
         end
 		#todo fix widn and wp1 files with the real name
+=======
+>>>>>>> master
 	end
+
+    def update_hash(climate, climate_array)
+        hash = Hash.new
+        hash["max"] = climate.max_temp
+        hash["min"] = climate.min_temp
+        hash["pcp"] = climate.precipitation
+        climate_array.push(hash)
+        return climate_array
+    end
 
     def create_soils()
         #APEXStrings1 As New System.Text.StringBuilder
