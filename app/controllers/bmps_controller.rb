@@ -69,8 +69,8 @@ before_filter :take_names
 	  @bmp_id = @bmp.bmp_id
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
-    @climate_array = create_hash
     @climates = Climate.where(:bmp_id => @bmp.id)
+    @climate_array = create_hash()
     if @bmp.bmpsublist_id == 19
       @climate_array = populate_array(@climates, @climate_array)
     end
@@ -82,26 +82,38 @@ before_filter :take_names
   # POST /bmps
   # POST /bmps.json
   def create
+    @type = "create"
     @slope = 100
     @bmp = Bmp.new(bmp_params)
 	  @bmp.scenario_id = session[:scenario_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
     @climate_array = create_hash()
-    session[:bmp] = @bmp
-    ooo
     respond_to do |format|
-      if @bmp.save
+      if @bmp.bmpsublist_id == 19
         msg = input_fields("create")
-        if msg == "OK"
-          format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
-          format.json { render json: @bmp, status: :created, location: @bmp }
+      else
+        msg = "OK"
+      end
+      if msg == "OK"
+        if @bmp.save
+          if @bmp.bmpsublist_id != 19
+            msg = input_fields("create")
+          end
+          if msg == "OK"
+            add_climate_id(@bmp.id)
+            format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
+            format.json { render json: @bmp, status: :created, location: @bmp }
+          else
+            format.html { render action: "new" }
+            format.json { render json: @bmp.errors, status: :unprocessable_entity }
+          end
         else
-          @bmp.errors.add(msg[0], msg[1])
           format.html { render action: "new" }
           format.json { render json: @bmp.errors, status: :unprocessable_entity }
         end
       else
+        @bmp.errors.add(msg[0], msg[1])
         format.html { render action: "new" }
         format.json { render json: @bmp.errors, status: :unprocessable_entity }
       end
@@ -119,9 +131,10 @@ before_filter :take_names
     @climates = Climate.where(:bmp_id => @bmp.id)
     @irrigation = Irrigation.arel_table
     #@climate_array = session[:climate_array]
-    #@climate_array = create_hash()
-    @climate_array = create_hash
-    @climate_array = populate_array(@climates, @climate_array)
+    @climate_array = create_hash()
+    if @bmp.bmpsublist_id == 19
+      @climate_array = populate_array(@climates, @climate_array)
+    end
 
 	  msg = input_fields("update")
 
@@ -135,6 +148,7 @@ before_filter :take_names
           format.json { render json: @bmp.errors, status: :unprocessable_entity }
         end
       else
+        @climate_array = populate_array(@climates, @climate_array)
         @bmp.errors.add(msg[0], msg[1])
         format.html { render action: "edit" }
         format.json { render json: @bmp.errors, status: :unprocessable_entity }
@@ -244,6 +258,14 @@ before_filter :take_names
       climate_array = update_hash(climate, climate_array)
     end
     return climate_array
+  end
+
+  def add_climate_id(id)
+    climates = Climate.where(:bmp_id => nil)
+    climates.each do |climate|
+      climate.bmp_id = id
+      climate.save
+    end
   end
   
   ####################### INDIVIDUAL SUBLIST ACTIONS #######################
@@ -454,7 +476,7 @@ before_filter :take_names
         @climate_array.clear
         while i < 12 do
           climate = Climate.new
-          climate.bmp_id = @bmp.id
+          climate.bmp_id = nil
           climate.month = i + 1
           climate.max_temp = 0.0
           climate.min_temp = 0.0
@@ -476,8 +498,14 @@ before_filter :take_names
         @climates = Climate.where(:bmp_id => @bmp.id)
         @climates.each do |climate|
           edit_climate(climate, i + 1)
-          @climate_array = update_hash(climate, @climate_array)
+          #@climate_array = update_hash(climate, @climate_array)
           i += 1
+          if(climate.errors.first != nil)
+            @climate_errors = climate.errors.first
+          end
+        end
+        if(@climate_errors != nil)
+          return @climate_errors
         end
       end
     return "OK"
@@ -563,62 +591,86 @@ before_filter :take_names
     case i
       when 1
         climate.max_temp = params[:climate][:max_1] unless params[:climate][:max_1] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_1] unless params[:climate][:min_1] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_1] unless params[:climate][:pcp_1] == ""
         climate.save
       when 2
         climate.max_temp = params[:climate][:max_2] unless params[:climate][:max_2] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_2] unless params[:climate][:min_2] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_2] unless params[:climate][:pcp_2] == ""
         climate.save
       when 3
         climate.max_temp = params[:climate][:max_3] unless params[:climate][:max_3] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_3] unless params[:climate][:min_3] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_3] unless params[:climate][:pcp_3] == ""
         climate.save
       when 4
         climate.max_temp = params[:climate][:max_4] unless params[:climate][:max_4] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_4] unless params[:climate][:min_4] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_4] unless params[:climate][:pcp_4] == ""
         climate.save
       when 5
         climate.max_temp = params[:climate][:max_5] unless params[:climate][:max_5] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_5] unless params[:climate][:min_5] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_5] unless params[:climate][:pcp_5] == ""
         climate.save
       when 6
         climate.max_temp = params[:climate][:max_6] unless params[:climate][:max_6] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_6] unless params[:climate][:min_6] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_6] unless params[:climate][:pcp_6] == ""
         climate.save
       when 7
         climate.max_temp = params[:climate][:max_7] unless params[:climate][:max_7] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_7] unless params[:climate][:min_7] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_7] unless params[:climate][:pcp_7] == ""
         climate.save
       when 8
         climate.max_temp = params[:climate][:max_8] unless params[:climate][:max_8] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_8] unless params[:climate][:min_8] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_8] unless params[:climate][:pcp_8] == ""
         climate.save
       when 9
         climate.max_temp = params[:climate][:max_9] unless params[:climate][:max_9] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_9] unless params[:climate][:min_9] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_9] unless params[:climate][:pcp_9] == ""
         climate.save
       when 10
         climate.max_temp = params[:climate][:max_10] unless params[:climate][:max_10] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_10] unless params[:climate][:min_10] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_10] unless params[:climate][:pcp_10] == ""
         climate.save
       when 11
         climate.max_temp = params[:climate][:max_11] unless params[:climate][:max_11] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_11] unless params[:climate][:min_11] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_11] unless params[:climate][:pcp_11] == ""
         climate.save
       when 12
         climate.max_temp = params[:climate][:max_12] unless params[:climate][:max_12] == ""
+        climate.save
         climate.min_temp = params[:climate][:min_12] unless params[:climate][:min_12] == ""
+        climate.save
         climate.precipitation = params[:climate][:pcp_12] unless params[:climate][:pcp_12] == ""
         climate.save
     end
