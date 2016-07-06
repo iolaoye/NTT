@@ -42,6 +42,8 @@ gem "nokogiri"
 gem 'savon', '>= 2.0'
 
 gem 'chartkick', '~> 1.5', '>= 1.5.2'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 # gem 'wicked_pdf'
 # gem 'wkhtmltopdf-binary'
