@@ -62,7 +62,7 @@
     @apex_layer = Layer.find(params[:id])
     respond_to do |format|
       if @apex_layer.update_attributes(layer_params)
-        format.html { redirect_to apex_layers_path, notice: 'Layer was successfully updated.' }
+        format.html { redirect_to apex_layers_path(:id => @apex_layer.soil_id), notice: 'Layer was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
