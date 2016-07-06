@@ -3,33 +3,33 @@
 	<% field_name = "" %>
 	<% scenario_name = "" %>
     <div class="navbar navbar-default" style="line-height:0px" id="div1">
-        <ul class="nav navbar-nav">
+        <ul class="navbar-nav">
             <% case  %>
 	           <% when request.original_url.include?("project") || request.original_url.include?("welcome") ||  request.original_url.include?("about") || request.original_url.include?("contact") || request.original_url.include?("help")  %>
-			       <li><%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></li>
-   			       <li><%= link_to t('menu.projects'), welcomes_path %></li>
+			       <li><a <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
+   			       <li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>
 	           <% when request.original_url.include?("modifications") || request.original_url.include?("apex_controls") ||  request.original_url.include?("apex_parameters") || request.original_url.include?("subarea") || request.original_url.include?("apex_soil") || request.original_url.include?("apex_layer") || request.original_url.include?("soil_operation") || request.original_url.include?("site")%>
-				   <li><%= link_to t('menu.control_file'), apex_controls_path %></li>
-				   <li><%= link_to t('menu.parameters_file'), apex_parameters_path %></li>
-				   <li><%= link_to t('menu.subarea_file'), subareas_path %></li>
-				   <li><%= link_to t('menu.apex_soil'), field_apex_soils_path(session[:field_id]) %></li>
-				   <li><%= link_to t('menu.operation_file'), soil_operations_path %></li>
-				   <li><%= link_to t('menu.site'), site_path(session[:field_id]) %></li>
+				   <li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+				   <li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+				   <li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+				   <li><a <%= link_to t('menu.apex_soil'), field_apex_soils_path(session[:field_id]) %></a></li>
+				   <li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+				   <li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
 	           <% when request.original_url.include?("weather") || request.original_url.include?("soil") ||  request.original_url.include?("scenario") || request.original_url.include?("layer") || request.original_url.include?("results")  %>
-				   <li><%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></li>
-				   <li><%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></li>
-				   <li><%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
-				   <li><%= link_to t('menu.results'), results_path %></li>
-				   <li><%= link_to t('menu.apex_file'), apex_controls_path %></li> 
+				   <li><a <%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></a></li>
+				   <li><a <%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></a></li>
+				   <li><a <%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></a></li>
+				   <li><a <%= link_to t('menu.results'), results_path %></a></li>
+				   <li><a <%= link_to t('menu.apex_file'), apex_controls_path %></a></li> 
 			   <% when request.original_url.include?("location") || request.original_url.include?("field") ||  request.original_url.include?("watershed")%>
-				   <li><%= link_to t('menu.location'), location_path(session[:location_id]) %></li>
-				   <li><%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-				   <li><%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
+				   <li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+				   <li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+				   <li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
 			   <% when request.original_url.include?("operation") || request.original_url.include?("bmp")%>
-				   <li><%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></li>
-				   <li><%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></li>
+				   <li><a <%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></a></li>
+				   <li><a <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></a></li>
 			<% end %>
-    		<li><%= link_to t('menu.signout'), logout_path %></li>
+    		<li><a <%= link_to t('menu.signout'), logout_path %></a></li>
 	    </ul>      
     </div>
     <ul class="crumbs">
@@ -41,6 +41,7 @@
 			    <li><%=">>"%><%=project_name%></li>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+				<li><%=">>"%><%= t('menu.apex_file') %></li>
 				<li><%=">>"%></li>
 				<% case request.original_url %>
 					<% when /apex_control/ %>
@@ -120,7 +121,7 @@
 <% else %>
 	<div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
-    			   <li><%= link_to t('menu.signin'), logout_path %></li>
+    			   <li><%= link_to t('menu.signin'), login_path %></li>
 	    </ul>      
     </div>
 <% end %>

@@ -15,7 +15,7 @@
     <td><%= person.name %></td>
     <td><%= person.age %></td>
     <td><%= person.last_name %></td>
-    <td><%= link_to 'Show', person %></td>
+    <td><%= link_to t('general.show'), person %></td>
     <td><%= link_to t('general.edit'), edit_person_path(person) %></td>
     <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
