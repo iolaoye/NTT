@@ -11,7 +11,7 @@
 <% @scenarios.each do |scenario| %>
   <tr>
     <td><%= scenario.name %></td>
-    <td><%= link_to 'Show', scenario %></td>
+    <td><%= link_to t('general.show'), scenario %></td>
     <td><%= link_to t('general.edit'), edit_scenario_path(scenario) %></td>
     <td><%= link_to 'Destroy', scenario, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
