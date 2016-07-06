@@ -63,10 +63,10 @@
   <fieldset class="section">
 	  <div class="field">
         <p><%= t('weather.note') %></p>
-		<%= f.label t('weather.years_of_simulation') + " " + t('weather.initial_year') %>
-		<%= f.number_field :simulation_initial_year %>
+		<%= f.label t('weather.years_of_simulation') + ": " + t('weather.initial_year') %>
+		<%= f.number_field :simulation_initial_year, :class => "fieldNumbers" %>
 		<%= f.label " " + t('weather.final_year') %>
-		<%= f.number_field :simulation_final_year %>
+		<%= f.number_field :simulation_final_year, :class => "fieldNumbers" %>
 	  </div>
   </fieldset>
   <div class="actions">

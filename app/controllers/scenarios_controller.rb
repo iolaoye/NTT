@@ -58,14 +58,13 @@ class ScenariosController < ApplicationController
   # POST /scenarios
   # POST /scenarios.json
   def create
-    scenario = Scenario.new(scenario_params)
-	scenario.field_id = session[:field_id]
-    
+    @scenario = Scenario.new(scenario_params)
+	@scenario.field_id = session[:field_id]
 	respond_to do |format|
-      if scenario.save
+      if @scenario.save
 		@scenarios = Scenario.where(:field_id => session[:field_id])
 		#add new scenario to soils
-		add_scenario_to_soils(scenario)
+		add_scenario_to_soils(@scenario)
 		format.html { render action: "list" }
       else
         format.html { render action: "new" }
