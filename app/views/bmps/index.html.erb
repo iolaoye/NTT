@@ -11,7 +11,7 @@
 <% @bmps.each do |bmp| %>
   <tr>
     <td><%= bmps.name %></td>
-    <td><%= link_to 'Show', bmp %></td>
+    <td><%= link_to t('general.show'), bmp %></td>
     <td><%= link_to t('general.edit'), edit_bmp_path(bmp) %></td>
     <td><%= link_to 'Destroy', bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
