@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :Z %>
-    <%= f.number_field :depth, :class => "numbers", :value => (number_with_precision(f.object.depth, :precision => 2) || 0) %>
+    <%= f.number_field :depth, :class => "numbers", :value => (number_with_precision(f.object.depth, :precision => 2)) %>
   </div>
   <div class="field">
     <%= f.label :BD %>
@@ -85,6 +85,6 @@
   </div>
   
   <div class="actions">
-    <%= link_to t('submit.update'), { controller: "apex_layers", action: "index", id: @apex_layer.soil_id}, :class => "button" %>
+    <%= link_to t('submit.update'), { controller: "apex_layers", action: "update", id: @apex_layer.soil_id}, :class => "button" %>
   </div>
 <% end %>
