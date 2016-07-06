@@ -62,12 +62,12 @@
 	soil_id = Soil.where(:selected => true).last.id
     respond_to do |format|
       if @soil.update_attributes(soil_params)
-		if soil_id == @soil.id then
-			Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01) * 0.9, :stp => @soil.slope / 100)
-		else
-			Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
-		end
-        format.html { redirect_to list_soil_path(session[:field_id]), notice: 'Soil was successfully updated.' }
+		#if soil_id == @soil.id then
+			#Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01) * 0.9, :stp => @soil.slope / 100)
+		#else
+			#Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
+		#end
+        format.html { redirect_to field_apex_soils_path(session[:field_id]), notice: 'Soil was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -94,6 +94,7 @@
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def soil_params
-      params.require(:soil).permit(:albedo, :drainage_type, :field_id, :group, :key, :name, :percentage, :selected, :slope, :symbol)
+      params.require(:soil).permit(:albedo, :drainage_type, :field_id, :group, :key, :name, :percentage, :selected, :slope, :symbol, :ffc, :wtmn, :wtmx, :wtbl, :gwst, :gwmx, 
+	  :rft, :rfpk, :tsla, :xids, :rtn1, :xidk, :zqt, :zf, :ztk, :fbm, :fhp )
     end
 end

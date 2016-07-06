@@ -2,7 +2,10 @@
   <h2><%= t('submit.login')%></h2>
   <%= form_tag session_path do %>
     <% if flash[:alert] %>
-      <p class="flash_alert"><%= flash[:alert] %></p>
+    <div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:alert] %>
+    </div>
     <% end %>
     <div class="field">
       <%= label_tag (t('.email')) %><br />
@@ -13,10 +16,8 @@
       <%= password_field_tag :password %>
     </div>
     <div class="actions">
-      <p><%= submit_tag t('submit.login') %></p>
-    </div>
-    <div class="actions">
-      <p><%= link_to t('.new_user'), users_new_path, method: :get %></p>
+      <%= submit_tag t('submit.login') %>
+      <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button" %>
     </div>
   <% end %>
 <%# end %>
