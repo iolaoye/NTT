@@ -43,6 +43,34 @@
 
 .crumbs li { display: inline; color:Blue}
 
+.danger_alert {
+  padding: 20px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px;
+}
+
+.success_alert {
+  padding: 20px;
+  background-color: #6abc6e; /* Green */
+  color: white;
+  margin-bottom: 15px;
+}
+
+.info_alert {
+  padding: 20px;
+  background-color: #47a8f5; /* Blue */
+  color: white;
+  margin-bottom: 15px;
+}
+
+.warning_alert {
+  padding: 20px;
+  background-color: #ffa92c; /* Yellow */
+  color: white;
+  margin-bottom: 15px;
+}
+
 .flash_alert { 
   padding: 20px;
   background-color: #f44336; /* Red */
@@ -577,7 +605,7 @@ input[type="submit"]:hover {
   color: dodgerblue;
 }
 
-.new_user_button {
+.green_button {
   background-color: #4CAF50;
   border: none;
   color: white !important;
@@ -590,7 +618,8 @@ input[type="submit"]:hover {
   margin-top: 5px;
 }
 
-.new_user_button:hover {
+
+.green_button:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   background-color: white;
   color: #4CAF50 !important;
