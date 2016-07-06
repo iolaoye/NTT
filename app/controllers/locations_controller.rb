@@ -57,8 +57,8 @@ class LocationsController < ApplicationController
 				isFound = true
 				end
 			end
-			if (!isFound) then
-				field.destroy()
+			if (!isFound) then			
+				field.destroy
 			end  # end if isFound
 			end # end Location do
 
@@ -116,12 +116,13 @@ class LocationsController < ApplicationController
 				@weather.longitude = site.xlog
 				@weather.way_id = 1   #assign PRISM weather station to the weather way as default from map
 				@weather.station_way = "map"
-			if @weather.save then
-				@field.weather_id = @weather.id
-			end 
-			@field.save
-			@weather.field_id = @field.id
-			@weather.save
+				if @weather.save then
+					@field.weather_id = @weather.id
+				end 
+				@field.save
+				@weather.field_id = @field.id
+				session[:field_id] = @field.id
+				@weather.save
 			end # end for fields
 
 			# step 5: update location	  
@@ -138,7 +139,7 @@ class LocationsController < ApplicationController
 			load_controls()
 			load_parameters()
 		end # end if of session_id check
-		format.html # Runs receive_from_mapping_site.html.erb view
+		format.html # Runs receive_from_mapping_site.html.erb view in location folder
       end  # end if error
 	end
   end  #end method receiving from map site
@@ -219,7 +220,7 @@ class LocationsController < ApplicationController
   def create_soils(i, field_id, forestry)
     #delete all of the soils for this field
 	soils1 = Soil.where(:field_id => field_id)
-	soils1.delete_all
+	soils1.destroy_all
 	#todo since all of the soils are deleted all of the subareas need to be created again. Also, the SoilOperation needs to be deleted and created again.
 	total_percentage = 0
     for j in 1..params["field#{i}soils"].to_i

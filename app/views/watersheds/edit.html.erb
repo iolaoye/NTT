@@ -7,7 +7,7 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Back', list_watershed_path(session[:location_id]) %>
+<%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
 
 <table>
   <tr>
@@ -26,7 +26,7 @@
 
 <div class="actions"><%= f.submit %></div>
     
-<%= link_to 'Show', @watershed %> |
+<%= link_to t('general.show'), @watershed %> |
 
 <%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>.
 

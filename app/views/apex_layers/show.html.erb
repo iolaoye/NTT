@@ -1,0 +1,97 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Z:</b>
+  <%= @layer.depth %>
+</p>
+
+<p>
+  <b>BD:</b>
+  <%= @layer.bulk_density %>
+</p>
+
+<p>
+  <b>UW:</b>
+  <%= @layer.uw %>
+</p>
+
+<p>
+  <b>FC:</b>
+  <%= @layer.fc %>
+</p>
+
+<p>
+  <b>SAN:</b>
+  <%= @layer.sand %>
+</p>
+
+<p>
+  <b>SIL:</b>
+  <%= @layer.silt %>
+</p>
+
+<p>
+  <b>WN:</b>
+  <%= @layer.wn %>
+</p>
+
+<p>
+  <b>Ph:</b>
+  <%= @layer.ph %>
+</p>
+
+<p>
+  <b>SMB:</b>
+  <%= @layer.smb %>
+</p>
+
+<p>
+  <b>CAC:</b>
+  <%= @layer.cac %>
+</p>
+
+<p>
+  <b>CEC:</b>
+  <%= @layer.cec %>
+</p>
+
+<p>
+  <b>ROK:</b>
+  <%= @layer.rok %>
+</p>
+
+<p>
+  <b>CNDS:</b>
+  <%= @layer.cnds %>
+</p>
+
+<p>
+  <b>SSF:</b>
+  <%= @layer.soil_p %>
+</p>
+
+<p>
+  <b>RSD:</b>
+  <%= @layer.rsd %>
+</p>
+
+<p>
+  <b>BDD:</b>
+  <%= @layer.bdd %>
+</p>
+
+<p>
+  <b>PSP:</b>
+  <%= @layer.psp %>
+</p>
+
+<p>
+  <b>SATC:</b>
+  <%= @layer.satc %>
+</p>
+
+
+
+
+<%= link_to t('general.edit'), edit_apex_layer_path %> |
+<%= link_to t('general.back'), controller: "apex_layers", action: "index", id: @layer.soil_id %>

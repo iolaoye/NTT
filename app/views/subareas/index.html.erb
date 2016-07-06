@@ -1,25 +1,22 @@
 <%= form_for :subarea do |f| %>
   <table>
-    <%#= hidden_field(:field, :id, :value => session[:field_id]) %>
     <tr>
-      <td><%= label :bmp_id, 'Scenario' %></td>
-      <td><%#= label :bmp_id, 'Subarea' %></td>
+      <td><%= label :bmp_id, t('scenario.scenario') %></td>
     </tr>
     <tr>
-      <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('subarea.select_scenario'), :selected => session[:scenario_id]}, {:required => true} %></td>
+      <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => session[:scenario_id]}, {:required => true} %></td>
       <td><%= button_to t('subarea.load_subarea'), subareas_path%></td>
-	  <td><%#= collection_select :subarea, :subarea_id, Subarea.where(:id => -1), :id, :description, {:prompt => 'Select Subarea'}, {:required => true} %></td>
     </tr>
   </table>
 <% end %>
 
-<h1>Listing subareas</h1>
+<h1><%= t('general.listing') + " " + t('menu.subarea_file') %></h1>
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th class="gvCellStyleTitle"><%= 'Subarea Type'%></th>
-    <th class="gvCellStyleTitle"><%= 'Subarea Number'%></th>
-    <th class="gvCellStyleTitle"><%= 'Subarea Description'%></th>
+    <th class="gvCellStyleTitle"><%= t('subarea.subarea_type') %></th>
+    <th class="gvCellStyleTitle"><%= t('subarea.subarea_number') %></th>
+    <th class="gvCellStyleTitle"><%= t('subarea.subarea_description') %></th>
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
     <th></th>
   </tr>

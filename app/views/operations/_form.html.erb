@@ -54,16 +54,16 @@
 	           <%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
 			</div>
 		    <div class="field" id="div_amount">
-			  <%= f.label :plant_population %>
+			  <%= f.label t('operation.plant_population') %>
 			  <%= f.text_field :amount %>
 		    </div>
 		    <div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('soil.depth') %>
-			  <%= f.text_field :depth %> 
+			  <%= f.number_field :depth %> 
 		    </div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.text_field :moisture %>
+			  <%= f.number_field :moisture %>
 		    </div>
 		    <div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
@@ -106,7 +106,7 @@
 		    </div>
 		    <div class="field" id="div_depth">
 			  <%= f.label :depth, t('soil.depth') %>
-			  <%= f.text_field :depth %> %>
+			  <%= f.text_field :depth %>
 		    </div>
 			<div class="field" id="div_moisture">
 			  <%= f.label :moisture, t('operation.moisture') %>
@@ -336,6 +336,6 @@
 	<% end %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('operation.create_operation') %>
   </div>
 <% end %>

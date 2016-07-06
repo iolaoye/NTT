@@ -23,8 +23,8 @@
     <td><%= description.unit %></td>
     <td><%= description.position %></td>
     <td><%= description.period %></td>
-    <td><%= link_to 'Show', description %></td>
-    <td><%= link_to 'Edit', edit_description_path(description) %></td>
+    <td><%= link_to t('general.show'), description %></td>
+    <td><%= link_to t('general.edit'), edit_description_path(description) %></td>
     <td><%= link_to 'Destroy', description, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>

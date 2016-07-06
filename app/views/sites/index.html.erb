@@ -29,8 +29,8 @@
     <td><%= site.upr %></td>
     <td><%= site.unr %></td>
     <td><%= site.fir0 %></td>
-    <td><%= link_to 'Show', site %></td>
-    <td><%= link_to 'Edit', edit_site_path(site) %></td>
+    <td><%= link_to t('general.show'), site %></td>
+    <td><%= link_to t('general.edit'), edit_site_path(site) %></td>
     <td><%= link_to 'Destroy', site, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
