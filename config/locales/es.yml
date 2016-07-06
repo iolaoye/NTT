@@ -260,6 +260,7 @@
     simulations: Simulaciones
     results: Resultados
     modifications: Modificaciones
+    signin: Iniciar sesión
     signout: Salir
     site: Sitio
     control_file: Control
