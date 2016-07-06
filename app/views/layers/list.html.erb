@@ -16,6 +16,7 @@
 
   <% @layers.each do |layer| %>
     <tr class="gvRowStyle">
+<<<<<<< HEAD
       <td class="gvCellStyleNumber"><%= layer.depth %></td>
       <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
       <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
@@ -24,6 +25,16 @@
       <td class="gvCellStyleNumber"><%= layer.clay %></td>
       <td class="gvCellStyleNumber"><%= layer.organic_matter %></td>
       <td class="gvCellStyleNumber"><%= layer.ph %></td>
+=======
+      <td><%= '%.2f' % layer.depth %></td>
+      <td><%= layer.soil_p %></td>
+      <td><%= layer.bulk_density %></td>
+      <td><%= layer.sand %></td>
+      <td><%= layer.silt %></td>
+      <td><%= layer.clay %></td>
+      <td><%= layer.organic_matter %></td>
+      <td><%= layer.ph %></td>
+>>>>>>> 9c11a95d2cff61620780bf8f4bc55aac9cdbe591
       <td>
          <%= link_to image_tag("edit.png"), edit_layer_path(layer), title: t('general.edit') %>
          <%= link_to image_tag("delete.png"), layer, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
