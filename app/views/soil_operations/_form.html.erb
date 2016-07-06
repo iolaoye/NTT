@@ -12,19 +12,19 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :'Year:' %>
+    <%= f.label t('datetime.prompts.year') + " " + ':' %>
     <%= f.number_field :year, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :'Month:' %>
+    <%= f.label t('datetime.prompts.month') + " " + ':' %>
     <%= f.number_field :month, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :'Day:' %>
+    <%= f.label t('datetime.prompts.day') + " " + ':' %>
     <%= f.number_field :day, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :'Operation:' %>
+    <%= f.label t('scenario.operation') + " " + ':' %>
     <%= f.number_field :apex_operation, :class => "numbers" %>
   </div>
   <div class="field">
@@ -32,11 +32,11 @@
     <%= f.number_field :tractor_id, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :'Crop:' %>
+    <%= f.label t('operation.crop') + " " + ':' %>
     <%= f.number_field :apex_crop, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :'Type:' %>
+    <%= f.label t('general.type') + " " + ':' %>
     <%= f.number_field :type_id, :class => "numbers" %>
   </div>
   <div class="field">
@@ -69,6 +69,6 @@
   </div>
   
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('submit.update') + " " + t('scenario.operation') %>
   </div>
 <% end %>

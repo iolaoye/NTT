@@ -208,7 +208,6 @@ class ScenariosController < ApplicationController
 			print_array_to_file(weather_data, "APEX.wth")
 		end
 		#todo after file is copied if climate bmp is in place modified the weather file.
-<<<<<<< HEAD
         bmp_id = Bmp.select(:id).where(:scenario_id => session[:scenario_id])
         climate_array = Array.new
         climates = Climate.where(:bmp_id => bmp_id)
@@ -264,8 +263,6 @@ class ScenariosController < ApplicationController
             #@change_till_depth.push(newLine)
         end
 		#todo fix widn and wp1 files with the real name
-=======
->>>>>>> master
 	end
 
     def update_hash(climate, climate_array)
