@@ -5,7 +5,7 @@
     </tr>
     <tr>
       <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => session[:scenario_id]}, {:required => true} %></td>
-      <td><%= button_to t('scenario.load_scenario'), subareas_path%></td>
+      <td><%= button_to t('subarea.load_subarea'), subareas_path%></td>
     </tr>
   </table>
 <% end %>

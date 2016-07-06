@@ -104,16 +104,35 @@ class ResultsController < ApplicationController
 		end
 	end
 	respond_to do |format|
+		format.pdf do
+			render  pdf: "report", 
+							layout: "pdf",
+							template: "/results/report",
+							footer: { center: '[page] of [topage]' }
+							#header:  {
+							#	html: {
+							#		template: "/layouts/pdf_header"
+							#	}
+							#}
+		end
 		format.html # index.html.erb
 	end
   end
+
+	def download
+		respond_to do |format|
+			format.pdf do
+        render pdf: "tester", 
+               layout: "pdf",
+               template: "/results/tester"
+			end
+	end
 
   # GET /results/1
   # GET /results/1.json
   def show
     @result = Result.find(params[:id])
 
-    respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @result }
     end
