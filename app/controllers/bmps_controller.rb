@@ -97,11 +97,12 @@ before_filter :take_names
       end
       if msg == "OK"
         if @bmp.save
-          if @bmp.bmpsublist_id != 19
+          if @bmp.bmpsublist_id == 19
+            add_climate_id(@bmp.id)
+          else
             msg = input_fields("create")
           end
           if msg == "OK"
-            add_climate_id(@bmp.id)
             format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
             format.json { render json: @bmp, status: :created, location: @bmp }
           else
