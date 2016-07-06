@@ -43,17 +43,23 @@ div {
 
 .field_with_errors {
   padding: 2px;
-  background-color: red;
+  background-color: #f44336;
+  color: white;
   display: table;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.warning {
+  color: red;
+  font-family: verdana, arial, helvetica, sans-serif;
 }
 
 #error_explanation {
-  width: 450px;
-  border: 2px solid red;
-  padding: 7px;
-  padding-bottom: 0;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
+  padding: 20px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px; 
 
   h2 {
     text-align: left;
@@ -62,12 +68,11 @@ div {
     font-size: 12px;
     margin: -7px;
     margin-bottom: 0px;
-    background-color: #c00;
     color: #fff;
   }
 
   ul li {
     font-size: 12px;
-    list-style: square;
+    color: #e9e9e9;
   }
 }

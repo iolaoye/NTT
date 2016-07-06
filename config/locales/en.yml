@@ -259,6 +259,7 @@ en:
     simulations: Simulations
     results: Results
     modifications: Modifications
+    signin: Sign In
     signout: Sign Out
     site: Site
     control_file: Controls
@@ -270,6 +271,7 @@ en:
     site_file: Site
     apex_file: APEX Files
   project:
+    project: Project
     new_project: 'New Project'
     upload_project: 'Upload Project'
     upload_button_desc: 'Project to Upload'
@@ -359,6 +361,7 @@ en:
     new_activity: New Activity
     activity_title: Listing Activities
   field:
+    field: Field
     field_name: Field Name
     field_area: Field Area
     field_avg_slope: Field Average Slope
@@ -381,6 +384,7 @@ en:
     watershed_scenario_title: Listing Watershed Scenarios
     add_to_watershed: Add to watershed
   submit:
+    create: Create
     save: Save Changes
     login: Sign in
     update: Update
