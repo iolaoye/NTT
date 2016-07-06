@@ -89,7 +89,6 @@
     </div></td>
   </tr>
 </table>
-  <div class="actions">
-    <%= f.submit t('submit.update') + " " + t('soil.soil') %>
-  </div>
+<%= button_to "Update", field_apex_soils_path(session[:field_id]) %>
+
 <% end %>

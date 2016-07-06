@@ -1,0 +1,29 @@
+.header {
+    font-family: Arial, Helvetica, sans-serif;
+    width:500px;
+    float:left;
+}
+
+#document_header {
+    display: inline;
+}
+
+.inline {
+    display: inline !important;
+}
+
+.line_break {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.right {
+    font-family: Arial, Helvetica, sans-serif;
+    float: right;
+    background: none;
+}
+
+.empty {
+    margin: 0px, 0px, 0px, 0px;
+    padding: 0px, 0px, 0px, 0px;
+}

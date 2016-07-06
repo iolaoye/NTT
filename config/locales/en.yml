@@ -259,6 +259,7 @@ en:
     simulations: Simulations
     results: Results
     modifications: Modifications
+    signin: Sign In
     signout: Sign Out
     site: Site
     control_file: Controls
