@@ -1,4 +1,4 @@
-<%= form_for(@apex_layer) do |f| %>
+<%= form_for @apex_layer, url: apex_layer_path do |f| %>
   <% if @apex_layer.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
@@ -85,6 +85,6 @@
   </div>
   
   <div class="actions">
-    <%= link_to t('submit.update'), { controller: "apex_layers", action: "index", id: @apex_layer.soil_id}, :class => "button" %>
+    <%= f.submit t('submit.update') %>
   </div>
 <% end %>
