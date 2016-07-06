@@ -13,47 +13,23 @@
 
   <div class="field">
     <% if (@type == "create") %>
-<<<<<<< HEAD
       <%= label :bmp_id, t('bmp.bmp_group') %>
       <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
       <%= label :bmp_id, t('operation.bmp') %>
       <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
-=======
-<<<<<<< HEAD
-     <%= label :bmp_id, t('bmp.bmp_group') %>
-     <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
-     <%= label :bmp_id, t('operation.bmp') %>
-     <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
-    <% else %>
-      <%= label :bmp_id, t('bmp.bmp_group') %>
-      <%= collection_select :bmp, :bmp_id, Bmplist.where(:id => @bmp.bmp_id), :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
-      <%= label :bmp_id, t('operation.bmp') %>
-      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:id => @bmp.bmpsublist_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id } %>
-    <% end %>
-
-
-=======
-      <%= label :bmp_id, t('bmp.bmp_group') %>
-      <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => 'Select BMP Group'}, {:class => "dropdown"} %>
-      <%= label :bmp_id, t('operation.bmp') %>
-      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => 'Select BMP Group' } %>
->>>>>>> 33c53d4b11d04da76defca7608fd4dbf882000a6
     <% else %>
       <%= label :bmp_id, t('bmp.bmp_group') %>
       <%= collection_select :bmp, :bmp_id, Bmplist.where(:id => @bmp.bmp_id), :id, :name, {:prompt => 'Select BMP Group'}, {:required => false} %>
       <%= label :bmp_id, t('operation.bmp') %>
       <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:id => @bmp.bmpsublist_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id } %>
     <% end %>
-<<<<<<< HEAD
-=======
   </div>
-  <div id="slow_warning" class="warning" style="display:none">
-    <label>This BMP may take longer to save</label>
+  <div class="warning_alert" id="slow_warning">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      This BMP may take longer to save
   </div>
   <div>
     <hr class="line_break" color="dodgerblue">
->>>>>>> 99b9385007db5c0e1e7f73ac4dee234c0b0d1cae
->>>>>>> 33c53d4b11d04da76defca7608fd4dbf882000a6
   </div>
   <div class="field" id="irrigation" style="display:none">
       <%= label :irrigation_id, 'Irrigation' %>
