@@ -21,7 +21,7 @@
     <td><%= climate.max_temp %></td>
     <td><%= climate.min_temp %></td>
     <td><%= climate.precipitation %></td>
-    <td><%= link_to 'Show', climate %></td>
+    <td><%= link_to t('general.show'), climate %></td>
     <td><%= link_to t('general.edit'), edit_climate_path(climate) %></td>
     <td><%= link_to 'Destroy', climate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>

@@ -4,5 +4,5 @@ class Climate < ActiveRecord::Base
     belongs_to :bmp
   #validations 
      validates :month, uniqueness: { scope: :bmp_id }
-     validates :precipitation, numericality: { greater_than_or_equal_to: 0 }
+     validates :precipitation, numericality: { greater_than_or_equal_to: -100 }
 end

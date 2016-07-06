@@ -58,14 +58,13 @@ class ScenariosController < ApplicationController
   # POST /scenarios
   # POST /scenarios.json
   def create
-    scenario = Scenario.new(scenario_params)
-	scenario.field_id = session[:field_id]
-    
+    @scenario = Scenario.new(scenario_params)
+	@scenario.field_id = session[:field_id]
 	respond_to do |format|
-      if scenario.save
+      if @scenario.save
 		@scenarios = Scenario.where(:field_id => session[:field_id])
 		#add new scenario to soils
-		add_scenario_to_soils(scenario)
+		add_scenario_to_soils(@scenario)
 		format.html { render action: "list" }
       else
         format.html { render action: "new" }
@@ -208,7 +207,6 @@ class ScenariosController < ApplicationController
 			print_array_to_file(weather_data, "APEX.wth")
 		end
 		#todo after file is copied if climate bmp is in place modified the weather file.
-<<<<<<< HEAD
         bmp_id = Bmp.select(:id).where(:scenario_id => session[:scenario_id])
         climate_array = Array.new
         climates = Climate.where(:bmp_id => bmp_id)
@@ -264,8 +262,6 @@ class ScenariosController < ApplicationController
             #@change_till_depth.push(newLine)
         end
 		#todo fix widn and wp1 files with the real name
-=======
->>>>>>> master
 	end
 
     def update_hash(climate, climate_array)

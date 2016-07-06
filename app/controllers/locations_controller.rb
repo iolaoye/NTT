@@ -39,7 +39,7 @@ class LocationsController < ApplicationController
 
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site	 
-  @location = Location.find_by_project_id(params[:id])
+    @location = Location.find_by_project_id(params[:id])
 	@project_name = Project.find(params[:id]).name
 	session[:project_id] = params[:id]
 	session[:location_id] = @location.id
@@ -57,8 +57,8 @@ class LocationsController < ApplicationController
 				isFound = true
 				end
 			end
-			if (!isFound) then
-				field.destroy()
+			if (!isFound) then			
+				field.destroy
 			end  # end if isFound
 			end # end Location do
 
@@ -139,7 +139,7 @@ class LocationsController < ApplicationController
 			load_controls()
 			load_parameters()
 		end # end if of session_id check
-		format.html # Runs receive_from_mapping_site.html.erb view
+		format.html # Runs receive_from_mapping_site.html.erb view in location folder
       end  # end if error
 	end
   end  #end method receiving from map site
@@ -220,7 +220,7 @@ class LocationsController < ApplicationController
   def create_soils(i, field_id, forestry)
     #delete all of the soils for this field
 	soils1 = Soil.where(:field_id => field_id)
-	soils1.delete_all
+	soils1.destroy_all
 	#todo since all of the soils are deleted all of the subareas need to be created again. Also, the SoilOperation needs to be deleted and created again.
 	total_percentage = 0
     for j in 1..params["field#{i}soils"].to_i

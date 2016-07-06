@@ -13,7 +13,7 @@
   <tr>
     <td><%= fertilizer_type.name %></td>
     <td><%= fertilizer_type.spanish_name %></td>
-    <td><%= link_to 'Show', fertilizer_type %></td>
+    <td><%= link_to t('general.show'), fertilizer_type %></td>
     <td><%= link_to t('general.edit'), edit_fertilizer_type_path(fertilizer_type) %></td>
     <td><%= link_to 'Destroy', fertilizer_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
