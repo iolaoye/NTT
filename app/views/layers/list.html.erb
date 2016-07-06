@@ -16,7 +16,7 @@
 
   <% @layers.each do |layer| %>
     <tr class="gvRowStyle">
-      <td><%= layer.depth %></td>
+      <td><%= '%.2f' % layer.depth %></td>
       <td><%= layer.soil_p %></td>
       <td><%= layer.bulk_density %></td>
       <td><%= layer.sand %></td>
