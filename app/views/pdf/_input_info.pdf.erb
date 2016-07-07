@@ -1,4 +1,3 @@
-
 <% t = Time.now %>
 
 <div class="group_header first_group">Input Information Report</div>
@@ -10,9 +9,9 @@
         Report Created:</br>
     </div>
     <div class="data">
-        This is a space filler<%=  %></br>
-        This is a space filler<%=  %></br>
-        This is a space filler<%=  %></br>
+        <%= @project.name %></br>
+        <%= @project.description %></br>
+        <%= @project.created_at %></br>
         </br>
         <%=t.day%>/<%=t.month%>/<%=t.year %>&nbsp; -
                 <%=t.strftime("%I:%M%p") %></br>

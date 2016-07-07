@@ -1,4 +1,4 @@
-<% @bmps = ["A", "B", "C"] %>
+<% @soils = Soil.where(:field_id => @field.id) %>
 
 <div class="group_header">Soil Information</div>
 <table class='table_fill'>
@@ -17,24 +17,24 @@
     </thead>
     <tbody>
         <% i=1 %>
-        <% @bmps.each do |bmp| %>
+        <% @soils.each do |soil| %>
             <% if (i % 2  == 0) %>
                 <tr class="table_row_even">
-                    <td class="row text"><%= bmp %></td>
-                    <td class="row text"><%= bmp %></td>
-                    <td class="row text"><%= bmp %></td>
-                    <td class="row number"><%= bmp %></td>
-                    <td class="row number"><%= bmp %></td>
-                    <td class="row number"><%= bmp %></td>
+                    <td class="row text"><%= soil.name %></td>
+                    <td class="row text"><%= soil.symbol %></td>
+                    <td class="row text"><%= soil.group %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.albedo) unless soil.albedo == nil %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.slope) unless soil.slope == nil %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.percentage) unless soil.percentage == nil %></td>
                 </tr>
             <% else %>
                 <tr class="table_row_odd">
-                    <td class="row text"><%= bmp %></td>
-                    <td class="row text"><%= bmp %></td>
-                    <td class="row text"><%= bmp %></td>
-                    <td class="row number"><%= bmp %></td>
-                    <td class="row number"><%= bmp %></td>
-                    <td class="row number"><%= bmp %></td>
+                    <td class="row text"><%= soil.name %></td>
+                    <td class="row text"><%= soil.symbol %></td>
+                    <td class="row text"><%= soil.group %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.albedo) unless soil.albedo == nil %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.slope) unless soil.slope == nil %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.percentage) unless soil.percentage == nil %></td>
                 </tr>
             <% end %>
             <% i = i + 1 %>
