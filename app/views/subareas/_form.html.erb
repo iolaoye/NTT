@@ -98,11 +98,11 @@
   <tr class='gvRowStyleOdd'>
     <td><div class="field">
         <b><%= f.label :wsa %></b><br />
-        <%= f.number_field :wsa, :class => "fieldNumbers" %>
+        <%= f.number_field :wsa, :class => "fieldNumbers", :step => '0.0001' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :chl %></b><br />
-        <%= f.number_field :chl, :class => "fieldNumbers" %>
+        <%= f.number_field :chl, :class => "fieldNumbers", :step => '0.0001' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :chd %></b><br />
@@ -118,11 +118,11 @@
     </div></td>
     <td><div class="field">
         <b><%= f.label :slp %></b><br />
-        <%= f.number_field :slp, :class => "fieldNumbers" %>
+        <%= f.number_field :slp, :class => "fieldNumbers", :step => '0.0001' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :splg %></b><br />
-        <%= f.number_field :splg, :class => "fieldNumbers" %>
+        <%= f.number_field :splg, :class => "fieldNumbers", :step => '0.01' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :upn %></b><br />
@@ -141,7 +141,7 @@
   <tr class='gvRowStyleOdd'>
     <td><div class="field">
         <b><%= f.label :rchl %></b><br />
-        <%= f.number_field :rchl, :class => "fieldNumbers" %>
+        <%= f.number_field :rchl, :class => "fieldNumbers" , :step => '0.0001' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :rchd %></b><br />

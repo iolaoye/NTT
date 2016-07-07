@@ -63,6 +63,7 @@
 			    <li><%=">>"%><%=project_name%></li>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+				<li><%=">>"%><%= t('menu.apex_file') %></li>				
 				<li><%=">>"%><%= t('menu.apex_soil') %></li>
 				<li><%=">>"%></li>
 				<% case request.original_url %>
