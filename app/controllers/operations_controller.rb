@@ -116,8 +116,8 @@ class OperationsController < ApplicationController
 		if params[:cropping_system][:id] != "" then
 			@cropping_system_id = params[:cropping_system][:id]
 			#Delete operations for the scenario selected
-			Operation.where(:scenario_id => params[:id]).delete_all
-			SoilOperation.where(:scenario_id => params[:id]).delete_all
+			Operation.where(:scenario_id => params[:id]).destroy_all
+			#SoilOperation.where(:scenario_id => params[:id]).delete_all
 			#take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
 			events = Event.where(:cropping_system_id => params[:cropping_system][:id])
 			events.each do |event|
@@ -276,6 +276,7 @@ class OperationsController < ApplicationController
 				#opv1 = uri.read
 				#opv1 = Hash.from_xml(open(uri.to_s).read)["m"]{"p".inject({}) do |result, elem
 				client = Savon.client(wsdl: URL_HU)
+				session[:depth] = @operation.crop_id
 				response = client.call(:get_hu, message:{"crop" => @operation.crop_id, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
 				opv1 = response.body[:get_hu_response][:get_hu_result]
 				#opv1 = 2.2

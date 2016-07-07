@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label t('apex.value') %><br />
-    <%= f.text_field :value %>
+    <%= f.number_field :value, :step => 'any' %>
   </div>
   <div class="field">
     <%= t('apex.low_range') + " " + ':' %>
