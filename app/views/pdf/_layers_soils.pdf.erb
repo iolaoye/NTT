@@ -1,0 +1,57 @@
+<% j=1 %>
+<% @soils.each do |soil| %>
+    <% @layers = Layer.where(:soil_id => soil.id) %>
+    <div class="data_titles">
+        Soil Name:</br>
+    </div>
+    <div class="data">
+        <%= soil.name %></br>
+    </div>
+    </br>
+    <table class='table_fill'>
+        <thead>
+            <tr>
+                <th class="table_head">#</th>
+                <th class="table_head">Depth (in)</th>
+                <th class="table_head">Soil P(ppm)</th>
+                <th class="table_head">Bulk Density (Mg/m3)</th>
+                <th class="table_head">Sand (%)</th>
+                <th class="table_head">Silt (%)</th>
+                <th class="table_head">Organic Matter (%)</th>
+                <th class="table_head">pH</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% i=1 %>
+            <% @layers.each do |layer| %>
+                <% if (i % 2  == 0) %>
+                    <tr class="table_row_even">
+                        <td class="row number"><%= i %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.depth) unless layer.depth == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.soil_p) unless layer.soil_p == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.bulk_density) unless layer.bulk_density == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.sand) unless layer.sand == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.silt) unless layer.silt == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.organic_matter) unless layer.organic_matter == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.ph) unless layer.ph == nil %></td>
+                    </tr>
+                <% else %>
+                    <tr class="table_row_odd">
+                        <td class="row number"><%= i %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.depth) unless layer.depth == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.soil_p) unless layer.soil_p == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.bulk_density) unless layer.bulk_density == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.sand) unless layer.sand == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.silt) unless layer.silt == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.organic_matter) unless layer.organic_matter == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", layer.ph) unless layer.ph == nil %></td>
+                    </tr>
+                <% end %>
+                <% i = i + 1 %>
+            <% end %>
+        </tbody>
+    </table>
+    </br>
+    </br>
+    <% j = j + 1 %>
+<% end %>
