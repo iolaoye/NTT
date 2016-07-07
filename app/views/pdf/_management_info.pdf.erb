@@ -1,15 +1,14 @@
-<% @bmps = ["A", "B", "C"] %>
-<% @scenarios = ["Baseline", "Baseline", "Third"] %>
-
 <% j=1 %>
 <% @scenarios.each do |scenario| %>
+    <% @bmps = Bmp.where(:scenario_id => scenario.id) %>
+    <% @operations = Operation.where(:scenario_id => scenario.id) %>
     <%= render '/pdf/page_header' %>
     <div class="group_header first_group">Management Information</div>
     <div class="data_titles">
             Scenario <%=j%>:</br>
         </div>
         <div class="data">
-            <%= scenario %></br>
+            <%= scenario.name %></br>
         </div>
         </br>
     <table class='table_fill'>
@@ -17,9 +16,9 @@
             <tr>
                 <th class="table_head">Crop</th>
                 <th class="table_head">Operation</th>
-                <th class="table_head">Y</th>
-                <th class="table_head">M</th>
-                <th class="table_head">D</th>
+                <th class="table_head">Year</th>
+                <th class="table_head">Month</th>
+                <th class="table_head">Day</th>
                 <th class="table_head">Operation Method</th>
                 <th class="table_head">Val One</th>
                 <th class="table_head">Val Two</th>
@@ -28,30 +27,62 @@
         </thead>
         <tbody>
             <% i=1 %>
-            <% @bmps.each do |bmp| %>
+            <% @operations.each do |operation| %>
                 <% if (i % 2  == 0) %>
                     <tr class="table_row_even">
-                        <td class="row text"><%= bmp %></td>
-                        <td class="row text"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row text"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
+                        <td class="row text"><%= Crop.find(operation.crop_id).name %></td>
+                        <td class="row text"><%= Activity.find(operation.activity_id).name %></td>
+                        <td class="row number"><%= operation.year %></td>
+                        <td class="row number"><%= operation.month_id %></td>
+                        <td class="row number"><%= operation.day %></td>
+                        <% case operation.activity_id %>
+                            <% when 1, 3  # planting, tillage %>
+                                <td class="row text"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
+                            <% when 2  # fertilizer %>
+                                <td class="row text"><%= Fertilizer.find(operation.subtype_id).name %></td>
+                            <% when 6  # irrigation %>
+                                <td class="row text"><%= Irrigation.find(operation.type_id).name %></td>
+                            <% when 7  # grazing%>
+                                <td class="row text"><%= Fertilizer.find(operation.type_id).name %></td>
+                            <% else # harvest, kill, stop grazin, burn, liming%>
+                                <td class="row text"><%= :"" %></td>
+                        <% end %>
+                        <td class="row number"><%= sprintf("%.2f", operation.amount) unless operation.amount == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", operation.depth) unless operation.depth == nil%></td>
+                        <td class="row number">
+                            <%= sprintf("%.2f", operation.no3_n) unless operation.no3_n == nil %>, 
+                            <%= sprintf("%.2f", operation.po4_p) unless operation.po4_p == nil %>, 
+                            <%= sprintf("%.2f", operation.org_n) unless operation.org_n == nil %>, 
+                            <%= sprintf("%.2f", operation.org_p) unless operation.org_p == nil %>
+                        </td>
                     </tr>
                 <% else %>
                     <tr class="table_row_odd">
-                        <td class="row text"><%= bmp %></td>
-                        <td class="row text"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row text"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
-                        <td class="row number"><%= bmp %></td>
+                        <td class="row text"><%= Crop.find(operation.crop_id).name %></td>
+                        <td class="row text"><%= Activity.find(operation.activity_id).name %></td>
+                        <td class="row number"><%= operation.year %></td>
+                        <td class="row number"><%= operation.month_id %></td>
+                        <td class="row number"><%= operation.day %></td>
+                        <% case operation.activity_id %>
+                            <% when 1, 3  # planting, tillage %>
+                                <td class="row text"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
+                            <% when 2  # fertilizer %>
+                                <td class="row text"><%= Fertilizer.find(operation.subtype_id).name %></td>
+                            <% when 6  # irrigation %>
+                                <td class="row text"><%= Irrigation.find(operation.type_id).name %></td>
+                            <% when 7  # grazing%>
+                                <td class="row text"><%= Fertilizer.find(operation.type_id).name %></td>
+                            <% else # harvest, kill, stop grazin, burn, liming%>
+                                <td class="row text"><%= :"" %></td>
+                        <% end %>
+                        <td class="row number"><%= sprintf("%.2f", operation.amount) unless operation.amount == nil %></td>
+                        <td class="row number"><%= sprintf("%.2f", operation.depth) unless operation.depth == nil%></td>
+                        <td class="row number">
+                            <%= sprintf("%.2f", operation.no3_n) unless operation.no3_n == nil %>, 
+                            <%= sprintf("%.2f", operation.po4_p) unless operation.po4_p == nil %>, 
+                            <%= sprintf("%.2f", operation.org_n) unless operation.org_n == nil %>, 
+                            <%= sprintf("%.2f", operation.org_p) unless operation.org_p == nil %>
+                        </td>
                     </tr>
                 <% end %>
                 <% i = i + 1 %>
