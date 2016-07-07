@@ -1,0 +1,64 @@
+<% @bmps = ["A", "B", "C"] %>
+<% @scenarios = ["Baseline", "Baseline", "Third"] %>
+
+<% j=1 %>
+<% @scenarios.each do |scenario| %>
+    <%= render '/pdf/page_header' %>
+    <div class="group_header first_group">Management Information</div>
+    <div class="data_titles">
+            Scenario <%=j%>:</br>
+        </div>
+        <div class="data">
+            <%= scenario %></br>
+        </div>
+        </br>
+    <table class='table_fill'>
+        <thead>
+            <tr>
+                <th class="table_head">Crop</th>
+                <th class="table_head">Operation</th>
+                <th class="table_head">Y</th>
+                <th class="table_head">M</th>
+                <th class="table_head">D</th>
+                <th class="table_head">Operation Method</th>
+                <th class="table_head">Val One</th>
+                <th class="table_head">Val Two</th>
+                <th class="table_head">NO3, PO4, OrgN, OrgP</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% i=1 %>
+            <% @bmps.each do |bmp| %>
+                <% if (i % 2  == 0) %>
+                    <tr class="table_row_even">
+                        <td class="row text"><%= bmp %></td>
+                        <td class="row text"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row text"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                    </tr>
+                <% else %>
+                    <tr class="table_row_odd">
+                        <td class="row text"><%= bmp %></td>
+                        <td class="row text"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row text"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                        <td class="row number"><%= bmp %></td>
+                    </tr>
+                <% end %>
+                <% i = i + 1 %>
+            <% end %>
+        </tbody>
+    </table>
+    <%= render '/pdf/bmp_info' %>
+    <div class="page-break"></div>
+    <% j = j + 1 %>
+<% end %>

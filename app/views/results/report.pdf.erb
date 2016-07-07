@@ -1,8 +1,18 @@
 <% user_id = session[:user_id] %>
 <% user = User.find(user_id) %>
+<% t = Time.now %>
 <%= wicked_pdf_stylesheet_link_tag "pdf" %>
+<% @bmps = ["A", "B", "C"] %>
 
-<%= render '/layouts/pdf_header' %>
+
+<%= render '/pdf/report_header' %>
 
 <body>
+    <%= render '/pdf/input_info' %>
+    <%= render '/pdf/location_site_info' %>
+    <%= render '/pdf/weather_info' %>
+    <%= render '/pdf/field_info' %>
+    <%= render '/pdf/soil_info' %>
+    <%= render '/pdf/layers_info' %>
+    <%= render '/pdf/management_info' %>
 </body>

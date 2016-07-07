@@ -1,0 +1,44 @@
+<% @bmps = ["A", "B", "C"] %>
+
+<div class="group_header">Soil Information</div>
+<table class='table_fill'>
+    <thead>
+        <tr class="first_tr">
+            <th class="table_head">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Name
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </th>
+            <th class="table_head">Symbol</th>
+            <th class="table_head">Group</th>
+            <th class="table_head">Albedo</th>
+            <th class="table_head">Slope</th>
+            <th class="table_head">Percentage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% i=1 %>
+        <% @bmps.each do |bmp| %>
+            <% if (i % 2  == 0) %>
+                <tr class="table_row_even">
+                    <td class="row text"><%= bmp %></td>
+                    <td class="row text"><%= bmp %></td>
+                    <td class="row text"><%= bmp %></td>
+                    <td class="row number"><%= bmp %></td>
+                    <td class="row number"><%= bmp %></td>
+                    <td class="row number"><%= bmp %></td>
+                </tr>
+            <% else %>
+                <tr class="table_row_odd">
+                    <td class="row text"><%= bmp %></td>
+                    <td class="row text"><%= bmp %></td>
+                    <td class="row text"><%= bmp %></td>
+                    <td class="row number"><%= bmp %></td>
+                    <td class="row number"><%= bmp %></td>
+                    <td class="row number"><%= bmp %></td>
+                </tr>
+            <% end %>
+            <% i = i + 1 %>
+        <% end %>
+    </tbody>
+</table>
+<div class="page-break"></div>

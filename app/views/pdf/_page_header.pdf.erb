@@ -1,0 +1,12 @@
+<% user_id = session[:user_id] %>
+<% user = User.find(user_id) %>
+
+<div class="page_header inline">
+    <h3 class="margin_none">Nutrient Tracking Tool - Report</h3>
+</div>
+<div class="right">
+    <strong>User:</strong> <%= user.name %></br>
+</div>
+<div>
+    <hr class="line_break" color="dodgerblue">
+</div>
