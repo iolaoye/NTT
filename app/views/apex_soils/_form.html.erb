@@ -1,4 +1,4 @@
-<%= form_for(@soil) do |f| %>
+<%= form_for @soil, url: apex_soil_path do |f| %>
   <% if @soil.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@soil.errors.count, "error") %> prohibited this soil from being saved:</h2>
@@ -89,6 +89,6 @@
     </div></td>
   </tr>
 </table>
-<%= button_to "Update", field_apex_soils_path(session[:field_id]) %>
+<%= f.submit t('submit.update') %>
 
 <% end %>
