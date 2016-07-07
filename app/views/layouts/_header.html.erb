@@ -41,6 +41,7 @@
 			    <li><%=">>"%><%=project_name%></li>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+				<li><%=">>"%><%= t('menu.apex_file') %></li>
 				<li><%=">>"%></li>
 				<% case request.original_url %>
 					<% when /apex_control/ %>
@@ -120,7 +121,7 @@
 <% else %>
 	<div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
-    			   <li><%= link_to t('menu.signin'), logout_path %></li>
+    			   <li><%= link_to t('menu.signin'), login_path %></li>
 	    </ul>      
     </div>
 <% end %>
