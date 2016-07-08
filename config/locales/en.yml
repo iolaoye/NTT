@@ -502,6 +502,94 @@ en:
     understanding: Understanding NTT
     understanding1: APEX
     understanding2: NTT Disclaimer
+  pdf:
+    input_info: Input Information Report
+    name: Name
+    description: Description
+    date_created: Date Created
+    report_created: Report Created
+    location_info: Location and Additional Site Information
+    state: State
+    county: County
+    weather_info: Weather Information
+    weather_option: Weather Option
+    station_name: Station Name
+    weather_period: Weather Period
+    simulation_period: Simulation Period
+    field_info: Field Information
+    area: Area
+    channel_erodibility: Channel Erodibility
+    average_slope: Average Slope
+    soil_info: Soil Information
+    symbol: Symbol
+    group: Group
+    albedo: Albedo
+    slope: Slope
+    percentage: Percentage
+    layers_info: Layers Information
+    soil_name: Soil Name
+    depth: Depth
+    soil: Soil
+    bulk_density: Bulk Density
+    sand: Sand
+    silt: Silt
+    organic_matter: Organic Matter
+    ph: pH
+    management_info: Management Information
+    scenario: Scenario
+    crop: Crop
+    operation: Operation
+    year: Year
+    month: Month
+    day: Day
+    operation_method: Operation Method
+    val_one: Val One
+    val_two: Val Two
+    bmp_info: Best Management Practices (BMPs) Information
+    autoirrigation: Autoirrigation
+    irrigation: Irrigation
+    water_stress_factor: Water stress factor
+    irrigation_efficiency: Irrigation efficiency
+    max_single_application: Maximum single application
+    safety_factor: Safety factor
+    reservoir_area: Reservoir area
+    irrigation_frequency: Irrigation frequency
+    autofertigation: Autofertigation
+    tile_drain: Tile Drain
+    ppdi: Pads and Pipes - No Ditch Improvement
+    ppds: Pads and Pipes - Two-Stage Ditch System
+    ppde: Pads and Pipes - Ditch Enlargement and Reservoir System
+    ppti: Pads and Pipes - Tailwater Irrigation
+    width: Width
+    sides: Sides
+    wetlands: Wetlands
+    ponds: Ponds
+    stream_fencing: Stream Fencing
+    animal: Animal
+    number_of_animals: Number of animals
+    hours: Hours
+    dry_manure: Dry manure
+    streambank_stabilization: Streambank Stabilization
+    riparian_forest: Riparian Forest Buffer
+    grass_field_portion: Grass field portion
+    slope_ratio: Slope ratio
+    filter_strip: Filter Strip
+    waterway: Waterway (Grassed Buffer)
+    contour_buffer: Contour Buffer
+    land_leveling: Land Leveling
+    crop_width: Crop width
+    slope_reduction: Slope reduction
+    terrace_system: Terrace System
+    climate: Temperature and Precipitation Changes
+    climage_change: Changes to the climate files have been made
+    asphalt_concrete: Asphalt or Concrete
+    grass_cover: Grass Cover
+    slope_adjustment: Slope Adjustment
+    shading: Shading
+    none_required: This BMP does not require any input
+    inches: inches
+    acres: acres
+    days: days
   sysreq:
     header: System Requirements
     minreq:

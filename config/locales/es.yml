@@ -498,6 +498,94 @@
     understanding: La Comprensión de NTT
     understanding1: APEX
     understanding2: Descargo de responsabilidad del NTT
+  pdf:
+    input_info: Reporte de Información Entrada
+    name: Nombre
+    description: Descripción
+    date_created: Fecha de Creacion
+    report_created: Fecha de Creacion del Informe
+    location_info: Ubicación e Información Adicional del Sitio
+    state: Estdo
+    county: Condado
+    weather_info: Información del Clima
+    weather_option: Opcion de Clima
+    station_name: Nombre de estación
+    weather_period: Período de Clima
+    simulation_period: Período de Simulación
+    field_info: Información del campo
+    area: Área
+    channel_erodibility: Erosionabilidad del Canal
+    average_slope: Promedio de Inclinación
+    soil_info: Información de la Tierra
+    symbol: Símbolo
+    group: Grupo
+    albedo: Albedo
+    slope: Inclinación
+    percentage: Porcentaje
+    layers_info: Información de Capas
+    soil_name: Nombre de la Tierra
+    depth: Profundidad
+    soil: Tierra
+    bulk_density: Densidad Aparente
+    sand: Arena
+    silt: Limo
+    organic_matter: Materia Orgánica
+    ph: pH
+    management_info: Información de Administración
+    scenario: Escenario
+    crop: Cultivo
+    operation: Operation
+    year: Year
+    month: Month
+    day: Day
+    operation_method: Método de Operación
+    val_one: Val One
+    val_two: Val Two
+    bmp_info: Informatción de las Mejores Prácticas de Administración (BMPs)
+    autoirrigation: Autoirrigation
+    irrigation: Irrigación
+    water_stress_factor: Factor de estrés hídrico
+    irrigation_efficiency: Eficiencia del riego
+    max_single_application: Máxima aplicación única
+    safety_factor: Factor de seguridad
+    reservoir_area: Área del embalse
+    irrigation_frequency: La frecuencia de riego
+    autofertigation: Autofertigation
+    tile_drain: Tile drain
+    ppdi: Pads and Pipes - No Ditch Improvement
+    ppds: Pads and Pipes - Two-Stage Ditch System
+    ppde: Pads and Pipes - Ditch Enlargement and Reservoir System
+    ppti: Pads and Pipes - Tailwater Irrigation
+    width: Width
+    sides: Sides
+    wetlands: Humedales
+    ponds: Estanques
+    stream_fencing: Stream Fencing
+    animal: Animal
+    number_of_animals: Número de animales
+    hours: Horas
+    dry_manure: Estiércol seco
+    streambank_stabilization: Streambank Stabilization
+    riparian_forest: Riparian Forest Buffer
+    grass_field_portion: Grass field portion
+    slope_ratio: Slope ratio
+    filter_strip: Filter Strip
+    waterway: Waterway (Grassed Buffer)
+    contour_buffer: Contour Buffer
+    land_leveling: Land Leveling
+    crop_width: Crop width
+    slope_reduction: Slope reduction
+    terrace_system: Terrace System
+    climate: Cambios de Temperatura y Precipitación
+    climage_change: Se han hecho cambios en los archivos del clima
+    asphalt_concrete: Asfalto o Cemento
+    grass_cover: Grass Cover
+    slope_adjustment: Slope Adjustment
+    shading: Sombra
+    none_required: Este BMP no requiere ninguna entrada
+    inches: pulgadas
+    acres: acres
+    days: días
   sysreq:
     header: Requisitos del Sistema
     minreq:
