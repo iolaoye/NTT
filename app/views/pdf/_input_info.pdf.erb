@@ -1,12 +1,12 @@
 <% t = Time.now %>
 
-<div class="group_header first_group">Input Information Report</div>
+<div class="group_header first_group"><%=t('pdf.input_info')%></div>
     <div class="data_titles">
-        Name:</br>
-        Description:</br>
-        Date Created:</br>
+        <%=t('pdf.name')%>:</br>
+        <%=t('pdf.description')%>:</br>
+        <%=t('pdf.date_created')%>:</br>
         </br>
-        Report Created:</br>
+        <%=t('pdf.report_created')%>:</br>
     </div>
     <div class="data">
         <%= @project.name %></br>
