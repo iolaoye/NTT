@@ -1,0 +1,253 @@
+<div class="group_header">Best Management Practices (BMPs) Information</div>
+<% j=1 %>
+<% @bmps.each do |bmp| %>
+    <% case bmp.bmpsublist_id %>
+        <% when 1 %>
+            <div class="bmp_header">Autoirrigation</div>
+            <div class="data_titles">
+                Irrigation:</br>
+                Water stress factor:</br>
+                Irrigation efficiency:</br>
+                Maximum Single Application:</br>
+                <% if (bmp.irrigation_id == 7) %>
+                    Safety factor:</br>
+                <% elsif (bmp.irrigation_id == 8) %>
+                    Reservoir area:</br>
+                <% end %>
+                Irrigation frequency:</br>
+            </div>
+            <div class="data">
+                <%= Irrigation.find(bmp.irrigation_id).name %></br>
+                <%= bmp.water_stress_factor %></br>
+                <%= bmp.irrigation_efficiency %></br>
+                <%= bmp.maximum_single_application %> inches</br>
+                <% if (bmp.irrigation_id == 7) %>
+                    <%= bmp.safety_factor %></br>
+                <% elsif (bmp.irrigation_id == 8) %>
+                    <%= bmp.area %> acres</br>
+                <% end %>
+                <%= bmp.days %> days</br>
+            </div>
+        <% when 2 %>
+            <div class="bmp_header">Autofertigation</div>
+            <div class="data_titles">
+                Irrigation:</br>
+                Water stress factor:</br>
+                Irrigation efficiency:</br>
+                Maximum Single Application:</br>
+                <% if (bmp.irrigation_id == 7) %>
+                    Safety factor:</br>
+                <% elsif (bmp.irrigation_id == 8) %>
+                    Reservoir area:</br>
+                <% end %>
+                Irrigation frequency:</br>
+            </div>
+            <div class="data">
+                <%= Irrigation.find(bmp.irrigation_id).name %></br>
+                <%= bmp.water_stress_factor %></br>
+                <%= bmp.irrigation_efficiency %></br>
+                <%= bmp.maximum_single_application %> inches</br>
+                <% if (bmp.irrigation_id == 7) %>
+                    <%= bmp.safety_factor %></br>
+                <% elsif (bmp.irrigation_id == 8) %>
+                    <%= bmp.area %> acres</br>
+                <% end %>
+                <%= bmp.days %> days</br>
+            </div>
+        <% when 3 %>
+            <div class="bmp_header">Tile Drain</div>
+            <div class="data_titles">
+                Depth:</br>
+            </div>
+            <div class="data">
+                <%= bmp.depth %> ft</br>
+            </div>
+        <% when 4 %>
+            <div class="bmp_header">Pads and Pipes - No Ditch Improvement</div>
+            <div class="data_titles">
+                Width:</br>
+                Sides:</br>
+            </div>
+            <div class="data">
+                <%= bmp.depth %> ft</br>
+                <%= bmp.sides %></br>
+            </div>
+        <% when 5 %>
+            <div class="bmp_header">Pads and Pipes - Two-Stage Ditch System</div>
+            <div class="data_titles">
+                Width:</br>
+                Sides:</br>
+            </div>
+            <div class="data">
+                <%= bmp.depth %> ft</br>
+                <%= bmp.sides %></br>
+            </div>
+        <% when 6 %>
+            <div class="bmp_header">Pads and Pipes - Ditch Enlargement and Reservoir System</div>
+            <div class="data_titles">
+                Reservoir area:</br>
+                Width:</br>
+                Sides:</br>
+            </div>
+            <div class="data">
+                <%= bmp.area %> acres</br>
+                <%= bmp.depth %> ft</br>
+                <%= bmp.sides %></br>
+            </div>
+        <% when 7 %>
+            <div class="bmp_header">Pads and Pipes - Tailwater Irrigation</div>
+            <div class="data_titles">
+                Reservoir area:</br>
+                Width:</br>
+                Sides:</br>
+            </div>
+            <div class="data">
+                <%= bmp.area %> acres</br>
+                <%= bmp.depth %> ft</br>
+                <%= bmp.sides %></br>
+            </div>
+        <% when 8 %>
+            <div class="bmp_header">Wetlands</div>
+            <div class="data_titles">
+                Reservoir area:</br>
+            </div>
+            <div class="data">
+                <%= bmp.area %> acres</br>
+            </div>
+        <% when 9 %>
+            <div class="bmp_header">Ponds</div>
+            <div class="data_titles">
+                Irrigation efficiency:</br>
+            </div>
+            <div class="data">
+                <%= bmp.irrigation_efficiency %></br>
+            </div>
+        <% when 10 %>
+            <div class="bmp_header">Stream Fencing</div>
+            <div class="data_titles">
+                Animal:</br>
+                Number of animals:</br>
+                Irrigation frequency:</br>
+                Hours:</br>
+                Dry manure:</br>
+                No3 n:</br>
+                Po4 p:</br>
+                Org n:</br>
+                Org p:</br>
+            </div>
+            <div class="data">
+                <%= Fertilizer.find(bmp.animal_id).name %></br>
+                <%= bmp.number_of_animals %></br>
+                <%= bmp.days %> days</br>
+                <%= bmp.hours %></br>
+                <%= bmp.dry_manure %> lbs/day</br>
+                <%= bmp.no3_n %></br>
+                <%= bmp.po4_p %></br>
+                <%= bmp.org_n %></br>
+                <%= bmp.org_p %></br>
+            </div>
+        <% when 11 %>
+            <div class="bmp_header">Streambank Stabalization</div>
+            <div class="data no_content">
+                This BMP does not require any input</br>
+            </div>
+        <% when 12 %>
+            <div class="bmp_header">Riparian Forest Buffer</div>
+            <div class="data_titles">
+                Reservoir area:</br>
+                Width:</br>
+                Grass field portion:</br>
+                Slope ratio:</br>
+            </div>
+            <div class="data">
+                <%= bmp.area %> acres</br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.grass_field_portion %></br>
+                <%= bmp.buffer_slope_upland %></br>
+            </div>
+        <% when 13 %>
+            <div class="bmp_header">Filter Strip</div>
+            <div class="data_titles">
+                Crop:</br>
+                Reservoir area:</br>
+                Width:</br>
+                Slope ratio:</br>
+            </div>
+            <div class="data">
+                <%= Crop.find(bmp.crop_id).name %></br>
+                <%= bmp.area %> acres</br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.buffer_slope_upland %></br>
+            </div>
+        <% when 14 %>
+            <div class="bmp_header">Waterway (Grassed Buffer)</div>
+            <div class="data_titles">
+                Crop:</br>
+                Width:</br>
+            </div>
+            <div class="data">
+                <%= Crop.find(bmp.crop_id).name %></br>
+                <%= bmp.width %> ft</br>
+            </div>
+        <% when 15 %>
+            <div class="bmp_header">Contour Buffer</div>
+            <div class="data_titles">
+                Crop:</br>
+                Width:</br>
+                Crop width:</br>
+            </div>
+            <div class="data">
+                <%= Crop.find(bmp.crop_id).name %></br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.crop_width %> ft</br>
+            </div>
+        <% when 16 %>
+            <div class="bmp_header">Contour Buffer</div>
+            <div class="data_titles">
+                Slope reduction:</br>
+            </div>
+            <div class="data">
+                <%= bmp.slope_reduction %> %</br>
+            </div>
+        <% when 17 %>
+            <div class="bmp_header">Terrace System</div>
+            <div class="data no_content">
+                This BMP does not require any input</br>
+            </div>
+        <% when 19 %>
+            <div class="bmp_header">Termperature and Precipitation Changes</div>
+            <div class="data no_content">
+                Changes to the climate files have been made</br>
+            </div>
+        <% when 20 %>
+            <div class="bmp_header">Asphalt or Concrete</div>
+            <div class="data no_content">
+                This BMP does not require any input</br>
+            </div>
+        <% when 21 %>
+            <div class="bmp_header">Grass Cover</div>
+            <div class="data no_content">
+                This BMP does not require any input</br>
+            </div>
+        <% when 22 %>
+            <div class="bmp_header">Slope Adjustment</div>
+            <div class="data no_content">
+                This BMP does not require any input</br>
+            </div>
+        <% when 23 %>
+            <div class="bmp_header">Contour Buffer</div>
+            <div class="data_titles">
+                Crop:</br>
+                Reservoir area:</br>
+                Width:</br>
+                Crop width:</br>
+            </div>
+            <div class="data">
+                <%= Crop.find(bmp.crop_id).name %></br>
+                <%= bmp.area %> acres</br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.buffer_slope_upland %></br>
+            </div>
+    <% end %>
+    <% j = j + 1 %>
+<% end %>

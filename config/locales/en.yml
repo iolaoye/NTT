@@ -325,6 +325,7 @@ en:
     create_layer: Create Layer
     ph: PH
     select_soil: Select Soil
+    layer_number: Layer Number
   scenario:
     scenario_name: Scenario Name
     scenario: Scenario
@@ -426,6 +427,7 @@ en:
   users:
     confirmation: Password confirmation
     company: Company
+    user: User
   subarea:
     subarea_type: Subarea Type
     subarea_number: Subarea Number

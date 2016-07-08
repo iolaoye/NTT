@@ -1,8 +1,20 @@
-<% user_id = session[:user_id] %>
-<% user = User.find(user_id) %>
+<% @user_id = session[:user_id] %>
+<% @user = User.find(@user_id) %>
+<% @project = Project.find(session[:project_id]) %>
+<% @scenarios = Scenario.where(:field_id => session[:field_id]) %>
+<% @location = Location.find(session[:location_id]) %>
+<% t = Time.now %>
 <%= wicked_pdf_stylesheet_link_tag "pdf" %>
-
-<%= render '/layouts/pdf_header' %>
-
+<head>
+    <%= render '/pdf/report_header' %>
+</head>
 <body>
+    <%= render '/pdf/input_info' %>
+    <%= render '/pdf/location_site_info' %>
+    <%= render '/pdf/weather_info' %>
+    <%= render '/pdf/field_info' %>
+    <%= render '/pdf/soil_info' %>
+    <%= render '/pdf/layers_info' %>
+    <%= render '/pdf/management_info' %>
+    <%= render '/pdf/results' %>
 </body>
