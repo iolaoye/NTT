@@ -13,75 +13,75 @@
 
   <div class="field">
     <%= f.label :Z %>
-    <%= f.number_field :depth, :class => "numbers", :value => (number_with_precision(f.object.depth, :precision => 2)) %>
+    <%= f.number_field :depth, :class => 'numbers', :step => '0.01' %>
   </div>
   <div class="field">
     <%= f.label :BD %>
-    <%= f.number_field :bulk_density, :class => "numbers" %>
+    <%= f.number_field :bulk_density, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :UW %>
-    <%= f.number_field :uw, :class => "numbers" %>
+    <%= f.number_field :uw, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :FC %>
-    <%= f.number_field :fc, :class => "numbers" %>
+    <%= f.number_field :fc, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :SAN %>
-    <%= f.number_field :sand, :class => "numbers" %>
+    <%= f.number_field :sand, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :SIL %>
-    <%= f.number_field :silt, :class => "numbers" %>
+    <%= f.number_field :silt, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :WN %>
-    <%= f.number_field :wn, :class => "numbers" %>
+    <%= f.number_field :wn, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :ph, t('soil.ph') %>
-    <%= f.number_field :ph, :class => "numbers" %>
+    <%= f.number_field :ph, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :SMB %>
-    <%= f.number_field :smb, :class => "numbers" %>
+    <%= f.number_field :smb, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :CAC %>
-    <%= f.number_field :cac, :class => "numbers" %>
+    <%= f.number_field :cac, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :CEC %>
-    <%= f.number_field :cec, :class => "numbers" %>
+    <%= f.number_field :cec, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :Rok %>
-    <%= f.number_field :rok, :class => "numbers" %>
+    <%= f.number_field :rok, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :CNDS %>
-    <%= f.number_field :cnds, :class => "numbers" %>
+    <%= f.number_field :cnds, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :SSF %>
-    <%= f.number_field :soil_p, :class => "numbers" %>
+    <%= f.number_field :soil_p, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :RSD %>
-    <%= f.number_field :rsd, :class => "numbers" %>
+    <%= f.number_field :rsd, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :BDD %>
-    <%= f.number_field :bdd, :class => "numbers" %>
+    <%= f.number_field :bdd, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :PSP %>
-    <%= f.number_field :psp, :class => "numbers" %>
+    <%= f.number_field :psp, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :Satc %>
-    <%= f.number_field :satc, :class => "numbers" %>
+    <%= f.number_field :satc, :class => "numbers", :step => 'any' %>
   </div>
   
   <div class="actions">

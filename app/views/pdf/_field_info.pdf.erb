@@ -1,0 +1,15 @@
+<% @field = Field.find(session[:field_id]) %>
+
+<div class="group_header">Field Information</div>
+    <div class="data_titles">
+        Name:</br>
+        Area:</br>
+        Channel Erodiblity:</br>
+        Average Slope:</br>
+    </div>
+    <div class="data">
+        <%= @field.field_name %></br>
+        <%= @field.field_area %></br>
+        This is a space filler<%=  %></br>
+        <%= @field.field_average_slope %></br>
+    </div>

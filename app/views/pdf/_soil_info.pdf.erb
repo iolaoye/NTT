@@ -1,0 +1,44 @@
+<% @soils = Soil.where(:field_id => @field.id) %>
+
+<div class="group_header">Soil Information</div>
+<table class='table_fill'>
+    <thead>
+        <tr class="first_tr">
+            <th class="table_head">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Name
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </th>
+            <th class="table_head">Symbol</th>
+            <th class="table_head">Group</th>
+            <th class="table_head">Albedo</th>
+            <th class="table_head">Slope</th>
+            <th class="table_head">Percentage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% i=1 %>
+        <% @soils.each do |soil| %>
+            <% if (i % 2  == 0) %>
+                <tr class="table_row_even">
+                    <td class="row text"><%= soil.name %></td>
+                    <td class="row text"><%= soil.symbol %></td>
+                    <td class="row text"><%= soil.group %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.albedo) unless soil.albedo == nil %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.slope) unless soil.slope == nil %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.percentage) unless soil.percentage == nil %></td>
+                </tr>
+            <% else %>
+                <tr class="table_row_odd">
+                    <td class="row text"><%= soil.name %></td>
+                    <td class="row text"><%= soil.symbol %></td>
+                    <td class="row text"><%= soil.group %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.albedo) unless soil.albedo == nil %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.slope) unless soil.slope == nil %></td>
+                    <td class="row number"><%= sprintf("%.2f", soil.percentage) unless soil.percentage == nil %></td>
+                </tr>
+            <% end %>
+            <% i = i + 1 %>
+        <% end %>
+    </tbody>
+</table>
+<div class="page-break"></div>
