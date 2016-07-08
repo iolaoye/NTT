@@ -5,12 +5,9 @@
     <td><%= label :bmp_id, t('scenario.scenario') %></td>
   </tr>
   <tr>
-    <td>
-      <%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil')}, {:required => true} %>
-    </td>    
-    <td>
-      <%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario')}, {:required => true} %>
-    </td>
+    <td><%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil')}, {:required => true} %></td>    
+    <td><%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario')}, {:required => true} %></td>
+	<td><%= button_to t('operation.load_operation'), soil_operations_path%></td>
   </tr>
 </table>
 <% end %>

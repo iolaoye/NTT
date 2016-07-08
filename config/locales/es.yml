@@ -352,6 +352,7 @@
     bmp: MPG
     irrigation: Irrigación
     plant_population: Población de Planta
+    load_operation: Cargar Operación
   bmp:
     bmp_group: Grupo de MPG
     select_bmp:  Seleccione Grupo de MPG   
@@ -663,3 +664,36 @@
     textarea:
         header: Área de texto
         body: 'Haga clic en un área de texto para introducir una o más líneas de información como se muestra en este ejemplo:'
+  projpage:
+    header: Iniciar un Proyecto
+    statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'
+    navredir: ''
+    initial:
+        header: Para crear un nuevo Proyecto
+        statement: "Hay <b>tres opciones iniciales</b> para empezar un nuevo proyecto:"
+        item1: 'Seleccione la opción <b>Crear Proyecto Nuevo</b> para comenzar un proyecto desde cero.'
+        item2: 'Seleccione la opción <b>Abrir un Proyecto Salvado</b> para comenzar un proyecto <b>previamente salvado</b>.'
+        item3: 'Seleccione la opción <b>Abrir un Proyecto Ejemplo</b> para comenzar un proyecto de <b>ejemplo predefinido</b>.'
+    create:
+        header: Crear nuevo proyecto opción
+        body1: 'Seleccionando el botón "Crear Proyecto Nuevo" solicita al usuario el nombre de proyecto y la información de descripción.'
+        body2: 'Después de haber introducido la información, haga clic a  <b>Salvar y Continuar</b> para guardar la información y continuar.'
+    open:
+        header: Abrir proyecto salvado
+        body1: 'También se puede utilizar <b>Abrir un Proyecto Salvado</b> para abrir un archivo de NTT previamente salvado en el computador del usuario.'
+        body2: 'Después de haber abierto el proyecto previamente salvado, haga clic a <b>Salvar y Continuar</b>  para salvar la información y continuar.'
+    example:
+        header: Abrir un proyecto de ejemplo
+        body1: 'También se puede utilizar <b>Abrir un Proyecto Ejemplo</b> y luego seleccionar entre las opciones para cargar un proyecto de ejemplo.'
+        body2: 'Después de haber introducido la información, haga clic a <b>Salvar y Continuar</b> para salvar la información y continuar.'
+    save:
+        header: Save Active Project
+        body: 'También se puede utilizar <b>Salvar Proyecto Activo...</b> botón para salvar el proyecto actual con el que el usuario trabajando.' 
+        note: '<b>Importante:</b> si el usuario cargo sus propios archivos de clima, es importante cargar estos y simular de nuevo, estos archivos no son salvado con el proyecto original cuando este proyecto es salvado.'
+    close:
+        header: Close Active Project
+        body1: 'También se puede utilizar <b>Cerrar Proyecto Activo</b> para cerrar el proyecto actual que con el que el usuario está trabajando.'
+        body2: ''
+        body3: 'El cerrar un Proyecto activo borrará toda la información de ese Proyecto. Debido a esto, si usted necesitara usar el pryecto mas tarde, eis extremadamente importante que salve le Proyecto antes de cerrarlo. Presionando el botón <b>Cerrar Proyecto Activo</b> , la información será borrada (y perdida si no se salvo previamente). Si usted no ha salvado el Proyecto y lo quiere hacer, presione cancelar y siga las instrucciones para “Salvar Proyecto Activo” antes mencionadas.'
+    
+
