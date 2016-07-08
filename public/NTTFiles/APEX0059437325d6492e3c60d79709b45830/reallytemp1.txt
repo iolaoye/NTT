@@ -1,0 +1,4 @@
+                                                         0                          Crop Field 1
+                                                         0                          Crop Field 2
+AllSolids                                                8869.5                     Crop Field 1
+AllSolids                                                8869.5                     Crop Field 2

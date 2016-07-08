@@ -1,0 +1,13 @@
+ManureRateCode,Manure
+LatLongFile,E:\NTT_FEM\Long_Lat.txt
+FileDir,E:\NTT_FEM
+FEMPath,E:\NTT_FEM
+FEMFilesPath,E:\Borrar\NTTSLVer102013\APEXFiles\APEX1\
+MMSDir,E:\NTT_FEM
+FEMProgPath,E:\NTT_FEM
+OperationsLibraryFile,E:\Borrar\NTTSLVer102013\APEXFiles\APEX1\Local.mdb
+FEMOutputFile,E:\Borrar\NTTSLVer102013\APEXFiles\APEX1\NTTFEMOut.mdb
+TimeHorizon,0
+NTTPath,E:\Borrar\NTTSLVer102013\APEXFiles\APEX1
+COUNTY,
+Scenario,

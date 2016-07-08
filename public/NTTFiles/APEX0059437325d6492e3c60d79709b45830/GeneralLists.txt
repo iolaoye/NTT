@@ -1,0 +1,177 @@
+Begin Feeds List 
+animalp
+Barley
+Beetplp
+Bicarb
+brewgrn
+Caco3
+Calsulf
+Copsulf
+Corn
+Corngrn
+CornSilage1
+Cothull
+Cotmeal
+Cottnsd
+Dicalph
+Drydist
+Gluten
+Glutmel
+Hominy
+Iodate
+Limestn
+Mgoxide
+Mnoxide
+Molases
+Oatgras
+Oats
+Pclorid
+Peanut
+Phytase
+Psulph
+Rye
+Salt
+Sorggrn
+Sorghum
+Soyhull
+Soybean
+Soymeal
+Sulfate
+Sulfur1
+Tallow
+Trace
+Vitsup
+Vitsupa
+Vitsupd
+Vitsupe
+Wheat
+WhMidds
+End Feeds List 
+Begin Feed Nutrients List 
+Adf
+Calcium
+chlorin
+cobalt
+copper
+Dry Matter
+Energy
+Ether
+Fiber
+Iodine
+Iron
+Magnesium
+Manganese
+Ndf
+Phosphorus
+Potassium
+Protein
+Selenium
+Sodium
+Sulfur
+Vitamin A
+Vitamin D
+Vitamin E
+Zinc
+End Feed Nutrients List 
+Begin Livestock Products List 
+Milk
+Growing
+Heifer
+Steer
+End Livestock Products List 
+Begin Land Uses List 
+Solid manure
+Liquid manure
+No manure
+End Land Uses List 
+Begin Land Areas List 
+Crop Field 1
+Crop Field 2
+End Land Areas List 
+Begin Livestock Systems List 
+Dairy
+Beef
+End Livestock Systems List 
+Begin Livestock Types List 
+Finishing Hog
+Growing
+Heifer
+Steer
+Calf
+Bull
+Feeder calf
+End Livestock Types List 
+Begin Manure Nutrients List 
+Total Solids
+Nitrogen
+Phosphorus
+Orthophosphate
+Potassium
+Sodium
+End Manure Nutrients List 
+Begin Operations List 
+Plant
+Field Cultivate
+Sprig
+Combine
+Bale
+End Operations List 
+Begin Livestock Operations List 
+Feeding
+End Livestock Operations List 
+Begin Equipment List 
+	
+End Equipment List 
+Begin Structures List 
+End Structures List 
+Begin Feed Categories List 
+Concentrate
+Forage
+Grain
+Supplement
+End Feed Categories List 
+Begin Seeds List 
+Seeds: Corn
+Seeds: Soybeans
+Seeds: Alfalfa
+End Seeds List 
+Begin Herbicides List 
+Herbicide: Atrazine
+Herbicide: Glyphosate
+End Herbicides List 
+Begin Insecticides List 
+Insecticide: Carbofuran
+Insecticide: Fonofos
+End Insecticides List 
+Begin Fertilizers List 
+Fertilizer: Nitrogen
+Fertilizer: Phosphorus
+Fertilizer: Potassium
+Fert1001
+Fert1002
+Fert1003
+Fertilizer: Anhydrous ammonia
+Fertilizer: Nitrogen solution 32%
+Fertilizer: Lime
+End Fertilizers List 
+Begin Cropping Systems List 
+Corn-soybeans
+Continuous corn
+Coastal wheat
+End Cropping Systems List 
+Begin Crops List 
+Corn
+Soybeans
+Coastal
+Alfalfa
+Wheat
+Sorghum
+Barley
+End Crops List 
+Begin Manure Handling Options List 
+Scrape
+Store
+Flush
+Apply
+End Manure Handling Options List 
+

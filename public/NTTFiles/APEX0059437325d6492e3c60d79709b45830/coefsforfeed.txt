@@ -1,0 +1,16 @@
+ NVAR          51
+ M          24
+ livesysnum           1
+ opernum          10
+ liveoper           0
+ livetype           2
+ K           2
+ N           2
+ M1          87
+ M2          13
+ numtypes           2
+ sysnum           4
+ feedtypes           4
+ year_counter           1
+ Waste1  0.000000000000000E+000
+ Waste2  0.000000000000000E+000

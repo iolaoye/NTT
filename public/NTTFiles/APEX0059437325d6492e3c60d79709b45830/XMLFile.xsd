@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Project">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StartInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Status" />
+              <xs:element name="dates" />
+              <xs:element name="Description" />
+              <xs:element name="projectName" />
+              <xs:element name="StateAbrev" />
+              <xs:element name="StateName" />
+              <xs:element name="CountyCode" />
+              <xs:element name="CountyName" />
+              <xs:element name="ssaCode" />
+              <xs:element name="StationCode" />
+              <xs:element name="StationName" />
+              <xs:element name="StationWay" />
+              <xs:element name="StationYears" />
+              <xs:element name="StationInitialYear" />
+              <xs:element name="StationFinalYear" />
+              <xs:element name="YearsRotation" />
+              <xs:element name="CurrentWeatherPath" />
+              <xs:element name="tMax" />
+              <xs:element name="tMin" />
+              <xs:element name="wp1aLat" />
+              <xs:element name="windName" />
+              <xs:element name="wp1Name" />
+              <xs:element name="windCode" />
+              <xs:element name="wp1Code" />
+              <xs:element name="Latitude" />
+              <xs:element name="Longitude" />
+              <xs:element name="Versions" />
+              <xs:element name="key" type="xs:integer" />
+              <xs:element name="coordinates" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FarmInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Coordinates" />
+              <xs:element name="Name" />
+              <xs:element name="centroid" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ControlValues">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CtrlValue" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ParmValues">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ParmValue"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FieldInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Number" />
+        <xs:element name="Name" />
+        <xs:element name="Area" />
+        <xs:element name="Coordinates" />
+        <xs:element name="rchc" />
+        <xs:element name="rchk" />
+        <xs:element name="rchcVal" />
+        <xs:element name="rchkVal" />
+        <xs:element name="SoilInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Field" />
+              <xs:element name="Name" />
+              <xs:element name="Area" />
+              <xs:element name="Albedo" />
+              <xs:element name="Slope" />
+              <xs:element name="SSACode" />
+              <xs:element name="SSAName" />
+              <xs:element name="Key" />
+              <xs:element name="Symbol" />
+              <xs:element name="Group"  />
+              <xs:element name="Component" />
+              <xs:element name="tsla" />
+              <xs:element name="xids" />
+              <xs:element name="LayerInfo">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="LayerNumber" />
+                    <xs:element name="Depth" />
+                    <xs:element name="SoilP" />
+                    <xs:element name="BD" />
+                    <xs:element name="Sand" />
+                    <xs:element name="Silt" />
+                    <xs:element name="OM" />
+                    <xs:element name="PH" />
+                    <xs:element name="SatC" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="SoilScenarioInfo">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Name" />
+                    <xs:element name="Results">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="area" />
+                          <xs:element name="Crops">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="crop" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="FIFertilizer" />
+                          <xs:element name="i" />
+                          <xs:element name="Soil">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="co2" />
+                                <xs:element name="flow" />
+                                <xs:element name="flowCI" />
+                                <xs:element name="flowSD" />
+                                <xs:element name="irrigation" />
+                                <xs:element name="LeachedN" />
+                                <xs:element name="LeachedP" />
+                                <xs:element name="no" />
+                                <xs:element name="NO" />
+                                <xs:element name="NOCI" />
+                                <xs:element name="NOSD" />
+                                <xs:element name="OrgN" />
+                                <xs:element name="OrgNCI" />
+                                <xs:element name="OrgNSD" />
+                                <xs:element name="OrgP" />
+                                <xs:element name="OrgPCI" />
+                                <xs:element name="OrgPSD" />
+                                <xs:element name="PO" />
+                                <xs:element name="POCI" />
+                                <xs:element name="POSD" />
+                                <xs:element name="Sediment" />
+                                <xs:element name="SedimentCI" />
+                                <xs:element name="SedimentSD" />
+                                <xs:element name="tileDrainFlow" />
+                                <xs:element name="tileDrainN" />
+                                <xs:element name="tileDrainP" />
+                                <xs:element name="volatizationN" />
+                                <xs:element name="Yields">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Yield"  />
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="YieldsSD">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="YieldSD"  />
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="YieldsCI">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="YieldCI" />
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="CountCrops">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="CountCrop" />
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ScenarioInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" />
+              <xs:element name="Operations">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Scenario" />
+                    <xs:element name="EventId" />
+                    <xs:element name="ApexCrop" />
+                    <xs:element name="ApexCropName" />
+                    <xs:element name="ApexOp" />
+                    <xs:element name="ApexOpAbbreviation" />
+                    <xs:element name="ApexOpName" />
+                    <xs:element name="Year" />
+                    <xs:element name="Month" />
+                    <xs:element name="Day" />
+                    <xs:element name="ApexTillCode" />
+                    <xs:element name="ApexTillName" />
+                    <xs:element name="var" />
+                    <xs:element name="ApexFert" />
+                    <xs:element name="ApexOpv1" />
+                    <xs:element name="ApexOpv2" />
+                    <xs:element name="OrgN" />
+                    <xs:element name="NO3" />
+                    <xs:element name="OrgP" />
+                    <xs:element name="PO4" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Bmps">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="AFEff" />
+                    <xs:element name="AFFreq" />
+                    <xs:element name="AFMaxSingleApp" />
+                    <xs:element name="AFType"  />
+                    <xs:element name="AFWaterStressFactor"  />
+                    <xs:element name="AIEff"  />
+                    <xs:element name="AIFreq"  />
+                    <xs:element name="AIMaxSingleApp"  />
+                    <xs:element name="AIType"  />
+                    <xs:element name="AIWaterStressFactor"  />
+                    <xs:element name="FSArea"  />
+                    <xs:element name="FSCrop"  />
+                    <xs:element name="FSEff"  />
+                    <xs:element name="FSslopeRatio"  />
+                    <xs:element name="FSWidth"  />
+                    <xs:element name="Lm"  />
+                    <xs:element name="PndF"  />
+                    <xs:element name="RFArea"  />
+                    <xs:element name="RFEff"  />
+                    <xs:element name="RFGrassFieldPortion"  />
+                    <xs:element name="RFslopeRatio"  />
+                    <xs:element name="RFWidth"  />
+                    <xs:element name="Sbs"  />
+                    <xs:element name="SlopeRed"  />
+                    <xs:element name="TileDrainDepth"  />
+                    <xs:element name="Ts"  />
+                    <xs:element name="WLArea"  />
+                    <xs:element name="WWCrop"  />
+                    <xs:element name="WWWidth"  />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Results">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="area" />
+                    <xs:element name="Crops">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="crop" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="FIFertilizer" />
+                    <xs:element name="i" />
+                    <xs:element name="Soil">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="co2" />
+                          <xs:element name="flow" />
+                          <xs:element name="flowCI" />
+                          <xs:element name="flowSD" />
+                          <xs:element name="irrigation" />
+                          <xs:element name="LeachedN" />
+                          <xs:element name="LeachedP" />
+                          <xs:element name="n2o" />
+                          <xs:element name="NO3" />
+                          <xs:element name="NO3CI" />
+                          <xs:element name="NO3SD" />
+                          <xs:element name="OrgN" />
+                          <xs:element name="OrgNCI" />
+                          <xs:element name="OrgNSD" />
+                          <xs:element name="OrgP" />
+                          <xs:element name="OrgPCI" />
+                          <xs:element name="OrgPSD" />
+                          <xs:element name="PO4" />
+                          <xs:element name="PO4CI" />
+                          <xs:element name="PO4SD" />
+                          <xs:element name="Sediment" />
+                          <xs:element name="SedimentCI" />
+                          <xs:element name="SedimentSD" />
+                          <xs:element name="tileDrainFlow" />
+                          <xs:element name="tileDrainN" />
+                          <xs:element name="tileDrainP" />
+                          <xs:element name="volatizationN" />
+                          <xs:element name="Yields">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Yield" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="YieldsSD">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="YieldSD" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="YieldsCI">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="YieldCI" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="CountCrops">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="CountCrop" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="annualFlow">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="flow"  />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="annualNO3">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="NO3"  />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="annualOrgN">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="OrgN"  />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="annualOrgP">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="OrgP"  />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="annualPO4">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="PO4"  />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="annualSediment">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Sediment"  />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>  
+  <xs:element name="WeatherInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="daily" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
