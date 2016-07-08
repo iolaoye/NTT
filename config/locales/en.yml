@@ -353,6 +353,7 @@ en:
     bmp: BMP
     irrigation: Irrigation
     plant_population: Plant Population
+    load_operation: Load Operation
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group 
