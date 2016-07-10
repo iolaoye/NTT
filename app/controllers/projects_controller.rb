@@ -534,6 +534,8 @@ class ProjectsController < ApplicationController
 				when "SoilInfo"
 					field.save
 					upload_soil_info(p, field.id)
+				when "ScenarioInfo"
+					upload_scenario_info(p, field.id)
 			end
 		end
 
@@ -755,7 +757,7 @@ class ProjectsController < ApplicationController
 					end
 				when "SoilScenarioInfo"
 					if soil.save then
-						upload_scenario_info(p, soil.field_id, soil.id)
+						upload_soil_scenario_info(p, soil.field_id, soil.id)
 					else
 						return "Error uploading "
 					end
@@ -884,19 +886,43 @@ class ProjectsController < ApplicationController
 		end 
 	end
 
-	def upload_scenario_info(node, field_id, soil_id)
-		scenario = Scenario.new
-		scenario.field_id = field_id
+	def upload_soil_scenario_info(node, field_id, soil_id)
+		saved = true
+		scenario_id = 0
 		node.elements.each do |p|
 			case p.name
 				when "Name"
-					scenario.name = p.text
-				when "Subareas"
-					if scenario.save then
-						upload_subarea_info(p, scenario.id, soil_id)
-						upload_soil_operation_info(p, scenario.id, soil_id)
+					#validates if scenario already exists
+					scenario = Scenario.find_by_field_id_and_name(field_id, p.text)
+					if scenario == nil then
+						scenario = Scenario.new
+						scenario.field_id = field_id
+						scenario.name = name = p.text
+						if !scenario.save then
+							saved = false
+						else
+							scenario_id = scenario.id
+						end
 					else
-						return "Error loading subareas"
+						scenario_id = scenario.id
+					end
+				when "Subareas"
+					if save = true then
+						upload_subarea_info(p, scenario_id, soil_id)
+					else
+						return "Error saving scenario"
+					end
+				when "Operations"
+					if save = true then
+						upload_soil_operation_info(p, scenario_id, soil_id)
+					else
+						return "Error saving scenario"
+					end
+				when "Results"
+					if save = true then
+						upload_result_info(p, field_id, soil_id, scenario_id)
+					else
+						return "Error saving scenario"
 					end
 			end
 		end
@@ -1147,19 +1173,19 @@ class ProjectsController < ApplicationController
 		soil_operation.scenario_id = scenario_id
 		node.elements.each do |p|
 			case p.name
+				when "EventId"  #use to take the event id to be able to match this operation with the operations in scenarios
+					soil_operation.tractor_id = p.text					
 				when "Year"
 					soil_operation.year = p.text
 				when "Month"
 					soil_operation.month = p.text
 				when "Day"
 					soil_operation.day = p.text
-				when "TractorId"
-					soil_operation.tractor_id = p.text
 				when "operation_id"  #todo this need to be taken from operation table
 				when "ApexCrop"
 					soil_operation.apex_crop = p.text				
 				when "NO3", "PO4", "OrgN", "OrgP"
-					if p.text > 0
+					if p.text.to_f > 0.0
 						soil_operation.type_id = 25
 					end
 				when "OpVal1"
@@ -1180,7 +1206,6 @@ class ProjectsController < ApplicationController
 					soil_operation.activity_id = Activity.find_by_abbreviation(p.text).id
 				when "ApexTillCode"
 					soil_operation.apex_operation = p.text
-				when "bmp_id"
 			end
 		end
 		if soil_operation.save then
@@ -1190,23 +1215,63 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_operation_info(scenario_id, i, j, k)
+	def upload_operation_info(node, scenario_id)
 		operation = Operation.new
 		operation.scenario_id = scenario_id
-		operation.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexCrop"]
-		operation.activity_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexOp"]
-		operation.day = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["Day"]
-		operation.month_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["Month"]
-		operation.year = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["Year"]
-		operation.type_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexTillCode"]
-		operation.subtype_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexFert"]
-		operation.amount = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexOpv1"]
-		operation.depth = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["ApexOpv1"]
-		operation.no3_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["NO3"]
-		operation.po4_p = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["PO4"]
-		operation.org_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["OrgN"]
-		operation.org_p = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["OrgP"]
-		operation.nh3 = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Operations"][k]["Nh3"]
+		event_id = 0
+		scenario = ""
+		apex_till_code = 0
+		node.elements.each do |p|
+			case p.name
+				when "EventId"  #use to take the event id to be able to match this operation with the operations in scenarios
+					#look for the same opeerations in in the SoilOperation table to add the operation id
+					event_id = p.text
+				when "ApexOpAbbreviation"
+					operation.activity_id = Activity.find_by_abbreviation(p.text).id
+				when "Year"
+					operation.year = p.text
+				when "Month"
+					operation.month_id = p.text
+				when "Day"
+					operation.day = p.text
+				when "ApexCrop"
+					operation.crop_id = Crop.find_by_number(p.text).id
+				when "NO3"
+					operation.no3_n = p.text
+				when "PO4"
+					operation.po4_p = p.text
+				when "OrgN"
+					operation.org_n = p.text
+				when "OrgP"
+					operation.org_p = p.text
+				when "ApexOpv1"
+					operation.amount = p.text
+				when "ApexOpv2"
+					operation.depth = p.text
+				when "ApexTillCode"
+					apex_till_code = p.text.to_i
+				when "ApexTillName"
+					case operation.activity_id
+						when 1  #planting
+							operation.type_id = apex_till_code
+						when 2  # fertilizer
+							if p.text == "Commercial Fertilizer" 
+								operation.type_id = 1
+								operation.subtype_id = 25
+							else
+								operation.type_id =2
+								operation.subtype_id = 55
+							end
+					end # end case p.text
+			end # case
+		end # end each
+		operation.save
+		soils = Soil.where(:field_id => session[:field_id], :selected => true)
+		soils.each do |soil|
+			soil_operation = SoilOperation.where(:soil_id => soil.id, scenario_id => scneario_id, :tractor_id => event_id)
+			soil_operation.operation_id = operation.id
+			soil_operation.save
+		end # end soils.each
 	end
 
 	def upload_operation_new_version(scenario_id, new_operation)
@@ -1296,6 +1361,144 @@ class ProjectsController < ApplicationController
 			end
 		end
 	end
+
+	def upload_result_info(node, field_id, soil_id, scenario_id)
+		node.elements.each do |p|
+			case p.name
+				when "Crops"
+					upload_crop_soil_result_info(p, field_id, soil_id, scenario_id)
+				when "Soil"
+					upload_soil_result_info(p, field_id, soil_id, scenario_id)
+			end # end case p.name
+		end  # end node.elements.each
+	end  # end method
+
+	def upload_soil_result_info(node, field_id, soil_id, scenario_id)
+		#tile drain flow is duplicated in the old version NTTG2 VB. So is needed to control that the second one is not used
+		tile_drain = false
+		node.elements.each do |p|
+			case p.name
+				when "deepPerFlow"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 52)
+				when "deepPerFlowCI"
+					@result.ci_value = p.text
+					@result.save
+				when "runoff"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 41)
+				when "runoffCI"
+					@result.ci_value = p.text
+					@result.save
+				when "subsurfaceFlow"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 42)
+				when "subsurfaceFlowCI"
+					@result.ci_value = p.text
+					@result.save
+				when "tileDrainFlow"
+					if tile_drain == false then
+						@result = add_result(field_id, soil_id, scenario_id, p.text, 43)
+					end
+				when "tileDrainFlowCI"
+					if tile_drain == false then
+						tile_drain = true
+						@result.ci_value = p.text
+						@result.save
+					end
+				when "irrigation"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 51)
+				when "irrigationCI"
+					@result.ci_value = p.text
+					@result.save
+				when "OrgN"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 21)
+				when "OrgNCI"
+					@result.ci_value = p.text
+					@result.save
+				when "runoffN"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 22)
+				when "runoffNCI"
+					@result.ci_value = p.text
+					@result.save
+				when "subsurfaceN"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 23)
+				when "subsurfaceNCI"
+					@result.ci_value = p.text
+					@result.save
+				when "OrgP"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 31)
+				when "OrgPCI"
+					@result.ci_value = p.text
+					@result.save
+				when "PO4"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 32)
+				when "PO4CI"
+					@result.ci_value = p.text
+					@result.save
+				when "Sediment"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 61)
+				when "SedimentCI"
+					@result.ci_value = p.text
+					@result.save
+				when "tileDrainN"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 24)
+				when "tileDrainP"
+					@result1 = add_result(field_id, soil_id, scenario_id, p.text, 33)
+				when "tileDrainNCI"
+					@result.ci_value = p.text
+					@result.save
+				when "tileDrainPCI"
+					@result1.ci_value = p.text
+					@result1.save
+			end # end case p.name
+		end  # end node.elements.each
+	end
+
+	def add_result(field_id, soil_id, scenario_id, p_text, description_id)
+		result = Result.new
+		result.field_id = field_id
+		result.soil_id = soil_id
+		result.scenario_id = scenario_id
+		result.value = p_text
+		result.description_id = description_id
+		return result
+	end
+
+	def upload_crop_soil_result_info(node, field_id, soil_id, scenario_id)
+		crop_name = ""
+		crop_value = 0.0
+		crop_ci = 0.0
+		description_id = 71
+		node.elements.each do |p|
+			case p.name
+				when "cropName"
+					crop_name = p.text
+				when "cropYield"
+					crop_value = p.text
+				when "cropYieldCI"
+					result = add_result(field_id, soil_id, scenario_id, crop_value, description_id)
+					result.ci_value = p.text
+					result.crop_id = Crop.find_by_code(crop_name).id
+					result.save
+					description_id += description_id
+			end # end case
+		end # each do
+	end # end method
+
+	def upload_scenario_info(node, field_id)
+		name = ""
+		scenario_id = 0
+		node.elements.each do |p|
+			case p.name
+				when "Name"
+					name = p.text
+				when "Operations"
+					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
+					upload_operation_info(p, scenario_id)
+				when "Results"
+					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
+					upload_soil_result_info(p, field_id, 0, scenario_id)
+			end #end case
+		end ## end each
+	end # end method
 
 	def upload_bmp_info(scenario_id, i, j)
 		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIType"].to_i > 0 then
