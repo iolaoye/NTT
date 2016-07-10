@@ -7,6 +7,7 @@ class Bmp < ActiveRecord::Base
 	  has_many :crops
 	  has_many :subareas, :dependent => :destroy
 	  has_many :climates, :dependent => :destroy
+	  has_many :soil_operations, :dependent => :destroy
 	  belongs_to :scenario
   #validations
     validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id, :message => "already exist"
