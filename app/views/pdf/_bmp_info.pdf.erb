@@ -1,1 +1,253 @@
-<div class="group_header">Best Management Practices (BMPs) Information</div>
+<div class="group_header"><%=t('pdf.bmp_info')%></div>
+<% j=1 %>
+<% @bmps.each do |bmp| %>
+    <% case bmp.bmpsublist_id %>
+        <% when 1 %>
+            <div class="bmp_header"><%=t('pdf.autoirrigation')%></div>
+            <div class="data_titles">
+                <%=t('pdf.irrigation')%>:</br>
+                <%=t('pdf.water_stress_factor')%>:</br>
+                <%=t('pdf.irrigation_efficiency')%>:</br>
+                <%=t('pdf.max_single_application')%>:</br>
+                <% if (bmp.irrigation_id == 7) %>
+                    <%=t('pdf.safety_factor')%>:</br>
+                <% elsif (bmp.irrigation_id == 8) %>
+                    <%=t('pdf.reservoir_area')%>:</br>
+                <% end %>
+                <%=t('pdf.irrigation_frequency')%>:</br>
+            </div>
+            <div class="data">
+                <%= Irrigation.find(bmp.irrigation_id).name %></br>
+                <%= bmp.water_stress_factor %></br>
+                <%= bmp.irrigation_efficiency %></br>
+                <%= bmp.maximum_single_application %> <%=t('pdf.inches')%></br>
+                <% if (bmp.irrigation_id == 7) %>
+                    <%= bmp.safety_factor %></br>
+                <% elsif (bmp.irrigation_id == 8) %>
+                    <%= bmp.area %> <%=t('pdf.acres')%></br>
+                <% end %>
+                <%= bmp.days %> <%=t('pdf.days')%></br>
+            </div>
+        <% when 2 %>
+            <div class="bmp_header"><%=t('pdf.autofertigation')%></div>
+            <div class="data_titles">
+                <%=t('pdf.irrigation')%>:</br>
+                <%=t('pdf.water_stress_factor')%>:</br>
+                <%=t('pdf.irrigation_efficiency')%>:</br>
+                <%=t('pdf.max_single_application')%>:</br>
+                <% if (bmp.irrigation_id == 7) %>
+                    <%=t('pdf.safety_factor')%>:</br>
+                <% elsif (bmp.irrigation_id == 8) %>
+                    <%=t('pdf.reservoir_area')%>:</br>
+                <% end %>
+                <%=t('pdf.irrigation_frequency')%>:</br>
+            </div>
+            <div class="data">
+                <%= Irrigation.find(bmp.irrigation_id).name %></br>
+                <%= bmp.water_stress_factor %></br>
+                <%= bmp.irrigation_efficiency %></br>
+                <%= bmp.maximum_single_application %> <%=t('pdf.inches')%></br>
+                <% if (bmp.irrigation_id == 7) %>
+                    <%= bmp.safety_factor %></br>
+                <% elsif (bmp.irrigation_id == 8) %>
+                    <%= bmp.area %> <%=t('pdf.acres')%></br>
+                <% end %>
+                <%= bmp.days %> <%=t('pdf.days')%></br>
+            </div>
+        <% when 3 %>
+            <div class="bmp_header"><%=t('pdf.tile_drain')%></div>
+            <div class="data_titles">
+                <%=t('pdf.depth')%>:</br>
+            </div>
+            <div class="data">
+                <%= bmp.depth %> ft</br>
+            </div>
+        <% when 4 %>
+            <div class="bmp_header"><%=t('pdf.ppdi')%></div>
+            <div class="data_titles">
+                <%=t('pdf.width')%>:</br>
+                <%=t('pdf.sides')%>:</br>
+            </div>
+            <div class="data">
+                <%= bmp.width %> ft</br>
+                <%= bmp.sides %></br>
+            </div>
+        <% when 5 %>
+            <div class="bmp_header"><%=t('pdf.ppds')%></div>
+            <div class="data_titles">
+                <%=t('pdf.width')%>:</br>
+                <%=t('pdf.sides')%>:</br>
+            </div>
+            <div class="data">
+                <%= bmp.width %> ft</br>
+                <%= bmp.sides %></br>
+            </div>
+        <% when 6 %>
+            <div class="bmp_header"><%=t('pdf.ppde')%></div>
+            <div class="data_titles">
+                <%=t('pdf.reservoir_area')%>:</br>
+                <%=t('pdf.width')%>:</br>
+                <%=t('pdf.sides')%>:</br>
+            </div>
+            <div class="data">
+                <%= bmp.area %> <%=t('pdf.acres')%></br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.sides %></br>
+            </div>
+        <% when 7 %>
+            <div class="bmp_header"><%=t('pdf.ppti')%></div>
+            <div class="data_titles">
+                <%=t('pdf.reservoir_area')%>:</br>
+                <%=t('pdf.width')%>:</br>
+                <%=t('pdf.sides')%>:</br>
+            </div>
+            <div class="data">
+                <%= bmp.area %> <%=t('pdf.acres')%></br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.sides %></br>
+            </div>
+        <% when 8 %>
+            <div class="bmp_header"><%=t('pdf.wetlands')%></div>
+            <div class="data_titles">
+                <%=t('pdf.reservoir_area')%>:</br>
+            </div>
+            <div class="data">
+                <%= bmp.area %> <%=t('pdf.acres')%></br>
+            </div>
+        <% when 9 %>
+            <div class="bmp_header"><%=t('pdf.ponds')%></div>
+            <div class="data_titles">
+                <%=t('pdf.irrigation_efficiency')%>:</br>
+            </div>
+            <div class="data">
+                <%= bmp.irrigation_efficiency %></br>
+            </div>
+        <% when 10 %>
+            <div class="bmp_header"><%=t('pdf.stream_fencing')%></div>
+            <div class="data_titles">
+                <%=t('pdf.animal')%>:</br>
+                <%=t('pdf.number_of_animals')%>:</br>
+                <%=t('pdf.irrigation_frequency')%>:</br>
+                <%=t('pdf.hours')%>:</br>
+                <%=t('pdf.dry_manure')%>:</br>
+                No3 n:</br>
+                Po4 p:</br>
+                Org n:</br>
+                Org p:</br>
+            </div>
+            <div class="data">
+                <%= Fertilizer.find(bmp.animal_id).name %></br>
+                <%= bmp.number_of_animals %></br>
+                <%= bmp.days %> <%=t('pdf.days')%></br>
+                <%= bmp.hours %></br>
+                <%= bmp.dry_manure %> lbs/day</br>
+                <%= bmp.no3_n %></br>
+                <%= bmp.po4_p %></br>
+                <%= bmp.org_n %></br>
+                <%= bmp.org_p %></br>
+            </div>
+        <% when 11 %>
+            <div class="bmp_header"><%=t('pdf.streambank_stabilization')%></div>
+            <div class="data no_content">
+                <%=t('pdf.none_required')%>:</br>
+            </div>
+        <% when 12 %>
+            <div class="bmp_header"><%=t('pdf.riparian_forest')%></div>
+            <div class="data_titles">
+                <%=t('pdf.reservoir_area')%>:</br>
+                <%=t('pdf.width')%>:</br>
+                <%=t('pdf.grass_field_portion')%>:</br>
+                <%=t('pdf.slope_ratio')%>:</br>
+            </div>
+            <div class="data">
+                <%= bmp.area %> <%=t('pdf.acres')%></br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.grass_field_portion %></br>
+                <%= bmp.buffer_slope_upland %></br>
+            </div>
+        <% when 13 %>
+            <div class="bmp_header"><%=t('pdf.filter_strip')%></div>
+            <div class="data_titles">
+                <%=t('pdf.crop')%>:</br>
+                <%=t('pdf.reservoir_area')%>:</br>
+                <%=t('pdf.width')%>:</br>
+                <%=t('pdf.slope_ratio')%>:</br>
+            </div>
+            <div class="data">
+                <%= Crop.find(bmp.crop_id).name %></br>
+                <%= bmp.area %> <%=t('pdf.acres')%></br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.buffer_slope_upland %></br>
+            </div>
+        <% when 14 %>
+            <div class="bmp_header"><%=t('pdf.waterway')%></div>
+            <div class="data_titles">
+                <%=t('pdf.crop')%>:</br>
+                <%=t('pdf.width')%>:</br>
+            </div>
+            <div class="data">
+                <%= Crop.find(bmp.crop_id).name %></br>
+                <%= bmp.width %> ft</br>
+            </div>
+        <% when 15 %>
+            <div class="bmp_header"><%=t('pdf.contour_buffer')%></div>
+            <div class="data_titles">
+                <%=t('pdf.crop')%>:</br>
+                <%=t('pdf.width')%>:</br>
+                <%=t('pdf.crop_width')%>:</br>
+            </div>
+            <div class="data">
+                <%= Crop.find(bmp.crop_id).name %></br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.crop_width %> ft</br>
+            </div>
+        <% when 16 %>
+            <div class="bmp_header"><%=t('pdf.land_leveling')%></div>
+            <div class="data_titles">
+                <%=t('pdf.slope_reduction')%>:</br>
+            </div>
+            <div class="data">
+                <%= bmp.slope_reduction %> %</br>
+            </div>
+        <% when 17 %>
+            <div class="bmp_header"><%=t('pdf.terrace_system')%></div>
+            <div class="data no_content">
+                <%=t('pdf.none_required')%>:</br>
+            </div>
+        <% when 19 %>
+            <div class="bmp_header"><%=t('pdf.climate')%></div>
+            <div class="data no_content">
+                <%=t('pdf.climate_change')%></br>
+            </div>
+        <% when 20 %>
+            <div class="bmp_header"><%=t('pdf.asphalt_concrete')%></div>
+            <div class="data no_content">
+                <%=t('pdf.none_required')%>:</br>
+            </div>
+        <% when 21 %>
+            <div class="bmp_header"><%=t('pdf.grass_cover')%></div>
+            <div class="data no_content">
+                <%=t('pdf.none_required')%>:</br>
+            </div>
+        <% when 22 %>
+            <div class="bmp_header"><%=t('pdf.slope_adjustment')%></div>
+            <div class="data no_content">
+                <%=t('pdf.none_required')%>:</br>
+            </div>
+        <% when 23 %>
+            <div class="bmp_header"><%=t('pdf.shading')%></div>
+            <div class="data_titles">
+                <%=t('pdf.crop')%>:</br>
+                <%=t('pdf.reservoir_area')%>:</br>
+                <%=t('pdf.width')%>:</br>
+                <%=t('pdf.crop_width')%>:</br>
+            </div>
+            <div class="data">
+                <%= Crop.find(bmp.crop_id).name %></br>
+                <%= bmp.area %> <%=t('pdf.acres')%></br>
+                <%= bmp.width %> ft</br>
+                <%= bmp.buffer_slope_upland %></br>
+            </div>
+    <% end %>
+    <% j = j + 1 %>
+<% end %>

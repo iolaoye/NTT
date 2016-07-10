@@ -43,6 +43,17 @@
     padding: 0px 0px 0px 0px;
 }
 
+.bmp_header {
+    background: #00796B;
+    color: white;
+    text-align: center;
+    font-weight: 300;
+    font-size: 17px;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    padding: 7px 7px 7px 7px;
+    margin: 30px 10px 10px 10px;
+}
+
 .group_header {
     background: dodgerblue;
     color: white;
@@ -50,7 +61,7 @@
     font-weight: 300;
     font-size: 17px;
     font-family: "Roboto", Arial, Helvetica, sans-serif;
-    padding: 10px 10px 10px 10px;
+    padding: 12px 12px 12px 12px;
     margin: 30px 0px 10px 0px;
 }
 
@@ -67,6 +78,10 @@
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     margin-left: 210px;
     font-size: 16px;
+}
+
+.no_content {
+    margin-left: 100px;
 }
 
 /*** Table Styles **/
@@ -99,7 +114,7 @@
 }
 
 .row {
-    height: 50px;
+    height: 40px;
     padding:8px;
     text-align:left;
     vertical-align:middle;
@@ -126,14 +141,28 @@
 
 .text {
     text-align: left;
+    font-family: "Roboto", helvetica, arial, sans-serif;
 }
 
 .number {
     text-align: right;
+    font-family: "Roboto", helvetica, arial, sans-serif;
 }
 
 .first_group {
      margin-top:0px;
+}
+
+.bold {
+    font-weight: bold !important;
+}
+
+table, tr, td, th, tbody, thead, tfoot {
+    page-break-inside: avoid !important;
+}
+
+.no_page_break {
+    page-break-inside: avoid !important;
 }
 /*
 

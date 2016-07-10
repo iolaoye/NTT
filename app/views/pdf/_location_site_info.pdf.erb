@@ -1,9 +1,12 @@
-<div class="group_header">Location and Additional Site Information</div>
+<% @state = State.find(@location.state_id) %>
+<% @county = County.find(@location.county_id) %>
+
+<div class="group_header"><%=t('pdf.location_info')%></div>
     <div class="data_titles">
-        State:</br>
-        County:</br>
+        <%=t('pdf.state')%>:</br>
+        <%=t('pdf.county')%>:</br>
     </div>
     <div class="data">
-        This is a space filler<%=  %></br>
-        This is a space filler<%=  %></br>
+        <%= @state.state_name %></br>
+        <%= @county.county_name %></br>
     </div>

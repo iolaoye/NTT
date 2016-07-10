@@ -1,6 +1,7 @@
-<%= render '/pdf/page_header' %>
+<% @descriptions = Description.all %>
+
 <div class="group_header first_group">Annual Results for Nutrients, Flow, Sediment, and Crop Yield</div>
-<table class='table_fill'>
+<table class="table_fill">
     <thead>
         <tr>
             <th class="table_head">Description</th>
@@ -12,165 +13,198 @@
         </tr>
     </thead>
     <tbody>
-        <tr class="table_row_odd">
-            <td class="row text bold">Total Area (ac.)</td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row text bold">Total N (lbs/ac)</td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-        </tr>
-        <tr class="table_row_odd">
-            <td class="row number">Org N (lbs/ac)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row number">Runoff N (lbs/ac)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_odd">
-            <td class="row number">Subsurface N (lbs/ac)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row number">Tile Drain N (lbs/ac)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_odd">
-            <td class="row text bold">Total P (lbs/ac)</td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row number">Org P (lbs/ac)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_odd">
-            <td class="row number">PO4_P (lbs/ac)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row number">Tile Drain P (lbs/ac)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_odd">
-            <td class="row text bold">Total Flow (in)</td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row number">Surface Runoff (in)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_odd">
-            <td class="row number">Subsurface Runoff (in)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row number">Tile Drain Flow (in)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_odd">
-            <td class="row text bold">Other Water Information</td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row number">Irrigation (in)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_odd">
-            <td class="row number">Deep Percolation (in)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row text bold">Total Sediment (t/ac)</td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-            <td class="row text bold"><%= %></td>
-        </tr>
-        <tr class="table_row_odd">
-            <td class="row number">Sediment (t/ac)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
-        <tr class="table_row_even">
-            <td class="row number">Manure Erosion (t/ac)</td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-            <td class="row number"><%= %></td>
-        </tr>
+        <% i = 1 %>
+        <% if @results1 != nil %>
+            <% @results1.each do |result| %>
+                <% value2 = 0 %>
+                <% if @results2 != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
+                <% difference1 = value2 - result.value %>
+                <% reduction1 = difference1 / result.value * 100 %>
+                <% total_area1 = difference1 * @total_area%>          
+                <% value3 = 0 %>
+                <% if @results3 != nil %> <%value3 = @results3.find_by_description_id(result.description_id).value %> <% end %>
+                <% difference2 = value3- result.value%>
+                <% reduction2 = difference2 / result.value * 100%>
+                <% total_area2 = difference2 * @total_area%>
+                <% if (i % 2 == 0) then %>
+                    <% if (result.description_id % 10 == 0) %>
+                        <tr class="table_row_even">
+                        <% if result.description_id == 70 %>
+                            <td class="row text bold"><%= Description.find(result.description_id).description %></td>
+                            <td class="row text bold"><%= %></td>
+                            <% if @results2 != nil %>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                            <% end %>
+                            <% if @results3 != nil %>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                            <% end %>
+                            <% if @results2 == nil && @results4 == nil %>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                            <% end %>
+                        <% else %>
+                            <td class="row text bold"><%= Description.find(result.description_id).description %></td>
+                            <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+                            <% if @results2 != nil %>
+                                <td class="row text bold"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", difference1) %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", reduction1) %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", total_area1) %></td>
+                            <% end %>
+                            <% if @results3 != nil %>
+                                <td class="row text bold"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", difference2) %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", reduction2) %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", total_area2) %></td>
+                            <% end %>
+                            <% if @results2 == nil && @results4 == nil %>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                            <% end %>
+                        <% end %>
+                        </tr>
+                    <% else %>
+                        <tr class="table_row_even">
+                        <% if result.description_id > 70 && result.description_id < 90 %>
+                            <td class="row number"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
+                            <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+                            <% if @results2 != nil %>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                            <% end %>
+                            <% if @results3 != nil %>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                            <% end %>
+                        <% else %>
+                            <td class="row number"><%= Description.find(result.description_id).description %></td>
+                            <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+                            <% if @results2 != nil %>
+                                <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                                <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
+                                <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
+                                <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
+                            <% end %>
+                            <% if @results3 != nil %>
+                                <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                                <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
+                                <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
+                                <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
+                            <% end %>
+                            <% if @results2 == nil && @results4 == nil %>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                            <% end %>
+                        <% end %>
+                        </tr>
+                    <% end %>
+                <% else %>
+                    <% if (result.description_id % 10 == 0) %>
+                        <tr class="table_row_odd">
+                        <% if result.description_id == 70 %>
+                            <td class="row text bold"><%= Description.find(result.description_id).description %></td>
+                            <td class="row text bold"><%= %></td>
+                            <% if @results2 != nil %>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                            <% end %>
+                            <% if @results3 != nil %>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                            <% end %>
+                        <% else %>
+                            <td class="row text bold"><%= Description.find(result.description_id).description %></td>
+                            <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+                            <% if @results2 != nil %>
+                                <td class="row text bold"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", difference1) %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", reduction1) %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", total_area1) %></td>
+                            <% end %>
+                            <% if @results3 != nil %>
+                                <td class="row text bold"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", difference2) %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", reduction2) %></td>
+                                <td class="row text bold"><%= sprintf("%8.2f", total_area2) %></td>
+                            <% end %>
+                            <% if @results2 == nil && @results4 == nil %>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                                <td class="row text bold"><%= %></td>
+                            <% end %>
+                        <% end %>
+                        </tr>
+                    <% else %>
+                        <tr class="table_row_odd">
+                        <% if result.description_id > 70 && result.description_id < 90 %>
+                            <td class="row number"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
+                            <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+                            <% if @results2 != nil %>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                            <% end %>
+                            <% if @results3 != nil %>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                            <% end %>
+                            <% if @results2 == nil && @results4 == nil %>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                            <% end %>
+                        <% else %>
+                            <td class="row number"><%= Description.find(result.description_id).description %></td>
+                            <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+                            <% if @results2 != nil %>
+                                <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                                <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
+                                <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
+                                <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
+                            <% end %>
+                            <% if @results3 != nil %>
+                                <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+                                <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
+                                <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
+                                <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
+                            <% end %>
+                            <% if @results2 == nil && @results4 == nil %>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                                <td class="row number"><%= %></td>
+                            <% end %>
+                        <% end %>
+                        </tr>
+                    <% end %>
+                <% end %>
+                <% i = i + 1 %>
+            <% end %>
+        <% end %>
     </tbody>
 </table>
