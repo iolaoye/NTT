@@ -128,21 +128,10 @@ class ProjectsController < ApplicationController
 				when "FieldInfo"
 					msg = upload_field_info(node)		
 			end
-
-			#if node.name.eql? "project" #appears to return false, thus goes to else
-			#	msg = upload_project_new_version(node)
-			#else
-			#	msg = "File does not have a project"
-			#end
-			#if node.name.eql? "location" then
-			#	msg = upload_location_new_version(node)
-			#else
-			#	msg = "File does not have a location"
-			#end
 		end
-		#@data = Hash.from_xml(params[:project].read)
-		#@data = Nokogiri::XML(File.open(params[:project].path))
-		#detect project version
+		# summarizes results for totals and soils.
+		summarize_total()
+
 		#todo check the name of the project. It should not exist.		
 		msg = "OK"
 		if (@data['Project'] == nil) then 
@@ -1376,11 +1365,32 @@ class ProjectsController < ApplicationController
 	def upload_soil_result_info(node, field_id, soil_id, scenario_id)
 		#tile drain flow is duplicated in the old version NTTG2 VB. So is needed to control that the second one is not used
 		tile_drain = false
+
 		node.elements.each do |p|
 			case p.name
-				when "deepPerFlow"
-					@result = add_result(field_id, soil_id, scenario_id, p.text, 52)
-				when "deepPerFlowCI"
+				when "OrgN"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 21)
+				when "OrgNCI"
+					@result.ci_value = p.text
+					@result.save
+				when "runoffN"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 22)
+				when "runoffNCI"
+					@result.ci_value = p.text
+					@result.save
+				when "subsurfaceN"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 23)
+				when "subsurfaceNCI"
+					@result.ci_value = p.text
+					@result.save
+				when "OrgP"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 31)
+				when "OrgPCI"
+					@result.ci_value = p.text
+					@result.save
+				when "PO4"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 32)
+				when "PO4CI"
 					@result.ci_value = p.text
 					@result.save
 				when "runoff"
@@ -1408,29 +1418,9 @@ class ProjectsController < ApplicationController
 				when "irrigationCI"
 					@result.ci_value = p.text
 					@result.save
-				when "OrgN"
-					@result = add_result(field_id, soil_id, scenario_id, p.text, 21)
-				when "OrgNCI"
-					@result.ci_value = p.text
-					@result.save
-				when "runoffN"
-					@result = add_result(field_id, soil_id, scenario_id, p.text, 22)
-				when "runoffNCI"
-					@result.ci_value = p.text
-					@result.save
-				when "subsurfaceN"
-					@result = add_result(field_id, soil_id, scenario_id, p.text, 23)
-				when "subsurfaceNCI"
-					@result.ci_value = p.text
-					@result.save
-				when "OrgP"
-					@result = add_result(field_id, soil_id, scenario_id, p.text, 31)
-				when "OrgPCI"
-					@result.ci_value = p.text
-					@result.save
-				when "PO4"
-					@result = add_result(field_id, soil_id, scenario_id, p.text, 32)
-				when "PO4CI"
+				when "deepPerFlow"
+					@result = add_result(field_id, soil_id, scenario_id, p.text, 52)
+				when "deepPerFlowCI"
 					@result.ci_value = p.text
 					@result.save
 				when "Sediment"
@@ -1451,6 +1441,29 @@ class ProjectsController < ApplicationController
 			end # end case p.name
 		end  # end node.elements.each
 	end
+
+	def summarize_total()
+		# total n for soil 0
+		fields = Field.where(:location_id => Location.find_by_project_id(session[:project_id]).id)
+		fields.each do |field|
+			scenarios = Scenario.where(:field_id => field.id)
+			scenarios.each do |scenario|
+				value = Result.where(:field_id => field.id, :soil_id => 0, :scenario_id => scenario.id).sum(:value)
+				result = add_result(field.id, 0, scenario.id, value, 20)
+				ci_value = Result.where(:field_id => field.id, :soil_id => 0, :scenario_id => scenario.id).sum(:ci_value)
+				result.ci_value = ci_value
+				result.save
+				soils = Soil.where(:field_id => field.id)
+				soils.each do |soil|
+					value = Result.where(:field_id => field.id, :soil_id => soil.id, :scenario_id => scenario.id).sum(:value)
+					result = add_result(field.id, soil.id, scenario.id, value, 20)
+					ci_value = Result.where(:field_id => field.id, :soil_id => soil.id, :scenario_id => scenario.id).sum(:ci_value)
+					result.ci_value = ci_value
+					result.save
+				end # end each scenario
+			end # end each soil
+		end # end each field
+	end # end summarize_totals method.
 
 	def add_result(field_id, soil_id, scenario_id, p_text, description_id)
 		result = Result.new
@@ -1495,7 +1508,7 @@ class ProjectsController < ApplicationController
 					upload_operation_info(p, scenario_id)
 				when "Results"
 					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
-					upload_soil_result_info(p, field_id, 0, scenario_id)
+					upload_result_info(p, field_id, 0, scenario_id)
 			end #end case
 		end ## end each
 	end # end method
@@ -1847,4 +1860,5 @@ class ProjectsController < ApplicationController
 		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgslopeRatio"]
 		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgWidth"]
 	end
+
 end

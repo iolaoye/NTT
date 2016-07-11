@@ -2,7 +2,7 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
-	session[:results] = nil
+	#session[:results] = nil
 	if params[:language] != nil then
 		if params[:language][:language].eql?("es") 
 			I18n.locale = :es 
@@ -33,7 +33,6 @@ class ResultsController < ApplicationController
 			when params[:result1][:scenario_id] != "" 
 				results = Result.where(:field_id == params[:field][:id], :scenario_id => params[:result1][:scenario1]).where("crop_id > 0")
 		end # end case true
-
 		results.each do |result|
 			i+=1
 			#get crops name for each result to add to description list 
@@ -66,9 +65,10 @@ class ResultsController < ApplicationController
 					@results3 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
 					session[:scenario3] = @scenario3
 				end
-			end
+			end # end if params[:result1] != nill
 		end  #end if params button summary
 	end # if params nil
+
     if params[:button] == t('result.annual') then
 		@x = "Year"
 		@result_selected = t('result.annual')
@@ -89,7 +89,7 @@ class ResultsController < ApplicationController
 				@charts3 = get_chart_serie(@scenario3, 1)
 			end
 		end
-	end
+	end # end if params[:button] == t('result.annual')
 
     if params[:button] == t('result.monthly') then
 		@x = "Month"
@@ -111,67 +111,66 @@ class ResultsController < ApplicationController
 				@charts3 = get_chart_serie(@scenario3, 2)
 			end
 		end
-	end
-	respond_to do |format|
-		format.pdf do
-			
-			if session[:first_if]
-				if session[:result1] then			
-					@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
-				end
-				if session[:result2] then
-					@results2 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario2], :soil_id => 0)
-				end
-				if session[:result3] then
-					@results3 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario3], :soil_id => 0)
-				end
-			end
+	end # end if params[:button] == t('result.monthly')
 
-			#File.open(save_path, 'wb') do |file|
-			#	file << pdf
-			#end
-			#session[:results] = @results
-			#session[:results] = Result.where(:field_id => session[:field_id], :scenario_id => 0, :soil_id => 0)
-			render  pdf: "report",
-							page_size: "Letter",
+	if params[:format] == "pdf" then
+		respond_to do |format|
+			format.pdf do			
+				if session[:first_if]
+					if session[:result1] then			
+						@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
+					end
+					if session[:result2] then
+						@results2 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario2], :soil_id => 0)
+					end
+					if session[:result3] then
+						@results3 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario3], :soil_id => 0)
+					end
+				end # end if session[result1]
+
+				#File.open(save_path, 'wb') do |file|
+				#	file << pdf
+				#end
+				#session[:results] = @results
+				#session[:results] = Result.where(:field_id => session[:field_id], :scenario_id => 0, :soil_id => 0)
+				render  pdf: "report",
+						page_size: "Letter",
 			 		  	layout: "pdf",
-							template: "/results/report",
-							footer: { center: '[page] of [topage]' },
-							header: {
-								spacing: 1,
-								html: {
-									template: '/layouts/_page_header.html'
-								}
-							},
+						template: "/results/report",
+						footer: { center: '[page] of [topage]' },
+						header: {
+							spacing: 1,
+							html: { template: '/layouts/_page_header.html' }
+								},
 							margin: { top: 17 }
 							#header:  {
 							#	html: {
 							#		template: "/layouts/pdf_header"
 							#	}
 							#}
-
-		end
-		format.html # index.html.erb
-		end
+			end  # end format pdf
+			format.html # index.html.erb
+		end # end respond to do
+	end # if format is pdf
   end
 
-	def download
-		respond_to do |format|
-			format.pdf do
-        render pdf: "tester", 
-               layout: "pdf",
-               template: "/results/tester"
-			end
-	end
+  #def download
+	#respond_to do |format|
+		#format.pdf do
+			#render pdf: "tester", 
+            #layout: "pdf",
+            #template: "/results/tester"
+		#end
+  #end
 
   # GET /results/1
   # GET /results/1.json
   def show
     @result = Result.find(params[:id])
 
-      format.html # show.html.erb
-      format.json { render json: @result }
-    end
+    format.html # show.html.erb
+    format.json { render json: @result }
+    #end
   end
 
   # GET /results/new
