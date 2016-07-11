@@ -127,7 +127,6 @@ class OperationsController < ApplicationController
 				state_id = Location.find(session[:location_id]).state_id
 				crops = Crop.where(:number => event.apex_crop)
 				crop_id = event.apex_crop
-				session[:depth] = event.apex_crop
 				plant_population = crops[0].plant_population_ft
 				crops.each do |crop|
 					if crop.state_id == state_id then
@@ -276,7 +275,6 @@ class OperationsController < ApplicationController
 				#opv1 = uri.read
 				#opv1 = Hash.from_xml(open(uri.to_s).read)["m"]{"p".inject({}) do |result, elem
 				client = Savon.client(wsdl: URL_HU)
-				session[:depth] = @operation.crop_id
 				response = client.call(:get_hu, message:{"crop" => @operation.crop_id, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
 				opv1 = response.body[:get_hu_response][:get_hu_result]
 				#opv1 = 2.2

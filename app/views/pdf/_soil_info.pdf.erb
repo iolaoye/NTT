@@ -1,18 +1,18 @@
-<% @soils = Soil.where(:field_id => @field.id) %>
+<% @soils = Soil.where(:field_id => @field.id, :selected => true) %>
 
-<div class="group_header">Soil Information</div>
+<div class="group_header"><%=t('pdf.soil_info')%></div>
 <table class='table_fill'>
     <thead>
         <tr class="first_tr">
             <th class="table_head">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Name
+                <%=t('pdf.name')%>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th class="table_head">Symbol</th>
-            <th class="table_head">Group</th>
-            <th class="table_head">Albedo</th>
-            <th class="table_head">Slope</th>
-            <th class="table_head">Percentage</th>
+            <th class="table_head"><%=t('pdf.symbol')%></th>
+            <th class="table_head"><%=t('pdf.group')%></th>
+            <th class="table_head"><%=t('pdf.albedo')%></th>
+            <th class="table_head"><%=t('pdf.slope')%></th>
+            <th class="table_head"><%=t('pdf.percentage')%></th>
         </tr>
     </thead>
     <tbody>
