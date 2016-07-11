@@ -36,21 +36,20 @@
   <% @soil_operations.each do |soil_operation| %>
   <tr class="gvRowStyle">
     <td class="gvCellStyleNumber"><%= soil_operation.year %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.month %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.day %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.apex_operation %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.month %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.day %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.apex_operation %></td>
     <td class="gvCellStyleNumber"><%= soil_operation.tractor_id %></td>
     <td class="gvCellStyleNumber"><%= soil_operation.apex_crop %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.type_id %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv1 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv2 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv3 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv4 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv5 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv6 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv7 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.type_id %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv1 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv2 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv3 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv4 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv5 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv6 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv7 %></td>
     <td>
-      <%= link_to image_tag("view.png"), soil_operation_path(soil_operation) %>
       <%= link_to image_tag("edit.png"), edit_soil_operation_path(soil_operation) %>
     </td>
   </tr>
