@@ -174,7 +174,6 @@ class ScenariosController < ApplicationController
 		apex_run_string = "APEX001   1IWPNIWND   1   0   0"
 		if county != nil then
 			client = Savon.client(wsdl: URL_Weather)
-			session[:depth] = county.wind_wp1_name
 			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
 			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
 			print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
@@ -1086,6 +1085,7 @@ class ScenariosController < ApplicationController
         #check and fix the operation list
 		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + session[:scenario_id].to_s)
 		#todo when the map is saved again the number of soils in SoilOperation are not updated we can use something like SoilOperation.where(:soil_id => 1698).update_all(:soil_id => 1703)
+		
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
