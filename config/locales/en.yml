@@ -504,6 +504,10 @@ en:
     understanding1: APEX
     understanding2: NTT Disclaimer
   pdf:
+    ntt_report: Nutrient Tracking Tool - Report
+    user: User
+    email: Email
+    company: Company
     input_info: Input Information Report
     name: Name
     description: Description
@@ -591,6 +595,12 @@ en:
     inches: inches
     acres: acres
     days: days
+    annual_results: Annual Results for Nutrients, Flow, Sediment, and Crop Yield
+    description: Description
+    baseline: Baseline
+    difference: Difference
+    reduction: Reduction
+    total_area: Total Area
   sysreq:
     header: System Requirements
     minreq:
