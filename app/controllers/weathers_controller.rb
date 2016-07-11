@@ -27,7 +27,6 @@ class WeathersController < ApplicationController
 	@project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
 	if !(@weather == :nil) # no empty array	
-	ooo	
 	  if (@weather.way_id == nil)
 	     @way = ""
 	  else
@@ -55,7 +54,7 @@ class WeathersController < ApplicationController
 	@weather = Weather.find_by_field_id(params[:id])
 	@project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(params[:id]).field_name
-	if !(@weather == :nil) # no empty array
+	if !(@weather == nil) # no empty array
 	  if (@weather.way_id == nil)
 	     @way = ""
 	  else

@@ -1,0 +1,27 @@
+<% user_id = session[:user_id] %>
+<% user = User.find(user_id) %>
+<% t = Time.now %>
+<div class="firstHeader" style="display:none">
+    <div class="header">
+        <h1 id="document_header">Nutrient Tracking Tool - Report</h1>
+    </div>
+    <div class="right">
+        <strong>User:</strong> <%= user.name %></br>
+        <strong>Email:</strong> <%= user.email %></br>
+        <strong>Company:</strong> <%= user.company %></br>
+    </div>
+    <div>
+        <hr class="line_break" color="dodgerblue">
+    </div>
+</div>
+<script type="text/javascript">
+    var headerCheck = function() {
+      var x=document.location.search.substring(1).split('&');
+      for (var i in x) {
+        if(x[i] == "page=1")
+          document.getElementsByClassName("firstHeader")[0].style.display = "block";
+        } else {
+          document.getElementsByClassName("firstHeader")[0].style.display = "none";
+        }
+     }();
+</script>

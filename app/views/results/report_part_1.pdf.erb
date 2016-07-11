@@ -1,0 +1,11 @@
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<% @user_id = session[:user_id] %>
+<% @user = User.find(@user_id) %>
+<% @project = Project.find(session[:project_id]) %>
+<% @scenarios = Scenario.where(:field_id => session[:field_id]) %>
+<% @location = Location.find(session[:location_id]) %>
+<% t = Time.now %>
+<%= wicked_pdf_stylesheet_link_tag "pdf" %>
+<head>
+    <%= render '/layout/report_header' %>
+</head>
