@@ -134,15 +134,29 @@ class ResultsController < ApplicationController
 				#session[:results] = @results
 				#session[:results] = Result.where(:field_id => session[:field_id], :scenario_id => 0, :soil_id => 0)
 				render  pdf: "report",
-						page_size: "Letter",
-			 		  	layout: "pdf",
-						template: "/results/report",
-						footer: { center: '[page] of [topage]' },
-						header: {
-							spacing: 1,
-							html: { template: '/layouts/_page_header.html' }
+								page_size: "Letter",
+								layout: "pdf",
+								template: "/results/report",
+								footer: { 
+									spacing: -265,
+									html: { template: '/layouts/_report_header.html'} 
 								},
-							margin: { top: 17 }
+								header: { 
+									spacing: 3,
+									#content: render_to_string(template: '/layouts/_page_header.pdf.erb')
+									html: { template: '/layouts/_page_header.html' }
+								},
+								margin: { top: 20,
+													bottom: 5 }
+								#header: {
+								#	spacing: -5,
+								#	left: "Nutrient Tracking Tool - Report",
+								#	right: "User: " + User.find(session[:user_id]).name,
+								#	font_name: "helvetica",
+                #  font_size: 12,
+								#	html: { template: '/layouts/_report_header.html'}
+								#},
+								#footer: { center: '[page] of [topage]' }
 							#header:  {
 							#	html: {
 							#		template: "/layouts/pdf_header"
