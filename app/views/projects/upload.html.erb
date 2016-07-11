@@ -4,11 +4,11 @@
 <%= form_tag({action: :upload_project}, multipart: true) do %>
   <h1><%= t('project.upload_project') %></h1>
 
-  <label for="project"><%= t('project.upload_button_desc')%></label> 
+  <label for="project"><%= t('project.upload_button_desc')%></label>
+    <br>
+    <br>
   <%= file_field_tag "project" %>
- 
-  <%= submit_tag(value = t('submit.save')) %>
-
+  <%= submit_tag(value = t('submit.save'), data: {disable_with: 'Please wait. Uploading your project . . .'}) %>
   <p><%= link_to t('general.back'), welcomes_path %></p>
 
 <% end %>
