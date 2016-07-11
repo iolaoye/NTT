@@ -1,13 +1,13 @@
-<%= form_for :soil_operations do |f| %>
+<%= form_for :soil_operations, url: soil_operations_url do |f| %>
 <table>
   <tr>
     <td><%= label :bmp_id, t('soil.soil') %></td>
     <td><%= label :bmp_id, t('scenario.scenario') %></td>
   </tr>
   <tr>
-    <td><%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil')}, {:required => true} %></td>    
-    <td><%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario')}, {:required => true} %></td>
-	<td><%= button_to t('operation.load_operation'), soil_operations_path%></td>
+    <td><%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil}, {:required => true} %></td>    
+    <td><%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => @scenario}, {:required => true} %></td>
+	<td><%= button_to t('operation.load_operation')%></td>
   </tr>
 </table>
 <% end %>
@@ -36,21 +36,20 @@
   <% @soil_operations.each do |soil_operation| %>
   <tr class="gvRowStyle">
     <td class="gvCellStyleNumber"><%= soil_operation.year %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.month %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.day %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.apex_operation %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.month %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.day %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.apex_operation %></td>
     <td class="gvCellStyleNumber"><%= soil_operation.tractor_id %></td>
     <td class="gvCellStyleNumber"><%= soil_operation.apex_crop %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.type_id %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv1 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv2 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv3 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv4 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv5 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv6 %></td>
-    <td class="gvCellStyleNumber"><%= soil_operation.opv7 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.type_id %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv1 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv2 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv3 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv4 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv5 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv6 %></td>
+	<td class="gvCellStyleNumber"><%= soil_operation.opv7 %></td>
     <td>
-      <%= link_to image_tag("view.png"), soil_operation_path(soil_operation) %>
       <%= link_to image_tag("edit.png"), edit_soil_operation_path(soil_operation) %>
     </td>
   </tr>

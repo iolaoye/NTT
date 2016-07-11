@@ -1428,6 +1428,20 @@ class ProjectsController < ApplicationController
 				when "SedimentCI"
 					@result.ci_value = p.text
 					@result.save
+					#add manure. It is not in the old version projects
+					@result = add_result(field_id, soil_id, scenario_id, 0, 62)
+					@result.ci_value = 0
+					@result.save
+				when "Manure"  # just in case this exist in some projects the values for manuer (62) are updated
+					@result = Result.where(:field_id => field_id, :soil_id => soil_id, :scenario_id => scenario_id, description_id => 62)
+					if @result != nil then
+						@result.value = p.text
+					end 
+				when "ManureCI"  # just in case this exist in some projects the values for manuer (62) are updated
+					@result = Result.where(:field_id => field_id, :soil_id => soil_id, :scenario_id => scenario_id, description_id => 62)
+					if @result != nil then
+						@result.ci_value = p.text
+					end 
 				when "tileDrainN"
 					@result = add_result(field_id, soil_id, scenario_id, p.text, 24)
 				when "tileDrainP"
@@ -1438,30 +1452,50 @@ class ProjectsController < ApplicationController
 				when "tileDrainPCI"
 					@result1.ci_value = p.text
 					@result1.save
+				when "annualFlow"
+					upload_chart_info(field_id, 0, scenario_id, 41)
+				when "annualNO3"
+					upload_chart_info(field_id, 0, scenario_id, 22)
+				when "annualOrgN"
+					upload_chart_info(field_id, 0, scenario_id, 21)
+				when "annualOrgP"
+					upload_chart_info(field_id, 0, scenario_id, 31)
+				when "annualPO4"
+					upload_chart_info(field_id, 0, scenario_id, 32)
+				when "annualSediment"
+					upload_chart_info(field_id, 0, scenario_id, 61)
+				when "annualPrecipitation"
+					upload_chart_info(field_id, 0, scenario_id, 100)
+				when "annualCropYield"
+					
 			end # end case p.name
 		end  # end node.elements.each
 	end
 
 	def summarize_total()
-		# total n for soil 0
+		descriptions = Description.where("description like ?", "%Total%")
 		fields = Field.where(:location_id => Location.find_by_project_id(session[:project_id]).id)
 		fields.each do |field|
 			scenarios = Scenario.where(:field_id => field.id)
 			scenarios.each do |scenario|
-				value = Result.where(:field_id => field.id, :soil_id => 0, :scenario_id => scenario.id).sum(:value)
-				result = add_result(field.id, 0, scenario.id, value, 20)
-				ci_value = Result.where(:field_id => field.id, :soil_id => 0, :scenario_id => scenario.id).sum(:ci_value)
-				result.ci_value = ci_value
-				result.save
-				soils = Soil.where(:field_id => field.id)
-				soils.each do |soil|
-					value = Result.where(:field_id => field.id, :soil_id => soil.id, :scenario_id => scenario.id).sum(:value)
-					result = add_result(field.id, soil.id, scenario.id, value, 20)
-					ci_value = Result.where(:field_id => field.id, :soil_id => soil.id, :scenario_id => scenario.id).sum(:ci_value)
+				descriptions.each do |description|
+					value = Result.where("field_id = " + field.id.to_s + " AND soil_id = 0 AND scenario_id = " + scenario.id.to_s + " AND description_id > " + description.id.to_s + " AND description_id < " + (description.id + 10).to_s).sum(:value)
+					result = add_result(field.id, 0, scenario.id, value, description.id)
+					ci_value = Result.where("field_id = " + field.id.to_s + " AND soil_id = 0 AND scenario_id = " + scenario.id.to_s + " AND description_id > " + description.id.to_s + " AND description_id < " + (description.id + 10).to_s).sum(:ci_value)
 					result.ci_value = ci_value
 					result.save
-				end # end each scenario
-			end # end each soil
+				end # end descriptions each
+				soils = Soil.where(:field_id => field.id)
+				soils.each do |soil|
+					descriptions.each do |description|
+						value = Result.where("field_id = " + field.id.to_s + " AND soil_id = " + soil.id.to_s + " AND scenario_id = " + scenario.id.to_s + " AND description_id > " + description.id.to_s + " AND description_id < " + (description.id + 10).to_s).sum(:value)
+						result = add_result(field.id, soil.id, scenario.id, value, description.id)
+						ci_value = Result.where("field_id = " + field.id.to_s + " AND soil_id = " + soil.id.to_s + " AND scenario_id = " + scenario.id.to_s + " AND description_id > " + description.id.to_s + " AND description_id < " + (description.id + 10).to_s).sum(:ci_value)
+						result.ci_value = ci_value
+						result.save
+					end # end descriptions each
+				end # end each soil
+			end # end each scenario
 		end # end each field
 	end # end summarize_totals method.
 
@@ -1494,6 +1528,11 @@ class ProjectsController < ApplicationController
 					description_id += description_id
 			end # end case
 		end # each do
+		#after all of the crops ahve been added, Crop yield should be added too
+		#result = add_result(field_id, soil_id, scenario_id, "", 70)
+		#result.ci_value = ""
+		#result.crop_id = ""
+		#result.save
 	end # end method
 
 	def upload_scenario_info(node, field_id)
@@ -1512,6 +1551,29 @@ class ProjectsController < ApplicationController
 			end #end case
 		end ## end each
 	end # end method
+
+	def upload_chart_info(node, field_id, soil_id, scenario_id, description_id, type)
+		i = 1
+		month_year = 0
+		year = Weather.find_by_field_id(field_id).simulation_final_year - 11
+		node.elements.each do |p|
+			if i <= 12 then
+				month_year = year
+				year += 1
+			else
+				month_year = i - 12
+			end
+			i +=1
+			chart = chart.new
+			chart.field_id = field_id
+			chart.soil_id = soil_id
+			chart.scenario_id = scenario_id
+			chart.value = p_text
+			chart.description_id = description_id
+			chart.mont_year = month_year
+			chart.save
+		end # end node each
+	end
 
 	def upload_bmp_info(scenario_id, i, j)
 		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIType"].to_i > 0 then
