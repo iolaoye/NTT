@@ -7846,7 +7846,7 @@ Control.create!({:id => 74, :line => 6, :column => 6, :code =>'BUS(2)', :name =>
 Control.create!({:id => 75, :line => 6, :column => 7, :code =>'BUS(3)', :name => 'MUSI input according to equation above(Range: 0-0.9)', :range_low =>0, :range_high => 0.9, :default_value => 0, :state_id => 99 }, :without_protection => true)
 Control.create!({:id => 76, :line => 6, :column => 8, :code =>'BUS(4)', :name => 'MUSI input according to equation above(Range: 0-1.2)', :range_low =>0, :range_high => 1.2, :default_value => 0, :state_id => 99 }, :without_protection => true)
 
-#populate Parameters table
+#populate Parameters table.
 Parameter.delete_all
 Parameter.create!({:id => 1, :line => 1, :number => 1 , :name => 'Crop canopy-PET(1-2)', :range_low => 1, :range_high => 2, :default_value => 2, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 2, :line => 1, :number => 2 , :name => 'Root growth_soil strength (1_2)', :range_low => 1, :range_high => 2, :default_value => 2, :state_id => 99}, :without_protection => true)
