@@ -137,17 +137,16 @@ class ResultsController < ApplicationController
 								page_size: "Letter",
 								layout: "pdf",
 								template: "/results/report",
-								footer: { 
-									spacing: -265,
-									html: { template: '/layouts/_report_header.html'} 
+								footer: { center: '[page] of [topage]'
+									#spacing: -265,
+									#html: { template: '/layouts/_report_header.html'} 
 								},
 								header: { 
-									spacing: 3,
+									spacing: -6,
 									#content: render_to_string(template: '/layouts/_page_header.pdf.erb')
-									html: { template: '/layouts/_page_header.html' }
+									html: { template: '/layouts/_report_header.html' }
 								},
-								margin: { top: 20,
-													bottom: 5 }
+								margin: { top: 16 }
 								#header: {
 								#	spacing: -5,
 								#	left: "Nutrient Tracking Tool - Report",
