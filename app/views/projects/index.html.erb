@@ -6,17 +6,12 @@
     <tr class='gvHeaderStyle'>
       <th class="gvCellStyleTitle"><%= t('general.name') %></th>
       <th class="gvCellStyleTitle"><%= t('general.description') %></th>
-      <th><%= t('general.actions') %></th>
+      <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
     </tr>
       <% i=1 %>
     <% @projects.each do |project| %>
       <% if (i % 2  == 0) %>
-        <tr class="gvRowStyleEven">
-      <% else %>
-        <tr class="gvRowStyleOdd">
-      <% end %>
-      <% i = i + 1 %>
-      <tr class="gvRowStyle" style="padding-left:25px">
+        <tr class="gvRowStyleEven" style="padding-left:25px">
         <td class="gvCellStyleText"><%= link_to project.name, project %></td>
         <td class="gvCellStyleText"><%= project.description %></td>
         <td>
@@ -26,6 +21,19 @@
           <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>
+      <% else %>
+        <tr class="gvRowStyleOdd" style="padding-left:25px">
+        <td class="gvCellStyleText"><%= link_to project.name, project %></td>
+        <td class="gvCellStyleText"><%= project.description %></td>
+        <td>
+          <%#= link_to image_tag("view.png"), project %>
+          <%= link_to image_tag("download.gif"), download_project_path(project) %> <%#https://design.google.com/icons/%>
+          <%= link_to image_tag("edit.png"), edit_project_path(project) %>
+          <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+      <% end %>
+      <% i = i + 1 %>
     <% end %>
       
       </table>
