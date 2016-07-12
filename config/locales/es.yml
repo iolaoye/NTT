@@ -386,6 +386,7 @@
     save: Guardar
     login: Iniciar sesión
     update: Actualizar
+    new_user: Usuario Nuevo
   sessions:
     index:
       email: Correo Electrónico

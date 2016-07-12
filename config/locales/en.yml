@@ -390,6 +390,7 @@ en:
     save: Save Changes
     login: Sign in
     update: Update
+    new_user: New User
   sessions:
     index:
       email: Email
