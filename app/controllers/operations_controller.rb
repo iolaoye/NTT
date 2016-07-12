@@ -116,8 +116,8 @@ class OperationsController < ApplicationController
 		if params[:cropping_system][:id] != "" then
 			@cropping_system_id = params[:cropping_system][:id]
 			#Delete operations for the scenario selected
-			Operation.where(:scenario_id => params[:id]).delete_all
-			SoilOperation.where(:scenario_id => params[:id]).delete_all
+			Operation.where(:scenario_id => params[:id]).destroy_all
+			#SoilOperation.where(:scenario_id => params[:id]).delete_all
 			#take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
 			events = Event.where(:cropping_system_id => params[:cropping_system][:id])
 			events.each do |event|
@@ -127,7 +127,6 @@ class OperationsController < ApplicationController
 				state_id = Location.find(session[:location_id]).state_id
 				crops = Crop.where(:number => event.apex_crop)
 				crop_id = event.apex_crop
-				session[:depth] = event.apex_crop
 				plant_population = crops[0].plant_population_ft
 				crops.each do |crop|
 					if crop.state_id == state_id then

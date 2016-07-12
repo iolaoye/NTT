@@ -86,14 +86,9 @@ NTTG3::Application.routes.draw do
     get :location_fields, on: :member 
   end
 
-  resources :apex_soils do
-	resources :apex_layers
-  end
-
   resources :fields do
     get :list, on: :member 
     resources :soils
-	resources :apex_soils
     resources :scenarios
 	resources :weathers
 	get :field_soils, on: :member

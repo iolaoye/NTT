@@ -24,9 +24,9 @@
     </table>
     <table>
         <tr>
-          <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil'), :required => false, :selected => @soil} %></td>
+          <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => session[:field_id], :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :required => false, :selected => @soil} %></td>
           <td><%= submit_tag t("result.summary") + " " + t("result.by_soil"), name: "button"%>
-          <%= link_to "Download PDF", { :action => "index", :format => :pdf }, target: '_blank', :class => "green_button padding_top" %></td>
+          <%= link_to "Download PDF", { :action => "index", :format => :pdf }, target: '_blank', :class => "green_button padding_top", name: "button" %></td>
         </tr>
     </table>
   </div>
@@ -61,7 +61,7 @@
               <% if @results2 != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
               <% difference1 = value2 - result.value %>
               <% reduction1 = difference1 / result.value * 100 %>
-              <% total_area1 = difference1 * @total_area%>          
+              <% total_area1 = difference1 * @total_area%> 
               <% value3 = 0 %>
               <% if @results3 != nil %> <%value3 = @results3.find_by_description_id(result.description_id).value %> <% end %>
               <% difference2 = value3- result.value%>

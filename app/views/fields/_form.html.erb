@@ -11,12 +11,12 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label t('field.field_name') %>
+  <div class="field" title="Name of Field">
+    <%= f.label :field_name %><br />
     <%= f.text_field :field_name %>
   </div>
-  <div class="field">
-    <%= f.label t('field.field_area') %>
+  <div class="field" title="Field Area (Ac.). Must be greater than 0.">
+    <%= f.label :field_area %><br />
     <%= f.text_field :field_area %>
   </div>
   <div class="field">

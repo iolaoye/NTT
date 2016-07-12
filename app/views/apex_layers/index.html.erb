@@ -1,7 +1,7 @@
 ﻿<h1><%= t('menu.layer_file') %></h1>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th>Layer Number</th>
+    <th><%= t('layer.layer_number') %></th>
     <th>Z</th>
     <th>BD</th>
     <th>UW</th>
@@ -26,7 +26,7 @@
   </tr>
 
   <% i = 1 %>
-  <% @layers.each do |layer| %>
+  <% @apex_layers.each do |layer| %>
     <tr class="gvRowStyle">  
       <td class="gvCellStyleNumber"><%= i %></td>
       <td class="gvCellStyleNumber"><%= layer.depth %></td>

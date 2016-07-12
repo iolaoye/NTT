@@ -11,8 +11,9 @@
     }.join("\n").gsub(/url\(['"](.+)['"]\)(.+)/,%[url("#{wicked_pdf_image_location("\\1")}")\\2]).html_safe
   end
 
-  def initialize(wkhtmltopdf_binary_path = nil)
+  def initialize
     WickedPdf.config = {
-      exe_path: 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
+      exe_path: 'C:/Program Files (x86)/wkhtmltopdf/bin/wkhtmltopdf.exe'
+
     }
   end
