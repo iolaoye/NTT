@@ -10,20 +10,27 @@
 
 <% i=1 %>
 <% @watersheds.each do |watershed| %>
-<% if (i % 2  == 0) %>
-   <tr class="gvRowStyleEven">
-    <% else %>
-   <tr class="gvRowStyleOdd">
+  <% if (i % 2  == 0) %>
+     <tr class="gvRowStyleEven">
+        <td class="gvCellStyleText"><%= link_to watershed.name, watershed_scenario_path(watershed.id) %></td>
+        <td class="gvCellStyleCheckbox">
+          <%#= link_to image_tag("view.png"), watershed %>
+          <%= link_to image_tag("edit.png"), edit_watershed_path(watershed), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), watershed, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+  <% else %>
+      <tr class="gvRowStyleOdd">
+        <td class="gvCellStyleText"><%= link_to watershed.name, watershed_scenario_path(watershed.id) %></td>
+        <td class="gvCellStyleCheckbox">
+          <%#= link_to image_tag("view.png"), watershed %>
+          <%= link_to image_tag("edit.png"), edit_watershed_path(watershed), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), watershed, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
     <% end %>
-    <% i = i + 1 %>
-  <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= link_to watershed.name, watershed_scenario_path(watershed.id) %></td>
-    <td class="gvCellStyleCheckbox">
-      <%#= link_to image_tag("view.png"), watershed %>
-      <%= link_to image_tag("edit.png"), edit_watershed_path(watershed), title: t('general.edit') %>
-      <%= link_to image_tag("delete.png"), watershed, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
-  </tr>
+  <% i = i + 1 %>
+
 <% end %>
 </table>
 

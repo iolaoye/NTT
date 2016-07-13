@@ -4,23 +4,27 @@
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle"><%= t('operation.bmp') %></th>
-    <th><%= t('general.actions') %></th>
+    <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
   </tr>
 
   <% i=1 %>
   <% @bmps.each do |bmp| %>
     <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">
+        <td class="gvCellStyleText"><%= Bmpsublist.find(bmp.bmpsublist_id).name %></td>
+        <td class="gvCellStyleAction"><%= link_to image_tag("view.png"), bmp %>
+          <%= link_to image_tag("edit.png"), edit_bmp_path(bmp) %>
+        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
     <% else %>
       <tr class="gvRowStyleOdd">
+        <td class="gvCellStyleText"><%= Bmpsublist.find(bmp.bmpsublist_id).name %></td>
+        <td class="gvCellStyleAction"><%= link_to image_tag("view.png"), bmp %>
+          <%= link_to image_tag("edit.png"), edit_bmp_path(bmp) %>
+        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
     <% end %>
     <% i = i + 1 %>
-  <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= Bmpsublist.find(bmp.bmpsublist_id).name %></td>
-    <td><%= link_to image_tag("view.png"), bmp %>
-      <%= link_to image_tag("edit.png"), edit_bmp_path(bmp) %>
-    <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
 <% end %>
 </table>
 

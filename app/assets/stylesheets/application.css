@@ -417,10 +417,9 @@
     margin-top: 15px !important;
     text-align:left;
     vertical-align:middle;
-    font-weight:300 !important;
+    font-weight:100 !important;
     font-size:18px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-    border-right: 1px solid #C1C3D1;
     font-family: Roboto, helvetica, arial, sans-serif;
     text-align: center !important;
     color: white;
@@ -434,6 +433,11 @@
   border-top: 1px solid #C1C3D1;
 }
 
+.bottom_border {
+  border-bottom: 1px solid #D5DDE5;
+}
+
+
 .gvTotalNumber {
     height: 30px;
     padding:8px;
@@ -443,7 +447,6 @@
     font-size:16px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
-    border-right: 1px solid #C1C3D1;
     margin: 0px 0px 0px 0px;
     color:Blue;
     font-weight:bold;
@@ -459,7 +462,6 @@
     font-size:16px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
-    border-right: 1px solid #C1C3D1;
     margin: 0px 0px 0px 0px;
     color:Blue;
     text-align:left;
@@ -474,7 +476,6 @@
     font-size:16px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
-    border-right: 1px solid #C1C3D1;
     margin: 0px 0px 0px 0px;
     text-align:right;
 }
@@ -489,7 +490,6 @@
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px; 
-  border-right: 1px solid #C1C3D1;
   text-align: right; 
 }
 
@@ -503,7 +503,6 @@
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
-  border-right: 1px solid #C1C3D1;
   text-align: center;   
 }
 
@@ -517,7 +516,6 @@
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
-    border-right: 1px solid #C1C3D1;
     text-align: center;
 }   
 
@@ -531,23 +529,52 @@
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
-  border-right: 1px solid #C1C3D1;
-  text-align: left; 
+    text-align: left; 
+}
+
+.gvCellStyleString {
+    height: 30px;
+    padding:8px;
+    text-align:left;
+    vertical-align:middle;
+    font-weight:300;
+    font-size:16px;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+    font-family: Roboto, helvetica, arial, sans-serif;
+    margin: 0px 0px 0px 0px;
+    text-align: center; 
 }
 
 .gvCellStyleTitle { 
     height: 40px;
     padding: 8px;
     vertical-align:middle;
-    font-weight:200;
-    font-size:16px;
-  text-align: center;
+    font-weight:100;
+    font-size:18px;
+    text-align: center;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
-  overflow: hidden;
+    overflow: hidden;
+}
+
+.gvHeaderStyle > th:not(:last-child) {
   border-right: 1px solid #C1C3D1;
 }
+
+.unbold {
+    height: 40px;
+    padding: 8px;
+    vertical-align:middle;
+    font-weight:100;
+    font-size:18px;
+    text-align: center;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+    font-family: Roboto, helvetica, arial, sans-serif;
+    margin: 0px 0px 0px 0px;
+    overflow: hidden;
+}
+
 
 
 .gvRowStyle { 
@@ -572,11 +599,11 @@
   vertical-align: middle;
 }
 
-.gvRowStyleEven > td {
+.gvRowStyleEven > td:not(:last-child) {
     border-right: 1px solid #C1C3D1;
 }
 
-.gvRowStyleOdd > td {
+.gvRowStyleOdd > td:not(:last-child){
     border-right: 1px solid #C1C3D1;
 }
 
@@ -589,7 +616,7 @@
 
 .gvTableStyle { 
   border-right: #C1C3D1;
-  margin-top: 5px !important;
+  margin-top: 10px !important;
   border-style:None;
   border-collapse:collapse;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -599,6 +626,7 @@
 .gvTableStyle .even td {  background: #FFFFFF; }
 
 .gvTableStyle .odd td {  background: #D5DDE5; }
+
 
 .container {
   width: 100%;
@@ -619,7 +647,7 @@ select {
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
   border-radius: 3px;
   border: none;
   background: #f1f1f1;
@@ -668,7 +696,7 @@ input[type="submit"] {
   text-decoration: none;
   font-size: 15px;
   padding: 6px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
   border-radius: 4px;
   margin-top: 5px;
 }
@@ -687,7 +715,8 @@ input[type="submit"]:hover {
   text-decoration: none;
   font-size: 15px;
   padding: 6px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
   border-radius: 4px;
   margin-top: 5px;
 }
@@ -706,7 +735,8 @@ input[type="submit"]:hover {
   text-align: center;
   text-decoration: none;
   font-size: 15px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
   float: right;
   border-radius: 2px;
 }
@@ -817,4 +847,25 @@ input[type="submit"]:hover {
 .new > .spanish {
   padding: 8px 100px 8px 99px !important;
 }
-/*work on css of listing fields, etc...*/ 
+/*work on css of listing fields, etc...*/
+
+#pageContent > a {
+  margin-top: 200px;
+  background-color: #00796B;
+  border: none;
+  color: white !important;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  padding: 6px;
+  font-weight: 100;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  border-radius: 2px;
+  margin-top: 5px;
+} 
+
+#pageContent > a:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: white;
+  color: #00796B !important;
+}
