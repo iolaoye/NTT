@@ -147,20 +147,24 @@ class ResultsController < ApplicationController
 										html: { template: '/layouts/_report_header.html' }
 									},
 									margin: { top: 16 }
-									#header: {
-									#	spacing: -5,
-									#	left: "Nutrient Tracking Tool - Report",
-									#	right: "User: " + User.find(session[:user_id]).name,
-									#	font_name: "helvetica",
-									#  font_size: 12,
-									#	html: { template: '/layouts/_report_header.html'}
-									#},
-									#footer: { center: '[page] of [topage]' }
-								#header:  {
-								#	html: {
-								#		template: "/layouts/pdf_header"
-								#	}
-								#}
+									#javascript_delay: 10000, 
+									#no_stop_slow_scripts: true,
+					#render  pdf: "report",
+					#				page_size: "Letter",
+					#				layout: "pdf",
+					#				template: "/results/report",
+					#				footer: { 
+					#						spacing: -265,
+					#						html: { template: '/layouts/_report_header.html'} 
+					#				},
+					#				header: { 
+					#						spacing: 3,
+					#						html: { template: '/layouts/_page_header.html' }
+					#				},
+					#				margin: { 
+					#						top: 20,
+					#						bottom: 5 
+					#				}
 				end  # end format pdf
 				format.html # index.html.erb
 			end # end respond to do
