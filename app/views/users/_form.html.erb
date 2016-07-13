@@ -1,16 +1,16 @@
 ﻿<%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div class="flash_alert">
-		<h3><%=pluralize(@user.errors.count, "error") %> prohibited this user from being save:</h3>
-		<ul>
-		  <% @user.errors.full_messages.each do |msg| %>
-		    <li><%= msg %></li>
-		  <% end %>
-		</ul>
-	</div>
+      <h3><%=pluralize(@user.errors.count, "error") %> prohibited this user from being save:</h3>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
   
-  <div class="center left">
+  <div class="center left less-padding">
     <h2><%= t('submit.new_user')%></h2>
     <div class="field">
     <%= f.text_field :email, placeholder: "email" %>
