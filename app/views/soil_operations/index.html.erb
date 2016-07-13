@@ -32,7 +32,7 @@
     <th class="gvCellStyleTitle">OPV7</th>
     <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
   </tr>
-
+  <% i = 1 %>
   <% @soil_operations.each do |soil_operation| %>
     <% if (i % 2  == 0) %>
         <tr class="gvRowStyleEven">
@@ -76,6 +76,5 @@
         </tr>
       <% end %>
       <% i = i + 1 %>
-    <tr class="gvRowStyle">
   <% end %>
 </table>

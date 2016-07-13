@@ -850,7 +850,6 @@ input[type="submit"]:hover {
 /*work on css of listing fields, etc...*/
 
 #pageContent > a {
-  margin-top: 200px;
   background-color: #00796B;
   border: none;
   color: white !important;
