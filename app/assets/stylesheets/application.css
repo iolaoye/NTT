@@ -120,6 +120,7 @@
   border: none;
   margin: none;
   padding: none;
+  height: 42px;
 }
 
 .navbar-nav {
@@ -140,6 +141,7 @@
 .navbar {
   margin: none;
   padding: none;
+  display: block;
 }
 
 .navbar ul li  {
@@ -418,7 +420,7 @@
     text-align:left;
     vertical-align:middle;
     font-weight:100 !important;
-    font-size:18px;
+    font-size:16px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     text-align: center !important;
@@ -439,12 +441,12 @@
 
 
 .gvTotalNumber {
-    height: 30px;
+    height: 20px;
     padding:8px;
     text-align:right;
     vertical-align:middle;
     font-weight:300;
-    font-size:16px;
+    font-size:15px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
@@ -454,12 +456,12 @@
 }
 
 .gvTotalText {
-    height: 30px;
+    height: 20px;
     padding:8px;
     text-align:left;
     vertical-align:middle;
     font-weight:300;
-    font-size:16px;
+    font-size:15px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
@@ -468,12 +470,12 @@
 }
 
 .gvDetailText {
-    height: 30px;
+    height: 20px;
     padding:8px;
     text-align:left;
     vertical-align:middle;
     font-weight:300;
-    font-size:16px;
+    font-size:15px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
@@ -481,12 +483,12 @@
 }
 
 .gvCellStyleNumber {
-    height: 30px;
+    height: 20px;
     padding:8px;
     text-align:left;
     vertical-align:middle;
     font-weight:300;
-    font-size:16px;
+    font-size:15px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px; 
@@ -494,12 +496,12 @@
 }
 
 .gvCellStyleCheckbox { 
-    height: 30px;
+    height: 20px;
     padding:8px;
     text-align:left;
     vertical-align:middle;
     font-weight:300;
-    font-size:16px;
+    font-size:15px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
@@ -507,12 +509,12 @@
 }
 
 .gvCellStyleActions {
-    height: 30px;
+    height: 20px;
     padding:8px;
     text-align:left;
     vertical-align:middle;
     font-weight:300;
-    font-size:16px;
+    font-size:15px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
@@ -520,12 +522,12 @@
 }   
 
 .gvCellStyleText { 
-    height: 30px;
+    height: 20px;
     padding:8px;
     text-align:left;
     vertical-align:middle;
     font-weight:300;
-    font-size:16px;
+    font-size:15px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
@@ -533,12 +535,12 @@
 }
 
 .gvCellStyleString {
-    height: 30px;
+    height: 20px;
     padding:8px;
     text-align:left;
     vertical-align:middle;
     font-weight:300;
-    font-size:16px;
+    font-size:15px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
@@ -546,11 +548,11 @@
 }
 
 .gvCellStyleTitle { 
-    height: 40px;
+    height: 25px;
     padding: 8px;
     vertical-align:middle;
     font-weight:100;
-    font-size:18px;
+    font-size:16px;
     text-align: center;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
@@ -563,11 +565,11 @@
 }
 
 .unbold {
-    height: 40px;
+    height: 25px;
     padding: 8px;
     vertical-align:middle;
     font-weight:100;
-    font-size:18px;
+    font-size:16px;
     text-align: center;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
@@ -578,12 +580,12 @@
 
 
 .gvRowStyle { 
-    height: 30px;
+    height: 20px;
     padding:8px;
     text-align:left;
     vertical-align:middle;
     font-weight:300;
-    font-size:16px;
+    font-size:15px;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
     font-family: Roboto, helvetica, arial, sans-serif;
     margin: 0px 0px 0px 0px;
@@ -715,7 +717,6 @@ input[type="submit"]:hover {
   text-decoration: none;
   font-size: 15px;
   padding: 6px;
-  font-weight: 100;
   font-family: Roboto, Arial, Helvetica, sans-serif;
   border-radius: 4px;
   margin-top: 5px;
@@ -799,11 +800,13 @@ input[type="submit"]:hover {
 
 .login > input[type="submit"] {
   width: 100%;
-  margin-bottom: 9px !important;
+  margin-bottom: 0px !important;
   border-radius: 1px;
   border: none !important;
   padding-top: 8px;
   padding-bottom: 8px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 300;
 }
 
 .new > input[type="submit"] {
@@ -813,19 +816,25 @@ input[type="submit"]:hover {
   border: none !important;
   padding-top: 8px;
   padding-bottom: 8px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+.new {
+  padding-bottom: 0px;
+  display: inline;
 }
 
 .login > .green_button {
   border-radius: 1px;
+  display: block;
+  padding: 8px 0px 8px 0px;
+  margin-top: 0px;
+  margin-bottom: -5px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 300;
 }
 
-.login > .english {
-  padding: 8px 61px 8px 61px !important;
-}
-
-.login > .spanish {
-  padding: 8px 45px 8px 45px !important;
-}
 
 .center > h2 {
   margin-bottom: 25px; 
@@ -833,21 +842,14 @@ input[type="submit"]:hover {
 }
 
 .new > .green_button {
-  padding: 8px 113px 8px 113px !important;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  width: 254px;
   border-radius: 1px;
+  display: block;
+  padding: 8px 0px 8px 0px;
+  margin-top: 0px;
+  margin-bottom: -10px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 300;
 }
-
-.new > .english {
-    padding: 8px 113px 8px 113px !important;
-}
-
-.new > .spanish {
-  padding: 8px 100px 8px 99px !important;
-}
-/*work on css of listing fields, etc...*/
 
 #pageContent > a {
   background-color: #00796B;
@@ -857,9 +859,8 @@ input[type="submit"]:hover {
   text-decoration: none;
   font-size: 15px;
   padding: 6px;
-  font-weight: 100;
   font-family: Roboto, Arial, Helvetica, sans-serif;
-  border-radius: 2px;
+  border-radius: 4px;
   margin-top: 5px;
 } 
 
@@ -867,4 +868,87 @@ input[type="submit"]:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   background-color: white;
   color: #00796B !important;
+}
+
+header {
+  margin: 0px 0px -22px 0px;
+  padding: 0px 0px 0px 0px;
+  background: #80CBC4;
+  display: block;
+}
+
+header > h1 {
+  text-align: center;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  font-size: 70px;
+  color: white;
+}
+
+header > h2 {
+  text-align: center;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  font-size: 35px;
+  color: white;
+}
+
+header > h4 {
+  text-align: center;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  color: white;
+}
+
+html {
+  margin: 0px 0px 0px 0px;
+  background: #80CBC4;
+}
+
+body >.container {
+  background: #E0F2F1;
+  padding: 0px 0px 50px 0px;
+  margin-bottom: -15px;
+  display: block;
+}
+
+.pageContainer {
+  margin: 0px 25px -20px 25px;
+  padding: 15px 0px 15px 10px;
+}
+
+#pageContent{
+  padding: 0px 10px 0px 10px;
+}
+
+.crumbs {
+  background: #E0F2F1;
+  margin: 0px 0px 0px 0px;
+  padding: 15px 15px 0px 30px;
+}
+
+footer {
+  margin: 0px 0px -2px 0px;
+  display: block;
+}
+
+.nav_header {
+  display: block;
+}
+
+.spacer {
+  background: #E0F2F1;
+  margin: 0px 0px 0px 0px;
+}
+
+.pageContent > h1 {
+  margin-top: 35px;
+}
+
+.less-padding {
+  padding-top: -20px;
+}
+
+.margin {
+  display:inline;
 }
