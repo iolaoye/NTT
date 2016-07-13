@@ -2,25 +2,20 @@
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th><%= t('menu.control_file') %></th>
-    <th><%= t('apex.code') %></th>
-    <th><%= t('apex.line') %></th>
-    <th><%= t('apex.column') %></th>
-    <th><%= t('apex.value') %></th>
-    <th><%= t('apex.low_range') %></th>
-    <th><%= t('apex.high_range') %></th>
+    <th class="gvCellStyleTitle"><%= t('menu.control_file') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.code') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.line') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.column') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.value') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.low_range') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.high_range') %></th>
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
 
 <% i=1 %>
 <% @apex_controls.each do |apex_control| %>
-<% if (i % 2  == 0) %>
-<tr class="gvRowStyleEven">
-  <% else %>
-  <tr class="gvRowStyleOdd">
-    <% end %>
-    <% i = i + 1 %>
-    <tr class="gvRowStyle">
+  <% if (i % 2  == 0) %>
+    <tr class="gvRowStyleEven">
       <td class="gvCellStyleNumber"><%= apex_control.control_id %></td>
       <td class="gvCellStyleText"><%= apex_control.control.code %></td>
       <td class="gvCellStyleNumber"><%= apex_control.control.line %></td>
@@ -29,6 +24,19 @@
       <td class="gvCellStyleNumber"><%= apex_control.control.range_low %></td>
       <td class="gvCellStyleNumber"><%= apex_control.control.range_high %></td>
       <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control), title: t('general.edit') %></td>
-  </tr>
+    </tr>
+  <% else %>
+    <tr class="gvRowStyleOdd">
+      <td class="gvCellStyleNumber"><%= apex_control.control_id %></td>
+      <td class="gvCellStyleText"><%= apex_control.control.code %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.control.line %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.control.column %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.value %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.control.range_low %></td>
+      <td class="gvCellStyleNumber"><%= apex_control.control.range_high %></td>
+      <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control), title: t('general.edit') %></td>
+    </tr>
+  <% end %>
+  <% i = i + 1 %>
 <% end %>
 </table>

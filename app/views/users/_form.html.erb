@@ -9,29 +9,18 @@
 		</ul>
 	</div>
   <% end %>
-
-  <div class="field">
-    <%= f.label t('sessions.index.email') %><br />
-	<%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label t('sessions.index.password') %><br />
-	<%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label t('users.confirmation') %><br />
-	<%= f.password_field :password_confirmation %>
-  </div>
-  <div class="field">
-    <%= f.label t('general.name') %><br />
-	<%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label t('users.company') %><br />
-    <%= f.text_field :company %>
-  </div>
-  <div class="actions">
-    <%= f.submit t('submit.create') + " " + t('users.user') %>
-  </div>
+  
+  <div class="center left">
+    <h2><%= t('submit.new_user')%></h2>
+    <div class="field">
+    <%= f.text_field :email, placeholder: "email" %>
+    <%= f.password_field :password, placeholder: "Password" %>
+    <%= f.password_field :password_confirmation, placeholder: "Password Confirmation" %>
+    <%= f.text_field :name, placeholder: "Name" %>
+    <%= f.text_field :company, placeholder: "Company" %>
+    </div>
+    <div class="actions new">
+      <%= f.submit t('submit.create') + " " + t('users.user') %>
+    </div>
 <% end %>
 
