@@ -48,7 +48,17 @@
   width: 100px;
 }
 
-.crumbs li { display: inline; color:Blue}
+.crumbs li { display: inline; color:black}
+
+.crumbs a {
+  color: #0097A7 !important;
+}
+
+.crumbs a:hover {
+  background: none;
+  color: #F4511E !important;
+  text-decoration: underline;
+}
 
 .danger_alert {
   padding: 20px;
@@ -729,7 +739,7 @@ input[type="submit"]:hover {
   border: none;
   color: white !important;
   text-align: center;
-  text-decoration: none;
+  text-decoration: none !important;
   font-size: 15px;
   padding: 6px;
   font-family: Roboto, Arial, Helvetica, sans-serif;
@@ -997,4 +1007,9 @@ td > a:hover {
   background: none;
   color: #F4511E !important;
   text-decoration: underline;
+}
+
+
+#div_type, #div_fertilizer {
+  margin-bottom: 10px !important;
 }
