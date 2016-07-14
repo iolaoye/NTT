@@ -484,7 +484,7 @@ en:
     email: 'gallego@tiaer.tarleton.edu'
   help:
     header: NTT Table of Contents
-    return_to_table: '<< Return to Table of Contents'
+    return_to_table: 'Return to Table of Contents'
     overview: Overview
     overview1: About NTT
     overview2: Contact Information
