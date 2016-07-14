@@ -126,17 +126,11 @@ class ResultsController < ApplicationController
 						end # end respond to do
 					end # if format is pdf
 				when t('result.annual')  + "-" + t('result.charts') 
-						@x = "Year"
-						#@result_selected = t('result.annual')
-						if params[:result5] != nil then 
-							@description = params[:result5][:description_id] 
-							@title = Description.find(@description).description
-							@y = Description.find(@description).unit
-						else
-							@description = ""
-							@title = ""
-							@y = ""
-						end
+					@x = "Year"
+					if params[:result5] != nil && params[:result5][:description_id] != "" then
+						@description = params[:result5][:description_id] 
+						@title = Description.find(@description).description
+						@y = Description.find(@description).unit
 						if params[:result1] != nil
 							if params[:result1][:scenario_id] != "" then
 								@scenario1 = params[:result1][:scenario_id] 	
@@ -151,18 +145,17 @@ class ResultsController < ApplicationController
 								@charts3 = get_chart_serie(@scenario3, 1)
 							end
 						end
+					else
+						@description = ""
+						@title = ""
+						@y = ""
+					end
 				when t('result.monthly')  + "-" + t('result.charts') 
-						@x = "Month"
-						#@result_selected = t('result.monthly')
-						if params[:result6] != nil then 
-							@description = params[:result6][:description_id]
-							@title = Description.find(@description).description
-							@y = Description.find(@description).unit
-						else
-							@description = ""
-							@title = ""
-							@y = ""
-						end
+					@x = "Month"
+					if params[:result6] != nil && params[:result6][:description_id] != ""  then 
+						@description = params[:result6][:description_id]
+						@title = Description.find(@description).description
+						@y = Description.find(@description).unit
 						if params[:result1] != nil
 							if params[:result1][:scenario_id] != "" then
 								@scenario1 = params[:result1][:scenario_id] 	
@@ -177,6 +170,11 @@ class ResultsController < ApplicationController
 								@charts3 = get_chart_serie(@scenario3, 2)
 							end
 						end
+					else
+						@description = ""
+						@title = ""
+						@y = ""
+					end
 			end	# end case type
 		end # end if != nill
   end
