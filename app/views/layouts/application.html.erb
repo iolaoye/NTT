@@ -8,32 +8,64 @@
 	</head>
 	<body>
 	  <% if NTTG3::Application.config.language == "en" %>
-		<% I18n.default_locale = :en %>
+			<% I18n.default_locale = :en %>
 	  <% else %>
-		<% I18n.default_locale = :es %>
+			<% I18n.default_locale = :es %>
 	  <% end %>
 
-	  <%= image_tag("NTTG2_Logo.png", :alt => "NTT Logo", width:'100%', height:'200px') %>
+		
+		<header>
+			<!--<h1>NTT</h1>
+			<h2>Nurient Tracking Tool<h2>
+			<br>
+			<h4>3rd Generation</h4>-->
+			<%= image_tag("NTTG2_Logo.png", :alt => "NTT Logo", width:'100%', height:'200px') %>
+		</header>
 
-	  <% if signed_in? %>
-		<%= render 'layouts/header' %>
-	<% else %>
-		<% case request.original_url %>
-			<% when /about/, /contact/, /help/ %>
+		<div class="nav_header">
+			<% if signed_in? %>
 				<%= render 'layouts/header' %>
+			<% else %>
+				<% case request.original_url %>
+					<% when /about/, /contact/, /help/ %>
+						<%= render 'layouts/header' %>
+					<% else %>
+						<div class="spacer">
+							<br>
+							<br>
+						</div>
+				<% end %>
 			<% end %>
-	  <% end %>
+		</div>
 
 	  <!-- main body -->
-	  <div class="container">
-	  	<div class="pageContainer">
+	  <div class="container"><br>
+	  	<div class="pageContainer"><br>
 	  		<div id="pageContent">
 	  			<%= yield %>
 	  			<br><br>
 	  		</div>
+				<% if !signed_in? %>
+				<% case request.original_url %>
+					<% when /users/ %>
+						<br><br>
+				<% end %>
+			<% end %>
 	  	</div>
 	  </div>
-
-	  <%= render 'layouts/footer' %>
+		
+			<% if !signed_in? %>
+				<% case request.original_url %>
+					<% when /users/ %>
+					<br>
+						<div class="spacer margin">
+							<br>
+							<br>
+						</div>
+				<% end %>
+			<% end %>
+	  <footer>
+			<%= render 'layouts/footer' %>
+		</footer>
    </body>
 </html>
