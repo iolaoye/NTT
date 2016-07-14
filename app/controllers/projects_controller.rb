@@ -971,19 +971,19 @@ class ProjectsController < ApplicationController
 						scenario_id = scenario.id
 					end
 				when "Subareas"
-					if save == true then
+					if saved == true then
 						upload_subarea_info(p, scenario_id, soil_id)
 					else
 						return "Error saving scenario"
 					end
 				when "Operations"
-					if save == true then
+					if saved == true then
 						upload_soil_operation_info(p, scenario_id, soil_id)
 					else
 						return "Error saving scenario"
 					end
 				when "Results"
-					if save == true then
+					if saved == true then
 						upload_result_info(p, field_id, soil_id, scenario_id)
 					else
 						return "Error saving scenario"
@@ -1279,7 +1279,7 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_operation_info(node, scenario_id)
+	def upload_operation_info(node, scenario_id, field_id)
 		operation = Operation.new
 		operation.scenario_id = scenario_id
 		event_id = 0
@@ -1330,9 +1330,10 @@ class ProjectsController < ApplicationController
 			end # case
 		end # end each
 		operation.save
-		soils = Soil.where(:field_id => session[:field_id], :selected => true)
+		soils = Soil.where(:field_id => field_id, :selected => true)
 		soils.each do |soil|
-			soil_operation = SoilOperation.where(:soil_id => soil.id, scenario_id => scneario_id, :tractor_id => event_id)
+			session[:depth] = soil.id.to_s + "-" + scenario_id.to_s + "-" + event_id.to_s
+			soil_operation = SoilOperation.where(:soil_id => soil.id, :scenario_id => scenario_id, :tractor_id => event_id).first
 			soil_operation.operation_id = operation.id
 			soil_operation.save
 		end # end soils.each
@@ -1622,7 +1623,7 @@ class ProjectsController < ApplicationController
 					name = p.text
 				when "Operations"
 					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
-					upload_operation_info(p, scenario_id)
+					upload_operation_info(p, scenario_id, field_id)
 				when "Results"
 					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
 					upload_result_info(p, field_id, 0, scenario_id)

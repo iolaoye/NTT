@@ -28,10 +28,10 @@
             <td><%= submit_tag t("result.summary") + " " + t("result.by_soil"), name: "button" %>
           <% when t('result.annual')  + "-" + t('result.charts') %>
             <td><%= collection_select :result5, :description_id, @descriptions, :id, :description, {:prompt => t('result.select_chart'), :required => true, :selected => @description} %></td>
-            <td><%= submit_tag t("result.annual"), name: "button" %></td>
+            <td><%= submit_tag t("result.annual")  + "-" + t('result.charts'), name: "button" %></td>
           <% when t('result.monthly') + "-" + t('result.charts') %>
             <td><%= collection_select :result6, :description_id, Description.where("period == 3 OR period == 1"), :id, :description, {:prompt => t('result.select_chart'), :required => true, :selected => @description} %></td>
-            <td><%= submit_tag t("result.monthly"), name: "button" %></td>
+            <td><%= submit_tag t("result.monthly")  + "-" + t('result.charts'), name: "button" %></td>
           <% when t('result.download_pdf') %>
             <td><%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, target: '_blank', :class => "green_button padding_top", :id => "pdf_download", name: "button" %></td>
         <% end %>
@@ -48,14 +48,14 @@
 </form>
 
 <h1><%=@result_selected + " " + @title%></h1>
-<% if @result_selected == t('result.annual') || @result_selected == t('result.monthly') then %>
+<% if @result_selected == t('result.annual') + "-" + t('result.charts') || @result_selected == t('result.monthly') + "-" + t('result.charts') then %>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-      <%= column_chart [
-      { :name => "1st Scenario", :data => @charts1 },
-      { :name => "2nd Scenario", :data => @charts2 },
-      { :name => "3rd Scenario", :data => @charts3 }
-      ], { library: {hAxis: {title: @x}, vAxis: {title: @y}}}
-      %>
+        <%= column_chart [
+        { :name => "1st Scenario", :data => @charts1 },
+        { :name => "2nd Scenario", :data => @charts2 },
+        { :name => "3rd Scenario", :data => @charts3 }
+        ], { library: {hAxis: {title: @x}, vAxis: {title: @y}}}
+        %>
 <% else %>
   <table class='gvTableStyle'>
       <tr class='gvHeaderStyle'>
@@ -143,7 +143,7 @@
                   </tr>
                 <% else %>
                   <tr class="gvRowStyleEven">
-                    <% if result.description_id > 70 and result.description_id < 90 %>
+                    <% if result.description_id > 70 && result.description_id < 90 %>
                       <td class="gvDetailText bottom_border"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
                       <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
                       <% if @results2 != nil %>

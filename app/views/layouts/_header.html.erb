@@ -38,7 +38,6 @@
     		<li><a <%= link_to t('menu.signout'), logout_path %></a></li>
 	    </ul>      
     </div>
-	<%= request.original_url%>
     <ul class="crumbs">
         <% case request.original_url %>
 	        <% when /project/, /welcome/, /receive_from_mapping_site/ %>
@@ -129,7 +128,7 @@
 <% else %>
 	<div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
-    			   <li><%= link_to t('menu.signin'), login_path %></li>
+			<li><%= link_to t('menu.signin'), login_path %></li>
 	    </ul>      
     </div>
 <% end %>
