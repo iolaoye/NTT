@@ -1453,21 +1453,24 @@ class ProjectsController < ApplicationController
 					@result1.ci_value = p.text
 					@result1.save
 				when "annualFlow"
-					upload_chart_info(field_id, 0, scenario_id, 41)
+					upload_chart_info(p, field_id, 0, scenario_id, 41)
 				when "annualNO3"
-					upload_chart_info(field_id, 0, scenario_id, 22)
+					upload_chart_info(p, field_id, 0, scenario_id, 22)
 				when "annualOrgN"
-					upload_chart_info(field_id, 0, scenario_id, 21)
+					upload_chart_info(p, field_id, 0, scenario_id, 21)
 				when "annualOrgP"
-					upload_chart_info(field_id, 0, scenario_id, 31)
+					upload_chart_info(p, field_id, 0, scenario_id, 31)
 				when "annualPO4"
-					upload_chart_info(field_id, 0, scenario_id, 32)
+					upload_chart_info(p, field_id, 0, scenario_id, 32)
 				when "annualSediment"
-					upload_chart_info(field_id, 0, scenario_id, 61)
+					upload_chart_info(p, field_id, 0, scenario_id, 61)
 				when "annualPrecipitation"
-					upload_chart_info(field_id, 0, scenario_id, 100)
+					upload_chart_info(p, field_id, 0, scenario_id, 100)
 				when "annualCropYield"
-					
+					p.elements.each do |p|
+						#upload annual crops
+						upload_chart_crop_info(p, field_id, 0, scenario_id)
+					end
 			end # end case p.name
 		end  # end node.elements.each
 	end
@@ -1552,10 +1555,10 @@ class ProjectsController < ApplicationController
 		end ## end each
 	end # end method
 
-	def upload_chart_info(node, field_id, soil_id, scenario_id, description_id, type)
+	def upload_chart_info(node, field_id, soil_id, scenario_id, description_id)
 		i = 1
 		month_year = 0
-		year = Weather.find_by_field_id(field_id).simulation_final_year - 11
+		year = @weather["simulation_final_year"].to_i - 11
 		node.elements.each do |p|
 			if i <= 12 then
 				month_year = year
@@ -1564,14 +1567,36 @@ class ProjectsController < ApplicationController
 				month_year = i - 12
 			end
 			i +=1
-			chart = chart.new
+			chart = Chart.new
 			chart.field_id = field_id
 			chart.soil_id = soil_id
 			chart.scenario_id = scenario_id
-			chart.value = p_text
+			chart.value = p.text
 			chart.description_id = description_id
-			chart.mont_year = month_year
+			chart.month_year = month_year
 			chart.save
+		end # end node each
+	end
+
+	def upload_chart_crop_info(node, field_id, soil_id, scenario_id)
+	#todo check for more than one crop
+		i = 1		
+		month_year = @weather["simulation_final_year"].to_i - 11
+		node.elements.each do |p|
+			chart = Chart.new
+			chart.field_id = field_id
+			chart.soil_id = soil_id
+			chart.scenario_id = scenario_id
+			chart.value = p.elements[1]
+			chart.description_id = 71		#todo increase if more than one crop
+			chart.month_year = month_year
+			chart.save
+			if i < 12 then
+				month_year += 1
+			else
+				return
+			end
+			i +=1
 		end # end node each
 	end
 
@@ -1922,5 +1947,4 @@ class ProjectsController < ApplicationController
 		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgslopeRatio"]
 		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgWidth"]
 	end
-
 end
