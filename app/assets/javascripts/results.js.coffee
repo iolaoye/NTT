@@ -25,9 +25,15 @@ update_crops = ->
                items.push "<option value=\"" + i + "\">" + crop.name + " Yield </option>"
                $("#result5_description_id").html items.join("")
   else
-    $("#result5_description_id").html items.join("") 
+    $("#result5_description_id").html items.join("")
+
+pdf = ->
+    $("#pdf_download").click (event) ->
+        $("#myForm").submit()
+
 
 $(document).ready ->
+    pdf()
     $("#result1_scenario_id").change ->
         update_crops()
 
