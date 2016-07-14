@@ -18,7 +18,6 @@
 			   <% when request.original_url.include?("results")%>
 				   <li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
 				   <li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-				   <li><a <%= link_to t('result.download_pdf'), results_path(:button => t('result.download_pdf')) %></a></li>
 				   <li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
 				   <li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
 	           <% when request.original_url.include?("weather") || request.original_url.include?("soil") ||  request.original_url.include?("scenario") || request.original_url.include?("layer")   %>
@@ -38,7 +37,6 @@
     		<li><a <%= link_to t('menu.signout'), logout_path %></a></li>
 	    </ul>      
     </div>
-	<%= request.original_url%>
     <ul class="crumbs">
         <% case request.original_url %>
 	        <% when /project/, /welcome/, /receive_from_mapping_site/ %>
@@ -129,7 +127,7 @@
 <% else %>
 	<div class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="nav navbar-nav">
-    			   <li><%= link_to t('menu.signin'), login_path %></li>
+			<li><%= link_to t('menu.signin'), login_path %></li>
 	    </ul>      
     </div>
 <% end %>

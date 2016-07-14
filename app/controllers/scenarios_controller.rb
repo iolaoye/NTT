@@ -1689,7 +1689,7 @@ class ScenariosController < ApplicationController
 		Array.new(size) { |i| other[i] }
 	end
 
-	def load_month_values(apex_start_year)
+	def load_monthly_values(apex_start_year)
 		data = read_file("APEX001.msw")   #monthly values for sediment, flow, and nutrients
 
         annual_flow = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
@@ -1724,23 +1724,6 @@ class ScenariosController < ApplicationController
 
         last_year -= apex_start_year + 1
 
-		for i in 0..11
-            annual_flow[i] /= last_year
-			add_value_to_chart_table(annual_flow[i], 41, 0, i+1)
-            annual_sediment[i] /= last_year
-			add_value_to_chart_table(annual_sediment[i], 61, 0, i+1)
-            annual_orgn[i] /= last_year
-			add_value_to_chart_table(annual_orgn[i], 21, 0, i+1)
-            annual_orgp[i] /= last_year
-			add_value_to_chart_table(annual_orgp[i], 31, 0, i+1)
-            annual_no3[i] /= last_year
-			add_value_to_chart_table(annual_no3[i], 22, 0, i+1)
-            annual_po4[i] /= last_year
-			add_value_to_chart_table(annual_po4[i], 32, 0, i+1)
-            annual_precipitation[i] /= last_year
-			add_value_to_chart_table(annual_precipitation[i], 41, 0, i+1)
-        end  # end for
-
 		data = read_file("APEX001.mws")   #monthly values for precipitation
 		i=1
 		data.each_line do |tempa|
@@ -1765,6 +1748,22 @@ class ScenariosController < ApplicationController
 			i += 1
 		end # end data.each file apex001.mws
 
+		for i in 0..11
+            annual_flow[i] /= last_year
+			add_value_to_chart_table(annual_flow[i], 41, 0, i+1)
+            annual_sediment[i] /= last_year
+			add_value_to_chart_table(annual_sediment[i], 61, 0, i+1)
+            annual_orgn[i] /= last_year
+			add_value_to_chart_table(annual_orgn[i], 21, 0, i+1)
+            annual_orgp[i] /= last_year
+			add_value_to_chart_table(annual_orgp[i], 31, 0, i+1)
+            annual_no3[i] /= last_year
+			add_value_to_chart_table(annual_no3[i], 22, 0, i+1)
+            annual_po4[i] /= last_year
+			add_value_to_chart_table(annual_po4[i], 32, 0, i+1)
+            annual_precipitation[i] /= last_year
+			add_value_to_chart_table(annual_precipitation[i], 100, 0, i+1)
+        end  # end for
     end
 	
 	def load_results(apex_start_year)
@@ -1849,7 +1848,7 @@ class ScenariosController < ApplicationController
 			end
         end
 		msg = average_totals(results_data, 0)   # average totals
-
+		load_monthly_values(apex_start_year)
 		return msg
 
 		update_results_table

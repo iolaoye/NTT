@@ -49,7 +49,6 @@ class ResultsController < ApplicationController
 						#@result_selected = t('result.summary')
 						session[:first_if] = params[:result1] != nil
 						if params[:result1] != nil
-							#soo
 							session[:result1] = !params[:result1][:scenario_id].eql?("")
 							if !params[:result1][:scenario_id].eql?("") then
 								@scenario1 = params[:result1][:scenario_id] 			
@@ -74,17 +73,11 @@ class ResultsController < ApplicationController
 				when t('result.download_pdf')
 					
 				when t('result.annual')  + "-" + t('result.charts') 
-						@x = "Year"
-						#@result_selected = t('result.annual')
-						if params[:result5] != nil then 
-							@description = params[:result5][:description_id] 
-							@title = Description.find(@description).description
-							@y = Description.find(@description).unit
-						else
-							@description = ""
-							@title = ""
-							@y = ""
-						end
+					@x = "Year"
+					if params[:result5] != nil && params[:result5][:description_id] != "" then
+						@description = params[:result5][:description_id] 
+						@title = Description.find(@description).description
+						@y = Description.find(@description).unit
 						if params[:result1] != nil
 							if params[:result1][:scenario_id] != "" then
 								@scenario1 = params[:result1][:scenario_id] 	
@@ -99,18 +92,17 @@ class ResultsController < ApplicationController
 								@charts3 = get_chart_serie(@scenario3, 1)
 							end
 						end
+					else
+						@description = ""
+						@title = ""
+						@y = ""
+					end
 				when t('result.monthly')  + "-" + t('result.charts') 
-						@x = "Month"
-						#@result_selected = t('result.monthly')
-						if params[:result6] != nil then 
-							@description = params[:result6][:description_id]
-							@title = Description.find(@description).description
-							@y = Description.find(@description).unit
-						else
-							@description = ""
-							@title = ""
-							@y = ""
-						end
+					@x = "Month"
+					if params[:result6] != nil && params[:result6][:description_id] != ""  then 
+						@description = params[:result6][:description_id]
+						@title = Description.find(@description).description
+						@y = Description.find(@description).unit
 						if params[:result1] != nil
 							if params[:result1][:scenario_id] != "" then
 								@scenario1 = params[:result1][:scenario_id] 	
@@ -125,94 +117,59 @@ class ResultsController < ApplicationController
 								@charts3 = get_chart_serie(@scenario3, 2)
 							end
 						end
+					else
+						@description = ""
+						@title = ""
+						@y = ""
+					end
 			end	# end case type
 		end # end if != nill
 		session[:first_if] = params[:result1] != nil
 		if params[:result1] != nil
-			#oo
-			#soo
 			session[:result1] = !params[:result1][:scenario_id] != ""
-			#ooo
 			if params[:result1][:scenario_id] != "" then
 				@scenario1 = params[:result1][:scenario_id] 			
 				@results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
 				#session[:results] = @results1
 				session[:scenario1] = @scenario1
 			end
-			#ooo
 			session[:result2] = params[:result2][:scenario_id] != ""
 			if params[:result2][:scenario_id] != "" then
 				@scenario2 = params[:result2][:scenario_id]
 				@results2 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
 				session[:scenario2] = @scenario2
 			end
-			#ooo
 			session[:result3] = params[:result3][:scenario_id] != ""
-			#oo
 			if params[:result3][:scenario_id] != "" then
 				@scenario3 = params[:result3][:scenario_id]
 				@results3 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
 				session[:scenario3] = @scenario3
 			end
-			#ooo
 		end # end if params[:result1] != nill
 		if params[:format] == "pdf" then
-						respond_to do |format|
-							format.pdf do	
-								oo
-								if session[:first_if]
-									if session[:result1] then			
-										@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
-									end
-									if session[:result2] then
-										@results2 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario2], :soil_id => 0)
-									end
-									if session[:result3] then
-										@results3 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario3], :soil_id => 0)
-									end
-								end # end if session[result1]
+			respond_to do |format|
+				format.pdf do	
+					if session[:first_if]
+						if session[:result1] then			
+							@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
+						end
+						if session[:result2] then
+							@results2 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario2], :soil_id => 0)
+						end
+						if session[:result3] then
+							@results3 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario3], :soil_id => 0)
+						end
+					end # end if session[result1]
 
-								#File.open(save_path, 'wb') do |file|
-								#	file << pdf
-								#end
-								#session[:results] = @results
-								#session[:results] = Result.where(:field_id => session[:field_id], :scenario_id => 0, :soil_id => 0)
-								render  pdf: "report",
-												page_size: "Letter",
-												layout: "pdf",
-												template: "/results/report",
-												footer: { center: '[page] of [topage]'
-													#spacing: -265,
-													#html: { template: '/layouts/_report_header.html'} 
-												},
-												header: { 
-													spacing: -6,
-													#content: render_to_string(template: '/layouts/_page_header.pdf.erb')
-													html: { template: '/layouts/_report_header.html' }
-												},
-												margin: { top: 16 }
-												#javascript_delay: 10000, 
-												#no_stop_slow_scripts: true,
-								#render  pdf: "report",
-								#				page_size: "Letter",
-								#				layout: "pdf",
-								#				template: "/results/report",
-								#				footer: { 
-								#						spacing: -265,
-								#						html: { template: '/layouts/_report_header.html'} 
-								#				},
-								#				header: { 
-								#						spacing: 3,
-								#						html: { template: '/layouts/_page_header.html' }
-								#				},
-								#				margin: { 
-								#						top: 20,
-								#						bottom: 5 
-								#				}
-							end  # end format pdf
-							format.html # index.html.erb
-						end # end respond to do
-					end # if format is pdf
+					render  pdf: "report", page_size: "Letter", layout: "pdf",
+							template: "/results/report", 
+							footer: { center: '[page] of [topage]' },
+							header: { spacing: -6, html: { template: '/layouts/_report_header.html' } },
+							margin: { top: 16 }
+				end  # end format pdf
+				format.html # index.html.erb
+			end # end respond to do
+		end # if format is pdf
   end
 
   #def download
