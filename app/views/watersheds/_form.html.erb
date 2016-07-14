@@ -17,5 +17,6 @@
   </div>
   <div class="actions">
     <%= f.submit t('watershed.create_watershed') %>
+    <%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
   </div>
 <% end %>

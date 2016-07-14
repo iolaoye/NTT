@@ -16,7 +16,7 @@
         <% i = 1 %>
         <% if @results1 != nil %>
             <% @results1.each do |result| %>
-                <% if (I18n.locale.eql?(:en)) %>
+                <% if I18n.locale.eql?(:en) %>
                     <% value2 = 0 %>
                     <% if @results2 != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
                     <% difference1 = value2 - result.value %>

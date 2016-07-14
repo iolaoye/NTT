@@ -22,6 +22,7 @@ class ResultsController < ApplicationController
 		@descriptions = Description.select("id, description").where("id < 70 OR id > 79")
 		#load crop for each scenario selected
 		i = 70
+		
 		if params[:result1] != nil then
 			results = Result.new
 			case true
@@ -43,10 +44,12 @@ class ResultsController < ApplicationController
 			params[:button].eql?(t("result.summary") + " " + t("result.by_soil") && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0" 
 			case @type
 				when t("result.summary"), t("result.summary") + " " + t("result.by_soil")
-					if params[:button].include? t('result.summary') then
+					if params[:button].include? t('result.summary') then 
+						
 						#@result_selected = t('result.summary')
 						session[:first_if] = params[:result1] != nil
 						if params[:result1] != nil
+							#soo
 							session[:result1] = !params[:result1][:scenario_id].eql?("")
 							if !params[:result1][:scenario_id].eql?("") then
 								@scenario1 = params[:result1][:scenario_id] 			
@@ -69,9 +72,92 @@ class ResultsController < ApplicationController
 						end # end if params[:result1] != nill
 					end  #end if params button summary
 				when t('result.download_pdf')
-					if params[:format] == "pdf" then
+					
+				when t('result.annual')  + "-" + t('result.charts') 
+					@x = "Year"
+					if params[:result5] != nil && params[:result5][:description_id] != "" then
+						@description = params[:result5][:description_id] 
+						@title = Description.find(@description).description
+						@y = Description.find(@description).unit
+						if params[:result1] != nil
+							if params[:result1][:scenario_id] != "" then
+								@scenario1 = params[:result1][:scenario_id] 	
+								@charts1 = get_chart_serie(@scenario1, 1)
+							end
+							if params[:result2][:scenario_id] != "" then
+								@scenario2 = params[:result2][:scenario_id]
+								@charts2 = get_chart_serie(@scenario2, 1)
+							end
+							if params[:result3][:scenario_id] != "" then
+								@scenario3 = params[:result3][:scenario_id]
+								@charts3 = get_chart_serie(@scenario3, 1)
+							end
+						end
+					else
+						@description = ""
+						@title = ""
+						@y = ""
+					end
+				when t('result.monthly')  + "-" + t('result.charts') 
+					@x = "Month"
+					if params[:result6] != nil && params[:result6][:description_id] != ""  then 
+						@description = params[:result6][:description_id]
+						@title = Description.find(@description).description
+						@y = Description.find(@description).unit
+						if params[:result1] != nil
+							if params[:result1][:scenario_id] != "" then
+								@scenario1 = params[:result1][:scenario_id] 	
+								@charts1 = get_chart_serie(@scenario1, 2)
+							end
+							if params[:result2][:scenario_id] != "" then
+								@scenario2 = params[:result2][:scenario_id]
+								@charts2 = get_chart_serie(@scenario2, 2)
+							end
+							if params[:result3][:scenario_id] != "" then
+								@scenario3 = params[:result3][:scenario_id]
+								@charts3 = get_chart_serie(@scenario3, 2)
+							end
+						end
+					else
+						@description = ""
+						@title = ""
+						@y = ""
+					end
+			end	# end case type
+		end # end if != nill
+		session[:first_if] = params[:result1] != nil
+		if params[:result1] != nil
+			#oo
+			#soo
+			session[:result1] = !params[:result1][:scenario_id] != ""
+			#ooo
+			if params[:result1][:scenario_id] != "" then
+				@scenario1 = params[:result1][:scenario_id] 			
+				@results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
+				#session[:results] = @results1
+				session[:scenario1] = @scenario1
+			end
+			#ooo
+			session[:result2] = params[:result2][:scenario_id] != ""
+			if params[:result2][:scenario_id] != "" then
+				@scenario2 = params[:result2][:scenario_id]
+				@results2 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
+				session[:scenario2] = @scenario2
+			end
+			#ooo
+			session[:result3] = params[:result3][:scenario_id] != ""
+			#oo
+			if params[:result3][:scenario_id] != "" then
+				@scenario3 = params[:result3][:scenario_id]
+				@results3 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
+				session[:scenario3] = @scenario3
+			end
+			#ooo
+		end # end if params[:result1] != nill
+		if params[:format] == "pdf" then
 						respond_to do |format|
-							format.pdf do			
+							format.pdf do	
+								oo
 								if session[:first_if]
 									if session[:result1] then			
 										@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
@@ -125,58 +211,6 @@ class ResultsController < ApplicationController
 							format.html # index.html.erb
 						end # end respond to do
 					end # if format is pdf
-				when t('result.annual')  + "-" + t('result.charts') 
-					@x = "Year"
-					if params[:result5] != nil && params[:result5][:description_id] != "" then
-						@description = params[:result5][:description_id] 
-						@title = Description.find(@description).description
-						@y = Description.find(@description).unit
-						if params[:result1] != nil
-							if params[:result1][:scenario_id] != "" then
-								@scenario1 = params[:result1][:scenario_id] 	
-								@charts1 = get_chart_serie(@scenario1, 1)
-							end
-							if params[:result2][:scenario_id] != "" then
-								@scenario2 = params[:result2][:scenario_id]
-								@charts2 = get_chart_serie(@scenario2, 1)
-							end
-							if params[:result3][:scenario_id] != "" then
-								@scenario3 = params[:result3][:scenario_id]
-								@charts3 = get_chart_serie(@scenario3, 1)
-							end
-						end
-					else
-						@description = ""
-						@title = ""
-						@y = ""
-					end
-				when t('result.monthly')  + "-" + t('result.charts') 
-					@x = "Month"
-					if params[:result6] != nil && params[:result6][:description_id] != ""  then 
-						@description = params[:result6][:description_id]
-						@title = Description.find(@description).description
-						@y = Description.find(@description).unit
-						if params[:result1] != nil
-							if params[:result1][:scenario_id] != "" then
-								@scenario1 = params[:result1][:scenario_id] 	
-								@charts1 = get_chart_serie(@scenario1, 2)
-							end
-							if params[:result2][:scenario_id] != "" then
-								@scenario2 = params[:result2][:scenario_id]
-								@charts2 = get_chart_serie(@scenario2, 2)
-							end
-							if params[:result3][:scenario_id] != "" then
-								@scenario3 = params[:result3][:scenario_id]
-								@charts3 = get_chart_serie(@scenario3, 2)
-							end
-						end
-					else
-						@description = ""
-						@title = ""
-						@y = ""
-					end
-			end	# end case type
-		end # end if != nill
   end
 
   #def download

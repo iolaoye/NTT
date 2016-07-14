@@ -112,9 +112,9 @@ class ScenariosController < ApplicationController
     #@doc = "Nothing"
     @scenario = Scenario.find(params[:id])
 	dir_name = APEX + "/APEX" + session[:session_id]
-	#dir_name = "#{Rails.root}/data/#{session[:session_id]}"
+	dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
 	if !File.exists?(dir_name)
-		Dir.mkdir(dir_name) 
+		FileUtils.mkdir_p(dir_name)
 	else
 		#FileUtils.rm_rf(Dir.glob(File.join(dir_name, "*")))
 		#File.delete(dir_name + "/*")
