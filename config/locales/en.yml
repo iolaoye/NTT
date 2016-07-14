@@ -406,7 +406,9 @@ en:
     operation_file: Operation
   result:
     summary: Summary
-    by_soil: by Soil
+    by_soil: By Soil
+    download_pdf: Download PDF
+    charts: Charts
     monthly: Monthly
     annual: Annual
     update_chart: Update Chart

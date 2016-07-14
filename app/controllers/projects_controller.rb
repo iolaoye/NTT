@@ -896,19 +896,19 @@ class ProjectsController < ApplicationController
 						scenario_id = scenario.id
 					end
 				when "Subareas"
-					if save = true then
+					if save == true then
 						upload_subarea_info(p, scenario_id, soil_id)
 					else
 						return "Error saving scenario"
 					end
 				when "Operations"
-					if save = true then
+					if save == true then
 						upload_soil_operation_info(p, scenario_id, soil_id)
 					else
 						return "Error saving scenario"
 					end
 				when "Results"
-					if save = true then
+					if save == true then
 						upload_result_info(p, field_id, soil_id, scenario_id)
 					else
 						return "Error saving scenario"
