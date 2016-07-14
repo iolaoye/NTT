@@ -49,7 +49,6 @@ class ResultsController < ApplicationController
 						#@result_selected = t('result.summary')
 						session[:first_if] = params[:result1] != nil
 						if params[:result1] != nil
-							#soo
 							session[:result1] = !params[:result1][:scenario_id].eql?("")
 							if !params[:result1][:scenario_id].eql?("") then
 								@scenario1 = params[:result1][:scenario_id] 			
@@ -127,37 +126,29 @@ class ResultsController < ApplicationController
 		end # end if != nill
 		session[:first_if] = params[:result1] != nil
 		if params[:result1] != nil
-			#oo
-			#soo
 			session[:result1] = !params[:result1][:scenario_id] != ""
-			#ooo
 			if params[:result1][:scenario_id] != "" then
 				@scenario1 = params[:result1][:scenario_id] 			
 				@results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
 				#session[:results] = @results1
 				session[:scenario1] = @scenario1
 			end
-			#ooo
 			session[:result2] = params[:result2][:scenario_id] != ""
 			if params[:result2][:scenario_id] != "" then
 				@scenario2 = params[:result2][:scenario_id]
 				@results2 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
 				session[:scenario2] = @scenario2
 			end
-			#ooo
 			session[:result3] = params[:result3][:scenario_id] != ""
-			#oo
 			if params[:result3][:scenario_id] != "" then
 				@scenario3 = params[:result3][:scenario_id]
 				@results3 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
 				session[:scenario3] = @scenario3
 			end
-			#ooo
 		end # end if params[:result1] != nill
 		if params[:format] == "pdf" then
 						respond_to do |format|
 							format.pdf do	
-								oo
 								if session[:first_if]
 									if session[:result1] then			
 										@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
