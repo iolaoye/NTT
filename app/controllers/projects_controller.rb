@@ -335,6 +335,21 @@ class ProjectsController < ApplicationController
 					save_bmp_information(xml, bmp)
 				end # end bmps.each
 			} # end xml.bmp operation
+
+			soil_operations = SoilOperation.where(:scenario_id => scenario.id)
+			xml.soil_operations {
+				soil_operations.each do |so|
+					save_soil_operation_information(xml, so)
+				end # end soil_operations.each
+			} # end xml.soil_operations
+
+			subareas = Subarea.where(:scenario_id => scenario.id)
+			xml.subareas {
+				subareas.each do |sa|
+					save_subarea_information(xml, sa)
+				end # end subarea.each
+			} # end xml.subareas
+
 		} # end xml.scenario
 	end #end scenarionmethod
 
@@ -389,6 +404,66 @@ class ProjectsController < ApplicationController
 			xml.difference_min_temperature bmp.difference_min_temperature
 			xml.difference_precipitation bmp.difference_precipitation
 		} # xml bmp end
+	end # end method
+
+	def save_soil_operation_information(xml, soil_operation)
+		xml.soil_operation {
+			xml.apex_crop soil_operation.apex_crop
+			xml.opv1 soil_operation.opv1
+			xml.opv2 soil_operation.opv2
+			xml.opv3 soil_operation.opv3
+			xml.opv4 soil_operation.opv4
+			xml.opv5 soil_operation.opv5
+			xml.opv6 soil_operation.opv6
+			xml.opv7 soil_operation.opv7
+			xml.activity_id soil_operation.activity_id
+			xml.year soil_operation.year
+			xml.month soil_operation.month
+			xml.day soil_operation.day
+			xml.operation_id soil_operation.operation_id
+			xml.type_id soil_operation.type_id
+			xml.scenario_id soil_operation.soil_id
+			xml.apex_operation soil_operation.apex_operation
+		} # xml each soil_operation end
+	end # end method
+
+	def save_subarea_information(xml, subarea)
+		xml.subarea {
+			xml.type subarea.type
+			xml.description subarea.description
+			xml.number subarea.number
+			xml.inps subarea.inps
+			xml.iops subarea.iops
+			xml.iow subarea.iow
+			xml.ii subarea.ii
+			xml.iapl subarea.iapl
+			xml.nvcn subarea.nvcn
+			xml.iwth subarea.iwth
+			xml.ipts subarea.ipts
+			xml.isao subarea.isao
+			xml.luns subarea.luns
+			xml.imw subarea.imw
+			xml.sno subarea.sno
+			xml.stdo subarea.stdo
+			xml.yct subarea.yct
+			xml.xct subarea.xct
+			xml.azm subarea.azm
+			xml.fl subarea.fl
+			xml.angl subarea.angl
+			xml.wsa subarea.wsa
+			xml.chl subarea.chl
+			xml.chd subarea.chd
+			xml.chs subarea.chs
+			xml.chn subarea.chn
+			xml.slp subarea.slp
+			xml.splg subarea.splg
+			xml.upn subarea.upn
+			xml.ffpq subarea.ffpq
+			xml.urbf subarea.urbf
+			xml.soil_id subarea.soil_id
+			xml.bmp_id subarea.bmp_id
+			xml.scenario_id subarea.scenario_id
+		} # xml each subarea end
 	end # end method
 
   private
@@ -896,19 +971,19 @@ class ProjectsController < ApplicationController
 						scenario_id = scenario.id
 					end
 				when "Subareas"
-					if save = true then
+					if save == true then
 						upload_subarea_info(p, scenario_id, soil_id)
 					else
 						return "Error saving scenario"
 					end
 				when "Operations"
-					if save = true then
+					if save == true then
 						upload_soil_operation_info(p, scenario_id, soil_id)
 					else
 						return "Error saving scenario"
 					end
 				when "Results"
-					if save = true then
+					if save == true then
 						upload_result_info(p, field_id, soil_id, scenario_id)
 					else
 						return "Error saving scenario"
