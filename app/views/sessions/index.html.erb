@@ -16,9 +16,9 @@
       <div class="actions login">
         <%= submit_tag t('submit.login') %></br>
         <% if (I18n.locale.eql?(:en)) %>
-          <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button english" %>
+          <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button" %>
         <% else %>
-          <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button spanish" %>
+          <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button" %>
         <% end %>
       </div>
     </div>
