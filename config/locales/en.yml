@@ -274,7 +274,7 @@ en:
     project: Project
     new_project: 'New Project'
     upload_project: 'Upload Project'
-    upload_button_desc: 'Project to Upload'
+    upload_button_desc: 'Project to Upload:'
     editing_project: 'Editing Project'
   footer:
     instructions: Instructions
@@ -390,6 +390,7 @@ en:
     save: Save Changes
     login: Sign in
     update: Update
+    new_user: New User
   sessions:
     index:
       email: Email
@@ -504,6 +505,10 @@ en:
     understanding1: APEX
     understanding2: NTT Disclaimer
   pdf:
+    ntt_report: Nutrient Tracking Tool - Report
+    user: User
+    email: Email
+    company: Company
     input_info: Input Information Report
     name: Name
     description: Description
@@ -591,6 +596,12 @@ en:
     inches: inches
     acres: acres
     days: days
+    annual_results: Annual Results for Nutrients, Flow, Sediment, and Crop Yield
+    description: Description
+    baseline: Baseline
+    difference: Difference
+    reduction: Reduction
+    total_area: Total Area
   sysreq:
     header: System Requirements
     minreq:
@@ -674,18 +685,18 @@ en:
     navredir: 'to get a basic understanding of how to navigate the <b>NTT</b> application.'
     initial:
         header: To Start a Project
-        statement: "There are <b>three initial choices</b> to start a new project:"
-        item1: 'Select the <b>Create New Project</b> option to start a project from scratch'
-        item2: 'Select the <b>Open Saved Project</b> option to start a <b>previously saved</b> project.'
+        statement: "There are <b>two initial choices</b> to start a new project:"
+        item1: 'Select the <b>New Project</b> option to start a project from scratch'
+        item2: 'Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.'
         item3: 'Select the <b>Open an Example Project</b> option to start a <b>pre-defined example</b> project.'
     create:
-        header: Create New Project Option
-        body1: 'Selecting the <b>Create New Project</b> button asks the user for the project name, and description information.'
-        body2: 'After you have entered the information, click the <b>Save and Continue</b> button to save the information and continue.'
+        header: New Project Option
+        body1: 'Selecting the <b>New Project</b> button asks the user for the project name, and description information.'
+        body2: 'After you have entered the information, click the <b>Create Project</b> button to save the information and continue.'
     open:
-        header: Open Saved Project Option
-        body1: 'You can also use the <b>Open Saved Project</b> button to retrieve an NTT Save File containing previously saved information.'
-        body2: 'After you have opened the save project, click the <b>Save and Continue</b> button to save the information and continue.'
+        header: Upload Project Option
+        body1: 'You can also use the <b>Upload Project</b> button to retrieve an NTT Save File containing previously saved information.'
+        body2: 'After you have opened the save project, click the <b>Save Changes</b> button to save the information and continue.'
     example:
         header: Open an Example Project Option
         body1: 'You can also use the <b>Open an Example Project</b> button, and then select from the options to load a sample project file.'

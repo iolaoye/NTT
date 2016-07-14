@@ -14,21 +14,30 @@
   <% @fields.each do |field| %>
     <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">
+        <td class="gvCellStyleText"><%= link_to field.field_name, field %></td>
+        <td class="gvCellStyleNumber", class="numbers"><%= field.field_area %></td>
+        <td class="gvCellStyleNumber"><%= field.field_average_slope %></td>
+        <td class="gvCellStyleCheckbox">
+          <%#= link_to image_tag("view.png"), field %>
+          <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+        <td class="gvCellStyleCheckbox"><label><input type="checkbox" name="field_type" value="field_type"></label></td>
+      </tr>
     <% else %>
       <tr class="gvRowStyleOdd">
+        <td class="gvCellStyleText"><%= link_to field.field_name, field %></td>
+        <td class="gvCellStyleNumber", class="numbers"><%= field.field_area %></td>
+        <td class="gvCellStyleNumber"><%= field.field_average_slope %></td>
+        <td class="gvCellStyleCheckbox">
+          <%#= link_to image_tag("view.png"), field %>
+          <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+        <td class="gvCellStyleCheckbox"><label><input type="checkbox" name="field_type" value="field_type"></label></td>
+      </tr>
     <% end %>
     <% i = i + 1 %>
-  <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= link_to field.field_name, field %></td>
-    <td class="gvCellStyleNumber", class="numbers"><%= field.field_area %></td>
-    <td class="gvCellStyleNumber"><%= field.field_average_slope %></td>
-    <td class="gvCellStyleCheckbox">
-      <%#= link_to image_tag("view.png"), field %>
-      <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
-      <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
-    <td class="gvCellStyleCheckbox"><label><input type="checkbox" name="field_type" value="field_type"></label></td>
-  </tr>
 <% end %>
 </table>
 

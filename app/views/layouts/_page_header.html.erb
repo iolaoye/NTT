@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <% user_id = session[:user_id] %>
+    <% user = User.find(user_id) %>
+    <script>
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+          document.getElementsByClassName("page")[0].innerHTML(vars[x[i]]);
+        }
+      }
+    </script>
+  </head>
+  <body onload="number_pages()">
+    <div class="page_header inline">
+          <h3 class="margin_none font_roboto"><%=t('pdf.ntt_report')%></h3>
+      </div>
+      <div class="right margin_none">
+        <span class="font_roboto margin_bottom">
+            <strong><%=t('pdf.user')%>:</strong> <%= user.name %>
+        </span>
+        <span class="break">|</span>
+        <span class='page margin_bottom'>10</span></br>
+        </span>
+      </div>
+      <div>
+          <hr class="line_break" color="dodgerblue">
+      </div>
+  </body>
+</html>
+
+<!--
+    
+        <% user_id = session[:user_id] %>
+        <% user = User.find(user_id) %>
+            <div class="page_header inline">
+                <h3 class="margin_none">Nutrient Tracking Tool - Report</h3>
+            </div>
+            <div class="right">
+                <strong>User:</strong> <%= user.name %> - <span class="page"></span></br>
+            </div>
+            <div>
+                <hr class="line_break" color="dodgerblue">
+            </div>
+        </div> -->

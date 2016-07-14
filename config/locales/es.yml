@@ -386,6 +386,7 @@
     save: Guardar
     login: Iniciar sesión
     update: Actualizar
+    new_user: Usuario Nuevo
   sessions:
     index:
       email: Correo Electrónico
@@ -500,6 +501,10 @@
     understanding1: APEX
     understanding2: Descargo de responsabilidad del NTT
   pdf:
+    ntt_report: Nutrient Tracking Tool - Informe
+    user: Usuario
+    email: Email
+    company: Empresa
     input_info: Reporte de Información Entrada
     name: Nombre
     description: Descripción
@@ -587,6 +592,12 @@
     inches: pulgadas
     acres: acres
     days: días
+    annual_results: Resultados anuales de nutrientes, flujo, sedimentos, y rendimientos de cultivos
+    description: Descripción
+    baseline: Base
+    difference: Diferencia
+    reduction: Reducción
+    total_area: Área Total
   sysreq:
     header: Requisitos del Sistema
     minreq:
