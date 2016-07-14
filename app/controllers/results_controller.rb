@@ -147,61 +147,29 @@ class ResultsController < ApplicationController
 			end
 		end # end if params[:result1] != nill
 		if params[:format] == "pdf" then
-						respond_to do |format|
-							format.pdf do	
-								if session[:first_if]
-									if session[:result1] then			
-										@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
-									end
-									if session[:result2] then
-										@results2 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario2], :soil_id => 0)
-									end
-									if session[:result3] then
-										@results3 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario3], :soil_id => 0)
-									end
-								end # end if session[result1]
+			respond_to do |format|
+				format.pdf do	
+					if session[:first_if]
+						if session[:result1] then			
+							@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
+						end
+						if session[:result2] then
+							@results2 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario2], :soil_id => 0)
+						end
+						if session[:result3] then
+							@results3 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario3], :soil_id => 0)
+						end
+					end # end if session[result1]
 
-								#File.open(save_path, 'wb') do |file|
-								#	file << pdf
-								#end
-								#session[:results] = @results
-								#session[:results] = Result.where(:field_id => session[:field_id], :scenario_id => 0, :soil_id => 0)
-								render  pdf: "report",
-												page_size: "Letter",
-												layout: "pdf",
-												template: "/results/report",
-												footer: { center: '[page] of [topage]'
-													#spacing: -265,
-													#html: { template: '/layouts/_report_header.html'} 
-												},
-												header: { 
-													spacing: -6,
-													#content: render_to_string(template: '/layouts/_page_header.pdf.erb')
-													html: { template: '/layouts/_report_header.html' }
-												},
-												margin: { top: 16 }
-												#javascript_delay: 10000, 
-												#no_stop_slow_scripts: true,
-								#render  pdf: "report",
-								#				page_size: "Letter",
-								#				layout: "pdf",
-								#				template: "/results/report",
-								#				footer: { 
-								#						spacing: -265,
-								#						html: { template: '/layouts/_report_header.html'} 
-								#				},
-								#				header: { 
-								#						spacing: 3,
-								#						html: { template: '/layouts/_page_header.html' }
-								#				},
-								#				margin: { 
-								#						top: 20,
-								#						bottom: 5 
-								#				}
-							end  # end format pdf
-							format.html # index.html.erb
-						end # end respond to do
-					end # if format is pdf
+					render  pdf: "report", page_size: "Letter", layout: "pdf",
+							template: "/results/report", 
+							footer: { center: '[page] of [topage]' },
+							header: { spacing: -6, html: { template: '/layouts/_report_header.html' } },
+							margin: { top: 16 }
+				end  # end format pdf
+				format.html # index.html.erb
+			end # end respond to do
+		end # if format is pdf
   end
 
   #def download
