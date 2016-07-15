@@ -275,6 +275,7 @@
     project: Proyecto
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'
+    upload_example: Subir Ejemplo
     upload_button_desc: 'Proyecto a Subir'
     editing_project: 'Revisión de Proyecto'
   footer:
