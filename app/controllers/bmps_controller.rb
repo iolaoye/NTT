@@ -725,7 +725,7 @@ before_filter :take_names
         end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-          if i = 0 then 
+          if i == 0 then 
             @inps = subarea.inps   #select the first soil, which is with bigest area
             i += 1
           end
@@ -849,7 +849,7 @@ before_filter :take_names
         end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-          if i = 0 then 
+          if i == 0 then 
             @inps = subarea.inps   #select the first soil, which is with bigest area
             i += 1
           end
@@ -901,7 +901,7 @@ before_filter :take_names
         end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-          if i = 0 then 
+          if i == 0 then 
             @inps = subarea.inps   #select the first soil, which is with bigest area
             i += 1
           end
