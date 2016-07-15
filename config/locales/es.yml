@@ -363,8 +363,8 @@
     activity_title: Lista de Actividades
   field:
     field: Parcela
-    field_name: Nombre Parcela
-    field_area: Área Parcela
+    field_name: Nombre de Parcela
+    field_area: Área de Parcela
     field_avg_slope: Inclinación promedio parcela
     new_field: Parcela Nueva
     field_title: Lista Parcelas
@@ -482,7 +482,7 @@
     email: 'gallego@tiaer.tarleton.edu'
   help:
     header: NTT Tabla de Contenidos
-    return_to_table: '<< Regresar a la Tabla de Contenidos'
+    return_to_table: 'Regresar a la Tabla de Contenidos'
     overview: Visión General
     overview1: Acerca de NTT
     overview2: Información del Contacto

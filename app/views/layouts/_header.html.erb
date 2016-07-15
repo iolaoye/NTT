@@ -7,8 +7,12 @@
             <% case  %>			 
 	           <% when request.original_url.include?("project") || request.original_url.include?("welcome") ||  request.original_url.include?("about") || request.original_url.include?("contact") || request.original_url.include?("help")  %>
 			       <li><a <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
-   			       <li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>
-	           <% when request.original_url.include?("apex_controls") ||  request.original_url.include?("apex_parameters") || request.original_url.include?("subarea") || request.original_url.include?("apex_soil") || request.original_url.include?("apex_layer") || request.original_url.include?("soil_operation") || request.original_url.include?("site")%>
+   			       <li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>			   
+			   <% when request.original_url.include?("location") || request.original_url.include?("field") ||  request.original_url.include?("watershed") || request.original_url.include?("watershed_scenario")%>
+				   <li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+				   <li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+				   <li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>	       
+			   <% when request.original_url.include?("apex_controls") ||  request.original_url.include?("apex_parameters") || request.original_url.include?("subarea") || request.original_url.include?("apex_soil") || request.original_url.include?("apex_layer") || request.original_url.include?("soil_operation") || request.original_url.include?("site")%>
 				   <li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
 				   <li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
 				   <li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
@@ -25,11 +29,7 @@
 				   <li><a <%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></a></li>
 				   <li><a <%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></a></li>
 				   <li><a <%= link_to t('menu.results'), results_path(:button => t('result.summary')) %></a></li>
-				   <li><a <%= link_to t('menu.apex_file'), apex_controls_path %></a></li> 
-			   <% when request.original_url.include?("location") || request.original_url.include?("field") ||  request.original_url.include?("watershed")%>
-				   <li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
-				   <li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
-				   <li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
+				   <li><a <%= link_to t('menu.apex_file'), apex_controls_path %></a></li>
 			   <% when request.original_url.include?("operation") || request.original_url.include?("bmp")%>
 				   <li><a <%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></a></li>
 				   <li><a <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></a></li>
@@ -99,6 +99,7 @@
 				<% project_name = Project.find(session[:project_id]).name %>
 		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
 		        <li><%=">>"%><%=project_name%></li>
+				<li><%=">>"%>
 				<% case request.original_url %>
 					<% when /location/ %>
 						<li><%= t('menu.location') %></li>
@@ -113,8 +114,10 @@
 				<% scenario_name = Scenario.find(session[:scenario_id]).name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=project_name%></li>
+				<li><%=">>"%>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 			    <li><%=">>"%><%=field_name%></li>
+				<li><%=">>"%>
 			    <li><%=link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
 			    <li><%=">>"%><%=scenario_name%></li>
 				<% if request.original_url.include? "operation" %>
