@@ -376,10 +376,11 @@
     watershed_name: Nombre de la Cuenca
     new_watershed: Nueva Cuenca
     watershed_title: Listado de Cuencas
+    watershed_scenario: Escenario de Cuencas
     create_watershed: Crear Cuenca
   watershed_scenario:
     watershed_scenario_name: Nombre de la cuenca
-    watershed_scenario_title: Listing Watershed Scenarios
+    watershed_scenario_title: Lista de Escenario de Cuencas
     add_to_watershed: Adicionar a la cuenca
   submit:
     create: Crear
