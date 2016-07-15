@@ -379,6 +379,7 @@ en:
     new_watershed: New Watershed
     watershed_title: Listing Watershed
     create_watershed: Create Watershed
+    watershed_scenario: Watershed Scenario
   watershed_scenario:
     watershed_scenario_name: Watershed Name
     watershed_scenario_field: Watershed Field
