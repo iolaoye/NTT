@@ -38,7 +38,7 @@ class ResultsController < ApplicationController
 				#get crops name for each result to add to description list 
 				crop = Crop.find(result.crop_id)
 			end # end results.each
-		end # end if 
+		end # end if
 		@type = params[:button]
 		if params[:button] != nil then
 			params[:button].eql?(t("result.summary") + " " + t("result.by_soil") && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0" 
@@ -169,6 +169,7 @@ class ResultsController < ApplicationController
 				end  # end format pdf
 				format.html # index.html.erb
 			end # end respond to do
+			@type = t('result.summary')
 		end # if format is pdf
   end
 
