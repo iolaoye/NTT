@@ -1,37 +1,26 @@
 ﻿<%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div class="flash_alert">
-		<h3><%=pluralize(@user.errors.count, "error") %> prohibited this user from being save:</h3>
-		<ul>
-		  <% @user.errors.full_messages.each do |msg| %>
-		    <li><%= msg %></li>
-		  <% end %>
-		</ul>
-	</div>
+      <h3><%=pluralize(@user.errors.count, "error") %> prohibited this user from being save:</h3>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label t('sessions.index.email') %><br />
-	<%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label t('sessions.index.password') %><br />
-	<%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label t('users.confirmation') %><br />
-	<%= f.password_field :password_confirmation %>
-  </div>
-  <div class="field">
-    <%= f.label t('general.name') %><br />
-	<%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label t('users.company') %><br />
-    <%= f.text_field :company %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  
+  <div class="center left less-padding">
+    <h2><%= t('submit.new_user')%></h2>
+    <div class="field">
+    <%= f.text_field :email, placeholder: t('sessions.index.email') %>
+    <%= f.password_field :password, placeholder: t('sessions.index.password') %>
+    <%= f.password_field :password_confirmation, placeholder: t('users.confirmation') %>
+    <%= f.text_field :name, placeholder: t('general.name') %>
+    <%= f.text_field :company, placeholder: t('users.company') %>
+    </div>
+    <div class="actions new">
+      <%= f.submit t('submit.create') + " " + t('users.user') %>
+    </div>
 <% end %>
 

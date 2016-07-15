@@ -113,6 +113,7 @@ class SoilsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def soil_params
-      params.require(:soil).permit(:albedo, :drainage_type, :field_id, :group, :key, :name, :percentage, :selected, :slope, :symbol)
+      params.require(:soil).permit(:albedo, :drainage_type, :field_id, :group, :key, :name, :percentage, :selected, :slope, :symbol ,:ffc, :wtmn, :wtmx, :wtbl, :gwst, :gwmx, 
+	  :rft, :rfpk, :tsla, :xids, :rtn1, :xidk, :zqt, :zf, :ztk, :fbm, :fhp )
     end
 end

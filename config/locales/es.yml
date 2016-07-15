@@ -260,6 +260,7 @@
     simulations: Simulaciones
     results: Resultados
     modifications: Modificaciones
+    signin: Iniciar sesión
     signout: Salir
     site: Sitio
     control_file: Control
@@ -324,6 +325,7 @@
   layer:
     new_layer: Nueva Capa
     create_layer: Crear Capa
+    layer_number: Número de Capa
   scenario:
     scenario_name: Nombre Escenario
     scenario: Escenario
@@ -350,6 +352,7 @@
     bmp: MPG
     irrigation: Irrigación
     plant_population: Población de Planta
+    load_operation: Cargar Operación
   bmp:
     bmp_group: Grupo de MPG
     select_bmp:  Seleccione Grupo de MPG   
@@ -360,8 +363,8 @@
     activity_title: Lista de Actividades
   field:
     field: Parcela
-    field_name: Nombre Parcela
-    field_area: Área Parcela
+    field_name: Nombre de Parcela
+    field_area: Área de Parcela
     field_avg_slope: Inclinación promedio parcela
     new_field: Parcela Nueva
     field_title: Lista Parcelas
@@ -383,6 +386,7 @@
     save: Guardar
     login: Iniciar sesión
     update: Actualizar
+    new_user: Usuario Nuevo
   sessions:
     index:
       email: Correo Electrónico
@@ -421,6 +425,7 @@
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa
+    user: Usuario
   subarea:
     subarea_type: Tipo de Subárea
     subarea_number: Número Subárea 
@@ -475,7 +480,7 @@
     email: 'gallego@tiaer.tarleton.edu'
   help:
     header: NTT Tabla de Contenidos
-    return_to_table: '<< Regresar a la Tabla de Contenidos'
+    return_to_table: 'Regresar a la Tabla de Contenidos'
     overview: Visión General
     overview1: Acerca de NTT
     overview2: Información del Contacto
@@ -495,6 +500,104 @@
     understanding: La Comprensión de NTT
     understanding1: APEX
     understanding2: Descargo de responsabilidad del NTT
+  pdf:
+    ntt_report: Nutrient Tracking Tool - Informe
+    user: Usuario
+    email: Email
+    company: Empresa
+    input_info: Reporte de Información Entrada
+    name: Nombre
+    description: Descripción
+    date_created: Fecha de Creacion
+    report_created: Fecha de Creacion del Informe
+    location_info: Ubicación e Información Adicional del Sitio
+    state: Estdo
+    county: Condado
+    weather_info: Información del Clima
+    weather_option: Opcion de Clima
+    station_name: Nombre de estación
+    weather_period: Período de Clima
+    simulation_period: Período de Simulación
+    field_info: Información del campo
+    area: Área
+    channel_erodibility: Erosionabilidad del Canal
+    average_slope: Promedio de Inclinación
+    soil_info: Información de la Tierra
+    symbol: Símbolo
+    group: Grupo
+    albedo: Albedo
+    slope: Inclinación
+    percentage: Porcentaje
+    layers_info: Información de Capas
+    soil_name: Nombre de la Tierra
+    depth: Profundidad
+    soil: Tierra
+    bulk_density: Densidad Aparente
+    sand: Arena
+    silt: Limo
+    organic_matter: Materia Orgánica
+    ph: pH
+    management_info: Información de Administración
+    scenario: Escenario
+    crop: Cultivo
+    operation: Operation
+    year: Year
+    month: Month
+    day: Day
+    operation_method: Método de Operación
+    val_one: Val One
+    val_two: Val Two
+    bmp_info: Informatción de las Mejores Prácticas de Administración (BMPs)
+    autoirrigation: Autoirrigation
+    irrigation: Irrigación
+    water_stress_factor: Factor de estrés hídrico
+    irrigation_efficiency: Eficiencia del riego
+    max_single_application: Máxima aplicación única
+    safety_factor: Factor de seguridad
+    reservoir_area: Área del embalse
+    irrigation_frequency: La frecuencia de riego
+    autofertigation: Autofertigation
+    tile_drain: Tile drain
+    ppdi: Pads and Pipes - No Ditch Improvement
+    ppds: Pads and Pipes - Two-Stage Ditch System
+    ppde: Pads and Pipes - Ditch Enlargement and Reservoir System
+    ppti: Pads and Pipes - Tailwater Irrigation
+    width: Width
+    sides: Sides
+    wetlands: Humedales
+    ponds: Estanques
+    stream_fencing: Stream Fencing
+    animal: Animal
+    number_of_animals: Número de animales
+    hours: Horas
+    dry_manure: Estiércol seco
+    streambank_stabilization: Streambank Stabilization
+    riparian_forest: Riparian Forest Buffer
+    grass_field_portion: Grass field portion
+    slope_ratio: Slope ratio
+    filter_strip: Filter Strip
+    waterway: Waterway (Grassed Buffer)
+    contour_buffer: Contour Buffer
+    land_leveling: Land Leveling
+    crop_width: Crop width
+    slope_reduction: Slope reduction
+    terrace_system: Terrace System
+    climate: Cambios de Temperatura y Precipitación
+    climage_change: Se han hecho cambios en los archivos del clima
+    asphalt_concrete: Asfalto o Cemento
+    grass_cover: Grass Cover
+    slope_adjustment: Slope Adjustment
+    shading: Sombra
+    none_required: Este BMP no requiere ninguna entrada
+    inches: pulgadas
+    acres: acres
+    days: días
+    annual_results: Resultados anuales de nutrientes, flujo, sedimentos, y rendimientos de cultivos
+    description: Descripción
+    baseline: Base
+    difference: Diferencia
+    reduction: Reducción
+    total_area: Área Total
   sysreq:
     header: Requisitos del Sistema
     minreq:
@@ -526,3 +629,82 @@
         ie10: 'Internet Explorer 10'
         ie11: 'internet Explorer 11'
         netscape: 'Netscape 9.0'
+    display:
+        header: Resolución de Pantalla
+        body: 'El software ha sido probado y funciona correctamente en resoluciones de apenas 800 × 600, pero la parte inferior de la resolución, más tendrá que desplazarse.'
+    javascript:
+        header: JavaScript
+        body: 'Para ejecutar <b>NTT</b>, JavaScript es requerido. Si JavaScript está desactivado en su navegador, la aplicación simplemente no funcionará en absoluto. Usted verá un mensaje de error en este caso.'
+    cookies:
+        header: Cookies
+        body: '<b>NTT</b> mantiene una sesión entre el servidor y su navegador. Esto requiere que las “cookies de sesión” estén habilitadas para la página de <b>NTT</b>. Las “cookies de sesión” son válidas sólamente para la sesión actual del navegador. Ellas se mantienen solamente en la memoria del navegador, no escritas en el disco de sistema. Si no están habilitadas, la aplicación terminará su sesión con un mensaje diciendo que deben habilitar las cookies de sesión.'
+    popup:
+        header: Bloqueador de Ventanas Emergentes
+        body1: 'De forma predeterminada, <b>NTT</b> abre algunos contenidos en una ventana de navegador externo, específicamente:'
+        list1: 'Enlaces a otros sitios'
+        list2: ' Pantallas de <b>Ayuda</b>'
+        body2: 'Si usted tiene configurado un bloqueador de ventanas emergentes, probablemente no permitirá esto. Si desea abrir estos tipos de ventanas, debe configurar el bloqueador para que permita elementos emergentes de este sitio.'
+  nav:
+    header: Conceptos Básicos de Navegación
+    overview:
+        header: Resumen
+        statement: 'La herramienta de seguimiento de nutrientes fue diseñada de para ser fácil de usar, con diez pantallas principales:'
+        project: 'En la pantalla de <a href=/help/page_3?locale=en>Proyecto</a> , el usuario ingresa el nombre y la descripción del proyecto, o puede abrir proyectos guardados o proyectos de ejemplo o cerrar/guardar el proyecto activo.'
+        location: 'En la pantalla de <a href=/help/page_4?locale=en>Ubicación</a> , los usuarios ingresan la ubicación del proyecto basado en datos de SIG, en el input de estado/Condado, o la entrada manual del usuario.'
+        weather: 'En la pantalla de <a href=/help/page_5?locale=en>Clima</a> , los usuarios ingresan o verifican la información meteorológica, y la longitud de la simulación.'
+        fields: 'En la pantalla de <a href=/help/page_6?locale=en>Parcelas</a> , los usuarios crean nuevos campos o verifican los campos dibujados en la página ubicación.'
+        soils: 'En la pantalla de <a href=/help/page_7?locale=en>Suelos</a> , los usuarios verifican/agregan/eliminan los suelos y las capas correspondientes a esos suelos para el proyecto, o pueden entrar la información completa del suelo si el proyecto se basa en la entrada de datos manual.'
+        management: 'En la pantalla de <a href=/help/page_8?locale=en>Operaciones</a> , los usuarios introducen la información de manejo y la información de los escenarios.'
+        subproject: 'En la pantalla de <a href=/help/page_9?locale=en>Subproyecto</a> , los usuarios pueden seleccionar otras combinaciones de parcelas/escenario no seleccionados en la página de Operación (estos se llaman subproyectos).'
+        simulation: 'On the <a href=/help/page_10?locale=en>Simulation</a> , los usuarios pueden revisar toda la información ingresada y hacer la simulación de los proyectos/subproyectos creados.'
+        results: 'En la pantalla de <a href=/help/page_11?locale=en>Resultados</a> , usted puede ver los resultados de la simulación.'
+        modifications: 'En la pantalla de <a href=/help/page_12?locale=en>Modificaciones</a> , los usuarios pueden manualmente cambiar el archivo de APEX para realizar cambios específicos en la simulación.<b>Estos cambios no se reflejan en las pantallas anteriores.</b>'
+        advance: 'Para avanzar a la siguiente página, simplemente haga clic en <b> Salvar y Continuar.</b>'
+    dataentrybasics:
+        header: Datos básicos de entrada
+        body: '<b>NTT</b> requiere mínima información del usuario para calcular los valores del seguimiento de nutrientes para los informes.'
+    dataentryfield:
+        header: Campo de entrada de datos ayuda
+        body: 'Coloque el puntero del ratón para situar el cursor sobre el campo de entrada de datos para ver una breve descripción de los datos que necesitan ser introducidos.'
+    dropdownlist:
+        header: Selección de la lista desplegable
+        body: 'Una selección de lista desplegable ofrece una lista de artículos para seleccionar. Haga clic en la selección de la lista desplegable para buscar un elemento en la lista, como se muestra en este ejemplo:'
+    textbox:
+        header: Cuadro de texto
+        body: 'Haga clic en un cuadro de texto para especificar información de como se muestra en este ejemplo:'
+    textarea:
+        header: Área de texto
+        body: 'Haga clic en un área de texto para introducir una o más líneas de información como se muestra en este ejemplo:'
+  projpage:
+    header: Iniciar un Proyecto
+    statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'
+    navredir: ''
+    initial:
+        header: Para crear un nuevo Proyecto
+        statement: "Hay <b>tres opciones iniciales</b> para empezar un nuevo proyecto:"
+        item1: 'Seleccione la opción <b>Crear Proyecto Nuevo</b> para comenzar un proyecto desde cero.'
+        item2: 'Seleccione la opción <b>Abrir un Proyecto Salvado</b> para comenzar un proyecto <b>previamente salvado</b>.'
+        item3: 'Seleccione la opción <b>Abrir un Proyecto Ejemplo</b> para comenzar un proyecto de <b>ejemplo predefinido</b>.'
+    create:
+        header: Crear nuevo proyecto opción
+        body1: 'Seleccionando el botón "Crear Proyecto Nuevo" solicita al usuario el nombre de proyecto y la información de descripción.'
+        body2: 'Después de haber introducido la información, haga clic a  <b>Salvar y Continuar</b> para guardar la información y continuar.'
+    open:
+        header: Abrir proyecto salvado
+        body1: 'También se puede utilizar <b>Abrir un Proyecto Salvado</b> para abrir un archivo de NTT previamente salvado en el computador del usuario.'
+        body2: 'Después de haber abierto el proyecto previamente salvado, haga clic a <b>Salvar y Continuar</b>  para salvar la información y continuar.'
+    example:
+        header: Abrir un proyecto de ejemplo
+        body1: 'También se puede utilizar <b>Abrir un Proyecto Ejemplo</b> y luego seleccionar entre las opciones para cargar un proyecto de ejemplo.'
+        body2: 'Después de haber introducido la información, haga clic a <b>Salvar y Continuar</b> para salvar la información y continuar.'
+    save:
+        header: Save Active Project
+        body: 'También se puede utilizar <b>Salvar Proyecto Activo...</b> botón para salvar el proyecto actual con el que el usuario trabajando.' 
+        note: '<b>Importante:</b> si el usuario cargo sus propios archivos de clima, es importante cargar estos y simular de nuevo, estos archivos no son salvado con el proyecto original cuando este proyecto es salvado.'
+    close:
+        header: Close Active Project
+        body1: 'También se puede utilizar <b>Cerrar Proyecto Activo</b> para cerrar el proyecto actual que con el que el usuario está trabajando.'
+        body2: ''
+        body3: 'El cerrar un Proyecto activo borrará toda la información de ese Proyecto. Debido a esto, si usted necesitara usar el pryecto mas tarde, eis extremadamente importante que salve le Proyecto antes de cerrarlo. Presionando el botón <b>Cerrar Proyecto Activo</b> , la información será borrada (y perdida si no se salvo previamente). Si usted no ha salvado el Proyecto y lo quiere hacer, presione cancelar y siga las instrucciones para “Salvar Proyecto Activo” antes mencionadas.'
+    
+

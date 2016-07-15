@@ -1,0 +1,20 @@
+<% t = Time.now %>
+
+<div class="group_header first_group"><%=t('pdf.input_info')%></div>
+    <div class="data_titles">
+        <%=t('pdf.name')%>:</br>
+        <%=t('pdf.description')%>:</br>
+        <%=t('pdf.date_created')%>:</br>
+        </br>
+        <%=t('pdf.report_created')%>:</br>
+    </div>
+    <div class="data">
+        <%= @project.name %></br>
+        <%= @project.description %></br>
+        <%= @project.created_at %></br>
+        </br>
+        <%=t.day%>/<%=t.month%>/<%=t.year %>&nbsp; -
+                <%=t.strftime("%I:%M%p") %></br>
+    </div>
+
+</br>

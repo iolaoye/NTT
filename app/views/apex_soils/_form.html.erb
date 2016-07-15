@@ -1,4 +1,4 @@
-<%= form_for(@soil) do |f| %>
+<%= form_for @soil, url: apex_soil_path do |f| %>
   <% if @soil.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@soil.errors.count, "error") %> prohibited this soil from being saved:</h2>
@@ -15,73 +15,73 @@
   <tr class='gvRowStyleOdd'>
     <td><div class="field">
         <b><%= f.label :SALB %></b><br />
-        <%= f.number_field :albedo, :class => "fieldNumbers"%>
+        <%= f.number_field :albedo, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
 	<td><div class="field">
         <b><%= f.label :FFC %></b><br />
-        <%= f.number_field :ffc, :class => "fieldNumbers"%>
+        <%= f.number_field :ffc, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :WTMN %></b><br />
-        <%= f.number_field :wtmn, :class => "fieldNumbers" %>
+        <%= f.number_field :wtmn, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :WTMX %></b><br />
-        <%= f.number_field :wtmx, :class => "fieldNumbers" %>
+        <%= f.number_field :wtmx, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :WTBL %></b><br />
-        <%= f.number_field :wtbl, :class => "fieldNumbers" %>
+        <%= f.number_field :wtbl, :class => "fieldNumbers", :step => 'any'  %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :GWST %></b><br />
-        <%= f.number_field :gwst, :class => "fieldNumbers" %>
+        <%= f.number_field :gwst, :class => "fieldNumbers", :step => 'any'  %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :GWMX %></b><br />
-        <%= f.number_field :gwmx, :class => "fieldNumbers" %>
+        <%= f.number_field :gwmx, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :RFT %></b><br />
-        <%= f.number_field :rft, :class => "fieldNumbers" %>
+        <%= f.number_field :rft, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :RFPK %></b><br />
-        <%= f.number_field :rfpk, :class => "fieldNumbers" %> 
+        <%= f.number_field :rfpk, :class => "fieldNumbers", :step => 'any' %> 
   </tr>
   <tr class='gvRowStyleOdd''>
     </div></td>
     <td><div class="field">
         <b><%= f.label :TSLA %></b><br />
-        <%= f.number_field :tsla, :class => "fieldNumbers" %>
+        <%= f.number_field :tsla, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :XIDS %></b><br />
-        <%= f.number_field :xids, :class => "fieldNumbers" %>
+        <%= f.number_field :xids, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :RTN1 %></b><br />
-        <%= f.number_field :rtn1, :class => "fieldNumbers" %>
+        <%= f.number_field :rtn1, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
 	<td><div class="field">
         <b><%= f.label :XIDK %></b><br />
-        <%= f.number_field :xidk, :class => "fieldNumbers" %>
+        <%= f.number_field :xidk, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :ZQT %></b><br />
-        <%= f.number_field :zqt, :class => "fieldNumbers" %>
+        <%= f.number_field :zqt, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :ZF %></b><br />
-        <%= f.number_field :zf, :class => "fieldNumbers" %>
+        <%= f.number_field :zf, :class => "fieldNumbers", :step => 'any' %>
     </div></td>
      <td><div class="field">
         <b><%= f.label :ZTK %></b><br />
-        <%= f.number_field :ztk, :class => "fieldNumbers" %>
+        <%= f.number_field :ztk, :class => "fieldNumbers", :step => 'any' %>
     </div></td> 
      <td><div class="field">
         <b><%= f.label :FBM %></b><br />
-        <%= f.number_field :fbm, :class => "fieldNumbers" %>
+        <%= f.number_field :fbm, :class => "fieldNumbers", :step => 'any' %>
     </div></td> 
     <td><div class="field">
         <b><%= f.label :FHP %></b><br />
@@ -89,7 +89,6 @@
     </div></td>
   </tr>
 </table>
-  <div class="actions">
-    <%= f.submit t('submit.update') + " " + t('soil.soil') %>
-  </div>
+<%= f.submit t('submit.update') %>
+
 <% end %>
