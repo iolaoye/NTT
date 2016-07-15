@@ -1,6 +1,7 @@
   <h1><%= t('menu.projects') %></h1><br>
   <%= link_to t('project.new_project'), new_project_path %>
   <%= link_to t('project.upload_project'), upload_project_path(0) %>
+  <%= link_to t('project.upload_example'), upload_project_path(1) %>
   <table class='gvTableStyle'>
     <tr class='gvHeaderStyle'>
       <th class="gvCellStyleTitle"><%= t('general.name') %></th>
@@ -33,9 +34,5 @@
       </tr>
       <% end %>
       <% i = i + 1 %>
-    <% end %>
-      
-      </table>
-    
-    
-<br />
+    <% end %>     
+  </table>
