@@ -5,6 +5,9 @@
 <% @scenarios = Scenario.where(:field_id => session[:field_id]) %>
 <% @location = Location.find(session[:location_id]) %>
 <% t = Time.now %>
+<% @result_scenario1 = session[:scenario1] %>
+<% @result_scenario2 = session[:scenario2] %>
+<% @result_scenario3 = session[:scenario3] %>
 <%= wicked_pdf_stylesheet_link_tag "pdf" %>
 </br>
 </br>
