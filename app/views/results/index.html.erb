@@ -22,8 +22,14 @@
         <td><%= collection_select :result3, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario3'), :required => false, :selected => @scenario3} %></td>
         <% case @type %>
           <% when t('result.summary') %>
+<<<<<<< HEAD
+            <td><%= submit_tag t("result.summary"), :id => "summary", name: "button" %>
+            <%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :class => "green_button padding_top", :id => "pdf_download", name: "button" %>
+            <a href="javascript:AlertIt();" id="pdf_no_click" class="no_click">Download PDF</a></td>
+=======
             <td><%= submit_tag t("result.summary"), name: "button" %>
             <%= link_to t('result.download_pdf'), {  :format => :pdf }, target: '_blank', :class => "green_button padding_top", :id => "pdf_download", name: "button" %></td>
+>>>>>>> 8344cdc94bf9877bb523262b4cb78c2238908c56
           <% when t("result.summary") + " " + t("result.by_soil") %>
             <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => session[:field_id], :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :required => false, :selected => @soil} %></td>
             <td><%= submit_tag t("result.summary") + " " + t("result.by_soil"), name: "button" %>
@@ -45,7 +51,11 @@
     </table>
   </div>
 </form>
+<<<<<<< HEAD
+<h1><%=@result_selected %> <% @title%></h1>
+=======
 <h1><%=@result_selected%> <%= @title%></h1>
+>>>>>>> 8344cdc94bf9877bb523262b4cb78c2238908c56
 
 <% if @result_selected == t('result.annual') + "-" + t('result.charts') || @result_selected == t('result.monthly') + "-" + t('result.charts') then %>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
@@ -203,3 +213,9 @@
       <% end %>
   </table>
  <% end %>
+
+<script type="text/javascript">
+  function AlertIt() {
+    alert("You must run a summary before you can download a pdf");
+  }
+</script>
