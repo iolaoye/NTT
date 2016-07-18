@@ -2,6 +2,7 @@
 	<div id="notice"><%= flash[:notice] %></div>
 <% end %>
 <%= form_tag({action: :upload_project}, multipart: true) do %>
+<<<<<<< HEAD
   <h1><%= t('project.upload_project') %></h1>
 
   <label for="project"><%= t('project.upload_button_desc')%></label>
@@ -13,3 +14,18 @@
 <% end %>
 <br>
 <%= link_to t('general.back'), welcomes_path %>
+=======
+	<% if @id == "0" %>
+	  <h1><%= t('project.upload_project') %></h1>
+	  <%= file_field_tag "project" %>
+	  <%= submit_tag(value = t('submit.save'), data: {disable_with: 'Please wait. Uploading your project . . .'}) %>
+	  <p><%= link_to t('general.back'), welcomes_path %></p>
+	<% else %>
+	  <h1><%= t('project.upload_example') %></h1>
+
+	  <%= select_tag "examples", "<option value=0>#{t('helpers.select.prompt')}</option><option value=1>OH Two Fields</option>".html_safe %>
+	  <%= submit_tag(value = t('project.upload_example'), data: {disable_with: 'Please wait. Uploading Example . . .'}) %>
+	  <p><%= link_to t('general.back'), welcomes_path %></p>
+	<%end %>
+<% end %>
+>>>>>>> 8344cdc94bf9877bb523262b4cb78c2238908c56

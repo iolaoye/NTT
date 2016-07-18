@@ -22,7 +22,6 @@ class ResultsController < ApplicationController
 		@descriptions = Description.select("id, description").where("id < 70 OR id > 79")
 		#load crop for each scenario selected
 		i = 70
-		
 		if params[:result1] != nil then
 			results = Result.new
 			case true
@@ -38,7 +37,7 @@ class ResultsController < ApplicationController
 				#get crops name for each result to add to description list 
 				crop = Crop.find(result.crop_id)
 			end # end results.each
-		end # end if 
+		end # end if
 		@type = params[:button]
 		if params[:button] != nil then
 			params[:button].eql?(t("result.summary") + " " + t("result.by_soil") && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0" 
@@ -47,20 +46,23 @@ class ResultsController < ApplicationController
 					if params[:button].include? t('result.summary') then 
 						
 						#@result_selected = t('result.summary')
-						session[:first_if] = params[:result1] != nil
 						if params[:result1] != nil
+							session[:first_if] = true
 							session[:result1] = !params[:result1][:scenario_id].eql?("")
 							if !params[:result1][:scenario_id].eql?("") then
 								@scenario1 = params[:result1][:scenario_id] 			
 								@results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
-								#session[:results] = @results1
 								session[:scenario1] = @scenario1
+								session[:scenario2] = ""
+								session[:scenario3] = ""
+								#session[:results] = @results1
 							end
 							session[:result2] = params[:result2][:scenario_id] != ""
 							if params[:result2][:scenario_id] != "" then
 								@scenario2 = params[:result2][:scenario_id]
 								@results2 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
 								session[:scenario2] = @scenario2
+								session[:scenario3] = ""
 							end
 							session[:result3] = params[:result3][:scenario_id] != ""
 							if params[:result3][:scenario_id] != "" then
@@ -70,8 +72,10 @@ class ResultsController < ApplicationController
 							end
 						end # end if params[:result1] != nill
 					end  #end if params button summary
-				when t('result.download_pdf')
 					
+				when t('result.download_pdf')
+						#@result_selected = t('result.summary')
+						
 				when t('result.annual')  + "-" + t('result.charts') 
 					@x = "Year"
 					if params[:result5] != nil && params[:result5][:description_id] != "" then
@@ -123,30 +127,22 @@ class ResultsController < ApplicationController
 						@y = ""
 					end
 			end	# end case type
-		end # end if != nill
-		session[:first_if] = params[:result1] != nil
-		if params[:result1] != nil
-			session[:result1] = !params[:result1][:scenario_id] != ""
-			if params[:result1][:scenario_id] != "" then
-				@scenario1 = params[:result1][:scenario_id] 			
-				@results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
-				#session[:results] = @results1
-				session[:scenario1] = @scenario1
-			end
-			session[:result2] = params[:result2][:scenario_id] != ""
-			if params[:result2][:scenario_id] != "" then
-				@scenario2 = params[:result2][:scenario_id]
-				@results2 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
-				session[:scenario2] = @scenario2
-			end
-			session[:result3] = params[:result3][:scenario_id] != ""
-			if params[:result3][:scenario_id] != "" then
-				@scenario3 = params[:result3][:scenario_id]
-				@results3 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
-				session[:scenario3] = @scenario3
-			end
-		end # end if params[:result1] != nill
+		end # end if != nill <!--<h1><%=@result_selected + " " + @title%></h1>-->
+		
 		if params[:format] == "pdf" then
+<<<<<<< HEAD
+				pdf = render_to_string pdf: "report",
+						page_size: "Letter", layout: "pdf",
+						template: "/results/report", 
+						footer: { center: '[page] of [topage]' },
+						header: { spacing: -6, html: { template: '/layouts/_report_header.html' } },
+						margin: { top: 16 }
+				send_data(pdf, :filename => "report.pdf")
+			#end  # end format pdf
+			#format.html { render action: "index" }
+			#format.json { render json: "index"}
+			#end # end respond to do
+=======
 			respond_to do |format|
 				format.pdf do	
 					if session[:first_if]
@@ -169,6 +165,8 @@ class ResultsController < ApplicationController
 				end  # end format pdf
 				format.html # index.html.erb
 			end # end respond to do
+			@type = t('result.summary')
+>>>>>>> 8344cdc94bf9877bb523262b4cb78c2238908c56
 		end # if format is pdf
   end
 
@@ -177,11 +175,12 @@ class ResultsController < ApplicationController
 		#format.pdf do
 			#render pdf: "tester", 
             #layout: "pdf",
-            #template: "/results/tester"
+            #template: "/results/tester" 
 		#end
-  #end
-
-  # GET /results/1
+  #end 
+# results?result1%5Bscenario_id%5D=4&result2%5Bscenario_id%5D=5&result3%5Bscenario_id%5D=&language%5Blanguage%5D=en&field%5Bid%5D=3
+# results?result1%5Bscenario_id%5D=4&result2%5Bscenario_id%5D=5&result3%5Bscenario_id%5D=&language%5Blanguage%5D=en&field%5Bid%5D=3
+	# GET /results/1
   # GET /results/1.json
   def show
     @result = Result.find(params[:id])
