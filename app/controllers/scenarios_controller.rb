@@ -440,21 +440,21 @@ class ScenariosController < ApplicationController
 				ph[layer_number] = PHMAX if ph[layer_number] > PHMAX
 				
 				cec[layer_number] = 0
-                if layer.cec == 0 
+                if layer.cec == 0 && layer_number > 1
                     cec[layer_number] = cec[layer_number - 1]
                 else
                     cec[layer_number] = layer.cec unless layer.cec == nil
                 end
 
-                smb[layer_number] = 0 
+                smb[layer_number] = 0
                 if layer.smb == 0 && layer_number > 1 
                     smb[layer_number] = smb[layer_number - 1]
                 else
                     smb[layer_number] = layer.smb unless layer.smb == nil
                 end
-                #These lines were changed to take sand from xml file in case user had changed it
+
 				woc[layer_number] = 0
-                if layer.organic_matter == 0 
+                if layer.organic_matter == 0 && layer_number > 1
                     woc[layer_number] = woc[layer_number - 1]
                 else
                     woc[layer_number] = layer.organic_matter unless layer.organic_matter == nil
@@ -580,7 +580,7 @@ class ScenariosController < ApplicationController
 			end
             records = sprintf("%8.2f", albedo)
             #records =  albedo.to_s
-            case hsg
+            case hsg[0]
                 when "A"
                     records = records + "      1."
                 when "B"
@@ -993,6 +993,7 @@ class ScenariosController < ApplicationController
         #/line 7
         sLine = sprintf("%8.3f", _subarea_info.rshc)
         sLine += sprintf("%8.2f", _subarea_info.rsdp)
+		session[:depth] = _subarea_info
         sLine += sprintf("%8.2f", _subarea_info.rsbd)
         sLine += sprintf("%8.2f", _subarea_info.pcof)
         sLine += sprintf("%8.2f", _subarea_info.bcof)

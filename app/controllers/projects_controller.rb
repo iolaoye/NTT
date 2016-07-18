@@ -134,7 +134,13 @@ class ProjectsController < ApplicationController
 				when "FarmInfo"
 					msg = upload_location_info1(node)	
 				when "FieldInfo"
-					msg = upload_field_info(node)		
+					msg = upload_field_info(node)
+				when "SiteInfo"
+					msg = upload_site_info(node)
+				when "ControlValues"
+					msg = upload_control_values(node)
+				when "ParmValues"
+					msg = upload_parameter_values(node)
 			end
 		end
 		# summarizes results for totals and soils.
@@ -612,6 +618,7 @@ class ProjectsController < ApplicationController
 		end
 
 		field.save
+		session[:field_id] = field.id
 		# save Weather Info
 		weather = Weather.new
 		weather.field_id = field.id
@@ -687,7 +694,7 @@ class ProjectsController < ApplicationController
 					@weather["longitude"] = p.text
 				when "CurrentWeatherPath"
 					file_name = p.text.split(/\N/)
-					@weather["weather_file"] = file_name[1]
+					@weather["weather_file"] = "N" + file_name[1]
 				when "StationWay"
 					way_id = Way.find_by_way_value(p.text).id		
 					@weather["way_id"] = way_id
@@ -726,6 +733,42 @@ class ProjectsController < ApplicationController
 		else
 			return "weather could not be saved"
 		end
+	end
+
+	def upload_site_info(node)
+		fields = Field.where(:location_id => session[:location_id])
+		fields.each do |field|
+			site = Site.new
+			site.field_id = field.id
+			site.fir0 = 0
+			node.elements.each do |p|
+				case p.name
+					when "Apm"
+						site.apm = p.text
+					when "Co2x"
+						site.co2x = p.text
+					when "Cqnx"
+						site.cqnx = p.text
+					when "Elevation"
+						site.elev = p.text
+					when "Rfnx"
+						site.rfnx = p.text
+					when "Unr"
+						site.unr = p.text
+					when "Upr"
+						site.upr = p.text
+					when "Longitude"
+						site.xlog = p.text
+					when "Latitude"
+						site.ylat = p.text
+				end  # end case p.name
+			end  # end nodel.elements
+			if site.save then
+				return "OK"
+			else
+				return "site could not be saved"
+			end
+		end  # each field
 	end
 
 	def upload_site_new_version(node, field_id)
@@ -1034,6 +1077,18 @@ class ProjectsController < ApplicationController
 		subarea = Subarea.new
 		subarea.soil_id = soil_id
 		subarea.scenario_id = scenario_id
+		subarea.ny5 = 0
+		subarea.ny6 = 0
+		subarea.ny7 = 0
+		subarea.ny8 = 0
+		subarea.ny9 = 0
+		subarea.ny10 = 0
+		subarea.xtp5 = 0
+		subarea.xtp6 = 0
+		subarea.xtp7 = 0
+		subarea.xtp8 = 0
+		subarea.xtp9 = 0
+		subarea.xtp10 = 0
 		node.elements.each do |p|
 			case p.name
 				when "SbaType"
@@ -1144,8 +1199,8 @@ class ProjectsController < ApplicationController
 					subarea.rshc = p.text
 				when "Rsdp"
 					subarea.rsdp = p.text
-				when "Rsdb"
-					subarea.rsdb = p.text
+				when "Rsbd"
+					subarea.rsbd = p.text
 				when "Pcof"
 					subarea.pcof = p.text
 				when "Bcof"
@@ -1180,7 +1235,7 @@ class ProjectsController < ApplicationController
 					subarea.efi = p.text
 				when "Vimx"
 					subarea.vimx = p.text
-				when "armn"
+				when "Armn"
 					subarea.armn = p.text
 				when "Armx"
 					subarea.armx = p.text
@@ -2031,5 +2086,59 @@ class ProjectsController < ApplicationController
 		bmp.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SggCrop"]
 		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgslopeRatio"]
 		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgWidth"]
+	end
+
+	def upload_control_values(node)
+		control = ApexControl.new
+		control.project_id = session[:project_id]
+		node.elements.each do |p|
+			case p.name
+				when "Code"					
+					control.control_id = Control.find_by_code(p.text).id
+					case control.control_id
+						when 1 # get number of years of simulation from weather
+							weather = Weather.find_by_field_id(session[:field_id])
+							control.value = weather.simulation_final_year - weather.simulation_initial_year + 1
+							control.save
+							# get the first year of simulation from weather
+							control = ApexControl.new
+							control.project_id = session[:project_id]
+							control.control_id = Control.find_by_code(p.text).id
+							control.value = weather.simulation_initial_year
+							control.save
+							return
+						when 2 # do nothing because the second value should be alredy be taken
+							return
+					end  # end case control.control_id
+				when "Value"
+					control.value = p.text
+			end #end case
+		end ## end each		
+		if !control.save then
+			return "Error saving control file"
+		end
+	end
+
+	def upload_parameter_values(node)
+		parameter = ApexParameter.new
+		parameter.project_id = session[:project_id]
+		node.elements.each do |p|
+			case p.name
+				when "Code"
+					case p.text.length
+						when 5
+							parameter.parameter_id = p.text[4]
+						when 6
+							parameter.parameter_id = p.text[4] + p.text[5]
+						when 7
+							parameter.parameter_id = p.text[4] + p.text[5] + p.text[6]
+					end
+				when "Value"
+					parameter.value = p.text
+			end #end case
+		end ## end each		
+		if !parameter.save then
+			return "Error saving parameter file"
+		end
 	end
 end

@@ -10,7 +10,7 @@
 	<% else %>
 	  <h1><%= t('project.upload_example') %></h1>
 
-	  <%= select_tag "examples", "<option value=0>#{t('helpers.select.prompt')}</option><option value=1>OH Two Fields</option>".html_safe %>
+	  <%= select_tag "examples", "<option value=0>#{t('helpers.select.prompt')}</option><option value=1>OH Two Fields</option>".html_safe, {:required => true} %>
 	  <%= submit_tag(value = t('project.upload_example'), data: {disable_with: 'Please wait. Uploading Example . . .'}) %>
 	  <p><%= link_to t('general.back'), welcomes_path %></p>
 	<%end %>
