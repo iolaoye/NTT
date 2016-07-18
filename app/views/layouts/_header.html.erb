@@ -2,41 +2,157 @@
 	<% project_name = "" %>
 	<% field_name = "" %>
 	<% scenario_name = "" %>
-    <div class="navbar navbar-default" style="line-height:0px" id="div1">
+    <nav class="navbar navbar-default" style="line-height:0px" id="div1">
         <ul class="navbar-nav">
-            <% case  %>			 
-	           <% when request.original_url.include?("project") || request.original_url.include?("welcome") ||  request.original_url.include?("about") || request.original_url.include?("contact") || request.original_url.include?("help")  %>
-			       <li><a <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
-   			       <li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>			   
-			   <% when request.original_url.include?("location") || request.original_url.include?("field") ||  request.original_url.include?("watershed") || request.original_url.include?("watershed_scenario")%>
-				   <li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
-				   <li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
-				   <li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>	       
-			   <% when request.original_url.include?("apex_controls") ||  request.original_url.include?("apex_parameters") || request.original_url.include?("subarea") || request.original_url.include?("apex_soil") || request.original_url.include?("apex_layer") || request.original_url.include?("soil_operation") || request.original_url.include?("site")%>
-				   <li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
-				   <li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
-				   <li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
-				   <li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
-				   <li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-				   <li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
-			   <% when request.original_url.include?("results")%>
-				   <li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-				   <li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-				   <li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-				   <li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
-	           <% when request.original_url.include?("weather") || request.original_url.include?("soil") ||  request.original_url.include?("scenario") || request.original_url.include?("layer")   %>
-				   <li><a <%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></a></li>
-				   <li><a <%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></a></li>
-				   <li><a <%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></a></li>
-				   <li><a <%= link_to t('menu.results'), results_path(:button => t('result.summary')) %></a></li>
-				   <li><a <%= link_to t('menu.apex_file'), apex_controls_path %></a></li>
-			   <% when request.original_url.include?("operation") || request.original_url.include?("bmp")%>
-				   <li><a <%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></a></li>
-				   <li><a <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></a></li>
+            <% case %>			 
+	           	<% when request.original_url.include?("project") || request.original_url.include?("welcome") ||  request.original_url.include?("about") || request.original_url.include?("contact") || request.original_url.include?("help")  %>
+					<% if request.original_url.include?("welcome") %>
+						<li><a class="active" <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
+						<li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>	
+					<% elsif request.original_url.include?("project") %>
+						<li><a <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
+						<li><a class="active" <%= link_to t('menu.projects'), welcomes_path %></a></li>	
+					<% else %>
+						<li><a <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
+						<li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>	
+					<% end %>
+			   	<% when request.original_url.include?("location") || request.original_url.include?("field") ||  request.original_url.include?("watershed") || request.original_url.include?("watershed_scenario")%>
+				   	<% if request.original_url.include?("location") %>
+						<li><a class="active" <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+						<li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+						<li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
+					<% elsif request.original_url.include?("field") %>
+						<li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+						<li><a class="active" <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+						<li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>	
+					<% elsif request.original_url.include?("watershed") || request.original_url.include?("watershed_scenario") %>
+						<li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+						<li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+						<li><a class="active" <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
+					<% else %>
+						<li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+						<li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+						<li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
+					<% end %>
+			   	<% when request.original_url.include?("apex_controls") ||  request.original_url.include?("apex_parameters") || request.original_url.include?("subarea") || request.original_url.include?("apex_soil") || request.original_url.include?("apex_layer") || request.original_url.include?("soil_operation") || request.original_url.include?("site")%>
+			   		<% if request.original_url.include?("apex_controls") %>
+						<li><a class="active" <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
+					<% elsif request.original_url.include?("apex_parameters") %>
+						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+						<li><a class="active" <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>	
+					<% elsif request.original_url.include?("subarea") %>
+						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+						<li><a class="active" <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
+					<% elsif request.original_url.include?("apex_soil") %>
+						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+						<li><a class="active" <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>	
+					<% elsif request.original_url.include?("soil_operation") %>
+						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+						<li><a class="active" <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
+					<% elsif request.original_url.include?("site") %>
+						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+						<li><a class="active" <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
+					<% else %>
+						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
+					<% end %>
+			   	<% when request.original_url.include?("results")%>
+					<% if request.original_url.include?(t("navbar.by_soil")) %>
+						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+						<li><a class="active" <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+				   	<% elsif request.original_url.include?(t('result.summary')) %>
+						<li><a class="active" <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+					<% elsif request.original_url.include?(t('result.annual')) %>
+						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+						<li><a class="active" <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+					<% elsif request.original_url.include?(t('result.monthly')) %>
+						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+						<li><a class="active" <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+					<% else %>
+						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+					<% end %>
+				<% when request.original_url.include?("weather") || request.original_url.include?("soil") ||  request.original_url.include?("scenario") || request.original_url.include?("layer")   %>
+					<% if request.original_url.include?("weather") %>
+						<li><a class="active" <%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.results'), results_path(:button => t('result.summary')) %></a></li>
+						<li><a <%= link_to t('menu.apex_file'), apex_controls_path %></a></li>	
+					<% elsif request.original_url.include?("soil") %>
+						<li><a <%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></a></li>
+						<li><a class="active" <%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.results'), results_path(:button => t('result.summary')) %></a></li>
+						<li><a <%= link_to t('menu.apex_file'), apex_controls_path %></a></li>
+					<% elsif request.original_url.include?("scenario") %>
+						<li><a <%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></a></li>
+						<li><a class="active" <%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.results'), results_path(:button => t('result.summary')) %></a></li>
+						<li><a <%= link_to t('menu.apex_file'), apex_controls_path %></a></li>
+					<% else %>
+						<li><a <%= link_to t('menu.weather'), edit_weather_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></a></li>
+						<li><a <%= link_to t('menu.results'), results_path(:button => t('result.summary')) %></a></li>
+						<li><a <%= link_to t('menu.apex_file'), apex_controls_path %></a></li>	
+					<% end %>
+				<% when request.original_url.include?("operation") || request.original_url.include?("bmp")%>
+					<% if request.original_url.include?("operation") %>
+						<li><a class="active" <%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></a></li>
+						<li><a <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></a></li>
+					<% elsif request.original_url.include?("bmp") %>
+						<li><a <%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></a></li>
+						<li><a class="active" <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></a></li>
+					<% else %>
+						<li><a <%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></a></li>
+						<li><a <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></a></li>
+					<% end %>
 			<% end %>
     		<li><a <%= link_to t('menu.signout'), logout_path %></a></li>
 	    </ul>      
-    </div>
+    </nav>
     <ul class="crumbs">
         <% case request.original_url %>
 	        <% when /project/, /welcome/, /receive_from_mapping_site/ %>
