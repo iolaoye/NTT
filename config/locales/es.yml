@@ -400,6 +400,8 @@
     soil_file: Suelos
     layer_file: Capas
     operation_file: Operación
+  navbar:
+    by_soil: Por+Suelo
   result:
     summary: Resumen
     by_soil: Por Suelo
