@@ -130,7 +130,6 @@ class ResultsController < ApplicationController
 		end # end if != nill <!--<h1><%=@result_selected + " " + @title%></h1>-->
 		
 		if params[:format] == "pdf" then
-<<<<<<< HEAD
 				pdf = render_to_string pdf: "report",
 						page_size: "Letter", layout: "pdf",
 						template: "/results/report", 
@@ -142,31 +141,6 @@ class ResultsController < ApplicationController
 			#format.html { render action: "index" }
 			#format.json { render json: "index"}
 			#end # end respond to do
-=======
-			respond_to do |format|
-				format.pdf do	
-					if session[:first_if]
-						if session[:result1] then			
-							@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
-						end
-						if session[:result2] then
-							@results2 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario2], :soil_id => 0)
-						end
-						if session[:result3] then
-							@results3 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario3], :soil_id => 0)
-						end
-					end # end if session[result1]
-
-					render  pdf: "report", page_size: "Letter", layout: "pdf",
-							template: "/results/report", 
-							footer: { center: '[page] of [topage]' },
-							header: { spacing: -6, html: { template: '/layouts/_report_header.html' } },
-							margin: { top: 16 }
-				end  # end format pdf
-				format.html # index.html.erb
-			end # end respond to do
-			@type = t('result.summary')
->>>>>>> 8344cdc94bf9877bb523262b4cb78c2238908c56
 		end # if format is pdf
   end
 
