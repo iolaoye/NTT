@@ -481,10 +481,12 @@
     font-family: Roboto, helvetica, arial, sans-serif;
     text-align: center !important;
     color: white;
-  /*color:White;
+  /*
+  color:White;
   background-color:Gray;
   text-align: center;
-  border-bottom: 2px solid #d1d1d1;*/
+  border-bottom: 2px solid #d1d1d1;
+  */
 }
 
 .upper_border {
