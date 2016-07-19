@@ -6,8 +6,6 @@
 <% @watersheds.each do |watershed| %>
   <tr>
     <td><%= watershed.name %></td>
-    <td><%= watershed.field_id %></td>
-    <td><%= watershed.scenario_id %></td>
     <td><%= link_to t('general.show'), watershed %></td>
     <td><%= link_to t('general.edit'), edit_watershed_path(watershed) %></td>
     <td><%= link_to 'Destroy', watershed, method: :delete, data: { confirm: 'Are you sure?' } %></td>
