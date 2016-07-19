@@ -109,12 +109,20 @@ class ProjectsController < ApplicationController
 	#end
 
   def upload 
+	@id = params[:id]	
 	#nothing to do here. Just render the upload view
   end
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
 	def upload_project
-		@data = Nokogiri::XML(params[:project])
+		if params[:commit].eql?t('submit.save') then
+			@data = Nokogiri::XML(params[:project])
+		else
+			case params[:examples] 
+				when "1"  # Load OH two fields
+					@data = Nokogiri::XML(File.open("C:/Borrar/oscar/public/Examples/OH_MultipleFields.xml"))
+			end  # end case examples
+		end 
 		@data.root.elements.each do |node|
 			case node.name
 				when "project"  #appears to return false, thus goes to else
@@ -1634,6 +1642,7 @@ class ProjectsController < ApplicationController
 	def upload_chart_info(node, field_id, soil_id, scenario_id, description_id)
 		i = 1
 		month_year = 0
+		session[:depth] = @weather
 		year = @weather["simulation_final_year"].to_i - 11
 		node.elements.each do |p|
 			if i <= 12 then

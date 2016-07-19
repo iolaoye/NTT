@@ -157,9 +157,11 @@
         <% case request.original_url %>
 	        <% when /project/, /welcome/, /receive_from_mapping_site/ %>
 	        <% when /apex_controls/, /apex_parameters/, /subarea/, /apex_soils/, /soil_operation/, /site/ %>
+				<% project_name = Project.find(session[:project_id]).name %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=project_name%></li>
+				<li><%=">>"%>
 			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
 				<li><%=">>"%><%= t('menu.apex_file') %></li>
@@ -191,7 +193,18 @@
 					<% when /apex_layer/ %>
 						<li><%= t('menu.layer_file') %></li>
                 <% end %>
-			<% when /weather/, /soil/, /scenario/, /layer/, /results/ %>
+			<% when /watershed_scenario/ %>
+			    <% project_name = Project.find(session[:project_id]).name %>
+		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
+		        <li><%=">>"%><%=project_name%></li>
+				<li><%=">>"%>
+				<li><%=link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
+				<li><%=">>"%>
+				<% case request.original_url %>
+					<% when /watershed_scenario/ %>
+						<li><%= t('watershed.watershed_scenario') %></li>
+				<% end %>
+			<% when /weather/, /soil/, /scenario/, /layer/ %>
 				<% project_name = Project.find(session[:project_id]).name %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
@@ -206,10 +219,29 @@
 						<li><%= t('menu.soils') %></li>
 					<% when /scenario/ %>
 						<li><%= t('menu.scenarios') %></li>
-					<% when /result/ %>
-						<li><%= t('menu.results') %></li>
 					<% when /layer/ %>
 						<li><%= t('soil.layer') %></li>
+				<% end %>
+		    <% when /results/ %>
+				<% project_name = Project.find(session[:project_id]).name %>
+				<% field_name = Field.find(session[:field_id]).field_name %>
+			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
+			    <li><%=">>"%><%=project_name%></li>
+				<li><%=">>"%>
+			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
+				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+				<li><%=">>"%>
+				<li><%= t('menu.results') %></li>
+				<li><%=">>"%>
+				<% case request.original_url %>
+					<% when /Soil/, /Suelo/ %>
+						<li><%= t('result.summary') + " " + t('result.by_soil') %></li>														
+					<% when /Annual/, /Anual/ %>
+						<li><%= t('result.annual') + " " + t('result.charts') %></li>
+					<% when /Monthly/, /Mensual/ %>
+						<li><%= t('result.monthly') + " " + t('result.charts') %></li>
+					<% when /Summary/, /Resumen/, /result/ %>
+						<li><%= t('result.summary') %></li>	
 				<% end %>
 	        <% when /location/, /field/, /watershed/ %>
 				<% project_name = Project.find(session[:project_id]).name %>
