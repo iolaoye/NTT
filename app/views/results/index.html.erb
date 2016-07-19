@@ -1,3 +1,4 @@
+<br>
 <form id="myForm">
   <div class="field">
     <table>
@@ -46,7 +47,7 @@
     </table>
   </div>
 </form>
-<h1><%=@result_selected %> <% @title%></h1>
+<h1 class="less-margin"><%=@result_selected %> <% @title%></h1>
 
 
 <% if @result_selected == t('result.annual') + "-" + t('result.charts') || @result_selected == t('result.monthly') + "-" + t('result.charts') then %>
@@ -205,6 +206,7 @@
       <% end %>
   </table>
  <% end %>
+ <br>
 
 <script type="text/javascript">
   function AlertIt() {

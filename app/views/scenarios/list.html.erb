@@ -1,5 +1,4 @@
-﻿<p id="notice"><%= notice %></p>
-<h1><%= t('general.listing') + " " + t('menu.scenarios') %></h1><br>
+﻿<h1 class="less-margin"><%= t('general.listing') + " " + t('menu.scenarios') %></h1><br>
 <%= link_to t('general.new')  + ' ' + t('scenario.scenario'), new_scenario_path %>
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), new_scenario_path %>
   <table class='gvTableStyle'>
@@ -8,26 +7,28 @@
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
   <% i=1 %>    
-<% @scenarios.each do |scenario| %>
-    <% if (i % 2  == 0) %>
-      <tr class="gvRowStyleEven">
-        <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
-        <td class="gvCellStyleActions">
-          <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
-            <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% else %>
-      <tr class="gvRowStyleOdd">
-        <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
-        <td class="gvCellStyleActions">
-          <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
-            <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% end %>
-    <% i = i + 1 %>
-<% end %>
+  <% @scenarios.each do |scenario| %>
+      <% if (i % 2  == 0) %>
+        <tr class="gvRowStyleEven">
+          <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
+          <td class="gvCellStyleActions">
+            <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
+              <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
+            <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% else %>
+        <tr class="gvRowStyleOdd">
+          <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
+          <td class="gvCellStyleActions">
+            <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
+              <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
+            <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+      <% i = i + 1 %>
+  <% end %>
 </table>
+
+<br>
