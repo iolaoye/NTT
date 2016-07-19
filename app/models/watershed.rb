@@ -5,4 +5,5 @@ class Watershed < ActiveRecord::Base
     belongs_to :location
   #validations
     validates_uniqueness_of :name
+    validates :name, length: { minimum: 1 }
 end

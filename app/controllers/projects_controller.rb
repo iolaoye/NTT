@@ -120,7 +120,7 @@ class ProjectsController < ApplicationController
 		else
 			case params[:examples] 
 				when "1"  # Load OH two fields
-					@data = Nokogiri::XML(File.open("C:/Borrar/oscar/public/Examples/OH_MultipleFields.xml"))
+					@data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
 			end  # end case examples
 		end 
 		@data.root.elements.each do |node|

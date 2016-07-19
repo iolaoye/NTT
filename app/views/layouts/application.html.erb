@@ -40,15 +40,14 @@
 
 	  <!-- main body -->
 	  <div class="container"><br>
-	  	<div class="pageContainer"><br>
-	  		<div id="pageContent">
+	  	<div class="pageContainer">
+	  		<div class="pageContent">
 	  			<%= yield %>
-	  			<br><br>
 	  		</div>
 				<% if !signed_in? %>
 				<% case request.original_url %>
 					<% when /users/ %>
-						<br><br>
+						<br>
 				<% end %>
 			<% end %>
 	  	</div>
@@ -59,7 +58,6 @@
 					<% when /users/ %>
 					<br>
 						<div class="spacer margin">
-							<br>
 							<br>
 						</div>
 				<% end %>

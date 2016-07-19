@@ -406,6 +406,8 @@ en:
     soil_file: Soil
     layer_file: Layer
     operation_file: Operation
+  navbar:
+    by_soil: By+Soil
   result:
     summary: Summary
     by_soil: By Soil
