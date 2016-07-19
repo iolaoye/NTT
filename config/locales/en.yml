@@ -232,11 +232,11 @@ en:
     value: Value
     fraction: fraction
     date: Date
-    select: Seleccionar
-    one: Uno
-    please: Por favor
-    wait: espere
-    loading: Cargando
+    select: Select
+    one: One
+    please: Please
+    wait: wait
+    loading: Loading
   welcome_note: 
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the filed or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -259,6 +259,7 @@ en:
     simulations: Simulations
     results: Results
     modifications: Modifications
+    signin: Sign In
     signout: Sign Out
     site: Site
     control_file: Controls
@@ -270,9 +271,10 @@ en:
     site_file: Site
     apex_file: APEX Files
   project:
+    project: Project
     new_project: 'New Project'
     upload_project: 'Upload Project'
-    upload_button_desc: 'Project to Upload'
+    upload_button_desc: 'Project to Upload:'
     editing_project: 'Editing Project'
   footer:
     instructions: Instructions
@@ -323,6 +325,7 @@ en:
     create_layer: Create Layer
     ph: PH
     select_soil: Select Soil
+    layer_number: Layer Number
   scenario:
     scenario_name: Scenario Name
     scenario: Scenario
@@ -350,6 +353,7 @@ en:
     bmp: BMP
     irrigation: Irrigation
     plant_population: Plant Population
+    load_operation: Load Operation
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group 
@@ -359,6 +363,7 @@ en:
     new_activity: New Activity
     activity_title: Listing Activities
   field:
+    field: Field
     field_name: Field Name
     field_area: Field Area
     field_avg_slope: Field Average Slope
@@ -381,9 +386,11 @@ en:
     watershed_scenario_title: Listing Watershed Scenarios
     add_to_watershed: Add to watershed
   submit:
+    create: Create
     save: Save Changes
     login: Sign in
     update: Update
+    new_user: New User
   sessions:
     index:
       email: Email
@@ -397,9 +404,13 @@ en:
     soil_file: Soil
     layer_file: Layer
     operation_file: Operation
+  navbar:
+    by_soil: By+Soil
   result:
     summary: Summary
-    by_soil: by Soil
+    by_soil: By Soil
+    download_pdf: Download PDF
+    charts: Charts
     monthly: Monthly
     annual: Annual
     update_chart: Update Chart
@@ -422,6 +433,7 @@ en:
   users:
     confirmation: Password confirmation
     company: Company
+    user: User
   subarea:
     subarea_type: Subarea Type
     subarea_number: Subarea Number
@@ -476,7 +488,7 @@ en:
     email: 'gallego@tiaer.tarleton.edu'
   help:
     header: NTT Table of Contents
-    return_to_table: '<< Return to Table of Contents'
+    return_to_table: 'Return to Table of Contents'
     overview: Overview
     overview1: About NTT
     overview2: Contact Information
@@ -496,6 +508,104 @@ en:
     understanding: Understanding NTT
     understanding1: APEX
     understanding2: NTT Disclaimer
+  pdf:
+    ntt_report: Nutrient Tracking Tool - Report
+    user: User
+    email: Email
+    company: Company
+    input_info: Input Information Report
+    name: Name
+    description: Description
+    date_created: Date Created
+    report_created: Report Created
+    location_info: Location and Additional Site Information
+    state: State
+    county: County
+    weather_info: Weather Information
+    weather_option: Weather Option
+    station_name: Station Name
+    weather_period: Weather Period
+    simulation_period: Simulation Period
+    field_info: Field Information
+    area: Area
+    channel_erodibility: Channel Erodibility
+    average_slope: Average Slope
+    soil_info: Soil Information
+    symbol: Symbol
+    group: Group
+    albedo: Albedo
+    slope: Slope
+    percentage: Percentage
+    layers_info: Layers Information
+    soil_name: Soil Name
+    depth: Depth
+    soil: Soil
+    bulk_density: Bulk Density
+    sand: Sand
+    silt: Silt
+    organic_matter: Organic Matter
+    ph: pH
+    management_info: Management Information
+    scenario: Scenario
+    crop: Crop
+    operation: Operation
+    year: Year
+    month: Month
+    day: Day
+    operation_method: Operation Method
+    val_one: Val One
+    val_two: Val Two
+    bmp_info: Best Management Practices (BMPs) Information
+    autoirrigation: Autoirrigation
+    irrigation: Irrigation
+    water_stress_factor: Water stress factor
+    irrigation_efficiency: Irrigation efficiency
+    max_single_application: Maximum single application
+    safety_factor: Safety factor
+    reservoir_area: Reservoir area
+    irrigation_frequency: Irrigation frequency
+    autofertigation: Autofertigation
+    tile_drain: Tile Drain
+    ppdi: Pads and Pipes - No Ditch Improvement
+    ppds: Pads and Pipes - Two-Stage Ditch System
+    ppde: Pads and Pipes - Ditch Enlargement and Reservoir System
+    ppti: Pads and Pipes - Tailwater Irrigation
+    width: Width
+    sides: Sides
+    wetlands: Wetlands
+    ponds: Ponds
+    stream_fencing: Stream Fencing
+    animal: Animal
+    number_of_animals: Number of animals
+    hours: Hours
+    dry_manure: Dry manure
+    streambank_stabilization: Streambank Stabilization
+    riparian_forest: Riparian Forest Buffer
+    grass_field_portion: Grass field portion
+    slope_ratio: Slope ratio
+    filter_strip: Filter Strip
+    waterway: Waterway (Grassed Buffer)
+    contour_buffer: Contour Buffer
+    land_leveling: Land Leveling
+    crop_width: Crop width
+    slope_reduction: Slope reduction
+    terrace_system: Terrace System
+    climate: Temperature and Precipitation Changes
+    climage_change: Changes to the climate files have been made
+    asphalt_concrete: Asphalt or Concrete
+    grass_cover: Grass Cover
+    slope_adjustment: Slope Adjustment
+    shading: Shading
+    none_required: This BMP does not require any input
+    inches: inches
+    acres: acres
+    days: days
+    annual_results: Annual Results for Nutrients, Flow, Sediment, and Crop Yield
+    description: Description
+    baseline: Baseline
+    difference: Difference
+    reduction: Reduction
+    total_area: Total Area
   sysreq:
     header: System Requirements
     minreq:
@@ -579,18 +689,18 @@ en:
     navredir: 'to get a basic understanding of how to navigate the <b>NTT</b> application.'
     initial:
         header: To Start a Project
-        statement: "There are <b>three initial choices</b> to start a new project:"
-        item1: 'Select the <b>Create New Project</b> option to start a project from scratch'
-        item2: 'Select the <b>Open Saved Project</b> option to start a <b>previously saved</b> project.'
+        statement: "There are <b>two initial choices</b> to start a new project:"
+        item1: 'Select the <b>New Project</b> option to start a project from scratch'
+        item2: 'Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.'
         item3: 'Select the <b>Open an Example Project</b> option to start a <b>pre-defined example</b> project.'
     create:
-        header: Create New Project Option
-        body1: 'Selecting the <b>Create New Project</b> button asks the user for the project name, and description information.'
-        body2: 'After you have entered the information, click the <b>Save and Continue</b> button to save the information and continue.'
+        header: New Project Option
+        body1: 'Selecting the <b>New Project</b> button asks the user for the project name, and description information.'
+        body2: 'After you have entered the information, click the <b>Create Project</b> button to save the information and continue.'
     open:
-        header: Open Saved Project Option
-        body1: 'You can also use the <b>Open Saved Project</b> button to retrieve an NTT Save File containing previously saved information.'
-        body2: 'After you have opened the save project, click the <b>Save and Continue</b> button to save the information and continue.'
+        header: Upload Project Option
+        body1: 'You can also use the <b>Upload Project</b> button to retrieve an NTT Save File containing previously saved information.'
+        body2: 'After you have opened the save project, click the <b>Save Changes</b> button to save the information and continue.'
     example:
         header: Open an Example Project Option
         body1: 'You can also use the <b>Open an Example Project</b> button, and then select from the options to load a sample project file.'

@@ -1,22 +1,26 @@
-﻿<%# if !signed_in? %>
-  <h2><%= t('submit.login')%></h2>
+﻿<!DOCTYPE html>
+<%# if !signed_in? %>
   <%= form_tag session_path do %>
     <% if flash[:alert] %>
-      <p class="flash_alert"><%= flash[:alert] %></p>
+    <div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:alert] %>
+    </div>
     <% end %>
-    <div class="field">
-      <%= label_tag (t('.email')) %><br />
-      <%= text_field_tag :email %>
-    </div>
-    <div class="field">
-      <%= label_tag (t('.password')) %><br />
-      <%= password_field_tag :password %>
-    </div>
-    <div class="actions">
-      <p><%= submit_tag t('submit.login') %></p>
-    </div>
-    <div class="actions">
-      <p><%= link_to t('.new_user'), users_new_path, method: :get %></p>
+    <div class="center">
+    <h2><%= t('submit.login')%></h2>
+      <div class="field">
+        <%= text_field_tag :email, nil, placeholder: (t('.email')) %>
+        <%= password_field_tag :password, nil, placeholder: (t('.password')) %>
+      </div>
+      <div class="actions login">
+        <%= submit_tag t('submit.login') %></br>
+        <% if (I18n.locale.eql?(:en)) %>
+          <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button" %>
+        <% else %>
+          <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button" %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 <%# end %>

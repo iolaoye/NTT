@@ -1,6 +1,6 @@
-<h1>Editing bmp</h1>
+<h1><%= t('general.editing') + " " + t('operation.bmp') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @bmp %> |
+<%= link_to t('general.show'), @bmp %> |
 <%= link_to t('general.back'), scenario_bmps_scenario_path(session[:scenario_id]) %>

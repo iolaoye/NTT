@@ -1,4 +1,4 @@
-<%= form_for(@apex_layer) do |f| %>
+<%= form_for @apex_layer, url: apex_layer_path do |f| %>
   <% if @apex_layer.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
@@ -12,79 +12,79 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :Z %>
-    <%= f.number_field :depth, :class => "numbers", :value => (number_with_precision(f.object.depth, :precision => 2) || 0) %>
+    <%= f.label "Z" + ":" %>
+    <%= f.number_field :depth, :class => 'numbers', :value => (number_with_precision(f.object.depth, :precision => 2) || 0), :step => '0.01' %>
   </div>
   <div class="field">
-    <%= f.label :BD %>
+    <%= f.label "BD" + ":" %>
     <%= f.number_field :bulk_density, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :UW %>
+    <%= f.label "UW" + ":" %>
     <%= f.number_field :uw, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :FC %>
+    <%= f.label "FC" + ":" %>
     <%= f.number_field :fc, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :SAN %>
+    <%= f.label "SAN" + ":" %>
     <%= f.number_field :sand, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :SIL %>
+    <%= f.label "SIL" + ":" %>
     <%= f.number_field :silt, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :WN %>
+    <%= f.label "WN" + ":" %>
     <%= f.number_field :wn, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :ph, t('soil.ph') %>
+    <%= f.label t('soil.ph') + ":" %>
     <%= f.number_field :ph, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :SMB %>
+    <%= f.label "SMB" + ":" %>
     <%= f.number_field :smb, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :CAC %>
+    <%= f.label "CAC" + ":" %>
     <%= f.number_field :cac, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :CEC %>
+    <%= f.label "CEC" + ":" %>
     <%= f.number_field :cec, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :Rok %>
+    <%= f.label "Rok" + ":" %>
     <%= f.number_field :rok, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :CNDS %>
+    <%= f.label "CNDS" + ":" %>
     <%= f.number_field :cnds, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :SSF %>
+    <%= f.label "SSF" + ":" %>
     <%= f.number_field :soil_p, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :RSD %>
+    <%= f.label "RSD" + ":" %>
     <%= f.number_field :rsd, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :BDD %>
+    <%= f.label "BDD" + ":" %>
     <%= f.number_field :bdd, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :PSP %>
+    <%= f.label "PSP" + ":" %>
     <%= f.number_field :psp, :class => "numbers" %>
   </div>
   <div class="field">
-    <%= f.label :Satc %>
+    <%= f.label "Satc" + ":" %>
     <%= f.number_field :satc, :class => "numbers" %>
   </div>
   
   <div class="actions">
-    <%= link_to "Update", { controller: "apex_layers", action: "index", id: @apex_layer.soil_id}, :class => "button" %>
+    <%= f.submit t('submit.update') %>
   </div>
 <% end %>

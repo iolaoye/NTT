@@ -1,22 +1,27 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
 
 <p>
-  <b>Year:</b>
+  <b><%= t('datetime.prompts.year') + " " + ':' %></b>
   <%= @soil_operation.year %>
   </p>
 
 <p>
-  <b>Month:</b>
+  <b><%= t('datetime.prompts.month') + " " + ':' %></b>
   <%= @soil_operation.month %>
   </p>
 
 <p>
-  <b>Day:</b>
+  <b><%= t('datetime.prompts.day') + " " + ':' %></b>
   <%= @soil_operation.day %>
 </p>
 
 <p>
-  <b>Operation:</b>
+  <b><%= t('scenario.operation') + " " + ':' %></b>
   <%= @soil_operation.apex_operation %>
 </p>
 
@@ -26,12 +31,12 @@
 </p>
 
 <p>
-  <b>Crop:</b>
+  <b><%= t('operation.crop') + " " + ':' %></b>
   <%= @soil_operation.apex_crop %>
 </p>
 
 <p>
-  <b>Type:</b>
+  <b><%= t('general.type') + " " + ':' %></b>
   <%= @soil_operation.type_id %>
 </p>
 

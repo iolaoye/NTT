@@ -58,14 +58,13 @@ class ScenariosController < ApplicationController
   # POST /scenarios
   # POST /scenarios.json
   def create
-    scenario = Scenario.new(scenario_params)
-	scenario.field_id = session[:field_id]
-    
+    @scenario = Scenario.new(scenario_params)
+	@scenario.field_id = session[:field_id]
 	respond_to do |format|
-      if scenario.save
+      if @scenario.save
 		@scenarios = Scenario.where(:field_id => session[:field_id])
 		#add new scenario to soils
-		add_scenario_to_soils(scenario)
+		add_scenario_to_soils(@scenario)
 		format.html { render action: "list" }
       else
         format.html { render action: "new" }
@@ -113,9 +112,9 @@ class ScenariosController < ApplicationController
     #@doc = "Nothing"
     @scenario = Scenario.find(params[:id])
 	dir_name = APEX + "/APEX" + session[:session_id]
-	#dir_name = "#{Rails.root}/data/#{session[:session_id]}"
+	dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
 	if !File.exists?(dir_name)
-		Dir.mkdir(dir_name) 
+		FileUtils.mkdir_p(dir_name)
 	else
 		#FileUtils.rm_rf(Dir.glob(File.join(dir_name, "*")))
 		#File.delete(dir_name + "/*")
@@ -175,7 +174,6 @@ class ScenariosController < ApplicationController
 		apex_run_string = "APEX001   1IWPNIWND   1   0   0"
 		if county != nil then
 			client = Savon.client(wsdl: URL_Weather)
-			session[:depth] = county.wind_wp1_name
 			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
 			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
 			print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
@@ -208,7 +206,6 @@ class ScenariosController < ApplicationController
 			print_array_to_file(weather_data, "APEX.wth")
 		end
 		#todo after file is copied if climate bmp is in place modified the weather file.
-<<<<<<< HEAD
         bmp_id = Bmp.select(:id).where(:scenario_id => session[:scenario_id])
         climate_array = Array.new
         climates = Climate.where(:bmp_id => bmp_id)
@@ -264,8 +261,6 @@ class ScenariosController < ApplicationController
             #@change_till_depth.push(newLine)
         end
 		#todo fix widn and wp1 files with the real name
-=======
->>>>>>> master
 	end
 
     def update_hash(climate, climate_array)
@@ -1090,6 +1085,7 @@ class ScenariosController < ApplicationController
         #check and fix the operation list
 		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + session[:scenario_id].to_s)
 		#todo when the map is saved again the number of soils in SoilOperation are not updated we can use something like SoilOperation.where(:soil_id => 1698).update_all(:soil_id => 1703)
+		
 		if @soil_operations.count > 0 then
 			#fix_operation_file()
 			#line 1
@@ -1693,7 +1689,7 @@ class ScenariosController < ApplicationController
 		Array.new(size) { |i| other[i] }
 	end
 
-	def load_month_values(apex_start_year)
+	def load_monthly_values(apex_start_year)
 		data = read_file("APEX001.msw")   #monthly values for sediment, flow, and nutrients
 
         annual_flow = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
@@ -1728,23 +1724,6 @@ class ScenariosController < ApplicationController
 
         last_year -= apex_start_year + 1
 
-		for i in 0..11
-            annual_flow[i] /= last_year
-			add_value_to_chart_table(annual_flow[i], 41, 0, i+1)
-            annual_sediment[i] /= last_year
-			add_value_to_chart_table(annual_sediment[i], 61, 0, i+1)
-            annual_orgn[i] /= last_year
-			add_value_to_chart_table(annual_orgn[i], 21, 0, i+1)
-            annual_orgp[i] /= last_year
-			add_value_to_chart_table(annual_orgp[i], 31, 0, i+1)
-            annual_no3[i] /= last_year
-			add_value_to_chart_table(annual_no3[i], 22, 0, i+1)
-            annual_po4[i] /= last_year
-			add_value_to_chart_table(annual_po4[i], 32, 0, i+1)
-            annual_precipitation[i] /= last_year
-			add_value_to_chart_table(annual_precipitation[i], 41, 0, i+1)
-        end  # end for
-
 		data = read_file("APEX001.mws")   #monthly values for precipitation
 		i=1
 		data.each_line do |tempa|
@@ -1769,6 +1748,22 @@ class ScenariosController < ApplicationController
 			i += 1
 		end # end data.each file apex001.mws
 
+		for i in 0..11
+            annual_flow[i] /= last_year
+			add_value_to_chart_table(annual_flow[i], 41, 0, i+1)
+            annual_sediment[i] /= last_year
+			add_value_to_chart_table(annual_sediment[i], 61, 0, i+1)
+            annual_orgn[i] /= last_year
+			add_value_to_chart_table(annual_orgn[i], 21, 0, i+1)
+            annual_orgp[i] /= last_year
+			add_value_to_chart_table(annual_orgp[i], 31, 0, i+1)
+            annual_no3[i] /= last_year
+			add_value_to_chart_table(annual_no3[i], 22, 0, i+1)
+            annual_po4[i] /= last_year
+			add_value_to_chart_table(annual_po4[i], 32, 0, i+1)
+            annual_precipitation[i] /= last_year
+			add_value_to_chart_table(annual_precipitation[i], 100, 0, i+1)
+        end  # end for
     end
 	
 	def load_results(apex_start_year)
@@ -1853,7 +1848,7 @@ class ScenariosController < ApplicationController
 			end
         end
 		msg = average_totals(results_data, 0)   # average totals
-
+		load_monthly_values(apex_start_year)
 		return msg
 
 		update_results_table

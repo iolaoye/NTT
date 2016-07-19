@@ -1,5 +1,6 @@
 class WatershedScenario < ActiveRecord::Base
-  attr_accessible :field_id, :scenario_id, :watershed_id
+  attr_accessible :field_id, :scenario_id, :watershed_id 
+    belongs_to :watersheds
   #validations
     validates_uniqueness_of :field_id
 end
