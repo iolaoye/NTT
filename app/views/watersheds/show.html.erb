@@ -1,7 +1,9 @@
-<div class="success_alert">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    <%= notice %>
-</div>
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
 
 <p>
   <b><%= t('general.name') %></b>
