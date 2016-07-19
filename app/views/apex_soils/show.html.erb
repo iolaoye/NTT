@@ -1,10 +1,13 @@
+
 <% if notice != nil %>
   <div class="success_alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <%= notice %>
   </div>
 <% end %>
+<h1><%= t('menu.apex_soil')%></h1>
 
+<p id="notice"><%= notice %></p>
 
 <table class='gvTableStyle'>
   <tr class='gvRowStyleOdd'>
@@ -86,6 +89,7 @@
   </tr>
 </table>
 
-
+<br>
 <%= link_to t('general.edit'), edit_apex_soil_path(@soil) %> |
 <%= link_to t('general.back'), apex_soils_path %>
+</br>

@@ -49,6 +49,7 @@
 </form>
 <h1 class="less-margin"><%=@result_selected %> <% @title%></h1>
 
+
 <% if @result_selected == t('result.annual') + "-" + t('result.charts') || @result_selected == t('result.monthly') + "-" + t('result.charts') then %>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
         <%= column_chart [
