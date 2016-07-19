@@ -993,7 +993,6 @@ class ScenariosController < ApplicationController
         #/line 7
         sLine = sprintf("%8.3f", _subarea_info.rshc)
         sLine += sprintf("%8.2f", _subarea_info.rsdp)
-		session[:depth] = _subarea_info
         sLine += sprintf("%8.2f", _subarea_info.rsbd)
         sLine += sprintf("%8.2f", _subarea_info.pcof)
         sLine += sprintf("%8.2f", _subarea_info.bcof)
@@ -1524,21 +1523,21 @@ class ScenariosController < ApplicationController
 			end # end if j>=10
 			j+=1
 		end #end data.each
-
-		average_crops_result(crops_data)
+		crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] } .map { |k,v| [k, v.map(&:yield).mean]}
+		average_crops_result(crops_data_by_crop_year)
     end  #end method
 
 	def average_crops_result(items)		
 		yield_by_name = Array.new
 		description_id = 70
-		items.each do |item|			
+		items.each do |item|
 			found = false
 			yield_by_name.each do |array|
-				if array["name"] == item.name then
+				if array["name"] == item[0][0] then
 					found = true
-					array["yield"] += item.yield
+					array["yield"] += item[1]
 					array["total"] += 1
-					add_value_to_chart_table(item.yield * array["conversion"], description_id, 0, item.year)
+					add_value_to_chart_table(item[1] * array["conversion"], description_id, 0, item[0][1])
 					break
 				end # end if same crop
 			end  # end each name
@@ -1546,16 +1545,16 @@ class ScenariosController < ApplicationController
 				description_id += 1				
 				yield_by_name.push(create_hash_by_name(item, description_id))
 			end  # end if found
-			first = false
+			#first = false
 		end
 
 		yield_by_name.each do |crop|
-			crop_ci = Chart.select(:value).where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
+			crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
 			ci = Array.new
 			crop_ci.each do |c|
 				ci.push c.value
 			end 
-			
+			session[:depth] = crop_ci
 			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
 			add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
 		end
@@ -1565,15 +1564,15 @@ class ScenariosController < ApplicationController
 	def create_hash_by_name(item, crop_count)
         conversion_factor = 1 * AC_TO_HA
         dry_matter = 100
-		#find the crop to take conversion_faactor and dry_matter
-		crop = Crop.find_by_code(item.name)
+		#find the crop to take conversion_factor and dry_matter
+		crop = Crop.find_by_code(item[0][0])
 		if crop != nil then
 			conversion_factor = crop.conversion_factor * AC_TO_HA
 			dry_matter = crop.dry_matter
 		end #end if crop != nil
 		new_hash = Hash.new
-		new_hash["name"] = item.name
-		new_hash["yield"] = item.yield
+		new_hash["name"] = item[0][0]
+		new_hash["yield"] = item[1]
 		new_hash["conversion"] = conversion_factor / (dry_matter/100)
 		new_hash["total"] = 1
 		new_hash["description_id"] = crop_count
@@ -1901,6 +1900,9 @@ class ScenariosController < ApplicationController
 
 	def add_value_to_chart_table(value, description_id, soil_id, year)
 		chart = Chart.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id, :month_year => year ).first
+		if year == 2003 then
+			session[:depth] = chart
+		end
         if chart == nil then
 			chart = Chart.new
 			chart.month_year = year
@@ -1909,6 +1911,9 @@ class ScenariosController < ApplicationController
 			chart.watershed_id = 0
 			chart.scenario_id = @scenario.id
 			chart.description_id = description_id
+		end
+		if value == nil then
+			ooo
 		end
 		chart.value = value
 		chart.save
@@ -2003,7 +2008,7 @@ class ScenariosController < ApplicationController
 				when 4  #calculate total area
 					#todo	
 				when 24  #calculate total N		
-					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + session[:field_id].to_s + " AND scenario_id = " + session[:scenario_id].to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
+					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
 				when 33  #calculate total P
 					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
 				when 43 #calculate total flow
