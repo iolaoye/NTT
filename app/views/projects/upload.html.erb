@@ -6,12 +6,10 @@
 	  <h1><%= t('project.upload_project') %></h1>
 	  <%= file_field_tag "project" %>
 	  <%= submit_tag(value = t('submit.save'), data: {disable_with: 'Please wait. Uploading your project . . .'}) %>
-	  <p><%= link_to t('general.back'), welcomes_path %></p>
 	<% else %>
 	  <h1><%= t('project.upload_example') %></h1>
-
 	  <%= select_tag "examples", "<option value=0>#{t('helpers.select.prompt')}</option><option value=1>OH Two Fields</option>".html_safe %>
 	  <%= submit_tag(value = t('project.upload_example'), data: {disable_with: 'Please wait. Uploading Example . . .'}) %>
-	  <p><%= link_to t('general.back'), welcomes_path %></p>
 	<%end %>
 <% end %>
+<br><%= link_to t('general.back'), welcomes_path %></br>

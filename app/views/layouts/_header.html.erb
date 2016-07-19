@@ -193,6 +193,19 @@
 					<% when /apex_layer/ %>
 						<li><%= t('menu.layer_file') %></li>
                 <% end %>
+			<% when /layer/ %>
+			    <% project_name = Project.find(session[:project_id]).name %>
+				<% field_name = Field.find(session[:field_id]).field_name %>
+			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
+			    <li><%=">>"%><%=project_name%></li>
+			    <li><%=">>"%><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
+			    <li><%=">>"%><%=field_name%></li>
+				<li><%=">>"%><%= t('menu.soils') %>
+				<li><%=">>"%>
+				<% case request.original_url %>
+					<% when /layer/ %>
+						<li><%= t('soil.layer') %></li>
+				<% end %>
 			<% when /watershed_scenario/ %>
 			    <% project_name = Project.find(session[:project_id]).name %>
 		        <li><%=link_to t('menu.projects'), welcomes_path %></li>
@@ -204,7 +217,7 @@
 					<% when /watershed_scenario/ %>
 						<li><%= t('watershed.watershed_scenario') %></li>
 				<% end %>
-			<% when /weather/, /soil/, /scenario/, /layer/ %>
+			<% when /weather/, /soil/, /scenario/ %>
 				<% project_name = Project.find(session[:project_id]).name %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
@@ -219,8 +232,7 @@
 						<li><%= t('menu.soils') %></li>
 					<% when /scenario/ %>
 						<li><%= t('menu.scenarios') %></li>
-					<% when /layer/ %>
-						<li><%= t('soil.layer') %></li>
+
 				<% end %>
 		    <% when /results/ %>
 				<% project_name = Project.find(session[:project_id]).name %>
