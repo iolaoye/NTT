@@ -88,11 +88,12 @@ class WatershedsController < ApplicationController
   # DELETE /watersheds/1
   # DELETE /watersheds/1.json
   def destroy
+    #oo
     @watershed = Watershed.find(params[:id])
     @watershed.destroy
 
     respond_to do |format|
-      format.html { redirect_to watersheds_url }
+      format.html { redirect_to list_watershed_path(session[:location_id]) }
       format.json { head :no_content }
     end
   end

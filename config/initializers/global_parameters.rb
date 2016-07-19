@@ -23,6 +23,9 @@
 #todo create a process to delete old folders
 	APEX = "public/NTTFiles"
 
+#folder for examples
+	EXAMPLES = "public/Examples"
+
 #folder for own weather files
 	OWN = 'public/weather'
 
