@@ -31,6 +31,7 @@
   <div>
     <hr class="line_break" color="dodgerblue">
   </div>
+  <br>
   <div class="field" id="irrigation" style="display:none">
       <%= label :irrigation_id, 'Irrigation' %>
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
@@ -184,7 +185,9 @@
   </div>
   <div id="submit" class="actions" style="display:none">
     <%= f.submit %>
+    <%= link_to t('general.back'), scenario_bmps_scenario_path(session[:scenario_id]) %>
   </div>
+  
 
 <% end %>
 
