@@ -1051,6 +1051,20 @@ footer {
   display:inline;
 }
 
+.pageContent > a {
+  background-color: 00796B;
+  border: none;
+  color: white !important;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  padding: 6px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 0 0 0 0;
+}
+
 .actions > a {
   background-color: #00796B;
   border: none;
