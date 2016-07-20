@@ -1610,10 +1610,10 @@ class ProjectsController < ApplicationController
 				when "annualPrecipitation"
 					upload_chart_info(p, field_id, 0, scenario_id, 100)
 				when "annualCropYield"
-					p.elements.each do |p|
+					#p.elements.each do |p|
 						#upload annual crops
 						upload_chart_crop_info(p, field_id, 0, scenario_id)
-					end
+					#end
 			end # end case p.name
 		end  # end node.elements.each
 	end
@@ -1704,7 +1704,6 @@ class ProjectsController < ApplicationController
 	def upload_chart_info(node, field_id, soil_id, scenario_id, description_id)
 		i = 1
 		month_year = 0
-		session[:depth] = @weather
 		year = @weather["simulation_final_year"].to_i - 11
 		node.elements.each do |p|
 			if i <= 12 then
@@ -1729,21 +1728,28 @@ class ProjectsController < ApplicationController
 	#todo check for more than one crop
 		i = 1		
 		month_year = @weather["simulation_final_year"].to_i - 11
-		node.elements.each do |p|
-			chart = Chart.new
-			chart.field_id = field_id
-			chart.soil_id = soil_id
-			chart.scenario_id = scenario_id
-			chart.value = p.elements[1]
-			chart.description_id = 71		#todo increase if more than one crop
-			chart.month_year = month_year
-			chart.save
-			if i < 12 then
-				month_year += 1
-			else
-				return
-			end
-			i +=1
+		node.elements.each do |p1|
+			p1.elements.each do |p|
+				case p.name
+					when "cropName"
+						#todo add controls
+					when "cropYield"
+						chart = Chart.new
+						chart.field_id = field_id
+						chart.soil_id = soil_id
+						chart.scenario_id = scenario_id
+						chart.description_id = 71		#todo increase if more than one crop
+						chart.month_year = month_year
+						chart.value = p.text
+						chart.save
+						if i < 12 then
+							month_year += 1
+						else
+							return
+						end
+						i +=1
+				end # end case p.name
+			end # end p1.elements.each
 		end # end node each
 	end
 
