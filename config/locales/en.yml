@@ -694,7 +694,7 @@ en:
         statement: "There are <b>two initial choices</b> to start a new project:"
         item1: 'Select the <b>New Project</b> option to start a project from scratch'
         item2: 'Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.'
-        item3: 'Select the <b>Open an Example Project</b> option to start a <b>pre-defined example</b> project.'
+        item3: 'Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.'
     create:
         header: New Project Option
         body1: 'Selecting the <b>New Project</b> button asks the user for the project name, and description information.'
@@ -705,7 +705,7 @@ en:
         body2: 'After you have opened the save project, click the <b>Save Changes</b> button to save the information and continue.'
     example:
         header: Open an Example Project Option
-        body1: 'You can also use the <b>Open an Example Project</b> button, and then select from the options to load a sample project file.'
+        body1: 'You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.'
         body2: 'After you have entered the information, click the <b>Save and Continue</b> button to save the information and continue.'
     save:
         header: Save Active Project
@@ -815,6 +815,7 @@ en:
             body: 'To delete a field, simply click the <b>Delete</b> button on the left most part of the field characteristics.'
     characteristics:
         header: Changing Field Characteristics
+        body: 'In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.'
         name:
             header: Changing the Field Name
             body: 'In order to change field’s name, simply click on the current name of the field (in this case Field 1) and type in the name of the field.'

@@ -42,7 +42,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
-    combine_pdf (0.2.23)
+    combine_pdf (0.2.28)
       ruby-rc4 (>= 0.1.5)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -144,7 +144,7 @@ DEPENDENCIES
   chartkick (~> 1.5, >= 1.5.2)
   coffee-rails (~> 3.2.1)
   coffee-script-source (= 1.8.0)
-  combine_pdf
+  combine_pdf (>= 0.2.27)
   jquery-rails
   nokogiri
   rails (= 3.2.21)
@@ -157,3 +157,6 @@ DEPENDENCIES
   wicked_pdf
   will_paginate (= 3.0.3)
   wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.12.5
