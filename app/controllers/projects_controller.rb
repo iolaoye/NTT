@@ -109,12 +109,20 @@ class ProjectsController < ApplicationController
 	#end
 
   def upload 
+	@id = params[:id]	
 	#nothing to do here. Just render the upload view
   end
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
 	def upload_project
-		@data = Nokogiri::XML(params[:project])
+		if params[:commit].eql?t('submit.save') then
+			@data = Nokogiri::XML(params[:project])
+		else
+			case params[:examples] 
+				when "1"  # Load OH two fields
+					@data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
+			end  # end case examples
+		end 
 		@data.root.elements.each do |node|
 			case node.name
 				when "project"  #appears to return false, thus goes to else
@@ -126,7 +134,13 @@ class ProjectsController < ApplicationController
 				when "FarmInfo"
 					msg = upload_location_info1(node)	
 				when "FieldInfo"
-					msg = upload_field_info(node)		
+					msg = upload_field_info(node)
+				when "SiteInfo"
+					msg = upload_site_info(node)
+				when "ControlValues"
+					msg = upload_control_values(node)
+				when "ParmValues"
+					msg = upload_parameter_values(node)
 			end
 		end
 		# summarizes results for totals and soils.
@@ -335,6 +349,21 @@ class ProjectsController < ApplicationController
 					save_bmp_information(xml, bmp)
 				end # end bmps.each
 			} # end xml.bmp operation
+
+			soil_operations = SoilOperation.where(:scenario_id => scenario.id)
+			xml.soil_operations {
+				soil_operations.each do |so|
+					save_soil_operation_information(xml, so)
+				end # end soil_operations.each
+			} # end xml.soil_operations
+
+			subareas = Subarea.where(:scenario_id => scenario.id)
+			xml.subareas {
+				subareas.each do |sa|
+					save_subarea_information(xml, sa)
+				end # end subarea.each
+			} # end xml.subareas
+
 		} # end xml.scenario
 	end #end scenarionmethod
 
@@ -389,6 +418,66 @@ class ProjectsController < ApplicationController
 			xml.difference_min_temperature bmp.difference_min_temperature
 			xml.difference_precipitation bmp.difference_precipitation
 		} # xml bmp end
+	end # end method
+
+	def save_soil_operation_information(xml, soil_operation)
+		xml.soil_operation {
+			xml.apex_crop soil_operation.apex_crop
+			xml.opv1 soil_operation.opv1
+			xml.opv2 soil_operation.opv2
+			xml.opv3 soil_operation.opv3
+			xml.opv4 soil_operation.opv4
+			xml.opv5 soil_operation.opv5
+			xml.opv6 soil_operation.opv6
+			xml.opv7 soil_operation.opv7
+			xml.activity_id soil_operation.activity_id
+			xml.year soil_operation.year
+			xml.month soil_operation.month
+			xml.day soil_operation.day
+			xml.operation_id soil_operation.operation_id
+			xml.type_id soil_operation.type_id
+			xml.scenario_id soil_operation.soil_id
+			xml.apex_operation soil_operation.apex_operation
+		} # xml each soil_operation end
+	end # end method
+
+	def save_subarea_information(xml, subarea)
+		xml.subarea {
+			xml.type subarea.type
+			xml.description subarea.description
+			xml.number subarea.number
+			xml.inps subarea.inps
+			xml.iops subarea.iops
+			xml.iow subarea.iow
+			xml.ii subarea.ii
+			xml.iapl subarea.iapl
+			xml.nvcn subarea.nvcn
+			xml.iwth subarea.iwth
+			xml.ipts subarea.ipts
+			xml.isao subarea.isao
+			xml.luns subarea.luns
+			xml.imw subarea.imw
+			xml.sno subarea.sno
+			xml.stdo subarea.stdo
+			xml.yct subarea.yct
+			xml.xct subarea.xct
+			xml.azm subarea.azm
+			xml.fl subarea.fl
+			xml.angl subarea.angl
+			xml.wsa subarea.wsa
+			xml.chl subarea.chl
+			xml.chd subarea.chd
+			xml.chs subarea.chs
+			xml.chn subarea.chn
+			xml.slp subarea.slp
+			xml.splg subarea.splg
+			xml.upn subarea.upn
+			xml.ffpq subarea.ffpq
+			xml.urbf subarea.urbf
+			xml.soil_id subarea.soil_id
+			xml.bmp_id subarea.bmp_id
+			xml.scenario_id subarea.scenario_id
+		} # xml each subarea end
 	end # end method
 
   private
@@ -529,6 +618,7 @@ class ProjectsController < ApplicationController
 		end
 
 		field.save
+		session[:field_id] = field.id
 		# save Weather Info
 		weather = Weather.new
 		weather.field_id = field.id
@@ -604,7 +694,7 @@ class ProjectsController < ApplicationController
 					@weather["longitude"] = p.text
 				when "CurrentWeatherPath"
 					file_name = p.text.split(/\N/)
-					@weather["weather_file"] = file_name[1]
+					@weather["weather_file"] = "N" + file_name[1]
 				when "StationWay"
 					way_id = Way.find_by_way_value(p.text).id		
 					@weather["way_id"] = way_id
@@ -643,6 +733,42 @@ class ProjectsController < ApplicationController
 		else
 			return "weather could not be saved"
 		end
+	end
+
+	def upload_site_info(node)
+		fields = Field.where(:location_id => session[:location_id])
+		fields.each do |field|
+			site = Site.new
+			site.field_id = field.id
+			site.fir0 = 0
+			node.elements.each do |p|
+				case p.name
+					when "Apm"
+						site.apm = p.text
+					when "Co2x"
+						site.co2x = p.text
+					when "Cqnx"
+						site.cqnx = p.text
+					when "Elevation"
+						site.elev = p.text
+					when "Rfnx"
+						site.rfnx = p.text
+					when "Unr"
+						site.unr = p.text
+					when "Upr"
+						site.upr = p.text
+					when "Longitude"
+						site.xlog = p.text
+					when "Latitude"
+						site.ylat = p.text
+				end  # end case p.name
+			end  # end nodel.elements
+			if site.save then
+				return "OK"
+			else
+				return "site could not be saved"
+			end
+		end  # each field
 	end
 
 	def upload_site_new_version(node, field_id)
@@ -896,19 +1022,19 @@ class ProjectsController < ApplicationController
 						scenario_id = scenario.id
 					end
 				when "Subareas"
-					if save = true then
+					if saved == true then
 						upload_subarea_info(p, scenario_id, soil_id)
 					else
 						return "Error saving scenario"
 					end
 				when "Operations"
-					if save = true then
+					if saved == true then
 						upload_soil_operation_info(p, scenario_id, soil_id)
 					else
 						return "Error saving scenario"
 					end
 				when "Results"
-					if save = true then
+					if saved == true then
 						upload_result_info(p, field_id, soil_id, scenario_id)
 					else
 						return "Error saving scenario"
@@ -951,6 +1077,18 @@ class ProjectsController < ApplicationController
 		subarea = Subarea.new
 		subarea.soil_id = soil_id
 		subarea.scenario_id = scenario_id
+		subarea.ny5 = 0
+		subarea.ny6 = 0
+		subarea.ny7 = 0
+		subarea.ny8 = 0
+		subarea.ny9 = 0
+		subarea.ny10 = 0
+		subarea.xtp5 = 0
+		subarea.xtp6 = 0
+		subarea.xtp7 = 0
+		subarea.xtp8 = 0
+		subarea.xtp9 = 0
+		subarea.xtp10 = 0
 		node.elements.each do |p|
 			case p.name
 				when "SbaType"
@@ -1061,8 +1199,8 @@ class ProjectsController < ApplicationController
 					subarea.rshc = p.text
 				when "Rsdp"
 					subarea.rsdp = p.text
-				when "Rsdb"
-					subarea.rsdb = p.text
+				when "Rsbd"
+					subarea.rsbd = p.text
 				when "Pcof"
 					subarea.pcof = p.text
 				when "Bcof"
@@ -1097,7 +1235,7 @@ class ProjectsController < ApplicationController
 					subarea.efi = p.text
 				when "Vimx"
 					subarea.vimx = p.text
-				when "armn"
+				when "Armn"
 					subarea.armn = p.text
 				when "Armx"
 					subarea.armx = p.text
@@ -1204,7 +1342,7 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_operation_info(node, scenario_id)
+	def upload_operation_info(node, scenario_id, field_id)
 		operation = Operation.new
 		operation.scenario_id = scenario_id
 		event_id = 0
@@ -1255,9 +1393,10 @@ class ProjectsController < ApplicationController
 			end # case
 		end # end each
 		operation.save
-		soils = Soil.where(:field_id => session[:field_id], :selected => true)
+		soils = Soil.where(:field_id => field_id, :selected => true)
 		soils.each do |soil|
-			soil_operation = SoilOperation.where(:soil_id => soil.id, scenario_id => scneario_id, :tractor_id => event_id)
+			session[:depth] = soil.id.to_s + "-" + scenario_id.to_s + "-" + event_id.to_s
+			soil_operation = SoilOperation.where(:soil_id => soil.id, :scenario_id => scenario_id, :tractor_id => event_id).first
 			soil_operation.operation_id = operation.id
 			soil_operation.save
 		end # end soils.each
@@ -1467,10 +1606,10 @@ class ProjectsController < ApplicationController
 				when "annualPrecipitation"
 					upload_chart_info(p, field_id, 0, scenario_id, 100)
 				when "annualCropYield"
-					p.elements.each do |p|
+					#p.elements.each do |p|
 						#upload annual crops
 						upload_chart_crop_info(p, field_id, 0, scenario_id)
-					end
+					#end
 			end # end case p.name
 		end  # end node.elements.each
 	end
@@ -1547,7 +1686,7 @@ class ProjectsController < ApplicationController
 					name = p.text
 				when "Operations"
 					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
-					upload_operation_info(p, scenario_id)
+					upload_operation_info(p, scenario_id, field_id)
 				when "Results"
 					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
 					upload_result_info(p, field_id, 0, scenario_id)
@@ -1582,21 +1721,28 @@ class ProjectsController < ApplicationController
 	#todo check for more than one crop
 		i = 1		
 		month_year = @weather["simulation_final_year"].to_i - 11
-		node.elements.each do |p|
-			chart = Chart.new
-			chart.field_id = field_id
-			chart.soil_id = soil_id
-			chart.scenario_id = scenario_id
-			chart.value = p.elements[1]
-			chart.description_id = 71		#todo increase if more than one crop
-			chart.month_year = month_year
-			chart.save
-			if i < 12 then
-				month_year += 1
-			else
-				return
-			end
-			i +=1
+		node.elements.each do |p1|
+			p1.elements.each do |p|
+				case p.name
+					when "cropName"
+						#todo add controls
+					when "cropYield"
+						chart = Chart.new
+						chart.field_id = field_id
+						chart.soil_id = soil_id
+						chart.scenario_id = scenario_id
+						chart.description_id = 71		#todo increase if more than one crop
+						chart.month_year = month_year
+						chart.value = p.text
+						chart.save
+						if i < 12 then
+							month_year += 1
+						else
+							return
+						end
+						i +=1
+				end # end case p.name
+			end # end p1.elements.each
 		end # end node each
 	end
 
@@ -1946,5 +2092,59 @@ class ProjectsController < ApplicationController
 		bmp.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SggCrop"]
 		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgslopeRatio"]
 		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgWidth"]
+	end
+
+	def upload_control_values(node)
+		control = ApexControl.new
+		control.project_id = session[:project_id]
+		node.elements.each do |p|
+			case p.name
+				when "Code"					
+					control.control_id = Control.find_by_code(p.text).id
+					case control.control_id
+						when 1 # get number of years of simulation from weather
+							weather = Weather.find_by_field_id(session[:field_id])
+							control.value = weather.simulation_final_year - weather.simulation_initial_year + 1
+							control.save
+							# get the first year of simulation from weather
+							control = ApexControl.new
+							control.project_id = session[:project_id]
+							control.control_id = Control.find_by_code(p.text).id
+							control.value = weather.simulation_initial_year
+							control.save
+							return
+						when 2 # do nothing because the second value should be alredy be taken
+							return
+					end  # end case control.control_id
+				when "Value"
+					control.value = p.text
+			end #end case
+		end ## end each		
+		if !control.save then
+			return "Error saving control file"
+		end
+	end
+
+	def upload_parameter_values(node)
+		parameter = ApexParameter.new
+		parameter.project_id = session[:project_id]
+		node.elements.each do |p|
+			case p.name
+				when "Code"
+					case p.text.length
+						when 5
+							parameter.parameter_id = p.text[4]
+						when 6
+							parameter.parameter_id = p.text[4] + p.text[5]
+						when 7
+							parameter.parameter_id = p.text[4] + p.text[5] + p.text[6]
+					end
+				when "Value"
+					parameter.value = p.text
+			end #end case
+		end ## end each		
+		if !parameter.save then
+			return "Error saving parameter file"
+		end
 	end
 end

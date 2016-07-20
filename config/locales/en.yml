@@ -232,11 +232,11 @@ en:
     value: Value
     fraction: fraction
     date: Date
-    select: Seleccionar
-    one: Uno
-    please: Por favor
-    wait: espere
-    loading: Cargando
+    select: Select
+    one: One
+    please: Please
+    wait: wait
+    loading: Loading
   welcome_note: 
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the filed or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -274,6 +274,7 @@ en:
     project: Project
     new_project: 'New Project'
     upload_project: 'Upload Project'
+    upload_example: Upload Example
     upload_button_desc: 'Project to Upload:'
     editing_project: 'Editing Project'
   footer:
@@ -378,6 +379,7 @@ en:
     new_watershed: New Watershed
     watershed_title: Listing Watershed
     create_watershed: Create Watershed
+    watershed_scenario: Watershed Scenario
   watershed_scenario:
     watershed_scenario_name: Watershed Name
     watershed_scenario_field: Watershed Field
@@ -404,9 +406,13 @@ en:
     soil_file: Soil
     layer_file: Layer
     operation_file: Operation
+  navbar:
+    by_soil: By+Soil
   result:
     summary: Summary
-    by_soil: by Soil
+    by_soil: By Soil
+    download_pdf: Download PDF
+    charts: Charts
     monthly: Monthly
     annual: Annual
     update_chart: Update Chart
@@ -484,7 +490,7 @@ en:
     email: 'gallego@tiaer.tarleton.edu'
   help:
     header: NTT Table of Contents
-    return_to_table: '<< Return to Table of Contents'
+    return_to_table: 'Return to Table of Contents'
     overview: Overview
     overview1: About NTT
     overview2: Contact Information

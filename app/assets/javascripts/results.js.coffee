@@ -25,14 +25,39 @@ update_crops = ->
                items.push "<option value=\"" + i + "\">" + crop.name + " Yield </option>"
                $("#result5_description_id").html items.join("")
   else
-    $("#result5_description_id").html items.join("") 
+    $("#result5_description_id").html items.join("")
+
+generate_pdf = ->
+    $("#pdf_download").click (event) ->
+        $("#myForm").submit()
+
+display_button = ->
+    string = window.location.href
+    substring = 'results?button'
+    if string.indexOf(substring) > -1
+        set_buttons(false)
+    else
+        set_buttons(true)
+
+set_buttons = (view) ->
+    $("#pdf_download").toggle(view)
+    $("#pdf_no_click").toggle(!view)
 
 $(document).ready ->
+    set_buttons(false)
+    display_button()
+    generate_pdf()
     $("#result1_scenario_id").change ->
         update_crops()
+        set_buttons(false)
 
     $("#result2_scenario_id").change ->
         update_crops()
+        set_buttons(false)
 
     $("#result3_scenario_id").change ->
         update_crops()
+        set_buttons(false)
+
+    $("#summary").click (event) ->
+        set_buttons(true)

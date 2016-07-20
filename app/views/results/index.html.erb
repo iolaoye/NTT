@@ -1,3 +1,4 @@
+<br>
 <form id="myForm">
   <div class="field">
     <table>
@@ -5,42 +6,58 @@
         <td><%= label :bmp_id, t('result.scenario1') %></td>
         <td><%= label :bmp_id, t('result.scenario2') %></td>
         <td><%= label :bmp_id, t('result.scenario3') %></td>
-        <td></td>
-        <td colspan='2'><%= label :bmp_id, t('result.annual') + " " + t('result.last') %></td>
-        <td colspan='2'><%= label :bmp_id, t('result.avg') %></td>
+        <% case @type %>
+          <% when t('result.summary') %>
+            <td></td>
+            <% when t("result.summary") + " " + t("result.by_soil") %>
+            <td colspan='2'><%= label :bmp_id, t('soil.soil') %></td>
+          <% when t('result.annual') %>
+            <td colspan='2'><%= label :bmp_id, t('result.annual') + " " + t('result.last') %></td>
+          <% when t('result.monthly') %>
+            <td colspan='2'><%= label :bmp_id, t('result.avg') + " " + t('result.last') %></td>
+        <% end %>
       </tr>
       <tr>
         <td><%= collection_select :result1, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario1'), :required => true, :selected => @scenario1} %></td>
         <td><%= collection_select :result2, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario2'), :required => false, :selected => @scenario2} %></td>
         <td><%= collection_select :result3, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario3'), :required => false, :selected => @scenario3} %></td>
-        <td><%= submit_tag t("result.summary"), name: "button"%></td>
-        <td><%= collection_select :result5, :description_id, @descriptions, :id, :description, {:prompt => t('result.select_chart'), :required => true, :selected => @description} %></td>
-        <td><%= submit_tag t("result.annual"), name: "button" %></td>
-        <td><%= collection_select :result6, :description_id, Description.where("period == 3 OR period == 1"), :id, :description, {:prompt => t('result.select_chart'), :required => true, :selected => @description} %></td>
-        <td><%= submit_tag t("result.monthly"), name: "button" %></td>
+        <% case @type %>
+          <% when t('result.summary') %>
+            <td><%= submit_tag t("result.summary"), :id => "summary", name: "button" %>
+            <%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :class => "green_button padding_top", :id => "pdf_download", name: "button" %>
+            <a href="javascript:AlertIt();" id="pdf_no_click" class="no_click">Download PDF</a></td>
+          <% when t("result.summary") + " " + t("result.by_soil") %>
+            <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => session[:field_id], :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :required => false, :selected => @soil} %></td>
+            <td><%= submit_tag t("result.summary") + " " + t("result.by_soil"), name: "button" %>
+          <% when t('result.annual')  + "-" + t('result.charts') %>
+            <td><%= collection_select :result5, :description_id, @descriptions, :id, :description, {:prompt => t('result.select_chart'), :required => true, :selected => @description} %></td>
+            <td><%= submit_tag t("result.annual")  + "-" + t('result.charts'), name: "button" %></td>
+          <% when t('result.monthly') + "-" + t('result.charts') %>
+            <td><%= collection_select :result6, :description_id, Description.where("period == 3 OR period == 1"), :id, :description, {:prompt => t('result.select_chart'), :required => true, :selected => @description} %></td>
+            <td><%= submit_tag t("result.monthly")  + "-" + t('result.charts'), name: "button" %></td>
+        <% end %>
+
       </tr>
         <%= hidden_field(:language, :language, :value => I18n.locale) %>
-      <%= hidden_field(:field, :id, :value => session[:field_id]) %>
+        <%= hidden_field(:field, :id, :value => session[:field_id]) %>
     </table>
     <table>
         <tr>
-          <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => session[:field_id], :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :required => false, :selected => @soil} %></td>
-          <td><%= submit_tag t("result.summary") + " " + t("result.by_soil"), name: "button"%>
-          <%= link_to "Download PDF", { :action => "index", :format => :pdf }, target: '_blank', :class => "green_button padding_top", name: "button" %></td>
         </tr>
     </table>
   </div>
 </form>
+<h1 class="less-margin"><%=@result_selected %> <% @title%></h1>
 
-<h1><%=@result_selected + " " + @title%></h1>
-<% if @result_selected == t('result.annual') || @result_selected == t('result.monthly') then %>
+
+<% if @result_selected == t('result.annual') + "-" + t('result.charts') || @result_selected == t('result.monthly') + "-" + t('result.charts') then %>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-      <%= column_chart [
-      { :name => "1st Scenario", :data => @charts1 },
-      { :name => "2nd Scenario", :data => @charts2 },
-      { :name => "3rd Scenario", :data => @charts3 }
-      ], { library: {hAxis: {title: @x}, vAxis: {title: @y}}}
-      %>
+        <%= column_chart [
+        { :name => "1st Scenario", :data => @charts1 },
+        { :name => "2nd Scenario", :data => @charts2 },
+        { :name => "3rd Scenario", :data => @charts3 }
+        ], { library: {hAxis: {title: @x}, vAxis: {title: @y}}}
+        %>
 <% else %>
   <table class='gvTableStyle'>
       <tr class='gvHeaderStyle'>
@@ -128,7 +145,7 @@
                   </tr>
                 <% else %>
                   <tr class="gvRowStyleEven">
-                    <% if result.description_id > 70 and result.description_id < 90 %>
+                    <% if result.description_id > 70 && result.description_id < 90 %>
                       <td class="gvDetailText bottom_border"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
                       <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
                       <% if @results2 != nil %>
@@ -189,3 +206,10 @@
       <% end %>
   </table>
  <% end %>
+ <br>
+
+<script type="text/javascript">
+  function AlertIt() {
+    alert("You must run a summary before you can download a pdf");
+  }
+</script>

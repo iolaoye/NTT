@@ -275,6 +275,7 @@
     project: Proyecto
     new_project: 'Proyecto Nuevo'
     upload_project: 'Subir Proyecto'
+    upload_example: Subir Ejemplo
     upload_button_desc: 'Proyecto a Subir'
     editing_project: 'Revisión de Proyecto'
   footer:
@@ -363,8 +364,8 @@
     activity_title: Lista de Actividades
   field:
     field: Parcela
-    field_name: Nombre Parcela
-    field_area: Área Parcela
+    field_name: Nombre de Parcela
+    field_area: Área de Parcela
     field_avg_slope: Inclinación promedio parcela
     new_field: Parcela Nueva
     field_title: Lista Parcelas
@@ -376,10 +377,11 @@
     watershed_name: Nombre de la Cuenca
     new_watershed: Nueva Cuenca
     watershed_title: Listado de Cuencas
+    watershed_scenario: Escenario de Cuencas
     create_watershed: Crear Cuenca
   watershed_scenario:
     watershed_scenario_name: Nombre de la cuenca
-    watershed_scenario_title: Listing Watershed Scenarios
+    watershed_scenario_title: Lista de Escenario de Cuencas
     add_to_watershed: Adicionar a la cuenca
   submit:
     create: Crear
@@ -400,9 +402,13 @@
     soil_file: Suelos
     layer_file: Capas
     operation_file: Operación
+  navbar:
+    by_soil: Por+Suelo
   result:
     summary: Resumen
-    by_soil: por Suelo
+    by_soil: Por Suelo
+    download_pdf: Bajar PDF
+    charts: Gráficas
     monthly: Mensual
     annual: Anual
     update_chart: Actualizar Gráfica
@@ -480,7 +486,7 @@
     email: 'gallego@tiaer.tarleton.edu'
   help:
     header: NTT Tabla de Contenidos
-    return_to_table: '<< Regresar a la Tabla de Contenidos'
+    return_to_table: 'Regresar a la Tabla de Contenidos'
     overview: Visión General
     overview1: Acerca de NTT
     overview2: Información del Contacto
