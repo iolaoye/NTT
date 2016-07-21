@@ -319,28 +319,35 @@ class LocationsController < ApplicationController
 
 	#todo Update years of simulation + initialyear in weather. Also, update for state. Now is just one without state
 	def load_controls()
-		Control.all.each do |c|
-			apex_control = ApexControl.new
-			apex_control.control_id = c.id
-			apex_control.value = c.default_value
-			apex_control.project_id = session[:project_id]
-			if apex_control.control_id == 1 then
-				apex_control.value =  @weather.simulation_final_year - @weather.simulation_initial_year + 1
-			end
-			if apex_control.control_id == 2 then
-				apex_control.value = @weather.simulation_initial_year
-			end
-			apex_control.save
-		end
-	end
+              control = ApexControl.where(:project_id => session[:project_id])
+              if control == [] then
+                     Control.all.each do |c|
+                           apex_control = ApexControl.new
+                           apex_control.control_id = c.id
+                           apex_control.value = c.default_value
+                           apex_control.project_id = session[:project_id]
+                           if apex_control.control_id == 1 then
+                                  apex_control.value =  @weather.simulation_final_year - @weather.simulation_initial_year + 1
+                           end
+                           if apex_control.control_id == 2 then
+                                  apex_control.value = @weather.simulation_initial_year
+                           end
+                           apex_control.save
+                     end  # end control all
+              end # end if 
+       end
 
-	def load_parameters()
-		Parameter.all.each do |c|
-			apex_parameter = ApexParameter.new
-			apex_parameter.parameter_id = c.id
-			apex_parameter.value = c.default_value
-			apex_parameter.project_id = session[:project_id]
-			apex_parameter.save
-		end
-	end
+       def load_parameters()
+              parameter = ApexParameter.where(:project_id => session[:project_id])
+              if parameter == [] then
+                     Parameter.all.each do |c|
+                           apex_parameter = ApexParameter.new
+                           apex_parameter.parameter_id = c.id
+                           apex_parameter.value = c.default_value
+                           apex_parameter.project_id = session[:project_id]
+                           apex_parameter.save
+                     end  # end Parameter.all
+              end # if parameter == nil 
+       end  # end def
+
 end
