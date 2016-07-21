@@ -116,7 +116,6 @@ class ProjectsController < ApplicationController
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
 	def upload_project
-		@list_array = Array.new
 		if params[:commit].eql?t('submit.save') then
 			@data = Nokogiri::XML(params[:project])
 		else
@@ -1918,8 +1917,6 @@ class ProjectsController < ApplicationController
 	end
 
 	def upload_bmp_af(node, scenario_id)
-		af_array = Array.new
-		af_array.push("AF:")
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 1
@@ -1927,48 +1924,28 @@ class ProjectsController < ApplicationController
 		node.elements.each do |p|
 			case p.name
 				when "AFEff"
-					af_array.push(p.name)
-					af_array.push(p.text)
 					bmp.irrigation_efficiency = p.text.to_f
 				when "AFFreq"
-					af_array.push(p.name)
-					af_array.push(p.text)
 					bmp.days = p.text.to_i
 				when "AFMaxSingleApp"
-					af_array.push(p.name)
-					af_array.push(p.text)
 					bmp.maximum_single_application = p.text.to_f
 				when "AFType"
-					af_array.push(p.name)
-					af_array.push(p.text)
 					bmp.irrigation_id = p.text.to_i
 				when "AFWaterStressFactor"
-					af_array.push(p.name)
-					af_array.push(p.text)
 					bmp.water_stress_factor = p.text.to_f
 				when "AFSafetyFactor"
-					af_array.push(p.name)
-					af_array.push(p.text)
 					bmp.safety_factor = p.text.to_f
 				when "AFArea"
-					af_array.push(p.name)
-					af_array.push(p.text)
 					bmp.area = p.text.to_f
 				when "AFNConc"
-					af_array.push(p.name)
-					af_array.push(p.text)
 					# unsure of what this is 
 					#bmp.irrigation_efficiency = p.text.to_f
 			end
 		end
-		session[:array_af] = af_array
 		bmp.save
 	end
 
 	def upload_bmp_ai(node, scenario_id)
-		@list_array.push("ENTERED UPLOAD AI")
-		ai_array = Array.new
-		ai_array.push("AI:")
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 1
@@ -1976,43 +1953,22 @@ class ProjectsController < ApplicationController
 		node.elements.each do |p|
 			case p.name
 				when "AIEff"
-					ai_array.push(p.name)
-					ai_array.push(p.text)
 					bmp.irrigation_efficiency = p.text.to_f
 				when "AIFreq"
-					ai_array.push(p.name)
-					ai_array.push(p.text)
 					bmp.days = p.text.to_i
 				when "AIMaxSingleApp"
-					ai_array.push(p.name)
-					ai_array.push(p.text)
 					bmp.maximum_single_application = p.text.to_f
 				when "AIType"
-					ai_array.push(p.name)
-					ai_array.push(p.text)
 					bmp.irrigation_id = p.text.to_i
 				when "AIWaterStressFactor"
-					ai_array.push(p.name)
-					ai_array.push(p.text)
 					bmp.water_stress_factor = p.text.to_f
 				when "AISafetyFactor"
-					ai_array.push(p.name)
-					ai_array.push(p.text)
 					bmp.safety_factor = p.text.to_f 
 				when "AFArea"
-					ai_array.push(p.name)
-					ai_array.push(p.text)
 					bmp.area = p.text.to_f
 			end
 		end
-		ai_array_saved = Array.new
-		if bmp.save
-			ai_array_saved.push("saved")
-		else
-			ai_array_saved.push(bmp.errors)
-		end
-		session[:array_ai] = ai_array
-		session[:array_ai_saved] = ai_array_saved
+		bmp.save
 	end
 
 	def upload_bmp_td(node, scenario_id)
