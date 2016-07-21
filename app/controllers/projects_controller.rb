@@ -116,9 +116,7 @@ class ProjectsController < ApplicationController
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
 	def upload_project
-		
 		@list_array = Array.new
-		@list_array.push("HERE")
 		if params[:commit].eql?t('submit.save') then
 			@data = Nokogiri::XML(params[:project])
 		else
@@ -1758,186 +1756,93 @@ class ProjectsController < ApplicationController
 		node.elements.each do |p|
 			case p.name
 				when "AIType"
-					@list_array.push(p.text)
-					@list_array.push("VALUE: " + p.text.to_i.to_s)
-					@list_array.push(p.text.to_i > 0)
 					if p.text.to_i > 0
-						@list_array.push("Entered AIType")
 						upload_bmp_ai(node, scenario_id)
 					end
 				when "AFType"
-					@list_array.push(p.text)
 					if p.text.to_i > 0
 						upload_bmp_af(node, scenario_id)
 					end
 				when "TileDrainDepth"
-					@list_array.push(p.text)
 					if p.text.to_f > 0
 						upload_bmp_td(node, scenario_id)
 					end
 				when "PPNDWidth"
-					@list_array.push(p.text)
 					if p.text.to_f > 0
 						upload_bmp_ppnd(node, scenario_id)
 					end
 				when "PPDSWidth"
-					@list_array.push(p.text)
 					if p.text.to_f > 0
 						upload_bmp_ppds(node, scenario_id)
 					end
 				when "PPDEWidth"
-					@list_array.push(p.text)
 					if p.text.to_f > 0
 						upload_bmp_ppde(node, scenario_id)
 					end
 				when "PPTWWidth"
-					@list_array.push(p.text)
 					if p.text.to_f > 0
 						upload_bmp_pptw(node, scenario_id)
 					end
 				when "WLArea"
-					@list_array.push(p.text)
 					if p.text.to_f> 0
 						upload_bmp_wl(node, scenario_id)
 					end
 				when "PndF"
-					@list_array.push(p.text)
 					if p.text.to_f > 0
 						upload_bmp_pnd(node, scenario_id)
 					end
 				when "SFAnimals"
-					@list_array.push(p.text)
 					if p.text.to_i > 0
 						upload_bmp_sf(node, scenario_id)
 					end
 				when "Sbs"
-					@list_array.push(p.text)
 					if p.text == "True"
 						upload_bmp_sbs(node, scenario_id)
 					end
 				when "RFArea"
-					@list_array.push(p.text)
 					if p.text.to_f > 0
 						upload_bmp_rf(node, scenario_id)
 					end
 				when "FSCrop"
-					@list_array.push(p.text)
 					if p.text.to_i > 0
 						upload_bmp_fs(node, scenario_id)
 					end
 				when "WWCrop"
-					@list_array.push(p.text)
 					if p.text.to_i > 0
 						upload_bmp_ww(node, scenario_id)
 					end
 				when "CBCrop"
-					@list_array.push(p.text)
 					if p.text.to_i > 0
-						upload_bmp_cf(node, scenario_id)
+						upload_bmp_cb(node, scenario_id)
 					end
 				when "SlopeRed"
-					@list_array.push(p.text)
 					if p.text.to_f > 0
 						upload_bmp_ll(node, scenario_id)
 					end
 				when "Ts"
-					@list_array.push(p.text)
 					if p.text == "True"
 						upload_bmp_ts(node, scenario_id)
 					end
 				when "CcMaximumTeperature", "CcMinimumTeperature", "CcPrecipitation"
-					@list_array.push(p.text)
 					if p.text.to_f > 0
 						upload_bmp_cc(node, scenario_id)
 					end
 				when "AoC"
-					@list_array.push(p.text)
 					if p.text == "True"
 						upload_bmp_aoc(node, scenario_id)
 					end
 				when "Gc"
-					@list_array.push(p.text)
 					if p.text == "True"
 						upload_bmp_gc(node, scenario_id)
 					end
 				when "Sa"
-					@list_array.push(p.text)
 					if p.text == "True"
 						upload_bmp_sa(node, scenario_id)
 					end
 				when "SdgCrop"
-					@list_array.push(p.text)
 					if p.text.to_i > 0
 						upload_bmp_sdg(node, scenario_id)
 					end
-			end
-		end
-		if false
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIType"].to_i > 0 then
-				upload_bmp_ai(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFType"].to_i > 0 then
-				upload_bmp_af(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["TileDrainDepth"].to_f > 0 then
-				upload_bmp_td(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPNDWidth"].to_f > 0 then
-				upload_bmp_ppnd(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDSWidth"].to_f > 0 then
-				upload_bmp_ppds(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDEWidth"].to_f > 0 then
-				upload_bmp_ppde(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPTWWidth"].to_f > 0 then
-				upload_bmp_pptw(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WLArea"].to_f > 0 then
-				upload_bmp_wl(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PndF"].to_f > 0 then
-				upload_bmp_pnd(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFAnimals"].to_i > 0 then
-				upload_bmp_sf(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Sbs"] == "True" then
-				upload_bmp_sbs(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["RFArea"].to_f > 0 then
-				upload_bmp_rf(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["FSCrop"].to_i > 0 then
-				upload_bmp_fs(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WWCrop"].to_i > 0 then
-				upload_bmp_ww(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CBCrop"].to_i > 0 then
-				upload_bmp_cf(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SlopeRed"].to_f > 0 then
-				upload_bmp_ll(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Ts"] == "True" then
-				upload_bmp_ts(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMaximumTeperature"].to_f > 0 or @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMinimumTeperature"].to_f > 0 or @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcPrecipitation"].to_f > 0 then
-				upload_bmp_cc(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AoC"] == "True" then
-				upload_bmp_aoc(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Gc"] == "True" then
-				upload_bmp_gc(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Sa"] == "True" then
-				upload_bmp_sa(node, scenario_id)
-			end
-			if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgCrop"].to_i > 0 then
-				upload_bmp_sdg(node, scenario_id)
 			end
 		end
 	end
@@ -2012,77 +1917,102 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_bmp_ai(node, scenario_id)
-		@list_array.push("Entered AIType upload")
-		bmp = Bmp.new
-		bmp.scenario_id = scenario_id
-		bmp.bmp_id = 1
-		bmp.bmpsublist_id = 1
-		node.elements.each do |p|
-			case p.name
-				when "AFEff"
-					@list_array.push("Entered AFEff")
-					bmp.irrigation_efficiency = p.text.to_f
-				when "AFFreq"
-					@list_array.push("Entered AFFreq")
-					bmp.days = p.text.to_i
-				when "AFMaxSingleApp"
-					@list_array.push("Entered AFMaxSingleApp")
-					bmp.maximum_single_application = p.text.to_f
-				when "AFType"
-					@list_array.push("Entered AIType")
-					bmp.irrigation_id = p.text.to_i
-				when "AFWaterStressFactor"
-					@list_array.push("Entered AFWaterStressFactor")
-					bmp.water_stress_factor = p.text.to_f
-				when "AFSafetyFactor"
-					@list_array.push("Entered AFSafetyFactor")
-					bmp.safety_factor = p.text.to_f
-				when "AFArea"
-					@list_array.push("Entered AFArea")
-					bmp.area = p.text.to_f
-				when "AFNConc"
-					@list_array.push("Entered AFNConc")
-					# unsure of what this is 
-					#bmp.irrigation_efficiency = p.text.to_f
-			end
-		end
-		bmp.save
-		@list_array.push("Bmp: " + bmp.irrigation_efficiency)
-		@list_array.push("Bmp: " + bmp.days)
-		@list_array.push("Bmp: " + bmp.maximum_single_application)
-		@list_array.push("Bmp: " + bmp.irrigation_id)
-		@list_array.push("Bmp: " + bmp.water_stress_factor)
-		@list_array.push("Bmp: " + bmp.safety_factor)
-		@list_array.push("Bmp: " + bmp.area)
-		
-		@list_array.push("THIS BMP ENDS HERE ----------------------------")
-	end
-
 	def upload_bmp_af(node, scenario_id)
+		af_array = Array.new
+		af_array.push("AF:")
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 1
 		bmp.bmpsublist_id = 2
 		node.elements.each do |p|
 			case p.name
+				when "AFEff"
+					af_array.push(p.name)
+					af_array.push(p.text)
+					bmp.irrigation_efficiency = p.text.to_f
+				when "AFFreq"
+					af_array.push(p.name)
+					af_array.push(p.text)
+					bmp.days = p.text.to_i
+				when "AFMaxSingleApp"
+					af_array.push(p.name)
+					af_array.push(p.text)
+					bmp.maximum_single_application = p.text.to_f
+				when "AFType"
+					af_array.push(p.name)
+					af_array.push(p.text)
+					bmp.irrigation_id = p.text.to_i
+				when "AFWaterStressFactor"
+					af_array.push(p.name)
+					af_array.push(p.text)
+					bmp.water_stress_factor = p.text.to_f
+				when "AFSafetyFactor"
+					af_array.push(p.name)
+					af_array.push(p.text)
+					bmp.safety_factor = p.text.to_f
+				when "AFArea"
+					af_array.push(p.name)
+					af_array.push(p.text)
+					bmp.area = p.text.to_f
+				when "AFNConc"
+					af_array.push(p.name)
+					af_array.push(p.text)
+					# unsure of what this is 
+					#bmp.irrigation_efficiency = p.text.to_f
+			end
+		end
+		session[:array_af] = af_array
+		bmp.save
+	end
+
+	def upload_bmp_ai(node, scenario_id)
+		@list_array.push("ENTERED UPLOAD AI")
+		ai_array = Array.new
+		ai_array.push("AI:")
+		bmp = Bmp.new
+		bmp.scenario_id = scenario_id
+		bmp.bmp_id = 1
+		bmp.bmpsublist_id = 1
+		node.elements.each do |p|
+			case p.name
 				when "AIEff"
+					ai_array.push(p.name)
+					ai_array.push(p.text)
 					bmp.irrigation_efficiency = p.text.to_f
 				when "AIFreq"
+					ai_array.push(p.name)
+					ai_array.push(p.text)
 					bmp.days = p.text.to_i
 				when "AIMaxSingleApp"
+					ai_array.push(p.name)
+					ai_array.push(p.text)
 					bmp.maximum_single_application = p.text.to_f
 				when "AIType"
+					ai_array.push(p.name)
+					ai_array.push(p.text)
 					bmp.irrigation_id = p.text.to_i
 				when "AIWaterStressFactor"
+					ai_array.push(p.name)
+					ai_array.push(p.text)
 					bmp.water_stress_factor = p.text.to_f
 				when "AISafetyFactor"
+					ai_array.push(p.name)
+					ai_array.push(p.text)
 					bmp.safety_factor = p.text.to_f 
 				when "AFArea"
+					ai_array.push(p.name)
+					ai_array.push(p.text)
 					bmp.area = p.text.to_f
 			end
 		end
-		bmp.save
+		ai_array_saved = Array.new
+		if bmp.save
+			ai_array_saved.push("saved")
+		else
+			ai_array_saved.push(bmp.errors)
+		end
+		session[:array_ai] = ai_array
+		session[:array_ai_saved] = ai_array_saved
 	end
 
 	def upload_bmp_td(node, scenario_id)
