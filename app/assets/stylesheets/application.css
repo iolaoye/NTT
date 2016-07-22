@@ -489,6 +489,10 @@
   */
 }
 
+table {
+  margin-bottom: 15px;
+}
+
 .upper_border {
   border-top: 1px solid #C1C3D1;
 }
@@ -1098,5 +1102,25 @@ td > a:hover {
 
 
 #div_type, #div_fertilizer {
+  margin-bottom: 10px !important;
+}
+
+h1 > .normal_text {
+  font-size: 12px;
+  font-weight: normal;
+  color: black;
+  padding-top: 10px;
+  margin-bottom: 0px;
+}
+
+h1 {
+  margin-bottom: 25px;
+}
+
+.text_h1 {
+  margin-bottom: 20px !important;
+}
+
+.buttons_h1 {
   margin-bottom: 10px !important;
 }
