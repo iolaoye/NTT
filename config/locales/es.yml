@@ -604,6 +604,11 @@
     difference: Diferencia
     reduction: Reducción
     total_area: Área Total
+  instructions:
+    projects: Para seleccionar un proyecto, haga clic en el nombre del proyecto
+    fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
+    watersheds: Para seleccionar un cuenca, haga clic en el nombre de la cuenca
+    scenarios: Para seleccionar un escenario, haga clic en el nombre del escenario
   sysreq:
     header: Requisitos del Sistema
     minreq:
@@ -712,5 +717,30 @@
         body1: 'También se puede utilizar <b>Cerrar Proyecto Activo</b> para cerrar el proyecto actual que con el que el usuario está trabajando.'
         body2: ''
         body3: 'El cerrar un Proyecto activo borrará toda la información de ese Proyecto. Debido a esto, si usted necesitara usar el pryecto mas tarde, eis extremadamente importante que salve le Proyecto antes de cerrarlo. Presionando el botón <b>Cerrar Proyecto Activo</b> , la información será borrada (y perdida si no se salvo previamente). Si usted no ha salvado el Proyecto y lo quiere hacer, presione cancelar y siga las instrucciones para “Salvar Proyecto Activo” antes mencionadas.'
+    
+  instructionbox:
+    projects: >
+                Para comenzar un nuevo Proyecto tiene varias opciones:
+                <ol>
+                  <li>Seleccione <b><i>Proyecto Nuevo</i></b> para comenzar un proyecto desde cero.</li>
+                  <li>Seleccione <b><i>Subir Proyecto</i></b> para abrir un proyecto salvado previamente.</li>
+                  <li>Seleccione <b><i>Subir Ejemplo</i></b> para abrir un proyecto de ejemplo.</li>
+                </ol>
+                Para <b>Bajar</b> un proyecto, seleccione el icono de la flecha azul debajo de <b>Opciones</b>.<br>
+                Para <b>Editar</b> un proyecto, seleccione el icono del lapiz debajo de <b>Opciones</b>.
+                Para <b>Borrar</b> un proyecto, seleccione el icono de la "x" roja debajo de <b>Opciones</b>.
+    locations: >
+                There are three choices to select location for un proyecto:
+                <ol>
+                  <li>Seleccione the <b><i>Map System</i></b> option to draw the area of interest (farm) and the fields using a web map. You draw the farm and inside the farm the fields. Do not worry if the fields are not completly inside the farm, the farm is just for reference. Fields are the ones used.</li>
+                  <li>Seleccione the <b><i>State/County</b></i> option to select an area of interest by state, county, and dominant soils. Max of three soils for field.</li>
+                  <li>Seleccione <b><i>User Input</b></i> to enter all of the information needed to run the model manually.</li>
+                </ol>
+                After you are done click <b><i>Save and Continue</b></i> button to save the information and continue.
+    fields: >
+                The Fields page allows user to define the fields in the area of interest (farm).<br>
+                <p>If user selected <b>Mapping System</b>, the fields shown are those drawn in the map and the user is not allowed to add fields through this page (to delete fields in this case user needs to go back to location and do it on the web map). However, user is allowed to modify other field characteristics.</p>
+                <p>If <b>State/County</b> or <b>User Input</b> was selected, user is able to add, modify, and delete them from the list. To change the Channel Vegetation Condition or Channel Erodibily just click the specific field/column and a new window will pop up where user can select the new choice from the list. After the selection was made the pop-up window will close and the new selection is shown in the field/column. If no change is needed in the pop-up window just click the close button to go back to the main window.</p>
+                After you are done click <b><i>Save and Continue</b></i> button to save the information and continue.
     
 
