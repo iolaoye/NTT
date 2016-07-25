@@ -1,4 +1,8 @@
-  <h1><%= t('menu.projects') %></h1><br>
+<h1 class="buttons_text_h1">
+  <%= t('menu.projects') %>
+  <div class="normal_text"><%= t('instructions.projects') %></div>
+</h1>
+
   <%= link_to t('project.new_project'), new_project_path %>
   <%= link_to t('project.upload_project'), upload_project_path(0) %>
   <%= link_to t('project.upload_example'), upload_project_path(1) %>
@@ -36,4 +40,4 @@
       <% i = i + 1 %>
     <% end %>     
   </table>
-<br>
+

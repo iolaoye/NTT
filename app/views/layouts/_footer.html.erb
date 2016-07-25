@@ -6,6 +6,16 @@
       <%= raw t('instructionbox.locations')%>
     <% when request.original_url.include?('/fields') %>
       <%= raw t('instructionbox.fields')%>
+    <% when request.original_url.include?('/watersheds') %>
+      <%= raw t('instructionbox.watersheds')%>
+    <% when request.original_url.include?('/weathers') %>
+      <%= raw t('instructionbox.weathers')%>
+    <% when request.original_url.include?('/soils') %>
+      <%= raw t('instructionbox.soils')%>
+    <% when request.original_url.include?('/scenarios') %>
+      <%= raw t('instructionbox.scenarios')%>
+    <% when request.original_url.include?('/results') %>
+      <%= raw t('instructionbox.results')%>
   <% end %>
 </div>
 <div id='cssmenu'>
