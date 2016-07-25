@@ -1191,10 +1191,10 @@ en:
                 </ol>
                 After you are done click <strong><em>Save and Continue</strong></em> button to save the information and continue.
     fields: >
-                The Fields page allows user to define the fields in the area of interest (farm).<br>
-                <p>If user selected <strong>Mapping System</strong>, the fields shown are those drawn in the map and the user is not allowed to add fields through this page (to delete fields in this case user needs to go back to location and do it on the web map). However, user is allowed to modify other field characteristics.</p>
-                <p>If <strong>State/County</strong> or <strong>User Input</strong> was selected, user is able to add, modify, and delete them from the list. To change the Channel Vegetation Condition or Channel Erodibily just click the specific field/column and a new window will pop up where user can select the new choice from the list. After the selection was made the pop-up window will close and the new selection is shown in the field/column. If no change is needed in the pop-up window just click the close button to go back to the main window.</p>
-                After you are done click <strong><em>Save and Continue</strong></em> button to save the information and continue.
+                The Fields page allows user to define the fields in the area of interest (farm).<br><br>
+                To <strong>Select</strong> a field, the user must click the name of the desired field.<br>
+                To <strong>Edit</strong> a field, click the pencil icon under <strong>Actions</strong>.<br>
+                To <strong>Delete</strong> a field, click the red "x" icon under <strong>Actions</strong>.
     weathers: >
                 The weather information is loaded automatically for GIS-based map and State/County options.<br><br>
                 However, there three options.
@@ -1216,12 +1216,17 @@ en:
                 <ol>
                   <li>Click <strong><em>New Soil</em></strong> to create a new soil from scratch.</li>
                   <li>Modify or view the spcifics of the soil</li>
-                  <ul>
-                    <li>To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.</li>
-                    <li>To <strong>Edit</strong> a soil, click the pencil icon under <strong>Actions</strong>.</li>
-                    <li>To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.</li>
-                  </ul>
                 </ol>
+                To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
+                To <strong>Edit</strong> a soil, click the pencil icon under <strong>Actions</strong>.<br>
+                To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.
+    layers: >
+                In this page, you can see all the layers of the selected soil.
+                <ol>
+                  <li>Click <strong><em>New Layer</em></strong> to create a new layer from scratch.</li>
+                </ol>
+                To <strong>Edit</strong> a layer, click the pencil icon under <strong>Actions</strong>.<br>
+                To <strong>Delete</strong> a layer, click the red "x" icon under <strong>Actions</strong>.
     scenarios: >
                 In this page the user is able to run the simulations for scenarios or subprojects created or create new scenarios. 
                 Now you have a couple of options
@@ -1229,13 +1234,11 @@ en:
                   <li>Click <strong><em>New Scenario</em></strong> to create a new scenario.</li>
                   <li>Click <strong><em>Simulate All</em></strong> to simulate all existing scenarios.</li>
                   <li>Modify or view the spcifics of a scenario or simulate a specific scenario</li>
-                  <ul>
-                    <li>To view or edit the <strong>Operations</strong> and <strong>BMPs</strong> of a scenario, click the desired scenario name.</li>
+                    <li>To <strong>View</strong> or edit the <strong>Operations</strong> and <strong>BMPs</strong> of a scenario, click the desired scenario name.</li>
                     <li>To <strong>Simulate</strong> a scenario, click the folder with a gear icon under <strong>Actions</strong>.</li>
-                    <li>To <strong>Edit</strong> a scenario, click the pencil icon under <strong>Actions</strong>.</li>
-                    <li>To <strong>Delete</strong> a scenario, click the red "x" icon under <strong>Actions</strong>.</li>
-                  </ul>
                 </ol>
+                To <strong>Edit</strong> a scenario, click the pencil icon under <strong>Actions</strong>.<br>
+                To <strong>Delete</strong> a scenario, click the red "x" icon under <strong>Actions</strong>.
     results: > 
                 After scenarios have been simulated the results for that scenario is ready to be seen. 
                 Here you can compare scenarios, or just show one scenario. The following comparisons are possible.
@@ -1255,4 +1258,67 @@ en:
                         <ul><li>Addition field: Chart type</li></ul>
                 </ol>
                 <p><strong>Note:</strong> A PDF can only be downloaded once a summary has been run, in the <strong>Summary</strong> tab. If any of the scenarios change, you will have to run the summary again before downloading the PDF</p>
-    
+    operations: >
+                You have a couple of different options here.
+                <ol>
+                    <li>Select <strong>New Operation</strong> to create a new operation from scratch</li>
+                    <li>Select <strong>Upload Operation</strong> to create a new operation from a cropping system</li>
+                </ol>
+                To <strong>Edit</strong> a operation, click the pencil icon under <strong>Actions</strong>.<br>
+                To <strong>Delete</strong> a operation, click the red "x" icon under <strong>Actions</strong>.
+    bmps: >
+                Here you will see all the Best Management Practices (Bmps) for the selected scenario listed if you have created any or if you have not, you have the option to create new Bmps.
+                <p>To create a new Bmp select <strong>New Bmp</strong>. Here you are give two dropdown boxes:<p>
+                <ul>
+                    <li>Bmp group</li>
+                    <li>Bmp</li>
+                </ul>
+                <p>The options available in Bmp are dependent upon the group you choose in Bmp group. Please keep in mind that most Bmps and Bmp groups are totally unique and all Bmps are unique as well. For example you cannot have an Autoirrigation Bmp and an Autofertigation Bmp as well.</p>
+                To <strong>View</strong> a Bmp, click the magnifying glass icon under <strong>Actions</strong>.<br>
+                To <strong>Edit</strong> a Bmp, click the pencil icon under <strong>Actions</strong>.<br>
+                To <strong>Delete</strong> a Bmp, click the red "x" icon under <strong>Actions</strong>.
+    watersheds: >
+                Here you will see all the watersheds listed if you have created any or if you have not, you have the option to create new watershed.
+                <ol>
+                    <li>Select <strong>New Operation</strong> to create a new operation from scratch</li>
+                </ol>
+                <p>After creating a watershed, you can click on the watershed name to view and edit the details of the watershed.</p>
+                <p>You can use the drop downs at the top to add a field and scenario (watershed scenario), or use the red "x" icon under <strong>Actions</strong> to delete a watershed scenario.</p>
+                To <strong>Edit</strong> a watershed (only the name), click the pencil icon under <strong>Actions</strong>.<br>
+                To <strong>Delete</strong> a watershed, click the red "x" icon under <strong>Actions</strong>.
+                <p><strong>Note:</strong> To edit the specifics of a watershed and add/remove watershed scenarios, you msut click on the watershed name. The edit option under <strong>Actions</strong> will only allow you to edit the name.</p>
+    watershed_scenarios: >
+                Here you will see all the watershed scenarios listed if you have created any or if you have not, you have the option to create new watershed.
+                <p>To create a new watershed scenario, use must select a <strong>Field</strong> from the <strong><em>Fields</em></strong> dropdown, a <strong>Scenario</strong> from the <strong><em>Scenarios</em></strong> drop down and then click <strong><em>Add to watershed</em></strong>.</p>
+                To <strong>Delete</strong> a watershed scenario, click the red "x" icon under <strong>Actions</strong>.
+                <p><strong>Note:</strong> No field/scenario combination can be used twice.</p>
+    apex_controls: >
+                Here you will see all the constrols listed.<br><br>
+                To <strong>Edit</strong> a control, click the pencil icon under <strong>Actions</strong>.
+    apex_parameters: >
+                Here you will see all the parameters listed.<br><br>
+                To <strong>Edit</strong> a paramter, click the pencil icon under <strong>Actions</strong>.
+    subareas: >
+                Here you will see all the subareas of the scenario that is currently loaded.
+                <p>You can load a different subarea by changing the selected <strong>Subarea</strong> in the <strong><em>Scenario</em></strong> drop down list and then clicking <strong><em>Load Subarea</em></strong>.</p>
+                To <strong>View</strong> a subarea, click the magnifying glass icon under <strong>Actions</strong>.<br>
+                To <strong>Edit</strong> a subarea, click the pencil icon under <strong>Actions</strong>.
+                <p><strong>Note:</strong> By default, the first scenario is automatically loaded</p>
+    apex_soils: >
+                The Soils page allows user to enter the soils for each field.<br><br>
+                To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
+                To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
+                To <strong>View</strong> a soil, click the magnifying glass icon under <strong>Actions</strong>.<br>
+                To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.<br>
+    apex_layers: >
+                In this page, you can see all the layers of the selected soil.<br><br>
+                To <strong>View</strong> a layer, click the magnifying glass icon under <strong>Actions</strong>.<br>
+                To <strong>Edit</strong> a layer, click the pencil icon under <strong>Actions</strong>.
+    soil_operations: >
+                Here you will see all the operations of the soil/scenario combination that is currently loaded.
+                <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the <strong><em>Scenario</em></strong> drop down list, and then clicking <strong><em>Load Subarea</em></strong>.</p>
+                To <strong>Edit</strong> an operatino, click the pencil icon under <strong>Actions</strong>.
+                <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
+    sites: >
+                This is all the information about the APEX site.<br><br>
+                To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong> 
