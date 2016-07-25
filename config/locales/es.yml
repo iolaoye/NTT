@@ -726,21 +726,149 @@
                   <li>Seleccione <b><i>Subir Proyecto</i></b> para abrir un proyecto salvado previamente.</li>
                   <li>Seleccione <b><i>Subir Ejemplo</i></b> para abrir un proyecto de ejemplo.</li>
                 </ol>
-                Para <b>Bajar</b> un proyecto, seleccione el icono de la flecha azul debajo de <b>Opciones</b>.<br>
-                Para <b>Editar</b> un proyecto, seleccione el icono del lapiz debajo de <b>Opciones</b>.
-                Para <b>Borrar</b> un proyecto, seleccione el icono de la "x" roja debajo de <b>Opciones</b>.
+                Para <b>Bajar</b> un proyecto, seleccione el icono de la flecha azul debajo de <strong>Opciones</strong>.<br>
+                Para <b>Editar</b> un proyecto, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <b>Borrar</b> un proyecto, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
     locations: >
-                There are three choices to select location for un proyecto:
+                Hay tres opciones para seleccionar la ubicación de un proyecto:
                 <ol>
-                  <li>Seleccione the <b><i>Map System</i></b> option to draw the area of interest (farm) and the fields using a web map. You draw the farm and inside the farm the fields. Do not worry if the fields are not completly inside the farm, the farm is just for reference. Fields are the ones used.</li>
+                  <li>Seleccione <b><i>Map System</i></b> option to draw the area of interest (farm) and the fields using a web map. You draw the farm and inside the farm the fields. Do not worry if the fields are not completly inside the farm, the farm is just for reference. Fields are the ones used.</li>
                   <li>Seleccione the <b><i>State/County</b></i> option to select an area of interest by state, county, and dominant soils. Max of three soils for field.</li>
                   <li>Seleccione <b><i>User Input</b></i> to enter all of the information needed to run the model manually.</li>
                 </ol>
                 After you are done click <b><i>Save and Continue</b></i> button to save the information and continue.
     fields: >
-                The Fields page allows user to define the fields in the area of interest (farm).<br>
-                <p>If user selected <b>Mapping System</b>, the fields shown are those drawn in the map and the user is not allowed to add fields through this page (to delete fields in this case user needs to go back to location and do it on the web map). However, user is allowed to modify other field characteristics.</p>
-                <p>If <b>State/County</b> or <b>User Input</b> was selected, user is able to add, modify, and delete them from the list. To change the Channel Vegetation Condition or Channel Erodibily just click the specific field/column and a new window will pop up where user can select the new choice from the list. After the selection was made the pop-up window will close and the new selection is shown in the field/column. If no change is needed in the pop-up window just click the close button to go back to the main window.</p>
-                After you are done click <b><i>Save and Continue</b></i> button to save the information and continue.
+                La página de parcelas permite al usuario definir las parcelas en el área de interés (granja).<br><br>
+                Para <strong>Seleccionar</strong> una parcela, seleccione la parcela deseada.<br>
+                Para <strong>Editar</strong> una parcela, seleccione el icono del lapiz debajo de <strong>Opciones</strong><br>
+                Para <strong>Borrar</strong> una parcela, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+    weathers: >
+                La información meteorológica se carga automáticamente para obtener un mapa basado-en-SIG y las opciones de Estado/Condado.<br><br>
+                Sin embargo, hay tres opciones.
+                <ol>
+                    <li>Optar por utilizar la información meteorológica Utilizando datos <strong>PRISM</strong></li>
+                    <li>Usar su propio archivo del Clima</li>
+                    <li>Usando el clima de coordenadas especificas (USA only)</li>
+                </ol>
+                Para usar su propio archivo del Clima, el usuario tiene que tener un archivo de texto con el siguiente formato.<br>
+                Todas las columnas deben estar separados por al menos un espacio físico (Por favor, no use un tab para insertar el espacio)
+                <ul>
+                    <li>año(i.e. 1990), el mes , el día , la radiación solar (podría ser ceros ), temperatura maxima, temperatura minima en grados Celsius ,la precipitación en mm .
+                    <li>Ejemplo(1981 1 8 0 2.0 -13.5 11.30).</li>
+                </ul>
+                <p>Para subir su propio archivo de clima, seleccione <strong><em>Usar su propio archivo del Clima</em></strong> y después has clic en <strong><em>Choose File</em></strong>, después seleccione el archivo de clima de su equipo y, finalmente, haga clic en Abrir. Despues, seleccione <strong><em>Actualizar el Clima</em></strong> para finalizar los cambios.</p>
+                <p><strong>Note:</strong> Tenga en cuenta que si carga su propio archivo de clima, no se guardará al guardar el proyecto. Si sube un proyecto previamente guardado y utilizó la posibilidad de subir su propio archivo de clima, tendrá que cargar el archivo de clima de nuevo, pero para seguridad, debe simular cualquier escenario de nuevo.</p>
+    soils: > 
+                The Soils page allows user to enter the soils for each field. They (three dominant soils) are automatically uploaded based on the area of interest and fields selected.<br><br>
+                Now you have a couple of options
+                <ol>
+                  <li>Click <strong><em>New Soil</em></strong> to create a new soil from scratch.</li>
+                  <li>Modify or view the spcifics of the soil</li>
+                </ol>
+                To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Opciones</strong>.<br>
+                To <strong>Editar</strong> a soil, click the pencil icon under <strong>Opciones</strong>.<br>
+                To <strong>Borrar</strong> a soil, click the red "x" icon under <strong>Opciones</strong>.<br>
+    layers: >
+                In this page, you can see all the layers of the selected soil.
+                <ol>
+                  <li>Click <strong><em>New Layer</em></strong> to create a new layer from scratch.</li>
+                </ol>
+                To <strong>Editar</strong> a layer, click the pencil icon under <strong>Opciones</strong>.<br>
+                To <strong>Borrar</strong> a layer, click the red "x" icon under <strong>Opciones</strong>.
+    scenarios: >
+                In this page the user is able to run the simulations for scenarios or subprojects created or create new scenarios. 
+                Now you have a couple of options
+                <ol>
+                  <li>Click <strong><em>New Scenario</em></strong> to create a new scenario.</li>
+                  <li>Click <strong><em>Simulate All</em></strong> to simulate all existing scenarios.</li>
+                  <li>Modify or view the spcifics of a scenario or simulate a specific scenario</li>
+                    <li>To <strong>View</strong> or edit the <strong>Operations</strong> and <strong>BMPs</strong> of a scenario, click the desired scenario name.</li>
+                    <li>To <strong>Simulate</strong> a scenario, click the folder with a gear icon under <strong>Opciones</strong>.</li>
+                </ol>
+                To <strong>Editar</strong> a scenario, click the pencil icon under <strong>Opciones</strong>.<br>
+                To <strong>Borrar</strong> a scenario, click the red "x" icon under <strong>Opciones</strong>.
+    results: > 
+                After scenarios have been simulated the results for that scenario is ready to be seen. 
+                Here you can compare scenarios, or just show one scenario. The following comparisons are possible.
+                <ul>
+                    <li>1st Scenario vs 2nd Scenario</li>
+                    <li>1st Scenario vs 2nd Scenario and 1st Scenario vs 3nd Scenario</li>
+                </ul>
+                <p>Any scenario can be selected in any of the three drop downs, and scenarios can be repeated if desired.</p>
+                <p>Once at least one scenarios is chosen, a summary can be run by clicking <strong><em>Summary</em></strong>, and then if desired, a pdf can be downloaded by clicking <strong><em>Download PDF</em></strong>.</p>
+                <p>You also have the following options additional to just a <strong>Summary</strong>. These require the same input with an additional field</p>
+                <ol>
+                    <li>Summary by Soil</li>
+                        <ul><li>Addition field: Soil</li></ul>
+                    <li>Annual Charts</li>
+                        <ul><li>Addition field: Chart type</li></ul>
+                    <li>Monthly Charts</li>
+                        <ul><li>Addition field: Chart type</li></ul>
+                </ol>
+                <p><strong>Note:</strong> A PDF can only be downloaded once a summary has been run, in the <strong>Summary</strong> tab. If any of the scenarios change, you will have to run the summary again before downloading the PDF</p>
+    operations: >
+                You have a couple of different options here.
+                <ol>
+                    <li>Select <strong>New Operation</strong> to create a new operation from scratch</li>
+                    <li>Select <strong>Upload Operation</strong> to create a new operation from a cropping system</li>
+                </ol>
+                To <strong>Editar</strong> a operation, click the pencil icon under <strong>Opciones</strong>.<br>
+                To <strong>Borrar</strong> a operation, click the red "x" icon under <strong>Opciones</strong>.
+    bmps: >
+                Here you will see all the Best Management Practices (Bmps) for the selected scenario listed if you have created any or if you have not, you have the option to create new Bmps.
+                <p>To create a new Bmp select <strong>New Bmp</strong>. Here you are give two dropdown boxes:<p>
+                <ul>
+                    <li>Bmp group</li>
+                    <li>Bmp</li>
+                </ul>
+                <p>The options available in Bmp are dependent upon the group you choose in Bmp group. Please keep in mind that most Bmps and Bmp groups are totally unique and all Bmps are unique as well. For example you cannot have an Autoirrigation Bmp and an Autofertigation Bmp as well.</p>
+                To <strong>View</strong> a Bmp, click the magnifying glass icon under <strong>Opciones</strong>.<br>
+                To <strong>Editar</strong> a Bmp, click the pencil icon under <strong>Opciones</strong>.<br>
+                To <strong>Borrar</strong> a Bmp, click the red "x" icon under <strong>Opciones</strong>.
+    watersheds: >
+                Here you will see all the watersheds listed if you have created any or if you have not, you have the option to create new watershed.
+                <ol>
+                    <li>Select <strong>New Operation</strong> to create a new operation from scratch</li>
+                </ol>
+                <p>After creating a watershed, you can click on the watershed name to view and edit the details of the watershed.</p>
+                <p>You can use the drop downs at the top to add a field and scenario (watershed scenario), or use the red "x" icon under <strong>Opciones</strong> to delete a watershed scenario.</p>
+                To <strong>Editar</strong> a watershed (only the name), click the pencil icon under <strong>Opciones</strong>.<br>
+                To <strong>Borrar</strong> a watershed, click the red "x" icon under <strong>Opciones</strong>.
+                <p><strong>Note:</strong> To edit the specifics of a watershed and add/remove watershed scenarios, you msut click on the watershed name. The edit option under <strong>Opciones</strong> will only allow you to edit the name.</p>
+    watershed_scenarios: >
+                Here you will see all the watershed scenarios listed if you have created any or if you have not, you have the option to create new watershed.
+                <p>To create a new watershed scenario, use must select a <strong>Field</strong> from the <strong><em>Fields</em></strong> dropdown, a <strong>Scenario</strong> from the <strong><em>Scenarios</em></strong> drop down and then click <strong><em>Add to watershed</em></strong>.</p>
+                To <strong>Borrar</strong> a watershed scenario, click the red "x" icon under <strong>Opciones</strong>.
+                <p><strong>Note:</strong> No field/scenario combination can be used twice.</p>
+    apex_controls: >
+                Here you will see all the constrols listed.<br><br>
+                To <strong>Editar</strong> a control, click the pencil icon under <strong>Opciones</strong>.
+    apex_parameters: >
+                Here you will see all the parameters listed.<br><br>
+                To <strong>Editar</strong> a paramter, click the pencil icon under <strong>Opciones</strong>.
+    subareas: >
+                Here you will see all the subareas of the scenario that is currently loaded.
+                <p>You can load a different subarea by changing the selected <strong>Subarea</strong> in the <strong><em>Scenario</em></strong> drop down list and then clicking <strong><em>Load Subarea</em></strong>.</p>
+                To <strong>View</strong> a subarea, click the magnifying glass icon under <strong>Opciones</strong>.<br>
+                To <strong>Editar</strong> a subarea, click the pencil icon under <strong>Opciones</strong>.
+                <p><strong>Note:</strong> By default, the first scenario is automatically loaded</p>
+    apex_soils: >
+                The Soils page allows user to enter the soils for each field.<br><br>
+                To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
+                To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Opciones</strong>.<br>
+                To <strong>View</strong> a soil, click the magnifying glass icon under <strong>Opciones</strong>.<br>
+                To <strong>Borrar</strong> a soil, click the red "x" icon under <strong>Opciones</strong>.<br>
+    apex_layers: >
+                In this page, you can see all the layers of the selected soil.<br><br>
+                To <strong>View</strong> a layer, click the magnifying glass icon under <strong>Opciones</strong>.<br>
+                To <strong>Editar</strong> a layer, click the pencil icon under <strong>Opciones</strong>.
+    soil_operations: >
+                Here you will see all the operations of the soil/scenario combination that is currently loaded.
+                <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the <strong><em>Scenario</em></strong> drop down list, and then clicking <strong><em>Load Subarea</em></strong>.</p>
+                To <strong>Editar</strong> an operatino, click the pencil icon under <strong>Opciones</strong>.
+                <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
+    sites: >
+                This is all the information about the APEX site.<br><br>
+                To <strong>Editar</strong> this site, click <strong><em>Edit</em></strong> 
     
 
