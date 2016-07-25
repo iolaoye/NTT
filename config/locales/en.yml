@@ -1215,7 +1215,7 @@ en:
                 Now you have a couple of options
                 <ol>
                   <li>Click <strong><em>New Soil</em></strong> to create a new soil from scratch.</li>
-                  <li>Modify or view the spcifics of the soil</li>
+                  <li>Modify or view the specifics of the soil</li>
                 </ol>
                 To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
                 To <strong>Edit</strong> a soil, click the pencil icon under <strong>Actions</strong>.<br>
@@ -1229,7 +1229,7 @@ en:
                 To <strong>Delete</strong> a layer, click the red "x" icon under <strong>Actions</strong>.
     scenarios: >
                 In this page the user is able to run the simulations for scenarios or subprojects created or create new scenarios. 
-                Now you have a couple of options
+                <p>Now you have a couple of options.</p>
                 <ol>
                   <li>Click <strong><em>New Scenario</em></strong> to create a new scenario.</li>
                   <li>Click <strong><em>Simulate All</em></strong> to simulate all existing scenarios.</li>
@@ -1273,7 +1273,7 @@ en:
                     <li>Bmp group</li>
                     <li>Bmp</li>
                 </ul>
-                <p>The options available in Bmp are dependent upon the group you choose in Bmp group. Please keep in mind that most Bmps and Bmp groups are totally unique and all Bmps are unique as well. For example you cannot have an Autoirrigation Bmp and an Autofertigation Bmp as well.</p>
+                <p>The options available in Bmp are dependent upon the group you choose in Bmp group. Please keep in mind that most <strong>Bmp groups</strong> are totally unique and all <strong>Bmps</strong> are unique as well. For example you cannot have an Autoirrigation Bmp and an Autofertigation Bmp as well.</p>
                 To <strong>View</strong> a Bmp, click the magnifying glass icon under <strong>Actions</strong>.<br>
                 To <strong>Edit</strong> a Bmp, click the pencil icon under <strong>Actions</strong>.<br>
                 To <strong>Delete</strong> a Bmp, click the red "x" icon under <strong>Actions</strong>.
@@ -1288,7 +1288,7 @@ en:
                 To <strong>Delete</strong> a watershed, click the red "x" icon under <strong>Actions</strong>.
                 <p><strong>Note:</strong> To edit the specifics of a watershed and add/remove watershed scenarios, you msut click on the watershed name. The edit option under <strong>Actions</strong> will only allow you to edit the name.</p>
     watershed_scenarios: >
-                Here you will see all the watershed scenarios listed if you have created any or if you have not, you have the option to create new watershed.
+                Here you will see all the watershed scenarios listed if you have created any or if you have not, you have the option to create new watershed scenario.
                 <p>To create a new watershed scenario, use must select a <strong>Field</strong> from the <strong><em>Fields</em></strong> dropdown, a <strong>Scenario</strong> from the <strong><em>Scenarios</em></strong> drop down and then click <strong><em>Add to watershed</em></strong>.</p>
                 To <strong>Delete</strong> a watershed scenario, click the red "x" icon under <strong>Actions</strong>.
                 <p><strong>Note:</strong> No field/scenario combination can be used twice.</p>
@@ -1316,8 +1316,8 @@ en:
                 To <strong>Edit</strong> a layer, click the pencil icon under <strong>Actions</strong>.
     soil_operations: >
                 Here you will see all the operations of the soil/scenario combination that is currently loaded.
-                <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the <strong><em>Scenario</em></strong> drop down list, and then clicking <strong><em>Load Subarea</em></strong>.</p>
-                To <strong>Edit</strong> an operatino, click the pencil icon under <strong>Actions</strong>.
+                <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the <strong><em>Scenario</em></strong> drop down list, and then clicking <strong><em>Load Operation</em></strong>.</p>
+                To <strong>Edit</strong> an operation, click the pencil icon under <strong>Actions</strong>.
                 <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
     sites: >
                 This is all the information about the APEX site.<br><br>
