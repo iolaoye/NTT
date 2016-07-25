@@ -673,7 +673,7 @@ table {
 
 .gvRowStyleEven { 
   color:Black;
-  background:#FFFFFF important;
+  background:#FFFFFF !important;
   text-align: center;
   vertical-align: middle;
 }
