@@ -8,6 +8,11 @@ en:
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
+    models:
+      scenario: "Scenario"
+    attributes:
+      scenario:
+        name: "Name"
   date:
     abbr_day_names:
     - Sun
@@ -106,7 +111,7 @@ en:
       year: Year
   errors:
     format: "%{attribute} %{message}"
-    messages:
+    messages:	  
       accepted: must be accepted
       blank: can't be blank
       present: must be blank
@@ -148,9 +153,9 @@ en:
       field: Select Field
       scenario: Select Scenario
     submit:
-      create: Create %{model}
-      submit: Save %{model}
-      update: Update %{model}
+      create: Save 
+      submit: Save 
+      update: Save 
     label:
       project:
         name: Name
@@ -424,9 +429,9 @@ en:
     scenario3: 3rd scenario
     last: (last 12 years)
     avg: Monthly average (whole period)
-    select_scenario1: Select First Scenario
-    select_scenario2: Select Second Scenario
-    select_scenario3: Select Third Scenario
+    select_scenario1: Select 1st Scenario
+    select_scenario2: Select 2nd Scenario
+    select_scenario3: Select 3rd Scenario
     select_chart: Select kind of Chart
     description: Description
     difference: Difference

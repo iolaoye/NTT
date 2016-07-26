@@ -4,11 +4,11 @@
       <%= notice %>
   </div>
 <% end %>
-
-<p>
+<div>
   <b>Best Management Practice:</b>
   <%= Bmpsublist.find(@bmp.bmpsublist_id).name %>
-</p>
-
-<%= link_to t('general.edit'), edit_bmp_path(@bmp) %> |
-<%= link_to t('general.back'), scenario_bmps_scenario_path(session[:scenario_id]) %>
+</div>
+</br>
+<div class="actions">
+	<%= link_to t('general.back'), scenario_bmps_scenario_path(session[:scenario_id]) %>
+</div>

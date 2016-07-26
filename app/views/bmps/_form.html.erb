@@ -182,8 +182,9 @@
       <td><%= number_field :climate, :pcp_12, :step => 'any', :class => 'pcp', :value => @climate_array[11]["pcp"].inspect %></td></tr>
 	</table>
   </div>
-  <div id="submit" class="actions" style="display:none">
+  <div class="actions" >
     <%= f.submit %>
+	<%= link_to t('general.back'), list_bmp_path(session[:scenario_id]) %>
   </div>
 
 <% end %>

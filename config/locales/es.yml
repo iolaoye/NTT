@@ -6,6 +6,11 @@
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
+    models:
+      scenario: "Escenario"
+    attributes:
+      scenario:
+        name: "Nombre"
   date:
     abbr_day_names:
     - dom
@@ -146,9 +151,9 @@
       field: Seleccione la Parcela 
       scenario: Seleccione el Scenario
     submit:
-      create: Crear %{model}
-      submit: Guardar %{model}
-      update: Actualizar %{model}
+      create: Salvar
+      submit: Salvar
+      update: Salvar
     label:
       project:
         name: Nombre
@@ -420,9 +425,9 @@
     scenario3: Tercer Escenario
     last: (últimos 12 años)
     avg: Promedio Mensual (Todo el Periodo)
-    select_scenario1: Seleccione Primer Escenario
-    select_scenario2: Seleccione Segundo Escenario
-    select_scenario3: Seleccione Tercer Escenario
+    select_scenario1: Primer Escenario
+    select_scenario2: Segundo Escenario
+    select_scenario3: Tercer Escenario
     select_chart: Seleccione tipo de Gráfico
     description: Descripción
     difference: Diferencia
