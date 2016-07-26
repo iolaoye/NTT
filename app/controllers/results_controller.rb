@@ -2,7 +2,6 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
-		#session[:results] = nil
 		if params[:language] != nil then
 			if params[:language][:language].eql?("es") 
 				I18n.locale = :es 
@@ -18,7 +17,7 @@ class ResultsController < ApplicationController
 		@scenario3 = 0
 		@descrition = 0
 		@soil = "0"
-		@result_selected = t("result.by_soil")
+		@result_selected = params[:button]
 		@title = ""
 		@descriptions = Description.select("id, description").where("id < 70 OR id > 79")
 		#load crop for each scenario selected
@@ -38,136 +37,110 @@ class ResultsController < ApplicationController
 				#get crops name for each result to add to description list 
 				crop = Crop.find(result.crop_id)
 			end # end results.each
-		end # end if 
-
+		end # end if
+		@type = params[:button]
 		if params[:button] != nil then
-			params[:button].eql?(t("result.summary") + " " + t("result.by_soil"))? @soil = params[:result4][:soil_id] : @soil = "0"
-			if params[:button].include? t('result.summary') then
-				@result_selected = t('result.summary')
-				session[:first_if] = params[:result1] != nil
-				if params[:result1] != nil
-					session[:result1] = !params[:result1][:scenario_id].eql?("")
-					if !params[:result1][:scenario_id].eql?("") then
-						@scenario1 = params[:result1][:scenario_id] 			
-						@results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
-						#session[:results] = @results1
-						session[:scenario1] = @scenario1
+			params[:button].eql?(t("result.summary") + " " + t("result.by_soil") && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0" 
+			case @type
+				when t("result.summary"), t("result.summary") + " " + t("result.by_soil")
+					if params[:button].include? t('result.summary') then 
+						
+						#@result_selected = t('result.summary')
+						if params[:result1] != nil
+							session[:first_if] = true
+							session[:result1] = !params[:result1][:scenario_id].eql?("")
+							if !params[:result1][:scenario_id].eql?("") then
+								@scenario1 = params[:result1][:scenario_id] 			
+								@results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
+								session[:scenario1] = @scenario1
+								session[:scenario2] = ""
+								session[:scenario3] = ""
+								#session[:results] = @results1
+							end
+							session[:result2] = params[:result2][:scenario_id] != ""
+							if params[:result2][:scenario_id] != "" then
+								@scenario2 = params[:result2][:scenario_id]
+								@results2 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
+								session[:scenario2] = @scenario2
+								session[:scenario3] = ""
+							end
+							session[:result3] = params[:result3][:scenario_id] != ""
+							if params[:result3][:scenario_id] != "" then
+								@scenario3 = params[:result3][:scenario_id]
+								@results3 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
+								session[:scenario3] = @scenario3
+							end
+						end # end if params[:result1] != nill
+					end  #end if params button summary
+					
+				when t('result.download_pdf')
+						#@result_selected = t('result.summary')
+						
+				when t('result.annual')  + "-" + t('result.charts') 
+					@x = "Year"
+					if params[:result5] != nil && params[:result5][:description_id] != "" then
+						@description = params[:result5][:description_id] 
+						@title = Description.find(@description).description
+						@y = Description.find(@description).unit
+						if params[:result1] != nil
+							if params[:result1][:scenario_id] != "" then
+								@scenario1 = params[:result1][:scenario_id] 	
+								@charts1 = get_chart_serie(@scenario1, 1)
+							end
+							if params[:result2][:scenario_id] != "" then
+								@scenario2 = params[:result2][:scenario_id]
+								@charts2 = get_chart_serie(@scenario2, 1)
+							end
+							if params[:result3][:scenario_id] != "" then
+								@scenario3 = params[:result3][:scenario_id]
+								@charts3 = get_chart_serie(@scenario3, 1)
+							end
+						end
+					else
+						@description = ""
+						@title = ""
+						@y = ""
 					end
-					session[:result2] = params[:result2][:scenario_id] != ""
-					if params[:result2][:scenario_id] != "" then
-						@scenario2 = params[:result2][:scenario_id]
-						@results2 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
-						session[:scenario2] = @scenario2
+				when t('result.monthly')  + "-" + t('result.charts') 
+					@x = "Month"
+					if params[:result6] != nil && params[:result6][:description_id] != ""  then 
+						@description = params[:result6][:description_id]
+						@title = Description.find(@description).description
+						@y = Description.find(@description).unit
+						if params[:result1] != nil
+							if params[:result1][:scenario_id] != "" then
+								@scenario1 = params[:result1][:scenario_id] 	
+								@charts1 = get_chart_serie(@scenario1, 2)
+							end
+							if params[:result2][:scenario_id] != "" then
+								@scenario2 = params[:result2][:scenario_id]
+								@charts2 = get_chart_serie(@scenario2, 2)
+							end
+							if params[:result3][:scenario_id] != "" then
+								@scenario3 = params[:result3][:scenario_id]
+								@charts3 = get_chart_serie(@scenario3, 2)
+							end
+						end
+					else
+						@description = ""
+						@title = ""
+						@y = ""
 					end
-					session[:result3] = params[:result3][:scenario_id] != ""
-					if params[:result3][:scenario_id] != "" then
-						@scenario3 = params[:result3][:scenario_id]
-						@results3 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
-						session[:scenario3] = @scenario3
-					end
-				end # end if params[:result1] != nill
-			end  #end if params button summary
-		end # if params nil
-
-		if params[:button] == t('result.annual') then
-			@x = "Year"
-			@result_selected = t('result.annual')
-			@description = params[:result5][:description_id]
-			@title = Description.find(@description).description
-			@y = Description.find(@description).unit
-			if params[:result1] != nil
-				if params[:result1][:scenario_id] != "" then
-					@scenario1 = params[:result1][:scenario_id] 	
-					@charts1 = get_chart_serie(@scenario1, 1)
-				end
-				if params[:result2][:scenario_id] != "" then
-					@scenario2 = params[:result2][:scenario_id]
-					@charts2 = get_chart_serie(@scenario2, 1)
-				end
-				if params[:result3][:scenario_id] != "" then
-					@scenario3 = params[:result3][:scenario_id]
-					@charts3 = get_chart_serie(@scenario3, 1)
-				end
-			end
-		end # end if params[:button] == t('result.annual')
-
-		if params[:button] == t('result.monthly') then
-			@x = "Month"
-			@result_selected = t('result.monthly')
-			@description = params[:result6][:description_id]
-			@title = Description.find(@description).description
-			@y = Description.find(@description).unit
-			if params[:result1] != nil
-				if params[:result1][:scenario_id] != "" then
-					@scenario1 = params[:result1][:scenario_id] 	
-					@charts1 = get_chart_serie(@scenario1, 2)
-				end
-				if params[:result2][:scenario_id] != "" then
-					@scenario2 = params[:result2][:scenario_id]
-					@charts2 = get_chart_serie(@scenario2, 2)
-				end
-				if params[:result3][:scenario_id] != "" then
-					@scenario3 = params[:result3][:scenario_id]
-					@charts3 = get_chart_serie(@scenario3, 2)
-				end
-			end
-		end # end if params[:button] == t('result.monthly')
-
+			end	# end case type
+		end # end if != nill <!--<h1><%=@result_selected + " " + @title%></h1>-->
+		
 		if params[:format] == "pdf" then
-			respond_to do |format|
-				format.pdf do			
-					if session[:first_if]
-						if session[:result1] then			
-							@results1 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario1], :soil_id => 0)
-						end
-						if session[:result2] then
-							@results2 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario2], :soil_id => 0)
-						end
-						if session[:result3] then
-							@results3 = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario3], :soil_id => 0)
-						end
-					end # end if session[result1]
-
-					#File.open(save_path, 'wb') do |file|
-					#	file << pdf
-					#end
-					#session[:results] = @results
-					#session[:results] = Result.where(:field_id => session[:field_id], :scenario_id => 0, :soil_id => 0)
-					render  pdf: "report",
-									page_size: "Letter",
-									layout: "pdf",
-									template: "/results/report",
-									footer: { center: '[page] of [topage]'
-										#spacing: -265,
-										#html: { template: '/layouts/_report_header.html'} 
-									},
-									header: { 
-										spacing: -6,
-										#content: render_to_string(template: '/layouts/_page_header.pdf.erb')
-										html: { template: '/layouts/_report_header.html' }
-									},
-									margin: { top: 16 }
-									#javascript_delay: 10000, 
-									#no_stop_slow_scripts: true,
-					#render  pdf: "report",
-					#				page_size: "Letter",
-					#				layout: "pdf",
-					#				template: "/results/report",
-					#				footer: { 
-					#						spacing: -265,
-					#						html: { template: '/layouts/_report_header.html'} 
-					#				},
-					#				header: { 
-					#						spacing: 3,
-					#						html: { template: '/layouts/_page_header.html' }
-					#				},
-					#				margin: { 
-					#						top: 20,
-					#						bottom: 5 
-					#				}
-				end  # end format pdf
-				format.html # index.html.erb
-			end # end respond to do
+				pdf = render_to_string pdf: "report",
+						page_size: "Letter", layout: "pdf",
+						template: "/results/report", 
+						footer: { center: '[page] of [topage]' },
+						header: { spacing: -6, html: { template: '/layouts/_report_header.html' } },
+						margin: { top: 16 }
+				send_data(pdf, :filename => "report.pdf")
+			#end  # end format pdf
+			#format.html { render action: "index" }
+			#format.json { render json: "index"}
+			#end # end respond to do
 		end # if format is pdf
   end
 
@@ -176,11 +149,12 @@ class ResultsController < ApplicationController
 		#format.pdf do
 			#render pdf: "tester", 
             #layout: "pdf",
-            #template: "/results/tester"
+            #template: "/results/tester" 
 		#end
-  #end
-
-  # GET /results/1
+  #end 
+# results?result1%5Bscenario_id%5D=4&result2%5Bscenario_id%5D=5&result3%5Bscenario_id%5D=&language%5Blanguage%5D=en&field%5Bid%5D=3
+# results?result1%5Bscenario_id%5D=4&result2%5Bscenario_id%5D=5&result3%5Bscenario_id%5D=&language%5Blanguage%5D=en&field%5Bid%5D=3
+	# GET /results/1
   # GET /results/1.json
   def show
     @result = Result.find(params[:id])

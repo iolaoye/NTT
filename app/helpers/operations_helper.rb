@@ -4,7 +4,7 @@ module OperationsHelper
 		['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5], ['6', 6], ['7', 7], ['8', 8], ['9', 9], ['10', 10]
 	]
 	end
-  if (I18n.locale == "en") then
+  if I18n.locale.eql?(:en) then
 	  def listMonths
 		[
 			['January', 1], ['February', 2], ['March', 3], ['April', 4], ['May', 5], ['June', 6], ['July', 7], ['August', 8], ['September', 9], ['October', 10], ['November', 11], ['December', 12]

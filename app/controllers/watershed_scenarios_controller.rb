@@ -4,7 +4,7 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios.json
   def index
     @watershed_scenarios = WatershedScenario.all
-    @scenarios = Scenario.where(:field_id => 0)
+    @scenarios = Scenario.where(:field_id => session[:field_id])
 
     respond_to do |format|
       format.html # index.html.erb
