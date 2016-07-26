@@ -60,9 +60,9 @@ class OperationsController < ApplicationController
     @operation.scenario_id = session[:scenario_id]
     respond_to do |format|
       if @operation.save
-		#operations should be created in soils too.
-		add_soil_operation()
-        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: 'Operation was successfully created.' }
+				#operations should be created in soils too.
+				add_soil_operation()
+        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('operation.operation') + " " + t('general.created') }
         format.json { render json: @operation, status: :created, location: @operation }
       else
         format.html { render action: "new" }
@@ -82,8 +82,8 @@ class OperationsController < ApplicationController
 		soil_operations.each do |soil_operation|
 			update_soil_operation(soil_operation, soil_operation.soil_id)
 		end
-        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: 'Operation was successfully updated.' }
-        format.json { head :no_content }
+        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('operation.operation') + " " + t('general.updated') }
+				format.json { head :no_content }
       else
         format.html { render action: "edit" }
         format.json { render json: @operation.errors, status: :unprocessable_entity }

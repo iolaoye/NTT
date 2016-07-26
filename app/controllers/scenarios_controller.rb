@@ -64,6 +64,7 @@ class ScenariosController < ApplicationController
       if @scenario.save
 		@scenarios = Scenario.where(:field_id => session[:field_id])
 		#add new scenario to soils
+        flash[:notice] = t('scenario.scenario') + " " + @scenario.name + " " + t('general.success')
 		add_scenario_to_soils(@scenario)
 		format.html { render action: "list" }
       else

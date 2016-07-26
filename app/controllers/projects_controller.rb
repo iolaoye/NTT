@@ -109,13 +109,15 @@ class ProjectsController < ApplicationController
 	#  return
 	#end
 
-  def upload 
+  def upload
 	@id = params[:id]	
 	#nothing to do here. Just render the upload view
   end
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
 	def upload_project
+		#oo\
+		msg = ""
 		if params[:commit].eql?t('submit.save') then
 			@data = Nokogiri::XML(params[:project])
 		else
@@ -147,36 +149,15 @@ class ProjectsController < ApplicationController
 		# summarizes results for totals and soils.
 		summarize_total()
 
-		#todo check the name of the project. It should not exist.		
-		msg = "OK"
-		if (@data['Project'] == nil) then 
-		    #new version
-			#step 1. save project information
-			#msg = upload_project_new_version
-			#step 2. Save location information
-			#msg = upload_location_new_version
-			#step 3. Save field information
-			#@data["project"]["location"]["fields"].each do |f|
-				
-			#	msg = upload_field_new_version(f["field"])
-			#end
-		elsif (@data["Project"]["StartInfo"]["StationWay"] != "Station")
-		    #old version
-			#step 1. save project information
-			#upload_project_info
-			#step 2. Save location information
-			#upload_location_info
-			#step 3. Save field information			
-			#for i in 0..@data["Project"]["FieldInfo"].size-1
-			#	upload_field_info(i)
-			#end
-			#step 4. Save Weather Information
+		@projects = Project.where(:user_id => session[:user_id])
+		#session[:msg] = msg
+		if(msg == "OK")
+   	    	render :action => "index", notice: msg
 		else
 			redirect_to upload_project_path(0)
-			flash[:notice] = "Unable to upload this file" and return false
-		end  
-		@projects = Project.where(:user_id => session[:user_id])
-   	    render :action => "index", notice: msg
+			flash[:notice] = t('project.upload_error') and return false
+		end
+		render :action => "index", notice: msg
 	end
 
 	########################################### DOWNLOAD PROJECT FILE IN XML FORMAT ##################
