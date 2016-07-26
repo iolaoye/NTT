@@ -407,7 +407,7 @@
   result:
     summary: Resumen
     by_soil: Por Suelo
-    download_pdf: Bajar PDF
+    download_pdf: Descargar PDF
     charts: Gráficas
     monthly: Mensual
     annual: Anual
@@ -726,21 +726,147 @@
                   <li>Seleccione <b><i>Subir Proyecto</i></b> para abrir un proyecto salvado previamente.</li>
                   <li>Seleccione <b><i>Subir Ejemplo</i></b> para abrir un proyecto de ejemplo.</li>
                 </ol>
-                Para <b>Bajar</b> un proyecto, seleccione el icono de la flecha azul debajo de <b>Opciones</b>.<br>
-                Para <b>Editar</b> un proyecto, seleccione el icono del lapiz debajo de <b>Opciones</b>.
-                Para <b>Borrar</b> un proyecto, seleccione el icono de la "x" roja debajo de <b>Opciones</b>.
+                Para <b>Bajar</b> un proyecto, seleccione el icono de la flecha azul debajo de <strong>Opciones</strong>.<br>
+                Para <b>Editar</b> un proyecto, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <b>Borrar</b> un proyecto, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
     locations: >
-                There are three choices to select location for un proyecto:
+                Hay tres opciones para seleccionar la ubicación de un proyecto:
                 <ol>
-                  <li>Seleccione the <b><i>Map System</i></b> option to draw the area of interest (farm) and the fields using a web map. You draw the farm and inside the farm the fields. Do not worry if the fields are not completly inside the farm, the farm is just for reference. Fields are the ones used.</li>
+                  <li>Seleccione <b><i>Map System</i></b> option to draw the area of interest (farm) and the fields using a web map. You draw the farm and inside the farm the fields. Do not worry if the fields are not completly inside the farm, the farm is just for reference. Fields are the ones used.</li>
                   <li>Seleccione the <b><i>State/County</b></i> option to select an area of interest by state, county, and dominant soils. Max of three soils for field.</li>
                   <li>Seleccione <b><i>User Input</b></i> to enter all of the information needed to run the model manually.</li>
                 </ol>
                 After you are done click <b><i>Save and Continue</b></i> button to save the information and continue.
     fields: >
-                The Fields page allows user to define the fields in the area of interest (farm).<br>
-                <p>If user selected <b>Mapping System</b>, the fields shown are those drawn in the map and the user is not allowed to add fields through this page (to delete fields in this case user needs to go back to location and do it on the web map). However, user is allowed to modify other field characteristics.</p>
-                <p>If <b>State/County</b> or <b>User Input</b> was selected, user is able to add, modify, and delete them from the list. To change the Channel Vegetation Condition or Channel Erodibily just click the specific field/column and a new window will pop up where user can select the new choice from the list. After the selection was made the pop-up window will close and the new selection is shown in the field/column. If no change is needed in the pop-up window just click the close button to go back to the main window.</p>
-                After you are done click <b><i>Save and Continue</b></i> button to save the information and continue.
-    
-
+                La página de parcelas permite al usuario definir las parcelas en el área de interés (granja).<br><br>
+                Para <strong>Seleccionar</strong> una parcela, seleccione la parcela deseada.<br>
+                Para <strong>Editar</strong> una parcela, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> una parcela, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+    weathers: >
+                La información meteorológica se carga automáticamente para obtener un mapa basado-en-SIG y las opciones de Estado/Condado.<br><br>
+                Sin embargo, hay tres opciones.
+                <ol>
+                    <li>Optar por utilizar la información meteorológica Utilizando datos <strong>PRISM</strong></li>
+                    <li>Usar su propio archivo del Clima</li>
+                    <li>Usando el clima de coordenadas especificas (USA only)</li>
+                </ol>
+                Para usar su propio archivo del Clima, el usuario tiene que tener un archivo de texto con el siguiente formato.<br>
+                Todas las columnas deben estar separados por al menos un espacio físico (Por favor, no use un tab para insertar el espacio)
+                <ul>
+                    <li>año(i.e. 1990), el mes , el día , la radiación solar (podría ser ceros ), temperatura maxima, temperatura minima en grados Celsius ,la precipitación en mm .
+                    <li>Ejemplo(1981 1 8 0 2.0 -13.5 11.30).</li>
+                </ul>
+                <p>Para subir su propio archivo de clima, seleccione <strong><em>Usar su propio archivo del Clima</em></strong> y después has clic en <strong><em>Choose File</em></strong>, después seleccione el archivo de clima de su equipo y, finalmente, haga clic en Abrir. Despues, seleccione <strong><em>Actualizar el Clima</em></strong> para finalizar los cambios.</p>
+                <p><strong>Nota:</strong> Tenga en cuenta que si carga su propio archivo de clima, no se guardará al guardar el proyecto. Si sube un proyecto previamente guardado y utilizó la posibilidad de subir su propio archivo de clima, tendrá que cargar el archivo de clima de nuevo, pero para seguridad, debe simular cualquier escenario de nuevo.</p>
+    soils: > 
+                La página de suelos permite al usuario crear o ver los suelos para cada parcela. Ellos (los tres suelos dominantes) son automáticamente subido basado en el área de interés y los campos seleccionados.<br><br>
+                Ahora tiene un par de opciones
+                <ol>
+                  <li>Seleccione <strong><em>Adicionar Suelo</em></strong> para crear un suelo nuevo.</li>
+                  <li>Modificar o ver los detalles de los suelos</li>
+                </ol>
+                Para ver las <strong>Capas</strong> de un suelo, seleccione el icono del bloque de suelo debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Editar</strong> un suelo, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> un suelo, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+    layers: >
+                En esta página, se puede ver todas las capas del suelo seleccionado.
+                <ol>
+                  <li>Seleccione <strong><em>Adicionar Capa</em></strong> para crear una capa nueva.</li>
+                </ol>
+                Para <strong>Editar</strong> una capa, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> una capa, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+    scenarios: >
+                En esta página el usuario es puede ejecutar las simulaciones de escenarios creados o crear nuevos escenarios.
+                <p>Ahora usted tiene un par de opciones.</p>
+                <ol>
+                  <li>Seleccione <strong><em>Adicionar Escenario</em></strong> para crear un nuevo escenario.</li>
+                  <li>Seleccione <strong><em>Simular Todos</em></strong> para simular todos los escenarios.</li>
+                  <li>Modificar o ver los spcifics de un escenario o simular un escenario específico</li>
+                    <li>Para <strong>Vew</strong> o editar las <strong>Operaciones</strong> y los <strong>BMPs</strong> de un escenario, has clic en el nombre del escenario deseado.</li>
+                </ol>
+                Para <strong>Simular</strong> un escenario, seleccione el folder con el engranaje debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Editar</strong> un escenario, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> un escenario, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+    results: > 
+                Después de que los escenarios se han simulado los resultados para ese escenario estan listo para ver.
+                Aquí puede comparar escenarios, o simplemente mostrar un escenario. Las siguientes comparaciones son posibles.
+                <ul>
+                    <li>Primer Escenario vs Segundo Escenario</li>
+                    <li>Primer Escenario vs Segundo Escenario< y Primer Escenario vs Tercer Escenario<</li>
+                </ul>
+                <p>Cualquier escenario puede ser seleccionado en cualquiera de los tres menús desplegables, y los escenarios se puede repetir si se desea.</p>
+                <p>Despues de que al menos un escenario ha sido seleccionado, un resumenOnce at least one scenarios is chosen, un resumen se puede ejecutar haciendo clic en <strong><em>Resumen</em></strong>, y luego, si se desea, un pdf se puede descargar haciendo clic en <strong><em>Descargar PDF</em></strong>.</p>
+                <p>También tiene otras opciones a solo un <strong>Resumen</strong>. Estos requieren las misma entradas con un campo adicional</p>
+                <ol>
+                    <li>Resumen por Suelo</li>
+                        <ul><li>Campo adicional: Suelo</li></ul>
+                    <li>Anual Gráficas</li>
+                        <ul><li>Campo adicional: Tipo de gráfico</li></ul>
+                    <li>Mensual Gráficas</li>
+                        <ul><li>Campo adicional: Tipo de gráfico</li></ul>
+                </ol>
+                <p><strong>Nota:</strong> Un PDF sólo puede ser descargado después de que el resumen ha sido ejecutado, en el tab <strong>Resumen</strong>. Si cualquiera de los escenarios de cambia, tendrá que ejecutar de nuevo el resumen antes de descargar el PDF</p>
+    operations: >
+                Usted tiene un par de opciones diferentes aquí.
+                <ol>
+                    <li>Seleccione <strong>Nueva Operación</strong> para crear una nueva operación</li>
+                    <li>Seleccione <strong>Cargar Sistema de Cultivo</strong> para crear una nueva operación de un sistema de cultivo</li>
+                </ol>
+                Para <strong>Editar</strong> una operación, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> una operación, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+    bmps: >
+                Aquí podrás ver todas las Mejores Prácticas de Gestión (MPG) para el escenario seleccionado si se las ha creado o si no lo ha hecho, usted tiene la opción de crear nuevas MPGs.
+                <p>Para crear un nuevo Bmp seleccione <strong>New Bmp</strong>. Aquí verás dos cuadros desplegables:<p>
+                <ul>
+                    <li>Grupo de mpg</li>
+                    <li>Mpg</li>
+                </ul>
+                <p>Las opciones disponibles en en Mpg dependen del grupo elige en el grupo de mpg. Por favor, tenga en cuenta que la mayoría de <strong>Groupos de mpg</strong> son totalmente único y todos <strong>Mpgs</strong> son únicos tambien. Por ejemplo, usted no puede tener un Mpg Autoirrigation y un Mpg Autofertigation tambien.</p>
+                Para <strong>Ver</strong> un Mpg, seleccione en el icono de la lupa debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Editar</strong> un Mpg, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> un Mpg, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+    watersheds: >
+                Aquí podrás ver todas las cuencas que usted ha creado o si no lo ha hecho, usted tiene la opción de crear una nueva cuenca.
+                <ol>
+                    <li>Seleccione <strong>Nueva Cuenca</strong> para crear una nueva operación</li>
+                </ol>
+                <p>Después de crear una cuenca, puede hacer clic en el nombre de la cunca para ver y editar los detalles de la cuenca.</p>
+                <p>Puede utilizar los menús desplegables en la parte superior para añadir un campo y escenario (escenario de cuencas), o seleccione el icono de la "x" roja debajo de <strong>Opciones</strong> para borrar un escenario de cuenca.</p>
+                Para <strong>Editar</strong> una cuenca (solo el nombre), seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> una cuenca, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+                <p><strong>Nota:</strong> Para editar los detalles de una cuenca y añadir/eliminar escenarios de las cuencas, ebe hacer clic en el nombre de cuencas. La opción de edición debajo de <strong>Opciones</strong> sólo se le permitirá editar el nombre.</p>
+    watershed_scenarios: >
+               Aquí podrás ver todos los escenarios de las cuencas hidrográficas que usted ha creado ningún o si no lo ha hecho, usted tiene la opción de crear un nuevo escenario de cuenca
+                <p>Para crear un nuevo escenario de cuencas, debe seleccionar una <strong>Parcela</strong> de la lista desplegable <strong><em>Parcelas</em></strong>, un <strong>Escenario</strong> de la lista desplegable <strong><em>Escenarios</em></strong> y despus seleccionar <strong><em>Adicionar a la cuenca</em></strong>.</p>
+                Para <strong>Borrar</strong> un escenario de cuenca, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+                <p><strong>Nota:</strong> Ninguna combinación de campo/escenario se puede utilizar dos veces.</p>
+    apex_controls: >
+                Aquí podrás ver todos los controles enumerados.<br><br>
+                Para <strong>Editar</strong> un control, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.
+    apex_parameters: >
+                Aquí podrás ver todos los parámetros enumerados.<br><br>
+                Para <strong>Editar</strong> un parámetro, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.
+    subareas: >
+                Aquí podras ver todas las subáreas del escenario que esta cargado actualmente.
+                <p>Se puede cargar una subárea diferente cambiando la <strong>Subárea</strong> seleccionada en lista desplegable <strong><em>Escenario</em></strong> y despues seleccionado <strong><em>Cargar Subárea</em></strong>.</p>
+                Para <strong>Ver</strong> una subárea, seleccione en el icono de la lupa debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Editar</strong> una subárea, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.
+                <p><strong>Nota:</strong> Por defecto, el primer escenario es automáticamente cargada</p>
+    apex_soils: >
+                The Soils page allows user to enter the soils for each field.<br><br>
+                Para <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
+                To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Opciones</strong>.<br>
+                Para <strong>View</strong> a soil, click the magnifying glass icon under <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> a soil, click the red "x" icon under <strong>Opciones</strong>.<br>
+    apex_layers: >
+                En esta página, se puede ver todas las capas de suelo seleccionado.<br><br>
+                Para <strong>Ver</strong> una capa, seleccione en el icono de la lupa debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Editar</strong> una capa, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.
+    soil_operations: >
+                Aquí podrás ver todas las operaciones de la combinación de suelo/escenario que está actualmente cargada.
+                <p>Se puede cargar una combinación de suelo/escenario diferente cambiando el <strong>Suelo</strong> seleccionado en la lista desplegable <strong><em>Suelo</em></strong>, cambiando el <strong>Escenario</strong> seleccionado en la lista desplegable <strong><em>Escenario</em></strong>, y despues seleccionado <strong><em>Cargar Operación</em></strong>.</p>
+                Para <strong>Editar</strong> una peración, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.
+                <p><strong>Nota:</strong> Por defecto, el primer suelo y el primer escenario se cargan automáticamente</p>
+    sites: >
+                Esta es toda la información sobre el sitio de APEX.<br><br>
+                Para <strong>Editar</strong> este sitio, seleccione <strong><em>Editar</em></strong> 
