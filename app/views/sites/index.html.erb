@@ -1,41 +1,60 @@
 <h1>Listing sites</h1>
-
-<table>
-  <tr>
-    <th>Ylat</th>
-    <th>Xlog</th>
-    <th>Elev</th>
-    <th>Apm</th>
-    <th>Co2x</th>
-    <th>Cqnx</th>
-    <th>Rfnx</th>
-    <th>Upr</th>
-    <th>Unr</th>
-    <th>Fir0</th>
-    <th></th>
-    <th></th>
-    <th></th>
+<%= link_to 'New Site', new_site_path %>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th class="gvCellStyleTitle">Ylat</th>
+    <th class="gvCellStyleTitle">Xlog</th>
+    <th class="gvCellStyleTitle">Elev</th>
+    <th class="gvCellStyleTitle">Apm</th>
+    <th class="gvCellStyleTitle">Co2x</th>
+    <th class="gvCellStyleTitle">Cqnx</th>
+    <th class="gvCellStyleTitle">Rfnx</th>
+    <th class="gvCellStyleTitle">Upr</th>
+    <th class="gvCellStyleTitle">Unr</th>
+    <th class="gvCellStyleTitle">Fir0</th>
+    <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
   </tr>
 
-<% @sites.each do |site| %>
-  <tr>
-    <td><%= site.ylat %></td>
-    <td><%= site.xlog %></td>
-    <td><%= site.elev %></td>
-    <td><%= site.apm %></td>
-    <td><%= site.co2x %></td>
-    <td><%= site.cqnx %></td>
-    <td><%= site.rfnx %></td>
-    <td><%= site.upr %></td>
-    <td><%= site.unr %></td>
-    <td><%= site.fir0 %></td>
-    <td><%= link_to t('general.show'), site %></td>
-    <td><%= link_to t('general.edit'), edit_site_path(site) %></td>
-    <td><%= link_to 'Destroy', site, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+  <% i=1 %>
+      <% @sites.each do |site| %>
+      <% if (i % 2  == 0) %>
+        <tr class="gvRowStyleEven">
+          <td class="gvCellStyleNumber"><%= site.ylat %></td>
+          <td class="gvCellStyleNumber"><%= site.xlog %></td>
+          <td class="gvCellStyleNumber"><%= site.elev %></td>
+          <td class="gvCellStyleNumber"><%= site.apm %></td>
+          <td class="gvCellStyleNumber"><%= site.co2x %></td>
+          <td class="gvCellStyleNumber"><%= site.cqnx %></td>
+          <td class="gvCellStyleNumber"><%= site.rfnx %></td>
+          <td class="gvCellStyleNumber"><%= site.upr %></td>
+          <td class="gvCellStyleNumber"><%= site.unr %></td>
+          <td class="gvCellStyleNumber"><%= site.fir0 %></td>
+          <td class="gvCellStyleActions">
+            <%= link_to image_tag("view.png"), site, title: t('general.show') %>
+            <%= link_to image_tag("edit.png"), edit_site_path(site), title: t('general.edit') %>
+            <%= link_to image_tag("delete.png"), site, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+    <% else %>
+        <tr class="gvRowStyleOdd">
+          <td class="gvCellStyleNumber"><%= site.ylat %></td>
+          <td class="gvCellStyleNumber"><%= site.xlog %></td>
+          <td class="gvCellStyleNumber"><%= site.elev %></td>
+          <td class="gvCellStyleNumber"><%= site.apm %></td>
+          <td class="gvCellStyleNumber"><%= site.co2x %></td>
+          <td class="gvCellStyleNumber"><%= site.cqnx %></td>
+          <td class="gvCellStyleNumber"><%= site.rfnx %></td>
+          <td class="gvCellStyleNumber"><%= site.upr %></td>
+          <td class="gvCellStyleNumber"><%= site.unr %></td>
+          <td class="gvCellStyleNumber"><%= site.fir0 %></td>
+          <td class="gvCellStyleActions">
+            <%= link_to image_tag("view.png"), site, title: t('general.show') %>
+            <%= link_to image_tag("edit.png"), edit_site_path(site), title: t('general.edit') %>
+            <%= link_to image_tag("delete.png"), site, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+        </tr>
+      <% end %>
+    <% i = i + 1 %>
+  <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Site', new_site_path %>
