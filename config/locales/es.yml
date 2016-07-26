@@ -836,7 +836,7 @@
                 Para <strong>Borrar</strong> una cuenca, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
                 <p><strong>Nota:</strong> Para editar los detalles de una cuenca y añadir/eliminar escenarios de las cuencas, ebe hacer clic en el nombre de cuencas. La opción de edición debajo de <strong>Opciones</strong> sólo se le permitirá editar el nombre.</p>
     watershed_scenarios: >
-               Aquí podrás ver todos los escenarios de las cuencas hidrográficas que usted ha creado ningún o si no lo ha hecho, usted tiene la opción de crear un nuevo escenario de cuenca
+                Aquí podrás ver todos los escenarios de las cuencas hidrográficas que usted ha creado ningún o si no lo ha hecho, usted tiene la opción de crear un nuevo escenario de cuenca
                 <p>Para crear un nuevo escenario de cuencas, debe seleccionar una <strong>Parcela</strong> de la lista desplegable <strong><em>Parcelas</em></strong>, un <strong>Escenario</strong> de la lista desplegable <strong><em>Escenarios</em></strong> y despus seleccionar <strong><em>Adicionar a la cuenca</em></strong>.</p>
                 Para <strong>Borrar</strong> un escenario de cuenca, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
                 <p><strong>Nota:</strong> Ninguna combinación de campo/escenario se puede utilizar dos veces.</p>
