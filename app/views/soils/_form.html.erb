@@ -1,4 +1,4 @@
-<%= form_for(@soil) do |f| %>
+<%= form_for @soil, url: soils_path do |f| %>
   <% if @soil.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@soil.errors.count, "error") %> prohibited this soil from being saved:</h2>
@@ -48,7 +48,7 @@
     <%= f.text_field :drainage_type %>
   </div>
   <div class="actions">
-    <%= f.submit t('soil.create_soil') %>
+    <%= f.submit %>
     <%= link_to t('general.back'), field_soils_field_path(session[:field_id]) %>
   </div>
 <% end %>

@@ -60,7 +60,7 @@ class WatershedsController < ApplicationController
 
     respond_to do |format|
       if @watershed.save
-        format.html { redirect_to @watershed, notice: 'Watershed was successfully created.' }
+        format.html { redirect_to list_watershed_path(session[:location_id]), notice: t('watershed.watershed') + " " + t('general.created') }
         format.json { render json: @watershed, status: :created, location: @watershed }
       else
         format.html { render action: "new" }
@@ -76,7 +76,7 @@ class WatershedsController < ApplicationController
 
     respond_to do |format|
       if @watershed.update_attributes(watershed_params)
-        format.html { redirect_to @watershed, notice: 'Watershed was successfully updated.' }
+        format.html { redirect_to list_watershed_path(session[:location_id]), notice: t('watershed.watershed') + " " + t('general.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
