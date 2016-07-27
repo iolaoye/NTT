@@ -1,4 +1,11 @@
-<h1><%= t("general.listing") + " " + t("menu.soils") %></h1><br>
+<% if flash[:notice] %>
+	<div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:notice] %>
+    </div>
+<% end %>
+
+<h1><%= t("general.listing") + " " + t("menu.soils") %></h1>
 <%= link_to t('general.new') + ' ' + t('soil.soil'), new_soil_path %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>

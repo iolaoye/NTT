@@ -1,4 +1,11 @@
-<h1><%= t('general.listing') + " " + t('menu.managements') %></h1><br>
+<% if flash[:notice] %>
+	<div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:notice] %>
+    </div>
+<% end %>
+
+<h1 class="button_h1"><%= t('general.listing') + " " + t('menu.managements') %></h1>
 
 <%= link_to t('operation.new_operation'), new_operation_path %>
 <%= link_to t('operation.upload') + " " + t('operation.cropping_system'), cropping_system_operation_path(session[:scenario_id]), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'} %>

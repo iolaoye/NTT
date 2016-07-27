@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  #EXAMPLES = "public/Examples"
   require 'nokogiri'
   # GET /projects
   # GET /projects.json
@@ -110,13 +111,15 @@ class ProjectsController < ApplicationController
 	#  return
 	#end
 
-  def upload 
+  def upload
 	@id = params[:id]	
 	#nothing to do here. Just render the upload view
   end
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
 	def upload_project
+		#oo\
+		msg = ""
 		if params[:commit].eql?t('submit.save') then
 			@data = Nokogiri::XML(params[:project])
 		else
@@ -148,36 +151,15 @@ class ProjectsController < ApplicationController
 		# summarizes results for totals and soils.
 		summarize_total()
 
-		#todo check the name of the project. It should not exist.		
-		msg = "OK"
-		if (@data['Project'] == nil) then 
-		    #new version
-			#step 1. save project information
-			#msg = upload_project_new_version
-			#step 2. Save location information
-			#msg = upload_location_new_version
-			#step 3. Save field information
-			#@data["project"]["location"]["fields"].each do |f|
-				
-			#	msg = upload_field_new_version(f["field"])
-			#end
-		elsif (@data["Project"]["StartInfo"]["StationWay"] != "Station")
-		    #old version
-			#step 1. save project information
-			#upload_project_info
-			#step 2. Save location information
-			#upload_location_info
-			#step 3. Save field information			
-			#for i in 0..@data["Project"]["FieldInfo"].size-1
-			#	upload_field_info(i)
-			#end
-			#step 4. Save Weather Information
+		@projects = Project.where(:user_id => session[:user_id])
+		#session[:msg] = msg
+		if(msg == "OK")
+   	    	render :action => "index", notice: msg
 		else
 			redirect_to upload_project_path(0)
-			flash[:notice] = "Unable to upload this file" and return false
-		end  
-		@projects = Project.where(:user_id => session[:user_id])
-   	    render :action => "index", notice: msg
+			flash[:notice] = t('project.upload_error') and return false
+		end
+		render :action => "index", notice: msg
 	end
 
 	########################################### DOWNLOAD PROJECT FILE IN XML FORMAT ##################
@@ -1685,12 +1667,15 @@ class ProjectsController < ApplicationController
 			case p.name
 				when "Name"
 					name = p.text
-				when "Operations"
+				when "Opesations"
 					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
 					upload_operation_info(p, scenario_id, field_id)
 				when "Results"
 					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
 					upload_result_info(p, field_id, 0, scenario_id)
+				when "Bmps"
+					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
+					upload_bmp_info(p, scenario_id)
 			end #end case
 		end ## end each
 	end # end method
@@ -1747,72 +1732,99 @@ class ProjectsController < ApplicationController
 		end # end node each
 	end
 
-	def upload_bmp_info(scenario_id, i, j)
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIType"].to_i > 0 then
-			upload_bmp_ai(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFType"].to_i > 0 then
-			upload_bmp_af(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["TileDrainDepth"].to_f > 0 then
-			upload_bmp_td(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPNDWidth"].to_f > 0 then
-			upload_bmp_ppnd(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDSWidth"].to_f > 0 then
-			upload_bmp_ppds(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDEWidth"].to_f > 0 then
-			upload_bmp_ppde(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPTWWidth"].to_f > 0 then
-			upload_bmp_pptw(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WLArea"].to_f > 0 then
-			upload_bmp_wl(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PndF"].to_f > 0 then
-			upload_bmp_pnd(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFAnimals"].to_i > 0 then
-			upload_bmp_sf(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Sbs"] == "True" then
-			upload_bmp_sbs(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["RFArea"].to_f > 0 then
-			upload_bmp_rf(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["FSCrop"].to_i > 0 then
-			upload_bmp_fs(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WWCrop"].to_i > 0 then
-			upload_bmp_ww(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CBCrop"].to_i > 0 then
-			upload_bmp_cf(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SlopeRed"].to_f > 0 then
-			upload_bmp_ll(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Ts"] == "True" then
-			upload_bmp_ts(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMaximumTeperature"].to_f > 0 or @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMinimumTeperature"].to_f > 0 or @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcPrecipitation"].to_f > 0 then
-			upload_bmp_cc(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AoC"] == "True" then
-			upload_bmp_aoc(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Gc"] == "True" then
-			upload_bmp_gc(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["Sa"] == "True" then
-			upload_bmp_sa(scenario_id, i, j)
-		end
-		if @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgCrop"].to_i > 0 then
-			upload_bmp_sdg(scenario_id, i, j)
+	# p, field_id, 0, scenario_id
+	def upload_bmp_info(node, scenario_id)
+		node.elements.each do |p|
+			case p.name
+				when "AIType"
+					if p.text.to_i > 0
+						upload_bmp_ai(node, scenario_id)
+					end
+				when "AFType"
+					if p.text.to_i > 0
+						upload_bmp_af(node, scenario_id)
+					end
+				when "TileDrainDepth"
+					if p.text.to_f > 0
+						upload_bmp_td(node, scenario_id)
+					end
+				when "PPNDWidth"
+					if p.text.to_f > 0
+						upload_bmp_ppnd(node, scenario_id)
+					end
+				when "PPDSWidth"
+					if p.text.to_f > 0
+						upload_bmp_ppds(node, scenario_id)
+					end
+				when "PPDEWidth"
+					if p.text.to_f > 0
+						upload_bmp_ppde(node, scenario_id)
+					end
+				when "PPTWWidth"
+					if p.text.to_f > 0
+						upload_bmp_pptw(node, scenario_id)
+					end
+				when "WLArea"
+					if p.text.to_f> 0
+						upload_bmp_wl(node, scenario_id)
+					end
+				when "PndF"
+					if p.text.to_f > 0
+						upload_bmp_pnd(node, scenario_id)
+					end
+				when "SFAnimals"
+					if p.text.to_i > 0
+						upload_bmp_sf(node, scenario_id)
+					end
+				when "Sbs"
+					if p.text == "True"
+						upload_bmp_sbs(node, scenario_id)
+					end
+				when "RFArea"
+					if p.text.to_f > 0
+						upload_bmp_rf(node, scenario_id)
+					end
+				when "FSCrop"
+					if p.text.to_i > 0
+						upload_bmp_fs(node, scenario_id)
+					end
+				when "WWCrop"
+					if p.text.to_i > 0
+						upload_bmp_ww(node, scenario_id)
+					end
+				when "CBCrop"
+					if p.text.to_i > 0
+						upload_bmp_cb(node, scenario_id)
+					end
+				when "SlopeRed"
+					if p.text.to_f > 0
+						upload_bmp_ll(node, scenario_id)
+					end
+				when "Ts"
+					if p.text == "True"
+						upload_bmp_ts(node, scenario_id)
+					end
+				when "CcMaximumTeperature", "CcMinimumTeperature", "CcPrecipitation"
+					if p.text.to_f > 0
+						upload_bmp_cc(node, scenario_id)
+					end
+				when "AoC"
+					if p.text == "True"
+						upload_bmp_aoc(node, scenario_id)
+					end
+				when "Gc"
+					if p.text == "True"
+						upload_bmp_gc(node, scenario_id)
+					end
+				when "Sa"
+					if p.text == "True"
+						upload_bmp_sa(node, scenario_id)
+					end
+				when "SdgCrop"
+					if p.text.to_i > 0
+						upload_bmp_sdg(node, scenario_id)
+					end
+			end
 		end
 	end
 
@@ -1886,213 +1898,360 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def upload_bmp_ai(scneario_id, i, j)
+	def upload_bmp_af(node, scenario_id)
+		bmp = Bmp.new
+		bmp.scenario_id = scenario_id
+		bmp.bmp_id = 1
+		bmp.bmpsublist_id = 2
+		node.elements.each do |p|
+			case p.name
+				when "AFEff"
+					bmp.irrigation_efficiency = p.text.to_f
+				when "AFFreq"
+					bmp.days = p.text.to_i
+				when "AFMaxSingleApp"
+					bmp.maximum_single_application = p.text.to_f
+				when "AFType"
+					bmp.irrigation_id = p.text.to_i
+				when "AFWaterStressFactor"
+					bmp.water_stress_factor = p.text.to_f
+				when "AFSafetyFactor"
+					bmp.safety_factor = p.text.to_f
+				when "AFArea"
+					bmp.area = p.text.to_f
+				when "AFNConc"
+					# unsure of what this is 
+					#bmp.irrigation_efficiency = p.text.to_f
+			end
+		end
+		bmp.save
+	end
+
+	def upload_bmp_ai(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 1
 		bmp.bmpsublist_id = 1
-		bmp.irrigation_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIType"]
-		bmp.water_stress_factor = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIWaterStressFactor"]
-		bmp.irrigation_efficiency = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIEff"]
-		bmp.maximum_single_application = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIMaxSingleApp"]
-		bmp.safety_factor = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AISafetyFactor"]
-		bmp.days = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AIFreq"]
+		node.elements.each do |p|
+			case p.name
+				when "AIEff"
+					bmp.irrigation_efficiency = p.text.to_f
+				when "AIFreq"
+					bmp.days = p.text.to_i
+				when "AIMaxSingleApp"
+					bmp.maximum_single_application = p.text.to_f
+				when "AIType"
+					bmp.irrigation_id = p.text.to_i
+				when "AIWaterStressFactor"
+					bmp.water_stress_factor = p.text.to_f
+				when "AISafetyFactor"
+					bmp.safety_factor = p.text.to_f 
+				when "AFArea"
+					bmp.area = p.text.to_f
+			end
+		end
+		bmp.save
 	end
 
-	def upload_bmp_af(scneario_id, i, j)
+	def upload_bmp_td(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
-		bmp.bmp_id = 1
-		bmpsublist_id = 2
-		bmp.irrigation_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFType"]
-		bmp.water_stress_factor = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFWaterStressFactor"]
-		bmp.irrigation_efficiency = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFEff"]
-		bmp.maximum_single_application = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFMaxSingleApp"]
-		bmp.safety_factor = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFSafetyFactor"]
-		bmp.days = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["AFFreq"]
+		bmp.bmp_id = 2
+		bmp.bmpsublist_id = 3
+		node.elements.each do |p|
+			case p.name
+				when "TileDrainDepth"
+					bmp.depth = p.text.to_f
+			end
+		end
+		bmp.save
 	end
 
-	def upload_bmp_td(scenario_id, i, j)
+	def upload_bmp_ppnd(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 2
-		bmpsublist_id = 3
-		bmp.depth = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["TileDrainDepth"]
-	end
-
-	def upload_bmp_ppnd(scenario_id, i, j)
-		bmp = Bmp.new
-		bmp.scenario_id = scenario_id
-		bmp.bmp_id = 2
-		bmpsublist_id = 4
-		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPNDWidth"]
-		bmp.sides = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPNDSides"]		
+		bmp.bmpsublist_id = 4
+		node.elements.each do |p|
+			case p.name
+				when "PPNDWidth"
+					bmp.width = p.text.to_f
+				when "PPNDSides"
+					bmp.sides = p.text.to_i
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_ppds(scenario_id, i, j)
+	def upload_bmp_ppds(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 2
-		bmpsublist_id = 5
-		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDSWidth"]
-		bmp.sides = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDSSides"]		
+		bmp.bmpsublist_id = 5
+		node.elements.each do |p|
+			case p.name
+				when "PPDSWidth"
+					bmp.width = p.text.to_f
+				when "PPDSSides"
+					bmp.sides = p.text.to_i
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_ppde(scenario_id, i, j)
+	def upload_bmp_ppde(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 2
-		bmpsublist_id = 6
-		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDEWidth"]
-		bmp.sides = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDESides"]		
-		bmp.area = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPDEResArea"]		
+		bmp.bmpsublist_id = 6
+		node.elements.each do |p|
+			case p.name
+				when "PPDEWidth"
+					bmp.width = p.text.to_f
+				when "PPDESides"
+					bmp.sides = p.text.to_i
+				when "PPDEResArea"
+					bmp.area = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_pptw(scenario_id, i, j)
+	def upload_bmp_pptw(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 2
-		bmpsublist_id = 7
-		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPTWWidth"]
-		bmp.sides = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPTWSides"]		
-		bmp.area = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PPTWResArea"]		
+		bmp.bmpsublist_id = 7
+		node.elements.each do |p|
+			case p.name
+				when "PPTWWidth"
+					bmp.width = p.text.to_f
+				when "PPTWSides"
+					bmp.sides = p.text.to_i
+				when "PPTWResArea"
+					bmp.area = p.text.to_f
+			end
+		end
+		bmp.save		
 	end 
 
-	def upload_bmp_wl(scenario_id, i, j)
+	def upload_bmp_wl(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 3
-		bmpsublist_id = 8
-		bmp.area = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WLArea"]
+		bmp.bmpsublist_id = 8
+		node.elements.each do |p|
+			case p.name
+				when "WLArea"
+					bmp.area = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_pnd(scenario_id, i, j)
+	def upload_bmp_pnd(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 3
-		bmpsublist_id = 9
-		bmp.no3_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["PndF"]   # Because is a fraction
+		bmp.bmpsublist_id = 9
+		node.elements.each do |p|
+			case p.name
+				when "PndF"
+					bmp.irrigation_efficiency = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_sf(scenario_id, i, j)
+	def upload_bmp_sf(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 4
-		bmpsublist_id = 10
-		bmp.number_of_animals = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFAnimals"]   
-		bmp.animal_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFCode"]   
-		bmp.days = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFDays"]   
-		bmp.hours = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFHours"]   
-		bmp.dry_manure = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFDryManure"]
-		bmp.no3_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFNo3"]
-		bmp.po4_p = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFPo4"]
-		bmp.org_n = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFOrgN"]
-		bmp.org_p = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SFOrgP"]
+		bmp.bmpsublist_id = 10
+		node.elements.each do |p|
+			case p.name
+				when "SFAnimals"
+					bmp.number_of_animals = p.text.to_i
+				when "SFCode"
+					bmp.animal_id = p.text.to_i
+				when "SFDays"
+					bmp.days = p.text.to_i
+				when "SFHours"
+					bmp.hours = p.text.to_i
+				when "SFDryManure"
+					bmp.dry_manure = p.text.to_f
+				when "SFNo3"
+					bmp.no3_n = p.text.to_f
+				when "SFPo4"
+					bmp.po4_p = p.text.to_f
+				when "SFOrgN"
+					bmp.org_n = p.text.to_f
+				when "SFOrgP"
+					bmp.org_p = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_sbs(scenario_id, i, j)
+	def upload_bmp_sbs(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 4
-		bmpsublist_id = 11
+		bmp.bmpsublist_id = 11
 	end 
 
-	def upload_bmp_rf(scenario_id, i, j)
+	def upload_bmp_rf(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 4
-		bmpsublist_id = 12
-		bmp.area = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["RFArea"]
-		bmp.grass_field_portion = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["RFGrassFieldPortion"]
-		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["RFslopeRatio"]
-		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["RFWidth"]
+		bmp.bmpsublist_id = 12
+		node.elements.each do |p|
+			case p.name
+				when "RFArea"
+					bmp.area = p.text.to_f
+				when "RFGrassFieldPortion"
+					bmp.grass_field_portion = p.text.to_f
+				when "RFslopeRatio"
+					bmp.buffer_slope_upland = p.text.to_f
+				when "RFWidth"
+					bmp.width = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_fs(scenario_id, i, j)
+	def upload_bmp_fs(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 4
-		bmpsublist_id = 13
-		bmp.area = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["FSArea"]
-		bmp.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["FSCrop"]
-		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["FSslopeRatio"]
-		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["FSWidth"]
+		bmp.bmpsublist_id = 13
+		node.elements.each do |p|
+			case p.name
+				when "FSArea"
+					bmp.area = p.text.to_f
+				when "FSCrop"
+					bmp.crop_id = p.text.to_i
+				when "FSslopeRatio"
+					bmp.buffer_slope_upland = p.text.to_f
+				when "FSWidth"
+					bmp.width = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_ww(scenario_id, i, j)
+	def upload_bmp_ww(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 4
-		bmpsublist_id = 14
-		bmp.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WWCrop"]
-		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["WWWidth"]
+		bmp.bmpsublist_id = 14
+		node.elements.each do |p|
+			case p.name
+				when "WWCrop"
+					bmp.crop_id = p.text.to_i
+				when "WWWidth"
+					bmp.width = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_cb(scenario_id, i, j)
+	def upload_bmp_cb(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 5
-		bmpsublist_id = 15
-		bmp.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CBCrop"]
-		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CBBWidth"]
-		bmp.crop_width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CBCWidth"]
+		bmp.bmpsublist_id = 15
+		node.elements.each do |p|
+			case p.name
+				when "CBCrop"
+					bmp.crop_id = p.text.to_i
+				when "CBBWidth"
+					bmp.width = p.text.to_f
+				when "CBCWidth"
+					bmp.crop_width = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_ll(scenario_id, i, j)
+	def upload_bmp_ll(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 6
-		bmpsublist_id = 16
-		bmp.slope_reduction = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SlopeRed"]
+		bmp.bmpsublist_id = 16
+		node.elements.each do |p|
+			case p.name
+				when "SlopeRed"
+					bmp.slope_reduction = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_ts(scenario_id, i, j)
+	def upload_bmp_ts(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 6
 		bmpsublist_id = 17
 	end 
 
-	def upload_bmp_cc(scenario_id, i, j)
+	def upload_bmp_cc(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 7
-		bmpsublist_id = 22
-		bmp.difference_max_temperature = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMaximumTeperature"]
-		bmp.difference_min_temperature = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcMinimumTeperature"]
-		bmp.difference_precipitation = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["CcPrecipitation"]
+		bmp.bmpsublist_id = 19
+		node.elements.each do |p|
+			case p.name
+				when "CcMaximumTeperature"
+					bmp.difference_max_temperature = p.text.to_f
+				when "CcMinimumTeperature"
+					bmp.difference_min_temperature = p.text.to_f
+				when "CcPrecipitation"
+					bmp.difference_precipitation = p.text.to_f
+			end
+		end
+		bmp.save
 	end 
 
-	def upload_bmp_aoc(scenario_id, i, j)
+	def upload_bmp_aoc(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 8
-		bmpsublist_id = 23
+		bmp.bmpsublist_id = 20
 	end 
 
-	def upload_bmp_gc(scenario_id, i, j)
+	def upload_bmp_gc(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 8
-		bmpsublist_id = 24
+		bmp.bmpsublist_id = 21
 	end 
 
-	def upload_bmp_sa(scenario_id, i, j)
+	def upload_bmp_sa(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 8
-		bmpsublist_id = 25
+		bmp.bmpsublist_id = 22
 	end 
 
-	def upload_bmp_sdg(scenario_id, i, j)
+	def upload_bmp_sdg(node, scenario_id)
 		bmp = Bmp.new
 		bmp.scenario_id = scenario_id
 		bmp.bmp_id = 8
-		bmpsublist_id = 26
-		bmp.area = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgArea"]
-		bmp.crop_id = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SggCrop"]
-		bmp.buffer_slope_upland = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgslopeRatio"]
-		bmp.width = @data["Project"]["FieldInfo"][i]["ScenarioInfo"][j]["Bmps"]["SdgWidth"]
+		bmp.bmpsublist_id = 23
+		node.elements.each do |p|
+			case p.name
+				when "SdgArea"
+					bmp.area = p.text.to_f
+				when "SggCrop"
+					bmp.crop_id = p.text.to_i
+				when "SdgslopeRatio"
+					bmp.buffer_slope_upland = p.text.to_f
+				when "SdgWidth"
+					bmp.width = p.text.to_f
+			end
+		end
+		bmp.save
 	end
 
 	def upload_control_values(node)
