@@ -29,7 +29,7 @@
   <% @apex_layers.each do |layer| %>
     <tr class="gvRowStyle">  
       <td class="gvCellStyleNumber"><%= i %></td>
-      <td class="gvCellStyleNumber"><%= layer.depth %></td>
+      <td class="gvCellStyleNumber"><%= layer.depth, :value => (number_with_precision(f.object.depth, :precision => 2) || 0), :step => '0.01' %></td>
       <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
       <td class="gvCellStyleNumber"><%= layer.uw %></td>
       <td class="gvCellStyleNumber"><%= layer.fc %></td>

@@ -64,7 +64,7 @@ class ScenariosController < ApplicationController
       if @scenario.save
 		@scenarios = Scenario.where(:field_id => session[:field_id])
 		#add new scenario to soils
-        flash[:notice] = t('scenario.scenario') + " " + @scenario.name + " " + t('general.success')
+        flash[:notice] = t('scenario.scenario') + " " + t('general.success')
 		add_scenario_to_soils(@scenario)
 		format.html { render action: "list" }
       else
@@ -113,14 +113,12 @@ class ScenariosController < ApplicationController
     #@doc = "Nothing"
     @scenario = Scenario.find(params[:id])
 	dir_name = APEX + "/APEX" + session[:session_id]
-	dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
-	if !File.exists?(dir_name)
-		FileUtils.mkdir_p(dir_name)
-	else
-		#FileUtils.rm_rf(Dir.glob(File.join(dir_name, "*")))
-		#File.delete(dir_name + "/*")
-	end
-	FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
+	#dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
+	#if !File.exists?(dir_name)
+	#	FileUtils.mkdir_p(dir_name)
+	#end
+	#FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
+	msg = send_file_to_APEX("APEX", session[:session_id])  #this operation will create APEX folder from APEX1 folder
 	#CREATE structure for nutrients that go with fert file
 	@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
 	@current_nutrients = Array.new
@@ -134,22 +132,24 @@ class ScenariosController < ApplicationController
 	@change_till_depth = Array.new
 	@last_soil_sub = 0
 	@last_subarea = 0
-	create_control_file()
-	create_parameter_file()
-	create_site_file(@scenario.field_id)
-	create_weather_file(dir_name, @scenario.field_id)
-	create_wind_wp1_files(dir_name)
+	if msg = "OK" then msg = create_control_file() end
+	if msg = "OK" then msg = create_parameter_file() end
+	if msg = "OK" then msg = create_site_file(@scenario.field_id) end
+	if msg = "OK" then msg = create_weather_file(dir_name, @scenario.field_id) end
+	if msg = "OK" then msg = create_wind_wp1_files(dir_name) end
 	@last_soil = 0
 	@soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
 	@soil_list = Array.new
-	create_soils()
-	print_array_to_file(@soil_list, "soil.dat")
+	if msg = "OK" then msg = create_soils() end
+	if msg = "OK" then msg = send_file_to_APEX(@soil_list, "soil.dat") end
+	#print_array_to_file(@soil_list, "soil.dat")
 	@subarea_file = Array.new
 	@soil_number = 0
-	create_subareas(1)
-	print_array_to_file(@opcs_list_file, "OPCS.dat")
-	run_scenario()
-	read_apex_results()
+	if msg = "OK" then msg = create_subareas(1) end
+	if msg = "OK" then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") end
+	#print_array_to_file(@opcs_list_file, "OPCS.dat")	
+	if msg = "OK" then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation
+	read_apex_results(msg)
 	@scenarios = Scenario.where(:field_id => session[:field_id])
 	render "list"
   end
@@ -162,29 +162,6 @@ class ScenariosController < ApplicationController
     def scenario_params
       params.require(:scenario).permit(:name, :field_id)
     end
-
-	def create_wind_wp1_files(dir_name)
-		county = County.find(Location.find(session[:location_id]).county_id)
-		apex_run_string = "APEX001   1IWPNIWND   1   0   0"
-		if county != nil then
-			client = Savon.client(wsdl: URL_Weather)
-			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
-			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-			print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
-			#path = File.join(WP1, county.wind_wp1_name + ".wp1")
-			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
-			client = Savon.client(wsdl: URL_Weather)
-			response = client.call(:get_weather, message:{"path" => WIND + "/" + county.wind_wp1_name + ".wnd"})
-			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-			print_wind_to_file(weather_data, county.wind_wp1_name + ".wnd")
-			#path = File.join(WIND, county.wind_wp1_name + ".wnd")
-			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
-			apex_run_string["IWPN"] = sprintf("%4d", county.wind_wp1_code)
-			apex_run_string["IWND"] = sprintf("%4d", county.wind_wp1_code)
-		end
-		#create apex run file
-		print_string_to_file(apex_run_string, "Apexrun.dat")
-	end
 
     def update_hash(climate, climate_array)
         hash = Hash.new
@@ -199,14 +176,14 @@ class ScenariosController < ApplicationController
 		return File.read(File.join(APEX, "APEX" + session[:session_id], file))
 	end
 
-	def read_apex_results()
+	def read_apex_results(msg)
         ntt_apex_results = Array.new
 
         start_year = Weather.find_by_field_id(Scenario.find(params[:id]).field_id).simulation_initial_year
 
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
-        msg = load_results(apex_start_year)
+        msg = load_results(apex_start_year, msg)
         
 		msg = load_crop_results(apex_start_year)
     end
@@ -215,8 +192,9 @@ class ScenariosController < ApplicationController
 		msg = "OK"
 		crops_data = Array.new
 		oneCrop = Struct.new(:sub1,:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
-
-		data = read_file("APEX001.acy")   #Anual values for crop yield
+		data = send_file_to_APEX("ACY", session[:session_id])  #this operation will ask for ACY file
+		#todo validate that the file was uploaded correctly
+		#data = read_file("APEX001.acy")   #Anual values for crop yield
 		j = 1
         data.each_line do |tempa|
 			if j >= 10 then				
@@ -300,7 +278,9 @@ class ScenariosController < ApplicationController
 	end
 
 	def load_monthly_values(apex_start_year)
-		data = read_file("APEX001.msw")   #monthly values for sediment, flow, and nutrients
+		data = send_file_to_APEX("MSW", session[:session_id])  #this operation will ask for MSW file  
+		#todo validate that the file was uploaded correctly
+		#data = read_file("APEX001.msw")   #annual values for sediment, flow, and nutrients
 
         annual_flow = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
         annual_sediment = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
@@ -334,7 +314,9 @@ class ScenariosController < ApplicationController
 
         last_year -= apex_start_year + 1
 
-		data = read_file("APEX001.mws")   #monthly values for precipitation
+		data = send_file_to_APEX("MWS", session[:session_id])  #this operation will ask for MWS file  
+		#todo validate that the file was uploaded correctly
+		#data = read_file("APEX001.mws")   #monthly values for precipitation
 		i=1
 		data.each_line do |tempa|
 			if i > 9 then
@@ -376,7 +358,7 @@ class ScenariosController < ApplicationController
         end  # end for
     end
 	
-	def load_results(apex_start_year)
+	def load_results(apex_start_year, data)
 		msg = "OK"
 		results_data = Array.new
         oneResult = Struct.new(:sub1,:year,:flow,:qdr,:surface_flow,:sed,:ymnu,:orgp,:po4,:orgn,:no3,:qdrn,:qdrp,:qn,:dprk,:irri,:pcp)
@@ -385,7 +367,7 @@ class ScenariosController < ApplicationController
         dprk_sum = 0
 		pcp = 0
         total_subs = 0
-		data = read_file("APEX001.ntt")
+		#data = read_file("APEX001.ntt")
 		i=1
 		apex_control = ApexControl.where(:project_id => session[:project_id])
 		initial_chart_year = apex_control[0].value - 12 + apex_control[1].value

@@ -107,7 +107,11 @@ before_filter :take_names
             format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.created') }
 =======
             format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: 'Bmp was successfully created.' }
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> oscar
+>>>>>>> a993709fc9ee84259d45cb23998065c0ac0df986
             format.json { render json: @bmp, status: :created, location: @bmp }
           else
             format.html { render action: "new" }
@@ -150,7 +154,11 @@ before_filter :take_names
           format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.updated') }
 =======
           format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: 'Bmp was successfully updated.' }
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> oscar
+>>>>>>> a993709fc9ee84259d45cb23998065c0ac0df986
           format.json { head :no_content }
         else
           format.html { render action: "edit" }

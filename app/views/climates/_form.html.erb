@@ -1,7 +1,7 @@
 <%= form_for(@climate) do |f| %>
   <% if @climate.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@climate.errors.count, "error") %> prohibited this climate from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @climate.errors.count, :model => t('models.climate').downcase) %></h2>
 
       <ul>
       <% @climate.errors.full_messages.each do |msg| %>

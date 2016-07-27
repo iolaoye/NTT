@@ -1,7 +1,7 @@
 <%= form_for(@layer) do |f| %>
   <% if @layer.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @layer.errors.count, :model => t('models.layer').downcase) %></h2>
 
       <ul>
       <% @layer.errors.full_messages.each do |msg| %>
@@ -17,7 +17,11 @@
     <%= f.number_field :depth, :required => true, :class => 'numbers', :value => (number_with_precision(f.object.depth, :precision => 2) || 0), :step => '0.01' %>
 =======
     <%= f.number_field :depth %>
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> oscar
+>>>>>>> a993709fc9ee84259d45cb23998065c0ac0df986
   </div>
   <div class="field">
     <%= f.label :soil_p, t('soil.soilp') %>

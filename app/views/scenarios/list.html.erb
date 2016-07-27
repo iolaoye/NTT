@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 ﻿<% if flash[:notice] %>
+  <br>
 	<div class="success_alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <%= flash[:notice] %>
@@ -19,7 +20,11 @@
   </div>
 <% end %>
 <h1 class="less-margin"><%= t('general.listing') + " " + t('menu.scenarios') %></h1><br>
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> oscar
+>>>>>>> a993709fc9ee84259d45cb23998065c0ac0df986
 <%= link_to t('general.new')  + ' ' + t('scenario.scenario'), new_scenario_path %>
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), new_scenario_path %>
   <table class='gvTableStyle'>

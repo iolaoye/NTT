@@ -10,8 +10,7 @@ module SimulationsHelper
 	SoilPMaxForSoilDepth = 15.24
 	SoilPDefault = 0.1
 	CropMixedGrass = 367
-	COMA = ", "
-	
+	COMA = ", "	
 
 	def create_control_file()
 		apex_string = ""
@@ -49,11 +48,14 @@ module SimulationsHelper
 					apex_string += sprintf("%8.2f", c.value) + "\n"
             end
         end
-		uri = URI('http://nn.tarleton.edu/GoogleMapPost/callmap.aspx')
-		res = Net::HTTP.post_form(uri, "path" => apex_string, "file" => "Apexcont.dat", "folder" => session[:session_id])
-		session[:depth] = res.body
-		ooo
-		print_string_to_file(apex_string, "Apexcont.dat")
+		msg = send_file_to_APEX(apex_string, "Apexcont.dat")
+		#print_string_to_file(apex_string, "Apexcont.dat")
+	end
+
+	def send_file_to_APEX(apex_string, file)
+		uri = URI('http://nn.tarleton.edu/NTTRails/NNRestService.ashx')
+		res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes")
+		if res.body.include?("Created") then return "OK" else return res.body end
 	end
 
 	def create_parameter_file()
@@ -109,22 +111,26 @@ module SimulationsHelper
         apex_string +="\n"
         apex_string +="    .044     31.     .51     .57     10." + "\n"
         apex_string +=" " + "\n"
-		print_string_to_file(apex_string, "parm.dat")
+		msg = send_file_to_APEX(apex_string, "parm.dat")
+		#print_string_to_file(apex_string, "parm.dat")
 	end
 
 	def create_site_file(field_id)
 		site = Site.find_by_field_id(field_id)
-		site_file = Array.new
-		site_file.push(" .sit file Subbasin:1  Date: " + @dtNow1 + "\n")
-		site_file.push("" + "\n")
-		site_file.push("" + "\n")
-		site_file.push(sprintf("%8.2f", site.ylat) + sprintf("%8.2f", site.xlog) + sprintf("%8.2f", site.elev) + 
-			sprintf("%8.2f", site.apm) + sprintf("%8.2f", site.co2x) + sprintf("%8.2f", site.cqnx) + sprintf("%8.2f", site.rfnx) +
-			sprintf("%8.2f", site.upr) + sprintf("%8.2f", site.unr) + sprintf("%8.2f", site.fir0))
+		#site_file = Array.new
+		apex_string = ""
+		apex_string += 
+		apex_string += " .sit file Subbasin:1  Date: " + @dtNow1 + "\n"
+		apex_string += "" + "\n"
+		apex_string += "" + "\n"
+		apex_string += sprintf("%8.2f", site.ylat) + sprintf("%8.2f", site.xlog) + sprintf("%8.2f", site.elev) + 
+		sprintf("%8.2f", site.apm) + sprintf("%8.2f", site.co2x) + sprintf("%8.2f", site.cqnx) + sprintf("%8.2f", site.rfnx) +
+		sprintf("%8.2f", site.upr) + sprintf("%8.2f", site.unr) + sprintf("%8.2f", site.fir0)
 		for i in 5..25  #print 21 additonal lines in the site file, which do not need any information at this time.
-			site_file.push("" + "\n")
-		end
-		print_array_to_file(site_file, "APEX.sit")
+			apex_string += "" + "\n"
+		end  # end for
+		msg = send_file_to_APEX(apex_string, "APEX.sit")
+		#print_array_to_file(site_file, "APEX.sit")
 	end
 
 	def create_wind_wp1_files(dir_name)
@@ -134,20 +140,23 @@ module SimulationsHelper
 			client = Savon.client(wsdl: URL_Weather)
 			response = client.call(:get_weather, message:{"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
 			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-			print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
+			msg = send_file_to_APEX(weather_data.join("\n"), county.wind_wp1_name + ".wp1")
+			#print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
 			#path = File.join(WP1, county.wind_wp1_name + ".wp1")
 			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
 			client = Savon.client(wsdl: URL_Weather)
 			response = client.call(:get_weather, message:{"path" => WIND + "/" + county.wind_wp1_name + ".wnd"})
 			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-			print_wind_to_file(weather_data, county.wind_wp1_name + ".wnd")
+			msg = send_file_to_APEX(weather_data.join("\n"), county.wind_wp1_name + ".wnd")
+			#print_wind_to_file(weather_data, county.wind_wp1_name + ".wnd")
 			#path = File.join(WIND, county.wind_wp1_name + ".wnd")
 			#FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
 			apex_run_string["IWPN"] = sprintf("%4d", county.wind_wp1_code)
 			apex_run_string["IWND"] = sprintf("%4d", county.wind_wp1_code)
 		end
 		#create apex run file
-		print_string_to_file(apex_run_string, "Apexrun.dat")
+		#print_string_to_file(apex_run_string, "Apexrun.dat")
+		msg = send_file_to_APEX(apex_run_string, "Apexrun.dat")
 	end
 
 	def create_weather_file(dir_name, field_id)
@@ -171,8 +180,8 @@ module SimulationsHelper
         climates.each do |climate|
             climate_array = update_hash(climate, climate_array)
         end
+        data = read_file("Apex.wth")
         if climates.first != nil
-            data = read_file("Apex.wth")
             data.each_line do |day|
                 month = data[6, 4].to_i
                 max_input = climate_array[month]["max"]
@@ -188,7 +197,7 @@ module SimulationsHelper
                         max = " " + max
                     end
                     data[20, 6] = max
-                end
+                end #end if max
                 if min_input != 0
                     min = min_file + min_input
                     min = sprintf("%.1f", min)
@@ -196,7 +205,7 @@ module SimulationsHelper
                         min = " " + min
                     end
                     data[26, 6] = min
-                end
+                end #end if min
                 if pcp_input != 0
                     pcp = pcp_file + pcp_file * pcp_input
                     pcp = sprintf("%.2f", pcp)
@@ -204,21 +213,22 @@ module SimulationsHelper
                         pcp = " " + pcp
                     end
                     data[32, 7] = pcp
-                end
+                end #end if pcp
                 #climate_array[month]["key"] 
                 #session[:month] = str[6, 4].to_i
                 #session[:max] = str[20, 6].to_f
                 #session[:min] = str[26, 6].to_f
                 #session[:pcp] = str[32, 7].to_f
-            end
-            print_array_to_file(data, "Apex.wth")
+            end # end each
 	        #@climate_file_array = Array.new
 	        #newLine = "  " + oper.to_s	
 	        #newLine += " C:FERT 5 CUST      5.      0.      0.      0.      0.     0.0    0.00   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000"
             #newLine += sprintf("%8.2f", depthAnt * 25.4)
             #newLine += "   0.000   0.000   0.000   0.000   9.000   0.000   0.000   0.000   0.000   5.000   5.363  FERTILIZER APP        " + oper.to_s + "\n"
             #@change_till_depth.push(newLine)
-        end
+        end #end if
+        #print_array_to_file(data, "Apex.wth")
+		msg = send_file_to_APEX(data, "APEX.wth")
 		#todo fix widn and wp1 files with the real name
 	end
 
@@ -697,7 +707,8 @@ module SimulationsHelper
             #INSERT LINES 25, 26, 27, 28
             @soil_list.push("  " + sprintf("%3d",last_soil1) + " " + soil_file_name + "\n")
             i += 1
-			print_array_to_file(soil_info, soil_file_name)			
+			#print_array_to_file(soil_info, soil_file_name)			
+			msg = send_file_to_APEX(soil_info, soil_file_name)
 		end  # end soils do
 		@last_soil = last_soil1
 	end  # end method create_soils
@@ -756,7 +767,8 @@ module SimulationsHelper
         last_owner = last_owner1
         #todo check this one.
         #$last_subarea += _fieldsInfo1(currentFieldNumber)._soilsInfo(i - 1)._scenariosInfo(currentScenarioNumber)._subareasInfo_subarea_info..Iops
-		print_array_to_file(@subarea_file, "APEX.sub")	
+		#print_array_to_file(@subarea_file, "APEX.sub")	
+		msg = send_file_to_APEX(@subarea_file, "APEX.sub")
         return "OK"
 	end 
 
@@ -814,11 +826,11 @@ module SimulationsHelper
         sLine += sprintf("%8.2f", _subarea_info.urbf)
         @subarea_file.push(sLine + "\n")
         #/line 5
-        if _subarea_info.chl != _subarea_info.rchl && i > 0 then 
+        if _subarea_info.chl != _subarea_info.rchl && i > 0 then
 			_subarea_info.rchl = _subarea_info.chl 
 		end
-        #if (operation_number > 1 && i == 0) Or i > 0 then
-        if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
+        if (operation_number > 1 && i == 0) || i > 0 then
+        #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
             sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
         else
             sLine = sprintf("%8.4f", _subarea_info.rchl)
@@ -972,11 +984,12 @@ module SimulationsHelper
 			# add to the tillage file the new fertilizer operations - one for each depth
 			append_file("tillOrg.dat", true, "till.dat", "till")
 			append_file("fertOrg.dat", true, "fert.dat", "fert")
-			print_array_to_file(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")  #print operation files
+			#print_array_to_file(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")  #print operation files
+			msg = send_file_to_APEX(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")
 			@opcs_list_file.push((@soil_number+1).to_s.rjust(5, '0') + " " + "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
 		end #end if 
         #@opcs_file.push("End Operation")
-		print_array_to_file(@subarea_file, "APEX.sub")
+		#print_array_to_file(@subarea_file, "APEX.sub")
         return nirr
 	end  #end Create Operations
 
@@ -1168,6 +1181,7 @@ module SimulationsHelper
                 #if number of animals were enter in modify page and it is the first grazing operation
                 if grazingb == false then
                     items[3] = "DryMatterIntake"
+					#TODO create_herd file and send to APEX
                     values[3] = create_herd_file(operation.opv1, operation.opv2, operation.ApexTillName, soil_percentage)
                     animalB = operation.ApexTillCode
                     grazingb = true
@@ -1265,7 +1279,7 @@ module SimulationsHelper
 	def append_file(original_file, copy_file, target_file, file_type)
 		path = File.join(APEX, "APEX" + session[:session_id])
 		if copy_file then
-			FileUtils.cp(File.join(path, original_file), File.join(path, target_file))
+			FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
 		else
 			target_file = original_file
 		end
@@ -1278,7 +1292,9 @@ module SimulationsHelper
 				File.open(File.join(path, target_file), "a+") do |f| 
 					@new_fert_line.each do |row| f << row end
 				end
-		end #enc case file_type
+		end #end case file_type
+		msg = send_file_to_APEX(read_file(target_file), target_file)
+		#todo chcek how this will work with fert changing for grazing and fert appliction at the same time. Suggestion. firs get the changes for both and then change the fert file.
 	end
 
 	def add_fert(no3n, po4p, orgN, orgP, type, nh3, subtype)
@@ -1413,18 +1429,17 @@ module SimulationsHelper
 	end
 
 	def run_scenario()
-		path = File.join(APEX, "APEX" + session[:session_id])
-		file_name = File.join(path, "APEX001.NTT")
-		File.delete(file_name) if File.exist?(file_name)				
-		file_name = File.join(path, "APEX001.msw")  #monthly values for flow, nutrients, and sediment
-		File.delete(file_name) if File.exist?(file_name)					
-		file_name = File.join(path, "APEX001.mws")  #monthly values for flow, nutrients, and sediment
-		File.delete(file_name) if File.exist?(file_name)
-
-		curret_directory = Dir.pwd
-		Dir.chdir path
-		result = system("apex0806.exe")
-		Dir.chdir curret_directory
+		#path = File.join(APEX, "APEX" + session[:session_id])
+		#file_name = File.join(path, "APEX001.NTT")
+		#File.delete(file_name) if File.exist?(file_name)				
+		#file_name = File.join(path, "APEX001.msw")  #monthly values for flow, nutrients, and sediment
+		#File.delete(file_name) if File.exist?(file_name)					
+		#file_name = File.join(path, "APEX001.mws")  #monthly values for flow, nutrients, and sediment
+		#File.delete(file_name) if File.exist?(file_name)
+		#curret_directory = Dir.pwd
+		#Dir.chdir path
+		#result = system("apex0806.exe")
+		#Dir.chdir curret_directory
 	end
 
 end

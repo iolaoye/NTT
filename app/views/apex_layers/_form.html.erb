@@ -1,7 +1,7 @@
 <%= form_for @apex_layer, url: apex_layer_path do |f| %>
   <% if @apex_layer.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @apex_layer.errors.count, :model => t('models.apex_layer')) %></h2>
 
       <ul>
       <% @apex_layer.errors.full_messages.each do |msg| %>
