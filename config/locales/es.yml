@@ -6,6 +6,82 @@
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
+    models:
+      projects: "Proyectos"
+      location: "Ubicación"
+      field: "Parcelas"
+      watershed: "Cuencas"
+      weather: "Clima"
+      soil: "Suelos"
+      layer: "Capas"
+      scenario: "Escenario"
+      operation: "Operaciones"
+      bmp: "Mejores Prácticas de Gestión"
+      result:
+        result: "Resultados"
+        summary: "Resumen"
+        by_soil: "Por Suelo"
+        annual_charts: "Anual Gráficas"
+        monthly_charts: "Mensual Gráficas"
+      apex:
+        apex_file: "Archivos de APEX"
+        control: "Controls"
+        parameter: "Parámetros"
+        subarea: "Subáreas"
+        soil: "Suelos"
+        layer: "Capas"
+        operation: "Operaciones"
+        site: "Sitio"  
+    attributes:
+      projects:
+        name: "Nombre"
+      location:
+        field: "Parcela"
+      field:
+        field_name: "Nombre de Parcela"
+      watershed:
+        name: "Nombre"
+      weather:
+        year: "Año"
+      soil:
+        key: "Clave"
+      layer:
+        depth: "Profundidad"
+      scenario:
+        name: "Nombre"
+      operation:
+        crop: "Cultivo"
+      bmp:
+        bmp_group: "Grupo de MPG"
+      result:
+        result:
+        summary:
+          scenario: "Escenario"
+        by_soil:
+          scenario: "Escenario"
+          soil: "Suelo"
+        annual_charts:
+          scenario: "Escenario"
+        monthly_charts:
+          scenario: "Escenario"
+      apex:
+        apex_file:
+        control:
+          code: "Código"
+        parameter:
+          name: "Nombre"
+        subarea:
+          scenario: "Escenario"
+        soil:
+          key: "Clave"
+        layer:
+          depth: "Depth"
+        operation:
+          soil: "Suelo"
+          scenario: "Escenario"
+        site:
+          y_lat: "Ylat"
+          x_log: "Xlog"
   date:
     abbr_day_names:
     - dom
@@ -266,7 +342,7 @@
     signin: Iniciar sesión
     signout: Salir
     site: Sitio
-    control_file: Control
+    control_file: Controls
     parameters_file: Parámetros
     subarea_file: Subáreas
     apex_soil: Suelos

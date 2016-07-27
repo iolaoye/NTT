@@ -8,6 +8,82 @@ en:
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
+    models:
+      projects: "Projects"
+      location: "Location"
+      field: "Fields"
+      watershed: "Watersheds"
+      weather: "Weather"
+      soil: "Soils"
+      layer: "Layers"
+      scenario: "Scenario"
+      operation: "Operations"
+      bmp: "Best Management Practices"
+      result:
+        result: "Results"
+        summary: "Summary"
+        by_soil: "By Soil"
+        annual_charts: "Annual Charts"
+        monthly_charts: "Monthly Charts"
+      apex:
+        apex_file: "Apex Files"
+        control: "Controls"
+        parameter: "Parameters"
+        subarea: "Subareas"
+        soil: "Soils"
+        layer: "Layers"
+        operation: "Operation"
+        site: "Site"
+    attributes:
+      projects:
+        name: "Name"
+      location:
+        field: "Field"
+      field:
+        field_name: "Field Name"
+      watershed:
+        name: "Name"
+      weather:
+        year: "Year"
+      soil:
+        key: "Key"
+      layer:
+        depth: "Depth"
+      scenario:
+        name: "Name"
+      operation:
+        crop: "Crop"
+      bmp:
+        bmp_group: "BMP Group"
+      result:
+        result:
+        summary:
+          scenario: "Scenario"
+        by_soil:
+          scenario: "Scenario"
+          soil: "Soil"
+        annual_charts:
+          scenario: "Scenario"
+        monthly_charts:
+          scenario: "Scenario"
+      apex:
+        apex_file:
+        control:
+          code: "Code"
+        parameter:
+          name: "Name"
+        subarea:
+          Scenario: "Scenario"
+        soil:
+          key: "Key"
+        layer:
+          depth: "Depth"
+        operation:
+          soil: "Soil"
+          scenario: "Scenario"
+        site:
+          y_lat: "Ylat"
+          x_log: "Xlog"
   date:
     abbr_day_names:
     - Sun
