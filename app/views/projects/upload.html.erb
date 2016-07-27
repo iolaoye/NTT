@@ -1,5 +1,8 @@
 ﻿<% if flash[:notice] %>
-	<div id="notice"><%= flash[:notice] %></div>
+	<div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:notice] %>
+    </div>
 <% end %>
 <%= form_tag({action: :upload_project}, multipart: true) do %>
 	<% if @id == "0" %>
