@@ -25,7 +25,7 @@
           <% when t('result.summary') %>
             <td><%= submit_tag t("result.summary"), :id => "summary", name: "button" %>
             <%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :class => "green_button padding_top", :id => "pdf_download", name: "button" %>
-            <a href="javascript:AlertIt();" id="pdf_no_click" class="no_click">Download PDF</a></td>
+            <a href="javascript:AlertIt();" id="pdf_no_click" class="no_click"><%= t('result.download_pdf') %></a></td>
           <% when t("result.summary") + " " + t("result.by_soil") %>
             <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => session[:field_id], :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :required => false, :selected => @soil }%></td>
             <td><%= submit_tag t("result.summary") + " " + t("result.by_soil"), name: "button" %>

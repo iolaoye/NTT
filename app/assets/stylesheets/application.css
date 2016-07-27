@@ -125,7 +125,6 @@
 {
   float: none;
   text-decoration: none;
-  background: dodgerblue;
   border: none;
   margin: none;
   padding: none;
@@ -160,6 +159,7 @@
     overflow: hidden;
     width: 100%;
     margin-right: 20px;
+    background: dodgerblue;
 }
 
 .navbar-nav li {
@@ -174,14 +174,18 @@
     text-decoration: none;
     margin: 0;
     padding: 10px;
-    border: dodgerblue solid 2px;
+    border: 2px solid rgba(0, 0, 0, 0.0);
     font-size: 15px;
     font-weight: normal;
     font-family: Roboto, Arial, Helvetica, sans-serif;
+    -moz-transition: background .25s ease-out;
+    -ms-transition: background .25s ease-out;
+    -o-transition: background .25s ease-out;
+    transition: background .25s ease-out;
 }
 
 .navbar-nav li a:hover {
-    border: white solid 2px;
+    border: 2px solid rgba(0, 0, 0, 0.0);
     background: white;
     color: dodgerblue;
     cursor: pointer;
@@ -189,13 +193,17 @@
 }
 
 .navbar-nav .active {
-    border: #E0F2F1 solid 2px !important;
+    border: 2px solid rgba(0, 0, 0, 0.0);
     background: #E0F2F1 !important;
     color: dodgerblue !important;
+    -moz-transition: background .25s ease-out;
+    -ms-transition: background .25s ease-out;
+    -o-transition: background .25s ease-out;
+    transition: background .25s ease-out;
 }
 
 .navbar-nav .active:hover {
-    border: white solid 2px !important;
+    border: 2px solid rgba(0, 0, 0, 0.0);
     background: white !important;
     color: dodgerblue;
     cursor: pointer;
@@ -489,6 +497,10 @@
   */
 }
 
+table {
+  margin-bottom: 15px;
+}
+
 .upper_border {
   border-top: 1px solid #C1C3D1;
 }
@@ -669,7 +681,7 @@
 
 .gvRowStyleEven { 
   color:Black;
-  background:#FFFFFF important;
+  background:#FFFFFF !important;
   text-align: center;
   vertical-align: middle;
 }
@@ -1051,6 +1063,20 @@ footer {
   display:inline;
 }
 
+.pageContent > a {
+  background-color: 00796B;
+  border: none;
+  color: white !important;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  padding: 6px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 0 0 0 0;
+}
+
 .actions > a {
   background-color: #00796B;
   border: none;
@@ -1084,5 +1110,25 @@ td > a:hover {
 
 
 #div_type, #div_fertilizer {
+  margin-bottom: 10px !important;
+}
+
+h1 > .normal_text {
+  font-size: 12px;
+  font-weight: normal;
+  color: black;
+  padding-top: 10px;
+  margin-bottom: 0px;
+}
+
+h1 {
+  margin-bottom: 25px;
+}
+
+.text_h1 {
+  margin-bottom: 20px !important;
+}
+
+.buttons_h1 {
   margin-bottom: 10px !important;
 }

@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+﻿<% if flash[:notice] %>
+	<div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:notice] %>
+    </div>
+<% end %>
+
+<h1 class="less-margin text_h1">
+  <%= t('general.listing') + " " + t('menu.scenarios') %>
+  <div class="normal_text"><%= t('instructions.scenarios') %></div>
+</h1>
+
+=======
 ﻿<% if notice != nil %>
 	<div class="success_alert">
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -5,6 +19,7 @@
   </div>
 <% end %>
 <h1 class="less-margin"><%= t('general.listing') + " " + t('menu.scenarios') %></h1><br>
+>>>>>>> master
 <%= link_to t('general.new')  + ' ' + t('scenario.scenario'), new_scenario_path %>
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), new_scenario_path %>
   <table class='gvTableStyle'>

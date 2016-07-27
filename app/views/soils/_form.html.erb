@@ -1,4 +1,4 @@
-<%= form_for(@soil) do |f| %>
+<%= form_for @soil, url: soils_path do |f| %>
   <% if @soil.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@soil.errors.count, "error") %> prohibited this soil from being saved:</h2>
