@@ -182,7 +182,7 @@ module SimulationsHelper
         climates.each do |climate|
             climate_array = update_hash(climate, climate_array)
         end
-        data = read_file("Apex.wth")
+        #data = read_file("Apex.wth")
         if climates.first != nil
             data.each_line do |day|
                 month = data[6, 4].to_i
