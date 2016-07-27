@@ -2,6 +2,9 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 en:
   activerecord:
+    form_errors:
+        one: One error prohibited this %{model} from being saved
+        other: "%{count} errors prohibited this %{model} from being saved"
     errors:
       messages:
         record_invalid: "Validation failed: %{errors}"
@@ -109,6 +112,57 @@ en:
       month: Month
       second: Seconds
       year: Year
+  models:
+    about: About
+    activity: Activity
+    animal: Animal
+    apex_control: APEX control
+    apex_layer: APEX layer
+    apex_parameter: APEX parameter
+    apex_soil: APEX soil
+    bmplist: BMP list
+    bmp: BMP
+    bmpsublist: BMP sublist
+    chart: Chart
+    climate: Climate
+    contact: Contact
+    control: Control
+    county: County
+    create_table_fertilizer: Create table fertilizer
+    cropping_system: Cropping system
+    crop: Crop
+    description: Description
+    event: Event
+    fertilizer_type: Fertilizer type
+    fertilizer: Fertilizer
+    field: Field
+    help: Help
+    irrigation: Irrigation
+    layer: Layer
+    layout: Layout
+    location: Location
+    modification: Modification
+    operation: Operation
+    parameter: Parameter
+    pdf: PDF
+    people: Person
+    project: Project
+    result: Result
+    scenario: Scenario
+    session: Session
+    site: Site
+    soil_operation: Soil operation
+    soil: Soil
+    state: State
+    station: Station
+    subarea: Subarea
+    tillage: Tillage
+    user: User
+    watershed_scenario: Watershed scenario
+    watershed: Watershed
+    way: Way
+    weather: Weather
+    welcome: Welcome
   errors:
     format: "%{attribute} %{message}"
     messages:	  
@@ -369,6 +423,7 @@ en:
     select_bmp: Select BMP Group 
     create_bmp: Create BMP
   activity:
+    activity: Activity
     edit: Editing Activity
     new_activity: New Activity
     activity_title: Listing Activities

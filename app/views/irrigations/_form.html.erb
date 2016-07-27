@@ -1,7 +1,7 @@
 <%= form_for(@irrigation) do |f| %>
   <% if @irrigation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@irrigation.errors.count, "error") %> prohibited this irrigation from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @irrigation.errors.count, :model => t('models.irrigation').downcase) %></h2>
 
       <ul>
       <% @irrigation.errors.full_messages.each do |msg| %>

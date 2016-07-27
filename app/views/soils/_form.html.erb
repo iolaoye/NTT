@@ -1,7 +1,7 @@
 <%= form_for @soil, url: soils_path do |f| %>
   <% if @soil.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@soil.errors.count, "error") %> prohibited this soil from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @soil.errors.count, :model => t('models.soil').downcase) %></h2>
 
       <ul>
       <% @soil.errors.full_messages.each do |msg| %>
