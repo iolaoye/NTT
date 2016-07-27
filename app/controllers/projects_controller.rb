@@ -13,12 +13,13 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   # GET /projects/1.json
-  def show   #selected when click on a project or a new project is created.    
+  def show   #selected when click on a project or a new project is created.
     if params[:id] == "upload" then 
 		redirect_to "upload"
 	end
     session[:project_id] = params[:id]
     @location = Location.find_by_project_id(params[:id])
+	session[:location_id] = @location.id
     redirect_to location_path(@location.id)
   end
 
@@ -60,6 +61,7 @@ class ProjectsController < ApplicationController
 		location = Location.new
 		location.project_id = @project.id
 		location.save
+		session[:location_id]
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else
@@ -1377,7 +1379,6 @@ class ProjectsController < ApplicationController
 		operation.save
 		soils = Soil.where(:field_id => field_id, :selected => true)
 		soils.each do |soil|
-			session[:depth] = soil.id.to_s + "-" + scenario_id.to_s + "-" + event_id.to_s
 			soil_operation = SoilOperation.where(:soil_id => soil.id, :scenario_id => scenario_id, :tractor_id => event_id).first
 			soil_operation.operation_id = operation.id
 			soil_operation.save

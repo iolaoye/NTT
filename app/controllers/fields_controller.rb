@@ -40,7 +40,7 @@ class FieldsController < ApplicationController
       format.json { render json: @fields }
     end
   end
-################################  SHOW   #################################
+################################  soils   #################################
   def soils
     @soils = Soil.where(:field_id => params[:id])
 
@@ -74,11 +74,13 @@ class FieldsController < ApplicationController
     end
   end
 
+################################  EDIT   #################################
   # GET /fields/1/edit
   def edit
     @field = Field.find(params[:id])
   end
 
+################################  CREATE #################################
   # POST /fields
   # POST /fields.json
   def create
@@ -108,11 +110,14 @@ class FieldsController < ApplicationController
     end
   end
 
+################################  UPDATE  #################################
   # PATCH/PUT /fields/1
   # PATCH/PUT /fields/1.json
   def update
     @field = Field.find(params[:id])
-
+	if @field == params[:field_type] then
+		#todo create the forestry fields or delete them depending on the change. If it was true and changed to false delete them otherwise create them.
+	end
     respond_to do |format|
       if @field.update_attributes(field_params)
         format.html { redirect_to list_field_path(session[:location_id]), notice: 'Field was successfully updated.' }
@@ -124,6 +129,7 @@ class FieldsController < ApplicationController
     end
   end
 
+################################  DELETE  #################################
   # DELETE /fields/1
   # DELETE /fields/1.json
   def destroy

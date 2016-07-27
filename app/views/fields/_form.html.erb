@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="field" title="Name of Field">
-    <%= f.label t('field.field_name') %><br />
+    <%= f.label t('field.field_name') %>
     <%= f.text_field :field_name %>
   </div>
   <div class="field" title="Field Area (Ac.). Must be greater than 0.">
-    <%= f.label t('field.field_area') %><br />
+    <%= f.label t('field.field_area') %>
     <%= f.text_field :field_area %>
   </div>
   <div class="field">
@@ -24,15 +24,15 @@
     <%= f.text_field :field_average_slope %>
   </div>
   <div class="field">
-    <%= f.label t('field.type') %>
-    <%= f.text_field :field_type %>
+    <%= f.label t('field.field_type') %>
+    <%= f.check_box :field_type %>
   </div>
   <div class="field">
     <%= f.label t('field.coordinate') + " (long, lat)" %><br />
     <%= f.text_area :coordinates %>
   </div>
   <div class="actions">
-    <%= f.submit t('submit.update') + " " + t('field.field') %>
+    <%= f.submit  %>
+	<%= link_to t('general.back'), list_field_path(session[:location_id]) %>
   </div>
-  <!--<p>This is a test</p>-->
 <% end %>
