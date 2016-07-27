@@ -166,12 +166,14 @@ module SimulationsHelper
 			#copy the file path
 			path = File.join(OWN,weather.weather_file)
 		    FileUtils.cp_r(path, dir_name + "/APEX.wth")
+			data = read_file(OWN,weather.weather_file)
 		else
-			#path = File.join(PRISM,weather.weather_file)
-			client = Savon.client(wsdl: URL_Weather)
-			response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
-			weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-			print_array_to_file(weather_data, "APEX.wth")
+			path = File.join(PRISM,weather.weather_file)
+			#client = Savon.client(wsdl: URL_Weather)
+			#response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
+			#weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+			#print_array_to_file(PATH, "APEX.wth")
+			data = send_file_to_APEX("WTH", path)
 		end
 		#todo after file is copied if climate bmp is in place modified the weather file.
         bmp_id = Bmp.select(:id).where(:scenario_id => session[:scenario_id])
