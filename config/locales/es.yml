@@ -10,10 +10,10 @@
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
     models:
-      projects: "Proyectos"
+      project: "Proyecto"
       location: "Ubicación"
       field: "Parcelas"
-      watershed: "Cuencas"
+      watershed: "Cuenca"
       weather: "Clima"
       soil: "Suelos"
       layer: "Capas"
@@ -36,7 +36,7 @@
         operation: "Operaciones"
         site: "Sitio"  
     attributes:
-      projects:
+      project:
         name: "Nombre"
       location:
         field: "Parcela"
@@ -366,12 +366,13 @@
     date: Fecha
     select: Seleccione
     one: Uno
-    please: Please
-    wait: wait
+    please: Por favor
+    wait: esperar
     loading: Cargando
     success: fue creado exitosamente.
     created: fue creado exitosamente.
     updated: fue actualizado exitosamente.
+    uploading: cargando
   welcome_note: 
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
@@ -461,6 +462,7 @@
     new_layer: Nueva Capa
     create_layer: Crear Capa
     layer_number: Número de Capa
+    more_than: mas de 
   scenario:
     scenario_name: Nombre Escenario
     scenario: Escenario
@@ -697,7 +699,7 @@
     max_single_application: Máxima aplicación única
     safety_factor: Factor de seguridad
     reservoir_area: Área del embalse
-    irrigation_frequency: La frecuencia de riego
+    irrigation_frequency: Frecuencia de riego
     autofertigation: Autofertigation
     tile_drain: Tile drain
     ppdi: Pads and Pipes - No Ditch Improvement
