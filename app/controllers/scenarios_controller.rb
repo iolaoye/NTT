@@ -114,9 +114,9 @@ class ScenariosController < ApplicationController
     @scenario = Scenario.find(params[:id])
 	dir_name = APEX + "/APEX" + session[:session_id]
 	#dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
-	#if !File.exists?(dir_name)
-	#	FileUtils.mkdir_p(dir_name)
-	#end
+	if !File.exists?(dir_name)
+		FileUtils.mkdir_p(dir_name)
+	end
 	#FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
 	msg = send_file_to_APEX("APEX", session[:session_id])  #this operation will create APEX folder from APEX1 folder
 	#CREATE structure for nutrients that go with fert file
