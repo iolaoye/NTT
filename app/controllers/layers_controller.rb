@@ -57,6 +57,7 @@ class LayersController < ApplicationController
   # POST /layers.json
   def create
     @layer = Layer.new(layer_params)
+	@layer.soil_id = session[:soil_id]
 
     respond_to do |format|
       if @layer.save
