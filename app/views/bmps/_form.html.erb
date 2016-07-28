@@ -48,27 +48,27 @@
   </div>
   <br>
   <div class="field" id="irrigation" style="display:none">
-      <%= label :irrigation_id, 'Irrigation' %>
+      <%= label :irrigation_id, t('operation.irrigation') %>
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
   </div>
   <div class="field" id="crop"  style="display:none">
-    <%= label :crop_id, 'Crop' %>
+    <%= label :crop_id, t('operation.crop') %>
     <%= collection_select :bmp, :crop_id, Crop.all, :id, :name, {:prompt => 'Select Vegetation'}, {:required => true} %>
   </div>
   <div class="field" id = "water_stress_factor" style="display:none">
-    <%= f.label :water_stress_factor %> (0.00 – 1.00)<br />
+    <%= f.label t('pdf.water_stress_factor') %> (0.00 – 1.00)<br />
     <%= f.number_field :water_stress_factor, :step => 'any' %>
   </div>
   <div class="field" id = "irrigation_efficiency" style="display:none">
-    <%= f.label :irrigation_efficiency %> (0.00 – 1.00)<br />
+    <%= f.label t('pdf.irrigation_efficiency') %> (0.00 – 1.00)<br />
     <%= f.number_field :irrigation_efficiency, :step => 'any' %>
   </div>
   <div class="field" id = "area_control" style="display:none">
-    <%= f.label :fraction_of_area_control_by_pond %> (0.00 – 1.00)<br />
+    <%= f.label t('pdf.fraction_of_area_control_by_pond') %> (0.00 – 1.00)<br />
     <%= f.number_field :irrigation_efficiency, :step => 'any' %>
   </div>
   <div class="field" id="maximum_single_application" style="display:none">
-    <%= f.label :maximum_single_application %> (0.00 – 99999.00)<br />
+    <%= f.label t('pdf.max_single_application') %> (0.00 – 99999.00)<br />
     <%= f.number_field :maximum_single_application, :step => 'any' %> inches
   </div>
   <div class="field" id="safety_factor" style="display:none">
@@ -92,7 +92,7 @@
     <%= f.number_field :number_of_animals %>
   </div>
   <div class="field" id = "days" style="display:none">
-    <%= f.label :irrigation_frequency %> (Days: 0.00 – 365)<br />
+    <%= f.label t('pdf.irrigation_frequency') %> (Days: 0.00 – 365)<br />
     <%= f.number_field :days, :step => 'any' %>
   </div>
   <div class="field" id="hours" style="display:none">
