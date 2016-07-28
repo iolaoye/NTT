@@ -112,17 +112,20 @@ class ProjectsController < ApplicationController
 	#end
 
   def upload
-	@id = params[:id]	
+	@id = params[:id]
 	#nothing to do here. Just render the upload view
   end
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
 	def upload_project
 		#oo\
-		msg = ""
+		msg = "OK"
+		upload_id = 0
 		if params[:commit].eql?t('submit.save') then
 			@data = Nokogiri::XML(params[:project])
+			upload_id = 0
 		else
+			upload_id = 1
 			case params[:examples] 
 				when "1"  # Load OH two fields
 					@data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
@@ -147,17 +150,17 @@ class ProjectsController < ApplicationController
 				when "ParmValues"
 					msg = upload_parameter_values(node)
 			end
+			break if (msg != "OK" && msg != true)
 		end
-		# summarizes results for totals and soils.
-		summarize_total()
-
-		@projects = Project.where(:user_id => session[:user_id])
-		#session[:msg] = msg
-		if(msg != "OK")
-			redirect_to upload_project_path(0)
-			flash[:notice] = t('project.upload_error') and return false
+		if (msg == "OK" || msg == true)
+			# summarizes results for totals and soils.
+			summarize_total()
+			@projects = Project.where(:user_id => session[:user_id])
+   	    	render :action => "index", notice: msg
+		else
+			redirect_to upload_project_path(upload_id)
+			flash[:notice] = msg and return false
 		end
-		render :action => "index", notice: msg
 	end
 
 	########################################### DOWNLOAD PROJECT FILE IN XML FORMAT ##################
@@ -741,16 +744,17 @@ class ProjectsController < ApplicationController
 						site.upr = p.text
 					when "Longitude"
 						site.xlog = p.text
+						if site.xlog = 0 then site.xlog = Weather.find_by_field_id(field.id).longitude end
 					when "Latitude"
 						site.ylat = p.text
+						if site.ylat = 0 then site.ylat = Weather.find_by_field_id(field.id).latitude end
 				end  # end case p.name
 			end  # end nodel.elements
-			if site.save then
-				return "OK"
-			else
+			if !site.save then
 				return "site could not be saved"
 			end
 		end  # each field
+		return "OK"
 	end
 
 	def upload_site_new_version(node, field_id)
@@ -1023,6 +1027,7 @@ class ProjectsController < ApplicationController
 					end
 			end
 		end
+		return "OK"
 	end
 
 	def upload_scenario_new_version(field_id, new_scenario)
@@ -1292,7 +1297,7 @@ class ProjectsController < ApplicationController
 					soil_operation.day = p.text
 				when "operation_id"  #todo this need to be taken from operation table
 				when "ApexCrop"
-					soil_operation.apex_crop = p.text				
+					soil_operation.apex_crop = p.text
 				when "NO3", "PO4", "OrgN", "OrgP"
 					if p.text.to_f > 0.0
 						soil_operation.type_id = 25
@@ -1315,6 +1320,9 @@ class ProjectsController < ApplicationController
 					soil_operation.activity_id = Activity.find_by_abbreviation(p.text).id
 				when "ApexTillCode"
 					soil_operation.apex_operation = p.text
+					if soil_operation.activity_id == 4 then
+						soil_operation.apex_operation = Crop.find_by_number(soil_operation.apex_crop).harvest_code
+					end
 			end
 		end
 		if soil_operation.save then
@@ -1381,6 +1389,7 @@ class ProjectsController < ApplicationController
 			soil_operation.operation_id = operation.id
 			soil_operation.save
 		end # end soils.each
+		return "OK"
 	end
 
 	def upload_operation_new_version(scenario_id, new_operation)
@@ -1418,7 +1427,7 @@ class ProjectsController < ApplicationController
 					operation.nh3 = p.text
 				when "soil_operation"
 					p.elements.each do |s|
-						upload_soil_operation_new(scenario_id, s)
+						msg = upload_soil_operation_new(scenario_id, s)
 						if msg != "OK"
 							return msg
 						end
@@ -1665,7 +1674,7 @@ class ProjectsController < ApplicationController
 			case p.name
 				when "Name"
 					name = p.text
-				when "Opesations"
+				when "Operations"
 					scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
 					upload_operation_info(p, scenario_id, field_id)
 				when "Results"
@@ -2262,17 +2271,17 @@ class ProjectsController < ApplicationController
 					case control.control_id
 						when 1 # get number of years of simulation from weather
 							weather = Weather.find_by_field_id(session[:field_id])
-							control.value = weather.simulation_final_year - weather.simulation_initial_year + 1
+							control.value = weather.simulation_final_year - weather.simulation_initial_year + 1 + 5
 							control.save
 							# get the first year of simulation from weather
 							control = ApexControl.new
 							control.project_id = session[:project_id]
-							control.control_id = Control.find_by_code(p.text).id
-							control.value = weather.simulation_initial_year
+							control.control_id = Control.find_by_id(2).id
+							control.value = weather.simulation_initial_year - 5
 							control.save
-							return
-						when 2 # do nothing because the second value should be alredy be taken
-							return
+							return "OK"
+						when 2 # do nothing because the second value should be already be taken
+							return "OK"
 					end  # end case control.control_id
 				when "Value"
 					control.value = p.text
@@ -2280,6 +2289,8 @@ class ProjectsController < ApplicationController
 		end ## end each		
 		if !control.save then
 			return "Error saving control file"
+		else 
+			return "OK"
 		end
 	end
 
@@ -2303,6 +2314,8 @@ class ProjectsController < ApplicationController
 		end ## end each		
 		if !parameter.save then
 			return "Error saving parameter file"
+		else 
+			return "OK"
 		end
 	end
 end

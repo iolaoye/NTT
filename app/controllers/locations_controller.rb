@@ -109,6 +109,7 @@ class LocationsController < ApplicationController
 				end   #end weather validation
 				@weather.weather_file = params["field#{i}parcelweather"]
 				@weather.simulation_initial_year = params["field#{i}initialYear"]
+				@weather.simulation_initial_year += 5
 				@weather.simulation_final_year = params["field#{i}finalYear"]
 				@weather.weather_initial_year = params["field#{i}initialYear"]
 				@weather.weather_final_year = params["field#{i}finalYear"]

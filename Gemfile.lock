@@ -72,6 +72,7 @@ GEM
     nori (2.6.0)
     pkg-config (1.1.7)
     polyglot (0.3.5)
+    power_assert (0.3.0)
     rack (1.4.7)
     rack-cache (1.6.1)
       rack (>= 0.4)
@@ -124,6 +125,8 @@ GEM
       activemodel (~> 3.0)
       activesupport (~> 3.0)
       railties (~> 3.0)
+    test-unit (3.2.1)
+      power_assert
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -158,6 +161,7 @@ DEPENDENCIES
   savon (>= 2.0)
   sqlite3
   strong_parameters
+  test-unit
   therubyracer
   uglifier (>= 1.0.3)
   wicked_pdf
