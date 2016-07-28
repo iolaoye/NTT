@@ -6,10 +6,8 @@
     </div>
 <% end %>
 
-<h1 class="text_h1">
-  <%= t('watershed.watershed_title')%>
-  <div class="normal_text"><%= t('instructions.watersheds') %></div>
-</h1>
+<h1 class="text_h1"><%= t('watershed.watershed_title')%></h1>
+<h4 ><%= t('instructions.watersheds') %> </h4>
 
 <%= link_to t('watershed.new_watershed'), new_watershed_path %>
 
