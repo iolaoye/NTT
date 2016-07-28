@@ -78,7 +78,7 @@
     @apex_layer.destroy
 
     respond_to do |format|
-      format.html { redirect_to list_layer_path(@apex_layer.soil_id), notice: 'Layer was successfully updated.' }
+      format.html { redirect_to apex_layers_path(@apex_layer.soil_id), notice: 'Layer was successfully updated.' }
       format.json { head :no_content }
     end
   end
