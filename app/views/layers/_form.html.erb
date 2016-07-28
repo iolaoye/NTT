@@ -12,7 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :depth, t('soil.depth'), :required => true, :class => 'numbers', :step => '0.01' %>
+    <%= f.label :depth, t('soil.depth') %>
+    <%= f.number_field :depth %>
   </div>
   <div class="field">
     <%= f.label :soil_p, t('soil.soilp') %>
