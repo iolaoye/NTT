@@ -2,6 +2,9 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 en:
   activerecord:
+    form_errors:
+        one: One error prohibited this %{model} from being saved
+        other: "%{count} errors prohibited this %{model} from being saved"
     errors:
       messages:
         record_invalid: "Validation failed: %{errors}"
@@ -9,10 +12,81 @@ en:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
     models:
+      projects: "Projects"
+      location: "Location"
+      field: "Fields"
+      watershed: "Watersheds"
+      weather: "Weather"
+      soil: "Soils"
+      layer: "Layers"
       scenario: "Scenario"
+      operation: "Operations"
+      bmp: "Best Management Practices"
+      result:
+        result: "Results"
+        summary: "Summary"
+        by_soil: "By Soil"
+        annual_charts: "Annual Charts"
+        monthly_charts: "Monthly Charts"
+      apex:
+        apex_file: "Apex Files"
+        control: "Controls"
+        parameter: "Parameters"
+        subarea: "Subareas"
+        soil: "Soils"
+        layer: "Layers"
+        operation: "Operation"
+        site: "Site"
     attributes:
+      projects:
+        name: "Name"
+      location:
+        field: "Field"
+      field:
+        field_name: "Field Name"
+      watershed:
+        name: "Name"
+      weather:
+        year: "Year"
+      soil:
+        key: "Key"
+      layer:
+        depth: "Depth"
       scenario:
         name: "Name"
+      operation:
+        crop: "Crop"
+      bmp:
+        bmp_group: "BMP Group"
+      result:
+        result:
+        summary:
+          scenario: "Scenario"
+        by_soil:
+          scenario: "Scenario"
+          soil: "Soil"
+        annual_charts:
+          scenario: "Scenario"
+        monthly_charts:
+          scenario: "Scenario"
+      apex:
+        apex_file:
+        control:
+          code: "Code"
+        parameter:
+          name: "Name"
+        subarea:
+          Scenario: "Scenario"
+        soil:
+          key: "Key"
+        layer:
+          depth: "Depth"
+        operation:
+          soil: "Soil"
+          scenario: "Scenario"
+        site:
+          y_lat: "Ylat"
+          x_log: "Xlog"
   date:
     abbr_day_names:
     - Sun
@@ -109,6 +183,57 @@ en:
       month: Month
       second: Seconds
       year: Year
+  models:
+    about: About
+    activity: Activity
+    animal: Animal
+    apex_control: APEX control
+    apex_layer: APEX layer
+    apex_parameter: APEX parameter
+    apex_soil: APEX soil
+    bmplist: BMP list
+    bmp: BMP
+    bmpsublist: BMP sublist
+    chart: Chart
+    climate: Climate
+    contact: Contact
+    control: Control
+    county: County
+    create_table_fertilizer: Create table fertilizer
+    cropping_system: Cropping system
+    crop: Crop
+    description: Description
+    event: Event
+    fertilizer_type: Fertilizer type
+    fertilizer: Fertilizer
+    field: Field
+    help: Help
+    irrigation: Irrigation
+    layer: Layer
+    layout: Layout
+    location: Location
+    modification: Modification
+    operation: Operation
+    parameter: Parameter
+    pdf: PDF
+    people: Person
+    project: Project
+    result: Result
+    scenario: Scenario
+    session: Session
+    site: Site
+    soil_operation: Soil operation
+    soil: Soil
+    state: State
+    station: Station
+    subarea: Subarea
+    tillage: Tillage
+    user: User
+    watershed_scenario: Watershed scenario
+    watershed: Watershed
+    way: Way
+    weather: Weather
+    welcome: Welcome
   errors:
     format: "%{attribute} %{message}"
     messages:	  
@@ -369,6 +494,7 @@ en:
     select_bmp: Select BMP Group 
     create_bmp: Create BMP
   activity:
+    activity: Activity
     edit: Editing Activity
     new_activity: New Activity
     activity_title: Listing Activities

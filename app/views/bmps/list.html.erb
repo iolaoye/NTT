@@ -1,4 +1,5 @@
 ﻿<% if flash[:notice] %>
+  <br>
 	<div class="success_alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <%= flash[:notice] %>
@@ -18,14 +19,22 @@
   <% @bmps.each do |bmp| %>
     <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">
-        <td class="gvCellStyleText"><%= Bmpsublist.find(bmp.bmpsublist_id).name %></td>
+        <% if I18n.locale.eql?(:en) %>
+            <td class="gvCellStyleText"><%= Bmpsublist.find(bmp.bmpsublist_id).name %></td>
+        <% else %>
+            <td class="gvCellStyleText"><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></td>
+        <% end %>
         <td class="gvCellStyleAction"><%= link_to image_tag("view.png"), bmp %>
           <%= link_to image_tag("edit.png"), edit_bmp_path(bmp) %>
         <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% else %>
       <tr class="gvRowStyleOdd">
-        <td class="gvCellStyleText"><%= Bmpsublist.find(bmp.bmpsublist_id).name %></td>
+        <% if I18n.locale.eql?(:en) %>
+          <td class="gvCellStyleText"><%= Bmpsublist.find(bmp.bmpsublist_id).name %></td>
+        <% else %>
+          <td class="gvCellStyleText"><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></td>
+        <% end %>
         <td class="gvCellStyleAction"><%= link_to image_tag("view.png"), bmp %>
           <%= link_to image_tag("edit.png"), edit_bmp_path(bmp) %>
         <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>

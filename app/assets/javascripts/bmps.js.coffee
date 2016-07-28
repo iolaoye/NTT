@@ -26,11 +26,36 @@ update_animal_options = ->
 #update bmp sublist depending on the bmp selected.
 update_bmpsublist = ->
   url = "/bmplists/" + $("#bmp_bmp_id").val() + "/bmpsublists.json"
-  $.getJSON url, (bmpsublists) ->
+  if $("#bmp_bmp_id").val() > 0
+    $.getJSON url, (bmpsublists) ->
+      url = window.location.href
+      n = url.indexOf('locale=')
+      language = url.substring(n, n + 9)
+      if language == "locale=en"
+        items = []
+        items.push "<option value>Select One</option>"
+        $.each bmpsublists, (key, bmpsublist) ->
+           items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.name + "</option>"
+        $("#bmp_bmpsublist_id").html items.join("")
+        $("#bmp_bmpsublist_id").removeAttr("disabled")
+      else if language == "locale=es"
+        items = []
+        items.push "<option value>Select One</option>"
+        $.each bmpsublists, (key, bmpsublist) ->
+          items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.spanish_name + "</option>"
+        $("#bmp_bmpsublist_id").html items.join("")
+        $("#bmp_bmpsublist_id").removeAttr("disabled")
+      else
+        window.alert 'WTF Language error. Default English will be set for list Click [OK] to continue.'
+        items = []
+        items.push "<option value>Select One</option>"
+        $.each bmpsublists, (key, bmpsublist) ->
+          items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.name + "</option>"
+        $("#bmp_bmpsublist_id").html items.join("")
+        $("#bmp_bmpsublist_id").removeAttr("disabled")
+  else
     items = []
     items.push "<option value>Select One</option>"
-    $.each bmpsublists, (key, bmpsublist) ->
-       items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.name + "</option>"
     $("#bmp_bmpsublist_id").html items.join("")
     $("#bmp_bmpsublist_id").removeAttr("disabled")
 	
@@ -39,12 +64,13 @@ switch_all_to_off = ->
     $("#irrigation").toggle(false)
     $("#water_stress_factor").toggle(false)
     $("#irrigation_efficiency").toggle(false)
+    $("#area_control").toggle(false)
     $("#maximum_single_application").toggle(false)
     $("#days").toggle(false)
     $("#safety_factor").toggle(false)
     $('#bmp_crop_id').prop('required',false)
-    $('#bmp_animal_id').prop('required',false)   
-    $('#bmp_irrigation_id').prop('required',false)   
+    $('#bmp_animal_id').prop('required',false)
+    $('#bmp_irrigation_id').prop('required',false)
     $("#depth").toggle(false)
     $("#depth_ft_label").toggle(false)
     $("#width").toggle(false)
@@ -106,7 +132,7 @@ activate_bmp_controls = ->
             $("#area").toggle(true)
             $("#submit").toggle(true)
         when "9" #ponds
-            $("#irrigation_efficiency").toggle(true)
+            $("#area_control").toggle(true)
             $("#submit").toggle(true)
         when "10" #stream fencing
             $("#animals").toggle(true)

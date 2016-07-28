@@ -1,7 +1,7 @@
 <%= form_for(@layer) do |f| %>
   <% if @layer.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @layer.errors.count, :model => t('models.layer').downcase) %></h2>
 
       <ul>
       <% @layer.errors.full_messages.each do |msg| %>

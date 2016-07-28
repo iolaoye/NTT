@@ -153,9 +153,7 @@ class ProjectsController < ApplicationController
 
 		@projects = Project.where(:user_id => session[:user_id])
 		#session[:msg] = msg
-		if(msg == "OK")
-   	    	render :action => "index", notice: msg
-		else
+		if(msg != "OK")
 			redirect_to upload_project_path(0)
 			flash[:notice] = t('project.upload_error') and return false
 		end

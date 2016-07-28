@@ -1,8 +1,7 @@
 <%= form_for(@animal) do |f| %>
   <% if @animal.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@animal.errors.count, "error") %> prohibited this animal from being saved:</h2>
-
+      <h2><%= t('activerecord.form_errors', :count => @animal.errors.count, :model => t('models.animal').downcase) %></h2>
       <ul>
       <% @animal.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
