@@ -1,5 +1,5 @@
 class Subarea < ActiveRecord::Base
-  attr_accessible :type, :description, :number, :inps, :iops, :iow, :ii, :iapl, :nvcn, :iwth, :ipts, :isao, :luns, :imw, 
+  attr_accessible :subarea_type, :description, :number, :inps, :iops, :iow, :ii, :iapl, :nvcn, :iwth, :ipts, :isao, :luns, :imw, 
     :sno, :stdo, :yct, :xct, :azm, :fl, :fw, :angl, :wsa, :chl, :chd, :chs, :chn, :slp, :splg, :upn, :ffpq, :urbf, :soil_id,
 	:bmp_id, :scenario_id, :rchl, :rchd, :rcbw, :rctw, :rchs, :rchn, :rchc, :rchk, :rfpw, :rfpl, :rsee, :rsae, :rsve, :rsep, 
 	:rsap, :rsvp, :rsv, :rsrr, :rsys, :rsyn, :rshc, :rsdp, :rsbd, :pcof, :bcof, :bffl, :nirr, :iri, :ira, :lm, :ifd, :idr, 

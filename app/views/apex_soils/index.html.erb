@@ -14,27 +14,25 @@
   <% for apex_soil in @soils %>
     <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">
-        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", disabled: true %></td>
+        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", apex_soil.selected, disabled: true %></td>
         <td class="gvCellStyleText"><%= apex_soil.key %></td>
         <td class="gvCellStyleText"><%= apex_soil.symbol %></td>
         <td class="gvCellStyleText"><%= apex_soil.group %></td>
         <td class="gvCellStyleText"><%= apex_soil.name %></td>
         <td class="gvCellStyleActions">
           <%= link_to image_tag("layers.png"), controller: "apex_layers", action: "index", id: apex_soil.id, title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
-          <%= link_to image_tag("view.png"), apex_soil_path(apex_soil.id), title: t('general.show') %>
           <%= link_to image_tag("edit.png"), edit_apex_soil_path(apex_soil.id), title: t('general.edit') %>
         </td>
     </tr>
     <% else %>
       <tr class="gvRowStyleOdd">
-        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", disabled: true %></td>
+        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", apex_soil.selected, disabled: true %></td>
         <td class="gvCellStyleText"><%= apex_soil.key %></td>
         <td class="gvCellStyleText"><%= apex_soil.symbol %></td>
         <td class="gvCellStyleText"><%= apex_soil.group %></td>
         <td class="gvCellStyleText"><%= apex_soil.name %></td>
         <td class="gvCellStyleActions">
           <%= link_to image_tag("layers.png"), controller: "apex_layers", action: "index", id: apex_soil.id, title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
-          <%= link_to image_tag("view.png"), apex_soil_path(apex_soil.id), title: t('general.show') %>
           <%= link_to image_tag("edit.png"), edit_apex_soil_path(apex_soil.id), title: t('general.edit') %>
         </td>
     </tr>

@@ -114,9 +114,9 @@ class ScenariosController < ApplicationController
     @scenario = Scenario.find(params[:id])
 	dir_name = APEX + "/APEX" + session[:session_id]
 	#dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
-	#if !File.exists?(dir_name)
-	#	FileUtils.mkdir_p(dir_name)
-	#end
+	if !File.exists?(dir_name)
+		FileUtils.mkdir_p(dir_name)
+	end
 	#FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
 	msg = send_file_to_APEX("APEX", session[:session_id])  #this operation will create APEX folder from APEX1 folder
 	#CREATE structure for nutrients that go with fert file
@@ -178,8 +178,8 @@ class ScenariosController < ApplicationController
 
 	def read_apex_results(msg)
         ntt_apex_results = Array.new
-
-        start_year = Weather.find_by_field_id(Scenario.find(params[:id]).field_id).simulation_initial_year
+		#todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
+        start_year = Weather.find_by_field_id(Scenario.find(params[:id]).field_id).simulation_initial_year - 5
 
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
