@@ -432,6 +432,9 @@ en:
     enter_coordinates: Enter Coordinates
     initial_year: initial year
     final_year: final year
+    simulation_only_error: must be greater than or equal to simulation initial year
+    initial_simulation_error: value must be at least 5 years after initial year of weather info. Minimum value is
+    final_simulation_error: must not be greater than the final year of weather information. Maximum value is
   soil:
     layers: Layers
     soil: Soil
@@ -493,6 +496,60 @@ en:
     bmp_group: BMP Group
     select_bmp: Select BMP Group 
     create_bmp: Create BMP
+    zero_to_one: "(0.00 - 1.00)"
+    zero_to_max: "(0.00 – 99999.00)"
+    quarter_to_one: "(0.25 - 1.00)"
+    quarter_to_three_fourths: "(0.25 - 0.75)"
+    days_range: "(Days: 0.00 – 365)"
+    lbs_per_day: lbs per day
+    ft: ft
+    acres: acres
+    inches: inches
+    lbs: lbs
+    climate_warning: This BMP may take longer to save
+    irrigation: Irrigation
+    crop: Crop
+    water_stress_factor: Water stress factor
+    irrigation_efficiency: Irrigation efficiency
+    area_control: Fraction of area control by pond
+    maximum_single_application: Maxiumum single application
+    safety_factor: Safety factor
+    depth: Depth
+    reservoir_area: Reservoir area
+    animals: Animals
+    number_of_animals: Number of animals
+    irrigation_frequency: Irrigation frequency
+    hours: Hours
+    dry_manure: Dry manure
+    no3_n: No3 n
+    po4_p: Po4 p
+    org_n: Org n
+    org_p: Org p
+    width: Width
+    grass_field_portion: Grass field portion
+    slope_ratio: Slope ratio
+    crop_width: Crop width
+    slope_reduction: Slope reduction
+    sides: Sides
+    no_input: This BMP does not require any input
+    month: Month
+    max_temp: Max. Temp. ±(°C)
+    min_temp: Min. Temp. ±(°C)
+    precipitation: Precipitation (%)
+    fill: Fill
+  months:
+    january: Jan.
+    february: Feb.
+    march: Mar.
+    april: Apr.
+    may: May.
+    june: Jun.
+    july: Jul.
+    august: Aug.
+    september: Sep.
+    october: Oct.
+    novemeber: Nov.
+    december: Dec.
   activity:
     activity: Activity
     edit: Editing Activity
