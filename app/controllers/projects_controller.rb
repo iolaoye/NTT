@@ -425,7 +425,7 @@ class ProjectsController < ApplicationController
 
 	def save_subarea_information(xml, subarea)
 		xml.subarea {
-			xml.type subarea.type
+			xml.subarea_type subarea.subarea_type
 			xml.description subarea.description
 			xml.number subarea.number
 			xml.inps subarea.inps
