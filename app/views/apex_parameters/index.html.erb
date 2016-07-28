@@ -2,35 +2,40 @@
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
-    <th><%= t('menu.parameters_file') %></th>
-    <th><%= t('general.name') %></th>
-    <th></th>
-    <th><%= t('apex.line') %></th>
-    <th><%= t('apex.value') %></th>
-    <th><%= t('apex.low_range') %></th>
-    <th><%= t('apex.high_range') %></th>
+    <th class="gvCellStyleTitle"><%= t('menu.parameters_file') %></th>
+    <th class="gvCellStyleTitle"><%= t('general.name') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.line') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.value') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.low_range') %></th>
+    <th class="gvCellStyleTitle"><%= t('apex.high_range') %></th>
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
 
 <% i=1 %>
 <% @apex_parameters.each do |apex_parameter| %>
-<% if (i % 2  == 0) %>
-<tr class="gvRowStyleEven">
+  <% if (i % 2  == 0) %>
+    <tr class="gvRowStyleEven">
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.number %></td>
+      <td class="gvCellStyleString"><%= apex_parameter.parameter.name %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.line %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.value %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_low %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_high %></td>
+      <td><%= link_to image_tag("edit.png"), edit_apex_parameter_path(apex_parameter), title: t('general.edit') %></td>
+    </tr>
   <% else %>
-  <tr class="gvRowStyleOdd">
-    <% end %>
-    <% i = i + 1 %>
-    <tr class="gvRowStyle">
-    <td class="gvCellStyleNumber"><%= apex_parameter.parameter.number %></td>
-    <td class="gvCellStyleString"><%= apex_parameter.parameter.name %></td>
-    <td class="gvCellStyleNumber"></td>
-    <td class="gvCellStyleNumber"><%= apex_parameter.parameter.line %></td>
-    <td class="gvCellStyleNumber"><%= apex_parameter.value %></td>
-    <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_low %></td>
-    <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_high %></td>
-    <td><%= link_to image_tag("edit.png"), edit_apex_parameter_path(apex_parameter), title: t('general.edit') %></td>
-  </tr>
+    <tr class="gvRowStyleOdd">
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.number %></td>
+      <td class="gvCellStyleString"><%= apex_parameter.parameter.name %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.line %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.value %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_low %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_high %></td>
+      <td><%= link_to image_tag("edit.png"), edit_apex_parameter_path(apex_parameter), title: t('general.edit') %></td>
+    </tr>
+  <% end %>
+  <% i = i + 1 %>
 <% end %>
 </table>
 
-
+<br>

@@ -20,8 +20,10 @@
 	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
 #APEX folders.
-#todo create a process to delete old folders
 	APEX = "public/NTTFiles"
+	APEX_FOLDER = "E:/NTTHTML5Files"
+#folder for examples
+	EXAMPLES = "public/Examples"
 
 #folder for own weather files
 	OWN = 'public/weather'

@@ -103,7 +103,7 @@ before_filter :take_names
             msg = input_fields("create")
           end
           if msg == "OK"
-            format.html { redirect_to @bmp, notice: 'Bmp was successfully created.' }
+            format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.created') }
             format.json { render json: @bmp, status: :created, location: @bmp }
           else
             format.html { render action: "new" }
@@ -142,7 +142,7 @@ before_filter :take_names
     respond_to do |format|
       if msg == "OK"
         if @bmp.update_attributes(bmp_params)
-          format.html { redirect_to @bmp, notice: 'Bmp was successfully updated.' }
+          format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.updated') }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
@@ -725,7 +725,7 @@ before_filter :take_names
         end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-          if i = 0 then 
+          if i == 0 then 
             @inps = subarea.inps   #select the first soil, which is with bigest area
             i += 1
           end
@@ -849,7 +849,7 @@ before_filter :take_names
         end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-          if i = 0 then 
+          if i == 0 then 
             @inps = subarea.inps   #select the first soil, which is with bigest area
             i += 1
           end
@@ -901,7 +901,7 @@ before_filter :take_names
         end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-          if i = 0 then 
+          if i == 0 then 
             @inps = subarea.inps   #select the first soil, which is with bigest area
             i += 1
           end

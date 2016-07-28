@@ -1,7 +1,7 @@
 <%= form_for(@state) do |f| %>
   <% if @state.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@state.errors.count, "error") %> prohibited this state from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @state.errors.count, :model => t('models.state').downcase) %></h2>
 
       <ul>
       <% @state.errors.full_messages.each do |msg| %>

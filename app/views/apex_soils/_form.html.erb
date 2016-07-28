@@ -1,7 +1,7 @@
 <%= form_for @soil, url: apex_soil_path do |f| %>
   <% if @soil.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@soil.errors.count, "error") %> prohibited this soil from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @soil.errors.count, :model => t('models.apex_soil')) %></h2>
 
       <ul>
       <% @soil.errors.full_messages.each do |msg| %>
@@ -48,8 +48,8 @@
     <td><div class="field">
         <b><%= f.label :RFPK %></b><br />
         <%= f.number_field :rfpk, :class => "fieldNumbers", :step => 'any' %> 
-  </tr>
-  <tr class='gvRowStyleOdd''>
+    </div></tr>
+  <tr class='gvRowStyleOdd'>
     </div></td>
     <td><div class="field">
         <b><%= f.label :TSLA %></b><br />
@@ -90,5 +90,4 @@
   </tr>
 </table>
 <%= f.submit t('submit.update') %>
-
 <% end %>

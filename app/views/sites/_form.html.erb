@@ -1,7 +1,7 @@
 <%= form_for(@site) do |f| %>
   <% if @site.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@site.errors.count, "error") %> prohibited this site from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @site.errors.count, :model => t('models.site').downcase) %></h2>
 
       <ul>
       <% @site.errors.full_messages.each do |msg| %>
@@ -56,3 +56,4 @@
   </div>
 <% end %>
 
+<br>

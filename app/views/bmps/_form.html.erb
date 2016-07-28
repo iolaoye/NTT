@@ -1,7 +1,7 @@
 <%= form_for(@bmp) do |f| %>
   <% if @bmp.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@bmp.errors.count, "error") %> prohibited this bmp from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @bmp.errors.count, :model => t('models.bmp')) %></h2>
 
       <ul>
       <% @bmp.errors.full_messages.each do |msg| %>
@@ -10,20 +10,35 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <% if (@type == "create") %>
-      <%= label :bmp_id, t('bmp.bmp_group') %>
-      <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
-      <%= label :bmp_id, t('operation.bmp') %>
-      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
-    <% else %>
-      <%= label :bmp_id, t('bmp.bmp_group') %>
-      <%= collection_select :bmp, :bmp_id, Bmplist.where(:id => @bmp.bmp_id), :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
-      <%= label :bmp_id, t('operation.bmp') %>
-      <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:id => @bmp.bmpsublist_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id } %>
-    <% end %>
-  </div>
+  <% if I18n.locale.eql?(:en) %>
+    <div class="field">
+      <% if (@type == "create") %>
+        <%= label :bmp_id, t('bmp.bmp_group') %>
+        <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+        <%= label :bmp_id, t('operation.bmp') %>
+        <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+      <% else %>
+        <%= label :bmp_id, t('bmp.bmp_group') %>
+        <%= collection_select :bmp, :bmp_id, Bmplist.where(:id => @bmp.bmp_id), :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+        <%= label :bmp_id, t('operation.bmp') %>
+        <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:id => @bmp.bmpsublist_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id } %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="field">
+      <% if (@type == "create") %>
+          <%= label :bmp_id, t('bmp.bmp_group') %>
+          <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :spanish_name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+          <%= label :bmp_id, t('operation.bmp') %>
+          <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :spanish_name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+      <% else %>
+          <%= label :bmp_id, t('bmp.bmp_group') %>
+          <%= collection_select :bmp, :bmp_id, Bmplist.where(:id => @bmp.bmp_id), :id, :spanish_name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+          <%= label :bmp_id, t('operation.bmp') %>
+          <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:id => @bmp.bmpsublist_id), :id, :spanish_name, {:required => false, :selected => @bmp.bmpsublist_id } %>
+      <% end %>
+    </div>
+  <% end %>
   <div class="warning_alert" id="slow_warning">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       This BMP may take longer to save
@@ -31,6 +46,7 @@
   <div>
     <hr class="line_break" color="dodgerblue">
   </div>
+  <br>
   <div class="field" id="irrigation" style="display:none">
       <%= label :irrigation_id, 'Irrigation' %>
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
@@ -45,6 +61,10 @@
   </div>
   <div class="field" id = "irrigation_efficiency" style="display:none">
     <%= f.label :irrigation_efficiency %> (0.00 – 1.00)<br />
+    <%= f.number_field :irrigation_efficiency, :step => 'any' %>
+  </div>
+  <div class="field" id = "area_control" style="display:none">
+    <%= f.label :fraction_of_area_control_by_pond %> (0.00 – 1.00)<br />
     <%= f.number_field :irrigation_efficiency, :step => 'any' %>
   </div>
   <div class="field" id="maximum_single_application" style="display:none">
@@ -182,9 +202,11 @@
       <td><%= number_field :climate, :pcp_12, :step => 'any', :class => 'pcp', :value => @climate_array[11]["pcp"].inspect %></td></tr>
 	</table>
   </div>
-  <div id="submit" class="actions" style="display:none">
+  <div class="actions" >
     <%= f.submit %>
+	<%= link_to t('general.back'), list_bmp_path(session[:scenario_id]) %>
   </div>
+  
 
 <% end %>
 
