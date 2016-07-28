@@ -1,7 +1,7 @@
 <%= form_for(@crop) do |f| %>
   <% if @crop.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@crop.errors.count, "error") %> prohibited this crop from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @crop.errors.count, :model => t('models.crop')) %></h2>
 
       <ul>
       <% @crop.errors.full_messages.each do |msg| %>

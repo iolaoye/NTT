@@ -1,7 +1,7 @@
 <%= form_for(@bmpsublist) do |f| %>
   <% if @bmpsublist.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@bmpsublist.errors.count, "error") %> prohibited this bmpsublist from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @bmpsublist.errors.count, :model => t('models.bmpsublist')) %></h2>
 
       <ul>
       <% @bmpsublist.errors.full_messages.each do |msg| %>

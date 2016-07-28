@@ -1,7 +1,7 @@
 <%= form_for(@cropping_system) do |f| %>
   <% if @cropping_system.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@cropping_system.errors.count, "error") %> prohibited this cropping_system from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @cropping_system.errors.count, :model => t('models.cropping_system').downcase) %></h2>
 
       <ul>
       <% @cropping_system.errors.full_messages.each do |msg| %>

@@ -1,5 +1,8 @@
 ﻿es:
   activerecord:
+    form_errors:
+        one: No se pudo guardar este/a %{model} porque se encontró un error
+        other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"
@@ -107,6 +110,57 @@
       month: Mes
       second: Segundos
       year: Año
+  models:
+    about: Acerca
+    activity: Actividad
+    animal: Animal
+    apex_control: APEX control
+    apex_layer: APEX capa
+    apex_parameter: APEX parámetros
+    apex_soil: APEX suelo
+    bmplist: MPG lista
+    bmp: MPG
+    bmpsublist: BMP sublista
+    chart: Gráfica
+    climate: Clima
+    contact: Contacto
+    control: Control
+    county: Condado
+    create_table_fertilizer: Crear tabla de fertilizante
+    cropping_system: Sistema de cultivo
+    crop: Cultivo
+    description: Descripción
+    event: Evento
+    fertilizer_type: Tipo de fertilizante
+    fertilizer: Fertilizante
+    field: Parcela
+    help: Ayuda
+    irrigation: Irrigación
+    layer: Capa
+    layout: Diseño
+    location: Ubicación
+    modification: Modificación
+    operation: Operación
+    parameter: Parámetro
+    pdf: PDF
+    people: Persona
+    project: Proyecto
+    result: Resultado
+    scenario: Escenario
+    session: Sesión
+    site: Sitio
+    soil_operation: Operación de suelo
+    soil: Suelo
+    state: Estado
+    station: Estación
+    subarea: Subárea
+    tillage: Labranza
+    user: Usuario
+    watershed_scenario: Escenario de cuenca
+    watershed: Cuanca
+    way: Way
+    weather: Clima
+    welcome: Bienvenido
   errors:
     format: "%{attribute} %{message}"
     messages:
@@ -368,6 +422,7 @@
     select_bmp:  Seleccione Grupo de MPG   
     create_bmp: Crear MPG
   activity:
+    activity: Actividad
     edit: Revisión de Actividad
     new_activity: Actividad Nuevo
     activity_title: Lista de Actividades
