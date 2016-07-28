@@ -27,33 +27,59 @@
 
   <% i = 1 %>
   <% @apex_layers.each do |layer| %>
-    <tr class="gvRowStyle">  
-      <td class="gvCellStyleNumber"><%= i %></td>
-      <td class="gvCellStyleNumber"><%= layer.depth %></td>
-      <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
-      <td class="gvCellStyleNumber"><%= layer.uw %></td>
-      <td class="gvCellStyleNumber"><%= layer.fc %></td>
-      <td class="gvCellStyleNumber"><%= layer.sand %></td>
-      <td class="gvCellStyleNumber"><%= layer.silt %></td>
-      <td class="gvCellStyleNumber"><%= layer.wn %></td>
-      <td class="gvCellStyleNumber"><%= layer.ph %></td>
-      <td class="gvCellStyleNumber"><%= layer.smb %></td>
-      <td class="gvCellStyleNumber"><%= layer.cac %></td>
-      <td class="gvCellStyleNumber"><%= layer.cec %></td>
-      <td class="gvCellStyleNumber"><%= layer.rok %></td>
-      <td class="gvCellStyleNumber"><%= layer.cnds %></td>
-      <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
-      <td class="gvCellStyleNumber"><%= layer.rsd %></td>
-      <td class="gvCellStyleNumber"><%= layer.bdd %></td>
-      <td class="gvCellStyleNumber"><%= layer.psp %></td>
-      <td class="gvCellStyleNumber"><%= layer.satc %></td>
-      <td>
-          <%= link_to image_tag("view.png"), apex_layer_path(layer.id), title: t('general.show') %>
-          <%= link_to image_tag("edit.png"), edit_apex_layer_path(layer.id), title: t('general.edit') %>
-      </td>
-      <% i = i + 1 %> 
-    </tr>
-  <% end %>
+    <% if (i % 2  == 0) %>
+      <tr class="gvRowStyleEven">
+        <td class="gvCellStyleNumber"><%= i %></td>
+        <td class="gvCellStyleNumber"><%= layer.depth %></td>
+        <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
+        <td class="gvCellStyleNumber"><%= layer.uw %></td>
+        <td class="gvCellStyleNumber"><%= layer.fc %></td>
+        <td class="gvCellStyleNumber"><%= layer.sand %></td>
+        <td class="gvCellStyleNumber"><%= layer.silt %></td>
+        <td class="gvCellStyleNumber"><%= layer.wn %></td>
+        <td class="gvCellStyleNumber"><%= layer.ph %></td>
+        <td class="gvCellStyleNumber"><%= layer.smb %></td>
+        <td class="gvCellStyleNumber"><%= layer.cac %></td>
+        <td class="gvCellStyleNumber"><%= layer.cec %></td>
+        <td class="gvCellStyleNumber"><%= layer.rok %></td>
+        <td class="gvCellStyleNumber"><%= layer.cnds %></td>
+        <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+        <td class="gvCellStyleNumber"><%= layer.rsd %></td>
+        <td class="gvCellStyleNumber"><%= layer.bdd %></td>
+        <td class="gvCellStyleNumber"><%= layer.psp %></td>
+        <td class="gvCellStyleNumber"><%= layer.satc %></td>
+        <td>
+            <%= link_to image_tag("edit.png"), edit_apex_layer_path(layer.id), title: t('general.edit') %>
+        </td>
+      </tr>
+  <% else %>
+      <tr class="gvRowStyleOdd">
+        <td class="gvCellStyleNumber"><%= i %></td>
+        <td class="gvCellStyleNumber"><%= layer.depth %></td>
+        <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
+        <td class="gvCellStyleNumber"><%= layer.uw %></td>
+        <td class="gvCellStyleNumber"><%= layer.fc %></td>
+        <td class="gvCellStyleNumber"><%= layer.sand %></td>
+        <td class="gvCellStyleNumber"><%= layer.silt %></td>
+        <td class="gvCellStyleNumber"><%= layer.wn %></td>
+        <td class="gvCellStyleNumber"><%= layer.ph %></td>
+        <td class="gvCellStyleNumber"><%= layer.smb %></td>
+        <td class="gvCellStyleNumber"><%= layer.cac %></td>
+        <td class="gvCellStyleNumber"><%= layer.cec %></td>
+        <td class="gvCellStyleNumber"><%= layer.rok %></td>
+        <td class="gvCellStyleNumber"><%= layer.cnds %></td>
+        <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+        <td class="gvCellStyleNumber"><%= layer.rsd %></td>
+        <td class="gvCellStyleNumber"><%= layer.bdd %></td>
+        <td class="gvCellStyleNumber"><%= layer.psp %></td>
+        <td class="gvCellStyleNumber"><%= layer.satc %></td>
+        <td>
+            <%= link_to image_tag("edit.png"), edit_apex_layer_path(layer.id), title: t('general.edit') %>
+        </td>
+      </tr>
+     <% end %>
+    <% i = i + 1 %>
+   <% end %>
 </table>
 
 <br>
