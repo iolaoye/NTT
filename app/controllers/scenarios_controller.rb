@@ -178,8 +178,8 @@ class ScenariosController < ApplicationController
 
 	def read_apex_results(msg)
         ntt_apex_results = Array.new
-
-        start_year = Weather.find_by_field_id(Scenario.find(params[:id]).field_id).simulation_initial_year
+		#todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
+        start_year = Weather.find_by_field_id(Scenario.find(params[:id]).field_id).simulation_initial_year - 5
 
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops

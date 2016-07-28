@@ -747,15 +747,14 @@ class ProjectsController < ApplicationController
 						if site.xlog = 0 then site.xlog = Weather.find_by_field_id(field.id).longitude end
 					when "Latitude"
 						site.ylat = p.text
-						if site.ylat = 0 then site.xlog = Weather.find_by_field_id(field.id).latitude end
+						if site.ylat = 0 then site.ylat = Weather.find_by_field_id(field.id).latitude end
 				end  # end case p.name
 			end  # end nodel.elements
-			if site.save then
-				return "OK"
-			else
+			if !site.save then
 				return "site could not be saved"
 			end
 		end  # each field
+		return "OK"
 	end
 
 	def upload_site_new_version(node, field_id)
@@ -1298,7 +1297,7 @@ class ProjectsController < ApplicationController
 					soil_operation.day = p.text
 				when "operation_id"  #todo this need to be taken from operation table
 				when "ApexCrop"
-					soil_operation.apex_crop = p.text				
+					soil_operation.apex_crop = p.text
 				when "NO3", "PO4", "OrgN", "OrgP"
 					if p.text.to_f > 0.0
 						soil_operation.type_id = 25
@@ -1321,6 +1320,9 @@ class ProjectsController < ApplicationController
 					soil_operation.activity_id = Activity.find_by_abbreviation(p.text).id
 				when "ApexTillCode"
 					soil_operation.apex_operation = p.text
+					if soil_operation.activity_id == 4 then
+						soil_operation.apex_operation = Crop.find_by_number(soil_operation.apex_crop).harvest_code
+					end
 			end
 		end
 		if soil_operation.save then
