@@ -4,6 +4,8 @@ class Layer < ActiveRecord::Base
     belongs_to :soil
   #scopes
     default_scope :order => "depth ASC"
+  #validation
+	validates_presence_of :sand, :silt, :depth, :clay
   #Intialization
     after_initialize :init
   #Functions

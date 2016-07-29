@@ -10,7 +10,7 @@ class Bmp < ActiveRecord::Base
 	  has_many :soil_operations, :dependent => :destroy
 	  belongs_to :scenario
   #validations
-    validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id, :message => "already exist"
+    validates_uniqueness_of :bmpsublist_id, :scope => :scenario_id
     validates :water_stress_factor, numericality: { greater_than: 0,  less_than_or_equal_to: 1 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
     validates :irrigation_efficiency, numericality: { greater_than: 0, less_than_or_equal_to: 1 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2 || bmpsublist_id == 9"
     validates :maximum_single_application, numericality: { greater_than: 0,  less_than: 100000 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
