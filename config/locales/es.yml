@@ -434,6 +434,9 @@
     enter_coordinates: Entre las coordenadas
     initial_year: año inicial
     final_year: año final
+    simulation_only_error: debe ser mayor que o igual a la simulación primer año
+    initial_simulation_error: debe ser al menos 5 años después del año inicial de información meteorológica . El valor mínimo es
+    final_simulation_error: no debe ser mayor que el último año de información meteorológica. El valor máximo es
   soil:
     layers: Capas
     soil: Suelo
@@ -494,6 +497,60 @@
     bmp_group: Grupo de MPG
     select_bmp:  Seleccione Grupo de MPG   
     create_bmp: Crear MPG
+    zero_to_one: "(0.00 - 1.00)"
+    zero_to_max: "(0.00 – 99999.00)"
+    quarter_to_one: "(0.25 - 1.00)"
+    quarter_to_three_fourths: "(0.25 - 0.75)"
+    days_range: "(Días: 0.00 – 365)"
+    lbs_per_day: libras por día
+    ft: ft
+    acres: hectáreas
+    inches: pulgadas
+    lbs: libras
+    climate_warning: Este MPG puede tomar más tiempo para salvar
+    irrigation: Irrigación
+    crop: Cultivo
+    water_stress_factor: Factor de estrés hídrico
+    irrigation_efficiency: Eficiencia del riego
+    area_control: Fracción de control de área por laguna
+    maximum_single_application: Máxima aplicación única
+    safety_factor: Factor de seguridad
+    depth: Profundidad
+    reservoir_area: Área del embalse
+    animals: Animales
+    number_of_animals: Número de animales
+    irrigation_frequency: La frecuencia de riego
+    hours: Horas
+    dry_manure: Estiércol seco
+    no3_n: No3 n
+    po4_p: Po4 p
+    org_n: Org n
+    org_p: Org a
+    width: Lo ancho
+    grass_field_portion: Porción de pasto del campo
+    slope_ratio: Proporción de inclinación
+    crop_width: Lo ancho de cultivo
+    slope_reduction: Reducción de inclinación
+    sides: Lados
+    no_input: Este MPG no requiere ninguna entrada
+    month: Mes
+    max_temp: Temp. Max. ±(°C)
+    min_temp: Temp. Min. ±(°C)
+    precipitation: Precipitación (%)
+    fill: Fill
+  months:
+    january: enero
+    february: feb.
+    march: marzo
+    april: abr.
+    may: mayo
+    june: jun
+    july: jul
+    august: agosto
+    september: sept.
+    october: oct.
+    novemeber: nov.
+    december: dic.
   activity:
     activity: Actividad
     edit: Revisión de Actividad
@@ -685,20 +742,21 @@
     scenario: Escenario
     crop: Cultivo
     operation: Operation
-    year: Year
-    month: Month
-    day: Day
+    year: Año
+    month: Mes
+    day: Día
     operation_method: Método de Operación
     val_one: Val One
     val_two: Val Two
     bmp_info: Informatción de las Mejores Prácticas de Administración (BMPs)
-    autoirrigation: Autoirrigation
+    autoirrigation: Irrigacion Automatica
     irrigation: Irrigación
     water_stress_factor: Factor de estrés hídrico
     irrigation_efficiency: Eficiencia del riego
     max_single_application: Máxima aplicación única
     safety_factor: Factor de seguridad
     reservoir_area: Área del embalse
+<<<<<<< HEAD
     irrigation_frequency: Frecuencia de riego
     autofertigation: Autofertigation
     tile_drain: Tile drain
@@ -708,31 +766,42 @@
     ppti: Pads and Pipes - Tailwater Irrigation
     width: Width
     sides: Sides
+=======
+    irrigation_frequency: La frecuencia de riego
+    autofertigation: Fertirrigacion Automatica
+    tile_drain: Sistema de Drenaje
+    ppdi: Almohadillas y Tuberias - Ningun Mejoramiento en la Zanja
+    ppds: Almohadillas y Tuberias - Sistema de Zanja de Dos Etapas
+    ppde: Almohadillas y Tuberias - Ampliacion de la Zanja y Sistema de Represa
+    ppti: Almohadillas y Tuberias - Irrigacion desde Reserva
+    width: Ancho
+    sides: Lados
+>>>>>>> baed2df2118b38959a9e0c420d30d69eef6800c8
     wetlands: Humedales
-    ponds: Estanques
-    stream_fencing: Stream Fencing
+    ponds: Lagunas
+    stream_fencing: Cercado del rio
     animal: Animal
     number_of_animals: Número de animales
     hours: Horas
     dry_manure: Estiércol seco
-    streambank_stabilization: Streambank Stabilization
-    riparian_forest: Riparian Forest Buffer
-    grass_field_portion: Grass field portion
-    slope_ratio: Slope ratio
-    filter_strip: Filter Strip
-    waterway: Waterway (Grassed Buffer)
-    contour_buffer: Contour Buffer
-    land_leveling: Land Leveling
-    crop_width: Crop width
-    slope_reduction: Slope reduction
-    terrace_system: Terrace System
+    streambank_stabilization: Estabilizacion de la Orilla del rio
+    riparian_forest: Bosque Ribereno
+    grass_field_portion: Porción de pasto del campo
+    slope_ratio: Proporción de inclinación
+    filter_strip: Zona de Contencion Filtrante
+    waterway: Canal de Agua (Zona de Pasto)
+    contour_buffer: Buffer de Contorno
+    land_leveling: Nivelacion de la Tierra
+    crop_width: Lo ancho de cultivo
+    slope_reduction: Reducción de inclinación
+    terrace_system: Sistema de Terraza
     climate: Cambios de Temperatura y Precipitación
     climage_change: Se han hecho cambios en los archivos del clima
-    asphalt_concrete: Asfalto o Cemento
-    grass_cover: Grass Cover
-    slope_adjustment: Slope Adjustment
+    asphalt_concrete: Asfalto o Concreto
+    grass_cover: Cubierta de Pasto
+    slope_adjustment: Ajuste de la inclinacion
     shading: Sombra
-    none_required: Este BMP no requiere ninguna entrada
+    none_required: Este MPG no requiere ninguna entrada
     inches: pulgadas
     acres: acres
     days: días
