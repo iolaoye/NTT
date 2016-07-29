@@ -48,19 +48,14 @@
   </div>
   <br>
   <div class="field" id="irrigation" style="display:none">
-<<<<<<< HEAD
-      <%= label :irrigation_id, t('operation.irrigation') %>
-=======
     <%= label :irrigation_id, t('bmp.irrigation') %>
     <% if I18n.equal?(:en) %>
->>>>>>> baed2df2118b38959a9e0c420d30d69eef6800c8
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
     <% else %>
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
     <% end %>
   </div>
   <div class="field" id="crop"  style="display:none">
-<<<<<<< HEAD
     <%= label :crop_id, t('operation.crop') %>
     <%= collection_select :bmp, :crop_id, Crop.all, :id, :name, {:prompt => 'Select Vegetation'}, {:required => true} %>
   </div>
@@ -79,26 +74,6 @@
   <div class="field" id="maximum_single_application" style="display:none">
     <%= f.label t('pdf.max_single_application') %> (0.00 – 99999.00)<br />
     <%= f.number_field :maximum_single_application, :step => 'any' %> inches
-=======
-    <%= label :crop_id, t('bmp.irrigation') %>
-    <%= collection_select :bmp, :crop_id, Crop.all, :id, :name, {:prompt => 'Select Vegetation'}, {:required => true} %>
-  </div>
-  <div class="field" id = "water_stress_factor" style="display:none">
-    <%= f.label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %><br />
-    <%= f.number_field :water_stress_factor, :step => 'any' %>
-  </div>
-  <div class="field" id = "irrigation_efficiency" style="display:none">
-    <%= f.label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one') %><br />
-    <%= f.number_field :irrigation_efficiency, :step => 'any' %>
-  </div>
-  <div class="field" id = "area_control" style="display:none">
-    <%= f.label :irrigation_efficiency, t('bmp.area_control') + " " + t('bmp.zero_to_one')%><br />
-    <%= f.number_field :irrigation_efficiency, :step => 'any' %>
-  </div>
-  <div class="field" id="maximum_single_application" style="display:none">
-    <%= f.label :maximum_single_application, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') %><br />
-    <%= f.number_field :maximum_single_application, :step => 'any' %> <%= t('bmp.inches') %>
->>>>>>> baed2df2118b38959a9e0c420d30d69eef6800c8
   </div>
   <div class="field" id="safety_factor" style="display:none">
     <%= f.label :safety_factor, t('bmp.safety_factor') + " " + t('bmp.zero_to_max') %><br />
@@ -121,11 +96,7 @@
     <%= f.number_field :number_of_animals %>
   </div>
   <div class="field" id = "days" style="display:none">
-<<<<<<< HEAD
     <%= f.label t('pdf.irrigation_frequency') %> (Days: 0.00 – 365)<br />
-=======
-    <%= f.label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %><br />
->>>>>>> baed2df2118b38959a9e0c420d30d69eef6800c8
     <%= f.number_field :days, :step => 'any' %>
   </div>
   <div class="field" id="hours" style="display:none">
