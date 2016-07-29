@@ -19,7 +19,7 @@
       layer: "Capas"
       scenario: "Escenario"
       operation: "Operaciones"
-      bmp: "Mejores Prácticas de Gestión"
+      bmp: "Buenas Prácticas de Gestión"
       result:
         result: "Resultados"
         summary: "Resumen"
@@ -55,7 +55,8 @@
       operation:
         crop: "Cultivo"
       bmp:
-        bmp_group: "Grupo de MPG"
+        bmp_group: "Grupo de BPG"
+        bmpsublist_id: "BPG"
       result:
         result:
         summary:
@@ -189,8 +190,8 @@
     apex_layer: APEX capa
     apex_parameter: APEX parámetros
     apex_soil: APEX suelo
-    bmplist: MPG lista
-    bmp: MPG
+    bmplist: BPG lista
+    bmp: BPG
     bmpsublist: BMP sublista
     chart: Gráfica
     climate: Clima
@@ -388,7 +389,7 @@
     fields: Parcelas
     soils: Suelos
     scenarios: Escenarios
-    bmps: Mejores Prácticas de Gestión
+    bmps: Buenas Prácticas de Gestión
     managements: Operaciones
     economics: Costos
     simulations: Simulaciones
@@ -489,14 +490,14 @@
     distribution: Distribución
     fertilizer: Fertilizante
     amount: Cantidad
-    bmp: MPG
+    bmp: BPG
     irrigation: Irrigación
     plant_population: Población de Planta
     load_operation: Cargar Operación
   bmp:
-    bmp_group: Grupo de MPG
-    select_bmp:  Seleccione Grupo de MPG   
-    create_bmp: Crear MPG
+    bmp_group: Grupo de BPG
+    select_bmp:  Seleccione Grupo de BPG   
+    create_bmp: Crear BPG
     zero_to_one: "(0.00 - 1.00)"
     zero_to_max: "(0.00 – 99999.00)"
     quarter_to_one: "(0.25 - 1.00)"
@@ -507,7 +508,7 @@
     acres: hectáreas
     inches: pulgadas
     lbs: libras
-    climate_warning: Este MPG puede tomar más tiempo para salvar
+    climate_warning: Este BPG puede tomar más tiempo para salvar
     irrigation: Irrigación
     crop: Cultivo
     water_stress_factor: Factor de estrés hídrico
@@ -532,7 +533,7 @@
     crop_width: Lo ancho de cultivo
     slope_reduction: Reducción de inclinación
     sides: Lados
-    no_input: Este MPG no requiere ninguna entrada
+    no_input: Este BPG no requiere ninguna entrada
     month: Mes
     max_temp: Temp. Max. ±(°C)
     min_temp: Temp. Min. ±(°C)
@@ -748,7 +749,7 @@
     operation_method: Método de Operación
     val_one: Val One
     val_two: Val Two
-    bmp_info: Informatción de las Mejores Prácticas de Administración (BMPs)
+    bmp_info: Informatción de las Buenas Prácticas de Administración (BMPs)
     autoirrigation: Irrigacion Automatica
     irrigation: Irrigación
     water_stress_factor: Factor de estrés hídrico
@@ -789,7 +790,7 @@
     grass_cover: Cubierta de Pasto
     slope_adjustment: Ajuste de la inclinacion
     shading: Sombra
-    none_required: Este MPG no requiere ninguna entrada
+    none_required: Este BPG no requiere ninguna entrada
     inches: pulgadas
     acres: acres
     days: días
@@ -1010,16 +1011,16 @@
                 Para <strong>Editar</strong> una operación, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
                 Para <strong>Borrar</strong> una operación, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
     bmps: >
-                Aquí podrás ver todas las Mejores Prácticas de Gestión (MPG) para el escenario seleccionado si se las ha creado o si no lo ha hecho, usted tiene la opción de crear nuevas MPGs.
+                Aquí podrás ver todas las Buenas Prácticas de Gestión (BPG) para el escenario seleccionado si se las ha creado o si no lo ha hecho, usted tiene la opción de crear nuevas BPGs.
                 <p>Para crear un nuevo Bmp seleccione <strong>New Bmp</strong>. Aquí verás dos cuadros desplegables:<p>
                 <ul>
-                    <li>Grupo de mpg</li>
-                    <li>Mpg</li>
+                    <li>Grupo de BPG</li>
+                    <li>BPG</li>
                 </ul>
-                <p>Las opciones disponibles en en Mpg dependen del grupo elige en el grupo de mpg. Por favor, tenga en cuenta que la mayoría de <strong>Groupos de mpg</strong> son totalmente único y todos <strong>Mpgs</strong> son únicos tambien. Por ejemplo, usted no puede tener un Mpg Autoirrigation y un Mpg Autofertigation tambien.</p>
-                Para <strong>Ver</strong> un Mpg, seleccione en el icono de la lupa debajo de <strong>Opciones</strong>.<br>
-                Para <strong>Editar</strong> un Mpg, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
-                Para <strong>Borrar</strong> un Mpg, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+                <p>Las opciones disponibles en en BPG dependen del grupo elige en el grupo de BPG. Por favor, tenga en cuenta que la mayoría de <strong>Groupos de BPG</strong> son totalmente único y todos <strong>BPGs</strong> son únicos tambien. Por ejemplo, usted no puede tener un BPG Autoirrigation y un BPG Autofertigation tambien.</p>
+                Para <strong>Ver</strong> un BPG, seleccione en el icono de la lupa debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Editar</strong> un BPG, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> un BPG, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
     watersheds: >
                 Aquí podrás ver todas las cuencas que usted ha creado o si no lo ha hecho, usted tiene la opción de crear una nueva cuenca.
                 <ol>
