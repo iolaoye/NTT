@@ -58,6 +58,7 @@ en:
         crop: "Crop"
       bmp:
         bmp_group: "BMP Group"
+        bmpsublist_id: "BMP"
       result:
         result:
         summary:
