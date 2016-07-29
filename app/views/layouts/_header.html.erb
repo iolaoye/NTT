@@ -7,43 +7,43 @@
             <% case request.original_url %>			 
 	           	<% when /project/, /welcome/, /about/, /contact/, /help/  %>
 					<% case request.original_url %>
-					<% when /welcome/ %>
-						<li><a class="active" <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
-						<li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>	
-					<% when /project/ %>
-						<li><a <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
-						<li><a class="active" <%= link_to t('menu.projects'), welcomes_path %></a></li>	
-					<% else %>
-						<li><a <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
-						<li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>	
+						<% when /welcome/ %>
+							<li><a class="active" <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
+							<li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>	
+						<% when /project/ %>
+							<li><a <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
+							<li><a class="active" <%= link_to t('menu.projects'), welcomes_path %></a></li>	
+						<% else %>
+							<li><a <%= link_to t('menu.welcome'), { :controller => "welcomes", :action => "show", :id => "0" } %></a></li>
+							<li><a <%= link_to t('menu.projects'), welcomes_path %></a></li>	
 					<% end %>
 			   	<% when /results/ %>
 					<% case request.original_url %>
-					<% when /Soil/ %>
-						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a class="active" <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
-				   	<% when /Summary/, /Resumen/ %>
-						<li><a class="active" <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
-					<% when /Annual/, /Anual/ %>
-						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a class="active" <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
-					<% when /Monthly/, /Mensual/ %>
-						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a class="active" <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
-					<% else %>
-						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+						<% when /Soil/ %>
+							<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+							<li><a class="active" <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+							<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+							<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+				   		<% when /Summary/, /Resumen/ %>
+							<li><a class="active" <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+							<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+							<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+							<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+						<% when /Annual/, /Anual/ %>
+							<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+							<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+							<li><a class="active" <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+							<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+						<% when /Monthly/, /Mensual/ %>
+							<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+							<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+							<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+							<li><a class="active" <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+						<% else %>
+							<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
+							<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
+							<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
+							<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
 					<% end %>			   	
 				<% when /locations/, /field/, /watershed_scenario/, /watershed/ %>
 				   	<% case request.original_url %>
@@ -79,7 +79,7 @@
 						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
 						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
 						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-						<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>	
+						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>	
 					<% when /subarea/ %>
 						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
 						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
@@ -93,7 +93,7 @@
 						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
 						<li><a class="active" <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
 						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-						<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>	
+						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>	
 					<% when /soil_operation/ %>
 						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
 						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
@@ -184,7 +184,7 @@
 						<li><a <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %></a></li>
 					<% end %>
 			<% end %>
-    		<li><a <%= link_to t('menu.signout'), logout_path %></a></li>
+    		<li class="numbers"><a <%= link_to t('menu.signout'), logout_path %></a></li>
 	    </ul>      
     </nav>
     <ul class="crumbs">
@@ -223,10 +223,7 @@
 				<li><%=">>"%><%= t('menu.apex_file') %></li>				
 				<li><%=">>"%><%= t('menu.apex_soil') %></li>
 				<li><%=">>"%></li>
-				<% case request.original_url %>
-					<% when /apex_layer/ %>
-						<li><%= t('menu.layer_file') %></li>
-                <% end %>
+				<li><%= t('menu.layer_file') %></li>
 			<% when /layer/ %>
 			    <% project_name = Project.find(session[:project_id]).name %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
@@ -234,12 +231,9 @@
 			    <li><%=">>"%><%=project_name%></li>
 			    <li><%=">>"%><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
 			    <li><%=">>"%><%=field_name%></li>
-				<li><%=">>"%><%= t('menu.soils') %>
+				<li><%=">>"%><%= @soil_name %>
 				<li><%=">>"%>
-				<% case request.original_url %>
-					<% when /layer/ %>
-						<li><%= t('soil.layer') %></li>
-				<% end %>
+				<li><%= t('menu.layers') %></li>
 			<% when /results/ %>
 				<% project_name = Project.find(session[:project_id]).name %>
 				<% field_name = Field.find(session[:field_id]).field_name %>
@@ -287,28 +281,6 @@
 						<li><%= t('menu.soils') %></li>
 					<% when /scenario/ %>
 						<li><%= t('menu.scenarios') %></li>
-
-				<% end %>
-		    <% when /results/ %>
-				<% project_name = Project.find(session[:project_id]).name %>
-				<% field_name = Field.find(session[:field_id]).field_name %>
-			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
-			    <li><%=">>"%><%=project_name%></li>
-				<li><%=">>"%>
-			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
-				<li><%=">>"%>
-				<li><%= t('menu.results') %></li>
-				<li><%=">>"%>
-				<% case request.original_url %>
-					<% when /Soil/, /Suelo/ %>
-						<li><%= t('result.summary') + " " + t('result.by_soil') %></li>														
-					<% when /Annual/, /Anual/ %>
-						<li><%= t('result.annual') + " " + t('result.charts') %></li>
-					<% when /Monthly/, /Mensual/ %>
-						<li><%= t('result.monthly') + " " + t('result.charts') %></li>
-					<% when /Summary/, /Resumen/, /result/ %>
-						<li><%= t('result.summary') %></li>	
 				<% end %>
 	        <% when /location/, /field/, /watershed/ %>
 				<% project_name = Project.find(session[:project_id]).name %>

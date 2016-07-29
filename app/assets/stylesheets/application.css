@@ -140,6 +140,12 @@
     padding: 0px;
 }
 
+.navbar-nav li:last-child {
+  background: dodgerblue;
+  display: inline-block;
+  padding: 0px;
+  float: right;
+}
 /*.navbar-default 
 {
   float: none;
