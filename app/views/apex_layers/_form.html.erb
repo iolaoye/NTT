@@ -86,5 +86,6 @@
   
   <div class="actions">
     <%= f.submit t('submit.update') %>
+	<%= link_to t('general.back'), controller: "apex_layers", action: "index", id: @apex_layer.soil_id %>
   </div>
 <% end %>

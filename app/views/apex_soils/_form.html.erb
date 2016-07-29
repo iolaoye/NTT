@@ -89,5 +89,8 @@
     </div></td>
   </tr>
 </table>
-<%= f.submit t('submit.update') %>
+<div class="actions">
+	<%= f.submit t('submit.update') %>
+	<%= link_to t('general.back'), apex_soils_path %>
+</div>
 <% end %>
