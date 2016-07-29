@@ -49,10 +49,10 @@
   <br>
   <div class="field" id="irrigation" style="display:none">
     <%= label :irrigation_id, t('bmp.irrigation') %>
-    <% if I18n.equal?(:en) %>
-      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
+    <% if I18n.locale.equal?(:en) %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
     <% else %>
-      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => 'Select Irrigation Type'}, {:required => true} %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
     <% end %>
   </div>
   <div class="field" id="crop"  style="display:none">

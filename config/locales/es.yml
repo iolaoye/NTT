@@ -756,18 +756,7 @@
     max_single_application: Máxima aplicación única
     safety_factor: Factor de seguridad
     reservoir_area: Área del embalse
-<<<<<<< HEAD
     irrigation_frequency: Frecuencia de riego
-    autofertigation: Autofertigation
-    tile_drain: Tile drain
-    ppdi: Pads and Pipes - No Ditch Improvement
-    ppds: Pads and Pipes - Two-Stage Ditch System
-    ppde: Pads and Pipes - Ditch Enlargement and Reservoir System
-    ppti: Pads and Pipes - Tailwater Irrigation
-    width: Width
-    sides: Sides
-=======
-    irrigation_frequency: La frecuencia de riego
     autofertigation: Fertirrigacion Automatica
     tile_drain: Sistema de Drenaje
     ppdi: Almohadillas y Tuberias - Ningun Mejoramiento en la Zanja
@@ -776,7 +765,6 @@
     ppti: Almohadillas y Tuberias - Irrigacion desde Reserva
     width: Ancho
     sides: Lados
->>>>>>> baed2df2118b38959a9e0c420d30d69eef6800c8
     wetlands: Humedales
     ponds: Lagunas
     stream_fencing: Cercado del rio
