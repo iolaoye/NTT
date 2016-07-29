@@ -527,10 +527,10 @@
     po4_p: Po4 p
     org_n: Org n
     org_p: Org a
-    width: Lo ancho
+    width: Ancho
     grass_field_portion: Porción de pasto del campo
     slope_ratio: Proporción de inclinación
-    crop_width: Lo ancho de cultivo
+    crop_width: Ancho de cultivo
     slope_reduction: Reducción de inclinación
     sides: Lados
     no_input: Este BPG no requiere ninguna entrada
@@ -781,7 +781,7 @@
     waterway: Canal de Agua (Zona de Pasto)
     contour_buffer: Buffer de Contorno
     land_leveling: Nivelacion de la Tierra
-    crop_width: Lo ancho de cultivo
+    crop_width: Ancho de cultivo
     slope_reduction: Reducción de inclinación
     terrace_system: Sistema de Terraza
     climate: Cambios de Temperatura y Precipitación
