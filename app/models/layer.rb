@@ -4,6 +4,10 @@ class Layer < ActiveRecord::Base
     belongs_to :soil
   #scopes
     default_scope :order => "depth ASC"
+<<<<<<< HEAD
+  #validation
+	validates_presence_of :sand, :silt, :depth, :clay
+=======
   #Intialization
     after_initialize :init
   #Functions
@@ -32,4 +36,5 @@ class Layer < ActiveRecord::Base
     self.psp  ||= 0.0
     self.satc  ||= 0.0
   end
+>>>>>>> baed2df2118b38959a9e0c420d30d69eef6800c8
 end
