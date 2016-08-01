@@ -122,11 +122,18 @@ class ProjectsController < ApplicationController
 		msg = "OK"
 		upload_id = 0
 		if params[:commit].eql?t('submit.save') then
+			if params[:project] == nil then 
+				redirect_to upload_project_path(upload_id)
+				flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
+			end
 			@data = Nokogiri::XML(params[:project])
 			upload_id = 0
 		else
 			upload_id = 1
-			case params[:examples] 
+			case params[:examples]
+				when "0"
+					redirect_to upload_project_path(upload_id)
+					flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
 				when "1"  # Load OH two fields
 					@data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
 			end  # end case examples
@@ -428,7 +435,7 @@ class ProjectsController < ApplicationController
 
 	def save_subarea_information(xml, subarea)
 		xml.subarea {
-			xml.type subarea.type
+			xml.subarea_type subarea.subarea_type
 			xml.description subarea.description
 			xml.number subarea.number
 			xml.inps subarea.inps

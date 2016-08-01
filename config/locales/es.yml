@@ -10,16 +10,16 @@
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
     models:
-      projects: "Proyectos"
+      project: "Proyecto"
       location: "Ubicación"
       field: "Parcelas"
-      watershed: "Cuencas"
+      watershed: "Cuenca"
       weather: "Clima"
       soil: "Suelos"
       layer: "Capas"
       scenario: "Escenario"
       operation: "Operaciones"
-      bmp: "Mejores Prácticas de Gestión"
+      bmp: "Buenas Prácticas de Gestión"
       result:
         result: "Resultados"
         summary: "Resumen"
@@ -36,7 +36,7 @@
         operation: "Operaciones"
         site: "Sitio"  
     attributes:
-      projects:
+      project:
         name: "Nombre"
       location:
         field: "Parcela"
@@ -55,7 +55,8 @@
       operation:
         crop: "Cultivo"
       bmp:
-        bmp_group: "Grupo de MPG"
+        bmp_group: "Grupo de BPG"
+        bmpsublist_id: "BPG"
       result:
         result:
         summary:
@@ -189,8 +190,8 @@
     apex_layer: APEX capa
     apex_parameter: APEX parámetros
     apex_soil: APEX suelo
-    bmplist: MPG lista
-    bmp: MPG
+    bmplist: BPG lista
+    bmp: BPG
     bmpsublist: BMP sublista
     chart: Gráfica
     climate: Clima
@@ -366,12 +367,13 @@
     date: Fecha
     select: Seleccione
     one: Uno
-    please: Please
-    wait: wait
+    please: Por favor
+    wait: esperar
     loading: Cargando
     success: fue creado exitosamente.
     created: fue creado exitosamente.
     updated: fue actualizado exitosamente.
+    uploading: cargando
   welcome_note: 
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
@@ -387,7 +389,7 @@
     fields: Parcelas
     soils: Suelos
     scenarios: Escenarios
-    bmps: Mejores Prácticas de Gestión
+    bmps: Buenas Prácticas de Gestión
     managements: Operaciones
     economics: Costos
     simulations: Simulaciones
@@ -433,6 +435,9 @@
     enter_coordinates: Entre las coordenadas
     initial_year: año inicial
     final_year: año final
+    simulation_only_error: debe ser mayor que o igual a la simulación primer año
+    initial_simulation_error: debe ser al menos 5 años después del año inicial de información meteorológica . El valor mínimo es
+    final_simulation_error: no debe ser mayor que el último año de información meteorológica. El valor máximo es
   soil:
     layers: Capas
     soil: Suelo
@@ -461,6 +466,7 @@
     new_layer: Nueva Capa
     create_layer: Crear Capa
     layer_number: Número de Capa
+    more_than: mas de 
   scenario:
     scenario_name: Nombre Escenario
     scenario: Escenario
@@ -484,14 +490,68 @@
     distribution: Distribución
     fertilizer: Fertilizante
     amount: Cantidad
-    bmp: MPG
+    bmp: BPG
     irrigation: Irrigación
     plant_population: Población de Planta
     load_operation: Cargar Operación
   bmp:
-    bmp_group: Grupo de MPG
-    select_bmp:  Seleccione Grupo de MPG   
-    create_bmp: Crear MPG
+    bmp_group: Grupo de BPG
+    select_bmp:  Seleccione Grupo de BPG   
+    create_bmp: Crear BPG
+    zero_to_one: "(0.00 - 1.00)"
+    zero_to_max: "(0.00 – 99999.00)"
+    quarter_to_one: "(0.25 - 1.00)"
+    quarter_to_three_fourths: "(0.25 - 0.75)"
+    days_range: "(Días: 0.00 – 365)"
+    lbs_per_day: libras por día
+    ft: ft
+    acres: hectáreas
+    inches: pulgadas
+    lbs: libras
+    climate_warning: Este BPG puede tomar más tiempo para salvar
+    irrigation: Irrigación
+    crop: Cultivo
+    water_stress_factor: Factor de estrés hídrico
+    irrigation_efficiency: Eficiencia del riego
+    area_control: Fracción de control de área por laguna
+    maximum_single_application: Máxima aplicación única
+    safety_factor: Factor de seguridad
+    depth: Profundidad
+    reservoir_area: Área del embalse
+    animals: Animales
+    number_of_animals: Número de animales
+    irrigation_frequency: La frecuencia de riego
+    hours: Horas
+    dry_manure: Estiércol seco
+    no3_n: No3 n
+    po4_p: Po4 p
+    org_n: Org n
+    org_p: Org a
+    width: Ancho
+    grass_field_portion: Porción de pasto del campo
+    slope_ratio: Proporción de inclinación
+    crop_width: Ancho de cultivo
+    slope_reduction: Reducción de inclinación
+    sides: Lados
+    no_input: Este BPG no requiere ninguna entrada
+    month: Mes
+    max_temp: Temp. Max. ±(°C)
+    min_temp: Temp. Min. ±(°C)
+    precipitation: Precipitación (%)
+    fill: Fill
+  months:
+    january: enero
+    february: feb.
+    march: marzo
+    april: abr.
+    may: mayo
+    june: jun
+    july: jul
+    august: agosto
+    september: sept.
+    october: oct.
+    novemeber: nov.
+    december: dic.
   activity:
     activity: Actividad
     edit: Revisión de Actividad
@@ -683,54 +743,54 @@
     scenario: Escenario
     crop: Cultivo
     operation: Operation
-    year: Year
-    month: Month
-    day: Day
+    year: Año
+    month: Mes
+    day: Día
     operation_method: Método de Operación
     val_one: Val One
     val_two: Val Two
-    bmp_info: Informatción de las Mejores Prácticas de Administración (BMPs)
-    autoirrigation: Autoirrigation
+    bmp_info: Informatción de las Buenas Prácticas de Administración (BMPs)
+    autoirrigation: Irrigacion Automatica
     irrigation: Irrigación
     water_stress_factor: Factor de estrés hídrico
     irrigation_efficiency: Eficiencia del riego
     max_single_application: Máxima aplicación única
     safety_factor: Factor de seguridad
     reservoir_area: Área del embalse
-    irrigation_frequency: La frecuencia de riego
-    autofertigation: Autofertigation
-    tile_drain: Tile drain
-    ppdi: Pads and Pipes - No Ditch Improvement
-    ppds: Pads and Pipes - Two-Stage Ditch System
-    ppde: Pads and Pipes - Ditch Enlargement and Reservoir System
-    ppti: Pads and Pipes - Tailwater Irrigation
-    width: Width
-    sides: Sides
+    irrigation_frequency: Frecuencia de riego
+    autofertigation: Fertirrigacion Automatica
+    tile_drain: Sistema de Drenaje
+    ppdi: Almohadillas y Tuberias - Ningun Mejoramiento en la Zanja
+    ppds: Almohadillas y Tuberias - Sistema de Zanja de Dos Etapas
+    ppde: Almohadillas y Tuberias - Ampliacion de la Zanja y Sistema de Represa
+    ppti: Almohadillas y Tuberias - Irrigacion desde Reserva
+    width: Ancho
+    sides: Lados
     wetlands: Humedales
-    ponds: Estanques
-    stream_fencing: Stream Fencing
+    ponds: Lagunas
+    stream_fencing: Cercado del rio
     animal: Animal
     number_of_animals: Número de animales
     hours: Horas
     dry_manure: Estiércol seco
-    streambank_stabilization: Streambank Stabilization
-    riparian_forest: Riparian Forest Buffer
-    grass_field_portion: Grass field portion
-    slope_ratio: Slope ratio
-    filter_strip: Filter Strip
-    waterway: Waterway (Grassed Buffer)
-    contour_buffer: Contour Buffer
-    land_leveling: Land Leveling
-    crop_width: Crop width
-    slope_reduction: Slope reduction
-    terrace_system: Terrace System
+    streambank_stabilization: Estabilizacion de la Orilla del rio
+    riparian_forest: Bosque Ribereno
+    grass_field_portion: Porción de pasto del campo
+    slope_ratio: Proporción de inclinación
+    filter_strip: Zona de Contencion Filtrante
+    waterway: Canal de Agua (Zona de Pasto)
+    contour_buffer: Buffer de Contorno
+    land_leveling: Nivelacion de la Tierra
+    crop_width: Ancho de cultivo
+    slope_reduction: Reducción de inclinación
+    terrace_system: Sistema de Terraza
     climate: Cambios de Temperatura y Precipitación
     climage_change: Se han hecho cambios en los archivos del clima
-    asphalt_concrete: Asfalto o Cemento
-    grass_cover: Grass Cover
-    slope_adjustment: Slope Adjustment
+    asphalt_concrete: Asfalto o Concreto
+    grass_cover: Cubierta de Pasto
+    slope_adjustment: Ajuste de la inclinacion
     shading: Sombra
-    none_required: Este BMP no requiere ninguna entrada
+    none_required: Este BPG no requiere ninguna entrada
     inches: pulgadas
     acres: acres
     days: días
@@ -951,16 +1011,16 @@
                 Para <strong>Editar</strong> una operación, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
                 Para <strong>Borrar</strong> una operación, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
     bmps: >
-                Aquí podrás ver todas las Mejores Prácticas de Gestión (MPG) para el escenario seleccionado si se las ha creado o si no lo ha hecho, usted tiene la opción de crear nuevas MPGs.
+                Aquí podrás ver todas las Buenas Prácticas de Gestión (BPG) para el escenario seleccionado si se las ha creado o si no lo ha hecho, usted tiene la opción de crear nuevas BPGs.
                 <p>Para crear un nuevo Bmp seleccione <strong>New Bmp</strong>. Aquí verás dos cuadros desplegables:<p>
                 <ul>
-                    <li>Grupo de mpg</li>
-                    <li>Mpg</li>
+                    <li>Grupo de BPG</li>
+                    <li>BPG</li>
                 </ul>
-                <p>Las opciones disponibles en en Mpg dependen del grupo elige en el grupo de mpg. Por favor, tenga en cuenta que la mayoría de <strong>Groupos de mpg</strong> son totalmente único y todos <strong>Mpgs</strong> son únicos tambien. Por ejemplo, usted no puede tener un Mpg Autoirrigation y un Mpg Autofertigation tambien.</p>
-                Para <strong>Ver</strong> un Mpg, seleccione en el icono de la lupa debajo de <strong>Opciones</strong>.<br>
-                Para <strong>Editar</strong> un Mpg, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
-                Para <strong>Borrar</strong> un Mpg, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+                <p>Las opciones disponibles en en BPG dependen del grupo elige en el grupo de BPG. Por favor, tenga en cuenta que la mayoría de <strong>Groupos de BPG</strong> son totalmente único y todos <strong>BPGs</strong> son únicos tambien. Por ejemplo, usted no puede tener un BPG Autoirrigation y un BPG Autofertigation tambien.</p>
+                Para <strong>Ver</strong> un BPG, seleccione en el icono de la lupa debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Editar</strong> un BPG, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> un BPG, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
     watersheds: >
                 Aquí podrás ver todas las cuencas que usted ha creado o si no lo ha hecho, usted tiene la opción de crear una nueva cuenca.
                 <ol>
