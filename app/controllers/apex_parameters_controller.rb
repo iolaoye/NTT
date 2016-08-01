@@ -3,7 +3,7 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters.json
   def index
     @apex_parameters = ApexParameter.includes(:parameter).where(:project_id => session[:project_id])
-	#@apex_parameters = ApexParameter.where(:project_id => session[:project_id])
+    #@apex_parameters = ApexParameter.where(:project_id => session[:project_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -36,9 +36,9 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters/1/edit
   def edit
     @apex_parameter = ApexParameter.includes(:parameter).where(:project_id => session[:project_id]).find(params[:id])
-	@parameter_name = @apex_parameter.parameter.name
-	@low_range = @apex_parameter.parameter.range_low
-	@high_range = @apex_parameter.parameter.range_high
+    @parameter_name = @apex_parameter.parameter.name
+    @low_range = @apex_parameter.parameter.range_low
+    @high_range = @apex_parameter.parameter.range_high
     #@apex_parameter = ApexParameter.where(:project_id => session[:project_id]).find(params[:id])
   end
 
@@ -65,7 +65,7 @@ class ApexParametersController < ApplicationController
 
     respond_to do |format|
       if @apex_parameter.update_attributes(apex_parameter_params)
-        format.html { redirect_to @apex_parameter, notice: 'Apex parameter was successfully updated.' }
+        format.html { redirect_to apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.updated')}
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -86,12 +86,27 @@ class ApexParametersController < ApplicationController
     end
   end
 
+  def reset
+    @parameters = Parameter.all
+    @apex_parameters = ApexParameter.where(:project_id => session[:project_id])
+    @apex_parameters.destroy_all()
+
+    @parameters.each do |parameter|
+      apex_parameter = ApexParameter.new
+      apex_parameter.parameter_id = parameter.id
+      apex_parameter.value = parameter.default_value
+      apex_parameter.project_id = session[:project_id]
+      apex_parameter.save
+    end
+    redirect_to apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.reset')
+  end
+
   private
 
-    # Use this method to whitelist the permissible parameters. Example:
-    # params.require(:person).permit(:name, :age)
-    # Also, you can specialize this method with per-user checking of permissible attributes.
-    def apex_parameter_params
-      params.require(:apex_parameter).permit(:parameter_id, :project_id, :value)
-    end
+  # Use this method to whitelist the permissible parameters. Example:
+  # params.require(:person).permit(:name, :age)
+  # Also, you can specialize this method with per-user checking of permissible attributes.
+  def apex_parameter_params
+    params.require(:apex_parameter).permit(:parameter_id, :project_id, :value)
+  end
 end
