@@ -1,7 +1,7 @@
 <%= form_for(@operation) do |f| %>
   <% if @operation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@operation.errors.count, "error") %> prohibited this operation from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @operation.errors.count, :model => t('models.operation').downcase) %></h2>
 
       <ul>
       <% @operation.errors.full_messages.each do |msg| %>
@@ -336,7 +336,7 @@
 	<% end %>
 
   <div class="actions">
-    <%= f.submit t('operation.create_operation') %>
+    <%= f.submit %>
 		<%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]) %>
   </div>
 <% end %>

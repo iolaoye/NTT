@@ -1,7 +1,7 @@
 <%= form_for(@apex_parameter) do |f| %>
   <% if @apex_parameter.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@apex_parameter.errors.count, "error") %> prohibited this apex_parameter from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @apex_parameter.errors.count, :model => t('models.apex_parameter')) %></h2>
 
       <ul>
       <% @apex_parameter.errors.full_messages.each do |msg| %>

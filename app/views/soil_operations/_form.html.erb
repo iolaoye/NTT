@@ -1,7 +1,7 @@
 <%= form_for(@soil_operation) do |f| %>
   <% if @soil_operation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@soil_operation.errors.count, "error") %> prohibited this soil_operation from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @soil_operation.errors.count, :model => t('models.soil_operation').downcase) %></h2>
 
       <ul>
       <% @soil_operation.errors.full_messages.each do |msg| %>
@@ -69,5 +69,5 @@
   </div>
   <div class="actions">
     <%= f.submit t('submit.update') + " " + t('scenario.operation') %>
-  </div>
+	<%= link_to t('general.back'), soil_operations_path %>  </div>
 <% end %>
