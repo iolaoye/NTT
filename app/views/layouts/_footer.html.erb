@@ -6,6 +6,38 @@
       <%= raw t('instructionbox.locations')%>
     <% when request.original_url.include?('/fields') %>
       <%= raw t('instructionbox.fields')%>
+    <% when request.original_url.include?('/watersheds') %>
+      <%= raw t('instructionbox.watersheds')%>
+    <% when request.original_url.include?('/watershed_scenarios') %>
+      <%= raw t('instructionbox.watershed_scenarios')%>
+    <% when request.original_url.include?('/weathers') %>
+      <%= raw t('instructionbox.weathers')%>
+    <% when request.original_url.include?('/soils') %>
+      <%= raw t('instructionbox.soils')%>
+    <% when request.original_url.include?('/layers') %>
+      <%= raw t('instructionbox.layers')%>
+    <% when request.original_url.include?('/scenarios') %>
+      <%= raw t('instructionbox.scenarios')%>
+    <% when request.original_url.include?('/results') %>
+      <%= raw t('instructionbox.results')%>
+    <% when request.original_url.include?('/operations') %>
+      <%= raw t('instructionbox.operations')%>
+    <% when request.original_url.include?('/bmps') %>
+      <%= raw t('instructionbox.bmps')%>
+    <% when request.original_url.include?('/apex_controls') %>
+      <%= raw t('instructionbox.apex_controls')%>
+    <% when request.original_url.include?('/apex_parameters') %>
+      <%= raw t('instructionbox.apex_parameters')%>
+    <% when request.original_url.include?('/subareas') %>
+      <%= raw t('instructionbox.subareas')%>
+    <% when request.original_url.include?('/apex_soils') %>
+      <%= raw t('instructionbox.apex_soils')%>
+    <% when request.original_url.include?('/apex_layers') %>
+      <%= raw t('instructionbox.apex_layers')%>
+    <% when request.original_url.include?('/soil_operations') %>
+      <%= raw t('instructionbox.soil_operations')%>
+    <% when request.original_url.include?('/sites') %>
+      <%= raw t('instructionbox.sites')%>
   <% end %>
 </div>
 <div id='cssmenu'>

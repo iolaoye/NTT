@@ -1,5 +1,12 @@
-<p id="notice"><%= notice %></p>
 
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
+
+<h1><%= t('menu.subarea_file') %></h1>
 <table class='gvTableStyle'>
   <tr class='gvRowStyleOdd'>
     <td>
@@ -463,6 +470,7 @@
     <td></td>
   </tr>
 </table>
-
+<br>
 <%= link_to t('general.edit'), edit_subarea_path(@subarea) %> |
 <%= link_to t('general.back'), subareas_path %>
+</br>
