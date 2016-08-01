@@ -155,6 +155,8 @@ class ScenariosController < ApplicationController
 	#print_array_to_file(@opcs_list_file, "OPCS.dat")	
 	if msg = "OK" then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation
 	read_apex_results(msg)
+	@scenario.last_simulation =  Time.now
+	@scenario.save
 	if params[:id] == nil then
 		return
 	else

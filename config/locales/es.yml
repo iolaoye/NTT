@@ -476,6 +476,7 @@
     create_scenario: Crear Escenario
     select_scenario: Seleccione Escenario
     load_scenario: Cargar Escenario
+    last_simulation: Ultima Simulación
   location:
     new_location: Localización Nuevo
     edit: Revisión de Localización
