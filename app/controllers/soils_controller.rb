@@ -33,10 +33,10 @@ class SoilsController < ApplicationController
   # GET /soils/1
   # GET /soils/1.json
   def show
-    @layers = Layer.where(:soil_id => params[:id])
+    @soil = Soil.find(params[:id])
     respond_to do |format|
-	  redirect_to @layers
-      format.json { render json: @layers }
+      format.html # show.html.erb
+      format.json { render json: @soil }
     end
   end
 
@@ -60,6 +60,7 @@ class SoilsController < ApplicationController
   # POST /soils.json
   def create
     @soil = Soil.new(soil_params)
+	@soil.field_id = session[:field_id]
 
     respond_to do |format|
       if @soil.save
