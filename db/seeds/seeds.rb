@@ -4265,7 +4265,7 @@ Bmpsublist.create!({:id => 22, :name => "Slope Adjustment", :spanish_name => "Aj
 Bmpsublist.create!({:id => 23, :name => "Shading", :spanish_name => "Shading", :bmplist_id => 8}, :without_protection => true)
 
 Bmplist.delete_all
-Bmplist.create!({:id => 1, :name => "Autoirrigation and Autofertigation", :spanish_name => "Autoirrigation and Autofertigacion"}, :without_protection => true)
+Bmplist.create!({:id => 1, :name => "Autoirrigation and Autofertigation", :spanish_name => "Irrigacion y fertigacion Automatica"}, :without_protection => true)
 Bmplist.create!({:id => 2, :name => "Drainage Water Management System", :spanish_name => "Manejo de Sistemas de Drenaje"}, :without_protection => true)
 Bmplist.create!({:id => 3, :name => "Wetlands and Ponds", :spanish_name => "Humedales y Lagunas"}, :without_protection => true)
 Bmplist.create!({:id => 4, :name => "Stream and Riparian Management", :spanish_name => "Manejo de los rios y riberas"}, :without_protection => true)
