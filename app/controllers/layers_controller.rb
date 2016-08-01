@@ -31,6 +31,7 @@ class LayersController < ApplicationController
   def show
  
     @layer = Layer.where(:soil_id => params[:id])
+	@layer = Layer.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

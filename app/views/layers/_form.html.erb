@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :depth, t('soil.depth') %>
-    <%= f.number_field :depth %>
+    <%= f.number_field :depth, :required => 'true', :class => 'numbers', :value => (number_with_precision(f.object.depth, :precision => 2) || 0), :step => '0.01' %>
   </div>
   <div class="field">
     <%= f.label :soil_p, t('soil.soilp') %>
@@ -25,15 +25,15 @@
   </div>
   <div class="field">
     <%= f.label :sand, t('soil.sand') %>
-    <%= f.number_field :sand, :class => 'numbers' %>
+    <%= f.number_field :sand, :required => 'true', :class => 'numbers' %>
   </div>
   <div class="field">
     <%= f.label :silt, t('soil.silt') %>
-    <%= f.number_field :silt, :class => 'numbers' %>
+    <%= f.number_field :silt, :required => 'true', :class => 'numbers' %>
   </div>
   <div class="field">
     <%= f.label :clay, t('soil.clay') %>
-    <%= f.number_field :clay, :class => 'numbers' %>
+    <%= f.number_field :clay, :required => 'true', :class => 'numbers' %>
   </div>
   <div class="field">
     <%= f.label :organic_matter, t('soil.organic_matter') %>

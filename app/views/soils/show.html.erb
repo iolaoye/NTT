@@ -1,39 +1,60 @@
-<h1>Listing soils</h1>
-
-<table>
-  <tr>
-    <th>Selected</th>
-    <th>Key</th>
-    <th>Symbol</th>
-    <th>Group</th>
-    <th>Name</th>
-    <th>Albedo</th>
-    <th>Slope</th>
-    <th>Percentage</th>
-    <th>Drainage type</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @soils.each do |soil| %>
-  <tr>
-    <td><%= soil.selected %></td>
-    <td><%= soil.key %></td>
-    <td><%= soil.symbol %></td>
-    <td><%= soil.group %></td>
-    <td><%= soil.name %></td>
-    <td><%= soil.albedo %></td>
-    <td><%= soil.slope %></td>
-    <td><%= soil.percentage %></td>
-    <td><%= soil.drainage_type %></td>
-    <td><%= link_to t('general.show'), soil %></td>
-    <td><%= link_to t('general.edit'), edit_soil_path(soil) %></td>
-    <td><%= link_to 'Destroy', soil, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
 <% end %>
-</table>
 
-<br />
+<p>
+  <b>Selected:</b>
+  <%= @soil.selected %>
+</p>
 
-<%= link_to 'New Soil', new_soil_path %>
+<p>
+  <b>Key:</b>
+  <%= @soil.key %>
+</p>
+
+<p>
+  <b>Symbol:</b>
+  <%= @soil.symbol %>
+</p>
+
+<p>
+  <b>Group:</b>
+  <%= @soil.group %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @soil.name %>
+</p>
+
+<p>
+  <b>Albedo:</b>
+  <%= @soil.albedo %>
+</p>
+
+<p>
+  <b>Slope:</b>
+  <%= @soil.slope %>
+</p>
+
+<p>
+  <b>Percentage:</b>
+  <%= @soil.percentage %>
+</p>
+
+<p>
+  <b>Field:</b>
+  <%= @soil.field_id %>
+</p>
+
+<p>
+  <b>Drainage type:</b>
+  <%= @soil.drainage_type %>
+</p>
+
+
+<%= link_to t('general.edit'), edit_soil_path(@soil) %> |
+<%= link_to t('general.back'), field_soils_field_path(session[:field_id]) %>
