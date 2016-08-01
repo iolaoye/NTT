@@ -19,7 +19,7 @@ class ResultsController < ApplicationController
 		@soil = "0"
 		@result_selected = params[:button]
 		@title = ""
-		@descriptions = Description.select("id, description").where("id < 70 OR id > 79")
+		@descriptions = Description.select("id, description, spanish_description").where("id < 70 OR id > 79")
 		#load crop for each scenario selected
 		i = 70
 		if params[:result1] != nil then
