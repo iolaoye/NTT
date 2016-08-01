@@ -19,7 +19,7 @@ class ScenariosController < ApplicationController
 ################################  scenarios list  #################################
   # GET /scenarios/1
   # GET /1/scenarios.json
-  def list  
+  def list
     @scenarios = Scenario.where(:field_id => params[:id])
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(params[:id]).field_name
@@ -33,6 +33,10 @@ class ScenariosController < ApplicationController
   # GET /scenarios.json
   def index
     @scenarios = Scenario.where(:field_id => session[:field_id])
+	@scenarios.each do |scenario|
+		session[:scenario_id] = scenario.id
+		show()
+	end #end each scenario loop
     render "list"
   end
 
@@ -108,10 +112,11 @@ class ScenariosController < ApplicationController
 ################################  SHOW - simulate the selected scenario  #################################
   # GET /scenarios/1
   # GET /scenarios/1.json
-  def show
-	session[:scenario_id] = params[:id]	
-    #@doc = "Nothing"
-    @scenario = Scenario.find(params[:id])
+  def show()
+	if @scenarios == nil then
+		session[:scenario_id] = params[:id]
+	end
+	@scenario = Scenario.find(session[:scenario_id])
 	dir_name = APEX + "/APEX" + session[:session_id]
 	#dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
 	if !File.exists?(dir_name)
@@ -150,9 +155,13 @@ class ScenariosController < ApplicationController
 	#print_array_to_file(@opcs_list_file, "OPCS.dat")	
 	if msg = "OK" then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation
 	read_apex_results(msg)
-	@scenarios = Scenario.where(:field_id => session[:field_id])
-	render "list"
-  end
+	if params[:id] == nil then
+		return
+	else
+		@scenarios = Scenario.where(:field_id => session[:field_id])
+		render "list"
+	end # end if params[:id] nill
+  end # end show method
 
   private
 
@@ -172,14 +181,18 @@ class ScenariosController < ApplicationController
         return climate_array
     end
 
-	def read_file(file)
-		return File.read(File.join(APEX, "APEX" + session[:session_id], file))
+	def read_file(file, name_composed)
+		if name_composed == false then
+			return File.read(File.join(APEX, "APEX" + session[:session_id], file))
+		else
+			return File.read(file)  #means the whole path is coming in the file variable.
+		end
 	end
 
 	def read_apex_results(msg)
         ntt_apex_results = Array.new
 		#todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
-        start_year = Weather.find_by_field_id(Scenario.find(params[:id]).field_id).simulation_initial_year - 5
+        start_year = Weather.find_by_field_id(Scenario.find(session[:scenario_id]).field_id).simulation_initial_year - 5
 
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
@@ -194,7 +207,6 @@ class ScenariosController < ApplicationController
 		oneCrop = Struct.new(:sub1,:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
 		data = send_file_to_APEX("ACY", session[:session_id])  #this operation will ask for ACY file
 		#todo validate that the file was uploaded correctly
-		#data = read_file("APEX001.acy")   #Anual values for crop yield
 		j = 1
         data.each_line do |tempa|
 			if j >= 10 then				
@@ -280,7 +292,6 @@ class ScenariosController < ApplicationController
 	def load_monthly_values(apex_start_year)
 		data = send_file_to_APEX("MSW", session[:session_id])  #this operation will ask for MSW file  
 		#todo validate that the file was uploaded correctly
-		#data = read_file("APEX001.msw")   #annual values for sediment, flow, and nutrients
 
         annual_flow = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
         annual_sediment = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
@@ -316,7 +327,6 @@ class ScenariosController < ApplicationController
 
 		data = send_file_to_APEX("MWS", session[:session_id])  #this operation will ask for MWS file  
 		#todo validate that the file was uploaded correctly
-		#data = read_file("APEX001.mws")   #monthly values for precipitation
 		i=1
 		data.each_line do |tempa|
 			if i > 9 then
@@ -367,7 +377,6 @@ class ScenariosController < ApplicationController
         dprk_sum = 0
 		pcp = 0
         total_subs = 0
-		#data = read_file("APEX001.ntt")
 		i=1
 		apex_control = ApexControl.where(:project_id => session[:project_id])
 		initial_chart_year = apex_control[0].value - 12 + apex_control[1].value

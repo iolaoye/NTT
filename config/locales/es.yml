@@ -539,7 +539,7 @@
     max_temp: Temp. Max. ±(°C)
     min_temp: Temp. Min. ±(°C)
     precipitation: Precipitación (%)
-    fill: Fill
+    fill: Duplicar
   months:
     january: enero
     february: feb.

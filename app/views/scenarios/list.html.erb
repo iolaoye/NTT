@@ -10,8 +10,8 @@
 <% end %>
 
 <%= link_to t('general.new')  + ' ' + t('scenario.scenario'), new_scenario_path %>
-<%= link_to t('scenario.simulate') + ' ' + t('general.all'), new_scenario_path %>
-  <table class='gvTableStyle'>
+<%= link_to t('scenario.simulate') + ' ' + t('general.all'), scenarios_path, data: {disable_with: 'Please wait. Simulation in progress . . .'}  %>
+<table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle"><%= t('general.name') %></th>
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
