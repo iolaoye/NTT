@@ -145,6 +145,9 @@ NTTG3::Application.routes.draw do
   get '/help/' => redirect('/help/index')
   get '/help/:page' => "help#show", :as => "help"
 
+  post 'apex_controls/reset'
+  post 'apex_parameters/reset'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
