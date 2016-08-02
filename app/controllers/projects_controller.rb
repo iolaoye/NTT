@@ -130,7 +130,7 @@ class ProjectsController < ApplicationController
 		end 
 		@data.root.elements.each do |node|
 			case node.name
-				when "project"  #appears to return false, thus goes to else
+				when "project"
 					msg = upload_project_new_version(node)
 				when "location"
 					msg = upload_location_new_version(node)
@@ -1272,7 +1272,98 @@ class ProjectsController < ApplicationController
 		if subarea.save then
 			return "OK"
 		else
-			retutn "Error loading subares"
+			return "Error loading subareas"
+		end
+	end
+
+	#where is this to be called?
+	def upload_subarea_new_version(node, scenario_id, soil_id)
+		subarea = Subarea.new
+		subarea.soil_id = soil_id
+		subarea.scenario_id = scenario_id
+		subarea.ny5 = 0
+		subarea.ny6 = 0
+		subarea.ny7 = 0
+		subarea.ny8 = 0
+		subarea.ny9 = 0
+		subarea.ny10 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		node.elements.each do |p|
+			case p.name
+				when "subarea_type"
+					subarea.subarea_type = p.text
+				when "description"
+					subarea.description = p.text
+				when "number"
+					subarea.number = p.text
+				when "inps"
+					subarea.inps = p.text
+				when "iops"
+					subarea.iops = p.text
+				when "iow"
+					subarea.iow = p.text
+				when "ii"
+					subarea.ii = p.text
+				when "iapl"
+					subarea.iapl = p.text
+				when "nvcn"
+					subarea.nvcn = p.text
+				when "iwth"
+					subarea.iwth = p.text
+				when "ipts"
+					subarea.ipts = p.text
+				when "isao"
+					subarea.isao = p.text
+				when "luns"
+					subarea.luns = p.text
+				when "imw"
+					subarea.imw = p.text
+				when "sno"
+					subarea.sno = p.text
+				when "stdo"
+					subarea.stdo = p.text
+				when "yct"
+					subarea.yct = p.text
+				when "xct"
+					subarea.xct = p.text
+				when "azm"
+					subarea.azm = p.text
+				when "fl"
+					subarea.fl = p.text
+				when "angl"
+					subarea.angl = p.text
+				when "wsa"
+					subarea.wsa = p.text
+				when "chl"
+					subarea.chl = p.text
+				when "chd"
+					subarea.chd = p.text
+				when "chs"
+					subarea.chs = p.text
+				when "chn"
+					subarea.chn = p.text
+				when "slp"
+					subarea.slp = p.text
+				when "splg"
+					subarea.splg = p.text
+				when "upn"
+					subarea.upn = p.text
+				when "ffpq"
+					subarea.ffpq = p.text
+				when "urbf"
+					subarea.urbf = p.text
+			end
+		end
+
+		if subarea.save then
+			return "OK"
+		else
+			return "Error loading subareas"
 		end
 	end
 
@@ -1320,7 +1411,7 @@ class ProjectsController < ApplicationController
 		if soil_operation.save then
 			return "OK"
 		else
-			retutn "Error loading operations"
+			return "Error loading operations"
 		end
 	end
 
