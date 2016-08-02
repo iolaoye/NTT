@@ -1052,6 +1052,13 @@ class ProjectsController < ApplicationController
 							return msg
 						end
 					end
+				when "results"
+					p.elements.each do |r|
+						msg = upload_result_new_version(scenario.id, r)
+						if msg != "OK"
+							return msg
+						end
+					end
 				when "bmps"
 					p.elements.each do |b|
 						msg = upload_bmp_info_new_version(scenario.id, b)
@@ -1588,6 +1595,19 @@ class ProjectsController < ApplicationController
 			end # end case p.name
 		end  # end node.elements.each
 	end  # end method
+
+	def upload_result_new_version(scenario_id, new_result)
+		result = Result.new
+		result.scenario_id = scenario_id
+		new_result.elements.each do |p|
+			case p.name
+				when "value"
+					result.value = p.text
+				when "ci_value"
+					result.ci_value = p.text
+			end # end case
+		end # end each
+	end
 
 	def upload_soil_result_info(node, field_id, soil_id, scenario_id)
 		#tile drain flow is duplicated in the old version NTTG2 VB. So is needed to control that the second one is not used
