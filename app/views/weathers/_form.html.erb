@@ -28,8 +28,18 @@
 	<% end %>
   </fieldset>
 
+  
   <% if @weather.way_id == 2 %>
-	  <fieldset id="fsetCoordinates" class="section"></fieldset>
+	<fieldset id="fsetUploadWeatherFile" class="section">
+  <% else %>
+	<fieldset id="fsetUploadWeatherFile" class="section" style="display:none">
+  <% end %>
+	<legend><%= t('weather.choose_file_lenged') %></legend>
+	  <%= f.file_field :weather_file %>
+  </fieldset>
+  
+  <% if @weather.way_id == 3 %>
+	  <fieldset id="fsetCoordinates" class="section">
   <% else %>
 	  <fieldset id="fsetCoordinates" class="section" style="display:none">
   <% end %>
@@ -41,15 +51,6 @@
 			<%= f.text_field :longitude %>
 		</div>
     </fieldset>	
-
-  <% if @weather.way_id == 3 %>
-	<fieldset id="fsetUploadWeatherFile" class="section"></fieldset>
-  <% else %>
-	<fieldset id="fsetUploadWeatherFile" class="section" style="display:none">
-  <% end %>
-	<legend><%= t('weather.choose_file_lenged') %></legend>
-	  <%= f.file_field :weather_file %>
-  </fieldset>
 
   <p>
 	  <div class="field">
