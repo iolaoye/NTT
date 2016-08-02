@@ -4,7 +4,8 @@ class LayersController < ApplicationController
   # GET /1/soils.json
   def list
     @layers = Layer.where(:soil_id => params[:id])
-    @soil_code = Soil.find(session[:soil_id]).key
+    @soil_name = Soil.find(session[:soil_id]).name[0..20]
+	@soil_name += ". . ." unless @soil_name.length < 20
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(session[:field_id]).field_name
 
@@ -30,6 +31,7 @@ class LayersController < ApplicationController
   def show
  
     @layer = Layer.where(:soil_id => params[:id])
+	@layer = Layer.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

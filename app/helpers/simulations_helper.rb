@@ -166,7 +166,7 @@ module SimulationsHelper
 			#copy the file path
 			path = File.join(OWN,weather.weather_file)
 		    FileUtils.cp_r(path, dir_name + "/APEX.wth")
-			data = read_file(OWN,weather.weather_file)
+			data = read_file(File.join(OWN,weather.weather_file), true)
 		else
 			path = File.join(PRISM,weather.weather_file)
 			#client = Savon.client(wsdl: URL_Weather)
@@ -182,7 +182,6 @@ module SimulationsHelper
         climates.each do |climate|
             climate_array = update_hash(climate, climate_array)
         end
-        #data = read_file("Apex.wth")
         if climates.first != nil
             data.each_line do |day|
                 month = data[6, 4].to_i
@@ -1295,7 +1294,7 @@ module SimulationsHelper
 					@new_fert_line.each do |row| f << row end
 				end
 		end #end case file_type
-		msg = send_file_to_APEX(read_file(target_file), target_file)
+		msg = send_file_to_APEX(read_file(target_file, false), target_file)
 		#todo chcek how this will work with fert changing for grazing and fert appliction at the same time. Suggestion. firs get the changes for both and then change the fert file.
 	end
 

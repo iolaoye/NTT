@@ -13,7 +13,7 @@ class SitesController < ApplicationController
   # GET /sites/1
   # GET /sites/1.json
   def show
-    @site = Site.find(params[:id])
+    @site = Site.find_by_field_id(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -44,7 +44,7 @@ class SitesController < ApplicationController
 
     respond_to do |format|
       if @site.save
-        format.html { redirect_to @site, notice: 'Site was successfully created.' }
+        format.html { render "show", notice: 'Site was successfully created.' }
         format.json { render json: @site, status: :created, location: @site }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class SitesController < ApplicationController
 
     respond_to do |format|
       if @site.update_attributes(site_params)
-        format.html { redirect_to @site, notice: 'Site was successfully updated.' }
+        format.html { render "show", notice: 'Site was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
