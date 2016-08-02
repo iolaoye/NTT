@@ -97,8 +97,16 @@ class WeathersController < ApplicationController
   def update
     @weather = Weather.find(params[:id])
 	if !(params[:weather][:weather_file] == nil) then 
-		upload_weather
-		redirect_to edit_weather_path(session[:field_id]),  notice: 'File was successfully uploaded.' 
+	  if !(params[:weather][:way_id] == 2) 
+	    upload_weather
+		redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.'
+      end
+      if !(params[:weather][:way_id] == 3) 
+        validates :latitude, presence: true
+        validates :longitude, presence: true
+  		upload_weather
+		redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.'
+	  end 
 	else
 		respond_to do |format|
 		  if @weather.update_attributes(weather_params)

@@ -135,11 +135,6 @@ ActiveRecord::Schema.define(:version => 20160801204517) do
     t.integer  "state_id"
   end
 
-  create_table "controls_apex_controls", :id => false, :force => true do |t|
-    t.integer "control_id"
-    t.integer "apex_control_id"
-  end
-
   create_table "counties", :force => true do |t|
     t.string   "county_name"
     t.string   "county_code"
@@ -223,12 +218,6 @@ ActiveRecord::Schema.define(:version => 20160801204517) do
     t.integer  "cropping_system_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
-  end
-
-  create_table "fertilizer_type", :force => true do |t|
-    t.string   "field_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "fertilizer_types", :force => true do |t|
