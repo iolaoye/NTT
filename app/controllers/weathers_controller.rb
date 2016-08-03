@@ -112,7 +112,7 @@ class WeathersController < ApplicationController
 				redirect_to edit_weather_path(session[:field_id])
 				flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file') 
 		else
-			upload_weather
+			msg = upload_weather
 		    redirect_to edit_weather_path(session[:field_id]),  notice: 'File was successfully uploaded.' 
 		end
     end
@@ -171,7 +171,13 @@ class WeathersController < ApplicationController
 			end
 		end
 		@weather.weather_file = name
-		@weather.save 
+		@weather.way_id = 2
+		@weather.save
+		  if @weather.save then
+ 			return "OK"
+ 		  else
+ 			return msg
+ 		  end 
 	    return 
 	end
 
