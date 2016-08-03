@@ -16,6 +16,7 @@ class FieldsController < ApplicationController
   # GET /fields/1
   # GET /1/fields.json
   def list
+  	session[:simulation] = "watershed"
     @fields = Field.where(:location_id => params[:id])
 	@project_name = Project.find(session[:project_id]).name
 	@fields.each do |field|
@@ -55,6 +56,7 @@ class FieldsController < ApplicationController
   # GET /fields/1
   # GET /fields/1.json
   def show
+    session[:simulation] = "scenario"
     session[:field_id] = params[:id]
 
     respond_to do |format|

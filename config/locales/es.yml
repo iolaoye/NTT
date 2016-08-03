@@ -46,6 +46,7 @@
         name: "Nombre"
       weather:
         year: "Año"
+        file: "Archivo"
       soil:
         key: "Clave"
       layer:
@@ -233,6 +234,7 @@
     way: Way
     weather: Clima
     welcome: Bienvenido
+    file: "Archivo"
   errors:
     format: "%{attribute} %{message}"
     messages:

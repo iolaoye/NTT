@@ -45,104 +45,80 @@
 							<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
 							<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
 					<% end %>			   	
-				<% when /locations/, /field/, /watershed_scenario/, /watershed/ %>
+				<% when /locations/, /field/, /watershed_scenario/, /watershed/, /results/ %>
 				   	<% case request.original_url %>
-					<% when /locations/ %>
-						<li><a class="active" <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
-						<li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
-						<li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
-					<% when /field/ %>
-						<li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
-						<li><a class="active" <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
-						<li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>	
-					<% when /watershed/, /watershed_scenario/ %>
-						<li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
-						<li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
-						<li><a class="active" <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
-					<% else %>
-						<li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
-						<li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
-						<li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
+						<% when /location/ %>
+							<li><a class="active" <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+							<li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+							<li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
+							<li><a <%= link_to t('menu.results') + "-" + t('menu.watershed'), results_path(:button => t('result.summary')) %></a></li>
+						<% when /field/ %>
+							<li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+							<li><a class="active" <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+							<li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>	
+							<li><a <%= link_to t('menu.results') + "-" + t('menu.watershed'), results_path(:button => t('result.summary')) %></a></li>
+						<% when /watershed/, /watershed_scenario/ %>
+							<li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+							<li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+							<li><a class="active" <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
+							<li><a <%= link_to t('menu.results') + "-" + t('menu.watershed'), results_path(:button => t('result.summary'), :who_call => "watershed") %></a></li>
+						<% else %>
+							<li><a <%= link_to t('menu.location'), location_path(session[:location_id]) %></a></li>
+							<li><a <%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></a></li>
+							<li><a <%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></a></li>
+							<li><a <%= link_to t('menu.results') + "-" + t('menu.watershed'), results_path(:button => t('result.summary')) %></a></li>
 					<% end %>
 			   	<% when /apex_controls/, /apex_parameters/, /subarea/, /apex_soil/, /apex_layer/, /soil_operation/, /site/ %>
 			   		<% case request.original_url %>
-					<% when /apex_controls/ %>
-						<li><a class="active" <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
-						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
-						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
-						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
-						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-						<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
-					<% when/apex_parameters/ %>
-						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
-						<li><a class="active" <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
-						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
-						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
-						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>	
-					<% when /subarea/ %>
-						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
-						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
-						<li><a class="active" <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
-						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
-						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-						<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
-					<% when /apex_soil/ %>
-						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
-						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
-						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
-						<li><a class="active" <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
-						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-						<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>	
-					<% when /soil_operation/ %>
-						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
-						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
-						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
-						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
-						<li><a class="active" <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-						<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
-					<% when /site/ %>
-						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
-						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
-						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
-						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
-						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-						<li><a class="active" <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
-					<% else %>
-						<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
-						<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
-						<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
-						<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
-						<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-						<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
-					<% end %>
-			   	<% when /results/ %>
-					<% case request.original_url %>
-					<% when /Soil/ %>
-						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a class="active" <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
-				   	<% when /Summary/, /Resumen/ %>
-						<li><a class="active" <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
-					<% when /Annual/, /Anual/ %>
-						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a class="active" <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
-					<% when /Monthly/, /Mensual/ %>
-						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a class="active" <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
-					<% else %>
-						<li><a <%= link_to t('result.summary'), results_path(:button => t('result.summary')) %></a></li>
-						<li><a <%= link_to t('result.by_soil'), results_path(:button => t("result.summary") + " " + t("result.by_soil")) %></a></li>
-						<li><a <%= link_to t('result.annual') + " " + t('result.charts'), results_path(:button => t('result.annual')  + "-" + t('result.charts') ) %></a></li>
-						<li><a <%= link_to t('result.monthly') + " " + t('result.charts'), results_path(:button => t('result.monthly')  + "-" + t('result.charts') ) %></a></li>
+						<% when /apex_controls/ %>
+							<li><a class="active" <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+							<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+							<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+							<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+							<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+							<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
+						<% when/apex_parameters/ %>
+							<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+							<li><a class="active" <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+							<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+							<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+							<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+							<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>	
+						<% when /subarea/ %>
+							<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+							<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+							<li><a class="active" <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+							<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+							<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+							<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
+						<% when /apex_soil/ %>
+							<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+							<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+							<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+							<li><a class="active" <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+							<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+							<li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>	
+						<% when /soil_operation/ %>
+							<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+							<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+							<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+							<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+							<li><a class="active" <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+							<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
+						<% when /site/ %>
+							<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+							<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+							<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+							<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+							<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+							<li><a class="active" <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
+						<% else %>
+							<li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
+							<li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
+							<li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
+							<li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id=>session[:field_id]) %></a></li>
+							<li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
+							<li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
 					<% end %>
 				<% when /weather/, /soil/, /scenario/, /layer/   %>
 					<% case request.original_url %>

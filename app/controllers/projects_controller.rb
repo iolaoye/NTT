@@ -5,6 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index 
     @projects = Project.where(:user_id => params[:user_id])
+	session[:simulation] = "watershed"
     respond_to do |format|
       format.html   # index.html.erb
       format.json { render json: @projects }
