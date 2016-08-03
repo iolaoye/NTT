@@ -95,26 +95,44 @@ class WeathersController < ApplicationController
   # PATCH/PUT /weathers/1
   # PATCH/PUT /weathers/1.json
   def update
-	msg = "OK"
     @weather = Weather.find(params[:id])
+	if (params[:weather][:way_id] == "1")
+	  respond_to do |format|
+		  if @weather.update_attributes(weather_params)
+			format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.' }
+			format.json { head :no_content }
+		  else
+			format.html { render action: "edit" }
+			format.json { render json: @weather.errors, status: :unprocessable_entity }
+		  end
+	  end
+	end
 	if (params[:weather][:way_id] == "2")
 		if (params[:weather][:weather_file] == nil)
-			msg = t('general.please') + " " + t('general.select') + " " + t('models.file')
+				redirect_to edit_weather_path(session[:field_id])
+				flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file') 
 		else
-			msg = upload_weather
+			upload_weather
+		    redirect_to edit_weather_path(session[:field_id]),  notice: 'File was successfully uploaded.' 
 		end
     end
     if (params[:weather][:way_id] == "3")
-		validates :latitude, presence: true
-		validates :longitude, presence: true
-	end 
-
-	if msg == "OK"
-		redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.' 
-	else
-		@weather.errors.add(:id,msg)
-		redirect_to edit_weather_path(session[:field_id])
-	end 
+		case
+		when (params[:weather][:latitude] == "") 
+				redirect_to edit_weather_path(session[:field_id])
+				flash[:info] = t('weather.latitude') + " " + t('errors.messages.blank')
+		when (params[:weather][:longitude] == "")
+				redirect_to edit_weather_path(session[:field_id])
+				flash[:info] = t('weather.longitude') + " " + t('errors.messages.blank')
+        else
+		  respond_to do |format|
+		    if @weather.update_attributes(weather_params)
+			  format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.' }
+			  format.json { head :no_content }
+		    end
+		  end
+        end
+	end
   end
 
   # DELETE /weathers/1
@@ -153,11 +171,8 @@ class WeathersController < ApplicationController
 			end
 		end
 		@weather.weather_file = name
-		if @weather.save then
-			return "OK"
-		else
-			return msg
-		end 
+		@weather.save 
+	    return 
 	end
 
   private
