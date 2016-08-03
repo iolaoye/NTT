@@ -476,6 +476,7 @@ en:
     create_scenario: Create Scenario
     select_scenario: Select Scenario
     load_scenario: Load Scenario
+    last_simulation: Last Simulation
   location:
     new_location: New Location
     edit: Editing Location
