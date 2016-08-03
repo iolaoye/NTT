@@ -158,6 +158,8 @@ class ProjectsController < ApplicationController
 					msg = upload_control_values(node)
 				when "ParmValues"
 					msg = upload_parameter_values(node)
+				when "parameter_values"
+					msg = upload_parameter_values_new_version(node)
 			end
 			break if (msg != "OK" && msg != true)
 		end
@@ -388,12 +390,22 @@ class ProjectsController < ApplicationController
 		} # xml each operation end
 	end # end method
 	
+	# ApexControl table needed for download? (Remove if not needed)
 	def save_control_information(xml, project_id)
 		xml.control {
 			control = ApexControl.find_by_project_id(project_id)
 			xml.control_id control.control_id
 			xml.value control.value
 		} # xml each control end
+	end
+
+	# ApexParameter table needed for download? (Remove if not needed)
+	def save_parameter_information(xml, project_id)
+		xml.parameter_values {
+			parameter = ApexParameter.find_by_project_id(project_id)
+			xml.parameter_id parameter.parameter_id
+			xml.value parameter.value
+		} # xml each parameter end
 	end
 
 	def save_result_information(xml, result)
@@ -2505,4 +2517,23 @@ class ProjectsController < ApplicationController
 			return "OK"
 		end
 	end
+
+	def upload_parameter_values_new_version(node)
+		parameter = ApexParameter.new
+		parameter.project_id = session[:project_id]
+		node.elements.each do |p|
+			case p.name
+				when "parameter_id"
+					parameter.parameter_id = p.text
+				when "value"
+					parameter.value = p.text
+			end # end case
+		end # end each
+		if !parameter.save
+			return "Error saving parameter file"
+		else 
+			return "OK"
+		end
+	end
+
 end
