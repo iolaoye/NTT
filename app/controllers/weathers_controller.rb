@@ -95,29 +95,26 @@ class WeathersController < ApplicationController
   # PATCH/PUT /weathers/1
   # PATCH/PUT /weathers/1.json
   def update
+	msg = "OK"
     @weather = Weather.find(params[:id])
-	if !(params[:weather][:weather_file] == nil) then 
-	  if !(params[:weather][:way_id] == 2) 
-	    upload_weather
-		redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.'
-      end
-      if !(params[:weather][:way_id] == 3) 
-        validates :latitude, presence: true
-        validates :longitude, presence: true
-  		upload_weather
-		redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.'
-	  end 
-	else
-		respond_to do |format|
-		  if @weather.update_attributes(weather_params)
-			format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.' }
-			format.json { head :no_content }
-		  else
-			format.html { render action: "edit" }
-			format.json { render json: @weather.errors, status: :unprocessable_entity }
-		  end
+	if (params[:weather][:way_id] == "2")
+		if (params[:weather][:weather_file] == nil)
+			msg = t('general.please') + " " + t('general.select') + " " + t('models.file')
+		else
+			msg = upload_weather
 		end
-	end
+    end
+    if (params[:weather][:way_id] == "3")
+		validates :latitude, presence: true
+		validates :longitude, presence: true
+	end 
+
+	if msg == "OK"
+		redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.' 
+	else
+		@weather.errors.add(:id,msg)
+		redirect_to edit_weather_path(session[:field_id])
+	end 
   end
 
   # DELETE /weathers/1
@@ -134,6 +131,7 @@ class WeathersController < ApplicationController
 
 	########################################### UPLOAD weather FILE IN TEXT FORMAT ##################
 	def upload_weather
+		msg = "Error loading file"
 	    #@weather = Weather.find_by_field_id(session[:field_id])
 		name = params[:weather][:weather_file].original_filename
 		# create the file path
@@ -149,14 +147,17 @@ class WeathersController < ApplicationController
 			@weather.simulation_final_year = line1
 			@weather.weather_final_year = line1
 			if i == 0
-				@weather.simulation_initial_year = line1
+				@weather.simulation_initial_year = line1 + 5
 				@weather.weather_initial_year = line1
 				i = i + 1
 			end
 		end
 		@weather.weather_file = name
-		@weather.save
-		return
+		if @weather.save then
+			return "OK"
+		else
+			return msg
+		end 
 	end
 
   private
