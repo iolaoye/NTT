@@ -3,24 +3,26 @@
   <div class="field">
     <table>
       <tr>
-        <td><%= label :bmp_id, t('result.scenario1') %></td>
-        <td><%= label :bmp_id, t('result.scenario2') %></td>
-        <td><%= label :bmp_id, t('result.scenario3') %></td>
-        <% case @type %>
-          <% when t('result.summary') %>
-            <td></td>
-            <% when t("result.summary") + " " + t("result.by_soil") %>
-            <td colspan='2'><%= label :bmp_id, t('soil.soil') %></td>
-          <% when t('result.annual') %>
-            <td colspan='2'><%= label :bmp_id, t('result.annual') + " " + t('result.last') %></td>
-          <% when t('result.monthly') %>
-            <td colspan='2'><%= label :bmp_id, t('result.avg') + " " + t('result.last') %></td>
+        <% if session[:simulation] == 'scenario' %>
+          <td><%= label :bmp_id, t('result.scenario1') %></td>
+          <td><%= label :bmp_id, t('result.scenario2') %></td>
+          <td><%= label :bmp_id, t('result.scenario3') %></td>
+        <% else %>
+          <td><%= label :bmp_id, t('result.watershed1') %></td>
+          <td><%= label :bmp_id, t('result.watershed2') %></td>
+          <td><%= label :bmp_id, t('result.watershed3') %></td>
         <% end %>
       </tr>
       <tr>
-        <td><%= collection_select :result1, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario1'), :selected => @scenario1}, {:required => true} %></td>
-        <td><%= collection_select :result2, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario2'), :required => false, :selected => @scenario2} %></td>
-        <td><%= collection_select :result3, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario3'), :required => false, :selected => @scenario3} %></td>
+        <% if session[:simulation] == 'scenario' %>
+          <td><%= collection_select :result1, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario1'), :selected => @scenario1}, {:required => true} %></td>
+          <td><%= collection_select :result2, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario2'), :required => false, :selected => @scenario2} %></td>
+          <td><%= collection_select :result3, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario3'), :required => false, :selected => @scenario3} %></td>
+        <% else %>
+          <td><%= collection_select :result1, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed1'), :selected => @scenario1}, {:required => true} %></td>
+          <td><%= collection_select :result2, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed2'), :required => false, :selected => @scenario2} %></td>
+          <td><%= collection_select :result3, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed3'), :required => false, :selected => @scenario3} %></td>
+        <% end %>
         <% case @type %>
           <% when t('result.summary') %>
             <td><%= submit_tag t("result.summary"), :id => "summary", name: "button" %>

@@ -60,7 +60,7 @@ en:
         bmp_group: "BMP Group"
         bmpsublist_id: "BMP"
       result:
-        result:
+        result: "Result"
         summary:
           scenario: "Scenario"
         by_soil:
@@ -620,11 +620,17 @@ en:
     scenario1: 1st scenario
     scenario2: 2nd scenario
     scenario3: 3rd scenario
+    watershed1: 1st watershed
+    watershed2: 2nd watershed
+    watershed3: 3rd watershed
     last: (last 12 years)
     avg: Monthly average (whole period)
-    select_scenario1: Select 1st Scenario
-    select_scenario2: Select 2nd Scenario
-    select_scenario3: Select 3rd Scenario
+    select_scenario1: Select 1st Escenario
+    select_scenario2: Select 2nd Escenario
+    select_scenario3: Select 3rd Escenario
+    select_watershed1: Select 1st watershed
+    select_watershed2: Select 2nd watershed
+    select_watershed3: Select 3rd watershed
     select_chart: Select kind of Chart
     description: Description
     difference: Difference

@@ -29,7 +29,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /watersheds/1.json
   def show
-	@watershed = params[:id]
+	@watershed_id = params[:id]
   	@dtNow1  = Time.now.to_s
 	dir_name = APEX + "/APEX" + session[:session_id]
 

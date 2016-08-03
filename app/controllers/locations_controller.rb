@@ -51,15 +51,15 @@ class LocationsController < ApplicationController
 		if (session[:session_id] == params[:source_id]) then
 			# step 1: delete fields not found
 			@location.fields.each do |field|
-			isFound = false
-			for i in 1..params[:fieldnum].to_i
-				if (field.field_name == params["field#{i}id"]) then
-				isFound = true
+				isFound = false
+				for i in 1..params[:fieldnum].to_i
+					if (field.field_name == params["field#{i}id"]) then
+					isFound = true
+					end
 				end
-			end
-			if (!isFound) then			
-				field.destroy
-			end  # end if isFound
+				if (!isFound) then			
+					field.destroy_all
+				end  # end if isFound
 			end # end Location do
 
 			# step 2: update or create remaining fields

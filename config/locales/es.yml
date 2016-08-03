@@ -613,14 +613,20 @@
     result: Resultado
     add: Añadir
     submit: Enviar
-    scenario1: Primer Escenario
-    scenario2: Segundo Escenario
-    scenario3: Tercer Escenario
+    scenario1: 1er Escenario
+    scenario2: 2do Escenario
+    scenario3: 3er Escenario
+    watershed1: 1a cuenca
+    watershed2: 2da cuenca
+    watershed3: 3ra cuenca
     last: (últimos 12 años)
     avg: Promedio Mensual (Todo el Periodo)
-    select_scenario1: Primer Escenario
-    select_scenario2: Segundo Escenario
-    select_scenario3: Tercer Escenario
+    select_scenario1: 1er Escenario
+    select_scenario2: 2do Escenario
+    select_scenario3: 3er Escenario
+    select_watershed1: Selectione 1ra cuenca
+    select_watershed2: Selectione 2da cuenca
+    select_watershed3: Selectione 3ra cuenca
     select_chart: Seleccione tipo de Gráfico
     description: Descripción
     difference: Diferencia

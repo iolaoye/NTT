@@ -1618,14 +1618,21 @@ module SimulationsHelper
 		org_n += total_manure * bmp.days * bmp.org_n
 		org_p += total_manure * bmp.days * bmp.org_p
 
-		soils = Soil.where(:field_id => session[:field_id], :soil_selected => true)
-		soils.each do |soil|
-			results = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
-			results.each do |result|
-				update_value_of_results(result, false)
+		if session[:simulation] == 'scenario'
+			soils = Soil.where(:field_id => session[:field_id], :soil_selected => true)
+			soils.each do |soil|
+				results = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
+				results.each do |result|
+					update_value_of_results(result, false)
+				end
 			end
 		end
-		results = Result.where(:soil_id => 0, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+		if session[:simulation] == 'scenario'
+			results = Result.where(:soil_id => 0, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+		else
+			results = Result.where(:watershed_id => @watershed_id)
+		end
+
         results.each do |result|
             update_value_of_results(result, true)
         end
@@ -1698,23 +1705,39 @@ module SimulationsHelper
 		#total sediment = 60, sediment = 61, manure erosion = 62		
 		
 		for i in 0..values.count-1
-		session[:depth] = values[i][0]
 			values[i][0] == 0  ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
 			add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
-			case description_id    #Total area for summary report is beeing calculated
-				when 4  #calculate total area
-					#todo	
-				when 24  #calculate total N		
-					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
-				when 33  #calculate total P
-					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
-				when 43 #calculate total flow
-					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
-				when 52 #calculate total other water info
-					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
-				when 62 #calculate total sediment
-					add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-			end #end case when
+			if session[:simulation].eql?('scenario') then
+				case description_id    #Total area for summary report is beeing calculated
+					when 4  #calculate total area
+						#todo	
+					when 24  #calculate total N		
+						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
+					when 33  #calculate total P
+						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
+					when 43 #calculate total flow
+						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
+					when 52 #calculate total other water info
+						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
+					when 62 #calculate total sediment
+						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
+				end #end case when
+			else
+				case description_id    #Total area for summary report is beeing calculated
+					when 4  #calculate total area
+						#todo	
+					when 24  #calculate total N		
+						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
+					when 33  #calculate total P
+						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
+					when 43 #calculate total flow
+						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
+					when 52 #calculate total other water info
+						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
+					when 62 #calculate total sediment
+						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
+				end #end case when
+			end # end if simulation == scenario
 		end #end for i
 		return "OK"
 	end
@@ -1908,6 +1931,7 @@ module SimulationsHelper
 				ci.push c.value
 			end 
 			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
+			session[:depth] = crop_ci
 			add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
 		end
 		add_summary(0, 70,0,0,0)
