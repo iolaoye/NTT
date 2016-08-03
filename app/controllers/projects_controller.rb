@@ -356,6 +356,13 @@ class ProjectsController < ApplicationController
 				end # end subarea.each
 			} # end xml.subareas
 
+			results = Result.where(:scenario_id => scenario.id)
+			xml.results {
+				results.each do |r|
+					save_result_information(xml, r)
+				end # end results.each
+			} # end xml.results
+
 		} # end xml.scenario
 	end #end scenarionmethod
 
@@ -376,6 +383,13 @@ class ProjectsController < ApplicationController
 			xml.nh3 operation.nh3
 			xml.subtype_id operation.subtype_id
 		} # xml each operation end
+	end # end method
+
+	def save_result_information(xml, result)
+		xml.result {
+			xml.value result.value
+			xml.ci_value result.ci_value
+		} # xml each result end
 	end # end method
 
 	def save_bmp_information(xml, bmp)
@@ -1066,6 +1080,13 @@ class ProjectsController < ApplicationController
 							return msg
 						end
 					end
+				when "subarea"
+					p.elements.each do |sa|
+						msg = upload_subarea_new_version(sa, scenario.id)
+						if msg != "OK"
+							return msg
+						end
+					end
 			end
 		end
 		if !scenario.save then
@@ -1295,10 +1316,8 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	#where is this to be called?
-	def upload_subarea_new_version(node, scenario_id, soil_id)
+	def upload_subarea_new_version(node, scenario_id)
 		subarea = Subarea.new
-		subarea.soil_id = soil_id
 		subarea.scenario_id = scenario_id
 		subarea.ny5 = 0
 		subarea.ny6 = 0
