@@ -55,32 +55,32 @@
 			</div>
 			<div class="field" id="div_amount">
 			  <%= f.label t('operation.plant_population') %>
-			  <%= f.text_field :amount %>
+			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('soil.depth') %>
-			  <%= f.number_field :depth %> 
+			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %> 
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.number_field :moisture %>
+			  <%= f.number_field :moisture, :class => "numbers" %>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
 					<%= f.label :no3_n %>
-					<%= f.text_field :no3_n %>
+					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p %>
-					<%= f.text_field :po4_p %>
+					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n %>
-					<%= f.text_field :org_n %>
+					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p %>
-					<%= f.text_field :org_p %>
+					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% when 2 # fertilizer %>
@@ -102,32 +102,32 @@
 			</div>
 			<div class="field" id="div_amount">
 				<%= f.label :amount, t('operation.amount') %>
-				<%= f.text_field :amount %>
+				<%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
 				<%= f.label :depth, t('soil.depth') %>
-				<%= f.text_field :depth %>
+				<%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture">
 					<%= f.label :moisture, t('operation.moisture') %>
-					<%= f.text_field :moisture %>
+					<%= f.number_field :moisture, :class => "numbers" %>
 			</div>
 			<div class="field" id="div_nutrients" >
 				<div class="field" >
 					<%= f.label :no3_n %>
-					<%= f.text_field :no3_n %>
+					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 				<div class="field" >
 					<%= f.label :po4_p %>
-					<%= f.text_field :po4_p %>
+					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 				<div class="field" >
 					<%= f.label :org_n %>
-					<%= f.text_field :org_n %>
+					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 				<div class="field" >
 					<%= f.label :org_p %>
-					<%= f.text_field :org_p %>
+					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 			</div>
 		<% when 3 # tillage %>
@@ -145,32 +145,32 @@
 			</div>
 			<div class="field" id="div_amount" style="display:none">
 			  <%= f.label :amount %>
-			  <%= f.text_field :amount %>
+			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('soil.depth') %>
-			  <%= f.text_field :depth %>
+			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.text_field :moisture %>
+			  <%= f.number_field :moisture, :class => "numbers"%>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
 					<%= f.label :no3_n %>
-					<%= f.text_field :no3_n %>
+					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p %>
-					<%= f.text_field :po4_p %>
+					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n %>
-					<%= f.text_field :org_n %>
+					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 			  <div class="field" >
 					<%= f.label :org_p %>
-					<%= f.text_field :org_p %>
+					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% when 6 # irrigation%>
@@ -188,32 +188,32 @@
 			</div>
 			<div class="field" id="div_amount">
 			  <%= f.label :volume %>
-			  <%= f.text_field :amount %>
+			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
 			  <%= f.label :efficiency %>
-			  <%= f.text_field :depth %>
+			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.text_field :moisture %>
+			  <%= f.number_field :moisture, :class => "numbers" %>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 				<div class="field" >
 					<%= f.label :no3_n %>
-					<%= f.text_field :no3_n %>
+					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p %>
-					<%= f.text_field :po4_p %>
+					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n %>
-					<%= f.text_field :org_n %>
+					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p %>
-					<%= f.text_field :org_p %>
+					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% when 7 # grazing %>
@@ -227,32 +227,32 @@
 			</div>
 			<div class="field" id="div_amount">
 			  <%= f.label :animals %>
-			  <%= f.text_field :amount %>
+			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
 			  <%= f.label :hours_in_field %>
-			  <%= f.text_field :depth %>
+			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 		    </div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.text_field :moisture %>
+			  <%= f.number_field :moisture %>
 			</div>
 			<div class="field" id="div_nutrients" >
 			  <div class="field" >
 					<%= f.label :no3_n %>
-					<%= f.text_field :no3_n %>
+					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p %>
-					<%= f.text_field :po4_p %>
+					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n %>
-					<%= f.text_field :org_n %>
+					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p %>
-					<%= f.text_field :org_p %>
+					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% when 10 # liming %>
@@ -266,32 +266,32 @@
 			</div>
 			<div class="field" id="div_amount" >
 			  <%= f.label :amount %>
-			  <%= f.text_field :amount %>
+			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('soil.depth') %>
-			  <%= f.text_field :depth %>
+			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.text_field :moisture %>
+			  <%= f.number_field :moisture, :class => "numbers" %>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
 					<%= f.label :no3_n %>
-					<%= f.text_field :no3_n %>
+					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p %>
-					<%= f.text_field :po4_p %>
+					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n %>
-					<%= f.text_field :org_n %>
+					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p %>
-					<%= f.text_field :org_p %>
+					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% else # harvest, kill, stop grazing, burn%>
@@ -305,32 +305,32 @@
 			</div>
 			<div class="field" id="div_amount" style="display:none">
 			  <%= f.label :amount %>
-			  <%= f.text_field :amount %>
+			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('soil.depth') %>
-			  <%= f.text_field :depth %>
+			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.text_field :moisture %>
+			  <%= f.number_field :moisture, :class => "numbers" %>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
 					<%= f.label :no3_n %>
-					<%= f.text_field :no3_n %>
+					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p %>
-					<%= f.text_field :po4_p %>
+					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n %>
-					<%= f.text_field :org_n %>
+					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p %>
-					<%= f.text_field :org_p %>
+					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 	<% end %>

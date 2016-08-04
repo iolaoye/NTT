@@ -5,7 +5,10 @@ class Layer < ActiveRecord::Base
   #scopes
     default_scope :order => "depth ASC"
   #validation
-	validates_presence_of :sand, :silt, :depth, :clay
+	validates_presence_of :sand
+	validates_presence_of :silt
+	validates_presence_of :depth
+	validates_presence_of :clay
   #Intialization
     after_initialize :init
   #Functions
