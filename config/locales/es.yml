@@ -470,6 +470,8 @@
     create_layer: Crear Capa
     layer_number: Número de Capa
     more_than: mas de 
+    sum: 'Arcilla, arena, y limo debe añadir un máximo de 100 porcentaje'
+    error_depth: 'La profundidad es obligatorio y debe ser mayor que 0. '
   scenario:
     scenario_name: Nombre Escenario
     scenario: Escenario
@@ -544,18 +546,18 @@
     precipitation: Precipitación (%)
     fill: Duplicar
   months:
-    january: enero
-    february: feb.
-    march: marzo
-    april: abr.
-    may: mayo
-    june: jun
-    july: jul
-    august: agosto
-    september: sept.
-    october: oct.
-    novemeber: nov.
-    december: dic.
+    january: Enero
+    february: Febrero
+    march: Marzo
+    april: Abril
+    may: Mayo
+    june: Junio
+    july: Julio
+    august: Agosto
+    september: Septiembre
+    october: Octubre
+    november: Noviembre
+    december: Diciembre
   activity:
     activity: Actividad
     edit: Revisión de Actividad
