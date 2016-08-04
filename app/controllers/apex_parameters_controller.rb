@@ -89,14 +89,14 @@ class ApexParametersController < ApplicationController
   def reset
     @parameters = Parameter.all
     @apex_parameters = ApexParameter.where(:project_id => session[:project_id])
-    @apex_parameters.destroy_all()
+    @apex_parameters.delete_all()
 
     @parameters.each do |parameter|
-      apex_parameter = ApexParameter.new
-      apex_parameter.parameter_id = parameter.id
-      apex_parameter.value = parameter.default_value
-      apex_parameter.project_id = session[:project_id]
-      apex_parameter.save
+		  apex_parameter = ApexParameter.new
+		  apex_parameter.parameter_id = parameter.id
+		  apex_parameter.value = parameter.default_value
+		  apex_parameter.project_id = session[:project_id]
+		  apex_parameter.save
     end
     redirect_to apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.reset')
   end

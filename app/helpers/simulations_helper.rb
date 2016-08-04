@@ -234,6 +234,7 @@ module SimulationsHelper
 	end
 
     def create_soils()
+		msg = "OK"
         #APEXStrings1 As New System.Text.StringBuilder
         #Dim ds1 As IEnumerable(Of LayersData)
         soilSlope =0
@@ -712,6 +713,7 @@ module SimulationsHelper
 			msg = send_file_to_APEX(soil_info, soil_file_name)
 		end  # end soils do
 		@last_soil = last_soil1
+		return msg
 	end  # end method create_soils
 
 	def create_subareas(operation_number)  # operation_number is used for subprojects as for now it is just 1 - todo
@@ -770,8 +772,8 @@ module SimulationsHelper
         #$last_subarea += _fieldsInfo1(currentFieldNumber)._soilsInfo(i - 1)._scenariosInfo(currentScenarioNumber)._subareasInfo_subarea_info..Iops
 		#print_array_to_file(@subarea_file, "APEX.sub")	
 		msg = send_file_to_APEX(@subarea_file, "APEX.sub")
-        return "OK"
-	end 
+        return msg
+	end #end method create_subarea
 
     def add_subarea_file(_subarea_info, operation_number, last_owner1, i, nirr, buffer, total_soils)
         j = i + 1
@@ -1897,6 +1899,7 @@ module SimulationsHelper
 		end #end data.each
 		crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] } .map { |k,v| [k, v.map(&:yield).mean]}
 		average_crops_result(crops_data_by_crop_year)
+		return "OK"
     end  #end method
 
 	def average_crops_result(items)		

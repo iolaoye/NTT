@@ -116,6 +116,7 @@ class FieldsController < ApplicationController
   # PATCH/PUT /fields/1
   # PATCH/PUT /fields/1.json
   def update
+  #todo find out how to make roll back if one part of the process does not work
 	field_type = false
     if params[:field][:field_type].eql?("1") then
 		field_type = true		
@@ -168,7 +169,7 @@ class FieldsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def field_params
-      params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id)
+      params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at)
     end
 
 	def add_forestry_field(typ, area)
@@ -185,16 +186,24 @@ class FieldsController < ApplicationController
 			#add soils for this new field
 			soils = Soil.where(:field_id => @field.id)
 			soils.each do |soil|
-				soil_new = soil.clone
-				soil_new.field_id = field.id
+				soil_new = Soil.new(soil.attributes.merge({:field_id => field.id, :id => nil}))
 				if !soil_new.save
 					return "Error saving Soil"
+				else
+					#add layers of this soil
+					layers = Layer.where(:soil_id => soil.id)
+					layers.each do |layer|
+						layer_new = Layer.new(layer.attributes.merge({:soil_id => soil_new.id, :id => nil}))
+						if !layer_new.save
+							return "Error saving layer"
+						end
+					end
 				end
 			end # end soils.eah
 			#add weather for this new field
-			weather = Weather.find_by_field_id(@field.id).clone
-			weather.field_id = field.id
-			if !weather.save
+			weather = Weather.find_by_field_id(@field.id)
+			weather_new = Weather.new(weather.attributes.merge({:field_id => field.id, :id => nil}))
+			if !weather_new.save
 				return "Error saving Weather information"
 			end
 		end # end if field.saved
