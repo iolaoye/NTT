@@ -470,6 +470,8 @@ en:
     select_soil: Select Soil
     layer_number: Layer Number
     more_than: more than
+    sum: 'Clay, sand, and silt should add up to 100 percentage.'
+    error_depth: 'Depth is mandatory and should be greater than 0.'
   scenario:
     scenario_name: Scenario Name
     scenario: Scenario

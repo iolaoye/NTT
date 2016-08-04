@@ -470,6 +470,8 @@
     create_layer: Crear Capa
     layer_number: Número de Capa
     more_than: mas de 
+    sum: 'Arcilla, arena, y limo debe añadir un máximo de 100 porcentaje'
+    error_depth: 'La profundidad es obligatorio y debe ser mayor que 0. '
   scenario:
     scenario_name: Nombre Escenario
     scenario: Escenario
