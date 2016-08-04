@@ -137,23 +137,23 @@ class ScenariosController < ApplicationController
 	@change_till_depth = Array.new
 	@last_soil_sub = 0
 	@last_subarea = 0
-	if msg = "OK" then msg = create_control_file() end
-	if msg = "OK" then msg = create_parameter_file() end
-	if msg = "OK" then msg = create_site_file(@scenario.field_id) end
-	if msg = "OK" then msg = create_weather_file(dir_name, @scenario.field_id) end
-	if msg = "OK" then msg = create_wind_wp1_files(dir_name) end
+	if msg.eql?("OK") then msg = create_control_file() end
+	if msg.eql?("OK") then msg = create_parameter_file() end
+	if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) end
+	if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) end
+	if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) end
 	@last_soil = 0
 	@soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
 	@soil_list = Array.new
-	if msg = "OK" then msg = create_soils() end
-	if msg = "OK" then msg = send_file_to_APEX(@soil_list, "soil.dat") end
+	if msg.eql?("OK") then msg = create_soils() end
+	if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") end
 	#print_array_to_file(@soil_list, "soil.dat")
 	@subarea_file = Array.new
 	@soil_number = 0
-	if msg = "OK" then msg = create_subareas(1) end
-	if msg = "OK" then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") end
+	if msg.eql?("OK") then msg = create_subareas(1) end
+	if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") end
 	#print_array_to_file(@opcs_list_file, "OPCS.dat")	
-	if msg = "OK" then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation
+	if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation
 	read_apex_results(msg)
 	@scenario.last_simulation =  Time.now
 	@scenario.save

@@ -14,6 +14,7 @@
     <div class="field">
       <% if (@type == "create") %>
         <%= label :bmp_id, t('bmp.bmp_group') %>
+
         <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
         <%= label :bmp_id, t('operation.bmp') %>
         <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
