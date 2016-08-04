@@ -220,12 +220,16 @@
 				<li><%= t('menu.layers') %></li>
 			<% when /results/ %>
 				<% project_name = Project.find(session[:project_id]).name %>
-				<% field_name = Field.find(session[:field_id]).field_name %>
 			    <li><%=link_to t('menu.projects'), welcomes_path %></li>
 			    <li><%=">>"%><%=project_name%></li>
 				<li><%=">>"%>
-			    <li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-				<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+				<% if session[:simulation].eql?('scenario') %>
+					<% field_name = Field.find(session[:field_id]).field_name %>
+					<li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
+					<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+				<% else %>
+					<li><%=link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
+				<% end %>
 				<li><%=">>"%>
 				<li><%= t('menu.results') %></li>
 				<li><%=">>"%>

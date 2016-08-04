@@ -12,10 +12,14 @@ class ResultsController < ApplicationController
 	@descrition = 0
 	@result_selected = params[:button]
 	@title = ""
+	@total_area = 0
+	@field_name = ""
 	@descriptions = Description.select("id, description, spanish_description").where("id < 70 OR id > 79")
 	@project_name = Project.find(session[:project_id]).name
-	@total_area = Field.find(session[:field_id]).field_area
-	@field_name = Field.find(session[:field_id]).field_name
+	if session[:simulation].eql?('scenario') then
+		@total_area = Field.find(session[:field_id]).field_area
+		@field_name = Field.find(session[:field_id]).field_name
+	end
 	@scenario1 = 0
 	@scenario2 = 0
 	@scenario3 = 0
