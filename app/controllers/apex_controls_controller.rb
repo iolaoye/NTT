@@ -88,15 +88,17 @@ class ApexControlsController < ApplicationController
 
   def reset
     @controls = Control.all
-    @apex_controls = ApexControl.where(:project_id => session[:project_id])
-    @apex_controls.destroy_all()
+    @apex_controls = ApexControl.where("project_id == " + session[:project_id].to_s + " AND control_id != 1 AND control_id != 2")
+    @apex_controls.delete_all()
 
     @controls.each do |control|
-      apex_control = ApexControl.new
-      apex_control.control_id = control.id
-      apex_control.value = control.default_value
-      apex_control.project_id = session[:project_id]
-      apex_control.save
+		if control.id != 1 && control.id != 2
+		  apex_control = ApexControl.new
+		  apex_control.control_id = control.id
+		  apex_control.value = control.default_value
+		  apex_control.project_id = session[:project_id]
+		  apex_control.save
+		end
     end
     redirect_to apex_controls_url, notice: t('models.apex_control') + " " + t('general.reset')
   end

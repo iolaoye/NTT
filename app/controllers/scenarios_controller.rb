@@ -153,16 +153,17 @@ class ScenariosController < ApplicationController
 	if msg.eql?("OK") then msg = create_subareas(1) end
 	if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") end
 	#print_array_to_file(@opcs_list_file, "OPCS.dat")	
-	if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation
-	read_apex_results(msg)
-	@scenario.last_simulation =  Time.now
+	if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation and return ntt file.
+	if msg.eql?("OK") then read_apex_results(msg) end
+	@scenario.last_simulation = Time.now
 	@scenario.save
-	if params[:id] == nil then
-		return
+	@scenarios = Scenario.where(:field_id => session[:field_id])
+	if msg.include?("NTT OUTPUT INFORMATION") then
+	#if params[:id] == nil then
+		render "list", notice: "Simulation process end succesfully"
 	else
-		@scenarios = Scenario.where(:field_id => session[:field_id])
-		render "list"
-	end # end if params[:id] nill
+		render "list", notice: msg
+	end # end if msg 
   end # end show method
 
   private
