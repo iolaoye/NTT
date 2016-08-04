@@ -25,7 +25,11 @@
   </div>
   <div class="field">
     <%= f.label t('field.field_type') %>
-    <%= f.check_box :field_type %>
+	<% if @field.field_name.include?(ROAD) || @field.field_name.include?(SMZ) %>
+		<%= f.check_box :field_type, disabled: true %>
+	<% else %>
+		<%= f.check_box :field_type %>
+	<% end %>
   </div>
   <div class="field">
     <%= f.label t('field.coordinate') + " (long, lat)" %><br />
