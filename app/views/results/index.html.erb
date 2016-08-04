@@ -72,12 +72,21 @@
   <table class='gvTableStyle'>
       <tr class='gvHeaderStyle'>
           <th class="gvCellStyleTitle"><%= t('result.description') %></th>
-          <% if @results1 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results1[0].scenario_id).name%></th> <% end %>
-          <% if @results2 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results2[0].scenario_id).name%></th> <% end %>
+          <% if session[:simulation] == 'scenario' %>
+            <% if @results1 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results1[0].scenario_id).name%></th> <% end %>
+            <% if @results2 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results2[0].scenario_id).name%></th> <% end %>
+          <% else %>
+            <% if @results1 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results1[0].watershed_id).name%></th> <% end %>
+            <% if @results2 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results2[0].watershed_id).name%></th> <% end %>
+          <% end %>
           <th class="gvCellStyleTitle"><%= t('result.difference') %></th>
           <th class="gvCellStyleTitle"><%= t('result.reduction') %></th>
           <th class="gvCellStyleTitle"><%= t('result.total_area') %></th>
-          <% if @results3 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results3[0].scenario_id).name%></th> <% end %>
+          <% if session[:simulation] == 'scenario' %>
+            <% if @results3 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results3[0].scenario_id).name%></th> <% end %>
+          <% else %>
+            <% if @results3 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results3[0].watershed_id).name%></th> <% end %>
+          <% end %>
           <th class="gvCellStyleTitle"><%= t('result.difference') %></th>
           <th class="gvCellStyleTitle"><%= t('result.reduction') %></th>
           <th class="gvCellStyleTitle"><%= t('result.total_area') %></th>

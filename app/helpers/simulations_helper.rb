@@ -1931,8 +1931,13 @@ module SimulationsHelper
 				ci.push c.value
 			end 
 			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
-			session[:depth] = crop_ci
-			add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+			#todo check why the ci is crashing with watershed simulations
+			if session[:simulation].eql?('scenario') then
+				add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+			else
+				#0 used for ci.confidence_interval because it is crashing with watersheds.
+				add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
+			end
 		end
 		add_summary(0, 70,0,0,0)
 	end

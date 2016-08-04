@@ -56,6 +56,8 @@ class WatershedsController < ApplicationController
 	j=0
 	watershed_scenarios.each do |p|
 		@scenario = Scenario.find(p.scenario_id)
+		session[:scenario_id] = p.scenario_id
+		session[:field_id] = p.field_id
 		if msg = "OK" then msg = create_weather_file(dir_name, p.field_id) end
 		@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
 		if msg = "OK" then msg = create_soils() end
