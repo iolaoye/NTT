@@ -9,15 +9,17 @@
 	<% if @id == "0" %>
 	  <h1><%= t('project.upload_project') %></h1>
 	  <%= file_field_tag "project" %>
-	  <%= submit_tag(value = t('submit.save'), data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')  }) %>
 	<% else %>
 	  <h1><%= t('project.upload_example') %></h1>
-
 	  <%= select_tag "examples", "<option value=0>#{t('helpers.select.prompt')}</option><option value=1>OH Two Fields</option>".html_safe, {:required => true} %>
-	  <%= submit_tag(value = t('project.upload_example'), data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')  }) %>
 	<%end %>
-<% end %>
 </br>
-<div class="actions">
-	<%= link_to t('general.back'), welcomes_path %>
-</div>
+	<div class="actions">
+		<% if @id == "0" %>
+		  <%= submit_tag(value = t('submit.save'), data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')  }) %>
+		<% else %>
+		  <%= submit_tag(value = t('project.upload_example'), data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')  }) %>
+		<%end %>
+		<%= link_to t('general.back'), welcomes_path %>
+	</div>
+<% end %>
