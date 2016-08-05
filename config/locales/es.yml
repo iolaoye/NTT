@@ -274,7 +274,8 @@
         one: No se pudo guardar este/a %{model} porque se encontró 1 error
         other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
   notices:
-    deleted: " ha sido borrado"
+    deleted: " ha sido borrado/a"
+    updated: " fue actualizado/a satisfactoriamente"
   helpers:
     select:
       prompt: Por favor seleccione
