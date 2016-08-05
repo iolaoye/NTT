@@ -275,6 +275,8 @@ en:
       header:
         one: 1 error prohibited this %{model} from being saved
         other: "%{count} errors prohibited this %{model} from being saved"
+  notices:
+    deleted: " has been deleted"
   helpers:
     select:
       prompt: Please select

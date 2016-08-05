@@ -88,6 +88,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+  ########################################### DELETE PROJECT##################
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
@@ -95,9 +96,11 @@ class ProjectsController < ApplicationController
 	location = Location.where(:project_id => params[:id])
 	location.destroy_all unless location == []
     @project.destroy
+    @projects = Project.where(:user_id => params[:user_id])
 
     respond_to do |format|
-      format.html { redirect_to welcomes_url }
+	  flash[:notice] = t('models.project') + " " + @project.name + t('notices.deleted')
+      format.html { render "index"}
       format.json { head :no_content }
     end
   end
