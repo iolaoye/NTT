@@ -10,7 +10,6 @@ class WeathersController < ApplicationController
   # GET /weathers
   # GET /weathers.json
   def index
-	index
 	@weather = Weather.all
 
     respond_to do |format|

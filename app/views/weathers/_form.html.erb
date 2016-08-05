@@ -53,9 +53,9 @@
         <legend><%= t('weather.enter_coordinates') %></legend>
         <div class="field">
 			<%= f.label t('weather.latitude')%>
-			<%= f.number_field :latitude, :class => "numbers", min: -90, max: 90  %>
+			<%= f.number_field :latitude, :class => "numbers", :step => 'any', min: -90, max: 90  %>
 			<%= f.label t('weather.longitude') %>
-			<%= f.number_field :longitude, :class => "numbers", min: -180, max: 180 %>
+			<%= f.number_field :longitude, :class => "numbers", :step => 'any', min: -180, max: 180 %>
 		</div>
     </fieldset>	
 
