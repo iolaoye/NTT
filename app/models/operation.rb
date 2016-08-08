@@ -5,6 +5,7 @@ class Operation < ActiveRecord::Base
   has_many :activities
   has_many :soil_operations, :dependent => :destroy
   belongs_to :scenario
+  #validations
   #scopes
      default_scope :order => "year, month_id, day, activity_id, id ASC"
 end

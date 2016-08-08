@@ -13,78 +13,79 @@
 
   <div class="field">
     <%= f.label "Z" + ":" %>
-    <%= f.number_field :depth, :class => 'numbers', :value => (number_with_precision(f.object.depth, :precision => 2) || 0), :step => '0.01' %>
+    <%= f.number_field :depth, :class => 'numbers', :value => (number_with_precision(f.object.depth, :precision => 2) || 0), :step => '0.01', min: 0 %>
   </div>
   <div class="field">
     <%= f.label "BD" + ":" %>
-    <%= f.number_field :bulk_density, :class => "numbers" %>
+    <%= f.number_field :bulk_density, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "UW" + ":" %>
-    <%= f.number_field :uw, :class => "numbers" %>
+    <%= f.number_field :uw, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "FC" + ":" %>
-    <%= f.number_field :fc, :class => "numbers" %>
+    <%= f.number_field :fc, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "SAN" + ":" %>
-    <%= f.number_field :sand, :class => "numbers" %>
+    <%= f.number_field :sand, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "SIL" + ":" %>
-    <%= f.number_field :silt, :class => "numbers" %>
+    <%= f.number_field :silt, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "WN" + ":" %>
-    <%= f.number_field :wn, :class => "numbers" %>
+    <%= f.number_field :wn, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "PH" + ":" %>
-    <%= f.number_field :ph, :class => "numbers" %>
+    <%= f.number_field :ph, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "SMB" + ":" %>
-    <%= f.number_field :smb, :class => "numbers" %>
+    <%= f.number_field :smb, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "CAC" + ":" %>
-    <%= f.number_field :cac, :class => "numbers" %>
+    <%= f.number_field :cac, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "CEC" + ":" %>
-    <%= f.number_field :cec, :class => "numbers" %>
+    <%= f.number_field :cec, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "Rok" + ":" %>
-    <%= f.number_field :rok, :class => "numbers" %>
+    <%= f.number_field :rok, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "CNDS" + ":" %>
-    <%= f.number_field :cnds, :class => "numbers" %>
+    <%= f.number_field :cnds, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "SSF" + ":" %>
-    <%= f.number_field :soil_p, :class => "numbers" %>
+    <%= f.number_field :soil_p, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "RSD" + ":" %>
-    <%= f.number_field :rsd, :class => "numbers" %>
+    <%= f.number_field :rsd, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "BDD" + ":" %>
-    <%= f.number_field :bdd, :class => "numbers" %>
+    <%= f.number_field :bdd, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "PSP" + ":" %>
-    <%= f.number_field :psp, :class => "numbers" %>
+    <%= f.number_field :psp, :class => "numbers", min: 0 %>
   </div>
   <div class="field">
     <%= f.label "Satc" + ":" %>
-    <%= f.number_field :satc, :class => "numbers" %>
+    <%= f.number_field :satc, :class => "numbers", min: 0 %>
   </div>
   
   <div class="actions">
     <%= f.submit t('submit.update') %>
+	<%= link_to t('general.back'), controller: "apex_layers", action: "index", id: @apex_layer.soil_id %>
   </div>
 <% end %>

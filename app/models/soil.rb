@@ -1,5 +1,5 @@
 class Soil < ActiveRecord::Base
-  attr_accessible :albedo, :drainage_type, :field_id, :group, :key, :name, :percentage, :selected, :slope, :symbol, :ffc, :wtmn, :wtmx, :wtbl, :gwst, :gwmx, :rft, :rfpk, :tsla, :xids, :rtn1, :xidk, :zqt, :zf, :ztk, :fbm, :fhp
+  attr_accessible :albedo, :drainage_type, :field_id, :group, :key, :name, :percentage, :selected, :slope, :symbol, :ffc, :wtmn, :wtmx, :wtbl, :gwst, :gwmx, :rft, :rfpk, :tsla, :xids, :rtn1, :xidk, :zqt, :zf, :ztk, :fbm, :fhp, :id, :created_at, :updated_at
   #associations
      belongs_to :field
 	 has_many :layers, :dependent => :destroy

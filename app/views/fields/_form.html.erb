@@ -17,19 +17,23 @@
   </div>
   <div class="field" title="Field Area (Ac.). Must be greater than 0.">
     <%= f.label t('field.field_area') %>
-    <%= f.text_field :field_area %>
+    <%= f.number_field :field_area, :class => 'numbers' %>
   </div>
   <div class="field">
 	<%= f.label t('field.field_avg_slope') %>
-    <%= f.text_field :field_average_slope %>
+    <%= f.number_field :field_average_slope, :class => 'numbers' %>
   </div>
   <div class="field">
     <%= f.label t('field.field_type') %>
-    <%= f.check_box :field_type %>
+	<% if @field.field_name.include?(ROAD) || @field.field_name.include?(SMZ) %>
+		<%= f.check_box :field_type, disabled: true %>
+	<% else %>
+		<%= f.check_box :field_type %>
+	<% end %>
   </div>
   <div class="field">
     <%= f.label t('field.coordinate') + " (long, lat)" %><br />
-    <%= f.text_area :coordinates %>
+    <%= f.text_area :coordinates, :required => 'true' %>
   </div>
   <div class="actions">
     <%= f.submit  %>

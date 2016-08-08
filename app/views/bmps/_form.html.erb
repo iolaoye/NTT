@@ -14,6 +14,7 @@
     <div class="field">
       <% if (@type == "create") %>
         <%= label :bmp_id, t('bmp.bmp_group') %>
+
         <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
         <%= label :bmp_id, t('operation.bmp') %>
         <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
@@ -68,7 +69,7 @@
     <%= f.number_field :irrigation_efficiency, :step => 'any' %>
   </div>
   <div class="field" id = "area_control" style="display:none">
-    <%= f.label t('pdf.fraction_of_area_control_by_pond') %> (0.00 – 1.00)<br />
+    <%= f.label t('bmp.area_control') %> (0.00 – 1.00)<br />
     <%= f.number_field :irrigation_efficiency, :step => 'any' %>
   </div>
   <div class="field" id="maximum_single_application" style="display:none">
@@ -84,7 +85,7 @@
     <%= f.number_field :depth, :step => 'any' %> <%= t('bmp.ft') %>
   </div>
   <div class="field" id="area" style="display:none">
-    <%= f.label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max')%><br />
+    <%= f.label :area, t('bmp.area') + " " + t('bmp.zero_to_max')%><br />
     <%= f.number_field :area, :step => 'any' %> <%= t('bmp.acres') %>
   </div>
   <div class="field" id="animals" style="display:none">

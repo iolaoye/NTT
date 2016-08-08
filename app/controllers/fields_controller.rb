@@ -16,6 +16,7 @@ class FieldsController < ApplicationController
   # GET /fields/1
   # GET /1/fields.json
   def list
+  	session[:simulation] = "watershed"
     @fields = Field.where(:location_id => params[:id])
 	@project_name = Project.find(session[:project_id]).name
 	@fields.each do |field|
@@ -55,6 +56,7 @@ class FieldsController < ApplicationController
   # GET /fields/1
   # GET /fields/1.json
   def show
+    session[:simulation] = "scenario"
     session[:field_id] = params[:id]
 
     respond_to do |format|
@@ -114,18 +116,37 @@ class FieldsController < ApplicationController
   # PATCH/PUT /fields/1
   # PATCH/PUT /fields/1.json
   def update
-    @field = Field.find(params[:id])
-	if @field == params[:field_type] then
-		#todo create the forestry fields or delete them depending on the change. If it was true and changed to false delete them otherwise create them.
+  #todo find out how to make roll back if one part of the process does not work
+	field_type = false
+    if params[:field][:field_type].eql?("1") then
+		field_type = true		
 	end
+    @field = Field.find(params[:id])
+	msg = "OK"
+	if @field.field_type != field_type then
+		if field_type == true then
+			#create the forestry additional fields
+			msg = add_forestry_field(ROAD, 0.05)
+			if msg.eql?("OK") then msg = add_forestry_field(SMZ, 0.10) end
+		else
+			#delete the forestry additional fields
+			field = Field.find_by_field_name(@field.field_name + ROAD)
+			if !(field == nil) then field.destroy end
+			field = Field.find_by_field_name(@field.field_name + SMZ)
+			if !(field == nil) then field.destroy end
+		end
+	end
+    if !@field.update_attributes(field_params)	
+		msg = "Error saving field"
+    end
     respond_to do |format|
-      if @field.update_attributes(field_params)
-        format.html { redirect_to list_field_path(session[:location_id]), notice: 'Field was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @field.errors, status: :unprocessable_entity }
-      end
+		if msg.eql?("OK") then
+			format.html { redirect_to list_field_path(session[:location_id]), notice: 'Field was successfully updated.' }
+			format.json { head :no_content }
+		else
+			format.html { render action: "edit", notice: msg }
+			format.json { render json: @field.errors, status: :unprocessable_entity }
+		end
     end
   end
 
@@ -148,6 +169,44 @@ class FieldsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def field_params
-      params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id)
+      params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at)
     end
+
+	def add_forestry_field(typ, area)
+		field = Field.new
+		field.field_name = @field.field_name + typ
+		field.field_area = @field.field_area * area
+		field.location_id = @field.location_id
+		field.field_average_slope = @field.field_average_slope
+		field.field_type = true
+		field.coordinates = @field.coordinates
+		if !field.save   #save the road additonal field
+			return "Error saving field " + typ
+		else
+			#add soils for this new field
+			soils = Soil.where(:field_id => @field.id)
+			soils.each do |soil|
+				soil_new = Soil.new(soil.attributes.merge({:field_id => field.id, :id => nil}))
+				if !soil_new.save
+					return "Error saving Soil"
+				else
+					#add layers of this soil
+					layers = Layer.where(:soil_id => soil.id)
+					layers.each do |layer|
+						layer_new = Layer.new(layer.attributes.merge({:soil_id => soil_new.id, :id => nil}))
+						if !layer_new.save
+							return "Error saving layer"
+						end
+					end
+				end
+			end # end soils.eah
+			#add weather for this new field
+			weather = Weather.find_by_field_id(@field.id)
+			weather_new = Weather.new(weather.attributes.merge({:field_id => field.id, :id => nil}))
+			if !weather_new.save
+				return "Error saving Weather information"
+			end
+		end # end if field.saved
+		return "OK"
+	end
 end

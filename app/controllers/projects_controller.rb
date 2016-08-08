@@ -5,6 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index 
     @projects = Project.where(:user_id => params[:user_id])
+	session[:simulation] = "watershed"
     respond_to do |format|
       format.html   # index.html.erb
       format.json { render json: @projects }
@@ -14,13 +15,17 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show   #selected when click on a project or a new project is created.
-    if params[:id] == "upload" then 
+    if params[:id] == "upload" then
 		redirect_to "upload"
 	end
     session[:project_id] = params[:id]
     @location = Location.find_by_project_id(params[:id])
 	session[:location_id] = @location.id
-    redirect_to location_path(@location.id)
+	if Field.where(:location_id => @location.id).count > 0 then
+		redirect_to list_field_path(session[:location_id])
+	else
+		redirect_to location_path(@location.id)
+	end
   end
 
   # GET /projects/1
@@ -87,6 +92,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+  ########################################### DELETE PROJECT##################
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
@@ -94,9 +100,11 @@ class ProjectsController < ApplicationController
 	location = Location.where(:project_id => params[:id])
 	location.destroy_all unless location == []
     @project.destroy
+    @projects = Project.where(:user_id => params[:user_id])
 
     respond_to do |format|
-      format.html { redirect_to welcomes_url }
+	  flash[:notice] = t('models.project') + " " + @project.name + t('notices.deleted')
+      format.html { render "index"}
       format.json { head :no_content }
     end
   end

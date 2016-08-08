@@ -1,11 +1,14 @@
 class Layer < ActiveRecord::Base
-  attr_accessible :bulk_density, :clay, :depth, :organic_matter, :ph, :sand, :silt, :soil_id, :soil_p, :uw, :fc, :wn, :smb, :woc, :cac, :cec, :rok, :cnds, :rsd, :bdd, :psp, :satc
+  attr_accessible :bulk_density, :clay, :depth, :organic_matter, :ph, :sand, :silt, :soil_id, :soil_p, :uw, :fc, :wn, :smb, :woc, :cac, :cec, :rok, :cnds, :rsd, :bdd, :psp, :satc, :created_at, :updated_at
   #associations
     belongs_to :soil
   #scopes
     default_scope :order => "depth ASC"
   #validation
-	validates_presence_of :sand, :silt, :depth, :clay
+	validates_presence_of :sand
+	validates_presence_of :silt
+	validates_presence_of :depth
+	validates_presence_of :clay
   #Intialization
     after_initialize :init
   #Functions

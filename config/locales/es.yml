@@ -46,6 +46,7 @@
         name: "Nombre"
       weather:
         year: "Año"
+        file: "Archivo"
       soil:
         key: "Clave"
       layer:
@@ -233,6 +234,7 @@
     way: Way
     weather: Clima
     welcome: Bienvenido
+    file: "Archivo"
   errors:
     format: "%{attribute} %{message}"
     messages:
@@ -271,6 +273,9 @@
       header:
         one: No se pudo guardar este/a %{model} porque se encontró 1 error
         other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
+  notices:
+    deleted: " ha sido borrado/a"
+    updated: " fue actualizado/a satisfactoriamente"
   helpers:
     select:
       prompt: Por favor seleccione
@@ -468,6 +473,8 @@
     create_layer: Crear Capa
     layer_number: Número de Capa
     more_than: mas de 
+    sum: 'Arcilla, arena, y limo debe añadir un máximo de 100 porcentaje'
+    error_depth: 'La profundidad es obligatorio y debe ser mayor que 0. '
   scenario:
     scenario_name: Nombre Escenario
     scenario: Escenario
@@ -476,6 +483,7 @@
     create_scenario: Crear Escenario
     select_scenario: Seleccione Escenario
     load_scenario: Cargar Escenario
+    last_simulation: Ultima Simulación
   location:
     new_location: Localización Nuevo
     edit: Revisión de Localización
@@ -539,20 +547,20 @@
     max_temp: Temp. Max. ±(°C)
     min_temp: Temp. Min. ±(°C)
     precipitation: Precipitación (%)
-    fill: Fill
+    fill: Duplicar
   months:
-    january: enero
-    february: feb.
-    march: marzo
-    april: abr.
-    may: mayo
-    june: jun
-    july: jul
-    august: agosto
-    september: sept.
-    october: oct.
-    novemeber: nov.
-    december: dic.
+    january: Enero
+    february: Febrero
+    march: Marzo
+    april: Abril
+    may: Mayo
+    june: Junio
+    july: Julio
+    august: Agosto
+    september: Septiembre
+    october: Octubre
+    november: Noviembre
+    december: Diciembre
   activity:
     activity: Actividad
     edit: Revisión de Actividad
@@ -612,14 +620,20 @@
     result: Resultado
     add: Añadir
     submit: Enviar
-    scenario1: Primer Escenario
-    scenario2: Segundo Escenario
-    scenario3: Tercer Escenario
+    scenario1: 1er Escenario
+    scenario2: 2do Escenario
+    scenario3: 3er Escenario
+    watershed1: 1a cuenca
+    watershed2: 2da cuenca
+    watershed3: 3ra cuenca
     last: (últimos 12 años)
     avg: Promedio Mensual (Todo el Periodo)
-    select_scenario1: Primer Escenario
-    select_scenario2: Segundo Escenario
-    select_scenario3: Tercer Escenario
+    select_scenario1: 1er Escenario
+    select_scenario2: 2do Escenario
+    select_scenario3: 3er Escenario
+    select_watershed1: Selectione 1ra cuenca
+    select_watershed2: Selectione 2da cuenca
+    select_watershed3: Selectione 3ra cuenca
     select_chart: Seleccione tipo de Gráfico
     description: Descripción
     difference: Diferencia

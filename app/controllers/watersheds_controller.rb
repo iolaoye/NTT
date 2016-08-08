@@ -29,15 +29,16 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /watersheds/1.json
   def show
+	@watershed_id = params[:id]
   	@dtNow1  = Time.now.to_s
 	dir_name = APEX + "/APEX" + session[:session_id]
 
 	watershed_scenarios = WatershedScenario.where(:watershed_id => params[:id])
-	copy_folder()
-	create_control_file()
-	create_parameter_file()
-	create_site_file(Field.find_by_location_id(session[:location_id]).id)
-	create_wind_wp1_files(dir_name)
+	msg = send_file_to_APEX("APEX", session[:session_id])  #this operation will create APEX folder from APEX1 folder
+	if msg.eql?("OK") then msg = create_control_file() end
+	if msg.eql?("OK") then msg = create_parameter_file() end
+	if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(session[:location_id]).id) end
+	if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) end
 	@last_soil = 0
 	@last_soil_sub = 0
 	@last_subarea = 0
@@ -55,17 +56,24 @@ class WatershedsController < ApplicationController
 	j=0
 	watershed_scenarios.each do |p|
 		@scenario = Scenario.find(p.scenario_id)
-		create_weather_file(dir_name, p.field_id)
+		session[:scenario_id] = p.scenario_id
+		session[:field_id] = p.field_id
+		if msg.eql?("OK") then msg = create_weather_file(dir_name, p.field_id) end
 		@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
-		create_soils()
-		create_subareas(j+1)
+		if msg.eql?("OK") then msg = create_soils() end
+		if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") end
+		if msg.eql?("OK") then msg = create_subareas(j+1) end
+		if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") end
 		j+=1
 	end # end watershed_scenarios.each
 	print_array_to_file(@soil_list, "soil.dat")
 	print_array_to_file(@opcs_list_file, "OPCS.dat")
-	run_scenario()
+	if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation
+	read_apex_results(msg)
+	@scenario.last_simulation =  Time.now
+	@scenario.save
 
-	@scenarios = Scenario.where(:field_id => 0)  # make @scnearions empty to start the list page in watershed
+	@scenarios = Scenario.where(:field_id => 0)  # make @scenarios empty to start the list page in watershed
 	@watersheds = Watershed.where(:location_id => session[:location_id])
 	@project_name = Project.find(session[:project_id]).name
 
@@ -140,7 +148,7 @@ class WatershedsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def watershed_params
-      params.require(:watershed).permit(:field_id, :name, :scenario_id, :location_id)
+      params.require(:watershed).permit(:field_id, :name, :scenario_id, :location_id, :id, :created_at, :updated_at)
     end
 		
 end

@@ -1,5 +1,6 @@
 <%= form_for(@weather) do |f| %>
-  <% if @weather.errors.any? %>
+  <% case %>
+  <% when @weather.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @weather.errors.count, :model => t('models.weather').downcase) %></h2>
       <ul>
@@ -8,9 +9,15 @@
 		  <% end %>
       </ul>
     </div>
-  <% else %>
+  <% when flash[:info] %>
+  <br>
+	<div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:info] %>
+    </div>
+    <% else %>
     <div id="div_notice">
-		<p id="notice"><%= notice %></p>
+    <p id="notice"><%= notice %></p>
     </div>
   <% end %>
 
@@ -28,28 +35,29 @@
 	<% end %>
   </fieldset>
 
+  
   <% if @weather.way_id == 2 %>
-	  <fieldset id="fsetCoordinates" class="section"></fieldset>
-  <% else %>
-	  <fieldset id="fsetCoordinates" class="section" style="display:none">
-  <% end %>
-        <legend><%= t('weather.enter_coordinates') %></legend>
-        <div class="field">
-			<%= f.label t('weather.latitude')%>
-			<%= f.text_field :latitude %>
-			<%= f.label t('weather.longitude') %>
-			<%= f.text_field :longitude %>
-		</div>
-    </fieldset>	
-
-  <% if @weather.way_id == 3 %>
-	<fieldset id="fsetUploadWeatherFile" class="section"></fieldset>
+	<fieldset id="fsetUploadWeatherFile" class="section">
   <% else %>
 	<fieldset id="fsetUploadWeatherFile" class="section" style="display:none">
   <% end %>
 	<legend><%= t('weather.choose_file_lenged') %></legend>
 	  <%= f.file_field :weather_file %>
   </fieldset>
+  
+  <% if @weather.way_id == 3 %>
+	  <fieldset id="fsetCoordinates" class="section">
+  <% else %>
+	  <fieldset id="fsetCoordinates" class="section" style="display:none">
+  <% end %>
+        <legend><%= t('weather.enter_coordinates') %></legend>
+        <div class="field">
+			<%= f.label t('weather.latitude')%>
+			<%= f.number_field :latitude, :class => "numbers", :step => 'any', min: -90, max: 90  %>
+			<%= f.label t('weather.longitude') %>
+			<%= f.number_field :longitude, :class => "numbers", :step => 'any', min: -180, max: 180 %>
+		</div>
+    </fieldset>	
 
   <p>
 	  <div class="field">
