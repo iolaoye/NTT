@@ -148,7 +148,7 @@ class WatershedsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def watershed_params
-      params.require(:watershed).permit(:field_id, :name, :scenario_id, :location_id)
+      params.require(:watershed).permit(:field_id, :name, :scenario_id, :location_id, :id, :created_at, :updated_at)
     end
 		
 end

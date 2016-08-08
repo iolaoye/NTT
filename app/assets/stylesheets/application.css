@@ -141,10 +141,10 @@
 }
 
 .navbar-nav li:last-child {
-  background: dodgerblue;
   display: inline-block;
   padding: 0px;
   float: right;
+  background-color:blue;
 }
 /*.navbar-default 
 {
@@ -1151,7 +1151,7 @@ h1 {
 }
 
 .buttons_h1 {
-  margin-bottom: 10px !important;  
+  margin-bottom: 10px !important;
 }
 
 .no_margin_bottom {

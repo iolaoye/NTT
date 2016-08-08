@@ -2,7 +2,7 @@ class BmpsublistsController < ApplicationController
   # GET /bmpsublists
   # GET /bmpsublists.json
   def index
-    @bmpsublists = Bmpsublist.where(:bmplist_id => params[:bmplist_id], :status => true)
+    @bmpsublists = Bmpsublist.where(:bmplist_id => params[:bmplist_id])
 
     respond_to do |format|
       format.html # index.html.erb

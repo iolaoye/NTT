@@ -10,7 +10,6 @@ class WeathersController < ApplicationController
   # GET /weathers
   # GET /weathers.json
   def index
-	index
 	@weather = Weather.all
 
     respond_to do |format|
@@ -99,7 +98,7 @@ class WeathersController < ApplicationController
 	if (params[:weather][:way_id] == "1")
 	  respond_to do |format|
 		  if @weather.update_attributes(weather_params)
-			format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.' }
+			format.html { redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')}
 			format.json { head :no_content }
 		  else
 			format.html { render action: "edit" }
@@ -113,7 +112,7 @@ class WeathersController < ApplicationController
 				flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file') 
 		else
 			msg = upload_weather
-		    redirect_to edit_weather_path(session[:field_id]),  notice: 'File was successfully uploaded.' 
+		    redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated') 
 		end
     end
     if (params[:weather][:way_id] == "3")
@@ -127,7 +126,7 @@ class WeathersController < ApplicationController
         else
 		  respond_to do |format|
 		    if @weather.update_attributes(weather_params)
-			  format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.' }
+			  format.html { redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated') }
 			  format.json { head :no_content }
 		    end
 		  end

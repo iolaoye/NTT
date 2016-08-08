@@ -13,10 +13,10 @@ before_filter :take_names
   # GET /1/operations.json
   def list
     @bmps = Bmp.where(:scenario_id => params[:id])
-		respond_to do |format|
-		  format.html # list.html.erb
-		  format.json { render json: @bmps }
-		end
+	respond_to do |format|
+		format.html # list.html.erb
+		format.json { render json: @bmps }
+	end
   end
 ################################  INDEX  #################################
   # GET /bmps
