@@ -32,12 +32,20 @@ class ScenariosController < ApplicationController
   # GET /scenarios
   # GET /scenarios.json
   def index
+    msg = "OK"
     @scenarios = Scenario.where(:field_id => session[:field_id])
 	@scenarios.each do |scenario|
 		session[:scenario_id] = scenario.id
-		show()
+		msg = run_scenario
+		if !msg.include?("NTT OUTPUT INFORMATION") then
+			break
+		end # end if msg 
 	end #end each scenario loop
-    render "list"
+	if msg.include?("NTT OUTPUT INFORMATION") then
+		render "list", notice: "Simulation process end succesfully"
+	else
+		render "list", notice: msg
+	end # end if msg 
   end
 
 ################################  NEW   #################################
@@ -113,6 +121,17 @@ class ScenariosController < ApplicationController
   # GET /scenarios/1
   # GET /scenarios/1.json
   def show()
+    msg = run_scenario
+	if msg.include?("NTT OUTPUT INFORMATION") then
+		render "list", notice: "Simulation process end succesfully"
+	else
+		render "list", notice: msg
+	end # end if msg 
+  end
+
+  private
+
+  def run_scenario()
 	if @scenarios == nil then
 		session[:scenario_id] = params[:id]
 	end
@@ -158,15 +177,8 @@ class ScenariosController < ApplicationController
 	@scenario.last_simulation = Time.now
 	@scenario.save
 	@scenarios = Scenario.where(:field_id => session[:field_id])
-	if msg.include?("NTT OUTPUT INFORMATION") then
-	#if params[:id] == nil then
-		render "list", notice: "Simulation process end succesfully"
-	else
-		render "list", notice: msg
-	end # end if msg 
+	return msg
   end # end show method
-
-  private
 
     # Use this method to whitelist the permissible parameters. Example:
     # params.require(:person).permit(:name, :age)
