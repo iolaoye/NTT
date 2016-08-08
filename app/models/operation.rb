@@ -6,7 +6,8 @@ class Operation < ActiveRecord::Base
   has_many :soil_operations, :dependent => :destroy
   belongs_to :scenario
   #validations
-     validates_uniqueness_of :crop_id, :scope => [:activity_id, :year, :month_id, :day, :type_id, :subtype_id]
+    validates_uniqueness_of :crop_id, :scope => [:activity_id, :year, :month_id, :day, :type_id, :subtype_id]
+    validates_presence_of :amount, :depth, :moisture, :nh3, :no3_n, :org_n, :org_p, :po4_p
   #scopes
      default_scope :order => "year, month_id, day, activity_id, id ASC"
 end

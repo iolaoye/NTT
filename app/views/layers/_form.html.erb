@@ -10,13 +10,6 @@
       </ul>
     </div>
   <% end %>
-  <% if flash[:info] %>
-  <br>
-	<div class="flash_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= flash[:info] %>
-    </div>
-  <% end %>
 
   <div class="field">
     <%= f.label :depth, t('soil.depth') %>

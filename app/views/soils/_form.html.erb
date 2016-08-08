@@ -33,7 +33,7 @@
   </div>
   <div class="field">
     <%= f.label :albedo, t('soil.albedo') %>
-    <%= f.number_field :albedo, :class => "numbers" %>
+    <%= f.number_field :albedo, :class => "numbers", :step => 'any'  %>
   </div>
   <div class="field">
     <%= f.label :slope, t('soil.slope') %>

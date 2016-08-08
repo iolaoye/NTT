@@ -48,8 +48,10 @@ class OperationsController < ApplicationController
     end
   end
 
+################################  Edit  #################################
   # GET /operations/1/edit
   def edit
+	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @operation = Operation.find(params[:id])
   end
 
