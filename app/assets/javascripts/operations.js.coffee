@@ -141,3 +141,15 @@ $(document).ready ->
 
     $("#rowIdEven").click ->
       updateTitles()
+
+    $('#replace').click ->
+      $('#year').toggle(!@checked)
+      $('#year_label').toggle(!@checked)
+      document.getElementById('year').disabled = @checked
+      if (@checked)
+        r = confirm('Are you sure? When you upload, this will delete all your current operations')
+        if r == false
+          $("#replace").removeAttr('checked');
+          $('#year').toggle(true)
+          $('#year_label').toggle(true)
+      return
