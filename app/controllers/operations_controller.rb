@@ -41,6 +41,7 @@ class OperationsController < ApplicationController
   # GET /operations/new.json
   def new
     @operation = Operation.new
+	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @operation }
@@ -108,7 +109,7 @@ class OperationsController < ApplicationController
   end
 
   def cropping_system
-	@cropping_systems = CroppingSystem.where(:state_id => Location.find(Field.find(Scenario.find(params[:id]).field_id).location_id).state_id)
+	@cropping_systems = CroppingSystem.where(:state_id => Location.find(session[:location_id]).state_id)
 	if @cropping_systems == nil then
 		@cropping_systems = CroppingSystem.where(:state_id => "All")
 	end
@@ -275,7 +276,8 @@ class OperationsController < ApplicationController
 				#opv1 = uri.read
 				#opv1 = Hash.from_xml(open(uri.to_s).read)["m"]{"p".inject({}) do |result, elem
 				client = Savon.client(wsdl: URL_HU)
-				response = client.call(:get_hu, message:{"crop" => @operation.crop_id, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
+				session[:depth] = "crop " + @operation.crop_id.to_s + " lat " + Weather.find_by_field_id(session[:field_id]).latitude.to_s + " nlon " + Weather.find_by_field_id(session[:field_id]).longitude.to_s
+				response = client.call(:get_hu, message:{"crop" => Crop.find(@operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
 				opv1 = response.body[:get_hu_response][:get_hu_result]
 				#opv1 = 2.2
 			when 2   #fertilizer - converte amount applied
