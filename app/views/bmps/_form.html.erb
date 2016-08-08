@@ -56,6 +56,14 @@
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
     <% end %>
   </div>
+  <div class="field" id="irrigation1" style="display:none">
+    <%= label :irrigation_id, t('bmp.irrigation') %>
+    <% if I18n.locale.equal?(:en) %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.where(:id => [1,2,3,7]), :id, :name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
+    <% else %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.where(:id => [1,2,3,7]), :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
+    <% end %>
+  </div>
   <div class="field" id="crop"  style="display:none">
     <%= label :crop_id, t('operation.crop') %>
     <%= collection_select :bmp, :crop_id, Crop.all, :id, :name, {:prompt => 'Select Vegetation'}, {:required => true} %>

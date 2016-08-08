@@ -65,7 +65,7 @@ class SoilsController < ApplicationController
     respond_to do |format|
       if @soil.save
         flash[:notice] = t('soil.soil') + " " + @soil.name + " " + t('general.success')
-        format.html { redirect_to @soil, notice: 'Soil was successfully created.' }
+        format.html { redirect_to list_soil_path(session[:field_id]), notice: 'Soil was successfully created.' }
         format.json { render json: @soil, status: :created, location: @soil }
       else
         format.html { render action: "new" }

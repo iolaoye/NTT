@@ -62,6 +62,7 @@ update_bmpsublist = ->
 #switch all of the bmps off to avoid having something on that does not belong to the new selected bmp
 switch_all_to_off = ->
     $("#irrigation").toggle(false)
+    $("#irrigation1").toggle(false)
     $("#water_stress_factor").toggle(false)
     $("#irrigation_efficiency").toggle(false)
     $("#area_control").toggle(false)
@@ -102,13 +103,15 @@ activate_bmp_controls = ->
     switch $("#bmp_bmpsublist_id").val()
         when "1" #autoirrigation
             $('#irrigation').toggle(true)
+            $('#irrigation1').toggle(false)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
             $("#submit").toggle(true)
         when "2" #autofertigation
-            $('#irrigation').toggle(true)
+            $('#irrigation').toggle(false)
+            $('#irrigation1').toggle(true)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
@@ -278,6 +281,8 @@ $(document).ready ->
 	    update_animal_options()
     $("#bmp_irrigation_id").change ->
         update_irrigation_options()
+    $("#autofertigation").change ->
+        update_fertigation_options()
     $("#fill_max").click ->
         update_max_row()
     $("#fill_min").click ->
