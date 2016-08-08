@@ -15,13 +15,17 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show   #selected when click on a project or a new project is created.
-    if params[:id] == "upload" then 
+    if params[:id] == "upload" then
 		redirect_to "upload"
 	end
     session[:project_id] = params[:id]
     @location = Location.find_by_project_id(params[:id])
 	session[:location_id] = @location.id
-    redirect_to location_path(@location.id)
+	if Field.where(:location_id => @location.id).count > 0 then
+		redirect_to list_field_path(session[:location_id])
+	else
+		redirect_to location_path(@location.id)
+	end
   end
 
   # GET /projects/1
