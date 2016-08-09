@@ -111,18 +111,17 @@ class OperationsController < ApplicationController
   end
 
   def cropping_system
-    #oo
-		@operations = Operation.where(:scenario_id => session[:scenario_id])
+	@operations = Operation.where(:scenario_id => session[:scenario_id])
     @highest_year = 0
     @operations.each do |operation|
       if(operation.year > @highest_year)
         @highest_year = operation.year
       end
     end
-		@cropping_systems = CroppingSystem.where(:state_id => Location.find(session[:location_id]).state_id)
-		if @cropping_systems == nil then
-			@cropping_systems = CroppingSystem.where(:state_id => "All")
-		end
+	@cropping_systems = CroppingSystem.where(:state_id => Location.find(session[:location_id]).state_id)
+	if @cropping_systems == nil then
+		@cropping_systems = CroppingSystem.where(:state_id => "All")
+	end
   	if params[:cropping_system] != nil
 		if params[:cropping_system][:id] != "" then
 			@cropping_system_id = params[:cropping_system][:id]
@@ -131,81 +130,78 @@ class OperationsController < ApplicationController
         Operation.where(:scenario_id => params[:id]).destroy_all
         #SoilOperation.where(:scenario_id => params[:id]).delete_all
       end
-			#take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
-			events = Event.where(:cropping_system_id => params[:cropping_system][:id])
-      #session[:events] = events
-      #oo
-			events.each do |event|
-				@operation = Operation.new
-				@operation.scenario_id = params[:id]
-				#get crop_id from croppingsystem and state_id
-				state_id = Location.find(session[:location_id]).state_id
-				crops = Crop.where(:number => event.apex_crop)
-				crop_id = event.apex_crop
-				plant_population = crops[0].plant_population_ft
-				crops.each do |crop|
-					if crop.state_id == state_id then
-						crop_id = crop.id
-						break
-					else
-						crop_id = crop.id
-					end
-				end
-				@operation.crop_id = crop_id
-				@operation.activity_id = event.activity_id
-				@operation.day = event.day
-				@operation.month_id = event.month
-        if params[:replace] != nil
-				  @operation.year = event.year
-        else
-          @operation.year = event.year + params[:year].to_i
-        end
-				#type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
-				#note fertilizer id and code are the same so far. Try to keep them that way
-				@operation.type_id = 0
-				@operation.no3_n = 0
-				@operation.po4_p = 0
-				@operation.org_n = 0
-				@operation.org_p = 0
-				@operation.nh3 = 0
-				@operation.subtype_id = 0
-				case @operation.activity_id
-					when 1  #planting operation. Take planting code from crop table and plant population as well
-						@operation.type_id = Crop.find(crop_id).planting_code
-						@operation.amount = plant_population
-					when 2, 7
-						fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
-						@operation.amount = event.apex_opv1
-						if fertilizer != nil then
-							@operation.type_id = fertilizer.fertilizer_type_id
-							@operation.no3_n = fertilizer.qn
-							@operation.po4_p = fertilizer.qp
-							@operation.org_n = fertilizer.yn
-							@operation.org_p = fertilizer.yp
-							@operation.nh3 = fertilizer.nh3
-							@operation.subtype_id = event.apex_fertilizer
-						end
-					when 3
-						@operation.type_id = event.apex_operation
-					else
-						@operation.amount = event.apex_opv1
-				end  #end case
-				@operation.depth = event.apex_opv2
-				@operation.scenario_id = params[:id]
-				if @operation.save
-					add_soil_operation()
-        end
-			end  # end events.each
-		end  #end if cropping_system_id != ""
-		@operations = Operation.where(:scenario_id => params[:id])
-		if params[:language] != nil then
-			if params[:language][:language].eql?("es")
-				I18n.locale = :es
+	  #take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
+	  events = Event.where(:cropping_system_id => params[:cropping_system][:id])
+	  events.each do |event|
+		@operation = Operation.new
+		@operation.scenario_id = params[:id]
+		#get crop_id from croppingsystem and state_id
+		state_id = Location.find(session[:location_id]).state_id
+		crops = Crop.where(:number => event.apex_crop)
+		crop_id = event.apex_crop
+		plant_population = crops[0].plant_population_ft
+		crops.each do |crop|
+			if crop.state_id == state_id then
+				crop_id = crop.id
+				break
 			else
-				I18n.locale = :en
+				crop_id = crop.id
 			end
 		end
-
+		@operation.crop_id = crop_id
+		@operation.activity_id = event.activity_id
+		@operation.day = event.day
+		@operation.month_id = event.month
+      if params[:replace] != nil
+        @operation.year = event.year
+      else
+        @operation.year = event.year + params[:year].to_i
+      end
+      #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
+      #note fertilizer id and code are the same so far. Try to keep them that way
+      @operation.type_id = 0
+      @operation.no3_n = 0
+      @operation.po4_p = 0
+      @operation.org_n = 0
+      @operation.org_p = 0
+      @operation.nh3 = 0
+      @operation.subtype_id = 0
+      case @operation.activity_id
+        when 1  #planting operation. Take planting code from crop table and plant population as well
+          @operation.type_id = Crop.find(crop_id).planting_code
+          @operation.amount = plant_population
+        when 2, 7
+          fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
+          @operation.amount = event.apex_opv1
+          if fertilizer != nil then
+            @operation.type_id = fertilizer.fertilizer_type_id
+            @operation.no3_n = fertilizer.qn
+            @operation.po4_p = fertilizer.qp
+            @operation.org_n = fertilizer.yn
+            @operation.org_p = fertilizer.yp
+            @operation.nh3 = fertilizer.nh3
+            @operation.subtype_id = event.apex_fertilizer
+          end
+        when 3
+          @operation.type_id = event.apex_operation
+        else
+          @operation.amount = event.apex_opv1
+      end  #end case
+      @operation.depth = event.apex_opv2
+      @operation.scenario_id = params[:id]
+      if @operation.save
+        add_soil_operation()
+      end
+    end  # end events.each
+  end  #end if cropping_system_id != ""
+  @operations = Operation.where(:scenario_id => params[:id])
+  if params[:language] != nil then
+    if params[:language][:language].eql?("es")
+      I18n.locale = :es
+		else
+			I18n.locale = :en
+		end
+	end
 		render action: 'list'
 	else
 		render action: 'upload'
