@@ -25,7 +25,7 @@ class CropsController < ApplicationController
   # GET /crops/new.json
   def new
     @crop = Crop.new
-
+	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @crop }
