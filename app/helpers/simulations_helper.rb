@@ -955,8 +955,9 @@ module SimulationsHelper
         #check and fix the operation list
 		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + @scenario.id.to_s)
 		#todo when the map is saved again the number of soils in SoilOperation are not updated we can use something like SoilOperation.where(:soil_id => 1698).update_all(:soil_id => 1703)
-		
+
 		if @soil_operations.count > 0 then
+			ooo
 			#fix_operation_file()
 			#line 1
 			@opcs_file.push(" .Opc file created directly by the user. Date: " + @dtNow1 + "\n")
@@ -989,6 +990,7 @@ module SimulationsHelper
 			append_file("fertOrg.dat", true, "fert.dat", "fert")
 			#print_array_to_file(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")  #print operation files
 			msg = send_file_to_APEX(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")
+			ooo
 			@opcs_list_file.push((@soil_number+1).to_s.rjust(5, '0') + " " + "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
 		end #end if 
         #@opcs_file.push("End Operation")
@@ -1454,15 +1456,15 @@ module SimulationsHelper
 	end
 
 	def read_apex_results(msg)
+	ooo
         ntt_apex_results = Array.new
 		#todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
         start_year = Weather.find_by_field_id(Scenario.find(session[:scenario_id]).field_id).simulation_initial_year - 5
-
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
-        msg = load_results(apex_start_year, msg)
-        
+        msg = load_results(apex_start_year, msg)        
 		msg = load_crop_results(apex_start_year)
+		return msg
     end
 
 	def load_results(apex_start_year, data)
@@ -1548,7 +1550,7 @@ module SimulationsHelper
 			end
         end
 		msg = average_totals(results_data)   # average totals
-		load_monthly_values(apex_start_year)
+		msg = load_monthly_values(apex_start_year)
 		return msg
 		#todo activate this method. This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
 		update_results_table
@@ -1705,7 +1707,6 @@ module SimulationsHelper
 		#total Flow = 40, surface runoff = 41, subsurface runoff = 42, tile drain flow = 43
 		#other water info = 50, irrigation = 51, deep percolation = 52
 		#total sediment = 60, sediment = 61, manure erosion = 62		
-		
 		for i in 0..values.count-1
 			values[i][0] == 0  ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
 			add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
@@ -1771,7 +1772,6 @@ module SimulationsHelper
 			result.watershed_id = watershed
 			result.crop_id = crop_id
 		end
-
 		result.value = value
 		if !ci.to_f.nan? then 
 			result.ci_value = ci
@@ -1863,6 +1863,7 @@ module SimulationsHelper
             annual_precipitation[i] /= last_year
 			add_value_to_chart_table(annual_precipitation[i], 100, 0, i+1)
         end  # end for
+		return "OK"
     end
 
 	def fixed_array(size, other)

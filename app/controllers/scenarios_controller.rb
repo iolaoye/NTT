@@ -5,7 +5,6 @@ class ScenariosController < ApplicationController
   # GET /scenarios/1
   # GET /1/scenarios.json
   def scenario_bmps
-
     session[:scenario_id] = params[:id]
     redirect_to list_bmp_path(params[:id])	
   end
@@ -37,14 +36,14 @@ class ScenariosController < ApplicationController
 	@scenarios.each do |scenario|
 		session[:scenario_id] = scenario.id
 		msg = run_scenario
-		if !msg.include?("NTT OUTPUT INFORMATION") then
+		if !msg.eql?("OK") then
 			break
 		end # end if msg 
 	end #end each scenario loop
-	if msg.include?("NTT OUTPUT INFORMATION") then
+	if msg.eql?("OK") then
 		render "list", notice: "Simulation process end succesfully"
 	else
-		render "list", notice: msg
+		render "list", error: msg
 	end # end if msg 
   end
 
@@ -122,15 +121,18 @@ class ScenariosController < ApplicationController
   # GET /scenarios/1.json
   def show()
     msg = run_scenario
-	if msg.include?("NTT OUTPUT INFORMATION") then
-		render "list", notice: "Simulation process end succesfully"
-	else
-		render "list", notice: msg
-	end # end if msg 
+	respond_to do |format|
+		if msg.eql?("OK") then
+			render "list", notice: "Simulation process end succesfully"
+		else
+			format.html { render action: "list" }
+		end # end if msg 
+	end
   end
 
   private
 
+################################  run_scenario - run simulation called from show or index  #################################
   def run_scenario()
 	if @scenarios == nil then
 		session[:scenario_id] = params[:id]
@@ -171,9 +173,9 @@ class ScenariosController < ApplicationController
 	@soil_number = 0
 	if msg.eql?("OK") then msg = create_subareas(1) end
 	if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") end
-	#print_array_to_file(@opcs_list_file, "OPCS.dat")	
 	if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation and return ntt file.
-	if msg.eql?("OK") then read_apex_results(msg) end
+	session[:depth] = ""
+	if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) end
 	@scenario.last_simulation = Time.now
 	@scenario.save
 	@scenarios = Scenario.where(:field_id => session[:field_id])
