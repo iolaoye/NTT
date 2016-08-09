@@ -1692,8 +1692,12 @@ module SimulationsHelper
 			chart.watershed_id = watershed
 			chart.description_id = description_id
 		end
-		chart.value = value
-		chart.save
+		chart.value = value	
+		if description_id > 70 and description_id < 80 then
+		end	
+		if chart.save then
+		else
+		end
 	end
 
 	def add_summary_to_results_table(values, description_id, cis)
@@ -1899,7 +1903,7 @@ module SimulationsHelper
 		return "OK"
     end  #end method
 
-	def average_crops_result(items)		
+	def average_crops_result(items)
 		yield_by_name = Array.new
 		description_id = 70
 		items.each do |item|
@@ -1909,12 +1913,12 @@ module SimulationsHelper
 					found = true
 					array["yield"] += item[1]
 					array["total"] += 1
-					add_value_to_chart_table(item[1] * array["conversion"], description_id, 0, item[0][1])
+					add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1])
 					break
 				end # end if same crop
 			end  # end each name
 			if found == false then
-				description_id += 1				
+				description_id += 1
 				yield_by_name.push(create_hash_by_name(item, description_id))
 			end  # end if found
 			#first = false
@@ -1923,6 +1927,7 @@ module SimulationsHelper
 		yield_by_name.each do |crop|
 			if session[:simulation] == "scenario"
 				crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
+				session[:depth] = @scenario
 			else
 				crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
 			end 

@@ -122,8 +122,6 @@ class LocationsController < ApplicationController
 				end 
 				if @field.save then
 				else
-				session[:depth] = @field
-				ooo
 				end
 				@weather.field_id = @field.id
 				session[:field_id] = @field.id
@@ -225,8 +223,7 @@ class LocationsController < ApplicationController
   def create_soils(i, field_id, forestry)
     #delete all of the soils for this field
 	soils1 = Soil.where(:field_id => field_id)
-	soils1.destroy_all
-	#todo since all of the soils are deleted all of the subareas need to be created again. Also, the SoilOperation needs to be deleted and created again.
+	soils1.destroy_all  #will delete Subareas and SoilOperations linked to these soils
 	total_percentage = 0
     for j in 1..params["field#{i}soils"].to_i
   	   @soil = @field.soils.new
@@ -265,7 +262,7 @@ class LocationsController < ApplicationController
 
  	   if @soil.save then
 		   if !(params["field#{i}soil#{j}error"] == 2) then
-			create_layers(i, j)				   
+			create_layers(i, j)
 		   end
 	   end
 	end #end for create_soils
@@ -285,7 +282,7 @@ class LocationsController < ApplicationController
 	end #end Scenario each do
   end  
 
- ###################################### create_soil ######################################
+ ###################################### create_soil layers ######################################
  ## Create layers receiving from map for each soil.
   def create_layers(i, j)
     for l in 1..params["field#{i}soil#{j}layers"].to_i
@@ -299,9 +296,12 @@ class LocationsController < ApplicationController
 	   layer.ph = params["field#{i}soil#{j}layer#{l}ph"]
 	   layer.depth = params["field#{i}soil#{j}layer#{l}depth"]
 	   layer.depth /= IN_TO_CM
+	   layer.depth = layer.depth.round(2)
 	   layer.cec = params["field#{i}soil#{j}layer#{l}cec"]
 	   layer.soil_p = 0
- 	   layer.save
+ 	   if layer.save then
+	   else
+	   end
 	end #end for create_layers
   end  
 
