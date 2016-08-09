@@ -7,7 +7,20 @@ class Operation < ActiveRecord::Base
   belongs_to :scenario
   #validations
     validates_uniqueness_of :crop_id, :scope => [:activity_id, :year, :month_id, :day, :type_id, :subtype_id]
-    validates_presence_of :amount, :depth, :moisture, :nh3, :no3_n, :org_n, :org_p, :po4_p
+	validate :sum
   #scopes
      default_scope :order => "year, month_id, day, activity_id, id ASC"
+  #Functions
+  def sum
+    if self.activity_id == 2
+	  if !((self.no3_n.to_f + self.po4_p.to_f + self.org_n.to_f + self.org_p.to_f) == 1)
+      self.errors.add(:error, I18n.t('operation.sum'))
+      end
+    end
+	if self.activity_id ==  7
+	  if !((self.no3_n.to_f + self.po4_p.to_f + self.org_n.to_f + self.org_p.to_f) == 1)
+      self.errors.add(:error, I18n.t('operation.sum'))
+      end
+    end
+  end
 end

@@ -503,6 +503,7 @@
     irrigation: Irrigación
     plant_population: Población de Planta
     load_operation: Cargar Operación
+    sum: 'Todos los nutrientes deben sumar 1.'
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG   
@@ -548,6 +549,8 @@
     min_temp: Temp. Min. ±(°C)
     precipitation: Precipitación (%)
     fill: Duplicar
+    select_vege: Seleccione la Vegetación
+    select_animal: Seleccione el tipo de Animal
   months:
     january: Enero
     february: Febrero

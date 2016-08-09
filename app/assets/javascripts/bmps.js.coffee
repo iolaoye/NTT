@@ -103,14 +103,12 @@ activate_bmp_controls = ->
     switch $("#bmp_bmpsublist_id").val()
         when "1" #autoirrigation
             $('#irrigation').toggle(true)
-            $('#irrigation1').toggle(false)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
             $("#submit").toggle(true)
         when "2" #autofertigation
-            $('#irrigation').toggle(false)
             $('#irrigation1').toggle(true)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)

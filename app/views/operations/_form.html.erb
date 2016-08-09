@@ -15,9 +15,13 @@
     </div>
   <% end %>
 
-  <div class="field">
+    <div class="field">
     <%= label :crop_id, t('operation.crop') %>
+        <% if I18n.locale.eql?(:en) %>
 			<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => 'Select crop'}, {:required => true} %>
+		<% else %>
+			<%= collection_select :operation, :crop_id, @crops, :id, :spanish_name, {:prompt => 'Seleccione Cultivo'}, {:required => true} %>
+		<% end %>
 	</div>
 	<div class="field">
 		<%= label :activity_id, t('scenario.operation') %>
@@ -34,7 +38,7 @@
 			<%= f.select :month_id, options_for_select(listMonths, :selected => @operation.month_id), {:prompt => t('datetime.prompts.month')}, {:required => true, :style => 'width:100px'} %>
 			<%= f.select :day, options_for_select(listDays, :selected => @operation.day), {:prompt => t('datetime.prompts.day')}, {:required => true, :style => 'width:50px'} %>
     </li>
-  </div>
+    </div>
 	<% case @operation.activity_id %>
 		<% when 1  # planting %>
 			<div id="div_type" class="field spacer_bottom" >
