@@ -60,21 +60,13 @@ class LayersController < ApplicationController
   def create
     @layer = Layer.new(layer_params)
 	@layer.soil_id = session[:soil_id]
-	if !((params[:layer][:clay].to_f) + (params[:layer][:sand].to_f) + (params[:layer][:silt].to_f) == 100 )
-      respond_to do |format|
-          format.html { render action: "new" }
-          flash[:info] = t('layer.sum')
-      end
-	elsif (params[:layer][:depth].to_f == 0)
-	  respond_to do |format|
-          format.html { render action: "new" }
-          flash[:info] = t('layer.error_depth')
-	  end	   
-	else
-	  respond_to do |format|
-	    @layer.save
-          format.html { redirect_to @layer, notice: 'Layer was successfully created.' }
-          format.json { render json: @layer, status: :created, location: @layer }     
+	respond_to do |format|
+      if @layer.save
+        format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully created.' }
+        format.json { render json: @layer, status: :created, location: @layer }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @layer.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -102,7 +94,7 @@ class LayersController < ApplicationController
     @layer.destroy
 
     respond_to do |format|
-      format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully updated.' }
+      format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully deleted.' }
       format.json { head :no_content }
     end
   end

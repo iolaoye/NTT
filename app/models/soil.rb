@@ -7,6 +7,8 @@ class Soil < ActiveRecord::Base
 	 has_many :results, :dependent => :destroy
 	 has_many :soil_operations, :dependent => :destroy
 	 has_many :charts, :dependent => :destroy
+  #validations
+     validates_presence_of :key, :group, :name, :slope
   #scopes
     default_scope :order => "percentage DESC"
 end
