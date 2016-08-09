@@ -58,14 +58,13 @@ update_bmpsublist = ->
     items.push "<option value>Select One</option>"
     $("#bmp_bmpsublist_id").html items.join("")
     $("#bmp_bmpsublist_id").removeAttr("disabled")
-	
+
 #switch all of the bmps off to avoid having something on that does not belong to the new selected bmp
 switch_all_to_off = ->
     $("#irrigation").toggle(false)
     $("#irrigation1").toggle(false)
     $("#water_stress_factor").toggle(false)
     $("#irrigation_efficiency").toggle(false)
-    $("#area_control").toggle(false)
     $("#maximum_single_application").toggle(false)
     $("#days").toggle(false)
     $("#safety_factor").toggle(false)
@@ -102,16 +101,18 @@ activate_bmp_controls = ->
     switch_all_to_off()
     switch $("#bmp_bmpsublist_id").val()
         when "1" #autoirrigation
+            $("#irrigation_efficiency_label").toggle(true)
+            $("#area_control_label").toggle(false)
             $('#irrigation').toggle(true)
-            $('#irrigation1').toggle(false)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
             $("#submit").toggle(true)
         when "2" #autofertigation
+            $("#irrigation_efficiency_label").toggle(true)
+            $("#area_control_label").toggle(false)
             $('#irrigation').toggle(false)
-            $('#irrigation1').toggle(true)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
@@ -135,7 +136,9 @@ activate_bmp_controls = ->
             $("#area").toggle(true)
             $("#submit").toggle(true)
         when "9" #ponds
-            $("#area_control").toggle(true)
+            $("#irrigation_efficiency_label").toggle(false)
+            $("#area_control_label").toggle(true)
+            $("#irrigation_efficiency").toggle(true)
             $("#submit").toggle(true)
         when "10" #stream fencing
             $("#animals").toggle(true)
@@ -198,7 +201,7 @@ activate_bmp_controls = ->
             $("#buffer_slope_upland").toggle(true)
             $("#bmp_crop_id").prop('required',true)
             $("#submit").toggle(true)
-    
+
 #activate elements on the bmp screen according to the bmp sublist selected
 update_irrigation_options = ->
     switch $("#bmp_irrigation_id").val()
