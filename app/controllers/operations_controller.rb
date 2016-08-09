@@ -185,19 +185,19 @@ class OperationsController < ApplicationController
         when 3
           @operation.type_id = event.apex_operation
         else
-          @operation.amount = event.apex_opv1
-      end  #end case
-      @operation.depth = event.apex_opv2
-      @operation.scenario_id = params[:id]
-      if @operation.save
-        add_soil_operation()
-      end
-    end  # end events.each
-  end  #end if cropping_system_id != ""
-  @operations = Operation.where(:scenario_id => params[:id])
-  if params[:language] != nil then
-    if params[:language][:language].eql?("es")
-      I18n.locale = :es
+			@operation.amount = event.apex_opv1
+		end  #end case
+		@operation.depth = event.apex_opv2
+		@operation.scenario_id = params[:id]
+		if @operation.save then
+			add_soil_operation()
+		end
+	  end  # end events.each
+	end  #end if cropping_system_id != ""
+	@operations = Operation.where(:scenario_id => params[:id])
+	if params[:language] != nil then
+		if params[:language][:language].eql?("es") 
+			I18n.locale = :es
 		else
 			I18n.locale = :en
 		end

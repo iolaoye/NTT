@@ -38,6 +38,7 @@ class Layer < ActiveRecord::Base
     self.psp  ||= 0.0
     self.satc  ||= 0.0
   end
+
   def sum
     if !((self.sand.to_f + self.silt.to_f + self.clay.to_f) == 100)
       self.errors.add(:error, I18n.t('layer.sum'))
