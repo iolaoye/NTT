@@ -189,8 +189,6 @@ class OperationsController < ApplicationController
 		end  #end case
 		@operation.depth = event.apex_opv2
 		@operation.scenario_id = params[:id]
-		session[:depth] = @operation
-		ooo
 		if @operation.save then
 			add_soil_operation()
 		end

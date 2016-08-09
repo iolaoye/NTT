@@ -61,7 +61,6 @@ class LocationsController < ApplicationController
 					field.destroy_all
 				end  # end if isFound
 			end # end Location do
-
 			# step 2: update or create remaining fields
 			for i in 1..params[:fieldnum].to_i
 				# find or create field
@@ -71,13 +70,14 @@ class LocationsController < ApplicationController
 		
 				#verify if this field aready has its soils. If not the soils coming from the map are added
 				if !(params["field#{i}error"] == 1) then
-					if @field.id == nil then
-						if Field.all.length == 0
-							@field.id = 1
-						else
-							@field.id = Field.last.id += 1
-						end 
-					end
+					#if @field.id == nil then
+					#	if Field.all.length == 0
+					#		@field.id = 1
+					#	else
+					#		@field.id = Field.last.id += 1
+					#	end 
+					#end
+					@field.save
 					create_soils(i, @field.id, @field.field_type)
 				end
 				#step 3 find or create site
@@ -120,7 +120,11 @@ class LocationsController < ApplicationController
 				if @weather.save then
 					@field.weather_id = @weather.id
 				end 
-				@field.save
+				if @field.save then
+				else
+				session[:depth] = @field
+				ooo
+				end
 				@weather.field_id = @field.id
 				session[:field_id] = @field.id
 				@weather.save
