@@ -148,7 +148,7 @@ class ProjectsController < ApplicationController
 		end 
 		@data.root.elements.each do |node|
 			case node.name
-				when "project"  #appears to return false, thus goes to else
+				when "project"
 					msg = upload_project_new_version(node)
 				when "location"
 					msg = upload_location_new_version(node)
@@ -160,10 +160,14 @@ class ProjectsController < ApplicationController
 					msg = upload_field_info(node)
 				when "SiteInfo"
 					msg = upload_site_info(node)
+				when "control"
+					msg = upload_control_values_new_version(node)
 				when "ControlValues"
 					msg = upload_control_values(node)
 				when "ParmValues"
 					msg = upload_parameter_values(node)
+				when "parameter_values"
+					msg = upload_parameter_values_new_version(node)
 			end
 			break if (msg != "OK" && msg != true)
 		end
@@ -196,6 +200,7 @@ class ProjectsController < ApplicationController
 			} # end xml.project
 			#save location information
 			save_location_information(xml, params[:id])
+			save_control_information(xml, params[:id])
 		} # end xml.projects
 	   end   #builder do end
 
@@ -352,17 +357,24 @@ class ProjectsController < ApplicationController
 
 			soil_operations = SoilOperation.where(:scenario_id => scenario.id)
 			xml.soil_operations {
-				soil_operations.each do |so|
-					save_soil_operation_information(xml, so)
+				soil_operations.each do |soil_op|
+					save_soil_operation_information(xml, soil_op)
 				end # end soil_operations.each
 			} # end xml.soil_operations
 
 			subareas = Subarea.where(:scenario_id => scenario.id)
 			xml.subareas {
-				subareas.each do |sa|
-					save_subarea_information(xml, sa)
+				subareas.each do |subarea|
+					save_subarea_information(xml, subarea)
 				end # end subarea.each
 			} # end xml.subareas
+
+			results = Result.where(:scenario_id => scenario.id)
+			xml.results {
+				results.each do |result|
+					save_result_information(xml, result)
+				end # end results.each
+			} # end xml.results
 
 		} # end xml.scenario
 	end #end scenarionmethod
@@ -384,6 +396,32 @@ class ProjectsController < ApplicationController
 			xml.nh3 operation.nh3
 			xml.subtype_id operation.subtype_id
 		} # xml each operation end
+	end # end method
+	
+	# ApexControl table needed for download? (Remove if not needed)
+	def save_control_information(xml, project_id)
+		xml.control {
+			control = ApexControl.find_by_project_id(project_id)
+			xml.control_id control.control_id
+			xml.value control.value
+		} # xml each control end
+	end
+
+	# ApexParameter table needed for download? (Remove if not needed)
+	def save_parameter_information(xml, project_id)
+		xml.parameter_values {
+			parameter = ApexParameter.find_by_project_id(project_id)
+			xml.parameter_id parameter.parameter_id
+			xml.value parameter.value
+		} # xml each parameter end
+	end
+
+	def save_result_information(xml, result)
+		xml.result {
+			xml.field_id result.field_id
+			xml.value result.value
+			xml.ci_value result.ci_value
+		} # xml each result end
 	end # end method
 
 	def save_bmp_information(xml, bmp)
@@ -671,6 +709,39 @@ class ProjectsController < ApplicationController
 			end
 		end	 
 		return "OK"
+	end
+
+	def upload_control_values_new_version(node) # exact same as old method, only lowercase
+		control = ApexControl.new
+		control.project_id = session[:project_id]
+		node.elements.each do |p|
+			case p.name
+				when "code"
+					control.control_id = Control.find_by_code(p.text).id
+					case control.control_id
+					when 1 # get number of years of simulation from weather
+						weather = Weather.find_by_field_id(session[:field_id])
+						control.value = weather.simulation_final_year - weather.simulation_initial_year + 1 + 5
+						control.save
+						# get first year of simulation from weather
+						control = ApexControl.new
+						control.project_id = session[:project_id]
+						control.control_id = Control.find_by_id(2).id
+						control.value = weather.simulation_initial_year - 5
+						control.save
+						return "OK"
+					when 2 # do nothing, second value should be taken
+						return "OK"
+					end # end case control_id
+				when "value"
+					control.value = p.text
+			end # end case
+		end # end each
+		if !control.save
+			return "Error saving control file"
+		else
+			return "OK"
+		end
 	end
 
 	def upload_weather_info(node)
@@ -1060,9 +1131,23 @@ class ProjectsController < ApplicationController
 							return msg
 						end
 					end
+				when "results"
+					p.elements.each do |r|
+						msg = upload_result_new_version(scenario.id, field_id, r)
+						if msg != "OK"
+							return msg
+						end
+					end
 				when "bmps"
 					p.elements.each do |b|
 						msg = upload_bmp_info_new_version(scenario.id, b)
+						if msg != "OK"
+							return msg
+						end
+					end
+				when "subarea"
+					p.elements.each do |sa|
+						msg = upload_subarea_new_version(sa, scenario.id)
 						if msg != "OK"
 							return msg
 						end
@@ -1292,7 +1377,95 @@ class ProjectsController < ApplicationController
 		if subarea.save then
 			return "OK"
 		else
-			retutn "Error loading subares"
+			return "Error loading subareas"
+		end
+	end
+
+	def upload_subarea_new_version(node, scenario_id)
+		subarea = Subarea.new
+		subarea.scenario_id = scenario_id
+		subarea.ny5 = 0
+		subarea.ny6 = 0
+		subarea.ny7 = 0
+		subarea.ny8 = 0
+		subarea.ny9 = 0
+		subarea.ny10 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		subarea.xtp5 = 0
+		node.elements.each do |p|
+			case p.name
+				when "subarea_type"
+					subarea.subarea_type = p.text
+				when "description"
+					subarea.description = p.text
+				when "number"
+					subarea.number = p.text
+				when "inps"
+					subarea.inps = p.text
+				when "iops"
+					subarea.iops = p.text
+				when "iow"
+					subarea.iow = p.text
+				when "ii"
+					subarea.ii = p.text
+				when "iapl"
+					subarea.iapl = p.text
+				when "nvcn"
+					subarea.nvcn = p.text
+				when "iwth"
+					subarea.iwth = p.text
+				when "ipts"
+					subarea.ipts = p.text
+				when "isao"
+					subarea.isao = p.text
+				when "luns"
+					subarea.luns = p.text
+				when "imw"
+					subarea.imw = p.text
+				when "sno"
+					subarea.sno = p.text
+				when "stdo"
+					subarea.stdo = p.text
+				when "yct"
+					subarea.yct = p.text
+				when "xct"
+					subarea.xct = p.text
+				when "azm"
+					subarea.azm = p.text
+				when "fl"
+					subarea.fl = p.text
+				when "angl"
+					subarea.angl = p.text
+				when "wsa"
+					subarea.wsa = p.text
+				when "chl"
+					subarea.chl = p.text
+				when "chd"
+					subarea.chd = p.text
+				when "chs"
+					subarea.chs = p.text
+				when "chn"
+					subarea.chn = p.text
+				when "slp"
+					subarea.slp = p.text
+				when "splg"
+					subarea.splg = p.text
+				when "upn"
+					subarea.upn = p.text
+				when "ffpq"
+					subarea.ffpq = p.text
+				when "urbf"
+					subarea.urbf = p.text
+			end
+		end
+		if subarea.save then
+			return "OK"
+		else
+			return "Error loading subareas"
 		end
 	end
 
@@ -1343,7 +1516,7 @@ class ProjectsController < ApplicationController
 		if soil_operation.save then
 			return "OK"
 		else
-			retutn "Error loading operations"
+			return "Error loading operations"
 		end
 	end
 
@@ -1505,6 +1678,25 @@ class ProjectsController < ApplicationController
 			end # end case p.name
 		end  # end node.elements.each
 	end  # end method
+
+	def upload_result_new_version(scenario_id, field_id, new_result)
+		result = Result.new
+		result.scenario_id = scenario_id
+		result.field_id = field_id
+		new_result.elements.each do |p|
+			case p.name
+				when "value"
+					result.value = p.text
+				when "ci_value"
+					result.ci_value = p.text
+			end # end case
+		end # end each
+		if result.save
+			return "OK"
+		else
+			return "Result could not be saved"
+		end
+	end
 
 	def upload_soil_result_info(node, field_id, soil_id, scenario_id)
 		#tile drain flow is duplicated in the old version NTTG2 VB. So is needed to control that the second one is not used
@@ -2333,4 +2525,23 @@ class ProjectsController < ApplicationController
 			return "OK"
 		end
 	end
+
+	def upload_parameter_values_new_version(node)
+		parameter = ApexParameter.new
+		parameter.project_id = session[:project_id]
+		node.elements.each do |p|
+			case p.name
+				when "parameter_id"
+					parameter.parameter_id = p.text
+				when "value"
+					parameter.value = p.text
+			end # end case
+		end # end each
+		if !parameter.save
+			return "Error saving parameter file"
+		else 
+			return "OK"
+		end
+	end
+
 end
