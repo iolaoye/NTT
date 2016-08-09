@@ -101,7 +101,7 @@ class OperationsController < ApplicationController
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
     @operation.destroy
 	if soil_operations != nil then
-		soil_operations.delete_all 
+		soil_operations.delete_all
 	end if
 
     respond_to do |format|
@@ -184,7 +184,7 @@ class OperationsController < ApplicationController
 							@operation.org_p = fertilizer.yp
 							@operation.nh3 = fertilizer.nh3
 							@operation.subtype_id = event.apex_fertilizer
-						end						 
+						end
 					when 3
 						@operation.type_id = event.apex_operation
 					else
@@ -192,14 +192,14 @@ class OperationsController < ApplicationController
 				end  #end case
 				@operation.depth = event.apex_opv2
 				@operation.scenario_id = params[:id]
-				if @operation.save then
+				if @operation.save
 					add_soil_operation()
-				end
+        end
 			end  # end events.each
 		end  #end if cropping_system_id != ""
 		@operations = Operation.where(:scenario_id => params[:id])
 		if params[:language] != nil then
-			if params[:language][:language].eql?("es") 
+			if params[:language][:language].eql?("es")
 				I18n.locale = :es
 			else
 				I18n.locale = :en
@@ -229,75 +229,37 @@ class OperationsController < ApplicationController
 	end
 
 	def update_soil_operation(soil_operation, soil_id)
-    #if params[:replace] != nil
-      # checked --- replace
-      soil_operation.activity_id = @operation.activity_id
-      soil_operation.scenario_id = @operation.scenario_id
-      soil_operation.operation_id = @operation.id
-      soil_operation.soil_id = soil_id
-      soil_operation.year = @operation.year
-      soil_operation.month = @operation.month_id
-      soil_operation.day = @operation.day
-      case @operation.activity_id
-        when 1, 3	#planting, tillage
-          soil_operation.apex_operation = @operation.type_id
-          soil_operation.type_id = @operation.type_id
-        when 2, 7   #fertilizer, grazing
-          soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
-          soil_operation.type_id = @operation.subtype_id
-        when 4   #Harvest. Take harvest operation from crop table
-          soil_operation.apex_operation = Crop.find(@operation.crop_id).harvest_code
-          soil_operation.type_id = @operation.subtype_id
-        else
-          soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
-          soil_operation.type_id = @operation.type_id
-      end
-      soil_operation.tractor_id = 0
-      soil_operation.apex_crop = Crop.find(@operation.crop_id).number
-      soil_operation.opv1 = set_opval1
-      soil_operation.opv2 = set_opval2(soil_operation.soil_id)
-      soil_operation.opv3 = 0
-      soil_operation.opv4 = set_opval4
-      soil_operation.opv5 = set_opval5
-      soil_operation.opv6 = 0
-      soil_operation.opv7 = 0
-      soil_operation.save
-    #else
-    if false
-      # not checked -- do not replace
-      new_soil_operation = SoilOperation.new
-      new_soil_operation.activity_id = @operation.activity_id
-      new_soil_operation.scenario_id = @operation.scenario_id
-      new_soil_operation.operation_id = @operation.id
-      new_soil_operation.soil_id = soil_id
-      new_soil_operation.year = params[:year].to_i
-      new_soil_operation.month = @operation.month_id
-      new_soil_operation.day = @operation.day
-      case @operation.activity_id
-        when 1, 3	#planting, tillage
-          new_soil_operation.apex_operation = @operation.type_id
-          new_soil_operation.type_id = @operation.type_id
-        when 2, 7   #fertilizer, grazing
-          new_soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
-          new_soil_operation.type_id = @operation.subtype_id
-        when 4   #Harvest. Take harvest operation from crop table
-          new_soil_operation.apex_operation = Crop.find(@operation.crop_id).harvest_code
-          new_soil_operation.type_id = @operation.subtype_id
-        else
-          new_soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
-          new_soil_operation.type_id = @operation.type_id
-      end
-      new_soil_operation.tractor_id = 0
-      new_soil_operation.apex_crop = Crop.find(@operation.crop_id).number
-      new_soil_operation.opv1 = set_opval1
-      new_soil_operation.opv2 = set_opval2(new_soil_operation.soil_id)
-      new_soil_operation.opv3 = 0
-      new_soil_operation.opv4 = set_opval4
-      new_soil_operation.opv5 = set_opval5
-      new_soil_operation.opv6 = 0
-      new_soil_operation.opv7 = 0
-      new_soil_operation.save
+    soil_operation.activity_id = @operation.activity_id
+    soil_operation.scenario_id = @operation.scenario_id
+    soil_operation.operation_id = @operation.id
+    soil_operation.soil_id = soil_id
+    soil_operation.year = @operation.year
+    soil_operation.month = @operation.month_id
+    soil_operation.day = @operation.day
+    case @operation.activity_id
+      when 1, 3	#planting, tillage
+        soil_operation.apex_operation = @operation.type_id
+        soil_operation.type_id = @operation.type_id
+      when 2, 7   #fertilizer, grazing
+        soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
+        soil_operation.type_id = @operation.subtype_id
+      when 4   #Harvest. Take harvest operation from crop table
+        soil_operation.apex_operation = Crop.find(@operation.crop_id).harvest_code
+        soil_operation.type_id = @operation.subtype_id
+      else
+        soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
+        soil_operation.type_id = @operation.type_id
     end
+    soil_operation.tractor_id = 0
+    soil_operation.apex_crop = Crop.find(@operation.crop_id).number
+    soil_operation.opv1 = set_opval1
+    soil_operation.opv2 = set_opval2(soil_operation.soil_id)
+    soil_operation.opv3 = 0
+    soil_operation.opv4 = set_opval4
+    soil_operation.opv5 = set_opval5
+    soil_operation.opv6 = 0
+    soil_operation.opv7 = 0
+    soil_operation.save
 	end
 
 	def set_opval5
