@@ -48,20 +48,12 @@
     <hr class="line_break" color="dodgerblue">
   </div>
   <br>
-  <div class="field" id="irrigation" style="display:none">
+  <div class="field" id="irrigation" style="display:none;">
     <%= label :irrigation_id, t('bmp.irrigation') %>
     <% if I18n.locale.equal?(:en) %>
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
     <% else %>
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
-    <% end %>
-  </div>
-  <div class="field" id="irrigation1" style="display:none">
-    <%= label :irrigation_id, t('bmp.irrigation') %>
-    <% if I18n.locale.equal?(:en) %>
-      <%= collection_select :bmp, :irrigation_id, Irrigation.where(:id => [1,2,3,7]), :id, :name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
-    <% else %>
-      <%= collection_select :bmp, :irrigation_id, Irrigation.where(:id => [1,2,3,7]), :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
     <% end %>
   </div>
   <div class="field" id="crop"  style="display:none">
@@ -73,11 +65,8 @@
     <%= f.number_field :water_stress_factor, :step => 'any' %>
   </div>
   <div class="field" id = "irrigation_efficiency" style="display:none">
-    <%= f.label t('pdf.irrigation_efficiency') %> (0.00 – 1.00)<br />
-    <%= f.number_field :irrigation_efficiency, :step => 'any' %>
-  </div>
-  <div class="field" id = "area_control" style="display:none">
-    <%= f.label t('bmp.area_control') %> (0.00 – 1.00)<br />
+    <%= f.label t('pdf.irrigation_efficiency'), :id => 'irrigation_efficiency_label' %>
+    <%= f.label t('bmp.area_control'), :id => 'area_control_label' %> (0.00 – 1.00)<br />
     <%= f.number_field :irrigation_efficiency, :step => 'any' %>
   </div>
   <div class="field" id="maximum_single_application" style="display:none">
@@ -219,7 +208,7 @@
     <%= f.submit %>
 	<%= link_to t('general.back'), list_bmp_path(session[:scenario_id]) %>
   </div>
-  
+
 
 <% end %>
 
@@ -235,7 +224,7 @@
 
 <script>
 
-document.addEventListener('DOMContentLoaded', function(){ 
+document.addEventListener('DOMContentLoaded', function(){
     showFields();
 }, false);
 
@@ -257,7 +246,7 @@ function showFields() {
       document.getElementById("safety_factor").style.display = "none";
       document.getElementById("area").style.display = "none";
       }
-    } 
+    }
   }
 }
 
