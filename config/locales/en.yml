@@ -513,7 +513,8 @@ en:
     zero_to_max: "(0.00 – 99999.00)"
     quarter_to_one: "(0.25 - 1.00)"
     quarter_to_three_fourths: "(0.25 - 0.75)"
-    days_range: "(Days: 0.00 – 365)"
+    days_range: "(Days: 0 – 365)"
+    days_range_number: "(0 - 365)"
     lbs_per_day: lbs per day
     ft: ft
     acres: acres
@@ -532,15 +533,19 @@ en:
     animals: Animals
     number_of_animals: Number of animals
     irrigation_frequency: Irrigation frequency
-    hours: Hours
+    stream_fencing_frequency: Days in Stream
+    hours: Hours per day
     dry_manure: Dry manure
     no3_n: No3 n
     po4_p: Po4 p
     org_n: Org n
     org_p: Org p
     width: Width
+    buffer_width: Buffer Width
+    waterways_info: Including both sides of channel
     grass_field_portion: Grass field portion
     slope_ratio: Slope ratio
+    slope_ratio_label: Buffer Slope Ratio to Upland
     crop_width: Crop width
     slope_reduction: Slope reduction
     sides: Sides

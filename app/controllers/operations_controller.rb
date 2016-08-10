@@ -103,7 +103,7 @@ class OperationsController < ApplicationController
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
     @operation.destroy
 	if soil_operations != nil then
-		soil_operations.delete_all 
+		soil_operations.delete_all
 	end if
 
     respond_to do |format|
@@ -113,18 +113,17 @@ class OperationsController < ApplicationController
   end
 
   def cropping_system
-    #oo
-		@operations = Operation.where(:scenario_id => session[:scenario_id])
+	@operations = Operation.where(:scenario_id => session[:scenario_id])
     @highest_year = 0
     @operations.each do |operation|
       if(operation.year > @highest_year)
         @highest_year = operation.year
       end
     end
-		@cropping_systems = CroppingSystem.where(:state_id => Location.find(session[:location_id]).state_id)
-		if @cropping_systems == nil then
-			@cropping_systems = CroppingSystem.where(:state_id => "All")
-		end
+	@cropping_systems = CroppingSystem.where(:state_id => Location.find(session[:location_id]).state_id)
+	if @cropping_systems == nil then
+		@cropping_systems = CroppingSystem.where(:state_id => "All")
+	end
   	if params[:cropping_system] != nil
 		if params[:cropping_system][:id] != "" then
 			@cropping_system_id = params[:cropping_system][:id]
@@ -133,81 +132,78 @@ class OperationsController < ApplicationController
         Operation.where(:scenario_id => params[:id]).destroy_all
         #SoilOperation.where(:scenario_id => params[:id]).delete_all
       end
-			#take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
-			events = Event.where(:cropping_system_id => params[:cropping_system][:id])
-      #session[:events] = events
-      #oo
-			events.each do |event|
-				@operation = Operation.new
-				@operation.scenario_id = params[:id]
-				#get crop_id from croppingsystem and state_id
-				state_id = Location.find(session[:location_id]).state_id
-				crops = Crop.where(:number => event.apex_crop)
-				crop_id = event.apex_crop
-				plant_population = crops[0].plant_population_ft
-				crops.each do |crop|
-					if crop.state_id == state_id then
-						crop_id = crop.id
-						break
-					else
-						crop_id = crop.id
-					end
-				end
-				@operation.crop_id = crop_id
-				@operation.activity_id = event.activity_id
-				@operation.day = event.day
-				@operation.month_id = event.month
-        if params[:replace] != nil
-				  @operation.year = event.year
-        else
-          @operation.year = event.year + params[:year].to_i
-        end
-				#type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
-				#note fertilizer id and code are the same so far. Try to keep them that way
-				@operation.type_id = 0
-				@operation.no3_n = 0
-				@operation.po4_p = 0
-				@operation.org_n = 0
-				@operation.org_p = 0
-				@operation.nh3 = 0
-				@operation.subtype_id = 0
-				case @operation.activity_id
-					when 1  #planting operation. Take planting code from crop table and plant population as well
-						@operation.type_id = Crop.find(crop_id).planting_code
-						@operation.amount = plant_population
-					when 2, 7
-						fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
-						@operation.amount = event.apex_opv1
-						if fertilizer != nil then
-							@operation.type_id = fertilizer.fertilizer_type_id
-							@operation.no3_n = fertilizer.qn
-							@operation.po4_p = fertilizer.qp
-							@operation.org_n = fertilizer.yn
-							@operation.org_p = fertilizer.yp
-							@operation.nh3 = fertilizer.nh3
-							@operation.subtype_id = event.apex_fertilizer
-						end						 
-					when 3
-						@operation.type_id = event.apex_operation
-					else
-						@operation.amount = event.apex_opv1
-				end  #end case
-				@operation.depth = event.apex_opv2
-				@operation.scenario_id = params[:id]
-				if @operation.save then
-					add_soil_operation()
-				end
-			end  # end events.each
-		end  #end if cropping_system_id != ""
-		@operations = Operation.where(:scenario_id => params[:id])
-		if params[:language] != nil then
-			if params[:language][:language].eql?("es") 
-				I18n.locale = :es
+	  #take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
+	  events = Event.where(:cropping_system_id => params[:cropping_system][:id])
+	  events.each do |event|
+		@operation = Operation.new
+		@operation.scenario_id = params[:id]
+		#get crop_id from croppingsystem and state_id
+		state_id = Location.find(session[:location_id]).state_id
+		crops = Crop.where(:number => event.apex_crop)
+		crop_id = event.apex_crop
+		plant_population = crops[0].plant_population_ft
+		crops.each do |crop|
+			if crop.state_id == state_id then
+				crop_id = crop.id
+				break
 			else
-				I18n.locale = :en
+				crop_id = crop.id
 			end
 		end
-
+		@operation.crop_id = crop_id
+		@operation.activity_id = event.activity_id
+		@operation.day = event.day
+		@operation.month_id = event.month
+      if params[:replace] != nil
+        @operation.year = event.year
+      else
+        @operation.year = event.year + params[:year].to_i
+      end
+      #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
+      #note fertilizer id and code are the same so far. Try to keep them that way
+      @operation.type_id = 0
+      @operation.no3_n = 0
+      @operation.po4_p = 0
+      @operation.org_n = 0
+      @operation.org_p = 0
+      @operation.nh3 = 0
+      @operation.subtype_id = 0
+      case @operation.activity_id
+        when 1  #planting operation. Take planting code from crop table and plant population as well
+          @operation.type_id = Crop.find(crop_id).planting_code
+          @operation.amount = plant_population
+        when 2, 7
+          fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
+          @operation.amount = event.apex_opv1
+          if fertilizer != nil then
+            @operation.type_id = fertilizer.fertilizer_type_id
+            @operation.no3_n = fertilizer.qn
+            @operation.po4_p = fertilizer.qp
+            @operation.org_n = fertilizer.yn
+            @operation.org_p = fertilizer.yp
+            @operation.nh3 = fertilizer.nh3
+            @operation.subtype_id = event.apex_fertilizer
+          end
+        when 3
+          @operation.type_id = event.apex_operation
+        else
+			@operation.amount = event.apex_opv1
+		end  #end case
+		@operation.depth = event.apex_opv2
+		@operation.scenario_id = params[:id]
+		if @operation.save then
+			add_soil_operation()
+		end
+	  end  # end events.each
+	end  #end if cropping_system_id != ""
+	@operations = Operation.where(:scenario_id => params[:id])
+	if params[:language] != nil then
+		if params[:language][:language].eql?("es") 
+			I18n.locale = :es
+		else
+			I18n.locale = :en
+		end
+	end
 		render action: 'list'
 	else
 		render action: 'upload'
@@ -231,75 +227,37 @@ class OperationsController < ApplicationController
 	end
 
 	def update_soil_operation(soil_operation, soil_id)
-    #if params[:replace] != nil
-      # checked --- replace
-      soil_operation.activity_id = @operation.activity_id
-      soil_operation.scenario_id = @operation.scenario_id
-      soil_operation.operation_id = @operation.id
-      soil_operation.soil_id = soil_id
-      soil_operation.year = @operation.year
-      soil_operation.month = @operation.month_id
-      soil_operation.day = @operation.day
-      case @operation.activity_id
-        when 1, 3	#planting, tillage
-          soil_operation.apex_operation = @operation.type_id
-          soil_operation.type_id = @operation.type_id
-        when 2, 7   #fertilizer, grazing
-          soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
-          soil_operation.type_id = @operation.subtype_id
-        when 4   #Harvest. Take harvest operation from crop table
-          soil_operation.apex_operation = Crop.find(@operation.crop_id).harvest_code
-          soil_operation.type_id = @operation.subtype_id
-        else
-          soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
-          soil_operation.type_id = @operation.type_id
-      end
-      soil_operation.tractor_id = 0
-      soil_operation.apex_crop = Crop.find(@operation.crop_id).number
-      soil_operation.opv1 = set_opval1
-      soil_operation.opv2 = set_opval2(soil_operation.soil_id)
-      soil_operation.opv3 = 0
-      soil_operation.opv4 = set_opval4
-      soil_operation.opv5 = set_opval5
-      soil_operation.opv6 = 0
-      soil_operation.opv7 = 0
-      soil_operation.save
-    #else
-    if false
-      # not checked -- do not replace
-      new_soil_operation = SoilOperation.new
-      new_soil_operation.activity_id = @operation.activity_id
-      new_soil_operation.scenario_id = @operation.scenario_id
-      new_soil_operation.operation_id = @operation.id
-      new_soil_operation.soil_id = soil_id
-      new_soil_operation.year = params[:year].to_i
-      new_soil_operation.month = @operation.month_id
-      new_soil_operation.day = @operation.day
-      case @operation.activity_id
-        when 1, 3	#planting, tillage
-          new_soil_operation.apex_operation = @operation.type_id
-          new_soil_operation.type_id = @operation.type_id
-        when 2, 7   #fertilizer, grazing
-          new_soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
-          new_soil_operation.type_id = @operation.subtype_id
-        when 4   #Harvest. Take harvest operation from crop table
-          new_soil_operation.apex_operation = Crop.find(@operation.crop_id).harvest_code
-          new_soil_operation.type_id = @operation.subtype_id
-        else
-          new_soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
-          new_soil_operation.type_id = @operation.type_id
-      end
-      new_soil_operation.tractor_id = 0
-      new_soil_operation.apex_crop = Crop.find(@operation.crop_id).number
-      new_soil_operation.opv1 = set_opval1
-      new_soil_operation.opv2 = set_opval2(new_soil_operation.soil_id)
-      new_soil_operation.opv3 = 0
-      new_soil_operation.opv4 = set_opval4
-      new_soil_operation.opv5 = set_opval5
-      new_soil_operation.opv6 = 0
-      new_soil_operation.opv7 = 0
-      new_soil_operation.save
+    soil_operation.activity_id = @operation.activity_id
+    soil_operation.scenario_id = @operation.scenario_id
+    soil_operation.operation_id = @operation.id
+    soil_operation.soil_id = soil_id
+    soil_operation.year = @operation.year
+    soil_operation.month = @operation.month_id
+    soil_operation.day = @operation.day
+    case @operation.activity_id
+      when 1, 3	#planting, tillage
+        soil_operation.apex_operation = @operation.type_id
+        soil_operation.type_id = @operation.type_id
+      when 2, 7   #fertilizer, grazing
+        soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
+        soil_operation.type_id = @operation.subtype_id
+      when 4   #Harvest. Take harvest operation from crop table
+        soil_operation.apex_operation = Crop.find(@operation.crop_id).harvest_code
+        soil_operation.type_id = @operation.subtype_id
+      else
+        soil_operation.apex_operation = Activity.find(@operation.activity_id).apex_code
+        soil_operation.type_id = @operation.type_id
     end
+    soil_operation.tractor_id = 0
+    soil_operation.apex_crop = Crop.find(@operation.crop_id).number
+    soil_operation.opv1 = set_opval1
+    soil_operation.opv2 = set_opval2(soil_operation.soil_id)
+    soil_operation.opv3 = 0
+    soil_operation.opv4 = set_opval4
+    soil_operation.opv5 = set_opval5
+    soil_operation.opv6 = 0
+    soil_operation.opv7 = 0
+    soil_operation.save
 	end
 
 	def set_opval5

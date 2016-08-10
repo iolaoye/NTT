@@ -955,9 +955,7 @@ module SimulationsHelper
         #check and fix the operation list
 		@soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + @scenario.id.to_s)
 		#todo when the map is saved again the number of soils in SoilOperation are not updated we can use something like SoilOperation.where(:soil_id => 1698).update_all(:soil_id => 1703)
-
 		if @soil_operations.count > 0 then
-			ooo
 			#fix_operation_file()
 			#line 1
 			@opcs_file.push(" .Opc file created directly by the user. Date: " + @dtNow1 + "\n")
@@ -990,7 +988,6 @@ module SimulationsHelper
 			append_file("fertOrg.dat", true, "fert.dat", "fert")
 			#print_array_to_file(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")  #print operation files
 			msg = send_file_to_APEX(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")
-			ooo
 			@opcs_list_file.push((@soil_number+1).to_s.rjust(5, '0') + " " + "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
 		end #end if 
         #@opcs_file.push("End Operation")
@@ -1456,7 +1453,6 @@ module SimulationsHelper
 	end
 
 	def read_apex_results(msg)
-	ooo
         ntt_apex_results = Array.new
 		#todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
         start_year = Weather.find_by_field_id(Scenario.find(session[:scenario_id]).field_id).simulation_initial_year - 5
@@ -1696,8 +1692,12 @@ module SimulationsHelper
 			chart.watershed_id = watershed
 			chart.description_id = description_id
 		end
-		chart.value = value
-		chart.save
+		chart.value = value	
+		if description_id > 70 and description_id < 80 then
+		end	
+		if chart.save then
+		else
+		end
 	end
 
 	def add_summary_to_results_table(values, description_id, cis)
@@ -1903,7 +1903,7 @@ module SimulationsHelper
 		return "OK"
     end  #end method
 
-	def average_crops_result(items)		
+	def average_crops_result(items)
 		yield_by_name = Array.new
 		description_id = 70
 		items.each do |item|
@@ -1913,12 +1913,12 @@ module SimulationsHelper
 					found = true
 					array["yield"] += item[1]
 					array["total"] += 1
-					add_value_to_chart_table(item[1] * array["conversion"], description_id, 0, item[0][1])
+					add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1])
 					break
 				end # end if same crop
 			end  # end each name
 			if found == false then
-				description_id += 1				
+				description_id += 1
 				yield_by_name.push(create_hash_by_name(item, description_id))
 			end  # end if found
 			#first = false
@@ -1927,6 +1927,7 @@ module SimulationsHelper
 		yield_by_name.each do |crop|
 			if session[:simulation] == "scenario"
 				crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
+				session[:depth] = @scenario
 			else
 				crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
 			end 

@@ -1,11 +1,12 @@
 class FieldsController < ApplicationController
+################################  scenarios list   #################################
   # GET /locations
   # GET /locations.json
   def field_scenarios  
     session[:field_id] = params[:id]
-    redirect_to list_scenario_path	
+    redirect_to list_scenario_path
   end
-################################  scenarios list   #################################
+################################  soils list   #################################
   # GET /locations
   # GET /locations.json
   def field_soils
