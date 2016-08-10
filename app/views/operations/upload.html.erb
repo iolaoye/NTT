@@ -3,12 +3,14 @@
   <div class="field">
     <%= label "select", t('operation.cropping_system') %>
     <%= collection_select :cropping_system, :id, @cropping_systems, :id, :crop, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id}, :required => true %>
-    <% if @operations != nil %>&nbsp&nbsp&nbsp
-        <%= label :year, "Year", :id => "year_label" %>
-        <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true %>
-        <br><br>
-        <%= label "replace", "Replace current operations" %>
-        <%= check_box_tag :replace, 'replace', false %>
+    <% if @operations.first != nil %>&nbsp&nbsp&nbsp
+      <%= label :year, "Year", :id => "year_label" %>
+      <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true %>
+      <br><br>
+      <%= label "replace", "Replace current operations" %>
+      <%= check_box_tag :replace, 'replace', false %>
+    <% else %>
+      <br><br>
     <% end %>
     <%= hidden_field(:language, :language, :value => I18n.locale) %>
     <%= button_to t('operation.upload'), cropping_system_operation_path, :id => "operation_upload", :class => "inbox-sf-add-btn tip", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
