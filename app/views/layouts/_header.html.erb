@@ -226,7 +226,7 @@
 				<% if session[:simulation].eql?('scenario') %>
 					<% field_name = Field.find(session[:field_id]).field_name %>
 					<li><%=link_to t('menu.fields'), list_field_path(session[:location_id]) %></li>
-					<li><%=">>"%><%=link_to field_name, field_path(session[:field_id]) %></li>
+					<li><%=">>"%><%=link_to field_name, list_scenario_path(session[:field_id]) %></li>
 				<% else %>
 					<li><%=link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
 				<% end %>

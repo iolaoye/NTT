@@ -234,6 +234,7 @@ class LocationsController < ApplicationController
 	   @soil.albedo = params["field#{i}soil#{j}albedo"]
 	   @soil.slope = params["field#{i}soil#{j}slope"]
 	   @soil.percentage = params["field#{i}soil#{j}pct"]
+	   @soil.percentage = @soil.percentage.round(2)
 	   @soil.drainage_type = params["field#{i}soil#{j}drain"]
 	   @soil.tsla = 10
 	   @soil.xids = 1

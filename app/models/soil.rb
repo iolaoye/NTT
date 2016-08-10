@@ -9,6 +9,7 @@ class Soil < ActiveRecord::Base
 	 has_many :charts, :dependent => :destroy
   #validations
      validates_presence_of :key, :group, :name, :slope
+     validates :slope, numericality: { greater_than: 0 }
   #scopes
     default_scope :order => "percentage DESC"
 end

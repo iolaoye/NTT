@@ -503,7 +503,7 @@
     irrigation: Irrigación
     plant_population: Población de Planta
     load_operation: Cargar Operación
-    sum: 'Todos los nutrientes deben sumar 1.'
+    sum: 'El total de los nutrientes deben ser menor o igual a 1'
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG   
