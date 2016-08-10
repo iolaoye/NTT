@@ -58,7 +58,11 @@
   </div>
   <div class="field" id="crop"  style="display:none">
     <%= label :crop_id, t('operation.crop') %>
-    <%= collection_select :bmp, :crop_id, Crop.all, :id, :name, {:prompt => 'Select Vegetation'}, {:required => true} %>
+    <% if I18n.locale.equal?(:en) %>
+	  <%= collection_select :bmp, :crop_id, Crop.all, :id, :name, {:prompt => t('bmp.select_vege')}, {:required => true} %>
+    <% else %>
+	  <%= collection_select :bmp, :crop_id, Crop.all, :id, :spanish_name, {:prompt => t('bmp.select_vege')}, {:required => true} %>
+	<% end %>
   </div>
   <div class="field" id = "water_stress_factor" style="display:none">
     <%= f.label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %> <br />
@@ -87,7 +91,11 @@
   </div>
   <div class="field" id="animals" style="display:none">
     <%= label :animal_id, t("bmp.animals") %>
-    <%= collection_select :bmp, :animal_id, @animals, :id, :name, {:prompt => 'Select Animal Type', :selected => @bmp.animal_id}, {:required => true} %>
+	<% if I18n.locale.equal?(:en) %>
+      <%= collection_select :bmp, :animal_id, @animals, :id, :name, {:prompt => t('bmp.select_animal'), :selected => @bmp.animal_id}, {:required => true} %>
+	<% else %>
+	  <%= collection_select :bmp, :animal_id, @animals, :id, :spanish_name, {:prompt => t('bmp.select_animal'), :selected => @bmp.animal_id}, {:required => true} %>
+	<% end %>
   </div>
   <div class="field" id="number_of_animals" style="display:none">
     <%= f.label :number_of_animals, t('bmp.number_of_animals') %><br />

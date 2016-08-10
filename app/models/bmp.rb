@@ -30,11 +30,10 @@ class Bmp < ActiveRecord::Base
     validates :buffer_slope_upland, numericality: { greater_than_or_equal_to: 0.25, less_than_or_equal_to: 1.0 }, if: "bmpsublist_id == 12 || bmpsublist_id == 13 || bmpsublist_id == 23"
     validates :crop_width, numericality: { greater_than: 0 }, if: "bmpsublist_id == 15"
     validates :slope_reduction, numericality: { greater_than: 0,  less_than_or_equal_to: 100 }, if: "bmpsublist_id == 16"
-    validates :sides, numericality: { greater_than: 0 }, if: "bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7"
+    validates :sides, numericality: { greater_than: 0, less_than_or_equal_to: 4.0 }, if: "bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7"
     validates_uniqueness_of :bmp_id, :scope => :scenario_id, :message => "of this group already exists", if: "bmp_id == 1 || bmp_id == 8"
     validates_uniqueness_of :bmp_id, :scope => :scenario_id, if: :pad_and_pipes_exists
-
-  #functions
+  #Functions
   def pad_and_pipes_exists
     if bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7
       sublist_ids = Array.wrap([4, 5, 6, 7])
@@ -47,5 +46,4 @@ class Bmp < ActiveRecord::Base
 	  end #end first if
 	  return pads_exists
   end #end function
-
 end
