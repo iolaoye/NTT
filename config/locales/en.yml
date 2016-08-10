@@ -504,6 +504,7 @@ en:
     irrigation: Irrigation
     plant_population: Plant Population
     load_operation: Load Operation
+    sum: 'total nutrients should be less or equal to 1'
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group 
@@ -554,6 +555,8 @@ en:
     min_temp: Min. Temp. ±(°C)
     precipitation: Precipitation (%)
     fill: Fill
+    select_vege: Select Vegetation
+    select_animal: Select Animal Type
   months:
     january: January
     february: February
@@ -912,10 +915,10 @@ en:
     navredir: 'to get a basic understanding of how to navigate the <strong>NTT</strong> application.'
     initial:
         header: To Start a Project
-        statement: "There are <strong>two initial choices</strong> to start a new project:"
-        item1: 'Select the <strong>New Project</strong> option to start a project from scratch'
-        item2: 'Select the <strong>Upload Project</strong> option to start a <strong>previously saved</strong> project.'
-        item3: 'Select the <strong>Open an Example Project</strong> option to start a <strong>pre-defined example</strong> project.'
+        statement: "There are <b>two initial choices</b> to start a new project:"
+        item1: 'Select the <b>New Project</b> option to start a project from scratch'
+        item2: 'Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.'
+        item3: 'Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.'
     create:
         header: New Project Option
         body1: 'Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.'
@@ -926,8 +929,8 @@ en:
         body2: 'After you have opened the save project, click the <strong>Save Changes</strong> button to save the information and continue.'
     example:
         header: Open an Example Project Option
-        body1: 'You can also use the <strong>Open an Example Project</strong> button, and then select from the options to load a sample project file.'
-        body2: 'After you have entered the information, click the <strong>Save and Continue</strong> button to save the information and continue.'
+        body1: 'You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.'
+        body2: 'After you have entered the information, click the <b>Save and Continue</b> button to save the information and continue.'
     save:
         header: Save Active Project
         body: 'You can also use the <strong>Save Active Project...</strong> button to save the current project that you are working on.' 

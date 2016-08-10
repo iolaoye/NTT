@@ -35,6 +35,9 @@ class ScenariosController < ApplicationController
 # GET /scenarios.json
   def index
     msg = "OK"
+			@project_name = Project.find(session[:project_id]).name
+			@field_name = Field.find(session[:field_id]).field_name
+
     @scenarios = Scenario.where(:field_id => session[:field_id])
     @scenarios.each do |scenario|
       session[:scenario_id] = scenario.id
@@ -126,7 +129,10 @@ class ScenariosController < ApplicationController
     msg = run_scenario
     respond_to do |format|
       if msg.eql?("OK") then
-        render "list", notice: "Simulation process end succesfully"
+          @scenarios = Scenario.where(:field_id => session[:field_id])
+        @project_name = Project.find(session[:project_id]).name
+        @field_name = Field.find(session[:field_id]).field_name
+        format.html { render action: "list" }
       else
         format.html { render action: "list" }
       end # end if msg

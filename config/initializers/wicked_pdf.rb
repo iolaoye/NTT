@@ -13,7 +13,6 @@
 
   def initialize
     WickedPdf.config = {
-      exe_path: 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
-
+      exe_path: WICK_FOLDER + 'wkhtmltopdf.exe'
     }
   end
