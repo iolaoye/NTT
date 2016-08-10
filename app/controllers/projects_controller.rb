@@ -104,7 +104,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
 	  flash[:notice] = t('models.project') + " " + @project.name + t('notices.deleted')
-      format.html { render "index"}
+      format.html { redirect_to welcomes_path }
       format.json { head :no_content }
     end
   end
