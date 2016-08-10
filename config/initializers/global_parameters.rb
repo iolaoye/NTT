@@ -39,6 +39,10 @@
 #public folder
 	APEX_ORIGINAL = 'public/APEX1'
 
+#folder for wick program - this is to print results in pdf file
+	r_root = Rails.root.to_s
+	WICK_FOLDER = r_root + '/public/Wicked/bin/'
+
 #convertion values
 	AC_TO_HA = 0.404685645
 	FT_TO_M = 0.3048
