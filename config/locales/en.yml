@@ -504,7 +504,7 @@ en:
     irrigation: Irrigation
     plant_population: Plant Population
     load_operation: Load Operation
-    sum: 'All the nutrients should add up to 1.'
+    sum: 'total nutrients should be less or equal to 1'
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group 

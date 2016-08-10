@@ -17,11 +17,11 @@
   </div>
   <div class="field" title="Field Area (Ac.). Must be greater than 0.">
     <%= f.label t('field.field_area') %>
-    <%= f.number_field :field_area, :class => 'numbers' %>
+    <%= f.number_field :field_area, :class => 'numbers', :step => "any" %>
   </div>
   <div class="field">
 	<%= f.label t('field.field_avg_slope') %>
-    <%= f.number_field :field_average_slope, :class => 'numbers' %>
+    <%= f.number_field :field_average_slope, :class => 'numbers', :step => "any"  %>
   </div>
   <div class="field">
     <%= f.label t('field.field_type') %>
