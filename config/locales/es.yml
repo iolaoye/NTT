@@ -503,6 +503,7 @@
     irrigation: Irrigación
     plant_population: Población de Planta
     load_operation: Cargar Operación
+    sum: 'Todos los nutrientes deben sumar 1.'
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG   
@@ -511,7 +512,8 @@
     zero_to_max: "(0.00 – 99999.00)"
     quarter_to_one: "(0.25 - 1.00)"
     quarter_to_three_fourths: "(0.25 - 0.75)"
-    days_range: "(Días: 0.00 – 365)"
+    days_range: "(Días: 0 – 365)"
+    days_range_number: "(0 – 365)"
     lbs_per_day: libras por día
     ft: ft
     acres: hectáreas
@@ -530,15 +532,19 @@
     animals: Animales
     number_of_animals: Número de animales
     irrigation_frequency: La frecuencia de riego
-    hours: Horas
+    stream_fencing_frequency: Días en la corriente
+    hours: Horas por día
     dry_manure: Estiércol seco
     no3_n: No3 n
     po4_p: Po4 p
     org_n: Org n
     org_p: Org a
     width: Ancho
+    buffer_width: Lo Ancho del Buffer
+    waterways_info: Incluyendo ambos lados del canal
     grass_field_portion: Porción de pasto del campo
     slope_ratio: Proporción de inclinación
+    slope_ratio_label: Proporción de inclinación del Buffer al Upland
     crop_width: Ancho de cultivo
     slope_reduction: Reducción de inclinación
     sides: Lados
@@ -548,6 +554,8 @@
     min_temp: Temp. Min. ±(°C)
     precipitation: Precipitación (%)
     fill: Duplicar
+    select_vege: Seleccione la Vegetación
+    select_animal: Seleccione el tipo de Animal
   months:
     january: Enero
     february: Febrero

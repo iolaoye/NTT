@@ -1,13 +1,13 @@
-
-<h1 class="less-margin text_h1"><%= t('general.listing') + " " + t('menu.scenarios') %></h1>
-<h4 ><%= t('instructions.scenarios') %> </h4>
-
 <% if notice != nil %>
-	<div class="success_alert">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    <%= notice %>
-  </div>
+    <br>
+    <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
 <% end %>
+
+<h1 class="no_margin_bottom"><%= t('general.listing') + " " + t('menu.scenarios') %></h1>
+<p class="instruction"><%= t('instructions.scenarios') %> </p>
 
 <%= link_to t('general.new')  + ' ' + t('scenario.scenario'), new_scenario_path %>
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), scenarios_path, data: {disable_with: 'Please wait. Simulation in progress . . .'}  %>

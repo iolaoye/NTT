@@ -61,6 +61,7 @@ class OperationsController < ApplicationController
   def create
     @operation = Operation.new(operation_params)
     @operation.scenario_id = session[:scenario_id]
+	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     respond_to do |format|
       if @operation.save
 				#operations should be created in soils too.
@@ -79,6 +80,7 @@ class OperationsController < ApplicationController
   # PATCH/PUT /operations/1.json
   def update
     @operation = Operation.find(params[:id])
+	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     respond_to do |format|
       if @operation.update_attributes(operation_params)
 		soil_operations = SoilOperation.where(:operation_id => @operation.id)
