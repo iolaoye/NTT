@@ -590,7 +590,8 @@ module SimulationsHelper
       soil_info.push(records + "\n")
       #line 4 to 24 Layers information
       records = ""
-      for layers in initial_layer..layer_number - 1
+      for layers in initial_layer..layer_number
+        -1
         depth_cm = depth[layers] / 100
         records = records + sprintf("%8.3f", depth_cm)
       end
@@ -767,7 +768,7 @@ module SimulationsHelper
           end
           opcsFile.Add("End " & buf.SubareaTitle)
         end
-        add_subarea_file(buf, operation_number, last_owner1, 0, 0, True, 0)
+        add_subarea_file(buf, operation_number, last_owner1, 0, 0, True)
       end
     end #end if no != 1
 
@@ -1678,210 +1679,11 @@ module SimulationsHelper
       results = Result.where(:watershed_id => @watershed_id)
     end
 
-<<<<<<< HEAD
     results.each do |result|
       update_value_of_results(result, true)
-=======
-	def add_value_to_chart_table(value, description_id, soil_id, year)
-		field = 0
-		soil = 0
-		scenario = 0
-		watershed = 0
-		if session[:simulation] == "scenario" then
-			chart = Chart.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id, :month_year => year ).first
-			field = @scenario.field_id
-			soil = soil_id
-			scenario = @scenario.id
-		else
-			chart = Chart.where(:watershed_id => @watershed_id, :description_id => description_id, :month_year => year ).first
-			watershed = @watershed_id
-		end
-        if chart == nil then
-			chart = Chart.new
-			chart.month_year = year
-			chart.field_id = field
-			chart.soil_id = soil
-			chart.scenario_id = scenario
-			chart.watershed_id = watershed
-			chart.description_id = description_id
-		end
-		chart.value = value	
-		if description_id > 70 and description_id < 80 then
-		end	
-		if chart.save then
-		else
-		end
-	end
-
-	def add_summary_to_results_table(values, description_id, cis)
-		#total Area =10, main area= 11, additional area 12..19
-		#total N = 20, orgn=21, runoffn=22, subsurface n=23, tile drain n = 24
-		#total p = 30, orgp=31, po4_p=32, tile drain p = 33
-		#total Flow = 40, surface runoff = 41, subsurface runoff = 42, tile drain flow = 43
-		#other water info = 50, irrigation = 51, deep percolation = 52
-		#total sediment = 60, sediment = 61, manure erosion = 62		
-		for i in 0..values.count-1
-			values[i][0] == 0  ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
-			add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
-			if session[:simulation].eql?('scenario') then
-				case description_id    #Total area for summary report is beeing calculated
-					when 4  #calculate total area
-						#todo	
-					when 24  #calculate total N		
-						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
-					when 33  #calculate total P
-						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
-					when 43 #calculate total flow
-						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
-					when 52 #calculate total other water info
-						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
-					when 62 #calculate total sediment
-						add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-				end #end case when
-			else
-				case description_id    #Total area for summary report is beeing calculated
-					when 4  #calculate total area
-						#todo	
-					when 24  #calculate total N		
-						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
-					when 33  #calculate total P
-						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
-					when 43 #calculate total flow
-						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
-					when 52 #calculate total other water info
-						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
-					when 62 #calculate total sediment
-						add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-				end #end case when
-			end # end if simulation == scenario
-		end #end for i
-		return "OK"
-	end
-
-	def add_totals(results, description_id, soil_id)					
-		msg = add_summary(results.sum(:value), description_id, soil_id, results.sum(:ci_value), 0)		
-	end
-
-	def add_summary(value, description_id, soil_id, ci, crop_id)
-		field = 0
-		soil = 0
-		scenario = 0
-		watershed = 0
-		if session[:simulation] == "scenario" then
-			result = Result.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id).first
-			field = @scenario.field_id
-			soil = soil_id
-			scenario = @scenario.id
-		else
-			result = Result.where(:watershed_id => @watershed_id, :description_id => description_id).first
-			watershed = @watershed_id
-		end
-        if result == nil then
-			result = Result.new
-			result.field_id = field
-			result.scenario_id = scenario
-			result.soil_id = soil
-			result.description_id = description_id
-			result.watershed_id = watershed
-			result.crop_id = crop_id
-		end
-		result.value = value
-		if !ci.to_f.nan? then 
-			result.ci_value = ci
-		else 
-			result.ci_value = 0
-		end
-    	result.crop_id = crop_id
-		if result.save then 
-			return "OK"
-		else
-			return "Results couldn't be saved"
-		end
-	end
-
-	def load_monthly_values(apex_start_year)
-		data = send_file_to_APEX("MSW", session[:session_id])  #this operation will ask for MSW file  
-		#todo validate that the file was uploaded correctly
-
-        annual_flow = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
-        annual_sediment = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
-        annual_orgn = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
-        annual_orgp = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
-        annual_no3 = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
-        annual_po4 = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
-        annual_precipitation = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
-        annual_crop_yield = fixed_array(12, [0,0,0,0,0,0,0,0,0,0,0,0])
-		last_year = 0
-        #read titles 10 lines
-        #calculate monthly averages starting after first rotation.
-		j=1
-		data.each_line do |tempa|
-			if j >= 11 then
-				year = tempa[1, 4].to_i
-				if year > 0 && year >= apex_start_year then
-					#accumulate the monthly values of simulation for graphs.
-					i = tempa[6, 4].to_i
-					annual_flow[i-1] += tempa[12, 10].to_f * MM_TO_IN
-					annual_sediment[i-1] += tempa[23, 10].to_f * THA_TO_TAC
-					annual_orgn[i-1] += tempa[34, 10].to_f * 10 * KG_TO_LBS / HA_TO_AC  #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
-					annual_orgp[i-1] += tempa[45, 10].to_f * 20 * KG_TO_LBS / HA_TO_AC  #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
-					annual_no3[i-1] += tempa[56, 10].to_f * KG_TO_LBS / HA_TO_AC
-					annual_po4[i-1] += tempa[67, 10].to_f * KG_TO_LBS / HA_TO_AC
-					last_year = year
-				end # end if not end of data
-			end #end if 
-			j+=1
-		end # end data.each
-
-        last_year -= apex_start_year + 1
-
-		data = send_file_to_APEX("MWS", session[:session_id])  #this operation will ask for MWS file  
-		#todo validate that the file was uploaded correctly
-		i=1
-		data.each_line do |tempa|
-			if i > 9 then
-				if not tempa.nil? and tempa.strip.empty? then
-					break
-				else
-					month = 1
-					current_column = 5
-					output = tempa.strip.split /\s+/
-					if output[0].is_a? Numeric then
-						year = output[0].to_i
-						if year > 0 && year >= apex_start_year then
-							for i in 0..annual_precipitation.size - 1
-								annual_precipitation[i] += output[i+1].to_f								 
-							end 
-						end  # end if year ok
-						
-					end  # end if valid year
-				end  # end if tempa nil or empty
-			end #end if i>9
-			i += 1
-		end # end data.each file apex001.mws
-
-		for i in 0..11
-            annual_flow[i] /= last_year
-			add_value_to_chart_table(annual_flow[i], 41, 0, i+1)
-            annual_sediment[i] /= last_year
-			add_value_to_chart_table(annual_sediment[i], 61, 0, i+1)
-            annual_orgn[i] /= last_year
-			add_value_to_chart_table(annual_orgn[i], 21, 0, i+1)
-            annual_orgp[i] /= last_year
-			add_value_to_chart_table(annual_orgp[i], 31, 0, i+1)
-            annual_no3[i] /= last_year
-			add_value_to_chart_table(annual_no3[i], 22, 0, i+1)
-            annual_po4[i] /= last_year
-			add_value_to_chart_table(annual_po4[i], 32, 0, i+1)
-            annual_precipitation[i] /= last_year
-			add_value_to_chart_table(annual_precipitation[i], 100, 0, i+1)
-        end  # end for
-		return "OK"
->>>>>>> origin/master
     end
   end
 
-<<<<<<< HEAD
   def update_value_of_results(result, is_total)
     if is_total
       percentage = 1
@@ -1937,7 +1739,11 @@ module SimulationsHelper
       chart.description_id = description_id
     end
     chart.value = value
-    chart.save
+    if description_id > 70 and description_id < 80 then
+    end
+    if chart.save then
+    else
+    end
   end
 
   def add_summary_to_results_table(values, description_id, cis)
@@ -2155,7 +1961,7 @@ module SimulationsHelper
           found = true
           array["yield"] += item[1]
           array["total"] += 1
-          add_value_to_chart_table(item[1] * array["conversion"], description_id, 0, item[0][1])
+          add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1])
           break
         end # end if same crop
       end # end each name
@@ -2169,6 +1975,7 @@ module SimulationsHelper
     yield_by_name.each do |crop|
       if session[:simulation] == "scenario"
         crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
+        session[:depth] = @scenario
       else
         crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
       end
@@ -2206,105 +2013,4 @@ module SimulationsHelper
     new_hash["crop_id"] = crop.id
     return new_hash
   end
-=======
-	def fixed_array(size, other)
-		Array.new(size) { |i| other[i] }
-	end
-
-	def load_crop_results(apex_start_year)
-		msg = "OK"
-		crops_data = Array.new
-		oneCrop = Struct.new(:sub1,:name,:year,:yield,:ws,:ts,:ns,:ps,:as1)
-		data = send_file_to_APEX("ACY", session[:session_id])  #this operation will ask for ACY file
-		#todo validate that the file was uploaded correctly
-		j = 1
-        data.each_line do |tempa|
-			if j >= 10 then				
-				year1 = tempa[18, 4].to_i
-				subs = tempa[5, 5].to_i
-				next if year1 < apex_start_year #take years greater or equal than ApexStartYear.
-				one_crop = oneCrop.new
-				one_crop.sub1 = subs
-				one_crop.year = year1
-				one_crop.name = tempa[28,4]
-				one_crop.yield = tempa[33,9].to_f
-				one_crop.yield += tempa[43,9].to_f unless (one_crop.name == "COTS" || one_crop.name == "COTP")
-				one_crop.ws = tempa[63,9].to_f 
-				one_crop.ns = tempa[73,9].to_f
-				one_crop.ps = tempa[83,9].to_f
-				one_crop.ts = tempa[93,9].to_f
-				one_crop.as1 = tempa[103,9].to_f
-
-				crops_data.push(one_crop)
-			end # end if j>=10
-			j+=1
-		end #end data.each
-		crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] } .map { |k,v| [k, v.map(&:yield).mean]}
-		average_crops_result(crops_data_by_crop_year)
-		return "OK"
-    end  #end method
-
-	def average_crops_result(items)
-		yield_by_name = Array.new
-		description_id = 70
-		items.each do |item|
-			found = false
-			yield_by_name.each do |array|
-				if array["name"] == item[0][0] then
-					found = true
-					array["yield"] += item[1]
-					array["total"] += 1
-					add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1])
-					break
-				end # end if same crop
-			end  # end each name
-			if found == false then
-				description_id += 1
-				yield_by_name.push(create_hash_by_name(item, description_id))
-			end  # end if found
-			#first = false
-		end
-
-		yield_by_name.each do |crop|
-			if session[:simulation] == "scenario"
-				crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
-				session[:depth] = @scenario
-			else
-				crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
-			end 
-			ci = Array.new
-			crop_ci.each do |c|
-				ci.push c.value
-			end 
-			crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
-			#todo check why the ci is crashing with watershed simulations
-			if session[:simulation].eql?('scenario') then
-				add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
-			else
-				#0 used for ci.confidence_interval because it is crashing with watersheds.
-				add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
-			end
-		end
-		add_summary(0, 70,0,0,0)
-	end
-
-	def create_hash_by_name(item, crop_count)
-        conversion_factor = 1 * AC_TO_HA
-        dry_matter = 100
-		#find the crop to take conversion_factor and dry_matter
-		crop = Crop.find_by_code(item[0][0])
-		if crop != nil then
-			conversion_factor = crop.conversion_factor * AC_TO_HA
-			dry_matter = crop.dry_matter
-		end #end if crop != nil
-		new_hash = Hash.new
-		new_hash["name"] = item[0][0]
-		new_hash["yield"] = item[1]
-		new_hash["conversion"] = conversion_factor / (dry_matter/100)
-		new_hash["total"] = 1
-		new_hash["description_id"] = crop_count
-		new_hash["crop_id"] = crop.id
-		return new_hash
-	end
->>>>>>> origin/master
 end
