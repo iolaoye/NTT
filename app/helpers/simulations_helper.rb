@@ -590,8 +590,7 @@ module SimulationsHelper
       soil_info.push(records + "\n")
       #line 4 to 24 Layers information
       records = ""
-      for layers in initial_layer..layer_number
-        -1
+      for layers in initial_layer..layer_number - 1
         depth_cm = depth[layers] / 100
         records = records + sprintf("%8.3f", depth_cm)
       end
