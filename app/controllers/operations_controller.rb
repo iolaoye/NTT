@@ -112,6 +112,7 @@ class OperationsController < ApplicationController
     end
   end
 
+################################  CALL WHEN CLICK IN UPLOAD CROPPING SYSTEM  #################################
   def cropping_system
     @operations = Operation.where(:scenario_id => session[:scenario_id])
     @count = @operations.count
@@ -121,9 +122,9 @@ class OperationsController < ApplicationController
         @highest_year = operation.year
       end
     end
-    @cropping_systems = CroppingSystem.where(:state_id => Location.find(session[:location_id]).state_id)
+    @cropping_systems = CroppingSystem.where(:state_id => Location.find(session[:location_id]).state_id, :status => true)
     if @cropping_systems == nil then
-      @cropping_systems = CroppingSystem.where(:state_id => "All")
+      @cropping_systems = CroppingSystem.where(:state_id => 0, :status => true)
     end
     if params[:cropping_system] != nil
       if params[:cropping_system][:id] != "" then

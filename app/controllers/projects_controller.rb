@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
     if params[:id] == "upload" then
       redirect_to "upload"
     end
-    session[:project_id] = params[:id]
+    #session[:project_id] = params[:id]
     @location = Location.find_by_project_id(params[:id])
     session[:location_id] = @location.id
     if Field.where(:location_id => @location.id).count > 0 then
@@ -54,6 +54,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  ########################################### CREATE NEW PROJECT##################
   # POST /projects
   # POST /projects.json
   def create
@@ -66,7 +67,7 @@ class ProjectsController < ApplicationController
         location = Location.new
         location.project_id = @project.id
         location.save
-        session[:location_id]
+        session[:location_id] = location.id
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else

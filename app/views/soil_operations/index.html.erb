@@ -1,4 +1,10 @@
-<br>
+<% if notice != nil %>
+<div class="success_alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <%= notice %>
+</div>
+<% end %>
+
 <%= form_for :soil_operations, url: soil_operations_url do |f| %>
 <table>
   <tr>
