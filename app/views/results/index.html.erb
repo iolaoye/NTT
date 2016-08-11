@@ -107,7 +107,11 @@
                 <% when 0 %>
                   <tr class="gvRowStyleOdd">
                     <% if result.description_id == 70 %>
-                        <td class="gvTotalText"><%= Description.find(result.description_id).description %></td>
+                        <% if I18n.locale.eql?(:en) %>
+                          <td class="gvTotalText"><%= Description.find(result.description_id).description %></td>
+                        <% else %>
+                          <td class="gvTotalText"><%= Description.find(result.description_id).spanish_description %></td>
+                        <% end %>  
                         <td class="gvTotalNumber"><%= "" %></td>
                         <% if @results2 != nil %>
                           <td class="gvTotalNumber"><%= "" %></td>
@@ -134,7 +138,11 @@
                           <td class="gvTotalNumber"><%= "" %></td>
                         <% end %>
                     <% else %>
-                        <td class="gvTotalText"><%= Description.find(result.description_id).description %></td>
+                        <% if I18n.locale.eql?(:en) %>
+                          <td class="gvTotalText"><%= Description.find(result.description_id).description %></td>
+                        <% else %>
+                          <td class="gvTotalText"><%= Description.find(result.description_id).spanish_description %></td>
+                        <% end %>  
                         <td class="gvTotalNumber"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
                         <% if @results2 != nil %>
                           <td class="gvTotalNumber"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
@@ -165,7 +173,11 @@
                 <% else %>
                   <tr class="gvRowStyleEven">
                     <% if result.description_id > 70 && result.description_id < 90 %>
-                      <td class="gvDetailText bottom_border"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
+                      <% if I18n.locale.eql?(:en) %>
+                          <td class="gvDetailText bottom_border"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
+                        <% else %>
+                          <td class="gvDetailText bottom_border"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
+                      <% end %>  
                       <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
                       <% if @results2 != nil %>
                         <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
@@ -204,7 +216,11 @@
                         <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
                       <% end %>
                     <% else %>
-                      <td class="gvDetailText bottom_border"><%= Description.find(result.description_id).description %></td>
+                      <% if I18n.locale.eql?(:en) %>
+                          <td class="gvDetailText bottom_border"><%= Description.find(result.description_id).description %></td>
+                        <% else %>
+                          <td class="gvDetailText bottom_border"><%= Description.find(result.description_id).spanish_description %></td>
+                      <% end %>  
                       <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
                       <% if @results2 != nil %>
                         <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
