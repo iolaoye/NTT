@@ -59,9 +59,9 @@
   <div class="field" id="crop"  style="display:none">
     <%= label :crop_id, t('operation.crop') %>
     <% if I18n.locale.equal?(:en) %>
-	  <%= collection_select :bmp, :crop_id, Crop.all, :id, :name, {:prompt => t('bmp.select_vege')}, {:required => true} %>
+	  <%= collection_select :bmp, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege')}, {:required => true} %>
     <% else %>
-	  <%= collection_select :bmp, :crop_id, Crop.all, :id, :spanish_name, {:prompt => t('bmp.select_vege')}, {:required => true} %>
+	  <%= collection_select :bmp, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege')}, {:required => true} %>
 	<% end %>
   </div>
   <div class="field" id = "water_stress_factor" style="display:none">
