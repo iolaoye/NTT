@@ -1,4 +1,11 @@
-﻿<h1 class="less-margin"><%= t('menu.apex_soil')%></h1>
+﻿<% if notice != nil %>
+<div class="success_alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <%= notice %>
+</div>
+<% end %>
+
+<h1 class="less-margin"><%= t('menu.apex_soil')%></h1>
 
 <table class='gvTableStyle'>
     <tr class='gvHeaderStyle'>
@@ -21,6 +28,7 @@
         <td class="gvCellStyleText"><%= apex_soil.name %></td>
         <td class="gvCellStyleActions">
           <%= link_to image_tag("layers.png"), controller: "apex_layers", action: "index", id: apex_soil.id, title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
+          <%= link_to image_tag("view.png"), apex_soil_path(apex_soil.id), title: t('general.show') %>
           <%= link_to image_tag("edit.png"), edit_apex_soil_path(apex_soil.id), title: t('general.edit') %>
         </td>
     </tr>
@@ -33,6 +41,7 @@
         <td class="gvCellStyleText"><%= apex_soil.name %></td>
         <td class="gvCellStyleActions">
           <%= link_to image_tag("layers.png"), controller: "apex_layers", action: "index", id: apex_soil.id, title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
+          <%= link_to image_tag("view.png"), apex_soil_path(apex_soil.id), title: t('general.show') %>
           <%= link_to image_tag("edit.png"), edit_apex_soil_path(apex_soil.id), title: t('general.edit') %>
         </td>
     </tr>
