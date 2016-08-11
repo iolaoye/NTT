@@ -53,6 +53,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  ########################################### CREATE NEW PROJECT##################
   # POST /projects
   # POST /projects.json
   def create
@@ -65,7 +66,7 @@ class ProjectsController < ApplicationController
 		location = Location.new
 		location.project_id = @project.id
 		location.save
-		session[:location_id]
+		session[:location_id] = location.id
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else
