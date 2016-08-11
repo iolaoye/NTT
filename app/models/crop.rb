@@ -13,9 +13,9 @@ class Crop < ActiveRecord::Base
 		end # end each event
 	end # end croping system 
 	if I18n.locale.eql?(:en) then
-		return self.select("id, name").find_all_by_number(crops).sort_by(&:name)
+		return self.select("id, name, type1").find_all_by_number(crops).sort_by(&:name)
 	else
-		return self.select("id, spanish_name as name").find_all_by_number(crops).sort_by(&:name)
+		return self.select("id, spanish_name as name, type1").find_all_by_number(crops).sort_by(&:name)
 	end
   end #end load_crops method
 end

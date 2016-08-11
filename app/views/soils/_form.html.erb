@@ -37,11 +37,11 @@
   </div>
   <div class="field">
     <%= f.label :slope, t('soil.slope') %>
-    <%= f.number_field :slope, :class => "numbers", :value => (number_with_precision(f.object.slope, :precision => 2) || 0), :step => '0.01' %>
+    <%= f.number_field :slope, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :percentage, t('soil.percentage') %>
-    <%= f.number_field :percentage, :class => "numbers", :value => (number_with_precision(f.object.percentage, :precision => 2) || 0), :step => '0.01' %>
+    <%= f.number_field :percentage, :class => "numbers", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :drainage_type, t('soil.drainage_type') %>
