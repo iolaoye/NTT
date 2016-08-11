@@ -43,6 +43,15 @@
 	r_root = Rails.root.to_s
 	WICK_FOLDER = r_root + '/public/Wicked/bin/'
 
+	#osx dev
+	#WICK_ENV = "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf_darwin_x86"
+
+	#windows dev
+	#WICK_ENV = WICK_FOLDER + 'wkhtmltopdf.exe'
+
+	#linux prod
+	WICK_ENV = "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf_linux_amd64"
+
 #convertion values
 	AC_TO_HA = 0.404685645
 	FT_TO_M = 0.3048
