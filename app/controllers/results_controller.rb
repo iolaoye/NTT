@@ -60,7 +60,7 @@ class ResultsController < ApplicationController
 			when t("result.summary"), t("result.summary") + " " + t("result.by_soil")
 				if params[:button].include? t('result.summary') then 
 					if params[:result1] != nil
-						session[:first_if] = true
+						#session[:first_if] = true
 						session[:result1] = !params[:result1][:scenario_id].eql?("")
 						if !params[:result1][:scenario_id].eql?("") then
 							session[:result1] = params[:result1][:scenario_id]

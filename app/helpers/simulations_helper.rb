@@ -342,9 +342,8 @@ module SimulationsHelper
             albedo = 0.37
           end
         end
-
+		
         depth[layer_number] = layer.depth * IN_TO_CM
-
         #if current layer is deeper than maxDept  no more layers are needed.
         #if Depth[layer_number] > maxDepth(i) && maxDepth(i) > 0  Exit for
         #These statements were added to control duplicated layers in the soil.
@@ -590,8 +589,7 @@ module SimulationsHelper
       soil_info.push(records + "\n")
       #line 4 to 24 Layers information
       records = ""
-      for layers in initial_layer..layer_number
-        -1
+      for layers in initial_layer..layer_number - 1
         depth_cm = depth[layers] / 100
         records = records + sprintf("%8.3f", depth_cm)
       end

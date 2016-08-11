@@ -66,7 +66,7 @@ before_filter :take_names
   def edit
     @type = "edit"
     @bmp = Bmp.find(params[:id])
-	  @bmp_id = @bmp.bmp_id
+	@bmp_id = @bmp.bmp_id
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
     @climates = Climate.where(:bmp_id => @bmp.id)
@@ -85,7 +85,7 @@ before_filter :take_names
     @type = "create"
     @slope = 100
     @bmp = Bmp.new(bmp_params)
-	  @bmp.scenario_id = session[:scenario_id]
+	@bmp.scenario_id = session[:scenario_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
     @climate_array = create_hash()

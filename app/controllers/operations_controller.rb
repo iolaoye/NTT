@@ -222,7 +222,6 @@ class OperationsController < ApplicationController
           I18n.locale = :en
         end
       end
-      session[:a] = @operations.count
       render action: 'list'
     else
       render action: 'upload'
