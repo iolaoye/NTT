@@ -64,6 +64,7 @@ class ProjectsController < ApplicationController
     @project.version = "NTTG3"
     respond_to do |format|
       if @project.save
+	    session[:project_id] = @project.id
         location = Location.new
         location.project_id = @project.id
         location.save
