@@ -1677,14 +1677,17 @@ class ProjectsController < ApplicationController
           end # end case p.text
       end # case
     end # end each
-    operation.save
-    soils = Soil.where(:field_id => field_id, :selected => true)
-    soils.each do |soil|
-      soil_operation = SoilOperation.where(:soil_id => soil.id, :scenario_id => scenario_id, :tractor_id => event_id).first
-      soil_operation.operation_id = operation.id
-      soil_operation.save
-    end # end soils.each
-    return "OK"
+    if operation.save then
+		soils = Soil.where(:field_id => field_id)
+		soils.each do |soil|
+		  soil_operation = SoilOperation.where(:soil_id => soil.id, :scenario_id => scenario_id, :tractor_id => event_id).first
+		  soil_operation.operation_id = operation.id
+		  soil_operation.save
+		end # end soils.each
+		return "OK"
+	else
+		return "Error saving Operation"
+	end
   end
 
   def upload_operation_new_version(scenario_id, new_operation)

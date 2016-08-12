@@ -428,6 +428,7 @@ before_filter :take_names
   def waterway(type)
     case type
       when "create"
+	    @bmp.area = 0 
         return create_new_subarea("WW", 14)
       when "update"
         update_existing_subarea("WW", 14)
