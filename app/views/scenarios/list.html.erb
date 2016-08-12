@@ -21,8 +21,8 @@
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
   <% i=1 %>
-  <% warning = false %>
   <% @scenarios.each do |scenario| %>
+	  <% warning = false %>
       <% if (i % 2  == 0) %>
         <tr class="gvRowStyleEven">
           <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
