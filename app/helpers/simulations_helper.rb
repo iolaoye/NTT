@@ -1171,6 +1171,8 @@ module SimulationsHelper
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
         oper = Operation.where(:id => operation.operation_id).first
+        session[:a_op] = operation
+        session[:a_id] = operation.operation_id
         add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
@@ -1497,14 +1499,28 @@ module SimulationsHelper
   end
 
   def read_apex_results(msg)
-    ntt_apex_results = Array.new
-    #todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
-    start_year = Weather.find_by_field_id(Scenario.find(session[:scenario_id]).field_id).simulation_initial_year - 5
-    apex_start_year = start_year + 1
-    #take results from .NTT file for all but crops
-    msg = load_results(apex_start_year, msg)
-    msg = load_crop_results(apex_start_year)
-    return msg
+    @watershed = Watershed.new
+    @watershed.name = "BEFORE"
+    @watershed.save
+    ActiveRecord::Base.transaction do
+      begin
+        @watershed = Watershed.new
+        @watershed.name = "AFTER"
+        @watershed.save
+        ntt_apex_results = Array.new
+        #todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
+        start_year = Weather.find_by_field_id(Scenario.find(session[:scenario_id]).field_id).simulation_initial_year - 5
+        apex_start_year = start_year + 1
+        #take results from .NTT file for all but crops
+        msg = load_results(apex_start_year, msg)
+        msg = load_crop_results(apex_start_year)
+      rescue => e
+        msg = "Failed, Error: " + e.inspect
+        raise ActiveRecord::Rollback
+      ensure
+        return msg
+      end
+    end
   end
 
   def load_results(apex_start_year, data)
