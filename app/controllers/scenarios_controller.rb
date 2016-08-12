@@ -133,6 +133,7 @@ class ScenariosController < ApplicationController
         @field_name = Field.find(session[:field_id]).field_name
         format.html { render action: "list" }
       else
+        @scenarios = Scenario.where(:field_id => session[:field_id])
         format.html { render action: "list" }
       end # end if msg
     end
