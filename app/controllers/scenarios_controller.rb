@@ -72,25 +72,22 @@ class ScenariosController < ApplicationController
 # POST /scenarios
 # POST /scenarios.json
   def create
-    #ActiveRecord::Base.transaction do
-      @scenario = Scenario.new(scenario_params)
-      @scenario.field_id = session[:field_id]
-      @watershed = Watershed.new(scenario_params)
-      @watershed.save
-      respond_to do |format|
-        if @scenario.save
-          @scenarios = Scenario.where(:field_id => session[:field_id])
-          #add new scenario to soils
-          flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-          add_scenario_to_soils(@scenario)
-          format.html { render action: "list" }
-        else
-          #raise ActiveRecord::Rollback
-          format.html { render action: "new" }
-          format.json { render json: scenario.errors, status: :unprocessable_entity }
-        end
+    @scenario = Scenario.new(scenario_params)
+    @scenario.field_id = session[:field_id]
+    @watershed = Watershed.new(scenario_params)
+    @watershed.save
+    respond_to do |format|
+      if @scenario.save
+        @scenarios = Scenario.where(:field_id => session[:field_id])
+        #add new scenario to soils
+        flash[:notice] = t('scenario.scenario') + " " + t('general.success')
+        add_scenario_to_soils(@scenario)
+        format.html { render action: "list" }
+      else
+        format.html { render action: "new" }
+        format.json { render json: scenario.errors, status: :unprocessable_entity }
       end
-    #end
+    end
   end
 
 ################################  UPDATE  #################################
