@@ -54,6 +54,30 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  ################## ERASE ALL PROJECT AND CORRESPONDING FILES ##################
+
+  def self.wipe_database
+    ApexControl.delete_all
+    ApexParameter.delete_all
+    Bmp.delete_all
+    Chart.delete_all
+    Climate.delete_all
+    Field.delete_all
+    Layer.delete_all
+    Location.delete_all
+    Operation.delete_all
+    Project.delete_all
+    Result.delete_all
+    Scenario.delete_all
+    Site.delete_all
+    Soil.delete_all
+    SoilOperation.delete_all
+    Subarea.delete_all
+    Watershed.delete_all
+    WatershedScenario.delete_all
+    Weather.delete_all
+  end
+
   ########################################### CREATE NEW PROJECT##################
   # POST /projects
   # POST /projects.json
@@ -64,6 +88,7 @@ class ProjectsController < ApplicationController
     @project.version = "NTTG3"
     respond_to do |format|
       if @project.save
+	    session[:project_id] = @project.id
         location = Location.new
         location.project_id = @project.id
         location.save
@@ -1652,14 +1677,17 @@ class ProjectsController < ApplicationController
           end # end case p.text
       end # case
     end # end each
-    operation.save
-    soils = Soil.where(:field_id => field_id, :selected => true)
-    soils.each do |soil|
-      soil_operation = SoilOperation.where(:soil_id => soil.id, :scenario_id => scenario_id, :tractor_id => event_id).first
-      soil_operation.operation_id = operation.id
-      soil_operation.save
-    end # end soils.each
-    return "OK"
+    if operation.save then
+		soils = Soil.where(:field_id => field_id)
+		soils.each do |soil|
+		  soil_operation = SoilOperation.where(:soil_id => soil.id, :scenario_id => scenario_id, :tractor_id => event_id).first
+		  soil_operation.operation_id = operation.id
+		  soil_operation.save
+		end # end soils.each
+		return "OK"
+	else
+		return "Error saving Operation"
+	end
   end
 
   def upload_operation_new_version(scenario_id, new_operation)
