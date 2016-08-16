@@ -13,12 +13,21 @@
   <% if I18n.locale.eql?(:en) %>
     <div class="field">
       <% if (@type == "create") %>
-        <%= label :bmp_id, t('bmp.bmp_group') %>
-
-        <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
-        <%= label :bmp_id, t('operation.bmp') %>
-        <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
-      <% else %>
+        <% if @field %>
+		  <%= label :bmp_id, t('bmp.bmp_group') %>
+          <%= collection_select :bmp, :bmp_id, Bmplist.where(:id => 8), :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+		<% else %>
+		  <%= label :bmp_id, t('bmp.bmp_group') %>
+		  <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+		<% end %>
+        <% if (@state == [25,26]) %>
+		  <%= label :bmp_id, t('operation.bmp') %>
+          <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+        <% else %>
+		  <%= label :bmp_id, t('operation.bmp') %>
+          <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id != [25,26]), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+        <% end %>
+	  <% else %>
         <%= label :bmp_id, t('bmp.bmp_group') %>
         <%= collection_select :bmp, :bmp_id, Bmplist.where(:id => @bmp.bmp_id), :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
         <%= label :bmp_id, t('operation.bmp') %>
@@ -28,8 +37,13 @@
   <% else %>
     <div class="field">
       <% if (@type == "create") %>
-          <%= label :bmp_id, t('bmp.bmp_group') %>
-          <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :spanish_name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+          <% if @field %>
+		  <%= label :bmp_id, t('bmp.bmp_group') %>
+          <%= collection_select :bmp, :bmp_id, Bmplist.where(:id => 8), :id, :spanish_name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+		<% else %>
+		  <%= label :bmp_id, t('bmp.bmp_group') %>
+		  <%= collection_select :bmp, :bmp_id, Bmplist.all, :id, :spanish_name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+		<% end %>
           <%= label :bmp_id, t('operation.bmp') %>
           <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :spanish_name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
       <% else %>
