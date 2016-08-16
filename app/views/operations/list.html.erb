@@ -10,6 +10,7 @@
 
 <%= link_to t('operation.new_operation'), new_operation_path %>
 <%= link_to t('operation.upload') + " " + t('operation.cropping_system'), cropping_system_operation_path(session[:scenario_id]), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'} %>
+<%= link_to t('operation.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?' %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th colspan="9" class="gvCellStyleTitle"></th>

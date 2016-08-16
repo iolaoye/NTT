@@ -61,15 +61,36 @@ class OperationsController < ApplicationController
 # POST /operations
 # POST /operations.json
   def create
-    @operation = Operation.new(operation_params)
-    @operation.scenario_id = session[:scenario_id]
-	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
-    respond_to do |format|
+    saved = false
+    soil_op_saved = false
+    msg = "Unknown error"
+    ActiveRecord::Base.transaction do
+      @operation = Operation.new(operation_params)
+      @operation.scenario_id = session[:scenario_id]
+      @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
       if @operation.save
+        saved = true
         #operations should be created in soils too.
-        add_soil_operation()
-        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
-        format.json { render json: @operation, status: :created, location: @operation }
+        msg = add_soil_operation()
+        if msg.eql?("OK")
+          soil_op_saved = true
+        else
+          soil_op_saved = false
+          raise ActiveRecord::Rollback
+        end
+      else
+        saved = false
+      end
+    end
+    respond_to do |format|
+      if saved
+        if soil_op_saved
+          format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+          format.json { render json: @operation, status: :created, location: @operation }
+        else
+          format.html { render action: "new" }
+          format.json { render json: msg, status: :unprocessable_entity }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @operation.errors, status: :unprocessable_entity }
@@ -82,7 +103,7 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1.json
   def update
     @operation = Operation.find(params[:id])
-	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+	  @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     respond_to do |format|
       if @operation.update_attributes(operation_params)
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
@@ -98,15 +119,27 @@ class OperationsController < ApplicationController
     end
   end
 
+################################  DESTROY  #################################
 # DELETE /operations/1
 # DELETE /operations/1.json
   def destroy
     @operation = Operation.find(params[:id])
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
     @operation.destroy
-    if soil_operations != nil then
+    if soil_operations != nil
       soil_operations.delete_all
-    end if respond_to do |format|
+    end
+    respond_to do |format|
+      format.html { redirect_to list_operation_path(session[:scenario_id]) }
+      format.json { head :no_content }
+    end
+  end
+
+##############################  DESTROY ALL  ###############################
+  def delete_all
+    @operations = Operation.where(:scenario_id =>  session[:scenario_id])
+    @operations.destroy_all
+    respond_to do |format|
       format.html { redirect_to list_operation_path(session[:scenario_id]) }
       format.json { head :no_content }
     end
@@ -128,6 +161,7 @@ class OperationsController < ApplicationController
     end
     if params[:cropping_system] != nil
       if params[:cropping_system][:id] != "" then
+<<<<<<< HEAD
         @cropping_system_id = params[:cropping_system][:id]
         if params[:replace] != nil
           #Delete operations for the scenario selected
@@ -157,61 +191,101 @@ class OperationsController < ApplicationController
           @operation.activity_id = event.activity_id
           @operation.day = event.day
           @operation.month_id = event.month
+=======
+        ActiveRecord::Base.transaction do
+          @cropping_system_id = params[:cropping_system][:id]
+>>>>>>> f8fb8519f7476f3e32a9cc710b35fdd94f90c740
           if params[:replace] != nil
-            #replace
-            @operation.year = event.year
-          else
-            #don't replace
-            if @count > 0
-              #oo
-              #session[:a_type] = "OO"
-              @operation.year = event.year + params[:year].to_i - 1
-              #session[:a_op_year] = @operation.year
-              #session[:a_event_year] = event.year
-            else
-              #aa
-              #session[:a_type] = "AA"
-              @operation.year = event.year
-              #session[:a_op_year] = @operation.year
-              #session[:a_event_year] = event.year
-            end
+            #Delete operations for the scenario selected
+            Operation.where(:scenario_id => params[:id]).destroy_all
+            #SoilOperation.where(:scenario_id => params[:id]).delete_all
           end
-          #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
-          #note fertilizer id and code are the same so far. Try to keep them that way
-          @operation.type_id = 0
-          @operation.no3_n = 0
-          @operation.po4_p = 0
-          @operation.org_n = 0
-          @operation.org_p = 0
-          @operation.nh3 = 0
-          @operation.subtype_id = 0
-          case @operation.activity_id
-            when 1 #planting operation. Take planting code from crop table and plant population as well
-              @operation.type_id = Crop.find(crop_id).planting_code
-              @operation.amount = plant_population
-            when 2, 7
-              fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
-              @operation.amount = event.apex_opv1
-              if fertilizer != nil then
-                @operation.type_id = fertilizer.fertilizer_type_id
-                @operation.no3_n = fertilizer.qn
-                @operation.po4_p = fertilizer.qp
-                @operation.org_n = fertilizer.yn
-                @operation.org_p = fertilizer.yp
-                @operation.nh3 = fertilizer.nh3
-                @operation.subtype_id = event.apex_fertilizer
+          #take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
+          events = Event.where(:cropping_system_id => params[:cropping_system][:id])
+          events.each do |event|
+            @operation = Operation.new
+            @operation.scenario_id = params[:id]
+            #get crop_id from croppingsystem and state_id
+            state_id = Location.find(session[:location_id]).state_id
+            crops = Crop.where(:number => event.apex_crop)
+            crop_id = event.apex_crop
+            plant_population = crops[0].plant_population_ft
+            crops.each do |crop|
+              if crop.state_id == state_id then
+                crop_id = crop.id
+                break
+              else
+                crop_id = crop.id
               end
-            when 3
-              @operation.type_id = event.apex_operation
+            end
+            #session[:a_year] = params[:year]
+            #session[:a_year_to_i] = params[:year].to_i
+            #session[:a_count] = @operations.count()
+            @operation.crop_id = crop_id
+            @operation.activity_id = event.activity_id
+            @operation.day = event.day
+            @operation.month_id = event.month
+            if params[:replace] != nil
+              #replace
+              @operation.year = event.year
             else
-              @operation.amount = event.apex_opv1
-          end #end case
-          @operation.depth = event.apex_opv2
-          @operation.scenario_id = params[:id]
-          if @operation.save
-            add_soil_operation()
-          end
-        end # end events.each
+              #don't replace
+              if @count > 0
+                #oo
+                #session[:a_type] = "OO"
+                @operation.year = event.year + params[:year].to_i - 1
+                #session[:a_op_year] = @operation.year
+                #session[:a_event_year] = event.year
+              else
+                #aa
+                #session[:a_type] = "AA"
+                @operation.year = event.year
+                #session[:a_op_year] = @operation.year
+                #session[:a_event_year] = event.year
+              end
+            end
+            #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
+            #note fertilizer id and code are the same so far. Try to keep them that way
+            @operation.type_id = 0
+            @operation.no3_n = 0
+            @operation.po4_p = 0
+            @operation.org_n = 0
+            @operation.org_p = 0
+            @operation.nh3 = 0
+            @operation.subtype_id = 0
+            case @operation.activity_id
+              when 1 #planting operation. Take planting code from crop table and plant population as well
+                @operation.type_id = Crop.find(crop_id).planting_code
+                @operation.amount = plant_population
+              when 2, 7
+                fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
+                @operation.amount = event.apex_opv1
+                if fertilizer != nil then
+                  @operation.type_id = fertilizer.fertilizer_type_id
+                  @operation.no3_n = fertilizer.qn
+                  @operation.po4_p = fertilizer.qp
+                  @operation.org_n = fertilizer.yn
+                  @operation.org_p = fertilizer.yp
+                  @operation.nh3 = fertilizer.nh3
+                  @operation.subtype_id = event.apex_fertilizer
+                end
+              when 3
+                @operation.type_id = event.apex_operation
+              else
+                @operation.amount = event.apex_opv1
+            end #end case
+            @operation.depth = event.apex_opv2
+            @operation.scenario_id = params[:id]
+            if @operation.save
+              msg = add_soil_operation()
+              unless msg.eql?("OK")
+                raise ActiveRecord::Rollback
+              end
+            else
+              raise ActiveRecord::Rollback
+            end
+          end # end events.each
+        end
       end #end if cropping_system_id != ""
       @operations = Operation.where(:scenario_id => params[:id])
       if params[:language] != nil then
@@ -238,9 +312,15 @@ class OperationsController < ApplicationController
 
   def add_soil_operation()
     soils = Soil.where(:field_id => Scenario.find(@operation.scenario_id).field_id)
+    msg = "OK"
     soils.each do |soil|
-      update_soil_operation(SoilOperation.new, soil.id)
+      if msg.eql?("OK")
+        msg = update_soil_operation(SoilOperation.new, soil.id)
+      else
+        break
+      end
     end
+    return msg
   end
 
   def update_soil_operation(soil_operation, soil_id)
@@ -274,7 +354,11 @@ class OperationsController < ApplicationController
     soil_operation.opv5 = set_opval5
     soil_operation.opv6 = 0
     soil_operation.opv7 = 0
-    soil_operation.save
+    if soil_operation.save
+      return "OK"
+    else
+      return soil_operation.errors
+    end
   end
 
   def set_opval5
@@ -365,5 +449,4 @@ class OperationsController < ApplicationController
     end #end case @operation
     return opv2
   end #end set_opval2
-
 end #end class

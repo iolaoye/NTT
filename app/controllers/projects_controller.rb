@@ -55,6 +55,30 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  ################## ERASE ALL PROJECT AND CORRESPONDING FILES ##################
+
+  def self.wipe_database
+    ApexControl.delete_all
+    ApexParameter.delete_all
+    Bmp.delete_all
+    Chart.delete_all
+    Climate.delete_all
+    Field.delete_all
+    Layer.delete_all
+    Location.delete_all
+    Operation.delete_all
+    Project.delete_all
+    Result.delete_all
+    Scenario.delete_all
+    Site.delete_all
+    Soil.delete_all
+    SoilOperation.delete_all
+    Subarea.delete_all
+    Watershed.delete_all
+    WatershedScenario.delete_all
+    Weather.delete_all
+  end
+
   ########################################### CREATE NEW PROJECT##################
   # POST /projects
   # POST /projects.json
