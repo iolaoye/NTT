@@ -119,15 +119,27 @@ class OperationsController < ApplicationController
     end
   end
 
+################################  DESTROY  #################################
 # DELETE /operations/1
 # DELETE /operations/1.json
   def destroy
     @operation = Operation.find(params[:id])
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
     @operation.destroy
-    if soil_operations != nil then
+    if soil_operations != nil
       soil_operations.delete_all
-    end if respond_to do |format|
+    end
+    respond_to do |format|
+      format.html { redirect_to list_operation_path(session[:scenario_id]) }
+      format.json { head :no_content }
+    end
+  end
+
+##############################  DESTROY ALL  ###############################
+  def delete_all
+    @operations = Operation.where(:scenario_id =>  session[:scenario_id])
+    @operations.destroy_all
+    respond_to do |format|
       format.html { redirect_to list_operation_path(session[:scenario_id]) }
       format.json { head :no_content }
     end

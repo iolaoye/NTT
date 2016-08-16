@@ -1,3 +1,16 @@
+<% if @errors != nil %>
+  <% if @errors.length > 0 %>
+    <div id="error_explanation">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <h2>The following errors prevented the summary from running</h2>
+      <ul>
+        <% @errors.each do |error| %>
+            <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
 <br>
 <form id="myForm">
   <div class="field">
@@ -59,7 +72,6 @@
 </form>
 <h1 class="less-margin"><%=@result_selected %> <% @title%></h1>
 
-
 <% if @result_selected == t('result.annual') + "-" + t('result.charts') || @result_selected == t('result.monthly') + "-" + t('result.charts') then %>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
         <%= column_chart [
@@ -73,25 +85,25 @@
       <tr class='gvHeaderStyle'>
           <th class="gvCellStyleTitle"><%= t('result.description') %></th>
           <% if session[:simulation] == 'scenario' %>
-            <% if @results1 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results1[0].scenario_id).name%></th> <% end %>
-            <% if @results2 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results2[0].scenario_id).name%></th> <% end %>
+            <% if !@present1 %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results1[0].scenario_id).name%></th> <% end %>
+            <% if !@present2 %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results2[0].scenario_id).name%></th> <% end %>
           <% else %>
-            <% if @results1 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results1[0].watershed_id).name%></th> <% end %>
-            <% if @results2 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results2[0].watershed_id).name%></th> <% end %>
+            <% if !@present1 %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results1[0].watershed_id).name%></th> <% end %>
+            <% if !@present2 %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results2[0].watershed_id).name%></th> <% end %>
           <% end %>
           <th class="gvCellStyleTitle"><%= t('result.difference') %></th>
           <th class="gvCellStyleTitle"><%= t('result.reduction') %></th>
           <th class="gvCellStyleTitle"><%= t('result.total_area') %></th>
           <% if session[:simulation] == 'scenario' %>
-            <% if @results3 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results3[0].scenario_id).name%></th> <% end %>
+            <% if !@present3 %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results3[0].scenario_id).name%></th> <% end %>
           <% else %>
-            <% if @results3 == nil %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results3[0].watershed_id).name%></th> <% end %>
+            <% if !@present3 %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results3[0].watershed_id).name%></th> <% end %>
           <% end %>
           <th class="gvCellStyleTitle"><%= t('result.difference') %></th>
           <th class="gvCellStyleTitle"><%= t('result.reduction') %></th>
           <th class="gvCellStyleTitle"><%= t('result.total_area') %></th>
       </tr>
-      <% if @results1 != nil %>
+      <% if @results1 != nil && @present %>
           <% @results1.each do |result| %>
               <% value2 = 0 %>
               <% if @results2 != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
@@ -266,6 +278,8 @@
   </table>
  <% end %>
  <br>
+
+<%= hidden_field_tag "errors", @errors, { :id => "errors" } %>
 
 <script type="text/javascript">
   function AlertIt() {
