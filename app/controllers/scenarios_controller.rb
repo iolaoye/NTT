@@ -19,6 +19,7 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /1/scenarios.json
   def list
+    @errors = Array.new
     @scenarios = Scenario.where(:field_id => session[:field_id])
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
@@ -31,11 +32,36 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def index
-    msg = "OK"
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
-
+    @errors = Array.new
     @scenarios = Scenario.where(:field_id => session[:field_id])
+    respond_to do |format|
+      format.html { render action: "list" }
+      format.json { render json: @scenarios }
+    end
+  end
+
+
+################################  Simulate  #################################
+  def simulate_all
+    @project_name = Project.find(session[:project_id]).name
+    @field_name = Field.find(session[:field_id]).field_name
+    @errors = Array.new
+    @scenarios = Scenario.where(:field_id => session[:field_id])
+<<<<<<< HEAD
+    msg = "OK"
+    ActiveRecord::Base.transaction do
+      @scenarios.each do |scenario|
+        session[:scenario_id] = scenario.id
+        msg = run_scenario
+        unless msg.eql?("OK")
+          @errors.push("Error simulating scenario " + scenario.name)
+          raise ActiveRecord::Rollback
+        end # end if msg
+      end # end each do scenario loop
+    end
+=======
     @scenarios.each do |scenario|
       session[:scenario_id] = scenario.id
       msg = run_scenario
@@ -44,7 +70,9 @@ class ScenariosController < ApplicationController
       end # end if msg
     end #end each scenario loop
     @scenarios = Scenario.where(:field_id => session[:field_id])
+>>>>>>> oscar
     if msg.eql?("OK") then
+      flash[:notice] = @scenarios.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
       render "list", notice: "Simulation process end succesfully"
     else
       render "list", error: msg
@@ -55,6 +83,7 @@ class ScenariosController < ApplicationController
 # GET /scenarios/new
 # GET /scenarios/new.json
   def new
+    @errors = Array.new
     @scenario = Scenario.new
 
     respond_to do |format|
@@ -66,6 +95,7 @@ class ScenariosController < ApplicationController
 ################################  EDIT   #################################
 # GET /scenarios/1/edit
   def edit
+    @errors = Array.new
     @scenario = Scenario.find(params[:id])
   end
 
@@ -73,6 +103,7 @@ class ScenariosController < ApplicationController
 # POST /scenarios
 # POST /scenarios.json
   def create
+    @errors = Array.new
     @scenario = Scenario.new(scenario_params)
     @scenario.field_id = session[:field_id]
     @watershed = Watershed.new(scenario_params)
@@ -95,6 +126,7 @@ class ScenariosController < ApplicationController
 # PATCH/PUT /scenarios/1
 # PATCH/PUT /scenarios/1.json
   def update
+    @errors = Array.new
     @scenario = Scenario.find(params[:id])
 
     respond_to do |format|
@@ -112,9 +144,10 @@ class ScenariosController < ApplicationController
 # DELETE /scenarios/1
 # DELETE /scenarios/1.json
   def destroy
+    @errors = Array.new
     @scenario = Scenario.find(params[:id])
     Subarea.where(:scenario_id => @scenario.id).delete_all
-    @scenario.destroy
+    @scenario.destroy ? flash[:notice] = 'Scenario deleted successfully' : flash[:error] = 'Scenario failed to delete'
 
     respond_to do |format|
       format.html { redirect_to scenarios_url }
@@ -126,15 +159,22 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /scenarios/1.json
   def show()
+    @errors = Array.new
     msg = run_scenario
     respond_to do |format|
       @scenarios = Scenario.where(:field_id => session[:field_id])
       if msg.eql?("OK") then
+<<<<<<< HEAD
+        flash[:notice] = "Scenario simulated successfully"
+        @scenarios = Scenario.where(:field_id => session[:field_id])
+=======
+>>>>>>> oscar
         @project_name = Project.find(session[:project_id]).name
         @field_name = Field.find(session[:field_id]).field_name
 		flash[:notice] = t('scenario.scenario') + " " + t('general.success')
         format.html { render action: "list" }
       else
+        flash[:error] = "Scenario simulated successfully"
         @scenarios = Scenario.where(:field_id => session[:field_id])
         format.html { render action: "list" }
       end # end if msg

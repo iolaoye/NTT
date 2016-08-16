@@ -3,6 +3,9 @@
     form_errors:
         one: No se pudo guardar este/a %{model} porque se encontró un error
         other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
+    run_errors:
+      one: No se pudo correr este/a %{model} porque se encontró un error
+      other: No se pudo correr este/a %{model} porque se encontraron %{count} errores
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"

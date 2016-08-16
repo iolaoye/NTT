@@ -150,6 +150,8 @@ NTTG3::Application.routes.draw do
 
   post 'operations/delete_all'
 
+  post 'scenarios/simulate_all'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
