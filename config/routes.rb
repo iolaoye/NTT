@@ -148,6 +148,8 @@ NTTG3::Application.routes.draw do
   post 'apex_controls/reset'
   post 'apex_parameters/reset'
 
+  post 'operations/delete_all'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
