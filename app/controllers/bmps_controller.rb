@@ -46,15 +46,16 @@ before_filter :take_names
   # GET /bmps/new
   # GET /bmps/new.json
   def new
-    session.delete(:bmp)
-    session.delete(:climate_array)
     @climate_array = create_hash()
-    #session[:climate_array] = @climate_array
     @bmp = Bmp.new
   	@animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
-    session.delete(:subarea)
-    @type = "create"
+    #@type = "create"
+	if Field.find(session[:field_id]).field_type
+		@bmp_list = Bmplist.all
+	else
+		@bmp_list = Bmplist.where('id != 8')
+	end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @bmp }
@@ -64,7 +65,12 @@ before_filter :take_names
 ################################  EDIT  #################################
   # GET /bmps/1/edit
   def edit
-    @type = "edit"
+    #@type = "edit"
+	if Field.find(session[:field_id]).field_type
+		@bmp_list = Bmplist.all
+	else
+		@bmp_list = Bmplist.where('id != 8')
+	end
     @bmp = Bmp.find(params[:id])
 	@bmp_id = @bmp.bmp_id
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
@@ -82,14 +88,13 @@ before_filter :take_names
   # POST /bmps
   # POST /bmps.json
   def create
-    @type = "create"
+    #@type = "create"
     @slope = 100
     @bmp = Bmp.new(bmp_params)
 	@bmp.scenario_id = session[:scenario_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
     @climate_array = create_hash()
-	@field = Field.find(session[:field_id]).field_type
 	@state = Location.find(session[:location_id]).state_id
 	respond_to do |format|
       if @bmp.bmpsublist_id == 19
@@ -112,11 +117,21 @@ before_filter :take_names
             format.json { render json: @bmp.errors, status: :unprocessable_entity }
           end
         else
+			if Field.find(session[:field_id]).field_type
+				@bmp_list = Bmplist.all
+			else
+				@bmp_list = Bmplist.where('id != 8')
+			end
           format.html { render action: "new" }
           format.json { render json: @bmp.errors, status: :unprocessable_entity }
         end
       else
         @bmp.errors.add(msg[0], msg[1])
+		if Field.find(session[:field_id]).field_type
+			@bmp_list = Bmplist.all
+		else
+			@bmp_list = Bmplist.where('id != 8')
+		end
         format.html { render action: "new" }
         format.json { render json: @bmp.errors, status: :unprocessable_entity }
       end
