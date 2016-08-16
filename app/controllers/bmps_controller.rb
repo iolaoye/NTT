@@ -89,7 +89,9 @@ before_filter :take_names
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
     @climate_array = create_hash()
-    respond_to do |format|
+	@field = Field.find(session[:field_id]).field_type
+	@state = Location.find(session[:location_id]).state_id
+	respond_to do |format|
       if @bmp.bmpsublist_id == 19
         msg = input_fields("create")
       else
