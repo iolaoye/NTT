@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
     if params[:id] == "upload" then
       redirect_to "upload"
     end
-    #session[:project_id] = params[:id]
+    session[:project_id] = params[:id]
     @location = Location.find_by_project_id(params[:id])
     session[:location_id] = @location.id
     if Field.where(:location_id => @location.id).count > 0 then
