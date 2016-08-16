@@ -55,7 +55,7 @@ class ResultsController < ApplicationController
 	end # end if
 	@type = params[:button]
 	if params[:button] != nil then
-		params[:button].eql?(t("result.summary") + " " + t("result.by_soil") && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0" 
+		(params[:button].eql?(t("result.summary") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
 		case @type
 			when t("result.summary"), t("result.summary") + " " + t("result.by_soil")
 				if params[:button].include? t('result.summary') then 

@@ -132,7 +132,6 @@ class OperationsController < ApplicationController
         if params[:replace] != nil
           #Delete operations for the scenario selected
           Operation.where(:scenario_id => params[:id]).destroy_all
-          #SoilOperation.where(:scenario_id => params[:id]).delete_all
         end
         #take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
         events = Event.where(:cropping_system_id => params[:cropping_system][:id])
@@ -149,12 +148,11 @@ class OperationsController < ApplicationController
               crop_id = crop.id
               break
             else
-              crop_id = crop.id
+				if crop.state_id == "**" then
+					crop_id = crop.id
+				end
             end
           end
-          #session[:a_year] = params[:year]
-          #session[:a_year_to_i] = params[:year].to_i
-          #session[:a_count] = @operations.count()
           @operation.crop_id = crop_id
           @operation.activity_id = event.activity_id
           @operation.day = event.day
