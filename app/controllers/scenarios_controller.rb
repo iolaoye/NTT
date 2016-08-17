@@ -49,7 +49,6 @@ class ScenariosController < ApplicationController
     @field_name = Field.find(session[:field_id]).field_name
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => session[:field_id])
-<<<<<<< HEAD
     msg = "OK"
     ActiveRecord::Base.transaction do
       @scenarios.each do |scenario|
@@ -61,16 +60,6 @@ class ScenariosController < ApplicationController
         end # end if msg
       end # end each do scenario loop
     end
-=======
-    @scenarios.each do |scenario|
-      session[:scenario_id] = scenario.id
-      msg = run_scenario
-      if !msg.eql?("OK") then
-        break
-      end # end if msg
-    end #end each scenario loop
-    @scenarios = Scenario.where(:field_id => session[:field_id])
->>>>>>> oscar
     if msg.eql?("OK") then
       flash[:notice] = @scenarios.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
       render "list", notice: "Simulation process end succesfully"
@@ -164,14 +153,9 @@ class ScenariosController < ApplicationController
     respond_to do |format|
       @scenarios = Scenario.where(:field_id => session[:field_id])
       if msg.eql?("OK") then
-<<<<<<< HEAD
-        flash[:notice] = "Scenario simulated successfully"
-        @scenarios = Scenario.where(:field_id => session[:field_id])
-=======
->>>>>>> oscar
         @project_name = Project.find(session[:project_id]).name
         @field_name = Field.find(session[:field_id]).field_name
-		flash[:notice] = t('scenario.scenario') + " " + t('general.success')
+		    flash[:notice] = t('scenario.scenario') + " " + t('general.success')
         format.html { render action: "list" }
       else
         flash[:error] = "Scenario simulated successfully"
