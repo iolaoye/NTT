@@ -136,7 +136,9 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     @scenario = Scenario.find(params[:id])
     Subarea.where(:scenario_id => @scenario.id).delete_all
-    @scenario.destroy ? flash[:notice] = 'Scenario deleted successfully' : flash[:error] = 'Scenario failed to delete'
+    if @scenario.destroy
+      flash[:notice] = t('models.field') + " " + @scenario.name + t('notices.deleted')
+    end
 
     respond_to do |format|
       format.html { redirect_to scenarios_url }

@@ -156,8 +156,9 @@ class FieldsController < ApplicationController
   # DELETE /fields/1.json
   def destroy
     @field = Field.find(params[:id])
-    @field.destroy
-
+    if @field.destroy
+			flash[:notice] = t('models.field') + " " + @field.field_name + t('notices.deleted')
+		end
     respond_to do |format|
       format.html { redirect_to list_field_path(session[:location_id]) }
       format.json { head :no_content }
