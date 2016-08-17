@@ -156,9 +156,10 @@ class WatershedsController < ApplicationController
   # DELETE /watersheds/1
   # DELETE /watersheds/1.json
   def destroy
-    #oo
     @watershed = Watershed.find(params[:id])
-    @watershed.destroy
+    if @watershed.destroy
+      flash[:notice] = t('models.watershed') + " " + @watershed.name + t('notices.deleted')
+    end
 
     respond_to do |format|
       format.html { redirect_to list_watershed_path(session[:location_id]) }
