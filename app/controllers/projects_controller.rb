@@ -12,6 +12,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+  ########################################### SHOW - WHEN CLICK ON PROJECT NAME ##################
   # GET /projects/1
   # GET /projects/1.json
   def show #selected when click on a project or a new project is created.
@@ -2593,7 +2594,7 @@ class ProjectsController < ApplicationController
       node.elements.each do |p|
         case p.name
           when "Code"
-            control.control_id = Control.find_by_code(p.text).id
+            control.control_id = Control.find_by_code(p.text.strip).id
             case control.control_id
               when 1 # get number of years of simulation from weather
                 weather = Weather.find_by_field_id(session[:field_id])
