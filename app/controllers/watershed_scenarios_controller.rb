@@ -76,7 +76,7 @@ class WatershedScenariosController < ApplicationController
   def destroy
     @watershed_scenarios = WatershedScenario.find(params[:id])
     @watershed_scenarios.destroy
-    redirect_to watershed_scenario_path(session[:watershed_id])
+    redirect_to watershed_scenario_path(session[:watershed_id]), notice: 'Watershed scenario was successfully deleted.'
   end
 
   def new_scenario
@@ -90,7 +90,7 @@ class WatershedScenariosController < ApplicationController
         @new_watershed_scenario.scenario_id = params[:watershed][:scenario_id]
         @new_watershed_scenario.watershed_id = params[:id]
         @new_watershed_scenario.save
-        format.html { redirect_to watershed_scenario_path(params[:id]) }
+        format.html { redirect_to watershed_scenario_path(params[:id]), notice: 'Watershed scenario was successfully created.' }
       else
         format.html { redirect_to watershed_scenario_path(params[:id]), notice: 'That field/scenario combination has already been selected for this watershed. Please choose again.' }
       end

@@ -1,3 +1,11 @@
+<% if notice != nil %>
+<br>
+  <div class="success_alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <%= notice %>
+  </div>
+  <% end %>
+    
 <br>
 <%= form_for :watershed, url: new_scenario_watershed_scenario_path do |f| %>
 <table>
@@ -13,9 +21,6 @@
   </tr>
 </table>  
 <% end %>
-
- 
-<p id="error_notice"><%= notice %></p>
 
 <h1><%= t('watershed_scenario.watershed_scenario_title')%></h1> 
 

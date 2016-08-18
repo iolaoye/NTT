@@ -279,8 +279,9 @@ en:
         one: 1 error prohibited this %{model} from being saved
         other: "%{count} errors prohibited this %{model} from being saved"
   notices:
-    deleted: " has been deleted"
-    updated: " was successfully updated"
+    deleted: " has been deleted."
+    updated: " was successfully updated."
+    created: " was sucessfully created."
   helpers:
     select:
       prompt: Please select

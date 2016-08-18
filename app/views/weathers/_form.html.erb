@@ -14,6 +14,11 @@
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <%= notice %>
     </div>
+  <% when flash[:info] %>
+	<div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:info] %>
+    </div>
   <% end %>
 
  <fieldset class="section">
@@ -32,7 +37,7 @@
 
   
   <% if @weather.way_id == 2 %>
-	<fieldset id="fsetUploadWeatherFile" class="section"></fieldset>
+	<fieldset id="fsetUploadWeatherFile" class="section">
   <% else %>
 	<fieldset id="fsetUploadWeatherFile" class="section" style="display:none">
   <% end %>
@@ -41,16 +46,16 @@
   </fieldset>
   
   <% if @weather.way_id == 3 %>
-	  <fieldset id="fsetCoordinates" class="section"></fieldset>
+	  <fieldset id="fsetCoordinates" class="section">
   <% else %>
 	  <fieldset id="fsetCoordinates" class="section" style="display:none">
   <% end %>
         <legend><%= t('weather.enter_coordinates') %></legend>
         <div class="field">
 			<%= f.label t('weather.latitude')%>
-			<%= f.number_field :latitude, :class => "numbers", :step => 'any', min: -90, max: 90  %>
+			<%= f.number_field :latitude, :class => "numbers", :step => 'any' %>
 			<%= f.label t('weather.longitude') %>
-			<%= f.number_field :longitude, :class => "numbers", :step => 'any', min: -180, max: 180 %>
+			<%= f.number_field :longitude, :class => "numbers", :step => 'any' %>
 		</div>
     </fieldset>	
 
