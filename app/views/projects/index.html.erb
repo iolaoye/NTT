@@ -1,5 +1,10 @@
+<% if flash[:error] != nil %>
+    <div class="danger_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:error] %>
+    </div>
+<% end %>
 <% if notice != nil %>
-    <br>
     <div class="success_alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <%= notice %>
