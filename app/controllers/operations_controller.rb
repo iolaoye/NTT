@@ -125,7 +125,9 @@ class OperationsController < ApplicationController
   def destroy
     @operation = Operation.find(params[:id])
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
-    @operation.destroy
+    if @operation.destroy
+      flash[:notice] = t('models.operation') + t('notices.deleted')
+    end
     if soil_operations != nil
       soil_operations.delete_all
     end

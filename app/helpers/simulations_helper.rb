@@ -1834,9 +1834,9 @@ module SimulationsHelper
     end
     result.value = value
     if !ci.to_f.nan? then
-      result.ci_value = ci
+      result.ci_value = ci.round(2)
     else
-      result.ci_value = 0
+      result.ci_value = 0.00
     end
     result.crop_id = crop_id
     if result.save then

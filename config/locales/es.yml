@@ -3,6 +3,9 @@
     form_errors:
         one: No se pudo guardar este/a %{model} porque se encontró un error
         other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
+    run_errors:
+      one: No se pudo correr este/a %{model} porque se encontró un error
+      other: No se pudo correr este/a %{model} porque se encontraron %{count} errores
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"
@@ -636,12 +639,12 @@
     watershed3: 3ra cuenca
     last: (últimos 12 años)
     avg: Promedio Mensual (Todo el Periodo)
-    select_scenario1: 1er Escenario
-    select_scenario2: 2do Escenario
-    select_scenario3: 3er Escenario
-    select_watershed1: Selectione 1ra cuenca
-    select_watershed2: Selectione 2da cuenca
-    select_watershed3: Selectione 3ra cuenca
+    select_scenario1: Seleccione 1er Escenario
+    select_scenario2: Seleccione 2do Escenario
+    select_scenario3: Seleccione 3er Escenario
+    select_watershed1: Seleccione 1ra cuenca
+    select_watershed2: Seleccione 2da cuenca
+    select_watershed3: Seleccione 3ra cuenca
     select_chart: Seleccione tipo de Gráfico
     description: Descripción
     difference: Diferencia

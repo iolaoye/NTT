@@ -12,13 +12,14 @@ class ProjectsController < ApplicationController
     end
   end
 
+  ########################################### SHOW - WHEN CLICK ON PROJECT NAME ##################
   # GET /projects/1
   # GET /projects/1.json
   def show #selected when click on a project or a new project is created.
     if params[:id] == "upload" then
       redirect_to "upload"
     end
-    #session[:project_id] = params[:id]
+    session[:project_id] = params[:id]
     @location = Location.find_by_project_id(params[:id])
     session[:location_id] = @location.id
     if Field.where(:location_id => @location.id).count > 0 then
@@ -118,14 +119,16 @@ class ProjectsController < ApplicationController
     end
   end
 
-  ########################################### DELETE PROJECT##################
+  ######################## DELETE PROJECT ##################
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
     @project = Project.find(params[:id])
     location = Location.where(:project_id => params[:id])
     location.destroy_all unless location == []
-    @project.destroy
+    if @project.destroy
+      flash[:notice] = t('models.project') + " " + @project.name + t('notices.deleted')
+    end
     @projects = Project.where(:user_id => params[:user_id])
 
     respond_to do |format|
@@ -2593,7 +2596,7 @@ class ProjectsController < ApplicationController
       node.elements.each do |p|
         case p.name
           when "Code"
-            control.control_id = Control.find_by_code(p.text).id
+            control.control_id = Control.find_by_code(p.text.strip).id
             case control.control_id
               when 1 # get number of years of simulation from weather
                 weather = Weather.find_by_field_id(session[:field_id])

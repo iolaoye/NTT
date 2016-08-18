@@ -1,3 +1,11 @@
+<% if notice != nil %>
+    <br>
+    <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
+<% end %>
+
 <h1 class="no_margin_bottom"><%= t('field.field_title') %></h1>
 <p class="instruction"><%= t('instructions.fields') %> </p>
 
