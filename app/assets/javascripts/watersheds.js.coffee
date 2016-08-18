@@ -17,5 +17,5 @@ select_scenarios = ->
     $("#watershed_scenario_id").removeAttr("disabled")
 
 $(document).ready ->
-    $('#watershed_field_id').change ->
-       select_scenarios()
+  $("#watershed_field_id").change ->
+    select_scenarios()

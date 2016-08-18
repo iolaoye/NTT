@@ -2,7 +2,7 @@
   <% if @errors.length > 0 %>
     <div id="error_explanation">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <h2>The following errors prevented the summary from running</h2>
+      <h2><%= t('activerecord.run_errors', :count => @errors.count, :model => t('models.result').downcase) %></h2>
       <ul>
         <% @errors.each do |error| %>
             <li><%= error %></li>
