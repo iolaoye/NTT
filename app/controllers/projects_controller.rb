@@ -119,14 +119,16 @@ class ProjectsController < ApplicationController
     end
   end
 
-  ########################################### DELETE PROJECT##################
+  ######################## DELETE PROJECT ##################
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
     @project = Project.find(params[:id])
     location = Location.where(:project_id => params[:id])
     location.destroy_all unless location == []
-    @project.destroy
+    if @project.destroy
+      flash[:notice] = t('models.project') + " " + @project.name + t('notices.deleted')
+    end
     @projects = Project.where(:user_id => params[:user_id])
 
     respond_to do |format|
