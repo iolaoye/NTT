@@ -288,8 +288,8 @@ $(document).ready ->
         update_fertigation_options()
     $("#fill_max").click ->
         update_max_row()
-    $("#fill_min").click ->
-        update_min_row()
     $("#fill_pcp").click ->
         update_pcp_row()
+    $("#fill_min").click ->
+        update_min_row()
 
