@@ -96,11 +96,11 @@ class WatershedScenariosController < ApplicationController
         if @new_watershed_scenario.save
           flash[:notice] = 'Watershed scenario was successfully created.'
         else
-          flash[:error] = 'That field/scenario combination has already been selected for this watershed. Please choose again.'
+          flash[:error] = 'That field has already been selected for this watershed. Please choose again.'
         end
         format.html { redirect_to watershed_scenario_path(params[:id]) }
       else
-        flash[:error] = 'That field/scenario combination has already been selected for this watershed. Please choose again.'
+        flash[:error] =  'That field has already been selected for this watershed. Please choose again.'
         format.html { redirect_to watershed_scenario_path(params[:id]) }
       end
     end
