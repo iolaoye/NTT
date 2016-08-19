@@ -95,17 +95,6 @@ class WeathersController < ApplicationController
   # PATCH/PUT /weathers/1.json
   def update
     @weather = Weather.find(params[:id])
-	if (params[:weather][:way_id] == "1")
-	  respond_to do |format|
-		  if @weather.update_attributes(weather_params)
-			format.html { redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')}
-			format.json { head :no_content }
-		  else
-			format.html { render action: "edit" }
-			format.json { render json: @weather.errors, status: :unprocessable_entity }
-		  end
-	  end
-	end
 	if (params[:weather][:way_id] == "2")
 		if (params[:weather][:weather_file] == nil)
 				redirect_to edit_weather_path(session[:field_id])
@@ -114,23 +103,16 @@ class WeathersController < ApplicationController
 			msg = upload_weather
 		    redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated') 
 		end
-    end
-    if (params[:weather][:way_id] == "3")
-		case
-		when (params[:weather][:latitude] == "") 
-				redirect_to edit_weather_path(session[:field_id])
-				flash[:info] = t('weather.latitude') + " " + t('errors.messages.blank')
-		when (params[:weather][:longitude] == "")
-				redirect_to edit_weather_path(session[:field_id])
-				flash[:info] = t('weather.longitude') + " " + t('errors.messages.blank')
-        else
-		  respond_to do |format|
-		    if @weather.update_attributes(weather_params)
-			  format.html { redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated') }
-			  format.json { head :no_content }
-		    end
+	else
+		respond_to do |format|
+		  if @weather.update_attributes(weather_params)
+			format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Weather was successfully updated.' }
+			format.json { head :no_content }
+		  else
+			format.html { render action: "edit" }
+			format.json { render json: @weather.errors, status: :unprocessable_entity }
 		  end
-        end
+		end
 	end
   end
 
