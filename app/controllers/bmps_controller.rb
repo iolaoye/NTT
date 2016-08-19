@@ -53,9 +53,9 @@ class BmpsController < ApplicationController
     @irrigation = Irrigation.arel_table
     #@type = "create"
     if Field.find(session[:field_id]).field_type
-      @bmp_list = Bmplist.all
+      @bmp_list = Bmplist.where(:id => 8)
     else
-      @bmp_list = Bmplist.where('id != 8')
+      @bmp_list = Bmplist.all
     end
     respond_to do |format|
       format.html # new.html.erb
@@ -119,9 +119,9 @@ class BmpsController < ApplicationController
           end
         else
           if Field.find(session[:field_id]).field_type
-            @bmp_list = Bmplist.all
+            @bmp_list = Bmplist.where(:id => 8)
           else
-            @bmp_list = Bmplist.where('id != 8')
+            @bmp_list = Bmplist.all
           end
           format.html { render action: "new" }
           format.json { render json: @bmp.errors, status: :unprocessable_entity }
@@ -129,9 +129,9 @@ class BmpsController < ApplicationController
       else
         @bmp.errors.add(msg[0], msg[1])
         if Field.find(session[:field_id]).field_type
-          @bmp_list = Bmplist.all
+          @bmp_list = Bmplist.where(:id => 8)
         else
-          @bmp_list = Bmplist.where('id != 8')
+          @bmp_list = Bmplist.all
         end
         format.html { render action: "new" }
         format.json { render json: @bmp.errors, status: :unprocessable_entity }

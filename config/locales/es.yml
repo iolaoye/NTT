@@ -280,6 +280,8 @@
     deleted: " ha sido borrado/a."
     updated: " fue actualizado/a satisfactoriamente."
     created: " fue creado correctamente."
+    simulation: "Simulación fue Exitoso."
+    all: "Todas las operaciones se han eliminado."
   helpers:
     select:
       prompt: Por favor seleccione
