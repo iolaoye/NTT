@@ -248,6 +248,7 @@ class OperationsController < ApplicationController
             @operation.scenario_id = params[:id]
             if @operation.save
               msg = add_soil_operation()
+			  notice = t('scenario.operation') + " " + t('general.created')
               unless msg.eql?("OK")
                 raise ActiveRecord::Rollback
               end
