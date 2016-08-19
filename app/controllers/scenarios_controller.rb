@@ -55,7 +55,7 @@ class ScenariosController < ApplicationController
         session[:scenario_id] = scenario.id
         msg = run_scenario
         unless msg.eql?("OK")
-          @errors.push("Error simulating scenario " + scenario.name)
+          @errors.push("Error simulating scenario " + scenario.name + " (" + msg + ")")
           raise ActiveRecord::Rollback
         end # end if msg
       end # end each do scenario loop
@@ -137,7 +137,7 @@ class ScenariosController < ApplicationController
     @scenario = Scenario.find(params[:id])
     Subarea.where(:scenario_id => @scenario.id).delete_all
     if @scenario.destroy
-      flash[:notice] = t('models.field') + " " + @scenario.name + t('notices.deleted')
+      flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.deleted')
     end
 
     respond_to do |format|
@@ -151,19 +151,21 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1.json
   def show()
     @errors = Array.new
-    msg = run_scenario
-    respond_to do |format|
+    ActiveRecord::Base.transaction do
+      msg = run_scenario
       @scenarios = Scenario.where(:field_id => session[:field_id])
       if msg.eql?("OK") then
         @project_name = Project.find(session[:project_id]).name
         @field_name = Field.find(session[:field_id]).field_name
-		    flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-        format.html { render action: "list" }
+        flash[:notice] = t('scenario.scenario') + ' was successfully simulated'
       else
-        flash[:error] = "Scenario simulated successfully"
+        flash[:error] = "Scenario failed to simulate (" + msg + ")"
         @scenarios = Scenario.where(:field_id => session[:field_id])
-        format.html { render action: "list" }
-      end # end if msg
+        raise ActiveRecord::Rollback
+      end
+    end
+    respond_to do |format|
+      format.html { render action: "list" }
     end
   end
 
