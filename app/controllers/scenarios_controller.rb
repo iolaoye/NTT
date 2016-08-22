@@ -150,19 +150,20 @@ class ScenariosController < ApplicationController
   def show()
     @errors = Array.new
     ActiveRecord::Base.transaction do
-    msg = run_scenario
-    @scenarios = Scenario.where(:field_id => session[:field_id])
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
-    respond_to do |format|
-      if msg.eql?("OK") then
-		flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-        format.html { render action: "list" }
-      else
-        flash[:error] = "Error simulatin scenario"
-        format.html { render action: "list" }
-      end # end if msg
-    end
+		msg = run_scenario
+		@scenarios = Scenario.where(:field_id => session[:field_id])
+		@project_name = Project.find(session[:project_id]).name
+		@field_name = Field.find(session[:field_id]).field_name
+		respond_to do |format|
+		  if msg.eql?("OK") then
+			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
+			format.html { render action: "list" }
+		  else
+			flash[:error] = "Error simulatin scenario"
+			format.html { render action: "list" }
+		  end # end if msg
+		end
+	end
   end
 
   private
