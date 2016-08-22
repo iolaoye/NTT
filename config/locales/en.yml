@@ -643,9 +643,9 @@ en:
     watershed3: 3rd watershed
     last: (last 12 years)
     avg: Monthly average (whole period)
-    select_scenario1: Select 1st Escenario
-    select_scenario2: Select 2nd Escenario
-    select_scenario3: Select 3rd Escenario
+    select_scenario1: Select 1st Scenario
+    select_scenario2: Select 2nd Scenario
+    select_scenario3: Select 3rd Scenario
     select_watershed1: Select 1st watershed
     select_watershed2: Select 2nd watershed
     select_watershed3: Select 3rd watershed

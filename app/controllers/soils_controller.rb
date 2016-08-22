@@ -101,7 +101,9 @@ class SoilsController < ApplicationController
   # DELETE /soils/1.json
   def destroy
     @soil = Soil.find(params[:id])
-    @soil.destroy
+    if @soil.destroy
+      flash[:notice] = t('models.soil') + " " + @soil.name + t('notices.deleted')
+    end
 
     respond_to do |format|
       format.html { redirect_to list_soil_path(@soil.field_id) }

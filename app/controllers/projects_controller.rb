@@ -119,14 +119,16 @@ class ProjectsController < ApplicationController
     end
   end
 
-  ########################################### DELETE PROJECT##################
+  ######################## DELETE PROJECT ##################
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
     @project = Project.find(params[:id])
     location = Location.where(:project_id => params[:id])
     location.destroy_all unless location == []
-    @project.destroy
+    if @project.destroy
+      flash[:notice] = t('models.project') + " " + @project.name + t('notices.deleted')
+    end
     @projects = Project.where(:user_id => params[:user_id])
 
     respond_to do |format|
@@ -1617,7 +1619,10 @@ class ProjectsController < ApplicationController
         when "ApexTillCode"
           soil_operation.apex_operation = p.text
           if soil_operation.activity_id == 4 then
-            soil_operation.apex_operation = Crop.find_by_number(soil_operation.apex_crop).harvest_code
+            soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, Location.find(session[:location_id].id).state_id).harvest_code
+			if soil_operation.apex_operation == nil then
+				soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, "**").harvest_code				
+			end
           end
       end
     end

@@ -3,8 +3,6 @@ class ApexControlsController < ApplicationController
   # GET /apex_controls.json
   def index
 	@apex_controls = ApexControl.includes(:control).where(:project_id => session[:project_id])
-    #@apex_controls = ApexControl.where(:project_id => session[:project_id])
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_controls }

@@ -43,14 +43,17 @@ set_buttons = (view) ->
   $("#pdf_download").toggle(view)
   $("#pdf_no_click").toggle(!view)
 
+check_for_errors = ->
+  errors = $("#errors").val() + ""
+  size = errors.length
+  if size > 0
+    set_buttons(false)
+
 $(document).ready ->
-  errors = $('#errors').val().length
   set_buttons(false)
   display_button()
   generate_pdf()
-  if errors > 0
-    #alert(errors)
-    set_buttons(false)
+  check_for_errors()
   $("#result1_scenario_id").change ->
     update_crops()
     set_buttons(false)
@@ -65,7 +68,3 @@ $(document).ready ->
 
   $("#summary").click (event) ->
     set_buttons(true)
-
-  if errors > 0
-    #alert(errors)
-    set_buttons(false)
