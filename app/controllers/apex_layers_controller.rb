@@ -47,7 +47,7 @@
 
     respond_to do |format|
       if @apex_layer.save
-        format.html { redirect_to @apex_layer, notice: 'Layer was successfully created.' }
+        format.html { redirect_to @apex_layer, notice: t('models.layer') + "" + t('notices.created') }
         format.json { render json: @apex_layer, status: :created, location: @apex_layer }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@
     @apex_layer = Layer.find(params[:id])
     respond_to do |format|
       if @apex_layer.update_attributes(layer_params)
-        format.html { redirect_to apex_layers_path(:id => @apex_layer.soil_id), notice: 'Layer was successfully updated.' }
+        format.html { redirect_to apex_layers_path(:id => @apex_layer.soil_id), notice: t('models.layer') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

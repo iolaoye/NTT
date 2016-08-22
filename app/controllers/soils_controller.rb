@@ -64,8 +64,7 @@ class SoilsController < ApplicationController
 
     respond_to do |format|
       if @soil.save
-        flash[:notice] = t('soil.soil') + " " + @soil.name + " " + t('general.success')
-        format.html { redirect_to list_soil_path(session[:field_id]), notice: 'Soil was successfully created.' }
+        format.html { redirect_to list_soil_path(session[:field_id]), notice: t('soil.soil') + " " + @soil.name + " " + t('general.success') }
         format.json { render json: @soil, status: :created, location: @soil }
       else
         format.html { render action: "new" }
@@ -88,7 +87,7 @@ class SoilsController < ApplicationController
 		else
 			Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
 		end
-        format.html { redirect_to list_soil_path(session[:field_id]), notice: 'Soil was successfully updated.' }
+        format.html { redirect_to list_soil_path(session[:field_id]), notice: t('models.soil') + " " + @soil.name + " " + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -102,7 +101,7 @@ class SoilsController < ApplicationController
   def destroy
     @soil = Soil.find(params[:id])
     if @soil.destroy
-      flash[:notice] = t('models.soil') + " " + @soil.name + t('notices.deleted')
+      flash[:info] = t('models.soil') + " " + @soil.name + t('notices.deleted')
     end
 
     respond_to do |format|

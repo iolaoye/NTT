@@ -142,7 +142,7 @@ class OperationsController < ApplicationController
     @operations = Operation.where(:scenario_id =>  session[:scenario_id])
     @operations.destroy_all
     respond_to do |format|
-      format.html { redirect_to list_operation_path(session[:scenario_id]) }
+      format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('notices.all') }
       format.json { head :no_content }
     end
   end
@@ -230,6 +230,7 @@ class OperationsController < ApplicationController
             @operation.scenario_id = params[:id]
             if @operation.save
               msg = add_soil_operation()
+			  notice = t('scenario.operation') + " " + t('general.created')
               unless msg.eql?("OK")
                 raise ActiveRecord::Rollback
               end

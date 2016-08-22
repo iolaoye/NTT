@@ -89,14 +89,15 @@ class ProjectsController < ApplicationController
     @project.version = "NTTG3"
     respond_to do |format|
       if @project.save
-	    session[:project_id] = @project.id
+        session[:project_id] = @project.id
         location = Location.new
         location.project_id = @project.id
         location.save
         session[:location_id] = location.id
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
+        format.html { redirect_to @project, notice: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
+        flash[:error] = @project.errors
         format.html { render action: "new" }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -110,7 +111,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to welcomes_path, notice: 'Project was successfully updated.' }
+        format.html { redirect_to welcomes_path, notice: t('models.project') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -127,13 +128,12 @@ class ProjectsController < ApplicationController
     location = Location.where(:project_id => params[:id])
     location.destroy_all unless location == []
     if @project.destroy
-      flash[:notice] = t('models.project') + " " + @project.name + t('notices.deleted')
+      flash[:info] = t('models.project') + " " + @project.name + t('notices.deleted')
     end
     @projects = Project.where(:user_id => params[:user_id])
 
     respond_to do |format|
-      flash[:notice] = t('models.project') + " " + @project.name + t('notices.deleted')
-      format.html { redirect_to welcomes_path }
+      format.html { redirect_to welcomes_path, notice: 'Project was successfully updated.' }
       format.json { head :no_content }
     end
   end
@@ -155,74 +155,73 @@ class ProjectsController < ApplicationController
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_project
-    #oo\
-    @errors = Array.new
     saved = false
     msg = ""
     upload_id = 0
     ActiveRecord::Base.transaction do
       #begin
-        msg = "OK"
-        #oo
+      msg = "OK"
+      #oo
+      upload_id = 0
+      if params[:commit].eql? t('submit.save') then
+        if params[:project] == nil then
+          redirect_to upload_project_path(upload_id)
+          flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
+        end
+        @data = Nokogiri::XML(params[:project])
         upload_id = 0
-        if params[:commit].eql? t('submit.save') then
-          if params[:project] == nil then
+      else
+        upload_id = 1
+        case params[:examples]
+          when "0"
             redirect_to upload_project_path(upload_id)
-            flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
-          end
-          @data = Nokogiri::XML(params[:project])
-          upload_id = 0
-        else
-          upload_id = 1
-          case params[:examples]
-            when "0"
-              redirect_to upload_project_path(upload_id)
-              flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
-            when "1" # Load OH two fields
-              @data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
-          end # end case examples
+            flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
+          when "1" # Load OH two fields
+            @data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
+        end # end case examples
+      end
+      @data.root.elements.each do |node|
+        case node.name
+          when "project"
+            msg = upload_project_new_version(node)
+          when "location"
+            msg = upload_location_new_version(node)
+          when "StartInfo"
+            msg = upload_project_info(node)
+          when "FarmInfo"
+            msg = upload_location_info1(node)
+          when "FieldInfo"
+            msg = upload_field_info(node)
+          when "SiteInfo"
+            msg = upload_site_info(node)
+          when "control"
+            msg = upload_control_values_new_version(node)
+          when "ControlValues"
+            msg = upload_control_values(node)
+          when "ParmValues"
+            msg = upload_parameter_values(node)
+          when "parameter_values"
+            msg = upload_parameter_values_new_version(node)
         end
-        @data.root.elements.each do |node|
-          case node.name
-            when "project"
-              msg = upload_project_new_version(node)
-            when "location"
-              msg = upload_location_new_version(node)
-            when "StartInfo"
-              msg = upload_project_info(node)
-            when "FarmInfo"
-              msg = upload_location_info1(node)
-            when "FieldInfo"
-              msg = upload_field_info(node)
-            when "SiteInfo"
-              msg = upload_site_info(node)
-            when "control"
-              msg = upload_control_values_new_version(node)
-            when "ControlValues"
-              msg = upload_control_values(node)
-            when "ParmValues"
-              msg = upload_parameter_values(node)
-            when "parameter_values"
-              msg = upload_parameter_values_new_version(node)
-          end
-          break if (msg != "OK" && msg != true)
-        end
-        if (msg == "OK" || msg == true)
-          # summarizes results for totals and soils.
-          summarize_total()
-          @projects = Project.where(:user_id => session[:user_id])
-          saved = true
-        else
-          saved = false
-          raise ActiveRecord::Rollback
-        end
+        break if (msg != "OK" && msg != true)
+      end
+      if (msg == "OK" || msg == true)
+        # summarizes results for totals and soils.
+        summarize_total()
+        @projects = Project.where(:user_id => session[:user_id])
+        saved = true
+      else
+        saved = false
+        raise ActiveRecord::Rollback
+      end
       #rescue NoMethodError => e
-        #msg = e.inspect
-        #saved = false
-        #raise ActiveRecord::Rollback
+      #msg = e.inspect
+      #saved = false
+      #raise ActiveRecord::Rollback
       #end
     end
     if saved
+      flash[:notice] = t('models.project') + " " + t('general.success')
       render :action => "index", notice: msg
     else
       redirect_to upload_project_path(upload_id)
@@ -1684,16 +1683,16 @@ class ProjectsController < ApplicationController
       end # case
     end # end each
     if operation.save then
-		soils = Soil.where(:field_id => field_id)
-		soils.each do |soil|
-		  soil_operation = SoilOperation.where(:soil_id => soil.id, :scenario_id => scenario_id, :tractor_id => event_id).first
-		  soil_operation.operation_id = operation.id
-		  soil_operation.save
-		end # end soils.each
-		return "OK"
-	else
-		return "Error saving Operation"
-	end
+      soils = Soil.where(:field_id => field_id)
+      soils.each do |soil|
+        soil_operation = SoilOperation.where(:soil_id => soil.id, :scenario_id => scenario_id, :tractor_id => event_id).first
+        soil_operation.operation_id = operation.id
+        soil_operation.save
+      end # end soils.each
+      return "OK"
+    else
+      return "Error saving Operation"
+    end
   end
 
   def upload_operation_new_version(scenario_id, new_operation)

@@ -64,7 +64,7 @@ class SoilOperationsController < ApplicationController
 
     respond_to do |format|
       if @soil_operation.update_attributes(soil_operation_params)
-        format.html { redirect_to soil_operations_path, notice: 'Soil operation was successfully updated.' }
+        format.html { redirect_to soil_operations_path, notice: t('models.soil_operation') + " " + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -22,7 +22,8 @@
 </div>
 </br>
 
-<% if (@bmp.bmpsublist_id == 1) %>
+<% case @bmp.bmpsublist_id %>
+<% when 1 %>
   <% if I18n.locale.eql?(:en) %>
     <div>
       <b>Irrigation:</b>
@@ -62,9 +63,8 @@
         <%= @bmp.area %>
       </div>
     <% end %>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 2) %>
+<% when 2 %>
   <div>
     <b><%= t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one')  + " " + ':' %></b>
     <%= @bmp.water_stress_factor %>
@@ -81,16 +81,14 @@
     <b><%= t('bmp.irrigation_frequency') + " " + t('bmp.days_range') + " " + ':' %></b>
     <%= @bmp.days %>
   </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 3) %>
+<% when 3 %>
   <div>
     <b><%= t('bmp.depth') + " (" + t('bmp.ft') + ")" + " " + ':' %></b>
     <%= @bmp.depth %>
   </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 4) %>
+<% when 4 %>
   <div>
     <b><%= t('bmp.width') + " " + ':' %></b>
     <%= @bmp.width %>
@@ -99,9 +97,8 @@
     <b><%= t('bmp.sides') + " " + ':' %></b>
     <%= @bmp.sides %>
   </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 5) %>
+<% when 5 %>
   <div>
     <b><%= t('bmp.width') + " " + ':' %></b>
     <%= @bmp.width %>
@@ -110,9 +107,8 @@
     <b><%= t('bmp.sides') + " " + ':' %></b>
     <%= @bmp.sides %>
   </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 6) %>
+<% when 6 %>
   <div>
     <b><%= t('bmp.area') + " " + t('bmp.zero_to_max') + " " + ':' %></b>
     <%= @bmp.area %>
@@ -125,9 +121,8 @@
     <b><%= t('bmp.sides') + " " + ':' %></b>
     <%= @bmp.sides %>
   </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 7) %>
+<% when 7 %>
   <div>
     <b><%= t('bmp.area') + " " + t('bmp.zero_to_max') + " " + ':' %></b>
     <%= @bmp.area %>
@@ -140,23 +135,20 @@
     <b><%= t('bmp.sides') + " " + ':' %></b>
     <%= @bmp.sides %>
   </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 8) %>
+<% when 8 %>
   <div>
     <b><%= t('bmp.area') + " " + t('bmp.zero_to_max') + " " + ':' %></b>
     <%= @bmp.area %>
   </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 9) %>
+<% when 9 %>
    <div>
       <b><%= t('bmp.area') + " " + t('bmp.zero_to_max') + " " + ':' %></b>
       <%= @bmp.area %>
   </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 10) %>
+<% when 10 %>
 <div>
   <b><%= t('bmp.number_of_animals') + " " + ':' %></b>
   <%= @bmp.number_of_animals %>
@@ -189,12 +181,8 @@
   <b><%= t('bmp.org_p') + " " + ':' %></b>
   <%= @bmp.org_p %>
 </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 11) %>
-<% end %>
-
-<% if (@bmp.bmpsublist_id == 12) %>
+<% when 12 %>
 <div>
   <b><%= t('bmp.area') + " " + t('bmp.zero_to_max') + " " + ':' %></b>
   <%= @bmp.area %>
@@ -211,9 +199,8 @@
   <b><%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') + " " + ':' %></b>
   <%= @bmp.buffer_slope_upland %>
 </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 13) %>
+<% when 13 %>
   <% if I18n.locale.eql?(:en) %>
     <div>
       <b>Crop:</b>
@@ -237,9 +224,8 @@
   <b><%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') + " " + ':' %></b>
   <%= @bmp.buffer_slope_upland %>
 </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 14) %>
+<% when 14 %>
   <% if I18n.locale.eql?(:en) %>
     <div>
       <b>Crop:</b>
@@ -255,9 +241,8 @@
   <b><%= t('bmp.width') + " " + ':' %></b>
   <%= @bmp.width %>
 </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 15) %>
+<% when 15 %>
   <% if I18n.locale.eql?(:en) %>
     <div>
       <b>Crop:</b>
@@ -277,31 +262,14 @@
   <b><%= t('bmp.crop_width') + " (" + t('bmp.ft') + ")" + " " + ':' %></b>
   <%= @bmp.crop_width %>
 </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 16) %>
+<% when 16 %>
 <div>
   <b><%= t('bmp.slope_reduction') + " " + ':' %></b>
   <%= @bmp.slope_reduction %>
 </div>
-<% end %>
 
-<% if (@bmp.bmpsublist_id == 17) %>
-<% end %>
-
-<% if (@bmp.bmpsublist_id == 19) %>
-<% end %>
-
-<% if (@bmp.bmpsublist_id == 20) %>
-<% end %>
-
-<% if (@bmp.bmpsublist_id == 21) %>
-<% end %>
-
-<% if (@bmp.bmpsublist_id == 22) %>
-<% end %>
-
-<% if (@bmp.bmpsublist_id == 23) %>
+<% when 23 %>
   <% if I18n.locale.eql?(:en) %>
     <div>
       <b>Crop:</b>
