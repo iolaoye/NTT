@@ -750,10 +750,9 @@ module SimulationsHelper
 
     #for Each buf In _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bufferInfo
     #todo if buffer is used. Maybe just subarea are used means all of the buffer are created directly as subareas.
-    no = 1
-    if no != 1 then
-      Buffer.each do |buf|
-        if !(buf.SbaType == "PPDE" || buf.SbaType == "PPTW" || buf.SbaType == "AITW" || buf.SbaType == "CBMain")
+	  buffer = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND bmp_id != 'nil' AND bmp_id != 0")
+      buffer.each do |buf|
+        if !(buf.subarea_type == "PPDE" || buf.subarea_type == "PPTW" || buf.subarea_type == "AITW" || buf.subarea_type == "CBMain")
           #create the operation file for this subarea.
           @last_subarea += 1
           opcsFile.Add(buf.SubareaTitle)
@@ -764,11 +763,11 @@ module SimulationsHelper
           operations.each do |oper|
             opcsFile.Add(sprintf("%3d", oper.year) + sprintf("%3d", oper.month) + sprintf("%3d", oper) + sprintf("%5d", oper.apex_code) + sprintf("%5d", 0) + sprintf("%5d", oper.apex_crop) + sprintf("%5d", oper.subtype) + sprintf("%8.2f", oper.opv1) + sprintf("%8.2f", oper.opv2))
           end
-          opcsFile.Add("End " & buf.SubareaTitle)
+          opcsFile.Add("End " & buf.description)
         end
-        add_subarea_file(buf, operation_number, last_owner1, 0, 0, True)
+        add_subarea_file(buf, operation_number, last_owner1, i, nirr, true, 0)
+		i+=1
       end
-    end #end if no != 1
 
     @last_soil_sub = @last_soil2
     last_owner = last_owner1
@@ -875,10 +874,11 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.bffl)
     @subarea_file.push(sLine + "\n")
     #/line 8
+	sLine = "  0"
     if _subarea_info.nirr > 0 then
-      sLine = sprintf("%4d", _subarea_info.nirr)
+      sLine += sprintf("%1d", _subarea_info.nirr)
     else
-      sLine = sprintf("%4d", _subarea_info.nirr)
+      sLine += sprintf("%1d", _subarea_info.nirr)
     end
     sLine += sprintf("%4d", _subarea_info.iri)
     sLine += sprintf("%4d", _subarea_info.ira)
@@ -945,19 +945,14 @@ module SimulationsHelper
   end
 
   def create_operations(soil, operation_number)
-    #This suroutine create operation files for Baseline and Alternative using information entered by user.
+    #This suroutine create operation files using information entered by user.
     nirr = 0
-    #verify if _crops are empty. if so get them.
     @fert_code = 79
     grazingb = false
     @opcs_file = Array.new
-    #@opcs_file.push("Operation" + "\n")
     irrigation_type = 0
     bmp = Bmp.where("scenario_id = " + session[:scenario_id].to_s + " and irrigation_id > 0").first
     irrigation_type = Irrigation.find(bmp.irrigation_id).code unless bmp == nil
-    #SORT operation records by date (year, month, day)
-    #Dim query As IEnumerable(Of OperationsData)
-    #query = From r In soil._scenariosInfo(currentScenarioNumber)._operationsInfo Order By r.Year, r.Month, r.Day, r.ApexOpName, r.EventId
     #check and fix the operation list
     @soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + @scenario.id.to_s)
     #todo when the map is saved again the number of soils in SoilOperation are not updated we can use something like SoilOperation.where(:soil_id => 1698).update_all(:soil_id => 1703)
@@ -992,12 +987,9 @@ module SimulationsHelper
       # add to the tillage file the new fertilizer operations - one for each depth
       append_file("tillOrg.dat", true, "till.dat", "till")
       append_file("fertOrg.dat", true, "fert.dat", "fert")
-      #print_array_to_file(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")  #print operation files
       msg = send_file_to_APEX(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")
       @opcs_list_file.push((@soil_number+1).to_s.rjust(5, '0') + " " + "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
     end #end if
-    #@opcs_file.push("End Operation")
-    #print_array_to_file(@subarea_file, "APEX.sub")
     return nirr
   end
 
@@ -1145,15 +1137,13 @@ module SimulationsHelper
         values[0] = operation.opv1
         items[1] = "Curve Number"
         values[1] = operation.opv2
-        bmps_count = Bmp.where(:bmpsublist_id == 4 || :bmpsublist_id == 5 || :bmpsublist_id == 6 || :bmpsublist_id == 7).count
-        #With _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo
-        #if .PPNDWidth > 0 Or .PPDSWidth > 0 Or .PPDEWidth > 0 Or .PPTWWidth > 0 then
+		#find if there are Pads & Pipes Bmps set up.
+        bmps_count = Bmp.where("bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7").count
         if bmps_count > 0 then
           apex_string += sprintf("%8.1f", (operation.opv2 * 0.9)) #curve number
         else
           apex_string += sprintf("%8.1f", operation.opv2) #curve number
         end
-        #End With
         apex_string += sprintf("%8.2f", operation.opv3) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", operation.opv4) #Opv4. No entry needed.
 

@@ -333,10 +333,10 @@ class LocationsController < ApplicationController
                            apex_control.value = c.default_value
                            apex_control.project_id = session[:project_id]
                            if apex_control.control_id == 1 then
-                                  apex_control.value =  @weather.simulation_final_year - @weather.simulation_initial_year + 1
+							  apex_control.value =  @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
                            end
                            if apex_control.control_id == 2 then
-                                  apex_control.value = @weather.simulation_initial_year
+                              apex_control.value = @weather.simulation_initial_year - 5
                            end
                            apex_control.save
                      end  # end control all

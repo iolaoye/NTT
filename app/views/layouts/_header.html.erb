@@ -129,7 +129,7 @@
                 <li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
                 <li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]) %></a></li>
                 <li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-                <li><a <%= link_to t('menu.site'), sites_path(:id => session[:field_id]) %></a></li>
+                <li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
             <% when /apex_parameters/ %>
                 <li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
                 <li><a class="active" <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
@@ -143,7 +143,7 @@
                 <li><a class="active" <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
                 <li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]) %></a></li>
                 <li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-                <li><a <%= link_to t('menu.site'), sites_path(:id => session[:field_id]) %></a></li>
+                <li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
             <% when /apex_soil/ %>
                 <li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
                 <li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
@@ -158,14 +158,14 @@
                 <li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
                 <li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]) %></a></li>
                 <li><a class="active" <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-                <li><a <%= link_to t('menu.site'), sites_path(:id => session[:field_id]) %></a></li>
+                <li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
             <% when /site/ %>
                 <li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
                 <li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
                 <li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
                 <li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]) %></a></li>
                 <li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-                <li><a class="active" <%= link_to t('menu.site'), sites_path(:id => session[:field_id]) %></a></li>
+                <li><a class="active" <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
             <% else %>
                 <li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
                 <li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>

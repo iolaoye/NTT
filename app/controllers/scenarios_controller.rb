@@ -41,8 +41,6 @@ class ScenariosController < ApplicationController
       format.json { render json: @scenarios }
     end
   end
-
-
 ################################  Simulate  #################################
   def simulate_all
     @project_name = Project.find(session[:project_id]).name
@@ -84,7 +82,7 @@ class ScenariosController < ApplicationController
 ################################  EDIT   #################################
 # GET /scenarios/1/edit
   def edit
-    @errors = Array.new
+    #@errors = Array.new
     @scenario = Scenario.find(params[:id])
   end
 
@@ -101,7 +99,7 @@ class ScenariosController < ApplicationController
       if @scenario.save
         @scenarios = Scenario.where(:field_id => session[:field_id])
         #add new scenario to soils
-        flash[:notice] = t('scenario.scenario') + " " + t('general.success')
+        flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
         add_scenario_to_soils(@scenario)
         format.html { render action: "list" }
       else
@@ -120,7 +118,7 @@ class ScenariosController < ApplicationController
 
     respond_to do |format|
       if @scenario.update_attributes(scenario_params)
-        format.html { redirect_to list_scenario_path(session[:field_id]), notice: "Scenario was successfully updated." }
+        format.html { redirect_to list_scenario_path(session[:field_id]), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -157,7 +155,8 @@ class ScenariosController < ApplicationController
       if msg.eql?("OK") then
         @project_name = Project.find(session[:project_id]).name
         @field_name = Field.find(session[:field_id]).field_name
-        flash[:notice] = t('scenario.scenario') + ' was successfully simulated'
+		  flash[:notice] = t('notices.simulation')
+        format.html { render action: "list" }
       else
         flash[:error] = "Scenario failed to simulate (" + msg + ")"
         @scenarios = Scenario.where(:field_id => session[:field_id])

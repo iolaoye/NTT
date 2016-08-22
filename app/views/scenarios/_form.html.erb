@@ -2,9 +2,8 @@
   <% if @scenario.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @scenario.errors.count, :model => t('models.scenario').downcase) %></h2>
-
       <ul>
-      <% @scenario.errors.full_messages.each do |msg| %>
+        <% @scenario.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

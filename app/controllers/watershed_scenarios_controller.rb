@@ -46,7 +46,7 @@ class WatershedScenariosController < ApplicationController
 
     respond_to do |format|
       if @watershed_scenarios.save
-        format.html { redirect_to @watershed_scenarios, notice: 'Watershed scenario was successfully created.' }
+        format.html { redirect_to @watershed_scenarios, notice: t('models.watershed_scenario') + "" + t('notices.created') }
         format.json { render json: @watershed_scenarios, status: :created, location: @watershed_scenarios }
       else
         flash[:error] = @watershed_scenarios.errors
@@ -63,7 +63,7 @@ class WatershedScenariosController < ApplicationController
 
     respond_to do |format|
       if @watershed_scenarios.update_attributes(watershed_scenario_params)
-        format.html { redirect_to @watershed_scenarios, notice: 'Watershed scenario was successfully updated.' }
+        format.html { redirect_to watershed_scenarios_path, notice: t('models.watershed_scenario') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         flash[:error] = @watershed_scenarios.errors
@@ -78,9 +78,9 @@ class WatershedScenariosController < ApplicationController
   def destroy
     @watershed_scenarios = WatershedScenario.find(params[:id])
     if @watershed_scenarios.destroy
-      flash[:notice] = t('models.watershed_scenario') + t('notices.deleted')
+	  redirect_to watershed_scenario_path(session[:watershed_id])
+      flash[:info] = t('models.watershed_scenario') + t('notices.deleted')
     end
-    redirect_to watershed_scenario_path(session[:watershed_id])
   end
 
   def new_scenario
@@ -93,18 +93,14 @@ class WatershedScenariosController < ApplicationController
         @new_watershed_scenario.field_id = params[:watershed][:field_id]
         @new_watershed_scenario.scenario_id = params[:watershed][:scenario_id]
         @new_watershed_scenario.watershed_id = params[:id]
-        if @new_watershed_scenario.save
-          flash[:notice] = 'Watershed scenario was successfully created.'
-        else
-          flash[:error] = 'That field has already been selected for this watershed. Please choose again.'
-        end
-        format.html { redirect_to watershed_scenario_path(params[:id]) }
+        @new_watershed_scenario.save
+        format.html { redirect_to watershed_scenario_path(params[:id]), notice: t('models.watershed_scenario') + t('notices.created') }
       else
-        flash[:error] =  'That field has already been selected for this watershed. Please choose again.'
-        format.html { redirect_to watershed_scenario_path(params[:id]) }
+        format.html { redirect_to watershed_scenario_path(params[:id]), notice: 'That field/scenario combination has already been selected for this watershed. Please choose again.' }
       end
     end
   end
+
 
   private
 

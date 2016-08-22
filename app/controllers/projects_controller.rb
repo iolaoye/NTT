@@ -94,8 +94,7 @@ class ProjectsController < ApplicationController
         location.project_id = @project.id
         location.save
         session[:location_id] = location.id
-        flash[:notice] = 'Project was successfully created.'
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
+        format.html { redirect_to @project, notice: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
         flash[:error] = @project.errors
@@ -112,8 +111,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(project_params)
-        flash[:notice] = 'Project was successfully updated.'
-        format.html { redirect_to welcomes_path, notice: 'Project was successfully updated.' }
+        format.html { redirect_to welcomes_path, notice: t('models.project') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -130,7 +128,7 @@ class ProjectsController < ApplicationController
     location = Location.where(:project_id => params[:id])
     location.destroy_all unless location == []
     if @project.destroy
-      flash[:notice] = t('models.project') + " " + @project.name + t('notices.deleted')
+      flash[:info] = t('models.project') + " " + @project.name + t('notices.deleted')
     end
     @projects = Project.where(:user_id => params[:user_id])
 
@@ -1620,7 +1618,10 @@ class ProjectsController < ApplicationController
         when "ApexTillCode"
           soil_operation.apex_operation = p.text
           if soil_operation.activity_id == 4 then
-            soil_operation.apex_operation = Crop.find_by_number(soil_operation.apex_crop).harvest_code
+            soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, Location.find(session[:location_id].id).state_id).harvest_code
+			if soil_operation.apex_operation == nil then
+				soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, "**").harvest_code				
+			end
           end
       end
     end
