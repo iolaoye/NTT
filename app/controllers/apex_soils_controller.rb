@@ -44,7 +44,7 @@
 
     respond_to do |format|
       if @soil.save
-        format.html { redirect_to @soil, notice: 'Soil was successfully created.' }
+        format.html { redirect_to @soil, notice: t('models.soil') + "" + t('notices.created') }
         format.json { render json: @soil, status: :created, location: @soil }
       else
         format.html { render action: "new" }
@@ -59,7 +59,7 @@
     @soil = Soil.find(params[:id])
     respond_to do |format|
       if @soil.update_attributes(soil_params)
-        format.html { redirect_to apex_soils_path, notice: 'Soil was successfully updated.' }
+        format.html { redirect_to apex_soils_path, notice: t('models.soil') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

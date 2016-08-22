@@ -62,7 +62,7 @@ class LayersController < ApplicationController
 	@layer.soil_id = session[:soil_id]
 	respond_to do |format|
       if @layer.save
-        format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully created.' }
+        format.html { redirect_to list_layer_path(@layer.soil_id), notice: t('models.layer') + "" + t('notices.created') }
         format.json { render json: @layer, status: :created, location: @layer }
       else
         format.html { render action: "new" }
@@ -78,7 +78,7 @@ class LayersController < ApplicationController
 
     respond_to do |format|
       if @layer.update_attributes(layer_params)
-        format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully updated.' }
+        format.html { redirect_to list_layer_path(@layer.soil_id), notice: t('models.layer') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -91,10 +91,11 @@ class LayersController < ApplicationController
   # DELETE /layers/1.json
   def destroy
     @layer = Layer.find(params[:id])
-    @layer.destroy
-
+    if @layer.destroy
+		flash[:info] = t('models.layer') + "" + t('notices.deleted')
+	end
     respond_to do |format|
-      format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully deleted.' }
+      format.html { redirect_to list_layer_path(@layer.soil_id) }
       format.json { head :no_content }
     end
   end

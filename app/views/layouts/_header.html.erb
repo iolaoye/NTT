@@ -136,7 +136,7 @@
                 <li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
                 <li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]) %></a></li>
                 <li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-                <li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
+                <li><a <%= link_to t('menu.site'), sites_path(:id => session[:field_id]) %></a></li>
             <% when /subarea/ %>
                 <li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
                 <li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
@@ -151,7 +151,7 @@
                 <li><a class="active" <%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]) %></a>
                 </li>
                 <li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-                <li><a <%= link_to t('menu.site'), site_path(session[:field_id]) %></a></li>
+                <li><a <%= link_to t('menu.site'), sites_path(:id => session[:field_id]) %></a></li>
             <% when /soil_operation/ %>
                 <li><a <%= link_to t('menu.control_file'), apex_controls_path %></a></li>
                 <li><a <%= link_to t('menu.parameters_file'), apex_parameters_path %></a></li>
@@ -172,7 +172,7 @@
                 <li><a <%= link_to t('menu.subarea_file'), subareas_path %></a></li>
                 <li><a <%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]) %></a></li>
                 <li><a <%= link_to t('menu.operation_file'), soil_operations_path %></a></li>
-                <li><a <%= link_to t('menu.site'), sites_path(session[:field_id]) %></a></li>
+                <li><a <%= link_to t('menu.site'), sites_path(:id => session[:field_id]) %></a></li>
             <% end %>
         <% when /weather/, /soil/, /scenario/, /layer/ %>
             <% case request.original_url %>
