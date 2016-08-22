@@ -4150,11 +4150,11 @@ FertilizerType.create!({:id => 1, :name => "Commercial Fertilizer", :spanish_nam
 FertilizerType.create!({:id => 2, :name => "Manure", :spanish_name => "Escremento"}, :without_protection => true)
 
 Irrigation.delete_all
-Irrigation.create!({:id => 1, :name => 'Sprinkle', :status => 1, :spanish_name => 'Rociado'}, :without_protection => true)
-Irrigation.create!({:id => 2, :name => 'Furrow/Flood', :status => 1, :spanish_name => "Surco/Inundacion"}, :without_protection => true)
-Irrigation.create!({:id => 3, :name => 'Drip', :status => 1, :spanish_name => "Goteo"}, :without_protection => true)
-Irrigation.create!({:id => 7, :name => 'Furrow Diking', :status => 1, :spanish_name => "Dique en Surcos"}, :without_protection => true)
-Irrigation.create!({:id => 8, :name => 'Pads and Pipes - Tailwater Irrigation', :status => 1, :spanish_name => "Almuadiallas y Tubos - Irrigacion de Descargue"}, :without_protection => true)
+Irrigation.create!({:id => 1, :name => 'Sprinkle', :status => 1, :spanish_name => 'Rociado', :code => 500}, :without_protection => true)
+Irrigation.create!({:id => 2, :name => 'Furrow/Flood', :status => 1, :spanish_name => "Surco/Inundacion", :code => 502}, :without_protection => true)
+Irrigation.create!({:id => 3, :name => 'Drip', :status => 1, :spanish_name => "Goteo", :code => 530}, :without_protection => true)
+Irrigation.create!({:id => 7, :name => 'Furrow Diking', :status => 1, :spanish_name => "Dique en Surcos", :code => 502}, :without_protection => true)
+Irrigation.create!({:id => 8, :name => 'Pads and Pipes - Tailwater Irrigation', :status => 1, :spanish_name => "Almuadiallas y Tubos - Irrigacion de Descargue", :code => 502}, :without_protection => true)
 
 Fertilizer.delete_all
 Fertilizer.create!({:id => 1, :code => 1, :spanish_name => 'Elemento-N', :name => 'Elem-N', :qn => 1, :qp => 0, :yn => 0, :yp => 0, :nh3 => 0, :dry_matter => 0, :fertilizer_type_id => 1, :status => 1}, :without_protection => true)
