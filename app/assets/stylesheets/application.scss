@@ -924,7 +924,6 @@ input[type="submit"]:hover {
   padding: 20px 10px 20px 10px;
   margin: auto;
   width: 188px;
-  float: center;
   text-align: center;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -938,6 +937,7 @@ input[type="submit"]:hover {
 }
 
 .center > .field > input {
+  width: 90% !important;
   border: 6px solid #ffffff;
   border-radius: 0px;
   margin-bottom: 1px;
@@ -994,6 +994,10 @@ input[type="submit"]:hover {
 .new {
   padding-bottom: 0px;
   display: inline;
+}
+
+.back {
+  margin-bottom: 15px !important;
 }
 
 .login > .green_button {

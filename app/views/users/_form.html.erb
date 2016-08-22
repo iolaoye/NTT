@@ -13,15 +13,25 @@
   <div class="center left less-padding">
     <h2><%= t('submit.new_user')%></h2>
     <div class="field">
-    <%= f.text_field :email, placeholder: t('sessions.index.email') %>
-    <%= f.password_field :password, placeholder: t('sessions.index.password') %>
-    <%= f.password_field :password_confirmation, placeholder: t('users.confirmation') %>
-    <%= f.text_field :name, placeholder: t('general.name') %>
-    <%= f.text_field :company, placeholder: t('users.company') %>
+      <%= f.text_field :email, placeholder: t('sessions.index.email') %>
+      <%= f.password_field :password, placeholder: t('sessions.index.password') %>
+      <%= f.password_field :password_confirmation, placeholder: t('users.confirmation') %>
+      <%= f.text_field :name, placeholder: t('general.name') %>
+      <%= f.text_field :company, placeholder: t('users.company') %>
     </div>
-  </div>
+
     <div class="actions new">
       <%= f.submit t('submit.create') + " " + t('users.user') %>
     </div>
+
+    <div class="login back">
+      <% if (I18n.locale.eql?(:en)) %>
+          <%= link_to t('general.back'), login_path, :class => "green_button english" %>
+      <% else %>
+          <%= link_to t('general.back'), login_path, :class => "green_button spanish" %>
+      <% end %>
+
+    </div>
+  </div>
 <% end %>
 
