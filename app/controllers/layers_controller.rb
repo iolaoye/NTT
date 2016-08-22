@@ -4,7 +4,8 @@ class LayersController < ApplicationController
   # GET /1/soils.json
   def list
     @layers = Layer.where(:soil_id => params[:id])
-    @soil_code = Soil.find(session[:soil_id]).key
+    @soil_name = Soil.find(session[:soil_id]).name[0..20]
+	@soil_name += ". . ." unless @soil_name.length < 20
 	@project_name = Project.find(session[:project_id]).name
 	@field_name = Field.find(session[:field_id]).field_name
 
@@ -30,6 +31,7 @@ class LayersController < ApplicationController
   def show
  
     @layer = Layer.where(:soil_id => params[:id])
+	@layer = Layer.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -57,10 +59,10 @@ class LayersController < ApplicationController
   # POST /layers.json
   def create
     @layer = Layer.new(layer_params)
-
-    respond_to do |format|
+	@layer.soil_id = session[:soil_id]
+	respond_to do |format|
       if @layer.save
-        format.html { redirect_to @layer, notice: 'Layer was successfully created.' }
+        format.html { redirect_to list_layer_path(@layer.soil_id), notice: t('models.layer') + "" + t('notices.created') }
         format.json { render json: @layer, status: :created, location: @layer }
       else
         format.html { render action: "new" }
@@ -76,7 +78,7 @@ class LayersController < ApplicationController
 
     respond_to do |format|
       if @layer.update_attributes(layer_params)
-        format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully updated.' }
+        format.html { redirect_to list_layer_path(@layer.soil_id), notice: t('models.layer') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -89,10 +91,11 @@ class LayersController < ApplicationController
   # DELETE /layers/1.json
   def destroy
     @layer = Layer.find(params[:id])
-    @layer.destroy
-
+    if @layer.destroy
+		flash[:info] = t('models.layer') + "" + t('notices.deleted')
+	end
     respond_to do |format|
-      format.html { redirect_to list_layer_path(@layer.soil_id), notice: 'Layer was successfully updated.' }
+      format.html { redirect_to list_layer_path(@layer.soil_id) }
       format.json { head :no_content }
     end
   end
@@ -104,6 +107,6 @@ class LayersController < ApplicationController
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def layer_params
       params.require(:layer).permit(:bulk_density, :clay, :depth, :organic_matter, :ph, :sand, :silt, :soil_id, :soil_p,
-	  :uw, :fc, :wn, :smb, :cac, :cec, :rok, :cnds, :rsd, :bdd, :psp, :satc )
+	  :uw, :fc, :wn, :smb, :cac, :cec, :rok, :cnds, :rsd, :bdd, :psp, :satc, :id, :created_at, :updated_at)
     end
 end

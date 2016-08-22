@@ -12,7 +12,7 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find(params[:id])
-	  @project_name = Project.find(session[:project_id]).name
+	@project_name = Project.find(session[:project_id]).name
     session[:location_id] = params[:id]
       respond_to do |format|		  
 		    format.html # show.html.erb		  
@@ -51,17 +51,16 @@ class LocationsController < ApplicationController
 		if (session[:session_id] == params[:source_id]) then
 			# step 1: delete fields not found
 			@location.fields.each do |field|
-			isFound = false
-			for i in 1..params[:fieldnum].to_i
-				if (field.field_name == params["field#{i}id"]) then
-				isFound = true
+				isFound = false
+				for i in 1..params[:fieldnum].to_i
+					if (field.field_name == params["field#{i}id"]) then
+					isFound = true
+					end
 				end
-			end
-			if (!isFound) then			
-				field.destroy
-			end  # end if isFound
+				if (!isFound) then			
+					field.destroy_all
+				end  # end if isFound
 			end # end Location do
-
 			# step 2: update or create remaining fields
 			for i in 1..params[:fieldnum].to_i
 				# find or create field
@@ -71,13 +70,14 @@ class LocationsController < ApplicationController
 		
 				#verify if this field aready has its soils. If not the soils coming from the map are added
 				if !(params["field#{i}error"] == 1) then
-					if @field.id == nil then
-						if Field.all.length == 0
-							@field.id = 1
-						else
-							@field.id = Field.last.id += 1
-						end 
-					end
+					#if @field.id == nil then
+					#	if Field.all.length == 0
+					#		@field.id = 1
+					#	else
+					#		@field.id = Field.last.id += 1
+					#	end 
+					#end
+					@field.save
 					create_soils(i, @field.id, @field.field_type)
 				end
 				#step 3 find or create site
@@ -109,6 +109,7 @@ class LocationsController < ApplicationController
 				end   #end weather validation
 				@weather.weather_file = params["field#{i}parcelweather"]
 				@weather.simulation_initial_year = params["field#{i}initialYear"]
+				@weather.simulation_initial_year += 5
 				@weather.simulation_final_year = params["field#{i}finalYear"]
 				@weather.weather_initial_year = params["field#{i}initialYear"]
 				@weather.weather_final_year = params["field#{i}finalYear"]
@@ -119,7 +120,9 @@ class LocationsController < ApplicationController
 				if @weather.save then
 					@field.weather_id = @weather.id
 				end 
-				@field.save
+				if @field.save then
+				else
+				end
 				@weather.field_id = @field.id
 				session[:field_id] = @field.id
 				@weather.save
@@ -220,8 +223,7 @@ class LocationsController < ApplicationController
   def create_soils(i, field_id, forestry)
     #delete all of the soils for this field
 	soils1 = Soil.where(:field_id => field_id)
-	soils1.destroy_all
-	#todo since all of the soils are deleted all of the subareas need to be created again. Also, the SoilOperation needs to be deleted and created again.
+	soils1.destroy_all  #will delete Subareas and SoilOperations linked to these soils
 	total_percentage = 0
     for j in 1..params["field#{i}soils"].to_i
   	   @soil = @field.soils.new
@@ -232,6 +234,7 @@ class LocationsController < ApplicationController
 	   @soil.albedo = params["field#{i}soil#{j}albedo"]
 	   @soil.slope = params["field#{i}soil#{j}slope"]
 	   @soil.percentage = params["field#{i}soil#{j}pct"]
+	   @soil.percentage = @soil.percentage.round(2)
 	   @soil.drainage_type = params["field#{i}soil#{j}drain"]
 	   @soil.tsla = 10
 	   @soil.xids = 1
@@ -260,7 +263,7 @@ class LocationsController < ApplicationController
 
  	   if @soil.save then
 		   if !(params["field#{i}soil#{j}error"] == 2) then
-			create_layers(i, j)				   
+			create_layers(i, j)
 		   end
 	   end
 	end #end for create_soils
@@ -280,7 +283,7 @@ class LocationsController < ApplicationController
 	end #end Scenario each do
   end  
 
- ###################################### create_soil ######################################
+ ###################################### create_soil layers ######################################
  ## Create layers receiving from map for each soil.
   def create_layers(i, j)
     for l in 1..params["field#{i}soil#{j}layers"].to_i
@@ -294,9 +297,12 @@ class LocationsController < ApplicationController
 	   layer.ph = params["field#{i}soil#{j}layer#{l}ph"]
 	   layer.depth = params["field#{i}soil#{j}layer#{l}depth"]
 	   layer.depth /= IN_TO_CM
+	   layer.depth = layer.depth.round(2)
 	   layer.cec = params["field#{i}soil#{j}layer#{l}cec"]
 	   layer.soil_p = 0
- 	   layer.save
+ 	   if layer.save then
+	   else
+	   end
 	end #end for create_layers
   end  
 
@@ -327,10 +333,10 @@ class LocationsController < ApplicationController
                            apex_control.value = c.default_value
                            apex_control.project_id = session[:project_id]
                            if apex_control.control_id == 1 then
-                                  apex_control.value =  @weather.simulation_final_year - @weather.simulation_initial_year + 1
+							  apex_control.value =  @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
                            end
                            if apex_control.control_id == 2 then
-                                  apex_control.value = @weather.simulation_initial_year
+                              apex_control.value = @weather.simulation_initial_year - 5
                            end
                            apex_control.save
                      end  # end control all

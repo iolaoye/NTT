@@ -59,7 +59,6 @@ module ScenariosHelper
 		subarea.chl = 0
 		subarea.chl = Math::sqrt(subarea.wsa * 0.01) unless subarea.wsa < 0
 		#subarea.wsa *= -1 unless i == 1
-		session[:slope] = slope
         subarea.slp = slope / 100
 		subarea.splg = calculate_slope_length(slope)
 		subarea.chn = 0
@@ -75,7 +74,6 @@ module ScenariosHelper
 		end
 		#line 5
 		subarea.rchl = subarea.chl
-		session[:i] = i
 		subarea.rchl *= 0.9 unless i < total_selected  #just the last subarea is going to have different chl and rchl
 		subarea.rchd = 0.0
 		subarea.rcbw = 0.0
@@ -539,10 +537,23 @@ module ScenariosHelper
 		operation.day = 15
 		operation.month = 1
 		operation.year = 1
+		operation.operation_id = 0
+		operation.tractor_id = 0
 		operation.apex_crop = crop
+		operation.type_id = 0
 		operation.opv1 = opv1
 		operation.opv2 = opv2
-		operation.apex_operation = years_cult
+		operation.opv3 = 0
+		operation.opv4 = 0
+		operation.opv5 = 0
+		operation.opv6 = 0
+		operation.opv7 = 0
+		operation.scenario_id = scenario_info
+		operation.soil_id = 0
+		operation.apex_operation = operation
+		operation.bmp_id = @bmp.id
+		operation.activity_id = 1
+		operation.save
 		#TODO oper.LuNumber = lunum <- visual basic code
 	end
 end

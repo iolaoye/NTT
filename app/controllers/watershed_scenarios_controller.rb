@@ -4,7 +4,7 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios.json
   def index
     @watershed_scenarios = WatershedScenario.all
-    @scenarios = Scenario.where(:field_id => session[:field_id])
+    @scenarios = Scenario.where(:field_id => 0)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,9 +46,10 @@ class WatershedScenariosController < ApplicationController
 
     respond_to do |format|
       if @watershed_scenarios.save
-        format.html { redirect_to @watershed_scenarios, notice: 'Watershed scenario was successfully created.' }
+        format.html { redirect_to @watershed_scenarios, notice: t('models.watershed_scenario') + "" + t('notices.created') }
         format.json { render json: @watershed_scenarios, status: :created, location: @watershed_scenarios }
       else
+        flash[:error] = @watershed_scenarios.errors
         format.html { render action: "new" }
         format.json { render json: @watershed_scenarios.errors, status: :unprocessable_entity }
       end
@@ -62,9 +63,10 @@ class WatershedScenariosController < ApplicationController
 
     respond_to do |format|
       if @watershed_scenarios.update_attributes(watershed_scenario_params)
-        format.html { redirect_to @watershed_scenarios, notice: 'Watershed scenario was successfully updated.' }
+        format.html { redirect_to watershed_scenarios_path, notice: t('models.watershed_scenario') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
+        flash[:error] = @watershed_scenarios.errors
         format.html { render action: "edit" }
         format.json { render json: @watershed_scenarios.errors, status: :unprocessable_entity }
       end
@@ -75,8 +77,10 @@ class WatershedScenariosController < ApplicationController
   # DELETE /watershed_scenarios/1.json
   def destroy
     @watershed_scenarios = WatershedScenario.find(params[:id])
-    @watershed_scenarios.destroy
-    redirect_to watershed_scenario_path(session[:watershed_id])
+    if @watershed_scenarios.destroy
+	  redirect_to watershed_scenario_path(session[:watershed_id])
+      flash[:info] = t('models.watershed_scenario') + t('notices.deleted')
+    end
   end
 
   def new_scenario
@@ -90,12 +94,13 @@ class WatershedScenariosController < ApplicationController
         @new_watershed_scenario.scenario_id = params[:watershed][:scenario_id]
         @new_watershed_scenario.watershed_id = params[:id]
         @new_watershed_scenario.save
-        format.html { redirect_to watershed_scenario_path(params[:id]) }
+        format.html { redirect_to watershed_scenario_path(params[:id]), notice: t('models.watershed_scenario') + t('notices.created') }
       else
         format.html { redirect_to watershed_scenario_path(params[:id]), notice: 'That field/scenario combination has already been selected for this watershed. Please choose again.' }
       end
     end
   end
+
 
   private
 

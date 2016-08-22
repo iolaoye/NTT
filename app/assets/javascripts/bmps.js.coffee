@@ -26,27 +26,51 @@ update_animal_options = ->
 #update bmp sublist depending on the bmp selected.
 update_bmpsublist = ->
   url = "/bmplists/" + $("#bmp_bmp_id").val() + "/bmpsublists.json"
-  $.getJSON url, (bmpsublists) ->
+  if $("#bmp_bmp_id").val() > 0
+    $.getJSON url, (bmpsublists) ->
+      url = window.location.href
+      n = url.indexOf('locale=')
+      language = url.substring(n, n + 9)
+      if language == "locale=en"
+        items = []
+        items.push "<option value>Select One</option>"
+        $.each bmpsublists, (key, bmpsublist) ->
+           items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.name + "</option>"
+        $("#bmp_bmpsublist_id").html items.join("")
+        $("#bmp_bmpsublist_id").removeAttr("disabled")
+      else if language == "locale=es"
+        items = []
+        items.push "<option value>Select One</option>"
+        $.each bmpsublists, (key, bmpsublist) ->
+          items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.spanish_name + "</option>"
+        $("#bmp_bmpsublist_id").html items.join("")
+        $("#bmp_bmpsublist_id").removeAttr("disabled")
+      else
+        window.alert 'WTF Language error. Default English will be set for list Click [OK] to continue.'
+        items = []
+        items.push "<option value>Select One</option>"
+        $.each bmpsublists, (key, bmpsublist) ->
+          items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.name + "</option>"
+        $("#bmp_bmpsublist_id").html items.join("")
+        $("#bmp_bmpsublist_id").removeAttr("disabled")
+  else
     items = []
     items.push "<option value>Select One</option>"
-    $.each bmpsublists, (key, bmpsublist) ->
-       items.push "<option value=\"" + bmpsublist.id + "\">" + bmpsublist.name + "</option>"
     $("#bmp_bmpsublist_id").html items.join("")
     $("#bmp_bmpsublist_id").removeAttr("disabled")
-	
+
 #switch all of the bmps off to avoid having something on that does not belong to the new selected bmp
 switch_all_to_off = ->
     $("#irrigation").toggle(false)
+    $("#irrigation1").toggle(false)
     $("#water_stress_factor").toggle(false)
     $("#irrigation_efficiency").toggle(false)
     $("#maximum_single_application").toggle(false)
-    $("#days").toggle(false)
     $("#safety_factor").toggle(false)
     $('#bmp_crop_id').prop('required',false)
-    $('#bmp_animal_id').prop('required',false)   
-    $('#bmp_irrigation_id').prop('required',false)   
+    $('#bmp_animal_id').prop('required',false)
+    $('#bmp_irrigation_id').prop('required',false)
     $("#depth").toggle(false)
-    $("#depth_ft_label").toggle(false)
     $("#width").toggle(false)
     $("#sides").toggle(false)
     $("#area").toggle(false)
@@ -67,109 +91,112 @@ switch_all_to_off = ->
     $("#slow_warning").toggle(false)
     $("#climate_table").toggle(false)
     $("#slope_reduction").toggle(false)
-    $("#submit").toggle(true)
+    
+    switch_all_labels_off()
 
+switch_all_labels_off = ->
+    $("#irrigation_efficiency_label").toggle(false)
+    $("#area_control_label").toggle(false)
+    $("#depth_ft_label").toggle(false)
+    $("#waterways_label").toggle(false)
+    $("#width_label").toggle(false)
+    $("#contour_buffer_label").toggle(false)
+    $("#stream_fencing_label").toggle(false)
+    $("#irrigation_frequency_label").toggle(false)
 
 #activate elements on the bmp screen according to the bmp sublist selected
 activate_bmp_controls = ->
     switch_all_to_off()
     switch $("#bmp_bmpsublist_id").val()
         when "1" #autoirrigation
+            $("#irrigation_efficiency_label").toggle(true)
             $('#irrigation').toggle(true)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
-            $("#submit").toggle(true)
+            $("#irrigation_frequency_label").toggle(true)            
         when "2" #autofertigation
+            $("#irrigation_efficiency_label").toggle(true)
             $('#irrigation').toggle(true)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
-            $("#submit").toggle(true)
+            $("#irrigation_frequency_label").toggle(true)
         when "3" #Tile Drain
             $("#depth").toggle(true)
             $("#depth_ft_label").toggle(true)
-            $("#safety_factor").toggle(false)
-            $("#submit").toggle(true)
         when "4", "5" #Pad and pipes - No Ditch Improvement, Two-stage ditch system
             $("#width").toggle(true)
+            $("#width_label").toggle(true)
             $("#sides").toggle(true)
-            $("#submit").toggle(true)
         when "6", "7" #Pad and pipes - ditch enlargement and reservoir system, tailwater irrigation
             $("#width").toggle(true)
+            $("#width_label").toggle(true)
             $("#sides").toggle(true)
             $("#area").toggle(true)
-            $("#submit").toggle(true)
         when "8" #wetland
             $("#area").toggle(true)
-            $("#submit").toggle(true)
         when "9" #ponds
+            $("#area_control_label").toggle(true)
             $("#irrigation_efficiency").toggle(true)
-            $("#submit").toggle(true)
         when "10" #stream fencing
             $("#animals").toggle(true)
             $("#number_of_animals").toggle(true)
             $("#days").toggle(true)
+            $("#stream_fencing_label").toggle(true)
             $("#hours").toggle(true)
             $("#dry_manure").toggle(true)
             $("#no3_n").toggle(true)
             $("#po4_p").toggle(true)
             $("#org_n").toggle(true)
-            $("#org_p").toggle(true)
-            $("#submit").toggle(true)
+            $("#org_p").toggle(true)            
         when "11" #streambank stabilization -nothing is needed no inputs needed
-            $("#no_input").toggle(true)
-            $("#submit").toggle(true)
+            $("#no_input").toggle(true)            
         when "12" #Riparian forest
             $("#area").toggle(true)
             $("#width").toggle(true)
+            $("#width_label").toggle(true)
             $("#grass_field_portion").toggle(true)
-            $("#buffer_slope_upland").toggle(true)
-            $("#submit").toggle(true)
+            $("#buffer_slope_upland").toggle(true)            
         when "13" #filter strip
             $("#area").toggle(true)
             $("#width").toggle(true)
+            $("#width_label").toggle(true)
             $("#crop").toggle(true)
             $("#buffer_slope_upland").toggle(true)
-            $('#bmp_crop_id').prop('required',true)
-            $("#submit").toggle(true)
+            $('#bmp_crop_id').prop('required',true)         
         when "14" #water ways
             $("#width").toggle(true)
-            $("#crop").toggle(true)
-            $("#submit").toggle(true)
+            $("#waterways_label").toggle(true)
+            $("#crop").toggle(true)            
         when "15" #contour buffer
             $("#width").toggle(true)
+            $("#contour_buffer_label").toggle(true)
             $("#crop").toggle(true)
-            $("#crop_width").toggle(true)
-            $("#submit").toggle(true)
+            $("#crop_width").toggle(true)            
         when "16" #land leveling
-            $("#slope_reduction").toggle(true)
-            $("#submit").toggle(true)
+            $("#slope_reduction").toggle(true)            
         when "17" #Terrace system
             $("#no_input").toggle(true)
         when "19" #climate change
             $("#climate_table").toggle(true)
-            $("#slow_warning").toggle(true)
-            $("#submit").toggle(true)
+            $("#slow_warning").toggle(true)            
         when "20" #asphalt or concrete
-            $("#no_input").toggle(true)
-            $("#submit").toggle(true)
+            $("#no_input").toggle(true)            
         when "21" #grass cover
-            $("#no_input").toggle(true)
-            $("#submit").toggle(true)
+            $("#no_input").toggle(true)            
         when "22" #slope adjustment
-            $("#no_input").toggle(true)
-            $("#submit").toggle(true)
+            $("#no_input").toggle(true)            
         when "23" #Shading
             $("#area").toggle(true)
             $("#width").toggle(true)
+            $("#width_label").toggle(true)
             $("#crop").toggle(true)
             $("#buffer_slope_upland").toggle(true)
-            $("#bmp_crop_id").prop('required',true)
-            $("#submit").toggle(true)
-    
+            $("#bmp_crop_id").prop('required',true)            
+
 #activate elements on the bmp screen according to the bmp sublist selected
 update_irrigation_options = ->
     switch $("#bmp_irrigation_id").val()
@@ -180,7 +207,8 @@ update_irrigation_options = ->
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
-            $("#submit").toggle(true)
+            $("#irrigation_frequency_label").toggle(true)
+            
         when "8" #pads and pipes
             $("#safety_factor").toggle(false)
             $("#area").toggle(true)
@@ -188,7 +216,8 @@ update_irrigation_options = ->
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
-            $("#submit").toggle(true)
+            $("#irrigation_frequency_label").toggle(true)
+            
         else
             $("#safety_factor").toggle(false)
             $("#area").toggle(false)
@@ -196,7 +225,8 @@ update_irrigation_options = ->
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
-            $("#submit").toggle(true)
+            $("#irrigation_frequency_label").toggle(true)
+            
 
 update_fertigation_options = ->
     switch $("#autofertigation").val()
@@ -207,7 +237,8 @@ update_fertigation_options = ->
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
-            $("#submit").toggle(true)
+            $("#irrigation_frequency_label").toggle(true)
+            
         else
             $("#safety_factor").toggle(false)
             $("#area").toggle(false)
@@ -215,7 +246,8 @@ update_fertigation_options = ->
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)
             $("#days").toggle(true)
-            $("#submit").toggle(true)
+            $("#irrigation_frequency_label").toggle(true)
+            
 
 
 #bmpsublist_irrigation_selector = ->
@@ -252,10 +284,12 @@ $(document).ready ->
 	    update_animal_options()
     $("#bmp_irrigation_id").change ->
         update_irrigation_options()
+    $("#autofertigation").change ->
+        update_fertigation_options()
     $("#fill_max").click ->
         update_max_row()
-    $("#fill_min").click ->
-        update_min_row()
     $("#fill_pcp").click ->
         update_pcp_row()
+    $("#fill_min").click ->
+        update_min_row()
 

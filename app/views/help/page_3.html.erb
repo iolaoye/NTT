@@ -10,30 +10,30 @@
 		<ol>
 			<li><%= raw t('projpage.initial.item1') %></li>
 			<li><%= raw t('projpage.initial.item2') %></li>
-			<!-- <li><%= raw t('projpage.initial.item3') %></li> -->
+			<li><%= raw t('projpage.initial.item3') %></li>
 		</ol>
 		<br>
-    <%= image_tag("help/page_3/image000.PNG", :alt => "Choices", :width => "100%") %>
+    <%= image_tag("help/page_3/image000.PNG", :alt => "Choices", :style =>"border:1px solid gray;max-width:760px;width: 100%;") %>
 		
 		<h2><%= t('projpage.create.header') %></h2>
 		<p><%= raw t('projpage.create.body1') %></p>
 		<p><%= raw t('projpage.create.body2') %></p>
 
-    <%= image_tag("help/page_3/image001.PNG", :alt => "Create New Project", :width => "100%") %>
+    <%= image_tag("help/page_3/image001.PNG", :alt => "Create New Project", :style =>"border:1px solid gray;max-width:321px;width: 100%;") %>
 
 		<h2><%= t('projpage.open.header') %></h2>
 		<p><%= raw t('projpage.open.body1') %></p>
 		<p><%= raw t('projpage.open.body2') %></p>
 
-    <%= image_tag("help/page_3/image002.PNG", :alt => "Open Saved Project", :width => "100%") %>
+    <%= image_tag("help/page_3/image002.PNG", :alt => "Open Saved Project", :style =>"border:1px solid gray;max-width:356px;width: 100%;") %>
 		
 		<h2><%= t('projpage.example.header') %></h2>
 		<p><%= raw t('projpage.example.body1') %></p>
 		<p><%= raw t('projpage.example.body2') %></p>
 
-    <%= image_tag("help/page_3/image003.PNG", :alt => "Open Example Project") %>
+    <%= image_tag("help/page_3/image003.png", :alt => "Open Example Project", :style =>"border:1px solid gray;max-width:245px;width: 100%;") %>
 		
-		<h2><%= t('projpage.save.header') %></h2>
+		<!--<h2><%= t('projpage.save.header') %></h2>
 		<p><%= raw t('projpage.save.body') %></p>
 		<p><%= raw t('projpage.save.note') %></p>
 		<br>
@@ -42,8 +42,9 @@
 		<p><%= raw t('projpage.close.body1') %></p>
 		<p><%= raw t('projpage.close.body2') %></p>
     <%= image_tag("help/page_3/image004.PNG", :alt => "Clsoe Warning") %>
-		<p><%= raw t('projpage.close.body3') %></p>
+		<p><%= raw t('projpage.close.body3') %></p> -->
 		<br>
+    <br>
 		
 		<%= link_to "< Prev", help_path("nav") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_4") %><br>
 		<%= link_to t('help.return_to_table'), help_path("index") %>

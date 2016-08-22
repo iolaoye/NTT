@@ -1,7 +1,7 @@
 <%= form_for(@fertilizer_type) do |f| %>
   <% if @fertilizer_type.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@fertilizer_type.errors.count, "error") %> prohibited this fertilizer_type from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @fertilizer_type.errors.count, :model => t('models.fertilizer_type').downcase) %></h2>
 
       <ul>
       <% @fertilizer_type.errors.full_messages.each do |msg| %>

@@ -1,3 +1,16 @@
+<% case %>
+<% when notice %>
+	<div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
+<% when flash[:info] %>
+	<div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:info] %>
+    </div>
+<% end %>
+
 <h1><%= t("general.listing") + " " + t("menu.soils") %></h1>
 <%= link_to t('general.new') + ' ' + t('soil.soil'), new_soil_path %>
 <table class='gvTableStyle'>
@@ -24,8 +37,8 @@
             <td class="gvCellStyleText"><%= soil.group %></td>
             <td class="gvCellStyleText"><%= soil.name %></td>
             <td class="gvCellStyleNumber"><%= soil.albedo %></td>
-            <td class="gvCellStyleNumber"><%= soil.slope.round(2) %></td>
-            <td class="gvCellStyleNumber"><%= soil.percentage.round(2) %></td>
+            <td class="gvCellStyleNumber"><%= soil.slope %></td>
+            <td class="gvCellStyleNumber"><%= soil.percentage %></td>
             <td class="gvCellStyleText"><%= soil.drainage_type %></td>
             <td class="gvCellStyleActions">
               <%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
@@ -41,8 +54,8 @@
             <td class="gvCellStyleText"><%= soil.group %></td>
             <td class="gvCellStyleText"><%= soil.name %></td>
             <td class="gvCellStyleNumber"><%= soil.albedo %></td>
-            <td class="gvCellStyleNumber"><%= soil.slope.round(2) %></td>
-            <td class="gvCellStyleNumber"><%= soil.percentage.round(2) %></td>
+            <td class="gvCellStyleNumber"><%= soil.slope %></td>
+            <td class="gvCellStyleNumber"><%= soil.percentage %></td>
             <td class="gvCellStyleText"><%= soil.drainage_type %></td>
             <td class="gvCellStyleActions">
               <%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
