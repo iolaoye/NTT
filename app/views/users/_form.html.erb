@@ -1,6 +1,6 @@
 ﻿<%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
-    <div class="flash_alert">
+    <div class="danger_alert">
       <h2><%= t('activerecord.form_errors', :count => @user.errors.count, :model => t('models.user').downcase) %></h2>
       <ul>
         <% @user.errors.full_messages.each do |msg| %>
