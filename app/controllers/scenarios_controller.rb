@@ -41,8 +41,6 @@ class ScenariosController < ApplicationController
       format.json { render json: @scenarios }
     end
   end
-
-
 ################################  Simulate  #################################
   def simulate_all
     @project_name = Project.find(session[:project_id]).name
@@ -84,7 +82,7 @@ class ScenariosController < ApplicationController
 ################################  EDIT   #################################
 # GET /scenarios/1/edit
   def edit
-    @errors = Array.new
+    #@errors = Array.new
     @scenario = Scenario.find(params[:id])
   end
 

@@ -17,11 +17,7 @@
 
     <div class="field">
     <%= label :crop_id, t('operation.crop') %>
-        <% if I18n.locale.eql?(:en) %>
-			<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => 'Select crop'}, {:required => true} %>
-		<% else %>
-			<%= collection_select :operation, :crop_id, @crops, :id, :spanish_name, {:prompt => 'Seleccione Cultivo'}, {:required => true} %>
-		<% end %>
+		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => 'Select crop'}, {:required => true} %>
 	</div>
 	<div class="field">
 		<%= label :activity_id, t('scenario.operation') %>

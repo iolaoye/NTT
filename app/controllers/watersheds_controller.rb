@@ -104,6 +104,7 @@ class WatershedsController < ApplicationController
     render "list"
   end
 
+  ################################ NEW #################################
   # GET /watersheds/new
   # GET /watersheds/new.json
   def new
@@ -120,12 +121,12 @@ class WatershedsController < ApplicationController
     @watershed = Watershed.find(params[:id])
   end
 
+  ################################ CREATE #################################
   # POST /watersheds
   # POST /watersheds.json
   def create
     @watershed = Watershed.new(watershed_params)
     @watershed.location_id = session[:location_id]
-
     respond_to do |format|
       if @watershed.save
         format.html { redirect_to list_watershed_path(session[:location_id]), notice: t('watershed.watershed') + " " + t('general.created') }
@@ -137,6 +138,7 @@ class WatershedsController < ApplicationController
     end
   end
 
+  ################################ UPDATE #################################
   # PATCH/PUT /watersheds/1
   # PATCH/PUT /watersheds/1.json
   def update
