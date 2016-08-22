@@ -13,7 +13,7 @@
         <%= text_field_tag :email, nil, placeholder: (t('.email')) %>
         <%= password_field_tag :password, nil, placeholder: (t('.password')) %>
       </div>
-      <div class="actions login">
+      <div class="actions login back">
         <%= submit_tag t('submit.login') %></br>
         <% if (I18n.locale.eql?(:en)) %>
             <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button" %>
