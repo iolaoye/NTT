@@ -10,21 +10,19 @@
       </ul>
     </div>
   <% end %>
-  <% if I18n.locale.eql?(:en) %>
-    <div class="field">
-		  <%= label :bmp_id, t('bmp.bmp_group') %>
-          <%= collection_select :bmp, :bmp_id, @bmp_list, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
-		  <%= label :bmp_id, t('operation.bmp') %>
-          <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
-    </div>
-  <% else %>
-	<div>
-		  <%= label :bmp_id, t('bmp.bmp_group') %>
-		  <%= collection_select :bmp, :bmp_id, @bmp_list, :id, :spanish_name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
-          <%= label :bmp_id, t('operation.bmp') %>
-          <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :spanish_name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
-    </div>
-  <% end %>
+  <div class="field">
+    <% if I18n.locale.eql?(:en) %>
+        <%= label :bmp_id, t('bmp.bmp_group') %>
+            <%= collection_select :bmp, :bmp_id, @bmp_list, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+        <%= label :bmp_id, t('operation.bmp') %>
+            <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+    <% else %>
+        <%= label :bmp_id, t('bmp.bmp_group') %>
+        <%= collection_select :bmp, :bmp_id, @bmp_list, :id, :spanish_name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+        <%= label :bmp_id, t('operation.bmp') %>
+        <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :spanish_name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+    <% end %>
+  </div>
   <div class="warning_alert" id="slow_warning">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <%= t('bmp.climate_warning') %>

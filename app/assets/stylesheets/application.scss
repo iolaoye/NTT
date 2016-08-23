@@ -1260,3 +1260,32 @@ h1 {
   font-size: 15px;
   color: #ff9900;
 }
+
+#climate_table {
+
+  table {
+
+    tr {
+
+      td {
+        padding: 2px 5px 2px 5px !important;
+
+        input {
+          width: 100%;
+        }
+      }
+
+      th {
+        padding: 2px 5px 2px 5px !important;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        .fillButton {
+          margin: 0 0 0 10px;
+        }
+      }
+    }
+
+  }
+}
