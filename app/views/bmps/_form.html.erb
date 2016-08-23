@@ -12,15 +12,31 @@
   <% end %>
   <div class="field">
     <% if I18n.locale.eql?(:en) %>
-        <%= label :bmp_id, t('bmp.bmp_group') %>
-            <%= collection_select :bmp, :bmp_id, @bmp_list, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
-        <%= label :bmp_id, t('operation.bmp') %>
-            <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+      <%= label :bmp_id, t('bmp.bmp_group') %>
+      <% if @type == "Edit" %>
+        <%= collection_select :bmp, :bmp_id, @bmp_list, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false, :disabled => "disabled"} %>
+      <% else %>
+        <%= collection_select :bmp, :bmp_id, @bmp_list, :id, :name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
+      <% end %>
+      <%= label :bmp_id, t('operation.bmp') %>
+      <% if @type == "Edit" %>
+        <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') }, { :disabled => "disabled" } %>
+      <% else %>
+        <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+      <% end %>
     <% else %>
-        <%= label :bmp_id, t('bmp.bmp_group') %>
+      <%= label :bmp_id, t('bmp.bmp_group') %>
+      <% if @type == "Edit" %>
+        <%= label :bmp_id, @bmp_group %>
+      <% else %>
         <%= collection_select :bmp, :bmp_id, @bmp_list, :id, :spanish_name, {:prompt => t('bmp.select_bmp')}, {:required => false} %>
-        <%= label :bmp_id, t('operation.bmp') %>
+      <% end %>
+      <%= label :bmp_id, t('operation.bmp') %>
+      <% if @type == "Edit" %>
+        <%= label :bmp_id, @bmp_selection %>
+      <% else %>
         <%= collection_select :bmp, :bmpsublist_id, Bmpsublist.where(:bmplist_id => @bmp.bmp_id), :id, :spanish_name, {:required => false, :selected => @bmp.bmpsublist_id, :prompt => t('bmp.select_bmp') } %>
+      <% end %>
     <% end %>
   </div>
   <div class="warning_alert" id="slow_warning">

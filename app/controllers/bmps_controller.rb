@@ -66,7 +66,7 @@ class BmpsController < ApplicationController
 ################################  EDIT  #################################
 # GET /bmps/1/edit
   def edit
-    #@type = "edit"
+	  @type = "Edit"
     if Field.find(session[:field_id]).field_type
       @bmp_list = Bmplist.all
     else
@@ -89,8 +89,9 @@ class BmpsController < ApplicationController
 # POST /bmps
 # POST /bmps.json
   def create
-    #@type = "create"
-	msg = "OK"
+    @bmplist_name = "create"
+    @bmpsublist_name = "create"
+	  msg = "OK"
     @slope = 100
     @bmp = Bmp.new(bmp_params)
     @bmp.scenario_id = session[:scenario_id]
