@@ -364,6 +364,7 @@ en:
     show: Show
     edit: Edit
     delete: Delete
+    delete_all: Delete All
     back: Back
     actions: Actions
     new: New
@@ -498,6 +499,7 @@ en:
     edit: Editing Operation
     create_operation: Create Operation
     upload: 'Upload'
+    replace: Replace current operations
     cropping_system: 'Cropping System'
     fertilizer: Fertilizer Type
     crop: Crop
