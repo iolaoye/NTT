@@ -275,6 +275,12 @@ class ProjectsController < ApplicationController
           save_fields_information(xml, field)
         end #end fields.each
       } # end xml.fields
+      xml.watersheds {
+        watersheds = Field.where(:location_id => location.id)
+        watersheds.each do |watershed|
+          save_watershed_information(xml, watershed)
+        end # end watersheds.each
+      } # end xml.watersheds
     } #end xml.location
   end
 
@@ -522,6 +528,12 @@ class ProjectsController < ApplicationController
       xml.difference_max_temperature bmp.difference_max_temperature
       xml.difference_min_temperature bmp.difference_min_temperature
       xml.difference_precipitation bmp.difference_precipitation
+      climates = Climate.where(:bmp_id => bmp.bmp_id)
+      xml.climates {
+        climates.each do |climate|
+          save_climate_information(xml, climate)
+        end # end climates.each
+      } # end xml.climates
     } # xml bmp end
   end
 
@@ -588,6 +600,46 @@ class ProjectsController < ApplicationController
       xml.scenario_id subarea.scenario_id
     } # xml each subarea end
   end
+
+=begin Work in progress
+  def save_chart_information(xml, chart)
+    xml.chart {
+      xml.description_id chart.description_id
+      xml.month_year chart.month_year
+      xml.value chart.value
+    } # xml each chart_info end
+  end
+=end
+
+  def save_climate_information(xml, climate)
+    xml.climate {
+      xml.max_temp climate.max_temp
+      xml.min_temp climate.min_temp
+      xml.month climate.month
+      xml.precipitation climate.precipitation
+      xml.spanish_month climate.spanish_month
+    } # xml each climate end
+  end
+
+  def save_watershed_information(xml, watershed)
+    xml.watershed {
+      xml.name watershed.name
+      watershed_scenarios = WatershedScenario.where(:watershed_id => watershed.id)
+      xml.watershed_scenarios {
+        watershed_scenarios.each do |wss|
+          save_watershed_scenario_information(xml, wss)
+        end # end watershed scenarios each
+      } # end xml.watershed scenarios
+    } # xml each watershed end
+  end
+
+=begin Work in progress
+  def save_watershed_scenario_information(xml, watershed_scenario)
+    xml.watershed_scenario {
+      xml.
+    }
+  end
+=end
 
   # end method
 
@@ -710,8 +762,12 @@ class ProjectsController < ApplicationController
             else
               return "location could not be saved"
             end
-        end
-      end
+          when "watershed"
+            p.elements.each do |ws|
+              msg = upload_watershed_information_new_version(ws)
+            end
+        end # end case
+      end # end each
     rescue
       return 'Location could not be saved'
     end
@@ -806,43 +862,6 @@ class ProjectsController < ApplicationController
       end
     end
     return "OK"
-  end
-
-  def upload_control_values_new_version(node) # exact same as old method, only lowercase
-    begin
-      control = ApexControl.new
-      control.project_id = session[:project_id]
-      node.elements.each do |p|
-        case p.name
-          when "code"
-            control.control_id = Control.find_by_code(p.text).id
-            case control.control_id
-              when 1 # get number of years of simulation from weather
-                weather = Weather.find_by_field_id(session[:field_id])
-                control.value = weather.simulation_final_year - weather.simulation_initial_year + 1 + 5
-                control.save
-                # get first year of simulation from weather
-                control = ApexControl.new
-                control.project_id = session[:project_id]
-                control.control_id = Control.find_by_id(2).id
-                control.value = weather.simulation_initial_year - 5
-                control.save
-                return "OK"
-              when 2 # do nothing, second value should be taken
-                return "OK"
-            end # end case control_id
-          when "value"
-            control.value = p.text
-        end # end case
-      end # end each
-      if !control.save
-        return "Error saving control file"
-      else
-        return "OK"
-      end
-    rescue
-      return "Control values could not be saved"
-    end
   end
 
   def upload_weather_info(node)
@@ -2226,12 +2245,43 @@ class ProjectsController < ApplicationController
           bmp.difference_min_temperature = p.text
         when "difference_precipitation"
           bmp.difference_precipitation = p.text
+        when "climate"
+          p.elements.each do |climate|
+            msg = upload_climate_new_version(climate, bmp.bmp_id)
+            if msg != "OK"
+              return msg
+            end
+          end
       end
     end
     if bmp.save
       return "OK"
     else
       return "bmp could not be saved"
+    end
+  end
+
+  def upload_climate_new_version(node, bmp_id)
+    climate = Climate.new
+    climate.bmp_id = bmp_id
+    node.elements.each do |p|
+      case p.name
+        when "max_temp"
+          climate.max_temp = p.text
+        when "min_temp"
+          climate.min_temp = p.text
+        when "month"
+          climate.month = p.text
+        when "precipitation"
+          climate.precipitation = p.text
+        when "spanish_month"
+          climate.spanish_month = p.text
+      end # case end
+    end # each end
+    if climate.save then
+      return "OK"
+    else
+      return "climate could not be saved"
     end
   end
 
@@ -2628,6 +2678,43 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def upload_control_values_new_version(node) # exact same as old method, only lowercase
+    begin
+      control = ApexControl.new
+      control.project_id = session[:project_id]
+      node.elements.each do |p|
+        case p.name
+          when "code"
+            control.control_id = Control.find_by_code(p.text).id
+            case control.control_id
+              when 1 # get number of years of simulation from weather
+                weather = Weather.find_by_field_id(session[:field_id])
+                control.value = weather.simulation_final_year - weather.simulation_initial_year + 1 + 5
+                control.save
+                # get first year of simulation from weather
+                control = ApexControl.new
+                control.project_id = session[:project_id]
+                control.control_id = Control.find_by_id(2).id
+                control.value = weather.simulation_initial_year - 5
+                control.save
+                return "OK"
+              when 2 # do nothing, second value should be taken
+                return "OK"
+            end # end case control_id
+          when "value"
+            control.value = p.text
+        end # end case
+      end # end each
+      if !control.save
+        return "Error saving control file"
+      else
+        return "OK"
+      end
+    rescue
+      return "Control values could not be saved"
+    end
+  end
+
   def upload_parameter_values(node)
     begin
       parameter = ApexParameter.new
@@ -2678,5 +2765,37 @@ class ProjectsController < ApplicationController
       return "Parameters could not be saved"
     end
   end
+
+  def upload_watershed_information_new_version(node)
+    watershed = Watershed.new
+    node.elements.each do |p|
+      case p.name
+        when "name"
+          watershed.name = p.text
+        when "watershed_scenarios"
+          if watershed.save
+            session[:watershed_id] = watershed.id
+            p.elements.each do |node|
+              msg = upload_watershed_scenario_information_new_version(node, watershed.id)
+            end
+          else
+            return "Watershed scenario could not be saved"
+          end
+      end # end case
+    end # end each
+  end
+
+=begin <----Work in progress---->
+  def upload_watershed_scenario_information_new_version(node, watershed_id)
+    watershed_scenario = WatershedScenario.new
+    watershed_scneario.watershed_id = watershed_id
+    node.elements.each do |p|
+      case p.name
+        when ""
+          = p.text
+      end # end case
+    end # end each element
+  end
+=end 
 
 end
