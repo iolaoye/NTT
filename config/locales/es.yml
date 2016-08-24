@@ -366,6 +366,7 @@
     show: Mostrar
     edit: Editar
     delete: Borrar
+    delete_all: Borrar Todos
     back: Regresar
     actions: Opciones
     new: Adicionar
@@ -498,6 +499,7 @@
     edit: Revisión de Operación
     create_operation: Crear Operación
     upload: 'Cargar'
+    replace: Reemplazar todas las operaciones actuales
     cropping_system: 'Sistema de Cultivo'
     crop: Cultivo
     moisture: Humedad
