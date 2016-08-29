@@ -272,7 +272,7 @@ class ProjectsController < ApplicationController
       xml.fields {
         fields = Field.where(:location_id => location.id)
         fields.each do |field|
-          save_fields_information(xml, field)
+          save_field_information(xml, field)
         end #end fields.each
       } # end xml.fields
       xml.watersheds {
@@ -286,7 +286,7 @@ class ProjectsController < ApplicationController
 
   # end method
 
-  def save_fields_information(xml, field)
+  def save_field_information(xml, field)
     xml.field {
       #field information
       xml.field_name field.field_name
@@ -312,6 +312,20 @@ class ProjectsController < ApplicationController
           save_scenario_information(xml, scenario)
         end # end scenarios.each
       } #end xml.scenarios
+
+      charts = Chart.where(:field_id => field.id)
+      xml.charts {
+        charts.each do |chart|
+          save_chart_information(xml, chart)
+        end # end charts.each
+      } # end xml.charts
+
+      results = Result.where(:field_id => field.id)
+      xml.results {
+        results.each do |result|
+          save_result_information(xml, result)
+        end # end results.each
+      } # end xml results
     } # end field info
   end
 
@@ -385,6 +399,34 @@ class ProjectsController < ApplicationController
           save_layer_information(xml, layer)
         end # end layers.each
       } # end xml.layers
+
+      subareas = Subarea.where(:soil_id => soil.id)
+      xml.subareas {
+        subareas.each do |subarea|
+          save_subarea_information(xml, subarea)
+        end # end 
+      } # end xml.subareas
+
+      charts = Chart.where(:soil_id => soil.id)
+      xml.charts {
+        charts.each do |chart|
+          save_chart_information(xml, chart)
+        end # end charts.each
+      } # end xml.charts
+
+      results = Result.where(:soil_id => soil.id)
+      xml.results {
+        results.each do |result|
+          save_result_information(xml, result)
+        end # end results.each
+      } # end xml results
+
+      soil_operations = SoilOperation.where(:soil_id => soil.id)
+      xml.soil_operations {
+        soil_operations.each do |so|
+          save_soil_operation_information(xml, so)
+        end # end soil_operations.each
+      } # end xml soil_operations
     } # end xml.soil
   end
 
@@ -443,6 +485,19 @@ class ProjectsController < ApplicationController
         end # end results.each
       } # end xml.results
 
+      charts = Chart.where(:scenario_id => scenario.id)
+      xml.charts {
+        charts.each do |chart|
+          save_chart_information(xml, chart)
+        end # end charts.each
+      } # end xml.charts
+
+      soil_operations = SoilOperation.where(:scenario_id => scenario.id)
+      xml.soil_operations {
+        soil_operations.each do |so|
+          save_soil_operation_information(xml, so)
+        end # end soil_operations.each
+      } # end xml.soil_operations
     } # end xml.scenario
   end
 
@@ -464,6 +519,12 @@ class ProjectsController < ApplicationController
       xml.org_p operation.org_p
       xml.nh3 operation.nh3
       xml.subtype_id operation.subtype_id
+      soil_operations = SoilOperation.where(:operation_id => operation.id)
+      xml.soil_operations {
+        soil_operations.each do |so|
+          save_soil_operation_information(xml, soil_operation)
+        end # end soil_operations.each
+      } # end xml.soil_operations
     } # xml each operation end
   end
 
@@ -489,7 +550,6 @@ class ProjectsController < ApplicationController
 
   def save_result_information(xml, result)
     xml.result {
-      xml.field_id result.field_id
       xml.value result.value
       xml.ci_value result.ci_value
     } # xml each result end
@@ -534,6 +594,20 @@ class ProjectsController < ApplicationController
           save_climate_information(xml, climate)
         end # end climates.each
       } # end xml.climates
+
+      subareas = Subarea.where(:bmp_id => bmp.bmp_id)
+      xml.subareas {
+        subareas.each do |subarea|
+          save_subarea_information(xml, subarea)
+        end # end subareas.each
+      } # end xml.subareas
+
+      soil_operations = SoilOperation.where(:bmp_id => bmp.bmp_id)
+      xml.soil_operations {
+        soil_operations.each do |so|
+          save_soil_operation_information(xml, so)
+        end # end soil_operations.each
+      } # end xml.soil_operations
     } # xml bmp end
   end
 
@@ -682,7 +756,6 @@ class ProjectsController < ApplicationController
     } # xml each subarea end
   end
 
-=begin Work in progress
   def save_chart_information(xml, chart)
     xml.chart {
       xml.description_id chart.description_id
@@ -690,7 +763,6 @@ class ProjectsController < ApplicationController
       xml.value chart.value
     } # xml each chart_info end
   end
-=end
 
   def save_climate_information(xml, climate)
     xml.climate {
@@ -704,12 +776,27 @@ class ProjectsController < ApplicationController
   def save_watershed_information(xml, watershed)
     xml.watershed {
       xml.name watershed.name
+
       watershed_scenarios = WatershedScenario.where(:watershed_id => watershed.id)
       xml.watershed_scenarios {
         watershed_scenarios.each do |wss|
           save_watershed_scenario_information(xml, wss)
         end # end scenarios each
       } # end scenarios
+
+      charts = Chart.where(:watershed_id => watershed.id)
+      xml.charts {
+        charts.each do |chart|
+          save_chart_information(xml, chart)
+        end # end charts.each
+      } # end charts
+
+      results = Result.where(:watershed_id => watershed.id)
+      xml.results {
+        results.each do |result|
+          save_result_information(xml, result)
+        end # end results.each
+      } # end results
     } # xml each watershed end
   end
 
