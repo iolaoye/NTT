@@ -41,8 +41,6 @@ class ScenariosController < ApplicationController
       format.json { render json: @scenarios }
     end
   end
-
-
 ################################  Simulate  #################################
   def simulate_all
     @project_name = Project.find(session[:project_id]).name
@@ -55,7 +53,7 @@ class ScenariosController < ApplicationController
         session[:scenario_id] = scenario.id
         msg = run_scenario
         unless msg.eql?("OK")
-          @errors.push("Error simulating scenario " + scenario.name)
+          @errors.push("Error simulating scenario " + scenario.name + " (" + msg + ")")
           raise ActiveRecord::Rollback
         end # end if msg
       end # end each do scenario loop
@@ -84,7 +82,7 @@ class ScenariosController < ApplicationController
 ################################  EDIT   #################################
 # GET /scenarios/1/edit
   def edit
-    @errors = Array.new
+    #@errors = Array.new
     @scenario = Scenario.find(params[:id])
   end
 
@@ -151,20 +149,21 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1.json
   def show()
     @errors = Array.new
-    msg = run_scenario
-    respond_to do |format|
-      @scenarios = Scenario.where(:field_id => session[:field_id])
-      if msg.eql?("OK") then
-        @project_name = Project.find(session[:project_id]).name
-        @field_name = Field.find(session[:field_id]).field_name
-		    flash[:notice] = t('notices.simulation')
-        format.html { render action: "list" }
-      else
-        flash[:error] = "Scenario simulated successfully"
-        @scenarios = Scenario.where(:field_id => session[:field_id])
-        format.html { render action: "list" }
-      end # end if msg
-    end
+    ActiveRecord::Base.transaction do
+		msg = run_scenario
+		@scenarios = Scenario.where(:field_id => session[:field_id])
+		@project_name = Project.find(session[:project_id]).name
+		@field_name = Field.find(session[:field_id]).field_name
+		respond_to do |format|
+		  if msg.eql?("OK") then
+			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
+			format.html { render action: "list" }
+		  else
+			flash[:error] = "Error simulatin scenario"
+			format.html { render action: "list" }
+		  end # end if msg
+		end
+	end
   end
 
   private

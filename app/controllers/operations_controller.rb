@@ -103,7 +103,7 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1.json
   def update
     @operation = Operation.find(params[:id])
-	  @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     respond_to do |format|
       if @operation.update_attributes(operation_params)
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
@@ -168,7 +168,6 @@ class OperationsController < ApplicationController
           if params[:replace] != nil
             #Delete operations for the scenario selected
             Operation.where(:scenario_id => params[:id]).destroy_all
-            #SoilOperation.where(:scenario_id => params[:id]).delete_all
           end
           #take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
           events = Event.where(:cropping_system_id => params[:cropping_system][:id])
@@ -177,21 +176,12 @@ class OperationsController < ApplicationController
             @operation.scenario_id = params[:id]
             #get crop_id from croppingsystem and state_id
             state_id = Location.find(session[:location_id]).state_id
-            crops = Crop.where(:number => event.apex_crop)
-            crop_id = event.apex_crop
-            plant_population = crops[0].plant_population_ft
-            crops.each do |crop|
-              if crop.state_id == state_id then
-                crop_id = crop.id
-                break
-              else
-                crop_id = crop.id
-              end
-            end
-            #session[:a_year] = params[:year]
-            #session[:a_year_to_i] = params[:year].to_i
-            #session[:a_count] = @operations.count()
-            @operation.crop_id = crop_id
+            crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
+			if crop == nil then
+				crop = Crop.find_by_number_and_state_id(event.apex_crop, '**')
+			end
+            plant_population = crop.plant_population_ft
+            @operation.crop_id = crop.id
             @operation.activity_id = event.activity_id
             @operation.day = event.day
             @operation.month_id = event.month
@@ -201,17 +191,9 @@ class OperationsController < ApplicationController
             else
               #don't replace
               if @count > 0
-                #oo
-                #session[:a_type] = "OO"
                 @operation.year = event.year + params[:year].to_i - 1
-                #session[:a_op_year] = @operation.year
-                #session[:a_event_year] = event.year
               else
-                #aa
-                #session[:a_type] = "AA"
                 @operation.year = event.year
-                #session[:a_op_year] = @operation.year
-                #session[:a_event_year] = event.year
               end
             end
             #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
@@ -225,7 +207,7 @@ class OperationsController < ApplicationController
             @operation.subtype_id = 0
             case @operation.activity_id
               when 1 #planting operation. Take planting code from crop table and plant population as well
-                @operation.type_id = Crop.find(crop_id).planting_code
+                @operation.type_id = Crop.find(@operation.crop_id).planting_code
                 @operation.amount = plant_population
               when 2, 7
                 fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0

@@ -537,10 +537,23 @@ module ScenariosHelper
 		operation.day = 15
 		operation.month = 1
 		operation.year = 1
+		operation.operation_id = 0
+		operation.tractor_id = 0
 		operation.apex_crop = crop
+		operation.type_id = 0
 		operation.opv1 = opv1
 		operation.opv2 = opv2
-		operation.apex_operation = years_cult
+		operation.opv3 = 0
+		operation.opv4 = 0
+		operation.opv5 = 0
+		operation.opv6 = 0
+		operation.opv7 = 0
+		operation.scenario_id = scenario_info
+		operation.soil_id = 0
+		operation.apex_operation = operation
+		operation.bmp_id = @bmp.id
+		operation.activity_id = 1
+		operation.save
 		#TODO oper.LuNumber = lunum <- visual basic code
 	end
 end

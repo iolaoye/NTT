@@ -66,7 +66,7 @@ class BmpsController < ApplicationController
 ################################  EDIT  #################################
 # GET /bmps/1/edit
   def edit
-    #@type = "edit"
+	  @type = "Edit"
     if Field.find(session[:field_id]).field_type
       @bmp_list = Bmplist.all
     else
@@ -89,7 +89,9 @@ class BmpsController < ApplicationController
 # POST /bmps
 # POST /bmps.json
   def create
-    #@type = "create"
+    @bmplist_name = "create"
+    @bmpsublist_name = "create"
+	  msg = "OK"
     @slope = 100
     @bmp = Bmp.new(bmp_params)
     @bmp.scenario_id = session[:scenario_id]
@@ -294,18 +296,12 @@ class BmpsController < ApplicationController
 ### ID: 1
   def autoirrigation(type)
     return irrigation_fertigation(type)
-  end
-
-  # end method
-
+  end  # end method
 
 ### ID: 2
   def fertigation(type)
     return irrigation_fertigation(type)
-  end
-
-  # end method
-
+  end # end method
 
 ### ID: 3
   def tile_drain(type)
@@ -316,19 +312,16 @@ class BmpsController < ApplicationController
         case type
           when "create", "update"
             subarea.idr = @bmp.depth * FT_TO_MM
+			subarea.drt = 2
           when "delete"
             subarea.idr = 0
-          else
-            # DO NOTHING
+			subarea.drt = 0
         end
-        #if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
-  end
-
-  # end method
-
+  end # end method
 
 ### ID: 4
   def ppnd(type)
@@ -385,7 +378,6 @@ class BmpsController < ApplicationController
       when "delete"
         subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WL").first
         update_wsa("-", subarea.wsa)
-      #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "PPDE").first.delete
     end
   end
 
@@ -405,7 +397,7 @@ class BmpsController < ApplicationController
             subarea.pcof = 0
           else
         end
-        #if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
@@ -425,7 +417,7 @@ class BmpsController < ApplicationController
           when "delete"
             # TODO check values for deletion to see if other questions to set values may need to be asked
         end
-        #if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
@@ -501,7 +493,7 @@ class BmpsController < ApplicationController
             subarea.slp = subarea.slp / (1 - session[:old_percentage])
           else
         end
-        #if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
@@ -581,7 +573,7 @@ class BmpsController < ApplicationController
             subarea.upn = 0.2
             subarea.pec = 1.0
         end
-        #if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
@@ -608,7 +600,7 @@ class BmpsController < ApplicationController
             subarea.upn = 0.2
             subarea.pec = 1.0
         end
-        #if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
@@ -759,13 +751,11 @@ class BmpsController < ApplicationController
             # TODO check values for deletion to see if other questions to set values may need to be asked
             subarea.pec = 1.0
         end
-        #if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
-  end
-
-  # end method
+  end # end method
 
 
 ## USED FOR PADS AND PIPES FIELDS (ID: 4 - ID: 7)
@@ -798,7 +788,7 @@ class BmpsController < ApplicationController
           when "delete"
             subarea.pcof = 0.0
         end # switch statement
-        #if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
       soil_ops = SoilOperation.where(:soil_id => soil.id, :scenario_id => session[:scenario_id], :activity_id => 1)
       soil_ops.each do |soil_op|
@@ -814,15 +804,12 @@ class BmpsController < ApplicationController
       end # end soil_ops.each
     end # end soils.each
     return "OK"
-  end
-
-  # end method
-
+  end # end method
 
   def irrigation_fertigation(type)
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
       if subarea != nil then
         case type
           when "create", "update"
@@ -838,9 +825,13 @@ class BmpsController < ApplicationController
             subarea.bir = 0.8
             subarea.iri = @bmp.days
             subarea.bir = @bmp.water_stress_factor
-            subarea.efi = 1 - @bmp.irrigation_efficiency
+            subarea.efi = 1.0 - @bmp.irrigation_efficiency
             subarea.armx = @bmp.maximum_single_application * IN_TO_MM
-            subarea.fdsf = @bmp.safety_factor
+			if @bmp.safety_factor == nil then
+				subarea.fdsf = 0
+			else
+				subarea.fdsf = @bmp.safety_factor
+			end
             if @bmp.bmpsublist_id == 2
               subarea.idf4 = 1.0
               subarea.bft = 0.8
@@ -859,10 +850,8 @@ class BmpsController < ApplicationController
               subarea.idf4 = 0.0
               subarea.bft = 0.0
             end
-          else
-            #DO NOTHING
         end
-        #if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Unable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"

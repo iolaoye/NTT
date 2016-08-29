@@ -18,9 +18,9 @@
   <% end %>
 <% end %>
 <% if flash[:error] != nil %>
-    <div id="error_explanation">
+    <div class="danger_alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <h2>Simulation failed to run</h2>
+      <!--<h2>Simulation failed to run</h2>-->
       <%= flash[:error] %>
     </div>
 <% end %>
