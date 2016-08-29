@@ -1013,11 +1013,20 @@ class ProjectsController < ApplicationController
           end
         when "weather"
           msg = upload_weather_new_version(p, field.id)
+          if msg != "OK"
+            return msg
+          end
         when "site"
           msg = upload_site_new_version(p, field.id)
+          if msg != "OK"
+            return msg
+          end
         when "soils"
           p.elements.each do |f|
             msg = upload_soil_new_version(field.id, f)
+            if msg != "OK"
+              return msg
+            end
           end
         when "scenarios"
           p.elements.each do |f|
@@ -1247,7 +1256,7 @@ class ProjectsController < ApplicationController
           if soil.save then
             upload_soil_scenario_info(p, soil.field_id, soil.id)
           else
-            return "Error uploading "
+            return "Error uploading soil"
           end
       end
     end
@@ -1280,15 +1289,25 @@ class ProjectsController < ApplicationController
         when "drainage_type"
           soil.drainage_type = p.text
         when "layers"
-          if soil.save
-            p.elements.each do |f|
-              msg = upload_layer_new_version(soil.id, p)
+          p.elements.each do |f|
+            msg = upload_layer_new_version(soil.id, p)
+            if msg != "OK"
+              return msg
             end
-          else
-            return "Soil could not be saved"
           end
-      end
-    end
+        when "subareas"
+          p.elements.each do |sa|
+            msg = upload_subarea_new_version(0, 0, soil.id, sa)
+            if msg != "OK"
+              return msg
+            end
+          end
+      end # case end 
+    end # each element end
+    if soil.save
+      return "OK"
+    else
+      return "Soil could not be saved"
   end
 
   def upload_layer_info(node, soil_id)
@@ -1448,7 +1467,7 @@ class ProjectsController < ApplicationController
           end
         when "subarea"
           p.elements.each do |sa|
-            msg = upload_subarea_new_version(sa, scenario.id)
+            msg = upload_subarea_new_version(0, scenario.id, 0, sa)
             if msg != "OK"
               return msg
             end
@@ -1682,9 +1701,11 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def upload_subarea_new_version(node, scenario_id)
+  def upload_subarea_new_version(bmp_id, scenario_id, soil_id, node)
     subarea = Subarea.new
     subarea.scenario_id = scenario_id
+    subarea.bmp_id = bmp_id
+    subarea.soil_id = soil_id
     subarea.ny5 = 0
     subarea.ny6 = 0
     subarea.ny7 = 0
@@ -2053,8 +2074,8 @@ class ProjectsController < ApplicationController
         when "nh3"
           operation.nh3 = p.text
         when "soil_operation"
-          p.elements.each do |s|
-            msg = upload_soil_operation_new(scenario_id, s)
+          p.elements.each do |soil_op|
+            msg = upload_soil_operation_new(soil_op, scenario_id, 0, operation.id, 0)
             if msg != "OK"
               return msg
             end
@@ -2068,12 +2089,13 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def upload_soil_operation_new(scenario_id, operation)
+  def upload_soil_operation_new(node, scenario_id, soil_id, operation_id, bmp_id)
     soil_operation = SoilOperation.new
     soil_operation.scenario_id = scenario_id
-    soil_operation.operation_id = operation.id
-    #soil_operation.soil_id = ??
-    operation.elements.each do |p|
+    soil_operation.operation_id = operation_id
+    soil_operation.soil_id = soil_id
+    soil_operation.bmp_id = bmp_id
+    node.elements.each do |p|
       case p.name
         when "apex_crop"
           soil_operation.apex_crop = p.text
@@ -2107,6 +2129,12 @@ class ProjectsController < ApplicationController
           soil_operation.apex_operation = p.text
       end
     end
+    if soil_operation.save then
+      return "OK"
+    else
+      return "soil operation could not be saved"
+    end
+    else
   end
 
   def upload_result_info(node, field_id, soil_id, scenario_id)
@@ -2552,9 +2580,23 @@ class ProjectsController < ApplicationController
           bmp.difference_min_temperature = p.text
         when "difference_precipitation"
           bmp.difference_precipitation = p.text
-        when "climate"
+        when "climates"
           p.elements.each do |climate|
             msg = upload_climate_new_version(climate, bmp.bmp_id)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "subareas"
+          p.elements.each do |subarea|
+            msg = upload_subarea_new_version(bmp.bmp_id, 0, 0, subarea)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "soil_operations"
+          p.elements.each do |soil_op|
+            msg = upload_soil_operation_new(soil_op, 0, 0, 0, bmp.bmp_id)
             if msg != "OK"
               return msg
             end
@@ -3084,7 +3126,7 @@ class ProjectsController < ApplicationController
               msg = upload_watershed_scenario_information_new_version(node, watershed.id)
             end
           else
-            return "Watershed scenario could not be saved"
+            return "Watershed could not be saved"
           end
       end # end case
     end # end each
