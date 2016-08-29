@@ -552,6 +552,7 @@ class ProjectsController < ApplicationController
     xml.result {
       xml.value result.value
       xml.ci_value result.ci_value
+      xml.crop_id result.crop_id
     } # xml each result end
   end
 
@@ -1298,6 +1299,13 @@ class ProjectsController < ApplicationController
         when "subareas"
           p.elements.each do |sa|
             msg = upload_subarea_new_version(0, 0, soil.id, sa)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "soil_operations"
+          p.elements.each do |so|
+            msg = upload_soil_operation_new(so, 0, soil.id, 0, 0)
             if msg != "OK"
               return msg
             end
