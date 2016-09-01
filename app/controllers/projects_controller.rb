@@ -550,6 +550,7 @@ class ProjectsController < ApplicationController
 
   def save_result_information(xml, result)
     xml.result {
+      xml.description_id result.description_id
       xml.value result.value
       xml.ci_value result.ci_value
       xml.crop_id result.crop_id
@@ -1316,6 +1317,7 @@ class ProjectsController < ApplicationController
       return "OK"
     else
       return "Soil could not be saved"
+    end
   end
 
   def upload_layer_info(node, soil_id)
@@ -2168,6 +2170,8 @@ class ProjectsController < ApplicationController
           result.value = p.text
         when "ci_value"
           result.ci_value = p.text
+        when "description_id"
+          result.description_id = p.text
       end # end case
     end # end each
     if result.save
@@ -3152,5 +3156,4 @@ class ProjectsController < ApplicationController
     end # end each element
   end
 =end 
-
 end
