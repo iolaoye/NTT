@@ -38,9 +38,7 @@
 		<h2><%= t('resultspage.saving.header') %></h2>
 			<p><%= raw t('resultspage.saving.body1') %></p>
 			<p><%= raw t('resultspage.saving.body2') %></p>
-				
-		<br>
-		<%= link_to "< Prev", help_path("page_10") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_12") %><br>
-		<%= link_to t('help.return_to_table'), help_path("index") %>
 	</div>
 </div>
+<br><%= link_to "< Prev", help_path("page_10") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_12") %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index") %><br>
