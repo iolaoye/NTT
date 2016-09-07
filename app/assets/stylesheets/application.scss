@@ -921,15 +921,52 @@ input[type="submit"]:hover {
 }
 
 .center {
-  padding: 20px 10px 20px 10px;
+  padding: 20px 10px 0px 10px;
   margin: auto;
   width: 188px;
-  float: center;
   text-align: center;
   -webkit-appearance: none;
   -moz-appearance: none;
   border: 1px solid #e9e9e9;
   border-radius: 2px;
+
+  .field_with_errors {
+    width: 100%;
+    margin: 0 -24px 0 -24px !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid #e9e9e9;
+    border-radius: 2px;
+    padding: 2px;
+
+    ::-webkit-input-placeholder { /* Chrome */
+      color: white;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+      color: white;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+      color: white;
+      opacity: 1;
+    }
+    :-moz-placeholder { /* Firefox 4 - 18 */
+      color: white;
+      opacity: 1;
+    }
+
+    input {
+
+      width: 100% !important;
+      background: transparent;
+      border: 0 solid #ffffff;
+      padding: 8px 0 8px 8px;
+      border-radius: 0;
+      margin-bottom: 1px;
+
+    }
+
+  }
+
 }
 
 .left {
@@ -938,8 +975,12 @@ input[type="submit"]:hover {
 }
 
 .center > .field > input {
-  border: 6px solid #ffffff;
-  border-radius: 0px;
+  width: 100% !important;
+  margin: 0 -24px 0 -24px !important;
+  background: transparent;
+  border: 0 solid #ffffff;
+  padding: 8px 0 8px 8px;
+  border-radius: 0;
   margin-bottom: 1px;
 }
 
@@ -950,8 +991,6 @@ input[type="submit"]:hover {
 }
 
 .center > .field {
-  width: 184px;
-  padding: 4px;
   -webkit-appearance: none;
   -moz-appearance: none;
   border: 1px solid #e9e9e9;
@@ -961,7 +1000,6 @@ input[type="submit"]:hover {
 
 .left > .field {
   width: 254px;
-  padding: 4px;
   -webkit-appearance: none;
   -moz-appearance: none;
   border: 1px solid #e9e9e9;
@@ -994,6 +1032,10 @@ input[type="submit"]:hover {
 .new {
   padding-bottom: 0px;
   display: inline;
+}
+
+.back {
+  margin-bottom: 15px !important;
 }
 
 .login > .green_button {
@@ -1217,4 +1259,33 @@ h1 {
   font-weight: 300;
   font-size: 15px;
   color: #ff9900;
+}
+
+#climate_table {
+
+  table {
+
+    tr {
+
+      td {
+        padding: 2px 5px 2px 5px !important;
+
+        input {
+          width: 100%;
+        }
+      }
+
+      th {
+        padding: 2px 5px 2px 5px !important;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        .fillButton {
+          margin: 0 0 0 10px;
+        }
+      }
+    }
+
+  }
 }

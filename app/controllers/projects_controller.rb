@@ -271,15 +271,21 @@ class ProjectsController < ApplicationController
       xml.fields {
         fields = Field.where(:location_id => location.id)
         fields.each do |field|
-          save_fields_information(xml, field)
+          save_field_information(xml, field)
         end #end fields.each
       } # end xml.fields
+      xml.watersheds {
+        watersheds = Location.where(:location_id => location.id)
+        watersheds.each do |watershed|
+          save_watershed_information(xml, watershed)
+        end # end watersheds.each
+      } # end xml.watersheds
     } #end xml.location
   end
 
   # end method
 
-  def save_fields_information(xml, field)
+  def save_field_information(xml, field)
     xml.field {
       #field information
       xml.field_name field.field_name
@@ -305,6 +311,20 @@ class ProjectsController < ApplicationController
           save_scenario_information(xml, scenario)
         end # end scenarios.each
       } #end xml.scenarios
+
+      charts = Chart.where(:field_id => field.id)
+      xml.charts {
+        charts.each do |chart|
+          save_chart_information(xml, chart)
+        end # end charts.each
+      } # end xml.charts
+
+      results = Result.where(:field_id => field.id)
+      xml.results {
+        results.each do |result|
+          save_result_information(xml, result)
+        end # end results.each
+      } # end xml results
     } # end field info
   end
 
@@ -378,6 +398,34 @@ class ProjectsController < ApplicationController
           save_layer_information(xml, layer)
         end # end layers.each
       } # end xml.layers
+
+      subareas = Subarea.where(:soil_id => soil.id)
+      xml.subareas {
+        subareas.each do |subarea|
+          save_subarea_information(xml, subarea)
+        end # end 
+      } # end xml.subareas
+
+      charts = Chart.where(:soil_id => soil.id)
+      xml.charts {
+        charts.each do |chart|
+          save_chart_information(xml, chart)
+        end # end charts.each
+      } # end xml.charts
+
+      results = Result.where(:soil_id => soil.id)
+      xml.results {
+        results.each do |result|
+          save_result_information(xml, result)
+        end # end results.each
+      } # end xml results
+
+      soil_operations = SoilOperation.where(:soil_id => soil.id)
+      xml.soil_operations {
+        soil_operations.each do |so|
+          save_soil_operation_information(xml, so)
+        end # end soil_operations.each
+      } # end xml soil_operations
     } # end xml.soil
   end
 
@@ -436,10 +484,23 @@ class ProjectsController < ApplicationController
         end # end results.each
       } # end xml.results
 
+      charts = Chart.where(:scenario_id => scenario.id)
+      xml.charts {
+        charts.each do |chart|
+          save_chart_information(xml, chart)
+        end # end charts.each
+      } # end xml.charts
+
+      soil_operations = SoilOperation.where(:scenario_id => scenario.id)
+      xml.soil_operations {
+        soil_operations.each do |so|
+          save_soil_operation_information(xml, so)
+        end # end soil_operations.each
+      } # end xml.soil_operations
     } # end xml.scenario
   end
 
-  #end scenarionmethod
+  #end scenario method
 
   def save_operation_information(xml, operation)
     xml.operation {
@@ -457,6 +518,12 @@ class ProjectsController < ApplicationController
       xml.org_p operation.org_p
       xml.nh3 operation.nh3
       xml.subtype_id operation.subtype_id
+      soil_operations = SoilOperation.where(:operation_id => operation.id)
+      xml.soil_operations {
+        soil_operations.each do |so|
+          save_soil_operation_information(xml, soil_operation)
+        end # end soil_operations.each
+      } # end xml.soil_operations
     } # xml each operation end
   end
 
@@ -482,9 +549,10 @@ class ProjectsController < ApplicationController
 
   def save_result_information(xml, result)
     xml.result {
-      xml.field_id result.field_id
+      xml.description_id result.description_id
       xml.value result.value
       xml.ci_value result.ci_value
+      xml.crop_id result.crop_id
     } # xml each result end
   end
 
@@ -521,6 +589,26 @@ class ProjectsController < ApplicationController
       xml.difference_max_temperature bmp.difference_max_temperature
       xml.difference_min_temperature bmp.difference_min_temperature
       xml.difference_precipitation bmp.difference_precipitation
+      climates = Climate.where(:bmp_id => bmp.bmp_id)
+      xml.climates {
+        climates.each do |climate|
+          save_climate_information(xml, climate)
+        end # end climates.each
+      } # end xml.climates
+
+      subareas = Subarea.where(:bmp_id => bmp.bmp_id)
+      xml.subareas {
+        subareas.each do |subarea|
+          save_subarea_information(xml, subarea)
+        end # end subareas.each
+      } # end xml.subareas
+
+      soil_operations = SoilOperation.where(:bmp_id => bmp.bmp_id)
+      xml.soil_operations {
+        soil_operations.each do |so|
+          save_soil_operation_information(xml, so)
+        end # end soil_operations.each
+      } # end xml.soil_operations
     } # xml bmp end
   end
 
@@ -528,6 +616,10 @@ class ProjectsController < ApplicationController
 
   def save_soil_operation_information(xml, soil_operation)
     xml.soil_operation {
+      xml.operation_id soil_operation.operation_id
+      xml.scenario_id soil_operation.scenario_id
+      xml.soil_id soil_operation.soil_id
+      xml.bmp_id soil_operation.bmp_id
       xml.apex_crop soil_operation.apex_crop
       xml.opv1 soil_operation.opv1
       xml.opv2 soil_operation.opv2
@@ -540,10 +632,9 @@ class ProjectsController < ApplicationController
       xml.year soil_operation.year
       xml.month soil_operation.month
       xml.day soil_operation.day
-      xml.operation_id soil_operation.operation_id
       xml.type_id soil_operation.type_id
-      xml.scenario_id soil_operation.soil_id
       xml.apex_operation soil_operation.apex_operation
+      xml.tractor_id soil_operation.tractor_id
     } # xml each soil_operation end
   end
 
@@ -551,6 +642,9 @@ class ProjectsController < ApplicationController
 
   def save_subarea_information(xml, subarea)
     xml.subarea {
+      xml.soil_id subarea.soil_id
+      xml.bmp_id subarea.bmp_id
+      xml.scenario_id subarea.scenario_id
       xml.subarea_type subarea.subarea_type
       xml.description subarea.description
       xml.number subarea.number
@@ -571,6 +665,7 @@ class ProjectsController < ApplicationController
       xml.xct subarea.xct
       xml.azm subarea.azm
       xml.fl subarea.fl
+      xml.fw subarea.fw
       xml.angl subarea.angl
       xml.wsa subarea.wsa
       xml.chl subarea.chl
@@ -582,11 +677,137 @@ class ProjectsController < ApplicationController
       xml.upn subarea.upn
       xml.ffpq subarea.ffpq
       xml.urbf subarea.urbf
-      xml.soil_id subarea.soil_id
-      xml.bmp_id subarea.bmp_id
-      xml.scenario_id subarea.scenario_id
+      xml.rchl subarea.rchl
+      xml.rchd subarea.rchd
+      xml.rcbw subarea.rcbw
+      xml.rctw subarea.rctw
+      xml.rchs subarea.rchs
+      xml.rchn subarea.rchn
+      xml.rchc subarea.rchc
+      xml.rchk subarea.rchk
+      xml.rfpw subarea.rfpw
+      xml.rfpl subarea.rfpl
+      xml.rsee subarea.rsee
+      xml.rsae subarea.rsae
+      xml.rsve subarea.rsve
+      xml.rsep subarea.rsep
+      xml.rsap subarea.rsap
+      xml.rsvp subarea.rsvp
+      xml.rsv subarea.rsv
+      xml.rsrr subarea.rsrr
+      xml.rsys subarea.rsys
+      xml.rsyn subarea.rsyn
+      xml.rshc subarea.rshc
+      xml.rsdp subarea.rsdp
+      xml.rsbd subarea.rsbd
+      xml.pcof subarea.pcof
+      xml.bcof subarea.bcof
+      xml.bffl subarea.bffl
+      xml.nirr subarea.nirr
+      xml.iri subarea.iri
+      xml.ira subarea.ira
+      xml.lm subarea.lm
+      xml.ifd subarea.ifd
+      xml.idr subarea.idr
+      xml.idf1 subarea.idf1
+      xml.idf2 subarea.idf2
+      xml.idf3 subarea.idf3
+      xml.idf4 subarea.idf4
+      xml.idf5 subarea.idf5
+      xml.bir subarea.bir
+      xml.efi subarea.efi
+      xml.vimx subarea.vimx
+      xml.armn subarea.armn
+      xml.armx subarea.armx
+      xml.bft subarea.bft
+      xml.fnp4 subarea.fnp4
+      xml.fmx subarea.fmx
+      xml.drt subarea.drt
+      xml.fdsf subarea.fdsf
+      xml.pec subarea.pec
+      xml.dalg subarea.dalg
+      xml.vlgn subarea.vlgn
+      xml.coww subarea.coww
+      xml.ddlg subarea.ddlg
+      xml.solq subarea.solq
+      xml.sflg subarea.sflg
+      xml.fnp2 subarea.fnp2
+      xml.fnp5 subarea.fnp5
+      xml.firg subarea.firg
+      xml.ny1 subarea.ny1
+      xml.ny2 subarea.ny2
+      xml.ny3 subarea.ny3
+      xml.ny4 subarea.ny4
+      xml.ny5 subarea.ny5
+      xml.ny5 subarea.ny6
+      xml.ny5 subarea.ny7
+      xml.ny5 subarea.ny8
+      xml.ny5 subarea.ny9
+      xml.ny5 subarea.ny10
+      xml.xtp1 subarea.xtp1
+      xml.xtp2 subarea.xtp2
+      xml.xtp3 subarea.xtp3
+      xml.xtp4 subarea.xtp4
+      xml.xtp4 subarea.xtp5
+      xml.xtp4 subarea.xtp6
+      xml.xtp4 subarea.xtp7
+      xml.xtp4 subarea.xtp8
+      xml.xtp4 subarea.xtp9
+      xml.xtp4 subarea.xtp10
     } # xml each subarea end
   end
+
+  def save_chart_information(xml, chart)
+    xml.chart {
+      xml.description_id chart.description_id
+      xml.month_year chart.month_year
+      xml.value chart.value
+    } # xml each chart_info end
+  end
+
+  def save_climate_information(xml, climate)
+    xml.climate {
+      xml.max_temp climate.max_temp
+      xml.min_temp climate.min_temp
+      xml.month climate.month
+      xml.precipitation climate.precipitation
+    } # xml each climate end
+  end
+
+  def save_watershed_information(xml, watershed)
+    xml.watershed {
+      xml.name watershed.name
+
+      watershed_scenarios = WatershedScenario.where(:watershed_id => watershed.id)
+      xml.watershed_scenarios {
+        watershed_scenarios.each do |wss|
+          save_watershed_scenario_information(xml, wss)
+        end # end scenarios each
+      } # end scenarios
+
+      charts = Chart.where(:watershed_id => watershed.id)
+      xml.charts {
+        charts.each do |chart|
+          save_chart_information(xml, chart)
+        end # end charts.each
+      } # end charts
+
+      results = Result.where(:watershed_id => watershed.id)
+      xml.results {
+        results.each do |result|
+          save_result_information(xml, result)
+        end # end results.each
+      } # end results
+    } # xml each watershed end
+  end
+
+=begin Work in progress
+  def save_watershed_scenario_information(xml, watershed_scenario)
+    xml.watershed_scenario {
+      xml.
+    }
+  end
+=end
 
   # end method
 
@@ -709,11 +930,15 @@ class ProjectsController < ApplicationController
             else
               return "location could not be saved"
             end  # end location.save
+          when "watershed"
+            p.elements.each do |ws|
+              msg = upload_watershed_information_new_version(ws)
+            end
         end  # end case p.name
       end  # end node.elements do
-    #rescue
-      #return 'Location could not be saved'
-    #end
+    rescue
+      return 'Location could not be saved'
+    end
     return msg
   end # end method
 
@@ -790,11 +1015,20 @@ class ProjectsController < ApplicationController
           end
         when "weather"
           msg = upload_weather_new_version(p, field.id)
+          if msg != "OK"
+            return msg
+          end
         when "site"
           msg = upload_site_new_version(p, field.id)
+          if msg != "OK"
+            return msg
+          end
         when "soils"
           p.elements.each do |f|
             msg = upload_soil_new_version(field.id, f)
+            if msg != "OK"
+              return msg
+            end
           end
         when "scenarios"
           p.elements.each do |f|
@@ -806,43 +1040,6 @@ class ProjectsController < ApplicationController
       end
     end
     return "OK"
-  end
-
-  def upload_control_values_new_version(node) # exact same as old method, only lowercase
-    begin
-      control = ApexControl.new
-      control.project_id = session[:project_id]
-      node.elements.each do |p|
-        case p.name
-          when "code"
-            control.control_id = Control.find_by_code(p.text).id
-            case control.control_id
-              when 1 # get number of years of simulation from weather
-                weather = Weather.find_by_field_id(session[:field_id])
-                control.value = weather.simulation_final_year - weather.simulation_initial_year + 1 + 5
-                control.save
-                # get first year of simulation from weather
-                control = ApexControl.new
-                control.project_id = session[:project_id]
-                control.control_id = Control.find_by_id(2).id
-                control.value = weather.simulation_initial_year - 5
-                control.save
-                return "OK"
-              when 2 # do nothing, second value should be taken
-                return "OK"
-            end # end case control_id
-          when "value"
-            control.value = p.text
-        end # end case
-      end # end each
-      if !control.save
-        return "Error saving control file"
-      else
-        return "OK"
-      end
-    rescue
-      return "Control values could not be saved"
-    end
   end
 
   def upload_weather_info(node)
@@ -975,8 +1172,14 @@ class ProjectsController < ApplicationController
           site.upr = p.text
         when "xlog"
           site.xlog = p.text
+          if site.xlog = 0
+            site.xlog = Weather.find_by_field_id(field_id).longitude
+          end
         when "ylat"
           site.ylat = p.text
+          if site.ylat = 0
+            site.ylat = Weather.find_by_field_id(field_id).latitude
+          end
       end
     end
     if site.save then
@@ -1055,7 +1258,7 @@ class ProjectsController < ApplicationController
           if soil.save then
             upload_soil_scenario_info(p, soil.field_id, soil.id)
           else
-            return "Error uploading "
+            return "Error uploading soil"
           end
       end
     end
@@ -1091,11 +1294,30 @@ class ProjectsController < ApplicationController
           if soil.save
             p.elements.each do |f|
               msg = upload_layer_new_version(soil.id, f)
+            if msg != "OK"
+              return msg
             end
-          else
-            return "Soil could not be saved"
           end
-      end
+        when "subareas"
+          p.elements.each do |sa|
+            msg = upload_subarea_new_version(0, 0, soil.id, sa)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "soil_operations"
+          p.elements.each do |so|
+            msg = upload_soil_operation_new(so, 0, soil.id, 0, 0)
+            if msg != "OK"
+              return msg
+            end
+          end
+      end # case end 
+    end # each element end
+    if soil.save
+      return "OK"
+    else
+      return "Soil could not be saved"
     end
   end
 
@@ -1256,7 +1478,7 @@ class ProjectsController < ApplicationController
           end
         when "subarea"
           p.elements.each do |sa|
-            msg = upload_subarea_new_version(sa, scenario.id)
+            msg = upload_subarea_new_version(0, scenario.id, 0, sa)
             if msg != "OK"
               return msg
             end
@@ -1490,9 +1712,11 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def upload_subarea_new_version(node, scenario_id)
+  def upload_subarea_new_version(bmp_id, scenario_id, soil_id, node)
     subarea = Subarea.new
     subarea.scenario_id = scenario_id
+    subarea.bmp_id = bmp_id
+    subarea.soil_id = soil_id
     subarea.ny5 = 0
     subarea.ny6 = 0
     subarea.ny7 = 0
@@ -1500,11 +1724,11 @@ class ProjectsController < ApplicationController
     subarea.ny9 = 0
     subarea.ny10 = 0
     subarea.xtp5 = 0
-    subarea.xtp5 = 0
-    subarea.xtp5 = 0
-    subarea.xtp5 = 0
-    subarea.xtp5 = 0
-    subarea.xtp5 = 0
+    subarea.xtp6 = 0
+    subarea.xtp7 = 0
+    subarea.xtp8 = 0
+    subarea.xtp9 = 0
+    subarea.xtp10 = 0
     node.elements.each do |p|
       case p.name
         when "subarea_type"
@@ -1547,6 +1771,8 @@ class ProjectsController < ApplicationController
           subarea.azm = p.text
         when "fl"
           subarea.fl = p.text
+        when "fw"
+          subarea.fw = p.text
         when "angl"
           subarea.angl = p.text
         when "wsa"
@@ -1569,6 +1795,136 @@ class ProjectsController < ApplicationController
           subarea.ffpq = p.text
         when "urbf"
           subarea.urbf = p.text
+        when "rchl"
+          subarea.rchl = p.text
+        when "rchd"
+          subarea.rchd = p.text
+        when "rcbw"
+          subarea.rcbw = p.text
+        when "rctw"
+          subarea.rctw = p.text
+        when "rchs"
+          subarea.rchs = p.text
+        when "rchn"
+          subarea.rchn = p.text
+        when "rchc"
+          subarea.rchc = p.text
+        when "rchk"
+          subarea.rchk = p.text
+        when "rfpw"
+          subarea.rfpw = p.text
+        when "rfp1"
+          subarea.rfpl = p.text
+        when "rsee"
+          subarea.rsee = p.text
+        when "rsae"
+          subarea.rsae = p.text
+        when "rsve"
+          subarea.rsve = p.text
+        when "rsep"
+          subarea.rsep = p.text
+        when "rsap"
+          subarea.rsap = p.text
+        when "rsvp"
+          subarea.rsvp = p.text
+        when "rsv"
+          subarea.rsv = p.text
+        when "rsrr"
+          subarea.rsrr = p.text
+        when "rsys"
+          subarea.rsys = p.text
+        when "rsyn"
+          subarea.rsyn = p.text
+        when "rshc"
+          subarea.rshc = p.text
+        when "rsdp"
+          subarea.rsdp = p.text
+        when "rsbd"
+          subarea.rsbd = p.text
+        when "pcof"
+          subarea.pcof = p.text
+        when "bcof"
+          subarea.bcof = p.text
+        when "bffl"
+          subarea.bffl = p.text
+        when "nirr"
+          subarea.nirr = p.text
+        when "iri"
+          subarea.iri = p.text
+        when "ira"
+          subarea.ira = p.text
+        when "lm"
+          subarea.lm = p.text
+        when "ifd"
+          subarea.ifd = p.text
+        when "idr"
+          subarea.idr = p.text
+        when "idf1"
+          subarea.idf1 = p.text
+        when "idf2"
+          subarea.idf2 = p.text
+        when "idf3"
+          subarea.idf3 = p.text
+        when "idf4"
+          subarea.idf4 = p.text
+        when "idf5"
+          subarea.idf5 = p.text
+        when "bir"
+          subarea.bir = p.text
+        when "efi"
+          subarea.efi = p.text
+        when "vimx"
+          subarea.vimx = p.text
+        when "armn"
+          subarea.armn = p.text
+        when "armx"
+          subarea.armx = p.text
+        when "bft"
+          subarea.bft = p.text
+        when "fnp4"
+          subarea.fnp4 = p.text
+        when "fmx"
+          subarea.fmx = p.text
+        when "drt"
+          subarea.drt = p.text
+        when "fdsf"
+          subarea.fdsf = p.text
+        when "pec"
+          subarea.pec = p.text
+        when "dalg"
+          subarea.dalg = p.text
+        when "vlgn"
+          subarea.vlgn = p.text
+        when "coww"
+          subarea.coww = p.text
+        when "ddlg"
+          subarea.ddlg = p.text
+        when "solq"
+          subarea.solq = p.text
+        when "sflg"
+          subarea.sflg = p.text
+        when "fnp2"
+          subarea.fnp2 = p.text
+        when "fnp5"
+          subarea.fnp5 = p.text
+        when "firg"
+          subarea.firg = p.text
+        when "ny1"
+          subarea.ny1 = p.text
+        when "ny2"
+          subarea.ny2 = p.text
+        when "ny3"
+          subarea.ny3 = p.text
+        when "ny4"
+          subarea.ny4 = p.text
+        when "xtp1"
+          subarea.xtp1 = p.text
+        when "xtp2"
+          subarea.xtp2 = p.text
+        when "xtp3"
+          subarea.xtp3 = p.text
+        when "xtp4"
+          subarea.xtp4 = p.text
       end
     end
     if subarea.save then
@@ -1714,7 +2070,7 @@ class ProjectsController < ApplicationController
           operation.type_id = p.text
         when "subtype_id"
           operation.subtype_id = p.text
-        when "amout" #typo in xml download
+        when "amout"
           operation.amount = p.text
         when "depth"
           operation.depth = p.text
@@ -1729,8 +2085,8 @@ class ProjectsController < ApplicationController
         when "nh3"
           operation.nh3 = p.text
         when "soil_operation"
-          p.elements.each do |s|
-            msg = upload_soil_operation_new(scenario_id, s)
+          p.elements.each do |soil_op|
+            msg = upload_soil_operation_new(soil_op, scenario_id, 0, operation.id, 0)
             if msg != "OK"
               return msg
             end
@@ -1746,12 +2102,13 @@ ooo
     end
   end
 
-  def upload_soil_operation_new(scenario_id, operation)
+  def upload_soil_operation_new(node, scenario_id, soil_id, operation_id, bmp_id)
     soil_operation = SoilOperation.new
     soil_operation.scenario_id = scenario_id
-    soil_operation.operation_id = operation.id
-    #soil_operation.soil_id = ??
-    operation.elements.each do |p|
+    soil_operation.operation_id = operation_id
+    soil_operation.soil_id = soil_id
+    soil_operation.bmp_id = bmp_id
+    node.elements.each do |p|
       case p.name
         when "apex_crop"
           soil_operation.apex_crop = p.text
@@ -1771,6 +2128,8 @@ ooo
           soil_operation.opv7 = p.text
         when "activity_id"
           soil_operation.activity_id = p.text
+        when "tractor_id"
+          operation.tractor_id = p.text
         when "year"
           soil_operation.year = p.text
         when "month"
@@ -1783,6 +2142,12 @@ ooo
           soil_operation.apex_operation = p.text
       end
     end
+    if soil_operation.save then
+      return "OK"
+    else
+      return "soil operation could not be saved"
+    end
+    else
   end
 
   def upload_result_info(node, field_id, soil_id, scenario_id)
@@ -1808,6 +2173,8 @@ ooo
           result.value = p.text
         when "ci_value"
           result.ci_value = p.text
+        when "description_id"
+          result.description_id = p.text
       end # end case
     end # end each
     if result.save
@@ -2228,12 +2595,55 @@ ooo
           bmp.difference_min_temperature = p.text
         when "difference_precipitation"
           bmp.difference_precipitation = p.text
+        when "climates"
+          p.elements.each do |climate|
+            msg = upload_climate_new_version(climate, bmp.bmp_id)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "subareas"
+          p.elements.each do |subarea|
+            msg = upload_subarea_new_version(bmp.bmp_id, 0, 0, subarea)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "soil_operations"
+          p.elements.each do |soil_op|
+            msg = upload_soil_operation_new(soil_op, 0, 0, 0, bmp.bmp_id)
+            if msg != "OK"
+              return msg
+            end
+          end
       end
     end
     if bmp.save
       return "OK"
     else
       return "bmp could not be saved"
+    end
+  end
+
+  def upload_climate_new_version(node, bmp_id)
+    climate = Climate.new
+    climate.bmp_id = bmp_id
+    node.elements.each do |p|
+      case p.name
+        when "max_temp"
+          climate.max_temp = p.text
+        when "min_temp"
+          climate.min_temp = p.text
+        when "month"
+          climate.month = p.text
+        when "precipitation"
+          climate.precipitation = p.text
+      end # case end
+    end # each end
+    if climate.save then
+      return "OK"
+    else
+      return "climate could not be saved"
     end
   end
 
@@ -2630,6 +3040,43 @@ ooo
     end
   end
 
+  def upload_control_values_new_version(node) # exact same as old method, only lowercase
+    begin
+      control = ApexControl.new
+      control.project_id = session[:project_id]
+      node.elements.each do |p|
+        case p.name
+          when "code"
+            control.control_id = Control.find_by_code(p.text).id
+            case control.control_id
+              when 1 # get number of years of simulation from weather
+                weather = Weather.find_by_field_id(session[:field_id])
+                control.value = weather.simulation_final_year - weather.simulation_initial_year + 1 + 5
+                control.save
+                # get first year of simulation from weather
+                control = ApexControl.new
+                control.project_id = session[:project_id]
+                control.control_id = Control.find_by_id(2).id
+                control.value = weather.simulation_initial_year - 5
+                control.save
+                return "OK"
+              when 2 # do nothing, second value should be taken
+                return "OK"
+            end # end case control_id
+          when "value"
+            control.value = p.text
+        end # end case
+      end # end each
+      if !control.save
+        return "Error saving control file"
+      else
+        return "OK"
+      end
+    rescue
+      return "Control values could not be saved"
+    end
+  end
+
   def upload_parameter_values(node)
     begin
       parameter = ApexParameter.new
@@ -2681,4 +3128,35 @@ ooo
     end
   end
 
+  def upload_watershed_information_new_version(node)
+    watershed = Watershed.new
+    node.elements.each do |p|
+      case p.name
+        when "name"
+          watershed.name = p.text
+        when "watershed_scenarios"
+          if watershed.save
+            session[:watershed_id] = watershed.id
+            p.elements.each do |node|
+              msg = upload_watershed_scenario_information_new_version(node, watershed.id)
+            end
+          else
+            return "Watershed could not be saved"
+          end
+      end # end case
+    end # end each
+  end
+
+=begin <----Work in progress---->
+  def upload_watershed_scenario_information_new_version(node, watershed_id)
+    watershed_scenario = WatershedScenario.new
+    watershed_scenario.watershed_id = watershed_id
+    node.elements.each do |p|
+      case p.name
+        when ""
+          = p.text
+      end # end case
+    end # end each element
+  end
+=end 
 end

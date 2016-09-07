@@ -7944,3 +7944,4 @@ Parameter.create!({:id => 93, :line => 10, :number => 93, :name => 'Water Erosio
 Parameter.create!({:id => 94, :line => 10, :number => 94, :name => 'Wind Erosion Threshold', :range_low => 0, :range_high => 10, :default_value => 1, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 95, :line => 10, :number => 95, :name => '', :range_low => 0, :range_high => 999, :default_value => 1, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 96, :line => 10, :number => 96, :name => '', :range_low => 0, :range_high => 999, :default_value => 10, :state_id => 99}, :without_protection => true)
+
