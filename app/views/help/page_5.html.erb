@@ -36,8 +36,7 @@
 			<h2><%= t('weathpage.simulate.header') %></h2>
 				<p><%= raw t('weathpage.simulate.body') %></p>
     <%= image_tag("help/page5/image005.png", :alt => "Image 005") %>
-		<br>
-		<%= link_to "< Prev", help_path("page_4") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_6") %><br>
-		<%= link_to t('help.return_to_table'), help_path("index") %>
 	</div>
 </div>
+<br><%= link_to "< Prev", help_path("page_4") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_6") %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index") %></br>
