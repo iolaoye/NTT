@@ -161,7 +161,6 @@ class ProjectsController < ApplicationController
     ActiveRecord::Base.transaction do
       #begin
       msg = "OK"
-      #oo
       upload_id = 0
       if params[:commit].eql? t('submit.save') then
         if params[:project] == nil then
@@ -320,8 +319,8 @@ class ProjectsController < ApplicationController
       xml.latitude weather.latitude
       xml.weather_file weather.weather_file
       xml.way_id weather.way_id
-      xml.weather_initial_year weather.simulation_initial_year
-      xml.weather_final_year weather.simulation_final_year
+      xml.weather_initial_year weather.weather_initial_year
+      xml.weather_final_year weather.weather_final_year
     } #weather info end
   end
 
@@ -687,7 +686,7 @@ class ProjectsController < ApplicationController
   end
 
   def upload_location_new_version(node)
-    begin
+    #begin  todo activate this
       msg = "OK"
       location = Location.new
       location.project_id = session[:project_id]
@@ -709,13 +708,14 @@ class ProjectsController < ApplicationController
               end
             else
               return "location could not be saved"
-            end
-        end
-      end
-    rescue
-      return 'Location could not be saved'
-    end
-  end
+            end  # end location.save
+        end  # end case p.name
+      end  # end node.elements do
+    #rescue
+      #return 'Location could not be saved'
+    #end
+    return msg
+  end # end method
 
   def upload_field_info(node)
     begin
@@ -1090,7 +1090,7 @@ class ProjectsController < ApplicationController
         when "layers"
           if soil.save
             p.elements.each do |f|
-              msg = upload_layer_new_version(soil.id, p)
+              msg = upload_layer_new_version(soil.id, f)
             end
           else
             return "Soil could not be saved"
@@ -1737,6 +1737,8 @@ class ProjectsController < ApplicationController
           end
       end
     end
+			  					  session[:depth] = operation
+ooo
     if operation.save then
       return "OK"
     else
