@@ -403,7 +403,7 @@ class ProjectsController < ApplicationController
       xml.subareas {
         subareas.each do |subarea|
           save_subarea_information(xml, subarea)
-        end # end 
+        end # end
       } # end xml.subareas
 
       charts = Chart.where(:soil_id => soil.id)
@@ -1312,7 +1312,7 @@ class ProjectsController < ApplicationController
               return msg
             end
           end
-      end # case end 
+      end # case end
     end # each element end
     if soil.save
       return "OK"
@@ -1976,7 +1976,7 @@ class ProjectsController < ApplicationController
           if soil_operation.activity_id == 4 then
             soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, Location.find(session[:location_id].id).state_id).harvest_code
 			if soil_operation.apex_operation == nil then
-				soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, "**").harvest_code				
+				soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, "**").harvest_code
 			end
           end
       end
@@ -3158,5 +3158,5 @@ ooo
       end # end case
     end # end each element
   end
-=end 
+=end
 end
