@@ -57,6 +57,7 @@ class ProjectsController < ApplicationController
 
   ################## ERASE ALL PROJECT AND CORRESPONDING FILES ##################
 
+  # Does not seem to be working
   def self.wipe_database
     ApexControl.delete_all
     ApexParameter.delete_all
