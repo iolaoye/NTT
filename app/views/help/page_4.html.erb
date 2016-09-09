@@ -74,9 +74,9 @@
 			
 			<p><%= raw t('locpage.userinput.body2') %></p>
     <%= image_tag("help/page4/image009.png", :alt => "Image 010") %>
-			
-		<br>
-		<%= link_to "< Prev", help_path("page_3") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_5") %><br>
-		<%= link_to t('help.return_to_table'), help_path("index") %>
+		
 	</div>
 </div>
+
+<br><%= link_to "< Prev", help_path("page_3") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_5") %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index") %></br>

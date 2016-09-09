@@ -118,7 +118,7 @@ activate_bmp_controls = ->
             $("#irrigation_frequency_label").toggle(true)            
         when "2" #autofertigation
             $("#irrigation_efficiency_label").toggle(true)
-            $('#irrigation').toggle(false)
+            $('#irrigation').toggle(true)
             $("#water_stress_factor").toggle(true)
             $("#irrigation_efficiency").toggle(true)
             $("#maximum_single_application").toggle(true)

@@ -150,28 +150,27 @@ class ScenariosController < ApplicationController
   def show()
     @errors = Array.new
     ActiveRecord::Base.transaction do
-      msg = run_scenario
-      @scenarios = Scenario.where(:field_id => session[:field_id])
-      if msg.eql?("OK") then
-        @project_name = Project.find(session[:project_id]).name
-        @field_name = Field.find(session[:field_id]).field_name
-		  flash[:notice] = t('notices.simulation')
-        format.html { render action: "list" }
-      else
-        flash[:error] = "Scenario failed to simulate (" + msg + ")"
-        @scenarios = Scenario.where(:field_id => session[:field_id])
-        raise ActiveRecord::Rollback
-      end
-    end
-    respond_to do |format|
-      format.html { render action: "list" }
-    end
+		msg = run_scenario
+		@scenarios = Scenario.where(:field_id => session[:field_id])
+		@project_name = Project.find(session[:project_id]).name
+		@field_name = Field.find(session[:field_id]).field_name
+		respond_to do |format|
+		  if msg.eql?("OK") then
+			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
+			format.html { render action: "list" }
+		  else
+			flash[:error] = "Error simulatin scenario - " + msg
+			format.html { render action: "list" }
+		  end # end if msg
+		end
+	end
   end
 
   private
 
 ################################  run_scenario - run simulation called from show or index  #################################
   def run_scenario()
+	msg = "OK"
     if @scenarios == nil then
       session[:scenario_id] = params[:id]
     end
@@ -196,26 +195,25 @@ class ScenariosController < ApplicationController
     @change_till_depth = Array.new
     @last_soil_sub = 0
     @last_subarea = 0
-    if msg.eql?("OK") then msg = create_control_file() end
-    if msg.eql?("OK") then msg = create_parameter_file() end
-    if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) end
-    if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) end
-    if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) end
+    if msg.eql?("OK") then msg = create_control_file() else return msg end
+    if msg.eql?("OK") then msg = create_parameter_file() else return msg  end
+    if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end
+    if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end
+    if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) else return msg  end
     @last_soil = 0
     @soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
     @soil_list = Array.new
-    if msg.eql?("OK") then msg = create_soils() end
-    if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") end
+    if msg.eql?("OK") then msg = create_soils() else return msg  end
+    if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg  end
     #print_array_to_file(@soil_list, "soil.dat")
     @subarea_file = Array.new
     @soil_number = 0
-    if msg.eql?("OK") then msg = create_subareas(1) end
-    if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") end
-    if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) end  #this operation will run a simulation and return ntt file.
-    session[:depth] = ""
-    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) end
+    if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
+    if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg  end
+    if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) else return msg  end  #this operation will run a simulation and return ntt file.
+    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg  end
     @scenario.last_simulation = Time.now
-    @scenario.save
+    if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
     @scenarios = Scenario.where(:field_id => session[:field_id])
     return msg
   end # end show method

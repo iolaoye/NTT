@@ -366,6 +366,7 @@
     show: Mostrar
     edit: Editar
     delete: Borrar
+    delete_all: Borrar Todos
     back: Regresar
     actions: Opciones
     new: Adicionar
@@ -498,6 +499,7 @@
     edit: Revisión de Operación
     create_operation: Crear Operación
     upload: 'Cargar'
+    replace: Reemplazar todas las operaciones actuales
     cropping_system: 'Sistema de Cultivo'
     crop: Cultivo
     moisture: Humedad
@@ -682,8 +684,8 @@
     disclaimer1: 'Aunque NTT ha sido probado por sus desarrolladores, NO garantía, expresa o implícita, es dada a la validez de los resultados y la funcionalidad del programa y material relacionado al programa, ni deberá el echo de la distribución constituir ninguna de tales garantías, y NINGUNA responsabilidad es es asumida por los desarrolladores en conección con ello. El usuario asume todos los riesgos y responsabilidades por el uso y aplicación de NTT y la interpretación de los resultados generados por la herramienta.'
     disclaimer2: 'Los autores y su institución afiliada, TIAER, y cualquier otra agencia del govierno de los Estados Unidos no será responsable por posibles daños a los usiarios de NTT, incluyendo perdida de utilidades, perdida de ahorros, perdida de tiempo, accines de las agencias reguladoras, o cualquier otro incidente o daño generado directo o indirecto ocurrido por el uso o la imposibilidad de usar NTT, sus bases de datos, sus resultados, o su documentación por cualquier proposito.'
     selections0: 'Selecciiones Disponibles'
-    selections1: '<b>Nutrient Tracking Tool (NTT)</b> compara compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield.'
-    selections2: '<b>NTT</b> requires regional soils, climate and crop parameters. As a new application, <b>NTT</b> currently provides selections for <b>every U.S. county</b>, but it has only been validated for a limited number of states and counties.'
+    selections1: '<strong>Nutrient Tracking Tool (NTT)</strong> compara compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield.'
+    selections2: '<strong>NTT</strong> requiere suelos regionales, climas regionales, y parámetros de cultivo regionales. Como una nueva aplicación, <strong>NTT</strong> actualmente ofrece selecciones de <strong>todos los condados de EE.UU.</strong>, pero sólo ha sido validado para un número limitado de estados y condados.'
     note1: '* A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading.  Soil and Water Conservation Society.  November/December 2011 vol. 66 no. 6 400-410.'
     note2: '** Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
   contact1:
