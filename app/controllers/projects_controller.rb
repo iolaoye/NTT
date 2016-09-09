@@ -57,6 +57,7 @@ class ProjectsController < ApplicationController
 
   ################## ERASE ALL PROJECT AND CORRESPONDING FILES ##################
 
+  # Does not seem to be working
   def self.wipe_database
     ApexControl.delete_all
     ApexParameter.delete_all
@@ -161,7 +162,6 @@ class ProjectsController < ApplicationController
     ActiveRecord::Base.transaction do
       #begin
       msg = "OK"
-      #oo
       upload_id = 0
       if params[:commit].eql? t('submit.save') then
         if params[:project] == nil then
@@ -194,20 +194,24 @@ class ProjectsController < ApplicationController
             msg = upload_field_info(node)
           when "SiteInfo"
             msg = upload_site_info(node)
-          when "control"
-            msg = upload_control_values_new_version(node)
+          when "controls"
+			  node.elements.each do |c|
+				msg = upload_control_values_new_version(c)
+			  end
           when "ControlValues"
             msg = upload_control_values(node)
           when "ParmValues"
             msg = upload_parameter_values(node)
-          when "parameter_values"
-            msg = upload_parameter_values_new_version(node)
+          when "parameters"
+			  node.elements.each do |c|
+				msg = upload_parameter_values_new_version(c)
+			  end
         end
         break if (msg != "OK" && msg != true)
       end
       if (msg == "OK" || msg == true)
         # summarizes results for totals and soils.
-        summarize_total()
+        #summarize_total()
         @projects = Project.where(:user_id => session[:user_id])
         saved = true
       else
@@ -247,7 +251,19 @@ class ProjectsController < ApplicationController
         } # end xml.project
         #save location information
         save_location_information(xml, params[:id])
-        save_control_information(xml, params[:id])
+		xml.controls {
+		  controls = ApexControl.where(:project_id => params[:id])
+		  controls.each do |c|
+			save_control_information(xml, c)
+		  end
+		} # xml each control end
+
+		xml.parameters {
+		  parameters = ApexParameter.where(:project_id => params[:id])
+		  parameters.each do |c|
+			save_parameter_information(xml, c)
+		  end
+		} # xml each control end
       } # end xml.projects
     end #builder do end
 
@@ -276,7 +292,7 @@ class ProjectsController < ApplicationController
         end #end fields.each
       } # end xml.fields
       xml.watersheds {
-        watersheds = Location.where(:location_id => location.id)
+        watersheds = Watershed.where(:location_id => location.id)
         watersheds.each do |watershed|
           save_watershed_information(xml, watershed)
         end # end watersheds.each
@@ -289,6 +305,7 @@ class ProjectsController < ApplicationController
   def save_field_information(xml, field)
     xml.field {
       #field information
+	  xml.id field.id
       xml.field_name field.field_name
       xml.field_area field.field_area
       xml.field_average_slope field.field_average_slope
@@ -320,16 +337,14 @@ class ProjectsController < ApplicationController
         end # end charts.each
       } # end xml.charts
 
-      results = Result.where(:field_id => field.id)
-      xml.results {
-        results.each do |result|
-          save_result_information(xml, result)
-        end # end results.each
-      } # end xml results
+      #results = Result.where(:field_id => field.id)
+      #xml.results {
+        #results.each do |result|
+          #save_result_information(xml, result)
+        #end # end results.each
+      #} # end xml results
     } # end field info
-  end
-
-  # end method
+  end   # end method
 
   def save_weather_information(xml, weather)
     xml.weather {
@@ -340,8 +355,8 @@ class ProjectsController < ApplicationController
       xml.latitude weather.latitude
       xml.weather_file weather.weather_file
       xml.way_id weather.way_id
-      xml.weather_initial_year weather.simulation_initial_year
-      xml.weather_final_year weather.simulation_final_year
+      xml.weather_initial_year weather.weather_initial_year
+      xml.weather_final_year weather.weather_final_year
     } #weather info end
   end
 
@@ -367,6 +382,7 @@ class ProjectsController < ApplicationController
   def save_soil_information(xml, soil)
     #soils and layers information
     xml.soil {
+	  xml.id soil.id
       xml.selected soil.selected
       xml.key soil.key
       xml.symbol soil.symbol
@@ -404,7 +420,7 @@ class ProjectsController < ApplicationController
       xml.subareas {
         subareas.each do |subarea|
           save_subarea_information(xml, subarea)
-        end # end 
+        end # end
       } # end xml.subareas
 
       charts = Chart.where(:soil_id => soil.id)
@@ -414,12 +430,12 @@ class ProjectsController < ApplicationController
         end # end charts.each
       } # end xml.charts
 
-      results = Result.where(:soil_id => soil.id)
-      xml.results {
-        results.each do |result|
-          save_result_information(xml, result)
-        end # end results.each
-      } # end xml results
+      #results = Result.where(:soil_id => soil.id)
+      #xml.results {
+        #results.each do |result|
+          #save_result_information(xml, result)
+        #end # end results.each
+      #} # end xml results
 
       soil_operations = SoilOperation.where(:soil_id => soil.id)
       xml.soil_operations {
@@ -449,6 +465,7 @@ class ProjectsController < ApplicationController
 
   def save_scenario_information(xml, scenario)
     xml.scenario {
+      xml.id scenario.id
       xml.name scenario.name
       operations = Operation.where(:scenario_id => scenario.id)
       xml.operations {
@@ -478,9 +495,16 @@ class ProjectsController < ApplicationController
         end # end subarea.each
       } # end xml.subareas
 
-      results = Result.where(:scenario_id => scenario.id)
+      results = Result.where(:scenario_id => scenario.id, :soil_id =>0)
       xml.results {
         results.each do |result|
+          save_result_information(xml, result)
+        end # end results.each
+      } # end xml.results
+
+      results = Result.where("scenario_id == scenario.id AND soil_id >0")
+      xml.soil_results {
+        soil_results.each do |result|
           save_result_information(xml, result)
         end # end results.each
       } # end xml.results
@@ -522,7 +546,7 @@ class ProjectsController < ApplicationController
       soil_operations = SoilOperation.where(:operation_id => operation.id)
       xml.soil_operations {
         soil_operations.each do |so|
-          save_soil_operation_information(xml, soil_operation)
+          save_soil_operation_information(xml, so)
         end # end soil_operations.each
       } # end xml.soil_operations
     } # xml each operation end
@@ -530,22 +554,20 @@ class ProjectsController < ApplicationController
 
   # end method
 
-  # ApexControl table needed for download? (Remove if not needed)
-  def save_control_information(xml, project_id)
-    xml.control {
-      control = ApexControl.find_by_project_id(project_id)
-      xml.control_id control.control_id
-      xml.value control.value
-    } # xml each control end
+  # ApexControl table needed for download?
+  def save_control_information(xml, control)
+	xml.control {
+		xml.value control.value
+		xml.conrtrol_id control.control_id
+	}
   end
 
   # ApexParameter table needed for download? (Remove if not needed)
-  def save_parameter_information(xml, project_id)
-    xml.parameter_values {
-      parameter = ApexParameter.find_by_project_id(project_id)
-      xml.parameter_id parameter.parameter_id
-      xml.value parameter.value
-    } # xml each parameter end
+  def save_parameter_information(xml, parameter)
+	xml.parameter {
+		xml.value parameter.value
+		xml.parameter_id parameter.parameter_id
+	}
   end
 
   def save_result_information(xml, result)
@@ -554,10 +576,12 @@ class ProjectsController < ApplicationController
       xml.value result.value
       xml.ci_value result.ci_value
       xml.crop_id result.crop_id
+	  xml.soil_id result.soil_id
+	  xml.watershed_id result.watershed_id
+	  xml.scenario_id result.scenario_id
+	  xml.field_id result.field_id
     } # xml each result end
-  end
-
-  # end method
+  end  # end method
 
   def save_bmp_information(xml, bmp)
     xml.bmp {
@@ -763,6 +787,10 @@ class ProjectsController < ApplicationController
       xml.description_id chart.description_id
       xml.month_year chart.month_year
       xml.value chart.value
+	  xml.watershed_id chart.watershed_id
+	  xml.scenario_id chart.scenario_id
+	  xml.field_id chart.field_id
+	  xml.soil_id chart.soil_id
     } # xml each chart_info end
   end
 
@@ -929,18 +957,22 @@ class ProjectsController < ApplicationController
                 msg = upload_field_new_version(f)
               end
             else
-              return "location could not be saved"
-            end
+              return "location could not be saved " + msg
+            end  # end location.save
           when "watershed"
             p.elements.each do |ws|
               msg = upload_watershed_information_new_version(ws)
             end
-        end # end case
-      end # end each
+        end # end case p.name
+      end # end node.elements do
     rescue
       return 'Location could not be saved'
     end
+
+    return msg
   end
+
+  # end method
 
   def upload_field_info(node)
     begin
@@ -1011,6 +1043,8 @@ class ProjectsController < ApplicationController
           if field.save! then
             session[:field_id] = field.id
           else
+		  session[:depth] = field
+		  ooo
             return "field could not be saved"
           end
         when "weather"
@@ -1270,6 +1304,8 @@ class ProjectsController < ApplicationController
     soil.selected = false
     node.elements.each do |p|
       case p.name
+	    when "Id"
+		  #look for this soil in result in order to
         when "key"
           soil.key = p.text
         when "symbol"
@@ -1291,12 +1327,15 @@ class ProjectsController < ApplicationController
         when "drainage_type"
           soil.drainage_type = p.text
         when "layers"
-          p.elements.each do |f|
-            msg = upload_layer_new_version(soil.id, p)
-            if msg != "OK"
-              return msg
+          if soil.save
+            p.elements.each do |f|
+              msg = upload_layer_new_version(soil.id, f)
+              if msg != "OK"
+                return msg
+              end
             end
           end
+		  end
         when "subareas"
           p.elements.each do |sa|
             msg = upload_subarea_new_version(0, 0, soil.id, sa)
@@ -1311,7 +1350,7 @@ class ProjectsController < ApplicationController
               return msg
             end
           end
-      end # case end 
+      end # case end
     end # each element end
     if soil.save
       return "OK"
@@ -1414,7 +1453,7 @@ class ProjectsController < ApplicationController
           if scenario == nil then
             scenario = Scenario.new
             scenario.field_id = field_id
-            scenario.name = name = p.text
+            scenario.name = p.text
             if !scenario.save then
               saved = false
             else
@@ -1450,20 +1489,17 @@ class ProjectsController < ApplicationController
     msg = "OK"
     scenario = Scenario.new
     scenario.field_id = field_id
+	scenario
     new_scenario.elements.each do |p|
       case p.name
         when "name"
           scenario.name = p.text
+  		  if !scenario.save then
+		    return "scenario could not be saved"
+		  end
         when "operations"
           p.elements.each do |o|
             msg = upload_operation_new_version(scenario.id, o)
-            if msg != "OK"
-              return msg
-            end
-          end
-        when "results"
-          p.elements.each do |r|
-            msg = upload_result_new_version(scenario.id, field_id, r)
             if msg != "OK"
               return msg
             end
@@ -1475,9 +1511,19 @@ class ProjectsController < ApplicationController
               return msg
             end
           end
+        when "results"
+          p.elements.each do |r|
+            msg = upload_result_new_version(scenario.id, field_id, r)
+			msg = upload_soil_result_new_version(scenario.id, field_id, r)
+            if msg != "OK"
+              return msg
+            end
+          end
         when "subarea"
           p.elements.each do |sa|
             msg = upload_subarea_new_version(0, scenario.id, 0, sa)
+			session[:depth] = msg
+			ppp 
             if msg != "OK"
               return msg
             end
@@ -1947,7 +1993,8 @@ class ProjectsController < ApplicationController
           soil_operation.month = p.text
         when "Day"
           soil_operation.day = p.text
-        when "operation_id" #todo this need to be taken from operation table
+        when "operation_id"
+          #todo this need to be taken from operation table
         when "ApexCrop"
           soil_operation.apex_crop = p.text
         when "NO3", "PO4", "OrgN", "OrgP"
@@ -1974,9 +2021,9 @@ class ProjectsController < ApplicationController
           soil_operation.apex_operation = p.text
           if soil_operation.activity_id == 4 then
             soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, Location.find(session[:location_id].id).state_id).harvest_code
-			if soil_operation.apex_operation == nil then
-				soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, "**").harvest_code				
-			end
+            if soil_operation.apex_operation == nil then
+              soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, "**").harvest_code
+            end
           end
       end
     end
@@ -2126,7 +2173,7 @@ class ProjectsController < ApplicationController
         when "activity_id"
           soil_operation.activity_id = p.text
         when "tractor_id"
-          operation.tractor_id = p.text
+          soil_operation.tractor_id = p.text
         when "year"
           soil_operation.year = p.text
         when "month"
@@ -2139,12 +2186,11 @@ class ProjectsController < ApplicationController
           soil_operation.apex_operation = p.text
       end
     end
-    if soil_operation.save then
+    if soil_operation.save
       return "OK"
     else
       return "soil operation could not be saved"
     end
-    else
   end
 
   def upload_result_info(node, field_id, soil_id, scenario_id)
@@ -2157,7 +2203,6 @@ class ProjectsController < ApplicationController
       end # end case p.name
     end # end node.elements.each
   end
-
   # end method
 
   def upload_result_new_version(scenario_id, field_id, new_result)
@@ -2172,6 +2217,10 @@ class ProjectsController < ApplicationController
           result.ci_value = p.text
         when "description_id"
           result.description_id = p.text
+		when "soil_id"
+		  result.soil_id = Soil.find_by_soil_id_old(p.text).id
+		when "crop_id"
+		  result.crop_id = p.text
       end # end case
     end # end each
     if result.save
@@ -3037,29 +3086,14 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def upload_control_values_new_version(node) # exact same as old method, only lowercase
+  def upload_control_values_new_version(node) 
     begin
-      control = ApexControl.new
+	  control = ApexControl.new
       control.project_id = session[:project_id]
       node.elements.each do |p|
         case p.name
-          when "code"
-            control.control_id = Control.find_by_code(p.text).id
-            case control.control_id
-              when 1 # get number of years of simulation from weather
-                weather = Weather.find_by_field_id(session[:field_id])
-                control.value = weather.simulation_final_year - weather.simulation_initial_year + 1 + 5
-                control.save
-                # get first year of simulation from weather
-                control = ApexControl.new
-                control.project_id = session[:project_id]
-                control.control_id = Control.find_by_id(2).id
-                control.value = weather.simulation_initial_year - 5
-                control.save
-                return "OK"
-              when 2 # do nothing, second value should be taken
-                return "OK"
-            end # end case control_id
+          when "control_id"
+            control.control_id = p.text
           when "value"
             control.value = p.text
         end # end case
@@ -3105,7 +3139,7 @@ class ProjectsController < ApplicationController
 
   def upload_parameter_values_new_version(node)
     begin
-      parameter = ApexParameter.new
+	  parameter = ApexParameter.new
       parameter.project_id = session[:project_id]
       node.elements.each do |p|
         case p.name
@@ -3155,5 +3189,5 @@ class ProjectsController < ApplicationController
       end # end case
     end # end each element
   end
-=end 
+=end
 end

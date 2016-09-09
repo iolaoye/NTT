@@ -10,5 +10,5 @@ class Scenario < ActiveRecord::Base
 	  belongs_to :field
   #validations
      validates_uniqueness_of :name, :scope => :field_id
-	 validates_presence_of :name, :message => "nnn"
+	 validates_presence_of :name, :message => "Scenario Name needed"
 end
