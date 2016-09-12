@@ -1335,7 +1335,6 @@ class ProjectsController < ApplicationController
               end
             end
           end
-		  end
         when "subareas"
           p.elements.each do |sa|
             msg = upload_subarea_new_version(0, 0, soil.id, sa)
