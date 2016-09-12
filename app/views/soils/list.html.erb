@@ -13,6 +13,7 @@
 
 <h1><%= t("general.listing") + " " + t("menu.soils") %></h1>
 <%= link_to t('general.new') + ' ' + t('soil.soil'), new_soil_path %>
+<%= link_to t('general.continue'), list_scenario_path(session[:field_id]) %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>

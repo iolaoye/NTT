@@ -215,8 +215,9 @@
 	</table>
   </div>
   <div class="actions" >
-    <%= f.submit %>
-	<%= link_to t('general.back'), list_bmp_path(session[:scenario_id]) %>
+    <%= f.submit "Add more", :name => "add_more" %>
+    <%= f.submit "Finish", :name => "finish" %>
+	  <%= link_to t('general.back'), list_bmp_path(session[:scenario_id]) %>
   </div>
 
 
