@@ -101,7 +101,8 @@ class ScenariosController < ApplicationController
         #add new scenario to soils
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
         add_scenario_to_soils(@scenario)
-        format.html { render action: "list" }
+        session[:scenario_id] = @scenario.id
+        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('models.scenario') + " " + t('general.success') }
       else
         format.html { render action: "list" }
         format.json { render json: scenario.errors, status: :unprocessable_entity }
@@ -118,7 +119,8 @@ class ScenariosController < ApplicationController
 
     respond_to do |format|
       if @scenario.update_attributes(scenario_params)
-        format.html { redirect_to list_scenario_path(session[:field_id]), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
+        session[:scenario_id] = @scenario.id
+        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
