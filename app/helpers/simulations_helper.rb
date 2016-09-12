@@ -834,7 +834,7 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.urbf)
     @subarea_file.push(sLine + "\n")
     #/line 5
-    if _subarea_info.chl != _subarea_info.rchl && i > 0 then
+    if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
       _subarea_info.rchl = _subarea_info.chl
     end
     if (operation_number > 1 && i == 0) || i > 0 then
@@ -1457,7 +1457,6 @@ module SimulationsHelper
     saturation_out = 1 - (matric_den_out / 2.65)
 
     plant_avail_out = (field_cap_out - wilt_out) * (1 - ((matric_den_out / 2.65) * gravels_in) / (1 - gravels_in * (1 - matric_den_out / 2.65)))
-
     z = -0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031 +
         0.14 * (-0.024 * sand_in + 0.487 * clay_in + 0.006 * org_matter_in + 0.005 * sand_in * org_matter_in - 0.013 * clay_in * org_matter_in + 0.068 * sand_in * clay_in + 0.031) - 0.02
     i = (Math::log(y + (1.283 * y * y - 0.374 * y - 0.015) + 0.2 * ((1 - matric_den_out / 2.65) - (1 - ((1 - x) * 2.65) / 2.65))) / Math::log(2.718281828) - Math::log(z) / Math::log(2.718281828)) / (Math::log(1500) / Math::log(2.718281828) - Math::log(33) / Math::log(2.718281828))
@@ -1489,14 +1488,14 @@ module SimulationsHelper
   end
 
   def read_apex_results(msg)
-    @watershed = Watershed.new
-    @watershed.name = "BEFORE"
-    @watershed.save
+    #@watershed = Watershed.new
+    #@watershed.name = "BEFORE"
+    #@watershed.save
     ActiveRecord::Base.transaction do
       begin
-        @watershed = Watershed.new
-        @watershed.name = "AFTER"
-        @watershed.save
+        #@watershed = Watershed.new
+        #@watershed.name = "AFTER"
+        #@watershed.save
         ntt_apex_results = Array.new
         #todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
         start_year = Weather.find_by_field_id(Scenario.find(session[:scenario_id]).field_id).simulation_initial_year - 5
@@ -1979,7 +1978,6 @@ module SimulationsHelper
     yield_by_name.each do |crop|
       if session[:simulation] == "scenario"
         crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
-        session[:depth] = @scenario
       else
         crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
       end
