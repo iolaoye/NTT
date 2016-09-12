@@ -2203,6 +2203,7 @@ class ProjectsController < ApplicationController
 		        result.soil_id = Soil.find_by_soil_id_old(p.text).id
           else
             result.soil_id = 0
+          end
 		    when "crop_id"
 		      result.crop_id = p.text
       end # end case
