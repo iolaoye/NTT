@@ -336,13 +336,6 @@ class ProjectsController < ApplicationController
           save_chart_information(xml, chart)
         end # end charts.each
       } # end xml.charts
-
-      #results = Result.where(:field_id => field.id)
-      #xml.results {
-        #results.each do |result|
-          #save_result_information(xml, result)
-        #end # end results.each
-      #} # end xml results
     } # end field info
   end   # end method
 
@@ -430,13 +423,6 @@ class ProjectsController < ApplicationController
         end # end charts.each
       } # end xml.charts
 
-      #results = Result.where(:soil_id => soil.id)
-      #xml.results {
-        #results.each do |result|
-          #save_result_information(xml, result)
-        #end # end results.each
-      #} # end xml results
-
       soil_operations = SoilOperation.where(:soil_id => soil.id)
       xml.soil_operations {
         soil_operations.each do |so|
@@ -495,19 +481,19 @@ class ProjectsController < ApplicationController
         end # end subarea.each
       } # end xml.subareas
 
-      results = Result.where(:scenario_id => scenario.id, :soil_id =>0)
+      results = Result.where(:scenario_id => scenario.id, :soil_id => 0)
       xml.results {
         results.each do |result|
           save_result_information(xml, result)
         end # end results.each
       } # end xml.results
 
-      results = Result.where("scenario_id == scenario.id AND soil_id >0")
+      soil_results = Result.where("scenario_id == scenario.id AND soil_id > 0")
       xml.soil_results {
-        soil_results.each do |result|
-          save_result_information(xml, result)
-        end # end results.each
-      } # end xml.results
+        soil_results.each do |soil_result|
+          save_result_information(xml, soil_result)
+        end # end soil_results.each
+      } # end xml.soil_results
 
       charts = Chart.where(:scenario_id => scenario.id)
       xml.charts {
@@ -576,10 +562,10 @@ class ProjectsController < ApplicationController
       xml.value result.value
       xml.ci_value result.ci_value
       xml.crop_id result.crop_id
-	  xml.soil_id result.soil_id
-	  xml.watershed_id result.watershed_id
-	  xml.scenario_id result.scenario_id
-	  xml.field_id result.field_id
+	    xml.soil_id result.soil_id
+	    xml.watershed_id result.watershed_id
+	    xml.scenario_id result.scenario_id
+	    xml.field_id result.field_id
     } # xml each result end
   end  # end method
 
@@ -787,10 +773,10 @@ class ProjectsController < ApplicationController
       xml.description_id chart.description_id
       xml.month_year chart.month_year
       xml.value chart.value
-	  xml.watershed_id chart.watershed_id
-	  xml.scenario_id chart.scenario_id
-	  xml.field_id chart.field_id
-	  xml.soil_id chart.soil_id
+	    xml.watershed_id chart.watershed_id
+	    xml.scenario_id chart.scenario_id
+	    xml.field_id chart.field_id
+	    xml.soil_id chart.soil_id
     } # xml each chart_info end
   end
 
@@ -1304,8 +1290,8 @@ class ProjectsController < ApplicationController
     soil.selected = false
     node.elements.each do |p|
       case p.name
-	    when "Id"
-		  #look for this soil in result in order to
+	      when "id"
+          soil.soil_id_old = p.text
         when "key"
           soil.key = p.text
         when "symbol"
@@ -1488,7 +1474,6 @@ class ProjectsController < ApplicationController
     msg = "OK"
     scenario = Scenario.new
     scenario.field_id = field_id
-	scenario
     new_scenario.elements.each do |p|
       case p.name
         when "name"
@@ -1513,7 +1498,6 @@ class ProjectsController < ApplicationController
         when "results"
           p.elements.each do |r|
             msg = upload_result_new_version(scenario.id, field_id, r)
-			msg = upload_soil_result_new_version(scenario.id, field_id, r)
             if msg != "OK"
               return msg
             end
@@ -1521,8 +1505,6 @@ class ProjectsController < ApplicationController
         when "subarea"
           p.elements.each do |sa|
             msg = upload_subarea_new_version(0, scenario.id, 0, sa)
-			session[:depth] = msg
-			ppp 
             if msg != "OK"
               return msg
             end
@@ -2216,10 +2198,13 @@ class ProjectsController < ApplicationController
           result.ci_value = p.text
         when "description_id"
           result.description_id = p.text
-		when "soil_id"
-		  result.soil_id = Soil.find_by_soil_id_old(p.text).id
-		when "crop_id"
-		  result.crop_id = p.text
+		    when "soil_id"
+          if p.text > 0
+		        result.soil_id = Soil.find_by_soil_id_old(p.text).id
+          else
+            result.soil_id = 0
+		    when "crop_id"
+		      result.crop_id = p.text
       end # end case
     end # end each
     if result.save
