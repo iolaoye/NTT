@@ -332,7 +332,8 @@
 	<% end %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Add more", :name => "add_more" %>
+    <%= f.submit "Finish", :name => "finish" %>
 		<%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]) %>
   </div>
 <% end %>

@@ -113,8 +113,13 @@ class BmpsController < ApplicationController
             msg = input_fields("create")
           end
           if msg == "OK"
-            format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.created') }
-            format.json { render json: @bmp, status: :created, location: @bmp }
+            if params[:add_more] == "Add more" && params[:finish] == nil
+              format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.created') }
+              format.json { render json: @bmp, status: :created, location: @bmp }
+            elsif params[:finish] == "Finish" && params[:add_more] == nil
+              format.html { redirect_to list_scenario_path(session[:field_id]), notice: t('operation.bmp') + " " + t('general.created') }
+              format.json { render json: @bmp, status: :created, location: @bmp }
+            end
           else
             format.html { render action: "new" }
             format.json { render json: @bmp.errors, status: :unprocessable_entity }

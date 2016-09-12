@@ -112,7 +112,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to welcomes_path, notice: t('models.project') + "" + t('notices.updated') }
+        format.html { redirect_to list_field_path(session[:location_id]), notice: t('models.project') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -134,7 +134,7 @@ class ProjectsController < ApplicationController
     @projects = Project.where(:user_id => params[:user_id])
 
     respond_to do |format|
-      format.html { redirect_to welcomes_path, notice: 'Project was successfully updated.' }
+      format.html { redirect_to welcomes_path, notice: 'Project was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -226,7 +226,7 @@ class ProjectsController < ApplicationController
     end
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
-      render :action => "index", notice: msg
+      redirect_to list_field_path(session[:location_id]), notice: msg
     else
       redirect_to upload_project_path(upload_id)
       flash[:notice] = msg and return false
