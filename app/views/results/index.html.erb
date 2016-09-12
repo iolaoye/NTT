@@ -287,6 +287,15 @@
 
 <script type="text/javascript">
   function AlertIt() {
-    alert("You must run a summary before you can download a pdf");
+    var language, n, url;
+    url = window.location.href;
+    n = url.indexOf('locale=');
+    language = url.substring(n, n + 9);
+
+    if (language === "locale=en") {
+      alert("You must run a summary before you can download a pdf");
+    } else {
+      alert("Debe ejecutar un resumen antes de poder descargar el pdf");
+    }
   }
 </script>
