@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  def create #runs when logging in.
+  def create # runs when logging in.
     if user = User.authenticate(params[:email], params[:password]) # authenticated user
       session[:user_id] = user.id
       session[:status] = "signed" # store user id in session

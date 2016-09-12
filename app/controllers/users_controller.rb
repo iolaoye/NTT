@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 		@user = User.new(user_params)
 		respond_to do |format|
 			if @user.save
-				session[:user_id] = @user.id				# store user id in session
+				session[:user_id] = @user.id 		# store user id in session
 				#format.html { redirect_to "welcomes/0", notice: 'User successfully added' }
 				format.html { redirect_to welcome_path(0), :notice => "User successfully added"	}# redirect is successful	  
 			else

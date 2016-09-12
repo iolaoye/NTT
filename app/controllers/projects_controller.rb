@@ -57,6 +57,7 @@ class ProjectsController < ApplicationController
 
   ################## ERASE ALL PROJECT AND CORRESPONDING FILES ##################
 
+  # Does not seem to be working
   def self.wipe_database
     ApexControl.delete_all
     ApexParameter.delete_all
@@ -935,7 +936,7 @@ class ProjectsController < ApplicationController
   end
 
   def upload_location_new_version(node)
-    #begin    #todo activate this one
+    begin
       msg = "OK"
       location = Location.new
       location.project_id = session[:project_id]
@@ -962,13 +963,16 @@ class ProjectsController < ApplicationController
             p.elements.each do |ws|
               msg = upload_watershed_information_new_version(ws)
             end
-        end  # end case p.name
-      end  # end node.elements do
-    #rescue
-      #return 'Location could not be saved' + msg
-    #end
+        end # end case p.name
+      end # end node.elements do
+    rescue
+      return 'Location could not be saved'
+    end
+
     return msg
-  end # end method
+  end
+
+  # end method
 
   def upload_field_info(node)
     begin
@@ -1324,10 +1328,11 @@ class ProjectsController < ApplicationController
           soil.drainage_type = p.text
         when "layers"
           if soil.save
-          p.elements.each do |f|
-            msg = upload_layer_new_version(soil.id, f)
-            if msg != "OK"
-              return msg
+            p.elements.each do |f|
+              msg = upload_layer_new_version(soil.id, f)
+              if msg != "OK"
+                return msg
+              end
             end
           end
 		  end
@@ -1988,7 +1993,8 @@ class ProjectsController < ApplicationController
           soil_operation.month = p.text
         when "Day"
           soil_operation.day = p.text
-        when "operation_id" #todo this need to be taken from operation table
+        when "operation_id"
+          #todo this need to be taken from operation table
         when "ApexCrop"
           soil_operation.apex_crop = p.text
         when "NO3", "PO4", "OrgN", "OrgP"
@@ -2015,9 +2021,9 @@ class ProjectsController < ApplicationController
           soil_operation.apex_operation = p.text
           if soil_operation.activity_id == 4 then
             soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, Location.find(session[:location_id].id).state_id).harvest_code
-			if soil_operation.apex_operation == nil then
-				soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, "**").harvest_code
-			end
+            if soil_operation.apex_operation == nil then
+              soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, "**").harvest_code
+            end
           end
       end
     end
@@ -2180,12 +2186,11 @@ class ProjectsController < ApplicationController
           soil_operation.apex_operation = p.text
       end
     end
-    if soil_operation.save then
+    if soil_operation.save
       return "OK"
     else
       return "soil operation could not be saved"
     end
-    else
   end
 
   def upload_result_info(node, field_id, soil_id, scenario_id)
