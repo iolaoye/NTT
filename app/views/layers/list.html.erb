@@ -13,7 +13,7 @@
 
 <h1 class="text_h1"><%= t('general.listing') + " " + t('soil.layers') %></h1>
 <%= link_to t('general.new') + ' ' + t('soil.layer'), new_layer_path %>
-<%= link_to t('general.continue'), list_scenario_path(session[:field_id]) %>
+<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'light_green_button' %>
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>

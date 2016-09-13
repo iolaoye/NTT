@@ -82,7 +82,7 @@ class WeathersController < ApplicationController
 
     respond_to do |format|
       if @weather.save
-        format.html { redirect_to @weather, notice: 'Weather was successfully created.' }
+        format.html { redirect_to @weather, notice: t('models.weather') + " " + t('general.success') }
         format.json { render json: @weather, status: :created, location: @weather }
       else
         format.html { render action: "new" }
@@ -106,7 +106,7 @@ class WeathersController < ApplicationController
     else
       respond_to do |format|
         if @weather.update_attributes(weather_params)
-          format.html { redirect_to list_soil_path(session[:field_id]), notice: 'Weather was successfully updated.' }
+          format.html { redirect_to list_soil_path(session[:field_id]), notice: t('models.weather') + " " + t('general.updated') }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }

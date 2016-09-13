@@ -9,6 +9,7 @@
 <p class="instruction"><%= t('instructions.watersheds') %> </p>
 
 <%= link_to t('watershed.new_watershed'), new_watershed_path %>
+<%= link_to t('general.continue'), results_path(:button => t('result.summary')), :class => 'light_green_button' %>
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>

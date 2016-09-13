@@ -173,7 +173,6 @@ class OperationsController < ApplicationController
     end
     if params[:cropping_system] != nil
       if params[:cropping_system][:id] != "" then
-        oo
         ActiveRecord::Base.transaction do
           @cropping_system_id = params[:cropping_system][:id]
           if params[:replace] != nil

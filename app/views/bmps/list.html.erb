@@ -8,6 +8,8 @@
 <h1 class="button_h1 less-margin"><%= t('general.listing') + " " + t('menu.bmps') %></h1>
 
 <%= link_to t('general.new') + " " + t('operation.bmp'), new_bmp_path %>
+<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'light_green_button' %>
+
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle"><%= t('operation.bmp') %></th>
