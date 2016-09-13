@@ -6,10 +6,10 @@
           <legend id="lblWeatherTitle" runat="server" >Select Source for Weather Information</legend>
           <%= radio_button("weather", "way_id", "1", onchange: "rbtnStation_onclick('Prism')") %>
             <label id="lblStation" runat="server" for="rbtnStation">ddddd</label>
-          <br />
+          <br>
           <%= radio_button("weather", "way_id", "2", onchange: "rbtnStation_onclick('Own')") %>
             <label id="lblOwn" runat="server" for="rbtnOwn">Load your Own Weather File</label>
-          <br />
+          <br>
           <%= radio_button("weather", "way_id", "3", onchange: "rbtnStation_onclick('Coordinates')") %>
             <label id="lblCoordinates" runat="server" for="rbtnStation">Load Using Specific Coordinates (USA only)</label>            
           </fieldset>

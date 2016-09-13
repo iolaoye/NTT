@@ -25,7 +25,7 @@
         <% end %>
         <td class="gvCellStyleAction"><%= link_to image_tag("view.png"), bmp %>
           <%= link_to image_tag("edit.png"), edit_bmp_path(bmp) %>
-        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: t('general.confirm') } %></td>
       </tr>
     <% else %>
       <tr class="gvRowStyleOdd">
@@ -36,7 +36,7 @@
         <% end %>
         <td class="gvCellStyleAction"><%= link_to image_tag("view.png"), bmp %>
           <%= link_to image_tag("edit.png"), edit_bmp_path(bmp) %>
-        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: t('general.confirm') } %></td>
       </tr>
     <% end %>
     <% i = i + 1 %>

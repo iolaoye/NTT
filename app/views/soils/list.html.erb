@@ -44,7 +44,7 @@
             <td class="gvCellStyleActions">
               <%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
               <%= link_to image_tag("edit.png"), edit_soil_path(soil), title: t('general.edit')%>
-              <%= link_to image_tag("delete.png"), soil, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' }%>
+              <%= link_to image_tag("delete.png"), soil, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
             </td>
           </tr>
       <% else %>
@@ -61,7 +61,7 @@
             <td class="gvCellStyleActions">
               <%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
               <%= link_to image_tag("edit.png"), edit_soil_path(soil), title: t('general.edit')%>
-              <%= link_to image_tag("delete.png"), soil, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' }%>
+              <%= link_to image_tag("delete.png"), soil, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
             </td>
           </tr>
       <% end %>

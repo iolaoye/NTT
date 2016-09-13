@@ -13,6 +13,7 @@
 
 <h1 class="text_h1"><%= t('general.listing') + " " + t('soil.layers') %></h1>
 <%= link_to t('general.new') + ' ' + t('soil.layer'), new_layer_path %>
+<%= link_to t('general.continue'), list_scenario_path(session[:field_id]) %>
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
@@ -41,7 +42,7 @@
          <td class="gvCellStyleNumber"><%= layer.ph %></td>
          <td>
             <%= link_to image_tag("edit.png"), edit_layer_path(layer), title: t('general.edit') %>
-            <%= link_to image_tag("delete.png"), layer, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to image_tag("delete.png"), layer, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
          </td>
       </tr>
       <% else %>
@@ -56,7 +57,7 @@
          <td class="gvCellStyleNumber"><%= layer.ph %></td>
          <td>
             <%= link_to image_tag("edit.png"), edit_layer_path(layer), title: t('general.edit') %>
-            <%= link_to image_tag("delete.png"), layer, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to image_tag("delete.png"), layer, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
          </td>
       </tr>
      <% end %>

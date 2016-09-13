@@ -21,11 +21,11 @@
     <td><%= activity.apex_code %></td>
     <td><%= link_to t('general.show'), activity %></td>
     <td><%= link_to t('general.edit'), edit_activity_path(activity) %></td>
-    <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to t('activity.new_activity'), new_activity_path %>

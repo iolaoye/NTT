@@ -25,11 +25,11 @@
     <td><%= weather.longitude %></td>
     <td><%= link_to t('general.show'), weather %></td>
     <td><%= link_to t('general.edit'), edit_weather_path(weather) %></td>
-    <td><%= link_to 'Destroy', weather, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', weather, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Weather', new_weather_path %>

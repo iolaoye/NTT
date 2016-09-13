@@ -86,7 +86,7 @@
       <td class="gvCellStyleNumber"><%= operation.org_n %></td>
       <td class="gvCellStyleNumber"><%= operation.org_p %></td>
       <td ><%= link_to image_tag("edit.png"), edit_operation_path(operation), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), operation, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <%= link_to image_tag("delete.png"), operation, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td>
     </tr>
   <% end %>
 </table>

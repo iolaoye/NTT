@@ -23,11 +23,11 @@
     <td><%= chart.value %></td>
     <td><%= link_to t('general.show'), chart %></td>
     <td><%= link_to t('general.edit'), edit_chart_path(chart) %></td>
-    <td><%= link_to 'Destroy', chart, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', chart, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Chart', new_chart_path %>
