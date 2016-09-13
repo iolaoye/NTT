@@ -29,7 +29,7 @@
         <td class="gvCellStyleCheckbox">
           <%#= link_to image_tag("view.png"), field %>
           <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
         </td>
       </tr>
     <% else %>
@@ -41,7 +41,7 @@
         <td class="gvCellStyleCheckbox">
           <%#= link_to image_tag("view.png"), field %>
           <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
         </td>
       </tr>
     <% end %>

@@ -13,11 +13,11 @@
     <td><%= scenario.name %></td>
     <td><%= link_to t('general.show'), scenario %></td>
     <td><%= link_to t('general.edit'), edit_scenario_path(scenario) %></td>
-    <td><%= link_to 'Destroy', scenario, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', scenario, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Scenario', new_scenario_path %>

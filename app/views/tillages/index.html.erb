@@ -29,11 +29,11 @@
       <td><%= tillage.status %></td>
       <td><%= link_to t('general.show'), tillage %></td>
       <td><%= link_to t('general.edit'), edit_tillage_path(tillage) %></td>
-      <td><%= link_to 'Destroy', tillage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'Destroy', tillage, method: :delete, data: { confirm: t('general.confirm') } %></td>
     </tr>
   <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Tillage', new_tillage_path %>

@@ -25,11 +25,11 @@
     <td><%= description.period %></td>
     <td><%= link_to t('general.show'), description %></td>
     <td><%= link_to t('general.edit'), edit_description_path(description) %></td>
-    <td><%= link_to 'Destroy', description, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', description, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Description', new_description_path %>
