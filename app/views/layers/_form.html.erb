@@ -44,7 +44,8 @@
     <%= f.number_field :ph, :class => 'numbers', min: 0, :step => 'any' %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Finish", :name => "finish" %>
+    <%= f.submit "Add more", :name => "add_more" %>
     <%= link_to t('general.back'), soil_layers_soil_path(session[:soil_id]) %>
   </div>
 <% end %>

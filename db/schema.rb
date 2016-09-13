@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160801204517) do
+ActiveRecord::Schema.define(:version => 20160909204426) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -468,6 +468,7 @@ ActiveRecord::Schema.define(:version => 20160801204517) do
     t.float    "ztk"
     t.float    "fbm"
     t.float    "fhp"
+    t.integer  "soil_id_old"
   end
 
   create_table "states", :force => true do |t|

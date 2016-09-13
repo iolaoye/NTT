@@ -129,7 +129,8 @@ class WatershedsController < ApplicationController
     @watershed.location_id = session[:location_id]
     respond_to do |format|
       if @watershed.save
-        format.html { redirect_to list_watershed_path(session[:location_id]), notice: t('watershed.watershed') + " " + t('general.created') }
+        session[:watershed_id] = @watershed.id
+        format.html { redirect_to watershed_scenario_path(session[:watershed_id]), notice: t('watershed.watershed') + " " + t('general.created') }
         format.json { render json: @watershed, status: :created, location: @watershed }
       else
         format.html { render action: "new" }
