@@ -423,12 +423,12 @@ class ProjectsController < ApplicationController
         #end # end charts.each
       #} # end xml.charts
 
-      soil_operations = SoilOperation.where(:soil_id => soil.id)
-      xml.soil_operations {
-        soil_operations.each do |so|
-          save_soil_operation_information(xml, so)
-        end # end soil_operations.each
-      } # end xml soil_operations
+      #soil_operations = SoilOperation.where(:soil_id => soil.id)
+      #xml.soil_operations {
+        #soil_operations.each do |so|
+          #save_soil_operation_information(xml, so)
+        #end # end soil_operations.each
+      #} # end xml soil_operations
     } # end xml.soil
   end
 
@@ -467,13 +467,6 @@ class ProjectsController < ApplicationController
         end # end bmps.each
       } # end xml.bmp operation
 
-      soil_operations = SoilOperation.where(:scenario_id => scenario.id)
-      xml.soil_operations {
-        soil_operations.each do |soil_op|
-          save_soil_operation_information(xml, soil_op)
-        end # end soil_operations.each
-      } # end xml.soil_operations
-
       subareas = Subarea.where("scenario_id == " + scenario.id.to_s + " AND bmp_id == 0")
       xml.subareas {
         subareas.each do |subarea|
@@ -502,12 +495,12 @@ class ProjectsController < ApplicationController
         end # end charts.each
       } # end xml.charts
 
-      soil_operations = SoilOperation.where(:scenario_id => scenario.id)
-      xml.soil_operations {
-        soil_operations.each do |so|
-          save_soil_operation_information(xml, so)
-        end # end soil_operations.each
-      } # end xml.soil_operations
+      #soil_operations = SoilOperation.where(:scenario_id => scenario.id)
+      #xml.soil_operations {
+        #soil_operations.each do |so|
+          #save_soil_operation_information(xml, so)
+        #end # end soil_operations.each
+      #} # end xml.soil_operations
     } # end xml.scenario
   end
 
@@ -1327,13 +1320,13 @@ class ProjectsController < ApplicationController
               #return msg
             #end
           #end
-        when "soil_operations"
-          p.elements.each do |so|
-            msg = upload_soil_operation_new(so, 0, soil.id, 0, 0)
-            if msg != "OK"
-              return msg
-            end
-          end
+        #when "soil_operations"
+          #p.elements.each do |so|
+            #msg = upload_soil_operation_new(so, 0, soil.id, 0, 0)
+            #if msg != "OK"
+              #return msg
+            #end
+          #end
       end # case end
     end # each element end
     if soil.save
@@ -2095,6 +2088,7 @@ class ProjectsController < ApplicationController
   def upload_operation_new_version(scenario_id, new_operation)
     operation = Operation.new
     operation.scenario_id = scenario_id
+	operation.save
     new_operation.elements.each do |p|
       case p.name
         when "crop_id"
@@ -2125,7 +2119,7 @@ class ProjectsController < ApplicationController
           operation.org_p = p.text
         when "nh3"
           operation.nh3 = p.text
-        when "soil_operation"
+        when "soil_operations"
           p.elements.each do |soil_op|
             msg = upload_soil_operation_new(soil_op, scenario_id, 0, operation.id, 0)
             if msg != "OK"
@@ -2145,7 +2139,7 @@ class ProjectsController < ApplicationController
     soil_operation = SoilOperation.new
     soil_operation.scenario_id = scenario_id
     soil_operation.operation_id = operation_id
-    soil_operation.soil_id = soil_id
+    #soil_operation.soil_id = soil_id
     soil_operation.bmp_id = bmp_id
     node.elements.each do |p|
       case p.name
@@ -2179,8 +2173,14 @@ class ProjectsController < ApplicationController
           soil_operation.type_id = p.text
         when "apex_operation"
           soil_operation.apex_operation = p.text
-      end
-    end
+		when "soil_id"
+			if p.text == "0"
+				soil_operation.soil_id = 0
+			else
+				soil_operation.soil_id = Soil.find_by_soil_id_old(p.text).id
+			end
+      end  # end case 
+    end  # node
     if soil_operation.save
       return "OK"
     else
@@ -2214,9 +2214,9 @@ class ProjectsController < ApplicationController
           result.description_id = p.text
 		when "soil_id"
 			if p.text == "0"
-			result.soil_id = 0
+				result.soil_id = 0
 			else
-			result.soil_id = Soil.find_by_soil_id_old(p.text).id
+				result.soil_id = Soil.find_by_soil_id_old(p.text).id
 			end
 		when "crop_id"
 		    result.crop_id = p.text
