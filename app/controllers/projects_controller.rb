@@ -409,12 +409,12 @@ class ProjectsController < ApplicationController
         end # end layers.each
       } # end xml.layers
 
-      subareas = Subarea.where(:soil_id => soil.id)
-      xml.subareas {
-        subareas.each do |subarea|
-          save_subarea_information(xml, subarea)
-        end # end
-      } # end xml.subareas
+      #subareas = Subarea.where(:soil_id => soil.id)
+      #xml.subareas {
+        #subareas.each do |subarea|
+          #save_subarea_information(xml, subarea)
+        #end # end
+      #} # end xml.subareas
 
       #charts = Chart.where(:soil_id => soil.id)
       #xml.charts {
@@ -474,7 +474,7 @@ class ProjectsController < ApplicationController
         end # end soil_operations.each
       } # end xml.soil_operations
 
-      subareas = Subarea.where(:scenario_id => scenario.id)
+      subareas = Subarea.where("scenario_id == " + scenario.id.to_s + " AND bmp_id == 0")
       xml.subareas {
         subareas.each do |subarea|
           save_subarea_information(xml, subarea)
@@ -544,7 +544,7 @@ class ProjectsController < ApplicationController
   def save_control_information(xml, control)
 	xml.control {
 		xml.value control.value
-		xml.conrtrol_id control.control_id
+		xml.control_id control.control_id
 	}
   end
 
@@ -1320,13 +1320,13 @@ class ProjectsController < ApplicationController
               end
             end
           end
-        when "subareas"
-          p.elements.each do |sa|
-            msg = upload_subarea_new_version(0, 0, soil.id, sa)
-            if msg != "OK"
-              return msg
-            end
-          end
+        #when "subareas"
+          #p.elements.each do |sa|
+            #msg = upload_subarea_new_version(0, 0, soil.id, sa)
+            #if msg != "OK"
+              #return msg
+            #end
+          #end
         when "soil_operations"
           p.elements.each do |so|
             msg = upload_soil_operation_new(so, 0, soil.id, 0, 0)
@@ -1508,9 +1508,9 @@ class ProjectsController < ApplicationController
               return msg
             end
           end
-        when "subarea"
+        when "subareas"
           p.elements.each do |sa|
-            msg = upload_subarea_new_version(0, scenario.id, 0, sa)
+            msg = upload_subarea_new_version(0, scenario.id, sa)
             if msg != "OK"
               return msg
             end
@@ -1744,11 +1744,11 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def upload_subarea_new_version(bmp_id, scenario_id, soil_id, node)
+  def upload_subarea_new_version(bmp_id, scenario_id, node)
     subarea = Subarea.new
     subarea.scenario_id = scenario_id
     subarea.bmp_id = bmp_id
-    subarea.soil_id = soil_id
+    #subarea.soil_id = soil_id
     subarea.ny5 = 0
     subarea.ny6 = 0
     subarea.ny7 = 0
@@ -1767,6 +1767,14 @@ class ProjectsController < ApplicationController
           subarea.subarea_type = p.text
         when "description"
           subarea.description = p.text
+		when "bmp_id"
+			subarea.bmp_id = bmp_id
+		when "soil_id"
+			if p.text == "0"
+				subarea.soil_id = 0
+			else
+				subarea.soil_id = Soil.find_by_soil_id_old(p.text).id
+			end
         when "number"
           subarea.number = p.text
         when "inps"
@@ -2204,14 +2212,14 @@ class ProjectsController < ApplicationController
           result.ci_value = p.text
         when "description_id"
           result.description_id = p.text
-		    when "soil_id"
-          if p.text == "0"
+		when "soil_id"
+			if p.text == "0"
 			result.soil_id = 0
-          else
+			else
 			result.soil_id = Soil.find_by_soil_id_old(p.text).id
-          end
-		    when "crop_id"
-		      result.crop_id = p.text
+			end
+		when "crop_id"
+		    result.crop_id = p.text
       end # end case
     end # end each
     if result.save
@@ -2637,7 +2645,7 @@ class ProjectsController < ApplicationController
           end
         when "subareas"
           p.elements.each do |subarea|
-            msg = upload_subarea_new_version(bmp.bmp_id, 0, 0, subarea)
+            msg = upload_subarea_new_version(bmp.bmp_id, scenario_id, subarea)
             if msg != "OK"
               return msg
             end
