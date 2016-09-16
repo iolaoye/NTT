@@ -20,9 +20,8 @@
 	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
 #APEX folders.
-#todo create a process to delete old folders
 	APEX = "public/NTTFiles"
-
+	APEX_FOLDER = "E:/NTTHTML5Files"
 #folder for examples
 	EXAMPLES = "public/Examples"
 
@@ -39,6 +38,23 @@
 
 #public folder
 	APEX_ORIGINAL = 'public/APEX1'
+
+#folder for wick program - this is to print results in pdf file
+	r_root = Rails.root.to_s
+	WICK_FOLDER = r_root + '/public/Wicked/bin/'
+
+	#osx dev
+	#WICK_ENV = "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf_darwin_x86"
+
+	#windows dev
+	if Rails.env == "development"
+		WICK_ENV = WICK_FOLDER + 'wkhtmltopdf.exe'
+	end
+
+	#linux prod
+	if Rails.env == "production"
+		WICK_ENV = "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf_linux_amd64"
+	end
 
 #convertion values
 	AC_TO_HA = 0.404685645

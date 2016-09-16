@@ -1,7 +1,7 @@
 ﻿<%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div class="flash_alert">
-      <h3><%=pluralize(@user.errors.count, "error") %> prohibited this user from being save:</h3>
+      <h2><%= t('activerecord.form_errors', :count => @user.errors.count, :model => t('models.user').downcase) %></h2>
       <ul>
         <% @user.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -19,6 +19,7 @@
     <%= f.text_field :name, placeholder: t('general.name') %>
     <%= f.text_field :company, placeholder: t('users.company') %>
     </div>
+  </div>
     <div class="actions new">
       <%= f.submit t('submit.create') + " " + t('users.user') %>
     </div>

@@ -1,7 +1,7 @@
 <%= form_for(@create_table_fertilizer) do |f| %>
   <% if @create_table_fertilizer.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@create_table_fertilizer.errors.count, "error") %> prohibited this create_table_fertilizer from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @create_table_fertilizer.errors.count, :model => t('models.create_table_fertilizer').downcase) %></h2>
 
       <ul>
       <% @create_table_fertilizer.errors.full_messages.each do |msg| %>

@@ -33,10 +33,10 @@ class SoilsController < ApplicationController
   # GET /soils/1
   # GET /soils/1.json
   def show
-    @layers = Layer.where(:soil_id => params[:id])
+    @soil = Soil.find(params[:id])
     respond_to do |format|
-	  redirect_to @layers
-      format.json { render json: @layers }
+      format.html # show.html.erb
+      format.json { render json: @soil }
     end
   end
 
@@ -60,10 +60,11 @@ class SoilsController < ApplicationController
   # POST /soils.json
   def create
     @soil = Soil.new(soil_params)
+	@soil.field_id = session[:field_id]
 
     respond_to do |format|
       if @soil.save
-        format.html { redirect_to @soil, notice: 'Soil was successfully created.' }
+        format.html { redirect_to list_soil_path(session[:field_id]), notice: t('soil.soil') + " " + @soil.name + " " + t('general.success') }
         format.json { render json: @soil, status: :created, location: @soil }
       else
         format.html { render action: "new" }
@@ -82,11 +83,11 @@ class SoilsController < ApplicationController
     respond_to do |format|
       if @soil.update_attributes(soil_params)
 		if soil_id == @soil.id then
-			Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01) * 0.9, :stp => @soil.slope / 100)
+			Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01) * 0.9, :slp => @soil.slope / 100)
 		else
 			Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
 		end
-        format.html { redirect_to list_soil_path(session[:field_id]), notice: 'Soil was successfully updated.' }
+        format.html { redirect_to list_soil_path(session[:field_id]), notice: t('models.soil') + " " + @soil.name + " " + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -99,7 +100,9 @@ class SoilsController < ApplicationController
   # DELETE /soils/1.json
   def destroy
     @soil = Soil.find(params[:id])
-    @soil.destroy
+    if @soil.destroy
+      flash[:info] = t('models.soil') + " " + @soil.name + t('notices.deleted')
+    end
 
     respond_to do |format|
       format.html { redirect_to list_soil_path(@soil.field_id) }

@@ -10,7 +10,6 @@ class WeathersController < ApplicationController
   # GET /weathers
   # GET /weathers.json
   def index
-	index
 	@weather = Weather.all
 
     respond_to do |format|
@@ -96,9 +95,14 @@ class WeathersController < ApplicationController
   # PATCH/PUT /weathers/1.json
   def update
     @weather = Weather.find(params[:id])
-	if !(params[:weather][:weather_file] == nil) then 
-		upload_weather
-		redirect_to edit_weather_path(session[:field_id]),  notice: 'File was successfully uploaded.' 
+	if (params[:weather][:way_id] == "2")
+		if (params[:weather][:weather_file] == nil)
+				redirect_to edit_weather_path(session[:field_id])
+				flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file') 
+		else
+			msg = upload_weather
+		    redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated') 
+		end
 	else
 		respond_to do |format|
 		  if @weather.update_attributes(weather_params)
@@ -126,6 +130,7 @@ class WeathersController < ApplicationController
 
 	########################################### UPLOAD weather FILE IN TEXT FORMAT ##################
 	def upload_weather
+		msg = "Error loading file"
 	    #@weather = Weather.find_by_field_id(session[:field_id])
 		name = params[:weather][:weather_file].original_filename
 		# create the file path
@@ -141,14 +146,20 @@ class WeathersController < ApplicationController
 			@weather.simulation_final_year = line1
 			@weather.weather_final_year = line1
 			if i == 0
-				@weather.simulation_initial_year = line1
+				@weather.simulation_initial_year = line1 + 5
 				@weather.weather_initial_year = line1
 				i = i + 1
 			end
 		end
 		@weather.weather_file = name
+		@weather.way_id = 2
 		@weather.save
-		return
+		  if @weather.save then
+ 			return "OK"
+ 		  else
+ 			return msg
+ 		  end 
+	    return 
 	end
 
   private

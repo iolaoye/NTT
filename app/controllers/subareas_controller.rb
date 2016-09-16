@@ -64,7 +64,7 @@ class SubareasController < ApplicationController
 
     respond_to do |format|
       if @subarea.update_attributes(subarea_params)
-        format.html { redirect_to @subarea, notice: 'Subarea was successfully updated.' }
+        format.html { redirect_to subareas_path, notice: t('models.subarea') + " " + t('notices.updated')  }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

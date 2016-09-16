@@ -1,4 +1,11 @@
-﻿<h1 class="less-margin"><%= t('menu.apex_soil')%></h1>
+﻿<% if notice != nil %>
+<div class="success_alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <%= notice %>
+</div>
+<% end %>
+
+<h1 class="less-margin"><%= t('menu.apex_soil')%></h1>
 
 <table class='gvTableStyle'>
     <tr class='gvHeaderStyle'>
@@ -14,7 +21,7 @@
   <% for apex_soil in @soils %>
     <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">
-        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", disabled: true %></td>
+        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", apex_soil.selected, disabled: true %></td>
         <td class="gvCellStyleText"><%= apex_soil.key %></td>
         <td class="gvCellStyleText"><%= apex_soil.symbol %></td>
         <td class="gvCellStyleText"><%= apex_soil.group %></td>
@@ -27,7 +34,7 @@
     </tr>
     <% else %>
       <tr class="gvRowStyleOdd">
-        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", disabled: true %></td>
+        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", apex_soil.selected, disabled: true %></td>
         <td class="gvCellStyleText"><%= apex_soil.key %></td>
         <td class="gvCellStyleText"><%= apex_soil.symbol %></td>
         <td class="gvCellStyleText"><%= apex_soil.group %></td>

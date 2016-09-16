@@ -1,3 +1,16 @@
+<% case %>
+<% when notice %>
+	<div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
+<% when flash[:info] %>
+	<div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:info] %>
+    </div>
+<% end %>
+
 <br>
 <%= form_for :watershed, url: new_scenario_watershed_scenario_path do |f| %>
 <table>
@@ -13,9 +26,6 @@
   </tr>
 </table>  
 <% end %>
-
- 
-<p id="error_notice"><%= notice %></p>
 
 <h1><%= t('watershed_scenario.watershed_scenario_title')%></h1> 
 

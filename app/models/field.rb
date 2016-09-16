@@ -10,5 +10,6 @@ class Field < ActiveRecord::Base
 	belongs_to :location
   #validations
 	 validates_uniqueness_of :location_id, :scope => :field_name
-	 validates_presence_of :field_name	
+	 validates_presence_of :field_name, :field_area
+     validates :field_area, numericality: { greater_than: 0 }
 end

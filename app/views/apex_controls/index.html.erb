@@ -1,3 +1,10 @@
+<% if flash[:notice] != nil %>
+    <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:notice] %>
+    </div>
+<% end %>
+
 <h1><%= t('general.listing')  + " " + t('menu.control_file') %></h1>
 
 <table class='gvTableStyle'>
@@ -11,6 +18,8 @@
     <th class="gvCellStyleTitle"><%= t('apex.high_range') %></th>
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
+
+  <%= link_to "Reset to Default", {:action => :reset}, :method => :post %>
 
 <% i=1 %>
 <% @apex_controls.each do |apex_control| %>
