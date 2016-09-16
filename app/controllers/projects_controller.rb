@@ -195,9 +195,9 @@ class ProjectsController < ApplicationController
           when "SiteInfo"
             msg = upload_site_info(node)
           when "controls"
-			  node.elements.each do |c|
-				msg = upload_control_values_new_version(c)
-			  end
+			      node.elements.each do |c|
+				      msg = upload_control_values_new_version(c)
+			      end
           when "ControlValues"
             msg = upload_control_values(node)
           when "ParmValues"
@@ -423,6 +423,19 @@ class ProjectsController < ApplicationController
       xml.clay layer.clay
       xml.om layer.organic_matter
       xml.ph layer.ph
+      xml.uw layer.uw
+      xml.fc layer.fc
+      xml.wn layer.wn
+      xml.smb layer.smb
+      xml.woc layer.woc
+      xml.cac layer.cac
+      xml.cec layer.cec
+      xml.rok layer.rok
+      xml.cnds layer.cnds
+      xml.rsd layer.rsd
+      xml.bdd layer.bdd
+      xml.psp layer.psp
+      xml.satc layer.satc
     } # layer xml
   end
 
@@ -498,19 +511,22 @@ class ProjectsController < ApplicationController
 
   # end method
 
-  # ApexControl table needed for download?
   def save_control_information(xml, control)
-	xml.control {
-		xml.value control.value
-		xml.control_id control.control_id
+	  xml.control {
+		  xml.control_id control.control_id
+      xml.code control.control.code
+      xml.line control.control.line
+      xml.column control.control.column
+      xml.value control.value
+      xml.low_range control.control.range_low
+      xml.high_range control.control.range_high
 	}
   end
 
-  # ApexParameter table needed for download? (Remove if not needed)
   def save_parameter_information(xml, parameter)
-	xml.parameter {
-		xml.value parameter.value
-		xml.parameter_id parameter.parameter_id
+	  xml.parameter {
+		  xml.value parameter.value
+		  xml.parameter_id parameter.parameter_id
 	}
   end
 
@@ -824,7 +840,7 @@ class ProjectsController < ApplicationController
       project.user_id = session[:user_id]
       node.elements.each do |p|
         case p.name
-          when "project_name" #no value receieved/saved
+          when "project_name" #if project name exists, save fails
             project.name = p.text
           when "project_description"
             project.description = p.text
@@ -1375,6 +1391,33 @@ class ProjectsController < ApplicationController
           layer.organic_matter = p.text
         when "ph"
           layer.ph = p.text
+        when "uw"
+          layer.uw = p.text
+        when "fc"
+          layer.fc = p.text
+        when "wn"
+          layer.wn = p.text
+        when "smb"
+          layer.smb = p.text
+        when "woc"
+          layer.woc = p.text
+        when "cac"
+          layer.cac = p.text
+        when "cec"
+          layer.cec = p.text
+        when "rok"
+          layer.rok = p.text
+        when "cnds"
+          layer.cnds = p.text
+        when "rsd"
+          layer.rsd = p.text
+        when "bdd"
+          layer.bdd = p.text
+        when "psp"
+          layer.psp = p.text
+        when "satc"
+          layer.satc = p.text
+
       end
     end
     if layer.save
@@ -3054,6 +3097,16 @@ class ProjectsController < ApplicationController
         case p.name
           when "control_id"
             control.control_id = p.text
+          when "code"
+            control.control.code = p.text
+          when "line"
+            control.control.line = p.text
+          when "column"
+            control.control.column = p.text
+          when "low_range"
+            control.control.range_low = p.text
+          when "high_range"
+            control.control.range_high = p.text
           when "value"
             control.value = p.text
         end # end case
