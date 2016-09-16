@@ -260,7 +260,7 @@ class OperationsController < ApplicationController
       end
       render action: 'list'
     else
-      render action: 'upload'
+      render action: 'list'
     end # end if cropping_system_id != nil
   end # end method
 
