@@ -408,27 +408,6 @@ class ProjectsController < ApplicationController
           save_layer_information(xml, layer)
         end # end layers.each
       } # end xml.layers
-
-      #subareas = Subarea.where(:soil_id => soil.id)
-      #xml.subareas {
-        #subareas.each do |subarea|
-          #save_subarea_information(xml, subarea)
-        #end # end
-      #} # end xml.subareas
-
-      #charts = Chart.where(:soil_id => soil.id)
-      #xml.charts {
-        #charts.each do |chart|
-          #save_chart_information(xml, chart)
-        #end # end charts.each
-      #} # end xml.charts
-
-      #soil_operations = SoilOperation.where(:soil_id => soil.id)
-      #xml.soil_operations {
-        #soil_operations.each do |so|
-          #save_soil_operation_information(xml, so)
-        #end # end soil_operations.each
-      #} # end xml soil_operations
     } # end xml.soil
   end
 
@@ -481,26 +460,12 @@ class ProjectsController < ApplicationController
         end # end results.each
       } # end xml.results
 
-      #soil_results = Result.where("scenario_id == scenario.id AND soil_id > 0")
-      #xml.soil_results {
-        #soil_results.each do |soil_result|
-          #save_result_information(xml, soil_result)
-        #end # end soil_results.each
-      #} # end xml.soil_results
-
       charts = Chart.where(:scenario_id => scenario.id)
       xml.charts {
         charts.each do |chart|
           save_chart_information(xml, chart)
         end # end charts.each
       } # end xml.charts
-
-      #soil_operations = SoilOperation.where(:scenario_id => scenario.id)
-      #xml.soil_operations {
-        #soil_operations.each do |so|
-          #save_soil_operation_information(xml, so)
-        #end # end soil_operations.each
-      #} # end xml.soil_operations
     } # end xml.scenario
   end
 
