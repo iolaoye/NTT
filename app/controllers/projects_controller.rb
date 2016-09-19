@@ -514,12 +514,7 @@ class ProjectsController < ApplicationController
   def save_control_information(xml, control)
 	  xml.control {
 		  xml.control_id control.control_id
-      xml.code control.control.code
-      xml.line control.control.line
-      xml.column control.control.column
       xml.value control.value
-      xml.low_range control.control.range_low
-      xml.high_range control.control.range_high
 	}
   end
 
@@ -1417,7 +1412,6 @@ class ProjectsController < ApplicationController
           layer.psp = p.text
         when "satc"
           layer.satc = p.text
-
       end
     end
     if layer.save
