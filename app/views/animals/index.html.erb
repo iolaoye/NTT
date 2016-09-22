@@ -17,11 +17,11 @@
     <td><%= animal.apex_code %></td>
     <td><%= link_to t('general.show'), animal %></td>
     <td><%= link_to t('general.edit'), edit_animal_path(animal) %></td>
-    <td><%= link_to 'Destroy', animal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', animal, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Animal', new_animal_path %>

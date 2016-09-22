@@ -1,18 +1,19 @@
 <% case %>
 <% when notice %>
 	<div class="success_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= notice %>
-    </div>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <%= notice %>
+  </div>
 <% when flash[:info] %>
 	<div class="flash_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= flash[:info] %>
-    </div>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <%= flash[:info] %>
+  </div>
 <% end %>
 
 <h1><%= t("general.listing") + " " + t("menu.soils") %></h1>
 <%= link_to t('general.new') + ' ' + t('soil.soil'), new_soil_path %>
+<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'light_green_button' %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
@@ -43,7 +44,7 @@
             <td class="gvCellStyleActions">
               <%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
               <%= link_to image_tag("edit.png"), edit_soil_path(soil), title: t('general.edit')%>
-              <%= link_to image_tag("delete.png"), soil, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' }%>
+              <%= link_to image_tag("delete.png"), soil, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
             </td>
           </tr>
       <% else %>
@@ -60,7 +61,7 @@
             <td class="gvCellStyleActions">
               <%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
               <%= link_to image_tag("edit.png"), edit_soil_path(soil), title: t('general.edit')%>
-              <%= link_to image_tag("delete.png"), soil, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' }%>
+              <%= link_to image_tag("delete.png"), soil, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
             </td>
           </tr>
       <% end %>

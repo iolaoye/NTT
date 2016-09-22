@@ -85,8 +85,13 @@ class OperationsController < ApplicationController
     respond_to do |format|
       if saved
         if soil_op_saved
-          format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
-          format.json { render json: @operation, status: :created, location: @operation }
+          if params[:add_more] == "Add more" && params[:finish] == nil
+            format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+            format.json { render json: @operation, status: :created, location: @operation }
+          elsif params[:finish] == "Finish" && params[:add_more] == nil
+            format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+            format.json { render json: @operation, status: :created, location: @operation }
+          end
         else
           format.html { render action: "new" }
           format.json { render json: msg, status: :unprocessable_entity }
@@ -110,8 +115,13 @@ class OperationsController < ApplicationController
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id)
         end
-        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.updated') }
-        format.json { head :no_content }
+        if params[:add_more] == "Add more" && params[:finish] == nil
+          format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+          format.json { render json: @operation, status: :created, location: @operation }
+        elsif params[:finish] == "Finish" && params[:add_more] == nil
+          format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+          format.json { render json: @operation, status: :created, location: @operation }
+        end
       else
         format.html { render action: "edit" }
         format.json { render json: @operation.errors, status: :unprocessable_entity }

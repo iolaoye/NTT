@@ -10,6 +10,7 @@
 <%= link_to t('operation.new_operation'), new_operation_path %>
 <%= link_to t('operation.upload') + " " + t('operation.cropping_system'), cropping_system_operation_path(session[:scenario_id]), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'} %>
 <%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?' %>
+<%= link_to t('general.continue'), list_bmp_path(session[:scenario_id]), :class => 'light_green_button' %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th colspan="9" class="gvCellStyleTitle"></th>
@@ -85,7 +86,7 @@
       <td class="gvCellStyleNumber"><%= operation.org_n %></td>
       <td class="gvCellStyleNumber"><%= operation.org_p %></td>
       <td ><%= link_to image_tag("edit.png"), edit_operation_path(operation), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), operation, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <%= link_to image_tag("delete.png"), operation, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td>
     </tr>
   <% end %>
 </table>
