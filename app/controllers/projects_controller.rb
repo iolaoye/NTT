@@ -761,37 +761,21 @@ class ProjectsController < ApplicationController
   def save_watershed_information(xml, watershed)
     xml.watershed {
       xml.name watershed.name
-
       watershed_scenarios = WatershedScenario.where(:watershed_id => watershed.id)
       xml.watershed_scenarios {
         watershed_scenarios.each do |wss|
           save_watershed_scenario_information(xml, wss)
         end # end scenarios each
       } # end scenarios
-
-      charts = Chart.where(:watershed_id => watershed.id)
-      xml.charts {
-        charts.each do |chart|
-          save_chart_information(xml, chart)
-        end # end charts.each
-      } # end charts
-
-      results = Result.where(:watershed_id => watershed.id)
-      xml.results {
-        results.each do |result|
-          save_result_information(xml, result)
-        end # end results.each
-      } # end results
     } # xml each watershed end
   end
 
-=begin Work in progress
   def save_watershed_scenario_information(xml, watershed_scenario)
     xml.watershed_scenario {
-      xml.
+      xml.field_id watershed_scenario.field_id
+      xml.scenario_id watershed_scenario.field_id
     }
   end
-=end
 
   # end method
 
@@ -3185,16 +3169,16 @@ class ProjectsController < ApplicationController
     end # end each
   end
 
-=begin <----Work in progress---->
   def upload_watershed_scenario_information_new_version(node, watershed_id)
     watershed_scenario = WatershedScenario.new
     watershed_scenario.watershed_id = watershed_id
     node.elements.each do |p|
       case p.name
-        when ""
-          = p.text
+        when "field_id"
+          watershed_scenario.field_id = p.text
+        when "scenario_id"
+          watershed_scenario.scenario_id = p.text
       end # end case
     end # end each element
   end
-=end
 end
