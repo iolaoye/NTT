@@ -111,11 +111,27 @@ class LocationsController < ApplicationController
               @weather = Weather.find(@field.weather_id)
             end #end weather validation
             @weather.weather_file = params["field#{i}parcelweather"]
-            @weather.simulation_initial_year = params["field#{i}initialYear"]
-            @weather.simulation_initial_year += 5
-            @weather.simulation_final_year = params["field#{i}finalYear"]
-            @weather.weather_initial_year = params["field#{i}initialYear"]
-            @weather.weather_final_year = params["field#{i}finalYear"]
+            if (params["field#{i}initialYear"] == nil) then
+				@weather.simulation_initial_year = 0
+			else
+	            @weather.simulation_initial_year = params["field#{i}initialYear"]
+			end
+			@weather.simulation_initial_year += 5
+            if params["field#{i}finalYear"] == nil then
+				@weather.simulation_final_year = 0
+			else
+				@weather.simulation_final_year = params["field#{i}finalYear"]
+			end
+            if params["field#{i}initialYear"] == nil then
+				@weather.weather_initial_year = 0
+			else
+				@weather.weather_initial_year = params["field#{i}initialYear"]
+			end
+            if params["field#{i}finalYear"] == nil then
+				@weather.weather_final_year = 0
+			else
+				@weather.weather_final_year = params["field#{i}finalYear"]
+			end
             @weather.latitude = site.ylat
             @weather.longitude = site.xlog
             @weather.way_id = 1 #assign PRISM weather station to the weather way as default from map
@@ -134,11 +150,19 @@ class LocationsController < ApplicationController
           # step 5: update location
           state_abbreviation = params[:state]
           state = State.find_by_state_abbreviation(state_abbreviation)
-          @location.state_id = state.id
-          county_name = params[:county]
-          county_name.slice! " County"
-          county = County.find_by_county_name(county_name)
-          @location.county_id = county.id
+		  if state == nil then
+			@location.state_id = 0
+		  else
+			@location.state_id = state.id
+		  end
+		  county_name = params[:county]
+          if county_name == nil then
+			  @location.county_id = 0
+		  else
+			  county_name.slice! " County"
+			  county = County.find_by_county_name(county_name)
+			  @location.county_id = county.id
+		  end
           @location.coordinates = params[:parcelcoords]
           @location.save
           # step 6 load parameters and controls for the specific state or general if states controls and parms are not specified

@@ -788,7 +788,7 @@ class ProjectsController < ApplicationController
   end
 
   def upload_project_info(node)
-    begin
+    #begin  #check this one
       project = Project.new
       project.user_id = session[:user_id]
       node.elements.each do |p|
@@ -808,9 +808,9 @@ class ProjectsController < ApplicationController
       else
         return "Error saving project"
       end
-    rescue
-      return 'Error saving project'
-    end
+    #rescue
+      #return 'Error saving project'
+    #end
   end
 
   def upload_project_new_version(node)
@@ -913,7 +913,7 @@ class ProjectsController < ApplicationController
   # end method
 
   def upload_field_info(node)
-    begin
+    #begin
       field = Field.new
       field.location_id = session[:location_id]
       node.elements.each do |p|
@@ -942,9 +942,9 @@ class ProjectsController < ApplicationController
 
       field.save
       session[:field_id] = field.id
-    rescue
-      return "Field could not be saved"
-    end
+    #rescue
+      #return "Field could not be saved"
+    #end
     begin
       # save Weather Info
       weather = Weather.new
@@ -981,8 +981,6 @@ class ProjectsController < ApplicationController
           if field.save! then
             session[:field_id] = field.id
           else
-		  session[:depth] = field
-		  ooo
             return "field could not be saved"
           end
         when "weather"
@@ -1994,10 +1992,11 @@ class ProjectsController < ApplicationController
         when "ApexTillCode"
           soil_operation.apex_operation = p.text
           if soil_operation.activity_id == 4 then
-            soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, Location.find(session[:location_id].id).state_id).harvest_code
-            if soil_operation.apex_operation == nil then
-              soil_operation.apex_operation = Crop.find_by_number_and_state(soil_operation.apex_crop, "**").harvest_code
+            crop_state = Crop.where(:number => soil_operation.apex_crop, :state_id => Location.find(session[:location_id]).state_id).first
+            if crop_state == nil then
+              crop_state = Crop.where(:number => soil_operation.apex_crop, :state_id => "**").first
             end
+    	    soil_operation.apex_operation = crop_state.harvest_code
           end
       end
     end
