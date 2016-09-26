@@ -1,6 +1,6 @@
 <%= form_for(@weather) do |f| %>
     <% case %>
-<% when @weather.errors.any? %>
+	<% when @weather.errors.any? %>
         <div id="error_explanation">
           <h2><%= t('activerecord.form_errors', :count => @weather.errors.count, :model => t('models.weather').downcase) %></h2>
           <ul>
@@ -34,7 +34,6 @@
           </div>
       <% end %>
     </fieldset>
-
 
     <% if @weather.way_id == 2 %>
         <fieldset id="fsetUploadWeatherFile" class="section"></fieldset>
