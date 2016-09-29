@@ -2046,6 +2046,8 @@ class ProjectsController < ApplicationController
           case operation.activity_id
             when 1 #planting
               operation.type_id = apex_till_code
+			when 3 #tillage
+              operation.type_id = apex_till_code
             when 2 # fertilizer
               if p.text == "Commercial Fertilizer"
                 operation.type_id = 1
@@ -3030,7 +3032,7 @@ class ProjectsController < ApplicationController
   end
 
   def upload_control_values(node)
-    begin
+    #begin
       control = ApexControl.new
       control.project_id = session[:project_id]
       node.elements.each do |p|
@@ -3061,9 +3063,11 @@ class ProjectsController < ApplicationController
       else
         return "OK"
       end
-    rescue
-      return "Control values could not be saved"
-    end
+    #rescue
+      #return "Control values could not be saved"
+	  #session[:depth] = control
+	  #ooo
+    #end
   end
 
   def upload_control_values_new_version(node) 

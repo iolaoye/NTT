@@ -120,7 +120,7 @@ class ScenariosController < ApplicationController
     respond_to do |format|
       if @scenario.update_attributes(scenario_params)
         session[:scenario_id] = @scenario.id
-        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
+        format.html { redirect_to field_scenarios_field_path(session[:field_id]), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
