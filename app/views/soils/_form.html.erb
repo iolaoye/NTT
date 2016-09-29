@@ -48,7 +48,10 @@
     <%= f.text_field :drainage_type %>
   </div>
   <div class="actions">
-    <%= f.submit %>
-    <%= link_to t('general.back'), field_soils_field_path(session[:field_id]) %>
+    <%if type1 == 'Edit' %>
+		<%= f.submit t('submit.save') %>
+	<% else %>
+		<%= f.submit t('submit.savecontinue') %>
+	<% end %>
   </div>
 <% end %>

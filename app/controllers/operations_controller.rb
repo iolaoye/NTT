@@ -360,6 +360,7 @@ class OperationsController < ApplicationController
         #opv1 = uri.read
         #opv1 = Hash.from_xml(open(uri.to_s).read)["m"]{"p".inject({}) do |result, elem
         client = Savon.client(wsdl: URL_HU)
+		session[:depth] = Crop.find(@operation.crop_id).number.to_s + "-" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + " - " + Weather.find_by_field_id(session[:field_id]).longitude.to_s
         response = client.call(:get_hu, message: {"crop" => Crop.find(@operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
         opv1 = response.body[:get_hu_response][:get_hu_result]
       #opv1 = 2.2

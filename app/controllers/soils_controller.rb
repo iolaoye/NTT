@@ -91,7 +91,7 @@ class SoilsController < ApplicationController
           Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
         end
         session[:soil_id] = @soil.id
-        format.html { redirect_to list_layer_path(@soil.id), notice: t('models.soil') + " " + @soil.name + " " + t('notices.updated') }
+        format.html { redirect_to field_soils_field_path(session[:field_id]), notice: t('models.soil') + " " + @soil.name + " " + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

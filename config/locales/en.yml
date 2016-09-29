@@ -292,7 +292,7 @@ en:
     submit:
       create: Save 
       submit: Save 
-      update: Save 
+      update: Save
     label:
       project:
         name: Name
@@ -618,6 +618,7 @@ en:
     login: Sign in
     update: Update
     new_user: New User
+    savecontinue: Save and Continue
   sessions:
     index:
       email: Email
