@@ -291,6 +291,7 @@
       create: Salvar
       submit: Salvar
       update: Salvar
+      savecontinue: Salvar y Continuar     
     label:
       project:
         name: Nombre
@@ -614,6 +615,7 @@
     login: Iniciar sesión
     update: Actualizar
     new_user: Usuario Nuevo
+    savecontinue: Salvar y Continuar
   sessions:
     index:
       email: Correo Electrónico

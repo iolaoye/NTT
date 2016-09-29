@@ -15,7 +15,10 @@
     <%= f.text_field :name %>
   </div>
   <div class="actions">
-    <%= f.submit %>
-    <%= link_to t('general.back'), scenarios_path %>
+    <% if type1 == 'Edit' %>
+		<%= f.submit t('submit.save') %>
+	<% else %>
+		<%= f.submit t('submit.savecontinue') %>
+	<% end %>
   </div>
 <% end %>
