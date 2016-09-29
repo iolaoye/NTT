@@ -2046,6 +2046,8 @@ class ProjectsController < ApplicationController
           case operation.activity_id
             when 1 #planting
               operation.type_id = apex_till_code
+			when 3 #tillage
+              operation.type_id = apex_till_code
             when 2 # fertilizer
               if p.text == "Commercial Fertilizer"
                 operation.type_id = 1
