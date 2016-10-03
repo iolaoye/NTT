@@ -614,7 +614,7 @@ en:
     add_to_watershed: Add to watershed
   submit:
     create: Create
-    save: Save Changes
+    save: Save
     login: Sign in
     update: Update
     new_user: New User
