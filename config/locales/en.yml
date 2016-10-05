@@ -517,6 +517,8 @@ en:
     plant_population: Plant Population
     load_operation: Load Operation
     sum: 'total nutrients should be less or equal to 1'
+    save: Save
+    open_saved: 'Open Saved Cropping System'
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group 

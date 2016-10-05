@@ -517,6 +517,8 @@
     plant_population: Población de Planta
     load_operation: Cargar Operación
     sum: 'El total de los nutrientes deben ser menor o igual a 1'
+    save: Guardar
+    open_saved: 'Abrir Sistema de Cultivo guardado'
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG   
