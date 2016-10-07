@@ -414,3 +414,48 @@ class OperationsController < ApplicationController
     return opv2
   end #end set_opval2
 end #end class
+
+########################################### DOWNLOAD OPERATION IN XML FORMAT ##################
+  def download
+    #require 'open-uri'
+    #require 'net/http'
+    #require 'rubygems'
+
+    operation = Operation.find(params[:id])
+
+    builder = Nokogiri::XML::Builder.new do |xml|
+      xml.operations {
+        xml.operation {
+          xml.crop_id operation.crop_id
+	      xml.activity_id operation.activity_id
+          xml.day operation.day
+          xml.month operation.month_id
+          xml.year operation.year
+          xml.type_id operation.type_id
+          xml.amout operation.amount
+          xml.depth operation.depth
+          xml.no3_n operation.no3_n
+          xml.po4_p operation.po4_p
+          xml.org_n operation.org_n
+          xml.org_p operation.org_p
+          xml.nh3 operation.nh3
+          xml.subtype_id operation.subtype_id
+          soil_operations = SoilOperation.where(:operation_id => operation.id)
+          xml.soil_operations {
+            soil_operations.each do |so|
+              save_soil_operation_information(xml, so)
+          end # end soil_operations.each
+          } # end xml.soil_operations
+        } # xml each operation end      
+      } # end xml.operations
+    end #builder do end
+
+    file_name = session[:session_id] + ".opr"
+    path = File.join(DOWNLOAD, file_name)
+    content = builder.to_xml
+    File.open(path, "w") { |f| f.write(content) }
+    #file.write(content)
+    send_file path, :type => "application/xml", :x_sendfile => true
+  end
+
+  #download operation def end 
