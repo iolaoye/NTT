@@ -518,7 +518,8 @@ en:
     load_operation: Load Operation
     sum: 'total nutrients should be less or equal to 1'
     save: Save
-    open_saved: 'Open Saved Cropping System'
+    open: 'Open Saved Cropping System'
+    saved: 'saved Cropping System'
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group 
