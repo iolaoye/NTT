@@ -118,7 +118,8 @@ NTTG3::Application.routes.draw do
   resources :operations do
 	get :list, on: :member
 	get :cropping_system, on: :member
-    get 'download', on: :member
+    get :download, on: :member
+    get :upload_system, on: :member
   end
 
   resources :bmps do
