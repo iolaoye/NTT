@@ -139,7 +139,7 @@ NTTG3::Application.routes.draw do
   get 'users/new'
   post 'projects/upload_project'
   post 'weathers/upload_weather'
-  root to: 'sessions#index'
+  root to: 'welcomes#index'
   
   get '/about' => "about#index", :as => "about"
   get '/contact' => "contact#index", :as => "contact"

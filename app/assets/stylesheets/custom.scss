@@ -557,3 +557,8 @@ font-size: 16px;
 .language:hover .tooltiptext {
     visibility: visible;
 }
+
+.button_to,
+.button_to div {
+  display: inline;
+}
