@@ -459,3 +459,13 @@ end #end class
   end
 
   #download operation def end 
+
+  ########################################### UPLOAD CROPPING SYSTEM FILE IN XML FORMAT ##################
+  def upload_system
+    saved = false
+    msg = ""
+    ActiveRecord::Base.transaction do
+      #begin
+      msg = "OK"
+
+  end
