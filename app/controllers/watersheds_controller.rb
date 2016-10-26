@@ -7,6 +7,8 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => params[:id])
     @project_name = Project.find(session[:project_id]).name
+    @field = Field.find(session[:field_id])
+
 
     respond_to do |format|
       format.html # list.html.erb
