@@ -233,7 +233,7 @@
     tillage: Labranza
     user: Usuario
     watershed_scenario: Escenario de cuenca
-    watershed: Cuanca
+    watershed: Cuenca
     way: Way
     weather: Clima
     welcome: Bienvenido
@@ -517,6 +517,9 @@
     plant_population: Población de Planta
     load_operation: Cargar Operación
     sum: 'El total de los nutrientes deben ser menor o igual a 1'
+    save: Guardar
+    open: 'Abrir Sistema de Cultivo guardado'
+    saved: 'Sistema de Cultivo guardado'
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG   
@@ -736,10 +739,10 @@
     getstarted6: Página de Parcela 
     getstarted7: Página de Suelos 
     getstarted8: Página del Gestión
-    getstarted9: Página del Sub-Proyecto
+    getstarted9: Página del Cuenca
     getstarted10: Página del Simulación
     getstarted11: Página de resultados 
-    getstarted12: Página de modificaciones
+    getstarted12: Página de Archivos APEX
     understanding: La Comprensión de NTT
     understanding1: APEX
     understanding2: Descargo de responsabilidad del NTT
@@ -1292,22 +1295,22 @@
     reference:
         header: Reference
         body1: '* See USDA website: http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849 for more detailed term descriptions.'
-  subprojpage:
-    header: Subproject Page Help
-    body1: 'The subprojects page allows you to combine multiple fields and scenarios and simulate them as a single field.'
+  watershedpage:
+    header: Ayuda para la página de cuencas
+    body1: 'La página de cuencas le permite al usuario combinar varias parcelas y escenarios y simularlas como un único campo.'
     create:
-        header: Creating a Subproject
+        header: Crear un cuenca
         name:
-            header: Naming Your Subproject
-            body1: 'To begin creating a subproject, click <strong><em>Add New Subproject</em></strong>. Once you do this, a text box will pop up where you can type in the name of the subproject:'
-            body2: 'Once you enter the name, click <strong><em>Add Subproject</em></strong>.'
+            header: Nombrando el cuenca
+            body1: 'Para crear un cuenca, haga clic a <strong><em>Nueva Cuenca</em></strong>. Cuando esto ha sido hecho, un cuadro de texto aparecerá donde se puede escribir el nombre del cuenca:'
+            body2: 'Una vez que ingresa el nombre, haga clic en <strong><em>Crear Cuenca</em></strong>.'
         select:
-            header: Selecting Fields/Scenarios to Simulate
-            body1: 'Once you have named your subproject, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same subproject (the idea is combining fields to simulate as one field). To add field/scenario combinations to the subproject, select the Field/scenario combinations, and click <strong><em>Select Scenario</em></strong>.'
-            body2: 'Once you have finished, click on <strong><em>Continue</em></strong>.'
+            header: Seleccionar campos/escenarios para simular
+            body1: 'Cuando el usuario nombre su cuenca, puede agregar las parcelas y los escenarios que desea simular. No puede agregar una parcela más de una vez al mismo cuenca (la idea es combinar las parcelas y escenarios para simular como una sola parcela). Para agregar las combinaciones de escenarios/parcelas del cuenca, seleccione las combinaciones de escenarios y parcelas y haga clic a <strong><em>Seleccionar Escenario</em></strong>.'
+            body2: 'Cuando haya terminado, haga clic en <strong><em>Añadir a Cuenca</em></strong>.'
         simulate:
-            header: Simulating/Viewing Results for Subprojects
-            body1: 'To simulate or view results for subprojects, where the heading is present (as is in the Simulation page and Results page), simply select subproject, as shown below:'
+            header: Resultados de la simulación y visualización para cuencas
+            body1: 'Para simular o ver resultados de subproyectos, donde el título <strong><em>Seleccione Clase</em></strong> está presente (como es en la página de simulación y resultados), simplemente seleccione el subproyecto, como se muestra a continuación:'
   simpage:
     header: Simulation Page Help
     body1: 'In this page the user is able to run the simulations for the fields/scenarios or subprojects that were created.'

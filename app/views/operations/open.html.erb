@@ -1,0 +1,18 @@
+﻿<% if flash[:notice] %>
+  <div class="flash_alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<%= form_tag({action: :upload_system}, multipart: true) do %>
+  <div>
+      <h1><%= t('operation.open') %></h1>
+      <%= file_field_tag "Cropping system" %>
+  </div>
+  </br>
+  <div class="actions">
+      <%= submit_tag(value = t('operation.open'), data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('operation.saved')}) %>
+      <%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]) %>
+  </div>
+<% end %>

@@ -517,6 +517,9 @@ en:
     plant_population: Plant Population
     load_operation: Load Operation
     sum: 'total nutrients should be less or equal to 1'
+    save: Save
+    open: 'Open Saved Cropping System'
+    saved: 'saved Cropping System'
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group 
@@ -614,7 +617,7 @@ en:
     add_to_watershed: Add to watershed
   submit:
     create: Create
-    save: Save Changes
+    save: Save
     login: Sign in
     update: Update
     new_user: New User
@@ -739,10 +742,10 @@ en:
     getstarted6: Fields Page
     getstarted7: Soils Page
     getstarted8: Management Page
-    getstarted9: Subproject Page
+    getstarted9: Watershed Page
     getstarted10: Simulation Page
     getstarted11: Results Page
-    getstarted12: Modifications Page
+    getstarted12: APEX Files Page
     understanding: Understanding NTT
     understanding1: APEX
     understanding2: NTT Disclaimer
@@ -1295,22 +1298,22 @@ en:
     reference:
         header: Reference
         body1: '* See USDA website: http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849 for more detailed term descriptions.'
-  subprojpage:
-    header: Subproject Page Help
-    body1: 'The subprojects page allows you to combine multiple fields and scenarios and simulate them as a single field.'
+  watershedpage:
+    header: Watershed Page Help
+    body1: 'The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.'
     create:
-        header: Creating a Subproject
+        header: Creating a Watershed
         name:
-            header: Naming Your Subproject
-            body1: 'To begin creating a subproject, click <strong><em>Add New Subproject</em></strong>. Once you do this, a text box will pop up where you can type in the name of the subproject:'
-            body2: 'Once you enter the name, click <strong><em>Add Subproject</em></strong>.'
+            header: Naming Your Watershed
+            body1: 'To begin creating a watershed, click <strong><em>New Watershed</em></strong>. Once you do this, a text box will pop up where you can type in the name of the watershed:'
+            body2: 'Once you enter the name, click <strong><em>Create Watershed</em></strong>.'
         select:
             header: Selecting Fields/Scenarios to Simulate
-            body1: 'Once you have named your subproject, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same subproject (the idea is combining fields to simulate as one field). To add field/scenario combinations to the subproject, select the Field/scenario combinations, and click <strong><em>Select Scenario</em></strong>.'
-            body2: 'Once you have finished, click on <strong><em>Continue</em></strong>.'
+            body1: 'Once you have named your Watershed, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same watershed (the idea is combining fields to simulate as one field). To add field/scenario combinations to the watershed, select the Field/scenario combinations, and click <strong><em>Select Scenario</em></strong>.'
+            body2: 'Once you have finished, click on <strong><em>Add to Watershed</em></strong>.'
         simulate:
-            header: Simulating/Viewing Results for Subprojects
-            body1: 'To simulate or view results for subprojects, where the heading is present (as is in the Simulation page and Results page), simply select subproject, as shown below:'
+            header: Simulating/Viewing Results for Watersheds
+            body1: 'To simulate or to view results for Watersheds, go to Results-Watershed Page and select the watersheds and click on <strong><em>Summary</em></strong> to get the results.'
   simpage:
     header: Simulation Page Help
     body1: 'In this page the user is able to run the simulations for the fields/scenarios or subprojects that were created.'
