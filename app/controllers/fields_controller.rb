@@ -1,4 +1,5 @@
 class FieldsController < ApplicationController
+
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
@@ -19,9 +20,16 @@ class FieldsController < ApplicationController
 # GET /fields/1
 # GET /1/fields.json
   def list
+
     session[:simulation] = "watershed"
+
     @fields = Field.where(:location_id => params[:id])
     @project_name = Project.find(session[:project_id]).name
+
+    add_breadcrumb t('menu.projects'), user_projects_path(current_user)
+    add_breadcrumb @project_name
+    add_breadcrumb t('menu.fields')
+
     @fields.each do |field|
       field_average_slope = 0
       i = 0

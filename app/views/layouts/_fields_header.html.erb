@@ -1,0 +1,6 @@
+<li><%= link_to t('menu.location'), location_path, class: current_page(user_projects_path(current_user)) %></li>
+<li><%= link_to t('menu.fields'), list_field_path, class: current_page(list_field_path) %></li>
+<li><%= link_to t('menu.watershed'), list_watershed_path, class: current_page(list_watershed_path) %></li>
+<li><%= link_to t('menu.results') + "-" + t('menu.watershed'), results_path, class: current_page(results_path) %></li>
+      
+<li class="numbers"><%= link_to t('menu.signout'), logout_path %></li>
