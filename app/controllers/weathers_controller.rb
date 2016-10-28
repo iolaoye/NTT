@@ -50,9 +50,17 @@ class WeathersController < ApplicationController
 
 # GET /weathers/1/edit
   def edit
+
     @weather = Weather.find_by_field_id(params[:id])
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(params[:id]).field_name
+    @project = Project.find(session[:project_id])
+    @field = Field.find(params[:id])
+
+    add_breadcrumb t('menu.projects'), user_projects_path(current_user)
+    add_breadcrumb @project.name
+    add_breadcrumb t('menu.fields'), list_field_path(@project)
+    add_breadcrumb @field.field_name
+    add_breadcrumb t('menu.weather')
+
     if !(@weather == nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
