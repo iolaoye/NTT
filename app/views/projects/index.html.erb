@@ -11,6 +11,7 @@
     </div>
 <% end %>
 
+<!--
 <h1 class="no_margin_bottom"><%= t('menu.projects') %></h1>
 <p class="instruction"><%= t('instructions.projects') %> </p>
 
@@ -51,4 +52,48 @@
       <% i = i + 1 %>
     <% end %>     
   </table>
+  -->
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm-10 col-md-10 main">
+        <div class="page-header"><h1><small><%= current_user.name %></small><br>Project Management</h1>
+          
+  </div>
+  <%= button_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
+  <%= button_to t('project.upload_project'), upload_project_path(0), :method => "get", :class => "btn btn-primary" %>
+   <%= button_to t('project.upload_example'), upload_project_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
+  <%= t('instructions.projects') %>.<br><br>
+  <div class="panel panel-default">
+        <div class="table-responsive">
+       <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><%= t('general.name') %></th>
+            <th><%= t('general.description') %></th>
+            <th>Last Modified</th>
+            <th><%= t('general.actions') %></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @projects.each do |project| %>
+          <tr>
+            <td><%= link_to project.name, project %></td>
+            <td><%= project.description %></td>
+            <td><%= project.updated_at.to_date %></td>
+            <td><%= link_to image_tag("download.gif"), download_project_path(project) %>
+          <%= link_to image_tag("edit.png"), edit_project_path(project) %>
+          <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 

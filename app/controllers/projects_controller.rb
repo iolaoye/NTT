@@ -1,4 +1,7 @@
 class ProjectsController < ApplicationController
+
+  layout 'welcome'
+  
   #EXAMPLES = "public/Examples"
   require 'nokogiri'
   # GET /projects
