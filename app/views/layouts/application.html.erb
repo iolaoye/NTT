@@ -17,41 +17,11 @@
    			<%= render "layouts/header" %>
 		</div>
 
-
-<div class="container">
-      <div class="container-fluid">
-		<div class="row">
-		<div class="col-sm-3 col-md-3"><h3>Project</h3></div>
-		 <div class="col-sm-9 col-md-9"><h3>&nbsp&nbsp&nbspOH Multiple Fields</h3></div>
-		</div>
-		      <div class="row">
-		      <div class="row2">
-		        <div class="col-sm-3 col-md-3 sidebar">
-		          <ul class="nav nav-sidebar nav-pills nav-stacked">
-		<% if signed_in? %>
-		  <% project_name = "" %>
-		  <% field_name = "" %>
-		  <% scenario_name = "" %>
-		  <nav class="navbar navbar-default" style="line-height:0px" id="div1">
-		    <ul class="navbar-nav">
-		     <%= render "layouts/sidebar" %>
-		  </ul>
-		<% else %>
-		  <div class="navbar navbar-default" style="line-height:0px" id="div1">
-		    <ul class="nav navbar-nav">
-		      <li><%= link_to t('menu.signin'), login_path %></li>
-		    </ul>
-		  </div>
-		<% end %>
-
-
-             </ul>
-</div>
-        </div>
-        <div class="col-sm-9 col-md-9 main">
-      <%= yield %>
-      </div>
-</div></div></div>
+<% if signed_in? %>
+<%= render "layouts/project" %>
+<% else %>
+<%= yield %>
+<% end %>
 
 <%= render "layouts/footer" %>
 
