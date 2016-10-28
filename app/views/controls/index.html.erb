@@ -22,13 +22,13 @@
     <td><%=control.range_low%></td>
     <td><%=control.range_high%></td>
     <td><%=control.default_value%></td>
-    <td><%= link_to 'Show', control %></td>
-    <td><%= link_to 'Edit', edit_control_path(control) %></td>
-    <td><%= link_to 'Destroy', control, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to t('general.show'), control %></td>
+    <td><%= link_to t('general.edit'), edit_control_path(control) %></td>
+    <td><%= link_to 'Destroy', control, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Control', new_control_path %>

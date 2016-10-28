@@ -1,7 +1,7 @@
 <%= form_for(@watershed) do |f| %>
   <% if @watershed.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@watershed.errors.count, "error") %> prohibited this watershed from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @watershed.errors.count, :model => t('models.watershed').downcase) %></h2>
 
       <ul>
       <% @watershed.errors.full_messages.each do |msg| %>
@@ -12,10 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label t('general.name') %><br>
     <%= f.text_field :name %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('watershed.create_watershed') %>
+    <%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
   </div>
 <% end %>

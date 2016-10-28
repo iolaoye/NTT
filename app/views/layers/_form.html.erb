@@ -1,7 +1,7 @@
 <%= form_for(@layer) do |f| %>
   <% if @layer.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@layer.errors.count, "error") %> prohibited this layer from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @layer.errors.count, :model => t('models.layer').downcase) %></h2>
 
       <ul>
       <% @layer.errors.full_messages.each do |msg| %>
@@ -13,37 +13,39 @@
 
   <div class="field">
     <%= f.label :depth, t('soil.depth') %>
-    <%= f.text_field :depth %>
+    <%= f.number_field :depth, :class => 'numbers', min: 0, :step => 'any'  %>
   </div>
   <div class="field">
     <%= f.label :soil_p, t('soil.soilp') %>
-    <%= f.text_field :soil_p %>
+    <%= f.number_field :soil_p, :class => 'numbers', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :bulk_density, t('soil.bulk_density') %>
-    <%= f.text_field :bulk_density %>
+    <%= f.number_field :bulk_density, :class => 'numbers', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :sand, t('soil.sand') %>
-    <%= f.text_field :sand %>
+    <%= f.number_field :sand, :class => 'numbers', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :silt, t('soil.silt') %>
-    <%= f.text_field :silt %>
+    <%= f.number_field :silt, :class => 'numbers', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :clay, t('soil.clay') %>
-    <%= f.text_field :clay %>
+    <%= f.number_field :clay, :class => 'numbers', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :organic_matter, t('soil.organic_matter') %>
-    <%= f.text_field :organic_matter %>
+    <%= f.number_field :organic_matter, :class => 'numbers', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :ph, t('soil.ph') %>
-    <%= f.text_field :ph %>
+    <%= f.number_field :ph, :class => 'numbers', min: 0, :step => 'any' %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Finish", :name => "finish" %>
+    <%= f.submit "Add more", :name => "add_more" %>
+    <%= link_to t('general.back'), soil_layers_soil_path(session[:soil_id]) %>
   </div>
 <% end %>

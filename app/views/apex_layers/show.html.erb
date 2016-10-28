@@ -1,0 +1,104 @@
+
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
+<h1><%= t('menu.layer_file') %></h1>
+
+<p>
+  <b>Z:</b>
+  <%= @apex_layer.depth %>
+</p>
+
+<p>
+  <b>BD:</b>
+  <%= @apex_layer.bulk_density %>
+</p>
+
+<p>
+  <b>UW:</b>
+  <%= @apex_layer.uw %>
+</p>
+
+<p>
+  <b>FC:</b>
+  <%= @apex_layer.fc %>
+</p>
+
+<p>
+  <b>SAN:</b>
+  <%= @apex_layer.sand %>
+</p>
+
+<p>
+  <b>SIL:</b>
+  <%= @apex_layer.silt %>
+</p>
+
+<p>
+  <b>WN:</b>
+  <%= @apex_layer.wn %>
+</p>
+
+<p>
+  <b>Ph:</b>
+  <%= @apex_layer.ph %>
+</p>
+
+<p>
+  <b>SMB:</b>
+  <%= @apex_layer.smb %>
+</p>
+
+<p>
+  <b>CAC:</b>
+  <%= @apex_layer.cac %>
+</p>
+
+<p>
+  <b>CEC:</b>
+  <%= @apex_layer.cec %>
+</p>
+
+<p>
+  <b>ROK:</b>
+  <%= @apex_layer.rok %>
+</p>
+
+<p>
+  <b>CNDS:</b>
+  <%= @apex_layer.cnds %>
+</p>
+
+<p>
+  <b>SSF:</b>
+  <%= @apex_layer.soil_p %>
+</p>
+
+<p>
+  <b>RSD:</b>
+  <%= @apex_layer.rsd %>
+</p>
+
+<p>
+  <b>BDD:</b>
+  <%= @apex_layer.bdd %>
+</p>
+
+<p>
+  <b>PSP:</b>
+  <%= @apex_layer.psp %>
+</p>
+
+<p>
+  <b>SATC:</b>
+  <%= @apex_layer.satc %>
+</p>
+
+
+
+
+<%= link_to t('general.edit'), edit_apex_layer_path %> |
+<%= link_to t('general.back'), controller: "apex_layers", action: "index", id: @apex_layer.soil_id %>

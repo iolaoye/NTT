@@ -1,7 +1,7 @@
 <%= form_for(@apex_control) do |f| %>
   <% if @apex_control.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@apex_control.errors.count, "error") %> prohibited this apex_control from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @apex_control.errors.count, :model => t('models.apex_control')) %></h2>
 
       <ul>
       <% @apex_control.errors.full_messages.each do |msg| %>
@@ -12,23 +12,24 @@
   <% end %>
 
   <div class="field">
-    <%= "Code:" %>
+    <%= t('apex.code') + " " + ':' %>
     <%= f.label @control_code %>
   </div>
   <div class="field">
-    <%= f.label :value %><br />
-    <%= f.text_field :value %>
+    <%= f.label t('apex.value') %><br>
+    <%= f.number_field :value, :step => 'any' %>
   </div>
   <div class="field">
-    <%= "Low Range:" %>
+    <%= t('apex.low_range') + " " + ':' %>
     <%= @low_range %>
   </div>
   <div class="field">
-    <%= "High Range:" %>
+    <%= t('apex.high_range') + " " + ':' %>
     <%=  @high_range %>
   </div>
 
   <div class="actions">
     <%= f.submit %>
+	<%= link_to t('general.back'), apex_controls_path %>
   </div>
 <% end %>

@@ -5,29 +5,26 @@
 			<p><%= raw t('locpage.mapsystem.body1') %></p>
 			<p><%= raw t('locpage.mapsystem.body2') %></p>
 			<p><%= raw t('locpage.mapsystem.body3') %></p>
-      <%= image_tag("help/page4/image001.png", :alt => "Zoom") %>
+      <%= image_tag("help/page_4/image001.png", :alt => "Zoom", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>
 			<p><%= raw t('locpage.mapsystem.body4') %></p>
 			
 			<h3><%= t('locpage.mapsystem.option1.header') %></h3>
 			<ol>
 				<li>
 					<p><%= raw t('locpage.mapsystem.option1.item1.body1') %></p>
-          <%= image_tag("help/page4/image002.png", :alt => "Draw Farms 01") %>
-					
-					<p><%= raw t('locpage.mapsystem.option1.item1.body2') %></p>
-          <%= image_tag("help/page4/image003.png", :alt => "Draw Farms 02") %>
+          <%= image_tag("help/page_4/image002.png", :alt => "Draw Farms 01", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>
 					
 					<p><%= raw t('locpage.mapsystem.option1.item1.body3') %></p>
-          <%= image_tag("help/page4/image004.png", :alt => "Draw Farms 03") %>
+          <%= image_tag("help/page_4/image003.png", :alt => "Draw Farms 02", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>
 					
 				</li>
 				<li><p><%= raw t('locpage.mapsystem.option1.item2') %></p></li>
 				<li>
 					<p><%= raw t('locpage.mapsystem.option1.item3.body1') %></p>
-          <%= image_tag("help/page4/image005.png", :alt => "Submitting 01") %>
+          <%= image_tag("help/page_4/image004.png", :alt => "Submitting 01") %>
 					
 					<p><%= raw t('locpage.mapsystem.option1.item3.body2') %></p>
-          <%= image_tag("help/page4/image006.png", :alt => "Submitting 02") %>
+          <%= image_tag("help/page_4/image005.png", :alt => "Submitting 02") %>
 					
 					<p><%= raw t('locpage.mapsystem.option1.item3.body3') %></p>
 				</li>
@@ -63,23 +60,23 @@
 			<p><%= raw t('locpage.statecounty.body3') %></p>
 			<ol>
 				<li><p><%= raw t('locpage.statecounty.item1') %></p></li>
-        <%= image_tag("help/page4/image007.png", :alt => "Select State") %>
+        <%= image_tag("help/page4/image006.png", :alt => "Select State") %>
 				
 				<li><p><%= raw t('locpage.statecounty.item2') %></p></li>
-        <%= image_tag("help/page4/image008.png", :alt => "Select County") %>
+        <%= image_tag("help/page4/image007.png", :alt => "Select County") %>
 			</ol>
 			
 			<p><%= raw t('locpage.statecounty.body4') %></p>
 		
 		<h2><%= t('locpage.userinput.header') %></h2>
 			<p><%= raw t('locpage.userinput.body1') %></p>
-    <%= image_tag("help/page4/image009.png", :alt => "User Input") %>
+    <%= image_tag("help/page4/image008.png", :alt => "User Input") %>
 			
 			<p><%= raw t('locpage.userinput.body2') %></p>
-    <%= image_tag("help/page4/image010.png", :alt => "Image 010") %>
-			
-		<br>
-		<%= link_to "< Prev", help_path("page_3") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_5") %><br>
-		<%= link_to "<< Return to Table of Contents", help_path("index") %>
+    <%= image_tag("help/page4/image009.png", :alt => "Image 010") %>
+		
 	</div>
 </div>
+
+<br><%= link_to "< Prev", help_path("page_3") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_5") %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index") %></br>

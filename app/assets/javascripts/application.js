@@ -12,8 +12,12 @@
 // ...
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
+//= require turbolinks
 //= require_tree .
 //= require chartkick
+
+$('.dropdown-toggle').dropdown()  
 
 function rbtnStation_onclick(way) {
     document.getElementById("fsetUploadWeatherFile").style.display = "none";
@@ -33,5 +37,11 @@ function rbtnStation_onclick(way) {
     }
 }
 
+function toggle_visibility(id){
+    var e = document.getElementById(id);
+    if(e.style.display == 'block')
+        e.style.display = 'none';
+    else
+        e.style.display = 'block';
 
-
+}

@@ -1,10 +1,11 @@
 ﻿<%= form_tag welcome_path do %>
-  <div class="field">
+  <div class="field less-padding">
     <p><%= t('welcome_note.thanks') %></p>
     <strong><%= t('general.note') %></strong>
     <p><%= t('welcome_note.note1') %></p>
     <p><%= t('welcome_note.note2') %></p>
     <p><%= t('welcome_note.final') %></p>
-    <p><%= t('welcome_note.name') %></p>
+    <p><%= t('welcome_note.name') %></p><br>
+    <%= link_to t('general.begin'), welcomes_path, :class => 'light_green_button' %>
   </div>
 <% end %>

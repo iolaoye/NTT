@@ -1,0 +1,40 @@
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
+
+<p>
+  <b>Bmp:</b>
+  <%= @climate.bmp_id %>
+</p>
+
+<p>
+  <b>Month:</b>
+  <%= @climate.month %>
+</p>
+
+<p>
+  <b>Spanish month:</b>
+  <%= @climate.spanish_month %>
+</p>
+
+<p>
+  <b>Max temp:</b>
+  <%= @climate.max_temp %>
+</p>
+
+<p>
+  <b>Min temp:</b>
+  <%= @climate.min_temp %>
+</p>
+
+<p>
+  <b>Precipitation:</b>
+  <%= @climate.precipitation %>
+</p>
+
+
+<%= link_to t('general.edit'), edit_climate_path(@climate) %> |
+<%= link_to t('general.back'), climates_path %>

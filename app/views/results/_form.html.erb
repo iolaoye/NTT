@@ -1,7 +1,7 @@
 <%= form_for(@result) do |f| %>
   <% if @result.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@result.errors.count, "error") %> prohibited this result from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @result.errors.count, :model => t('models.result').downcase) %></h2>
 
       <ul>
       <% @result.errors.full_messages.each do |msg| %>
@@ -12,27 +12,27 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :watershed_id %><br />
+    <%= f.label :watershed_id %><br>
     <%= f.number_field :watershed_id %>
   </div>
   <div class="field">
-    <%= f.label :field_id %><br />
+    <%= f.label :field_id %><br>
     <%= f.number_field :field_id %>
   </div>
   <div class="field">
-    <%= f.label :soil_id %><br />
+    <%= f.label :soil_id %><br>
     <%= f.number_field :soil_id %>
   </div>
   <div class="field">
-    <%= f.label :scenario_id %><br />
+    <%= f.label :scenario_id %><br>
     <%= f.number_field :scenario_id %>
   </div>
   <div class="field">
-    <%= f.label :value %><br />
+    <%= f.label :value %><br>
     <%= f.text_field :value %>
   </div>
   <div class="field">
-    <%= f.label :ci_value %><br />
+    <%= f.label :ci_value %><br>
     <%= f.text_field :ci_value %>
   </div>
   <div class="actions">

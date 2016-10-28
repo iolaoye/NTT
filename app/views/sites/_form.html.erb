@@ -1,7 +1,7 @@
 <%= form_for(@site) do |f| %>
   <% if @site.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@site.errors.count, "error") %> prohibited this site from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @site.errors.count, :model => t('models.site').downcase) %></h2>
 
       <ul>
       <% @site.errors.full_messages.each do |msg| %>
@@ -12,46 +12,48 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :ylat %><br />
+    <%= f.label :ylat %><br>
     <%= f.text_field :ylat %>
   </div>
   <div class="field">
-    <%= f.label :xlog %><br />
+    <%= f.label :xlog %><br>
     <%= f.text_field :xlog %>
   </div>
   <div class="field">
-    <%= f.label :elev %><br />
+    <%= f.label :elev %><br>
     <%= f.text_field :elev %>
   </div>
   <div class="field">
-    <%= f.label :apm %><br />
+    <%= f.label :apm %><br>
     <%= f.text_field :apm %>
   </div>
   <div class="field">
-    <%= f.label :co2x %><br />
+    <%= f.label :co2x %><br>
     <%= f.text_field :co2x %>
   </div>
   <div class="field">
-    <%= f.label :cqnx %><br />
+    <%= f.label :cqnx %><br>
     <%= f.text_field :cqnx %>
   </div>
   <div class="field">
-    <%= f.label :rfnx %><br />
+    <%= f.label :rfnx %><br>
     <%= f.text_field :rfnx %>
   </div>
   <div class="field">
-    <%= f.label :upr %><br />
+    <%= f.label :upr %><br>
     <%= f.text_field :upr %>
   </div>
   <div class="field">
-    <%= f.label :unr %><br />
+    <%= f.label :unr %><br>
     <%= f.text_field :unr %>
   </div>
   <div class="field">
-    <%= f.label :fir0 %><br />
+    <%= f.label :fir0 %><br>
     <%= f.text_field :fir0 %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t("submit.update") + " " + t("menu.site") %>
   </div>
 <% end %>
+
+<br>

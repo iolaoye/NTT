@@ -1,5 +1,4 @@
 <h1><%= t('general.editing')  + " " + t('soil.layer') %></h1>
 
-<%= render 'form' %>
+<%= render partial: 'form', locals:  {type1: "Edit"} %>
 
-<%= link_to t('general.back'), soil_layers_soil_path(session[:soil_id]) %>

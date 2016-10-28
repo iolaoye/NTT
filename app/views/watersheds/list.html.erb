@@ -1,6 +1,15 @@
-<h1><%= t('watershed.watershed_title')%></h1>
+<% if flash[:notice] %>
+	<div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:notice] %>
+    </div>
+<% end %>
+
+<h1 class="no_margin_bottom"><%= t('watershed.watershed_title')%></h1>
+<p class="instruction"><%= t('instructions.watersheds') %> </p>
 
 <%= link_to t('watershed.new_watershed'), new_watershed_path %>
+<%= link_to t('general.continue'), results_path(:button => t('result.summary')), :class => 'light_green_button' %>
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
@@ -10,21 +19,29 @@
 
 <% i=1 %>
 <% @watersheds.each do |watershed| %>
-<% if (i % 2  == 0) %>
-   <tr class="gvRowStyleEven">
-    <% else %>
-   <tr class="gvRowStyleOdd">
+  <% if (i % 2  == 0) %>
+     <tr class="gvRowStyleEven">
+        <td class="gvCellStyleText"><%= link_to watershed.name, watershed_scenario_path(watershed.id) %></td>
+        <td class="gvCellStyleCheckbox">
+          <%#= link_to image_tag("view.png"), watershed %>
+          <%= link_to image_tag("edit.png"), edit_watershed_path(watershed), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), watershed, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+        </td>
+      </tr>
+  <% else %>
+      <tr class="gvRowStyleOdd">
+        <td class="gvCellStyleText"><%= link_to watershed.name, watershed_scenario_path(watershed.id) %></td>
+        <td class="gvCellStyleCheckbox">
+          <%#= link_to image_tag("run.png"), watershed_path(watershed.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
+          <%#= link_to image_tag("view.png"), watershed %>
+          <%= link_to image_tag("edit.png"), edit_watershed_path(watershed), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), watershed, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+        </td>
+      </tr>
     <% end %>
-    <% i = i + 1 %>
-  <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= link_to watershed.name, watershed_scenario_path(watershed.id) %></td>
-    <td class="gvCellStyleCheckbox">
-      <%#= link_to image_tag("view.png"), watershed %>
-      <%= link_to image_tag("edit.png"), edit_watershed_path(watershed), title: t('general.edit') %>
-      <%= link_to image_tag("delete.png"), watershed, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
-  </tr>
+  <% i = i + 1 %>
+
 <% end %>
 </table>
 
-<br />
+<br>

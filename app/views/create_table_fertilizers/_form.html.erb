@@ -1,7 +1,7 @@
 <%= form_for(@create_table_fertilizer) do |f| %>
   <% if @create_table_fertilizer.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@create_table_fertilizer.errors.count, "error") %> prohibited this create_table_fertilizer from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @create_table_fertilizer.errors.count, :model => t('models.create_table_fertilizer').downcase) %></h2>
 
       <ul>
       <% @create_table_fertilizer.errors.full_messages.each do |msg| %>
@@ -12,47 +12,47 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :code %><br />
+    <%= f.label :code %><br>
     <%= f.number_field :code %>
   </div>
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :qn %><br />
+    <%= f.label :qn %><br>
     <%= f.text_field :qn %>
   </div>
   <div class="field">
-    <%= f.label :qp %><br />
+    <%= f.label :qp %><br>
     <%= f.text_field :qp %>
   </div>
   <div class="field">
-    <%= f.label :yn %><br />
+    <%= f.label :yn %><br>
     <%= f.text_field :yn %>
   </div>
   <div class="field">
-    <%= f.label :yp %><br />
+    <%= f.label :yp %><br>
     <%= f.text_field :yp %>
   </div>
   <div class="field">
-    <%= f.label :nh3 %><br />
+    <%= f.label :nh3 %><br>
     <%= f.text_field :nh3 %>
   </div>
   <div class="field">
-    <%= f.label :lbs %><br />
+    <%= f.label :lbs %><br>
     <%= f.text_field :lbs %>
   </div>
   <div class="field">
-    <%= f.label :type %><br />
+    <%= f.label :type %><br>
     <%= f.number_field :type %>
   </div>
   <div class="field">
-    <%= f.label :status=boolean %><br />
+    <%= f.label :status=boolean %><br>
     <%= f.text_field :status=boolean %>
   </div>
   <div class="field">
-    <%= f.label :spanish_name %><br />
+    <%= f.label :spanish_name %><br>
     <%= f.text_field :spanish_name %>
   </div>
   <div class="actions">

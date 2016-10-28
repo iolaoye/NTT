@@ -1,5 +1,4 @@
-<h1>New layer</h1>
+<h1><%= t('layer.new_layer') %></h1>
 
-<%= render 'form' %>
+<%= render partial: 'form', locals:  {type1: "New"} %>
 
-<%= link_to t('general.back'), soil_layers_soil_path(session[:soil_id]) %>

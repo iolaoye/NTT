@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
 
 <p>
   <b>Control:</b>
@@ -36,5 +41,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_apex_control_path(@apex_control) %> |
-<%= link_to 'Back', apex_controls_path %>
+<%= link_to t('general.edit'), edit_apex_control_path(@apex_control) %> |
+<%= link_to t('general.back'), apex_controls_path %>

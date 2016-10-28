@@ -1,5 +1,10 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
 
 
-<%= link_to 'Edit', edit_modification_path(@modification) %> |
-<%= link_to 'Back', modifications_path %>
+<%= link_to t('general.edit'), edit_modification_path(@modification) %> |
+<%= link_to t('general.back'), modifications_path %>

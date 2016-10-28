@@ -1,50 +1,54 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
 
-<p>
-  <b>Depth:</b>
-  <%= @layer.depth %>
-</p>
+ <p>
+   <b>Depth:</b>
+   <%= @layer.depth %>
+ </p>
+ 
+ <p>
+   <b>Soil p:</b>
+   <%= @layer.soil_p %>
+ </p>
+ 
+ <p>
+   <b>Bulk density:</b>
+   <%= @layer.bulk_density %>
+ </p>
+ 
+ <p>
+   <b>Sand:</b>
+   <%= @layer.sand %>
+ </p>
+ 
+ <p>
+   <b>Silt:</b>
+   <%= @layer.silt %>
+ </p>
+ 
+ <p>
+   <b>Clay:</b>
+   <%= @layer.clay %>
+ </p>
+ 
+ <p>
+   <b>Organic matter:</b>
+   <%= @layer.organic_matter %>
+ </p>
+ 
+ <p>
+   <b>Ph:</b>
+   <%= @layer.ph %>
+ </p>
+ 
+ <p>
+   <b>Soil:</b>
+   <%= @layer.soil_id %>
+ </p>
 
-<p>
-  <b>Soil p:</b>
-  <%= @layer.soil_p %>
-</p>
-
-<p>
-  <b>Bulk density:</b>
-  <%= @layer.bulk_density %>
-</p>
-
-<p>
-  <b>Sand:</b>
-  <%= @layer.sand %>
-</p>
-
-<p>
-  <b>Silt:</b>
-  <%= @layer.silt %>
-</p>
-
-<p>
-  <b>Clay:</b>
-  <%= @layer.clay %>
-</p>
-
-<p>
-  <b>Organic matter:</b>
-  <%= @layer.organic_matter %>
-</p>
-
-<p>
-  <b>Ph:</b>
-  <%= @layer.ph %>
-</p>
-
-<p>
-  <b>Soil:</b>
-  <%= @layer.soil_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_layer_path(@layer) %> |
-<%= link_to 'Back', layers_path %>
+<%= link_to t('general.edit'), edit_layer_path %> |
+<%= link_to t('general.back'), soil_layers_soil_path(session[:soil_id]) %>

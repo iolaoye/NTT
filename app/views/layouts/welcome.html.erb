@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NTTG3</title>
+    <%= stylesheet_link_tag  "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <% if NTTG3::Application.config.language == "en" %>
+      <% I18n.default_locale = :en %>
+    <% else %>
+      <% I18n.default_locale = :es %>
+    <% end %>
+
+        <div id="navbar" class="navbar-collapse collapse">
+        <%= render "layouts/header" %>
+    </div>
+
+
+<div class="container">
+
+      <%= yield %>
+
+</div></div></div>
+
+<%= render "layouts/footer" %>
+
+
+   </body>
+</html>

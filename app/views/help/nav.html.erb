@@ -23,25 +23,25 @@
 		
 		<h2><%= t('nav.dataentryfield.header') %></h2>
 		<p><%= t('nav.dataentryfield.body') %></p>
-		<%= image_tag("navpage/image008.jpg", :alt => "Data Entry") %>
+		<%= image_tag("help/navpage/image001.png", :alt => "Data Entry") %>
 		<br><br>
 		
 		<h2><%= t('nav.dropdownlist.header') %></h2>
 		<p><%= t('nav.dropdownlist.body') %></p>
-		<%= image_tag("navpage/image009.png", :alt => "Drop Down List") %>
+		<%= image_tag("help/navpage/image002.png", :alt => "Drop Down List") %>
 		<br><br>
 		
 		<h2><%= t('nav.textbox.header') %></h2>
 		<p><%= t('nav.textbox.body') %></p>
-		<%= image_tag("navpage/image011.jpg", :alt => "Text Box") %>
+		<%= image_tag("help/navpage/image003.png", :alt => "Text Box") %>
 		<br><br>
 		
 		<h2><%= t('nav.textarea.header') %></h2>
 		<p><%= t('nav.textarea.body') %></p>
-		<%= image_tag("navpage/image013.jpg", :alt => "Text Area") %>
+		<%= image_tag("help/navpage/image004.png", :alt => "Text Area") %>
 		<br><br>
-		
-		<%= link_to "< Prev", help_path("sysreq") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_3") %><br>
-		<%= link_to "<< Return to Table of Contents", help_path("index") %>
+      
 	</div>
 </div>
+<br><%= link_to "< Prev", help_path("sysreq") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_3") %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index") %></br>

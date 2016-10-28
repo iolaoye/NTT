@@ -1,55 +1,95 @@
+
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
+<h1><%= t('menu.apex_soil')%></h1>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Selected:</b>
-  <%= @soil.selected %>
-</p>
+<table class='gvTableStyle'>
+  <tr class='gvRowStyleOdd'>
+    <td><p>
+        <b>SALB</b><br>
+        <%= @soil.albedo %>
+    </p></td>
+    <td><p>
+        <b>FFC</b><br>
+        <%= @soil.ffc %>
+    </p></td>
+    <td><p>
+        <b>WTMN</b><br>
+        <%= @soil.wtmn %>
+    </p></td>
+    <td><p>
+        <b>WTMX</b><br>
+        <%= @soil.wtmx %>
+    </p></td>
+    <td><p>
+        <b>WTBL</b><br>
+        <%= @soil.wtbl %>
+    </p></td>
+    <td><p>
+        <b>GWST</b><br>
+        <%= @soil.gwst %>
+    </p></td>
+    <td><p>
+        <b>GWMX</b><br>
+        <%= @soil.gwmx %>
+    </p></td>
+    <td><p>
+        <b>RFT</b><br>
+        <%= @soil.rft %>
+    </p></td>
+    <td><p>
+        <b>RFPK</b><br>
+        <%= @soil.rfpk %>
+    </p></td>
+  
+  </tr>
+  <tr class='gvRowStyleOdd'>
+    <td><p>
+        <b>TSLA</b><br>
+        <%= @soil.tsla %>
+    </p></td>
+    <td><p>
+        <b>XIDS</b><br>
+        <%= @soil.xids %>
+    </p></td>
+    <td><p>
+        <b>RTN1</b><br>
+        <%= @soil.rtn1 %>
+    </p></td>
+    <td><p>
+        <b>XIDK</b><br>
+        <%= @soil.xidk %>
+    </p></td>
+    <td><p>
+        <b>ZQT</b><br>
+        <%= @soil.zqt %>
+    </p></td>
+    <td><p>
+        <b>ZF</b><br>
+        <%= @soil.zf %>
+    </p></td>
+    <td><p>
+        <b>ZTK</b><br>
+        <%= @soil.ztk %>
+    </p></td>
+    <td><p>
+        <b>FBM</b><br>
+        <%= @soil.fbm %>
+    </p></td>
+    <td><p>
+        <b>FHP</b><br>
+        <%= @soil.fhp %>
+    </p></td>
+  </tr>
+</table>
 
-<p>
-  <b>Key:</b>
-  <%= @soil.key %>
-</p>
-
-<p>
-  <b>Symbol:</b>
-  <%= @soil.symbol %>
-</p>
-
-<p>
-  <b>Group:</b>
-  <%= @soil.group %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @soil.name %>
-</p>
-
-<p>
-  <b>Albedo:</b>
-  <%= @soil.albedo %>
-</p>
-
-<p>
-  <b>Slope:</b>
-  <%= @soil.slope %>
-</p>
-
-<p>
-  <b>Percentage:</b>
-  <%= @soil.percentage %>
-</p>
-
-<p>
-  <b>Field:</b>
-  <%= @soil.field_id %>
-</p>
-
-<p>
-  <b>Drainage type:</b>
-  <%= @soil.drainage_type %>
-</p>
-
-
-<%= link_to 'Edit', edit_soil_path(@soil) %> |
-<%= link_to 'Back', soils_path %>
+<br>
+<%= link_to t('general.edit'), edit_apex_soil_path(@soil) %> |
+<%= link_to t('general.back'), apex_soils_path %>
+</br>

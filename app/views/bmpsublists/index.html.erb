@@ -15,13 +15,13 @@
     <td><%= bmpsublist.id %></td>
     <td><%= bmpsublist.name %></td>
     <td><%= bmpsublist.status %></td>
-    <td><%= link_to 'Show', bmpsublist %></td>
-    <td><%= link_to 'Edit', edit_bmpsublist_path(bmpsublist) %></td>
-    <td><%= link_to 'Destroy', bmpsublist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to t('general.show'), bmpsublist %></td>
+    <td><%= link_to t('general.edit'), edit_bmpsublist_path(bmpsublist) %></td>
+    <td><%= link_to 'Destroy', bmpsublist, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Bmpsublist', new_bmplist_bmpsublist_path %>

@@ -1,25 +1,26 @@
 <%= form_for(@project) do |f| %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @project.errors.count, :model => t('models.project').downcase) %></h2>
 
       <ul>
-      <% @project.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @project.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
+  <div class="field" title="Name of Project">
+    <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
+  <div class="field" title="Description of Project">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, :rows => 5 %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit t('submit.savecontinue') %>
+    <%= link_to t('general.back'), welcomes_path %>
   </div>
 <% end %>

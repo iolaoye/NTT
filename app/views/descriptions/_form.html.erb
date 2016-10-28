@@ -1,7 +1,7 @@
 <%= form_for(@description) do |f| %>
   <% if @description.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@description.errors.count, "error") %> prohibited this description from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @description.errors.count, :model => t('models.description').downcase) %></h2>
 
       <ul>
       <% @description.errors.full_messages.each do |msg| %>
@@ -12,31 +12,31 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :id %><br />
+    <%= f.label :id %><br>
     <%= f.number_field :id %>
   </div>
   <div class="field">
-    <%= f.label :detail %><br />
+    <%= f.label :detail %><br>
     <%= f.check_box :detail %>
   </div>
   <div class="field">
-    <%= f.label :description %><br />
+    <%= f.label :description %><br>
     <%= f.text_field :description %>
   </div>
   <div class="field">
-    <%= f.label :spanish_description %><br />
+    <%= f.label :spanish_description %><br>
     <%= f.text_field :spanish_description %>
   </div>
   <div class="field">
-    <%= f.label :unit %><br />
+    <%= f.label :unit %><br>
     <%= f.text_field :unit %>
   </div>
   <div class="field">
-    <%= f.label :position %><br />
+    <%= f.label :position %><br>
     <%= f.number_field :position %>
   </div>
   <div class="field">
-    <%= f.label :period %><br />
+    <%= f.label :period %><br>
     <%= f.number_field :period %>
   </div>
   <div class="actions">

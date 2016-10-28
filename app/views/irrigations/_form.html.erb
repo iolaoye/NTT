@@ -1,7 +1,7 @@
 <%= form_for(@irrigation) do |f| %>
   <% if @irrigation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@irrigation.errors.count, "error") %> prohibited this irrigation from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @irrigation.errors.count, :model => t('models.irrigation').downcase) %></h2>
 
       <ul>
       <% @irrigation.errors.full_messages.each do |msg| %>
@@ -12,19 +12,19 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :id %><br />
+    <%= f.label :id %><br>
     <%= f.text_field :id %>
   </div>
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :code %><br />
+    <%= f.label :code %><br>
     <%= f.text_field :code %>
   </div>
   <div class="field">
-    <%= f.label :status %><br />
+    <%= f.label :status %><br>
     <%= f.check_box :status %>
   </div>
   <div class="actions">

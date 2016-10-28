@@ -1,5 +1,4 @@
 <h1><%= t('general.new') + " " + t('scenario.scenario') %></h1>
 
-<%= render 'form' %>
+<%= render partial: 'form', locals:  {type1: "New"} %>
 
-<%= link_to t('general.back'), scenarios_path  %>

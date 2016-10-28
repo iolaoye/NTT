@@ -65,13 +65,13 @@
     <td><%= crop.dd %></td>
     <td><%= crop.dyam %></td>
     <td><%= crop.spanish_name %></td>
-    <td><%= link_to 'Show', crop %></td>
-    <td><%= link_to 'Edit', edit_crop_path(crop) %></td>
-    <td><%= link_to 'Destroy', crop, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to t('general.show'), crop %></td>
+    <td><%= link_to t('general.edit'), edit_crop_path(crop) %></td>
+    <td><%= link_to 'Destroy', crop, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Crop', new_crop_path %>

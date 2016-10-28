@@ -1,7 +1,7 @@
 <%= form_for(@bmpsublist) do |f| %>
   <% if @bmpsublist.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@bmpsublist.errors.count, "error") %> prohibited this bmpsublist from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @bmpsublist.errors.count, :model => t('models.bmpsublist')) %></h2>
 
       <ul>
       <% @bmpsublist.errors.full_messages.each do |msg| %>
@@ -12,15 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :status %><br />
+    <%= f.label :status %><br>
     <%= f.check_box :status %>
   </div>
   <div class="field">
-    <%= f.label :bmplist_id %><br />
+    <%= f.label :bmplist_id %><br>
     <%= f.text_field :bmplist_id %>
   </div>
   <div class="actions">

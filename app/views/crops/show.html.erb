@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
 
 <p>
   <b>Number:</b>
@@ -136,5 +141,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_crop_path(@crop) %> |
-<%= link_to 'Back', crops_path %>
+<%= link_to t('general.edit'), edit_crop_path(@crop) %> |
+<%= link_to t('general.back'), crops_path %>

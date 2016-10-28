@@ -1,3 +1,17 @@
+<% case %>
+<% when notice %>
+	<div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
+<% when flash[:info] %>
+	<div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:info] %>
+    </div>
+<% end %>
+
+<br>
 <%= form_for :watershed, url: new_scenario_watershed_scenario_path do |f| %>
 <table>
   <tr>
@@ -12,10 +26,8 @@
   </tr>
 </table>  
 <% end %>
- 
-<p id="error_notice"><%= notice %></p>
 
-<h1><%= t('watershed_scenarios.watershed_scenarios_title')%></h1> 
+<h1><%= t('watershed_scenario.watershed_scenario_title')%></h1> 
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
@@ -25,23 +37,29 @@
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
 
-<% i=1 %>
-<% @watershed_scenarios.each do |watershed_scenario| %>
-<% if (i % 2  == 0) %>
-   <tr class="gvRowStyleEven">
+  <% i=1 %>
+  <% @watershed_scenarios.each do |watershed_scenario| %>
+    <% if (i % 2  == 0) %>
+      <tr class="gvRowStyleEven">
+        <td class="gvCellStyleText"><%= Watershed.find_by_id(watershed_scenario.watershed_id).name %></td>
+        <td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
+        <td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
+        <td class="gvCellStyleCheckbox">
+          <%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+        </td>
+      </tr>
     <% else %>
-   <tr class="gvRowStyleOdd">
+      <tr class="gvRowStyleOdd">
+        <td class="gvCellStyleText"><%= Watershed.find_by_id(watershed_scenario.watershed_id).name %></td>
+        <td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
+        <td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
+        <td class="gvCellStyleCheckbox">
+          <%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+        </td>
+      </tr>
     <% end %>
-    <% i = i + 1 %>
-  <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= Watershed.find_by_id(watershed_scenario.watershed_id).name %></td>
-    <td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
-    <td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
-    <td class="gvCellStyleCheckbox">
-      <%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
-  </tr>
-<% end %>
+  <% i = i + 1 %>
+  <% end %>
 </table>
 
-<br />
+<br>

@@ -11,13 +11,13 @@
 <% @ways.each do |way| %>
   <tr>
     <td><%= way.way_name %></td>
-    <td><%= link_to 'Show', way %></td>
-    <td><%= link_to 'Edit', edit_way_path(way) %></td>
-    <td><%= link_to 'Destroy', way, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to t('general.show'), way %></td>
+    <td><%= link_to t('general.edit'), edit_way_path(way) %></td>
+    <td><%= link_to 'Destroy', way, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Way', new_way_path %>

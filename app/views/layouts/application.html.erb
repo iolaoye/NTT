@@ -8,32 +8,23 @@
 	</head>
 	<body>
 	  <% if NTTG3::Application.config.language == "en" %>
-		<% I18n.default_locale = :en %>
+			<% I18n.default_locale = :en %>
 	  <% else %>
-		<% I18n.default_locale = :es %>
+			<% I18n.default_locale = :es %>
 	  <% end %>
 
-	  <%= image_tag("NTTG2_Logo.png", :alt => "NTT Logo", width:'100%', height:'200px') %>
+        <div id="navbar" class="navbar-collapse collapse">
+   			<%= render "layouts/header" %>
+		</div>
 
-	  <% if signed_in? %>
-		<%= render 'layouts/header' %>
-	<% else %>
-		<% case request.original_url %>
-			<% when /about/, /contact/, /help/ %>
-				<%= render 'layouts/header' %>
-			<% end %>
-	  <% end %>
+<% if signed_in? %>
+<%= render "layouts/project" %>
+<% else %>
+<%= yield %>
+<% end %>
 
-	  <!-- main body -->
-	  <div class="container">
-	  	<div class="pageContainer">
-	  		<div id="pageContent">
-	  			<%= yield %>
-	  			<br><br>
-	  		</div>
-	  	</div>
-	  </div>
+<%= render "layouts/footer" %>
 
-	  <%= render 'layouts/footer' %>
+
    </body>
 </html>

@@ -1,5 +1,6 @@
 <h1><%= t('general.new') + " " + t('soil.soil') %></h1>
 
-<%= render 'form' %>
+<%= render partial: 'form', locals:  {type1: "New"} %>
 
-<%= link_to t('general.back'), field_soils_field_path(session[:field_id]) %>
+
+

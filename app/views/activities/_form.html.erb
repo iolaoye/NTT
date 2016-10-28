@@ -1,7 +1,7 @@
 <%= form_for(@activity) do |f| %>
   <% if @activity.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :ac => @activity.errors.count, :model => t('models.activity').downcase) %></h2>
 
       <ul>
       <% @activity.errors.full_messages.each do |msg| %>
@@ -12,23 +12,23 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :code %><br />
+    <%= f.label :code %><br>
     <%= f.number_field :code %>
   </div>
   <div class="field">
-    <%= f.label :abbreviation %><br />
+    <%= f.label :abbreviation %><br>
     <%= f.text_field :abbreviation %>
   </div>
   <div class="field">
-    <%= f.label :spanish_name %><br />
+    <%= f.label :spanish_name %><br>
     <%= f.text_field :spanish_name %>
   </div>
   <div class="field">
-    <%= f.label :apex_code %><br />
+    <%= f.label :apex_code %><br>
     <%= f.number_field :apex_code %>
   </div>
   <div class="actions">

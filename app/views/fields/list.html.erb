@@ -1,37 +1,81 @@
-<h1><%= t('field.field_title')%></h1>
+<% if notice != nil %>
+    <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
+<% end %>
 
-<%#= link_to t('field.new_field'), new_field_path %>
+<!--<h1 class="no_margin_bottom"><%= t('field.field_title') %></h1>
+<p class="instruction"><%= t('instructions.fields') %> </p>
+
+<%= form_tag list_field_path, :method => :get do |f| %>
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
     <th class="gvCellStyleTitle"><%= t('field.field_area')%></th>
     <th class="gvCellStyleTitle"><%= t('field.field_avg_slope')%></th>
-    <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
     <th class="gvCellStyleTitle"><%= t('field.field_type')%></th>
+    <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
 
   <% i=1 %>
   <% @fields.each do |field| %>
     <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">
+        <td class="gvCellStyleText"><%= link_to field.field_name, field %></td>
+        <td class="gvCellStyleNumber", class="numbers"><%= field.field_area %></td>
+        <td class="gvCellStyleNumber"><%= field.field_average_slope %></td>
+        <td class="gvCellStyleCheckbox"><%= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
+        <td class="gvCellStyleCheckbox">
+          <%#= link_to image_tag("view.png"), field %>
+          <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+        </td>
+      </tr>
     <% else %>
       <tr class="gvRowStyleOdd">
+        <td class="gvCellStyleText"><%= link_to field.field_name, field %></td>
+        <td class="gvCellStyleNumber", class="numbers"><%= field.field_area %></td>
+        <td class="gvCellStyleNumber"><%= field.field_average_slope %></td>
+        <td class="gvCellStyleCheckbox"><%= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
+        <td class="gvCellStyleCheckbox">
+          <%#= link_to image_tag("view.png"), field %>
+          <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+        </td>
+      </tr>
     <% end %>
     <% i = i + 1 %>
-  <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= link_to field.field_name, field %></td>
-    <td class="gvCellStyleNumber", class="numbers"><%= field.field_area %></td>
-    <td class="gvCellStyleNumber"><%= field.field_average_slope %></td>
-    <td class="gvCellStyleCheckbox">
-      <%#= link_to image_tag("view.png"), field %>
-      <%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
-      <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
-    <td class="gvCellStyleCheckbox"><label><input type="checkbox" name="field_type" value="field_type"></label></td>
-  </tr>
-<% end %>
+  <% end %>
 </table>
+<% end %>
+-->
 
-
-
-<br />
+    <div class="page-header"><h1><%= t('field.field_title') %></h1>
+            
+    </div>
+    <%= t('instructions.fields') %><br><br>
+          <div class="table-responsive">
+            <div class="panel panel-default">
+         <table class="table table-striped">
+          <thead>
+            <tr>
+              <th><%= t('field.field_name')%></th>
+              <th><%= t('field.field_area')%></th>
+              <th><%= t('field.field_type')%></th>
+              <th><%= t('general.actions')%></th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @fields.each do |field| %>
+            <tr>
+              <td><%= link_to field.field_name, field %></td>
+              <td><%= field.field_area %></td>
+              <td><%= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
+              <td><%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table></div><button type="button" class="btn btn-primary">Add New Field</button>
+          </div>

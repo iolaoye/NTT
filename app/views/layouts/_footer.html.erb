@@ -1,14 +1,179 @@
-﻿<div id='cssmenu'>
+﻿<!--<div id="instructionBox" style="display: none">
+  <%case%>
+    <% when  request.original_url.include?('/projects') %>
+      <%= raw t('instructionbox.projects')%>
+    <% when request.original_url.include?('/locations') %>
+      <%= raw t('instructionbox.locations')%>
+    <% when request.original_url.include?('/fields') %>
+      <%= raw t('instructionbox.fields')%>
+    <% when request.original_url.include?('/watersheds') %>
+      <%= raw t('instructionbox.watersheds')%>
+    <% when request.original_url.include?('/watershed_scenarios') %>
+      <%= raw t('instructionbox.watershed_scenarios')%>
+    <% when request.original_url.include?('/weathers') %>
+      <%= raw t('instructionbox.weathers')%>
+    <% when request.original_url.include?('/soils') %>
+      <%= raw t('instructionbox.soils')%>
+    <% when request.original_url.include?('/layers') %>
+      <%= raw t('instructionbox.layers')%>
+    <% when request.original_url.include?('/scenarios') %>
+      <%= raw t('instructionbox.scenarios')%>
+    <% when request.original_url.include?('/results') %>
+      <%= raw t('instructionbox.results')%>
+    <% when request.original_url.include?('/operations') %>
+      <%= raw t('instructionbox.operations')%>
+    <% when request.original_url.include?('/bmps') %>
+      <%= raw t('instructionbox.bmps')%>
+    <% when request.original_url.include?('/apex_controls') %>
+      <%= raw t('instructionbox.apex_controls')%>
+    <% when request.original_url.include?('/apex_parameters') %>
+      <%= raw t('instructionbox.apex_parameters')%>
+    <% when request.original_url.include?('/subareas') %>
+      <%= raw t('instructionbox.subareas')%>
+    <% when request.original_url.include?('/apex_soils') %>
+      <%= raw t('instructionbox.apex_soils')%>
+    <% when request.original_url.include?('/apex_layers') %>
+      <%= raw t('instructionbox.apex_layers')%>
+    <% when request.original_url.include?('/soil_operations') %>
+      <%= raw t('instructionbox.soil_operations')%>
+    <% when request.original_url.include?('/sites') %>
+      <%= raw t('instructionbox.sites')%>
+  <% end %>
+</div>
+<div id='cssmenu'>
     <ul id="mnuFooter" >
-      <li><a <%= link_to t('footer.instructions') %> </a></li>
-	  <li><a <%= link_to t("footer.contact_us"), contact_path %></a></li>
-	  <li><a <%= link_to t("footer.about_ntt"), about_path %></a></li>
-	  <li><a <%= link_to t("footer.help"), help_path("index") %></a></li>
-	  <li class='active has-sub'><%= link_to t("footer.Language") %>
-		<ul id="cssSubMenu" >
-		  <li><%= link_to t("languages.english"), :locale=>'en'%></li>
-		  <li><%= link_to t("languages.spanish"), :locale=>'es'%></li>
-		</ul>
-        </li>
+      <li><a <%= link_to_function t('footer.instructions'), "toggle_visibility('instructionBox')"%></a></li>
+      <li><a <%= link_to t("footer.contact_us"), contact_path %></a></li>
+      <li><a <%= link_to t("footer.about_ntt"), about_path %></a></li>
+      <li><a <%= link_to t("footer.help"), help_path("index") %></a></li>
+      <li class='active has-sub'><%= link_to t("footer.Language") %>
+        <ul id="cssSubMenu" >
+          <li><%= link_to t("languages.english"), :locale=>'en'%></li>
+          <li><%= link_to t("languages.spanish"), :locale=>'es'%></li>
+        </ul>
+      </li>
     </ul>
+</div>-->
+
+<footer class="footer">
+    <nav class="navbar navbar-default navbar-custom">
+        <div class="container-fluid">
+            <div class="nav navbar-nav navbar-right">
+                <ul class="footerright">
+                    
+                    <li>
+                        <%= image_tag('download.gif') %> Download
+                    </li>
+                    <li>
+                    <%= image_tag('layers.png') %> Soil Layers
+                    </li>
+                     <li>
+                        <%= image_tag('edit.png') %> Edit
+                    </li>
+                    <!--<li>
+                        <div class="undo"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></div> Reset
+                    </li>-->
+                    <li>
+                       <%= image_tag('delete.png') %> Delete
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav navbar-nav navbar-left">
+<ul class="footerleft">
+                   <li>
+                        <a href="#" data-toggle="modal" data-target="#instructions">Instructions</a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#contact">Contact Us</a>
+                    </li>
+                    <li>
+                        <%= link_to t("footer.about_ntt"), about_path %>
+                    </li>
+                     <li>
+                       <%= link_to t("footer.help"), help_path("index") %>
+                    </li>
+                      <li>
+                         <div class="language">Language
+              <span class="tooltiptext">
+                <%= link_to t("languages.english"), :locale=>'en'%><br>
+                    <%= link_to t("languages.spanish"), :locale=>'es'%>
+                  </span>
+            </div>
+              </li>
+                </ul>
+            </div>
+
+
+        </div>
+
+    </nav>
+</footer>
+
+<div class="modal fade" id="instructions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+After scenarios have been simulated the results for that scenario is ready to be seen. Here you can compare scenarios, or just show one scenario. The following comparisons are possible.<br><br>
+<li>1st Scenario vs 2nd Scenario</li>
+<li>1st Scenario vs 2nd Scenario and 1st Scenario vs 3nd Scenario</li><br>
+Any scenario can be selected in any of the three drop downs, and scenarios can be repeated if desired.<br><br>
+
+Once at least one scenarios is chosen, a summary can be run by clicking Summary, and then if desired, a pdf can be downloaded by clicking Download PDF.<br><br>
+
+You also have the following options additional to just a Summary. These require the same input with an additional field
+<br><br>
+1. Summary by Soil
+<ul><li>Addition field: Soil</li></ul>
+2. Annual Charts
+<ul><li>Addition field: Chart type</li></ul>
+3. Monthly Charts
+<ul><li>Addition field: Chart type</li></ul>
+Note: A PDF can only be downloaded once a summary has been run, in the Summary tab. If any of the scenarios change, you will have to run the summary again before downloading the PDF
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Contact Information</h4>
+      </div>
+      <div class="modal-body">
+For questions or comments regarding the Nutrient Tracking Tool <b>(NTT)</b>, please contact:<br><br>
+<ul><li><b>Ali Saleh</b></li>
+Associate Director<br>
+P.O. Box T410<br>
+Tarleton State University<br>
+Stephenville, TX 76402<br>
+(254)968-9079 (Phone)<br>
+(254)968-9790 (Fax)<br>
+saleh@tarleton.edu</li></ul>
+<br>
+For <b>technical </b>questions or comments regarding the Nutrient Tracking Tool <b>(NTT)</b>, please contact:<br><br>
+
+<ul><li><b>Oscar Gallego</b></li>
+Senior Research Associate<br>
+P.O. Box T410<br>
+Tarleton State University<br>
+Stephenville, TX 76402<br>
+(254)968-9787 (Phone)<br>
+(254)968-9790 (Fax)<br>
+gallego@tiaer.tarleton.edu
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,28 +1,162 @@
-﻿<p id="notice"><%= notice %></p>
-<h1><%= t('general.listing') + " " + t('menu.scenarios') %></h1>
-<%= link_to t('general.new')  + ' ' + t('scenario.scenario'), new_scenario_path %>
-&nbsp &nbsp
-<%= link_to t('scenario.simulate') + ' ' + t('general.all'), new_scenario_path %>
-  <table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
-    <th class="gvCellStyleTitle">Name</th>
-    <th><%= t('general.actions')%></th>
-  </tr>
-  <% i=1 %>    
-<% @scenarios.each do |scenario| %>
-    <% if (i % 2  == 0) %>
-      <tr class="gvRowStyleEven">
-    <% else %>
-      <tr class="gvRowStyleOdd">
-    <% end %>
-    <% i = i + 1 %>
-  <tr class="gvRowStyle">
-    <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
-    <td>
-      <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
-        <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
-      <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
-    </td>
-  </tr>
+<% if notice != nil %>
+    <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
 <% end %>
+<% if @errors != nil %>
+    <% if @errors.length > 0 %>
+        <div id="error_explanation">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          <h2>Simulation failed to run</h2>
+          <ul>
+            <% @errors.each do |error| %>
+                <li><%= error %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+<% end %>
+<% if flash[:error] != nil %>
+    <div class="danger_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <!--<h2>Simulation failed to run</h2>-->
+      <%= flash[:error] %>
+    </div>
+<% end %>
+
+<h1 class="no_margin_bottom"><%= t('general.listing') + " " + t('menu.scenarios') %></h1>
+<p class="instruction"><%= t('instructions.scenarios') %> </p>
+
+<%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_scenario_path %>
+<%= link_to t('scenario.simulate') + ' ' + t('general.all'), {:action => :simulate_all}, :method => :post, data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
+<%= link_to t('general.continue'), results_path(:button => t('result.summary')), :class => 'light_green_button' %>
+<table class='gvTableStyle'>
+  <tr class='gvHeaderStyle'>
+    <th class="gvCellStyleTitle"><%= t('general.name') %></th>
+    <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
+    <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
+    <th class="gvCellStyleTitle"><%= t('menu.layer_file') %></th>
+    <th class="gvCellStyleTitle"><%= t('menu.operation_file') %></th>
+    <th class="gvCellStyleTitle"><%= t('scenario.last_simulation') %></th>
+    <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+  </tr>
+  <% i=1 %>
+  <% @scenarios.each do |scenario| %>
+      <% warning = false %>
+      <% if (i % 2 == 0) %>
+          <tr class="gvRowStyleEven">
+            <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
+            <td class="gvCellStyleImage">
+              <% if Weather.find_by_field_id(scenario.field_id) == nil %>
+                  <%= link_to(image_tag("warning_icon.png", :class => 'gvCellStyleImage', :title => t('menu.weather') + " No"), edit_weather_path(session[:field_id])) %>
+                  <% warning = true %>
+              <% else %>
+                  <%= image_tag("go_icon.png", :class => 'gvCellStyleImage', :title => t('menu.weather') + " OK") %>
+              <% end %>
+            </td>
+            <td class="gvCellStyleImage">
+              <% if Soil.find_by_field_id(scenario.field_id) == nil %>
+                  <%= link_to(image_tag("warning_icon.png", :class => 'gvCellStyleImage', :title => t('menu.soils') + " No"), field_soils_field_path(session[:field_id])) %>
+                  <% warning = true %>
+              <% else %>
+                  <%= image_tag("go_icon.png", :class => 'gvCellStyleImage', :title => t('menu.soils') + " OK") %>
+              <% end %>
+            </td>
+            <td class="gvCellStyleImage">
+              <% soils = Soil.where(:field_id => scenario.field_id) %>
+              <% found = true %>
+              <% soils.each do |soil| %>
+                  <% if Layer.find_by_soil_id(soil.id) == nil %>
+                      <% @soil_id = soil.id %>
+                      <% found = false %>
+                      <% break %>
+                  <% end %>
+              <% end %>
+              <% if found == false %>
+                  <% session[:soil_id] = @soil_id %>
+                  <%= link_to(image_tag("warning_icon.png", :class => 'gvCellStyleImage', :title => t('menu.layer_file') + " No"), list_layer_path(session[:soil_id])) %>
+                  <% warning = true %>
+              <% else %>
+                  <%= image_tag("go_icon.png", :class => 'gvCellStyleImage', :title => t('menu.layer_file') + " OK") %>
+              <% end %>
+            </td>
+            <td class="gvCellStyleImage">
+              <% if Operation.find_by_scenario_id(scenario.id) == nil %>
+                  <% session[:scenario_id] = scenario.id %>
+                  <%= link_to(image_tag("warning_icon.png", :class => 'gvCellStyleImage', :title => t('menu.operation_file') + " No"), list_operation_path(scenario.id)) %>
+                  <% warning = true %>
+              <% else %>
+                  <%= image_tag("go_icon.png", :class => 'gvCellStyleImage', :title => t('menu.operation_file') + " OK") %>
+              <% end %>
+            </td>
+            <td calss="gvCellStyleText"><%= scenario.last_simulation %></td>
+            <td class="gvCellStyleActions">
+              <% if warning == false %>
+                  <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
+              <% end %>
+              <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
+              <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
+            </td>
+          </tr>
+      <% else %>
+          <tr class="gvRowStyleOdd">
+            <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
+            <td class="gvCellStyleImage">
+              <% if Weather.find_by_field_id(scenario.field_id) == nil %>
+                  <%= link_to(image_tag("warning_icon.png", :class => 'gvCellStyleImage', :title => t('menu.weather') + " No"), edit_weather_path(session[:field_id])) %>
+                  <% warning = true %>
+              <% else %>
+                  <%= image_tag("go_icon.png", :class => 'gvCellStyleImage', :title => t('menu.weather') + " OK") %>
+              <% end %>
+            </td>
+            <td class="gvCellStyleImage">
+              <% if Soil.find_by_field_id(scenario.field_id) == nil %>
+                  <%= link_to(image_tag("warning_icon.png", :class => 'gvCellStyleImage', :title => t('menu.soils') + " No"), field_soils_field_path(session[:field_id])) %>
+                  <% warning = true %>
+              <% else %>
+                  <%= image_tag("go_icon.png", :class => 'gvCellStyleImage', :title => t('menu.soils') + " OK") %>
+              <% end %>
+            </td>
+            <td class="gvCellStyleImage">
+              <% soils = Soil.where(:field_id => scenario.field_id) %>
+              <% found = true %>
+              <% soils.each do |soil| %>
+                  <% if Layer.find_by_soil_id(soil.id) == nil %>
+                      <% @soil_id = soil.id %>
+                      <% found = false %>
+                      <% break %>
+                  <% end %>
+              <% end %>
+              <% if found == false %>
+                  <% session[:soil_id] = @soil_id %>
+                  <%= link_to(image_tag("warning_icon.png", :class => 'gvCellStyleImage', :title => t('menu.layer_file') + " No"), list_layer_path(session[:soil_id])) %>
+                  <% warning = true %>
+              <% else %>
+                  <%= image_tag("go_icon.png", :class => 'gvCellStyleImage', :title => t('menu.layer_file') + " OK") %>
+              <% end %>
+            </td>
+            <td class="gvCellStyleImage">
+              <% if Operation.find_by_scenario_id(scenario.id) == nil %>
+                  <% session[:scenario_id] = scenario.id %>
+                  <%= link_to(image_tag("warning_icon.png", :class => 'gvCellStyleImage', :title => t('menu.operation_file') + " No"), list_operation_path(scenario.id)) %>
+                  <% warning = true %>
+              <% else %>
+                  <%= image_tag("go_icon.png", :class => 'gvCellStyleImage', :title => t('menu.operation_file') + " OK") %>
+              <% end %>
+            </td>
+            <td calss="gvCellStyleText"><%= scenario.last_simulation %></td>
+            <td class="gvCellStyleActions">
+              <% if warning == false %>
+                  <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate'), data: {disable_with: 'Please wait. Simulation in progress . . .'} %>
+              <% end %>
+              <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
+              <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
+            </td>
+          </tr>
+      <% end %>
+      <% i = i + 1 %>
+  <% end %>
 </table>
+
+<br>

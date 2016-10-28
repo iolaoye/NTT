@@ -1,7 +1,7 @@
 <%= form_for(@tillage) do |f| %>
   <% if @tillage.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@tillage.errors.count, "error") %> prohibited this tillage from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @tillage.errors.count, :model => t('models.tillage').downcase) %></h2>
 
       <ul>
       <% @tillage.errors.full_messages.each do |msg| %>
@@ -12,35 +12,35 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :code %><br />
+    <%= f.label :code %><br>
     <%= f.number_field :code %>
   </div>
   <div class="field">
-    <%= f.label :abbreviation %><br />
+    <%= f.label :abbreviation %><br>
     <%= f.text_field :abbreviation %>
   </div>
   <div class="field">
-    <%= f.label :spanish_name %><br />
+    <%= f.label :spanish_name %><br>
     <%= f.text_field :spanish_name %>
   </div>
   <div class="field">
-    <%= f.label :operation %><br />
+    <%= f.label :operation %><br>
     <%= f.number_field :operation %>
   </div>
   <div class="field">
-    <%= f.label :dndc %><br />
+    <%= f.label :dndc %><br>
     <%= f.number_field :dndc %>
   </div>
   <div class="field">
-    <%= f.label :eqp %><br />
+    <%= f.label :eqp %><br>
     <%= f.text_field :eqp %>
   </div>
   <div class="field">
-    <%= f.label :status %><br />
+    <%= f.label :status %><br>
     <%= f.check_box :status %>
   </div>
   <div class="actions">

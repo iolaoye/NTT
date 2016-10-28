@@ -1,8 +1,18 @@
 class SoilOperationsController < ApplicationController
   # GET /soil_operations
   # GET /soil_operations.json
-  def index
-    @soil_operations = SoilOperation.all
+  def index	
+	@soil = 0
+	@scenario = 0
+    soils = Soil.where(:field_id => session[:field_id])
+	if soils != nil then
+		@soil = soils[0].id
+	end
+	scenarios = Scenario.where(:field_id => session[:field_id])
+	if scenarios != nil then
+		@scenario = scenarios[0].id
+	end
+    @soil_operations = SoilOperation.where(:soil_id => @soil, :scenario_id => @scenario)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -40,17 +50,11 @@ class SoilOperationsController < ApplicationController
   # POST /soil_operations
   # POST /soil_operations.json
   def create
-    @soil_operation = SoilOperation.new(soil_operation_params)
+	@soil = params[:soil_operation][:soil_id]
+	@scenario = params[:soil_operation][:scenario_id]
+    @soil_operations = SoilOperation.where(:soil_id => @soil, :scenario_id => @scenario)
 
-    respond_to do |format|
-      if @soil_operation.save
-        format.html { redirect_to @soil_operation, notice: 'Soil operation was successfully created.' }
-        format.json { render json: @soil_operation, status: :created, location: @soil_operation }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @soil_operation.errors, status: :unprocessable_entity }
-      end
-    end
+    render "index" 
   end
 
   # PATCH/PUT /soil_operations/1
@@ -60,7 +64,7 @@ class SoilOperationsController < ApplicationController
 
     respond_to do |format|
       if @soil_operation.update_attributes(soil_operation_params)
-        format.html { redirect_to @soil_operation, notice: 'Soil operation was successfully updated.' }
+        format.html { redirect_to soil_operations_path, notice: t('models.soil_operation') + " " + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -87,6 +91,6 @@ class SoilOperationsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def soil_operation_params
-      params.require(:soil_operation).permit(:apex_crop, :opv1, :opv2, :opv3, :opv4, :opv5, :opv6, :opv7, :activity_id, :id, :year, :month, :day, :operation_id, :type_id, :scenario_id, soil_id, :apex_operation)
+      params.require(:soil_operation).permit(:apex_crop, :opv1, :opv2, :opv3, :opv4, :opv5, :opv6, :opv7, :activity_id, :id, :year, :month, :day, :operation_id, :type_id, :scenario_id, :soil_id, :apex_operation, :tractor_id)
     end
 end

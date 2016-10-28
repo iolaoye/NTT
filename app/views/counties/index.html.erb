@@ -21,13 +21,13 @@
     <td><%= county.latitude %></td>
     <td><%= county.longitude %></td>
     <td><%= county.state_id %></td>
-    <td><%= link_to 'Show', county %></td>
-    <td><%= link_to 'Edit', edit_county_path(county) %></td>
-    <td><%= link_to 'Destroy', county, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to t('general.show'), county %></td>
+    <td><%= link_to t('general.edit'), edit_county_path(county) %></td>
+    <td><%= link_to 'Destroy', county, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New County', new_county_path %>

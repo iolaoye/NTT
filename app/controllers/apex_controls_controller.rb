@@ -3,8 +3,6 @@ class ApexControlsController < ApplicationController
   # GET /apex_controls.json
   def index
 	@apex_controls = ApexControl.includes(:control).where(:project_id => session[:project_id])
-    #@apex_controls = ApexControl.where(:project_id => session[:project_id])
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_controls }
@@ -65,7 +63,7 @@ class ApexControlsController < ApplicationController
 
     respond_to do |format|
       if @apex_control.update_attributes(apex_control_params)
-        format.html { redirect_to @apex_control, notice: 'Apex control was successfully updated.' }
+        format.html { redirect_to apex_controls_url, notice: t('models.apex_control') + " " + t('general.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -84,6 +82,23 @@ class ApexControlsController < ApplicationController
       format.html { redirect_to apex_controls_url }
       format.json { head :no_content }
     end
+  end
+
+  def reset
+    @controls = Control.all
+    @apex_controls = ApexControl.where("project_id == " + session[:project_id].to_s + " AND control_id != 1 AND control_id != 2")
+    @apex_controls.delete_all()
+
+    @controls.each do |control|
+		if control.id != 1 && control.id != 2
+		  apex_control = ApexControl.new
+		  apex_control.control_id = control.id
+		  apex_control.value = control.default_value
+		  apex_control.project_id = session[:project_id]
+		  apex_control.save
+		end
+    end
+    redirect_to apex_controls_url, notice: t('models.apex_control') + " " + t('general.reset')
   end
 
   private

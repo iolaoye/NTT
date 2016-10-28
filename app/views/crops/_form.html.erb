@@ -1,7 +1,7 @@
 <%= form_for(@crop) do |f| %>
   <% if @crop.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@crop.errors.count, "error") %> prohibited this crop from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @crop.errors.count, :model => t('models.crop')) %></h2>
 
       <ul>
       <% @crop.errors.full_messages.each do |msg| %>
@@ -12,111 +12,111 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :number %><br />
+    <%= f.label :number %><br>
     <%= f.number_field :number %>
   </div>
   <div class="field">
-    <%= f.label :dndc %><br />
+    <%= f.label :dndc %><br>
     <%= f.number_field :dndc %>
   </div>
   <div class="field">
-    <%= f.label :code %><br />
+    <%= f.label :code %><br>
     <%= f.text_field :code %>
   </div>
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :plant_population_mt %><br />
+    <%= f.label :plant_population_mt %><br>
     <%= f.text_field :plant_population_mt %>
   </div>
   <div class="field">
-    <%= f.label :plant_population_ac %><br />
+    <%= f.label :plant_population_ac %><br>
     <%= f.text_field :plant_population_ac %>
   </div>
   <div class="field">
-    <%= f.label :plant_population_ft %><br />
+    <%= f.label :plant_population_ft %><br>
     <%= f.text_field :plant_population_ft %>
   </div>
   <div class="field">
-    <%= f.label :heat_units %><br />
+    <%= f.label :heat_units %><br>
     <%= f.text_field :heat_units %>
   </div>
   <div class="field">
-    <%= f.label :lu_number %><br />
+    <%= f.label :lu_number %><br>
     <%= f.number_field :lu_number %>
   </div>
   <div class="field">
-    <%= f.label :soil_group_a %><br />
+    <%= f.label :soil_group_a %><br>
     <%= f.number_field :soil_group_a %>
   </div>
   <div class="field">
-    <%= f.label :soil_group_b %><br />
+    <%= f.label :soil_group_b %><br>
     <%= f.number_field :soil_group_b %>
   </div>
   <div class="field">
-    <%= f.label :soil_group_c %><br />
+    <%= f.label :soil_group_c %><br>
     <%= f.number_field :soil_group_c %>
   </div>
   <div class="field">
-    <%= f.label :soil_group_d %><br />
+    <%= f.label :soil_group_d %><br>
     <%= f.number_field :soil_group_d %>
   </div>
   <div class="field">
-    <%= f.label :type %><br />
+    <%= f.label :type %><br>
     <%= f.text_field :type %>
   </div>
   <div class="field">
-    <%= f.label :yield_unit %><br />
+    <%= f.label :yield_unit %><br>
     <%= f.text_field :yield_unit %>
   </div>
   <div class="field">
-    <%= f.label :bushel_weight %><br />
+    <%= f.label :bushel_weight %><br>
     <%= f.text_field :bushel_weight %>
   </div>
   <div class="field">
-    <%= f.label :conversion_factor %><br />
+    <%= f.label :conversion_factor %><br>
     <%= f.text_field :conversion_factor %>
   </div>
   <div class="field">
-    <%= f.label :dry_matter %><br />
+    <%= f.label :dry_matter %><br>
     <%= f.text_field :dry_matter %>
   </div>
   <div class="field">
-    <%= f.label :harvest_code %><br />
+    <%= f.label :harvest_code %><br>
     <%= f.number_field :harvest_code %>
   </div>
   <div class="field">
-    <%= f.label :planting_code %><br />
+    <%= f.label :planting_code %><br>
     <%= f.number_field :planting_code %>
   </div>
   <div class="field">
-    <%= f.label :state_id %><br />
+    <%= f.label :state_id %><br>
     <%= f.text_field :state_id %>
   </div>
   <div class="field">
-    <%= f.label :itil %><br />
+    <%= f.label :itil %><br>
     <%= f.text_field :itil %>
   </div>
   <div class="field">
-    <%= f.label :to1 %><br />
+    <%= f.label :to1 %><br>
     <%= f.text_field :to1 %>
   </div>
   <div class="field">
-    <%= f.label :tb %><br />
+    <%= f.label :tb %><br>
     <%= f.text_field :tb %>
   </div>
   <div class="field">
-    <%= f.label :dd %><br />
+    <%= f.label :dd %><br>
     <%= f.number_field :dd %>
   </div>
   <div class="field">
-    <%= f.label :dyam %><br />
+    <%= f.label :dyam %><br>
     <%= f.number_field :dyam %>
   </div>
   <div class="field">
-    <%= f.label :spanish_name %><br />
+    <%= f.label :spanish_name %><br>
     <%= f.text_field :spanish_name %>
   </div>
   <div class="actions">

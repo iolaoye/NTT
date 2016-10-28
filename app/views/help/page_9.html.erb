@@ -1,20 +1,19 @@
 <div class="main">
 	<div class="container">
-		<h1><%= t('subprojpage.header') %></h1>
-			<p><%= raw t('subprojpage.body1') %></p>
+		<h1><%= t('watershedpage.header') %></h1>
+			<p><%= raw t('watershedpage.body1') %></p>
 		
-		<h2><%= t('subprojpage.create.header') %></h2>
-			<h3><%= t('subprojpage.create.name.header') %></h3>
-				<p><%= raw t('subprojpage.create.name.body1') %></p>
-				<p><%= raw t('subprojpage.create.name.body2') %></p>
-			<h3><%= t('subprojpage.create.select.header') %></h3>
-				<p><%= raw t('subprojpage.create.select.body1') %></p>
-				<p><%= raw t('subprojpage.create.select.body2') %></p>
-			<h3><%= t('subprojpage.create.simulate.header') %></h3>
-				<p><%= raw t('subprojpage.create.simulate.body1') %></p>
+		<h2><%= t('watershedpage.create.header') %></h2>
+			<h3><%= t('watershedpage.create.name.header') %></h3>
+				<p><%= raw t('watershedpage.create.name.body1') %></p>
+				<p><%= raw t('watershedpage.create.name.body2') %></p>
+			<h3><%= t('watershedpage.create.select.header') %></h3>
+				<p><%= raw t('watershedpage.create.select.body1') %></p>
+				<p><%= raw t('watershedpage.create.select.body2') %></p>
+			<h3><%= t('watershedpage.create.simulate.header') %></h3>
+				<p><%= raw t('watershedpage.create.simulate.body1') %></p>
 
-		<br>	
-		<%= link_to "< Prev", help_path("page_8") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_10") %><br>
-		<%= link_to "<< Return to Table of Contents", help_path("index") %>
 	</div>
 </div>
+<br><%= link_to "< Prev", help_path("page_8") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_10") %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index") %></br>

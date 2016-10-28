@@ -1,0 +1,122 @@
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <%= image_tag 'pic1.jpg', :class => "first-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1 class="intro">What is NTT?</h1>
+              <p>A couple of introductory sentences would go here, e.g. "NTT allows farmers to simulate BMPS and operations..." etc.</p>
+              <%= button_to "Sign up today", new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %></div></div>
+        </div>
+       <div class="item">
+          <%= image_tag 'pic2.jpg', :class => "second-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+             <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p>This can be some different text from the first image, or the same.</p>
+             <%= button_to "Sign up today", new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+        <%= image_tag 'pic3.jpg', :class => "third-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p>This can be some different text from the first image, or the same.</p>
+              <%= button_to "Sign up today", new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+        <%= image_tag 'pic4.jpg', :class => "fourth-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p>This can be some different text from the first image, or the same.</p>
+             <%= button_to "Sign up today", new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+        <%= image_tag 'pic5.jpg', :class => "fifth-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p>This can be some different text from the first image, or the same.</p>
+             <%= button_to "Sign up today", new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+        <%= image_tag 'pic6.jpg', :class => "sixth-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p>This can be some different text from the first image, or the same.</p>
+              <%= button_to "Sign up today", new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+        <%= image_tag 'pic7.jpg', :class => "seventh-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p>This can be some different text from the first image, or the same.</p>
+              <%= button_to "Sign up today", new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+        <%= image_tag 'pic8.jpg', :class => "eigth-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p>This can be some different text from the first image, or the same.</p>
+              <%= button_to "Sign up today", new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+        <%= image_tag 'pic9.png', :class => "ninth-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p>This can be some different text from the first image, or the same.</p>
+             <%= button_to "Sign up today", new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><!-- /.carousel -->
+
+      <div class="row featurette">
+        <div class="col-md-12">
+          <h2 class="featurette-heading">Welcome to NTT. </h2>
+          <p>Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the filed or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.</p>
+
+<p>NOTE:<br>
+1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.</p>
+
+<p>2. This version of NTT is written both in English and Spanish.</p>
+
+<p>Finally, as the NTT project leader and behalf of all of my project team (Oscar Gallego and Edward Osei), I would like to thank the funding sources and our colleagues, in particular the farmers and producers, for their contribution in designing this program.</p><br>
+
+<p>Dr. Ali Saleh</p>
+        </div>
+      </div>

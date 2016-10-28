@@ -1,7 +1,7 @@
 <%= form_for(@person) do |f| %>
   <% if @person.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @person.errors.count, :model => t('models.people').downcase) %></h2>
 
       <ul>
       <% @person.errors.full_messages.each do |msg| %>
@@ -12,15 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :age %><br />
+    <%= f.label :age %><br>
     <%= f.number_field :age %>
   </div>
   <div class="field">
-    <%= f.label :last_name %><br />
+    <%= f.label :last_name %><br>
     <%= f.text_field :last_name %>
   </div>
   <div class="actions">

@@ -1,5 +1,9 @@
-<p id="notice"><%= notice %></p>
-
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
 <p>
   <b>Detail:</b>
   <%= @description.detail %>
@@ -21,5 +25,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_description_path(@description) %> |
-<%= link_to 'Back', descriptions_path %>
+<%= link_to t('general.edit'), edit_description_path(@description) %> |
+<%= link_to t('general.back'), descriptions_path %>

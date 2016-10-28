@@ -1,7 +1,7 @@
 <%= form_for(@field) do |f| %>
   <% if @field.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@field.errors.count, "error") %> prohibited this field from being saved:</h2>
+      <h2><%= t('activerecord.form_errors', :count => @field.errors.count, :model => t('models.field').downcase) %></h2>
 
       <ul>
       <% @field.errors.full_messages.each do |msg| %>
@@ -11,28 +11,32 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :field_name %><br />
+  <div class="field" title="Name of Field">
+    <%= f.label t('field.field_name') %>
     <%= f.text_field :field_name %>
   </div>
-  <div class="field">
-    <%= f.label :field_area %><br />
-    <%= f.text_field :field_area %>
+  <div class="field" title="Field Area (Ac.). Must be greater than 0.">
+    <%= f.label t('field.field_area') %>
+    <%= f.number_field :field_area, :class => 'numbers', :step => "any" %>
   </div>
   <div class="field">
-	<%= f.label :field_average_slope %><br />
-    <%= f.text_field :field_average_slope %>
+	<%= f.label t('field.field_avg_slope') %>
+    <%= f.number_field :field_average_slope, :class => 'numbers', :step => "any"  %>
   </div>
   <div class="field">
-    <%= f.label :field_type %><br />
-    <%= f.text_field :field_type %>
+    <%= f.label t('field.field_type') %>
+	<% if @field.field_name.include?(ROAD) || @field.field_name.include?(SMZ) %>
+		<%= f.check_box :field_type, disabled: true %>
+	<% else %>
+		<%= f.check_box :field_type %>
+	<% end %>
   </div>
   <div class="field">
-    <%= f.label :coordinates %><br />
-    <%= f.text_field :coordinates %>
+    <%= f.label t('field.coordinate') + " (long, lat)" %><br>
+    <%= f.text_area :coordinates, :required => 'true' %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit  %>
+	<%= link_to t('general.back'), list_field_path(session[:location_id]) %>
   </div>
-  <!--<p>This is a test</p>-->
 <% end %>

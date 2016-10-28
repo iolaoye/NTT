@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <div class="success_alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <%= notice %>
+  </div>
+<% end %>
 
 <p>
   <b>Crop:</b>
@@ -71,5 +76,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_operation_path(@operation) %> |
-<%= link_to 'Back', scenario_operations_scenario_path(session[:scenario_id]) %>
+<%= link_to t('general.edit'), edit_operation_path(@operation) %> |
+<%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]) %>

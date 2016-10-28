@@ -96,9 +96,7 @@
 			<li><%= raw t('sysreq.popup.list2') %></li>
 		</ul>
 		<p><%= t('sysreq.popup.body2') %></p>
-		<br>
-		
-		<%= link_to "Next >", help_path("nav") %><br>
-		<%= link_to "<< Return to Table of Contents", help_path("index") %>
 	</div>
 </div>
+<br><%= link_to "Next >", help_path("nav") %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index") %></br>

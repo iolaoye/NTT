@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :climates
+
+
   resources :watershed_scenarios
   resources :watersheds
   resources :people
@@ -41,6 +44,8 @@ NTTG3::Application.routes.draw do
   #resources :users
   resources :welcomes
   #resources :fields
+  resources :apex_soils
+  resources :apex_layers
   resources :results do
 	get 'sel', on: :member
   end 
@@ -79,12 +84,11 @@ NTTG3::Application.routes.draw do
     get :send_to_mapping_site, on: :member
     post :receive_from_mapping_site, on: :member
     get :location_fields, on: :member 
-  end  
+  end
 
   resources :fields do
     get :list, on: :member 
     resources :soils
-	resources :apex_soils
     resources :scenarios
 	resources :weathers
 	get :field_soils, on: :member
@@ -114,6 +118,9 @@ NTTG3::Application.routes.draw do
   resources :operations do
 	get :list, on: :member
 	get :cropping_system, on: :member
+    get 'download', on: :member
+    get :open, on: :member
+    get :upload_system, on: :member
   end
 
   resources :bmps do
@@ -133,13 +140,20 @@ NTTG3::Application.routes.draw do
   get 'users/new'
   post 'projects/upload_project'
   post 'weathers/upload_weather'
-  root to: 'sessions#index'
+  root to: 'welcomes#index'
   
   get '/about' => "about#index", :as => "about"
   get '/contact' => "contact#index", :as => "contact"
   
   get '/help/' => redirect('/help/index')
   get '/help/:page' => "help#show", :as => "help"
+
+  post 'apex_controls/reset'
+  post 'apex_parameters/reset'
+
+  post 'operations/delete_all'
+
+  post 'scenarios/simulate_all'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

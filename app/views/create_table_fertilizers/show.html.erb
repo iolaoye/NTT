@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+  </div>
+<% end %>
 
 <p>
   <b>Code:</b>
@@ -56,5 +61,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_create_table_fertilizer_path(@create_table_fertilizer) %> |
-<%= link_to 'Back', create_table_fertilizers_path %>
+<%= link_to t('general.edit'), edit_create_table_fertilizer_path(@create_table_fertilizer) %> |
+<%= link_to t('general.back'), create_table_fertilizers_path %>
