@@ -42,6 +42,7 @@ class SoilsController < ApplicationController
     end
   end
 
+################################  NEW  #################################
 # GET /soils/new
 # GET /soils/new.json
   def new
@@ -53,6 +54,7 @@ class SoilsController < ApplicationController
     end
   end
 
+################################  EDIT   #################################
 # GET /soils/1/edit
   def edit
     @soil = Soil.find(params[:id])
@@ -76,6 +78,7 @@ class SoilsController < ApplicationController
     end
   end
 
+################################  UPDATE  #################################
 # PATCH/PUT /soils/1
 # PATCH/PUT /soils/1.json
   def update
@@ -100,17 +103,16 @@ class SoilsController < ApplicationController
     end
   end
 
+################################  DELETE  #################################
 # DELETE /soils/1
 # DELETE /soils/1.json
   def destroy
     @soil = Soil.find(params[:id])
     if @soil.destroy
-      flash[:info] = t('models.soil') + " " + @soil.name + t('notices.deleted')
-    end
-
-    respond_to do |format|
-      format.html { redirect_to list_soil_path(@soil.field_id) }
-      format.json { head :no_content }
+		respond_to do |format|
+		  format.html { redirect_to list_soil_path(@soil.field_id), notice: t('models.soil') + " " + @soil.name + t('notices.deleted') }
+		  format.json { head :no_content }
+		end
     end
   end
 

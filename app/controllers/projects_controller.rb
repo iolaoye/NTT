@@ -1832,7 +1832,7 @@ class ProjectsController < ApplicationController
           subarea.rchk = p.text
         when "rfpw"
           subarea.rfpw = p.text
-        when "rfp1"
+        when "rfpl"
           subarea.rfpl = p.text
         when "rsee"
           subarea.rsee = p.text
