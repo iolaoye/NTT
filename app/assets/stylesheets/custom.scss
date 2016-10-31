@@ -332,9 +332,28 @@ footer a:hover{
 
 .header-icon {
     position: absolute;
-    margin-left: -25px;
-    margin-top: 0px;
+    z-index: 1;
+    margin-left: 25px;
+    margin-top: 10px;
+    color: #204060;
     }
+
+.sub-header-icon {
+    position: absolute;
+    z-index: 1;
+    margin-left: 55px;
+    margin-top: 10px;
+    color: #204060;
+    }
+
+.sub-sub-header-icon {
+    position: absolute;
+    z-index: 1;
+    margin-left: 75px;
+    margin-top: 10px;
+    color: #204060;
+    }
+
 
 .container-fluid {
   margin-right: auto;
