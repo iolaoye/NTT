@@ -4,6 +4,7 @@ class OperationsController < ApplicationController
 # GET /operations/1
 # GET /1/operations.json
   def list
+    @field = Field.find(session[:field_id])
     @operations = Operation.where(:scenario_id => session[:scenario_id]) # used to be params[:id]
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
@@ -43,6 +44,7 @@ class OperationsController < ApplicationController
 # GET /operations/new.json
   def new
     @operation = Operation.new
+    @field = Field.find(session[:field_id])
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     respond_to do |format|
       format.html # new.html.erb

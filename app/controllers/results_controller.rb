@@ -2,6 +2,7 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
+    @field = Field.find(session[:field_id])
     if params[:language] != nil then
       if params[:language][:language].eql?("es")
         I18n.locale = :es
