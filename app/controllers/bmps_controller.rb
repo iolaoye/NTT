@@ -14,6 +14,7 @@ class BmpsController < ApplicationController
   def list
     @bmps = Bmp.where(:scenario_id => params[:id])
     @field = Field.find(session[:field_id])
+    @scenario = Scenario.find(session[:scenario_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @bmps }

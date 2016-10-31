@@ -14,9 +14,11 @@ module ApplicationHelper
 	def field_submenu
 		if current_page?(url_for(:controller => 'weathers', :action => 'edit'))
 			true
-		elsif current_page?(url_for(:controller => 'soils', :action => 'list'))
+		elsif current_page?(url_for(controller: 'soils', :action => 'list'))
 			true
 		elsif current_page?(url_for(:controller => 'scenarios', :action => 'list'))
+			true
+		elsif current_page?(url_for(:controller => 'scenarios', :action => 'new'))
 			true
 		elsif current_page?(url_for(:controller => 'results', :action => 'index'))
 			true
@@ -35,6 +37,8 @@ module ApplicationHelper
 
 	def scenario_submenu
 		if current_page?(url_for(:controller => 'operations', :action => 'list'))
+			true
+		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
 			true
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'list'))
 			true

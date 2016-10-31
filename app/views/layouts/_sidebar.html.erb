@@ -12,7 +12,7 @@
     <li><%= link_to t('menu.scenarios'), field_scenarios_field_path(session[:field_id]) %></li>
     <% if scenario_submenu  %>
       <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-        <div class="nav-sub-header"><font color="#20689B">Scenario:</font> Baseline
+        <div class="nav-sub-header"><font color="#20689B">Scenario:</font> <%= @scenario.name %>
         </div>
         <li><%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %></li>
       </ul>

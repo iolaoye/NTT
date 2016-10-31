@@ -71,6 +71,7 @@ class ScenariosController < ApplicationController
   def new
     @errors = Array.new
     @scenario = Scenario.new
+    @field = Field.find(session[:field_id])
 
     respond_to do |format|
       format.html # new.html.erb
