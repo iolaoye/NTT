@@ -47,8 +47,4 @@ module ApplicationHelper
 		end
 	end
 
-	def active_class
-		controller_name == "weathers" ? "active" : ''
-	end
-
 end
