@@ -11,29 +11,32 @@
   </div>
 <% end %>
 
-<h1><%= t("general.listing") + " " + t("menu.soils") %></h1>
-<%= link_to t('general.new') + ' ' + t('soil.soil'), new_soil_path %>
-<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'light_green_button' %>
-<table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
-    <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
-    <th class="gvCellStyleTitle"><%= t('soil.key') %></th>
-    <th class="gvCellStyleTitle"><%= t('soil.symbol') %></th>
-    <th class="gvCellStyleTitle"><%= t('soil.group') %></th> 
-    <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
-    <th class="gvCellStyleTitle"><%= t('soil.albedo') %></th>
-    <th class="gvCellStyleTitle"><%= t('soil.slope') %></th>
-    <th class="gvCellStyleTitle"><%= t('soil.percentage') %></th>
-    <th class="gvCellStyleTitle"><%= t('soil.drainage_type') %></th>
-    <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
-  </tr>
+  <div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t("general.listing") + " " + t("menu.soils") %></h1></div>
+
+<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'btn btn-success' %><br><br>
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.symbol') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.group') %></th> 
+          <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.albedo') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.slope') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.percentage') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.drainage_type') %></th>
+          <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+        </tr>
+      </thead>
+    <tbody>
 
   <% i=1 %>
       <% for soil in @soils %>
       <% if (i % 2  == 0) %>
           <tr class="gvRowStyleEven">
             <td class="gvCellStyleCheckbox"><%= check_box_tag :soil, "1", soil.selected, disabled: true %></td>
-            <td class="gvCellStyleText"><%= soil.key %></td>
             <td class="gvCellStyleText"><%= soil.symbol %></td>
             <td class="gvCellStyleText"><%= soil.group %></td>
             <td class="gvCellStyleText"><%= soil.name %></td>
@@ -50,7 +53,6 @@
       <% else %>
           <tr class="gvRowStyleOdd">
             <td class="gvCellStyleCheckbox"><%= check_box_tag :soil, "1", soil.selected, disabled: true %></td>
-            <td class="gvCellStyleText"><%= soil.key %></td>
             <td class="gvCellStyleText"><%= soil.symbol %></td>
             <td class="gvCellStyleText"><%= soil.group %></td>
             <td class="gvCellStyleText"><%= soil.name %></td>
@@ -67,6 +69,8 @@
       <% end %>
       <% i = i + 1 %>
   <% end %>
-</table>
+ </tbody>
+        </table></div>
+          </div>
 
 <br>

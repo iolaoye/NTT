@@ -46,6 +46,7 @@ h1 {
   font-family: 'Open Sans', sans-serif;
       margin-bottom: 0px;
     margin-top: 7px;
+    font-weight: 100;
 }
 
 
@@ -200,6 +201,7 @@ p {
 .page-header small {
   font-size: 18px;
   letter-spacing: 1.2px;
+  font-weight: lighter;
 }
 
 
@@ -332,9 +334,28 @@ footer a:hover{
 
 .header-icon {
     position: absolute;
-    margin-left: -25px;
-    margin-top: 0px;
+    z-index: 1;
+    margin-left: 25px;
+    margin-top: 10px;
+    color: #204060;
     }
+
+.sub-header-icon {
+    position: absolute;
+    z-index: 1;
+    margin-left: 55px;
+    margin-top: 10px;
+    color: #204060;
+    }
+
+.sub-sub-header-icon {
+    position: absolute;
+    z-index: 1;
+    margin-left: 75px;
+    margin-top: 10px;
+    color: #204060;
+    }
+
 
 .container-fluid {
   margin-right: auto;
@@ -561,4 +582,11 @@ font-size: 16px;
 .button_to,
 .button_to div {
   display: inline;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: normal;
 }

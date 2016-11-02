@@ -21,8 +21,7 @@ class ScenariosController < ApplicationController
   def list
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => session[:field_id])
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
+    @field = Field.find(session[:field_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @scenarios }
@@ -72,6 +71,7 @@ class ScenariosController < ApplicationController
   def new
     @errors = Array.new
     @scenario = Scenario.new
+    @field = Field.find(session[:field_id])
 
     respond_to do |format|
       format.html # new.html.erb

@@ -21,9 +21,11 @@
         </div>
     <% end %>
 
-    <fieldset class="section">
-      <legend><%= t('weather.legend') %></legend>
-      <% for way in Way.find(:all) %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><%= t('weather.legend') %></div>
+      <div class="panel-body">
+       <% for way in Way.find(:all) %>
           <div>
             <%= f.radio_button :way_id, way.id, onchange: "rbtnStation_onclick(" + "'" + way.way_value + "'" + ")" %>
             <% if (params[:locale] == "en") %>
@@ -33,15 +35,20 @@
             <% end %>
           </div>
       <% end %>
-    </fieldset>
+      </div>
+    </div>
+
 
     <% if @weather.way_id == 2 %>
         <fieldset id="fsetUploadWeatherFile" class="section"></fieldset>
     <% else %>
         <fieldset id="fsetUploadWeatherFile" class="section" style="display:none">
     <% end %>
-    <legend><%= t('weather.choose_file_lenged') %></legend>
+    <div class="panel panel-default">
+    <div class="panel-heading"><%= t('weather.choose_file_lenged') %></div>
+    <div class="panel-body">
     <%= f.file_field :weather_file %>
+    </div></div>
     </fieldset>
 
     <% if @weather.way_id == 3 %>
@@ -49,35 +56,35 @@
     <% else %>
         <fieldset id="fsetCoordinates" class="section" style="display:none">
     <% end %>
-    <legend><%= t('weather.enter_coordinates') %></legend>
+    <div class="panel panel-default">
+    <div class="panel-heading"><%= t('weather.enter_coordinates') %></div>
+    <div class="panel-body">
     <div class="field">
       <%= f.label t('weather.latitude') %>
       <%= f.number_field :latitude, :class => "numbers", :step => 'any' %>
       <%= f.label t('weather.longitude') %>
       <%= f.number_field :longitude, :class => "numbers", :step => 'any' %>
-    </div>
+    </div></div></div>
     </fieldset>
 
-    <p>
     <div class="field">
       <%= f.label t('weather.years_of_weather') + ": " %>
       <%= f.label @weather.weather_initial_year %>
       <%= f.label "-" %>
       <%= f.label @weather.weather_final_year %>
     </div>
-    </p>
-
+<br>
     <fieldset class="section">
       <div class="field">
-        <p><%= t('weather.note') %></p>
+        <%= t('weather.note') %></p>
         <%= f.label t('weather.years_of_simulation') + ": " + t('weather.initial_year') %>
         <%= f.number_field :simulation_initial_year, :class => "fieldNumbers" %>
         <%= f.label " " + t('weather.final_year') %>
         <%= f.number_field :simulation_final_year, :class => "fieldNumbers" %>
       </div>
-    </fieldset>
+    </fieldset><br>
     <div class="actions">
-      <%= f.submit t('weather.update'), name: 'update' %>
-      <%= link_to t('general.continue'), list_soil_path(session[:field_id]), :class => 'light_green_button' %>
+      <%= f.submit t('weather.update'), name: 'update', :class => "btn btn-primary" %>
+      <%= link_to t('general.continue'), list_soil_path(session[:field_id]), :class => 'btn btn-success' %>
     </div>
 <% end %>
