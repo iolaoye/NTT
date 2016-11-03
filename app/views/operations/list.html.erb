@@ -5,7 +5,7 @@
   </div>
 <% end %>
 
-<h1 class="button_h1"><%= t('general.listing') + " " + t('menu.managements') %></h1>
+<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing') + " " + t('menu.managements') %></h1></div>
 
 <%= link_to t('operation.new_operation'), new_operation_path %>
 <%= link_to t('operation.upload') + " " + t('operation.cropping_system'), cropping_system_operation_path(session[:scenario_id]), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'} %>
