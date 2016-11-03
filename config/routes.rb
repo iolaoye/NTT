@@ -60,6 +60,7 @@ NTTG3::Application.routes.draw do
 	resources :locations
     get 'upload', on: :member
     get 'download', on: :member
+    get 'group', on: :member
   end
  
   resources :weathers do
