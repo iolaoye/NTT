@@ -1,0 +1,5 @@
+<li><%= link_to t('menu.weather'), edit_weather_path(@field), class: current_page(edit_weather_path(@field)) %></li>
+<li><%= link_to t('menu.soils'), list_soil_path(@field), class: current_page(list_soil_path(@field)) %></li>
+<li><%= link_to t('menu.scenarios'), field_scenarios_field_path(@field), class: current_page(field_scenarios_field_path(@field)) %></li>
+      
+<li class="numbers"><%= link_to t('menu.signout'), logout_path %></li>

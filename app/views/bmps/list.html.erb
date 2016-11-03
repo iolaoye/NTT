@@ -5,7 +5,7 @@
     </div>
 <% end %>
 
-<h1 class="button_h1 less-margin"><%= t('general.listing') + " " + t('menu.bmps') %></h1>
+<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing') + " " + t('menu.bmps') %></h1></div>
 
 <%= link_to t('general.new') + " " + t('operation.bmp'), new_bmp_path %>
 <%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'light_green_button' %>
