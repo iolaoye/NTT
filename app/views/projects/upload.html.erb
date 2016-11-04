@@ -17,10 +17,10 @@
   </br>
   <div class="actions">
     <% if @id == "0" %>
-        <%= submit_tag(value = t('submit.save'), data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
+        <%= submit_tag(value = t('submit.save'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
     <% else %>
-        <%= submit_tag(value = t('project.upload_example'), data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
+        <%= submit_tag(value = t('project.upload_example'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
     <% end %>
-    <%= link_to t('general.back'), welcomes_path %>
+    <%= link_to t('general.back'), welcomes_path, :class => "btn btn-primary" %>
   </div>
 <% end %>
