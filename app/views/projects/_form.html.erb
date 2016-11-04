@@ -16,7 +16,11 @@
     <%= f.text_field :name %>
 	  <% if current_user.company.downcase == "tiaer" %>	
 		<%= label "special", t("project.special_project") %>
-		<%= check_box_tag :special, 'special', false %>
+		<% if @project.version == "NTTG3_special" %>
+			<%= check_box_tag :special, 'special', true %>
+		<% else %>
+			<%= check_box_tag :special, 'special', false %>
+		<% end %>
       <% end %>
   </div>
   <div class="field" title="Description of Project">
