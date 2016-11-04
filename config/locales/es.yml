@@ -432,7 +432,7 @@
     upload_button_desc: 'Proyecto a Subir'
     editing_project: 'Revisión de Proyecto'
     upload_error: 'No se pudo subir este archivo'
-    group_project: 'Proyecto de grupo'
+    group_project: 'Proyecto Especial'
   footer:
     instructions: Instrucciones
     contact_us: 'Contactarnos'
