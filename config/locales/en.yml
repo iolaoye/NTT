@@ -430,7 +430,7 @@ en:
     upload_button_desc: 'Project to Upload:'
     editing_project: 'Editing Project'
     upload_error: 'Unable to upload this file'
-    group_project: 'Group Project'
+    special_project: 'Special Project'
   footer:
     instructions: Instructions
     contact_us: 'Contact Us'
