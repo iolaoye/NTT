@@ -13,6 +13,7 @@ gem 'coffee-script-source', '1.8.0'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'bootstrap-sass'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -23,6 +24,8 @@ end
 
 gem 'jquery-rails'
 gem 'breadcrumbs_on_rails'
+gem 'turbolinks', '~> 2.5', '>= 2.5.3'
+gem 'jquery-turbolinks'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
@@ -34,7 +37,7 @@ gem 'breadcrumbs_on_rails'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+gem 'debugger'
 
 # gem 'bcrypt-ruby'
 # rest API for NTT call
@@ -49,4 +52,6 @@ gem 'wkhtmltopdf-binary'
 # gem 'wkhtmltopdf-binary'
 # gem 'prawn'
 # gem 'pdfkit'
+
+gem 'breadcrumbs_on_rails'
 

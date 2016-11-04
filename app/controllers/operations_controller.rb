@@ -4,10 +4,11 @@ class OperationsController < ApplicationController
 # GET /operations/1
 # GET /1/operations.json
   def list
+    @field = Field.find(session[:field_id])
     @operations = Operation.where(:scenario_id => session[:scenario_id]) # used to be params[:id]
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
-    @scenario_name = Scenario.find(session[:scenario_id]).name
+    @scenario = Scenario.find(session[:scenario_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @fields }
@@ -43,7 +44,9 @@ class OperationsController < ApplicationController
 # GET /operations/new.json
   def new
     @operation = Operation.new
+    @field = Field.find(session[:field_id])
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+    @scenario = Scenario.find(session[:scenario_id])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @operation }
@@ -459,3 +462,13 @@ end #end class
   end
 
   #download operation def end 
+
+  ########################################### UPLOAD CROPPING SYSTEM FILE IN XML FORMAT ##################
+  def upload_system
+    saved = false
+    msg = ""
+    ActiveRecord::Base.transaction do
+      #begin
+      msg = "OK"
+    end
+  end

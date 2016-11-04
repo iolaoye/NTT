@@ -1,4 +1,7 @@
 class ProjectsController < ApplicationController
+
+  layout 'welcome'
+  
   #EXAMPLES = "public/Examples"
   require 'nokogiri'
   # GET /projects
@@ -87,8 +90,12 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     session[:project_id] = @project.id
     @project.user_id = session[:user_id]
-    @project.version = "NTTG3"
-    respond_to do |format|
+    if params[:special] != nil
+	  @project.version = "NTTG3_special"
+    else
+	  @project.version = "NTTG3"
+	end
+	respond_to do |format|
       if @project.save
         session[:project_id] = @project.id
         location = Location.new
