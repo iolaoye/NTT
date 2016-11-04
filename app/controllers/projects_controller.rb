@@ -25,11 +25,14 @@ class ProjectsController < ApplicationController
     session[:project_id] = params[:id]
     @location = Location.find_by_project_id(params[:id])
     session[:location_id] = @location.id
-    if Field.where(:location_id => @location.id).count > 0 then
-      redirect_to list_field_path(session[:location_id])
-    else
-      redirect_to location_path(@location.id)
-    end
+	case true
+		when Project.find(params[:id]).version == "NTTG3_special"
+			redirect_to states_path()
+        when Field.where(:location_id => @location.id).count > 0 && Project.find(params[:id]).version == "NTTG3"  # load fields
+			redirect_to list_field_path(session[:location_id])
+        else # Load map
+			redirect_to location_path(@location.id)
+    end # end case true
   end
 
   # GET /projects/1
@@ -90,8 +93,12 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     session[:project_id] = @project.id
     @project.user_id = session[:user_id]
-    @project.version = "NTTG3"
-    respond_to do |format|
+    if params[:special] != nil
+	  @project.version = "NTTG3_special"
+    else
+	  @project.version = "NTTG3"
+	end
+	respond_to do |format|
       if @project.save
         session[:project_id] = @project.id
         location = Location.new
@@ -1835,7 +1842,7 @@ class ProjectsController < ApplicationController
           subarea.rchk = p.text
         when "rfpw"
           subarea.rfpw = p.text
-        when "rfp1"
+        when "rfpl"
           subarea.rfpl = p.text
         when "rsee"
           subarea.rsee = p.text
