@@ -1,6 +1,6 @@
-<h1>Listing states</h1>
+<h1><%= t('general.listing') + " " + t('menu.state') %></h1>
 
-<table>
+<!--<table>
   <tr>
     <th>State Id</th>
     <th>State name</th>
@@ -19,9 +19,9 @@
       <td><%= state.state_code %></td>
       <td><%= state.state_abbreviation %></td>
       <td><%= state.status %></td>
-      <!--<td><%= link_to t('general.show'), state %></td>
+      <td><%= link_to t('general.show'), state %></td>
       <td><%= link_to t('general.edit'), edit_state_path(state) %></td>
-      <td><%= link_to 'Destroy', state, method: :delete, data: { confirm: t('general.confirm') } %></td>-->
+      <td><%= link_to 'Destroy', state, method: :delete, data: { confirm: t('general.confirm') } %></td>
     </tr>
     <% @counties = County.where(:state_id => state.id) %>
     <tr style='display:none'><td><%= render 'counties_form' %></td></tr>
@@ -31,3 +31,38 @@
 <br>
 
 <%= link_to 'New State', new_state_path %>
+-->
+<br>
+  
+<div class="panel panel-default">
+        <div class="table-responsive">
+       <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>State Id</th>
+            <th>State name</th>
+            <th>State code</th>
+            <th>State Abrebbiation</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @states.each do |state| %>
+          <tr>
+            <td><%= check_box_tag :selected, 'selected' %></td>
+            <td><%= state.state_name %></td>
+            <td><%= state.state_code %></td>
+            <td><%= state.state_abbreviation %></td>
+            <td><%= state.status %></td>
+          </tr>
+          <% @counties = County.where(:state_id => state.id) %>
+          <tr style='display:none'><td><%= render 'counties_form' %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
