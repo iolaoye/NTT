@@ -18,6 +18,9 @@
   <%= link_to t('project.new_project'), new_project_path %>
   <%= link_to t('project.upload_project'), upload_project_path(0) %>
   <%= link_to t('project.upload_example'), upload_project_path(1) %>
+  <% if current_user.company.downcase == "tiaer" %>
+	<%= link_to t('project.group_project'), group_project_path %>
+  <% end %>
   <table class='gvTableStyle'>
     <tr class='gvHeaderStyle'>
       <th class="gvCellStyleTitle"><%= t('general.name') %></th>
@@ -63,7 +66,10 @@
   </div>
   <%= button_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
   <%= button_to t('project.upload_project'), upload_project_path(0), :method => "get", :class => "btn btn-primary" %>
-   <%= button_to t('project.upload_example'), upload_project_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
+  <%= button_to t('project.upload_example'), upload_project_path(1), :method => "get", :class => "btn btn-primary" %>
+  <% if current_user.company.downcase == "tiaer" %>
+	<%= button_to t('project.group_project'), group_project_path %>
+  <% end %><br><br>
   <%= t('instructions.projects') %>.<br><br>
   <div class="panel panel-default">
         <div class="table-responsive">

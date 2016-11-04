@@ -5,21 +5,19 @@
   </div>
 <% end %>
 
-<h1 class="button_h1"><%= t('general.listing') + " " + t('menu.managements') %></h1>
+<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing') + " " + t('menu.managements') %></h1></div>
 
-<%= link_to t('operation.new_operation'), new_operation_path %>
-<%= link_to t('operation.upload') + " " + t('operation.cropping_system'), cropping_system_operation_path(session[:scenario_id]), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'} %>
-<%= link_to t('operation.save') + " " + t('operation.cropping_system'), download_operation_path(session[:scenario_id]) %>
-<%= link_to t('operation.open'), open_operation_path %>
-<%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?' %>
-<%= link_to t('general.continue'), list_bmp_path(session[:scenario_id]), :class => 'light_green_button' %>
-<table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
-    <th colspan="9" class="gvCellStyleTitle"></th>
-    <th colspan="4" class="gvCellSytleTitle unbold"><%= t('operation.distribution') +  ' ' + t('operation.nutrients')  + " (" + t('general.fraction') + ")" %></th>
-    <th colspan="2" class="gvCellSytleTitle"></th>
-  </tr>
-  <tr class='gvHeaderStyle'>
+<%= link_to t('operation.new_operation'), new_operation_path, :class => 'btn btn-primary' %>
+<%= link_to t('operation.upload') + " " + t('operation.cropping_system'), cropping_system_operation_path(session[:scenario_id]), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'}, :class => 'btn btn-primary' %>
+<%= link_to t('operation.save') + " " + t('operation.cropping_system'), download_operation_path(session[:scenario_id]), :class => 'btn btn-primary' %><br><br>
+<%= link_to t('operation.open'), open_operation_path, :class => 'btn btn-primary' %>
+<%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
+<%= link_to t('general.continue'), list_bmp_path(session[:scenario_id]), :class => 'btn btn-success' %><br><br>
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
     <th class="gvCellStyleTitle upper_border"><%= t('operation.crop') %></th>
     <th class="gvCellStyleTitle upper_border"><%= t('scenario.operation') %></th>
     <th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.year') %></th>
@@ -35,6 +33,8 @@
     <th class="gvCellStyleTitle upper_border">Org P</th>
     <th class="gvCellStyleTitle upper_border"><%= t('general.actions') %></th>
   </tr>
+  </thead>
+          <tbody>
   <% i=1 %>
   <% @operations.each do |operation| %>
     <% if (i % 2  == 0) %>
@@ -95,4 +95,7 @@
           <%= link_to image_tag("delete.png"), operation, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td>
     </tr>
   <% end %>
-</table>
+
+          </tbody>
+        </table></div>
+          </div>
