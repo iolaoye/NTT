@@ -1,4 +1,8 @@
-<li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), location_path(session[:location_id]) %></li>
+<% if Project.find(session[:project_id]).version == "NTTG3" %>
+  <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), location_path(session[:location_id]) %></li>
+<% else %>
+  <li class="<%= controller_name == "states" %>"><%= link_to t('menu.state'), states_path() %></li>
+<% end %>
 <li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || (controller_name == "results") || (controller_name == "apex_controls")) ? "active" : "" %>"><%= link_to t('menu.fields'), list_field_path(session[:location_id]) %></li></ul>
 <% if field_submenu  %>
   <div class="nav-header">
