@@ -424,6 +424,7 @@
     site_file: Sitio
     apex_file: Archivos APEX
     layers: Capas
+    state: Estado
   project:
     project: Proyecto
     new_project: 'Proyecto Nuevo'

@@ -161,7 +161,7 @@ class ScenariosController < ApplicationController
 			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
 			format.html { render action: "list" }
 		  else
-			flash[:error] = "Error simulatin scenario - " + msg
+			flash[:error] = "Error simulating scenario - " + msg
 			format.html { render action: "list" }
 		  end # end if msg
 		end

@@ -374,7 +374,7 @@ class OperationsController < ApplicationController
           opv1 = (@operation.amount * LBS_TO_KG / AC_TO_HA).round(2) #kg/ha of fertilizer applied converted from lbs/ac
         end
       when 6 #irrigation
-        opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
+        opv1 = @operation.amount * IN_TO_MM #irrigation volume from inches to mm.
       when 10 #liming
         opv1 = @operation.amount / THA_TO_TAC #converts input t/ac to APEX t/ha
     end
@@ -387,7 +387,7 @@ class OperationsController < ApplicationController
     opv4 = 0.0
     case @operation.activity_id
       when 6 #irrigation
-        opv4 = 1 - @operation.depth unless @operatin.depth == nil
+        opv4 = 1 - @operation.depth unless @operation.depth == nil
     end
     return opv4
   end
