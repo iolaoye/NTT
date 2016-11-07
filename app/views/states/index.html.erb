@@ -8,13 +8,13 @@
 <table>
   <% @states.each do |state| %>
     <ul class="ddm" role="menu" >
-      <li><input type="checkbox" name=<%=state.id%>[] id=<%=state.id%>[]><lable for=<%=state.id%>[] ><%= state.state_name %></li>
+      <li><input type="checkbox" name=<%=state.id%> id=<%=state.id%>><lable for=<%=state.id%> ><%= state.state_name %></li>
       <% @counties = County.where(:state_id => state.id) %>
       <div id="state_<%=state.id%>" style="display:none">
         <ul >
           <% @counties.each do |county| %>
           <li>
-            <input type="checkbox" name=<%=county.id%>[] id=<%=county.id%>[] checked/><lable for=<%=county.id%> ><%= county.county_name %>
+            <input type="checkbox" name=<%=county.id%> id=<%=county.id%> checked/><lable for=<%=county.id%> ><%= county.county_name %>
           </li>
           <% end %>
         </ul>
