@@ -45,7 +45,7 @@
         <td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
         <td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
         <td class="gvCellStyleCheckbox">
-          <%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
         </td>
       </tr>
     <% else %>
@@ -54,7 +54,7 @@
         <td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
         <td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
         <td class="gvCellStyleCheckbox">
-          <%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
         </td>
       </tr>
     <% end %>

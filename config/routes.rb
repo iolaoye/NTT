@@ -60,6 +60,7 @@ NTTG3::Application.routes.draw do
 	resources :locations
     get 'upload', on: :member
     get 'download', on: :member
+    get :group, on: :member
   end
  
   resources :weathers do
@@ -118,6 +119,9 @@ NTTG3::Application.routes.draw do
   resources :operations do
 	get :list, on: :member
 	get :cropping_system, on: :member
+    get 'download', on: :member
+    get :open, on: :member
+    get :upload_system, on: :member
   end
 
   resources :bmps do
@@ -137,7 +141,7 @@ NTTG3::Application.routes.draw do
   get 'users/new'
   post 'projects/upload_project'
   post 'weathers/upload_weather'
-  root to: 'sessions#index'
+  root to: 'welcomes#index'
   
   get '/about' => "about#index", :as => "about"
   get '/contact' => "contact#index", :as => "contact"

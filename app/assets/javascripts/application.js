@@ -12,8 +12,12 @@
 // ...
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
+//= require turbolinks
 //= require_tree .
 //= require chartkick
+
+$('.dropdown-toggle').dropdown()  
 
 function rbtnStation_onclick(way) {
     document.getElementById("fsetUploadWeatherFile").style.display = "none";

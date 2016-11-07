@@ -13,11 +13,11 @@
     <td><%= bmps.name %></td>
     <td><%= link_to t('general.show'), bmp %></td>
     <td><%= link_to t('general.edit'), edit_bmp_path(bmp) %></td>
-    <td><%= link_to 'Destroy', bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Destroy', bmp, method: :delete, data: { confirm: t('general.confirm') } %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<br>
 
 <%= link_to 'New Bmp', new_bmp_path %>

@@ -13,6 +13,11 @@
       <br><br>
     <% end %>
     <%= hidden_field(:language, :language, :value => I18n.locale) %>
-    <%= button_to t('operation.upload'), cropping_system_operation_path, :id => "operation_upload", :class => "inbox-sf-add-btn tip", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
+    <div class="actions">
+      <span style="display: inline-block">
+        <%= button_to t('operation.upload'), cropping_system_operation_path, :name => "add_more", :id => "operation_upload", :class => "inbox-sf-add-btn tip", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
+      </span>
+      <%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]) %>
+      </div>
   </div>
 </form>

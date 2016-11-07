@@ -93,8 +93,11 @@ class WatershedScenariosController < ApplicationController
         @new_watershed_scenario.field_id = params[:watershed][:field_id]
         @new_watershed_scenario.scenario_id = params[:watershed][:scenario_id]
         @new_watershed_scenario.watershed_id = params[:id]
-        @new_watershed_scenario.save
-        format.html { redirect_to watershed_scenario_path(params[:id]), notice: t('models.watershed_scenario') + t('notices.created') }
+        if @new_watershed_scenario.save
+          format.html { redirect_to watershed_scenario_path(params[:id]), notice: t('models.watershed_scenario') + t('notices.created') }
+        else
+          format.html { redirect_to watershed_scenario_path(params[:id]), notice: @new_watershed_scenario.errors }
+        end
       else
         format.html { redirect_to watershed_scenario_path(params[:id]), notice: 'That field/scenario combination has already been selected for this watershed. Please choose again.' }
       end

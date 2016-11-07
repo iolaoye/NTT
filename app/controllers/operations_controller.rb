@@ -4,10 +4,11 @@ class OperationsController < ApplicationController
 # GET /operations/1
 # GET /1/operations.json
   def list
+    @field = Field.find(session[:field_id])
     @operations = Operation.where(:scenario_id => session[:scenario_id]) # used to be params[:id]
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
-    @scenario_name = Scenario.find(session[:scenario_id]).name
+    @scenario = Scenario.find(session[:scenario_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @fields }
@@ -43,7 +44,9 @@ class OperationsController < ApplicationController
 # GET /operations/new.json
   def new
     @operation = Operation.new
+    @field = Field.find(session[:field_id])
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+    @scenario = Scenario.find(session[:scenario_id])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @operation }
@@ -85,8 +88,13 @@ class OperationsController < ApplicationController
     respond_to do |format|
       if saved
         if soil_op_saved
-          format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
-          format.json { render json: @operation, status: :created, location: @operation }
+          if params[:add_more] == "Add more" && params[:finish] == nil
+            format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+            format.json { render json: @operation, status: :created, location: @operation }
+          elsif params[:finish] == "Finish" && params[:add_more] == nil
+            format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+            format.json { render json: @operation, status: :created, location: @operation }
+          end
         else
           format.html { render action: "new" }
           format.json { render json: msg, status: :unprocessable_entity }
@@ -110,8 +118,13 @@ class OperationsController < ApplicationController
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id)
         end
-        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.updated') }
-        format.json { head :no_content }
+        if params[:add_more] == "Add more" && params[:finish] == nil
+          format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+          format.json { render json: @operation, status: :created, location: @operation }
+        elsif params[:finish] == "Finish" && params[:add_more] == nil
+          format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+          format.json { render json: @operation, status: :created, location: @operation }
+        end
       else
         format.html { render action: "edit" }
         format.json { render json: @operation.errors, status: :unprocessable_entity }
@@ -350,6 +363,7 @@ class OperationsController < ApplicationController
         #opv1 = uri.read
         #opv1 = Hash.from_xml(open(uri.to_s).read)["m"]{"p".inject({}) do |result, elem
         client = Savon.client(wsdl: URL_HU)
+		session[:depth] = Crop.find(@operation.crop_id).number.to_s + "-" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + " - " + Weather.find_by_field_id(session[:field_id]).longitude.to_s
         response = client.call(:get_hu, message: {"crop" => Crop.find(@operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
         opv1 = response.body[:get_hu_response][:get_hu_result]
       #opv1 = 2.2
@@ -403,3 +417,58 @@ class OperationsController < ApplicationController
     return opv2
   end #end set_opval2
 end #end class
+
+########################################### DOWNLOAD OPERATION IN XML FORMAT ##################
+  def download
+    #require 'open-uri'
+    #require 'net/http'
+    #require 'rubygems'
+
+    operation = Operation.find(params[:id])
+
+    builder = Nokogiri::XML::Builder.new do |xml|
+      xml.operations {
+        xml.operation {
+          xml.crop_id operation.crop_id
+	      xml.activity_id operation.activity_id
+          xml.day operation.day
+          xml.month operation.month_id
+          xml.year operation.year
+          xml.type_id operation.type_id
+          xml.amout operation.amount
+          xml.depth operation.depth
+          xml.no3_n operation.no3_n
+          xml.po4_p operation.po4_p
+          xml.org_n operation.org_n
+          xml.org_p operation.org_p
+          xml.nh3 operation.nh3
+          xml.subtype_id operation.subtype_id
+          soil_operations = SoilOperation.where(:operation_id => operation.id)
+          xml.soil_operations {
+            soil_operations.each do |so|
+              save_soil_operation_information(xml, so)
+          end # end soil_operations.each
+          } # end xml.soil_operations
+        } # xml each operation end      
+      } # end xml.operations
+    end #builder do end
+
+    file_name = session[:session_id] + ".opr"
+    path = File.join(DOWNLOAD, file_name)
+    content = builder.to_xml
+    File.open(path, "w") { |f| f.write(content) }
+    #file.write(content)
+    send_file path, :type => "application/xml", :x_sendfile => true
+  end
+
+  #download operation def end 
+
+  ########################################### UPLOAD CROPPING SYSTEM FILE IN XML FORMAT ##################
+  def upload_system
+    saved = false
+    msg = ""
+    ActiveRecord::Base.transaction do
+      #begin
+      msg = "OK"
+    end
+  end

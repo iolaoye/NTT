@@ -13,6 +13,8 @@ class BmpsController < ApplicationController
 # GET /1/operations.json
   def list
     @bmps = Bmp.where(:scenario_id => params[:id])
+    @field = Field.find(session[:field_id])
+    @scenario = Scenario.find(session[:scenario_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @bmps }
@@ -113,8 +115,13 @@ class BmpsController < ApplicationController
             msg = input_fields("create")
           end
           if msg == "OK"
-            format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.created') }
-            format.json { render json: @bmp, status: :created, location: @bmp }
+            if params[:add_more] == "Add more" && params[:finish] == nil
+              format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.created') }
+              format.json { render json: @bmp, status: :created, location: @bmp }
+            elsif params[:finish] == "Finish" && params[:add_more] == nil
+              format.html { redirect_to list_scenario_path(session[:field_id]), notice: t('operation.bmp') + " " + t('general.created') }
+              format.json { render json: @bmp, status: :created, location: @bmp }
+            end
           else
             format.html { render action: "new" }
             format.json { render json: @bmp.errors, status: :unprocessable_entity }

@@ -1,0 +1,4 @@
+<li><%= link_to t('menu.welcome'), "/welcomes/0?locale=#{params[:locale]}", class: active_welcome? %></li>
+<li><%= link_to t('menu.projects'), user_projects_path(current_user), class: current_page(user_projects_path(current_user)) %></li>
+      
+<li class="numbers"><%= link_to t('menu.signout'), logout_path %></li>

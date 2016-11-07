@@ -2,6 +2,7 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
+    @field = Field.find(session[:field_id])
     if params[:language] != nil then
       if params[:language][:language].eql?("es")
         I18n.locale = :es
@@ -85,7 +86,7 @@ class ResultsController < ApplicationController
                 if @results1.count > 0
                   @present1 = true
                 else
-                  @errors.push("First scenario has no results")
+                  @errors.push(t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase)
                 end
                 session[:scenario2] = ""
                 session[:scenario3] = ""
@@ -102,7 +103,7 @@ class ResultsController < ApplicationController
                 if @results2.count > 0
                   @present2 = true
                 else
-                  @errors.push("Second scenario has no results")
+                  @errors.push(t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase)
                 end
                 session[:scenario3] = ""
               end
@@ -118,7 +119,7 @@ class ResultsController < ApplicationController
                 if @results3.count > 0
                   @present3 = true
                 else
-                  @errors.push("Third scenario has no results")
+                  @errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase)
                 end
               end
               #session[:a_test] = @present
@@ -141,7 +142,7 @@ class ResultsController < ApplicationController
                 if @charts1.count > 0
                   @present1 = true
                 else
-                  @errors.push("First scenario has no charts")
+                  @errors.push(t('result.first_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then
@@ -150,7 +151,7 @@ class ResultsController < ApplicationController
                 if @charts2.count > 0
                   @present2 = true
                 else
-                  @errors.push("Second scenario has no charts")
+                  @errors.push(t('result.second_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result3][:scenario_id] != "" then
@@ -159,7 +160,7 @@ class ResultsController < ApplicationController
                 if @charts3.count > 0
                   @present3 = true
                 else
-                  @errors.push("Third scenario has no charts")
+                  @errors.push(t('result.third_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
             end
@@ -181,7 +182,7 @@ class ResultsController < ApplicationController
                 if @charts1.count > 0
                   @present1 = true
                 else
-                  @errors.push("First scenario has no charts")
+                  @errors.push(t('result.first_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then
@@ -190,7 +191,7 @@ class ResultsController < ApplicationController
                 if @charts2.count > 0
                   @present2 = true
                 else
-                  @errors.push("Second scenario has no charts")
+                  @errors.push(t('result.second_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result3][:scenario_id] != "" then
@@ -199,7 +200,7 @@ class ResultsController < ApplicationController
                 if @charts3.count > 0
                   @present3 = true
                 else
-                  @errors.push("Third scenario has no charts")
+                  @errors.push(t('result.third_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
             end
@@ -272,7 +273,7 @@ class ResultsController < ApplicationController
 
     respond_to do |format|
       if @result.save
-        format.html { redirect_to @result, notice: 'Result was successfully created.' }
+        format.html { redirect_to @result, notice: t('result.result') + " " + t('general.success') }
         format.json { render json: @result, status: :created, location: @result }
       else
         format.html { render action: "new" }
@@ -288,7 +289,7 @@ class ResultsController < ApplicationController
 
     respond_to do |format|
       if @result.update_attributes(result_params)
-        format.html { redirect_to @result, notice: 'Result was successfully updated.' }
+        format.html { redirect_to @result, notice: t('result.result') + " " + t('general.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

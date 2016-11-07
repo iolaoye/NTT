@@ -7,6 +7,8 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => params[:id])
     @project_name = Project.find(session[:project_id]).name
+    @field = Field.find(session[:field_id])
+
 
     respond_to do |format|
       format.html # list.html.erb
@@ -129,7 +131,8 @@ class WatershedsController < ApplicationController
     @watershed.location_id = session[:location_id]
     respond_to do |format|
       if @watershed.save
-        format.html { redirect_to list_watershed_path(session[:location_id]), notice: t('watershed.watershed') + " " + t('general.created') }
+        session[:watershed_id] = @watershed.id
+        format.html { redirect_to watershed_scenario_path(session[:watershed_id]), notice: t('watershed.watershed') + " " + t('general.created') }
         format.json { render json: @watershed, status: :created, location: @watershed }
       else
         format.html { render action: "new" }

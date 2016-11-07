@@ -5,9 +5,11 @@
     </div>
 <% end %>
 
-<h1 class="button_h1 less-margin"><%= t('general.listing') + " " + t('menu.bmps') %></h1>
+<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing') + " " + t('menu.bmps') %></h1></div>
 
 <%= link_to t('general.new') + " " + t('operation.bmp'), new_bmp_path %>
+<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'light_green_button' %>
+
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
     <th class="gvCellStyleTitle"><%= t('operation.bmp') %></th>
@@ -25,7 +27,7 @@
         <% end %>
         <td class="gvCellStyleAction"><%= link_to image_tag("view.png"), bmp %>
           <%= link_to image_tag("edit.png"), edit_bmp_path(bmp) %>
-        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: t('general.confirm') } %></td>
       </tr>
     <% else %>
       <tr class="gvRowStyleOdd">
@@ -36,7 +38,7 @@
         <% end %>
         <td class="gvCellStyleAction"><%= link_to image_tag("view.png"), bmp %>
           <%= link_to image_tag("edit.png"), edit_bmp_path(bmp) %>
-        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%= link_to image_tag("delete.png"), bmp, method: :delete, data: { confirm: t('general.confirm') } %></td>
       </tr>
     <% end %>
     <% i = i + 1 %>
