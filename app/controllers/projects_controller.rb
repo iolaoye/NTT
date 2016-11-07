@@ -119,7 +119,11 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1.json
   def update
     @project = Project.find(params[:id])
-
+    if params[:special] != nil
+	  @project.version = "NTTG3_special"
+    else
+	  @project.version = "NTTG3"
+	end
     respond_to do |format|
       if @project.update_attributes(project_params)
         format.html { redirect_to list_field_path(session[:location_id]), notice: t('models.project') + "" + t('notices.updated') }
