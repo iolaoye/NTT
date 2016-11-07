@@ -159,7 +159,7 @@ class ScenariosController < ApplicationController
 		respond_to do |format|
 		  if msg.eql?("OK") then
 			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-			format.html { render action: "list" }
+			format.html { redirect_to field_scenarios_field_path(session[:field_id]) }
 		  else
 			flash[:error] = "Error simulating scenario - " + msg
 			format.html { render action: "list" }
