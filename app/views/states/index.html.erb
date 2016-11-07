@@ -1,10 +1,8 @@
 <form id="myForm" >
 
 <h1>Listing states</h1>
-<%= submit_tag t("result.update_chart"), name: "button"%>
+<%= submit_tag t("submit.save"), name: "button"%>
 
-<input name="commit" type="submit" value="Search" />
-<%= link_to t('general.show') %>
 <table>
   <% @states.each do |state| %>
     <ul class="ddm" role="menu" >
@@ -24,7 +22,5 @@
 </table>
 
 <br>
-
-<%= link_to 'New State', new_state_path %>
  
 <form>
