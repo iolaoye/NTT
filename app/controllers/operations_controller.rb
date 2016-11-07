@@ -261,7 +261,7 @@ class OperationsController < ApplicationController
           I18n.locale = :en
         end
       end
-      render action: 'list'
+      redirect_to scenario_operations_scenario_path(session[:scenario_id])
     else
       render action: 'upload'
     end # end if cropping_system_id != nil

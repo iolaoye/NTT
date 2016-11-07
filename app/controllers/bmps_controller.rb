@@ -53,6 +53,8 @@ class BmpsController < ApplicationController
     @bmp = Bmp.new
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
+    @field = Field.find(session[:field_id])
+    @scenario = Scenario.find(session[:scenario_id])
     #@type = "create"
     if Field.find(session[:field_id]).field_type
       @bmp_list = Bmplist.where(:id => 8)
