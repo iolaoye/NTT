@@ -32,7 +32,6 @@
         <td class="gvCellStyleText"><%= link_to project.name, project %></td>
         <td class="gvCellStyleText"><%= project.description %></td>
         <td>
-          <%#= link_to image_tag("view.png"), project %>
           <%= link_to image_tag("download.gif"), download_project_path(project) %> <%#https://design.google.com/icons/%>
           <%= link_to image_tag("edit.png"), edit_project_path(project) %>
           <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
@@ -43,7 +42,6 @@
         <td class="gvCellStyleText"><%= link_to project.name, project %></td>
         <td class="gvCellStyleText"><%= project.description %></td>
         <td>
-          <%#= link_to image_tag("view.png"), project %>
           <%= link_to image_tag("download.gif"), download_project_path(project) %> <%#https://design.google.com/icons/%>
           <%= link_to image_tag("edit.png"), edit_project_path(project) %>
           <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>

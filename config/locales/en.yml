@@ -422,6 +422,7 @@ en:
     site_file: Site
     apex_file: APEX Files
     layers: Layers
+    state: States
   project:
     project: Project
     new_project: 'New Project'

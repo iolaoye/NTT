@@ -1,30 +1,26 @@
+<form id="myForm" >
+
 <h1>Listing states</h1>
+<%= submit_tag t("result.update_chart"), name: "button"%>
 
+<input name="commit" type="submit" value="Search" />
+<%= link_to t('general.show') %>
 <table>
-  <tr>
-    <th>State Id</th>
-    <th>State name</th>
-    <th>State code</th>
-    <th>State Abrebbiation</th>
-    <th>Status</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @states.each do |state| %>
-  <tr>
-    <td><%= state.id %></td>
-    <td><%= state.state_name %></td>
-    <td><%= state.state_code %></td>
-    <td><%= state.state_abbreviation %></td>
-    <td><%= state.status %></td>
-    <td><%= link_to t('general.show'), state %></td>
-    <td><%= link_to t('general.edit'), edit_state_path(state) %></td>
-    <td><%= link_to 'Destroy', state, method: :delete, data: { confirm: t('general.confirm') } %></td>
-  </tr>
-<% end %>
-</table>
+  <% @states.each do |state| %>
+    <ul class="ddm" role="menu" >
+      <li><input type="checkbox" name=<%=state.id%>[] id=<%=state.id%>[]><lable for=<%=state.id%>[] ><%= state.state_name %></li>
+      <% @counties = County.where(:state_id => state.id) %>
+      <div id="state_<%=state.id%>" style="display:none">
+        <ul >
+          <% @counties.each do |county| %>
+          <li>
+            <input type="checkbox" name=<%=county.id%>[] id=<%=county.id%>[] checked/><lable for=<%=county.id%> ><%= county.county_name %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </ul>
+<h1><%= t('general.listing') + " " + t('menu.state') %></h1>
 
 <br>
 
