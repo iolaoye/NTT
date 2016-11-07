@@ -424,6 +424,17 @@ border: 2px;
     border-right: thin double #cccccc;
  }
 
+.row {
+    height: 40px;
+    padding:8px;
+    text-align:left;
+    vertical-align:middle;
+    font-weight:300;
+    font-size:16px;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+    margin: 0px 0px 0px 0px;
+}
+
  .navbar-default {
     background-color: #d9d9d9;
     border-color: #e7e7e7;

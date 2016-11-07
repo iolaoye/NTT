@@ -30,6 +30,8 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'list'))
 			true
+		elsif current_page?(url_for(:controller => 'bmps', :action => 'new'))
+			true
 		else
 			false
 		end
@@ -41,6 +43,8 @@ module ApplicationHelper
 		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
 			true
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'list'))
+			true
+		elsif current_page?(url_for(:controller => 'bmps', :action => 'new'))
 			true
 		else
 			false
