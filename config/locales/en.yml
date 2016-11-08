@@ -603,6 +603,8 @@ en:
     edit_field: Editing Field
     type: Field Type
     coordinate: Coordinates
+    create_field: Create Field
+    max_slope: Maximum Slope
   watershed:
     watershed: Watershed
     watershed_name: Watershed Name
@@ -624,6 +626,7 @@ en:
     update: Update
     new_user: New User
     savecontinue: Save and Continue
+    continue: Continue
   sessions:
     index:
       email: Email
