@@ -602,7 +602,9 @@
     field_type: Bosque?
     edit_field: Editando Parcela
     type: Tipo de Parcela
-    coordinate: Coordenadas 
+    coordinate: Coordenadas
+    create_field: Crear Parcela
+    max_slope: Inclinación Máxima
   watershed:
     watershed: Cuenca
     watershed_name: Nombre de la Cuenca
@@ -621,6 +623,7 @@
     update: Actualizar
     new_user: Usuario Nuevo
     savecontinue: Salvar y Continuar
+    continue: Continuar
   sessions:
     index:
       email: Correo Electrónico
