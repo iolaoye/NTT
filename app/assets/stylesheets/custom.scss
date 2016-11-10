@@ -174,7 +174,7 @@ p {
     color: #fff;
     background-color: #20689B;
         text-decoration: none;
-   
+
 
 }
 
@@ -240,7 +240,7 @@ footer a{
 
 footer a:hover{
     color: #32374B;
-    text-decoration: underline;    
+    text-decoration: underline;
 }
 .social:hover {
      -webkit-transform: scale(1.0);
@@ -249,7 +249,7 @@ footer a:hover{
  .social {
      -webkit-transform: scale(0.8);
      color: #222;
-     
+
  }
 
  footer ul.footerright{
@@ -365,6 +365,18 @@ footer a:hover{
 
 }
 
+.container-login {
+  background-color: #ffffff;
+  min-height: 100%;
+  box-shadow: 0 2px 8px #204060;
+  padding: 1px 40px 40px 40px;
+  margin: 0 auto;
+  width: 300px;
+}
+
+.container-login > .field {
+  padding: 0 20px 0 20px;
+}
 
 @media (min-width: 992px) {
 .container {
@@ -538,7 +550,7 @@ font-size: 16px;
     color: #204060;
     background-color: #eeeeee;
         text-decoration: none;
-   
+
 
 }
 
@@ -546,7 +558,7 @@ font-size: 16px;
     color: #204060;
     background-color: #eeeeee;
         text-decoration: none;
-   
+
 
 }
 
@@ -554,7 +566,7 @@ font-size: 16px;
     color: #204060;
     background-color: #eeeeee;
         text-decoration: none;
-   
+
 
 }
 .language {
@@ -571,7 +583,7 @@ font-size: 16px;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    
+
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
@@ -600,4 +612,18 @@ label {
     max-width: 100%;
     margin-bottom: 5px;
     font-weight: normal;
+}
+
+#left_button {
+  float: left;
+}
+
+#right_button {
+  float: right;
+}
+
+.button_container {
+  text-align: center;
+  width: 192px;
+  padding: 10px 0 5px 20px;
 }
