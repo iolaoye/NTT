@@ -186,6 +186,7 @@ p {
 
 .main {
   padding: 20px;
+  border: 2px;
 }
 @media (min-width: 768px) {
   .main {
@@ -365,17 +366,28 @@ footer a:hover{
 
 }
 
-.container-login {
+.page-container {
+  text-align: center;
+}
+
+.container-form {
   background-color: #ffffff;
   min-height: 100%;
   box-shadow: 0 2px 8px #204060;
   padding: 1px 40px 40px 40px;
+  max-width: 400px;
   margin: 0 auto;
-  width: 300px;
+  display: inline-block;
 }
 
-.container-login > .field {
+.container-form > h2 {
+  text-align: center;
+}
+
+.container-form .form_input {
   padding: 0 20px 0 20px;
+  display: block;
+  margin: 0 auto;
 }
 
 @media (min-width: 992px) {
@@ -387,11 +399,6 @@ footer a:hover{
 .table-responsive {
     overflow-x: visible;
     }
-
-.main {
-border: 2px;
-}
-
 
 .carousel {
   height: 400px;
@@ -625,5 +632,6 @@ label {
 .button_container {
   text-align: center;
   width: 192px;
-  padding: 10px 0 5px 20px;
+  padding-top: 10px;
+  margin: 0 auto;
 }
