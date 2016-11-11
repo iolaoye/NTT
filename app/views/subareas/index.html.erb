@@ -14,7 +14,7 @@
 <%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
 <%= link_to t('menu.site'), site_path(session[:field_id]), :class => 'btn btn-default' %>
 
-
+<br>
 
 <br><%= form_for :subarea do |f| %>
   <table>
@@ -23,22 +23,26 @@
     </tr>
     <tr>
       <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => session[:scenario_id]}, {:required => true} %></td>
-      <td><%= button_to t('subarea.load_subarea'), subareas_path%></td>
+      <td><%= button_to t('subarea.load_subarea'), subareas_path, class: 'btn btn-primary' %></td>
     </tr>
   </table>
 <% end %>
+<br>
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="gvCellStyleTitle"><%= t('subarea.subarea_type') %></th>
+          <th class="gvCellStyleTitle"><%= t('subarea.subarea_number') %></th>
+          <th class="gvCellStyleTitle"><%= t('subarea.subarea_description') %></th>
+          <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+        </tr>
+      </thead>
+      <tbody>
 
-<table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
-    <th class="gvCellStyleTitle"><%= t('subarea.subarea_type') %></th>
-    <th class="gvCellStyleTitle"><%= t('subarea.subarea_number') %></th>
-    <th class="gvCellStyleTitle"><%= t('subarea.subarea_description') %></th>
-    <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
-  </tr>
 
-<% i=1 %>
 <% @subareas.each do |sub| %>
-  <% if (i % 2  == 0) %>
     <tr class="gvRowStyleEven">
       <td class="gvCellStyleText"><%= sub[:subarea_type] %></td>
       <td class="gvCellStyleText"><%= sub[:subarea_number] %></td>
@@ -47,21 +51,12 @@
         <%= link_to image_tag("view.png"), subarea_path(sub[:subarea_id]), title: t('general.show') %>
         <%= link_to image_tag("edit.png"), edit_subarea_path(sub[:subarea_id]), title: t('general.edit') %>
       </td>
-    </tr>
-  <% else %>
-    <tr class="gvRowStyleOdd">
-      <td class="gvCellStyleText"><%= sub[:subarea_type] %></td>
-      <td class="gvCellStyleText"><%= sub[:subarea_number] %></td>
-      <td class="gvCellStyleText"><%= sub[:subarea_description] %></td>
-      <td class="gvCellStyleCheckbox">
-        <%= link_to image_tag("view.png"), subarea_path(sub[:subarea_id]), title: t('general.show') %>
-        <%= link_to image_tag("edit.png"), edit_subarea_path(sub[:subarea_id]), title: t('general.edit') %>
-      </td>
-    </tr>
-  <% end %>
-  <% i = i + 1 %>
 <% end %>
-</table>
+</tr>
+    </tbody>
+  </table>
+</div>
+</div>
 
 <br>
 
