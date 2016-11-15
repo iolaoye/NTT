@@ -32,6 +32,8 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'new'))
 			true
+		elsif current_page?(url_for(:controller => 'apex_parameters', :action => 'index'))
+			true
 		else
 			false
 		end

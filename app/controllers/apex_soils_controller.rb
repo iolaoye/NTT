@@ -4,6 +4,7 @@
   # GET /soils.json
   def index
     @soils = Soil.where(:field_id => session[:field_id])
+    @field = Field.find(session[:field_id])
 
     respond_to do |format|
       format.html # index.html.erb

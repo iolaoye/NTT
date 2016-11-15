@@ -1,25 +1,39 @@
-﻿<% if notice != nil %>
-<div class="success_alert">
+﻿<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('menu.apex_soil')%></h1></div>
+
+<% if notice != nil %>
+<div class="alert alert-info" role="alert">
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
   <%= notice %>
 </div>
 <% end %>
 
-<h1 class="less-margin"><%= t('menu.apex_soil')%></h1>
 
-<table class='gvTableStyle'>
-    <tr class='gvHeaderStyle'>
-	  <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
-      <th class="gvCellStyleTitle"><%= t('soil.key') %></th>
-      <th class="gvCellStyleTitle"><%= t('soil.symbol') %></th>
-      <th class="gvCellStyleTitle"><%= t('soil.group') %></th>
-      <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
-      <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-primary' %>
+<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.site'), site_path(session[:field_id]), :class => 'btn btn-default' %>
+
+<br><br>
+
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.key') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.symbol') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.group') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
+          <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
     </tr>
+    </thead>
+    <tbody>
+
     <%= hidden_field(:layer_id, :id, :value => @field_id) %>
-  <% i = 1 %>
   <% for apex_soil in @soils %>
-    <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">
         <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", apex_soil.selected, disabled: true %></td>
         <td class="gvCellStyleText"><%= apex_soil.key %></td>
@@ -31,23 +45,11 @@
           <%= link_to image_tag("view.png"), apex_soil_path(apex_soil.id), title: t('general.show') %>
           <%= link_to image_tag("edit.png"), edit_apex_soil_path(apex_soil.id), title: t('general.edit') %>
         </td>
-    </tr>
-    <% else %>
-      <tr class="gvRowStyleOdd">
-        <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", apex_soil.selected, disabled: true %></td>
-        <td class="gvCellStyleText"><%= apex_soil.key %></td>
-        <td class="gvCellStyleText"><%= apex_soil.symbol %></td>
-        <td class="gvCellStyleText"><%= apex_soil.group %></td>
-        <td class="gvCellStyleText"><%= apex_soil.name %></td>
-        <td class="gvCellStyleActions">
-          <%= link_to image_tag("layers.png"), controller: "apex_layers", action: "index", id: apex_soil.id, title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
-          <%= link_to image_tag("view.png"), apex_soil_path(apex_soil.id), title: t('general.show') %>
-          <%= link_to image_tag("edit.png"), edit_apex_soil_path(apex_soil.id), title: t('general.edit') %>
-        </td>
-    </tr>
-    <% end %>
-    <% i = i + 1 %>
   <% end %>
-</table>
+</tr>
+    </tbody>
+  </table>
+</div>
+</div>
 
 <br>

@@ -1,14 +1,29 @@
+<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing')  + " " + t('menu.parameters_file') %></h1></div>
+
 <% if flash[:notice] != nil %>
-    <div class="success_alert">
+    <div class="alert alert-info" role="alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <%= flash[:notice] %>
     </div>
 <% end %>
 
-<h1><%= t('general.listing')  + " " + t('menu.parameters_file') %></h1>
+<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-primary' %>
+<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-default' %>
+<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.site'), site_path(session[:field_id]), :class => 'btn btn-default' %>
 
-<table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
+
+<br><br>
+  <%= link_to "Reset to Default", {:action => :reset}, :method => :post, :class => 'btn btn-primary' %>
+<br><br>
+
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
     <th class="gvCellStyleTitle"><%= t('menu.parameters_file') %></th>
     <th class="gvCellStyleTitle"><%= t('general.name') %></th>
     <th class="gvCellStyleTitle"><%= t('apex.line') %></th>
@@ -17,12 +32,10 @@
     <th class="gvCellStyleTitle"><%= t('apex.high_range') %></th>
     <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   </tr>
+  </thead>
+      <tbody>
 
-  <%= link_to "Reset to Default", {:action => :reset}, :method => :post %>
-
-<% i=1 %>
 <% @apex_parameters.each do |apex_parameter| %>
-  <% if (i % 2  == 0) %>
     <tr class="gvRowStyleEven">
       <td class="gvCellStyleNumber"><%= apex_parameter.parameter.number %></td>
       <td class="gvCellStyleString"><%= apex_parameter.parameter.name %></td>
@@ -31,20 +44,11 @@
       <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_low %></td>
       <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_high %></td>
       <td><%= link_to image_tag("edit.png"), edit_apex_parameter_path(apex_parameter), title: t('general.edit') %></td>
-    </tr>
-  <% else %>
-    <tr class="gvRowStyleOdd">
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.number %></td>
-      <td class="gvCellStyleString"><%= apex_parameter.parameter.name %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.line %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.value %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_low %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_high %></td>
-      <td><%= link_to image_tag("edit.png"), edit_apex_parameter_path(apex_parameter), title: t('general.edit') %></td>
-    </tr>
-  <% end %>
-  <% i = i + 1 %>
 <% end %>
-</table>
+</tr>
+    </tbody>
+  </table>
+</div>
+</div>
 
 <br>
