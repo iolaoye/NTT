@@ -2,6 +2,7 @@ class SubareasController < ApplicationController
   # GET /subareas
   # GET /subareas.json
   def index
+    @field = Field.find(session[:field_id])
 	soils = Soil.where(:field_id => session[:field_id], :selected => true)
 	if soils != nil then
 		subarea = Subarea.where(:soil_id => soils[0].id).first
@@ -54,6 +55,7 @@ class SubareasController < ApplicationController
   def create
     session[:scenario_id] = params[:subarea][:scenario_id]
 	get_subareas()
+  @field = Field.find(session[:field_id])
 	render "index"
   end
 

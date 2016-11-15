@@ -3,29 +3,35 @@
 </h1>
 
 <%= form_tag show_counties_states_path, method: :post do %>
-  <%= submit_tag t("submit.save"), name: "button"%>
 
-  <table>
-    <% @states.each do |state| %>
-      <ul class="ddm" role="menu" >
+<%= submit_tag t("submit.save"), name: "button"%>
+
+<table>
+  <% @states.each do |state| %>
+  <ul class="ddm" role="menu" >
+    <li>
+      <input type="checkbox" name=""<%=state.id%> id=<%=state.id%>><lable for=""<%=state.id%> ><%= state.state_name %>
+    </li>
+    <% @counties = County.where(:state_id => state.id) %>
+    <div id="state_"
+      <%=state.id%>" style="display:none">
+      <ul >
+        <% @counties.each do |county| %>
+          <%= fields_for "counties[]", county do |f| %>
         <li>
-          <input type="checkbox" name=""<%=state.id%> id=<%=state.id%>><lable for=""<%=state.id%> ><%= state.state_name %>
+          <%= check_box_tag "county_ids[]", county.id %>
+          <%= county.county_name %>
         </li>
-        <% @counties = County.where(:state_id => state.id) %>
-        <div id="state_"
-          <%=state.id%>" style="display:none">
-          <ul >
-            <% @counties.each do |county| %>
-              <%= fields_for "counties[]", county do |f| %>
-                <li>
-                  <%= check_box_tag "county_ids[]", county.id %>
-                  <%= county.county_name %>
-                </li>
-              <% end %>
-            <% end %>
-          </ul>
-        </div>
+        <% end %>
+          <% end %>
       </ul>
-    <% end %>
-  </table>
-<% end %>
+    </div>
+  </ul>
+
+  <% end %>
+  <% end %>
+
+</table>
+<br>
+
+  <form>

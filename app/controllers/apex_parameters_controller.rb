@@ -5,6 +5,8 @@ class ApexParametersController < ApplicationController
     @apex_parameters = ApexParameter.includes(:parameter).where(:project_id => session[:project_id])
     #@apex_parameters = ApexParameter.where(:project_id => session[:project_id])
 
+    @field = Field.find(session[:field_id])
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_parameters }
