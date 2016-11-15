@@ -52,24 +52,12 @@
 <% end %>
 -->
 
-<<<<<<< HEAD
-    <div class="page-header"><h1><%= t('field.field_title') %></h1>            
-    </div>
-    <%= t('instructions.fields') %><br>  <%= link_to t('project.new_project'), create_soils_field_path %>
-
-=======
     <div class="page-header"><h1><%= t('field.field_title') %></h1>
 
     </div>
     <%= button_to t('field.create_field'), new_field_path, :method => "get", :class => "btn btn-primary" %>
 	<%= button_to t('submit.continue'), field_scenarios_field_path, :method => "get", :class => "btn btn-primary" %><br><br>
     <%= t('instructions.fields') %><br><br>
-	<div class="field">
-    <%= t('field.max_slope') %>
-	<%= number_field :field_average_slope, :class => "fieldNumbers" %>
-	<%= submit_tag t("submit.save"), name: "button"%>
-    </div><br>
->>>>>>> 67ab703ae6f8c79ccc09eccb4671b8983bf1673a
           <div class="table-responsive">
             <div class="panel panel-default">
          <table class="table table-striped">
