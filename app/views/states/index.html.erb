@@ -12,8 +12,7 @@
           <input type="checkbox" name=""<%=state.id%> id=<%=state.id%>><lable for=""<%=state.id%> ><%= state.state_name %>
         </li>
         <% @counties = County.where(:state_id => state.id) %>
-        <div id="state_"
-          <%=state.id%>" style="display:none">
+        <div< id="state_<%=state.id%>" style="display:none">
           <ul >
             <% @counties.each do |county| %>
               <%= fields_for "counties[]", county do |f| %>

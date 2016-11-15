@@ -71,6 +71,7 @@ NTTG3::Application.routes.draw do
 
   resources :states do
     resources :counties
+	post :show_counties, on: :collection
   end
 
   resources :activities do
@@ -94,6 +95,7 @@ NTTG3::Application.routes.draw do
 	resources :weathers
 	get :field_soils, on: :member
 	get :field_scenarios, on: :member
+    get 'create_soils', on: :member
   end
 
   resources :watersheds do
