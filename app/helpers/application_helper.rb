@@ -34,6 +34,12 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(:controller => 'apex_parameters', :action => 'index'))
 			true
+		elsif current_page?(url_for(:controller => 'subareas', :action => 'index'))
+			true
+		elsif current_page?(url_for(:controller => 'apex_soils', :action => 'index'))
+			true
+		elsif current_page?(url_for(:controller => 'soil_operations', :action => 'index'))
+			true
 		else
 			false
 		end

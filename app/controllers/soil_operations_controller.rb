@@ -2,6 +2,7 @@ class SoilOperationsController < ApplicationController
   # GET /soil_operations
   # GET /soil_operations.json
   def index	
+    @field = Field.find(session[:field_id])
 	@soil = 0
 	@scenario = 0
     soils = Soil.where(:field_id => session[:field_id])
