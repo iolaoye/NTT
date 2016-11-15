@@ -3,6 +3,7 @@ class SitesController < ApplicationController
   # GET /sites.json
   def index
     @sites = Site.all
+    @field = Field.find(session[:field_id])
 
     respond_to do |format|
       format.html # index.html.erb
