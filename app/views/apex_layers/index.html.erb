@@ -4,89 +4,96 @@
     <%= notice %>
   </div>
 <% end %>
+<div class="page-header"><h1><%= t('menu.layer_file') %></h1></div>
 
-<h1><%= t('menu.layer_file') %></h1>
-<table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
-    <th><%= t('layer.layer_number') %></th>
-    <th>Z</th>
-    <th>BD</th>
-    <th>UW</th>
-    <th>FC</th>
-    <th>SAN</th>
-    <th>SIL</th>
-    <th>WN</th>
-    <th><%= t('soil.ph') %></th>
-    <th>SMB</th>
-    <th>CAC</th>
-    <th>CEC</th>
-    <th>ROK</th>
-    <th>CNDS</th>
-    <th>SSF</th>
-    <th>RSD</th>
-    <th>BDD</th>
-    <th>PSP</th>
-    <th>SATC</th>
-    <th class="gvCellStyleTitle">
-      <%= t('general.actions') %>
-    </th>
-  </tr>
-
-  <% i = 1 %>
-  <% @apex_layers.each do |layer| %>
-      <% if (i % 2 == 0) %>
-          <tr class="gvRowStyleEven">
-            <td class="gvCellStyleNumber"><%= i %></td>
-            <td class="gvCellStyleNumber"><%= layer.depth %></td>
-            <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
-            <td class="gvCellStyleNumber"><%= layer.uw %></td>
-            <td class="gvCellStyleNumber"><%= layer.fc %></td>
-            <td class="gvCellStyleNumber"><%= layer.sand %></td>
-            <td class="gvCellStyleNumber"><%= layer.silt %></td>
-            <td class="gvCellStyleNumber"><%= layer.wn %></td>
-            <td class="gvCellStyleNumber"><%= layer.ph %></td>
-            <td class="gvCellStyleNumber"><%= layer.smb %></td>
-            <td class="gvCellStyleNumber"><%= layer.cac %></td>
-            <td class="gvCellStyleNumber"><%= layer.cec %></td>
-            <td class="gvCellStyleNumber"><%= layer.rok %></td>
-            <td class="gvCellStyleNumber"><%= layer.cnds %></td>
-            <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
-            <td class="gvCellStyleNumber"><%= layer.rsd %></td>
-            <td class="gvCellStyleNumber"><%= layer.bdd %></td>
-            <td class="gvCellStyleNumber"><%= layer.psp %></td>
-            <td class="gvCellStyleNumber"><%= layer.satc %></td>
-            <td>
-              <%= link_to image_tag("edit.png"), edit_apex_layer_path(layer.id), title: t('general.edit') %>
-            </td>
-          </tr>
-      <% else %>
-          <tr class="gvRowStyleOdd">
-            <td class="gvCellStyleNumber"><%= i %></td>
-            <td class="gvCellStyleNumber"><%= layer.depth %></td>
-            <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
-            <td class="gvCellStyleNumber"><%= layer.uw %></td>
-            <td class="gvCellStyleNumber"><%= layer.fc %></td>
-            <td class="gvCellStyleNumber"><%= layer.sand %></td>
-            <td class="gvCellStyleNumber"><%= layer.silt %></td>
-            <td class="gvCellStyleNumber"><%= layer.wn %></td>
-            <td class="gvCellStyleNumber"><%= layer.ph %></td>
-            <td class="gvCellStyleNumber"><%= layer.smb %></td>
-            <td class="gvCellStyleNumber"><%= layer.cac %></td>
-            <td class="gvCellStyleNumber"><%= layer.cec %></td>
-            <td class="gvCellStyleNumber"><%= layer.rok %></td>
-            <td class="gvCellStyleNumber"><%= layer.cnds %></td>
-            <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
-            <td class="gvCellStyleNumber"><%= layer.rsd %></td>
-            <td class="gvCellStyleNumber"><%= layer.bdd %></td>
-            <td class="gvCellStyleNumber"><%= layer.psp %></td>
-            <td class="gvCellStyleNumber"><%= layer.satc %></td>
-            <td>
-              <%= link_to image_tag("edit.png"), edit_apex_layer_path(layer.id), title: t('general.edit') %>
-            </td>
-          </tr>
-      <% end %>
-      <% i = i + 1 %>
-  <% end %>
-</table>
+<div class="table-responsive">
+  <div class="panel panel-default">
+      <table class='table table-striped'>
+        <thead>
+        <tr class='gvHeaderStyle'>
+          <th><%= t('layer.layer_number') %></th>
+          <th>Z</th>
+          <th>BD</th>
+          <th>UW</th>
+          <th>FC</th>
+          <th>SAN</th>
+          <th>SIL</th>
+          <th>WN</th>
+          <th><%= t('soil.ph') %></th>
+          <th>SMB</th>
+          <th>CAC</th>
+          <th>CEC</th>
+          <th>ROK</th>
+          <th>CNDS</th>
+          <th>SSF</th>
+          <th>RSD</th>
+          <th>BDD</th>
+          <th>PSP</th>
+          <th>SATC</th>
+          <th class="gvCellStyleTitle">
+            <%= t('general.actions') %>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 1 %>
+        <% @apex_layers.each do |layer| %>
+            <% if (i % 2 == 0) %>
+                <tr class="gvRowStyleEven">
+                  <td class="gvCellStyleNumber"><%= i %></td>
+                  <td class="gvCellStyleNumber"><%= layer.depth %></td>
+                  <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
+                  <td class="gvCellStyleNumber"><%= layer.uw %></td>
+                  <td class="gvCellStyleNumber"><%= layer.fc %></td>
+                  <td class="gvCellStyleNumber"><%= layer.sand %></td>
+                  <td class="gvCellStyleNumber"><%= layer.silt %></td>
+                  <td class="gvCellStyleNumber"><%= layer.wn %></td>
+                  <td class="gvCellStyleNumber"><%= layer.ph %></td>
+                  <td class="gvCellStyleNumber"><%= layer.smb %></td>
+                  <td class="gvCellStyleNumber"><%= layer.cac %></td>
+                  <td class="gvCellStyleNumber"><%= layer.cec %></td>
+                  <td class="gvCellStyleNumber"><%= layer.rok %></td>
+                  <td class="gvCellStyleNumber"><%= layer.cnds %></td>
+                  <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+                  <td class="gvCellStyleNumber"><%= layer.rsd %></td>
+                  <td class="gvCellStyleNumber"><%= layer.bdd %></td>
+                  <td class="gvCellStyleNumber"><%= layer.psp %></td>
+                  <td class="gvCellStyleNumber"><%= layer.satc %></td>
+                  <td>
+                    <%= link_to image_tag("edit.png"), edit_apex_layer_path(layer.id), title: t('general.edit') %>
+                  </td>
+                </tr>
+            <% else %>
+                <tr class="gvRowStyleOdd">
+                  <td class="gvCellStyleNumber"><%= i %></td>
+                  <td class="gvCellStyleNumber"><%= layer.depth %></td>
+                  <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
+                  <td class="gvCellStyleNumber"><%= layer.uw %></td>
+                  <td class="gvCellStyleNumber"><%= layer.fc %></td>
+                  <td class="gvCellStyleNumber"><%= layer.sand %></td>
+                  <td class="gvCellStyleNumber"><%= layer.silt %></td>
+                  <td class="gvCellStyleNumber"><%= layer.wn %></td>
+                  <td class="gvCellStyleNumber"><%= layer.ph %></td>
+                  <td class="gvCellStyleNumber"><%= layer.smb %></td>
+                  <td class="gvCellStyleNumber"><%= layer.cac %></td>
+                  <td class="gvCellStyleNumber"><%= layer.cec %></td>
+                  <td class="gvCellStyleNumber"><%= layer.rok %></td>
+                  <td class="gvCellStyleNumber"><%= layer.cnds %></td>
+                  <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+                  <td class="gvCellStyleNumber"><%= layer.rsd %></td>
+                  <td class="gvCellStyleNumber"><%= layer.bdd %></td>
+                  <td class="gvCellStyleNumber"><%= layer.psp %></td>
+                  <td class="gvCellStyleNumber"><%= layer.satc %></td>
+                  <td>
+                    <%= link_to image_tag("edit.png"), edit_apex_layer_path(layer.id), title: t('general.edit') %>
+                  </td>
+                </tr>
+            <% end %>
+            <% i = i + 1 %>
+        <% end %>
+      </tbody>
+      </table>
+    </div>
+</div>
 
 <br>
