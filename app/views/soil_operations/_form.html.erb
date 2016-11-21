@@ -68,6 +68,7 @@
     <%= f.number_field :opv7, :class => "numbers", :step => '0.01' %>
   </div>
   <div class="actions">
-    <%= f.submit t('submit.update') + " " + t('scenario.operation') %>
-	<%= link_to t('general.back'), soil_operations_path %>  </div>
+    <%= f.submit t('submit.update') + " " + t('scenario.operation'), :class => "btn btn-primary" %>
+	  <%= link_to t('general.back'), soil_operations_path, :class => "btn btn-primary" %>  
+  </div>
 <% end %>

@@ -6,6 +6,14 @@
 <% end %>
 <div class="page-header"><h1><%= t('general.listing') + " " + t('menu.operation_file') %></h1></div>
 
+<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-default' %>
+<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-primary' %>
+<%= link_to t('menu.site'), site_path(session[:field_id]), :class => 'btn btn-default' %>
+<br><br>
+
 <%= form_for :soil_operations, url: soil_operations_url do |f| %>
 <table>
   <tr>

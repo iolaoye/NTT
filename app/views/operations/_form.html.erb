@@ -55,7 +55,7 @@
 			</div>
 			<div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('soil.depth') %>
-			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %> 
+			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
@@ -332,8 +332,8 @@
 	<% end %>
 
   <div class="actions">
-    <%= f.submit "Add more", :name => "add_more" %>
-    <%= f.submit "Finish", :name => "finish" %>
-		<%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]) %>
+    <%= f.submit "Add more", :name => "add_more", :class => "btn btn-primary" %>
+    <%= f.submit "Finish", :name => "finish", :class => "btn btn-primary" %>
+		<%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]), :class => "btn btn-primary" %>
   </div>
 <% end %>

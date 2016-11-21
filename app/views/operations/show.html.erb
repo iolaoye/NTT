@@ -75,6 +75,7 @@
   <%= @operation.nh3 %>
 </p>
 
-
-<%= link_to t('general.edit'), edit_operation_path(@operation) %> |
-<%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]) %>
+<div class="actions">
+  <%= link_to t('general.edit'), edit_operation_path(@operation), :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]), :class => "btn btn-primary" %>
+</div>
