@@ -52,6 +52,7 @@ class SoilOperationsController < ApplicationController
   # POST /soil_operations.json
   def create
 	@soil = params[:soil_operation][:soil_id]
+  @field = Field.find(session[:field_id])
 	@scenario = params[:soil_operation][:scenario_id]
     @soil_operations = SoilOperation.where(:soil_id => @soil, :scenario_id => @scenario)
 
