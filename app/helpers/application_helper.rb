@@ -40,6 +40,8 @@ module ApplicationHelper
 			true
 		elsif request.url.include?(url_for("/soil_operations"))
 			true
+		elsif request.url.include?(url_for("/sites"))
+			true
 		else
 			false
 		end
