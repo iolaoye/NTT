@@ -11,7 +11,7 @@
 <%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
 <%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-primary' %>
 <%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.site'), site_path(session[:field_id]), :class => 'btn btn-default' %>
+<%= link_to t('menu.site'), sites_path(:id => session[:field_id]), :class => 'btn btn-default' %>
 
 <br><br>
 
