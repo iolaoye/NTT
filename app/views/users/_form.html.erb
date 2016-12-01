@@ -23,15 +23,15 @@
 
     <div class="button_container">
     <div id="left_button">
-      <%= f.submit t('submit.create') + " " + t('users.user') %>
+      <%= f.submit t('submit.create') + " " + t('users.user'), :class => "btn btn-primary" %>
     </div>
     <% end %>
 
     <div id="right_button">
       <% if (I18n.locale.eql?(:en)) %>
-          <%= button_to t('general.back'), login_path, method: :get, :class => "green_button english" %>
+          <%= button_to t('general.back'), login_path, method: :get, :class => "btn btn-primary" %>
       <% else %>
-          <%= button_to t('general.back'), login_path, method: :get, :class => "green_button spanish" %>
+          <%= button_to t('general.back'), login_path, method: :get, :class => "btn btn-primary" %>
       <% end %>
     </div>
     </div>

@@ -9,46 +9,48 @@
    <b>Depth:</b>
    <%= @layer.depth %>
  </p>
- 
+
  <p>
    <b>Soil p:</b>
    <%= @layer.soil_p %>
  </p>
- 
+
  <p>
    <b>Bulk density:</b>
    <%= @layer.bulk_density %>
  </p>
- 
+
  <p>
    <b>Sand:</b>
    <%= @layer.sand %>
  </p>
- 
+
  <p>
    <b>Silt:</b>
    <%= @layer.silt %>
  </p>
- 
+
  <p>
    <b>Clay:</b>
    <%= @layer.clay %>
  </p>
- 
+
  <p>
    <b>Organic matter:</b>
    <%= @layer.organic_matter %>
  </p>
- 
+
  <p>
    <b>Ph:</b>
    <%= @layer.ph %>
  </p>
- 
+
  <p>
    <b>Soil:</b>
    <%= @layer.soil_id %>
  </p>
 
-<%= link_to t('general.edit'), edit_layer_path %> |
-<%= link_to t('general.back'), soil_layers_soil_path(session[:soil_id]) %>
+<div class="actions">
+  <%= link_to t('general.edit'), edit_layer_path, :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), soil_layers_soil_path(session[:soil_id]), :class => "btn btn-primary" %>
+</div>

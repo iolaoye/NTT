@@ -7,12 +7,12 @@
 
 <%= form_tag({action: :upload_system}, multipart: true) do %>
   <div>
-      <h1><%= t('operation.open') %></h1>
+      <div class="page-header"><h1><%= t('operation.open') %></h1></div>
       <%= file_field_tag "Cropping system" %>
   </div>
   </br>
   <div class="actions">
-      <%= submit_tag(value = t('operation.open'), data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('operation.saved')}) %>
-      <%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]) %>
+      <%= submit_tag(value = t('operation.open'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('operation.saved')}) %>
+      <%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]), :class => "btn btn-primary" %>
   </div>
 <% end %>

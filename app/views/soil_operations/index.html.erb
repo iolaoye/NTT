@@ -24,9 +24,9 @@
     <td><%= label :bmp_id, t('scenario.scenario') %></td>
   </tr>
   <tr>
-    <td><%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil}, {:required => true} %></td>    
+    <td><%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil}, {:required => true} %></td>
     <td><%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => @scenario}, {:required => true} %></td>
-  <td><%= button_to t('operation.load_operation')%></td>
+	  <td class='action'><%= f.submit t('operation.load_operation'), :class => "btn btn-primary" %></td>
   </tr>
 </table>
 <% end %>
@@ -34,51 +34,75 @@
 
 <div class="table-responsive">
   <div class="panel panel-default">
-    <table class="table table-striped">
+    <table class='table table-striped'>
       <thead>
-        <tr>
-    <th class="gvCellStyleTitle"><%= t('datetime.prompts.year') %></th>
-    <th class="gvCellStyleTitle"><%= t('datetime.prompts.month') %></th>
-    <th class="gvCellStyleTitle"><%= t('datetime.prompts.day') %></th>
-    <th class="gvCellStyleTitle"><%= t('scenario.operation') %></th>
-    <th class="gvCellStyleTitle">Tractor</th>
-    <th class="gvCellStyleTitle"><%= t('operation.crop') %></th>
-    <th id="typeTitle" class="gvCellStyleTitle"><%= t('general.type') %></th>
-    <th class="gvCellStyleTitle">OPV1</th>
-    <th class="gvCellStyleTitle">OPV2</th>
-    <th class="gvCellStyleTitle">OPV3</th>
-    <th class="gvCellStyleTitle">OPV4</th>
-    <th class="gvCellStyleTitle">OPV5</th>
-    <th class="gvCellStyleTitle">OPV6</th>
-    <th class="gvCellStyleTitle">OPV7</th>
-    <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
-</tr>
-    </thead>
-    <tbody>
-  <% @soil_operations.each do |soil_operation| %>
-        <tr class="gvRowStyleEven">
-          <td class="gvCellStyleNumber"><%= soil_operation.year %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.month %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.day %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.apex_operation %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.tractor_id %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.apex_crop %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.type_id %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.opv1 %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.opv2 %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.opv3 %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.opv4 %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.opv5 %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.opv6 %></td>
-          <td class="gvCellStyleNumber"><%= soil_operation.opv7 %></td>
-          <td class="gvCellStyleActions">
-            <%= link_to image_tag("edit.png"), edit_soil_operation_path(soil_operation) %>
-         </td>
-  <% end %>
-</tr>
-    </tbody>
-  </table>
-</div>
+        <tr class='gvHeaderStyle'>
+          <th class="gvCellStyleTitle"><%= t('datetime.prompts.year') %></th>
+          <th class="gvCellStyleTitle"><%= t('datetime.prompts.month') %></th>
+          <th class="gvCellStyleTitle"><%= t('datetime.prompts.day') %></th>
+          <th class="gvCellStyleTitle"><%= t('scenario.operation') %></th>
+          <th class="gvCellStyleTitle">Tractor</th>
+          <th class="gvCellStyleTitle"><%= t('operation.crop') %></th>
+          <th id="typeTitle" class="gvCellStyleTitle"><%= t('general.type') %></th>
+          <th class="gvCellStyleTitle">OPV1</th>
+          <th class="gvCellStyleTitle">OPV2</th>
+          <th class="gvCellStyleTitle">OPV3</th>
+          <th class="gvCellStyleTitle">OPV4</th>
+          <th class="gvCellStyleTitle">OPV5</th>
+          <th class="gvCellStyleTitle">OPV6</th>
+          <th class="gvCellStyleTitle">OPV7</th>
+          <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 1 %>
+        <% @soil_operations.each do |soil_operation| %>
+          <% if (i % 2  == 0) %>
+            <tr class="gvRowStyleEven">
+              <td class="gvCellStyleNumber"><%= soil_operation.year %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.month %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.day %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.apex_operation %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.tractor_id %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.apex_crop %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.type_id %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv1 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv2 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv3 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv4 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv5 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv6 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv7 %></td>
+              <td class="gvCellStyleActions">
+                <%= link_to image_tag("edit.png"), edit_soil_operation_path(soil_operation) %>
+              </td>
+            </tr>
+          <% else %>
+            <tr class="gvRowStyleOdd">
+              <td class="gvCellStyleNumber"><%= soil_operation.year %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.month %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.day %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.apex_operation %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.tractor_id %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.apex_crop %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.type_id %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv1 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv2 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv3 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv4 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv5 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv6 %></td>
+              <td class="gvCellStyleNumber"><%= soil_operation.opv7 %></td>
+              <td>
+                <%= link_to image_tag("edit.png"), edit_soil_operation_path(soil_operation), title: t('general.edit') %>
+              </td>
+            </tr>
+          <% end %>
+          <% i = i + 1 %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <br>

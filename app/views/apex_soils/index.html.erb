@@ -1,12 +1,10 @@
-﻿<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('menu.apex_soil')%></h1></div>
-
 <% if notice != nil %>
 <div class="alert alert-info" role="alert">
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
   <%= notice %>
 </div>
 <% end %>
-
+<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('menu.apex_soil')%></h1></div>
 
 <%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
 <%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-default' %>
