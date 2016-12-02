@@ -11,7 +11,7 @@ NTTG3::Application.routes.draw do
   resources :apex_parameters
   resources :apex_controls
   resources :results
-  #resources :sites
+  resources :sites
   resources :modifications
   resources :soil_operations
   resources :subareas
@@ -72,12 +72,6 @@ NTTG3::Application.routes.draw do
   resources :states do
     resources :counties
 	post :show_counties, on: :collection
-  end
-
-  resources :sites do
-    get :show, on: :member
-    get :edit, on: :member
-    get :new, on: :member
   end
 
   resources :activities do
