@@ -2,7 +2,7 @@ class SitesController < ApplicationController
   # GET /sites
   # GET /sites.json
   def index
-    @sites = Site.all
+    @sites = Site.where(:field_id => session[:field_id])
     @field = Field.find(session[:field_id])
 
     respond_to do |format|
