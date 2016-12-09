@@ -210,7 +210,7 @@
       <td><%= number_field :climate, :min_12, :step => 'any', :class => 'min', :value => @climate_array[11]["min"].inspect %></td>
       <td><%= number_field :climate, :pcp_12, :step => 'any', :class => 'pcp', :value => @climate_array[11]["pcp"].inspect %></td></tr>
 	</table>
-  </div>
+  </div><br>
   <div class="actions" >
     <%= f.submit "Add more", :name => "add_more", :class => "btn btn-primary" %>
     <%= f.submit "Finish", :name => "finish", :class => "btn btn-primary" %>

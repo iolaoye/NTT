@@ -15,9 +15,9 @@
     <%= f.text_field :name %>
   </div>
   <div class="actions">
-    <% if type1 == 'Edit' %>
+    <% if type1 == 'Edit' %><br>
 		<%= f.submit t('submit.save'), :class => "btn btn-primary" %>
-	<% else %>
+	<% else %><br>
 		<%= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
 	<% end %>
   </div>
