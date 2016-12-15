@@ -15,6 +15,7 @@ class SitesController < ApplicationController
   # GET /sites/1.json
   def show
     @site = Site.find_by_field_id(params[:id])
+    @field = Field.find(session[:field_id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -36,6 +37,7 @@ class SitesController < ApplicationController
   # GET /sites/1/edit
   def edit
     @site = Site.find(params[:id])
+    @field = Field.find(session[:field_id])
   end
 
   # POST /sites
