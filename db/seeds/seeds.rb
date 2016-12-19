@@ -4239,7 +4239,7 @@ Bmpsublist.create!({:id => 15, :name => "Contour Buffer", :spanish_name => "Buff
 Bmpsublist.create!({:id => 16, :name => "Land Leveling", :spanish_name => "Nivelacion de la Tierra", :bmplist_id => 6, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 17, :name => "Terrace System", :spanish_name => "Sistema de Terraza", :bmplist_id => 6, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 19, :name => "Temperature and Precipitation Changes", :spanish_name => "Cambios de Temperatura y Precipitacion", :bmplist_id => 7, :status => true}, :without_protection => true)
-Bmpsublist.create!({:id => 20, :name => "Asfalt or Concrete", :spanish_name => "Asfalto o Concreto", :bmplist_id => 8, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 20, :name => "Asphalt or Concrete", :spanish_name => "Asfalto o Concreto", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 21, :name => "Grass Cover", :spanish_name => "Cubierta de Pasto", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 22, :name => "Slope Adjustment", :spanish_name => "Ajuste de la inclinacion", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 23, :name => "Shading", :spanish_name => "Shading", :bmplist_id => 8, :status => true}, :without_protection => true)
@@ -4656,7 +4656,7 @@ Crop.create!({:id => 222,:number => 53,:dndc => 55,:code => 'CABG',:name => 'CAB
 
 
 State.delete_all
-states = 
+states =
     {:id => 1, :state_name => 'Alabama', :state_abbreviation => 'AL', :state_code => '01', :status => 0},
     {:id => 2, :state_name => 'Alaska', :state_abbreviation => 'AK', :state_code => '02', :status => 0},
     {:id => 3, :state_name => 'Arizona', :state_abbreviation => 'AZ', :state_code => '04', :status => 0},
