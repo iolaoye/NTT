@@ -4,27 +4,40 @@
     <%= notice %>
   </div>
   <% end %>
-    
-<h1><%= t('general.listing') + " " + t('menu.site') %></h1>
-<%= link_to t('general.new') + " " + t('menu.site'), new_site_path %>
-<table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
-    <th class="gvCellStyleTitle">Ylat</th>
-    <th class="gvCellStyleTitle">Xlog</th>
-    <th class="gvCellStyleTitle">Elev</th>
-    <th class="gvCellStyleTitle">Apm</th>
-    <th class="gvCellStyleTitle">Co2x</th>
-    <th class="gvCellStyleTitle">Cqnx</th>
-    <th class="gvCellStyleTitle">Rfnx</th>
-    <th class="gvCellStyleTitle">Upr</th>
-    <th class="gvCellStyleTitle">Unr</th>
-    <th class="gvCellStyleTitle">Fir0</th>
-    <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
-  </tr>
 
-  <% i=1 %>
+ <div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing') + " " + t('menu.site') %></h1></div>
+<h1></h1>
+<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-default' %>
+<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.site'), sites_path(:id => session[:field_id]), :class => 'btn btn-primary' %><br><br>
+<br>
+
+
+
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="gvCellStyleTitle">Ylat</th>
+          <th class="gvCellStyleTitle">Xlog</th>
+          <th class="gvCellStyleTitle">Elev</th>
+          <th class="gvCellStyleTitle">Apm</th>
+          <th class="gvCellStyleTitle">Co2x</th>
+          <th class="gvCellStyleTitle">Cqnx</th>
+          <th class="gvCellStyleTitle">Rfnx</th>
+          <th class="gvCellStyleTitle">Upr</th>
+          <th class="gvCellStyleTitle">Unr</th>
+          <th class="gvCellStyleTitle">Fir0</th>
+          <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+        </tr>
+      </thead>
+      <tbody>
+
       <% @sites.each do |site| %>
-      <% if (i % 2  == 0) %>
         <tr class="gvRowStyleEven">
           <td class="gvCellStyleNumber"><%= site.ylat %></td>
           <td class="gvCellStyleNumber"><%= site.xlog %></td>
@@ -40,28 +53,10 @@
             <%= link_to image_tag("view.png"), site, title: t('general.show') %>
             <%= link_to image_tag("edit.png"), edit_site_path(site), title: t('general.edit') %>
             <%= link_to image_tag("delete.png"), site, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
-          </td>
-        </tr>
-    <% else %>
-        <tr class="gvRowStyleOdd">
-          <td class="gvCellStyleNumber"><%= site.ylat %></td>
-          <td class="gvCellStyleNumber"><%= site.xlog %></td>
-          <td class="gvCellStyleNumber"><%= site.elev %></td>
-          <td class="gvCellStyleNumber"><%= site.apm %></td>
-          <td class="gvCellStyleNumber"><%= site.co2x %></td>
-          <td class="gvCellStyleNumber"><%= site.cqnx %></td>
-          <td class="gvCellStyleNumber"><%= site.rfnx %></td>
-          <td class="gvCellStyleNumber"><%= site.upr %></td>
-          <td class="gvCellStyleNumber"><%= site.unr %></td>
-          <td class="gvCellStyleNumber"><%= site.fir0 %></td>
-          <td class="gvCellStyleActions">
-            <%= link_to image_tag("view.png"), site, title: t('general.show') %>
-            <%= link_to image_tag("edit.png"), edit_site_path(site), title: t('general.edit') %>
-            <%= link_to image_tag("delete.png"), site, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
-            </td>
-        </tr>
+         </td>
+       </tr>
       <% end %>
-    <% i = i + 1 %>
-  <% end %>
-</table>
-
+      </tbody>
+    </table>
+  </div>
+</div>

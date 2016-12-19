@@ -5,7 +5,7 @@
       <%= notice %>
   </div>
 <% end %>
-<h1><%= t('menu.apex_soil')%></h1>
+<div class="page-header"><h1><%= t('menu.apex_soil')%></h1></div>
 
 <p id="notice"><%= notice %></p>
 
@@ -47,7 +47,7 @@
         <b>RFPK</b><br>
         <%= @soil.rfpk %>
     </p></td>
-  
+
   </tr>
   <tr class='gvRowStyleOdd'>
     <td><p>
@@ -90,6 +90,6 @@
 </table>
 
 <br>
-<%= link_to t('general.edit'), edit_apex_soil_path(@soil) %> |
-<%= link_to t('general.back'), apex_soils_path %>
+<%= link_to t('general.edit'), edit_apex_soil_path(@soil), :class => "btn btn-primary" %>
+<%= link_to t('general.back'), apex_soils_path, :class => "btn btn-primary" %>
 </br>

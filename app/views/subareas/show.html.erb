@@ -6,7 +6,7 @@
   </div>
 <% end %>
 
-<h1><%= t('menu.subarea_file') %></h1>
+<div class="page-header"><h1><%= t('menu.subarea_file') %></h1></div>
 <table class='gvTableStyle'>
   <tr class='gvRowStyleOdd'>
     <td>
@@ -471,6 +471,6 @@
   </tr>
 </table>
 <br>
-<%= link_to t('general.edit'), edit_subarea_path(@subarea) %> |
-<%= link_to t('general.back'), subareas_path %>
+<%= link_to t('general.edit'), edit_subarea_path(@subarea), :class => "btn btn-primary" %>
+<%= link_to t('general.back'), subareas_path, :class => "btn btn-primary" %>
 </br>

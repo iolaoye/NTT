@@ -5,7 +5,7 @@
       <%= notice %>
   </div>
 <% end %>
-<h1><%= t('menu.layer_file') %></h1>
+<div class="page-header"><h1><%= t('menu.layer_file') %></h1></div>
 
 <p>
   <b>Z:</b>
@@ -99,6 +99,7 @@
 
 
 
-
-<%= link_to t('general.edit'), edit_apex_layer_path %> |
-<%= link_to t('general.back'), controller: "apex_layers", action: "index", id: @apex_layer.soil_id %>
+<div class="actions">
+  <%= link_to t('general.edit'), edit_apex_layer_path, :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), controller: "apex_layers", action: "index", id: @apex_layer.soil_id, :class => "btn btn-primary" %>
+</div>

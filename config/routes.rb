@@ -48,12 +48,12 @@ NTTG3::Application.routes.draw do
   resources :apex_layers
   resources :results do
 	get 'sel', on: :member
-  end 
+  end
   resources :watershed_scenarios do
      post 'new_scenario', on: :member
   end
   resources :users do
-	  resources :projects 
+	  resources :projects
   end
 
   resources :projects do
@@ -62,7 +62,7 @@ NTTG3::Application.routes.draw do
     get 'download', on: :member
     get :group, on: :member
   end
- 
+
   resources :weathers do
 	member do
 		post 'save_coordinates'
@@ -85,11 +85,11 @@ NTTG3::Application.routes.draw do
   resources :locations do
     get :send_to_mapping_site, on: :member
     post :receive_from_mapping_site, on: :member
-    get :location_fields, on: :member 
+    get :location_fields, on: :member
   end
 
   resources :fields do
-    get :list, on: :member 
+    get :list, on: :member
     resources :soils
     resources :scenarios
 	resources :weathers
@@ -144,10 +144,10 @@ NTTG3::Application.routes.draw do
   post 'projects/upload_project'
   post 'weathers/upload_weather'
   root to: 'welcomes#index'
-  
+
   get '/about' => "about#index", :as => "about"
   get '/contact' => "contact#index", :as => "contact"
-  
+
   get '/help/' => redirect('/help/index')
   get '/help/:page' => "help#show", :as => "help"
 
