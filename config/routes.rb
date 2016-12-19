@@ -95,6 +95,7 @@ NTTG3::Application.routes.draw do
 	resources :weathers
 	get :field_soils, on: :member
 	get :field_scenarios, on: :member
+    get 'create_soils', on: :member
   end
 
   resources :watersheds do

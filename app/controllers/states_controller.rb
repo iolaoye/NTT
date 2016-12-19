@@ -82,6 +82,27 @@ class StatesController < ApplicationController
     end
   end
 
+  def show_counties
+     #@counties = County.find(params["county_ids"])
+	 #Create location for this selection with just project_id
+	 Location.where(:project_id => session[:project_id]).delete_all
+	 location = Location.new
+	 location.project_id = session[:project_id]
+	 i = 0
+	 params["county_ids"].each do |county|
+		if i == 0 then
+			location.coordinates = county.to_s
+			i+=1
+		else
+			location.coordinates += "," + county.to_s
+		end
+	 end
+	 if location.save
+		session[:location_id] = location.id
+		redirect_to list_field_path(location.id)
+	end
+  end
+
   private
 
     # Use this method to whitelist the permissible parameters. Example:

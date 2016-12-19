@@ -19,6 +19,9 @@
 # URL to get weather information
 	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
+# URL to get soils information
+	URL_SoilsInfo = 'http://nn.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
+
 #APEX folders.
 	APEX = "public/NTTFiles"
 	APEX_FOLDER = "E:/NTTHTML5Files"
