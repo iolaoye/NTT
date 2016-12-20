@@ -1,0 +1,8 @@
+﻿<%= form_for(@bmp) do |f| %>
+  <div class="field" id="depth" >
+  </div>
+  <div class="field" id = "depth" >
+    <%= f.label :depth, t('bmp.depth') + " (" + t('bmp.ft') + ")" %>
+    <%= f.number_field :depth, :step => 'any' %>
+  </div>
+<% end %>
