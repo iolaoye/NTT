@@ -1,6 +1,5 @@
-<%= form_for(@bmps) do |f| %>
-div class="page-header">
-<h1><%= t('menu.bmps') %></h1>
+<div class="page-header">
+  <h1><%= t('menu.bmps') %></h1>
   <%= link_to "Save BMPs Selected", new_bmp_path, :class => 'btn btn-primary' %>
     <table class="table table-striped">
   <thead>
@@ -27,14 +26,15 @@ div class="page-header">
         <%end%>
         <% case bmpsublist.id %>
           <% when 1 %> 
-            <td><%= render 'auto_irrigation'%></td>
+            <td><%= render 'auto_irrigation' %></td>
           <% when 2 %> 
-            <td><%= render 'auto_irrigation'%></td>
+            <td><%= render 'auto_irrigation' %></td>
           <% when 3 %> 
             <td><%= render 'tile_drain' %></td>
         <% end %>
       </tr>
 <% end %>
 </table>
-<%end%>
+
+<br>
 
