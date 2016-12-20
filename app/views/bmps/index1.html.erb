@@ -1,0 +1,23 @@
+<h1>Listing bmps</h1>
+
+<table>
+  <tr>
+    <th>Best Management Practices</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @bmps.each do |bmp| %>
+  <tr>
+    <td><%= bmps.name %></td>
+    <td><%= link_to t('general.show'), bmp %></td>
+    <td><%= link_to t('general.edit'), edit_bmp_path(bmp) %></td>
+    <td><%= link_to 'Destroy', bmp, method: :delete, data: { confirm: t('general.confirm') } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br>
+
+<%= link_to 'New Bmp', new_bmp_path %>

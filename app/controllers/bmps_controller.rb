@@ -25,6 +25,7 @@ class BmpsController < ApplicationController
 # GET /bmps
 # GET /bmps.json
   def index
+    @bmpsublists = Bmpsublist.where(:status => true)
     @bmps = Bmp.all
 
     respond_to do |format|
@@ -49,6 +50,8 @@ class BmpsController < ApplicationController
 # GET /bmps/new
 # GET /bmps/new.json
   def new
+    fkjasdl
+
     @climate_array = create_hash()
     @bmp = Bmp.new
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
