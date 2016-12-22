@@ -1,40 +1,42 @@
-<div class="page-header">
-  <h1><%= t('menu.bmps') %></h1>
-  <%= link_to "Save BMPs Selected", new_bmp_path, :class => 'btn btn-primary' %>
+<%= form_tag save_bmps_bmps_path, method: :post do %>
+  <div class="page-header">
+    <h1><%= t('menu.bmps') %></h1>
+    <%= submit_tag t("submit.save"), name: "button"%>
     <table class="table table-striped">
-  <thead>
-  <tr class='gvHeaderStyle'>
-    <th><%= t('general.name')%></th>
-    <th><%= t('general.select')%></th>
-  </thead>
-</tr>
+      <thead>
+        <tr class='gvHeaderStyle'>
+          <th><%= t('general.name')%></th>
+          <th><%= t('general.select')%></th>
+        </tr>
+      </thead>
 
-<% @bmpsublists.each do |bmpsublist| %>
-      <tr>
-        <td><h4><%= bmpsublist.name %></h4></td>
-        <td><%= check_box_tag 'select' %></td>
-      </tr>
-      <tr >
-        <% if @Bmps == nil then %>
-          <%@bmp = Bmp.new %>
-        <%else%>
-          <% @bmp = @Bmps.where(:scenario_id => params[:id], :bmp_id => bmpsublist.id) %>
-        <%end%>
-        <%session[:depth] = @bmp %>
-        <%if @bmp.blank? then %>
-          <% @bmp = Bmps.new %>
-        <%end%>
-        <% case bmpsublist.id %>
-          <% when 1 %> 
-            <td><%= render 'auto_irrigation' %></td>
-          <% when 2 %> 
-            <td><%= render 'auto_irrigation' %></td>
-          <% when 3 %> 
-            <td><%= render 'tile_drain' %></td>
-        <% end %>
-      </tr>
+      <% @bmpsublists.each do |bmpsublist| %>
+        <tr>
+          <td><h4><%= bmpsublist.name %></h4></td>
+          <td><%= check_box_tag 'select' %></td>
+        </tr>
+        <tr >
+          <% if @bmps == nil then %>
+            <%@bmp = Bmp.new %>
+          <%else%>
+            <% @bmp = @bmps.where(:bmp_id => bmpsublist.id) %>
+          <%end%>
+          <%if @bmp.blank? then %>
+            <% @bmp = Bmp.new %>
+          <%end%>
+          <% case bmpsublist.id %>
+            <% when 1 %>
+              <td><%= render 'auto_irrigation' %></td>
+            <% when 2 %>
+              <td><%= render 'auto_irrigation' %></td>
+            <% when 3 %>
+              <td><%= render 'tile_drain' %></td>
+            <% when 8 %>
+              <td><%= render 'wetland' %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 <% end %>
-</table>
-
-<br>
 
