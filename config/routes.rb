@@ -74,6 +74,11 @@ NTTG3::Application.routes.draw do
 	post :show_counties, on: :collection
   end
 
+  resources :bmps do
+	get :list, on: :member
+	post :save_bmps, on: :collection
+  end
+
   resources :activities do
     resources :tillages
   end
@@ -124,10 +129,6 @@ NTTG3::Application.routes.draw do
     get 'download', on: :member
     get :open, on: :member
     get :upload_system, on: :member
-  end
-
-  resources :bmps do
-	get :list, on: :member
   end
 
   resources :bmplists do
