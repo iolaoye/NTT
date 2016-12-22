@@ -26,14 +26,17 @@ class BmpsController < ApplicationController
 # GET /bmps.json
   def index
     @bmpsublists = Bmpsublist.where(:status => true)
-    @bmps = Bmp.all
-
+    @bmps = Bmp.where(:scenario_id => session[:scenario_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @bmps }
     end
   end
-
+################################  SHOW  #################################
+# POST /bmps/scenario
+  def save_bmps
+		ddd
+  end
 ################################  SHOW  #################################
 # GET /bmps/1
 # GET /bmps/1.json

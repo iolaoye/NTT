@@ -7,7 +7,7 @@
       <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
     <% end %>
   </div>
-    <div class="field" id = "water_stress_factor" >
+  <div class="field" id = "water_stress_factor" >
     <%= f.label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %> <br>
     <%= f.number_field :water_stress_factor, :step => 'any' %>
   </div>
