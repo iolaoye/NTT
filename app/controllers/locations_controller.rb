@@ -256,6 +256,9 @@ class LocationsController < ApplicationController
     soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
     total_percentage = 0
     for j in 1..params["field#{i}soils"].to_i
+	  if params["field#{i}soil#{j}error"] then
+		next
+	  end # end if soil.error
       @soil = @field.soils.new
       @soil.key = params["field#{i}soil#{j}mukey"]
       @soil.symbol = params["field#{i}soil#{j}musym"]
@@ -264,6 +267,7 @@ class LocationsController < ApplicationController
       @soil.albedo = params["field#{i}soil#{j}albedo"]
       @soil.slope = params["field#{i}soil#{j}slope"]
       @soil.percentage = params["field#{i}soil#{j}pct"]
+	  session[:depth] = @soil.percentage
       @soil.percentage = @soil.percentage.round(2)
       @soil.drainage_type = params["field#{i}soil#{j}drain"]
       @soil.tsla = 10

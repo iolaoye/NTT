@@ -1,10 +1,10 @@
-﻿<%= form_for(@bmp1) do |f| %>
+﻿<%= form_for(@bmp2) do |f| %>
   <div class="field" id="irrigation" >
     <%= label :irrigation_id, t('bmp.irrigation') %>
     <% if I18n.locale.equal?(:en) %>
-      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+      <%= collection_select :bmp2, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
     <% else %>
-      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+      <%= collection_select :bmp2, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
     <% end %>
   </div>
   <div class="field" id = "water_stress_factor" >
