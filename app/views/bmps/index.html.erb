@@ -16,23 +16,47 @@
           <td><%= check_box_tag 'select' %></td>
         </tr>
         <tr >
-          <% if @bmps == nil then %>
-            <%@bmp = Bmp.new %>
-          <%else%>
-            <% @bmp = @bmps.where(:bmp_id => bmpsublist.id) %>
-          <%end%>
-          <%if @bmp.blank? then %>
-            <% @bmp = Bmp.new %>
-          <%end%>
           <% case bmpsublist.id %>
             <% when 1 %>
-              <td><%= render 'auto_irrigation' %></td>
+				<% if @bmps == nil then %>
+					<%@bmp1 = Bmp.new %>
+				<%else%>
+					<% @bmp1 = @bmps.where(:bmp_id => bmpsublist.id) %>
+				<%end%>
+				<%if @bmp1.blank? then %>
+					<% @bmp1 = Bmp.new %>
+				<%end%>
+				<td><%= render 'auto_irrigation' %></td>
             <% when 2 %>
-              <td><%= render 'auto_irrigation' %></td>
+				<% if @bmps == nil then %>
+					<%@bmp2 = Bmp.new %>
+				<%else%>
+					<% @bmp2 = @bmps.where(:bmp_id => bmpsublist.id) %>
+				<%end%>
+				<%if @bmp2.blank? then %>
+					<% @bmp2 = Bmp.new %>
+				<%end%>
+				<td><%= render 'auto_fertigation' %></td>
             <% when 3 %>
-              <td><%= render 'tile_drain' %></td>
+				<% if @bmps == nil then %>
+					<%@bmp3 = Bmp.new %>
+				<%else%>
+					<% @bmp3 = @bmps.where(:bmp_id => bmpsublist.id) %>
+				<%end%>
+				<%if @bmp3.blank? then %>
+					<% @bmp3 = Bmp.new %>
+				<%end%>
+				<td><%= render 'tile_drain' %></td>
             <% when 8 %>
-              <td><%= render 'wetland' %></td>
+				<% if @bmps == nil then %>
+					<%@bmp8 = Bmp.new %>
+				<%else%>
+					<% @bmp8 = @bmps.where(:bmp_id => bmpsublist.id) %>
+				<%end%>
+				<%if @bmp8.blank? then %>
+					<% @bmp8 = Bmp.new %>
+				<%end%>
+				<td><%= render 'wetland' %></td>
           <% end %>
         </tr>
       <% end %>

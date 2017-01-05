@@ -1,4 +1,10 @@
 class StatesController < ApplicationController
+################################  save BMPS  #################################
+# POST /bmps/scenario
+  def save_bmps
+		ddd
+  end
+
   # GET /states
   # GET /states.json
   def index

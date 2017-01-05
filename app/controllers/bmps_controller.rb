@@ -33,7 +33,7 @@ class BmpsController < ApplicationController
       format.json { render json: @bmps }
     end
   end
-################################  SHOW  #################################
+################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
 		ddd
