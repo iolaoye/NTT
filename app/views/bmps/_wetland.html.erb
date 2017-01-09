@@ -1,0 +1,8 @@
+﻿<%= form_for(@bmp8) do |f| %>
+  <div class="area" id="area" >
+  </div>
+  <div class="field" id="area" >
+    <%= f.label :area, t('bmp.area') + " " + t('bmp.zero_to_max')%><br>
+    <%= f.number_field :area, :step => 'any' %> <%= t('bmp.acres') %>
+  </div>
+<% end %>

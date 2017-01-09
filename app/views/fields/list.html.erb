@@ -6,7 +6,8 @@
 <% end %>
 
 <!--<h1 class="no_margin_bottom"><%= t('field.field_title') %></h1>
-<p class="instruction"><%= t('instructions.fields') %> </p>
+<p class="instruction"><%= t('instructions.fields') %> 
+</p>
 
 <%= form_tag list_field_path, :method => :get do |f| %>
 <table class='gvTableStyle'>
@@ -57,11 +58,8 @@
     <%= button_to t('field.create_field'), new_field_path, :method => "get", :class => "btn btn-primary" %>
 	<%= button_to t('submit.continue'), field_scenarios_field_path, :method => "get", :class => "btn btn-success" %><br><br>
     <%= t('instructions.fields') %><br><br>
-	<div class="field">
-    <%= t('field.max_slope') %>
-	<%= number_field :field_average_slope, :class => "fieldNumbers" %>
-	<%= submit_tag t("submit.save"), name: "button"%>
-    </div><br>
+
+
           <div class="table-responsive">
             <div class="panel panel-default">
          <table class="table table-striped">

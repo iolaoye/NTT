@@ -4,15 +4,6 @@
     <%= notice %>
   </div>
 <% end %>
-<div class="page-header"><h1><%= t('general.listing') + " " + t('menu.operation_file') %></h1></div>
-
-<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-default' %>
-<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-primary' %>
-<%= link_to t('menu.site'), site_path(session[:field_id]), :class => 'btn btn-default' %>
-<br><br>
 
 <div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing') + " " + t('menu.operation_file') %></h1></div>
 

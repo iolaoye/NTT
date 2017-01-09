@@ -7,7 +7,8 @@
 <%= form_tag({action: :upload_project}, multipart: true) do %>
   <div>
     <% if @id == "0" %>
-        <h1><%= t('project.upload_project') %></h1>
+        <div class="page-header"><h1><%= t('project.upload_project') %></h1></div>
+        <br>
         <%= file_field_tag "project" %>
     <% else %>
         <h1><%= t('project.upload_example') %></h1>

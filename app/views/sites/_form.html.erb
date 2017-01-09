@@ -51,8 +51,10 @@
     <%= f.label :fir0 %><br>
     <%= f.text_field :fir0 %>
   </div>
+  <br>
   <div class="actions">
-    <%= f.submit t("submit.update") + " " + t("menu.site") %>
+    <%= f.submit t("submit.update") + " " + t("menu.site"), :class => "btn btn-primary" %>
+    <%= link_to t('general.back'), site_path, :class => "btn btn-primary" %>
   </div>
 <% end %>
 
