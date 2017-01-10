@@ -261,7 +261,114 @@ class OperationsController < ApplicationController
           I18n.locale = :en
         end
       end
-      render action: 'list'
+      redirect_to scenario_operations_scenario_path(session[:scenario_id])
+    else
+      render action: 'upload'
+    end # end if cropping_system_id != nil
+  end # end method
+
+################################  CALL WHEN CLICK IN UPLOAD CROP SCHEDULE  #################################
+  def crop_schedule
+    @operations = Operation.where(:scenario_id => session[:scenario_id])
+    @count = @operations.count
+    @highest_year = 0
+    @operations.each do |operation|
+      if (operation.year > @highest_year)
+        @highest_year = operation.year
+      end
+    end
+    @cropping_systems = CropSchedule.where(:state_id => Location.find(session[:location_id]).state_id, :status => true)
+    if @cropping_systems == nil or @cropping_systems.blank? then
+      @cropping_systems = CropSchedule.where(:state_id => 0, :status => true)
+    end
+    if params[:cropping_system] != nil
+      if params[:cropping_system][:id] != "" then
+        ActiveRecord::Base.transaction do
+          @cropping_system_id = params[:cropping_system][:id]
+          if params[:replace] != nil
+            #Delete operations for the scenario selected
+            Operation.where(:scenario_id => params[:id]).destroy_all
+          end
+          #take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
+          events = Schedule.where(:crop_schedule_id => params[:cropping_system][:id])
+          events.each do |event|
+            @operation = Operation.new
+            @operation.scenario_id = params[:id]
+            #get crop_id from croppingsystem and state_id
+            state_id = Location.find(session[:location_id]).state_id
+            crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
+			if crop == nil then
+				crop = Crop.find_by_number_and_state_id(event.apex_crop, '**')
+			end
+            plant_population = crop.plant_population_ft
+            @operation.crop_id = crop.id
+            @operation.activity_id = event.activity_id
+            @operation.day = event.day
+            @operation.month_id = event.month
+            if params[:replace] != nil
+              #replace
+              @operation.year = event.year
+            else
+              #don't replace
+              if @count > 0
+                @operation.year = event.year + params[:year].to_i - 1
+              else
+                @operation.year = event.year
+              end
+            end
+            #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
+            #note fertilizer id and code are the same so far. Try to keep them that way
+            @operation.type_id = 0
+            @operation.no3_n = 0
+            @operation.po4_p = 0
+            @operation.org_n = 0
+            @operation.org_p = 0
+            @operation.nh3 = 0
+            @operation.subtype_id = 0
+            case @operation.activity_id
+              when 1 #planting operation. Take planting code from crop table and plant population as well
+                @operation.type_id = Crop.find(@operation.crop_id).planting_code
+                @operation.amount = plant_population
+              when 2, 7
+                fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
+                @operation.amount = event.apex_opv1
+                if fertilizer != nil then
+                  @operation.type_id = fertilizer.fertilizer_type_id
+                  @operation.no3_n = fertilizer.qn
+                  @operation.po4_p = fertilizer.qp
+                  @operation.org_n = fertilizer.yn
+                  @operation.org_p = fertilizer.yp
+                  @operation.nh3 = fertilizer.nh3
+                  @operation.subtype_id = event.apex_fertilizer
+                end
+              when 3
+                @operation.type_id = event.apex_operation
+              else
+                @operation.amount = event.apex_opv1
+            end #end case
+            @operation.depth = event.apex_opv2
+            @operation.scenario_id = params[:id]
+            if @operation.save
+              msg = add_soil_operation()
+			  notice = t('scenario.operation') + " " + t('general.created')
+              unless msg.eql?("OK")
+                raise ActiveRecord::Rollback
+              end
+            else
+              raise ActiveRecord::Rollback
+            end
+          end # end events.each
+        end
+      end #end if cropping_system_id != ""
+      @operations = Operation.where(:scenario_id => params[:id])
+      if params[:language] != nil then
+        if params[:language][:language].eql?("es")
+          I18n.locale = :es
+        else
+          I18n.locale = :en
+        end
+      end
+      redirect_to scenario_operations_scenario_path(session[:scenario_id])
     else
       render action: 'upload'
     end # end if cropping_system_id != nil
@@ -363,7 +470,7 @@ class OperationsController < ApplicationController
         #opv1 = uri.read
         #opv1 = Hash.from_xml(open(uri.to_s).read)["m"]{"p".inject({}) do |result, elem
         client = Savon.client(wsdl: URL_HU)
-		session[:depth] = Crop.find(@operation.crop_id).number.to_s + "-" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + " - " + Weather.find_by_field_id(session[:field_id]).longitude.to_s
+		#session[:depth] = Crop.find(@operation.crop_id).number.to_s + "-" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + " - " + Weather.find_by_field_id(session[:field_id]).longitude.to_s
         response = client.call(:get_hu, message: {"crop" => Crop.find(@operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
         opv1 = response.body[:get_hu_response][:get_hu_result]
       #opv1 = 2.2

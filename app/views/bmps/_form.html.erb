@@ -43,9 +43,6 @@
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <%= t('bmp.climate_warning') %>
   </div>
-  <div>
-    <hr class="line_break" color="dodgerblue">
-  </div>
   <br>
   <div class="field" id="irrigation" style="display:none;">
     <%= label :irrigation_id, t('bmp.irrigation') %>
@@ -213,11 +210,11 @@
       <td><%= number_field :climate, :min_12, :step => 'any', :class => 'min', :value => @climate_array[11]["min"].inspect %></td>
       <td><%= number_field :climate, :pcp_12, :step => 'any', :class => 'pcp', :value => @climate_array[11]["pcp"].inspect %></td></tr>
 	</table>
-  </div>
+  </div><br>
   <div class="actions" >
-    <%= f.submit "Add more", :name => "add_more" %>
-    <%= f.submit "Finish", :name => "finish" %>
-	  <%= link_to t('general.back'), list_bmp_path(session[:scenario_id]) %>
+    <%= f.submit "Add more", :name => "add_more", :class => "btn btn-primary" %>
+    <%= f.submit "Finish", :name => "finish", :class => "btn btn-primary" %>
+	  <%= link_to t('general.back'), list_bmp_path(session[:scenario_id]), :class => "btn btn-primary" %>
   </div>
 
 

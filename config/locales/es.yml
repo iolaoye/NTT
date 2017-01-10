@@ -509,6 +509,7 @@
     replace: Reemplazar todas las operaciones actuales
     cropping_system: 'Sistema de Cultivo'
     crop: Cultivo
+    schedule: "Calendario"
     moisture: Humedad
     nutrients: Nutrientes
     distribution: Distribución
@@ -532,9 +533,11 @@
     quarter_to_three_fourths: "(0.25 - 0.75)"
     days_range: "(Días: 0 – 365)"
     days_range_number: "(0 – 365)"
+    hours_range: "(0 - 24)"
+    percentage_range: "(0 - 100)"
     lbs_per_day: libras por día
     ft: ft
-    acres: hectáreas
+    acres: acres
     inches: pulgadas
     lbs: libras
     climate_warning: Este BPG puede tomar más tiempo para salvar
@@ -558,7 +561,7 @@
     org_n: Org n
     org_p: Org a
     width: Ancho
-    buffer_width: Lo Ancho del Buffer
+    buffer_width: Ancho del Buffer
     waterways_info: Incluyendo ambos lados del canal
     grass_field_portion: Porción de pasto del campo
     slope_ratio: Proporción de inclinación
@@ -602,7 +605,9 @@
     field_type: Bosque?
     edit_field: Editando Parcela
     type: Tipo de Parcela
-    coordinate: Coordenadas 
+    coordinate: Coordenadas
+    create_field: Crear Parcela
+    max_slope: Inclinación Máxima
   watershed:
     watershed: Cuenca
     watershed_name: Nombre de la Cuenca
@@ -621,6 +626,7 @@
     update: Actualizar
     new_user: Usuario Nuevo
     savecontinue: Salvar y Continuar
+    continue: Continuar
   sessions:
     index:
       email: Correo Electrónico

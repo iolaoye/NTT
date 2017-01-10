@@ -1,23 +1,387 @@
-<h1>Listing bmps</h1>
+<%= form_for :bmp, :url => save_bmps_bmps_path, method: :post do %>
+  <div class="page-header">
+    <h2><%= t('menu.bmps') %></h2>
+		<%= submit_tag t("submit.save"), name: "button"%>
+    <table class="table table-striped">
+      <thead>
+        <tr class='gvHeaderStyle'>
+          <th><%= t('general.name')%></th>
+          <th><%= t('general.select')%></th>
+        </tr>
+      </thead>
 
-<table>
-  <tr>
-    <th>Best Management Practices</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @bmps.each do |bmp| %>
-  <tr>
-    <td><%= bmps.name %></td>
-    <td><%= link_to t('general.show'), bmp %></td>
-    <td><%= link_to t('general.edit'), edit_bmp_path(bmp) %></td>
-    <td><%= link_to 'Destroy', bmp, method: :delete, data: { confirm: t('general.confirm') } %></td>
-  </tr>
+      <% @bmps.each do |bmp| %>
+		<%= fields_for "bmps[]", bmp do |bmp_fields| %>
+			<tr>
+			  <td><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+			  <td><%= check_box_tag 'select' %></td>
+			</tr>
+			  <% case bmp.bmpsublist_id %>
+				<% when 1 %>
+				  <tr style="padding-left:100px">
+					<td>
+						<%= label :irrigation_id, t('bmp.irrigation') %>
+						<% if I18n.locale.equal?(:en) %>
+						  <%= collection_select :autoirrigation, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+						<% else %>
+						  <%= collection_select :autoirrigation, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+						<% end %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %>
+						<%= bmp_fields.text_field :water_stress_factor, :step => 'any' %>
+					</td>
+				  </tr>
+				  <tr>
+				    <td class="field" id = "irrigation_efficiency" >
+						<%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one') %>
+						<%= bmp_fields.text_field :irrigation_efficiency, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="field" id = "frequency" >
+						<%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
+						<%= bmp_fields.text_field :days, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="field" id = "maximum_single_application" >
+						<%= label :days, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') + " " + t('bmp.inches') %>
+						<%= bmp_fields.text_field :maximum_single_application, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="field" id = "reservour_area" >
+						<%= label :days, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') %>
+						<%= bmp_fields.text_field :area, :step => 'any' %>
+				    </td>
+				  </tr>
+				<% when 2 %>
+				  <tr>
+					<td>
+						<%= label :irrigation_id, t('bmp.irrigation') %>
+						<% if I18n.locale.equal?(:en) %>
+						  <%= collection_select :autofertigation, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+						<% else %>
+						  <%= collection_select :autofertigation, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+						<% end %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %>
+						<%= bmp_fields.text_field :water_stress_factor, :step => 'any' %>
+					</td>
+				  </tr>
+				  <tr>
+				    <td class="field" id = "irrigation_efficiency" >
+						<%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one') %>
+						<%= bmp_fields.text_field :irrigation_efficiency, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="field" id = "frequency" >
+						<%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
+						<%= bmp_fields.text_field :days, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="field" id = "maximum_single_application" >
+						<%= label :days, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') + " " + t('bmp.inches') %>
+						<%= bmp_fields.text_field :maximum_single_application, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="field" id = "reservour_area" >
+						<%= label :days, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
+						<%= bmp_fields.text_field :area, :step => 'any' %>
+				    </td>
+				  </tr>
+				<% when 3 %>
+				  <tr>
+					<td class="field" id = "depth" >
+						<%= label :depth, t('bmp.depth') + " " + t('bmp.zero_to_max') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :depth, :step => 'any' %>
+					</td>
+				  </tr>
+				<% when 4 %>
+				  <tr>
+					<td  >
+						<%= t('bmp.width') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :width %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.sides')  %>
+						<%= bmp_fields.text_field :sides %>
+					</td>
+				  </tr>
+				<% when 5 %>
+				  <tr>
+					<td  >
+						<%= t('bmp.width') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :width %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.sides')  %>
+						<%= bmp_fields.text_field :sides %>
+					</td>
+				  </tr>
+				<% when 6 %>
+				  <tr>
+					<td  >
+						<%= label :depth, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
+						<%= bmp_fields.text_field :area, :step => 'any' %>
+					</td>
+				  </tr>
+				  <tr>
+					<td  >
+						<%= t('bmp.width') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :width %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.sides')  %>
+						<%= bmp_fields.text_field :sides %>
+					</td>
+				  </tr>
+				<% when 7 %>
+				  <tr>
+					<td  >
+						<%= label :depth, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
+						<%= bmp_fields.text_field :area, :step => 'any' %>
+					</td>
+				  </tr>
+				  <tr>
+					<td  >
+						<%= t('bmp.width') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :width %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.sides')  %>
+						<%= bmp_fields.text_field :sides %>
+					</td>
+				  </tr>
+				<% when 8 %>
+				  <tr>
+					<td class="field" id = "area" >
+						<%= label :depth, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
+						<%= bmp_fields.text_field :area, :step => 'any' %>
+					</td>
+				  </tr>
+				<% when 9 %>
+				  <tr>
+					<td class="field" id = "fraction_control_by_pond" >
+						<%= label :depth, t('bmp.area_control') + " " + t('bmp.zero_to_max')  %>
+						<%= bmp_fields.text_field :irrigation_efficiency, :step => 'any' %>
+					</td>
+				  </tr>
+				<% when 10 %>
+				  <tr>
+					<td>
+						<%= label :depth, t('bmp.animals') + " " + t('bmp.zero_to_max')  %>
+						<%= bmp_fields.text_field :number_of_animals, :step => 'any' %>
+					</td>
+				  </tr>
+				  <tr>
+				    <td >
+						<%= label :days, t('bmp.stream_fencing_frequency') + " " + t('bmp.days_range') %>
+						<%= bmp_fields.text_field :days, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td >
+						<%= label :hours, t('bmp.hours') + " " + t('bmp.hours_range') %>
+						<%= bmp_fields.text_field :hours, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td >
+						<%= label :animal_id, t('bmp.animals') %>
+						<% if I18n.locale.equal?(:en) %>
+						  <%= collection_select :animal, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+						<% else %>
+						  <%= collection_select :animal, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+						<% end %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td >
+						<%= label :dry_manure, t('bmp.dry_manure') + " " + t('bmp.zero_to_max') + " " + t('bmp.lbs') %>
+						<%= bmp_fields.text_field :dry_manure, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td >
+						<%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.zero_to_one') %>
+						<%= bmp_fields.text_field :no3_n, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td >
+						<%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.zero_to_one') %>
+						<%= bmp_fields.text_field :po4_p, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td >
+						<%= label :org_n, t('bmp.org_n') + " " + t('bmp.zero_to_one') %>
+						<%= bmp_fields.text_field :org_n, :step => 'any' %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td >
+						<%= label :org_p, t('bmp.org_p') + " " + t('bmp.zero_to_one') %>
+						<%= bmp_fields.text_field :org_p, :step => 'any' %>
+				    </td>
+				  </tr>
+				<% when 11 %>
+				  <tr>
+					<td>
+						<%= t('general.select') %>
+						<%= bmp_fields.check_box :id %>
+					</td>
+				  </tr>
+				<% when 12 %>
+				  <tr>
+					<td>
+						<%= t('general.area') + " " + t('bmp.acres') %>
+						<%= bmp_fields.text_field :area %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.width') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :width %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
+						<%= bmp_fields.text_field :grass_field_portion %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
+						<%= bmp_fields.text_field :buffer_slope_upland %>
+					</td>
+				  </tr>
+				<% when 13 %>
+				  <tr>
+					<td>
+						<%= label :crop_id, t('operation.crop') %>
+						<% if I18n.locale.equal?(:en) %>
+						  <%= collection_select :filter_strip, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege')} %>
+						<% else %>
+						  <%= collection_select :filter_strip, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege')} %>
+						<% end %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('general.area') + " " + t('bmp.acres') %>
+						<%= bmp_fields.text_field :area %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.width') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :width %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
+						<%= bmp_fields.text_field :buffer_slope_upland %>
+					</td>
+				  </tr>
+				<% when 14 %>
+				  <tr>
+					<td>
+						<%= label :crop_id, t('operation.crop') %>
+						<% if I18n.locale.equal?(:en) %>
+						  <%= collection_select :water_way, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege')} %>
+						<% else %>
+						  <%= collection_select :water_way, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege')} %>
+						<% end %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.width') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :width %>
+					</td>
+				  </tr>
+				<% when 15 %>
+				  <tr>
+					<td>
+						<%= label :crop_id, t('operation.crop') %>
+						<% if I18n.locale.equal?(:en) %>
+						  <%= collection_select :contour_buffer, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege')} %>
+						<% else %>
+						  <%= collection_select :contour_buffer, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege')} %>
+						<% end %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.buffer_width') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :width %>
+					</td>
+				  </tr>
+				  <tr>
+					<td>
+						<%= t('bmp.crop_width') + " " + t('bmp.ft') %>
+						<%= bmp_fields.text_field :crop_width %>
+					</td>
+				  </tr>
+				<% when 16 %>
+				  <tr>
+					<td>
+						<%= t('bmp.slope_reduction') + " " + t('bmp.percentage_range') %>
+						<%= bmp_fields.text_field :slope_reduction %>
+					</td>
+				  </tr>
+				<% when 17 %>  #terrace system
+				  <tr>
+					<td>
+						<%= t('general.select') %>
+						<%= bmp_fields.check_box :id %>
+					</td>
+				  </tr>
+				<% when 18 %>
+				  <tr>
+					<td>
+						<%= t('general.select') %>
+						<%= bmp_fields.check_box :id %>
+					</td>
+				  </tr>
+				<% when 19 %>
+				  <tr>
+					<td>
+						<%= t('general.select') %>
+						<%= bmp_fields.check_box :id %>
+					</td>
+				  </tr>
+				<% when 20 %>
+				  <tr>
+					<td>
+						<%= t('general.select') %>
+						<%= bmp_fields.check_box :id %>
+					</td>
+				  </tr>
+			  <% end %>
+		<% end %>
+      <% end %>
+    </table>
+  </div>
 <% end %>
-</table>
-
-<br>
-
-<%= link_to 'New Bmp', new_bmp_path %>

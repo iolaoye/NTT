@@ -1,0 +1,27 @@
+﻿<%= form_for(@bmp1) do |f| %>
+  <div class="field" id="irrigation" >
+    <%= label :irrigation_id, t('bmp.irrigation') %>
+    <% if I18n.locale.equal?(:en) %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+    <% else %>
+      <%= collection_select :bmp, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+    <% end %>
+  </div>
+  <div class="field" id = "water_stress_factor" >
+    <%= f.label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %> <br>
+    <%= f.number_field :water_stress_factor, :step => 'any' %>
+  </div>
+  <div class="field" id = "irrigation_efficiency" >
+    <%= f.label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one'), :id => 'irrigation_efficiency_label' %>
+    <%= f.label :irrigation_efficiency, t('bmp.area_control') + " " + t('bmp.zero_to_one'), :id => 'area_control_label' %><br>
+    <%= f.number_field :irrigation_efficiency, :step => 'any' %>
+  </div>
+  <div class="field" id="maximum_single_application" >
+    <%= f.label :maximum_single_application, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') %><br>
+    <%= f.number_field :maximum_single_application, :step => 'any' %> <%= t('bmp.inches') %>
+  </div>
+  <div class="field" id="safety_factor" >
+    <%= f.label :safety_factor, t('bmp.safety_factor') + " " + t('bmp.zero_to_max') %><br>
+    <%= f.number_field :safety_factor, :step => 'any' %>
+  </div>
+<% end %>

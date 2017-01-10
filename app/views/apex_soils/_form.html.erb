@@ -47,7 +47,7 @@
     </div></td>
     <td><div class="field">
         <b><%= f.label :RFPK %></b><br>
-        <%= f.number_field :rfpk, :class => "fieldNumbers", :step => 'any' %> 
+        <%= f.number_field :rfpk, :class => "fieldNumbers", :step => 'any' %>
     </div></tr>
   <tr class='gvRowStyleOdd'>
     </div></td>
@@ -78,19 +78,20 @@
      <td><div class="field">
         <b><%= f.label :ZTK %></b><br>
         <%= f.number_field :ztk, :class => "fieldNumbers", :step => 'any' %>
-    </div></td> 
+    </div></td>
      <td><div class="field">
         <b><%= f.label :FBM %></b><br>
         <%= f.number_field :fbm, :class => "fieldNumbers", :step => 'any' %>
-    </div></td> 
+    </div></td>
     <td><div class="field">
         <b><%= f.label :FHP %></b><br>
         <%= f.number_field :fhp, :class => "fieldNumbers" %>
     </div></td>
   </tr>
 </table>
+<br>
 <div class="actions">
-	<%= f.submit t('submit.update') %>
-	<%= link_to t('general.back'), apex_soils_path %>
+	<%= f.submit t('submit.update'), :class => "btn btn-primary" %>
+	<%= link_to t('general.back'), apex_soils_path, :class => "btn btn-primary" %>
 </div>
 <% end %>

@@ -36,7 +36,7 @@
     <%= f.text_area :coordinates, :required => 'true' %>
   </div>
   <div class="actions">
-    <%= f.submit  %>
-	<%= link_to t('general.back'), list_field_path(session[:location_id]) %>
+    <%= f.submit :class => "btn btn-primary" %>
+	<%= link_to t('general.back'), list_field_path(session[:location_id]), :class => "btn btn-primary" %>
   </div>
 <% end %>

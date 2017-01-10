@@ -9,7 +9,7 @@
   <b><%= t('general.name') %></b>
   <%= @watershed.name %>
 </p>
-<div class="actions"> 
-<%= link_to t('general.edit'), edit_watershed_path(@watershed) %>
-<%= link_to t('general.back'), list_watershed_path(session[:location_id]) %>
+<div class="actions">
+  <%= link_to t('general.edit'), edit_watershed_path(@watershed), :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), list_watershed_path(session[:location_id]), :class => "btn btn-primary" %>
 </div>

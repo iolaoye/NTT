@@ -30,6 +30,18 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'list'))
 			true
+		elsif current_page?(url_for(:controller => 'bmps', :action => 'new'))
+			true
+		elsif current_page?(url_for(:controller => 'apex_parameters', :action => 'index'))
+			true
+		elsif request.url.include?(url_for("/subareas"))
+			true
+		elsif request.url.include?(url_for("/apex_soils"))
+			true
+		elsif request.url.include?(url_for("/soil_operations"))
+			true
+		elsif request.url.include?(url_for("/sites"))
+			true
 		else
 			false
 		end
@@ -41,6 +53,8 @@ module ApplicationHelper
 		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
 			true
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'list'))
+			true
+		elsif current_page?(url_for(:controller => 'bmps', :action => 'new'))
 			true
 		else
 			false

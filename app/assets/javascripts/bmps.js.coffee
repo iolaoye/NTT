@@ -275,7 +275,7 @@ update_fertigation_options = ->
 #["Sprinkle", "Furrow/Flood", "Drip", "Furrow Diking", "Pads and Pipes - Tailwater Irrigation"]
 #bmp_bmpsublist_id
 $(document).ready ->
-    activate_bmp_controls()
+    #activate_bmp_controls()
     $("#bmp_bmp_id").change ->
 	    update_bmpsublist()
     $("#bmp_bmpsublist_id").change ->

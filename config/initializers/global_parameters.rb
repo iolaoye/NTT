@@ -4,7 +4,7 @@
 
 
 # URL to the mapping application
-	URL_MAP = 'http://nn.tarleton.edu/GoogleMapPost/Default.aspx'
+	URL_MAP = 'http://nn.tarleton.edu/GoogleMap/Default.aspx'
 	#URL_MAP = 'http://nn.tarleton.edu/NTTRails/Default.aspx'
 
 #NTT verision
@@ -18,6 +18,9 @@
 
 # URL to get weather information
 	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
+
+# URL to get soils information
+	URL_SoilsInfo = 'http://nn.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
 
 #APEX folders.
 	APEX = "public/NTTFiles"

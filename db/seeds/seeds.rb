@@ -7,6 +7,28 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+CropSchedule.delete_all
+CropSchedule.create!({:id => 1, :name =>'Corn', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 2, :name =>'Soybean, :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 3, :name =>'Barley Cover Crop', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
+
+Schedule.delete_all
+Schedule.create!({:id => 1, :event_order => 1, :month => 4, :day => 15, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 2, :apex_fertilizer => 1, :apex_opv1 => 180, :apex_opv2 => 0, :crop_schedule_id => 1}, :without_protection => true)
+Schedule.create!({:id => 2, :event_order => 2, :month => 4, :day => 15, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 2, :apex_fertilizer => 2, :apex_opv1 => 60, :apex_opv2 => 0, :crop_schedule_id => 1}, :without_protection => true)
+Schedule.create!({:id => 3, :event_order => 3, :month => 4, :day => 16, :year => 1, :activity_id => 3, :apex_operation => 250, :apex_crop => 2, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 1}, :without_protection => true)
+Schedule.create!({:id => 4, :event_order => 4, :month => 5, :day => 5, :year => 1, :activity_id => 1, :apex_operation => 136, :apex_crop => 2, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 1}, :without_protection => true)
+Schedule.create!({:id => 5, :event_order => 5, :month => 10, :day => 10, :year => 1, :activity_id => 4, :apex_operation => 626, :apex_crop => 2, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 1}, :without_protection => true)
+Schedule.create!({:id => 6, :event_order => 6, :month => 10, :day => 11, :year => 1, :activity_id => 5, :apex_operation => 451, :apex_crop => 2, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 1}, :without_protection => true)
+Schedule.create!({:id => 7, :event_order => 7, :month => 10, :day => 12, :year => 1, :activity_id => 3, :apex_operation => 211, :apex_crop => 2, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 1}, :without_protection => true)
+Schedule.create!({:id => 8, :event_order => 1, :month => 5, :day => 14, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 1, :apex_fertilizer => 2, :apex_opv1 => 40, :apex_opv2 => 0, :crop_schedule_id => 2}, :without_protection => true)
+Schedule.create!({:id => 9, :event_order => 2, :month => 5, :day => 15, :year => 1, :activity_id => 3, :apex_operation => 250, :apex_crop => 1, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 2}, :without_protection => true)
+Schedule.create!({:id => 10, :event_order => 3, :month => 5, :day => 15, :year => 1, :activity_id => 1, :apex_operation => 132, :apex_crop => 1, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 2}, :without_protection => true)
+Schedule.create!({:id => 11, :event_order => 4, :month => 10, :day => 15, :year => 1, :activity_id => 4, :apex_operation => 626, :apex_crop => 1, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 2}, :without_protection => true)
+Schedule.create!({:id => 12, :event_order => 5, :month => 10, :day => 16, :year => 1, :activity_id => 5, :apex_operation => 451, :apex_crop => 1, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 2}, :without_protection => true)
+Schedule.create!({:id => 13, :event_order => 6, :month => 10, :day => 17, :year => 1, :activity_id => 3, :apex_operation => 211, :apex_crop => 1, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 2}, :without_protection => true)
+Schedule.create!({:id => 14, :event_order => 1, :month => 4, :day => 14, :year => 1, :activity_id => 5, :apex_operation => 451, :apex_crop => 14, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 3}, :without_protection => true)
+Schedule.create!({:id => 15, :event_order => 2, :month => 10, :day => 20, :year => 1, :activity_id => 1, :apex_operation => 132, :apex_crop => 14, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 3}, :without_protection => true)
+
 Event.delete_all
 Event.create!({:id => 1, :event_order => 1, :month => 4, :day => 1, :year => 1, :activity_id => 1, :apex_operation => 132, :apex_crop => 168, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :cropping_system_id => 1}, :without_protection => true)
 Event.create!({:id => 2, :event_order => 1, :month => 4, :day => 15, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 2, :apex_fertilizer => 1, :apex_opv1 => 180, :apex_opv2 => 0, :cropping_system_id => 2}, :without_protection => true)
@@ -4239,7 +4261,7 @@ Bmpsublist.create!({:id => 15, :name => "Contour Buffer", :spanish_name => "Buff
 Bmpsublist.create!({:id => 16, :name => "Land Leveling", :spanish_name => "Nivelacion de la Tierra", :bmplist_id => 6, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 17, :name => "Terrace System", :spanish_name => "Sistema de Terraza", :bmplist_id => 6, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 19, :name => "Temperature and Precipitation Changes", :spanish_name => "Cambios de Temperatura y Precipitacion", :bmplist_id => 7, :status => true}, :without_protection => true)
-Bmpsublist.create!({:id => 20, :name => "Asfalt or Concrete", :spanish_name => "Asfalto o Concreto", :bmplist_id => 8, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 20, :name => "Asphalt or Concrete", :spanish_name => "Asfalto o Concreto", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 21, :name => "Grass Cover", :spanish_name => "Cubierta de Pasto", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 22, :name => "Slope Adjustment", :spanish_name => "Ajuste de la inclinacion", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 23, :name => "Shading", :spanish_name => "Shading", :bmplist_id => 8, :status => true}, :without_protection => true)
@@ -4656,7 +4678,7 @@ Crop.create!({:id => 222,:number => 53,:dndc => 55,:code => 'CABG',:name => 'CAB
 
 
 State.delete_all
-states = 
+states =
     {:id => 1, :state_name => 'Alabama', :state_abbreviation => 'AL', :state_code => '01', :status => 0},
     {:id => 2, :state_name => 'Alaska', :state_abbreviation => 'AK', :state_code => '02', :status => 0},
     {:id => 3, :state_name => 'Arizona', :state_abbreviation => 'AZ', :state_code => '04', :status => 0},

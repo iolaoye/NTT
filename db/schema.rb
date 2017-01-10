@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160909204426) do
+ActiveRecord::Schema.define(:version => 20170106211255) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -135,6 +135,11 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.integer  "state_id"
   end
 
+  create_table "controls_apex_controls", :id => false, :force => true do |t|
+    t.integer "control_id"
+    t.integer "apex_control_id"
+  end
+
   create_table "counties", :force => true do |t|
     t.string   "county_name"
     t.string   "county_code"
@@ -147,6 +152,15 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.string   "county_state_code"
     t.integer  "wind_wp1_code"
     t.string   "wind_wp1_name"
+  end
+
+  create_table "crop_schedules", :force => true do |t|
+    t.string   "name"
+    t.integer  "state_id"
+    t.integer  "class_id"
+    t.boolean  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "cropping_systems", :force => true do |t|
@@ -218,6 +232,12 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.integer  "cropping_system_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "fertilizer_type", :force => true do |t|
+    t.string   "field_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "fertilizer_types", :force => true do |t|
@@ -378,6 +398,22 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.datetime "updated_at",      :null => false
     t.integer  "field_id"
     t.datetime "last_simulation"
+  end
+
+  create_table "schedules", :force => true do |t|
+    t.integer  "event_order"
+    t.integer  "month"
+    t.integer  "day"
+    t.integer  "year"
+    t.integer  "activity_id"
+    t.integer  "apex_operation"
+    t.integer  "apex_crop"
+    t.integer  "apex_fertilizer"
+    t.float    "apex_opv1"
+    t.float    "apex_opv2"
+    t.integer  "crop_schedule_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "simulations", :force => true do |t|

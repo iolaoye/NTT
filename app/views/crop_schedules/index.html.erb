@@ -1,0 +1,31 @@
+<h1>Listing crop_schedules</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>State</th>
+    <th>Class</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @crop_schedules.each do |crop_schedule| %>
+  <tr>
+    <td><%= crop_schedule.id %></td>
+    <td><%= crop_schedule.name %></td>
+    <td><%= crop_schedule.state_id %></td>
+    <td><%= crop_schedule.class %></td>
+    <td><%= crop_schedule.status %></td>
+    <td><%= link_to 'Show', crop_schedule %></td>
+    <td><%= link_to 'Edit', edit_crop_schedule_path(crop_schedule) %></td>
+    <td><%= link_to 'Destroy', crop_schedule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Crop schedule', new_crop_schedule_path %>

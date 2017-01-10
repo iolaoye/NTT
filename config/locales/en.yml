@@ -242,7 +242,7 @@ en:
     file: "File"
   errors:
     format: "%{attribute} %{message}"
-    messages:	  
+    messages:
       accepted: must be accepted
       blank: can't be blank
       present: must be blank
@@ -290,8 +290,8 @@ en:
       field: Select Field
       scenario: Select Scenario
     submit:
-      create: Save 
-      submit: Save 
+      create: Save
+      submit: Save
       update: Save
     label:
       project:
@@ -384,12 +384,12 @@ en:
     created: was successfully created.
     updated: was successfully updated.
     reset: was successfully reset to defaults.
-    uploading: uploding
+    uploading: uploading
     continue: Continue
     confirm: Are you sure?
     begin: Begin
-  welcome_note: 
-    thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the filed or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
+  welcome_note:
+    thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
     note2: '2. This version of NTT is written both in English and Spanish.'
     final: 'Finally, as the NTT project leader and behalf of all of my project team (Oscar Gallego and Edward Osei), I would like to thank the funding sources and our colleagues, in particular the farmers and producers, for their contribution in designing this program.'
@@ -477,7 +477,7 @@ en:
     clay: Clay
     organic_matter: Organic Matter
     select_soil: Select Soil
-    load_soil: Load Soil     
+    load_soil: Load Soil
     create_soil: Create Soil
   layer:
     new_layer: New layer
@@ -509,6 +509,7 @@ en:
     cropping_system: 'Cropping System'
     fertilizer: Fertilizer Type
     crop: Crop
+    schedule: "Schedule"
     moisture: Moisture
     nutrients: Nutrients
     distribution: Distribution
@@ -524,7 +525,7 @@ en:
     saved: 'saved Cropping System'
   bmp:
     bmp_group: BMP Group
-    select_bmp: Select BMP Group 
+    select_bmp: Select BMP Group
     create_bmp: Create BMP
     zero_to_one: "(0.00 - 1.00)"
     zero_to_max: "(0.00 – 99999.00)"
@@ -532,6 +533,8 @@ en:
     quarter_to_three_fourths: "(0.25 - 0.75)"
     days_range: "(Days: 0 – 365)"
     days_range_number: "(0 - 365)"
+    hours_range: "(0 - 24)"
+    percentage_range: "(0 - 100)"
     lbs_per_day: lbs per day
     ft: ft
     acres: acres
@@ -543,7 +546,7 @@ en:
     water_stress_factor: Water stress factor
     irrigation_efficiency: Irrigation efficiency
     area_control: Fraction of area control by pond
-    maximum_single_application: Maxiumum single application
+    maximum_single_application: Maximum single application
     safety_factor: Safety factor
     depth: Depth
     reservoir_area: Reservoir area
@@ -603,6 +606,8 @@ en:
     edit_field: Editing Field
     type: Field Type
     coordinate: Coordinates
+    create_field: Create Field
+    max_slope: Maximum Slope
   watershed:
     watershed: Watershed
     watershed_name: Watershed Name
@@ -624,6 +629,7 @@ en:
     update: Update
     new_user: New User
     savecontinue: Save and Continue
+    continue: Continue
   sessions:
     index:
       email: Email
@@ -955,14 +961,14 @@ en:
         body2: 'After you have entered the information, click the <b>Save and Continue</b> button to save the information and continue.'
     save:
         header: Save Active Project
-        body: 'You can also use the <strong>Save Active Project...</strong> button to save the current project that you are working on.' 
+        body: 'You can also use the <strong>Save Active Project...</strong> button to save the current project that you are working on.'
         note: '<strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.'
     close:
         header: Close Active Project
         body1: 'You can also use the <strong>Close Active Project</strong> button to close the current project that you are working on.'
         body2: 'When you attempt to close, a warning message will come up:'
         body3: 'Closing an active project will erase all of that projects information. Because of this, if you would like to project for later use, it is extremely important that you save the project before closing it. By clicking the <strong>OK</strong> button on the warning message, the information will be cleared (and lost if not previously saved). If you have not yet saved and would like to, click cancel and follow the instructions for <strong>Save Active Project</strong> above.'
-    
+
   locpage:
     header: Location Information
     overview:
@@ -1187,7 +1193,7 @@ en:
         body: 'Below are the descriptions of the different BMPs that are available under NTT. The heading is the group under which you can find the BMPs and the text in bold is the actual BMP.'
         auto:
             header: 'Auto Irrigation and Fertigation'
-            irrigation: 
+            irrigation:
                 header: 'Auto Irrigation'
                 body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
                 item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
@@ -1215,7 +1221,7 @@ en:
             pp2stage:
                 header: 'Pads and Pipes - Two Stage Ditch System'
                 body1: 'This particular method of Pads and Pipes is very similar to the Pads and Pipes – No Ditch Improvement (see above for more information). The main difference is that using this method improves the ditch, creating a collection of water inside the ditch before the water is drained. The inputs for this method are the same as Pads and Pipes – No Ditch Improvement (see above).'
-            ppreservoir: 
+            ppreservoir:
                 header: 'Pads and Pipes – Ditch Enlargement and Reservoir System'
                 body1: 'This particular method of pads and pipes is very similar to the Pads and Pipes – Two Stage Ditch System. This method also has an improved ditch system. However, in this method, the water in the ditch is drained into a reservoir system. The inputs are the same as Pads and Pipes – No Ditch Improvement, with one additional input:'
                 item1: '<strong>Reservoir Area (ac.):</strong> This is the reservoir area in acres. Since this area is being used a reservoir, crops cannot be grown in this area.'
@@ -1452,7 +1458,7 @@ en:
                     <li>Example(1981 1 8 0 2.0 -13.5 11.30).</li>
                 </ul>
                 <p>To upload your own weather file select the <strong><em>Load Your Own Weather File</em></strong> and then click <strong><em>Choose File</em></strong>, then select your weather file from your computer and finally click Open. Then click <strong><em>Update Weather</em></strong> to finalize your changes.</p><p>Keep in mind that if you upload your own weather file this will not be saved when you save the project. If you upload a saved project and you used uploading own weather file you will need to upload the weather file again but just in case you need to simulate any scenario again.</p>
-    soils: > 
+    soils: >
                 The Soils page allows user to enter the soils for each field. They (three dominant soils) are automatically uploaded based on the area of interest and fields selected.<br><br>
                 Now you have a couple of options
                 <ol>
@@ -1470,7 +1476,7 @@ en:
                 To <strong>Edit</strong> a layer, click the pencil icon under <strong>Actions</strong>.<br>
                 To <strong>Delete</strong> a layer, click the red "x" icon under <strong>Actions</strong>.
     scenarios: >
-                In this page the user is able to run the simulations for scenarios or subprojects created or create new scenarios. 
+                In this page the user is able to run the simulations for scenarios or subprojects created or create new scenarios.
                 <p>Now you have a couple of options.</p>
                 <ol>
                   <li>Click <strong><em>New Scenario</em></strong> to create a new scenario.</li>
@@ -1481,8 +1487,8 @@ en:
                 </ol>
                 To <strong>Edit</strong> a scenario, click the pencil icon under <strong>Actions</strong>.<br>
                 To <strong>Delete</strong> a scenario, click the red "x" icon under <strong>Actions</strong>.
-    results: > 
-                After scenarios have been simulated the results for that scenario is ready to be seen. 
+    results: >
+                After scenarios have been simulated the results for that scenario is ready to be seen.
                 Here you can compare scenarios, or just show one scenario. The following comparisons are possible.
                 <ul>
                     <li>1st Scenario vs 2nd Scenario</li>
@@ -1563,4 +1569,4 @@ en:
                 <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
     sites: >
                 This is all the information about the APEX site.<br><br>
-                To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong> 
+                To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong>

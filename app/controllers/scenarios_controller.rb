@@ -6,7 +6,7 @@ class ScenariosController < ApplicationController
 # GET /1/scenarios.json
   def scenario_bmps
     session[:scenario_id] = params[:id]
-    redirect_to list_bmp_path(params[:id])
+    redirect_to bmps_path
   end
 ################################  list of operations   #################################
 # GET /scenarios/1
@@ -159,7 +159,7 @@ class ScenariosController < ApplicationController
 		respond_to do |format|
 		  if msg.eql?("OK") then
 			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-			format.html { render action: "list" }
+			format.html { redirect_to field_scenarios_field_path(session[:field_id]) }
 		  else
 			flash[:error] = "Error simulating scenario - " + msg
 			format.html { render action: "list" }

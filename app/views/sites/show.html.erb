@@ -5,7 +5,7 @@
     </div>
 <% end %>
 
-<h1><%= t('general.show')  + " " + t('menu.site_file') %></h1>
+<div class="page-header"><h1><%= t('general.show')  + " " + t('menu.site_file') %></h1></div>
 
 <p>
   <b>Ylat:</b>
@@ -57,7 +57,9 @@
   <%= @site.fir0 %>
 </p>
 
-
-<%= link_to t('general.edit'), edit_site_path(@site) %>
+<div class="actions">
+  <%= link_to t('general.edit'), edit_site_path(@site), :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), sites_path, :class => "btn btn-primary" %>
+</div>
 
 <br><br>

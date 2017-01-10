@@ -74,11 +74,11 @@
      <td><div class="field">
       <b><%= f.label :xct %></b><br>
       <%= f.number_field :xct, :class => "fieldNumbers" %>
-    </div></td> 
+    </div></td>
      <td><div class="field">
       <b><%= f.label :azm %></b><br>
       <%= f.number_field :azm, :class => "fieldNumbers" %>
-    </div></td> 
+    </div></td>
     <td><div class="field">
       <b><%= f.label :fl %></b><br>
       <%= f.number_field :fl, :class => "fieldNumbers" %>
@@ -180,7 +180,7 @@
         <%= f.number_field :rfpl, :class => "fieldNumbers" %>
     </div></td>
 	<td></td>
-  </tr> 
+  </tr>
   <tr class='gvRowStyleOdd'>
     <td><div class="field">
         <b><%= f.label :rsee %></b><br>
@@ -475,7 +475,7 @@
   </tr>
   </table>
   <div class="actions">
-    <%= f.submit t('submit.update') + " " + t('menu.subarea_file') %>
-	<%= link_to t('general.back'), subareas_path %>
+    <%= f.submit t('submit.update') + " " + t('menu.subarea_file'), :class => "btn btn-primary" %>
+	<%= link_to t('general.back'), subareas_path, :class => "btn btn-primary" %>
   </div>
 <% end %>

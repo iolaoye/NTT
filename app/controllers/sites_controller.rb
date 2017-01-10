@@ -2,7 +2,8 @@ class SitesController < ApplicationController
   # GET /sites
   # GET /sites.json
   def index
-    @sites = Site.all
+    @sites = Site.where(:field_id => session[:field_id])
+    @field = Field.find(session[:field_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +15,7 @@ class SitesController < ApplicationController
   # GET /sites/1.json
   def show
     @site = Site.find_by_field_id(params[:id])
+    @field = Field.find(session[:field_id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -35,6 +37,7 @@ class SitesController < ApplicationController
   # GET /sites/1/edit
   def edit
     @site = Site.find(params[:id])
+    @field = Field.find(session[:field_id])
   end
 
   # POST /sites

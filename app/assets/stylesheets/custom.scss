@@ -32,6 +32,10 @@ textarea {
   margin-bottom: 10px;
 }
 
+select {
+  margin-right: 5px;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -174,7 +178,7 @@ p {
     color: #fff;
     background-color: #20689B;
         text-decoration: none;
-   
+
 
 }
 
@@ -186,6 +190,7 @@ p {
 
 .main {
   padding: 20px;
+  border: 2px;
 }
 @media (min-width: 768px) {
   .main {
@@ -240,7 +245,7 @@ footer a{
 
 footer a:hover{
     color: #32374B;
-    text-decoration: underline;    
+    text-decoration: underline;
 }
 .social:hover {
      -webkit-transform: scale(1.0);
@@ -249,7 +254,7 @@ footer a:hover{
  .social {
      -webkit-transform: scale(0.8);
      color: #222;
-     
+
  }
 
  footer ul.footerright{
@@ -365,21 +370,39 @@ footer a:hover{
 
 }
 
+.page-container {
+  text-align: center;
+}
 
-@media (min-width: 992px) {
+.container-form {
+  background-color: #ffffff;
+  min-height: 100%;
+  box-shadow: 0 2px 8px #204060;
+  padding: 1px 40px 40px 40px;
+  max-width: 400px;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.container-form > h2 {
+  text-align: center;
+}
+
+.container-form .form_input {
+  padding: 0 20px 0 20px;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
 .container {
-    width: 1100px;
+    width: 100%;
 }
 }
 
 .table-responsive {
     overflow-x: visible;
     }
-
-.main {
-border: 2px;
-}
-
 
 .carousel {
   height: 400px;
@@ -423,6 +446,17 @@ border: 2px;
 .row2 > div {
     border-right: thin double #cccccc;
  }
+
+.row {
+    height: 40px;
+    padding:8px;
+    text-align:left;
+    vertical-align:middle;
+    font-weight:300;
+    font-size:16px;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+    margin: 0px 0px 0px 0px;
+}
 
  .navbar-default {
     background-color: #d9d9d9;
@@ -527,7 +561,7 @@ font-size: 16px;
     color: #204060;
     background-color: #eeeeee;
         text-decoration: none;
-   
+
 
 }
 
@@ -535,7 +569,7 @@ font-size: 16px;
     color: #204060;
     background-color: #eeeeee;
         text-decoration: none;
-   
+
 
 }
 
@@ -543,7 +577,7 @@ font-size: 16px;
     color: #204060;
     background-color: #eeeeee;
         text-decoration: none;
-   
+
 
 }
 .language {
@@ -560,7 +594,7 @@ font-size: 16px;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    
+
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
@@ -589,4 +623,19 @@ label {
     max-width: 100%;
     margin-bottom: 5px;
     font-weight: normal;
+}
+
+#left_button {
+  float: left;
+}
+
+#right_button {
+  float: right;
+}
+
+.button_container {
+  text-align: center;
+  width: 192px;
+  padding-top: 10px;
+  margin: 0 auto;
 }

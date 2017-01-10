@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-<%# if !signed_in? %>
 <%= form_tag session_path do %>
     <% if flash[:alert] %>
         <div class="danger_alert">
@@ -7,21 +6,26 @@
           <%= flash[:alert] %>
         </div>
     <% end %>
-    <div class="center">
+    <div class="page-container">
+    <div class="container-form">
       <h2><%= t('submit.login') %></h2>
       <div class="field">
-        <%= text_field_tag :email, nil, placeholder: (t('.email')) %>
-        <%= password_field_tag :password, nil, placeholder: (t('.password')) %>
+        <%= text_field_tag :email, nil, placeholder: (t('.email')), :class => "form_input" %>
+        <%= password_field_tag :password, nil, placeholder: (t('.password')), :class => "form_input" %>
       </div>
-      <div class="actions login back">
-        <%= submit_tag t('submit.login') %></br>
-        <% if (I18n.locale.eql?(:en)) %>
-            <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button" %>
-        <% else %>
-            <%= link_to t('.new_user'), users_new_path, method: :get, :class => "green_button" %>
-        <% end %>
+      <div class="button_container">
+        <div id="left_button">
+          <%= submit_tag t('submit.login'), :class => "btn btn-primary" %>
+        </div>
+<% end %>
+<% #end of form_tag for login input %>
+        <div id="right_button">
+          <% if (I18n.locale.eql?(:en)) %>
+            <%= button_to t('.new_user'), users_new_path, method: :get, :class => "btn btn-primary" %>
+          <% else %>
+            <%= button_to t('.new_user'), users_new_path, method: :get, :class => "btn btn-primary" %>
+          <% end %>
+        </div>
       </div>
     </div>
-    <br>
-<% end %>
-<%# end %>
+    </div>
