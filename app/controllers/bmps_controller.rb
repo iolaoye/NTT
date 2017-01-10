@@ -26,8 +26,20 @@ class BmpsController < ApplicationController
 # GET /bmps
 # GET /bmps.json
   def index
-    @bmpsublists = Bmpsublist.where(:status => true)
-    @bmps = Bmp.where(:scenario_id => session[:scenario_id])
+    bmpsublists = Bmpsublist.where(:status => true)
+	@bmps = Bmp.where(:bmpsublist_id => 0)
+    @bmps[0] = Bmp.new
+	bmpsublists.each do |bmpsublist|
+		bmp = Bmp.where(:scenario_id => session[:scenario_id], :bmpsublist_id => bmpsublist.id)
+		if bmp.blank? || bmp == nil then
+			bmp = Bmp.new
+			bmp.bmpsublist_id = bmpsublist.id
+		end
+		@bmps[bmp.bmpsublist_id-1] = bmp
+		if bmp.bmpsublist_id == 17 then
+			break
+		end
+	end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @bmps }
@@ -36,26 +48,26 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
-		ddd
+	Bmp.where(:scenario_id => session[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
+	if !(params[:autoirrigation][:irrigation_id] == "") then
+		create(1)
+	end
+	index()
   end
 ################################  SHOW  #################################
 # GET /bmps/1
 # GET /bmps/1.json
   def show
     @bmp = Bmp.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bmp }
     end
   end
-
 ################################  NEW  #################################
 # GET /bmps/new
 # GET /bmps/new.json
   def new
-    fkjasdl
-
     @climate_array = create_hash()
     @bmp = Bmp.new
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
@@ -99,62 +111,42 @@ class BmpsController < ApplicationController
 ################################  CREATE  #################################
 # POST /bmps
 # POST /bmps.json
-  def create
+  def create(bmpsublist)
     @bmplist_name = "create"
     @bmpsublist_name = "create"
-	  msg = "OK"
+	msg = "OK"
     @slope = 100
-    @bmp = Bmp.new(bmp_params)
+    @bmp = Bmp.new()
     @bmp.scenario_id = session[:scenario_id]
+	@bmp.bmpsublist_id = bmpsublist
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
     @climate_array = create_hash()
     @state = Location.find(session[:location_id]).state_id
-    respond_to do |format|
-      if @bmp.bmpsublist_id == 19
+    #respond_to do |format|
+      if bmpsublist == 19
         msg = input_fields("create")
       else
         msg = "OK"
       end
       if msg == "OK"
-        if @bmp.save
-          if @bmp.bmpsublist_id == 19
+        #if @bmp.save
+          if bmpsublist == 19
             add_climate_id(@bmp.id)
           else
             msg = input_fields("create")
+			if msg = "OK" then
+			session[:depth] = @bmp
+				if @bmp.save then
+					sss
+				else
+					nsnsns
+				end
+			end
           end
-          if msg == "OK"
-            if params[:add_more] == "Add more" && params[:finish] == nil
-              format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.created') }
-              format.json { render json: @bmp, status: :created, location: @bmp }
-            elsif params[:finish] == "Finish" && params[:add_more] == nil
-              format.html { redirect_to list_scenario_path(session[:field_id]), notice: t('operation.bmp') + " " + t('general.created') }
-              format.json { render json: @bmp, status: :created, location: @bmp }
-            end
-          else
-            format.html { render action: "new" }
-            format.json { render json: @bmp.errors, status: :unprocessable_entity }
-          end
-        else
-          if Field.find(session[:field_id]).field_type
-            @bmp_list = Bmplist.where(:id => 8)
-          else
-            @bmp_list = Bmplist.all
-          end
-          format.html { render action: "new" }
-          format.json { render json: @bmp.errors, status: :unprocessable_entity }
-        end
-      else
-        @bmp.errors.add(msg[0], msg[1])
-        if Field.find(session[:field_id]).field_type
-          @bmp_list = Bmplist.where(:id => 8)
-        else
-          @bmp_list = Bmplist.all
-        end
-        format.html { render action: "new" }
-        format.json { render json: @bmp.errors, status: :unprocessable_entity }
+        #end
       end
-    end
+    #end
   end
 
 ################################  UPDATE  #################################
@@ -163,11 +155,9 @@ class BmpsController < ApplicationController
   def update
     @slope = 100
     @bmp = Bmp.find(params[:id])
-    #@bmp.id = session[:bmp_id]
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @climates = Climate.where(:bmp_id => @bmp.id)
     @irrigation = Irrigation.arel_table
-    #@climate_array = session[:climate_array]
     @climate_array = create_hash()
     if @bmp.bmpsublist_id == 19
       @climate_array = populate_array(@climates, @climate_array)
@@ -197,9 +187,10 @@ class BmpsController < ApplicationController
 
 # DELETE /bmps/1
 # DELETE /bmps/1.json
-  def destroy
+  def destroy()
     @slope = 100
-    @bmp = Bmp.find(params[:id])
+    Bmp.where(:scenario_id => session[:scenario_id]).delete_all
+
     msg = input_fields("delete")
     if @bmp.destroy
       flash[:notice] = t('models.bmp') + " " + Bmpsublist.find(@bmp.bmpsublist_id).name + t('notices.deleted')
@@ -839,14 +830,22 @@ class BmpsController < ApplicationController
             end
             subarea.vimx = 5000
             subarea.bir = 0.8
-            subarea.iri = @bmp.days
-            subarea.bir = @bmp.water_stress_factor
-            subarea.efi = 1.0 - @bmp.irrigation_efficiency
-            subarea.armx = @bmp.maximum_single_application * IN_TO_MM
-			if @bmp.safety_factor == nil then
+			session[:depth] = params[:bmps][@bmp.bmpsublist_id-1][:irrigation_efficiency].to_f
+			@bmp.irrigation_id = params[:autoirrigation][:irrigation_id]
+            subarea.iri = params[:bmps][@bmp.bmpsublist_id-1][:days]
+			@bmp.days = subarea.iri
+            subarea.bir = params[:bmps][@bmp.bmpsublist_id-1][:water_stress_factor]
+			@bmp.water_stress_factor = subarea.bir
+            subarea.efi = 1.0 - params[:bmps][@bmp.bmpsublist_id-1][:irrigation_efficiency].to_f
+			@bmp.irrigation_efficiency = subarea.efi
+			@bmp.maximum_single_application = subarea.efi
+            subarea.armx = params[:bmps][@bmp.bmpsublist_id-1][:maximum_single_application] * IN_TO_MM
+			@bmp.maximum_single_application = subarea.armx
+			if params[:bmps][@bmp.bmpsublist_id-1][:safety_factor] == nil then
 				subarea.fdsf = 0
 			else
-				subarea.fdsf = @bmp.safety_factor
+				subarea.fdsf = params[:bmps][@bmp.bmpsublist_id-1][:safety_factor]
+				@bmp.safety_factor = subarea.fdsf
 			end
             if @bmp.bmpsublist_id == 2
               subarea.idf4 = 1.0
@@ -988,7 +987,6 @@ class BmpsController < ApplicationController
     update_wsa("-", subarea.wsa)
     #subarea.delete
   end
-
 ##############################  PRIVATE  ###############################
 
   private

@@ -1,4 +1,7 @@
 <h1>Listing bmps</h1>
+<%= submit_tag t("submit.save"), name: "button"%>
+<td>
+</td>
 
 <table>
   <tr>
@@ -10,7 +13,7 @@
 
 <% @bmps.each do |bmp| %>
   <tr>
-    <td><%= bmps.name %></td>
+    <td><%= bmp.bmpsublist_id %></td>
     <td><%= link_to t('general.show'), bmp %></td>
     <td><%= link_to t('general.edit'), edit_bmp_path(bmp) %></td>
     <td><%= link_to 'Destroy', bmp, method: :delete, data: { confirm: t('general.confirm') } %></td>
