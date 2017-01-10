@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @crop_schedule.id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @crop_schedule.name %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @crop_schedule.state_id %>
+</p>
+
+<p>
+  <b>Class:</b>
+  <%= @crop_schedule.class %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @crop_schedule.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_crop_schedule_path(@crop_schedule) %> |
+<%= link_to 'Back', crop_schedules_path %>

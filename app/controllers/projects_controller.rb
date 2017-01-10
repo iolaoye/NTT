@@ -3081,8 +3081,6 @@ class ProjectsController < ApplicationController
       end
     #rescue
       #return "Control values could not be saved"
-	  #session[:depth] = control
-	  #ooo
     #end
   end
 

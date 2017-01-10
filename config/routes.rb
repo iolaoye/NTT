@@ -1,4 +1,10 @@
 NTTG3::Application.routes.draw do
+  resources :schedules
+
+
+  resources :crop_schedules
+
+
   resources :climates
 
 
@@ -126,6 +132,7 @@ NTTG3::Application.routes.draw do
   resources :operations do
 	get :list, on: :member
 	get :cropping_system, on: :member
+	get :crop_schedule, on: :member
     get 'download', on: :member
     get :open, on: :member
     get :upload_system, on: :member
@@ -138,7 +145,6 @@ NTTG3::Application.routes.draw do
   #define two name routes, login_path and logout_path
   get '/login' => "sessions#index", :as => "login"
   get '/logout' => "sessions#destroy", :as => "logout"
-
   get 'sessions/create'
   get 'sessions/destroy'
   get 'users/new'

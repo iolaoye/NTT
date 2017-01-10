@@ -509,6 +509,7 @@ en:
     cropping_system: 'Cropping System'
     fertilizer: Fertilizer Type
     crop: Crop
+    schedule: "Schedule"
     moisture: Moisture
     nutrients: Nutrients
     distribution: Distribution
@@ -532,6 +533,8 @@ en:
     quarter_to_three_fourths: "(0.25 - 0.75)"
     days_range: "(Days: 0 – 365)"
     days_range_number: "(0 - 365)"
+    hours_range: "(0 - 24)"
+    percentage_range: "(0 - 100)"
     lbs_per_day: lbs per day
     ft: ft
     acres: acres
@@ -543,7 +546,7 @@ en:
     water_stress_factor: Water stress factor
     irrigation_efficiency: Irrigation efficiency
     area_control: Fraction of area control by pond
-    maximum_single_application: Maxiumum single application
+    maximum_single_application: Maximum single application
     safety_factor: Safety factor
     depth: Depth
     reservoir_area: Reservoir area

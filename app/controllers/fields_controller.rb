@@ -7,8 +7,6 @@ class FieldsController < ApplicationController
       client = Savon.client(wsdl: URL_SoilsInfo)
 	  counties.each do |county|
 		response = client.call(:get_soils, message: {"county" => County.find(county).county_state_code})
-		session[:depth] = response
-	  ooo
 	  end
   end
 ################################  scenarios list   #################################
