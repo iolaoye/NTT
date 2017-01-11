@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  name: MyString
+  wtmx: 1
+  wtmn: 1
+  wtbl: 1
+  zqt: 1
+  ztk: 1
+
+two:
+  id: 1
+  name: MyString
+  wtmx: 1
+  wtmn: 1
+  wtbl: 1
+  zqt: 1
+  ztk: 1

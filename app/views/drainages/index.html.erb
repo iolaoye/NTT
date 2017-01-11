@@ -1,0 +1,35 @@
+<h1>Listing drainages</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Wtmx</th>
+    <th>Wtmn</th>
+    <th>Wtbl</th>
+    <th>Zqt</th>
+    <th>Ztk</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @drainages.each do |drainage| %>
+  <tr>
+    <td><%= drainage.id %></td>
+    <td><%= drainage.name %></td>
+    <td><%= drainage.wtmx %></td>
+    <td><%= drainage.wtmn %></td>
+    <td><%= drainage.wtbl %></td>
+    <td><%= drainage.zqt %></td>
+    <td><%= drainage.ztk %></td>
+    <td><%= link_to 'Show', drainage %></td>
+    <td><%= link_to 'Edit', edit_drainage_path(drainage) %></td>
+    <td><%= link_to 'Destroy', drainage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Drainage', new_drainage_path %>
