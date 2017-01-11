@@ -12,12 +12,15 @@
 
       <% @bmps.each do |bmp| %>
 		<%= fields_for "bmps[]", bmp do |bmp_fields| %>
+      <tbody>
 			<tr>
-			  <td><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+			  <td id=<%= "bmp#{bmp.bmpsublist_id}" -%>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
 			  <td><%= check_box_tag 'select' %></td>
 			</tr>
+      </tbody>
 			  <% case bmp.bmpsublist_id %>
 				<% when 1 %>
+        <tbody id="1">
 				  <tr style="padding-left:100px">
 					<td>
 						<%= label :irrigation_id, t('bmp.irrigation') %>
@@ -58,7 +61,9 @@
 						<%= bmp_fields.text_field :area, :step => 'any' %>
 				    </td>
 				  </tr>
+        </tbody>
 				<% when 2 %>
+        <tbody id="2">
 				  <tr>
 					<td>
 						<%= label :irrigation_id, t('bmp.irrigation') %>
@@ -99,14 +104,18 @@
 						<%= bmp_fields.text_field :area, :step => 'any' %>
 				    </td>
 				  </tr>
+        </tbody>
 				<% when 3 %>
+        <tbody id="3">
 				  <tr>
 					<td class="field" id = "depth" >
 						<%= label :depth, t('bmp.depth') + " " + t('bmp.zero_to_max') + " " + t('bmp.ft') %>
 						<%= bmp_fields.text_field :depth, :step => 'any' %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 4 %>
+        <tbody id="4">
 				  <tr>
 					<td  >
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
@@ -119,7 +128,9 @@
 						<%= bmp_fields.text_field :sides %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 5 %>
+        <tbody id="5">
 				  <tr>
 					<td  >
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
@@ -132,7 +143,9 @@
 						<%= bmp_fields.text_field :sides %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 6 %>
+        <tbody id="6">
 				  <tr>
 					<td  >
 						<%= label :depth, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
@@ -151,7 +164,9 @@
 						<%= bmp_fields.text_field :sides %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 7 %>
+        <tbody id="7">
 				  <tr>
 					<td  >
 						<%= label :depth, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
@@ -170,21 +185,27 @@
 						<%= bmp_fields.text_field :sides %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 8 %>
+        <tbody id="8">
 				  <tr>
 					<td class="field" id = "area" >
 						<%= label :depth, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
 						<%= bmp_fields.text_field :area, :step => 'any' %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 9 %>
+        <tbody id="9">
 				  <tr>
 					<td class="field" id = "fraction_control_by_pond" >
 						<%= label :depth, t('bmp.area_control') + " " + t('bmp.zero_to_max')  %>
 						<%= bmp_fields.text_field :irrigation_efficiency, :step => 'any' %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 10 %>
+        <tbody id="10">
 				  <tr>
 					<td>
 						<%= label :depth, t('bmp.animals') + " " + t('bmp.zero_to_max')  %>
@@ -243,14 +264,18 @@
 						<%= bmp_fields.text_field :org_p, :step => 'any' %>
 				    </td>
 				  </tr>
+        </tbody>
 				<% when 11 %>
+        <tbody id="11">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
 						<%= bmp_fields.check_box :id %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 12 %>
+        <tbody id="12">
 				  <tr>
 					<td>
 						<%= t('general.area') + " " + t('bmp.acres') %>
@@ -275,7 +300,9 @@
 						<%= bmp_fields.text_field :buffer_slope_upland %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 13 %>
+        <tbody id="13">
 				  <tr>
 					<td>
 						<%= label :crop_id, t('operation.crop') %>
@@ -304,7 +331,9 @@
 						<%= bmp_fields.text_field :buffer_slope_upland %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 14 %>
+        <tbody id="14">
 				  <tr>
 					<td>
 						<%= label :crop_id, t('operation.crop') %>
@@ -321,7 +350,9 @@
 						<%= bmp_fields.text_field :width %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 15 %>
+        <tbody id="15">
 				  <tr>
 					<td>
 						<%= label :crop_id, t('operation.crop') %>
@@ -344,44 +375,70 @@
 						<%= bmp_fields.text_field :crop_width %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 16 %>
+        <tbody id="16">
 				  <tr>
 					<td>
 						<%= t('bmp.slope_reduction') + " " + t('bmp.percentage_range') %>
 						<%= bmp_fields.text_field :slope_reduction %>
 					</td>
 				  </tr>
-				<% when 17 %>  #terrace system
+        </tbody>
+				<% when 17 %>
+        <tbody id="17">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
 						<%= bmp_fields.check_box :id %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 18 %>
+        <tbody id="18">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
 						<%= bmp_fields.check_box :id %>
 					</td>
 				  </tr>
-				<% when 19 %>
+        </tbody>
+        <% when 19 %>
+        <tbody id="19">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
 						<%= bmp_fields.check_box :id %>
 					</td>
 				  </tr>
+        </tbody>
 				<% when 20 %>
+        <tbody id="20">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
 						<%= bmp_fields.check_box :id %>
 					</td>
 				  </tr>
+        </tbody>
 			  <% end %>
 		<% end %>
       <% end %>
     </table>
   </div>
 <% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      //hides all Bmps at beginning
+      for(i = 1; i < 21; i++) {
+        $('#'+i).hide();
+      }
+      //show/hide bmps on click-'let' makes 'i' local to loop instead of global
+      for(let i = 1; i < 21; i++) {
+        $("#bmp"+i).click(function(){
+          $("#"+i).toggle();
+        });
+      }
+    });
+</script>
