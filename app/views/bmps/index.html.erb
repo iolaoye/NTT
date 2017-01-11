@@ -13,12 +13,12 @@
 
       <% @bmps.each do |bmp| %>
 		<tbody>
-			<tr style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>>
-			  <td><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+			<tr>
+			  <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
 			  <% if bmp.id != nil %>
-				<td><%= check_box_tag 'select', true, value="1"%></td>
+				<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
 			<% else %>
-				<td><%= check_box_tag 'select' %></td>
+				<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
 			<% end %>
 			</tr>
 		</tbody>
@@ -396,8 +396,24 @@
       }
       //show/hide bmps on click-'let' makes 'i' local to loop instead of global
       for(let i = 1; i < 21; i++) {
+        //check on page load for checked boxes
+        if ($('#select').is(':checked')){
+          $('#'+i).show();
+        } else {
+          $('#'+i).hide();
+        }
+        //gives all BMPs toggle(show/hide) functionality
         $("#bmp"+i).click(function(){
           $("#"+i).toggle();
+        });
+        //checking box will open/show BMP, unchecking does opposite
+        $('#select_'+i).change(function () {
+         var row = $(this).closest('tr').prev();
+         if (!this.checked) {
+             $("tbody#"+i).hide();
+         } else {
+             $("tbody#"+i).show();
+           }
         });
       }
       //hide reservoir field if irrigation != pads & pipes
