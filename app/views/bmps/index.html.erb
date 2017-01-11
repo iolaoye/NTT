@@ -408,12 +408,14 @@
         });
         //checking box will open/show BMP, unchecking does opposite
         $('#select_'+i).change(function () {
-         var row = $(this).closest('tr').prev();
-         if (!this.checked) {
-             $("tbody#"+i).hide();
-         } else {
-             $("tbody#"+i).show();
-           }
+          if (!this.checked) {
+            $("tbody#"+i).hide();
+            $("tbody input select").each(function() {
+              this.value="";
+            });
+          } else {
+            $("tbody#"+i).show();
+          }
         });
       }
       //hide reservoir field if irrigation != pads & pipes
