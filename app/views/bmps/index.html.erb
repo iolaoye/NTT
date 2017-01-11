@@ -13,14 +13,18 @@
 
       <% @bmps.each do |bmp| %>
 		<tbody>
-			<tr>
-			  <td id=<%= "bmp#{bmp.bmpsublist_id}" -%>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
-			  <td><%= check_box_tag 'select' %></td>
+			<tr style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>>
+			  <td><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+			  <% if bmp.id != nil %>
+				<td><%= check_box_tag 'select', true, value="1"%></td>
+			<% else %>
+				<td><%= check_box_tag 'select' %></td>
+			<% end %>
 			</tr>
 		</tbody>
-		<% case bmp.bmpsublist_id %>
-			<% when 1 %>
-				<tbody id="1">
+		<tbody id=<%="#{bmp.bmpsublist_id}"%>>
+			<% case bmp.bmpsublist_id %>
+				<% when 1 %>
 				  <tr>
 					<td class="indent">
 						<%= label :irrigation_id, t('bmp.irrigation')  %>
@@ -57,14 +61,12 @@
 				    </td>
 				  </tr>
 				  <tr>
-				    <td class="field indent" id = "reservour_area" >
+				    <td class="field indent" id = "reservoir_area" style="display: none;">
 						<%= label :days, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') %>
 						<%= text_field :bmp_ai, :area, :value => bmp.area%>
 				    </td>
 				  </tr>
-				</tbody>
-			<% when 2 %>
-				<tbody id="2">
+				<% when 2 %>
 				  <tr>
 					<td class="indent">
 						<%= label :irrigation_id, t('bmp.irrigation') %>
@@ -99,24 +101,14 @@
 						<%= text_field :bmp_af, :maximum_single_application, :value => bmp.maximum_single_application %>
 				    </td>
 				  </tr>
-				  <tr>
-				    <td class="field indent" id = "reservour_area" >
-						<%= label :days, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_af, :area, :value => bmp.area %>
-				    </td>
-				  </tr>
-				</tbody>
-			<% when 3 %>
-				<tbody id="3">
+				<% when 3 %>
 				  <tr>
 					<td class="field indent" id = "depth" >
 						<%= label :depth, t('bmp.depth') + " " + t('bmp.zero_to_max') + " " + t('bmp.ft') %>
 						<%= text_field :bmp_td, :depth, :value => bmp.depth %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 4 %>
-				<tbody id="4">
+				<% when 4 %>
 				  <tr>
 					<td class="indent">
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
@@ -129,9 +121,7 @@
 						<%= text_field :bmp_ppnd, :sides, :value => bmp.sides %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 5 %>
-				<tbody id="5">
+				<% when 5 %>
 				  <tr>
 					<td class="indent">
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
@@ -144,9 +134,7 @@
 						<%= text_field :bmp_ppds, :sides, :value => bmp.sides %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 6 %>
-				<tbody id="6">
+				<% when 6 %>
 				  <tr>
 					<td class="indent">
 						<%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
@@ -165,9 +153,7 @@
 						<%= text_field :bmp_ppde, :sides, :value => bmp.sides %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 7 %>
-				<tbody id="7">
+				<% when 7 %>
 				  <tr>
 					<td class="indent">
 						<%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
@@ -186,27 +172,21 @@
 						<%= text_field :bmp_pptw, :sides, :value => bmp.sides %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 8 %>
-				<tbody id="8">
+				<% when 8 %>
 				  <tr>
 					<td class="field indent" id = "area" >
 						<%= label :depth, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
 						<%= text_field :bmp_wl, :area, :value => bmp.area %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 9 %>
-				<tbody id="9">
+				<% when 9 %>
 				  <tr>
 					<td class="field indent" id = "fraction_control_by_pond" >
 						<%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_max')  %>
 						<%= text_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 10 %>
-				<tbody id="10">
+				<% when 10 %>
 				  <tr>
 					<td class="indent">
 						<%= label :depth, t('bmp.animals') + " " + t('bmp.zero_to_max')  %>
@@ -265,18 +245,14 @@
 						<%= text_field :bmp_sf, :org_p, :value => bmp.org_p %>
 				    </td>
 				  </tr>
-				</tbody>
-			<% when 11 %>
-				<tbody id="11">
+				<% when 11 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
 						<%= check_box :bmp_sbs, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 12 %>
-				<tbody id="12">
+				<% when 12 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.area') + " " + t('bmp.acres') %>
@@ -301,9 +277,7 @@
 						<%= text_field :bmp_rf, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 13 %>
-				<tbody id="13">
+				<% when 13 %>
 				  <tr>
 					<td class="indent">
 						<%= label :crop_id, t('operation.crop') %>
@@ -332,9 +306,7 @@
 						<%= text_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 14 %>
-				<tbody id="14">
+				<% when 14 %>
 				  <tr>
 					<td class="indent">
 						<%= label :crop_id, t('operation.crop') %>
@@ -351,9 +323,7 @@
 						<%= text_field :bmp_ww, :width, :value => bmp.width %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 15 %>
-				<tbody id="15">
+				<% when 15 %>
 				  <tr>
 					<td class="indent">
 						<%= label :crop_id, t('operation.crop') %>
@@ -376,53 +346,43 @@
 						<%= text_field :bmp_cb, :crop_width, :value => bmp.crop_width %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 16 %>
-				<tbody id="16">
+				<% when 16 %>
 				  <tr>
 					<td class="indent">
 						<%= t('bmp.slope_reduction') + " " + t('bmp.percentage_range') %>
 						<%= text_field :bmp_ll, :slope_reduction, :value => bmp.slope_reduction %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 17 %>
-				<tbody id="17">
+				<% when 17 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
 						<%= check_box :bmp_ts, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 18 %>
-				<tbody id="18">
+				<% when 18 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
 						<%= check_box :bmp_ac, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 19 %>
-				<tbody id="19">
+				<% when 19 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
 						<%= check_box :bmp_gc, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-				</tbody>
-			<% when 20 %>
-				<tbody id="20">
+				<% when 20 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
 						<%= check_box :bmp_sa, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-        </tbody>
-      <% end %>
+			<% end %>
+		</tbody>
 	  <% end %>
     </table>
   </div>
@@ -440,5 +400,13 @@
           $("#"+i).toggle();
         });
       }
+      //hide reservoir field if irrigation != pads & pipes
+      $('#bmp_ai_irrigation_id').change(function(){
+        var tableValue = $('#bmp_ai_irrigation_id').val();
+        if (tableValue == 8)
+          $('#reservoir_area').show();
+        else
+          $('#reservoir_area').hide();
+      });
     });
 </script>
