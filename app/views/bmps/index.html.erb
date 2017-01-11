@@ -17,9 +17,9 @@
 			  <td><%= check_box_tag 'select' %></td>
 			</tr>
 		</tbody>
-			  <% case bmp.bmpsublist_id %>
-				<% when 1 %>
-        <tbody id="1">
+		<% case bmp.bmpsublist_id %>
+			<% when 1 %>
+				<tbody id="1">
 				  <tr style="padding-left:100px">
 					<td>
 						<%= label :irrigation_id, t('bmp.irrigation')  %>
@@ -61,9 +61,9 @@
 						<%= text_field :bmp_ai, :area, :value => bmp.area%>
 				    </td>
 				  </tr>
-        </tbody>
-				<% when 2 %>
-        <tbody id="2">
+				</tbody>
+			<% when 2 %>
+				<tbody id="2">
 				  <tr>
 					<td>
 						<%= label :irrigation_id, t('bmp.irrigation') %>
@@ -104,124 +104,124 @@
 						<%= text_field :bmp_af, :area, :value => bmp.area %>
 				    </td>
 				  </tr>
-        </tbody>
-				<% when 3 %>
-        <tbody id="3">
+				</tbody>
+			<% when 3 %>
+				<tbody id="3">
 				  <tr>
 					<td class="field" id = "depth" >
 						<%= label :depth, t('bmp.depth') + " " + t('bmp.zero_to_max') + " " + t('bmp.ft') %>
 						<%= text_field :bmp_td, :depth, :value => bmp.depth %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 4 %>
-        <tbody id="4">
+				</tbody>
+			<% when 4 %>
+				<tbody id="4">
 				  <tr>
 					<td  >
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_ppnd, :width %>
+						<%= text_field :bmp_ppnd, :width, :value => bmp.width %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('bmp.sides')  %>
-						<%= text_field :bmp_ppnd, :sides %>
+						<%= text_field :bmp_ppnd, :sides, :value => bmp.sides %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 5 %>
-        <tbody id="5">
+				</tbody>
+			<% when 5 %>
+				<tbody id="5">
 				  <tr>
 					<td  >
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_ppds, :width %>
+						<%= text_field :bmp_ppds, :width, :value => bmp.width %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('bmp.sides')  %>
-						<%= text_field :bmp_ppds, :sides %>
+						<%= text_field :bmp_ppds, :sides, :value => bmp.sides %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 6 %>
-        <tbody id="6">
+				</tbody>
+			<% when 6 %>
+				<tbody id="6">
 				  <tr>
 					<td  >
 						<%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_ppde, :area %>
+						<%= text_field :bmp_ppde, :area, :value => bmp.area %>
 					</td>
 				  </tr>
 				  <tr>
 					<td  >
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_ppde, :width %>
+						<%= text_field :bmp_ppde, :width, :value => bmp.width %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('bmp.sides')  %>
-						<%= text_field :bmp_ppde, :sides %>
+						<%= text_field :bmp_ppde, :sides, :value => bmp.sides %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 7 %>
-        <tbody id="7">
+				</tbody>
+			<% when 7 %>
+				<tbody id="7">
 				  <tr>
 					<td  >
 						<%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_pptw, :area %>
+						<%= text_field :bmp_pptw, :area, :value => bmp.area %>
 					</td>
 				  </tr>
 				  <tr>
 					<td  >
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_pptw, :width %>
+						<%= text_field :bmp_pptw, :width, :value => bmp.width %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('bmp.sides')  %>
-						<%= text_field :bmp_pptw, :sides %>
+						<%= text_field :bmp_pptw, :sides, :value => bmp.sides %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 8 %>
-        <tbody id="8">
+				</tbody>
+			<% when 8 %>
+				<tbody id="8">
 				  <tr>
 					<td class="field" id = "area" >
 						<%= label :depth, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_wl, :area %>
+						<%= text_field :bmp_wl, :area, :value => bmp.area %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 9 %>
-        <tbody id="9">
+				</tbody>
+			<% when 9 %>
+				<tbody id="9">
 				  <tr>
 					<td class="field" id = "fraction_control_by_pond" >
 						<%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_max')  %>
-						<%= text_field :bmp_pnd, :irrigation_efficiency %>
+						<%= text_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 10 %>
-        <tbody id="10">
+				</tbody>
+			<% when 10 %>
+				<tbody id="10">
 				  <tr>
 					<td>
 						<%= label :depth, t('bmp.animals') + " " + t('bmp.zero_to_max')  %>
-						<%= text_field :bmp_sf, :number_of_animals %>
+						<%= text_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals %>
 					</td>
 				  </tr>
 				  <tr>
 				    <td >
 						<%= label :days, t('bmp.stream_fencing_frequency') + " " + t('bmp.days_range') %>
-						<%= text_field :bmp_sf, :days %>
+						<%= text_field :bmp_sf, :days, :value => bmp.days %>
 				    </td>
 				  </tr>
 				  <tr>
 				    <td >
 						<%= label :hours, t('bmp.hours') + " " + t('bmp.hours_range') %>
-						<%= text_field :bmp_sf, :hours %>
+						<%= text_field :bmp_sf, :hours, :value => bmp.hours %>
 				    </td>
 				  </tr>
 				  <tr>
@@ -237,72 +237,72 @@
 				  <tr>
 				    <td >
 						<%= label :dry_manure, t('bmp.dry_manure') + " " + t('bmp.zero_to_max') + " " + t('bmp.lbs') %>
-						<%= text_field :bmp_sf, :dry_manure %>
+						<%= text_field :bmp_sf, :dry_manure, :value => bmp.dry_manure %>
 				    </td>
 				  </tr>
 				  <tr>
 				    <td >
 						<%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_sf, :no3_n %>
+						<%= text_field :bmp_sf, :no3_n, :value => bmp.no3_n %>
 				    </td>
 				  </tr>
 				  <tr>
 				    <td >
 						<%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_sf, :po4_p %>
+						<%= text_field :bmp_sf, :po4_p, :value => bmp.po4_p %>
 				    </td>
 				  </tr>
 				  <tr>
 				    <td >
 						<%= label :org_n, t('bmp.org_n') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_sf, :org_n %>
+						<%= text_field :bmp_sf, :org_n, :value => bmp.org_n %>
 				    </td>
 				  </tr>
 				  <tr>
 				    <td >
 						<%= label :org_p, t('bmp.org_p') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_sf, :org_p %>
+						<%= text_field :bmp_sf, :org_p, :value => bmp.org_p %>
 				    </td>
 				  </tr>
-        </tbody>
-				<% when 11 %>
-        <tbody id="11">
+				</tbody>
+			<% when 11 %>
+				<tbody id="11">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
-						<%= check_box :bmp_sbs, :id %>
+						<%= check_box :bmp_sbs, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 12 %>
-        <tbody id="12">
+				</tbody>
+			<% when 12 %>
+				<tbody id="12">
 				  <tr>
 					<td>
 						<%= t('general.area') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_rf, :area %>
+						<%= text_field :bmp_rf, :area, :value => bmp.area %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_rf, :width %>
+						<%= text_field :bmp_rf, :width, :value => bmp.width %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
-						<%= text_field :bmp_rf, :grass_field_portion %>
+						<%= text_field :bmp_rf, :grass_field_portion, :value => bmp.grass_field_portion %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
-						<%= text_field :bmp_rf, :buffer_slope_upland %>
+						<%= text_field :bmp_rf, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 13 %>
-        <tbody id="13">
+				</tbody>
+			<% when 13 %>
+				<tbody id="13">
 				  <tr>
 					<td>
 						<%= label :crop_id, t('operation.crop') %>
@@ -316,24 +316,24 @@
 				  <tr>
 					<td>
 						<%= t('general.area') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_fs, :area %>
+						<%= text_field :bmp_fs, :area, :value => bmp.area %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_fs, :width %>
+						<%= text_field :bmp_fs, :width, :value => bmp.width %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
-						<%= text_field :bmp_fs, :buffer_slope_upland %>
+						<%= text_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 14 %>
-        <tbody id="14">
+				</tbody>
+			<% when 14 %>
+				<tbody id="14">
 				  <tr>
 					<td>
 						<%= label :crop_id, t('operation.crop') %>
@@ -347,12 +347,12 @@
 				  <tr>
 					<td>
 						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_ww, :width %>
+						<%= text_field :bmp_ww, :width, :value => bmp.width %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 15 %>
-        <tbody id="15">
+				</tbody>
+			<% when 15 %>
+				<tbody id="15">
 				  <tr>
 					<td>
 						<%= label :crop_id, t('operation.crop') %>
@@ -366,61 +366,62 @@
 				  <tr>
 					<td>
 						<%= t('bmp.buffer_width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_cb, :width %>
+						<%= text_field :bmp_cb, :width, :value => bmp.width %>
 					</td>
 				  </tr>
 				  <tr>
 					<td>
 						<%= t('bmp.crop_width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_cb, :crop_width %>
+						<%= text_field :bmp_cb, :crop_width, :value => bmp.crop_width %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 16 %>
-        <tbody id="16">
+				</tbody>
+			<% when 16 %>
+				<tbody id="16">
 				  <tr>
 					<td>
 						<%= t('bmp.slope_reduction') + " " + t('bmp.percentage_range') %>
-						<%= text_field :bmp_ll, :slope_reduction %>
+						<%= text_field :bmp_ll, :slope_reduction, :value => bmp.slope_reduction %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 17 %>
-        <tbody id="17">
+				</tbody>
+			<% when 17 %>
+				<tbody id="17">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
-						<%= check_box :bmp_ts, :id %>
+						<%= check_box :bmp_ts, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 18 %>
-        <tbody id="18">
+				</tbody>
+			<% when 18 %>
+				<tbody id="18">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
-						<%= check_box :bmp_ac, :id %>
+						<%= check_box :bmp_ac, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-        </tbody>
-        <% when 19 %>
-        <tbody id="19">
+				</tbody>
+			<% when 19 %>
+				<tbody id="19">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
-						<%= check_box :bmp_gc, :id %>
+						<%= check_box :bmp_gc, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-        </tbody>
-				<% when 20 %>
-        <tbody id="20">
+				</tbody>
+			<% when 20 %>
+				<tbody id="20">
 				  <tr>
 					<td>
 						<%= t('general.select') %>
-						<%= check_box :bmp_sa, :id %>
+						<%= check_box :bmp_sa, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-        </tbody>
+				</tbody>
+	    <% end %>
 	  <% end %>
     </table>
   </div>
