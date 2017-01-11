@@ -19,3 +19,4 @@ Schedule.create!({:id => 12, :event_order => 5, :month => 10, :day => 16, :year 
 Schedule.create!({:id => 13, :event_order => 6, :month => 10, :day => 17, :year => 1, :activity_id => 3, :apex_operation => 211, :apex_crop => 1, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 2}, :without_protection => true)
 Schedule.create!({:id => 14, :event_order => 1, :month => 4, :day => 14, :year => 1, :activity_id => 5, :apex_operation => 451, :apex_crop => 14, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 3}, :without_protection => true)
 Schedule.create!({:id => 15, :event_order => 2, :month => 10, :day => 20, :year => 1, :activity_id => 1, :apex_operation => 132, :apex_crop => 14, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 3}, :without_protection => true)
+
