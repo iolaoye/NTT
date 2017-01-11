@@ -543,6 +543,10 @@ table.results_table td {
 
 }
 
+.table > tbody > tr > td.indent {
+  padding-left: 50px;
+}
+
 .btn-header, .btn-header:hover {
     background: #204060;
     color: #ffffff;
