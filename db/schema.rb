@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170106211255) do
+ActiveRecord::Schema.define(:version => 20170111210619) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -135,6 +135,11 @@ ActiveRecord::Schema.define(:version => 20170106211255) do
     t.integer  "state_id"
   end
 
+  create_table "controls_apex_controls", :id => false, :force => true do |t|
+    t.integer "control_id"
+    t.integer "apex_control_id"
+  end
+
   create_table "counties", :force => true do |t|
     t.string   "county_name"
     t.string   "county_code"
@@ -213,6 +218,17 @@ ActiveRecord::Schema.define(:version => 20170106211255) do
     t.integer  "period"
   end
 
+  create_table "drainages", :force => true do |t|
+    t.string   "name"
+    t.integer  "wtmx"
+    t.integer  "wtmn"
+    t.integer  "wtbl"
+    t.integer  "zqt"
+    t.integer  "ztk"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "events", :force => true do |t|
     t.integer  "event_order"
     t.integer  "month"
@@ -227,6 +243,12 @@ ActiveRecord::Schema.define(:version => 20170106211255) do
     t.integer  "cropping_system_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "fertilizer_type", :force => true do |t|
+    t.string   "field_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "fertilizer_types", :force => true do |t|
@@ -473,9 +495,9 @@ ActiveRecord::Schema.define(:version => 20170106211255) do
     t.float    "slope"
     t.float    "percentage"
     t.integer  "field_id"
-    t.string   "drainage_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.integer  "drainage_id", :limit => 255
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.float    "ffc"
     t.float    "wtmn"
     t.float    "wtmx"

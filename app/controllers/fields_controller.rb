@@ -24,15 +24,11 @@ class FieldsController < ApplicationController
     session[:field_id] = params[:id]
     redirect_to list_soil_path(params[:id])
   end
-
-################################  soils list   #################################
-# GET /fields/1
-# GET /1/fields.json
-  def list
-
+################################  get list of fields   #################################
+  def get_field_list(location_id)
     session[:simulation] = "watershed"
 
-    @fields = Field.where(:location_id => params[:id])
+    @fields = Field.where(:location_id => location_id)
     @project_name = Project.find(session[:project_id]).name
 
     add_breadcrumb t('menu.projects'), user_projects_path(current_user)
@@ -55,7 +51,12 @@ class FieldsController < ApplicationController
       end
       field.save
     end
-
+  end
+################################  soils list   #################################
+# GET /fields/1
+# GET /1/fields.json
+  def list
+	get_field_list(params[:id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @fields }
@@ -168,7 +169,9 @@ class FieldsController < ApplicationController
     respond_to do |format|
       if msg.eql?("OK") then
         session[:field_id] = @field.id
-        format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Field was successfully updated.' }
+        #format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Field was successfully updated.' }
+		get_field_list(@field.location_id)
+		format.html { render "list", notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit", notice: msg }
