@@ -52,23 +52,19 @@
 <% end %>
 -->
 
-    <div class="page-header"><h1><%= t('field.field_title') %></h1>
-
-    </div>
+    <div class="page-header"><h1><%= t('field.field_title') %></h1></div>
     <%#= button_to t('field.create_field'), new_field_path, :method => "get", :class => "btn btn-primary" %>
-	<%= button_to t('submit.continue'), field_scenarios_field_path, :method => "get", :class => "btn btn-success" %><br><br>
+	<%#= button_to t('submit.continue'), field_scenarios_field_path, :method => "get", :class => "btn btn-success" %>
     <%= t('instructions.fields') %><br><br>
-
-
-          <div class="table-responsive">
-            <div class="panel panel-default">
+        <div class="table-responsive">
+        <div class="panel panel-default">
          <table class="table table-striped">
           <thead>
             <tr>
               <th><%= t('field.field_name')%></th>
               <th><%= t('field.field_area')%></th>
 			  <th><%= t('field.field_avg_slope')%></th>
-              <th><%= t('field.field_type')%></th>
+              <th><%#= t('field.field_type')%></th>
               <th><%= t('general.actions')%></th>
             </tr>
           </thead>
@@ -78,7 +74,7 @@
               <td><%= link_to field.field_name, field %></td>
               <td><%= field.field_area %></td>
 			  <td><%= field.field_average_slope %></td>
-              <td><%= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
+              <td><%#= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
               <td><%= link_to image_tag("edit.png"), edit_field_path(field), title: t('general.edit') %>
           <%= link_to image_tag("delete.png"), field, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td>
             </tr>

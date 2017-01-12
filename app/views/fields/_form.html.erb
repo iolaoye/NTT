@@ -24,16 +24,16 @@
     <%= f.number_field :field_average_slope, :class => 'numbers', :step => "any"  %>
   </div>
   <div class="field">
-    <%= f.label t('field.field_type') %>
-	<% if @field.field_name.include?(ROAD) || @field.field_name.include?(SMZ) %>
-		<%= f.check_box :field_type, disabled: true %>
-	<% else %>
-		<%= f.check_box :field_type %>
-	<% end %>
+    <%#= f.label t('field.field_type') %>
+	<%# if @field.field_name.include?(ROAD) || @field.field_name.include?(SMZ) %>
+		<%#= f.check_box :field_type, disabled: true %>
+	<%# else %>
+		<%#= f.check_box :field_type %>
+	<%# end %>
   </div>
   <div class="field">
     <%= f.label t('field.coordinate') + " (long, lat)" %><br>
-    <%= f.text_area :coordinates, :required => 'true' %>
+    <%= f.text_area :coordinates, :readonly => true %>
   </div>
   <div class="actions">
     <%= f.submit :class => "btn btn-primary" %>

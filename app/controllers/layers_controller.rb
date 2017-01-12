@@ -77,6 +77,7 @@ class LayersController < ApplicationController
     end
   end
 
+################################  update  #################################
 # PATCH/PUT /layers/1
 # PATCH/PUT /layers/1.json
   def update
@@ -84,7 +85,7 @@ class LayersController < ApplicationController
 
     respond_to do |format|
       if @layer.update_attributes(layer_params)
-        if params[:add_more] == "Add more" && params[:finish] == nil
+        if params[:add_more] == "Save" && params[:finish] == nil
           format.html { redirect_to list_layer_path(@layer.soil_id), notice: t('models.layer') + "" + t('notices.created') }
           format.json { render json: @layer, status: :created, location: @layer }
         elsif params[:finish] == "Finish" && params[:add_more] == nil

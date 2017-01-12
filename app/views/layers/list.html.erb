@@ -13,6 +13,7 @@
 
 <div class="page-header"><h1><%= t('general.listing') + " " + t('soil.layers') %></h1></div>
 <%= link_to t('general.new') + ' ' + t('soil.layer'), new_layer_path, :class => 'btn btn-primary' %>
+<%= link_to t('general.back') + " " + t('general.to') + " " + t('menu.soils'), field_soils_field_path(session[:field_id]), :class => 'btn btn-primary' %>
 <%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'btn btn-success' %>
 <br><br>
 <div class="table-responsive">
@@ -32,41 +33,28 @@
 			  </tr>
 			</thead>
 			<tbody>
-		  	<% i=1 %>
-		    <% @layers.each do |layer| %>
-		      <% if (i % 2  == 0) %>
-			      <tr class="gvRowStyleEven">
-			         <td class="gvCellStyleNumber"><%= layer.depth %></td>
-			         <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
-			         <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
-			         <td class="gvCellStyleNumber"><%= layer.sand %></td>
-			         <td class="gvCellStyleNumber"><%= layer.silt %></td>
-			         <td class="gvCellStyleNumber"><%= layer.clay %></td>
-			         <td class="gvCellStyleNumber"><%= layer.organic_matter %></td>
-			         <td class="gvCellStyleNumber"><%= layer.ph %></td>
-			         <td>
-			            <%= link_to image_tag("edit.png"), edit_layer_path(layer), title: t('general.edit') %>
-			            <%= link_to image_tag("delete.png"), layer, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
-			         </td>
-			      </tr>
-		      <% else %>
-			      <tr class="gvRowStyleOdd">
-			         <td class="gvCellStyleNumber"><%= layer.depth %></td>
-			         <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
-			         <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
-			         <td class="gvCellStyleNumber"><%= layer.sand %></td>
-			         <td class="gvCellStyleNumber"><%= layer.silt %></td>
-			         <td class="gvCellStyleNumber"><%= layer.clay %></td>
-			         <td class="gvCellStyleNumber"><%= layer.organic_matter %></td>
-			         <td class="gvCellStyleNumber"><%= layer.ph %></td>
-			         <td>
-			            <%= link_to image_tag("edit.png"), edit_layer_path(layer), title: t('general.edit') %>
-			            <%= link_to image_tag("delete.png"), layer, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
-			         </td>
-			      </tr>
-		      <% end %>
-		    	<% i = i + 1 %>
-		   	<% end %>
+		  		<% i=1 %>
+				<% @layers.each do |layer| %>
+				  <% if (i % 2  == 0) %>
+					  <tr class="gvRowStyleEven">
+				  <% else %>
+					  <tr class="gvRowStyleOdd">
+				  <% end %>
+						<td class="gvCellStyleNumber"><%= layer.depth %></td>
+						<td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+						<td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
+						<td class="gvCellStyleNumber"><%= layer.sand %></td>
+						<td class="gvCellStyleNumber"><%= layer.silt %></td>
+						<td class="gvCellStyleNumber"><%= layer.clay %></td>
+						<td class="gvCellStyleNumber"><%= layer.organic_matter %></td>
+						<td class="gvCellStyleNumber"><%= layer.ph %></td>
+						<td>
+							<%= link_to image_tag("edit.png"), edit_layer_path(layer), title: t('general.edit') %>
+							<%= link_to image_tag("delete.png"), layer, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+						</td>
+					  </tr>
+		    		<% i = i + 1 %>
+		   	   <% end %>
 		  </tbody>
 		</table>
 	</div>

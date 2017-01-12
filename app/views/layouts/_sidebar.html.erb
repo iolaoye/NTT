@@ -5,7 +5,7 @@
 <% end %>
 <li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || (controller_name == "results") || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>"><%= link_to t('menu.fields'), list_field_path(session[:location_id]) %>
 </li>
-<% if field_submenu  %>
+<% if field_submenu %>
   <div class="nav-header">
     <font color="#20689B">Single Field:</font> <%= @field.field_name %>
   </div>

@@ -268,29 +268,28 @@ class LocationsController < ApplicationController
       @soil.slope = params["field#{i}soil#{j}slope"]
       @soil.percentage = params["field#{i}soil#{j}pct"]
       @soil.percentage = @soil.percentage.round(2)
-      @soil.drainage_type = params["field#{i}soil#{j}drain"]
+      @soil.drainage_id = params["field#{i}soil#{j}drain"]
       @soil.tsla = 10
       @soil.xids = 1
       @soil.wtmn = 0
       @soil.wtbl = 0
       @soil.ztk = 1
       @soil.zqt = 2
-      if @soil.drainage_type != nil then
+	  session[:depth] = @soil.drainage_id
+      if @soil.drainage_id != nil then
         case true
-          when @soil.drainage_type.downcase.include?("well") || @soil.drainage_type.downcase.include?("excessively")
+          when 1 
             @soil.wtmx = 0
-          when @soil.drainage_type.downcase == ""
-            @soil.wtmx = 0
-          when @soil.drainage_type.downcase == "very poorly drained" || @soil.drainage_type.downcase == "poorly drained"
+          when 2
             @soil.wtmx = 4
             @soil.wtmn = 1
             @soil.wtbl = 2
-          when @soil.drainage_type.downcase == "somewhat poorly drained"
+          when 3
             @soil.wtmx = 4
             @soil.wtmn = 1
             @soil.wtbl = 2
           else
-            soil.wtmx = 0
+            @soil.wtmx = 0
         end
       end
 
