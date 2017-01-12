@@ -12,12 +12,9 @@ class BmpsController < ApplicationController
 # GET /operations/1
 # GET /1/operations.json
   def list
-  ppp
-    @bmps = Bmp.where(:scenario_id => params[:id])
-    @field = Field.find(session[:field_id])
-    @scenario = Scenario.find(session[:scenario_id])
+    get_bmps()
     respond_to do |format|
-      format.html # list.html.erb
+      format.html # index.html.erb
       format.json { render json: @bmps }
     end
   end
