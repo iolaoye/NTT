@@ -16,9 +16,13 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(controller: 'soils', :action => 'list'))
 			true
+		elsif current_page?(url_for(controller: 'layers', :action => 'list'))
+			true
 		elsif current_page?(url_for(:controller => 'scenarios', :action => 'list'))
 			true
 		elsif current_page?(url_for(:controller => 'scenarios', :action => 'new'))
+			true
+		elsif current_page?(url_for(:controller => 'scenarios', :action => 'edit'))
 			true
 		elsif current_page?(url_for(:controller => 'results', :action => 'index'))
 			true
@@ -28,9 +32,7 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
 			true
-		elsif current_page?(url_for(:controller => 'bmps', :action => 'list'))
-			true
-		elsif current_page?(url_for(:controller => 'bmps', :action => 'new'))
+		elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
 			true
 		elsif current_page?(url_for(:controller => 'apex_parameters', :action => 'index'))
 			true
@@ -53,8 +55,6 @@ module ApplicationHelper
 		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
 			true
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'list'))
-			true
-		elsif current_page?(url_for(:controller => 'bmps', :action => 'new'))
 			true
 		else
 			false

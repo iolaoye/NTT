@@ -6,7 +6,7 @@ class ScenariosController < ApplicationController
 # GET /1/scenarios.json
   def scenario_bmps
     session[:scenario_id] = params[:id]
-    redirect_to bmps_path
+    redirect_to bmps_path()
   end
 ################################  list of operations   #################################
 # GET /scenarios/1
