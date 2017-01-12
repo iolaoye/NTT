@@ -12,6 +12,7 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20170111210619) do
+ActiveRecord::Schema.define(:version => 20170111210617) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
