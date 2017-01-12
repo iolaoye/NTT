@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170106211255) do
+ActiveRecord::Schema.define(:version => 20170111210617) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -211,6 +211,17 @@ ActiveRecord::Schema.define(:version => 20170106211255) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "period"
+  end
+
+  create_table "drainages", :force => true do |t|
+    t.string   "name"
+    t.integer  "wtmx"
+    t.integer  "wtmn"
+    t.integer  "wtbl"
+    t.integer  "zqt"
+    t.integer  "ztk"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "events", :force => true do |t|
