@@ -397,7 +397,7 @@
       //show/hide bmps on click-'let' makes 'i' local to loop instead of global
       for(let i = 1; i < 21; i++) {
         //check on page load for checked boxes
-        if ($('#select').is(':checked')){
+        if ($('#select_'+i).is(':checked')){
           $('#'+i).show();
         } else {
           $('#'+i).hide();
@@ -409,14 +409,90 @@
         //checking box will open/show BMP, unchecking does opposite
         $('#select_'+i).change(function () {
           if (!this.checked) {
+            //Unchecking BMP hides and clears input -> additionally: clear selections/checkboxes within BMPs
             $("tbody#"+i).hide();
-            $("tbody input select").each(function() {
+            $("tbody#"+i + " input").each(function() {
               this.value="";
             });
           } else {
             $("tbody#"+i).show();
+            if (i == 1 && $('#select_2').is(':checked')) {
+              if (prompt_user()) {
+                $("#select_2").prop('checked', false);
+                $("tbody#2 input").val("");
+              } else { confirm_check(i); }
+            } else if (i == 2 && $('#select_1').is(':checked')) {
+                if (prompt_user()) {
+                  $("#select_1").prop('checked', false);
+                  $("tbody#1 input").val("");
+                } else { confirm_check(i); }
+                //to work on... clear fields/selections when prompt is true
+            } else if (i > 3 && i < 8) {
+                if (i == 4 && ($('#select_5').is(':checked') || $('#select_6').is(':checked') || $('#select_7').is(':checked'))) {
+                  if (prompt_user()) {
+                    $("#select_5").prop('checked', false);
+                    $("#select_6").prop('checked', false);
+                    $("#select_7").prop('checked', false);
+                  } else { confirm_check(i); }
+                } else if (i == 5 && ($('#select_4').is(':checked') || $('#select_6').is(':checked') || $('#select_7').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_4").prop('checked', false);
+                      $("#select_6").prop('checked', false);
+                      $("#select_7").prop('checked', false);
+                    } else { confirm_check(i); }
+                } else if (i == 6 && ($('#select_4').is(':checked') || $('#select_5').is(':checked') || $('#select_7').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_4").prop('checked', false);
+                      $("#select_5").prop('checked', false);
+                      $("#select_7").prop('checked', false);
+                    } else { confirm_check(i); }
+                } else if (i == 7 && ($('#select_4').is(':checked') || $('#select_5').is(':checked') || $('#select_6').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_4").prop('checked', false);
+                      $("#select_5").prop('checked', false);
+                      $("#select_6").prop('checked', false);
+                    } else { confirm_check(i); }
+                }
+            } else if (i > 11 && i < 16) {
+                if (i == 12 && ($('#select_13').is(':checked') || $('#select_14').is(':checked') || $('#select_15').is(':checked'))) {
+                  if (prompt_user()) {
+                    $("#select_13").prop('checked', false);
+                    $("#select_14").prop('checked', false);
+                    $("#select_15").prop('checked', false);
+                  } else { confirm_check(i); }
+                } else if (i == 13 && ($('#select_12').is(':checked') || $('#select_14').is(':checked') || $('#select_15').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_12").prop('checked', false);
+                      $("#select_14").prop('checked', false);
+                      $("#select_15").prop('checked', false);
+                  } else { confirm_check(i); }
+                } else if (i == 14 && ($('#select_12').is(':checked') || $('#select_13').is(':checked') || $('#select_15').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_12").prop('checked', false);
+                      $("#select_13").prop('checked', false);
+                      $("#select_15").prop('checked', false);
+                    } else { confirm_check(i); }
+                } else if (i == 15 && ($('#select_12').is(':checked') || $('#select_13').is(':checked') || $('#select_14').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_12").prop('checked', false);
+                      $("#select_13").prop('checked', false);
+                      $("#select_14").prop('checked', false);
+                    } else { confirm_check(i); }
+                }
+            }
           }
         });
+      }
+      function prompt_user() {
+        var r = confirm("It appears you have a similar BMP already checked. Continuing will clear any input you may have had for the other BMP.");
+        if (r == true) {
+          return true;
+        } else {
+            return false;
+        }
+      }
+      function confirm_check(i) {
+        $('#select_'+i).prop('checked', false);
       }
       //hide reservoir field if irrigation != pads & pipes
       $('#bmp_ai_irrigation_id').change(function(){
