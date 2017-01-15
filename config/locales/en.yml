@@ -11,6 +11,8 @@ en:
     errors:
       messages:
         record_invalid: "Validation failed: %{errors}"
+        projects:
+          no_saved: "Project could not be saved"
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
@@ -469,7 +471,7 @@ en:
     albedo: Albedo
     slope: Slope
     percentage: Percentage
-    drainage_type: Drainage
+    drainage: Drainage
     depth: Depth
     soilp: Soil P
     bulk_density: Bulk Density
@@ -602,7 +604,7 @@ en:
     field_area: Field Area
     field_avg_slope: Field Average Slope
     new_field: New Field
-    field_title: Listing Fields
+    field_title: Fields
     field_type: Forestry?
     edit_field: Editing Field
     type: Field Type

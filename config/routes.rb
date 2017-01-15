@@ -1,16 +1,8 @@
 NTTG3::Application.routes.draw do
   resources :drainages
-
-
   resources :schedules
-
-
   resources :crop_schedules
-
-
   resources :climates
-
-
   resources :watershed_scenarios
   resources :watersheds
   resources :people
@@ -55,8 +47,13 @@ NTTG3::Application.routes.draw do
   #resources :fields
   resources :apex_soils
   resources :apex_layers
+
   resources :results do
 	get 'sel', on: :member
+	get :summary, on: :member
+	get :by_soils, on: :member
+	get :annual_charts, on: :member
+	get :monthly_charts, on: :member
   end
   resources :watershed_scenarios do
      post 'new_scenario', on: :member
@@ -138,7 +135,7 @@ NTTG3::Application.routes.draw do
 	get :crop_schedule, on: :member
     get 'download', on: :member
     get :open, on: :member
-    get :upload_system, on: :member
+    post :upload_system, on: :member
   end
 
   resources :bmplists do

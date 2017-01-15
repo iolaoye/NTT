@@ -1,4 +1,4 @@
-<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing')  + " " + t('menu.control_file') %></h1></div>
+<div class="page-header"><h1><%= t('menu.control_file') %></h1></div>
 
 <% if flash[:notice] != nil %>
     <div class="alert alert-info" role="alert">
@@ -35,9 +35,13 @@
       </thead>
       <tbody>
 
-
+<% i=1 %>
 <% @apex_controls.each do |apex_control| %>
-    <tr>
+	  <% if i % 2 == 0 %>
+        <tr class="gvRowStyleEven">
+	  <% else %>
+	    <tr class="gvRowStyleOdd">
+	  <% end %>
       <td><%= apex_control.control_id %></td>
       <td><%= apex_control.control.code %></td>
       <td><%= apex_control.control.line %></td>
@@ -46,7 +50,7 @@
       <td><%= apex_control.control.range_low %></td>
       <td><%= apex_control.control.range_high %></td>
       <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control), title: t('general.edit') %></td>
-
+      <% i+=1 %>
 <% end %>
 </tr>
     </tbody>

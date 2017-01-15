@@ -16,15 +16,11 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(controller: 'soils', :action => 'list'))
 			true
-		elsif current_page?(url_for(controller: 'layers', :action => 'list'))
-			true
 		elsif current_page?(url_for(:controller => 'scenarios', :action => 'list'))
 			true
 		elsif current_page?(url_for(:controller => 'scenarios', :action => 'new'))
 			true
 		elsif current_page?(url_for(:controller => 'scenarios', :action => 'edit'))
-			true
-		elsif current_page?(url_for(:controller => 'results', :action => 'index'))
 			true
 		elsif current_page?(url_for(:controller => 'apex_controls', :action => 'index'))
 			true
@@ -35,6 +31,10 @@ module ApplicationHelper
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
 			true
 		elsif current_page?(url_for(:controller => 'apex_parameters', :action => 'index'))
+			true
+		elsif request.url.include?(url_for("/results"))
+			true
+		elsif request.url.include?(url_for("/layers"))
 			true
 		elsif request.url.include?(url_for("/subareas"))
 			true
@@ -54,7 +54,21 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
 			true
-		elsif current_page?(url_for(:controller => 'bmps', :action => 'list'))
+		elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
+			true
+		else
+			false
+		end
+	end
+
+	def result_submenu
+		if request.url.include?(url_for('by_soils'))
+			true
+		elsif request.url.include?(url_for('annual_charts'))
+			true
+		elsif request.url.include?(url_for('monthly_charts'))
+			true
+		elsif request.url.include?(url_for("/summary"))
 			true
 		else
 			false

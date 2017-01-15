@@ -11,7 +11,8 @@
 	  </div>
 <% end %>
 
-<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t("general.listing") + " " + t("menu.soils") %></h1></div>
+<!--<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t("menu.soils") %></h1></div> -->
+<div class="page-header"><h1><%= t("menu.soils") %></h1></div>
 
 <%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'btn btn-success' %><br><br>
 <div class="table-responsive">
@@ -26,15 +27,15 @@
           <th class="gvCellStyleTitle"><%= t('soil.albedo') %></th>
           <th class="gvCellStyleTitle"><%= t('soil.slope') %></th>
           <th class="gvCellStyleTitle"><%= t('soil.percentage') %></th>
-          <th class="gvCellStyleTitle"><%= t('soil.drainage_type') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.drainage') %></th>
           <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
         </tr>
       </thead>
     
 	  <tbody>
 			  <% i=1 %>
-				<% for soil in @soils %>
-				<% if (i % 2  == 0) %>
+				<% @soils.each do |soil| %>
+				<% if (i % 2 == 0) %>
 					<tr class="gvRowStyleEven">
 				<% else %>
 					<tr class="gvRowStyleOdd">
