@@ -1,4 +1,4 @@
-<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing') + " " + t('menu.subarea_file') %></h1></div>
+<div class="page-header"><h1><%= t('menu.subarea_file') %></h1></div>
 
 <% if flash[:notice] != nil %>
     <div class="alert alert-info" role="alert">
@@ -41,17 +41,20 @@
       </thead>
       <tbody>
 
-
+<% i = 1 %>
 <% @subareas.each do |sub| %>
-    <tr class="gvRowStyleEven">
-      <td class="gvCellStyleText"><%= sub[:subarea_type] %></td>
+	<% if i % 2 == 0 %>
+      <tr class="gvRowStyleEven">
+	<% else %>
+	  <tr class="gvRowStyleOdd">
+	<% end %>      <td class="gvCellStyleText"><%= sub[:subarea_type] %></td>
       <td class="gvCellStyleText"><%= sub[:subarea_number] %></td>
       <td class="gvCellStyleText"><%= sub[:subarea_description] %></td>
       <td class="gvCellStyleCheckbox">
         <%= link_to image_tag("view.png"), subarea_path(sub[:subarea_id]), title: t('general.show') %>
         <%= link_to image_tag("edit.png"), edit_subarea_path(sub[:subarea_id]), title: t('general.edit') %>
       </td>
-<% end %>
+    <% i += 1 %><% end %>
 </tr>
     </tbody>
   </table>

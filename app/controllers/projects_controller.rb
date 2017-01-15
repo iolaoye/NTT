@@ -177,7 +177,7 @@ class ProjectsController < ApplicationController
       #begin
       msg = "OK"
       upload_id = 0
-      if params[:commit].eql? t('submit.save') then
+      if params[:commit].eql? t('project.upload_project') then
         if params[:project] == nil then
           redirect_to upload_project_path(upload_id)
           flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
@@ -398,7 +398,7 @@ class ProjectsController < ApplicationController
       xml.albedo soil.albedo
       xml.slope soil.slope
       xml.percentage soil.percentage
-      xml.drainage_type soil.drainage_type
+      xml.drainage_id soil.drainage_id
       xml.ffc soil.ffc
       xml.wtmn soil.wtmn
       xml.wtmx soil.wtmx
@@ -830,7 +830,7 @@ class ProjectsController < ApplicationController
   end
 
   def upload_project_new_version(node)
-    begin
+    #begin
       project = Project.new
       project.user_id = session[:user_id]
       node.elements.each do |p|
@@ -846,11 +846,11 @@ class ProjectsController < ApplicationController
         session[:project_id] = project.id
         return "OK"
       else
-        return "project could not be saved"
+        return t('activerecord.errors.messages.projects.no_saved')
       end
-    rescue
-      return 'Project could not be saved'
-    end
+    #rescue
+      return t('activerecord.errors.messages.projects.no_saved') 
+    #end
   end
 
   def upload_location_info(node)
@@ -1205,7 +1205,7 @@ class ProjectsController < ApplicationController
           soil.wtmn = p.text
         when "Wtmx"
           soil.wtmx = p.text
-          soil.drainage_type = p.text
+          soil.drainage_id = p.text
         when "Wtbl"
           soil.wtbl= p.text
         when "Gwst"
@@ -1276,8 +1276,8 @@ class ProjectsController < ApplicationController
           soil.slope = p.text
         when "percentage"
           soil.percentage = p.text
-        when "drainage_type"
-          soil.drainage_type = p.text
+        when "drainage_id"
+          soil.drainage_id = p.text
         when "layers"
           if soil.save
             p.elements.each do |f|

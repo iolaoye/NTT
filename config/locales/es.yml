@@ -27,8 +27,8 @@
         result: "Resultados"
         summary: "Resumen"
         by_soil: "Por Suelo"
-        annual_charts: "Anual Gráficas"
-        monthly_charts: "Mensual Gráficas"
+        annual_charts: "Gráficas Anuales"
+        monthly_charts: "Gráficas Mensuales"
       apex:
         apex_file: "Archivos de APEX"
         control: "Controls"
@@ -471,7 +471,7 @@
     albedo: Albedo
     slope: Inclinación
     percentage: Porcentaje
-    drainage_type: Drenaje
+    drainage: Drenaje
     depth: Profundidad
     soilp: P en el Suelo
     bulk_density: Densidad de la masa
@@ -598,11 +598,11 @@
     activity_title: Lista de Actividades
   field:
     field: Parcela
-    field_name: Nombre de Parcela
-    field_area: Área de Parcela
+    field_name: Nombre Parcela
+    field_area: Área Parcela
     field_avg_slope: Inclinación promedio parcela
     new_field: Parcela Nueva
-    field_title: Lista Parcelas
+    field_title: Parcelas
     field_type: Bosque?
     edit_field: Editando Parcela
     type: Tipo de Parcela

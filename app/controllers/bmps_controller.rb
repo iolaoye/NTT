@@ -24,6 +24,7 @@ class BmpsController < ApplicationController
 # GET /bmps.json
   def index
     get_bmps()
+	take_names()
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @bmps }
@@ -542,7 +543,6 @@ class BmpsController < ApplicationController
   end
 
   # end method
-
 
 ### ID: 9
   def pond(type)

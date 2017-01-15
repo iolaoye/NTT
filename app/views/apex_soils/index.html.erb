@@ -4,7 +4,7 @@
   <%= notice %>
 </div>
 <% end %>
-<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('menu.apex_soil')%></h1></div>
+<div class="page-header"><h1><%= t('menu.apex_soil')%></h1></div>
 
 <%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
 <%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-default' %>
@@ -31,8 +31,13 @@
     <tbody>
 
     <%= hidden_field(:layer_id, :id, :value => @field_id) %>
+	<% i = 1 %>
   <% for apex_soil in @soils %>
+	<% if i % 2 == 0 %>
       <tr class="gvRowStyleEven">
+	<% else %>
+	  <tr class="gvRowStyleOdd">
+	<% end %>
         <td class="gvCellStyleCheckbox"><%= check_box_tag :apex_soil, "1", apex_soil.selected, disabled: true %></td>
         <td class="gvCellStyleText"><%= apex_soil.key %></td>
         <td class="gvCellStyleText"><%= apex_soil.symbol %></td>
@@ -43,6 +48,7 @@
           <%= link_to image_tag("view.png"), apex_soil_path(apex_soil.id), title: t('general.show') %>
           <%= link_to image_tag("edit.png"), edit_apex_soil_path(apex_soil.id), title: t('general.edit') %>
         </td>
+		<% i+=1 %>
   <% end %>
 </tr>
     </tbody>

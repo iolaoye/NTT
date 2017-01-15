@@ -8,7 +8,7 @@ class OperationsController < ApplicationController
     @operations = Operation.where(:scenario_id => session[:scenario_id]) # used to be params[:id]
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
-    @scenario = Scenario.find(session[:scenario_id])
+    @scenario_name = Scenario.find(session[:scenario_id]).name
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @fields }
@@ -374,6 +374,78 @@ class OperationsController < ApplicationController
     end # end if cropping_system_id != nil
   end # end method
 
+########################################### DOWNLOAD OPERATION IN XML FORMAT ##################
+  def download
+    #require 'open-uri'
+    #require 'net/http'
+    #require 'rubygems'
+
+    operations = Operation.where(:scenario_id => params[:id])
+
+    builder = Nokogiri::XML::Builder.new do |xml|
+      xml.operations {
+	    operations.each do |operation|
+			xml.operation {
+			  xml.crop_id operation.crop_id
+			  xml.activity_id operation.activity_id
+			  xml.day operation.day
+			  xml.month operation.month_id
+			  xml.year operation.year
+			  xml.type_id operation.type_id
+			  xml.amount operation.amount
+			  xml.depth operation.depth
+			  xml.no3_n operation.no3_n
+			  xml.po4_p operation.po4_p
+			  xml.org_n operation.org_n
+			  xml.org_p operation.org_p
+			  xml.nh3 operation.nh3
+			  xml.subtype_id operation.subtype_id
+			  #soil_operations = SoilOperation.where(:operation_id => operation.id)
+			  #xml.soil_operations {
+				#soil_operations.each do |so|
+				  #save_soil_operation_information(xml, so)
+				#end # end soil_operations.each
+			  #} # end xml.soil_operation
+			} # xml each operation end      
+		end # end operations.each
+      } # end xml.operations
+    end #builder do end
+
+    file_name = session[:session_id] + ".opr"
+    path = File.join(DOWNLOAD, file_name)
+    content = builder.to_xml
+    File.open(path, "w") { |f| f.write(content) }
+    #file.write(content)
+    send_file path, :type => "application/xml", :x_sendfile => true
+  end
+  #download operation def end 
+
+  ########################################### UPLOAD CROPPING SYSTEM FILE IN XML FORMAT ##################
+  def upload_system
+    saved = false
+    msg = ""
+    ActiveRecord::Base.transaction do
+		#begin
+		if params[:Cropping_system] == nil then
+			redirect_to open_operation_path
+			flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
+		end
+		@data = Nokogiri::XML(params[:Cropping_system])
+
+		@data.root.elements.each do |node|
+			case node.name
+			  when "operation"
+				msg = upload_operation_info(node, params[:id], session[:field_id])
+			  else
+				ooo
+			end
+		end    
+    end
+	redirect_to list_operation_path(params[:id])
+  end
+
+  #########################################################################################################################
+  ############## private methods - Just to be seen from inside this controller. ###########################################
   private
 
 # Use this method to whitelist the permissible parameters. Example:
@@ -498,7 +570,6 @@ class OperationsController < ApplicationController
     end
     return opv4
   end
-
   #end set_opval4
 
   def set_opval2(soil_id)
@@ -523,59 +594,54 @@ class OperationsController < ApplicationController
     end #end case @operation
     return opv2
   end #end set_opval2
-end #end class
 
-########################################### DOWNLOAD OPERATION IN XML FORMAT ##################
-  def download
-    #require 'open-uri'
-    #require 'net/http'
-    #require 'rubygems'
-
-    operation = Operation.find(params[:id])
-
-    builder = Nokogiri::XML::Builder.new do |xml|
-      xml.operations {
-        xml.operation {
-          xml.crop_id operation.crop_id
-	      xml.activity_id operation.activity_id
-          xml.day operation.day
-          xml.month operation.month_id
-          xml.year operation.year
-          xml.type_id operation.type_id
-          xml.amout operation.amount
-          xml.depth operation.depth
-          xml.no3_n operation.no3_n
-          xml.po4_p operation.po4_p
-          xml.org_n operation.org_n
-          xml.org_p operation.org_p
-          xml.nh3 operation.nh3
-          xml.subtype_id operation.subtype_id
-          soil_operations = SoilOperation.where(:operation_id => operation.id)
-          xml.soil_operations {
-            soil_operations.each do |so|
-              save_soil_operation_information(xml, so)
-          end # end soil_operations.each
-          } # end xml.soil_operations
-        } # xml each operation end      
-      } # end xml.operations
-    end #builder do end
-
-    file_name = session[:session_id] + ".opr"
-    path = File.join(DOWNLOAD, file_name)
-    content = builder.to_xml
-    File.open(path, "w") { |f| f.write(content) }
-    #file.write(content)
-    send_file path, :type => "application/xml", :x_sendfile => true
-  end
-
-  #download operation def end 
-
-  ########################################### UPLOAD CROPPING SYSTEM FILE IN XML FORMAT ##################
-  def upload_system
-    saved = false
-    msg = ""
-    ActiveRecord::Base.transaction do
-      #begin
-      msg = "OK"
+  def upload_operation_info(node, scenario_id, field_id)
+    @operation = Operation.new
+    @operation.scenario_id = scenario_id
+    event_id = 0
+    scenario = ""
+    apex_till_code = 0
+    node.elements.each do |p|
+      case p.name
+        when "crop_id" 
+          @operation.crop_id = p.text
+        when "activity_id"
+          @operation.activity_id = p.text
+        when "year"
+          @operation.year = p.text
+        when "month"
+          @operation.month_id = p.text
+        when "day"
+          @operation.day = p.text
+        when "type_id"
+          @operation.type_id = p.text
+        when "amount"
+          @operation.amount = p.text
+        when "depth"
+          @operation.depth = p.text
+        when "no3_n"
+          @operation.no3_n = p.text
+        when "po4_p"
+          @operation.po4_p = p.text
+        when "org_n"
+          @operation.org_n = p.text
+        when "org_p"
+          @operation.org_p = p.text
+        when "nh3"
+          @operation.nh3 = p.text
+        when "subtype_id"
+          @operation.subtype_id = p.text.to_i
+      end # case
+    end # end each
+    if @operation.save then
+      soils = Soil.where(:field_id => field_id)
+      soils.each do |soil|
+		update_soil_operation(SoilOperation.new, soil.id)
+      end # end soils.each
+      return "OK"
+    else
+      return "Error saving operation"
     end
   end
+
+end #end class

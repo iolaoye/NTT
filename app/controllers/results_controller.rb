@@ -1,8 +1,34 @@
 class ResultsController < ApplicationController
+  ###############################  MONTHLY CHART  ###################################
+  def monthly_charts
+	@type = t('result.monthly') + "-" + t('result.charts')
+	index
+	render "index"	
+  end  
+  ###############################  ANNUAL CHART  ###################################
+  def annual_charts
+	@type = t('result.annual') + "-" + t('result.charts')
+	index
+	render "index"	
+  end  
+  ###############################  BY SOIL  ###################################
+  def by_soils
+	@type = t("result.summary") + " " + t("result.by_soil")
+	index
+	render "index"	
+  end
+  ###############################  SUMMARY ###################################
+  def summary
+	@type = t("result.summary")
+	index
+	render "index"
+  end
+
+  ###############################  INDEX  ###################################
   # GET /results
   # GET /results.json
   def index
-    @field = Field.find(session[:field_id])
+	@field = Field.find(session[:field_id])
     if params[:language] != nil then
       if params[:language][:language].eql?("es")
         I18n.locale = :es
@@ -15,7 +41,6 @@ class ResultsController < ApplicationController
     @present2 = false
     @present3 = false
     @descrition = 0
-    @result_selected = params[:button]
     @title = ""
     @total_area = 0
     @field_name = ""
@@ -25,17 +50,17 @@ class ResultsController < ApplicationController
       @total_area = Field.find(session[:field_id]).field_area
       @field_name = Field.find(session[:field_id]).field_name
     end
-    @scenario1 = 0
-    @scenario2 = 0
-    @scenario3 = 0
+    #@scenario1 = 0
+    #@scenario2 = 0
+    #@scenario3 = 0
+	@scenario1 = session[:scenario1]
+	@scenario2 = session[:scenario2]
+	@scenario3 = session[:scenario3]
+	#ooo
     @soil = "0"
-    @original_result1 = params[:result1]
-    @original_result2 = params[:result2]
-    @original_result3 = params[:result3]
     #load crop for each scenario selected
     i = 70
     if params[:result1] != nil then
-      #oo
       @present = true
       @before_button_clicked = false
       @errors = Array.new
@@ -65,17 +90,22 @@ class ResultsController < ApplicationController
         crop = Crop.find(result.crop_id)
       end # end results.each
     end # end if
-    @type = params[:button]
-    if params[:button] != nil then
-      (params[:button].eql?(t("result.summary") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
+	if params[:button] != nil
+		@type = params[:button]
+	end
+	if @type == nil then
+		@type = t("result.summary")
+	end
+    if @type != nil then
+      (@type.eql?(t("result.summary") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
         when t("result.summary"), t("result.summary") + " " + t("result.by_soil")
-          if params[:button].include? t('result.summary') then
+          if @type.include? t('result.summary') then
             if params[:result1] != nil
               #session[:first_if] = true
-              session[:result1] = !params[:result1][:scenario_id].eql?("")
+              #session[:result1] = !params[:result1][:scenario_id].eql?("")
               if !params[:result1][:scenario_id].eql?("") then
-                session[:result1] = params[:result1][:scenario_id]
+                #session[:result1] = params[:result1][:scenario_id]
                 @scenario1 = params[:result1][:scenario_id]
                 session[:scenario1] = @scenario1
                 if session[:simulation] == 'scenario'
@@ -92,7 +122,7 @@ class ResultsController < ApplicationController
                 session[:scenario3] = ""
               end
               if params[:result2][:scenario_id] != "" then
-                session[:result2] = params[:result2][:scenario_id]
+                #session[:result2] = params[:result2][:scenario_id]
                 @scenario2 = params[:result2][:scenario_id]
                 session[:scenario2] = @scenario2
                 if session[:simulation] == 'scenario'
@@ -108,7 +138,7 @@ class ResultsController < ApplicationController
                 session[:scenario3] = ""
               end
               if params[:result3][:scenario_id] != "" then
-                session[:result3] = params[:result3][:scenario_id]
+                #session[:result3] = params[:result3][:scenario_id]
                 @scenario3 = params[:result3][:scenario_id]
                 session[:scenario3] = @scenario3
                 if session[:simulation] == 'scenario'
@@ -213,7 +243,8 @@ class ResultsController < ApplicationController
       if @present
 
       end
-    end # end if != nill <!--<h1><%=@result_selected + " " + @title%></h1>-->
+    end # end if != nill <!--<h1><%=@type + " " + @title%></h1>-->
+		session[:depth] = @scenario1
 
     if params[:format] == "pdf" then
       pdf = render_to_string pdf: "report",

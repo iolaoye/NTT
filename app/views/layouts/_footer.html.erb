@@ -60,22 +60,14 @@
         <div class="container-fluid">
             <div class="nav navbar-nav navbar-right">
                 <ul class="footerright">
-                    
-                    <li>
-                        <%= image_tag('download.gif') %> Download
-                    </li>
-                    <li>
-                    <%= image_tag('layers.png') %> Soil Layers
-                    </li>
-                     <li>
-                        <%= image_tag('edit.png') %> Edit
-                    </li>
-                    <!--<li>
-                        <div class="undo"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></div> Reset
-                    </li>-->
-                    <li>
-                       <%= image_tag('delete.png') %> Delete
-                    </li>
+                  <%if request.url.include?(url_for=("/projects")) || request.url.include?(url_for=("/scenarios")) %>
+                    <li><%= image_tag('download.gif') %> Download</li>
+                   <% end %>
+                  <%if request.url.include?(url_for=("/soils")) || request.url.include?(url_for=("/apex_soils")) %>
+                    <li><%= image_tag('layers.png') %> Soil Layers</li>
+                  <% end %>
+                    <li><%= image_tag('edit.png') %> Edit</li>
+                    <li><%= image_tag('delete.png') %> Delete</li>
                 </ul>
             </div>
 
