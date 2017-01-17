@@ -869,7 +869,7 @@ module SimulationsHelper
     sLine = sprintf("%8.3f", _subarea_info.rshc)
     sLine += sprintf("%8.2f", _subarea_info.rsdp)
     sLine += sprintf("%8.2f", _subarea_info.rsbd)
-	if _subarea_info.bcof = nil then _subarea_info.pcof = 0 end
+	if _subarea_info.pcof = nil then _subarea_info.pcof = 0 end
     sLine += sprintf("%8.2f", _subarea_info.pcof)
     sLine += sprintf("%8.2f", _subarea_info.bcof)
     sLine += sprintf("%8.2f", _subarea_info.bffl)
