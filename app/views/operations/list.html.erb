@@ -12,7 +12,7 @@
 <%= link_to t('operation.save') + " " + t('operation.cropping_system'), download_operation_path(session[:scenario_id]), :class => 'btn btn-primary' %><br><br>
 <%= link_to t('operation.open'), open_operation_path, :class => 'btn btn-primary' %>
 <%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
-<%= link_to t('general.continue'), list_bmp_path(session[:scenario_id]), :class => 'btn btn-success' %><br><br>
+<%= link_to t('general.continue'), scenario_bmps_scenario_path(session[:scenario_id]), :class => 'btn btn-success' %><br><br>
 <div class="table-responsive">
   <div class="panel panel-default">
     <table class="table table-striped">
