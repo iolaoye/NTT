@@ -27,3 +27,10 @@ Drainage.delete_all
 Drainage.create!({:id => 1, :name => 'Well Drained', :wtmx => 0, :wtmn => 0, :wtbl => 0, :zqt => 0, :ztk => 0}, :without_protection => true)
 Drainage.create!({:id => 2, :name => 'Poorly Drained', :wtmx => 5, :wtmn => 1, :wtbl => 2, :zqt => 2, :ztk => 1}, :without_protection => true)
 Drainage.create!({:id => 3, :name => ' Somewhat Poorly Drained', :wtmx => 6, :wtmn => 1, :wtbl => 2, :zqt => 2, :ztk => 1}, :without_protection => true)
+
+Irrigation.delete_all
+Irrigation.create!({:id => 1, :name => 'Sprinkle', :status => 1, :spanish_name => 'Rociado', :code => 500}, :without_protection => true)
+Irrigation.create!({:id => 2, :name => 'Furrow/Flood', :status => 1, :spanish_name => "Surco/Inundacion", :code => 502}, :without_protection => true)
+Irrigation.create!({:id => 3, :name => 'Drip', :status => 1, :spanish_name => "Goteo", :code => 530}, :without_protection => true)
+Irrigation.create!({:id => 7, :name => 'Furrow Diking', :status => 1, :spanish_name => "Dique en Surcos", :code => 502}, :without_protection => true)
+Irrigation.create!({:id => 8, :name => 'Pads and Pipes - Tailwater Irrigation', :status => 1, :spanish_name => "Almuadiallas y Tubos - Irrigacion de Descargue", :code => 502}, :without_protection => true)
