@@ -874,6 +874,9 @@ module SimulationsHelper
 	end
 	session[:depth] = _subarea_info.pcof
     sLine += sprintf("%8.2f", _subarea_info.pcof)
+	if _subarea_info.bcof == nil then 
+		_subarea_info.bcof = 0 
+	end
     sLine += sprintf("%8.2f", _subarea_info.bcof)
     sLine += sprintf("%8.2f", _subarea_info.bffl)
     @subarea_file.push(sLine + "\n")
