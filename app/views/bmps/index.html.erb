@@ -389,7 +389,6 @@
 <% end %>
 
 <script type="text/javascript">
-    var previousChkBox = "";
     $(document).ready(function(){
       //hides all Bmps at beginning
       for(i = 1; i < 21; i++) {
@@ -428,22 +427,22 @@
                 //to work on... clear selections/checkboxes when prompt is true
             } else if (i > 3 && i < 8) {
                 if (i == 4 && ($('#select_5').is(':checked') || $('#select_6').is(':checked') || $('#select_7').is(':checked'))) {
-                  if (prompt_user(i)) {
+                  if (prompt_user()) {
                     $("#select_5, #select_6, #select_7").prop('checked', false);
                     $("tbody#5 input, tbody#6 input, tbody#7 input").val("");
                   } else { confirm_check(i); }
                 } else if (i == 5 && ($('#select_4').is(':checked') || $('#select_6').is(':checked') || $('#select_7').is(':checked'))) {
-                    if (prompt_user(i)) {
+                    if (prompt_user()) {
                       $("#select_4, #select_6, #select_7").prop('checked', false);
                       $("tbody#4 input, tbody#6 input, tbody#7 input").val("");
                     } else { confirm_check(i); }
                 } else if (i == 6 && ($('#select_4').is(':checked') || $('#select_5').is(':checked') || $('#select_7').is(':checked'))) {
-                    if (prompt_user(i)) {
+                    if (prompt_user()) {
                       $("#select_4, #select_5, #select_7").prop('checked', false);
                       $("tbody#4 input, tbody#5 input, tbody#7 input").val("");
                     } else { confirm_check(i); }
                 } else if (i == 7 && ($('#select_4').is(':checked') || $('#select_5').is(':checked') || $('#select_6').is(':checked'))) {
-                    if (prompt_user(i)) {
+                    if (prompt_user()) {
                       $("#select_4, #select_5, #select_6").prop('checked', false);
                       $("tbody#4 input, tbody#5 input, tbody#6 input").val("");
                     } else { confirm_check(i); }
@@ -474,8 +473,7 @@
           }
         });
       }
-      function prompt_user(i) {
-        console.log("inspect previous called");
+      function prompt_user() {
         var r = confirm("It appears you have a similar BMP already checked. Continuing will clear any input you may have had for the other BMP.");
         if (r == true) {
           return true;
