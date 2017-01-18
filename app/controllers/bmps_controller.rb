@@ -103,8 +103,9 @@ class BmpsController < ApplicationController
 	if !(params[:bmp_ts][:id] == "0") then
 		create(17)
 	end
-	get_bmps()
-	render "index"
+	#get_bmps()
+	#render "index"
+	redirect_to bmps_path
   end
 ################################  SHOW  #################################
 # GET /bmps/1
