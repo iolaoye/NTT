@@ -390,7 +390,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-      //hides all Bmps at beginning
+      //hides all Bmps on page load
       for(i = 1; i < 21; i++) {
         $('#'+i).hide();
       }
@@ -411,6 +411,8 @@
             $("tbody#"+i).hide();
             $("tbody#"+i + " input").each(function() {
               this.value="";
+              $("tbody#"+i + " input").not(this).attr('checked', false);
+              $("tbody#"+i + " select").val([]);
             });
           } else { //checkbox checked
             $("tbody#"+i).show();
@@ -424,7 +426,6 @@
                   $("#select_1").prop('checked', false);
                   $("tbody#1 input").val("");
                 } else { confirm_check(i); }
-                //to work on... clear selections/checkboxes when prompt is true
             } else if (i > 3 && i < 8) {
                 if (i == 4 && ($('#select_5').is(':checked') || $('#select_6').is(':checked') || $('#select_7').is(':checked'))) {
                   if (prompt_user()) {
