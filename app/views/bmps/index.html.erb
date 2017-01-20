@@ -390,14 +390,13 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-      //hides all Bmps at beginning
+      //hides all Bmps on page load
       for(i = 1; i < 21; i++) {
         $('#'+i).hide();
       }
       //show/hide bmps on click-'let' makes 'i' local to loop instead of global
       for(let i = 1; i < 21; i++) {
-        //check on page load for checked boxes
-        if ($('#select').is(':checked')){
+        if ($('#select_'+i).is(':checked')){
           $('#'+i).show();
         } else {
           $('#'+i).hide();
@@ -406,17 +405,85 @@
         $("#bmp"+i).click(function(){
           $("#"+i).toggle();
         });
-        //checking box will open/show BMP, unchecking does opposite
+        //checking box will open/show BMP, unchecking hides & clears BMP info.
         $('#select_'+i).change(function () {
-          if (!this.checked) {
+          if (!this.checked) { //unchecked
             $("tbody#"+i).hide();
-            $("tbody input select").each(function() {
+            $("tbody#"+i + " input").each(function() {
               this.value="";
+              $("tbody#"+i + " input").not(this).attr('checked', false);
+              $("tbody#"+i + " select").val([]);
             });
-          } else {
+          } else { //checkbox checked
             $("tbody#"+i).show();
+            if (i == 1 && $('#select_2').is(':checked')) {
+              if (prompt_user()) {
+                $("#select_2").prop('checked', false);
+                $("tbody#2 input").val("");
+              } else { confirm_check(i); }
+            } else if (i == 2 && $('#select_1').is(':checked')) {
+                if (prompt_user()) {
+                  $("#select_1").prop('checked', false);
+                  $("tbody#1 input").val("");
+                } else { confirm_check(i); }
+            } else if (i > 3 && i < 8) {
+                if (i == 4 && ($('#select_5').is(':checked') || $('#select_6').is(':checked') || $('#select_7').is(':checked'))) {
+                  if (prompt_user()) {
+                    $("#select_5, #select_6, #select_7").prop('checked', false);
+                    $("tbody#5 input, tbody#6 input, tbody#7 input").val("");
+                  } else { confirm_check(i); }
+                } else if (i == 5 && ($('#select_4').is(':checked') || $('#select_6').is(':checked') || $('#select_7').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_4, #select_6, #select_7").prop('checked', false);
+                      $("tbody#4 input, tbody#6 input, tbody#7 input").val("");
+                    } else { confirm_check(i); }
+                } else if (i == 6 && ($('#select_4').is(':checked') || $('#select_5').is(':checked') || $('#select_7').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_4, #select_5, #select_7").prop('checked', false);
+                      $("tbody#4 input, tbody#5 input, tbody#7 input").val("");
+                    } else { confirm_check(i); }
+                } else if (i == 7 && ($('#select_4').is(':checked') || $('#select_5').is(':checked') || $('#select_6').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_4, #select_5, #select_6").prop('checked', false);
+                      $("tbody#4 input, tbody#5 input, tbody#6 input").val("");
+                    } else { confirm_check(i); }
+                }
+            } else if (i > 11 && i < 16) {
+                if (i == 12 && ($('#select_13').is(':checked') || $('#select_14').is(':checked') || $('#select_15').is(':checked'))) {
+                  if (prompt_user()) {
+                    $("#select_13, #select_14, #select_15").prop('checked', false);
+                    $("tbody#13 input, tbody#14 input, tbody#15 input").val("");
+                  } else { confirm_check(i); }
+                } else if (i == 13 && ($('#select_12').is(':checked') || $('#select_14').is(':checked') || $('#select_15').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_12, #select_14, #select_15").prop('checked', false);
+                      $("tbody#12 input, tbody#14 input, tbody#15 input").val("");
+                  } else { confirm_check(i); }
+                } else if (i == 14 && ($('#select_12').is(':checked') || $('#select_13').is(':checked') || $('#select_15').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_12, #select_13, #select_15").prop('checked', false);
+                      $("tbody#12 input, tbody#13 input, tbody#15 input").val("");
+                    } else { confirm_check(i); }
+                } else if (i == 15 && ($('#select_12').is(':checked') || $('#select_13').is(':checked') || $('#select_14').is(':checked'))) {
+                    if (prompt_user()) {
+                      $("#select_12, #select_13").prop('checked', false);
+                      $("tbody#12 input, tbody#13 input, tbody#14 input").val("");
+                    } else { confirm_check(i); }
+                }
+            }
           }
         });
+      }
+      function prompt_user() {
+        var r = confirm("It appears you have a similar BMP already checked. Continuing will clear any input you may have had for the other BMP.");
+        if (r == true) {
+          return true;
+        } else {
+            return false;
+        }
+      }
+      function confirm_check(i) {
+        $('#select_'+i).prop('checked', false);
       }
       //hide reservoir field if irrigation != pads & pipes
       $('#bmp_ai_irrigation_id').change(function(){
