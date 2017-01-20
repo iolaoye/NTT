@@ -37,10 +37,6 @@ Drainage.create!({:id => 1, :name => 'Well Drained', :wtmx => 0, :wtmn => 0, :wt
 Drainage.create!({:id => 2, :name => 'Poorly Drained', :wtmx => 5, :wtmn => 1, :wtbl => 2, :zqt => 2, :ztk => 1}, :without_protection => true)
 Drainage.create!({:id => 3, :name => ' Somewhat Poorly Drained', :wtmx => 6, :wtmn => 1, :wtbl => 2, :zqt => 2, :ztk => 1}, :without_protection => true)
 
-CropSchedule.create!({:id => 1, :name =>'Corn', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
-CropSchedule.create!({:id => 2, :name =>'Soybean, :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
-CropSchedule.create!({:id => 3, :name =>'Barley Cover Crop', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
-
 Event.delete_all
 Event.create!({:id => 1, :event_order => 1, :month => 4, :day => 1, :year => 1, :activity_id => 1, :apex_operation => 132, :apex_crop => 168, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :cropping_system_id => 1}, :without_protection => true)
 Event.create!({:id => 2, :event_order => 1, :month => 4, :day => 15, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 2, :apex_fertilizer => 1, :apex_opv1 => 180, :apex_opv2 => 0, :cropping_system_id => 2}, :without_protection => true)
