@@ -1,6 +1,6 @@
 class ApexControl < ActiveRecord::Base
-  attr_accessible :control_id, :value
+  attr_accessible :control_description_id, :value
   #associations
 	belongs_to :project
-	belongs_to :control
+	belongs_to :control_description
 end

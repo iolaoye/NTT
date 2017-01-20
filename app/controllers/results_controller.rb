@@ -28,7 +28,7 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
-	@field = Field.find(session[:field_id])
+	#@field = Field.find(session[:field_id])
     if params[:language] != nil then
       if params[:language][:language].eql?("es")
         I18n.locale = :es
@@ -56,7 +56,6 @@ class ResultsController < ApplicationController
 	@scenario1 = session[:scenario1]
 	@scenario2 = session[:scenario2]
 	@scenario3 = session[:scenario3]
-	#ooo
     @soil = "0"
     #load crop for each scenario selected
     i = 70
@@ -152,7 +151,6 @@ class ResultsController < ApplicationController
                   @errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase)
                 end
               end
-              #session[:a_test] = @present
             end # end if params[:result1] != nill
           end #end if params button summary
 
@@ -244,15 +242,13 @@ class ResultsController < ApplicationController
 
       end
     end # end if != nill <!--<h1><%=@type + " " + @title%></h1>-->
-		session[:depth] = @scenario1
-
     if params[:format] == "pdf" then
       pdf = render_to_string pdf: "report",
-                             page_size: "Letter", layout: "pdf",
-                             template: "/results/report",
-                             footer: {center: '[page] of [topage]'},
-                             header: {spacing: -6, html: {template: '/layouts/_report_header.html'}},
-                             margin: {top: 16}
+	  page_size: "Letter", layout: "pdf",
+	  template: "/results/report",
+	  footer: {center: '[page] of [topage]'},
+	  header: {spacing: -6, html: {template: '/layouts/_report_header.html'}},
+	  margin: {top: 16}
       send_data(pdf, :filename => "report.pdf")
       #end  # end format pdf
       #format.html { render action: "index" }

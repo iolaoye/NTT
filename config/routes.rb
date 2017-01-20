@@ -1,4 +1,10 @@
 NTTG3::Application.routes.draw do
+  resources :control_descriptions
+
+
+  resources :parameter_descriptions
+
+
   resources :drainages
   resources :schedules
   resources :crop_schedules

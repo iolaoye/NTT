@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20170111210619) do
+=======
+ActiveRecord::Schema.define(:version => 20170119152025) do
+>>>>>>> oscar
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -32,19 +36,19 @@ ActiveRecord::Schema.define(:version => 20170111210619) do
   end
 
   create_table "apex_controls", :force => true do |t|
-    t.integer  "control_id"
+    t.integer  "control_description_id"
     t.float    "value"
     t.integer  "project_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   create_table "apex_parameters", :force => true do |t|
-    t.integer  "parameter_id"
+    t.integer  "parameter_description_id"
     t.float    "value"
     t.integer  "project_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "bmplists", :force => true do |t|
@@ -121,18 +125,23 @@ ActiveRecord::Schema.define(:version => 20170111210619) do
     t.integer  "month"
   end
 
-  create_table "controls", :force => true do |t|
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+  create_table "control_descriptions", :force => true do |t|
     t.integer  "line"
     t.integer  "column"
     t.string   "code"
     t.string   "name"
-    t.string   "description"
     t.float    "range_low"
     t.float    "range_high"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "controls", :force => true do |t|
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.float    "default_value"
     t.integer  "state_id"
+    t.integer  "number"
   end
 
   create_table "counties", :force => true do |t|
@@ -349,17 +358,22 @@ ActiveRecord::Schema.define(:version => 20170111210619) do
     t.float    "moisture"
   end
 
-  create_table "parameters", :force => true do |t|
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+  create_table "parameter_descriptions", :force => true do |t|
     t.integer  "line"
     t.integer  "number"
     t.string   "name"
-    t.string   "description"
     t.float    "range_low"
     t.float    "range_high"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "parameters", :force => true do |t|
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.float    "default_value"
     t.integer  "state_id"
+    t.integer  "number"
   end
 
   create_table "people", :force => true do |t|

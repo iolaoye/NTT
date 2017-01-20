@@ -1,0 +1,33 @@
+<h1>Listing parameter_descriptions</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Line</th>
+    <th>Number</th>
+    <th>Name</th>
+    <th>Range low</th>
+    <th>Range high</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @parameter_descriptions.each do |parameter_description| %>
+  <tr>
+    <td><%= parameter_description.id %></td>
+    <td><%= parameter_description.line %></td>
+    <td><%= parameter_description.number %></td>
+    <td><%= parameter_description.name %></td>
+    <td><%= parameter_description.range_low %></td>
+    <td><%= parameter_description.range_high %></td>
+    <td><%= link_to 'Show', parameter_description %></td>
+    <td><%= link_to 'Edit', edit_parameter_description_path(parameter_description) %></td>
+    <td><%= link_to 'Destroy', parameter_description, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Parameter description', new_parameter_description_path %>

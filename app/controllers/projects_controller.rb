@@ -35,6 +35,7 @@ class ProjectsController < ApplicationController
     end # end case true
   end
 
+  ########################################### SHOWS - WHEN CLICK ON PROJECT NAME ##################
   # GET /projects/1
   # GET /projects/1.json
   def shows
@@ -45,6 +46,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+  ########################################### NEW ######################################################
   # GET /projects/new
   # GET /projects/new.json
   def new
@@ -56,14 +58,14 @@ class ProjectsController < ApplicationController
     end
   end
 
+  ########################################### EDIT ######################################################
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
   end
 
-  ################## ERASE ALL PROJECT AND CORRESPONDING FILES ##################
+  ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
 
-  # Does not seem to be working
   def self.wipe_database
     ApexControl.delete_all
     ApexParameter.delete_all
@@ -529,7 +531,7 @@ class ProjectsController < ApplicationController
 
   def save_control_information(xml, control)
 	  xml.control {
-		  xml.control_id control.control_id
+		  xml.control_description_id control.control_description_id
       xml.value control.value
 	}
   end
@@ -537,7 +539,7 @@ class ProjectsController < ApplicationController
   def save_parameter_information(xml, parameter)
 	  xml.parameter {
 		  xml.value parameter.value
-		  xml.parameter_id parameter.parameter_id
+		  xml.parameter_description_id parameter.parameter_description_id
 	}
   end
 
@@ -3054,8 +3056,8 @@ class ProjectsController < ApplicationController
       node.elements.each do |p|
         case p.name
           when "Code"
-            control.control_id = Control.find_by_code(p.text.strip).id
-            case control.control_id
+            control.control_description_id = Control.find_by_code(p.text.strip).id
+            case control.control_description_id
               when 1 # get number of years of simulation from weather
                 weather = Weather.find_by_field_id(session[:field_id])
                 control.value = weather.simulation_final_year - weather.simulation_initial_year + 1 + 5
@@ -3063,13 +3065,13 @@ class ProjectsController < ApplicationController
                 # get the first year of simulation from weather
                 control = ApexControl.new
                 control.project_id = session[:project_id]
-                control.control_id = Control.find_by_id(2).id
+                control.control_description_id = Control.find_by_id(2).id
                 control.value = weather.simulation_initial_year - 5
                 control.save
                 return "OK"
               when 2 # do nothing because the second value should be already be taken
                 return "OK"
-            end # end case control.control_id
+            end # end case control.control_description_id
           when "Value"
             control.value = p.text
         end #end case
@@ -3090,8 +3092,8 @@ class ProjectsController < ApplicationController
       control.project_id = session[:project_id]
       node.elements.each do |p|
         case p.name
-          when "control_id"
-            control.control_id = p.text
+          when "control_description_id"
+            control.control_description_id = p.text
           when "code"
             control.control.code = p.text
           when "line"
@@ -3125,11 +3127,11 @@ class ProjectsController < ApplicationController
           when "Code"
             case p.text.length
               when 5
-                parameter.parameter_id = p.text[4]
+                parameter.parameter_description_id = p.text[4]
               when 6
-                parameter.parameter_id = p.text[4] + p.text[5]
+                parameter.parameter_description_id = p.text[4] + p.text[5]
               when 7
-                parameter.parameter_id = p.text[4] + p.text[5] + p.text[6]
+                parameter.parameter_description_id = p.text[4] + p.text[5] + p.text[6]
             end
           when "Value"
             parameter.value = p.text
@@ -3151,8 +3153,8 @@ class ProjectsController < ApplicationController
       parameter.project_id = session[:project_id]
       node.elements.each do |p|
         case p.name
-          when "parameter_id"
-            parameter.parameter_id = p.text
+          when "parameter_description_id"
+            parameter.parameter_description_id = p.text
           when "value"
             parameter.value = p.text
         end # end case
