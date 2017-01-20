@@ -27,7 +27,7 @@
 <div class="page-header"><h1><%= t('menu.scenarios') %></h1></div>
 <%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_scenario_path, :class => 'btn btn-primary' %>
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), {:action => :simulate_all}, :method => :post, data: {disable_with: 'Please wait. Simulation in progress . . .'}, :class => 'btn btn-primary' %>
-<%= link_to t('general.continue'), results_path(:button => t('result.summary')), :class => 'btn btn-success' %>
+<%= link_to t('general.continue'), summary_result_path(session[:field_id]), :class => 'btn btn-success' %>
 <br><br>
 <%= t('instructions.scenarios') %>
 
