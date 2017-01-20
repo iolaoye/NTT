@@ -42,13 +42,13 @@
 	  <% else %>
 	    <tr class="gvRowStyleOdd">
 	  <% end %>
-      <td><%= apex_control.control_id %></td>
-      <td><%= apex_control.control.code %></td>
-      <td><%= apex_control.control.line %></td>
-      <td><%= apex_control.control.column %></td>
+      <td><%= apex_control.control_description_id %></td>
+      <td><%= apex_control.control_description.code %></td>
+      <td><%= apex_control.control_description.line %></td>
+      <td><%= apex_control.control_description.column %></td>
       <td><%= apex_control.value %></td>
-      <td><%= apex_control.control.range_low %></td>
-      <td><%= apex_control.control.range_high %></td>
+      <td><%= apex_control.control_description.range_low %></td>
+      <td><%= apex_control.control_description.range_high %></td>
       <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control), title: t('general.edit') %></td>
       <% i+=1 %>
 <% end %>

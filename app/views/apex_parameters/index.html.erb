@@ -41,12 +41,12 @@
 	<% else %>
 	  <tr class="gvRowStyleOdd">
 	<% end %>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.number %></td>
-      <td class="gvCellStyleString"><%= apex_parameter.parameter.name %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.line %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.number %></td>
+      <td class="gvCellStyleString"><%= apex_parameter.parameter_description.name %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.line %></td>
       <td class="gvCellStyleNumber"><%= apex_parameter.value %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_low %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter.range_high %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.range_low %></td>
+      <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.range_high %></td>
       <td><%= link_to image_tag("edit.png"), edit_apex_parameter_path(apex_parameter), title: t('general.edit') %></td>
     <% i+=1 %>
 <% end %>

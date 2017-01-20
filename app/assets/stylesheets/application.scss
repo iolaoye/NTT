@@ -117,7 +117,7 @@ table {
 .gvTotalNumber {
   height: 20px;
   padding: 8px;
-  text-align: right;
+  text-align: left;
   vertical-align: middle;
   font-weight: 300;
   font-size: 15px;
@@ -125,8 +125,6 @@ table {
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
   color: Blue;
-  font-weight: bold;
-  text-align: left;
 }
 
 .gvTotalText {
@@ -140,13 +138,11 @@ table {
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
   color: Blue;
-  text-align: left;
 }
 
 .gvDetailText {
   height: 20px;
   padding: 8px;
-  text-align: left;
   vertical-align: middle;
   font-weight: 300;
   font-size: 15px;
@@ -159,7 +155,6 @@ table {
 .gvCellStyleNumber {
   height: 20px;
   padding: 8px;
-  text-align: left;
   vertical-align: middle;
   font-weight: 300;
   font-size: 15px;
@@ -185,7 +180,6 @@ table {
 .gvCellStyleActions {
   height: 20px;
   padding: 8px;
-  text-align: left;
   vertical-align: middle;
   font-weight: 300;
   font-size: 15px;
@@ -212,7 +206,6 @@ table {
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
-  text-align: left;
 }
 
 .gvCellStyleString {
@@ -225,7 +218,6 @@ table {
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
-  text-align: center;
 }
 
 .gvCellStyleTitle {
@@ -238,7 +230,6 @@ table {
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
-  overflow: hidden;
 }
 
 .gvHeaderStyle > th:not(:last-child) {

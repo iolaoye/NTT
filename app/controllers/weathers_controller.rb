@@ -138,7 +138,6 @@ class WeathersController < ApplicationController
 
 ########################################### UPLOAD weather FILE IN TEXT FORMAT ##################
   def upload_weather
-  ooo
     msg = "Error loading file"
     #@weather = Weather.find_by_field_id(session[:field_id])
     name = params[:weather][:weather_file].original_filename

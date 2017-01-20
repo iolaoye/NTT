@@ -275,7 +275,6 @@ class LocationsController < ApplicationController
       @soil.wtbl = 0
       @soil.ztk = 1
       @soil.zqt = 2
-	  session[:depth] = @soil.drainage_id
       if @soil.drainage_id != nil then
         case true
           when 1 
@@ -309,9 +308,15 @@ class LocationsController < ApplicationController
       end
       i+=1
     end
-    Scenario.where(:field_id => @field.id).each do |scenario|
-      #create_subarea("Soil", i, soil_area, soil.slope, forestry, total_selected, @field.field_name, scenario.id, soil.id, soil.percentage, total_percentage, @field.field_area)
+	scenarios = Scenario.where(:field_id => @field.id)
+    scenarios.each do |scenario|
       add_scenario_to_soils(scenario)
+	  operations = Operation.where(:scenario_id => scenario.id)
+	  operations.each do |operation|
+		  soils.each do |soil|
+			update_soil_operation(SoilOperation.new, soil.id, operation)
+		  end # end soils each
+	  end # end operations.each
     end #end Scenario each do
   end
 
@@ -355,19 +360,23 @@ class LocationsController < ApplicationController
     return centroid
   end
 
-  #todo Update years of simulation + initialyear in weather. Also, update for state. Now is just one without state
+  #todo Update years of simulation + initialyear in weather.
   def load_controls()
-    control = ApexControl.where(:project_id => session[:project_id])
-    if control == [] then
-      Control.all.each do |c|
+    apex_controls = ApexControl.where(:project_id => session[:project_id])
+    if apex_controls == [] then
+      controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
+	  if controls.blank? || controls == nil then
+		controls = Control.where(:state_id => 99)		
+	  end
+      controls.each do |c|
         apex_control = ApexControl.new
-        apex_control.control_id = c.id
+        apex_control.control_description_id = c.id
         apex_control.value = c.default_value
         apex_control.project_id = session[:project_id]
-        if apex_control.control_id == 1 then
+        if apex_control.control_description_id == 1 then
           apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
         end
-        if apex_control.control_id == 2 then
+        if apex_control.control_description_id == 2 then
           apex_control.value = @weather.simulation_initial_year - 5
         end
         apex_control.save
@@ -376,16 +385,20 @@ class LocationsController < ApplicationController
   end
 
   def load_parameters()
-    parameter = ApexParameter.where(:project_id => session[:project_id])
-    if parameter == [] then
-      Parameter.all.each do |c|
-        apex_parameter = ApexParameter.new
-        apex_parameter.parameter_id = c.id
-        apex_parameter.value = c.default_value
-        apex_parameter.project_id = session[:project_id]
-        apex_parameter.save
+    apex_parameters = ApexParameter.where(:project_id => session[:project_id])
+	if apex_parameters == [] then
+      parameters = Parameter.where(:state_id => Location.find(session[:location_id]).state_id)
+      if parameters.blank? || parameters == nil then
+		parameters = Parameter.where(:state_id => 99)
+	  end
+      parameters.each do |c|
+		apex_parameter = ApexParameter.new
+		apex_parameter.parameter_description_id = c.id
+		apex_parameter.value = c.default_value
+		apex_parameter.project_id = session[:project_id]
+		apex_parameter.save
       end # end Parameter.all
-    end # if parameter == nil
+	end # end if apex_controls == []
   end # end def
 
 end

@@ -20,7 +20,7 @@ module SimulationsHelper
     state = 'Maryland'
     t = 'cbntt'
     apex_control.each do |c|
-      case c.control_id
+      case c.control_description_id
         when 1..19 #line 1
           apex_string += sprintf("%4d", c.value)
         when 20
@@ -95,8 +95,8 @@ module SimulationsHelper
     apex_string +="   50.00   10.00" + "\n"
     apex_parameter = ApexParameter.where(:project_id => session[:project_id])
     apex_parameter.each do |p|
-      #number = Parameter.find(p.parameter_id).number
-      case p.parameter_id
+      #number = Parameter.find(p.parameter_description_id).number
+      case p.parameter_description_id
         when 10, 20, 30, 50, 60, 70, 80, 90
           apex_string += sprintf("%8.2f", p.value) + "\n"
         when 36, 65, 76, 87, 88
@@ -872,7 +872,6 @@ module SimulationsHelper
 	if _subarea_info.pcof == nil then 
 		_subarea_info.pcof = 0 
 	end
-	session[:depth] = _subarea_info.pcof
     sLine += sprintf("%8.2f", _subarea_info.pcof)
 	if _subarea_info.bcof == nil then 
 		_subarea_info.bcof = 0 
@@ -1168,8 +1167,8 @@ module SimulationsHelper
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
         oper = Operation.where(:id => operation.operation_id).first
-        session[:a_op] = operation
-        session[:a_id] = operation.operation_id
+        #session[:a_op] = operation
+        #session[:a_id] = operation.operation_id
         add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code

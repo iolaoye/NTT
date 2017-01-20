@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @parameter_description.id %>
+</p>
+
+<p>
+  <b>Line:</b>
+  <%= @parameter_description.line %>
+</p>
+
+<p>
+  <b>Number:</b>
+  <%= @parameter_description.number %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @parameter_description.name %>
+</p>
+
+<p>
+  <b>Range low:</b>
+  <%= @parameter_description.range_low %>
+</p>
+
+<p>
+  <b>Range high:</b>
+  <%= @parameter_description.range_high %>
+</p>
+
+
+<%= link_to 'Edit', edit_parameter_description_path(@parameter_description) %> |
+<%= link_to 'Back', parameter_descriptions_path %>
