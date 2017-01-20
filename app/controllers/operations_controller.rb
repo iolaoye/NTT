@@ -116,7 +116,7 @@ class OperationsController < ApplicationController
       if @operation.update_attributes(operation_params)
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
         soil_operations.each do |soil_operation|
-          update_soil_operation(soil_operation, soil_operation.soil_id)
+          update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
         if params[:add_more] == "Add more" && params[:finish] == nil
           format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
@@ -459,7 +459,7 @@ class OperationsController < ApplicationController
     msg = "OK"
     soils.each do |soil|
       if msg.eql?("OK")
-        msg = update_soil_operation(SoilOperation.new, soil.id)
+        msg = update_soil_operation(SoilOperation.new, soil.id, @operation)
       else
         break
       end
