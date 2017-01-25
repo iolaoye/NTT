@@ -531,15 +531,15 @@ class ProjectsController < ApplicationController
 
   def save_control_information(xml, control)
 	  xml.control {
-		  xml.control_description_id control.control_description_id
-      xml.value control.value
+		xml.control_description_id control.control_description_id
+		xml.value control.value
 	}
   end
 
   def save_parameter_information(xml, parameter)
 	  xml.parameter {
-		  xml.value parameter.value
-		  xml.parameter_description_id parameter.parameter_description_id
+		xml.value parameter.value
+		xml.parameter_description_id parameter.parameter_description_id
 	}
   end
 
@@ -1207,7 +1207,14 @@ class ProjectsController < ApplicationController
           soil.wtmn = p.text
         when "Wtmx"
           soil.wtmx = p.text
-          soil.drainage_id = p.text
+		  case soil.wtmx 
+			when 5
+				soil.drainage_id = 2
+			when 6
+				soil.drainage_id = 3
+			else
+				soil.drainage_id = 1
+		  end #case soil.wtmx
         when "Wtbl"
           soil.wtbl= p.text
         when "Gwst"
@@ -3056,7 +3063,7 @@ class ProjectsController < ApplicationController
       node.elements.each do |p|
         case p.name
           when "Code"
-            control.control_description_id = Control.find_by_code(p.text.strip).id
+            control.control_description_id = ControlDescription.find_by_code(p.text.strip).id
             case control.control_description_id
               when 1 # get number of years of simulation from weather
                 weather = Weather.find_by_field_id(session[:field_id])
@@ -3132,6 +3139,8 @@ class ProjectsController < ApplicationController
                 parameter.parameter_description_id = p.text[4] + p.text[5]
               when 7
                 parameter.parameter_description_id = p.text[4] + p.text[5] + p.text[6]
+			  else
+                parameter.parameter_description_id = p.text
             end
           when "Value"
             parameter.value = p.text

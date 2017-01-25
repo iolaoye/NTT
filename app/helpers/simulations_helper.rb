@@ -52,7 +52,7 @@ module SimulationsHelper
   end
 
   def send_file_to_APEX(apex_string, file)
-    uri = URI('http://nn.tarleton.edu/NTTRails/NNRestService.ashx')
+    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes")
     if res.body.include?("Created") then
       return "OK"
@@ -141,8 +141,10 @@ module SimulationsHelper
     apex_run_string = "APEX001   1IWPNIWND   1   0   0"
     if county != nil then
       client = Savon.client(wsdl: URL_Weather)
-      response = client.call(:get_weather, message: {"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
-      weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+	  #Create_wp1_from_weather(loc As String, wp1Name As String, controlValue5 As Integer)
+      response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
+      #response = client.call(:get_weather, message: {"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
+      weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
       msg = send_file_to_APEX(weather_data.join("\n"), county.wind_wp1_name + ".wp1")
       #print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
       #path = File.join(WP1, county.wind_wp1_name + ".wp1")
@@ -171,7 +173,7 @@ module SimulationsHelper
       FileUtils.cp_r(path, dir_name + "/APEX.wth")
       data = read_file(File.join(OWN, weather.weather_file), true)
     else
-      path = File.join(PRISM, weather.weather_file)
+      path = File.join(PRISM1, weather.weather_file)
       #client = Savon.client(wsdl: URL_Weather)
       #response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
       #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
@@ -819,7 +821,7 @@ module SimulationsHelper
     @subarea_file.push(sLine + "\n")
     #/line 4
     if _subarea_info.wsa > 0 && i > 0 then
-      sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
+      sLine = sprintf("%8.2f", _subarea_info.wsa * 1)
     else
       sLine = sprintf("%8.2f", _subarea_info.wsa)
     end

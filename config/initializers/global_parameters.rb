@@ -33,6 +33,8 @@
 
 #folder for Prism weather, wind, and wp1 files
 	PRISM = 'E:/Weather/weatherFiles/US'
+	PRISM1 = 'E:/Weather/weatherFiles/1981-2015'
+	PRISM2 = 'E:/Weather/weatherFiles/borrar'
 	WP1 = 'E:/Weather/wp1File'
 	WIND = 'E:/Weather/wndFile'
 
