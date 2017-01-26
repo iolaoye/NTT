@@ -7,7 +7,7 @@ module SimulationsHelper
   BDMIN = 1.1
   BDMAX = 1.79
   SoilPMaxForSoilDepth = 15.24
-  SoilPDefault = 0.1
+  SoilPDefault = 3.0
   CropMixedGrass = 367
   COMA = ", "
 
@@ -666,7 +666,10 @@ module SimulationsHelper
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
-        if depth[layers] > SoilPMaxForSoilDepth
+	    if ssf[layers] == nil then
+			ssf[layers] = 0
+		end
+        if ssf[layers] > SoilPMaxForSoilDepth
           ssf[layers] = SoilPDefault
         end
         if ssf[layers] == 0 || ssf[layers] == nil
@@ -943,7 +946,11 @@ module SimulationsHelper
     sLine += sprintf("%4d", _subarea_info.ny4)
     @subarea_file.push(sLine + "\n")
     #/line 12
-    sLine = sprintf("%8.2f", _subarea_info.xtp1)
+	if @grazingb == true and _subarea_info.xtp1 == 0 then
+		sLine = sprintf("%8.2f", 0.01)
+	else
+		sLine = sprintf("%8.2f", _subarea_info.xtp1)
+	end 
     sLine += sprintf("%8.2f", _subarea_info.xtp2)
     sLine += sprintf("%8.2f", _subarea_info.xtp3)
     sLine += sprintf("%8.2f", _subarea_info.xtp4)
@@ -956,7 +963,7 @@ module SimulationsHelper
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @fert_code = 79
-    grazingb = false
+    @grazingb = false
     @opcs_file = Array.new
     irrigation_type = 0
     bmp = Bmp.where("scenario_id = " + session[:scenario_id].to_s + " and irrigation_id > 0").first
@@ -1189,24 +1196,25 @@ module SimulationsHelper
       when 7 # grazing              #Grazing - kind and number of animals
         apex_string += sprintf("%5d", 0) #
         #if number of animals were enter in modify page and it is the first grazing operation
-        if grazingb == false then
+        if @grazingb == false then
           items[3] = "DryMatterIntake"
-          #TODO create_herd file and send to APEX
-          values[3] = create_herd_file(operation.opv1, operation.opv2, operation.ApexTillName, soil_percentage)
-          animalB = operation.ApexTillCode
-          grazingb = true
-          if operation.no3 != 0 || operation.po4 != 0 || operation.org_n != 0 || operation.org_p != 0 || operation.nh3 != 0 then
-            animal_code = get_animal_code(operation.ApexTillCode)
-            change_fert_for_grazing(operation.no3, operation.po4, operation.org_n, operation.org_p, animal_code, operation.nh3)
+          #create_herd file and send to APEX
+		  current_oper = Operation.find(operation.operation_id)
+          values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
+          #animalB = operation.ApexTillCode
+          @grazingb = true
+          if current_oper.no3_n != 0 || current_oper.po4_p != 0 || current_oper.org_n != 0 || current_oper.org_p != 0 || current_oper.nh3 != 0 then
+            #animal_code = get_animal_code(operation.type_id)
+            change_fert_for_grazing(current_oper.no3_n, current_oper.po4_p, current_oper.org_n, current_oper.org_p, operation.type_id, current_oper.nh3)
           end
         end
         apex_string += sprintf("%8.4f", operation.opv1)
         items[0] = "Kind"
-        values[0] = operation.ApexTillCode
+        values[0] = operation.type_id
         items[1] = "Animals"
-        values[1] = operation.ApexOpv1
+        values[1] = operation.opv1
         items[2] = "Hours"
-        values[2] = operation.ApexOpv2
+        values[2] = operation.opv2
         apex_string += sprintf("%8.2f", 0) #opval2
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
@@ -1226,8 +1234,7 @@ module SimulationsHelper
         items[1] = "Curve Number"
         values[1] = operation.opv2
         if Field.find(session[:field_id]).field_type then
-          #todo test this. ApexTillCode is not part of operations
-          change_till_for_HE(operation.ApexTillCode, operation.opv1)
+          change_till_for_HE(operation.type_id, operation.opv1)
         end
         apex_string += sprintf("%8.2f", 0) #opval2
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
@@ -1281,12 +1288,10 @@ module SimulationsHelper
         operation_name = Activity.find(operation.activity_id).name
     end
     @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + State.find(Location.find(session[:location_id]).state_id).state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
-                       COMA + Crop.find(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
-                       values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
+                   COMA + Crop.find(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
+                   values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
     #End With
-  end
-
-  # end add_operation method
+  end  # end add_operation method
 
   def append_file(original_file, copy_file, target_file, file_type)
     path = File.join(APEX, "APEX" + session[:session_id])
@@ -1400,9 +1405,12 @@ module SimulationsHelper
     newLine = newLine + " " + sprintf("%7.4f", 0)
     newLine = newLine + " " + sprintf("%7.4f", org_n)
     newLine = newLine + " " + sprintf("%7.4f", org_p)
+	if nh3 == nil then
+		nh3 = 0.350
+	end
     newLine = newLine + " " + sprintf("%7.4f", nh3)
     newLine = newLine + "   0.350   0.000   0.000"
-    @change_fert_for_grazing_line.Add(newLine)
+    @change_fert_for_grazing_line.push(newLine)
   end
 
   def print_string_to_file(data, file)
@@ -1481,7 +1489,7 @@ module SimulationsHelper
     return sat_cond_out
   end
 
-  def run_scenario()
+  #def run_scenario()
     #path = File.join(APEX, "APEX" + session[:session_id])
     #file_name = File.join(path, "APEX001.NTT")
     #File.delete(file_name) if File.exist?(file_name)
@@ -1493,7 +1501,7 @@ module SimulationsHelper
     #Dir.chdir path
     #result = system("apex0806.exe")
     #Dir.chdir curret_directory
-  end
+  #end
 
   def read_apex_results(msg)
     #@watershed = Watershed.new
@@ -2023,4 +2031,140 @@ module SimulationsHelper
     new_hash["crop_id"] = crop.id
     return new_hash
   end
+
+  def create_herd_file(animals, hours, animal_code, soil_percentage)
+        #Dim manureProduced, bioConsumed, urineProduced As Single
+        #Dim manureId
+        #Dim animalField As Integer
+        #calculate number of animals.
+        case animal_code
+            when 43		#"Dairy"    '1
+                manureProduced = 3.9
+                bioConsumed = 9.1
+                urineProduced = 11.8
+                manureId = 43
+            #when "Dairy-dry cow"    '2
+            #    manureProduced = 5.5
+            #    bioConsumed = 9.1
+            #    urineProduced = 11.8
+            #    manureId = 43
+            #when "Dairy-calf and heifer"     '3
+            #    manureProduced = 5.5
+            #    bioConsumed = 9.1
+            #    urineProduced = 11.8
+            #    manureId = 43
+            #when "Dairy bull"     '4
+            #    manureProduced = 3.9
+            #    bioConsumed = 9.1
+            #    urineProduced = 8.2
+            #    manureId = 43
+            when 44   #"Beef"    '5
+                manureProduced = 3.9
+                bioConsumed = 9.1
+                urineProduced = 8.2
+                manureId = 44
+            #when "Beef-bull"     '6
+            #    manureProduced = 3.9
+            #    bioConsumed = 9.1
+            #    urineProduced = 8.2
+            #    manureId = 44
+            #when "Beef-feeder yearling"    '7
+            #    manureProduced = 3.9
+            #    bioConsumed = 9.1
+            #    urineProduced = 8.2
+            #    manureId = 44
+            #when "Beef-calf"    '8
+            #    manureProduced = 3.9
+            #    bioConsumed = 9.1
+            #    urineProduced = 8.2
+            #    manureId = 44
+            when 47   #"Sheep"    '9
+                manureProduced = 5
+                bioConsumed = 9.0
+                urineProduced = 6.8
+                manureId = 47
+            when 49   #"Horse"   '10
+                manureProduced = 6.8
+                bioConsumed = 9.1
+                urineProduced = 4.5
+                manureId = 49
+            #when "Llama"    '11
+            #    manureProduced = 5
+            #    bioConsumed = 9.1
+            #    urineProduced = 6.8
+            #    manureId = 52
+            #when "Alpaca"   '12
+            #    manureProduced = 5.1
+            #    bioConsumed = 9.1
+            #    urineProduced = 6.8
+            #    manureId = 52
+            #when "Buffalo"   '13
+            #    manureProduced = 3.9
+            #    bioConsumed = 9.1
+            #    urineProduced = 8.2
+            #    manureId = 52
+            #when "Emu (breeding stock)"   '14
+            #    manureProduced = 10
+            #    bioConsumed = 9.1
+            #    urineProduced = 6.8
+            #    manureId = 52
+            #when "Emu (young birds)"    '15
+            #    manureProduced = 9.8
+            #    bioConsumed = 9.0
+            #    urineProduced = 6.8
+            #    manureId = 52
+            when 46   #"Swine"    '16
+                manureProduced = 5
+                bioConsumed = 9.1
+                urineProduced = 17.7
+                manureId = 46
+            when 52   #"Broiler"    '17
+                manureProduced = 10.4
+                bioConsumed = 10
+                urineProduced = 6.8
+                manureId = 52
+            else
+                manureProduced = 12
+                bioConsumed = 9.08
+                urineProduced = 0
+                manureId = 56
+        end   # end case
+
+        if animals < 1 then
+            animals = 1
+        end 
+        #If _animals.Count = 0 Then LoadAnimalUnits()
+        #For Each animal In _animals
+        #    If animal.Number.Split("|")(0) = manureId Then
+        #        conversionUnit = animal.ConversionUnit
+        #    End If
+        #Next
+
+		conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
+        @last_herd += 1
+
+        animalField = animals * soil_percentage / 100
+        herdFile = sprintf("%4d", @last_herd) #For different owners
+        #comentarized because there is not field divided anymore
+        #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
+        #    herdFile &= Format(CInt((animalField(0) / 2) * conversionUnit), "#####0.0").PadLeft(8)
+        #Else
+        #    herdFile &= Format(CInt(animalField(i) * conversionUnit), "#####0.0").PadLeft(8)
+        #End If
+        herdFile += sprintf("%8.1f", (animalField * conversion_unit).round(0))
+        herdFile += sprintf("%8.1f", animal_code)
+        herdFile += sprintf("%8.2f",(24 - hours) / 24)
+        herdFile += sprintf("%8.2f",bioConsumed)
+        herdFile += sprintf("%8.2f",manureProduced)
+        herdFile += sprintf("%8.2f",urineProduced)
+        @herd_list.push(herdFile + "\n")
+        #duplicate in case it is just one soil because the area is divided in two equal fields.
+        #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
+        #    herdList.Add(herdFile)
+        #End If
+
+        herdFile += ""
+		msg = send_file_to_APEX(@herd_list, "HERD.dat")
+        return bioConsumed
+    end #end create_herd_file
 end

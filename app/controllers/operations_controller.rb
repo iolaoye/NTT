@@ -20,7 +20,6 @@ class OperationsController < ApplicationController
 # GET /operations.json
   def index
     @operations = Operation.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @operations }
