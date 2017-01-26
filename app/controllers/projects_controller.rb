@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  include LocationsHelper
 
   layout 'welcome'
   
@@ -225,7 +226,9 @@ class ProjectsController < ApplicationController
         end
         break if (msg != "OK" && msg != true)
       end
-      if (msg == "OK" || msg == true)
+      load_parameters(ApexParameter.where(:project_id => session[:project_id]).count)
+
+	  if (msg == "OK" || msg == true)
         # summarizes results for totals and soils.
         #summarize_total()
         @projects = Project.where(:user_id => session[:user_id])
@@ -2078,9 +2081,11 @@ class ProjectsController < ApplicationController
                 operation.type_id = 1
                 operation.subtype_id = 25
               else
-                operation.type_id =2
+                operation.type_id = 2
                 operation.subtype_id = 55
               end
+			when 7  # Grazing
+				operation.type_id = Fertilizer.find_by_name(p.text.upcase).code
           end # end case p.text
       end # case
     end # end each

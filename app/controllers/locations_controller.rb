@@ -1,3 +1,4 @@
+include LocationsHelper
 include ScenariosHelper
 class LocationsController < ApplicationController
 
@@ -167,7 +168,7 @@ class LocationsController < ApplicationController
           @location.save
           # step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
           load_controls()
-          load_parameters()
+          load_parameters(0)
         end # end if of session_id check
         format.html # Runs receive_from_mapping_site.html.erb view in location folder
       end # end if error
@@ -383,22 +384,5 @@ class LocationsController < ApplicationController
       end # end control all
     end # end if
   end
-
-  def load_parameters()
-    apex_parameters = ApexParameter.where(:project_id => session[:project_id])
-	if apex_parameters == [] then
-      parameters = Parameter.where(:state_id => Location.find(session[:location_id]).state_id)
-      if parameters.blank? || parameters == nil then
-		parameters = Parameter.where(:state_id => 99)
-	  end
-      parameters.each do |c|
-		apex_parameter = ApexParameter.new
-		apex_parameter.parameter_description_id = c.id
-		apex_parameter.value = c.default_value
-		apex_parameter.project_id = session[:project_id]
-		apex_parameter.save
-      end # end Parameter.all
-	end # end if apex_controls == []
-  end # end def
 
 end

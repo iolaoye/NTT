@@ -172,6 +172,8 @@ class ScenariosController < ApplicationController
 
 ################################  run_scenario - run simulation called from show or index  #################################
   def run_scenario()
+    @last_herd = 0
+	@herd_list = Array.new
 	msg = "OK"
     if @scenarios == nil then
       session[:scenario_id] = params[:id]
