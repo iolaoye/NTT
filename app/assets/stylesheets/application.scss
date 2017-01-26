@@ -22,6 +22,13 @@
   width: 70px;
 }
 
+
+.panel-default { border-color: black !important; }
+
+.table-bordered td, .table-bordered th{
+    border-color: black !important;
+}
+
 .numbers {
   text-align: right;
   width: 100px;
@@ -81,26 +88,6 @@
                                                                                                      
 
 /*Table styles  */
-.gvHeaderStyle {
-  background: #6abc6e;
-  padding: 30px;
-  height: 40px;
-  margin-top: 15px !important;
-  text-align: left;
-  vertical-align: middle;
-  font-weight: 100 !important;
-  font-size: 16px;
-  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-  font-family: Roboto, helvetica, arial, sans-serif;
-  text-align: center !important;
-  color: white;
-  /*
-  color:White;
-  background-color:Gray;
-  text-align: center;
-  border-bottom: 2px solid #d1d1d1;
-  */
-}
 
 table {
   margin-bottom: 15px;
