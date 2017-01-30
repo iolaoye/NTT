@@ -72,33 +72,20 @@
             </div>
 
             <div class="nav navbar-nav navbar-left">
-<ul class="footerleft">
-                   <li>
-                        <a href="#" data-toggle="modal" data-target="#instructions">Instructions</a>
-                    </li>
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#contact">Contact Us</a>
-                    </li>
-                    <li>
-                        <%= link_to t("footer.about_ntt"), about_path %>
-                    </li>
-                     <li>
-                       <%= link_to t("footer.help"), help_path("index") %>
-                    </li>
-                      <li>
-                         <div class="language">Language
-              <span class="tooltiptext">
-                <%= link_to t("languages.english"), :locale=>'en'%><br>
-                    <%= link_to t("languages.spanish"), :locale=>'es'%>
-                  </span>
+              <ul class="footerleft">
+                   <li><a href="#" data-toggle="modal" data-target="#instructions"><%= t('footer.instructions')%></a></li>
+                   <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
+                   <li><%= link_to t("footer.about_ntt"), about_path %></li>
+                   <li><%= link_to t("footer.help"), help_path("index") %></li>
+                   <li><div class="language">Language
+                      <span class="tooltiptext">
+                        <%= link_to t("languages.english"), :locale=>'en'%><br>
+                        <%= link_to t("languages.spanish"), :locale=>'es'%>
+                      </span>
+                  </li>
+              </ul>
             </div>
-              </li>
-                </ul>
-            </div>
-
-
         </div>
-
     </nav>
 </footer>
 
@@ -106,25 +93,19 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
-
-After scenarios have been simulated the results for that scenario is ready to be seen. Here you can compare scenarios, or just show one scenario. The following comparisons are possible.<br><br>
-<li>1st Scenario vs 2nd Scenario</li>
-<li>1st Scenario vs 2nd Scenario and 1st Scenario vs 3nd Scenario</li><br>
-Any scenario can be selected in any of the three drop downs, and scenarios can be repeated if desired.<br><br>
-
-Once at least one scenarios is chosen, a summary can be run by clicking Summary, and then if desired, a pdf can be downloaded by clicking Download PDF.<br><br>
-
-You also have the following options additional to just a Summary. These require the same input with an additional field
-<br><br>
-1. Summary by Soil
-<ul><li>Addition field: Soil</li></ul>
-2. Annual Charts
-<ul><li>Addition field: Chart type</li></ul>
-3. Monthly Charts
-<ul><li>Addition field: Chart type</li></ul>
-Note: A PDF can only be downloaded once a summary has been run, in the Summary tab. If any of the scenarios change, you will have to run the summary again before downloading the PDF
-
-
+        <table>
+        <% case controller_name %>
+          <% when "projects" %>
+              <tr><td><%= t('projpage_html')%></td></tr>
+          </table>
+        <% when "locations" %>
+              <tr><td><%= t('locpage_html')%></td></tr>
+        <% when "weathers" %>
+              <tr><td><%= t('weathpage_html')%></td></tr>
+        <% when "fields" %>
+              <tr><td><%= t('fieldpage_html')%></td></tr>
+        <% end %>  
+        </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

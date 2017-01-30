@@ -1,0 +1,195 @@
+<%= form_for(@aplcat_parameter) do |f| %>
+  <% if @aplcat_parameter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@aplcat_parameter.errors.count, "error") %> prohibited this aplcat_parameter from being saved:</h2>
+
+      <ul>
+      <% @aplcat_parameter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label t('aplcat.noc') %>
+    <%= f.number_field :noc, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.nomb') %>
+    <%= f.number_field :nomb, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.norh') %>
+    <%= f.number_field :norh, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.abwc') %>
+    <%= f.text_field :abwc, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.abwmb') %>
+    <%= f.text_field :abwmb, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.abwh') %>
+    <%= f.text_field :abwh, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.prh') %>
+    <%= f.text_field :prh, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.prb') %>
+    <%= f.text_field :prb, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.adwgbc') %>
+    <%= f.text_field :adwgbc, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.adwgbh') %>
+    <%= f.text_field :adwgbh, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.mrga') %>
+    <%= f.text_field :mrga, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.jdcc') %>
+    <%= f.text_field :jdcc, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.gpc') %>
+    <%= f.text_field :gpc, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.tpwg') %>
+    <%= f.text_field :tpwg, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.csefa') %>
+    <%= f.text_field :csefa, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.srop') %>
+    <%= f.text_field :srop, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.bwoc') %>
+    <%= f.text_field :bwoc, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.jdbs') %>
+    <%= f.text_field :jdbs, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.dmd') %>
+    <%= f.text_field :dmd, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.dmi') %>
+    <%= f.text_field :dmi, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.napanr') %>
+    <%= f.text_field :napanr, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.napaip') %>
+    <%= f.text_field :napaip, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.mpsm') %>
+    <%= f.text_field :mpsm, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.splm') %>
+    <%= f.text_field :splm, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.pmme') %>
+    <%= f.text_field :pmme, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.rhaeba') %>
+    <%= f.text_field :rhaeba, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.toaboba') %>
+    <%= f.text_field :toaboba, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.vsim') %>
+    <%= f.text_field :vsim, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.foue') %>
+    <%= f.text_field :foue, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.ash') %>
+    <%= f.text_field :ash, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.mmppfm') %>
+    <%= f.text_field :mmppfm, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.cfmms') %>
+    <%= f.text_field :cfmms, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.fnemimms') %>
+    <%= f.text_field :fnemimms, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.effn2ofmms') %>
+    <%= f.text_field :effn2ofmms, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.dwawfga') %>
+    <%= f.text_field :dwawfga, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.dwawflc') %>
+    <%= f.text_field :dwawflc, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.dwawfmb') %>
+    <%= f.text_field :dwawfmb, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.pgu') %>
+    <%= f.text_field :pgu, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.ada') %>
+    <%= f.text_field :ada, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.ape') %>
+    <%= f.text_field :ape, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.platc') %>
+    <%= f.text_field :platc, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.pctbb') %>
+    <%= f.text_field :pctbb, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.ptdife') %>
+    <%= f.text_field :ptdife, :style => 'text-align: Right' %>
+  </div>
+  <div class="field">
+    <%= f.label t('aplcat.tnggbc') %>
+    <%= f.text_field :tnggbc, :style => 'text-align: Right' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+    <%= link_to 'Back', field_scenarios_field_path(session[:field_id])  %>
+  </div>
+<% end %>

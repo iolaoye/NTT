@@ -59,6 +59,7 @@ class ScenariosController < ApplicationController
     end
     if msg.eql?("OK") then
       flash[:notice] = @scenarios.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
+      @scenarios = Scenario.where(:field_id => session[:field_id])
       render "list", notice: "Simulation process end succesfully"
     else
       render "list", error: msg

@@ -3,9 +3,9 @@
 <% else %>
   <li class="<%= controller_name == "states" %>"><%= link_to t('menu.state'), states_path() %></li>
 <% end %>
-
-<%#=scenario_submenu %>
-<%#=field_submenu %>
+<%#= controller_name %>
+<%#= scenario_submenu %>
+<%#= field_submenu %>
 <% if field_submenu %>
   <li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || (controller_name == "results") || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>"><%= link_to t('menu.fields') + "   (" + Field.find(session[:field_id]).field_name + ")", list_field_path(session[:location_id]) %></li>
   <ul class="nav nav-pills nav-stacked nav-sidebar-sub">
@@ -22,7 +22,6 @@
       <% end %>
       <%= link_to t('menu.soils'), field_soils_field_path(session[:field_id]) %>
     </li>
-
     <li class="<%= controller_name == "scenarios" ? "active" : "" %>">
       <% if controller_name == "scenarios" %>
         <div class="header-icon">
@@ -30,7 +29,8 @@
         </div>
       <% end %>
 
-      <% if scenario_submenu  %>
+      <% if scenario_submenu %>
+	    <% session[:depth] = t('menu.scenarios') + "   (" + @scenario_name + ")" %>
 		<%= link_to t('menu.scenarios') + "   (" + @scenario_name + ")", field_scenarios_field_path(session[:field_id]) %></li>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <!-- <div class="nav-sub-header">
@@ -52,6 +52,14 @@
               </div>
             <% end %>
             <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %>
+          </li>
+          <li class="<%= controller_name == "aplcats" ? "active" : "" %>">
+            <% if controller_name == "aplcats" %>
+              <div class="sub-header-icon">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </div>
+            <% end %>
+            <%= link_to t('menu.APLCATS'), edit_aplcat_parameter_path(session[:scenario_id]) %>
           </li>
         </ul>
 	  <% else %>

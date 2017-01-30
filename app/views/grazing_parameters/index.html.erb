@@ -1,0 +1,39 @@
+<h1>Listing grazing_parameters</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Starting julian day</th>
+    <th>Ending julian day</th>
+    <th>Dmi code</th>
+    <th>Dmi cows</th>
+    <th>Dmi bulls</th>
+    <th>Dmi heifers</th>
+    <th>Dmi calves</th>
+    <th>Green water footprint</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @grazing_parameters.each do |grazing_parameter| %>
+  <tr>
+    <td><%= grazing_parameter.code %></td>
+    <td><%= grazing_parameter.starting_julian_day %></td>
+    <td><%= grazing_parameter.ending_julian_day %></td>
+    <td><%= grazing_parameter.dmi_code %></td>
+    <td><%= grazing_parameter.dmi_cows %></td>
+    <td><%= grazing_parameter.dmi_bulls %></td>
+    <td><%= grazing_parameter.dmi_heifers %></td>
+    <td><%= grazing_parameter.dmi_calves %></td>
+    <td><%= grazing_parameter.green_water_footprint %></td>
+    <td><%= link_to 'Show', grazing_parameter %></td>
+    <td><%= link_to 'Edit', edit_grazing_parameter_path(grazing_parameter) %></td>
+    <td><%= link_to 'Destroy', grazing_parameter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Grazing parameter', new_grazing_parameter_path %>

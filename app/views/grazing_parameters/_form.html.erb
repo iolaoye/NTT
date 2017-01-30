@@ -1,0 +1,53 @@
+<%= form_for(@grazing_parameter) do |f| %>
+  <% if @grazing_parameter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@grazing_parameter.errors.count, "error") %> prohibited this grazing_parameter from being saved:</h2>
+
+      <ul>
+      <% @grazing_parameter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code %><br />
+    <%= f.number_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :starting_julian_day %><br />
+    <%= f.number_field :starting_julian_day %>
+  </div>
+  <div class="field">
+    <%= f.label :ending_julian_day %><br />
+    <%= f.number_field :ending_julian_day %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_code %><br />
+    <%= f.number_field :dmi_code %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_cows %><br />
+    <%= f.text_field :dmi_cows %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_bulls %><br />
+    <%= f.text_field :dmi_bulls %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_heifers %><br />
+    <%= f.text_field :dmi_heifers %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_calves %><br />
+    <%= f.text_field :dmi_calves %>
+  </div>
+  <div class="field">
+    <%= f.label :green_water_footprint %><br />
+    <%= f.text_field :green_water_footprint %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

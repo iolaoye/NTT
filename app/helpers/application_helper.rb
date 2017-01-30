@@ -32,6 +32,8 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(:controller => 'apex_parameters', :action => 'index'))
 			true
+		elsif request.url.include?(url_for("/scenarios"))
+			true
 		elsif request.url.include?(url_for("/results"))
 			true
 		elsif request.url.include?(url_for("/layers"))
@@ -44,6 +46,8 @@ module ApplicationHelper
 			true
 		elsif request.url.include?(url_for("/sites"))
 			true
+		elsif request.url.include?(url_for("/aplcat_parameters"))
+			true
 		else
 			false
 		end
@@ -55,6 +59,9 @@ module ApplicationHelper
 		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
 			true
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
+			true
+		elsif current_page?(url_for(:controller => 'aplcat_parameters', :action => 'edit'))
+		    @scenario_name = Scenario.find(session[:scenario_id]).name
 			true
 		else
 			false
