@@ -1,0 +1,39 @@
+<h1>Listing aplcat_parameters</h1>
+
+<table>
+  <tr>
+    <th>Noc</th>
+    <th>Nomb</th>
+    <th>Norh</th>
+    <th>Abwc</th>
+    <th>Abwmb</th>
+    <th>Abwh</th>
+    <th>Prh</th>
+    <th>Prb</th>
+    <th>Adwgbc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @aplcat_parameters.each do |aplcat_parameter| %>
+  <tr>
+    <td><%= aplcat_parameter.noc %></td>
+    <td><%= aplcat_parameter.nomb %></td>
+    <td><%= aplcat_parameter.norh %></td>
+    <td><%= aplcat_parameter.abwc %></td>
+    <td><%= aplcat_parameter.abwmb %></td>
+    <td><%= aplcat_parameter.abwh %></td>
+    <td><%= aplcat_parameter.prh %></td>
+    <td><%= aplcat_parameter.prb %></td>
+    <td><%= aplcat_parameter.adwgbc %></td>
+    <td><%= link_to 'Show', aplcat_parameter %></td>
+    <td><%= link_to 'Edit', edit_aplcat_parameter_path(aplcat_parameter) %></td>
+    <td><%= link_to 'Destroy', aplcat_parameter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Aplcat parameter', new_aplcat_parameter_path %>

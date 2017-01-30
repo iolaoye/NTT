@@ -57,10 +57,10 @@
 					<% case operation.activity_id %>
 					  <% when 1  # planting %>
 						<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
+					  <% when 2  # fertilizer %>
+						<td class="gvCellStyleText"><%= FertilizerType.find(operation.type_id).name %></td>
 					  <% when 3  # tillage %>
 						<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
-					  <% when 2  # fertilizer %>
-						<td class="gvCellStyleText"><%= Fertilizer.find(operation.subtype_id).name %></td>
 					  <% when 6  # irrigation %>
 						<td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).name %></td>
 					  <% when 7  # grazing%>

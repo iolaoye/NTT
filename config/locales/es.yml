@@ -853,6 +853,51 @@
     difference: Diferencia
     reduction: Reducción
     total_area: Área Total
+  aplcat:
+      noc: Number of Cows
+      nomb: Number of Replacement bulls
+      norh: Number of Replacement Heifers
+      abwc: Average Body Weigth of Cows
+      abwmb: Average Body Weigth of Mature Bulls
+      abwh: Average Body Weigth of Heifers
+      prh: Protion of Replacement Heifers
+      prb: Protion of Replacement Bulls
+      adwgbc: Average daily weight gain (lb) by calves/growing cattle
+      adwgbh: Average daily weight gain (lb) by heifers
+      mrga: Mortailty rate of growing animals until harvest
+      jdcc: Julian day of cows conceiving
+      gpc: Gestation period of cows
+      tpwg: Total pregnancy weight gain (lb)
+      csefa: Calves start eating forage after (days)
+      srop: Success rate of pregnancy (%)
+      bwoc: Birth weight of calves (lb)
+      jdbs: Julian day of buying/selling
+      dmd: Dry Matter Digestibility (DMD) %
+      dmi: DMI (% of body weight)
+      napanr:
+      napaip:
+      mpsm: Moisture present in solid manure (%) 
+      splm: Solids present in liquid manure (urine) (%)
+      pmme: Proportion of manure (solid+liquid) moisture evaporated (%)
+      rhaeba: Relative humidity of air exhaled by animals (%)
+      toaboba: Temperature of air breathed out by animals (deg F)
+      vsim: Volatile solids in manure [kg of dry organic matter]
+      foue: Fraction of urinary energy expressed as fraction of GE
+      ash: Ash content in manure (fraction of dry matter intake)
+      mmppfm: Maximum methane production potential for the manure (Bo)
+      cfmms: Conversion factor for manure management system
+      fnemimms: Fraction of nitrogen excretion managed in manure management system
+      effn2ofmms: Emission factor for direct N2O emissions from manure management system
+      dwawfga: Drinking water adjustment factor for weight:Growing animals
+      dwawflc: Drinking water adjustment factor for weight:Lactating cows
+      dwawfmb: Drinking water adjustment factor for weight:Mature bulls
+      pgu: Proportion of groundwater used (%) in animal production
+      ada: Average depth of aquifer (feet)
+      ape: Average pumping efficiency (%)
+      platc: proportion of live animal to carcass (%)
+      pctbb: proportion of carcass to boneless beef (%)
+      ptdife: Proportion (for beef by-products) to be discounted in footprint estimation
+      tnggbc: Total number of grasses grazed by cattle
   instructions:
     projects: Para seleccionar un proyecto, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
