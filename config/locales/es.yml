@@ -874,8 +874,8 @@
       jdbs: Julian day of buying/selling
       dmd: Dry Matter Digestibility (DMD) %
       dmi: DMI (% of body weight)
-      napanr:
-      napaip:
+      napanr: Stocking rate in native range. number of animals/acre
+      napaip: Stocking rate in introduced pasture. number of animals/acre
       mpsm: Moisture present in solid manure (%) 
       splm: Solids present in liquid manure (urine) (%)
       pmme: Proportion of manure (solid+liquid) moisture evaporated (%)

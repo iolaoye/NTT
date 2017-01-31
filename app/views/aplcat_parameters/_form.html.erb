@@ -11,182 +11,240 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label t('aplcat.noc') %>
-    <%= f.number_field :noc, :style => 'text-align: Right' %>
+  <% if @type == 1 %>
+	  <div>
+  <%else%>
+	  <div style='display:none'>
+  <%end%>
+  	<%= field_set_tag t('aplcat.animal_parameters'), class:'fieldset' do %>
+	  <div class="field">
+		<%= f.label t('aplcat.noc') %>
+		<%= f.number_field :noc, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.nomb') %>
+		<%= f.number_field :nomb, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.norh') %>
+		<%= f.number_field :norh, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.abwc') %>
+		<%= f.text_field :abwc, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.abwmb') %>
+		<%= f.text_field :abwmb, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.abwh') %>
+		<%= f.text_field :abwh, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.prh') %>
+		<%= f.text_field :prh, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.prb') %>
+		<%= f.text_field :prb, class: 'fieldNumbers' %>
+	  </div>
+  <% end %>
   </div>
-  <div class="field">
-    <%= f.label t('aplcat.nomb') %>
-    <%= f.number_field :nomb, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.norh') %>
-    <%= f.number_field :norh, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.abwc') %>
-    <%= f.text_field :abwc, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.abwmb') %>
-    <%= f.text_field :abwmb, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.abwh') %>
-    <%= f.text_field :abwh, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.prh') %>
-    <%= f.text_field :prh, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.prb') %>
-    <%= f.text_field :prb, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.adwgbc') %>
-    <%= f.text_field :adwgbc, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.adwgbh') %>
-    <%= f.text_field :adwgbh, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.mrga') %>
-    <%= f.text_field :mrga, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.jdcc') %>
-    <%= f.text_field :jdcc, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.gpc') %>
-    <%= f.text_field :gpc, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.tpwg') %>
-    <%= f.text_field :tpwg, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.csefa') %>
-    <%= f.text_field :csefa, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.srop') %>
-    <%= f.text_field :srop, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.bwoc') %>
-    <%= f.text_field :bwoc, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.jdbs') %>
-    <%= f.text_field :jdbs, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.dmd') %>
-    <%= f.text_field :dmd, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.dmi') %>
-    <%= f.text_field :dmi, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.napanr') %>
-    <%= f.text_field :napanr, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.napaip') %>
-    <%= f.text_field :napaip, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.mpsm') %>
-    <%= f.text_field :mpsm, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.splm') %>
-    <%= f.text_field :splm, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.pmme') %>
-    <%= f.text_field :pmme, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.rhaeba') %>
-    <%= f.text_field :rhaeba, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.toaboba') %>
-    <%= f.text_field :toaboba, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.vsim') %>
-    <%= f.text_field :vsim, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.foue') %>
-    <%= f.text_field :foue, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.ash') %>
-    <%= f.text_field :ash, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.mmppfm') %>
-    <%= f.text_field :mmppfm, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.cfmms') %>
-    <%= f.text_field :cfmms, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.fnemimms') %>
-    <%= f.text_field :fnemimms, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.effn2ofmms') %>
-    <%= f.text_field :effn2ofmms, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.dwawfga') %>
-    <%= f.text_field :dwawfga, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.dwawflc') %>
-    <%= f.text_field :dwawflc, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.dwawfmb') %>
-    <%= f.text_field :dwawfmb, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.pgu') %>
-    <%= f.text_field :pgu, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.ada') %>
-    <%= f.text_field :ada, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.ape') %>
-    <%= f.text_field :ape, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.platc') %>
-    <%= f.text_field :platc, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.pctbb') %>
-    <%= f.text_field :pctbb, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.ptdife') %>
-    <%= f.text_field :ptdife, :style => 'text-align: Right' %>
-  </div>
-  <div class="field">
-    <%= f.label t('aplcat.tnggbc') %>
-    <%= f.text_field :tnggbc, :style => 'text-align: Right' %>
-  </div>
+
+  <% if @type == 2 %>
+	  <div>
+  <%else%>
+	  <div style='display:none'>
+  <%end%>
+	<%= field_set_tag t('aplcat.animal_growth_parameters') , class:'fieldset' do %>
+	  <div class="field">
+		<%= f.label t('aplcat.adwgbc') %>
+		<%= f.text_field :adwgbc, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.adwgbh') %>
+		<%= f.text_field :adwgbh, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.mrga') %>
+		<%= f.text_field :mrga, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.jdcc') %>
+		<%= f.text_field :jdcc, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.gpc') %>
+		<%= f.text_field :gpc, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.tpwg') %>
+		<%= f.text_field :tpwg, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.csefa') %>
+		<%= f.text_field :csefa, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.srop') %>
+		<%= f.text_field :srop, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.bwoc') %>
+		<%= f.text_field :bwoc, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.jdbs') %>
+		<%= f.text_field :jdbs, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.dmd') %>
+		<%= f.text_field :dmd, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.dmi') %>
+		<%= f.text_field :dmi, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.napanr') %>
+		<%= f.text_field :napanr, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.napaip') %>
+		<%= f.text_field :napaip, class: 'fieldNumbers' %>
+	  </div>
+	<% end %>
+	</div>
+
+  <% if @type == 3 %>
+	  <div>
+  <%else%>
+	  <div style='display:none'>
+  <%end%>
+    <%= field_set_tag t('aplcat.animal_manure_parameters') , class:'fieldset' do %>
+	  <div class="field">
+		<%= f.label t('aplcat.mpsm') %>
+		<%= f.text_field :mpsm, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.splm') %>
+		<%= f.text_field :splm, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.pmme') %>
+		<%= f.text_field :pmme, class: 'fieldNumbers' %>
+	  </div>
+	<% end %>
+	</div>
+
+  <% if @type == 4 %>
+	  <div>
+  <%else%>
+	  <div style='display:none'>
+  <%end%>
+    <%= field_set_tag t('aplcat.environmental_parameters') , class:'fieldset' do %>
+	  <div class="field">
+		<%= f.label t('aplcat.rhaeba') %>
+		<%= f.text_field :rhaeba, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.toaboba') %>
+		<%= f.text_field :toaboba, class: 'fieldNumbers' %>
+	  </div>
+	<% end %>
+	</div>
+
+  <% if @type == 5 %>
+	  <div>
+  <%else%>
+	  <div style='display:none'>
+  <%end%>
+    <%= field_set_tag t('aplcat.greenhouse_parameters') , class:'fieldset' do %>
+	  <div class="field">
+		<%= f.label t('aplcat.vsim') %>
+		<%= f.text_field :vsim, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.foue') %>
+		<%= f.text_field :foue, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.ash') %>
+		<%= f.text_field :ash, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.mmppfm') %>
+		<%= f.text_field :mmppfm, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.cfmms') %>
+		<%= f.text_field :cfmms, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.fnemimms') %>
+		<%= f.text_field :fnemimms, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.effn2ofmms') %>
+		<%= f.text_field :effn2ofmms, class: 'fieldNumbers' %>
+	  </div>
+	<% end %>
+	</div>
+
+  <% if @type == 6 %>
+	  <div>
+  <%else%>
+	  <div style='display:none'>
+  <%end%>
+    <%= field_set_tag t('aplcat.water_use_pumping_parameters'), class:'fieldset' do %>
+	  <div class="field">
+		<%= f.label t('aplcat.dwawfga') %>
+		<%= f.text_field :dwawfga, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.dwawflc') %>
+		<%= f.text_field :dwawflc, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.dwawfmb') %>
+		<%= f.text_field :dwawfmb, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.pgu') %>
+		<%= f.text_field :pgu, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.ada') %>
+		<%= f.text_field :ada, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.ape') %>
+		<%= f.text_field :ape, class: 'fieldNumbers' %>
+	  </div>
+	<% end %>
+	</div>
+
+  <% if @type == 7 %>
+	  <div>
+  <%else%>
+	  <div style='display:none'>
+  <%end%>
+    <%= field_set_tag t('aplcat.other_parameters'), class:'fieldset' do %>
+	  <div class="field">
+		<%= f.label t('aplcat.platc') %>
+		<%= f.text_field :platc, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.pctbb') %>
+		<%= f.text_field :pctbb, class: 'fieldNumbers' %>
+	  </div>
+	  <div class="field">
+		<%= f.label t('aplcat.ptdife') %>
+		<%= f.text_field :ptdife, class: 'fieldNumbers' %>
+	  </div>
+	<% end %>
+	</div>
 
   <div class="actions">
     <%= f.submit %>
