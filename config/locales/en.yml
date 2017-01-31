@@ -879,8 +879,8 @@ en:
       jdbs: Julian day of buying/selling
       dmd: Dry Matter Digestibility (DMD) %
       dmi: DMI (% of body weight)
-      napanr:
-      napaip:
+      napanr: Stocking rate in native range. number of animals/acre
+      napaip: Stocking rate in introduced pasture. number of animals/acre
       mpsm: Moisture present in solid manure (%) 
       splm: Solids present in liquid manure (urine) (%)
       pmme: Proportion of manure (solid+liquid) moisture evaporated (%)
@@ -903,6 +903,14 @@ en:
       pctbb: proportion of carcass to boneless beef (%)
       ptdife: Proportion (for beef by-products) to be discounted in footprint estimation
       tnggbc: Total number of grasses grazed by cattle
+      animal_paramters: ANIMAL PARAMETERS
+      animal_manure_parameters: Animal Manure Parameters
+      animal_growth_parameters: Animal Growth and Nutrition Parameters
+      environmental_parameters: Environmental Parameters
+      greenhouse_parameters: Greenhouse Parameters
+      water_use_pumping_parameters: Water Use and Pumping Parameters
+      other_parameters: Other Parameters
+      animal_feed_parameters: Animal Feed Parameters
   instructions:
     projects: To select a project, click on the project name
     fields: To select a field, click on the field name

@@ -2,7 +2,7 @@ class AplcatParameter < ActiveRecord::Base
   attr_accessible :abwc, :abwh, :abwmb, :adwgbc, :noc, :nomb, :norh, :prh, :adwgbh, :mrga, :jdcc, :gpc,
 				 :tpwg, :csefa , :srop, :bwoc, :jdbs, :dmd, :dmi, :napanr, :napaip, :mpsm, :splm, :pmme, :rhaeba, :toaboba,
 				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape, 
-				 :platc, :pctbb, :ptdife, :tnggbc
+				 :platc, :pctbb, :ptdife, :tnggbc, :prb
 
   after_initialize do
 	  if self.new_record?
@@ -26,8 +26,8 @@ class AplcatParameter < ActiveRecord::Base
 		self.jdbs = 274 
 		self.dmd = 80 
 		self.dmi = 2.3
-		self.napanr = 0
-		self.napaip = 0
+		self.napanr = 0.61
+		self.napaip = 1.235
 		self.mpsm = 88.0
 		self.splm = 5.0
 		self.pmme = 40.0

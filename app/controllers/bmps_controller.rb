@@ -472,7 +472,7 @@ class BmpsController < ApplicationController
       if subarea != nil then
         case type
           when "create", "update"
-            subarea.idr = params[:bmp_td][:depth] * FT_TO_MM
+            subarea.idr = params[:bmp_td][:depth].to_f * FT_TO_MM
 			@bmp.depth = params[:bmp_td][:depth]
 			subarea.drt = 2
           when "delete"
@@ -532,9 +532,13 @@ class BmpsController < ApplicationController
 
 ### ID: 8
   def wetlands(type)
+	@bmp.area = params[:bmp_wl][:area]
     case type
       when "create"
-        return create_new_subarea("WL", 8)
+		if @bmp.save then
+			return create_new_subarea("WL", 8)
+		else 
+		end
       when "update"
         update_existing_subarea("WL", 8)
       when "delete"

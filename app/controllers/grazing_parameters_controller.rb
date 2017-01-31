@@ -2,8 +2,7 @@ class GrazingParametersController < ApplicationController
   # GET /grazing_parameters
   # GET /grazing_parameters.json
   def index
-    @grazing_parameters = GrazingParameter.all
-
+    @grazing_parameters = GrazingParameter.where(:scenario_id => session[:scenario_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @grazing_parameters }
