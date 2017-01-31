@@ -1,39 +1,51 @@
-<h1>Listing grazing_parameters</h1>
+<div class="page-header"><h1><%= t("menu.animal_feed_parameters") %></h1></div>
 
-<table>
-  <tr>
-    <th>Code</th>
-    <th>Starting julian day</th>
-    <th>Ending julian day</th>
-    <th>Dmi code</th>
-    <th>Dmi cows</th>
-    <th>Dmi bulls</th>
-    <th>Dmi heifers</th>
-    <th>Dmi calves</th>
-    <th>Green water footprint</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr class='gvHeaderStyle'>
+          <th class="gvCellStyleTitle">Type of Grass</th>
+          <th class="gvCellStyleTitle">Starting julian day</th>
+          <th class="gvCellStyleTitle">Ending julian day</th>
+          <th class="gvCellStyleTitle">Dmi code</th>
+          <th class="gvCellStyleTitle">Dmi cows</th>
+          <th class="gvCellStyleTitle">Dmi bulls</th>
+          <th class="gvCellStyleTitle">Dmi heifers</th>
+          <th class="gvCellStyleTitle">Dmi calves</th>
+          <th class="gvCellStyleTitle">Green water footprint</th>
+          <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+        </tr>
+      </thead>
 
-<% @grazing_parameters.each do |grazing_parameter| %>
-  <tr>
-    <td><%= grazing_parameter.code %></td>
-    <td><%= grazing_parameter.starting_julian_day %></td>
-    <td><%= grazing_parameter.ending_julian_day %></td>
-    <td><%= grazing_parameter.dmi_code %></td>
-    <td><%= grazing_parameter.dmi_cows %></td>
-    <td><%= grazing_parameter.dmi_bulls %></td>
-    <td><%= grazing_parameter.dmi_heifers %></td>
-    <td><%= grazing_parameter.dmi_calves %></td>
-    <td><%= grazing_parameter.green_water_footprint %></td>
-    <td><%= link_to 'Show', grazing_parameter %></td>
-    <td><%= link_to 'Edit', edit_grazing_parameter_path(grazing_parameter) %></td>
-    <td><%= link_to 'Destroy', grazing_parameter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Grazing parameter', new_grazing_parameter_path %>
+      <tbody>
+        <% i=1 %>
+        <% @grazing_parameters.each do |grazing_parameter| %>
+				<% if (i % 2 == 0) %>
+					<tr class="gvRowStyleEven">
+				<% else %>
+					<tr class="gvRowStyleOdd">
+				<% end %>
+        <td><%= grazing_parameter.code %></td>
+        <td><%= grazing_parameter.starting_julian_day %></td>
+        <td><%= grazing_parameter.ending_julian_day %></td>
+        <td><%= grazing_parameter.dmi_code %></td>
+        <td><%= grazing_parameter.dmi_cows %></td>
+        <td><%= grazing_parameter.dmi_bulls %></td>
+        <td><%= grazing_parameter.dmi_heifers %></td>
+        <td><%= grazing_parameter.dmi_calves %></td>
+        <td><%= grazing_parameter.green_water_footprint %></td>
+        <td>
+          <%= link_to image_tag("view.png"), grazing_parameter %>
+            <%= link_to image_tag("edit.png"), edit_grazing_parameter_path(grazing_parameter) %>
+            <%= link_to image_tag("delete.png"), grazing_parameter, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+      </tr>
+      <% i = i + 1 %>
+      <% end %>
+	  </tbody>
+    </table>
+  </div>
+  </div>
+      
+<%= link_to 'New Grazing parameter', new_grazing_parameter_path, :class => 'btn btn-success' %>

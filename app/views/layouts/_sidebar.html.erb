@@ -119,7 +119,7 @@
 					<%= link_to t('aplcat.other_parameters'), edit_aplcat_parameter_path(session[:scenario_id]) + "&type=7" %>
 					</li>
 					<li class="<%= controller_name == "grazing_parameters" ? "active" : "" %>">
-					<% if controller_name == "grazing_parameters" && @type == 7 %>
+					<% if controller_name == "grazing_parameters" %>
 						<div class="sub-sub-header-icon">
 						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 						</div>

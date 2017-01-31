@@ -40,7 +40,7 @@ class GrazingParametersController < ApplicationController
   # POST /grazing_parameters.json
   def create
     @grazing_parameter = GrazingParameter.new(grazing_parameter_params)
-
+	@grazing_parameter.scenario_id = session[:scenario_id]
     respond_to do |format|
       if @grazing_parameter.save
         format.html { redirect_to @grazing_parameter, notice: 'Grazing parameter was successfully created.' }

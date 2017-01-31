@@ -12,42 +12,43 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :code %><br />
+    <%= f.label :code %>
     <%= f.number_field :code %>
   </div>
   <div class="field">
-    <%= f.label :starting_julian_day %><br />
+    <%= f.label :starting_julian_day %>
     <%= f.number_field :starting_julian_day %>
   </div>
   <div class="field">
-    <%= f.label :ending_julian_day %><br />
+    <%= f.label :ending_julian_day %>
     <%= f.number_field :ending_julian_day %>
   </div>
   <div class="field">
-    <%= f.label :dmi_code %><br />
+    <%= f.label :dmi_code %>
     <%= f.number_field :dmi_code %>
   </div>
   <div class="field">
-    <%= f.label :dmi_cows %><br />
+    <%= f.label :dmi_cows %>
     <%= f.text_field :dmi_cows %>
   </div>
   <div class="field">
-    <%= f.label :dmi_bulls %><br />
+    <%= f.label :dmi_bulls %>
     <%= f.text_field :dmi_bulls %>
   </div>
   <div class="field">
-    <%= f.label :dmi_heifers %><br />
+    <%= f.label :dmi_heifers %>
     <%= f.text_field :dmi_heifers %>
   </div>
   <div class="field">
-    <%= f.label :dmi_calves %><br />
+    <%= f.label :dmi_calves %>
     <%= f.text_field :dmi_calves %>
   </div>
   <div class="field">
-    <%= f.label :green_water_footprint %><br />
+    <%= f.label :green_water_footprint %>
     <%= f.text_field :green_water_footprint %>
   </div>
   <div class="actions">
     <%= f.submit %>
+	<%= link_to 'Back', grazing_parameters_path %>
   </div>
 <% end %>
