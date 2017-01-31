@@ -4,6 +4,9 @@ class AplcatParameter < ActiveRecord::Base
 				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape, 
 				 :platc, :pctbb, :ptdife, :tnggbc, :prb
 
+  #associations
+	  belongs_to :scenario
+
   after_initialize do
 	  if self.new_record?
 		self.abwc = 1300

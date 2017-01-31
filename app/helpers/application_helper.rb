@@ -56,7 +56,6 @@ module ApplicationHelper
 	end
 
 	def scenario_submenu
-		@scenario_name = Scenario.find(session[:scenario_id]).name
 		if current_page?(url_for(:controller => 'operations', :action => 'list'))
 			true
 		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
@@ -64,10 +63,13 @@ module ApplicationHelper
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
 			true
 		elsif current_page?(url_for(:controller => 'aplcat_parameters', :action => 'edit'))
+			@scenario_name = Scenario.find(session[:scenario_id]).name
 			true
 		elsif request.url.include?(url_for("/aplcat_parameters"))
+			@scenario_name = Scenario.find(session[:scenario_id]).name
 			true
 		elsif request.url.include?(url_for("/grazing_parameters"))
+			@scenario_name = Scenario.find(session[:scenario_id]).name
 			true
 		else
 			false
