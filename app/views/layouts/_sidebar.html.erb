@@ -141,10 +141,10 @@
           <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         </div>
       <% end %>
+      <%= link_to t('menu.results'), summary_result_path(session[:field_id]) %>
     </li>
 
 	<% if result_submenu %>
-      <%= link_to t('menu.results'), summary_result_path(session[:field_id]) %>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <li class="<%= controller_name == "results" ? "active" : "0" %>">
             <% if controller.action_name == "summary" %>
