@@ -759,6 +759,7 @@ module SimulationsHelper
       buffer.each do |buf|
         if !(buf.subarea_type == "PPDE" || buf.subarea_type == "PPTW" || buf.subarea_type == "AITW" || buf.subarea_type == "CBMain")
           #create the operation file for this subarea.
+		  session[:depth] = 
           @last_subarea += 1
           opcsFile.Add(buf.SubareaTitle)
           opcsFile.Add(".OPC " & buf.SubareaTitle + " file Operation:1  Date: " + @dtNow1)

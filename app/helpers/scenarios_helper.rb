@@ -163,7 +163,7 @@ module ScenariosHelper
         subarea.xtp8 = 0
         subarea.xtp9 = 0
         subarea.xtp10 = 0
-
+		
 		buffer_length = field_area   #total Area
 		bmps = Bmp.where(:bmpsublist => 1, :bmpsublist => 2, :bmpsublist => 3)
 		temp_length = Math.sqrt(buffer_length)
@@ -475,7 +475,11 @@ module ScenariosHelper
 				end # operations each do
 			end #if operations no nill
 		end # end if scneario_id == 0
-		subarea.save
+		if subarea.save then
+			
+		else
+			
+		end
 	end
 
     def calculate_slope_length(soil_slope)
@@ -553,7 +557,11 @@ module ScenariosHelper
 		operation.apex_operation = operation
 		operation.bmp_id = @bmp.id
 		operation.activity_id = 1
-		operation.save
+		if operation.save then
+			#sss
+		else
+			#nnn
+		end
 		#TODO oper.LuNumber = lunum <- visual basic code
 	end
 
