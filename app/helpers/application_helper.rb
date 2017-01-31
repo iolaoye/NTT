@@ -48,6 +48,8 @@ module ApplicationHelper
 			true
 		elsif request.url.include?(url_for("/aplcat_parameters"))
 			true
+		elsif request.url.include?(url_for("/grazing_parameters"))
+			true
 		else
 			false
 		end
@@ -64,6 +66,8 @@ module ApplicationHelper
 		elsif current_page?(url_for(:controller => 'aplcat_parameters', :action => 'edit'))
 			true
 		elsif request.url.include?(url_for("/aplcat_parameters"))
+			true
+		elsif request.url.include?(url_for("/grazing_parameters"))
 			true
 		else
 			false
@@ -87,6 +91,10 @@ module ApplicationHelper
 	def aplcats_submenu
 		if request.url.include?(url_for('aplcat_parameters'))
 			true
+		elsif request.url.include?(url_for('grazing_parameters'))
+			true
+		else
+			false
 		end
 	end
 

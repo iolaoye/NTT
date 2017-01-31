@@ -1,6 +1,7 @@
 class CreateGrazingParameters < ActiveRecord::Migration
   def change
     create_table :grazing_parameters do |t|
+	  t.integer :scenario_id
       t.integer :code
       t.integer :starting_julian_day
       t.integer :ending_julian_day
