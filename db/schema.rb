@@ -333,7 +333,6 @@ ActiveRecord::Schema.define(:version => 20170130133214) do
   end
 
   create_table "grazing_parameters", :force => true do |t|
-    t.integer  "scenario_id"
     t.integer  "code"
     t.integer  "starting_julian_day"
     t.integer  "ending_julian_day"
