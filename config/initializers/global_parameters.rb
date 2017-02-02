@@ -4,7 +4,7 @@
 
 
 # URL to the mapping application
-	URL_MAP = 'http://nn.tarleton.edu/GoogleMapPost/Default.aspx'
+	URL_MAP = 'http://nn.tarleton.edu/GoogleMap/Default.aspx'
 	#URL_MAP = 'http://nn.tarleton.edu/NTTRails/Default.aspx'
 
 #NTT verision
@@ -19,6 +19,9 @@
 # URL to get weather information
 	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
+# URL to get soils information
+	URL_SoilsInfo = 'http://nn.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
+
 #APEX folders.
 	APEX = "public/NTTFiles"
 	APEX_FOLDER = "E:/NTTHTML5Files"
@@ -30,6 +33,8 @@
 
 #folder for Prism weather, wind, and wp1 files
 	PRISM = 'E:/Weather/weatherFiles/US'
+	PRISM1 = 'E:/Weather/weatherFiles/1981-2015'
+	PRISM2 = 'E:/Weather/weatherFiles/borrar'
 	WP1 = 'E:/Weather/wp1File'
 	WIND = 'E:/Weather/wndFile'
 

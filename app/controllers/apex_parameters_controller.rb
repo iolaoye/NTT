@@ -2,9 +2,10 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters
   # GET /apex_parameters.json
   def index
-    @apex_parameters = ApexParameter.includes(:parameter).where(:project_id => session[:project_id])
+    @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => session[:project_id])
     #@apex_parameters = ApexParameter.where(:project_id => session[:project_id])
 
+    @field = Field.find(session[:field_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_parameters }
@@ -35,7 +36,7 @@ class ApexParametersController < ApplicationController
 
   # GET /apex_parameters/1/edit
   def edit
-    @apex_parameter = ApexParameter.includes(:parameter).where(:project_id => session[:project_id]).find(params[:id])
+    @apex_parameter = ApexParameter.includes(:parameter_description).where(:project_id => session[:project_id]).find(params[:id])
     @parameter_name = @apex_parameter.parameter.name
     @low_range = @apex_parameter.parameter.range_low
     @high_range = @apex_parameter.parameter.range_high
@@ -87,13 +88,17 @@ class ApexParametersController < ApplicationController
   end
 
   def reset
-    @parameters = Parameter.all
+    parameters = Parameter.where(:state_id => Location.find(session[:location_id]).state_id)
+	if parameters == nil then
+		parameters = Parameter.where(:state_id => 99)
+	end
+
     @apex_parameters = ApexParameter.where(:project_id => session[:project_id])
     @apex_parameters.delete_all()
 
-    @parameters.each do |parameter|
+    parameters.each do |parameter|
 		  apex_parameter = ApexParameter.new
-		  apex_parameter.parameter_id = parameter.id
+		  apex_parameter.parameter_description_id = parameter.id
 		  apex_parameter.value = parameter.default_value
 		  apex_parameter.project_id = session[:project_id]
 		  apex_parameter.save
@@ -107,6 +112,6 @@ class ApexParametersController < ApplicationController
   # params.require(:person).permit(:name, :age)
   # Also, you can specialize this method with per-user checking of permissible attributes.
   def apex_parameter_params
-    params.require(:apex_parameter).permit(:parameter_id, :project_id, :value)
+    params.require(:apex_parameter).permit(:parameter_description_id, :project_id, :value)
   end
 end

@@ -1,3 +1,4 @@
+include LocationsHelper
 include ScenariosHelper
 class LocationsController < ApplicationController
 
@@ -167,7 +168,7 @@ class LocationsController < ApplicationController
           @location.save
           # step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
           load_controls()
-          load_parameters()
+          load_parameters(0)
         end # end if of session_id check
         format.html # Runs receive_from_mapping_site.html.erb view in location folder
       end # end if error
@@ -256,6 +257,9 @@ class LocationsController < ApplicationController
     soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
     total_percentage = 0
     for j in 1..params["field#{i}soils"].to_i
+	  if params["field#{i}soil#{j}error"] then
+		next
+	  end # end if soil.error
       @soil = @field.soils.new
       @soil.key = params["field#{i}soil#{j}mukey"]
       @soil.symbol = params["field#{i}soil#{j}musym"]
@@ -265,29 +269,27 @@ class LocationsController < ApplicationController
       @soil.slope = params["field#{i}soil#{j}slope"]
       @soil.percentage = params["field#{i}soil#{j}pct"]
       @soil.percentage = @soil.percentage.round(2)
-      @soil.drainage_type = params["field#{i}soil#{j}drain"]
+      @soil.drainage_id = params["field#{i}soil#{j}drain"]
       @soil.tsla = 10
       @soil.xids = 1
       @soil.wtmn = 0
       @soil.wtbl = 0
       @soil.ztk = 1
       @soil.zqt = 2
-      if @soil.drainage_type != nil then
+      if @soil.drainage_id != nil then
         case true
-          when @soil.drainage_type.downcase.include?("well") || @soil.drainage_type.downcase.include?("excessively")
+          when 1 
             @soil.wtmx = 0
-          when @soil.drainage_type.downcase == ""
-            @soil.wtmx = 0
-          when @soil.drainage_type.downcase == "very poorly drained" || @soil.drainage_type.downcase == "poorly drained"
+          when 2
             @soil.wtmx = 4
             @soil.wtmn = 1
             @soil.wtbl = 2
-          when @soil.drainage_type.downcase == "somewhat poorly drained"
+          when 3
             @soil.wtmx = 4
             @soil.wtmn = 1
             @soil.wtbl = 2
           else
-            soil.wtmx = 0
+            @soil.wtmx = 0
         end
       end
 
@@ -307,9 +309,15 @@ class LocationsController < ApplicationController
       end
       i+=1
     end
-    Scenario.where(:field_id => @field.id).each do |scenario|
-      #create_subarea("Soil", i, soil_area, soil.slope, forestry, total_selected, @field.field_name, scenario.id, soil.id, soil.percentage, total_percentage, @field.field_area)
+	scenarios = Scenario.where(:field_id => @field.id)
+    scenarios.each do |scenario|
       add_scenario_to_soils(scenario)
+	  operations = Operation.where(:scenario_id => scenario.id)
+	  operations.each do |operation|
+		  soils.each do |soil|
+			update_soil_operation(SoilOperation.new, soil.id, operation)
+		  end # end soils each
+	  end # end operations.each
     end #end Scenario each do
   end
 
@@ -353,37 +361,28 @@ class LocationsController < ApplicationController
     return centroid
   end
 
-  #todo Update years of simulation + initialyear in weather. Also, update for state. Now is just one without state
+  #todo Update years of simulation + initialyear in weather.
   def load_controls()
-    control = ApexControl.where(:project_id => session[:project_id])
-    if control == [] then
-      Control.all.each do |c|
+    apex_controls = ApexControl.where(:project_id => session[:project_id])
+    if apex_controls == [] then
+      controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
+	  if controls.blank? || controls == nil then
+		controls = Control.where(:state_id => 99)		
+	  end
+      controls.each do |c|
         apex_control = ApexControl.new
-        apex_control.control_id = c.id
+        apex_control.control_description_id = c.id
         apex_control.value = c.default_value
         apex_control.project_id = session[:project_id]
-        if apex_control.control_id == 1 then
+        if apex_control.control_description_id == 1 then
           apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
         end
-        if apex_control.control_id == 2 then
+        if apex_control.control_description_id == 2 then
           apex_control.value = @weather.simulation_initial_year - 5
         end
         apex_control.save
       end # end control all
     end # end if
   end
-
-  def load_parameters()
-    parameter = ApexParameter.where(:project_id => session[:project_id])
-    if parameter == [] then
-      Parameter.all.each do |c|
-        apex_parameter = ApexParameter.new
-        apex_parameter.parameter_id = c.id
-        apex_parameter.value = c.default_value
-        apex_parameter.project_id = session[:project_id]
-        apex_parameter.save
-      end # end Parameter.all
-    end # if parameter == nil
-  end # end def
 
 end

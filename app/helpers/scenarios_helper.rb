@@ -163,7 +163,7 @@ module ScenariosHelper
         subarea.xtp8 = 0
         subarea.xtp9 = 0
         subarea.xtp10 = 0
-
+		
 		buffer_length = field_area   #total Area
 		bmps = Bmp.where(:bmpsublist => 1, :bmpsublist => 2, :bmpsublist => 3)
 		temp_length = Math.sqrt(buffer_length)
@@ -247,7 +247,7 @@ module ScenariosHelper
 				subarea.rsbd = 0.8
 				#line 10
 				subarea.pec = 1
-				add_buffer_operation(subarea, 139, 139, 0, 2000, 0, 33, true, scenario_id)
+				add_buffer_operation(subarea, 139, 139, 0, 2000, 0, 33, 1, scenario_id)
 			when 12    #Riperian Forest
 				if !checker
 					#line 2
@@ -299,7 +299,7 @@ module ScenariosHelper
 						update_wsa("-", subarea.wsa)
 						update_subarea(subarea, "RF", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
 					end
-					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, true, scenario_id)
+					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 2, scenario_id)
 				else
 					#line 2
 					subarea.number = 103
@@ -342,8 +342,8 @@ module ScenariosHelper
 					subarea.rfpl = subarea.rchl
 					#line 10
 					subarea.pec = 1.0
-					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, true, scenario_id)
-					add_buffer_operation(subarea, 136, 49, 0, 1400, 0, 22, false, scenario_id)
+					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, 1, scenario_id)
+					add_buffer_operation(subarea, 136, 49, 0, 1400, 0, 22, 1, scenario_id)
 				end
 			when 13    #Filter Strip
 				#line 2
@@ -384,7 +384,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, true, scenario_id)
+				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 1, scenario_id)
 			when 14    #Waterway
 				#line 2
 				subarea.number = 104
@@ -418,7 +418,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, true, scenario_id)
+				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 1, scenario_id)
 			when 23    #Shading
 				#line 2
 				subarea.number = 101
@@ -457,7 +457,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, true, scenario_id)
+				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, 1, scenario_id)
 		end # end bmpsublist_id
 
 		#this is when the subarea is added from a scenario
@@ -475,7 +475,11 @@ module ScenariosHelper
 				end # operations each do
 			end #if operations no nill
 		end # end if scneario_id == 0
-		subarea.save
+		if subarea.save then
+			
+		else
+			
+		end
 	end
 
     def calculate_slope_length(soil_slope)
@@ -522,17 +526,21 @@ module ScenariosHelper
 	def update_wsa(operation, wsa)
 		soils = soils = Soil.where(:field_id => session[:field_id], :selected => true)
 		soils.each do |soil|
-			subarea = Subarea.where(:scenario_id => session[:scenario_id], :soil_id => soil.id).first
+			#subarea = Subarea.find_by_scenario_id_and_soil_id(session[:scenario_id], soil.id)
 			if operation == "+"
-				subarea.wsa += subarea.wsa * soil.percentage / 100
+				soil.subareas.first.wsa += soil.subareas.first.wsa * soil.percentage / 100
 			else
-				subarea.wsa -= subarea.wsa * soil.percentage / 100
+				soil.subareas.first.wsa -= soil.subareas.first.wsa * soil.percentage / 100
 			end
-			subarea.save
+			if soil.save then
+				return "OK"
+			else
+				return "Problem updating subarea area"
+			end
 		end
 	end
 
-	def add_buffer_operation(subarea, operation, crop, years_cult, opv1, opv2, lunum, add_buffer, scenario_info)
+	def add_buffer_operation(subarea, oper, crop, years_cult, opv1, opv2, lunum, add_buffer, scenario_id)
 		operation = SoilOperation.new
 		operation.day = 15
 		operation.month = 1
@@ -546,14 +554,145 @@ module ScenariosHelper
 		operation.opv3 = 0
 		operation.opv4 = 0
 		operation.opv5 = 0
-		operation.opv6 = 0
+		operation.opv6 = add_buffer   # this is going to control the operation number. used when the bmp has more than one operation. As now just RF. 
 		operation.opv7 = 0
-		operation.scenario_id = scenario_info
+		operation.scenario_id = scenario_id
 		operation.soil_id = 0
-		operation.apex_operation = operation
+		operation.apex_operation = oper
 		operation.bmp_id = @bmp.id
 		operation.activity_id = 1
-		operation.save
+		if operation.save then
+			#sss
+		else
+			#nnn
+		end
 		#TODO oper.LuNumber = lunum <- visual basic code
 	end
+
+  def update_soil_operation(soil_operation, soil_id, operation)
+    soil_operation.activity_id = operation.activity_id
+    soil_operation.scenario_id = operation.scenario_id
+    soil_operation.operation_id = operation.id
+    soil_operation.soil_id = soil_id
+    soil_operation.year = operation.year
+    soil_operation.month = operation.month_id
+    soil_operation.day = operation.day
+    case operation.activity_id
+      when 1, 3 #planting, tillage
+        soil_operation.apex_operation = operation.type_id
+        soil_operation.type_id = operation.type_id
+      when 2, 7 #fertilizer, grazing
+        soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
+        soil_operation.type_id = operation.subtype_id
+      when 4 #Harvest. Take harvest operation from crop table
+        soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
+        soil_operation.type_id = operation.subtype_id
+      else
+        soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
+        soil_operation.type_id = operation.type_id
+    end
+    soil_operation.tractor_id = 0
+    soil_operation.apex_crop = Crop.find(operation.crop_id).number
+    soil_operation.opv1 = set_opval1(operation)
+    soil_operation.opv2 = set_opval2(soil_operation.soil_id, operation)
+    soil_operation.opv3 = 0
+    soil_operation.opv4 = set_opval4(operation)
+    soil_operation.opv5 = set_opval5(operation)
+    soil_operation.opv6 = 0
+    soil_operation.opv7 = 0
+    if soil_operation.save
+      return "OK"
+    else
+      return soil_operation.errors
+    end
+  end
+
+  def set_opval5(operation)
+    case operation.activity_id
+      when 1 #planting
+        lu_number = Crop.find(operation.crop_id).lu_number
+        if lu_number != nil then
+          if operation.amount == 0 then
+            if operation.crop_id == Crop_Road then
+              return 0
+            end
+          else
+            if operation.amount / FT_TO_M < 1 then
+              return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
+            else
+              return (operation.amount / FT2_TO_M2).round(0) #plant population converte from ft2 to m2 if it is not tree
+            end
+            if lu_number == 28 then
+              return (operation.amount / FT_TO_HA).round(0) #plant population converte from ft2 to ha if it is tree
+            end
+          end
+        end
+      else
+        return 0
+    end #end case
+  end
+
+  #end set_val5
+
+  def set_opval1(operation)
+    opv1 = 1.0
+    case operation.activity_id
+      when 1 #planting take heat units
+        #uri = URI.parse(URL_HU +  "?op=getHU&crop=" + operation.crop_id.to_s + "&nlat=" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + "&nlon=" + Weather.find_by_field_id(session[:field_id]).longitude.to_s)
+        #uri.open
+        #opv1 = uri.read
+        #opv1 = Hash.from_xml(open(uri.to_s).read)["m"]{"p".inject({}) do |result, elem
+        client = Savon.client(wsdl: URL_HU)
+		#session[:depth] = Crop.find(operation.crop_id).number.to_s + "-" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + " - " + Weather.find_by_field_id(session[:field_id]).longitude.to_s
+        response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
+        opv1 = response.body[:get_hu_response][:get_hu_result]
+      #opv1 = 2.2
+      when 2 #fertilizer - converte amount applied
+        if operation.subtype_id == 57 then
+          opv1 = (operation.amount * 8.25 * 0.005 * 1121.8).round(2) #kg/ha of fertilizer applied converted from liquid manure
+        else
+          opv1 = (operation.amount * LBS_TO_KG / AC_TO_HA).round(2) #kg/ha of fertilizer applied converted from lbs/ac
+        end
+      when 6 #irrigation
+        opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
+      when 10 #liming
+        opv1 = operation.amount / THA_TO_TAC #converts input t/ac to APEX t/ha
+    end
+    return opv1
+  end
+
+  #end ser_opval1
+
+  def set_opval4(operation)
+    opv4 = 0.0
+    case operation.activity_id
+      when 6 #irrigation
+        opv4 = 1 - operation.depth unless operation.depth == nil
+    end
+    return opv4
+  end
+  #end set_opval4
+
+  def set_opval2(soil_id, operation)
+    opv2 = 0.0
+    case operation.activity_id
+      when 1 #planting. Take curve number
+        case Soil.find(soil_id).group[0, 1]
+          when "A"
+            opv2 = Crop.find_by_number(operation.crop_id).soil_group_a
+          when "B"
+            opv2 = Crop.find_by_number(operation.crop_id).soil_group_b
+          when "C"
+            opv2 = Crop.find_by_number(operation.crop_id).soil_group_c
+          when "D"
+            opv2 = Crop.find_by_number(operation.crop_id).soil_group_d
+        end #end case Soil
+        if opv2 > 0 then
+          opv2 = opv2 * -1
+        end
+      when 2 #fertilizer - convert depth
+        opv2 = operation.depth * IN_TO_MM unless operation.depth == nil
+    end #end case operation
+    return opv2
+  end #end set_opval2
 end

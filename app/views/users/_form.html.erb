@@ -9,29 +9,31 @@
       </ul>
     </div>
   <% end %>
-  
-  <div class="center left">
+
+  <div class="page-container">
+  <div class="container-form">
     <h2><%= t('submit.new_user')%></h2>
     <div class="field">
-      <%= f.text_field :email, placeholder: t('sessions.index.email') %>
-      <%= f.password_field :password, placeholder: t('sessions.index.password') %>
-      <%= f.password_field :password_confirmation, placeholder: t('users.confirmation') %>
-      <%= f.text_field :name, placeholder: t('general.name') %>
-      <%= f.text_field :company, placeholder: t('users.company') %>
+      <%= f.text_field :email, placeholder: t('sessions.index.email'), :class => "form_input" %>
+      <%= f.password_field :password, placeholder: t('sessions.index.password'), :class => "form_input" %>
+      <%= f.password_field :password_confirmation, placeholder: t('users.confirmation'), :class => "form_input" %>
+      <%= f.text_field :name, placeholder: t('general.name'), :class => "form_input" %>
+      <%= f.text_field :company, placeholder: t('users.company'), :class => "form_input" %>
     </div>
 
-    <div class="actions new">
-      <%= f.submit t('submit.create') + " " + t('users.user') %>
+    <div class="button_container">
+    <div id="left_button">
+      <%= f.submit t('submit.create') + " " + t('users.user'), :class => "btn btn-primary" %>
     </div>
+    <% end %>
 
-    <div class="login back">
+    <div id="right_button">
       <% if (I18n.locale.eql?(:en)) %>
-          <%= link_to t('general.back'), login_path, :class => "green_button english" %>
+          <%= button_to t('general.back'), login_path, method: :get, :class => "btn btn-primary" %>
       <% else %>
-          <%= link_to t('general.back'), login_path, :class => "green_button spanish" %>
+          <%= button_to t('general.back'), login_path, method: :get, :class => "btn btn-primary" %>
       <% end %>
-
+    </div>
     </div>
   </div>
-<% end %>
-
+  </div>

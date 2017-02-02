@@ -1,0 +1,45 @@
+<%= form_for(@drainage) do |f| %>
+  <% if @drainage.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@drainage.errors.count, "error") %> prohibited this drainage from being saved:</h2>
+
+      <ul>
+      <% @drainage.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id %><br />
+    <%= f.number_field :id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :wtmx %><br />
+    <%= f.number_field :wtmx %>
+  </div>
+  <div class="field">
+    <%= f.label :wtmn %><br />
+    <%= f.number_field :wtmn %>
+  </div>
+  <div class="field">
+    <%= f.label :wtbl %><br />
+    <%= f.number_field :wtbl %>
+  </div>
+  <div class="field">
+    <%= f.label :zqt %><br />
+    <%= f.number_field :zqt %>
+  </div>
+  <div class="field">
+    <%= f.label :ztk %><br />
+    <%= f.number_field :ztk %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

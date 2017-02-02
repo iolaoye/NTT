@@ -12,15 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= f.label t('apex.parameter') %><br>
-    <%= f.number_field :parameter_id %>
+    <%= f.label t('apex.parameter') %>
+    <%= f.number_field :parameter_description_id, :disabled => true %>
   </div>
   <div class="field">
     <%= t('general.name') + " " + ':' %>
     <%= @parameter_name %>
   </div>
   <div class="field">
-    <%= f.label t('apex.value') %><br>
+    <%= f.label t('apex.value') %>
     <%= f.number_field :value, :step => 'any' %>
   </div>
   <div class="field">
@@ -32,6 +32,7 @@
     <%=  @high_range %>
   </div>
   <div class="actions">
-    <%= f.submit t("submit.update") + " " + t("apex.parameter") %>
+    <%= f.submit t("submit.update") + " " + t("apex.parameter"), :class => "btn btn-primary" %>
+    <%= link_to t('general.back'), apex_parameters_path, :class => "btn btn-primary" %>
   </div>
 <% end %>

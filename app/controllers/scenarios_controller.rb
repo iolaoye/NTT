@@ -6,7 +6,7 @@ class ScenariosController < ApplicationController
 # GET /1/scenarios.json
   def scenario_bmps
     session[:scenario_id] = params[:id]
-    redirect_to list_bmp_path(params[:id])
+    redirect_to bmps_path()
   end
 ################################  list of operations   #################################
 # GET /scenarios/1
@@ -21,7 +21,7 @@ class ScenariosController < ApplicationController
   def list
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => session[:field_id])
-    @field = Field.find(session[:field_id])
+    #@field = Field.find(session[:field_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @scenarios }
@@ -59,6 +59,7 @@ class ScenariosController < ApplicationController
     end
     if msg.eql?("OK") then
       flash[:notice] = @scenarios.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
+      @scenarios = Scenario.where(:field_id => session[:field_id])
       render "list", notice: "Simulation process end succesfully"
     else
       render "list", error: msg
@@ -172,6 +173,8 @@ class ScenariosController < ApplicationController
 
 ################################  run_scenario - run simulation called from show or index  #################################
   def run_scenario()
+    @last_herd = 0
+	@herd_list = Array.new
 	msg = "OK"
     if @scenarios == nil then
       session[:scenario_id] = params[:id]

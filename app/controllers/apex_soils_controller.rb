@@ -4,6 +4,7 @@
   # GET /soils.json
   def index
     @soils = Soil.where(:field_id => session[:field_id])
+    @field = Field.find(session[:field_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +16,7 @@
   # GET /soils/1.json
   def show
     @soil = Soil.find(params[:id])
+    @field = Field.find(session[:field_id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @soil }
@@ -35,6 +37,7 @@
   # GET /soils/1/edit
   def edit
     @soil = Soil.find(params[:id])
+    @field = Field.find(session[:field_id])
   end
 
   # POST /soils
@@ -55,7 +58,7 @@
 
   # PATCH/PUT /soils/1
   # PATCH/PUT /soils/1.json
-  def update  
+  def update
     @soil = Soil.find(params[:id])
     respond_to do |format|
       if @soil.update_attributes(soil_params)
@@ -86,7 +89,7 @@
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def soil_params
-      params.require(:soil).permit(:albedo, :drainage_type, :field_id, :group, :key, :name, :percentage, :selected, :slope, :symbol, :ffc, :wtmn, :wtmx, :wtbl, :gwst, :gwmx, 
+      params.require(:soil).permit(:albedo, :drainage_id, :field_id, :group, :key, :name, :percentage, :selected, :slope, :symbol, :ffc, :wtmn, :wtmx, :wtbl, :gwst, :gwmx,
 	  :rft, :rfpk, :tsla, :xids, :rtn1, :xidk, :zqt, :zf, :ztk, :fbm, :fhp )
     end
 end

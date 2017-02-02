@@ -4,8 +4,8 @@
     <%= notice %>
   </div>
 <% end %>
-  
-<h1>Listing operations</h1>
+
+<div class="page-header"><h1>Listing operations</h1></div>
 
 <table class='gvTableStyle'>
   <tr class='gvHeaderStyle'>
@@ -31,7 +31,7 @@
 <% @operations.each do |operation| %>
   <tr class="gvRowStyle">
     <td><%= operation.crop_id %></td>
-    <td><%= operation.operation_id %></td>
+    <td><%= operation.activity_id %></td>
     <td><%= operation.day %></td>
     <td><%= operation.month_id %></td>
     <td><%= operation.year %></td>

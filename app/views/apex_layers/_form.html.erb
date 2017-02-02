@@ -83,9 +83,9 @@
     <%= f.label "Satc" + ":" %>
     <%= f.number_field :satc, :class => "numbers", min: 0 %>
   </div>
-  
+
   <div class="actions">
-    <%= f.submit t('submit.update') %>
-	<%= link_to t('general.back'), controller: "apex_layers", action: "index", id: @apex_layer.soil_id %>
+    <%= f.submit t('submit.update'), :class => "btn btn-primary" %>
+	  <%= link_to t('general.back'), { controller: "apex_layers", action: "index", id: @apex_layer.soil_id }, { class: "btn btn-primary" } %>
   </div>
 <% end %>

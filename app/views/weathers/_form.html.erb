@@ -21,9 +21,7 @@
         </div>
     <% end %>
 
-
     <div class="panel panel-default">
-      <div class="panel-heading"><%= t('weather.legend') %></div>
       <div class="panel-body">
        <% for way in Way.find(:all) %>
           <div>
@@ -37,7 +35,6 @@
       <% end %>
       </div>
     </div>
-
 
     <% if @weather.way_id == 2 %>
         <fieldset id="fsetUploadWeatherFile" class="section"></fieldset>
@@ -73,7 +70,6 @@
       <%= f.label "-" %>
       <%= f.label @weather.weather_final_year %>
     </div>
-<br>
     <fieldset class="section">
       <div class="field">
         <%= t('weather.note') %></p>

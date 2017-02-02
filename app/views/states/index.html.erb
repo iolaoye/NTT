@@ -22,8 +22,24 @@
           <%= check_box_tag "county_ids[]", county.id %>
           <%= county.county_name %>
         </li>
+<<<<<<< HEAD
+        <% @counties = County.where(:state_id => state.id) %>
+        <div< id="state_<%=state.id%>" style="display:none">
+          <ul >
+            <% @counties.each do |county| %>
+              <%= fields_for "counties[]", county do |f| %>
+                <li>
+                  <%= check_box_tag "county_ids[]", county.id %>
+                  <%= county.county_name %>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+=======
         <% end %>
           <% end %>
+>>>>>>> 67ab703ae6f8c79ccc09eccb4671b8983bf1673a
       </ul>
     </div>
   </ul>

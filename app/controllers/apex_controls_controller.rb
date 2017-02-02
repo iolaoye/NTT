@@ -3,7 +3,7 @@ class ApexControlsController < ApplicationController
   # GET /apex_controls.json
   def index
     @field = Field.find(session[:field_id])
-  	@apex_controls = ApexControl.includes(:control).where(:project_id => session[:project_id])
+  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => session[:project_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_controls }
@@ -34,11 +34,10 @@ class ApexControlsController < ApplicationController
 
   # GET /apex_controls/1/edit
   def edit
-	@apex_control = ApexControl.includes(:control).where(:project_id => session[:project_id]).find(params[:id])
+	@apex_control = ApexControl.includes(:control_description).where(:project_id => session[:project_id]).find(params[:id])
 	@control_code = @apex_control.control.code
 	@low_range = @apex_control.control.range_low
 	@high_range = @apex_control.control.range_high
-    #@apex_control = ApexControl.where(:project_id => session[:project_id]).find(params[:id])
   end
 
   # POST /apex_controls
@@ -86,14 +85,17 @@ class ApexControlsController < ApplicationController
   end
 
   def reset
-    @controls = Control.all
-    @apex_controls = ApexControl.where("project_id == " + session[:project_id].to_s + " AND control_id != 1 AND control_id != 2")
+    controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
+    if controls.blank? || controls == nil then
+		controls = Control.where(:state_id => 99)
+	end
+    @apex_controls = ApexControl.where("project_id == " + session[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2")
     @apex_controls.delete_all()
 
-    @controls.each do |control|
+    controls.each do |control|
 		if control.id != 1 && control.id != 2
 		  apex_control = ApexControl.new
-		  apex_control.control_id = control.id
+		  apex_control.control_description_id = control.id
 		  apex_control.value = control.default_value
 		  apex_control.project_id = session[:project_id]
 		  apex_control.save
@@ -108,6 +110,6 @@ class ApexControlsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def apex_control_params
-      params.require(:apex_control).permit(:control_id, :value)
+      params.require(:apex_control).permit(:control_description_id, :value)
     end
 end

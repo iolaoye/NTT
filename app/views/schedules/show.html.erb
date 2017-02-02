@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @schedule.id %>
+</p>
+
+<p>
+  <b>Event order:</b>
+  <%= @schedule.event_order %>
+</p>
+
+<p>
+  <b>Month:</b>
+  <%= @schedule.month %>
+</p>
+
+<p>
+  <b>Day:</b>
+  <%= @schedule.day %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @schedule.year %>
+</p>
+
+<p>
+  <b>Activity:</b>
+  <%= @schedule.activity_id %>
+</p>
+
+<p>
+  <b>Apex operation:</b>
+  <%= @schedule.apex_operation %>
+</p>
+
+<p>
+  <b>Apex crop:</b>
+  <%= @schedule.apex_crop %>
+</p>
+
+<p>
+  <b>Apex fertilizer:</b>
+  <%= @schedule.apex_fertilizer %>
+</p>
+
+<p>
+  <b>Apex opv1:</b>
+  <%= @schedule.apex_opv1 %>
+</p>
+
+<p>
+  <b>Apex opv2:</b>
+  <%= @schedule.apex_opv2 %>
+</p>
+
+<p>
+  <b>Crop schedule:</b>
+  <%= @schedule.crop_schedule_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_schedule_path(@schedule) %> |
+<%= link_to 'Back', schedules_path %>

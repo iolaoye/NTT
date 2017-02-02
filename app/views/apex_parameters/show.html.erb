@@ -7,7 +7,7 @@
 
 <p>
   <b>Parameter:</b>
-  <%= @apex_parameter.parameter_id %>
+  <%= @apex_parameter.parameter_description_id %>
 </p>
 
 <p>
@@ -40,5 +40,7 @@
   <%= @apex_parameter.value %>
 </p>
 
-<%= link_to t('general.edit'), edit_apex_parameter_path(@apex_parameter) %> |
-<%= link_to t('general.back'), apex_parameters_path %>
+<div class="actions">
+  <%= link_to t('general.edit'), edit_apex_parameter_path(@apex_parameter), :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), apex_parameters_path, :class => "btn btn-primary" %>
+</div>

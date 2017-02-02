@@ -1,53 +1,62 @@
+<div class="page-header"><h1><%= t('menu.control_file') %></h1></div>
+
 <% if flash[:notice] != nil %>
-    <div class="success_alert">
+    <div class="alert alert-info" role="alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <%= flash[:notice] %>
     </div>
 <% end %>
 
-<div class="page-header"><h1><small><%= @field.field_name %></small><br><%= t('general.listing')  + " " + t('menu.control_file') %></h1></div>
+<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-primary' %>
+<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-default' %>
+<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.site'), sites_path(:id => session[:field_id]), :class => 'btn btn-default' %>
 
-<table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
-    <th class="gvCellStyleTitle"><%= t('menu.control_file') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.code') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.line') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.column') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.value') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.low_range') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.high_range') %></th>
-    <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
-  </tr>
 
-  <%= link_to "Reset to Default", {:action => :reset}, :method => :post %>
+<br><br>
+  <%= link_to "Reset to Default", {:action => :reset}, :method => :post, :class => 'btn btn-primary' %>
+<br><br>
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= t('menu.control_file') %></th>
+          <th><%= t('apex.code') %></th>
+          <th><%= t('apex.line') %></th>
+          <th><%= t('apex.column') %></th>
+          <th><%= t('apex.value') %></th>
+          <th><%= t('apex.low_range') %></th>
+          <th><%= t('apex.high_range') %></th>
+          <th><%= t('general.actions')%></th>
+        </tr>
+      </thead>
+      <tbody>
 
 <% i=1 %>
 <% @apex_controls.each do |apex_control| %>
-  <% if (i % 2  == 0) %>
-    <tr class="gvRowStyleEven">
-      <td class="gvCellStyleNumber"><%= apex_control.control_id %></td>
-      <td class="gvCellStyleText"><%= apex_control.control.code %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.control.line %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.control.column %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.value %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.control.range_low %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.control.range_high %></td>
+	  <% if i % 2 == 0 %>
+        <tr class="gvRowStyleEven">
+	  <% else %>
+	    <tr class="gvRowStyleOdd">
+	  <% end %>
+      <td><%= apex_control.control_description_id %></td>
+      <td><%= apex_control.control_description.code %></td>
+      <td><%= apex_control.control_description.line %></td>
+      <td><%= apex_control.control_description.column %></td>
+      <td><%= apex_control.value %></td>
+      <td><%= apex_control.control_description.range_low %></td>
+      <td><%= apex_control.control_description.range_high %></td>
       <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control), title: t('general.edit') %></td>
-    </tr>
-  <% else %>
-    <tr class="gvRowStyleOdd">
-      <td class="gvCellStyleNumber"><%= apex_control.control_id %></td>
-      <td class="gvCellStyleText"><%= apex_control.control.code %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.control.line %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.control.column %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.value %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.control.range_low %></td>
-      <td class="gvCellStyleNumber"><%= apex_control.control.range_high %></td>
-      <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control), title: t('general.edit') %></td>
-    </tr>
-  <% end %>
-  <% i = i + 1 %>
+      <% i+=1 %>
 <% end %>
-</table>
+</tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
 
 <br>

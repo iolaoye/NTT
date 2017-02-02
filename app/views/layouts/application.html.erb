@@ -7,24 +7,22 @@
 	  <%= csrf_meta_tags %>
 	</head>
 	<body>
-	  <% if NTTG3::Application.config.language == "en" %>
+		<% if NTTG3::Application.config.language == "en" %>
 			<% I18n.default_locale = :en %>
-	  <% else %>
+		<% else %>
 			<% I18n.default_locale = :es %>
-	  <% end %>
+		<% end %>
 
         <div id="navbar" class="navbar-collapse collapse">
    			<%= render "layouts/header" %>
 		</div>
 
-<% if signed_in? %>
-<%= render "layouts/project" %>
-<% else %>
-<%= yield %>
-<% end %>
+		<% if signed_in? %>
+			<%= render "layouts/project" %>
+		<% else %>
+			<%= yield %>
+		<% end %>
 
-<%= render "layouts/footer" %>
-
-
+		<%= render "layouts/footer" %>
    </body>
 </html>

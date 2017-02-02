@@ -1,7 +1,12 @@
 NTTG3::Application.routes.draw do
+  resources :grazing_parameters
+  resources :aplcat_parameters
+  resources :control_descriptions
+  resources :parameter_descriptions
+  resources :drainages
+  resources :schedules
+  resources :crop_schedules
   resources :climates
-
-
   resources :watershed_scenarios
   resources :watersheds
   resources :people
@@ -46,14 +51,19 @@ NTTG3::Application.routes.draw do
   #resources :fields
   resources :apex_soils
   resources :apex_layers
+
   resources :results do
 	get 'sel', on: :member
-  end 
+	get :summary, on: :member
+	get :by_soils, on: :member
+	get :annual_charts, on: :member
+	get :monthly_charts, on: :member
+  end
   resources :watershed_scenarios do
      post 'new_scenario', on: :member
   end
   resources :users do
-	  resources :projects 
+	  resources :projects
   end
 
   resources :projects do
@@ -62,7 +72,7 @@ NTTG3::Application.routes.draw do
     get 'download', on: :member
     get :group, on: :member
   end
- 
+
   resources :weathers do
 	member do
 		post 'save_coordinates'
@@ -72,6 +82,11 @@ NTTG3::Application.routes.draw do
   resources :states do
     resources :counties
 	post :show_counties, on: :collection
+  end
+
+  resources :bmps do
+	get :list, on: :member
+	post :save_bmps, on: :collection
   end
 
   resources :activities do
@@ -85,16 +100,17 @@ NTTG3::Application.routes.draw do
   resources :locations do
     get :send_to_mapping_site, on: :member
     post :receive_from_mapping_site, on: :member
-    get :location_fields, on: :member 
+    get :location_fields, on: :member
   end
 
   resources :fields do
-    get :list, on: :member 
+    get :list, on: :member
     resources :soils
     resources :scenarios
 	resources :weathers
 	get :field_soils, on: :member
 	get :field_scenarios, on: :member
+    get 'create_soils', on: :member
   end
 
   resources :watersheds do
@@ -120,13 +136,10 @@ NTTG3::Application.routes.draw do
   resources :operations do
 	get :list, on: :member
 	get :cropping_system, on: :member
+	get :crop_schedule, on: :member
     get 'download', on: :member
     get :open, on: :member
-    get :upload_system, on: :member
-  end
-
-  resources :bmps do
-	get :list, on: :member
+    post :upload_system, on: :member
   end
 
   resources :bmplists do
@@ -136,17 +149,16 @@ NTTG3::Application.routes.draw do
   #define two name routes, login_path and logout_path
   get '/login' => "sessions#index", :as => "login"
   get '/logout' => "sessions#destroy", :as => "logout"
-
   get 'sessions/create'
   get 'sessions/destroy'
   get 'users/new'
   post 'projects/upload_project'
   post 'weathers/upload_weather'
   root to: 'welcomes#index'
-  
+
   get '/about' => "about#index", :as => "about"
   get '/contact' => "contact#index", :as => "contact"
-  
+
   get '/help/' => redirect('/help/index')
   get '/help/:page' => "help#show", :as => "help"
 

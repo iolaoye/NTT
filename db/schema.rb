@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160909204426) do
+ActiveRecord::Schema.define(:version => 20170130133214) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -32,19 +32,69 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
   end
 
   create_table "apex_controls", :force => true do |t|
-    t.integer  "control_id"
+    t.integer  "control_description_id"
     t.float    "value"
     t.integer  "project_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   create_table "apex_parameters", :force => true do |t|
-    t.integer  "parameter_id"
+    t.integer  "parameter_description_id"
     t.float    "value"
     t.integer  "project_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  create_table "aplcat_parameters", :force => true do |t|
+    t.integer  "scenario_id"
+    t.integer  "noc"
+    t.integer  "nomb"
+    t.integer  "norh"
+    t.float    "abwc"
+    t.float    "abwmb"
+    t.float    "abwh"
+    t.float    "prh"
+    t.float    "prb"
+    t.float    "adwgbc"
+    t.float    "adwgbh"
+    t.float    "mrga"
+    t.integer  "jdcc"
+    t.integer  "gpc"
+    t.float    "tpwg"
+    t.integer  "csefa"
+    t.float    "srop"
+    t.float    "bwoc"
+    t.integer  "jdbs"
+    t.float    "dmd"
+    t.float    "dmi"
+    t.float    "napanr"
+    t.float    "napaip"
+    t.float    "mpsm"
+    t.float    "splm"
+    t.float    "pmme"
+    t.float    "rhaeba"
+    t.float    "toaboba"
+    t.float    "vsim"
+    t.float    "foue"
+    t.float    "ash"
+    t.float    "mmppfm"
+    t.float    "cfmms"
+    t.float    "fnemimms"
+    t.float    "effn2ofmms"
+    t.float    "dwawfga"
+    t.float    "dwawflc"
+    t.float    "dwawfmb"
+    t.float    "pgu"
+    t.float    "ada"
+    t.float    "ape"
+    t.float    "platc"
+    t.float    "pctbb"
+    t.float    "ptdife"
+    t.integer  "tnggbc"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "bmplists", :force => true do |t|
@@ -121,18 +171,23 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.integer  "month"
   end
 
-  create_table "controls", :force => true do |t|
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+  create_table "control_descriptions", :force => true do |t|
     t.integer  "line"
     t.integer  "column"
     t.string   "code"
     t.string   "name"
-    t.string   "description"
     t.float    "range_low"
     t.float    "range_high"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "controls", :force => true do |t|
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.float    "default_value"
     t.integer  "state_id"
+    t.integer  "number"
   end
 
   create_table "counties", :force => true do |t|
@@ -147,6 +202,15 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.string   "county_state_code"
     t.integer  "wind_wp1_code"
     t.string   "wind_wp1_name"
+  end
+
+  create_table "crop_schedules", :force => true do |t|
+    t.string   "name"
+    t.integer  "state_id"
+    t.integer  "class_id"
+    t.boolean  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "cropping_systems", :force => true do |t|
@@ -204,6 +268,17 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.integer  "period"
   end
 
+  create_table "drainages", :force => true do |t|
+    t.string   "name"
+    t.integer  "wtmx"
+    t.integer  "wtmn"
+    t.integer  "wtbl"
+    t.integer  "zqt"
+    t.integer  "ztk"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "events", :force => true do |t|
     t.integer  "event_order"
     t.integer  "month"
@@ -255,6 +330,21 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.datetime "updated_at",          :null => false
     t.string   "coordinates"
     t.integer  "weather_id"
+  end
+
+  create_table "grazing_parameters", :force => true do |t|
+    t.integer  "scenario_id"
+    t.integer  "code"
+    t.integer  "starting_julian_day"
+    t.integer  "ending_julian_day"
+    t.integer  "dmi_code"
+    t.float    "dmi_cows"
+    t.float    "dmi_bulls"
+    t.float    "dmi_heifers"
+    t.float    "dmi_calves"
+    t.float    "green_water_footprint"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "irrigations", :force => true do |t|
@@ -329,17 +419,22 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.float    "moisture"
   end
 
-  create_table "parameters", :force => true do |t|
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+  create_table "parameter_descriptions", :force => true do |t|
     t.integer  "line"
     t.integer  "number"
     t.string   "name"
-    t.string   "description"
     t.float    "range_low"
     t.float    "range_high"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "parameters", :force => true do |t|
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.float    "default_value"
     t.integer  "state_id"
+    t.integer  "number"
   end
 
   create_table "people", :force => true do |t|
@@ -378,6 +473,22 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.datetime "updated_at",      :null => false
     t.integer  "field_id"
     t.datetime "last_simulation"
+  end
+
+  create_table "schedules", :force => true do |t|
+    t.integer  "event_order"
+    t.integer  "month"
+    t.integer  "day"
+    t.integer  "year"
+    t.integer  "activity_id"
+    t.integer  "apex_operation"
+    t.integer  "apex_crop"
+    t.integer  "apex_fertilizer"
+    t.float    "apex_opv1"
+    t.float    "apex_opv2"
+    t.integer  "crop_schedule_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "simulations", :force => true do |t|
@@ -448,9 +559,9 @@ ActiveRecord::Schema.define(:version => 20160909204426) do
     t.float    "slope"
     t.float    "percentage"
     t.integer  "field_id"
-    t.string   "drainage_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.integer  "drainage_id", :limit => 255
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.float    "ffc"
     t.float    "wtmn"
     t.float    "wtmx"

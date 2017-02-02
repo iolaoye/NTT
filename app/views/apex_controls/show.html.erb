@@ -7,7 +7,7 @@
 
 <p>
   <b>Control:</b>
-  <%= @apex_control.control_id %>
+  <%= @apex_control.control_description_id %>
 </p>
 
 <p>
@@ -39,7 +39,8 @@
   <b>Value:</b>
   <%= @apex_control.value %>
 </p>
-
-
-<%= link_to t('general.edit'), edit_apex_control_path(@apex_control) %> |
-<%= link_to t('general.back'), apex_controls_path %>
+<br>
+<div class="actions">
+  <%= link_to t('general.edit'), edit_apex_control_path(@apex_control), :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), apex_controls_path, :class => "btn btn-primary" %>
+</div>

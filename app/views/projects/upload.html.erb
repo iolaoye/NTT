@@ -7,7 +7,8 @@
 <%= form_tag({action: :upload_project}, multipart: true) do %>
   <div>
     <% if @id == "0" %>
-        <h1><%= t('project.upload_project') %></h1>
+        <div class="page-header"><h1><%= t('project.upload_project') %></h1></div>
+        <br>
         <%= file_field_tag "project" %>
     <% else %>
         <h1><%= t('project.upload_example') %></h1>
@@ -17,7 +18,7 @@
   </br>
   <div class="actions">
     <% if @id == "0" %>
-        <%= submit_tag(value = t('submit.save'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
+        <%= submit_tag(value = t('project.upload_project'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
     <% else %>
         <%= submit_tag(value = t('project.upload_example'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
     <% end %>

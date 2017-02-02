@@ -5,6 +5,7 @@
   </div>
 <% end %>
 
-
-<%= link_to t('general.edit'), edit_user_path(@user) %> |
-<%= link_to t('general.back'), users_path %>
+<div class="actions">
+  <%= link_to t('general.edit'), edit_user_path(@user), :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), users_path, :class => "btn btn-primary" %>
+</div>

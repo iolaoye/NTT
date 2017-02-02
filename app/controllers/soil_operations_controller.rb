@@ -1,17 +1,18 @@
 class SoilOperationsController < ApplicationController
   # GET /soil_operations
   # GET /soil_operations.json
-  def index	
-	@soil = 0
-	@scenario = 0
+  def index
+    @field = Field.find(session[:field_id])
+  	@soil = 0
+  	@scenario = 0
     soils = Soil.where(:field_id => session[:field_id])
-	if soils != nil then
-		@soil = soils[0].id
-	end
-	scenarios = Scenario.where(:field_id => session[:field_id])
-	if scenarios != nil then
-		@scenario = scenarios[0].id
-	end
+  	if soils != nil then
+  		@soil = soils[0].id
+  	end
+  	scenarios = Scenario.where(:field_id => session[:field_id])
+  	if scenarios != nil then
+  		@scenario = scenarios[0].id
+  	end
     @soil_operations = SoilOperation.where(:soil_id => @soil, :scenario_id => @scenario)
 
     respond_to do |format|
@@ -24,7 +25,6 @@ class SoilOperationsController < ApplicationController
   # GET /soil_operations/1.json
   def show
     @soil_operation = SoilOperation.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @soil_operation }
@@ -45,16 +45,18 @@ class SoilOperationsController < ApplicationController
   # GET /soil_operations/1/edit
   def edit
     @soil_operation = SoilOperation.find(params[:id])
+    @field = Field.find(session[:field_id])
   end
 
   # POST /soil_operations
   # POST /soil_operations.json
   def create
-	@soil = params[:soil_operation][:soil_id]
-	@scenario = params[:soil_operation][:scenario_id]
+  	@soil = params[:soil_operation][:soil_id]
+    @field = Field.find(session[:field_id])
+  	@scenario = params[:soil_operation][:scenario_id]
     @soil_operations = SoilOperation.where(:soil_id => @soil, :scenario_id => @scenario)
 
-    render "index" 
+    render "index"
   end
 
   # PATCH/PUT /soil_operations/1

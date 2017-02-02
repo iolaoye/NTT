@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @control_description.id %>
+</p>
+
+<p>
+  <b>Line:</b>
+  <%= @control_description.line %>
+</p>
+
+<p>
+  <b>Column:</b>
+  <%= @control_description.column %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @control_description.code %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @control_description.name %>
+</p>
+
+<p>
+  <b>Range low:</b>
+  <%= @control_description.range_low %>
+</p>
+
+<p>
+  <b>Range high:</b>
+  <%= @control_description.range_high %>
+</p>
+
+
+<%= link_to 'Edit', edit_control_description_path(@control_description) %> |
+<%= link_to 'Back', control_descriptions_path %>
