@@ -869,7 +869,7 @@ en:
       prb: Proportion of Replacement Bulls (%)
       adwgbc: Average daily weight gain (lb) by calves/growing cattle
       adwgbh: Average daily weight gain (lb) by heifers
-      mrga: Mortality rate of growing (%)
+      mrga: Mortality rate of growing animals (%)
       jdcc: Julian day of cows conceiving
       gpc: Gestation period of cows
       tpwg: Total pregnancy weight gain (lb)
@@ -878,9 +878,9 @@ en:
       bwoc: Birth weight of calves (lb)
       jdbs: Julian day of buying/selling
       dmd: Dry Matter Digestibility (DMD)(%)
-      dmi: DMI (% of body weight)
-      napanr: Stocking rate in native range. number of animals/acre
-      napaip: Stocking rate in introduced pasture. number of animals/acre
+      dmi: "DMI (% of body weight)"
+      napanr: Stocking rate in native range. Number of animals/acre
+      napaip: Stocking rate in introduced pasture. Number of animals/acre
       mpsm: Moisture present in solid manure (%) 
       splm: Solids present in liquid manure (urine) (%)
       pmme: Proportion of manure (solid+liquid) moisture evaporated (%)
@@ -911,6 +911,8 @@ en:
       water_use_pumping_parameters: Water Use and Pumping Parameters
       other_parameters: Other Parameters
       animal_feed_parameters: Animal Feed Parameters
+  aplcat_tooltip:
+      noc: Total number of Cows in the farm under Cow-Calf system
   instructions:
     projects: To select a project, click on the project name
     fields: To select a field, click on the field name

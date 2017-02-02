@@ -864,7 +864,7 @@
       prb: Proporción toros de reemplazo (%)
       adwgbc: Aumento promedio de peso diario (lb) por terneros/ganado en crecimiento
       adwgbh: Aumento promedio de peso diario (lb) by novillas
-      mrga: Tasa de mortalidad en crecimiento (%)
+      mrga: Tasa de mortalidad en crecimiento de animales (%)
       jdcc: Día juliano en que las vacas conciben
       gpc: Período de gestación de las vacas
       tpwg: Total pregnancy weight gain (lb)
@@ -873,7 +873,7 @@
       bwoc: Peso de los terneros al nacer (lb)
       jdbs: Día juliano de compra/venta
       dmd: Digestibilidad de la materia seca (DMD) (%)
-      dmi: DMI (% de peso corporal)
+      dmi: "DMI (% de peso corporal)"
       napanr: Tasa de población en el rango nativo. Número de animales / acre
       napaip: Tasa de almacenamiento en pastos introducidos. Número de animales / acre
       mpsm: Humedad presente en el abono sólido (%) 
@@ -906,6 +906,8 @@
       water_use_pumping_parameters: Parámetros del uso y bombeo del agua
       other_parameters: Otros Parámetros
       animal_feed_parameters: Parámetros del alimento de los animales
+  aplcat_tooltip:
+      noc: Número total de vacas in la finca bajo el sistema vaca-ternera
   instructions:
     projects: Para seleccionar un proyecto, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
