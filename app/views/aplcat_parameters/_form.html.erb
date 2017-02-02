@@ -18,35 +18,35 @@
   <%end%>
   	<%= field_set_tag t('aplcat.animal_parameters'), class:'fieldset' do %>
 	  <div class="field">
-		<%= f.label t('aplcat.noc') %>
-		<%= f.number_field :noc, class: 'fieldNumbers' %>
+		<%=  t('aplcat.noc') %>
+		<%= f.number_field :noc, class: 'fieldNumbers', :title => t('aplcat_tooltip.noc')  %> 
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.nomb') %>
+		<%=  t('aplcat.nomb') %>
 		<%= f.number_field :nomb, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.norh') %>
+		<%=  t('aplcat.norh') %>
 		<%= f.number_field :norh, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.abwc') %>
+		<%=  t('aplcat.abwc') %>
 		<%= f.text_field :abwc, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.abwmb') %>
+		<%=  t('aplcat.abwmb') %>
 		<%= f.text_field :abwmb, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.abwh') %>
+		<%=  t('aplcat.abwh') %>
 		<%= f.text_field :abwh, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.prh') %>
+		<%=  t('aplcat.prh') %>
 		<%= f.text_field :prh, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.prb') %>
+		<%=  t('aplcat.prb') %>
 		<%= f.text_field :prb, class: 'fieldNumbers' %>
 	  </div>
   <% end %>
@@ -59,59 +59,59 @@
   <%end%>
 	<%= field_set_tag t('aplcat.animal_growth_parameters') , class:'fieldset' do %>
 	  <div class="field">
-		<%= f.label t('aplcat.adwgbc') %>
+		<%=  t('aplcat.adwgbc') %>
 		<%= f.text_field :adwgbc, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.adwgbh') %>
+		<%=  t('aplcat.adwgbh') %>
 		<%= f.text_field :adwgbh, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.mrga') %>
+		<%=  t('aplcat.mrga') %>
 		<%= f.text_field :mrga, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.jdcc') %>
+		<%=  t('aplcat.jdcc') %>
 		<%= f.text_field :jdcc, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.gpc') %>
+		<%=  t('aplcat.gpc') %>
 		<%= f.text_field :gpc, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.tpwg') %>
+		<%=  t('aplcat.tpwg') %>
 		<%= f.text_field :tpwg, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.csefa') %>
+		<%=  t('aplcat.csefa') %>
 		<%= f.text_field :csefa, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.srop') %>
+		<%=  t('aplcat.srop') %>
 		<%= f.text_field :srop, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.bwoc') %>
+		<%=  t('aplcat.bwoc') %>
 		<%= f.text_field :bwoc, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.jdbs') %>
+		<%= t('aplcat.jdbs') %>
 		<%= f.text_field :jdbs, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.dmd') %>
+		<%= t('aplcat.dmd') %>
 		<%= f.text_field :dmd, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.dmi') %>
+		<%= t("aplcat.dmi") %>
 		<%= f.text_field :dmi, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.napanr') %>
+		<%=  t('aplcat.napanr') %>
 		<%= f.text_field :napanr, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.napaip') %>
+		<%=  t('aplcat.napaip') %>
 		<%= f.text_field :napaip, class: 'fieldNumbers' %>
 	  </div>
 	<% end %>
@@ -124,15 +124,15 @@
   <%end%>
     <%= field_set_tag t('aplcat.animal_manure_parameters') , class:'fieldset' do %>
 	  <div class="field">
-		<%= f.label t('aplcat.mpsm') %>
+		<%=  t('aplcat.mpsm') %>
 		<%= f.text_field :mpsm, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.splm') %>
+		<%=  t('aplcat.splm') %>
 		<%= f.text_field :splm, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.pmme') %>
+		<%=  t('aplcat.pmme') %>
 		<%= f.text_field :pmme, class: 'fieldNumbers' %>
 	  </div>
 	<% end %>
@@ -145,11 +145,11 @@
   <%end%>
     <%= field_set_tag t('aplcat.environmental_parameters') , class:'fieldset' do %>
 	  <div class="field">
-		<%= f.label t('aplcat.rhaeba') %>
+		<%=  t('aplcat.rhaeba') %>
 		<%= f.text_field :rhaeba, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.toaboba') %>
+		<%=  t('aplcat.toaboba') %>
 		<%= f.text_field :toaboba, class: 'fieldNumbers' %>
 	  </div>
 	<% end %>
@@ -162,31 +162,31 @@
   <%end%>
     <%= field_set_tag t('aplcat.greenhouse_parameters') , class:'fieldset' do %>
 	  <div class="field">
-		<%= f.label t('aplcat.vsim') %>
+		<%=  t('aplcat.vsim') %>
 		<%= f.text_field :vsim, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.foue') %>
+		<%=  t('aplcat.foue') %>
 		<%= f.text_field :foue, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.ash') %>
+		<%=  t('aplcat.ash') %>
 		<%= f.text_field :ash, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.mmppfm') %>
+		<%=  t('aplcat.mmppfm') %>
 		<%= f.text_field :mmppfm, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.cfmms') %>
+		<%=  t('aplcat.cfmms') %>
 		<%= f.text_field :cfmms, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.fnemimms') %>
+		<%=  t('aplcat.fnemimms') %>
 		<%= f.text_field :fnemimms, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.effn2ofmms') %>
+		<%=  t('aplcat.effn2ofmms') %>
 		<%= f.text_field :effn2ofmms, class: 'fieldNumbers' %>
 	  </div>
 	<% end %>
@@ -199,27 +199,27 @@
   <%end%>
     <%= field_set_tag t('aplcat.water_use_pumping_parameters'), class:'fieldset' do %>
 	  <div class="field">
-		<%= f.label t('aplcat.dwawfga') %>
+		<%=  t('aplcat.dwawfga') %>
 		<%= f.text_field :dwawfga, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.dwawflc') %>
+		<%=  t('aplcat.dwawflc') %>
 		<%= f.text_field :dwawflc, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.dwawfmb') %>
+		<%=  t('aplcat.dwawfmb') %>
 		<%= f.text_field :dwawfmb, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.pgu') %>
+		<%=  t('aplcat.pgu') %>
 		<%= f.text_field :pgu, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.ada') %>
+		<%=  t('aplcat.ada') %>
 		<%= f.text_field :ada, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.ape') %>
+		<%=  t('aplcat.ape') %>
 		<%= f.text_field :ape, class: 'fieldNumbers' %>
 	  </div>
 	<% end %>
@@ -232,15 +232,15 @@
   <%end%>
     <%= field_set_tag t('aplcat.other_parameters'), class:'fieldset' do %>
 	  <div class="field">
-		<%= f.label t('aplcat.platc') %>
+		<%=  t('aplcat.platc') %>
 		<%= f.text_field :platc, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.pctbb') %>
+		<%=  t('aplcat.pctbb') %>
 		<%= f.text_field :pctbb, class: 'fieldNumbers' %>
 	  </div>
 	  <div class="field">
-		<%= f.label t('aplcat.ptdife') %>
+		<%=  t('aplcat.ptdife') %>
 		<%= f.text_field :ptdife, class: 'fieldNumbers' %>
 	  </div>
 	<% end %>
