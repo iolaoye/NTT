@@ -247,7 +247,7 @@ module ScenariosHelper
 				subarea.rsbd = 0.8
 				#line 10
 				subarea.pec = 1
-				add_buffer_operation(subarea, 139, 139, 0, 2000, 0, 33, true, scenario_id)
+				add_buffer_operation(subarea, 139, 139, 0, 2000, 0, 33, 1, scenario_id)
 			when 12    #Riperian Forest
 				if !checker
 					#line 2
@@ -299,7 +299,7 @@ module ScenariosHelper
 						update_wsa("-", subarea.wsa)
 						update_subarea(subarea, "RF", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
 					end
-					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, true, scenario_id)
+					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 2, scenario_id)
 				else
 					#line 2
 					subarea.number = 103
@@ -342,8 +342,8 @@ module ScenariosHelper
 					subarea.rfpl = subarea.rchl
 					#line 10
 					subarea.pec = 1.0
-					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, true, scenario_id)
-					add_buffer_operation(subarea, 136, 49, 0, 1400, 0, 22, false, scenario_id)
+					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, 1, scenario_id)
+					add_buffer_operation(subarea, 136, 49, 0, 1400, 0, 22, 1, scenario_id)
 				end
 			when 13    #Filter Strip
 				#line 2
@@ -384,7 +384,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, true, scenario_id)
+				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 1, scenario_id)
 			when 14    #Waterway
 				#line 2
 				subarea.number = 104
@@ -418,7 +418,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, true, scenario_id)
+				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 1, scenario_id)
 			when 23    #Shading
 				#line 2
 				subarea.number = 101
@@ -457,7 +457,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, true, scenario_id)
+				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, 1, scenario_id)
 		end # end bmpsublist_id
 
 		#this is when the subarea is added from a scenario
@@ -526,17 +526,21 @@ module ScenariosHelper
 	def update_wsa(operation, wsa)
 		soils = soils = Soil.where(:field_id => session[:field_id], :selected => true)
 		soils.each do |soil|
-			subarea = Subarea.where(:scenario_id => session[:scenario_id], :soil_id => soil.id).first
+			#subarea = Subarea.find_by_scenario_id_and_soil_id(session[:scenario_id], soil.id)
 			if operation == "+"
-				subarea.wsa += subarea.wsa * soil.percentage / 100
+				soil.subareas.first.wsa += soil.subareas.first.wsa * soil.percentage / 100
 			else
-				subarea.wsa -= subarea.wsa * soil.percentage / 100
+				soil.subareas.first.wsa -= soil.subareas.first.wsa * soil.percentage / 100
 			end
-			subarea.save
+			if soil.save then
+				return "OK"
+			else
+				return "Problem updating subarea area"
+			end
 		end
 	end
 
-	def add_buffer_operation(subarea, operation, crop, years_cult, opv1, opv2, lunum, add_buffer, scenario_info)
+	def add_buffer_operation(subarea, oper, crop, years_cult, opv1, opv2, lunum, add_buffer, scenario_id)
 		operation = SoilOperation.new
 		operation.day = 15
 		operation.month = 1
@@ -550,11 +554,11 @@ module ScenariosHelper
 		operation.opv3 = 0
 		operation.opv4 = 0
 		operation.opv5 = 0
-		operation.opv6 = 0
+		operation.opv6 = add_buffer   # this is going to control the operation number. used when the bmp has more than one operation. As now just RF. 
 		operation.opv7 = 0
-		operation.scenario_id = scenario_info
+		operation.scenario_id = scenario_id
 		operation.soil_id = 0
-		operation.apex_operation = operation
+		operation.apex_operation = oper
 		operation.bmp_id = @bmp.id
 		operation.activity_id = 1
 		if operation.save then

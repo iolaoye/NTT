@@ -3,9 +3,9 @@ class SubareasController < ApplicationController
   # GET /subareas.json
   def index
     @field = Field.find(session[:field_id])
-	  soils = Soil.where(:field_id => session[:field_id], :selected => true)
-	  if soils != nil then
-		  subarea = Subarea.where(:soil_id => soils[0].id).first
+	  @soils = Soil.where(:field_id => session[:field_id], :selected => true)
+	  if @soils != nil then
+		  subarea = Subarea.where(:soil_id => @soils[0].id).first
 		  if subarea != nil then
 		    session[:scenario_id] = subarea.scenario_id
 		  else
@@ -53,6 +53,7 @@ class SubareasController < ApplicationController
   # POST /subareas
   # POST /subareas.json
   def create
+    @soils = Soil.where(:field_id => session[:field_id], :selected => true)
     session[:scenario_id] = params[:subarea][:scenario_id]
 	get_subareas()
     @field = Field.find(session[:field_id])
@@ -88,17 +89,16 @@ class SubareasController < ApplicationController
   end
 
   def get_subareas()
-    @subareas = []
-	  soils = Soil.where(:field_id => session[:field_id], :selected => true)
+      @subareas = []
 	  i=1
 	  if session[:scenario_id] != 0 then
-		  soils.each do |soil|
-			  subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
-			  @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+		  @soils.each do |soil|
+			  #subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])   #no needed because subarea depends on soil
+			  @subareas.push(:subarea_type => soil.subareas.first.subarea_type, :subarea_number => i, :subarea_description => soil.subareas.first.description, :subarea_id => soil.subareas.first.id)
 			  i+=1
 		  end
 	  end
-	  subareas = Subarea.where(:scenario_id => session[:scenario_id]).where("bmp_id > 0")
+	  subareas = Subarea.where("scenario_id = " + session[:scenario_id].to_s + " AND bmp_id > 0 AND soil_id = 0")
 	  subareas.each do |subarea|
 		  @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
 		  i+=1
