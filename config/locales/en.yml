@@ -860,16 +860,16 @@ en:
     total_area: Total Area
   aplcat:
       noc: Number of Cows
-      nomb: Number of Replacement bulls
+      nomb: Number of mature bulls
       norh: Number of Replacement Heifers
-      abwc: Average Body Weigth of Cows
-      abwmb: Average Body Weigth of Mature Bulls
-      abwh: Average Body Weigth of Heifers
-      prh: Protion of Replacement Heifers
-      prb: Protion of Replacement Bulls
+      abwc: Average Body Weight of Cows (lb)
+      abwmb: Average Body Weight of Mature Bulls (lb)
+      abwh: Average Body Weight of Heifers (lb)
+      prh: Proportion of Replacement Heifers (%)
+      prb: Proportion of Replacement Bulls (%)
       adwgbc: Average daily weight gain (lb) by calves/growing cattle
       adwgbh: Average daily weight gain (lb) by heifers
-      mrga: Mortailty rate of growing animals until harvest
+      mrga: Mortality rate of growing (%)
       jdcc: Julian day of cows conceiving
       gpc: Gestation period of cows
       tpwg: Total pregnancy weight gain (lb)
@@ -877,7 +877,7 @@ en:
       srop: Success rate of pregnancy (%)
       bwoc: Birth weight of calves (lb)
       jdbs: Julian day of buying/selling
-      dmd: Dry Matter Digestibility (DMD) %
+      dmd: Dry Matter Digestibility (DMD)(%)
       dmi: DMI (% of body weight)
       napanr: Stocking rate in native range. number of animals/acre
       napaip: Stocking rate in introduced pasture. number of animals/acre
