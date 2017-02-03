@@ -4737,7 +4737,7 @@ states =
     {:id => 48, :state_name => 'Washington', :state_abbreviation => 'WA', :state_code => '53', :status => 1},
     {:id => 49, :state_name => 'West Virginia', :state_abbreviation => 'WV', :state_code => '54', :status => 0},
     {:id => 50, :state_name => 'Wisconsin', :state_abbreviation => 'WI', :state_code => '55', :status => 0},
-    {:id => 51, :state_name => 'Wyoming', :state_abbreviation => 'WY', :state_code => '56', :status => 0}
+    {:id => 51, :state_name => 'Wyoming', :state_abbreviation => 'WY', :state_code => '56', :status => 0},
     {:id => 52, :state_name => 'Puerto Rico', :state_abbreviation => 'PR', :state_code => '72', :status => 0}
 
 states.each { |state| State.create state, :without_protection => true }
