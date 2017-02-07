@@ -37,7 +37,8 @@
         soil: "Suelos"
         layer: "Capas"
         operation: "Operaciones"
-        site: "Sitio"  
+        site: "Sitio" 
+        download: Bajar
     attributes:
       project:
         name: "Nombre"
@@ -906,6 +907,8 @@
       water_use_pumping_parameters: Parámetros del uso y bombeo del agua
       other_parameters: Otros Parámetros
       animal_feed_parameters: Parámetros del alimento de los animales
+      avg_temp: Temperatura promedio diaria for cada mes
+      avg_rh: Humedad relativa diaria por cas mes
   aplcat_tooltip:
       noc: Número total de vacas in la finca bajo el sistema vaca-ternera
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'

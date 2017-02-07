@@ -99,7 +99,7 @@ module SimulationsHelper
       case p.parameter_description_id
         when 10, 20, 30, 50, 60, 70, 80, 90
           apex_string += sprintf("%8.2f", p.value) + "\n"
-        when 36, 65, 76, 87, 88
+        when 19, 36, 65, 76, 87, 88
           apex_string += sprintf("%8.3f", p.value)
         when 40
           apex_string += sprintf("%8.3f", p.value) + "\n"
