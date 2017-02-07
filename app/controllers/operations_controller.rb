@@ -1,4 +1,5 @@
 class OperationsController < ApplicationController
+  include ScenariosHelper
   require "open-uri"
 ################################  operations list   #################################
 # GET /operations/1
@@ -9,6 +10,12 @@ class OperationsController < ApplicationController
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
     @scenario_name = Scenario.find(session[:scenario_id]).name
+
+    @scenario = Scenario.find(session[:scenario_id])
+
+    array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
+    @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
+    
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @fields }
