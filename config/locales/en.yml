@@ -42,6 +42,7 @@ en:
         layer: "Layers"
         operation: "Operation"
         site: "Site"
+        download: Download 
     attributes:
       projects:
         name: "Name"
@@ -911,6 +912,8 @@ en:
       water_use_pumping_parameters: Water Use and Pumping Parameters
       other_parameters: Other Parameters
       animal_feed_parameters: Animal Feed Parameters
+      avg_temp: Daily average temperature for each month
+      avg_rh: Daily average relative humidity for each month
   aplcat_tooltip:
       noc: 'Total number of Cows in the farm under Cow-Calf system'
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'

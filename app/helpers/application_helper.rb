@@ -100,4 +100,12 @@ module ApplicationHelper
 		end
 	end
 
+	def apex_files_submenu
+		if request.url.include?(url_for('apex'))
+			true
+		else
+			false
+		end
+	end
+
 end
