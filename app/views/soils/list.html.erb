@@ -15,6 +15,54 @@
 <div class="page-header"><h1><%= t("menu.soils") %></h1></div>
 
 <%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'btn btn-success' %><br><br>
+
+<% if Rails.application.config.which_version == "modified" %>
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.symbol') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.group') %></th> 
+          <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.albedo') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.slope') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.percentage') %></th>
+          <th class="gvCellStyleTitle"><%= t('soil.drainage') %></th>
+          <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+        </tr>
+      </thead>
+    
+	  <tbody>
+			  <% i=1 %>
+				<% @soils.each do |soil| %>
+				<% if (i % 2 == 0) %>
+					<tr class="gvRowStyleEven">
+				<% else %>
+					<tr class="gvRowStyleOdd">
+				<% end %>
+					<td class="gvCellStyleCheckbox"><%= check_box_tag :soil, "1", soil.selected, disabled: true %></td>
+					<td class="gvCellStyleText"><%= soil.symbol %></td>
+					<td class="gvCellStyleText"><%= soil.group %></td>
+					<td class="gvCellStyleText"><%= soil.name %></td>
+					<td class="gvCellStyleNumber"><%= soil.albedo %></td>
+					<td class="gvCellStyleNumber"><%= soil.slope %></td>
+					<td class="gvCellStyleNumber"><%= soil.percentage %></td>
+					<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
+					<td class="gvCellStyleActions">
+						<%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
+						<%= link_to image_tag("delete.png"), soil, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
+					</td>
+				</tr>
+  			    <% i = i + 1 %>
+			  <% end %>
+	  </tbody>
+	</table></div>
+  </div>
+<br>
+
+<% else %>
 <div class="table-responsive">
   <div class="panel panel-default">
     <table class="table table-striped">
@@ -60,3 +108,4 @@
 	</table></div>
   </div>
 <br>
+<% end %>
