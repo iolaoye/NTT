@@ -82,7 +82,11 @@ class FieldsController < ApplicationController
     session[:field_id] = params[:id]
 
     respond_to do |format|
-      format.html { redirect_to edit_weather_path }
+      if Rails.application.config.which_version == "modified"
+        format.html { redirect_to field_soils_field_path(session[:field_id]) }
+      else
+        format.html { redirect_to edit_weather_path }
+      end
       format.json { render json: @field, status: :created, weather: @field.id }
     end
   end
