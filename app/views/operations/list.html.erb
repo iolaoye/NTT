@@ -26,9 +26,9 @@
   </div>
 
   <table class="table">
-    <tr><td><b>Year</b></td><td><b>Month</b></td><td><b>Day</b></td><td><b>Type</b></td><td><b>Seeding amount (seeds/ac)</b></td></tr>
+    <tr><td><b>Date</b></td><td><b>Type</b></td><td><b>Seeding amount (seeds/ac)</b></td></tr>
      <% @scenario.planting_operations(crop).each do |op| %>
-    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td></tr>
+    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td></tr>
     <% end %>
   </table>
   <% end %>
@@ -40,9 +40,9 @@
   </div>
 
   <table class="table">
-    <tr><td><b>Year</b></td><td><b>Month</b></td><td><b>Day</b></td><td><b>Fertilizer Type</b></td><td><b>Application Rate (lbs/ac)</b></td><td><b>Depth (in)</b></td><td><b>Moisture</b></td><td><b>NO3 N</b></td><td><b>PO4 P</b></td><td><b>Org N</b></td><td><b>Org P</b></td></tr>
+    <tr><td><b>Date</b></td><td><b>Fertilizer Type</b></td><td><b>Application Rate (lbs/ac)</b></td><td><b>Depth (in)</b></td><td><b>Moisture</b></td><td><b>NO3 N</b></td><td><b>PO4 P</b></td><td><b>Org N</b></td><td><b>Org P</b></td></tr>
     <% @scenario.fertilizer_operations(crop).each do |op| %>
-    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td><td><%= op.moisture %></td><td><%= op.no3_n %></td><td><%= op.po4_p %></td><td><%= op.org_n %></td><td><%= op.org_p %></td></tr>
+    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td><td><%= op.moisture %></td><td><%= op.no3_n %></td><td><%= op.po4_p %></td><td><%= op.org_n %></td><td><%= op.org_p %></td></tr>
     <% end %>
   </table>
   <% end %>
@@ -54,9 +54,9 @@
   </div>
 
   <table class="table">
-    <tr><td><b>Year</b></td><td><b>Month</b></td><td><b>Day</b></td><td><b>Type</b></td></tr>
+    <tr><td><b>Date</b></td><td><b>Type</b></td></tr>
     <% @scenario.tillage_operations(crop).each do |op| %>
-    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= op.type_name %></td></tr>
+    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td></tr>
     <% end %>
   </table>
   <% end %>
