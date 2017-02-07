@@ -87,6 +87,57 @@ class AplcatParametersController < ApplicationController
     end
   end
 
+  def create_aplcat_file
+	aplcat_file = Array.new
+	apex_string = ""
+	apex_string += sprintf("%8.2f", AplcatParameter.noc) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.nomb) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.norh) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.abwc) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.abwmb) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.abwh) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.prh) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.prb) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.adwgbc) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.adwgbh) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.mrga) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.jdcc) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.gpc) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.tpwg) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.csefa) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.srop) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.bwoc) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.jdbs) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.dmd) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.dmi) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.napanr) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.napaip) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.mpsm) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.splm) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.pmme) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.rhaeba) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.toaboba) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.vsim) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.foue) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.ash) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.mmppfm) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.cfmms) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.fnemimms) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.effn2ofmms) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.dwawfga) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.dwawflc) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.dwawfmb) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.pgu) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.ada) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.ape) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.platc) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.pctbb) + "\n"
+	apex_string += sprintf("%8.2f", AplcatParameter.ptdife) + "\n"
+	aplcat_file.push(apex_string + "\n")
+	msg = send_file_to_APEX(aplcat_file, "COW_CALF")
+	msg = send_file_to_APEX(aplcat_file, "DRINKIGWATER")
+  end	
+
   private
 
     # Use this method to whitelist the permissible parameters. Example:

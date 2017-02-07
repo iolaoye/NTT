@@ -908,6 +908,57 @@
       animal_feed_parameters: Parámetros del alimento de los animales
   aplcat_tooltip:
       noc: Número total de vacas in la finca bajo el sistema vaca-ternera
+      nomb: 'Total number of Bulls in the farm under Cow-Calf system'
+      norh: 'Total number of female animals kept by the producer as a replacement for the cows sold'
+      abwc: 'Body weight of Cows in pounds'
+      abwmb: 'Body weight of Bulls in pounds'
+      abwh: 'Body weight of Heifers in pounds'
+      prh: 'A value of 10  % means Cows live in the Cow-Calf system for ten years before slaughter'
+      prb: 'A value of 20  % means Bulls live in the Cow-Calf system for five years before slaughter'
+      adwgbc: 'Weight gain by Calves and growing cattle in lb/day'
+      adwgbh: 'Weight gain by Heifers in lb/day'
+      mrga: 'Likely proportion of dead animals in the growing cattle in the Cow-Calf system'
+      jdcc: 'Date/Julian day of Cows conceiving (Date will be converted to Julian day from 1 to 365)'
+      gpc: 'Typical total duration (in days) of pregnancy in Cows'
+      tpwg: 'Maximum weight gain by cows during their pregnancy in pounds'
+      csefa: 'Young calves typically start grazing forage three months after their birth'
+      srop: 'Not all cows in the farm can have a successful pregnancy'
+      bwoc: 'Birth weight of calves in pounds'
+      jdbs: 'Date/Julian day of buying/selling animals'
+      dmd: 'Dry Matter Digestibility (DMD): Varies with different animal feed items'
+      dmi: 'Dry Matter Intake (DMI) as a proportion (%) of body weight of animals'
+      napanr: 'Total number of animals allowed to graze an acre of native range (Headcount/ac)'
+      napaip: 'Total number of animals allowed to graze an acre of introduced pasture (Headcount/ac)'
+      mpsm: 
+      splm: 
+      pmme: 
+      rhaeba: 
+      toaboba: 
+      vsim: 
+      foue: 
+      ash: 
+      mmppfm: 
+      cfmms: 
+      fnemimms: 
+      effn2ofmms: 
+      dwawfga: 
+      dwawflc: 
+      dwawfmb: 
+      pgu: 
+      ada: 
+      ape: 
+      platc: 
+      pctbb: 
+      ptdife: 
+      tnggbc: 
+      animal_paramters: 
+      animal_manure_parameters: 
+      animal_growth_parameters:
+      environmental_parameters: 
+      greenhouse_parameters:
+      water_use_pumping_parameters:
+      other_parameters:
+      animal_feed_parameters:  
   instructions:
     projects: Para seleccionar un proyecto, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
