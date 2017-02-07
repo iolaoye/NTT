@@ -15,7 +15,7 @@ class OperationsController < ApplicationController
 
     array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
-    
+
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @fields }
@@ -53,6 +53,7 @@ class OperationsController < ApplicationController
     @field = Field.find(session[:field_id])
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @scenario = Scenario.find(session[:scenario_id])
+    @scenario_name = @scenario.name
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @operation }
