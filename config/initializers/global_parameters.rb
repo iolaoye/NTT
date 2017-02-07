@@ -11,7 +11,7 @@
 	VERSION = "NTTG3"
 
 # URL to send information to NTT, which return the results
-	URL_NTT = 'http://nn.tarleton.edu/NttApex/NNRestService.ashx'
+	#URL_NTT = 'http://nn.tarleton.edu/NttApex/NNRestService.ashx'  No being used
 
 # URL to get heat units
 	URL_HU = 'http://nn.tarleton.edu/NTTCalcHU/NTTService.asmx?WSDL'

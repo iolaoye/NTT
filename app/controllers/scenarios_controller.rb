@@ -169,6 +169,73 @@ class ScenariosController < ApplicationController
 	end
   end
 
+  def aplcat
+    #find the aplcat parameters for the sceanrio selected
+	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
+	if aplcat == nil then
+		aplcat = AplcatParameter.new
+		aplcat.scenario_id = params[:id]
+		aplcat.save
+	end 
+	# create string for the Cow_Calf_EME_final.txt file
+	apex_string = "This is the input file containing nutritional information for cattle in the cow-calf system" + "\n"
+	apex_string += "\n"
+	apex_string += "General data on cow-calf system" + "\n"
+	apex_string += "\n"
+	apex_string += sprintf("%8.2f", aplcat.noc) + "\t" + "! " + t('aplcat.noc') + "\n"
+	apex_string += sprintf("%8.2f", aplcat.nomb) + "\t" + "! " + t('aplcat.nomb') + "\n"
+	apex_string += sprintf("%8.2f", aplcat.norh) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.abwc) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.abwmb) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.abwh) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.prh) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.prb) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.adwgbc) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.adwgbh) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.mrga) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.jdcc) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.gpc) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.tpwg) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.csefa) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.srop) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.bwoc) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.jdbs) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.dmd) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.dmi) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.napanr) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.napaip) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.mpsm) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.splm) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.pmme) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.rhaeba) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.toaboba) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.vsim) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.foue) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.ash) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.mmppfm) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.cfmms) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.fnemimms) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.effn2ofmms) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.dwawfga) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.dwawflc) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.dwawfmb) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.pgu) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.ada) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.ape) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.platc) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.pctbb) + "\n"
+	apex_string += sprintf("%8.2f", aplcat.ptdife) + "\n"
+	msg = send_file_to_APEX(apex_string, "Cow_Calf_EME_final.txt")
+	# create string for the DRINKIGWATER.txt file
+	msg = send_file_to_APEX(apex_string, "DRINKIGWATER")
+    @scenarios = Scenario.where(:field_id => session[:field_id])
+    respond_to do |format|
+      format.html { redirect_to scenarios_url }
+      format.json { head :no_content }
+    end
+  end	
+
+
   private
 
 ################################  run_scenario - run simulation called from show or index  #################################

@@ -131,6 +131,7 @@ NTTG3::Application.routes.draw do
     get :list, on: :member
 	get :scenario_operations, on: :member
 	get :scenario_bmps, on: :member
+	get 'aplcat', on: :member
   end
 
   resources :operations do
