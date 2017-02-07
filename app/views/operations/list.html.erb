@@ -22,11 +22,11 @@
 
   <% if @scenario.planting_operations(crop).any? %>
   <div class="panel-body">
-    <p>Planting </p>
+    <p><h4>Planting</h4> </p>
   </div>
 
   <table class="table">
-    <tr><td><b>Date</b></td><td><b>Type</b></td><td><b>Seeding amount (seeds/ac)</b></td></tr>
+    <tr class="optable"><td class="optable"><b>Date</b></td><td class="optable"><b>Type</b></td><td class="optable"><b>Seeding amount (seeds/ac)</b></td></tr>
      <% @scenario.planting_operations(crop).each do |op| %>
     <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td></tr>
     <% end %>
@@ -36,11 +36,11 @@
 <% if @scenario.fertilizer_operations(crop).any? %>
 <br>
    <div class="panel-body">
-    <p>Fertilizer </p>
+    <p><h4>Fertilizer</h4> </p>
   </div>
 
   <table class="table">
-    <tr><td><b>Date</b></td><td><b>Fertilizer Type</b></td><td><b>Application Rate (lbs/ac)</b></td><td><b>Depth (in)</b></td><td><b>Moisture</b></td><td><b>NO3 N</b></td><td><b>PO4 P</b></td><td><b>Org N</b></td><td><b>Org P</b></td></tr>
+    <tr><td class="optable"><b>Date</b></td><td class="optable"><b>Fertilizer Type</b></td><td class="optable"><b>Application Rate (lbs/ac)</b></td><td class="optable"><b>Depth (in)</b></td><td class="optable"><b>Moisture</b></td><td class="optable"><b>NO3 N</b></td><td class="optable"><b>PO4 P</b></td><td class="optable"><b>Org N</b></td><td class="optable"><b>Org P</b></td></tr>
     <% @scenario.fertilizer_operations(crop).each do |op| %>
     <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td><td><%= op.moisture %></td><td><%= op.no3_n %></td><td><%= op.po4_p %></td><td><%= op.org_n %></td><td><%= op.org_p %></td></tr>
     <% end %>
@@ -50,11 +50,11 @@
 <% if @scenario.tillage_operations(crop).any? %>
 <br>
  <div class="panel-body">
-    <p>Tillage </p>
+    <p><h4>Tillage</h4> </p>
   </div>
 
   <table class="table">
-    <tr><td><b>Date</b></td><td><b>Type</b></td></tr>
+    <tr><td class="optable"><b>Date</b></td><td class="optable"><b>Type</b></td></tr>
     <% @scenario.tillage_operations(crop).each do |op| %>
     <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td></tr>
     <% end %>
@@ -63,11 +63,11 @@
 <% if @scenario.harvest_operations(crop).any? %>
 <br>
    <div class="panel-body">
-    <p>Harvest </p>
+    <p><h4>Harvest </h4></p>
   </div>
 
   <table class="table">
-  <tr><td><b>Year</b></td><td><b>Month</b></td><td><b>Day</b></td></tr>
+  <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td></tr>
     <% @scenario.harvest_operations(crop).each do |op| %>
     <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td></tr>
     <% end %>
@@ -77,11 +77,11 @@
   <% if @scenario.kill_operations(crop).any? %>
   <br>
    <div class="panel-body">
-    <p>Kill </p>
+    <p><h4>Kill</h4> </p>
   </div>
 
   <table class="table">
-    <tr><td><b>Year</b></td><td><b>Month</b></td><td><b>Day</b></td></tr>
+    <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td></tr>
     <% @scenario.kill_operations(crop).each do |op| %>
     <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td></tr>
     <% end %>
@@ -91,11 +91,11 @@
   <% if @scenario.irrigation_operations(crop).any? %>
   <br>
    <div class="panel-body">
-    <p>Irrigation </p>
+    <p><h4>Irrigation</h4> </p>
   </div>
 
   <table class="table">
-    <tr><td><b>Year</b></td><td><b>Month</b></td><td><b>Day</b></td><td><b>Type</b></td><td>Volume (in)</td><td>Depth</td></tr>
+    <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable"><b>Type</b></td><td class="optable">Volume (in)</td><td class="optable">Depth</td></tr>
      <% @scenario.irrigation_operations(crop).each do |op| %>
     <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td></tr>
     <% end %>
@@ -121,11 +121,11 @@
   <% if @scenario.burn_operations(crop).any? %>
   <br>
    <div class="panel-body">
-    <p>Burn </p>
+    <p><h4>Burn</h4> </p>
   </div>
 
   <table class="table">
-   <tr><td><b>Year</b></td><td><b>Month</b></td><td><b>Day</b></td></tr>
+   <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td></tr>
     <% @scenario.burn_operations(crop).each do |op| %>
     <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td></tr>
     <% end %>
@@ -135,10 +135,10 @@
 <% if @scenario.liming_operations(crop).any? %>
 <br>
    <div class="panel-body">
-    <p>Liming </p>
+    <p><h4>Liming</h4> </p>
   </div>
   <table class="table">
-     <tr><td><b>Year</b></td><td><b>Month</b></td><td><b>Day</b></td><td>Amount</td></tr>
+     <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable">Amount</td></tr>
     <% @scenario.liming_operations(crop).each do |op| %>
     <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= op.amount %></td></tr>
     <% end %>
@@ -148,10 +148,10 @@
   <% if @scenario.pesticide_operations(crop).any? %>
   <br>
    <div class="panel-body">
-    <p>Pesticide </p>
+    <p><h4>Pesticide</h4> </p>
   </div>
   <table class="table">
-   <tr><td><b>Year</b></td><td><b>Month</b></td><td><b>Day</b></td></tr>
+   <tr><td><b class="optable">Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td></tr>
     <% @scenario.pesticide_operations(crop).each do |op| %>
     <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td></tr>
     <% end %>
