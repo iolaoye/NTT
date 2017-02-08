@@ -172,19 +172,13 @@ class ScenariosController < ApplicationController
   def aplcat
     #find the aplcat parameters for the sceanrio selected
 	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
-	grazing = GrazingParameter.find_by_scenario_id(params[:id])
+	grazing = GrazingParameter.where(:scenario_id => params[:id])
 	grazing_count = grazing.count
-	i = 1 
 	if aplcat == nil then
 		aplcat = AplcatParameter.new
 		aplcat.scenario_id = params[:id]
 		aplcat.save
 	end
-	if grazing == nil then
-		grazing = GrazingParameter.new
-		grazing.scenario_id = params[:id]
-		grazing.save
-	end 
 	# create string for the Cow_Calf_EME_final.txt file
 	apex_string = "This is the input file containing nutritional information for cattle in the cow-calf system" + "\n"
 	apex_string += "\n"
@@ -223,10 +217,9 @@ class ScenariosController < ApplicationController
 	apex_string += "Data on animalfeed (grasses, hay and concentrates)" + "\n"
 	apex_string += "\n"
 	apex_string += sprintf("%8.2f", grazing_count) + "\t" + "| " + t('graze.total') + "\n"
-	while i <= grazing.count
-		apex_string += sprintf("%8.2f", grazing.code) + "\t"
-		i += 1
-	end
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%8.2f", grazing[i].code) + "\t"
+	end 
 	apex_string += "| " + t('graze.code') + "\n"
 	while i <= grazing.count
 		apex_string += sprintf("%8.2f", grazing.starting_julian_day) + "\t"
@@ -267,6 +260,7 @@ class ScenariosController < ApplicationController
 		apex_string += sprintf("%8.2f", grazing.green_water_footprint) + "\t"
 		i += 1
 	end
+
 	apex_string += "| " + t('graze.gwf') + "\n"
 	apex_string += "\n"
 	apex_string += "IMPORTANT NOTE: Details of parameters defined in the above 8 lines:" + "\n"
