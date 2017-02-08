@@ -694,7 +694,7 @@ en:
     select_subarea: Select Subarea
     load_subarea: Load Subarea
   apex:
-    parameter: Parameter
+    parameter: Parameters
     code: Code
     line: Line
     column: Column
@@ -914,6 +914,7 @@ en:
       animal_feed_parameters: Animal Feed Parameters
       avg_temp: Daily average temperature for each month
       avg_rh: Daily average relative humidity for each month
+      grazing: Grazing
   aplcat_tooltip:
       noc: 'Total number of Cows in the farm under Cow-Calf system'
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'

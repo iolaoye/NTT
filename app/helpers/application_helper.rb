@@ -103,9 +103,33 @@ module ApplicationHelper
 	def apex_files_submenu
 		if request.url.include?(url_for('apex'))
 			true
+		elsif request.url.include?(url_for('subareas'))
+			true
+		elsif request.url.include?(url_for('site'))
+			true
+		elsif request.url.include?(url_for('soils'))
+			true
+		elsif request.url.include?(url_for('operations'))
+			true
 		else
 			false
 		end
 	end
+
+    def download_apex_files
+      client = Savon.client(wsdl: URL_Weather)
+      response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APEX", "session1" => session[:session_id], "type" => "apex"})
+      path = response.body[:download_apex_folder_response][:download_apex_folder_result]
+	  file_name = path.split("\\")
+	  path = File.join(DOWNLOAD, file_name[2])
+	  require 'open-uri'
+	  File.open(DOWNLOAD + "/" + file_name[2], "wb") do |saved_file|
+	     # the following "open" is provided by open-uri
+	     open("http://nn.tarleton.edu//download/" + file_name[2], "rb") do |read_file|
+            saved_file.write(read_file.read)
+        end
+		send_file path, :type => "application/xml", :x_sendfile => true
+	  end
+    end 
 
 end
