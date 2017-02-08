@@ -618,8 +618,7 @@
                 $("tbody#2 input").val("");
                 $("tbody#2 select").val([]);
               } else { confirm_check(i); }
-            } else
-            if (i == 2 && $('#select_1').is(':checked')) {
+            } else if (i == 2 && $('#select_1').is(':checked')) {
                 if (prompt_user()) {
                   validateBmpAi.clearAllValidations();
                   validateBmpAf.addValidation(af_name, "req", "Fields missing in Autofertigation.");
