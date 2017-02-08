@@ -909,6 +909,7 @@
       animal_feed_parameters: Parámetros del alimento de los animales
       avg_temp: Temperatura promedio diaria for cada mes
       avg_rh: Humedad relativa diaria por cas mes
+      grazing: Pastoreo
   aplcat_tooltip:
       noc: Número total de vacas in la finca bajo el sistema vaca-ternera
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'
