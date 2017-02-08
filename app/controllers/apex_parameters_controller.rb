@@ -104,6 +104,9 @@ class ApexParametersController < ApplicationController
     redirect_to apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.reset')
   end
 
+  def download
+	download_apex_files()
+  end
   private
 
   # Use this method to whitelist the permissible parameters. Example:

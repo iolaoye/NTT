@@ -295,6 +295,29 @@ class ScenariosController < ApplicationController
 	apex_string += sprintf("%8.2f", aplcat.dwawfga) + "\t" + "! " + t('aplcat.dwawfga') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.dwawflc) + "\t" + "! " + t('aplcat.dwawflc') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.dwawfmb) + "\t" + "! " + t('aplcat.dwawfmb') + "\n"
+	# take monthly avg max and min temp and get an average of those two
+	# take monthly rh to add to dringking water.
+	county = County.find(Location.find(session[:location_id]).county_id)
+    if county != nil then
+      client = Savon.client(wsdl: URL_Weather)
+      response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
+      #response = client.call(:get_weather, message: {"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
+      weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
+	  max_temp = weather_data[2].split
+	  min_temp = weather_data[3].split
+	  rh = weather_data[14].split
+	  for i in 0..max_temp.count-1
+		min_temp[i] = sprintf("%5.1f",((max_temp[i].to_f + min_temp[i].to_f) / 2) * 9/5 + 32)
+		session[:depth] = rh[i]
+		rh[i] = 100 * (Math.exp((17.625 * rh[i].to_f) / (243.04 + rh[i].to_f)) / Math.exp((17.625 * min_temp[i].to_f) / (243.04 + min_temp[i].to_f)))
+		apex_string += sprintf("%5.1f", min_temp[i]) + "  "
+	  end
+	  apex_string += "\t" + "! " + t('aplcat.avg_temp') + "\n"
+	  for i in 0..rh.count-1
+		apex_string += sprintf("%5.1f", rh[i]) + "  "
+	  end
+	  apex_string += "\t" + "! " + t('aplcat.avg_rh') + "\n"
+	end
 	apex_string += sprintf("%8.2f", aplcat.adwgbc) + "\t" + "! " + t('aplcat.adwgbc') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.adwgbh) + "\t" + "! " + t('aplcat.adwgbh') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"	
