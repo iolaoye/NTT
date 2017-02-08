@@ -257,16 +257,7 @@ class ResultsController < ApplicationController
     end # if format is pdf
   end
 
-  #def download
-  #respond_to do |format|
-  #format.pdf do
-  #render pdf: "tester",
-  #layout: "pdf",
-  #template: "/results/tester"
-  #end
-  #end 
-  # results?result1%5Bscenario_id%5D=4&result2%5Bscenario_id%5D=5&result3%5Bscenario_id%5D=&language%5Blanguage%5D=en&field%5Bid%5D=3
-  # results?result1%5Bscenario_id%5D=4&result2%5Bscenario_id%5D=5&result3%5Bscenario_id%5D=&language%5Blanguage%5D=en&field%5Bid%5D=3
+
   # GET /results/1
   # GET /results/1.json
   def show

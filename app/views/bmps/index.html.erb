@@ -216,9 +216,9 @@
 				    <td class="indent">
 						<%= label :animal_id, t('bmp.animals') %>
 						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+						  <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
 						<% else %>
-						  <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true} %>
+						  <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
 						<% end %>
 				    </td>
 				  </tr>
@@ -256,7 +256,11 @@
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
-						<%= check_box :bmp_sbs, :id, :value => bmp.id %>
+						<% if bmp.id != nil %>
+							<%= check_box :bmp_sbs, :id, checked: true %>
+						<%else%>
+							<%= check_box :bmp_sbs, :id, checked: false %>
+						<%end%>
 					</td>
 				  </tr>
 				<% when 12 %>
@@ -289,9 +293,9 @@
 					<td class="indent">
 						<%= label :crop_id, t('operation.crop') %>
 						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege')} %>
+						  <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
 						<% else %>
-						  <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege')} %>
+						  <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
 						<% end %>
 					</td>
 				  </tr>
@@ -364,7 +368,11 @@
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
-						<%= check_box :bmp_ts, :id, :value => bmp.id %>
+						<% if bmp.id != nil %>
+							<%= check_box :bmp_ts, :id, checked: true %>
+						<%else%>
+							<%= check_box :bmp_ts, :id, checked: false %>
+						<%end%>
 					</td>
 				  </tr>
 				<% when 18 %>

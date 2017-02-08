@@ -2,10 +2,8 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters
   # GET /apex_parameters.json
   def index
-    @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => session[:project_id])
-    #@apex_parameters = ApexParameter.where(:project_id => session[:project_id])
-
     @field = Field.find(session[:field_id])
+    @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => session[:project_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_parameters }
@@ -89,7 +87,7 @@ class ApexParametersController < ApplicationController
 
   def reset
     parameters = Parameter.where(:state_id => Location.find(session[:location_id]).state_id)
-	if parameters == nil then
+	if parameters == nil or parameters.blank? then
 		parameters = Parameter.where(:state_id => 99)
 	end
 
@@ -98,7 +96,7 @@ class ApexParametersController < ApplicationController
 
     parameters.each do |parameter|
 		  apex_parameter = ApexParameter.new
-		  apex_parameter.parameter_description_id = parameter.id
+		  apex_parameter.parameter_description_id = parameter.number
 		  apex_parameter.value = parameter.default_value
 		  apex_parameter.project_id = session[:project_id]
 		  apex_parameter.save
@@ -106,6 +104,9 @@ class ApexParametersController < ApplicationController
     redirect_to apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.reset')
   end
 
+  def download
+	download_apex_files()
+  end
   private
 
   # Use this method to whitelist the permissible parameters. Example:

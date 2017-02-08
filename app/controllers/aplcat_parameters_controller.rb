@@ -25,6 +25,8 @@ class AplcatParametersController < ApplicationController
   # GET /aplcat_parameters/new.json
   def new
     @aplcat_parameter = AplcatParameter.new
+	@aplcat_parameter.scenario_id = params[:id]
+	@aplcat_parameter.save
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @aplcat_parameter }

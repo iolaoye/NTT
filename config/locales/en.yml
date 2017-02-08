@@ -42,6 +42,7 @@ en:
         layer: "Layers"
         operation: "Operation"
         site: "Site"
+        download: Download 
     attributes:
       projects:
         name: "Name"
@@ -693,7 +694,7 @@ en:
     select_subarea: Select Subarea
     load_subarea: Load Subarea
   apex:
-    parameter: Parameter
+    parameter: Parameters
     code: Code
     line: Line
     column: Column
@@ -860,16 +861,16 @@ en:
     total_area: Total Area
   aplcat:
       noc: Number of Cows
-      nomb: Number of Replacement bulls
+      nomb: Number of mature bulls
       norh: Number of Replacement Heifers
-      abwc: Average Body Weigth of Cows
-      abwmb: Average Body Weigth of Mature Bulls
-      abwh: Average Body Weigth of Heifers
-      prh: Protion of Replacement Heifers
-      prb: Protion of Replacement Bulls
+      abwc: Average Body Weight of Cows (lb)
+      abwmb: Average Body Weight of Mature Bulls (lb)
+      abwh: Average Body Weight of Heifers (lb)
+      prh: Proportion of Replacement Heifers (%)
+      prb: Proportion of Replacement Bulls (%)
       adwgbc: Average daily weight gain (lb) by calves/growing cattle
       adwgbh: Average daily weight gain (lb) by heifers
-      mrga: Mortailty rate of growing animals until harvest
+      mrga: Mortality rate of growing animals (%)
       jdcc: Julian day of cows conceiving
       gpc: Gestation period of cows
       tpwg: Total pregnancy weight gain (lb)
@@ -877,10 +878,10 @@ en:
       srop: Success rate of pregnancy (%)
       bwoc: Birth weight of calves (lb)
       jdbs: Julian day of buying/selling
-      dmd: Dry Matter Digestibility (DMD) %
-      dmi: DMI (% of body weight)
-      napanr: Stocking rate in native range. number of animals/acre
-      napaip: Stocking rate in introduced pasture. number of animals/acre
+      dmd: Dry Matter Digestibility (DMD)(%)
+      dmi: "DMI (% of body weight)"
+      napanr: Stocking rate in native range. Number of animals/acre
+      napaip: Stocking rate in introduced pasture. Number of animals/acre
       mpsm: Moisture present in solid manure (%) 
       splm: Solids present in liquid manure (urine) (%)
       pmme: Proportion of manure (solid+liquid) moisture evaporated (%)
@@ -911,6 +912,77 @@ en:
       water_use_pumping_parameters: Water Use and Pumping Parameters
       other_parameters: Other Parameters
       animal_feed_parameters: Animal Feed Parameters
+      avg_temp: Daily average temperature for each month
+      avg_rh: Daily average relative humidity for each month
+      grazing: Grazing
+  aplcat_tooltip:
+      noc: 'Total number of Cows in the farm under Cow-Calf system'
+      nomb: 'Total number of Bulls in the farm under Cow-Calf system'
+      norh: 'Total number of female animals kept by the producer as a replacement for the cows sold'
+      abwc: 'Body weight of Cows in pounds'
+      abwmb: 'Body weight of Bulls in pounds'
+      abwh: 'Body weight of Heifers in pounds'
+      prh: 'A value of 10  % means Cows live in the Cow-Calf system for ten years before slaughter'
+      prb: 'A value of 20  % means Bulls live in the Cow-Calf system for five years before slaughter'
+      adwgbc: 'Weight gain by Calves and growing cattle in lb/day'
+      adwgbh: 'Weight gain by Heifers in lb/day'
+      mrga: 'Likely proportion of dead animals in the growing cattle in the Cow-Calf system'
+      jdcc: 'Date/Julian day of Cows conceiving (Date will be converted to Julian day from 1 to 365)'
+      gpc: 'Typical total duration (in days) of pregnancy in Cows'
+      tpwg: 'Maximum weight gain by cows during their pregnancy in pounds'
+      csefa: 'Young calves typically start grazing forage three months after their birth'
+      srop: 'Not all cows in the farm can have a successful pregnancy'
+      bwoc: 'Birth weight of calves in pounds'
+      jdbs: 'Date/Julian day of buying/selling animals'
+      dmd: 'Dry Matter Digestibility (DMD): Varies with different animal feed items'
+      dmi: 'Dry Matter Intake (DMI) as a proportion (%) of body weight of animals'
+      napanr: 'Total number of animals allowed to graze an acre of native range (Headcount/ac)'
+      napaip: 'Total number of animals allowed to graze an acre of introduced pasture (Headcount/ac)'
+      mpsm: 
+      splm: 
+      pmme: 
+      rhaeba: 
+      toaboba: 
+      vsim: 
+      foue: 
+      ash: 
+      mmppfm: 
+      cfmms: 
+      fnemimms: 
+      effn2ofmms: 
+      dwawfga: 
+      dwawflc: 
+      dwawfmb: 
+      pgu: 
+      ada: 
+      ape: 
+      platc: 
+      pctbb: 
+      ptdife: 
+      tnggbc: 
+      animal_paramters: 
+      animal_manure_parameters: 
+      animal_growth_parameters:
+      environmental_parameters: 
+      greenhouse_parameters:
+      water_use_pumping_parameters:
+      other_parameters:
+      animal_feed_parameters:
+  graze:
+    total: 'Total number of grasses grazed by cattle'
+    code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
+    sjd: 'Starting julian day of grazing'
+    ejd: 'Ending julian day of grazing'
+    dmi_code: 'Dry Matter Intake (DMI) code Use 1: Prop. of animal weight 2: Absolute rates 3:Estimate'
+    dmi_cows: 'DMI of cows (% of animal bodyweight (OR) lb/day)'
+    dmi_bulls: 'DMI of bulls (% of animal bodyweight (OR) lb/day)'
+    dmi_heifers: 'DMI of heifers (% of animal bodyweight (OR) lb/day)'
+    dmi_calves: 'DMI of calves (% of animal bodyweight (OR) lb/day)'
+    gwf: 'Green water footprint (L/kg)'
+    ln1: 'Line 1: Total number of animal feed cattle have access to'
+    ln2: 'Animal feed code (refer to feed composition table file "FCT-NASEM-2016.txt")'
+    ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
+    ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   instructions:
     projects: To select a project, click on the project name
     fields: To select a field, click on the field name

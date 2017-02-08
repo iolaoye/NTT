@@ -37,7 +37,8 @@
         soil: "Suelos"
         layer: "Capas"
         operation: "Operaciones"
-        site: "Sitio"  
+        site: "Sitio" 
+        download: Bajar
     attributes:
       project:
         name: "Nombre"
@@ -854,50 +855,129 @@
     reduction: Reducción
     total_area: Área Total
   aplcat:
-      noc: Number of Cows
-      nomb: Number of Replacement bulls
-      norh: Number of Replacement Heifers
-      abwc: Average Body Weigth of Cows
-      abwmb: Average Body Weigth of Mature Bulls
-      abwh: Average Body Weigth of Heifers
-      prh: Protion of Replacement Heifers
-      prb: Protion of Replacement Bulls
-      adwgbc: Average daily weight gain (lb) by calves/growing cattle
-      adwgbh: Average daily weight gain (lb) by heifers
-      mrga: Mortailty rate of growing animals until harvest
-      jdcc: Julian day of cows conceiving
-      gpc: Gestation period of cows
+      noc: Número de Vacas
+      nomb: Número de toros maduros
+      norh: Número de novillas de reemplazo
+      abwc: Peso corporal promedio de las vacas (lb)
+      abwmb: Peso corporal promedio de los toros maduros (lb)
+      abwh: Peso corporal promedio de las novillas (lb)
+      prh: Proporción novillas de reemplazo (%)
+      prb: Proporción toros de reemplazo (%)
+      adwgbc: Aumento promedio de peso diario (lb) por terneros/ganado en crecimiento
+      adwgbh: Aumento promedio de peso diario (lb) by novillas
+      mrga: Tasa de mortalidad en crecimiento de animales (%)
+      jdcc: Día juliano en que las vacas conciben
+      gpc: Período de gestación de las vacas
       tpwg: Total pregnancy weight gain (lb)
-      csefa: Calves start eating forage after (days)
-      srop: Success rate of pregnancy (%)
-      bwoc: Birth weight of calves (lb)
-      jdbs: Julian day of buying/selling
-      dmd: Dry Matter Digestibility (DMD) %
-      dmi: DMI (% of body weight)
-      napanr: Stocking rate in native range. number of animals/acre
-      napaip: Stocking rate in introduced pasture. number of animals/acre
-      mpsm: Moisture present in solid manure (%) 
-      splm: Solids present in liquid manure (urine) (%)
-      pmme: Proportion of manure (solid+liquid) moisture evaporated (%)
-      rhaeba: Relative humidity of air exhaled by animals (%)
-      toaboba: Temperature of air breathed out by animals (deg F)
-      vsim: Volatile solids in manure [kg of dry organic matter]
-      foue: Fraction of urinary energy expressed as fraction of GE
-      ash: Ash content in manure (fraction of dry matter intake)
-      mmppfm: Maximum methane production potential for the manure (Bo)
+      csefa: Terneros empiezan a comer forraje (days)
+      srop: Rata de embarazos exitosos (%)
+      bwoc: Peso de los terneros al nacer (lb)
+      jdbs: Día juliano de compra/venta
+      dmd: Digestibilidad de la materia seca (DMD) (%)
+      dmi: "DMI (% de peso corporal)"
+      napanr: Tasa de población en el rango nativo. Número de animales / acre
+      napaip: Tasa de almacenamiento en pastos introducidos. Número de animales / acre
+      mpsm: Humedad presente en el abono sólido (%) 
+      splm: Sólidos presentes en el abono líquido (orina) (%)
+      pmme: Proporción de abono (sólido + líquido) evaporado (%)
+      rhaeba: Humedad relativa del aire exhalado por los animales (%)
+      toaboba: Temperatura del aire respirado por los animales (grados F)
+      vsim: Sólidos volátiles en abono [kg de materia orgánica seca]
+      foue: Fracción de la energía urinaria expresada como fracción de GE
+      ash: Contenido de ceniza en el estiércol (fracción de la ingesta de materia seca)
+      mmppfm: Potencial máximo de producción de metano para el abono (Bo)
       cfmms: Conversion factor for manure management system
       fnemimms: Fraction of nitrogen excretion managed in manure management system
       effn2ofmms: Emission factor for direct N2O emissions from manure management system
       dwawfga: Drinking water adjustment factor for weight:Growing animals
       dwawflc: Drinking water adjustment factor for weight:Lactating cows
       dwawfmb: Drinking water adjustment factor for weight:Mature bulls
-      pgu: Proportion of groundwater used (%) in animal production
-      ada: Average depth of aquifer (feet)
-      ape: Average pumping efficiency (%)
-      platc: proportion of live animal to carcass (%)
-      pctbb: proportion of carcass to boneless beef (%)
-      ptdife: Proportion (for beef by-products) to be discounted in footprint estimation
-      tnggbc: Total number of grasses grazed by cattle
+      pgu: Proporción de agua subterránea utilizada (%) en la producción animal
+      ada: Profundidad media del acuífero (ft)
+      ape: Rendimiento medio de bombeo (%)
+      platc: Proporción de animales vivos con respecto a la carcasa (%)
+      pctbb: Proporción de carcasa a la carne deshuesada (%)
+      ptdife: Proporción (para subproductos de la carne de vacuno) que se descontará en la estimación de la huella
+      tnggbc: Número total de pastos pastoreados por el ganado
+      animal_paramters: Parámetros de los Animales
+      animal_manure_parameters: Parámetros de abono animal
+      animal_growth_parameters: Parámetros de crecimiento y nutrición de los animales
+      environmental_parameters: Parámetros del medio ambiente
+      greenhouse_parameters: Parámetros Invernaderos
+      water_use_pumping_parameters: Parámetros del uso y bombeo del agua
+      other_parameters: Otros Parámetros
+      animal_feed_parameters: Parámetros del alimento de los animales
+      avg_temp: Temperatura promedio diaria for cada mes
+      avg_rh: Humedad relativa diaria por cas mes
+      grazing: Pastoreo
+  aplcat_tooltip:
+      noc: Número total de vacas in la finca bajo el sistema vaca-ternera
+      nomb: 'Total number of Bulls in the farm under Cow-Calf system'
+      norh: 'Total number of female animals kept by the producer as a replacement for the cows sold'
+      abwc: 'Body weight of Cows in pounds'
+      abwmb: 'Body weight of Bulls in pounds'
+      abwh: 'Body weight of Heifers in pounds'
+      prh: 'A value of 10  % means Cows live in the Cow-Calf system for ten years before slaughter'
+      prb: 'A value of 20  % means Bulls live in the Cow-Calf system for five years before slaughter'
+      adwgbc: 'Weight gain by Calves and growing cattle in lb/day'
+      adwgbh: 'Weight gain by Heifers in lb/day'
+      mrga: 'Likely proportion of dead animals in the growing cattle in the Cow-Calf system'
+      jdcc: 'Date/Julian day of Cows conceiving (Date will be converted to Julian day from 1 to 365)'
+      gpc: 'Typical total duration (in days) of pregnancy in Cows'
+      tpwg: 'Maximum weight gain by cows during their pregnancy in pounds'
+      csefa: 'Young calves typically start grazing forage three months after their birth'
+      srop: 'Not all cows in the farm can have a successful pregnancy'
+      bwoc: 'Birth weight of calves in pounds'
+      jdbs: 'Date/Julian day of buying/selling animals'
+      dmd: 'Dry Matter Digestibility (DMD): Varies with different animal feed items'
+      dmi: 'Dry Matter Intake (DMI) as a proportion (%) of body weight of animals'
+      napanr: 'Total number of animals allowed to graze an acre of native range (Headcount/ac)'
+      napaip: 'Total number of animals allowed to graze an acre of introduced pasture (Headcount/ac)'
+      mpsm: 
+      splm: 
+      pmme: 
+      rhaeba: 
+      toaboba: 
+      vsim: 
+      foue: 
+      ash: 
+      mmppfm: 
+      cfmms: 
+      fnemimms: 
+      effn2ofmms: 
+      dwawfga: 
+      dwawflc: 
+      dwawfmb: 
+      pgu: 
+      ada: 
+      ape: 
+      platc: 
+      pctbb: 
+      ptdife: 
+      tnggbc: 
+      animal_paramters: 
+      animal_manure_parameters: 
+      animal_growth_parameters:
+      environmental_parameters: 
+      greenhouse_parameters:
+      water_use_pumping_parameters:
+      other_parameters:
+      animal_feed_parameters:  
+  graze:
+    total: 'Total number of grasses grazed by cattle'
+    code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
+    sjd: 'Starting julian day of grazing'
+    ejd: 'Ending julian day of grazing'
+    dmi_code: 'Dry Matter Intake (DMI) code Use 1: Prop. of animal weight 2: Absolute rates 3:Estimate'
+    dmi_cows: 'DMI of cows (% of animal bodyweight (OR) lb/day)'
+    dmi_bulls: 'DMI of bulls (% of animal bodyweight (OR) lb/day)'
+    dmi_heifers: 'DMI of heifers (% of animal bodyweight (OR) lb/day)'
+    dmi_calves: 'DMI of calves (% of animal bodyweight (OR) lb/day)'
+    gwf: 'Green water footprint (L/kg)'
+    ln1: 'Line 1: Total number of animal feed cattle have access to'
+    ln2: 'Animal feed code (refer to feed composition table file "FCT-NASEM-2016.txt")'
+    ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
+    ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   instructions:
     projects: Para seleccionar un proyecto, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela

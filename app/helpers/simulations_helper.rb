@@ -99,7 +99,7 @@ module SimulationsHelper
       case p.parameter_description_id
         when 10, 20, 30, 50, 60, 70, 80, 90
           apex_string += sprintf("%8.2f", p.value) + "\n"
-        when 36, 65, 76, 87, 88
+        when 19, 36, 65, 76, 87, 88
           apex_string += sprintf("%8.3f", p.value)
         when 40
           apex_string += sprintf("%8.3f", p.value) + "\n"
@@ -721,16 +721,46 @@ module SimulationsHelper
     end # end soils do
     @last_soil = last_soil1
     return msg
-  end
+  end  # end method create_soils
 
-  # end method create_soils
+  #this is the new subarea creation method. This take first the subareas for the scenario and then choose those soils selected and bmp buffers.
+  def create_subareas(operation_number)  # operation_number is used for subprojects as for now it is just 1 - todo
+    last_owner1 = 0
+    i=0
+	nirr = 0
+	subareas = Subarea.where("scenario_id = " + session[:scenario_id].to_s + " AND soil_id > 0")
+	subareas.each do |subarea|
+		soil = Soil.find(subarea.soil_id)
+		if soil.selected then
+			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
+			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
+			i+=1
+			@soil_number += 1
+		end  # end if soil.selected
+	end  # end subareas.each for soil_id > 0
+	subareas = Subarea.where("scenario_id = " + session[:scenario_id].to_s + " AND soil_id = 0 AND bmp_id > 0")
+	buffer_type = 1
+	subareas.each do |subarea|
+		add_subarea_file(subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
+		if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
+			if subarea.subarea_type == "RFFS" then 
+				buffer_type = 2 
+			end
+			create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
+			i+=1
+			@soil_number += 1
+		end # end if bmp types PPDE and PPTW
+	end  # end subareas.each for buffers
+	msg = send_file_to_APEX(@subarea_file, "APEX.sub")
+	return msg
+  end   # end create_subareas
+	
 
-  def create_subareas(operation_number) # operation_number is used for subprojects as for now it is just 1 - todo
+  def create_subareas1(operation_number) # operation_number is used for subprojects as for now it is just 1 - todo
     @last_soil2 = 0
     last_owner1 = 0
     i=0
-    #soil_number = 0
-    #soils = Soil.where(:field_id => field_id, :selected => true)
+	nirr = 0
     @soils.each do |soil|
       #create the operation file for this subarea.
       nirr = create_operations(soil, operation_number)
@@ -744,6 +774,8 @@ module SimulationsHelper
         @soil_number += 1
         i+=1
       end
+	  msg = send_file_to_APEX(@subarea_file, "APEX.sub")
+	  return msg
     end
 
     if @last_soil2 > 0
@@ -755,11 +787,10 @@ module SimulationsHelper
 
     #for Each buf In _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bufferInfo
     #todo if buffer is used. Maybe just subarea are used means all of the buffer are created directly as subareas.
-	  buffer = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND bmp_id != 'nil' AND bmp_id != 0")
+	  buffer = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND bmp_id != 'nil' AND bmp_id != 0 AND soil_id = 0")
       buffer.each do |buf|
         if !(buf.subarea_type == "PPDE" || buf.subarea_type == "PPTW" || buf.subarea_type == "AITW" || buf.subarea_type == "CBMain")
           #create the operation file for this subarea.
-		  session[:depth] = 
           @last_subarea += 1
           opcsFile.Add(buf.SubareaTitle)
           opcsFile.Add(".OPC " & buf.SubareaTitle + " file Operation:1  Date: " + @dtNow1)
@@ -770,6 +801,8 @@ module SimulationsHelper
             opcsFile.Add(sprintf("%3d", oper.year) + sprintf("%3d", oper.month) + sprintf("%3d", oper) + sprintf("%5d", oper.apex_code) + sprintf("%5d", 0) + sprintf("%5d", oper.apex_crop) + sprintf("%5d", oper.subtype) + sprintf("%8.2f", oper.opv1) + sprintf("%8.2f", oper.opv2))
           end
           opcsFile.Add("End " & buf.description)
+		else
+			i -= 1
         end
         add_subarea_file(buf, operation_number, last_owner1, i, nirr, true, 0)
 		i+=1
@@ -782,9 +815,7 @@ module SimulationsHelper
     #print_array_to_file(@subarea_file, "APEX.sub")
     msg = send_file_to_APEX(@subarea_file, "APEX.sub")
     return msg
-  end
-
-  #end method create_subarea
+  end  #end method create_subarea1
 
   def add_subarea_file(_subarea_info, operation_number, last_owner1, i, nirr, buffer, total_soils)
     j = i + 1
@@ -796,8 +827,17 @@ module SimulationsHelper
     end
     #/line 2
     @last_soil2 = j + @last_soil_sub
-    sLine = sprintf("%4d", @soil_number + 1)
-    sLine += sprintf("%4d", @soil_number + 1)
+	if buffer then
+		sLine = sprintf("%4d", 1)  #soil
+		if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
+			sLine += sprintf("%4d", 1) #operation
+		else
+			sLine += sprintf("%4d", @soil_number + 1)   #operation
+		end
+	else
+		sLine = sprintf("%4d", @soil_number + 1)  #soil
+		sLine += sprintf("%4d", @soil_number + 1)   #operation
+	end
     if _subarea_info.iow == 0 then
       _subarea_info.iow = 1
     end
@@ -960,7 +1000,7 @@ module SimulationsHelper
     return "OK"
   end
 
-  def create_operations(soil, operation_number)
+  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @fert_code = 79
@@ -970,14 +1010,16 @@ module SimulationsHelper
     bmp = Bmp.where("scenario_id = " + session[:scenario_id].to_s + " and irrigation_id > 0").first
     irrigation_type = Irrigation.find(bmp.irrigation_id).code unless bmp == nil
     #check and fix the operation list
-    @soil_operations = SoilOperation.where("soil_id == " + soil.id.to_s + " and scenario_id == " + @scenario.id.to_s)
-    #todo when the map is saved again the number of soils in SoilOperation are not updated we can use something like SoilOperation.where(:soil_id => 1698).update_all(:soil_id => 1703)
+	if buffer_type == 0 then
+		@soil_operations = SoilOperation.where("soil_id = " + soil_id.to_s + " and scenario_id = " + @scenario.id.to_s)
+	else
+		@soil_operations = SoilOperation.where("bmp_id = " + soil_id.to_s + " and scenario_id = " + @scenario.id.to_s + " and opv6 = " + buffer_type.to_s)
+	end  # end if type
     if @soil_operations.count > 0 then
       #fix_operation_file()
       #line 1
       @opcs_file.push(" .Opc file created directly by the user. Date: " + @dtNow1 + "\n")
       j = 0
-
       @soil_operations.each do |soil_operation|
         # ask for 1=planting, 5=kill, 3=tillage
         if soil_operation.apex_crop == CropMixedGrass && (soil_operation.activity_id == 1 || soil_operation.activity_id == 5 || soil_operation.activity_id == 3) then
@@ -996,7 +1038,7 @@ module SimulationsHelper
           #    AddOperation(newOper, irrigation_type, nirr, soil.Percentage, j)
           #end
         else
-          add_operation(soil_operation, irrigation_type, nirr, soil.percentage, j)
+          add_operation(soil_operation, irrigation_type, nirr, soil_percentage, j)
         end # end if
         j+=1
       end #end soil_operations.each do
@@ -1007,9 +1049,7 @@ module SimulationsHelper
       @opcs_list_file.push((@soil_number+1).to_s.rjust(5, '0') + " " + "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
     end #end if
     return nirr
-  end
-
-  #end Create Operations
+  end  #end Create Operations
 
   def fix_operation_file()
     #drOuts = SoilOperation.new
@@ -1064,6 +1104,7 @@ module SimulationsHelper
 
     if crop_ant != operation.apex_crop then
       crop = Crop.find_by_number(operation.apex_crop)
+	  session[:depth] = operation
       if crop != nil then
         #if crop.number == operation.apex_crop then
         lu_number = crop.lu_number
@@ -1273,7 +1314,7 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
     end #end case true
 
-    apex_string += sprintf("%8.2f", operation.opv6) #Opv6
+    apex_string += sprintf("%8.2f", 0) #Opv6 for now is always zero. opv6 is used to know if the operations belong to the sme file.
     apex_string += sprintf("%8.2f", operation.opv7) #Opv7
     j += 1
     @opcs_file.push(apex_string + "\n")
