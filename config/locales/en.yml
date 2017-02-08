@@ -967,6 +967,21 @@ en:
       water_use_pumping_parameters:
       other_parameters:
       animal_feed_parameters:
+  graze:
+    total: 'Total number of grasses grazed by cattle'
+    code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
+    sjd: 'Starting julian day of grazing'
+    ejd: 'Ending julian day of grazing'
+    dmi_code: 'Dry Matter Intake (DMI) code Use 1: Prop. of animal weight 2: Absolute rates 3:Estimate'
+    dmi_cows: 'DMI of cows (% of animal bodyweight (OR) lb/day)'
+    dmi_bulls: 'DMI of bulls (% of animal bodyweight (OR) lb/day)'
+    dmi_heifers: 'DMI of heifers (% of animal bodyweight (OR) lb/day)'
+    dmi_calves: 'DMI of calves (% of animal bodyweight (OR) lb/day)'
+    gwf: 'Green water footprint (L/kg)'
+    ln1: 'Line 1: Total number of animal feed cattle have access to'
+    ln2: 'Animal feed code (refer to feed composition table file "FCT-NASEM-2016.txt")'
+    ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
+    ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   instructions:
     projects: To select a project, click on the project name
     fields: To select a field, click on the field name
