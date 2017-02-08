@@ -172,8 +172,9 @@ class ScenariosController < ApplicationController
   def aplcat
     #find the aplcat parameters for the sceanrio selected
 	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
-	grazing = GrazingParameter.find_by_scenario_id(params[id])
+	grazing = GrazingParameter.find_by_scenario_id(params[:id])
 	grazing_count = grazing.count
+	i = 1 
 	if aplcat == nil then
 		aplcat = AplcatParameter.new
 		aplcat.scenario_id = params[:id]
@@ -222,15 +223,51 @@ class ScenariosController < ApplicationController
 	apex_string += "Data on animalfeed (grasses, hay and concentrates)" + "\n"
 	apex_string += "\n"
 	apex_string += sprintf("%8.2f", grazing_count) + "\t" + "| " + t('graze.total') + "\n"
-	apex_string += sprintf("%8.2f", grazing.code) + "\t" + "| " + t('graze.code') + "\n"
-	apex_string += sprintf("%8.2f", grazing.starting_julian_day) + "\t" + "| " + t('graze.sjd') + "\n"
-	apex_string += sprintf("%8.2f", grazing.ending_julian_day) + "\t" + "| " + t('graze.ejd') + "\n"
-	apex_string += sprintf("%8.2f", grazing.dmi_code) + "\t" + "| " + t('graze.dmi_code') + "\n"
-	apex_string += sprintf("%8.2f", grazing.dmi_cows) + "\t" + "| " + t('graze.dmi_cows') + "\n"
-	apex_string += sprintf("%8.2f", grazing.dmi_bulls) + "\t" + "| " + t('graze.dmi_bulls') + "\n"
-	apex_string += sprintf("%8.2f", grazing.dmi_heifers) + "\t" + "| " + t('graze.dmi_heifers') + "\n"
-	apex_string += sprintf("%8.2f", grazing.dmi_calves) + "\t" + "| " + t('graze.dmi_calves') + "\n"
-	apex_string += sprintf("%8.2f", grazing.green_water_footprint) + "\t" + "| " + t('graze.gwf') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.code) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.code') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.starting_julian_day) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.sjd') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.ending_julian_day) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.ejd') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_code) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_code') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_cows) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_cows') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_bulls) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_bulls') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_heifers) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_heifers') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_calves) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_calves') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.green_water_footprint) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.gwf') + "\n"
 	apex_string += "\n"
 	apex_string += "IMPORTANT NOTE: Details of parameters defined in the above 8 lines:" + "\n"
 	apex_string += "\n"
