@@ -84,6 +84,10 @@ class SitesController < ApplicationController
     end
   end
 
+  def download
+	download_apex_files()
+  end
+
   private
 
     # Use this method to whitelist the permissible parameters. Example:

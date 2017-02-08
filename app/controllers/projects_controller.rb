@@ -292,9 +292,7 @@ class ProjectsController < ApplicationController
     File.open(path, "w") { |f| f.write(content) }
     #file.write(content)
     send_file path, :type => "application/xml", :x_sendfile => true
-  end
-
-  #download project def end
+  end   #download project def end
 
   def save_location_information(xml, project_id)
     xml.location {

@@ -1,3 +1,5 @@
+  include ApplicationHelper
+
 class ApexControlsController < ApplicationController
   # GET /apex_controls
   # GET /apex_controls.json
@@ -102,6 +104,10 @@ class ApexControlsController < ApplicationController
 		end
     end
     redirect_to apex_controls_url, notice: t('models.apex_control') + " " + t('general.reset')
+  end
+
+  def download
+	download_apex_files()
   end
 
   private
