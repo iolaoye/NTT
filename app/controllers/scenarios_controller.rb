@@ -172,10 +172,18 @@ class ScenariosController < ApplicationController
   def aplcat
     #find the aplcat parameters for the sceanrio selected
 	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
+	grazing = GrazingParameter.find_by_scenario_id(params[:id])
+	grazing_count = grazing.count
+	i = 1 
 	if aplcat == nil then
 		aplcat = AplcatParameter.new
 		aplcat.scenario_id = params[:id]
 		aplcat.save
+	end
+	if grazing == nil then
+		grazing = GrazingParameter.new
+		grazing.scenario_id = params[:id]
+		grazing.save
 	end 
 	# create string for the Cow_Calf_EME_final.txt file
 	apex_string = "This is the input file containing nutritional information for cattle in the cow-calf system" + "\n"
@@ -212,7 +220,68 @@ class ScenariosController < ApplicationController
 	apex_string += sprintf("%8.2f", aplcat.effn2ofmms) + "\t" + "! " + t('aplcat.effn2ofmms') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.ptdife) + "\t" + "! " + t('aplcat.ptdife') + "\n"
 	apex_string += "\n"
-	apex_string += "Data on animalfeed (grasses, hay and concentrates)"
+	apex_string += "Data on animalfeed (grasses, hay and concentrates)" + "\n"
+	apex_string += "\n"
+	apex_string += sprintf("%8.2f", grazing_count) + "\t" + "| " + t('graze.total') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.code) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.code') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.starting_julian_day) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.sjd') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.ending_julian_day) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.ejd') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_code) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_code') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_cows) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_cows') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_bulls) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_bulls') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_heifers) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_heifers') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.dmi_calves) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.dmi_calves') + "\n"
+	while i <= grazing.count
+		apex_string += sprintf("%8.2f", grazing.green_water_footprint) + "\t"
+		i += 1
+	end
+	apex_string += "| " + t('graze.gwf') + "\n"
+	apex_string += "\n"
+	apex_string += "IMPORTANT NOTE: Details of parameters defined in the above 8 lines:" + "\n"
+	apex_string += "\n"
+	apex_string += t('graze.ln1') + "\n"
+	apex_string += t('graze.ln2') + "\n"
+	apex_string += "Line 3: " + t('graze.sjd') + "\n"
+	apex_string += "Line 4: " + t('graze.ejd') + "\n"
+	apex_string += t('graze.ln5') + "\n"
+	apex_string += "Line 6: " + t('graze.dmi_cows') + "\n"
+	apex_string += "Line 7: " + t('graze.dmi_bulls') + "\n"
+	apex_string += "Line 8: " + t('graze.dmi_heifers') + "\n"
+	apex_string += "Line 9: " + t('graze.dmi_calves') + "\n"
+	apex_string += t('graze.ln10') + "\n"
+	apex_string += "\n"
 	msg = send_file_to_APEX(apex_string, "Cow_Calf_EME_final.txt")
 	# create string for the DRINKIGWATER.txt file
 	apex_string = "Input file for estimating drinking water requirement of cattle" + "\n"
