@@ -7,6 +7,13 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+#populate Manure control table
+ManureControl.delete_all
+ManureControl.create!({:id => 1, :name => 'Digeste', :spanish_name => 'Digeste', :no3n => 1.286, :orgn => 0.74, :po4p => 0.06, :orgp => 1.53, :om => 0.33}, :without_protection => true)
+ManureControl.create!({:id => 2, :name => 'Primary Screen', :spanish_name => 'Pantalla Primaria', :no3n => 1.12, :orgn => 0.67, :po4p => 0.23, :orgp => 1.76, :om => 0.59}, :without_protection => true)
+ManureControl.create!({:id => 3, :name => 'DAF', :spanish_name => 'DAF', :no3n => 1.02, :orgn => 0.21, :po4p => 0.23, :orgp => 0.08, :om => 0.835}, :without_protection => true)
+ManureControl.create!({:id => 4, :name => 'NH3 Stipper', :spanish_name => 'Estibador NH3', :no3n => 0.3, :orgn => 0.21, :po4p => 0.23, :orgp => 0.08, :om => 0.851}, :without_protection => true)
+
 CropSchedule.delete_all
 CropSchedule.create!({:id => 1, :name =>'Corn', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 2, :name =>'Soybean', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
@@ -4273,6 +4280,7 @@ Bmpsublist.create!({:id => 20, :name => "Asphalt or Concrete", :spanish_name => 
 Bmpsublist.create!({:id => 21, :name => "Grass Cover", :spanish_name => "Cubierta de Pasto", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 22, :name => "Slope Adjustment", :spanish_name => "Ajuste de la inclinacion", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 23, :name => "Shading", :spanish_name => "Shading", :bmplist_id => 8, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 24, :name => "Manure Control", :spanish_name => "Control de Estiercol", :bmplist_id => 6, :status => true}, :without_protection => true)
 
 Bmplist.delete_all
 Bmplist.create!({:id => 1, :name => "Autoirrigation and Autofertigation", :spanish_name => "Irrigacion y fertigacion Automatica"}, :without_protection => true)

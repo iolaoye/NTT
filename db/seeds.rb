@@ -1,3 +1,35 @@
+Bmpsublist.delete_all
+Bmpsublist.create!({:id => 1, :name => "Autoirrigation", :spanish_name => "Irrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 2, :name => "Autofertigation", :spanish_name => "Fertirrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 3, :name => "Tile Drain", :spanish_name => "Sistema de Drenaje", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 4, :name => "Pads and Pipes - No Ditch Improvement", :spanish_name => "Almohadillas y Tuberias - Ningun Mejoramiento en la Zanja", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 5, :name => "Pads and Pipes - Two-Stage Ditch System", :spanish_name => "Almohadillas y Tuberias - Sistema de Zanja de Dos Etapas", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 6, :name => "Pads and Pipes - Ditch Enlargement and Reservoir System", :spanish_name => "Almohadillas y Tuberias - Ampliacion de la Zanja y Sistema de Represa", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 7, :name => "Pads and Pipes - Tailwater Irrigation", :spanish_name => "Almohadillas y Tuberias - Irrigacion desde Reserva", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 8, :name => "Wetlands", :spanish_name => "Humedales", :bmplist_id => 3, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 9, :name => "Ponds", :spanish_name => "Lagunas", :bmplist_id => 3, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 10, :name => "Stream Fencing (Livestock Access Control)", :spanish_name => "Cercado del rio (Control de Acceso del Ganado)", :bmplist_id => 4, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 11, :name => "Streambank Stabilization", :spanish_name => "Estabilizacion de la Orilla del rio", :bmplist_id => 4, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 12, :name => "Riparian Forest Buffer", :spanish_name => "Bosque Ribereno", :bmplist_id => 4, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 13, :name => "Filter Strip", :spanish_name => "Zona de Contencion Filtrante", :bmplist_id => 4, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 14, :name => "Waterway (Grassed Buffer)", :spanish_name => "Canal de Agua (Zona de Pasto)", :bmplist_id => 4, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 15, :name => "Contour Buffer", :spanish_name => "Buffer de Contorno", :bmplist_id => 5, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 16, :name => "Land Leveling", :spanish_name => "Nivelacion de la Tierra", :bmplist_id => 6, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 17, :name => "Terrace System", :spanish_name => "Sistema de Terraza", :bmplist_id => 6, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 18, :name => "Manure Control", :spanish_name => "Control de Estiercol", :bmplist_id => 6, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 19, :name => "Temperature and Precipitation Changes", :spanish_name => "Cambios de Temperatura y Precipitacion", :bmplist_id => 7, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 20, :name => "Asphalt or Concrete", :spanish_name => "Asfalto o Concreto", :bmplist_id => 8, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 21, :name => "Grass Cover", :spanish_name => "Cubierta de Pasto", :bmplist_id => 8, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 22, :name => "Slope Adjustment", :spanish_name => "Ajuste de la inclinacion", :bmplist_id => 8, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 23, :name => "Shading", :spanish_name => "Shading", :bmplist_id => 8, :status => true}, :without_protection => true)
+
+#populate Manure control table
+ManureControl.delete_all
+ManureControl.create!({:id => 1, :name => 'Digeste', :spanish_name => 'Digeste', :no3n => 1.286, :orgn => 0.74, :po4p => 0.06, :orgp => 1.53, :om => 0.33}, :without_protection => true)
+ManureControl.create!({:id => 2, :name => 'Primary Screen', :spanish_name => 'Pantalla Primaria', :no3n => 1.12, :orgn => 0.67, :po4p => 0.23, :orgp => 1.76, :om => 0.59}, :without_protection => true)
+ManureControl.create!({:id => 3, :name => 'DAF', :spanish_name => 'DAF', :no3n => 1.02, :orgn => 0.21, :po4p => 0.23, :orgp => 0.08, :om => 0.835}, :without_protection => true)
+ManureControl.create!({:id => 4, :name => 'NH3 Stipper', :spanish_name => 'Estibador NH3', :no3n => 0.3, :orgn => 0.21, :po4p => 0.23, :orgp => 0.08, :om => 0.851}, :without_protection => true)
+
 #populate Parameters table.                                                                                                
 Parameter.delete_all                                                                                                       
 Parameter.create!({:id => 1, :number => 1, :default_value => 2, :state_id => 99}, :without_protection => true)             

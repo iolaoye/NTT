@@ -37,13 +37,13 @@ class BmpsController < ApplicationController
 	@bmps = Bmp.where(:bmpsublist_id => 0)
     @bmps[0] = Bmp.new
 	bmpsublists.each do |bmpsublist|
-		bmp = Bmp.where(:scenario_id => session[:scenario_id], :bmpsublist_id => bmpsublist.id).first
+		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], bmpsublist.id)
 		if bmp.blank? || bmp == nil then
 			bmp = Bmp.new
 			bmp.bmpsublist_id = bmpsublist.id
 		end
 		@bmps[bmp.bmpsublist_id-1] = bmp
-		if bmp.bmpsublist_id == 17 then
+		if bmp.bmpsublist_id == 23 then
 			break
 		end
 	end

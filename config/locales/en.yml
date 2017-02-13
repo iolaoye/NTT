@@ -581,6 +581,7 @@ en:
     fill: Fill
     select_vege: Select Vegetation
     select_animal: Select Animal Type
+    manure_control: Manure Control
   months:
     january: January
     february: February

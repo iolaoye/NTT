@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170130133214) do
+ActiveRecord::Schema.define(:version => 20170213200454) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -190,6 +190,11 @@ ActiveRecord::Schema.define(:version => 20170130133214) do
     t.integer  "number"
   end
 
+  create_table "controls_apex_controls", :id => false, :force => true do |t|
+    t.integer "control_id"
+    t.integer "apex_control_id"
+  end
+
   create_table "counties", :force => true do |t|
     t.string   "county_name"
     t.string   "county_code"
@@ -295,6 +300,12 @@ ActiveRecord::Schema.define(:version => 20170130133214) do
     t.datetime "updated_at",         :null => false
   end
 
+  create_table "fertilizer_type", :force => true do |t|
+    t.string   "field_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "fertilizer_types", :force => true do |t|
     t.string   "name"
     t.string   "spanish_name"
@@ -391,6 +402,18 @@ ActiveRecord::Schema.define(:version => 20170130133214) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "coordinates"
+  end
+
+  create_table "manure_controls", :force => true do |t|
+    t.string   "name"
+    t.string   "spanish_name"
+    t.float    "no3n"
+    t.float    "po4p"
+    t.float    "orgn"
+    t.float    "orgp"
+    t.float    "om"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "modifications", :force => true do |t|
