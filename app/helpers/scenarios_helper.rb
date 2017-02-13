@@ -638,12 +638,9 @@ module ScenariosHelper
     opv1 = 1.0
     case operation.activity_id
       when 1 #planting take heat units
-        #uri = URI.parse(URL_HU +  "?op=getHU&crop=" + operation.crop_id.to_s + "&nlat=" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + "&nlon=" + Weather.find_by_field_id(session[:field_id]).longitude.to_s)
-        #uri.open
-        #opv1 = uri.read
-        #opv1 = Hash.from_xml(open(uri.to_s).read)["m"]{"p".inject({}) do |result, elem
-        client = Savon.client(wsdl: URL_HU)
+        client = Savon.client(wsdl: URL_Weather)
 		#session[:depth] = Crop.find(operation.crop_id).number.to_s + "-" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + " - " + Weather.find_by_field_id(session[:field_id]).longitude.to_s
+		#ooo
         response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
         opv1 = response.body[:get_hu_response][:get_hu_result]
       #opv1 = 2.2
