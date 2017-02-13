@@ -14,7 +14,7 @@
 	#URL_NTT = 'http://nn.tarleton.edu/NttApex/NNRestService.ashx'  No being used
 
 # URL to get heat units
-	URL_HU = 'http://nn.tarleton.edu/NTTCalcHU/NTTService.asmx?WSDL'
+	URL_HU = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
 # URL to get weather information
 	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'

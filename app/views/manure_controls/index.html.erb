@@ -1,0 +1,37 @@
+<h1>Listing manure_controls</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Spanish name</th>
+    <th>No3n</th>
+    <th>Po4p</th>
+    <th>Orgn</th>
+    <th>Orgp</th>
+    <th>Om</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @manure_controls.each do |manure_control| %>
+  <tr>
+    <td><%= manure_control.id %></td>
+    <td><%= manure_control.name %></td>
+    <td><%= manure_control.spanish_name %></td>
+    <td><%= manure_control.no3n %></td>
+    <td><%= manure_control.po4p %></td>
+    <td><%= manure_control.orgn %></td>
+    <td><%= manure_control.orgp %></td>
+    <td><%= manure_control.om %></td>
+    <td><%= link_to 'Show', manure_control %></td>
+    <td><%= link_to 'Edit', edit_manure_control_path(manure_control) %></td>
+    <td><%= link_to 'Destroy', manure_control, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Manure control', new_manure_control_path %>

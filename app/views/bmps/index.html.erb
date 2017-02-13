@@ -17,16 +17,16 @@
       <% @bmps.each do |bmp| %>
 		<tbody>
 			<tr>
-        <% if I18n.locale.equal?(:en) %>
-			     <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
-        <% else %>
-          <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
-        <% end %>
-        <% if bmp.id != nil %>
-				<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
-			<% else %>
-				<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
-			<% end %>
+				<% if I18n.locale.equal?(:en) %>
+					<td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+				<% else %>
+					<td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
+				<% end %>
+				<% if bmp.id != nil %>
+					<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
+				<% else %>
+					<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
+				<% end %>
 			</tr>
 		</tbody>
 		<tbody id=<%="#{bmp.bmpsublist_id}"%>>
@@ -377,23 +377,87 @@
 				  </tr>
 				<% when 18 %>
 				  <tr>
+				    <td class="indent">
+						<%= label :manure_control_id, t('bmp.manure_control') %>
+						<% if I18n.locale.equal?(:en) %>
+						  <%= collection_select :bmp_mc, :animal_id, ManureControl.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
+						<% else %>
+						  <%= collection_select :bmp_mc, :animal_id, ManureControl.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
+						<% end %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="indent">
+						<%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.percentage_range') %>
+						<%= text_field :bmp_mc, :no3_n, :value => bmp.no3_n %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="indent">
+						<%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.percentage_range') %>
+						<%= text_field :bmp_mc, :po4_p, :value => bmp.po4_p %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="indent">
+						<%= label :org_n, t('bmp.org_n') + " " + t('bmp.percentage_range') %>
+						<%= text_field :bmp_mc, :org_n, :value => bmp.org_n %>
+				    </td>
+				  </tr>
+				  <tr>
+				    <td class="indent">
+						<%= label :org_p, t('bmp.org_p') + " " + t('bmp.percentage_range') %>
+						<%= text_field :bmp_mc, :org_p, :value => bmp.org_p %>
+				    </td>
+				  </tr>
+				<% when 20 %>
+				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
 						<%= check_box :bmp_ac, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-				<% when 19 %>
+				<% when 21 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
 						<%= check_box :bmp_gc, :id, :value => bmp.id %>
 					</td>
 				  </tr>
-				<% when 20 %>
+				<% when 22 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
 						<%= check_box :bmp_sa, :id, :value => bmp.id %>
+					</td>
+				  </tr>
+				<% when 23 %>
+				  <tr>
+					<td class="indent">
+						<%= label :crop_id, t('operation.crop') %>
+						<% if I18n.locale.equal?(:en) %>
+						  <%= collection_select :bmp_sdg, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
+						<% else %>
+						  <%= collection_select :bmp_sdg, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+						<% end %>
+					</td>
+				  </tr>
+				  <tr>
+					<td class="indent">
+						<%= t('general.area') + " " + t('bmp.acres') %>
+						<%= text_field :bmp_sdg, :area, :value => bmp.area %>
+					</td>
+				  </tr>
+				  <tr>
+					<td class="indent">
+						<%= t('bmp.width') + " " + t('bmp.ft') %>
+						<%= text_field :bmp_sdg, :width, :value => bmp.width %>
+					</td>
+				  </tr>
+				  <tr>
+					<td class="indent">
+						<%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
+						<%= text_field :bmp_sdg, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
 					</td>
 				  </tr>
 			<% end %>

@@ -1,0 +1,27 @@
+<h1>Listing bmpsublists</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @bmpsublists.each do |bmpsublist| %>
+  <tr>
+    <td><%= bmpsublist.id %></td>
+    <td><%= bmpsublist.name %></td>
+    <td><%= bmpsublist.status %></td>
+    <td><%= link_to t('general.show'), bmpsublist %></td>
+    <td><%= link_to t('general.edit'), edit_bmpsublist_path(bmpsublist) %></td>
+    <td><%= link_to 'Destroy', bmpsublist, method: :delete, data: { confirm: t('general.confirm') } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br>
+
+<%= link_to 'New Bmpsublist', new_bmpsublist_path %>

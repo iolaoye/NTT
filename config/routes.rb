@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :manure_controls
+
+
   resources :grazing_parameters
   resources :aplcat_parameters
   resources :control_descriptions

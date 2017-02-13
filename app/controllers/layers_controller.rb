@@ -4,6 +4,33 @@ class LayersController < ApplicationController
 # GET /1/soils.json
   def list
     @layers = Layer.where(:soil_id => params[:id])
+	#check if first layer depth is more than 10m. if so new layer is added
+	if @layers[0].depth > 3.94 then
+		layer = Layer.new
+		layer.depth = 3.94
+		layer.soil_p = @layers[0].soil_p
+		layer.bulk_density = @layers[0].bulk_density
+		layer.sand = @layers[0].sand
+		layer.silt = @layers[0].silt
+		layer.clay = @layers[0].clay
+		layer.organic_matter = @layers[0].organic_matter
+		layer.ph = @layers[0].ph
+		layer.soil_id = @layers[0].soil_id
+		layer.uw = @layers[0].uw
+		layer.fc = @layers[0].fc
+		layer.wn = @layers[0].wn
+		layer.smb = @layers[0].smb
+		layer.cac = @layers[0].cac
+		layer.cec = @layers[0].cec
+		layer.rok = @layers[0].rok
+		layer.cnds = @layers[0].cnds
+		layer.rsd = @layers[0].rsd
+		layer.bdd = @layers[0].bdd
+		layer.psp = @layers[0].psp
+		layer.satc = @layers[0].satc
+		layer.save
+	end
+    @layers = Layer.where(:soil_id => params[:id])
     @soil_name = Soil.find(session[:soil_id]).name[0..20]
     @soil_name += ". . ." unless @soil_name.length < 20
     @project_name = Project.find(session[:project_id]).name
