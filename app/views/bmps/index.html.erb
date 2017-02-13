@@ -580,6 +580,20 @@
         validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
       }
       function validationsBmpAf(i) {
+        if (($('#select_7').is(':checked'))) {
+          if(promptMsg("Tailwater Irrigation is currently checked and requires Autoirrigation to be checked. " +
+                       "Continuing will clear any data you may have for Tailwater Irrigation and Autoirrigation.")){
+            validateBmpAi.clearAllValidations();
+            validateBmpPptw.clearAllValidations();
+            $("#select_1").prop('checked', false);
+            $("#select_7").prop('checked', false);
+            $("tbody#1 input").val("");
+            $("tbody#1 select").val([]);
+            $("tbody#7 input").val("");
+          } else {
+            confirm_check(2);
+          }
+        }
         var af_inputs = $('[name^=bmp_af]').valueOf();
         if(i == 0) {
           validateBmpAi.clearAllValidations();
@@ -651,7 +665,7 @@
         validateBmpPpde.addValidation(ppde_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
       }
       function validationsBmpPptw(i) {
-        if (promptCheckAutoIrrigation()) {
+        if (promptMsg("This BMP requires Autoirrigation. Continuing will clear any data you may have entered in Autofertigation.")) {
           validationsBmpAi(0);
           $('#select_1').prop('checked', true);
           $('#1').show();
@@ -794,17 +808,8 @@
         var ts_inputs = $('[name^=bmp_ts]').valueOf();
         validateBmpTs.addValidation(ts_inputs[0].name, "shouldselchk=on", "Checkbox within Terrace System must be checked.");
       }
-      //prompt code can be shortened by passing a message to function such as prompt(msg)
-      function promptCheckAutoIrrigation() {
-        var r = confirm("This BMP requires Autoirrigation. Continuing will clear any data you may have entered in Autofertigation.");
-        if (r == true) {
-          return true;
-        } else {
-            return false;
-        }
-      }
-      function promptTailWater() {
-        var r = confirm("Tailwater Irrigation is currently checked and requires Autoirrigation to be checked. Continuing will clear any data you may have for Tailwater Irrigation and Autoirrigation.")
+      function promptMsg(msg) {
+        var r = confirm(msg);
         if (r == true) {
           return true;
         } else {
