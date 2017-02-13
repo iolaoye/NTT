@@ -447,10 +447,46 @@
               $("tbody#"+i + " input").not(this).attr('checked', false);
               $("tbody#"+i + " select").val([]);
             });
+            //removes validations when checkbox unchecked
+            if (i == 1) {
+              validateBmpAi.clearAllValidations();
+            } else if (i == 2) {
+                validateBmpAf.clearAllValidations();
+            } else if (i == 3) {
+                validateBmpTd.clearAllValidations();
+            } else if (i == 4) {
+                validateBmpPpnd.clearAllValidations();
+            } else if (i == 5) {
+                validateBmpPpds.clearAllValidations();
+            } else if (i == 6) {
+                validateBmpPpde.clearAllValidations();
+            } else if (i == 7) {
+                validateBmpPptw.clearAllValidations();
+            } else if (i == 8) {
+                validateBmpWl.clearAllValidations();
+            } else if (i == 9) {
+                validateBmpPnd.clearAllValidations();
+            } else if (i == 10) {
+                validateBmpSf.clearAllValidations();
+            } else if (i == 11) {
+                validateBmpSbs.clearAllValidations();
+            } else if (i == 12) {
+                validateBmpRf.clearAllValidations();
+            } else if (i == 13) {
+                validateBmpFs.clearAllValidations();
+            } else if (i == 14) {
+                validateBmpWw.clearAllValidations();
+            } else if (i == 15) {
+                validateBmpCb.clearAllValidations();
+                validationsBmpCb();
+            } else if (i == 16) {
+                validateBmpLl.clearAllValidations();
+            } else if (i == 17) {
+                validateBmpTs.clearAllValidations();
+            }
           } else { //checkbox checked
             $("tbody#"+i).show();
-            //add validations for inputs
-            //filter strip area will be optional field
+            //add validations for inputs when checkbox checked
             if (i == 1) {
               validationsBmpAi();
             } else if (i == 2) {
@@ -580,6 +616,20 @@
         validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
       }
       function validationsBmpAf(i) {
+        if (($('#select_7').is(':checked'))) {
+          if(promptMsg("Tailwater Irrigation is currently checked and requires Autoirrigation to be checked. " +
+                       "Continuing will clear any data you may have for Tailwater Irrigation and Autoirrigation.")){
+            validateBmpAi.clearAllValidations();
+            validateBmpPptw.clearAllValidations();
+            $("#select_1").prop('checked', false);
+            $("#select_7").prop('checked', false);
+            $("tbody#1 input").val("");
+            $("tbody#1 select").val([]);
+            $("tbody#7 input").val("");
+          } else {
+            confirm_check(2);
+          }
+        }
         var af_inputs = $('[name^=bmp_af]').valueOf();
         if(i == 0) {
           validateBmpAi.clearAllValidations();
@@ -651,7 +701,7 @@
         validateBmpPpde.addValidation(ppde_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
       }
       function validationsBmpPptw(i) {
-        if (promptCheckAutoIrrigation()) {
+        if (promptMsg("This BMP requires Autoirrigation. Continuing will clear any data you may have entered in Autofertigation.")) {
           validationsBmpAi(0);
           $('#select_1').prop('checked', true);
           $('#1').show();
@@ -794,17 +844,8 @@
         var ts_inputs = $('[name^=bmp_ts]').valueOf();
         validateBmpTs.addValidation(ts_inputs[0].name, "shouldselchk=on", "Checkbox within Terrace System must be checked.");
       }
-      //prompt code can be shortened by passing a message to function such as prompt(msg)
-      function promptCheckAutoIrrigation() {
-        var r = confirm("This BMP requires Autoirrigation. Continuing will clear any data you may have entered in Autofertigation.");
-        if (r == true) {
-          return true;
-        } else {
-            return false;
-        }
-      }
-      function promptTailWater() {
-        var r = confirm("Tailwater Irrigation is currently checked and requires Autoirrigation to be checked. Continuing will clear any data you may have for Tailwater Irrigation and Autoirrigation.")
+      function promptMsg(msg) {
+        var r = confirm(msg);
         if (r == true) {
           return true;
         } else {
@@ -813,8 +854,6 @@
       }
     });
     //To Do:
-    //if pads and pipes tailwater checked, autoirrigation must be checked too
     //make Auto Irrigation/Fertigation one body with same inputs and radio button will allow user to choose between the two
-    //when validating inputs also make sure to handle unchecking box
     //additionally, make error message translatable to spanish
 </script>
