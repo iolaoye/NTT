@@ -102,8 +102,8 @@
             <td calss="gvCellStyleText"><%= scenario.last_simulation %></td>
             <td class="gvCellStyleActions">
               <% if warning == false %>
-                  <%= link_to image_tag("aplcat_simulation.png"), aplcat_scenario_path(scenario.id), title: t('scenario.simulate') + " APLCAT", data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'} %>
-                  <%= link_to image_tag("CEEOT-SWAPP.ico"), scenario_path(scenario.id), title: t('scenario.simulate') + " NTT", data: {disable_with: 'Please wait. NTT simulation in progress . . .'} %>
+                  <%#= link_to image_tag("aplcat_simulation.png"), aplcat_scenario_path(scenario.id), title: t('scenario.simulate') + " APLCAT", data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'} %>
+                  <%= link_to image_tag("run.png"), scenario_path(scenario.id), title: t('scenario.simulate') + " NTT", data: {disable_with: 'Please wait. NTT simulation in progress . . .'} %>
               <% end %>
               <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
               <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
