@@ -119,17 +119,17 @@ class LocationsController < ApplicationController
 			end
 			@weather.simulation_initial_year += 5
             if params["field#{i}finalYear"] == nil then
-				@weather.simulation_final_year = 0
+				@weather.simulation_final_year = @weather.simulation_initial_year + 5
 			else
 				@weather.simulation_final_year = params["field#{i}finalYear"]
 			end
             if params["field#{i}initialYear"] == nil then
-				@weather.weather_initial_year = 0
+				@weather.weather_initial_year = @weather.simulation_initial_year - 5
 			else
 				@weather.weather_initial_year = params["field#{i}initialYear"]
 			end
             if params["field#{i}finalYear"] == nil then
-				@weather.weather_final_year = 0
+				@weather.weather_final_year = @weather.simulation_final_year
 			else
 				@weather.weather_final_year = params["field#{i}finalYear"]
 			end
@@ -139,12 +139,14 @@ class LocationsController < ApplicationController
             @weather.station_way = "map"
             if @weather.save then
               @field.weather_id = @weather.id
+			else
+			  session[:depth] = @weather
+			  #ooo
             end
             if @field.save then
-            else
+				@weather.field_id = @field.id
+				session[:field_id] = @field.id
             end
-            @weather.field_id = @field.id
-            session[:field_id] = @field.id
             @weather.save
           end # end for fields
 
@@ -157,12 +159,17 @@ class LocationsController < ApplicationController
 			@location.state_id = state.id
 		  end
 		  county_name = params[:county]
+		  session[:depth] = county_name
           if county_name == nil then
 			  @location.county_id = 0
 		  else
 			  county_name.slice! " County"
 			  county = County.find_by_county_name(county_name)
-			  @location.county_id = county.id
+			  if county == nil then 
+				@location.county_id = 0
+			  else
+				@location.county_id = county.id
+			  end 
 		  end
           @location.coordinates = params[:parcelcoords]
           @location.save

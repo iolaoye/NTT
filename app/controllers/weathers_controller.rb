@@ -48,18 +48,18 @@ class WeathersController < ApplicationController
     end
   end
 
+################################  EDIT   #################################
 # GET /weathers/1/edit
   def edit
-
     @weather = Weather.find_by_field_id(params[:id])
     @project = Project.find(session[:project_id])
     @field = Field.find(params[:id])
 
-    add_breadcrumb t('menu.projects'), user_projects_path(current_user)
-    add_breadcrumb @project.name
-    add_breadcrumb t('menu.fields'), list_field_path(@project)
-    add_breadcrumb @field.field_name
-    add_breadcrumb t('menu.weather')
+    #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
+    #add_breadcrumb @project.name
+    #add_breadcrumb t('menu.fields'), list_field_path(@project)
+    #add_breadcrumb @field.field_name
+    #add_breadcrumb t('menu.weather')
 
     if !(@weather == nil) # no empty array
       if (@weather.way_id == nil)
@@ -82,10 +82,10 @@ class WeathersController < ApplicationController
     end
   end
 
+################################  CREATE   #################################
 # POST /weathers
 # POST /weathers.json
   def create
-    create
     @weather = Weather.new(weather_params)
 
     respond_to do |format|
@@ -99,6 +99,7 @@ class WeathersController < ApplicationController
     end
   end
 
+################################  UPDATE   #################################
 # PATCH/PUT /weathers/1
 # PATCH/PUT /weathers/1.json
   def update
