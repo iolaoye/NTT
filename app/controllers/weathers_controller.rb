@@ -117,7 +117,7 @@ class WeathersController < ApplicationController
       end
     end
       respond_to do |format|
-        if @weather.update_attributes(weather_params)
+        if @weather.save
           format.html { redirect_to list_soil_path(session[:field_id]), notice: t('models.weather') + " " + t('general.updated') }
           format.json { head :no_content }
         else
@@ -167,7 +167,7 @@ class WeathersController < ApplicationController
         @weather.weather_initial_year = line1
         i = i + 1
       end
-    end
+    end  # end file.open
     @weather.weather_file = name
     @weather.way_id = 2
     @weather.save
