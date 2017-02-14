@@ -38,6 +38,7 @@ class WeathersController < ApplicationController
     end
   end
 
+################################  NEW   #################################
 # GET /weathers/new
 # GET /weathers/new.json
   def new
@@ -66,7 +67,7 @@ class WeathersController < ApplicationController
         @way = ""
       else
         @way = Way.find(@weather.way_id)
-      end
+      end	  
     else
       @weather = Weather.new
       @weather.field_id = session[:field_id]
@@ -105,14 +106,16 @@ class WeathersController < ApplicationController
   def update
     @weather = Weather.find(params[:id])
     if (params[:weather][:way_id] == "2")
-      if (params[:weather][:weather_file] == nil)
-        redirect_to edit_weather_path(session[:field_id])
-        flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
+      if params[:weather][:weather_file] == nil 
+		if @weather.weather_file == nil || @weather.weather_file == ""
+			redirect_to edit_weather_path(session[:field_id])
+			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
+		end
       else
         msg = upload_weather
-        redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
+        #redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
       end
-    else
+    end
       respond_to do |format|
         if @weather.update_attributes(weather_params)
           format.html { redirect_to list_soil_path(session[:field_id]), notice: t('models.weather') + " " + t('general.updated') }
@@ -122,7 +125,13 @@ class WeathersController < ApplicationController
           format.json { render json: @weather.errors, status: :unprocessable_entity }
         end
       end
-    end
+    #end
+	apex_control = ApexControl.find_by_project_id_and_control_description_id(session[:project_id], 1)
+	apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
+	apex_control.save
+	apex_control = ApexControl.find_by_project_id_and_control_description_id(session[:project_id], 2)
+	apex_control.value = @weather.simulation_initial_year - 5
+	apex_control.save
   end
 
 # DELETE /weathers/1
@@ -140,7 +149,6 @@ class WeathersController < ApplicationController
 ########################################### UPLOAD weather FILE IN TEXT FORMAT ##################
   def upload_weather
     msg = "Error loading file"
-    #@weather = Weather.find_by_field_id(session[:field_id])
     name = params[:weather][:weather_file].original_filename
     # create the file path
     path = File.join(OWN, name)

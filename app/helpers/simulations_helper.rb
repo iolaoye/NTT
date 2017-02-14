@@ -137,30 +137,33 @@ module SimulationsHelper
   end
 
   def create_wind_wp1_files(dir_name)
-    county = County.find(Location.find(session[:location_id]).county_id)
-    apex_run_string = "APEX001   1IWPNIWND   1   0   0"
+	county_id = Location.find(session[:location_id]).county_id
+	if county_id > 0
+		county = County.find(county_id)
+	else
+		county = nil
+	end
     if county != nil then
-      client = Savon.client(wsdl: URL_Weather)
-	  #Create_wp1_from_weather(loc As String, wp1Name As String, controlValue5 As Integer)
-      response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
-      #response = client.call(:get_weather, message: {"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
-      weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
-      msg = send_file_to_APEX(weather_data.join("\n"), county.wind_wp1_name + ".wp1")
-      #print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
-      #path = File.join(WP1, county.wind_wp1_name + ".wp1")
-      #FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
-      client = Savon.client(wsdl: URL_Weather)
-      response = client.call(:get_weather, message: {"path" => WIND + "/" + county.wind_wp1_name + ".wnd"})
-      weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-      msg = send_file_to_APEX(weather_data.join("\n"), county.wind_wp1_name + ".wnd")
-      #print_wind_to_file(weather_data, county.wind_wp1_name + ".wnd")
-      #path = File.join(WIND, county.wind_wp1_name + ".wnd")
-      #FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
-      apex_run_string["IWPN"] = sprintf("%4d", county.wind_wp1_code)
-      apex_run_string["IWND"] = sprintf("%4d", county.wind_wp1_code)
-    end
-    #create apex run file
-    #print_string_to_file(apex_run_string, "Apexrun.dat")
+		wind_wp1_name = county.wind_wp1_name
+		wind_wp1_code = county.wind_wp1_code
+	else
+		wind_wp1_name = "CHINAG"
+		wind_wp1_code = 999
+	end
+    apex_run_string = "APEX001   1IWPNIWND   1   0   0"
+    client = Savon.client(wsdl: URL_Weather)
+	###### create wp1 file from weather and send to server ########
+    response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
+    weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
+    msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wp1")
+    #client = Savon.client(wsdl: URL_Weather)
+	######### create eind file and send to server ########
+    response = client.call(:get_weather, message: {"path" => WIND + "/" + wind_wp1_name + ".wnd"})
+    weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+    msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wnd")
+	######### create apexrun file and send to server ########
+    apex_run_string["IWPN"] = sprintf("%4d", wind_wp1_code)
+    apex_run_string["IWND"] = sprintf("%4d", wind_wp1_code)
     msg = send_file_to_APEX(apex_run_string, "Apexrun.dat")
   end
 
@@ -1329,7 +1332,13 @@ module SimulationsHelper
       else
         operation_name = Activity.find(operation.activity_id).name
     end
-    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + State.find(Location.find(session[:location_id]).state_id).state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+	state_id = Location.find(session[:location_id]).state_id
+	if state_id == 0 or state_id == nil then
+		state_abbreviation = "**"
+	else
+		state_abbreviation = State.find(state_id).state_abbreviation
+	end
+    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
                    COMA + Crop.find(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
     #End With
