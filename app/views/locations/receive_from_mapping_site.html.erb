@@ -2,7 +2,7 @@
 <head>
   <script type="text/javascript">
       function reLoad() {
-          window.top.location = '<%=list_field_path(session[:location_id]) %>';
+          window.top.location = '<%= project_fields_path(@project.id) %>';
       }
   </script>
 </head>

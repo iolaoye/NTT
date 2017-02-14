@@ -55,8 +55,11 @@ class FieldsController < ApplicationController
 ################################  soils list   #################################
 # GET /fields/1
 # GET /1/fields.json
-  def list
-	get_field_list(params[:id])
+  def index
+    @project = Project.find(params[:project_id])
+    @location = @project.location
+	  get_field_list(@location.id)
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @fields }
@@ -105,6 +108,7 @@ class FieldsController < ApplicationController
 ################################  EDIT   #################################
 # GET /fields/1/edit
   def edit
+    @project = Project.find(params[:project_id])
     @field = Field.find(params[:id])
   end
 
@@ -147,6 +151,7 @@ class FieldsController < ApplicationController
       field_type = true
     end
     @field = Field.find(params[:id])
+    @project = Project.find(params[:project_id])
     msg = "OK"
     if @field.field_type != field_type then
       if field_type == true then
@@ -174,8 +179,8 @@ class FieldsController < ApplicationController
       if msg.eql?("OK") then
         session[:field_id] = @field.id
         #format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Field was successfully updated.' }
-		get_field_list(@field.location_id)
-		format.html { render "list", notice: 'Field was successfully updated.' }
+		    get_field_list(@field.location_id)
+		    format.html { redirect_to project_fields_path(@project), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit", notice: msg }
@@ -188,12 +193,13 @@ class FieldsController < ApplicationController
 # DELETE /fields/1
 # DELETE /fields/1.json
   def destroy
+    @project = Project.find(params[:project_id])
     @field = Field.find(params[:id])
     if @field.destroy
       flash[:notice] = t('models.field') + " " + @field.field_name + t('notices.deleted')
     end
     respond_to do |format|
-      format.html { redirect_to list_field_path(session[:location_id]) }
+      format.html { redirect_to project_fields_path(@project) }
       format.json { head :no_content }
     end
   end

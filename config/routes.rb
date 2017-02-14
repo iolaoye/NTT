@@ -55,42 +55,75 @@ NTTG3::Application.routes.draw do
   resources :apex_soils
   resources :apex_layers
 
-  resources :results do
-	get 'sel', on: :member
-	get :summary, on: :member
-	get :by_soils, on: :member
-	get :annual_charts, on: :member
-	get :monthly_charts, on: :member
-	get :download_apex_files, on: :member
-  end
   resources :watershed_scenarios do
      post 'new_scenario', on: :member
   end
+
   resources :users do
-	  resources :projects
+    resources :projects
   end
 
   resources :projects do
-	resources :locations
+    resources :watersheds
+    resources :locations do
+      get :send_to_mapping_site, on: :member
+      post :receive_from_mapping_site, on: :member
+      get :location_fields, on: :member
+    end 
     get 'upload', on: :member
     get 'download', on: :member
     get :group, on: :member
-  end
-
-  resources :weathers do
-	member do
-		post 'save_coordinates'
-	end
+    resources :fields do
+      resources :scenarios do
+        post :simulate_all, on: :collection
+        get 'aplcat', on: :member
+        resources :operations do
+          get :list, on: :member
+          get :cropping_system, on: :collection
+          get :crop_schedule, on: :collection
+          get 'download', on: :member
+          get :open, on: :member
+          get :upload_system, on: :member
+          post :delete_all, on: :collection
+        end
+        resources :bmps do
+          get :list, on: :member
+          post :save_bmps, on: :collection
+        end
+      end
+      resources :weathers do
+        member do
+          post 'save_coordinates'
+        end
+      end
+      get :field_soils, on: :member
+      get :field_scenarios, on: :member
+      get 'create_soils', on: :member
+      resources :soils do
+        get :list, on: :member
+        resources :layers do
+          get :list, on: :member
+        end
+        get :soil_layers, on: :member
+      end
+      resources :results do
+        get 'sel', on: :member
+        get :summary, on: :member
+        get :by_soils, on: :member
+        get :annual_charts, on: :member
+        get :monthly_charts, on: :member
+        get :download_apex_files, on: :member
+      end
+      resources :apex_parameters
+      resources :apex_controls
+      resources :apex_soils
+      resources :apex_layers
+    end
   end
 
   resources :states do
     resources :counties
-	post :show_counties, on: :collection
-  end
-
-  resources :bmps do
-	get :list, on: :member
-	post :save_bmps, on: :collection
+  post :show_counties, on: :collection
   end
 
   resources :activities do
@@ -101,50 +134,8 @@ NTTG3::Application.routes.draw do
     resources :fertilizers
   end
 
-  resources :locations do
-    get :send_to_mapping_site, on: :member
-    post :receive_from_mapping_site, on: :member
-    get :location_fields, on: :member
-  end
-
-  resources :fields do
-    get :list, on: :member
-    resources :soils
-    resources :scenarios
-	resources :weathers
-	get :field_soils, on: :member
-	get :field_scenarios, on: :member
-    get 'create_soils', on: :member
-  end
-
   resources :watersheds do
-	get :list, on: :member
-  end
-
-  resources :soils do
-    get :list, on: :member
-    resources :layers
-	get :soil_layers, on: :member
-  end
-
-  resources :layers do
-    get :list, on: :member
-  end
-
-  resources :scenarios do
-    get :list, on: :member
-	get :scenario_operations, on: :member
-	get :scenario_bmps, on: :member
-	get 'aplcat', on: :member
-  end
-
-  resources :operations do
-	get :list, on: :member
-	get :cropping_system, on: :member
-	get :crop_schedule, on: :member
-    get 'download', on: :member
-    get :open, on: :member
-    post :upload_system, on: :member
+  get :list, on: :member
   end
 
   resources :bmplists do
