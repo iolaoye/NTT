@@ -1,0 +1,2 @@
+module ManureControlsHelper
+end

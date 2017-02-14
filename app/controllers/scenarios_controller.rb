@@ -172,11 +172,12 @@ class ScenariosController < ApplicationController
   def aplcat
     #find the aplcat parameters for the sceanrio selected
 	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
+	grazing = GrazingParameter.where(:scenario_id => params[:id])
 	if aplcat == nil then
 		aplcat = AplcatParameter.new
 		aplcat.scenario_id = params[:id]
 		aplcat.save
-	end 
+	end
 	# create string for the Cow_Calf_EME_final.txt file
 	apex_string = "This is the input file containing nutritional information for cattle in the cow-calf system" + "\n"
 	apex_string += "\n"
@@ -212,7 +213,63 @@ class ScenariosController < ApplicationController
 	apex_string += sprintf("%8.2f", aplcat.effn2ofmms) + "\t" + "! " + t('aplcat.effn2ofmms') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.ptdife) + "\t" + "! " + t('aplcat.ptdife') + "\n"
 	apex_string += "\n"
-	apex_string += "Data on animalfeed (grasses, hay and concentrates)"
+	apex_string += "Data on animalfeed (grasses, hay and concentrates)" + "\n"
+	apex_string += "\n"
+	apex_string += sprintf("%.f", grazing.count) 
+	for i in 0..grazing.count-1
+		apex_string += "\t" 
+	end
+	apex_string += "| " + t('graze.total') + "\n"
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%.f", grazing[i].code) + "\t"
+	end 
+	apex_string += "| " + t('graze.code') + "\n"
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%.f", grazing[i].starting_julian_day) + "\t"
+	end
+	apex_string += "| " + t('graze.sjd') + "\n"
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%.f", grazing[i].ending_julian_day) + "\t"
+	end
+	apex_string += "| " + t('graze.ejd') + "\n"
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%.f", grazing[i].dmi_code) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_code') + "\n"
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%8.2f", grazing[i].dmi_cows) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_cows') + "\n"
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%8.2f", grazing[i].dmi_bulls) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_bulls') + "\n"
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%8.2f", grazing[i].dmi_heifers) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_heifers') + "\n"
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%8.2f", grazing[i].dmi_calves) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_calves') + "\n"
+	for i in 0..grazing.count-1
+		apex_string += sprintf("%.f", grazing[i].green_water_footprint) + "\t"
+	end
+	apex_string += "| " + t('graze.gwf') + "\n"
+	apex_string += "\n"
+	apex_string += "IMPORTANT NOTE: Details of parameters defined in the above 8 lines:" + "\n"
+	apex_string += "\n"
+	apex_string += t('graze.ln1') + "\n"
+	apex_string += t('graze.ln2') + "\n"
+	apex_string += "Line 3: " + t('graze.sjd') + "\n"
+	apex_string += "Line 4: " + t('graze.ejd') + "\n"
+	apex_string += t('graze.ln5') + "\n"
+	apex_string += "Line 6: " + t('graze.dmi_cows') + "\n"
+	apex_string += "Line 7: " + t('graze.dmi_bulls') + "\n"
+	apex_string += "Line 8: " + t('graze.dmi_heifers') + "\n"
+	apex_string += "Line 9: " + t('graze.dmi_calves') + "\n"
+	apex_string += t('graze.ln10') + "\n"
+	apex_string += "\n"
 	msg = send_file_to_APEX(apex_string, "Cow_Calf_EME_final.txt")
 	# create string for the DRINKIGWATER.txt file
 	apex_string = "Input file for estimating drinking water requirement of cattle" + "\n"
@@ -226,6 +283,29 @@ class ScenariosController < ApplicationController
 	apex_string += sprintf("%8.2f", aplcat.dwawfga) + "\t" + "! " + t('aplcat.dwawfga') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.dwawflc) + "\t" + "! " + t('aplcat.dwawflc') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.dwawfmb) + "\t" + "! " + t('aplcat.dwawfmb') + "\n"
+	# take monthly avg max and min temp and get an average of those two
+	# take monthly rh to add to dringking water.
+	county = County.find(Location.find(session[:location_id]).county_id)
+    if county != nil then
+      client = Savon.client(wsdl: URL_Weather)
+      response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
+      #response = client.call(:get_weather, message: {"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
+      weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
+	  max_temp = weather_data[2].split
+	  min_temp = weather_data[3].split
+	  rh = weather_data[14].split
+	  for i in 0..max_temp.count-1
+		min_temp[i] = sprintf("%5.1f",((max_temp[i].to_f + min_temp[i].to_f) / 2) * 9/5 + 32)
+		session[:depth] = rh[i]
+		rh[i] = 100 * (Math.exp((17.625 * rh[i].to_f) / (243.04 + rh[i].to_f)) / Math.exp((17.625 * min_temp[i].to_f) / (243.04 + min_temp[i].to_f)))
+		apex_string += sprintf("%5.1f", min_temp[i]) + "  "
+	  end
+	  apex_string += "\t" + "! " + t('aplcat.avg_temp') + "\n"
+	  for i in 0..rh.count-1
+		apex_string += sprintf("%5.1f", rh[i]) + "  "
+	  end
+	  apex_string += "\t" + "! " + t('aplcat.avg_rh') + "\n"
+	end
 	apex_string += sprintf("%8.2f", aplcat.adwgbc) + "\t" + "! " + t('aplcat.adwgbc') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.adwgbh) + "\t" + "! " + t('aplcat.adwgbh') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"	

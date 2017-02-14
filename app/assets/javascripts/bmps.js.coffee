@@ -23,6 +23,15 @@ update_animal_options = ->
      $("#bmp_sf_org_n").val(fertilizer.yn)
      $("#bmp_sf_org_p").val(fertilizer.yp)
 
+#update nutrients for manure control
+update_manure_control_options = ->
+  url = "/manure_controls/" + $("#bmp_mc_animal_id").val() + ".json"
+  $.getJSON url, (control) ->
+     $("#bmp_mc_no3_n").val(control.no3n)
+     $("#bmp_mc_po4_p").val(control.po4p)
+     $("#bmp_mc_org_n").val(control.orgn)
+     $("#bmp_mc_org_p").val(control.orgp)
+
 #update bmp sublist depending on the bmp selected.
 update_bmpsublist = ->
   url = "/bmplists/" + $("#bmp_bmp_id").val() + "/bmpsublists.json"
@@ -286,6 +295,8 @@ $(document).ready ->
         update_irrigation_options()
     $("#autofertigation").change ->
         update_fertigation_options()
+    $("#bmp_mc_animal_id").change ->
+	    update_manure_control_options()
     $("#fill_max").click ->
         update_max_row()
     $("#fill_pcp").click ->

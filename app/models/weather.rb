@@ -11,6 +11,9 @@ class Weather < ActiveRecord::Base
   validates :longitude, numericality: { greater_than_or_equal_to: -180.00, less_than_or_equal_to: 180.00 }, if: "way_id == 3"
   #Functions
   def simulation_years
+    if self.simulation_final_year == 0 && self.simulation_initial_year == 0
+		return 
+	end
     if self.simulation_final_year < self.simulation_initial_year
       self.errors.add(:simulation_final_year, I18n.t('weather.simulation_only_error'))
     end
@@ -21,12 +24,14 @@ class Weather < ActiveRecord::Base
       self.errors.add(:simulation_initial_year, I18n.t('weather.initial_simulation_error') + ": " + (self.weather_initial_year + 5).to_s)
     end
   end
+
   def file
     case self.way_id
-    when 2 
-	  if self.weather_file == nil
-	  self.errors.add(:weather_file, I18n.t('weather.simulation_only_error'))
-      end
+	  when 2 
+		if self.weather_file == nil
+		  self.errors.add(:weather_file, I18n.t('weather.simulation_only_error'))
+		end
     end
   end
+
 end

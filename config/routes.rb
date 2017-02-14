@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :manure_controls
+
+
   resources :grazing_parameters
   resources :aplcat_parameters
   resources :control_descriptions
@@ -165,10 +168,13 @@ NTTG3::Application.routes.draw do
   get '/help/:page' => "help#show", :as => "help"
 
   post 'apex_controls/reset'
+  post 'apex_controls/download'
   post 'apex_parameters/reset'
-
+  post 'apex_parameters/download'
+  post 'subareas/download'
+  post 'apex_soils/download'
+  post 'sites/download'
   post 'operations/delete_all'
-
   post 'scenarios/simulate_all'
 
   # The priority is based upon order of creation:
