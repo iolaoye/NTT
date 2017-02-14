@@ -77,6 +77,7 @@ class SoilsController < ApplicationController
     @soil = Soil.find(params[:id])
   end
 
+################################  CREATE   #################################
 # POST /soils
 # POST /soils.json
   def create
