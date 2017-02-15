@@ -24,10 +24,11 @@
       <%= flash[:error] %>
     </div>
 <% end %>
-<%= form_tag '/simulate_all', multipart: true do %>
+<%= form_tag simulate_checked_scenarios_path, method: :post do |f| %>
 <div class="page-header"><h1><%= t('menu.scenarios') %></h1></div>
 <%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_scenario_path, :class => 'btn btn-primary' %>
-<%= link_to t('scenario.simulate') + ' ' + t('general.all'), {:action => :simulate_all}, :method => :post, data: {disable_with: 'Please wait. Simulation in progress . . .'}, :class => 'btn btn-primary' %>
+<%#= link_to t('scenario.simulate') + ' ' + t('general.all'), data: {disable_with: 'Please wait. Simulation in progress . . .'}, :class => 'btn btn-primary' %>
+<%= submit_tag t('scenario.simulate') + ' '  + t('soil.selected'), :class => 'btn btn-primary'%>
 <%= link_to t('general.continue'), summary_result_path(session[:field_id]), :class => 'btn btn-success' %>
 <br><br>
 <%= t('instructions.scenarios') %>
@@ -55,7 +56,7 @@
       <% else %>
           <tr class="gvRowStyleOdd">
 	  <% end %>
-			<td><%= check_box_tag "select_scenario" + i.to_s %></td>
+			<td><%= check_box_tag :select_scenario  %></td>
             <td class="btn btn-link"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
             <td class="gvCellStyleImage">
               <% if Weather.find_by_field_id(scenario.field_id) == nil %>

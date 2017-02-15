@@ -19,7 +19,6 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /1/scenarios.json
   def list
-  
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => session[:field_id])
     #@field = Field.find(session[:field_id])
@@ -32,6 +31,7 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def index
+  iii
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
     @errors = Array.new
@@ -42,7 +42,7 @@ class ScenariosController < ApplicationController
     end
   end
 ################################  Simulate  #################################
-  def simulate_all
+  def simulate_checked
   ooo
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
