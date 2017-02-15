@@ -31,7 +31,10 @@ class SoilsController < ApplicationController
 # GET /soils
 # GET /soils.json
   def index
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     @soils = Soil.where(:field_id => session[:field_id])
+    @weather = @field.weather
 
     respond_to do |format|
       format.html # index.html.erb

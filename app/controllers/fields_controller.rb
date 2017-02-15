@@ -83,12 +83,14 @@ class FieldsController < ApplicationController
   def show
     session[:simulation] = "scenario"
     session[:field_id] = params[:id]
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:id])
 
     respond_to do |format|
       if Rails.application.config.which_version == "modified"
-        format.html { redirect_to field_soils_field_path(session[:field_id]) }
+        format.html { redirect_to project_field_soils_path(@field.location.project, @field) }
       else
-        format.html { redirect_to edit_weather_path }
+        format.html { redirect_to edit_project_field_weather_path(@project, @field) }
       end
       format.json { render json: @field, status: :created, weather: @field.id }
     end

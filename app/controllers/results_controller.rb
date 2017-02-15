@@ -19,6 +19,7 @@ class ResultsController < ApplicationController
   end
   ###############################  SUMMARY ###################################
   def summary
+    @project = Project.find(params[:project_id])
 	@type = t("result.summary")
 	index
 	render "index"
