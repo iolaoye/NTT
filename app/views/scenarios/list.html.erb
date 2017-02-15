@@ -24,6 +24,7 @@
       <%= flash[:error] %>
     </div>
 <% end %>
+<%= form_for :scenarios, :html => { :id => "scenariosForm" }, :url => scenarios_path, method: :post do %>
 <div class="page-header"><h1><%= t('menu.scenarios') %></h1></div>
 <%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_scenario_path, :class => 'btn btn-primary' %>
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), {:action => :simulate_all}, :method => :post, data: {disable_with: 'Please wait. Simulation in progress . . .'}, :class => 'btn btn-primary' %>
@@ -33,9 +34,10 @@
 
 <div class="table-responsive">
   <div class="panel panel-default">
-    <table class="table table-striped">
+    <table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
       <thead>
         <tr>
+          <th class="gvCellStyleTitle"><%= check_box_tag "select_all", t('general.select') %> </th>
           <th class="gvCellStyleTitle"><%= t('general.name') %></th>
           <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
           <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
@@ -54,7 +56,8 @@
       <% else %>
           <tr class="gvRowStyleOdd">
 	  <% end %>
-            <td class="gvCellStyleText"><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
+			<td><%= check_box_tag "select_scenario" + i.to_s %></td>
+            <td class="btn btn-link'><%= link_to scenario.name, scenario_operations_scenario_path(scenario.id) %></td>
             <td class="gvCellStyleImage">
               <% if Weather.find_by_field_id(scenario.field_id) == nil %>
 				  <%= "bad" %>
@@ -115,5 +118,6 @@
 </table>
 </div>
 </div>
+<% end %>
 
 <br>
