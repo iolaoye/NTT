@@ -51,6 +51,7 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
+  ooo
     @slope = 100
     #take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
 	bmps = Bmp.where(:scenario_id => session[:scenario_id])
