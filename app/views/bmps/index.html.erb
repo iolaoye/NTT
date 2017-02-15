@@ -16,6 +16,7 @@
 
       <% @bmps.each do |bmp| %>
 		<tbody>
+      <% if bmp.bmpsublist_id != 2 %>
 			<tr>
 				<% if I18n.locale.equal?(:en) %>
 					<td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
@@ -28,10 +29,26 @@
 					<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
 				<% end %>
 			</tr>
+        <%end %>
 		</tbody>
 		<tbody id=<%="#{bmp.bmpsublist_id}"%>>
 			<% case bmp.bmpsublist_id %>
 				<% when 1 %>
+          <tr>
+            <td>
+              <% case bmp.depth%>
+                <% when 1 %>
+                  <%= radio_button_tag :bmp_cb1, "1", true  %> <%= t('bmp.autoirrigation') %>
+                  <%= radio_button_tag :bmp_cb1, "2"%> <%= t('bmp.autofertigation') %>
+                <% when 2 %>
+                  <%= radio_button_tag :bmp_cb1, "1" %> <%= t('bmp.autoirrigation') %>
+                  <%= radio_button_tag :bmp_cb1, "2", true %> <%= t('bmp.autofertigation') %>
+                <% else %>
+                  <%= radio_button_tag :bmp_cb1, "1"%> <%= t('bmp.autoirrigation') %>
+                    <%= radio_button_tag :bmp_cb1, "2" %> <%= t('bmp.autofertigation') %>
+              <%end%>
+            </td>
+          </tr>
 				  <tr>
 					<td class="indent">
 						<%= label :irrigation_id, t('bmp.irrigation')  %>
@@ -71,41 +88,6 @@
 				    <td class="field indent" id = "reservoir_area" style="display: none;">
 						<%= label :days, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') %>
 						<%= text_field :bmp_ai, :area, :value => bmp.area%>
-				    </td>
-				  </tr>
-				<% when 2 %>
-				  <tr>
-					<td class="indent">
-						<%= label :irrigation_id, t('bmp.irrigation') %>
-						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_af, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id} %>
-						<% else %>
-						  <%= collection_select :bmp_af, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id} %>
-						<% end %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_af, :water_stress_factor, :value => bmp.water_stress_factor %>
-					</td>
-				  </tr>
-				  <tr>
-				    <td class="field indent" id = "irrigation_efficiency" >
-						<%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_af, :irrigation_efficiency, :value => bmp.irrigation_efficiency %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="field indent" id = "frequency" >
-						<%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
-						<%= text_field :bmp_af, :days, :value => bmp.days %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="field indent" id = "maximum_single_application" >
-						<%= label :days, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') + " " + t('bmp.inches') %>
-						<%= text_field :bmp_af, :maximum_single_application, :value => bmp.maximum_single_application %>
 				    </td>
 				  </tr>
 				<% when 3 %>
