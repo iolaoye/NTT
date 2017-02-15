@@ -136,6 +136,7 @@ NTTG3::Application.routes.draw do
 	get :scenario_operations, on: :member
 	get :scenario_bmps, on: :member
 	get 'aplcat', on: :member
+	post :simulate_checked, on: :collection
   end
 
   resources :operations do
@@ -175,7 +176,6 @@ NTTG3::Application.routes.draw do
   post 'apex_soils/download'
   post 'sites/download'
   post 'operations/delete_all'
-  post 'scenarios/simulate_all'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
