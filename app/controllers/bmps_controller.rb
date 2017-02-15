@@ -22,7 +22,7 @@ class BmpsController < ApplicationController
 ################################  INDEX  #################################
 # GET /bmps
 # GET /bmps.json
-  def index
+  def index  
     get_bmps()
 	take_names()
     respond_to do |format|
@@ -51,7 +51,6 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
-  ooo
     @slope = 100
     #take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
 	bmps = Bmp.where(:scenario_id => session[:scenario_id])
@@ -64,11 +63,13 @@ class BmpsController < ApplicationController
 	end  # bmps.each
 	#Bmp.where(:scenario_id => session[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
 	if !(params[:bmp_ai][:irrigation_id] == "") then
-		create(1)
+		if !(params[:bmp_cb1] == nil)
+			create(1)
+		end
 	end
-	if !(params[:bmp_af][:irrigation_id] == "") then
-		create(2)
-	end
+	#if !(params[:bmp_af][:irrigation_id] == "") then
+		#create(2)
+	#end
 	if !(params[:bmp_td][:depth] == "") then
 		create(3)
 	end
@@ -266,7 +267,7 @@ class BmpsController < ApplicationController
   def input_fields(type)
   session[:depth] = @bmp.bmpsublist_id
     case @bmp.bmpsublist_id
-      when 1
+      when 1		
         return autoirrigation(type)
       when 2
         return fertigation(type)
@@ -388,6 +389,7 @@ class BmpsController < ApplicationController
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
 			@bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
 			subarea.fdsf = 0
+			@bmp.depth = params[:bmp_cb1]
 			if params[:bmp_ai][:safety_factor] == nil then
 				subarea.fdsf = 0
 			else
