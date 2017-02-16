@@ -1,7 +1,5 @@
 NTTG3::Application.routes.draw do
   resources :manure_controls
-
-
   resources :grazing_parameters
   resources :aplcat_parameters
   resources :control_descriptions
@@ -75,6 +73,7 @@ NTTG3::Application.routes.draw do
     get 'upload', on: :member
     get 'download', on: :member
     get :group, on: :member
+	get 'copy_project', on: :member
   end
 
   resources :weathers do
