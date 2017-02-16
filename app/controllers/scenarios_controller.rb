@@ -51,7 +51,6 @@ class ScenariosController < ApplicationController
     ActiveRecord::Base.transaction do
 	  params[:select_scenario].each do |scenario_id|
 		  @scenario = Scenario.find(scenario_id)
-		  debugger
 		  session[:scenario_id] = @scenario.id
 		  msg = run_scenario
 		  unless msg.eql?("OK")
