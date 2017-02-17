@@ -4272,7 +4272,7 @@ Fertilizer.create!({:id => 81, :code => 81, :spanish_name => '00-25-30', :name =
 Fertilizer.create!({:id => 82, :code => 82, :spanish_name => '15-05-00', :name => '15-05-00', :qn => 0.15, :qp => 0, :yn => 0, :yp => 0, :nh3 => 0, :dry_matter => 0, :fertilizer_type_id => 0, :convertion_unit => 1, :status => 'false', :animal => 0}, :without_protection => true)
 
 Bmpsublist.delete_all
-Bmpsublist.create!({:id => 1, :name => "Autoirrigation", :spanish_name => "Irrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 1, :name => "Autoirrigation/Autofertigation", :spanish_name => "Irrigacion/Fertirrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 2, :name => "Autofertigation", :spanish_name => "Fertirrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 3, :name => "Tile Drain", :spanish_name => "Sistema de Drenaje", :bmplist_id => 2, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 4, :name => "Pads and Pipes - No Ditch Improvement", :spanish_name => "Almohadillas y Tuberias - Ningun Mejoramiento en la Zanja", :bmplist_id => 2, :status => true}, :without_protection => true)
@@ -4289,12 +4289,12 @@ Bmpsublist.create!({:id => 14, :name => "Waterway (Grassed Buffer)", :spanish_na
 Bmpsublist.create!({:id => 15, :name => "Contour Buffer", :spanish_name => "Buffer de Contorno", :bmplist_id => 5, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 16, :name => "Land Leveling", :spanish_name => "Nivelacion de la Tierra", :bmplist_id => 6, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 17, :name => "Terrace System", :spanish_name => "Sistema de Terraza", :bmplist_id => 6, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 18, :name => "Manure Control", :spanish_name => "Control de Estiercol", :bmplist_id => 6, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 19, :name => "Temperature and Precipitation Changes", :spanish_name => "Cambios de Temperatura y Precipitacion", :bmplist_id => 7, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 20, :name => "Asphalt or Concrete", :spanish_name => "Asfalto o Concreto", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 21, :name => "Grass Cover", :spanish_name => "Cubierta de Pasto", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 22, :name => "Slope Adjustment", :spanish_name => "Ajuste de la inclinacion", :bmplist_id => 8, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 23, :name => "Shading", :spanish_name => "Shading", :bmplist_id => 8, :status => true}, :without_protection => true)
-Bmpsublist.create!({:id => 24, :name => "Manure Control", :spanish_name => "Control de Estiercol", :bmplist_id => 6, :status => true}, :without_protection => true)
 
 Bmplist.delete_all
 Bmplist.create!({:id => 1, :name => "Autoirrigation and Autofertigation", :spanish_name => "Irrigacion y fertigacion Automatica"}, :without_protection => true)

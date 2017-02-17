@@ -65,6 +65,12 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  ################  copy the selected project  ###################
+  def copy_project
+	download_project(params[:id], "copy")
+	@projects = Project.where(:user_id => session[:user_id])
+  end
+
   ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
 
   def self.wipe_database
@@ -173,28 +179,44 @@ class ProjectsController < ApplicationController
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_project
+	saved = upload_prj()
+    if saved
+      flash[:notice] = t('models.project') + " " + t('general.success')
+      redirect_to list_field_path(session[:location_id]), notice: msg
+    else
+      redirect_to upload_project_path(@upload_id)
+      flash[:notice] = msg and return false
+    end
+  end
+
+  def upload_prj
     saved = false
     msg = ""
-    upload_id = 0
+    @upload_id = 0
     ActiveRecord::Base.transaction do
       #begin
       msg = "OK"
-      upload_id = 0
+      @upload_id = 0
+	  debugger
       if params[:commit].eql? t('project.upload_project') then
         if params[:project] == nil then
-          redirect_to upload_project_path(upload_id)
+          redirect_to upload_project_path(@upload_id)
           flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
         end
         @data = Nokogiri::XML(params[:project])
-        upload_id = 0
+        @upload_id = 0
       else
-        upload_id = 1
+        @upload_id = 1
         case params[:examples]
           when "0"
-            redirect_to upload_project_path(upload_id)
+            redirect_to upload_project_path(@upload_id)
             flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
           when "1" # Load OH two fields
             @data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
+		  when "2"  # load just the saved project to be copied
+		    @data = Nokogiri::XML(File.open(@path))
+			@upload_id = 2
+			debugger
         end # end case examples
       end
       @data.root.elements.each do |node|
@@ -243,22 +265,19 @@ class ProjectsController < ApplicationController
       #raise ActiveRecord::Rollback
       #end
     end
-    if saved
-      flash[:notice] = t('models.project') + " " + t('general.success')
-      redirect_to list_field_path(session[:location_id]), notice: msg
-    else
-      redirect_to upload_project_path(upload_id)
-      flash[:notice] = msg and return false
-    end
+	return saved
   end
 
   ########################################### DOWNLOAD PROJECT FILE IN XML FORMAT ##################
-  def download
+  def download()
+	download_project(params[:id], "download")
+  end
+
+  def download_project(project_id, type)
     #require 'open-uri'
     #require 'net/http'
     #require 'rubygems'
-
-    project = Project.find(params[:id])
+    project = Project.find(project_id)
 
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.projects {
@@ -269,16 +288,16 @@ class ProjectsController < ApplicationController
           xml.project_version project.version
         } # end xml.project
         #save location information
-        save_location_information(xml, params[:id])
+        save_location_information(xml, project_id)
 		xml.controls {
-		  controls = ApexControl.where(:project_id => params[:id])
+		  controls = ApexControl.where(:project_id => project_id)
 		  controls.each do |c|
 			save_control_information(xml, c)
 		  end
 		} # xml each control end
 
 		xml.parameters {
-		  parameters = ApexParameter.where(:project_id => params[:id])
+		  parameters = ApexParameter.where(:project_id => project_id)
 		  parameters.each do |c|
 			save_parameter_information(xml, c)
 		  end
@@ -287,11 +306,16 @@ class ProjectsController < ApplicationController
     end #builder do end
 
     file_name = session[:session_id] + ".prj"
-    path = File.join(DOWNLOAD, file_name)
+    @path = File.join(DOWNLOAD, file_name)
     content = builder.to_xml
-    File.open(path, "w") { |f| f.write(content) }
-    #file.write(content)
-    send_file path, :type => "application/xml", :x_sendfile => true
+	File.open(@path, "w") { |f| f.write(content) }
+	#file.write(content)
+	send_file @path, :type => "application/xml", :x_sendfile => true
+	if type == "copy"
+		#call upload to copy project
+		params[:examples] = "2"
+		upload_prj()
+	end
   end   #download project def end
 
   def save_location_information(xml, project_id)
@@ -833,13 +857,17 @@ class ProjectsController < ApplicationController
   end
 
   def upload_project_new_version(node)
+  debugger
     #begin
       project = Project.new
       project.user_id = session[:user_id]
       node.elements.each do |p|
         case p.name
           when "project_name" #if project name exists, save fails
-            project.name = p.text
+			project.name = p.text
+			if params[:examples] == "2"
+				project.name = project.name + " copy"
+			end
           when "project_description"
             project.description = p.text
         end
