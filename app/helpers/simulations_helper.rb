@@ -1221,15 +1221,14 @@ module SimulationsHelper
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
         oper = Operation.where(:id => operation.operation_id).first
-        #session[:a_op] = operation
-        #session[:a_id] = operation.operation_id
-        add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 18)
+		if oper.activity_id == 2 && oper.type_id == 2 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
+			add_fert(oper.no3_n * bmp.no3_n, oper.po4_p * bmp.po4_p, oper.org_n * bmp.org_n, oper.org_p * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+		else
+			add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+		end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
-        #else
-        #apex_string += sprintf("%5d", operation.subtype)    #Fertilizer Code       #APEX0604
-        #items[0] = operation.subtype
-        #end
         apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
         values[0] = operation.opv1
         apex_string += sprintf("%8.2f", operation.opv2)
@@ -1437,7 +1436,6 @@ module SimulationsHelper
       @new_fert_line.push(newLine)
     end
   end
-
   #end add_fert method
 
   def change_till_for_depth(oper, depthAnt)
