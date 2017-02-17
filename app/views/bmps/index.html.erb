@@ -411,8 +411,8 @@
           </tr>
 
           <% @climates.each do |climate| %>
-            <tr>
-              <td class="gvCellStyleNumber">
+            <tr class="indent">
+              <td style="text-align: center">
                 <%= climate.month %>
               </td>
               <td class="gvCellStyleNumber">
@@ -504,6 +504,12 @@
       var validateBmpCb = new Validator("bmpsForm");
       var validateBmpLl = new Validator("bmpsForm");
       var validateBmpTs = new Validator("bmpsForm");
+      var validateBmpMc = new Validator("bmpsForm");
+      var validateBmpCc = new Validator("bmpsForm");
+      var validateBmpAc = new Validator("bmpsForm");
+      var validateBmpGc = new Validator("bmpsForm");
+      var validateBmpSa = new Validator("bmpsForm");
+      var validateBmpSdg = new Validator("bmpsForm");
       //hides all Bmps on page load - (i < integer) integer = bmpsublist count
       for(i = 1; i < 24; i++) {
         $('#'+i).hide();
@@ -564,6 +570,18 @@
                 validateBmpLl.clearAllValidations();
             } else if (i == 17) {
                 validateBmpTs.clearAllValidations();
+            } else if (i == 18) {
+                validateBmpMc.clearAllValidations();
+            } else if (i == 19) {
+                validateBmpCc.clearAllValidations();
+            } else if (i == 20) {
+                validateBmpAc.clearAllValidations();
+            } else if (i == 21) {
+                validateBmpGc.clearAllValidations();
+            } else if (i == 22) {
+                validateBmpSa.clearAllValidations();
+            } else if (i == 23) {
+                validateBmpSdg.clearAllValidations();
             }
           } else { //checkbox checked
             $("tbody#"+i).show();
@@ -602,12 +620,24 @@
                 validationsBmpLl();
             } else if (i == 17) {
                 validationsBmpTs();
+            } else if (i == 18) {
+                validationsBmpMc();
+            } else if (i == 19) {
+                validationsBmpCc();
+            } else if (i == 20) {
+                validationsBmpAc();
+            } else if (i == 21) {
+                validationsBmpGc();
+            } else if (i == 22) {
+                validationsBmpSa();
+            } else if (i == 23) {
+                validationsBmpSdg();
             }
             if (i == 1 && $('#select_2').is(':checked')) {
               if (prompt_user()) {
                 validationsBmpAi(0);
               } else { confirm_check(i); }
-            } else if (i == 2 && $('#select_1').is(':checked')) {
+            } else if (i == 2 && $('#select_1').is(':checked')) { //unused functionality as checkbox 2 does not appear
                 if (prompt_user()) {
                   validationsBmpAf(0);
                 } else { confirm_check(i); }
@@ -681,22 +711,23 @@
         }
         $('#bmp_ai_irrigation_id').change(function(){
           if ($('#bmp_ai_irrigation_id').val() == 8) {
-            validateBmpAi.addValidation(ai_inputs[5].name, "req", "Required field missing in Autoirrigation.");
+            validateBmpAi.addValidation(ai_inputs[5].name, "req", "Required field missing in Autoirrigation/Autofertigation.");
           }
         });
         for(n = 0; n < ai_inputs.length - 1; n++) {
-            validateBmpAi.addValidation(ai_inputs[n].name, "req", "Required field missing in Autoirrigation.");
+            validateBmpAi.addValidation(ai_inputs[n].name, "req", "Required field missing in Autoirrigation/Autofertigation.");
         }
+        validateBmpAi.addValidation("bmp_cb1", "selone", "A selection is required.");
         validateBmpAi.addValidation(ai_inputs[1].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAi.addValidation(ai_inputs[1].name, "lte=1.00", "Input must be less than or equal to 1.00.");
+        validateBmpAi.addValidation(ai_inputs[1].name, "lte=365", "Input must be less than or equal to 365.");
         validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", "Input must be greater than 0.");
         validateBmpAi.addValidation(ai_inputs[2].name, "lte=1.00", "Input must be less than or equal to 1.00.");
         validateBmpAi.addValidation(ai_inputs[3].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAi.addValidation(ai_inputs[3].name, "lte=365", "Input must be less than or equal to 365.");
+        validateBmpAi.addValidation(ai_inputs[3].name, "lte=1.00", "Input must be less than or equal to 1.00.");
         validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", "Input must be greater than 0.");
         validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
       }
-      function validationsBmpAf(i) {
+      function validationsBmpAf(i) { //unused function - remove?
         if (($('#select_7').is(':checked'))) {
           if(promptMsg("Tailwater Irrigation is currently checked and requires Autoirrigation to be checked. " +
                        "Continuing will clear any data you may have for Tailwater Irrigation and Autoirrigation.")){
@@ -840,8 +871,7 @@
       }
       function validationsBmpSbs() {
         var sbs_inputs = $('[name^=bmp_sbs]').valueOf();
-        //problem with checkmark?
-        validateBmpSbs.addValidation(sbs_inputs[0].name, "shouldselchk=on", "Checkbox within Steambank Stabilization must be checked.");
+        validateBmpSbs.addValidation(sbs_inputs[0].name, "selone", "Checkbox within Steambank Stabilization must be checked.");
       }
       function validationsBmpRf(i) {
         var rf_inputs = $('[name^=bmp_rf]').valueOf();
@@ -923,7 +953,48 @@
       }
       function validationsBmpTs() {
         var ts_inputs = $('[name^=bmp_ts]').valueOf();
-        validateBmpTs.addValidation(ts_inputs[0].name, "shouldselchk=on", "Checkbox within Terrace System must be checked.");
+        validateBmpTs.addValidation(ts_inputs[0].name, "selone", "Checkbox within Terrace System must be checked.");
+      }
+      function validationsBmpMc() {
+        var mc_inputs = $('[name^=bmp_mc]').valueOf();
+        for (n = 0; n < mc_inputs.length; n++) {
+          validateBmpMc.addValidation(mc_inputs[n].name, "req", "Required field missing in Manure Control");
+        }
+        validateBmpMc.addValidation(mc_inputs[1].name, "gt=0", "Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[2].name, "gt=0", "Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[3].name, "gt=0", "Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[4].name, "gt=0", "Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[1].name, "lte=0", "Input must be less than or equal to 100.");
+        validateBmpMc.addValidation(mc_inputs[2].name, "lte=0", "Input must be less than or equal to 100.");
+        validateBmpMc.addValidation(mc_inputs[3].name, "lte=0", "Input must be less than or equal to 100.");
+        validateBmpMc.addValidation(mc_inputs[4].name, "lte=0", "Input must be less than or equal to 100.")
+      }
+      function validationsBmpCc() {
+        var cc_inputs = $('[name^=bmp_cc]').valueOf();
+        //validateBmpCc.addValidation();
+      }
+      function validationsBmpAc() {
+        var ac_inputs = $('[name^=bmp_ac]').valueOf();
+        validateBmpAc.addValidation(ac_inputs[0].name, "selone", "Checkbox within 'Ashphalt or Concrete' must be checked.");
+      }
+      function validationsBmpGc() {
+        var gc_inputs = $('[name^=bmp_gc]').valueOf();
+        validateBmpGc.addValidation(gc_inputs[0].name, "selone", "Checkbox within Grasscover must be checked.");
+      }
+      function validationsBmpSa() {
+        var sa_inputs = $('[name^=bmp_sa]').valueOf();
+        validateBmpSa.addValidation(sa_inputs[0].name, "selone", "Checkbox within Slope Adjustment must be checked.");
+      }
+      function validationsBmpSdg() {
+        var sdg_inputs = $('[name^=bmp_sdg]').valueOf();
+        for(n = 0; n < sdg_inputs.length; n++) {
+          validateBmpSdg.addValidation(sdg_inputs[n].name, "req", "Required field missing in Shading.");
+        }
+        validateBmpSdg.addValidation(sdg_inputs[1].name, "gt=0", "Input must be greater than 0.");
+        validateBmpSdg.addValidation(sdg_inputs[1].name, "lte=100000", "Input must be less than or equal to 100000.");
+        validateBmpSdg.addValidation(sdg_inputs[2].name, "gt=0", "Input must be greater than 0.");
+        validateBmpSdg.addValidation(sdg_inputs[3].name, "gte=0.25", "Input must be greater than or equal to 0.25.");
+        validateBmpSdg.addValidation(sdg_inputs[3].name, "lte=1", "Input must be less than or equal to 1.");
       }
       function promptMsg(msg) {
         var r = confirm(msg);
