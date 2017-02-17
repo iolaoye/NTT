@@ -1,5 +1,5 @@
 Bmpsublist.delete_all
-Bmpsublist.create!({:id => 1, :name => "Autoirrigation", :spanish_name => "Irrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 1, :name => "Autoirrigation/Autofertigation", :spanish_name => "Irrigacion/Fertirrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 2, :name => "Autofertigation", :spanish_name => "Fertirrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 3, :name => "Tile Drain", :spanish_name => "Sistema de Drenaje", :bmplist_id => 2, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 4, :name => "Pads and Pipes - No Ditch Improvement", :spanish_name => "Almohadillas y Tuberias - Ningun Mejoramiento en la Zanja", :bmplist_id => 2, :status => true}, :without_protection => true)
