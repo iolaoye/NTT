@@ -42,7 +42,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %>
+            <%= link_to t('menu.managements') + "(" + Operation.where(:scenario_id => session[:scenario_id]).count.to_s + ")", scenario_operations_scenario_path(session[:scenario_id]) %>
           </li>
           <li class="<%= controller_name == "bmps" ? "active" : "" %>">
             <% if controller_name == "bmps" %>
@@ -50,7 +50,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %>
+            <%= link_to t('menu.bmps') + "(" + Bmp.where(:scenario_id => session[:scenario_id]).count.to_s + ")", scenario_bmps_scenario_path(session[:scenario_id]) %>
           </li>
           <li class="<%= controller_name == "aplcat_paramters" ? "active" : "" %>">
             <% if controller_name == "aplcat_parameters" %>
