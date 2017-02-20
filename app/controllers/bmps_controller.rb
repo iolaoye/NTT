@@ -94,12 +94,14 @@ class BmpsController < ApplicationController
 		#Bmp.where(:scenario_id => session[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
 		if !(params[:bmp_ai][:irrigation_id] == "") then
 			if !(params[:bmp_cb1] == nil)
-				create(1)
+				if params[:bmp_cb1] == "1" then
+					create(1)   #autoirrigation
+				end
+				if params[:bmp_cb1] == "2" then
+					create(2)   #autofertigation
+				end
 			end
 		end
-		#if !(params[:bmp_af][:irrigation_id] == "") then
-			#create(2)
-		#end
 		if !(params[:bmp_td][:depth] == "") then
 			create(3)
 		end
@@ -466,6 +468,7 @@ class BmpsController < ApplicationController
       if subarea != nil then
         case type
           when "create", "update"
+			@bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
             case @bmp.irrigation_id
               when 1
                 subarea.nirr = 1.0
@@ -476,20 +479,19 @@ class BmpsController < ApplicationController
             end
             subarea.vimx = 5000
             subarea.bir = 0.8
-			@bmp.irrigation_id = params[:bmp_af][:irrigation_id]
-            subarea.iri = params[:bmp_af][:days]
+            subarea.iri = params[:bmp_ai][:days]
 			@bmp.days = subarea.iri
-            subarea.bir = params[:bmp_af][:water_stress_factor]
+            subarea.bir = params[:bmp_ai][:water_stress_factor]
 			@bmp.water_stress_factor = subarea.bir
-            subarea.efi = 1.0 - params[:bmp_af][:irrigation_efficiency].to_f
-			@bmp.irrigation_efficiency = params[:bmp_af][:irrigation_efficiency].to_f
-            subarea.armx = params[:bmp_af][:maximum_single_application].to_f * IN_TO_MM
-			@bmp.maximum_single_application = params[:bmp_af][:maximum_single_application].to_f
+            subarea.efi = 1.0 - params[:bmp_ai][:irrigation_efficiency].to_f
+			@bmp.irrigation_efficiency = params[:bmp_ai][:irrigation_efficiency].to_f
+            subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
+			@bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
 			subarea.fdsf = 0
-			if params[:bmp_af][:safety_factor] == nil then
+			if params[:bmp_ai][:safety_factor] == nil then
 				subarea.fdsf = 0
 			else
-				subarea.fdsf = params[:bmp_af][:safety_factor]
+				subarea.fdsf = params[:bmp_ai][:safety_factor]
 			end
 			@bmp.safety_factor = subarea.fdsf
             subarea.idf4 = 1.0
