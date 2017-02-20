@@ -408,6 +408,7 @@ class BmpsController < ApplicationController
       if subarea != nil then
         case type
           when "create", "update"
+			@bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
             case @bmp.irrigation_id
               when 1
                 subarea.nirr = 1.0
@@ -418,7 +419,6 @@ class BmpsController < ApplicationController
             end
             subarea.vimx = 5000
             subarea.bir = 0.8
-			@bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
             subarea.iri = params[:bmp_ai][:days]
 			@bmp.days = subarea.iri
             subarea.bir = params[:bmp_ai][:water_stress_factor]
@@ -449,8 +449,10 @@ class BmpsController < ApplicationController
               subarea.idf4 = 0.0
               subarea.bft = 0.0
             end
-        end
-        if !subarea.save then return "Unable to save value in the subarea file" end
+        end   # end case type
+        if !subarea.save then 
+			return "Unable to save value in the subarea file" 
+		end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
