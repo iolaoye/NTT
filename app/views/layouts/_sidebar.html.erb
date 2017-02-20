@@ -9,7 +9,7 @@
 <%#= aplcats_submenu %>
 <%#= controller.action_name %>
 <%#= url_for %>
-<%= @type %>
+<%#= @type %>
 <% if field_submenu %>
   <li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || (controller_name == "results") || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>"><%= link_to t('menu.fields') + "   (" + Field.find(session[:field_id]).field_name + ")", list_field_path(session[:location_id]) %></li>
   <ul class="nav nav-pills nav-stacked nav-sidebar-sub">
@@ -34,7 +34,7 @@
       <% end %>
 
       <% if scenario_submenu %>
-		<%= link_to t('menu.scenarios') + "   (" + @scenario_name + ")", field_scenarios_field_path(session[:field_id]) %></li>
+		<%= link_to t('menu.scenarios') + "   (" + Scenario.find(session[:scenario_id]).name + ")", field_scenarios_field_path(session[:field_id]) %></li>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <li class="<%= controller_name == "operations" ? "active" : "" %>">
             <% if controller_name == "operations" %>

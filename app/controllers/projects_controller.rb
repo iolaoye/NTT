@@ -182,10 +182,10 @@ class ProjectsController < ApplicationController
 	saved = upload_prj()
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
-      redirect_to list_field_path(session[:location_id]), notice: msg
+      redirect_to list_field_path(session[:location_id]), notice: t('activerecord.notices.messages.created', model: "Project")
     else
       redirect_to upload_project_path(@upload_id)
-      flash[:notice] = msg and return false
+      flash[:notice] = t('activerecord.errors.messages.projects.no_saved') and return false
     end
   end
 
@@ -197,7 +197,6 @@ class ProjectsController < ApplicationController
       #begin
       msg = "OK"
       @upload_id = 0
-	  debugger
       if params[:commit].eql? t('project.upload_project') then
         if params[:project] == nil then
           redirect_to upload_project_path(@upload_id)
@@ -216,7 +215,6 @@ class ProjectsController < ApplicationController
 		  when "2"  # load just the saved project to be copied
 		    @data = Nokogiri::XML(File.open(@path))
 			@upload_id = 2
-			debugger
         end # end case examples
       end
       @data.root.elements.each do |node|
@@ -234,9 +232,9 @@ class ProjectsController < ApplicationController
           when "SiteInfo"
             msg = upload_site_info(node)
           when "controls"
-			      node.elements.each do |c|
-				      msg = upload_control_values_new_version(c)
-			      end
+			  node.elements.each do |c|
+				msg = upload_control_values_new_version(c)
+			  end
           when "ControlValues"
             msg = upload_control_values(node)
           when "ParmValues"
@@ -248,7 +246,9 @@ class ProjectsController < ApplicationController
         end
         break if (msg != "OK" && msg != true)
       end
-      load_parameters(ApexParameter.where(:project_id => session[:project_id]).count)
+      if msg == "OK" then
+		load_parameters(ApexParameter.where(:project_id => session[:project_id]).count)
+	  end 
 
 	  if (msg == "OK" || msg == true)
         # summarizes results for totals and soils.
@@ -845,8 +845,8 @@ class ProjectsController < ApplicationController
       project.version = "NTTG3"
       if project.save then
         session[:project_id] = project.id
-        upload_location_info(node)
-        upload_weather_info(node)
+        msg = upload_location_info(node)
+        msg = upload_weather_info(node)
         return "OK"
       else
         return "Error saving project"
@@ -857,7 +857,6 @@ class ProjectsController < ApplicationController
   end
 
   def upload_project_new_version(node)
-  debugger
     #begin
       project = Project.new
       project.user_id = session[:user_id]
@@ -901,6 +900,7 @@ class ProjectsController < ApplicationController
     end
     if location.save
       session[:location_id] = location.id
+	  return "OK"
     else
       return "location could not be saved"
     end
@@ -915,7 +915,10 @@ class ProjectsController < ApplicationController
             location.coordinates = p.text
         end
       end
-      location.save
+      if location.save
+		session[:location_id] = location.id
+		return "OK"
+	  end 
     rescue
       return "Location could not be saved"
     end

@@ -31,7 +31,6 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def index
-  iii
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
     @errors = Array.new
