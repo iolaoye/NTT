@@ -118,6 +118,7 @@ function sfm_set_focus(objInput)
         if (!objInput.disabled && objInput.type != 'hidden')
         {
             objInput.focus();
+            objInput.value = "";
         }
     }
 }
