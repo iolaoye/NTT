@@ -16,6 +16,11 @@ en:
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
+    notices:
+       messages:
+          saved: "%{model} Saved"
+          created: "%{model} Created"
+          deleted: "%{model} Deleted"
     models:
       projects: "Projects"
       location: "Location"

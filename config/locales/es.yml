@@ -1,4 +1,6 @@
-﻿es:
+﻿# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+es:
   activerecord:
     form_errors:
         one: No se pudo guardar este/a %{model} porque se encontró un error
@@ -9,9 +11,16 @@
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"
+        projects:
+          no_saved: "Projecto no pudo ser salvado"
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
+    notices:
+       messages:
+          saved: "%{model} Salvado"
+          created: "%{model} Creado"
+          deleted: "%{model} Borrado"
     models:
       project: "Proyecto"
       location: "Ubicación"

@@ -1,3 +1,5 @@
+include ScenariosHelper
+
 class OperationsController < ApplicationController
   require "open-uri"
 ################################  operations list   #################################

@@ -638,11 +638,12 @@ module ScenariosHelper
     opv1 = 1.0
     case operation.activity_id
       when 1 #planting take heat units
-        client = Savon.client(wsdl: URL_Weather)
-		#session[:depth] = Crop.find(operation.crop_id).number.to_s + "-" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + " - " + Weather.find_by_field_id(session[:field_id]).longitude.to_s
-		#ooo
-        response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
-        opv1 = response.body[:get_hu_response][:get_hu_result]
+		#this code will calculate Heat Unist base on location and crop - Was taken back to take from database- Ali 11/2/2016 
+        #client = Savon.client(wsdl: URL_Weather)
+        #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
+        #opv1 = response.body[:get_hu_response][:get_hu_result]
+		#this code will take Heat Units from database according to Ali 11/2/216
+		opv1 = Crop.find(operation.crop_id).heat_units
       #opv1 = 2.2
       when 2 #fertilizer - converte amount applied
         if operation.subtype_id == 57 then
