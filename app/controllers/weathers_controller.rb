@@ -152,22 +152,36 @@ class WeathersController < ApplicationController
     name = params[:weather][:weather_file].original_filename
     # create the file path
     path = File.join(OWN, name)
-    # write the file
-    File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) }
+    # open the weather file for writing.
+	weather_file = open(path, "w") 
+    #File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) }
+	input_file = params[:weather][:weather_file].read.split(/\r\n/)
     i=0
     data = ""
-    File.open(path, "r").each_line do |line|
-      data = line.split(/\r\n/)
-      break if data[0][2, 5].blank?
-      line1 = data[0][2, 5].to_i
-      @weather.simulation_final_year = line1
-      @weather.weather_final_year = line1
+    #File.open(path, "r").each_line do |line|
+	input_file.each do |line|
+      #data = line.split(/\r\n/)
+      data = line.split(" ")
+      break if data[0].blank?
+      year = data[0].to_i
+      @weather.simulation_final_year = year
+      @weather.weather_final_year = year
       if i == 0
-        @weather.simulation_initial_year = line1 + 5
-        @weather.weather_initial_year = line1
+        @weather.simulation_initial_year = year + 5
+        @weather.weather_initial_year = year
         i = i + 1
       end
+	  # print the new wehater file in the correct format
+	  case data.length
+		when 7
+			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.1f",data[3]) + sprintf("%6.1f",data[4]) + sprintf("%6.1f",data[5]) + sprintf("%6.2f",data[6]) + "\n")
+		when 8
+			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.1f",data[3]) + sprintf("%6.1f",data[4]) + sprintf("%6.1f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + "\n")
+		when 9
+			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.1f",data[3]) + sprintf("%6.1f",data[4]) + sprintf("%6.1f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + sprintf("%6.2f",data[8]) + "\n")
+	  end   # end case data.len
     end  # end file.open
+	weather_file.close
     @weather.weather_file = name
     @weather.way_id = 2
     @weather.save
