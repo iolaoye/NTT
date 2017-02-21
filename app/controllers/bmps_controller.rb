@@ -98,7 +98,7 @@ class BmpsController < ApplicationController
 					create(1)   #autoirrigation
 				end
 				if params[:bmp_cb1] == "2" then
-					create(2)   #autofertigation
+					create(1)   #autofertigation
 				end
 			end
 		end
@@ -437,6 +437,13 @@ class BmpsController < ApplicationController
 				subarea.fdsf = params[:bmp_ai][:safety_factor]
 			end
 			@bmp.safety_factor = subarea.fdsf
+			if @bmp.depth == "1" then
+				subarea.idf4 = 0.0
+				subarea.bft = 0.0
+			else
+				subarea.idf4 = 1.0
+				subarea.bft = 0.8
+			end
           when "delete"
             subarea.nirr = 0.0
             subarea.vimx = 0.0
@@ -488,6 +495,7 @@ class BmpsController < ApplicationController
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
 			@bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
 			subarea.fdsf = 0
+			@bmp.depth = params[:bmp_cb1]
 			if params[:bmp_ai][:safety_factor] == nil then
 				subarea.fdsf = 0
 			else
