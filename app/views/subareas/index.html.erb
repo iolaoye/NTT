@@ -20,8 +20,6 @@
   <table>
     <tr>
       <td><%= label :bmp_id, t('scenario.scenario') %></td>
-    </tr>
-    <tr>
       <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => session[:scenario_id]}, {:required => true} %></td>
       <td><%= button_to t('subarea.load_subarea'), subareas_path, class: 'btn btn-primary' %></td>
     </tr>

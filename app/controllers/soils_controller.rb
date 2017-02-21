@@ -15,11 +15,11 @@ class SoilsController < ApplicationController
     @project = Project.find(session[:project_id])
     @field = Field.find(session[:field_id])
 
-    add_breadcrumb t('menu.projects'), user_projects_path(current_user)
-    add_breadcrumb @project.name
-    add_breadcrumb t('menu.fields'), list_field_path(@project)
-    add_breadcrumb @field.field_name
-    add_breadcrumb t('menu.soils')
+    #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
+    #add_breadcrumb @project.name
+    #add_breadcrumb t('menu.fields'), list_field_path(@project)
+    #add_breadcrumb @field.field_name
+    #add_breadcrumb t('menu.soils')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -59,11 +59,11 @@ class SoilsController < ApplicationController
     @project = Project.find(session[:project_id])
     @field_name = Field.find(session[:field_id]).field_name
 
-    add_breadcrumb t('menu.projects'), user_projects_path(current_user)
-    add_breadcrumb @project.name
-    add_breadcrumb t('menu.fields'), list_field_path(@project)
-    add_breadcrumb @field_name
-    add_breadcrumb t('menu.soils')
+    #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
+    #add_breadcrumb @project.name
+    #add_breadcrumb t('menu.fields'), list_field_path(@project)
+    #add_breadcrumb @field_name
+    #add_breadcrumb t('menu.soils')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -77,6 +77,7 @@ class SoilsController < ApplicationController
     @soil = Soil.find(params[:id])
   end
 
+################################  CREATE   #################################
 # POST /soils
 # POST /soils.json
   def create

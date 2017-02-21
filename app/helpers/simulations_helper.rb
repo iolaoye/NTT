@@ -137,30 +137,33 @@ module SimulationsHelper
   end
 
   def create_wind_wp1_files(dir_name)
-    county = County.find(Location.find(session[:location_id]).county_id)
-    apex_run_string = "APEX001   1IWPNIWND   1   0   0"
+	county_id = Location.find(session[:location_id]).county_id
+	if county_id > 0
+		county = County.find(county_id)
+	else
+		county = nil
+	end
     if county != nil then
-      client = Savon.client(wsdl: URL_Weather)
-	  #Create_wp1_from_weather(loc As String, wp1Name As String, controlValue5 As Integer)
-      response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
-      #response = client.call(:get_weather, message: {"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
-      weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
-      msg = send_file_to_APEX(weather_data.join("\n"), county.wind_wp1_name + ".wp1")
-      #print_wind_to_file(weather_data, county.wind_wp1_name + ".wp1")
-      #path = File.join(WP1, county.wind_wp1_name + ".wp1")
-      #FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wp1")
-      client = Savon.client(wsdl: URL_Weather)
-      response = client.call(:get_weather, message: {"path" => WIND + "/" + county.wind_wp1_name + ".wnd"})
-      weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-      msg = send_file_to_APEX(weather_data.join("\n"), county.wind_wp1_name + ".wnd")
-      #print_wind_to_file(weather_data, county.wind_wp1_name + ".wnd")
-      #path = File.join(WIND, county.wind_wp1_name + ".wnd")
-      #FileUtils.cp_r(path, dir_name + "/" + county.wind_wp1_name + ".wnd")
-      apex_run_string["IWPN"] = sprintf("%4d", county.wind_wp1_code)
-      apex_run_string["IWND"] = sprintf("%4d", county.wind_wp1_code)
-    end
-    #create apex run file
-    #print_string_to_file(apex_run_string, "Apexrun.dat")
+		wind_wp1_name = county.wind_wp1_name
+		wind_wp1_code = county.wind_wp1_code
+	else
+		wind_wp1_name = "CHINAG"
+		wind_wp1_code = 999
+	end
+    apex_run_string = "APEX001   1IWPNIWND   1   0   0"
+    client = Savon.client(wsdl: URL_Weather)
+	###### create wp1 file from weather and send to server ########
+    response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s, "pgm" => 'APEX'})
+    weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
+    msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wp1")
+    #client = Savon.client(wsdl: URL_Weather)
+	######### create eind file and send to server ########
+    response = client.call(:get_weather, message: {"path" => WIND + "/" + wind_wp1_name + ".wnd"})
+    weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+    msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wnd")
+	######### create apexrun file and send to server ########
+    apex_run_string["IWPN"] = sprintf("%4d", wind_wp1_code)
+    apex_run_string["IWND"] = sprintf("%4d", wind_wp1_code)
     msg = send_file_to_APEX(apex_run_string, "Apexrun.dat")
   end
 
@@ -1218,15 +1221,14 @@ module SimulationsHelper
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
         oper = Operation.where(:id => operation.operation_id).first
-        #session[:a_op] = operation
-        #session[:a_id] = operation.operation_id
-        add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 18)
+		if oper.activity_id == 2 && oper.type_id == 2 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
+			add_fert(oper.no3_n * bmp.no3_n, oper.po4_p * bmp.po4_p, oper.org_n * bmp.org_n, oper.org_p * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+		else
+			add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+		end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
-        #else
-        #apex_string += sprintf("%5d", operation.subtype)    #Fertilizer Code       #APEX0604
-        #items[0] = operation.subtype
-        #end
         apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
         values[0] = operation.opv1
         apex_string += sprintf("%8.2f", operation.opv2)
@@ -1329,7 +1331,13 @@ module SimulationsHelper
       else
         operation_name = Activity.find(operation.activity_id).name
     end
-    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + State.find(Location.find(session[:location_id]).state_id).state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+	state_id = Location.find(session[:location_id]).state_id
+	if state_id == 0 or state_id == nil then
+		state_abbreviation = "**"
+	else
+		state_abbreviation = State.find(state_id).state_abbreviation
+	end
+    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
                    COMA + Crop.find(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
     #End With
@@ -1428,7 +1436,6 @@ module SimulationsHelper
       @new_fert_line.push(newLine)
     end
   end
-
   #end add_fert method
 
   def change_till_for_depth(oper, depthAnt)

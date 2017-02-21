@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170130133214) do
+ActiveRecord::Schema.define(:version => 20170213200454) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -333,7 +333,6 @@ ActiveRecord::Schema.define(:version => 20170130133214) do
   end
 
   create_table "grazing_parameters", :force => true do |t|
-    t.integer  "scenario_id"
     t.integer  "code"
     t.integer  "starting_julian_day"
     t.integer  "ending_julian_day"
@@ -391,6 +390,18 @@ ActiveRecord::Schema.define(:version => 20170130133214) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "coordinates"
+  end
+
+  create_table "manure_controls", :force => true do |t|
+    t.string   "name"
+    t.string   "spanish_name"
+    t.float    "no3n"
+    t.float    "po4p"
+    t.float    "orgn"
+    t.float    "orgp"
+    t.float    "om"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "modifications", :force => true do |t|
