@@ -162,6 +162,8 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /scenarios/1.json
   def show()
+  	@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     @errors = Array.new
     ActiveRecord::Base.transaction do
 		msg = run_scenario
@@ -171,7 +173,7 @@ class ScenariosController < ApplicationController
 		respond_to do |format|
 		  if msg.eql?("OK") then
 			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-			format.html { redirect_to field_scenarios_field_path(session[:field_id]) }
+			format.html { redirect_to project_field_scenarios_path(@project, @field) }
 		  else
 			flash[:error] = "Error simulating scenario - " + msg
 			format.html { render action: "list" }
