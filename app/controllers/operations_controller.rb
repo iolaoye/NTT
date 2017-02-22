@@ -473,6 +473,12 @@ class OperationsController < ApplicationController
 	redirect_to list_operation_path(params[:id])
   end
 
+  def open
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
+  end
+
   #########################################################################################################################
   ############## private methods - Just to be seen from inside this controller. ###########################################
   private
@@ -501,6 +507,7 @@ class OperationsController < ApplicationController
   end
 
   def upload_operation_info(node, scenario_id, field_id)
+    debugger
     @operation = Operation.new
     @operation.scenario_id = scenario_id
     event_id = 0

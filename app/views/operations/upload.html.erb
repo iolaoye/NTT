@@ -3,6 +3,7 @@
   <div class="field">
     <%= label "select", t('operation.cropping_system') %>
     <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id}, :required => true %>
+    <% debugger %>
     <% if @operations.first != nil %>&nbsp&nbsp&nbsp
       <%= label :year, t('pdf.year'), :id => "year_label" %>
       <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true %>
