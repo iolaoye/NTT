@@ -718,14 +718,14 @@
             validateBmpAi.addValidation(ai_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.auto.header") %>');
         }
         validateBmpAi.addValidation("bmp_cb1", "selone", "A selection is required.");
-        validateBmpAi.addValidation(ai_inputs[1].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAi.addValidation(ai_inputs[1].name, "lte=365", "Input must be less than or equal to 365.");
-        validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAi.addValidation(ai_inputs[2].name, "lte=1.00", "Input must be less than or equal to 1.00.");
-        validateBmpAi.addValidation(ai_inputs[3].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAi.addValidation(ai_inputs[3].name, "lte=1.00", "Input must be less than or equal to 1.00.");
-        validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
+        validateBmpAi.addValidation(ai_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpAi.addValidation(ai_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
+        validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpAi.addValidation(ai_inputs[2].name, "lte=1.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
+        validateBmpAi.addValidation(ai_inputs[3].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpAi.addValidation(ai_inputs[3].name, "lte=1.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
+        validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
       }
       function validationsBmpAf(i) { //unused/unreferenced function - remove?
         if (($('#select_7').is(':checked'))) {
@@ -752,20 +752,20 @@
         for(n = 0; n < af_inputs.length; n++) {
           validateBmpAf.addValidation(af_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.auto.header") %>');
         }
-        validateBmpAf.addValidation(af_inputs[1].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAf.addValidation(af_inputs[1].name, "lte=1.00", "Input must be less than or equal to 1.00.");
-        validateBmpAf.addValidation(af_inputs[2].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAf.addValidation(af_inputs[2].name, "lte=1.00", "Input must be less than or equal to 1.00.");
-        validateBmpAf.addValidation(af_inputs[3].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAf.addValidation(af_inputs[3].name, "lte=365", "Input must be less than or equal to 365.");
-        validateBmpAf.addValidation(af_inputs[4].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAf.addValidation(af_inputs[4].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
+        validateBmpAf.addValidation(af_inputs[1].name, "gt=0", '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpAf.addValidation(af_inputs[1].name, "lte=1.00", '<%= t("validate.input_lssequal") %>' + " 1.00");
+        validateBmpAf.addValidation(af_inputs[2].name, "gt=0", '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpAf.addValidation(af_inputs[2].name, "lte=1.00", '<%= t("validate.input_lessequal") %>' + " 1.00");
+        validateBmpAf.addValidation(af_inputs[3].name, "gt=0", '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpAf.addValidation(af_inputs[3].name, "lte=365", '<%= t("validate.input_lessequal") %>' + " 365");
+        validateBmpAf.addValidation(af_inputs[4].name, "gt=0", '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpAf.addValidation(af_inputs[4].name, "lte=99999.00", '<%= t("validate.input_lessequal") %>' + " 99999.00");
       }
       function validationsBmpTd() {
         var td_inputs = $('[name^=bmp_td]').valueOf();
         validateBmpTd.addValidation(td_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>');
-        validateBmpTd.addValidation(td_inputs[0].name, "gt=0", "Input must be greater than 0.");
-        validateBmpTd.addValidation(td_inputs[0].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
+        validateBmpTd.addValidation(td_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpTd.addValidation(td_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
       }
       function validationsBmpPpnd(i) {
         var ppnd_inputs = $('[name^=bmp_ppnd]').valueOf();
@@ -778,9 +778,9 @@
         }
         validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
         validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
-        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", "Width must be greater than 0.");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", "Sides must be more than 0.");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
+        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
       }
       function validationsBmpPpds(i) {
         var ppds_inputs = $('[name^=bmp_ppds]').valueOf();
@@ -793,9 +793,9 @@
         }
         validateBmpPpds.addValidation(ppds_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>');
         validateBmpPpds.addValidation(ppds_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>');
-        validateBmpPpds.addValidation(ppds_inputs[0].name, "gt=0", "Width must be greater than 0.");
-        validateBmpPpds.addValidation(ppds_inputs[1].name, "gt=0", "Sides must be more than 0.");
-        validateBmpPpds.addValidation(ppds_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
+        validateBmpPpds.addValidation(ppds_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpds.addValidation(ppds_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpds.addValidation(ppds_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.0");
       }
       function validationsBmpPpde(i) {
         var ppde_inputs = $('[name^=bmp_ppde]').valueOf();
@@ -808,9 +808,9 @@
         }
         validateBmpPpde.addValidation(ppde_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
         validateBmpPpde.addValidation(ppde_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
-        validateBmpPpde.addValidation(ppde_inputs[0].name, "gt=0", "Width must be greater than 0.");
-        validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", "Sides must be more than 0.");
-        validateBmpPpde.addValidation(ppde_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
+        validateBmpPpde.addValidation(ppde_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpde.addValidation(ppde_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
       }
       function validationsBmpPptw(i) {
         if (promptMsg("This BMP requires Autoirrigation. Continuing will clear any data you may have entered in Autofertigation.")) {
@@ -831,47 +831,47 @@
         }
         validateBmpPptw.addValidation(pptw_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
         validateBmpPptw.addValidation(pptw_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
-        validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", "Width must be greater than 0.");
-        validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", "Sides must be more than 0.");
-        validateBmpPptw.addValidation(pptw_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
+        validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPptw.addValidation(pptw_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
       }
       function validationsBmpWl() {
         var wl_inputs = $('[name^=bmp_wl]').valueOf();
         validateBmpWl.addValidation(wl_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>');
-        validateBmpWl.addValidation(wl_inputs[0].name, "gt=0", "Reservoir Area must be greater than 0.");
-        validateBmpWl.addValidation(wl_inputs[0].name, "lte=99999.00", "Resevoir Area must be less than or equal to 99999.00.");
+        validateBmpWl.addValidation(wl_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpWl.addValidation(wl_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
       }
       function validationsBmpPnd() {
         var pnd_inputs = $('[name^=bmp_pnd]').valueOf();
         validateBmpPnd.addValidation(pnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>');
-        validateBmpPnd.addValidation(pnd_inputs[0].name, "gt=0", "Input must be greater than 0.");
-        validateBmpPnd.addValidation(pnd_inputs[0].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
+        validateBmpPnd.addValidation(pnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPnd.addValidation(pnd_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
       }
       function validationsBmpSf() {
         var sf_inputs = $('[name^=bmp_sf]').valueOf();
         for(n = 0; n < sf_inputs.length; n++) {
           validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
         }
-        validateBmpSf.addValidation(sf_inputs[0].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSf.addValidation(sf_inputs[0].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
-        validateBmpSf.addValidation(sf_inputs[1].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSf.addValidation(sf_inputs[1].name, "lte=365", "Input must be less than or equal to 365.");
-        validateBmpSf.addValidation(sf_inputs[2].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSf.addValidation(sf_inputs[2].name, "lte=24.00", "Input must be less than or equal to 24.");
-        validateBmpSf.addValidation(sf_inputs[4].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSf.addValidation(sf_inputs[4].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
-        validateBmpSf.addValidation(sf_inputs[5].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSf.addValidation(sf_inputs[5].name, "lte=1.00", "Input must be less than or equal to 1.00.");
-        validateBmpSf.addValidation(sf_inputs[6].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSf.addValidation(sf_inputs[6].name, "lte=1.00", "Input must be less than or equal to 99999.00.");
-        validateBmpSf.addValidation(sf_inputs[7].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSf.addValidation(sf_inputs[7].name, "lte=1.00", "Input must be less than or equal to 99999.00.");
-        validateBmpSf.addValidation(sf_inputs[8].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSf.addValidation(sf_inputs[8].name, "lte=1.00", "Input must be less than or equal to 99999.00.");
+        validateBmpSf.addValidation(sf_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSf.addValidation(sf_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+        validateBmpSf.addValidation(sf_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSf.addValidation(sf_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
+        validateBmpSf.addValidation(sf_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSf.addValidation(sf_inputs[2].name, "lte=24.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 24");
+        validateBmpSf.addValidation(sf_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSf.addValidation(sf_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+        validateBmpSf.addValidation(sf_inputs[5].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSf.addValidation(sf_inputs[5].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+        validateBmpSf.addValidation(sf_inputs[6].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSf.addValidation(sf_inputs[6].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+        validateBmpSf.addValidation(sf_inputs[7].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSf.addValidation(sf_inputs[7].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+        validateBmpSf.addValidation(sf_inputs[8].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSf.addValidation(sf_inputs[8].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
       }
       function validationsBmpSbs() {
         var sbs_inputs = $('[name^=bmp_sbs]').valueOf();
-        validateBmpSbs.addValidation(sbs_inputs[0].name, "selone", '<%= t("pdf.streambank_stabilization") %>' + ": Checkbox must be checked.");
+        validateBmpSbs.addValidation(sbs_inputs[0].name, "selone", '<%= t("pdf.streambank_stabilization") %>' + " " + '<%= t("validate.checkbox") %>');
       }
       function validationsBmpRf(i) {
         var rf_inputs = $('[name^=bmp_rf]').valueOf();
@@ -886,13 +886,13 @@
         for(n = 0; n < rf_inputs.length; n++){
           validateBmpRf.addValidation(rf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>');
         }
-        validateBmpRf.addValidation(rf_inputs[0].name, "gt=0", "Area acres must be greater than 0.");
-        validateBmpRf.addValidation(rf_inputs[0].name, "lte=100000", "Area acres must be less than or equal 100000.");
-        validateBmpRf.addValidation(rf_inputs[1].name, "gt=0", "Width ft must be greater than 0.");
-        validateBmpRf.addValidation(rf_inputs[2].name, "gte=0.25", "Input must be greater than or equal to 0.25.");
-        validateBmpRf.addValidation(rf_inputs[2].name, "lte=0.75", "Input must be less than or equal to 0.75.");
-        validateBmpRf.addValidation(rf_inputs[3].name, "gte=0.25", "Input must be greater than or equal to 0.25.");
-        validateBmpRf.addValidation(rf_inputs[3].name, "lte=1.00", "Input must be less than or equal to 1.0.");
+        validateBmpRf.addValidation(rf_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>' + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpRf.addValidation(rf_inputs[0].name, "lte=100000", '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>' + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100000");
+        validateBmpRf.addValidation(rf_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpRf.addValidation(rf_inputs[2].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>' + " " + '<%= t("pdf.area") %>' + " " + '<%= t("bmp.grass_field_portion") %>' + ": " + '<%= t("validate.input_greaterequal") %>' + " 0.25");
+        validateBmpRf.addValidation(rf_inputs[2].name, "lte=0.75", '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>' + " " + '<%= t("pdf.area") %>' + " " + '<%= t("bmp.grass_field_portion") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 0.75");
+        validateBmpRf.addValidation(rf_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>' + " " + '<%= t("bmp.slope_ratio_label") %>' + ": " + '<%= t("validate.input_greaterequal") %>' + " 0.25");
+        validateBmpRf.addValidation(rf_inputs[3].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>' + " " + '<%= t("bmp.slope_ration_label") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
       }
       function validationsBmpFs(i) {
         var fs_inputs = $('[name^=bmp_fs]').valueOf();
@@ -908,11 +908,11 @@
           if(n != 1)
             validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>');
         }
-        validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", "Area acres must be greater than 0.");
-        validateBmpFs.addValidation(fs_inputs[1].name, "lte=100000", "Area acres must be less than or equal to 100000.");
-        validateBmpFs.addValidation(fs_inputs[2].name, "gt=0", "Width must be greater than 0.");
-        validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", "Buffer slope ratio must be greater than or equal to 0.25.");
-        validateBmpFs.addValidation(fs_inputs[3].name, "lte=1.00", "Buffer slope ratio must be less than or equal to 1.0.");
+        validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpFs.addValidation(fs_inputs[1].name, "lte=100000", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100000");
+        validateBmpFs.addValidation(fs_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + " " + '<%= t("bmp.width") %>' + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + " Buffer slope ratio: " + '<%= t("validate.input_greaterequal") %>' + " 0.25");
+        validateBmpFs.addValidation(fs_inputs[3].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + " Buffer slope ratio: " + '<%= t("validate.input_lessequal") %>' + " 1.0");
       }
       function validationsBmpWw(i) {
         var ww_inputs = $('[name^=bmp_ww]').valueOf();
@@ -927,7 +927,7 @@
         for(n = 0; n < ww_inputs.length; n++){
             validateBmpWw.addValidation(ww_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.waterway.header") %>');
         }
-        validateBmpWw.addValidation(ww_inputs[1].name, "gt=0", "Width must be greater than 0.");
+        validateBmpWw.addValidation(ww_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.waterway.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
       }
       function validationsBmpCb(i) {
         var cb_inputs = $('[name^=bmp_cb]').valueOf();
@@ -942,60 +942,60 @@
         for(n = 0; n < cb_inputs.length; n++){
             validateBmpCb.addValidation(cb_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.contour.header") %>');
         }
-        validateBmpCb.addValidation(cb_inputs[0].name, "gt=0", "Buffer width must be greater than 0.");
-        validateBmpCb.addValidation(cb_inputs[1].name, "gt=0", "Crop width must be greater than 0.");
+        validateBmpCb.addValidation(cb_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.contour.header") %>' + " " + '<%= t("bmp.buffer_width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpCb.addValidation(cb_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.contour.header") %>' + " " + '<%= t("bmp.crop_width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
       }
       function validationsBmpLl() {
         var ll_inputs = $('[name^=bmp_ll]').valueOf();
-        validateBmpLl.addValidation(ll_inputs[0].name, "req", "Slope reduction is a required field.");
-        validateBmpLl.addValidation(ll_inputs[0].name, "gt=0", "Input must be more than 0.");
-        validateBmpLl.addValidation(ll_inputs[0].name, "lte=100.00", "Input must be less than 100.");
+        validateBmpLl.addValidation(ll_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("pdf.land_leveling") %>');
+        validateBmpLl.addValidation(ll_inputs[0].name, "gt=0", '<%= t("pdf.land_leveling") %>' + " " + '<%= t("bmp.slope_reduction") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpLl.addValidation(ll_inputs[0].name, "lte=100.00", '<%= t("pdf.land_leveling") %>' + " " + '<%= t("bmp.slope_reduction") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100.00");
       }
       function validationsBmpTs() {
         var ts_inputs = $('[name^=bmp_ts]').valueOf();
-        validateBmpTs.addValidation(ts_inputs[0].name, "selone", '<%= t("managepage.bmpdesc.landgrading.terrace.header")%>' + ": Checkbox must be checked.");
+        validateBmpTs.addValidation(ts_inputs[0].name, "selone", '<%= t("managepage.bmpdesc.landgrading.terrace.header")%>' + ": " + '<%= t("validate.checkbox") %>');
       }
       function validationsBmpMc() {
         var mc_inputs = $('[name^=bmp_mc]').valueOf();
         for (n = 0; n < mc_inputs.length; n++) {
           validateBmpMc.addValidation(mc_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("bmp.manure_control") %>');
         }
-        validateBmpMc.addValidation(mc_inputs[1].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
-        validateBmpMc.addValidation(mc_inputs[2].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
-        validateBmpMc.addValidation(mc_inputs[3].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
-        validateBmpMc.addValidation(mc_inputs[4].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
-        validateBmpMc.addValidation(mc_inputs[1].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.");
-        validateBmpMc.addValidation(mc_inputs[2].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.");
-        validateBmpMc.addValidation(mc_inputs[3].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.");
-        validateBmpMc.addValidation(mc_inputs[4].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.")
+        validateBmpMc.addValidation(mc_inputs[1].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
+        validateBmpMc.addValidation(mc_inputs[2].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
+        validateBmpMc.addValidation(mc_inputs[3].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
+        validateBmpMc.addValidation(mc_inputs[4].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
+        validateBmpMc.addValidation(mc_inputs[1].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
+        validateBmpMc.addValidation(mc_inputs[2].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
+        validateBmpMc.addValidation(mc_inputs[3].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
+        validateBmpMc.addValidation(mc_inputs[4].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0")
       }
       function validationsBmpCc() {
         var cc_inputs = $('[name^=bmp_cc]').valueOf();
-        //add validation: inputs must be between 0 & 100, for now at least until Oscar says otherwise
+        //add validation: inputs must be between 0 & 100
         //validateBmpCc.addValidation();
       }
       function validationsBmpAc() {
         var ac_inputs = $('[name^=bmp_ac]').valueOf();
-        validateBmpAc.addValidation(ac_inputs[0].name, "selone", '<%= t("pdf.asphalt_concrete") %>' + ": Checkbox must be checked.");
+        validateBmpAc.addValidation(ac_inputs[0].name, "selone", '<%= t("pdf.asphalt_concrete") %>' + ": " + '<%= t("validate.checkbox") %>');
       }
       function validationsBmpGc() {
         var gc_inputs = $('[name^=bmp_gc]').valueOf();
-        validateBmpGc.addValidation(gc_inputs[0].name, "selone", '<%= t("pdf.grass_cover") %>' + ": Checkbox must be checked.");
+        validateBmpGc.addValidation(gc_inputs[0].name, "selone", '<%= t("pdf.grass_cover") %>' + ": " + '<%= t("validate.checkbox") %>');
       }
       function validationsBmpSa() {
         var sa_inputs = $('[name^=bmp_sa]').valueOf();
-        validateBmpSa.addValidation(sa_inputs[0].name, "selone", '<%= t("pdf.slope_adjustment") %>' + ": Checkbox must be checked.");
+        validateBmpSa.addValidation(sa_inputs[0].name, "selone", '<%= t("pdf.slope_adjustment") %>' +  ": " + '<%= t("validate.checkbox") %>');
       }
       function validationsBmpSdg() {
         var sdg_inputs = $('[name^=bmp_sdg]').valueOf();
         for(n = 0; n < sdg_inputs.length; n++) {
           validateBmpSdg.addValidation(sdg_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("pdf.shading") %>');
         }
-        validateBmpSdg.addValidation(sdg_inputs[1].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSdg.addValidation(sdg_inputs[1].name, "lte=100000", "Input must be less than or equal to 100000.");
-        validateBmpSdg.addValidation(sdg_inputs[2].name, "gt=0", "Input must be greater than 0.");
-        validateBmpSdg.addValidation(sdg_inputs[3].name, "gte=0.25", "Input must be greater than or equal to 0.25.");
-        validateBmpSdg.addValidation(sdg_inputs[3].name, "lte=1", "Input must be less than or equal to 1.");
+        validateBmpSdg.addValidation(sdg_inputs[1].name, "gt=0", '<%= t("pdf.shading") %>' + " " + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSdg.addValidation(sdg_inputs[1].name, "lte=100000", '<%= t("pdf.shading") %>' + " " + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100000.");
+        validateBmpSdg.addValidation(sdg_inputs[2].name, "gt=0", '<%= t("pdf.shading") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpSdg.addValidation(sdg_inputs[3].name, "gte=0.25", '<%= t("pdf.shading") %>' + " " + '<%= t("bmp.slope_ratio_label")%>' + ": " + '<%= t("validate.input_greaterequal") %>' + " 0.25");
+        validateBmpSdg.addValidation(sdg_inputs[3].name, "lte=1", '<%= t("pdf.shading") %>' + " " + '<%= t("bmp.slope_ratio_label")%>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1");
       }
       function promptMsg(msg) {
         var r = confirm(msg);

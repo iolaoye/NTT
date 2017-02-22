@@ -1074,6 +1074,11 @@ en:
         body: 'Click in a text area to enter one or more lines of information as shown in this example:'
   validate:
     required: Required field(s) missing in
+    input_greater:  Input must be greater than
+    input_lessthan: Input must be less than
+    input_greaterequal: Input must be greater than or equal to
+    input_lessequal:  Input must be less than or equal to
+    checkbox: Checkbox must be checked
   projpage_html:
     <strong>Start of a Project</strong> <br><br>
     Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
