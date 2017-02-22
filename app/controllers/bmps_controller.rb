@@ -23,6 +23,9 @@ class BmpsController < ApplicationController
 # GET /bmps
 # GET /bmps.json
   def index
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     get_bmps()
 	take_names()
     respond_to do |format|
@@ -34,19 +37,45 @@ class BmpsController < ApplicationController
 ################################  Get CURRENT BMPS #########################
   def get_bmps
     bmpsublists = Bmpsublist.where(:status => true)
-	@bmps = Bmp.where(:bmpsublist_id => 0)
+  @bmps = Bmp.where(:bmpsublist_id => 0)
     @bmps[0] = Bmp.new
-	bmpsublists.each do |bmpsublist|
-		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], bmpsublist.id)
-		if bmp.blank? || bmp == nil then
-			bmp = Bmp.new
-			bmp.bmpsublist_id = bmpsublist.id
-		end
-		@bmps[bmp.bmpsublist_id-1] = bmp
-		if bmp.bmpsublist_id == 23 then
-			break
-		end
-	end
+  @climates = Climate.where(:id => 0)
+  
+  bmpsublists.each do |bmpsublist|
+    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], bmpsublist.id)
+    if bmp.blank? || bmp == nil then
+      bmp = Bmp.new
+      bmp.bmpsublist_id = bmpsublist.id
+      case bmp.bmpsublist_id
+        when 1  #autoirrigation/autofertigation - defaults
+        bmp.water_stress_factor = 0.8
+        bmp.days = 14
+      end
+    end
+    @bmps[bmp.bmpsublist_id-1] = bmp
+    if bmp.bmpsublist_id == 19 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
+      climates = Climate.where(:bmp_id => bmp.id)
+      i=0
+      for i in 0..11
+        if climates.blank? || climates == nil then
+          @climates[i] = Climate.new
+          @climates[i].month = i + 1
+          @climates[i].max_temp = 0
+          @climates[i].min_temp = 0
+          @climates[i].precipitation = 0
+        else
+          @climates[i] = climates[i]
+        end
+      end 
+    end
+    bmp_list = 23
+    if @field_type != false then 
+      bmp_list = 19
+    end
+    if bmp.bmpsublist_id == bmp_list then
+      break
+    end
+  end
   end
 ################################  save BMPS  #################################
 # POST /bmps/scenario

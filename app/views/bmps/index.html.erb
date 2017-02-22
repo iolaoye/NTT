@@ -1,12 +1,14 @@
 <head>
   <script src="assets/gen_validatorv4.js" type="text/javascript"></script>
 </head>
-<%= form_for :bmp, :html => { :id => "bmpsForm" }, :url => save_bmps_bmps_path, method: :post do %>
+<% form_for :bmp, :html => { :id => "bmpsForm" }, :url => save_bmps_project_field_scenario_bmps_path(@project, @field, @scenario), method: :post do %>
   <div class="page-header">
     <h1><%= t('menu.bmps') %></h1>
   </div>
 	<%= submit_tag t("submit.save"), name: "button", class: "btn btn-primary" %>
-    <table class="table table-striped">
+  <%= link_to t('general.continue'), scenarios_path(), :class => 'btn btn-success' %><br>
+    <br>
+      <table class="table table-striped">
       <thead>
         <tr class='gvHeaderStyle'>
           <th><%= t('general.name')%></th>
@@ -16,6 +18,7 @@
 
       <% @bmps.each do |bmp| %>
 		<tbody>
+      <% if bmp.bmpsublist_id != 2 %>
 			<tr>
 				<% if I18n.locale.equal?(:en) %>
 					<td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
@@ -28,10 +31,26 @@
 					<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
 				<% end %>
 			</tr>
+        <%end %>
 		</tbody>
 		<tbody id=<%="#{bmp.bmpsublist_id}"%>>
 			<% case bmp.bmpsublist_id %>
 				<% when 1 %>
+          <tr>
+            <td>
+              <% case bmp.depth%>
+                <% when 1 %>
+                  <%= radio_button_tag :bmp_cb1, "1", true  %> <%= t('bmp.autoirrigation') %>
+                  <%= radio_button_tag :bmp_cb1, "2"%> <%= t('bmp.autofertigation') %>
+                <% when 2 %>
+                  <%= radio_button_tag :bmp_cb1, "1" %> <%= t('bmp.autoirrigation') %>
+                  <%= radio_button_tag :bmp_cb1, "2", true %> <%= t('bmp.autofertigation') %>
+                <% else %>
+                  <%= radio_button_tag :bmp_cb1, "1"%> <%= t('bmp.autoirrigation') %>
+                    <%= radio_button_tag :bmp_cb1, "2" %> <%= t('bmp.autofertigation') %>
+              <%end%>
+            </td>
+          </tr>
 				  <tr>
 					<td class="indent">
 						<%= label :irrigation_id, t('bmp.irrigation')  %>
@@ -42,7 +61,13 @@
 						<% end %>
 					</td>
 				  </tr>
-				  <tr>
+          <tr>
+            <td class="field indent" id = "frequency" >
+              <%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
+              <%= text_field :bmp_ai, :days, :value => bmp.days %>
+            </td>
+          </tr>
+          <tr>
 					<td class="indent">
 						<%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %>
 						<%=bmp.water_stress_factor%>
@@ -56,12 +81,6 @@
 				    </td>
 				  </tr>
 				  <tr>
-				    <td class="field indent" id = "frequency" >
-						<%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
-						<%= text_field :bmp_ai, :days, :value => bmp.days %>
-				    </td>
-				  </tr>
-				  <tr>
 				    <td class="field indent" id = "maximum_single_application" >
 						<%= label :days, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') + " " + t('bmp.inches') %>
 						<%= text_field :bmp_ai, :maximum_single_application, :value => bmp.maximum_single_application %>
@@ -71,41 +90,6 @@
 				    <td class="field indent" id = "reservoir_area" style="display: none;">
 						<%= label :days, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') %>
 						<%= text_field :bmp_ai, :area, :value => bmp.area%>
-				    </td>
-				  </tr>
-				<% when 2 %>
-				  <tr>
-					<td class="indent">
-						<%= label :irrigation_id, t('bmp.irrigation') %>
-						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_af, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id} %>
-						<% else %>
-						  <%= collection_select :bmp_af, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id} %>
-						<% end %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_af, :water_stress_factor, :value => bmp.water_stress_factor %>
-					</td>
-				  </tr>
-				  <tr>
-				    <td class="field indent" id = "irrigation_efficiency" >
-						<%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_af, :irrigation_efficiency, :value => bmp.irrigation_efficiency %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="field indent" id = "frequency" >
-						<%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
-						<%= text_field :bmp_af, :days, :value => bmp.days %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="field indent" id = "maximum_single_application" >
-						<%= label :days, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') + " " + t('bmp.inches') %>
-						<%= text_field :bmp_af, :maximum_single_application, :value => bmp.maximum_single_application %>
 				    </td>
 				  </tr>
 				<% when 3 %>
@@ -410,7 +394,40 @@
 						<%= text_field :bmp_mc, :org_p, :value => bmp.org_p %>
 				    </td>
 				  </tr>
-				<% when 20 %>
+        <% when 19 %>
+          <tr>
+            <th class="gvCellStyleTitle">
+              <%= t('bmp.month')%>
+            </th>
+            <th class="gvCellStyleTitle">
+              <%= t('bmp.max_temp')%>
+            </th>
+            <th class="gvCellStyleTitle">
+              <%= t('bmp.min_temp')%>
+            </th>
+              <th class="gvCellStyleTitle">
+                <%= t('bmp.precipitation')%>
+              </th>
+          </tr>
+
+          <% @climates.each do |climate| %>
+            <tr class="indent">
+              <td style="text-align: center">
+                <%= climate.month %>
+              </td>
+              <td class="gvCellStyleNumber">
+                <%= number_field "bmp_cc", "max_temp" + climate.month.to_s, :value  => climate.max_temp %>
+              </td>
+              <td class="gvCellStyleNumber">
+                <%= number_field "bmp_cc", "min_temp" + climate.month.to_s, :value => climate.min_temp  %>
+              </td>
+              <td class="gvCellStyleNumber">
+                <%= number_field "bmp_cc", "precipitation" + climate.month.to_s, :value  => climate.precipitation %>
+              </td>
+            </tr>
+          <% end %>
+
+        <% when 20 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
@@ -487,12 +504,18 @@
       var validateBmpCb = new Validator("bmpsForm");
       var validateBmpLl = new Validator("bmpsForm");
       var validateBmpTs = new Validator("bmpsForm");
-      //hides all Bmps on page load
-      for(i = 1; i < 21; i++) {
+      var validateBmpMc = new Validator("bmpsForm");
+      var validateBmpCc = new Validator("bmpsForm");
+      var validateBmpAc = new Validator("bmpsForm");
+      var validateBmpGc = new Validator("bmpsForm");
+      var validateBmpSa = new Validator("bmpsForm");
+      var validateBmpSdg = new Validator("bmpsForm");
+      //hides all Bmps on page load - (i < integer) integer = bmpsublist count
+      for(i = 1; i < 24; i++) {
         $('#'+i).hide();
       }
       //show/hide bmps on click-'let' makes 'i' local to loop instead of global
-      for(let i = 1; i < 21; i++) {
+      for(let i = 1; i < 24; i++) {
         if ($('#select_'+i).is(':checked')){
           $('#'+i).show();
         } else {
@@ -547,6 +570,18 @@
                 validateBmpLl.clearAllValidations();
             } else if (i == 17) {
                 validateBmpTs.clearAllValidations();
+            } else if (i == 18) {
+                validateBmpMc.clearAllValidations();
+            } else if (i == 19) {
+                validateBmpCc.clearAllValidations();
+            } else if (i == 20) {
+                validateBmpAc.clearAllValidations();
+            } else if (i == 21) {
+                validateBmpGc.clearAllValidations();
+            } else if (i == 22) {
+                validateBmpSa.clearAllValidations();
+            } else if (i == 23) {
+                validateBmpSdg.clearAllValidations();
             }
           } else { //checkbox checked
             $("tbody#"+i).show();
@@ -585,12 +620,24 @@
                 validationsBmpLl();
             } else if (i == 17) {
                 validationsBmpTs();
+            } else if (i == 18) {
+                validationsBmpMc();
+            } else if (i == 19) {
+                validationsBmpCc();
+            } else if (i == 20) {
+                validationsBmpAc();
+            } else if (i == 21) {
+                validationsBmpGc();
+            } else if (i == 22) {
+                validationsBmpSa();
+            } else if (i == 23) {
+                validationsBmpSdg();
             }
             if (i == 1 && $('#select_2').is(':checked')) {
               if (prompt_user()) {
                 validationsBmpAi(0);
               } else { confirm_check(i); }
-            } else if (i == 2 && $('#select_1').is(':checked')) {
+            } else if (i == 2 && $('#select_1').is(':checked')) { //unused functionality as checkbox 2 does not appear
                 if (prompt_user()) {
                   validationsBmpAf(0);
                 } else { confirm_check(i); }
@@ -664,22 +711,23 @@
         }
         $('#bmp_ai_irrigation_id').change(function(){
           if ($('#bmp_ai_irrigation_id').val() == 8) {
-            validateBmpAi.addValidation(ai_inputs[5].name, "req", "Required field missing in Autoirrigation.");
+            validateBmpAi.addValidation(ai_inputs[5].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.auto.header") %>');
           }
         });
         for(n = 0; n < ai_inputs.length - 1; n++) {
-            validateBmpAi.addValidation(ai_inputs[n].name, "req", "Required field missing in Autoirrigation.");
+            validateBmpAi.addValidation(ai_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.auto.header") %>');
         }
+        validateBmpAi.addValidation("bmp_cb1", "selone", "A selection is required.");
         validateBmpAi.addValidation(ai_inputs[1].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAi.addValidation(ai_inputs[1].name, "lte=1.00", "Input must be less than or equal to 1.00.");
+        validateBmpAi.addValidation(ai_inputs[1].name, "lte=365", "Input must be less than or equal to 365.");
         validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", "Input must be greater than 0.");
         validateBmpAi.addValidation(ai_inputs[2].name, "lte=1.00", "Input must be less than or equal to 1.00.");
         validateBmpAi.addValidation(ai_inputs[3].name, "gt=0", "Input must be greater than 0.");
-        validateBmpAi.addValidation(ai_inputs[3].name, "lte=365", "Input must be less than or equal to 365.");
+        validateBmpAi.addValidation(ai_inputs[3].name, "lte=1.00", "Input must be less than or equal to 1.00.");
         validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", "Input must be greater than 0.");
         validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
       }
-      function validationsBmpAf(i) {
+      function validationsBmpAf(i) { //unused/unreferenced function - remove?
         if (($('#select_7').is(':checked'))) {
           if(promptMsg("Tailwater Irrigation is currently checked and requires Autoirrigation to be checked. " +
                        "Continuing will clear any data you may have for Tailwater Irrigation and Autoirrigation.")){
@@ -702,7 +750,7 @@
           $("tbody#1 select").val([]);
         }
         for(n = 0; n < af_inputs.length; n++) {
-          validateBmpAf.addValidation(af_inputs[n].name, "req", "Required field missing in Autofertigation.");
+          validateBmpAf.addValidation(af_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.auto.header") %>');
         }
         validateBmpAf.addValidation(af_inputs[1].name, "gt=0", "Input must be greater than 0.");
         validateBmpAf.addValidation(af_inputs[1].name, "lte=1.00", "Input must be less than or equal to 1.00.");
@@ -715,7 +763,7 @@
       }
       function validationsBmpTd() {
         var td_inputs = $('[name^=bmp_td]').valueOf();
-        validateBmpTd.addValidation(td_inputs[0].name, "req", "Required field missing in Tile Drain.");
+        validateBmpTd.addValidation(td_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>');
         validateBmpTd.addValidation(td_inputs[0].name, "gt=0", "Input must be greater than 0.");
         validateBmpTd.addValidation(td_inputs[0].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
       }
@@ -728,8 +776,8 @@
           $("#select_5, #select_6, #select_7").prop('checked', false);
           $("tbody#5 input, tbody#6 input, tbody#7 input").val("");
         }
-        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", "Required field missing in Pads & Pipes");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", "Required field missing in Pads & Pipes");
+        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
         validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", "Width must be greater than 0.");
         validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", "Sides must be more than 0.");
         validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
@@ -743,8 +791,8 @@
           $("#select_4, #select_6, #select_7").prop('checked', false);
           $("tbody#4 input, tbody#6 input, tbody#7 input").val("");
         }
-        validateBmpPpds.addValidation(ppds_inputs[0].name, "req", "Fields missing in Pads & Pipes");
-        validateBmpPpds.addValidation(ppds_inputs[1].name, "req", "Fields missing in Pads & Pipes");
+        validateBmpPpds.addValidation(ppds_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>');
+        validateBmpPpds.addValidation(ppds_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>');
         validateBmpPpds.addValidation(ppds_inputs[0].name, "gt=0", "Width must be greater than 0.");
         validateBmpPpds.addValidation(ppds_inputs[1].name, "gt=0", "Sides must be more than 0.");
         validateBmpPpds.addValidation(ppds_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
@@ -758,8 +806,8 @@
           $("#select_4, #select_5, #select_7").prop('checked', false);
           $("tbody#4 input, tbody#5 input, tbody#7 input").val("");
         }
-        validateBmpPpde.addValidation(ppde_inputs[0].name, "req", "Required field missing in Pads & Pipes");
-        validateBmpPpde.addValidation(ppde_inputs[1].name, "req", "Required field missing in Pads & Pipes");
+        validateBmpPpde.addValidation(ppde_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
+        validateBmpPpde.addValidation(ppde_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
         validateBmpPpde.addValidation(ppde_inputs[0].name, "gt=0", "Width must be greater than 0.");
         validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", "Sides must be more than 0.");
         validateBmpPpde.addValidation(ppde_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
@@ -781,28 +829,28 @@
           $("#select_4, #select_5, #select_6").prop('checked', false);
           $("tbody#4 input, tbody#5 input, tbody#6 input").val("");
         }
-        validateBmpPptw.addValidation(pptw_inputs[0].name, "req", "Required field missing in Pads & Pipes");
-        validateBmpPptw.addValidation(pptw_inputs[1].name, "req", "Required field missing in Pads & Pipes");
+        validateBmpPptw.addValidation(pptw_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
+        validateBmpPptw.addValidation(pptw_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
         validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", "Width must be greater than 0.");
         validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", "Sides must be more than 0.");
         validateBmpPptw.addValidation(pptw_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
       }
       function validationsBmpWl() {
         var wl_inputs = $('[name^=bmp_wl]').valueOf();
-        validateBmpWl.addValidation(wl_inputs[0].name, "req", "Reservoir Area input missing.");
+        validateBmpWl.addValidation(wl_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>');
         validateBmpWl.addValidation(wl_inputs[0].name, "gt=0", "Reservoir Area must be greater than 0.");
         validateBmpWl.addValidation(wl_inputs[0].name, "lte=99999.00", "Resevoir Area must be less than or equal to 99999.00.");
       }
       function validationsBmpPnd() {
         var pnd_inputs = $('[name^=bmp_pnd]').valueOf();
-        validateBmpPnd.addValidation(pnd_inputs[0].name, "req", "Input missing in Ponds.");
+        validateBmpPnd.addValidation(pnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>');
         validateBmpPnd.addValidation(pnd_inputs[0].name, "gt=0", "Input must be greater than 0.");
         validateBmpPnd.addValidation(pnd_inputs[0].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
       }
       function validationsBmpSf() {
         var sf_inputs = $('[name^=bmp_sf]').valueOf();
         for(n = 0; n < sf_inputs.length; n++) {
-          validateBmpSf.addValidation(sf_inputs[n].name, "req", "Required field missing in Stream Fencing.");
+          validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
         }
         validateBmpSf.addValidation(sf_inputs[0].name, "gt=0", "Input must be greater than 0.");
         validateBmpSf.addValidation(sf_inputs[0].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
@@ -823,8 +871,7 @@
       }
       function validationsBmpSbs() {
         var sbs_inputs = $('[name^=bmp_sbs]').valueOf();
-        //problem with checkmark?
-        validateBmpSbs.addValidation(sbs_inputs[0].name, "shouldselchk=on", "Checkbox within Steambank Stabilization must be checked.");
+        validateBmpSbs.addValidation(sbs_inputs[0].name, "selone", '<%= t("pdf.streambank_stabilization") %>' + ": Checkbox must be checked.");
       }
       function validationsBmpRf(i) {
         var rf_inputs = $('[name^=bmp_rf]').valueOf();
@@ -837,7 +884,7 @@
           $("tbody#13 select, tbody#14 select, tbody#15 select").val([]);
         }
         for(n = 0; n < rf_inputs.length; n++){
-          validateBmpRf.addValidation(rf_inputs[n].name, "req", "Required field missing in Riparian Forest");
+          validateBmpRf.addValidation(rf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>');
         }
         validateBmpRf.addValidation(rf_inputs[0].name, "gt=0", "Area acres must be greater than 0.");
         validateBmpRf.addValidation(rf_inputs[0].name, "lte=100000", "Area acres must be less than or equal 100000.");
@@ -859,7 +906,7 @@
         }
         for(n = 0; n < fs_inputs.length; n++){
           if(n != 1)
-            validateBmpFs.addValidation(fs_inputs[n].name, "req", "Required field missing in Filter Strip");
+            validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>');
         }
         validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", "Area acres must be greater than 0.");
         validateBmpFs.addValidation(fs_inputs[1].name, "lte=100000", "Area acres must be less than or equal to 100000.");
@@ -878,7 +925,7 @@
           $("tbody#13 select, tbody#15 select").val([]);
         }
         for(n = 0; n < ww_inputs.length; n++){
-            validateBmpWw.addValidation(ww_inputs[n].name, "req", "Required field missing in Waterway");
+            validateBmpWw.addValidation(ww_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.waterway.header") %>');
         }
         validateBmpWw.addValidation(ww_inputs[1].name, "gt=0", "Width must be greater than 0.");
       }
@@ -893,7 +940,7 @@
           $("tbody#13 select, tbody#14 select").val([]);
         }
         for(n = 0; n < cb_inputs.length; n++){
-            validateBmpCb.addValidation(cb_inputs[n].name, "req", "Required field missing in Contour Buffer");
+            validateBmpCb.addValidation(cb_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.contour.header") %>');
         }
         validateBmpCb.addValidation(cb_inputs[0].name, "gt=0", "Buffer width must be greater than 0.");
         validateBmpCb.addValidation(cb_inputs[1].name, "gt=0", "Crop width must be greater than 0.");
@@ -906,7 +953,49 @@
       }
       function validationsBmpTs() {
         var ts_inputs = $('[name^=bmp_ts]').valueOf();
-        validateBmpTs.addValidation(ts_inputs[0].name, "shouldselchk=on", "Checkbox within Terrace System must be checked.");
+        validateBmpTs.addValidation(ts_inputs[0].name, "selone", '<%= t("managepage.bmpdesc.landgrading.terrace.header")%>' + ": Checkbox must be checked.");
+      }
+      function validationsBmpMc() {
+        var mc_inputs = $('[name^=bmp_mc]').valueOf();
+        for (n = 0; n < mc_inputs.length; n++) {
+          validateBmpMc.addValidation(mc_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("bmp.manure_control") %>');
+        }
+        validateBmpMc.addValidation(mc_inputs[1].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[2].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[3].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[4].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[1].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.");
+        validateBmpMc.addValidation(mc_inputs[2].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.");
+        validateBmpMc.addValidation(mc_inputs[3].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.");
+        validateBmpMc.addValidation(mc_inputs[4].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.")
+      }
+      function validationsBmpCc() {
+        var cc_inputs = $('[name^=bmp_cc]').valueOf();
+        //add validation: inputs must be between 0 & 100, for now at least until Oscar says otherwise
+        //validateBmpCc.addValidation();
+      }
+      function validationsBmpAc() {
+        var ac_inputs = $('[name^=bmp_ac]').valueOf();
+        validateBmpAc.addValidation(ac_inputs[0].name, "selone", '<%= t("pdf.asphalt_concrete") %>' + ": Checkbox must be checked.");
+      }
+      function validationsBmpGc() {
+        var gc_inputs = $('[name^=bmp_gc]').valueOf();
+        validateBmpGc.addValidation(gc_inputs[0].name, "selone", '<%= t("pdf.grass_cover") %>' + ": Checkbox must be checked.");
+      }
+      function validationsBmpSa() {
+        var sa_inputs = $('[name^=bmp_sa]').valueOf();
+        validateBmpSa.addValidation(sa_inputs[0].name, "selone", '<%= t("pdf.slope_adjustment") %>' + ": Checkbox must be checked.");
+      }
+      function validationsBmpSdg() {
+        var sdg_inputs = $('[name^=bmp_sdg]').valueOf();
+        for(n = 0; n < sdg_inputs.length; n++) {
+          validateBmpSdg.addValidation(sdg_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("pdf.shading") %>');
+        }
+        validateBmpSdg.addValidation(sdg_inputs[1].name, "gt=0", "Input must be greater than 0.");
+        validateBmpSdg.addValidation(sdg_inputs[1].name, "lte=100000", "Input must be less than or equal to 100000.");
+        validateBmpSdg.addValidation(sdg_inputs[2].name, "gt=0", "Input must be greater than 0.");
+        validateBmpSdg.addValidation(sdg_inputs[3].name, "gte=0.25", "Input must be greater than or equal to 0.25.");
+        validateBmpSdg.addValidation(sdg_inputs[3].name, "lte=1", "Input must be less than or equal to 1.");
       }
       function promptMsg(msg) {
         var r = confirm(msg);
@@ -916,8 +1005,8 @@
             return false;
         }
       }
+      //Developer notes:
+      //make errors translatable & specific to each field to help client identify where their input error lies
+      //bug: if user clicks a checkbox (add requirements) and unchecks another(remove requirements), it will clear requirements and allow submission of form
     });
-    //To Do:
-    //make Auto Irrigation/Fertigation one body with same inputs and radio button will allow user to choose between the two
-    //additionally, make error message translatable to spanish
 </script>

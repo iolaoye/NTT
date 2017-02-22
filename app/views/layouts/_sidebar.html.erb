@@ -50,7 +50,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.bmps'), list_project_field_scenario_bmps_path(@project, @field, @scenario) %>
+            <%= link_to t('menu.bmps'), project_field_scenario_bmps_path(@project, @field, @scenario) %>
           </li>
           <li class="<%= controller_name == "aplcat_paramters" ? "active" : "" %>">
             <% if controller_name == "aplcat_parameters" %>
