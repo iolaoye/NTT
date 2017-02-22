@@ -31,8 +31,8 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def index
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => session[:field_id])
     respond_to do |format|

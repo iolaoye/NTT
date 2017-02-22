@@ -15,7 +15,7 @@
   <ul class="nav nav-pills nav-stacked nav-sidebar-sub">
     <% if Rails.application.config.which_version == "standard" %><li class="<%= controller_name == "weathers" ? "active" : "" %>">
       <% if controller_name == "weathers" %><div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div><% end %>
-      <%= link_to t('menu.weather'), edit_project_field_weather_path(@project, @field, @weather) %>
+      <%= link_to t('menu.weather'), edit_project_field_weather_path(@project, @field, @field.weather) %>
     </li><% end %>
 
     <li class="<%= controller_name == "soils" || controller_name == "layers" ? "active" : "" %>">
