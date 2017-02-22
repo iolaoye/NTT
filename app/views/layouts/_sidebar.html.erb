@@ -58,7 +58,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-			<%= link_to t('menu.aplcat'), edit_aplcat_parameter_path(session[:scenario_id]) %>
+			<% unless Rails.application.config.which_version == "modified" %><%= link_to t('menu.aplcat'), edit_aplcat_parameter_path(session[:scenario_id]) %><% end %>
 
 			<% if aplcats_submenu %>
 				<ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub-sub">
@@ -182,7 +182,7 @@
       <% end %>
     </li>
 
-    <li class="<%= ((controller_name == "apex_controls")|| (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>">
+    <% unless Rails.application.config.which_version == "modified" %><li class="<%= ((controller_name == "apex_controls")|| (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>">
       <% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) %>
         <div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
       <% end %>
@@ -197,7 +197,7 @@
             <% end %>
 			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post %>
 
-          </li>
+          </li><% end %>
 		 </ul>
       <% end %>
     </li>
