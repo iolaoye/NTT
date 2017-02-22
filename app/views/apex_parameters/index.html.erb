@@ -7,12 +7,12 @@
     </div>
 <% end %>
 
-<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-primary' %>
-<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-default' %>
-<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.site'), sites_path(:id => session[:field_id]), :class => 'btn btn-default' %>
+<%= link_to t('menu.control_file'), project_field_apex_controls_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.parameters_file'), project_field_apex_parameters_path(@project, @field), :class => 'btn btn-primary' %>
+<%= link_to t('menu.subarea_file'), project_field_subareas_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.apex_soil'), project_field_apex_soils_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.operation_file'), project_field_soil_operations_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.site'), project_field_sites_path(@project, @field), :class => 'btn btn-default' %>
 
 
 <br><br>

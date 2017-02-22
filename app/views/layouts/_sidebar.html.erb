@@ -186,7 +186,7 @@
       <% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) %>
         <div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
       <% end %>
-      <%= link_to t('menu.apex_file'), apex_controls_path %>
+      <%= link_to t('menu.apex_file'),  project_field_apex_controls_path(@project, @field) %>
 		<% if apex_files_submenu %>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <li class="<%= ((controller_name == "apex_controls")|| (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "0" %>">

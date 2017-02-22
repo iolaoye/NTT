@@ -2,7 +2,8 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters
   # GET /apex_parameters.json
   def index
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
     @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => session[:project_id])
     respond_to do |format|
       format.html # index.html.erb

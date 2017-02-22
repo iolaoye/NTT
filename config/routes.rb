@@ -19,10 +19,7 @@ NTTG3::Application.routes.draw do
   resources :apex_parameters
   resources :apex_controls
   resources :results
-  resources :sites
   resources :modifications
-  resources :soil_operations
-  resources :subareas
   resources :parameters
   resources :controls
   resources :create_table_fertilizers
@@ -118,6 +115,9 @@ NTTG3::Application.routes.draw do
       resources :apex_controls
       resources :apex_soils
       resources :apex_layers
+      resources :subareas
+      resources :soil_operations
+      resources :sites
     end
   end
 
