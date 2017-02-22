@@ -7,13 +7,13 @@
 
 <div class="page-header"><h1><%= t('menu.managements') %></h1></div>
 
-<%= link_to t('operation.new_operation'), new_operation_path, :class => 'btn btn-primary' %>
+<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
 <%= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@scenario), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'}, :class => 'btn btn-primary' %>
 
 <% if Rails.application.config.which_version == "modified" %>
 
 <%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
-<%= link_to t('general.continue'), scenario_bmps_scenario_path(session[:scenario_id]), :class => 'btn btn-success' %><br><br>
+<%# link_to t('general.continue'), scenario_bmps_scenario_path(session[:scenario_id]), :class => 'btn btn-success' %><br><br>
 
 <% @crops.each do |crop| %>
 <div class="panel panel-success">
@@ -246,8 +246,8 @@
 				<td class="gvCellStyleNumber"><%= operation.org_n %></td>
 				<td class="gvCellStyleNumber"><%= operation.org_p %></td>
 				<td >
-					<%= link_to image_tag("edit.png"), edit_operation_path(operation), title: t('general.edit') %>
-					<%= link_to image_tag("delete.png"), operation, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+					<%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.edit') %>
+					<%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
 				</td>
 			</tr>
 		  <% end %>
