@@ -1,7 +1,5 @@
 NTTG3::Application.routes.draw do
   resources :manure_controls
-
-
   resources :grazing_parameters
   resources :aplcat_parameters
   resources :control_descriptions
@@ -74,6 +72,7 @@ NTTG3::Application.routes.draw do
       resources :scenarios do
         post :simulate_all, on: :collection
         get 'aplcat', on: :member
+        post :simulate_checked, on: :collection
         resources :operations do
           get :list, on: :collection
           get :cropping_system, on: :collection
@@ -119,7 +118,9 @@ NTTG3::Application.routes.draw do
       resources :soil_operations
       resources :sites
     end
+	  get 'copy_project', on: :member
   end
+
 
   resources :states do
     resources :counties
@@ -135,7 +136,7 @@ NTTG3::Application.routes.draw do
   end
 
   resources :watersheds do
-  get :list, on: :member
+    get :list, on: :member
   end
 
   resources :bmplists do
@@ -166,7 +167,6 @@ NTTG3::Application.routes.draw do
   post 'apex_soils/download'
   post 'sites/download'
   post 'operations/delete_all'
-  post 'scenarios/simulate_all'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

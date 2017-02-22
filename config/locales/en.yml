@@ -16,6 +16,11 @@ en:
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
+    notices:
+       messages:
+          saved: "%{model} Saved"
+          created: "%{model} Created"
+          deleted: "%{model} Deleted"
     models:
       projects: "Projects"
       location: "Location"
@@ -42,7 +47,7 @@ en:
         layer: "Layers"
         operation: "Operation"
         site: "Site"
-        download: Download 
+        download: Download
     attributes:
       projects:
         name: "Name"
@@ -392,6 +397,7 @@ en:
     confirm: Are you sure?
     begin: Begin
     to: to
+    copy: copy
   welcome_note:
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -883,7 +889,7 @@ en:
       dmi: "DMI (% of body weight)"
       napanr: Stocking rate in native range. Number of animals/acre
       napaip: Stocking rate in introduced pasture. Number of animals/acre
-      mpsm: Moisture present in solid manure (%) 
+      mpsm: Moisture present in solid manure (%)
       splm: Solids present in liquid manure (urine) (%)
       pmme: Proportion of manure (solid+liquid) moisture evaporated (%)
       rhaeba: Relative humidity of air exhaled by animals (%)
@@ -939,32 +945,32 @@ en:
       dmi: 'Dry Matter Intake (DMI) as a proportion (%) of body weight of animals'
       napanr: 'Total number of animals allowed to graze an acre of native range (Headcount/ac)'
       napaip: 'Total number of animals allowed to graze an acre of introduced pasture (Headcount/ac)'
-      mpsm: 
-      splm: 
-      pmme: 
-      rhaeba: 
-      toaboba: 
-      vsim: 
-      foue: 
-      ash: 
-      mmppfm: 
-      cfmms: 
-      fnemimms: 
-      effn2ofmms: 
-      dwawfga: 
-      dwawflc: 
-      dwawfmb: 
-      pgu: 
-      ada: 
-      ape: 
-      platc: 
-      pctbb: 
-      ptdife: 
-      tnggbc: 
-      animal_paramters: 
-      animal_manure_parameters: 
+      mpsm:
+      splm:
+      pmme:
+      rhaeba:
+      toaboba:
+      vsim:
+      foue:
+      ash:
+      mmppfm:
+      cfmms:
+      fnemimms:
+      effn2ofmms:
+      dwawfga:
+      dwawflc:
+      dwawfmb:
+      pgu:
+      ada:
+      ape:
+      platc:
+      pctbb:
+      ptdife:
+      tnggbc:
+      animal_paramters:
+      animal_manure_parameters:
       animal_growth_parameters:
-      environmental_parameters: 
+      environmental_parameters:
       greenhouse_parameters:
       water_use_pumping_parameters:
       other_parameters:
@@ -1066,6 +1072,8 @@ en:
     textarea:
         header: Text Area
         body: 'Click in a text area to enter one or more lines of information as shown in this example:'
+  validate:
+    required: Required field(s) missing in
   projpage_html:
     <strong>Start of a Project</strong> <br><br>
     Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
@@ -1107,7 +1115,7 @@ en:
     <strong>Deleting Farms and Fields:</strong><br> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.<br>
 
     <strong>Choose a farm and a field(s) shapefile to upload</strong><br>
-    <strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder. 
+    <strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder.
     <strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button for the farm and for the field. The farm and field shapefile can be the same parameters, since, as mentioned above, the farm is simply a reference tool, and the data is drawn from the field shapefile that is uploaded. Nevertheless, you need to choose <strong>BOTH</strong> a <strong>farm shapefile</strong> and a <strong>field shapefile</strong> before uploading.
     <strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile for both a field and a farm.
     <strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.<br>
@@ -1115,7 +1123,7 @@ en:
     <strong>Choose area of interest by address</strong>
     <strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.
     <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br>
-  
+
     <strong>Choose an area of interest by latitude/longitude</strong><br>
     <strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).
     <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br>

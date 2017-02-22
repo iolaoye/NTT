@@ -11,49 +11,6 @@
     </div>
 <% end %>
 
-<!--
-<h1 class="no_margin_bottom"><%= t('menu.projects') %></h1>
-<p class="instruction"><%= t('instructions.projects') %> </p>
-
-  <%= link_to t('project.new_project'), new_project_path %>
-  <%= link_to t('project.upload_project'), upload_project_path(0) %>
-  <%= link_to t('project.upload_example'), upload_project_path(1) %>
-
-  <table class='gvTableStyle'>
-    <tr class='gvHeaderStyle'>
-      <th class="gvCellStyleTitle"><%= t('general.name') %></th>
-      <th class="gvCellStyleTitle"><%= t('general.description') %></th>
-      <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
-    </tr>
-      <% i=1 %>
-    <% @projects.each do |project| %>
-      <% if (i % 2  == 0) %>
-        <tr class="gvRowStyleEven" style="padding-left:25px">
-        <td class="gvCellStyleText"><%= link_to project.name, project %></td>
-        <td class="gvCellStyleText"><%= project.description %></td>
-        <td>
-          <%= link_to image_tag("download.gif"), download_project_path(project) %> <%#https://design.google.com/icons/%>
-          <%= link_to image_tag("edit.png"), edit_project_path(project) %>
-          <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
-        </td>
-      </tr>
-      <% else %>
-        <tr class="gvRowStyleOdd" style="padding-left:25px">
-        <td class="gvCellStyleText"><%= link_to project.name, project %></td>
-        <td class="gvCellStyleText"><%= project.description %></td>
-        <td>
-          <%= link_to image_tag("download.gif"), download_project_path(project) %> <%#https://design.google.com/icons/%>
-          <%= link_to image_tag("edit.png"), edit_project_path(project) %>
-          <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
-        </td>
-      </tr>
-      <% end %>
-      <% i = i + 1 %>
-    <% end %>     
-  </table>
-  -->
-
-
 <div class="container">
     <div class="row">
       <div class="col-sm-10 col-md-10 main">
@@ -94,6 +51,7 @@
             <td><%= project.updated_at.to_date %></td>
             <td><%= link_to image_tag("download.gif"), download_project_path(project) %>
           <%= link_to image_tag("edit.png"), edit_project_path(project) %>
+          <%= link_to image_tag("copy.jpg"), copy_project_project_path(project.id) %>
           <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %></td>
           </tr>
           <% end %>
@@ -102,8 +60,7 @@
     </div>
         </div>
       </div>
-
     </div>
-  </div>
+</div>
 
 

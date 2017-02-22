@@ -389,6 +389,6 @@ class LocationsController < ApplicationController
         apex_control.save
       end # end control all
     end # end if
-  end
+  end  #end method
 
 end

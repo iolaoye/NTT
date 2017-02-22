@@ -24,18 +24,20 @@
       <%= flash[:error] %>
     </div>
 <% end %>
+<%= form_tag simulate_checked_project_field_scenarios_path, method: :post do |f| %>
 <div class="page-header"><h1><%= t('menu.scenarios') %></h1></div>
 <%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_project_field_scenario_path(@project, @field), :class => 'btn btn-primary' %>
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), {:action => :simulate_all}, :method => :post, data: {disable_with: 'Please wait. Simulation in progress . . .'}, :class => 'btn btn-primary' %>
-<%# link_to t('general.continue'), summary_result_path(session[:field_id]), :class => 'btn btn-success' %>
+<%= link_to t('general.continue'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
 <br><br>
 <%= t('instructions.scenarios') %>
 
 <div class="table-responsive">
   <div class="panel panel-default">
-    <table class="table table-striped">
+    <table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
       <thead>
         <tr>
+          <th class="gvCellStyleTitle"><%= check_box_tag "select_all", t('general.select') %> </th>
           <th class="gvCellStyleTitle"><%= t('general.name') %></th>
           <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
           <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
@@ -48,13 +50,13 @@
       <tbody>
   <% i=1 %>
   <% @scenarios.each do |scenario| %>
-      <% warning = false %>
       <% if (i % 2 == 0) %>
           <tr class="gvRowStyleEven">
       <% else %>
           <tr class="gvRowStyleOdd">
 	  <% end %>
-            <td class="gvCellStyleText"><%= link_to scenario.name, list_project_field_scenario_operations_path(@project, @field, scenario) %></td>
+            <td><%= check_box_tag "select_scenario[]", scenario.id %></td>
+            <td class="btn btn-link"><%= link_to scenario.name, list_project_field_scenario_operations_path(@project, @field, scenario) %></td>
             <td class="gvCellStyleImage">
               <% if Weather.find_by_field_id(scenario.field_id) == nil %>
 				  <%= "bad" %>
@@ -102,8 +104,8 @@
             <td calss="gvCellStyleText"><%= scenario.last_simulation %></td>
             <td class="gvCellStyleActions">
               <% if warning == false %>
-                  <%# link_to image_tag("aplcat_simulation.png"), aplcat_scenario_path(scenario.id), title: t('scenario.simulate') + " APLCAT", data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'} %>
-                  <%= link_to image_tag("CEEOT-SWAPP.ico"), project_field_scenario_path(@project, @field, scenario.id), title: t('scenario.simulate') + " NTT", data: {disable_with: 'Please wait. NTT simulation in progress . . .'} %>
+                  <%#= link_to image_tag("aplcat_simulation.png"), aplcat_scenario_path(scenario.id), title: t('scenario.simulate') + " APLCAT", data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'} %>
+                  <%= link_to image_tag("run.png"), project_field_scenario_path(@project, @field, scenario.id), title: t('scenario.simulate') + " NTT", data: {disable_with: 'Please wait. NTT simulation in progress . . .'} %>
               <% end %>
               <%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
               <%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
@@ -115,5 +117,6 @@
 </table>
 </div>
 </div>
+<% end %>
 
 <br>

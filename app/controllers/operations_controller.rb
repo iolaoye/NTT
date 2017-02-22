@@ -1,3 +1,5 @@
+include ScenariosHelper
+
 class OperationsController < ApplicationController
   include ScenariosHelper
   require "open-uri"
@@ -341,6 +343,9 @@ class OperationsController < ApplicationController
                 @operation.year = event.year
               end
             end
+			if event.crop_schedule_id == 4 && @highest_year > @operation.year && @operation.activity_id == 5 # ask if corp rotation is winter wheat and the highest year is > than the kill operation. Since the kill is first in the table we need to be sure where to put it.
+				@operation.year += 1
+			end
             #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
             #note fertilizer id and code are the same so far. Try to keep them that way
             @operation.type_id = 0

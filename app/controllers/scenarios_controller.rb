@@ -43,21 +43,22 @@ class ScenariosController < ApplicationController
     end
   end
 ################################  Simulate  #################################
-  def simulate_all
+  def simulate_checked    
     @project_name = Project.find(session[:project_id]).name
     @field_name = Field.find(session[:field_id]).field_name
     @errors = Array.new
-    @scenarios = Scenario.where(:field_id => session[:field_id])
+    #@scenarios = Scenario.where(:field_id => session[:field_id])
     msg = "OK"
     ActiveRecord::Base.transaction do
-      @scenarios.each do |scenario|
-        session[:scenario_id] = scenario.id
-        msg = run_scenario
-        unless msg.eql?("OK")
+	  params[:select_scenario].each do |scenario_id|
+		  @scenario = Scenario.find(scenario_id)
+		  session[:scenario_id] = @scenario.id
+		  msg = run_scenario
+		  unless msg.eql?("OK")
           @errors.push("Error simulating scenario " + scenario.name + " (" + msg + ")")
           raise ActiveRecord::Rollback
-        end # end if msg
-      end # end each do scenario loop
+	      end # end if msg
+      end # end each do params loop
     end
     if msg.eql?("OK") then
       flash[:notice] = @scenarios.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
@@ -350,19 +351,17 @@ class ScenariosController < ApplicationController
       format.json { head :no_content }
     end
   end	
-
-
+  
   private
-
-################################  run_scenario - run simulation called from show or index  #################################
+  ################################  run_scenario - run simulation called from show or index  #################################
   def run_scenario()
     @last_herd = 0
 	@herd_list = Array.new
 	msg = "OK"
-    if @scenarios == nil then
-      session[:scenario_id] = params[:id]
-    end
-    @scenario = Scenario.find(session[:scenario_id])
+    #if @scenarios == nil then
+      #session[:scenario_id] = params[:id]
+    #end
+    #@scenario = Scenario.find(session[:scenario_id])
     dir_name = APEX + "/APEX" + session[:session_id]
     #dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
     if !File.exists?(dir_name)
@@ -410,7 +409,7 @@ class ScenariosController < ApplicationController
 # params.require(:person).permit(:name, :age)
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def scenario_params
-    params.require(:scenario).permit(:name, :field_id)
+    params.require(:scenario).permit(:name, :field_id, :scenario_select)
   end
 
 end  #end class

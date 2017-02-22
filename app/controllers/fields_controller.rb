@@ -31,9 +31,9 @@ class FieldsController < ApplicationController
     @fields = Field.where(:location_id => location_id)
     @project_name = Project.find(session[:project_id]).name
 
-    add_breadcrumb t('menu.projects'), user_projects_path(current_user)
-    add_breadcrumb @project_name
-    add_breadcrumb t('menu.fields')
+    #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
+    #add_breadcrumb @project_name
+    #add_breadcrumb t('menu.fields')
 
     @fields.each do |field|
       field_average_slope = 0

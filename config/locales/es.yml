@@ -1,4 +1,6 @@
-﻿es:
+﻿# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+es:
   activerecord:
     form_errors:
         one: No se pudo guardar este/a %{model} porque se encontró un error
@@ -9,9 +11,16 @@
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"
+        projects:
+          no_saved: "Projecto no pudo ser salvado"
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
+    notices:
+       messages:
+          saved: "%{model} Salvado"
+          created: "%{model} Creado"
+          deleted: "%{model} Borrado"
     models:
       project: "Proyecto"
       location: "Ubicación"
@@ -37,7 +46,7 @@
         soil: "Suelos"
         layer: "Capas"
         operation: "Operaciones"
-        site: "Sitio" 
+        site: "Sitio"
         download: Bajar
     attributes:
       project:
@@ -286,13 +295,13 @@
   helpers:
     select:
       prompt: Por favor seleccione
-      field: Seleccione la Parcela 
+      field: Seleccione la Parcela
       scenario: Seleccione el Scenario
     submit:
       create: Salvar
       submit: Salvar
       update: Salvar
-      savecontinue: Salvar y Continuar     
+      savecontinue: Salvar y Continuar
     label:
       project:
         name: Nombre
@@ -393,7 +402,8 @@
     confirm: ¿Está seguro?
     begin: Empezar
     to: a
-  welcome_note: 
+    copy: copiar
+  welcome_note:
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
     note2: '2.	Esta versión de NTT esta escrita tanto en Inglés como en Español.'
@@ -480,15 +490,15 @@
     silt: Limo
     clay: Arcilla
     organic_matter: Materia Orgánica
-    ph: PH  
-    select_soil: Seleccione Suelo 
+    ph: PH
+    select_soil: Seleccione Suelo
     load_soil: Cargar Suelo
     create_soil: Crear Suelo
   layer:
     new_layer: Nueva Capa
     create_layer: Crear Capa
     layer_number: Número de Capa
-    more_than: mas de 
+    more_than: mas de
     sum: 'Arcilla, arena, y limo debe añadir un máximo de 100 porcentaje'
     error_depth: 'La profundidad es obligatorio y debe ser mayor que 0. '
   scenario:
@@ -527,7 +537,7 @@
     saved: 'Sistema de Cultivo guardado'
   bmp:
     bmp_group: Grupo de BPG
-    select_bmp:  Seleccione Grupo de BPG   
+    select_bmp:  Seleccione Grupo de BPG
     create_bmp: Crear BPG
     zero_to_one: "(0.00 - 1.00)"
     zero_to_max: "(0.00 – 99999.00)"
@@ -685,7 +695,7 @@
     user: Usuario
   subarea:
     subarea_type: Tipo de Subárea
-    subarea_number: Número Subárea 
+    subarea_number: Número Subárea
     subarea_description: Descripción de subárea
     select_subarea: Seleccione Subárea
     load_subarea: Cargar Subárea
@@ -745,14 +755,14 @@
     getstarted1: Requisitos de Sistema
     getstarted2: Conceptos Básicos de Navegación
     getstarted3: Página del Proyecto
-    getstarted4: Página de Ubicación 
-    getstarted5: Página del Clima 
-    getstarted6: Página de Parcela 
-    getstarted7: Página de Suelos 
+    getstarted4: Página de Ubicación
+    getstarted5: Página del Clima
+    getstarted6: Página de Parcela
+    getstarted7: Página de Suelos
     getstarted8: Página del Gestión
     getstarted9: Página del Cuenca
     getstarted10: Página del Simulación
-    getstarted11: Página de resultados 
+    getstarted11: Página de resultados
     getstarted12: Página de Archivos APEX
     understanding: La Comprensión de NTT
     understanding1: APEX
@@ -878,7 +888,7 @@
       dmi: "DMI (% de peso corporal)"
       napanr: Tasa de población en el rango nativo. Número de animales / acre
       napaip: Tasa de almacenamiento en pastos introducidos. Número de animales / acre
-      mpsm: Humedad presente en el abono sólido (%) 
+      mpsm: Humedad presente en el abono sólido (%)
       splm: Sólidos presentes en el abono líquido (orina) (%)
       pmme: Proporción de abono (sólido + líquido) evaporado (%)
       rhaeba: Humedad relativa del aire exhalado por los animales (%)
@@ -934,36 +944,36 @@
       dmi: 'Dry Matter Intake (DMI) as a proportion (%) of body weight of animals'
       napanr: 'Total number of animals allowed to graze an acre of native range (Headcount/ac)'
       napaip: 'Total number of animals allowed to graze an acre of introduced pasture (Headcount/ac)'
-      mpsm: 
-      splm: 
-      pmme: 
-      rhaeba: 
-      toaboba: 
-      vsim: 
-      foue: 
-      ash: 
-      mmppfm: 
-      cfmms: 
-      fnemimms: 
-      effn2ofmms: 
-      dwawfga: 
-      dwawflc: 
-      dwawfmb: 
-      pgu: 
-      ada: 
-      ape: 
-      platc: 
-      pctbb: 
-      ptdife: 
-      tnggbc: 
-      animal_paramters: 
-      animal_manure_parameters: 
+      mpsm:
+      splm:
+      pmme:
+      rhaeba:
+      toaboba:
+      vsim:
+      foue:
+      ash:
+      mmppfm:
+      cfmms:
+      fnemimms:
+      effn2ofmms:
+      dwawfga:
+      dwawflc:
+      dwawfmb:
+      pgu:
+      ada:
+      ape:
+      platc:
+      pctbb:
+      ptdife:
+      tnggbc:
+      animal_paramters:
+      animal_manure_parameters:
       animal_growth_parameters:
-      environmental_parameters: 
+      environmental_parameters:
       greenhouse_parameters:
       water_use_pumping_parameters:
       other_parameters:
-      animal_feed_parameters:  
+      animal_feed_parameters:
   graze:
     total: 'Total number of grasses grazed by cattle'
     code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
@@ -1061,6 +1071,8 @@
     textarea:
         header: Área de texto
         body: 'Haga clic en un área de texto para introducir una o más líneas de información como se muestra en este ejemplo:'
+  validate:
+    required: Requerido campo(s) que falta en
   projpage:
     header: Iniciar un Proyecto
     statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'
@@ -1085,7 +1097,7 @@
         body2: 'Después de haber introducido la información, haga clic a <b>Salvar y Continuar</b> para salvar la información y continuar.'
     save:
         header: Save Active Project
-        body: 'También se puede utilizar <b>Salvar Proyecto Activo...</b> botón para salvar el proyecto actual con el que el usuario trabajando.' 
+        body: 'También se puede utilizar <b>Salvar Proyecto Activo...</b> botón para salvar el proyecto actual con el que el usuario trabajando.'
         note: '<b>Importante:</b> si el usuario cargo sus propios archivos de clima, es importante cargar estos y simular de nuevo, estos archivos no son salvado con el proyecto original cuando este proyecto es salvado.'
     close:
         header: Close Active Project
@@ -1317,7 +1329,7 @@
         body: 'Below are the descriptions of the different BMPs that are available under NTT. The heading is the group under which you can find the BMPs and the text in bold is the actual BMP.'
         auto:
             header: 'Auto Irrigation and Fertigation'
-            irrigation: 
+            irrigation:
                 header: 'Auto Irrigation'
                 body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
                 item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
@@ -1345,7 +1357,7 @@
             pp2stage:
                 header: 'Pads and Pipes - Two Stage Ditch System'
                 body1: 'This particular method of Pads and Pipes is very similar to the Pads and Pipes – No Ditch Improvement (see above for more information). The main difference is that using this method improves the ditch, creating a collection of water inside the ditch before the water is drained. The inputs for this method are the same as Pads and Pipes – No Ditch Improvement (see above).'
-            ppreservoir: 
+            ppreservoir:
                 header: 'Pads and Pipes – Ditch Enlargement and Reservoir System'
                 body1: 'This particular method of pads and pipes is very similar to the Pads and Pipes – Two Stage Ditch System. This method also has an improved ditch system. However, in this method, the water in the ditch is drained into a reservoir system. The inputs are the same as Pads and Pipes – No Ditch Improvement, with one additional input:'
                 item1: '<strong>Reservoir Area (ac.):</strong> This is the reservoir area in acres. Since this area is being used a reservoir, crops cannot be grown in this area.'
@@ -1583,7 +1595,7 @@
                 </ul>
                 <p>Para subir su propio archivo de clima, seleccione <strong><em>Usar su propio archivo del Clima</em></strong> y después has clic en <strong><em>Choose File</em></strong>, después seleccione el archivo de clima de su equipo y, finalmente, haga clic en Abrir. Despues, seleccione <strong><em>Actualizar el Clima</em></strong> para finalizar los cambios.</p>
                 <p><strong>Nota:</strong> Tenga en cuenta que si carga su propio archivo de clima, no se guardará al guardar el proyecto. Si sube un proyecto previamente guardado y utilizó la posibilidad de subir su propio archivo de clima, tendrá que cargar el archivo de clima de nuevo, pero para seguridad, debe simular cualquier escenario de nuevo.</p>
-    soils: > 
+    soils: >
                 La página de suelos permite al usuario crear o ver los suelos para cada parcela. Ellos (los tres suelos dominantes) son automáticamente subido basado en el área de interés y los campos seleccionados.<br><br>
                 Ahora tiene un par de opciones
                 <ol>
@@ -1612,7 +1624,7 @@
                 Para <strong>Simular</strong> un escenario, seleccione el folder con el engranaje debajo de <strong>Opciones</strong>.<br>
                 Para <strong>Editar</strong> un escenario, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
                 Para <strong>Borrar</strong> un escenario, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
-    results: > 
+    results: >
                 Después de que los escenarios se han simulado los resultados para ese escenario estan listo para ver.
                 Aquí puede comparar escenarios, o simplemente mostrar un escenario. Las siguientes comparaciones son posibles.
                 <ul>
@@ -1694,4 +1706,4 @@
                 <p><strong>Nota:</strong> Por defecto, el primer suelo y el primer escenario se cargan automáticamente</p>
     sites: >
                 Esta es toda la información sobre el sitio de APEX.<br><br>
-                Para <strong>Editar</strong> este sitio, seleccione <strong><em>Editar</em></strong> 
+                Para <strong>Editar</strong> este sitio, seleccione <strong><em>Editar</em></strong>

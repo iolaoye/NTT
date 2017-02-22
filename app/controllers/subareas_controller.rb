@@ -12,11 +12,12 @@ class SubareasController < ApplicationController
 		  else
 		    session[:scenario_id] = 0
 		  end
-	  else
+	else
 		  session[:scenario_id] = 0
-	  end
-	  get_subareas()
-    respond_to do |format|
+	end
+	get_subareas()
+    
+	respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @subareas }
     end
@@ -94,8 +95,8 @@ class SubareasController < ApplicationController
 	  i=1
 	  if session[:scenario_id] != 0 then
 		  @soils.each do |soil|
-			  #subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])   #no needed because subarea depends on soil
-			  @subareas.push(:subarea_type => soil.subareas.first.subarea_type, :subarea_number => i, :subarea_description => soil.subareas.first.description, :subarea_id => soil.subareas.first.id)
+			  subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])   #no needed because subarea depends on soil
+			  @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
 			  i+=1
 		  end
 	  end
