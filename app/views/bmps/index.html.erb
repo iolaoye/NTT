@@ -711,11 +711,11 @@
         }
         $('#bmp_ai_irrigation_id').change(function(){
           if ($('#bmp_ai_irrigation_id').val() == 8) {
-            validateBmpAi.addValidation(ai_inputs[5].name, "req", "Required field missing in Autoirrigation/Autofertigation.");
+            validateBmpAi.addValidation(ai_inputs[5].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.auto.header") %>');
           }
         });
         for(n = 0; n < ai_inputs.length - 1; n++) {
-            validateBmpAi.addValidation(ai_inputs[n].name, "req", "Required field missing in Autoirrigation/Autofertigation.");
+            validateBmpAi.addValidation(ai_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.auto.header") %>');
         }
         validateBmpAi.addValidation("bmp_cb1", "selone", "A selection is required.");
         validateBmpAi.addValidation(ai_inputs[1].name, "gt=0", "Input must be greater than 0.");
@@ -727,7 +727,7 @@
         validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", "Input must be greater than 0.");
         validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
       }
-      function validationsBmpAf(i) { //unused function - remove?
+      function validationsBmpAf(i) { //unused/unreferenced function - remove?
         if (($('#select_7').is(':checked'))) {
           if(promptMsg("Tailwater Irrigation is currently checked and requires Autoirrigation to be checked. " +
                        "Continuing will clear any data you may have for Tailwater Irrigation and Autoirrigation.")){
@@ -750,7 +750,7 @@
           $("tbody#1 select").val([]);
         }
         for(n = 0; n < af_inputs.length; n++) {
-          validateBmpAf.addValidation(af_inputs[n].name, "req", "Required field missing in Autofertigation.");
+          validateBmpAf.addValidation(af_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.auto.header") %>');
         }
         validateBmpAf.addValidation(af_inputs[1].name, "gt=0", "Input must be greater than 0.");
         validateBmpAf.addValidation(af_inputs[1].name, "lte=1.00", "Input must be less than or equal to 1.00.");
@@ -763,7 +763,7 @@
       }
       function validationsBmpTd() {
         var td_inputs = $('[name^=bmp_td]').valueOf();
-        validateBmpTd.addValidation(td_inputs[0].name, "req", "Required field missing in Tile Drain.");
+        validateBmpTd.addValidation(td_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>');
         validateBmpTd.addValidation(td_inputs[0].name, "gt=0", "Input must be greater than 0.");
         validateBmpTd.addValidation(td_inputs[0].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
       }
@@ -776,8 +776,8 @@
           $("#select_5, #select_6, #select_7").prop('checked', false);
           $("tbody#5 input, tbody#6 input, tbody#7 input").val("");
         }
-        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", "Required field missing in Pads & Pipes");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", "Required field missing in Pads & Pipes");
+        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
         validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", "Width must be greater than 0.");
         validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", "Sides must be more than 0.");
         validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
@@ -791,8 +791,8 @@
           $("#select_4, #select_6, #select_7").prop('checked', false);
           $("tbody#4 input, tbody#6 input, tbody#7 input").val("");
         }
-        validateBmpPpds.addValidation(ppds_inputs[0].name, "req", "Fields missing in Pads & Pipes");
-        validateBmpPpds.addValidation(ppds_inputs[1].name, "req", "Fields missing in Pads & Pipes");
+        validateBmpPpds.addValidation(ppds_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>');
+        validateBmpPpds.addValidation(ppds_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>');
         validateBmpPpds.addValidation(ppds_inputs[0].name, "gt=0", "Width must be greater than 0.");
         validateBmpPpds.addValidation(ppds_inputs[1].name, "gt=0", "Sides must be more than 0.");
         validateBmpPpds.addValidation(ppds_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
@@ -806,8 +806,8 @@
           $("#select_4, #select_5, #select_7").prop('checked', false);
           $("tbody#4 input, tbody#5 input, tbody#7 input").val("");
         }
-        validateBmpPpde.addValidation(ppde_inputs[0].name, "req", "Required field missing in Pads & Pipes");
-        validateBmpPpde.addValidation(ppde_inputs[1].name, "req", "Required field missing in Pads & Pipes");
+        validateBmpPpde.addValidation(ppde_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
+        validateBmpPpde.addValidation(ppde_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
         validateBmpPpde.addValidation(ppde_inputs[0].name, "gt=0", "Width must be greater than 0.");
         validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", "Sides must be more than 0.");
         validateBmpPpde.addValidation(ppde_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
@@ -829,28 +829,28 @@
           $("#select_4, #select_5, #select_6").prop('checked', false);
           $("tbody#4 input, tbody#5 input, tbody#6 input").val("");
         }
-        validateBmpPptw.addValidation(pptw_inputs[0].name, "req", "Required field missing in Pads & Pipes");
-        validateBmpPptw.addValidation(pptw_inputs[1].name, "req", "Required field missing in Pads & Pipes");
+        validateBmpPptw.addValidation(pptw_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
+        validateBmpPptw.addValidation(pptw_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
         validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", "Width must be greater than 0.");
         validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", "Sides must be more than 0.");
         validateBmpPptw.addValidation(pptw_inputs[1].name, "lte=4.00", "Sides must be less than or equal to 4.0.");
       }
       function validationsBmpWl() {
         var wl_inputs = $('[name^=bmp_wl]').valueOf();
-        validateBmpWl.addValidation(wl_inputs[0].name, "req", "Reservoir Area input missing.");
+        validateBmpWl.addValidation(wl_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>');
         validateBmpWl.addValidation(wl_inputs[0].name, "gt=0", "Reservoir Area must be greater than 0.");
         validateBmpWl.addValidation(wl_inputs[0].name, "lte=99999.00", "Resevoir Area must be less than or equal to 99999.00.");
       }
       function validationsBmpPnd() {
         var pnd_inputs = $('[name^=bmp_pnd]').valueOf();
-        validateBmpPnd.addValidation(pnd_inputs[0].name, "req", "Input missing in Ponds.");
+        validateBmpPnd.addValidation(pnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>');
         validateBmpPnd.addValidation(pnd_inputs[0].name, "gt=0", "Input must be greater than 0.");
         validateBmpPnd.addValidation(pnd_inputs[0].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
       }
       function validationsBmpSf() {
         var sf_inputs = $('[name^=bmp_sf]').valueOf();
         for(n = 0; n < sf_inputs.length; n++) {
-          validateBmpSf.addValidation(sf_inputs[n].name, "req", "Required field missing in Stream Fencing.");
+          validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
         }
         validateBmpSf.addValidation(sf_inputs[0].name, "gt=0", "Input must be greater than 0.");
         validateBmpSf.addValidation(sf_inputs[0].name, "lte=99999.00", "Input must be less than or equal to 99999.00.");
@@ -871,7 +871,7 @@
       }
       function validationsBmpSbs() {
         var sbs_inputs = $('[name^=bmp_sbs]').valueOf();
-        validateBmpSbs.addValidation(sbs_inputs[0].name, "selone", "Checkbox within Steambank Stabilization must be checked.");
+        validateBmpSbs.addValidation(sbs_inputs[0].name, "selone", '<%= t("pdf.streambank_stabilization") %>' + ": Checkbox must be checked.");
       }
       function validationsBmpRf(i) {
         var rf_inputs = $('[name^=bmp_rf]').valueOf();
@@ -884,7 +884,7 @@
           $("tbody#13 select, tbody#14 select, tbody#15 select").val([]);
         }
         for(n = 0; n < rf_inputs.length; n++){
-          validateBmpRf.addValidation(rf_inputs[n].name, "req", "Required field missing in Riparian Forest");
+          validateBmpRf.addValidation(rf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>');
         }
         validateBmpRf.addValidation(rf_inputs[0].name, "gt=0", "Area acres must be greater than 0.");
         validateBmpRf.addValidation(rf_inputs[0].name, "lte=100000", "Area acres must be less than or equal 100000.");
@@ -906,7 +906,7 @@
         }
         for(n = 0; n < fs_inputs.length; n++){
           if(n != 1)
-            validateBmpFs.addValidation(fs_inputs[n].name, "req", "Required field missing in Filter Strip");
+            validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>');
         }
         validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", "Area acres must be greater than 0.");
         validateBmpFs.addValidation(fs_inputs[1].name, "lte=100000", "Area acres must be less than or equal to 100000.");
@@ -925,7 +925,7 @@
           $("tbody#13 select, tbody#15 select").val([]);
         }
         for(n = 0; n < ww_inputs.length; n++){
-            validateBmpWw.addValidation(ww_inputs[n].name, "req", "Required field missing in Waterway");
+            validateBmpWw.addValidation(ww_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.waterway.header") %>');
         }
         validateBmpWw.addValidation(ww_inputs[1].name, "gt=0", "Width must be greater than 0.");
       }
@@ -940,7 +940,7 @@
           $("tbody#13 select, tbody#14 select").val([]);
         }
         for(n = 0; n < cb_inputs.length; n++){
-            validateBmpCb.addValidation(cb_inputs[n].name, "req", "Required field missing in Contour Buffer");
+            validateBmpCb.addValidation(cb_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.contour.header") %>');
         }
         validateBmpCb.addValidation(cb_inputs[0].name, "gt=0", "Buffer width must be greater than 0.");
         validateBmpCb.addValidation(cb_inputs[1].name, "gt=0", "Crop width must be greater than 0.");
@@ -953,42 +953,43 @@
       }
       function validationsBmpTs() {
         var ts_inputs = $('[name^=bmp_ts]').valueOf();
-        validateBmpTs.addValidation(ts_inputs[0].name, "selone", "Checkbox within Terrace System must be checked.");
+        validateBmpTs.addValidation(ts_inputs[0].name, "selone", '<%= t("managepage.bmpdesc.landgrading.terrace.header")%>' + ": Checkbox must be checked.");
       }
       function validationsBmpMc() {
         var mc_inputs = $('[name^=bmp_mc]').valueOf();
         for (n = 0; n < mc_inputs.length; n++) {
-          validateBmpMc.addValidation(mc_inputs[n].name, "req", "Required field missing in Manure Control");
+          validateBmpMc.addValidation(mc_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("bmp.manure_control") %>');
         }
-        validateBmpMc.addValidation(mc_inputs[1].name, "gt=0", "Input must be more than 0.");
-        validateBmpMc.addValidation(mc_inputs[2].name, "gt=0", "Input must be more than 0.");
-        validateBmpMc.addValidation(mc_inputs[3].name, "gt=0", "Input must be more than 0.");
-        validateBmpMc.addValidation(mc_inputs[4].name, "gt=0", "Input must be more than 0.");
-        validateBmpMc.addValidation(mc_inputs[1].name, "lte=0", "Input must be less than or equal to 100.");
-        validateBmpMc.addValidation(mc_inputs[2].name, "lte=0", "Input must be less than or equal to 100.");
-        validateBmpMc.addValidation(mc_inputs[3].name, "lte=0", "Input must be less than or equal to 100.");
-        validateBmpMc.addValidation(mc_inputs[4].name, "lte=0", "Input must be less than or equal to 100.")
+        validateBmpMc.addValidation(mc_inputs[1].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[2].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[3].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[4].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": Input must be more than 0.");
+        validateBmpMc.addValidation(mc_inputs[1].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.");
+        validateBmpMc.addValidation(mc_inputs[2].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.");
+        validateBmpMc.addValidation(mc_inputs[3].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.");
+        validateBmpMc.addValidation(mc_inputs[4].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": Input must be less than or equal to 100.")
       }
       function validationsBmpCc() {
         var cc_inputs = $('[name^=bmp_cc]').valueOf();
+        //add validation: inputs must be between 0 & 100, for now at least until Oscar says otherwise
         //validateBmpCc.addValidation();
       }
       function validationsBmpAc() {
         var ac_inputs = $('[name^=bmp_ac]').valueOf();
-        validateBmpAc.addValidation(ac_inputs[0].name, "selone", "Checkbox within 'Ashphalt or Concrete' must be checked.");
+        validateBmpAc.addValidation(ac_inputs[0].name, "selone", '<%= t("pdf.asphalt_concrete") %>' + ": Checkbox must be checked.");
       }
       function validationsBmpGc() {
         var gc_inputs = $('[name^=bmp_gc]').valueOf();
-        validateBmpGc.addValidation(gc_inputs[0].name, "selone", "Checkbox within Grasscover must be checked.");
+        validateBmpGc.addValidation(gc_inputs[0].name, "selone", '<%= t("pdf.grass_cover") %>' + ": Checkbox must be checked.");
       }
       function validationsBmpSa() {
         var sa_inputs = $('[name^=bmp_sa]').valueOf();
-        validateBmpSa.addValidation(sa_inputs[0].name, "selone", "Checkbox within Slope Adjustment must be checked.");
+        validateBmpSa.addValidation(sa_inputs[0].name, "selone", '<%= t("pdf.slope_adjustment") %>' + ": Checkbox must be checked.");
       }
       function validationsBmpSdg() {
         var sdg_inputs = $('[name^=bmp_sdg]').valueOf();
         for(n = 0; n < sdg_inputs.length; n++) {
-          validateBmpSdg.addValidation(sdg_inputs[n].name, "req", "Required field missing in Shading.");
+          validateBmpSdg.addValidation(sdg_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("pdf.shading") %>');
         }
         validateBmpSdg.addValidation(sdg_inputs[1].name, "gt=0", "Input must be greater than 0.");
         validateBmpSdg.addValidation(sdg_inputs[1].name, "lte=100000", "Input must be less than or equal to 100000.");
@@ -1004,5 +1005,8 @@
             return false;
         }
       }
+      //Developer notes:
+      //make errors translatable & specific to each field to help client identify where their input error lies
+      //bug: if user clicks a checkbox (add requirements) and unchecks another(remove requirements), it will clear requirements and allow submission of form
     });
 </script>

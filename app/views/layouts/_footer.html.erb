@@ -60,14 +60,39 @@
         <div class="container-fluid">
             <div class="nav navbar-nav navbar-right">
                 <ul class="footerright">
-                  <%if request.url.include?(url_for=("/projects")) || request.url.include?(url_for=("/scenarios")) %>
+                  <%if request.url.include?(url_for=("/projects?")) %>
                     <li><%= image_tag('download.gif') %> Download</li>
-                   <% end %>
-                  <%if request.url.include?(url_for=("/soils")) || request.url.include?(url_for=("/apex_soils")) %>
-                    <li><%= image_tag('layers.png') %> Soil Layers</li>
+                    <li><%= image_tag('edit.png') %> Edit</li>
+                    <li><%= image_tag('copy.jpg') %> Copy</li>
+                    <li><%= image_tag('delete.png') %> Delete</li>
                   <% end %>
+                  <%if request.url.include?(url_for=("/list")) || request.url.include?(url_for=("/scenarios//list"))%>  
+                      <%if request.url.include?(url_for=("/soils")) || request.url.include?(url_for=("/apex_soils"))%>
+                          <li><%= image_tag('layers.png') %> Soil Layers</li>
+                      <% end %>
+                      <li><%= image_tag('edit.png') %> Edit</li>
+                      <li><%= image_tag('delete.png') %> Delete</li>
+                  <% end %>
+                  <%if request.url.include?(url_for=("/grazing_parameters?")) %>
+                    <li><%= image_tag('view.png') %> View</li>
                     <li><%= image_tag('edit.png') %> Edit</li>
                     <li><%= image_tag('delete.png') %> Delete</li>
+                  <% end %>
+                  <%if request.url.include?(url_for=("/apex_controls?")) || request.url.include?(url_for=("/apex_parameters?")) || request.url.include?(url_for=("/subareas?")) || request.url.include?(url_for=("/apex_soils?")) || request.url.include?(url_for=("/apex_layers?")) || request.url.include?(url_for=("/soil_operations?"))%>  
+                      <%if request.url.include?(url_for=("/subareas?"))%>
+                          <li><%= image_tag('view.png') %> View</li>
+                      <% end %>
+                      <%if request.url.include?(url_for=("/apex_soils"))%>            
+                          <li><%= image_tag('layers.png') %> Soil Layers</li>   
+                          <li><%= image_tag('view.png') %> View</li>
+                      <% end %>
+                      <li><%= image_tag('edit.png') %> Edit</li>
+                  <% end %>
+                  <%if request.url.include?(url_for=("/sites?"))%>   
+                      <li><%= image_tag('view.png') %> View</li>
+                      <li><%= image_tag('edit.png') %> Edit</li>
+                      <li><%= image_tag('delete.png') %> Delete</li>
+                  <% end %>
                 </ul>
             </div>
 
