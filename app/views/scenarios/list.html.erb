@@ -25,7 +25,7 @@
     </div>
 <% end %>
 <div class="page-header"><h1><%= t('menu.scenarios') %></h1></div>
-<%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_scenario_path, :class => 'btn btn-primary' %>
+<%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_project_field_scenario_path(@project, @field), :class => 'btn btn-primary' %>
 <%= link_to t('scenario.simulate') + ' ' + t('general.all'), {:action => :simulate_all}, :method => :post, data: {disable_with: 'Please wait. Simulation in progress . . .'}, :class => 'btn btn-primary' %>
 <%# link_to t('general.continue'), summary_result_path(session[:field_id]), :class => 'btn btn-success' %>
 <br><br>
@@ -54,7 +54,7 @@
       <% else %>
           <tr class="gvRowStyleOdd">
 	  <% end %>
-            <td class="gvCellStyleText"><% link_to scenario.name, list_project_field_scenario_operation_path(@project, @field, scenario) %></td>
+            <td class="gvCellStyleText"><%= link_to scenario.name, list_project_field_scenario_operations_path(@project, @field, scenario) %></td>
             <td class="gvCellStyleImage">
               <% if Weather.find_by_field_id(scenario.field_id) == nil %>
 				  <%= "bad" %>
@@ -105,8 +105,8 @@
                   <%# link_to image_tag("aplcat_simulation.png"), aplcat_scenario_path(scenario.id), title: t('scenario.simulate') + " APLCAT", data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'} %>
                   <%= link_to image_tag("CEEOT-SWAPP.ico"), scenario_path(scenario.id), title: t('scenario.simulate') + " NTT", data: {disable_with: 'Please wait. NTT simulation in progress . . .'} %>
               <% end %>
-              <%= link_to image_tag("edit.png"), edit_scenario_path(scenario), title: t('general.edit') %>
-              <%= link_to image_tag("delete.png"), scenario, title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
+              <%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
+              <%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
             </td>
           </tr>
       <% i = i + 1 %>

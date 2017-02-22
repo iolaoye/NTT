@@ -78,7 +78,7 @@ NTTG3::Application.routes.draw do
         post :simulate_all, on: :collection
         get 'aplcat', on: :member
         resources :operations do
-          get :list, on: :member
+          get :list, on: :collection
           get :cropping_system, on: :collection
           get :crop_schedule, on: :collection
           get 'download', on: :member
@@ -87,7 +87,7 @@ NTTG3::Application.routes.draw do
           post :delete_all, on: :collection
         end
         resources :bmps do
-          get :list, on: :member
+          get :list, on: :collection
           post :save_bmps, on: :collection
         end
       end

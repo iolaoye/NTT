@@ -5,13 +5,10 @@ class OperationsController < ApplicationController
 # GET /operations/1
 # GET /1/operations.json
   def list
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
     @operations = Operation.where(:scenario_id => session[:scenario_id]) # used to be params[:id]
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
-    @scenario_name = Scenario.find(session[:scenario_id]).name
-
-    @scenario = Scenario.find(session[:scenario_id])
+    @project = Project.find(params[:project_id])
+    @scenario = Scenario.find(params[:scenario_id])
 
     array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
@@ -26,6 +23,9 @@ class OperationsController < ApplicationController
 # GET /operations
 # GET /operations.json
   def index
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     @operations = Operation.all
     respond_to do |format|
       format.html # index.html.erb

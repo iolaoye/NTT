@@ -34,7 +34,7 @@
       <% end %>
 
       <% if scenario_submenu %>
-		<%= link_to t('menu.scenarios') + "   (" + @scenario_name + ")", field_scenarios_field_path(session[:field_id]) %></li>
+		<%= link_to t('menu.scenarios') + "   (" + @scenario.name + ")", project_field_scenarios_path(@project, @field) %></li>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <li class="<%= controller_name == "operations" ? "active" : "" %>">
             <% if controller_name == "operations" %>
@@ -42,7 +42,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.managements'), scenario_operations_scenario_path(session[:scenario_id]) %>
+            <%= link_to t('menu.managements'), list_project_field_scenario_operations_path(@project, @field, @scenario) %>
           </li>
           <li class="<%= controller_name == "bmps" ? "active" : "" %>">
             <% if controller_name == "bmps" %>
@@ -50,7 +50,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.bmps'), scenario_bmps_scenario_path(session[:scenario_id]) %>
+            <%= link_to t('menu.bmps'), list_project_field_scenario_bmps_path(@project, @field, @scenario) %>
           </li>
           <li class="<%= controller_name == "aplcat_paramters" ? "active" : "" %>">
             <% if controller_name == "aplcat_parameters" %>
