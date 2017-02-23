@@ -220,7 +220,6 @@ module ScenariosHelper
 				subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
 				# reduce the area of others subareas proportionally
 				update_wsa("-", subarea.wsa)
-				debugger
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 				subarea.slp = 0.01
@@ -531,7 +530,7 @@ module ScenariosHelper
     end
 
 	def update_wsa(operation, wsa)
-		soils = soils = Soil.where(:field_id => session[:field_id], :selected => true)
+		soils = Soil.where(:field_id => session[:field_id], :selected => true)
 		soils.each do |soil|
 			subarea = Subarea.find_by_scenario_id_and_soil_id(session[:scenario_id], soil.id)
 			if operation == "+"
@@ -540,7 +539,7 @@ module ScenariosHelper
 				subarea.wsa -= wsa * soil.percentage / 100
 			end
 			if subarea.save then
-				return "OK"
+				#return "OK"   # if save no problem - cotinue with the next soil
 			else
 				return "Problem updating subarea area"
 			end
@@ -624,7 +623,7 @@ module ScenariosHelper
               return 0
             end
           else
-            if operation.amount / FT_TO_M < 1 then
+            if operation.amount / FT2_TO_M2 < 1 then
               return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
             else
               return (operation.amount / FT2_TO_M2).round(0) #plant population converte from ft2 to m2 if it is not tree
