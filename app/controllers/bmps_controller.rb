@@ -1104,7 +1104,6 @@ class BmpsController < ApplicationController
           end
         end
       end
-	  debugger
       create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
       return "OK"
     else

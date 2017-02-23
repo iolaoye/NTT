@@ -63,6 +63,7 @@
 
 #convertion values
 	AC_TO_HA = 0.404685645
+	AC_TO_FT2 = 43560
 	FT_TO_M = 0.3048
 	FT_TO_KM = 0.0003048
 	FT_TO_HA = 0.0000093
