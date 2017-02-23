@@ -150,7 +150,7 @@ class BmpsController < ApplicationController
 		if !(params[:bmp_mc][:animal_id] == "") then
 			create(18)
 		end
-		if params[:select][:"19"] == "1" then
+		if !(params[:select] == nil) and params[:select][:"19"] == "1" then
 			create(19)
 		end
 		redirect_to bmps_path
@@ -243,7 +243,7 @@ class BmpsController < ApplicationController
 			end
         #end
     #end
-	if params[:select][:"19"] == "1" && bmpsublist == 19 then
+	if !(params[:select] == nil) && params[:select][:"19"] == "1" && bmpsublist == 19 then
 		create_climate("create")
 	end
 	if msg == "OK" then
@@ -619,8 +619,7 @@ class BmpsController < ApplicationController
       when "update"
         update_existing_subarea("WL", 8)
       when "delete"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WL").first
-        return update_wsa("-", subarea.wsa)
+	    return delete_existing_subarea("WL")
     end
   end   # end method
 
@@ -691,7 +690,7 @@ class BmpsController < ApplicationController
         update_existing_subarea("RFFS", 12)
       when "delete"
         subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first
-        return update_wsa("-", subarea.wsa)
+        return update_wsa("+", subarea.wsa)
     end
   end  # end riparian forest
 
@@ -711,7 +710,7 @@ class BmpsController < ApplicationController
         update_existing_subarea("FS", 13)
       when "delete"
         subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first
-        update_wsa("-", subarea.wsa)
+        update_wsa("+", subarea.wsa)
       #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first.delete
     end
   end
@@ -733,7 +732,7 @@ class BmpsController < ApplicationController
         update_existing_subarea("WW", 14)
       when "delete"
         subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first
-        update_wsa("-", subarea.wsa)
+        update_wsa("+", subarea.wsa)
     end
   end    # end method waterway
 
@@ -780,7 +779,6 @@ class BmpsController < ApplicationController
 ### ID: 19
   def climate_change(type)
 	return "OK"
-  ooo
 	#@bmp.bmp = params[:bmp_mc][:animal_id]
   end
 
@@ -871,7 +869,7 @@ class BmpsController < ApplicationController
         update_existing_subarea("Sdg", 23)
       when "delete"
         subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first
-        update_wsa("-", subarea.wsa)
+        update_wsa("+", subarea.wsa)
       #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first.delete
     end
   end
@@ -1087,7 +1085,7 @@ class BmpsController < ApplicationController
 
     if is_filled
       @soils = Soil.where(:field_id => session[:field_id])
-      i = 0
+      #i = 0
       #@inps = i
       @soils.each do |soil|
         if soil.selected
@@ -1097,15 +1095,16 @@ class BmpsController < ApplicationController
         end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
         if subarea != nil then
-          if i == 0 then
-            @inps = subarea.inps #select the first soil, which is with bigest area
-            i += 1
-          end
+          #if i == 0 then
+            @inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
+            #i += 1
+          #end
           if soil.selected
-            @iops = subarea.iops #selected the last iops to inform the subarea the folowing iops to create.
+            @iops = subarea.iops + 1 #selected the last iops to inform the subarea the folowing iops to create.
           end
         end
       end
+	  debugger
       create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
       return "OK"
     else
@@ -1169,8 +1168,12 @@ class BmpsController < ApplicationController
 
   def delete_existing_subarea(name)
     subarea = Subarea.find_by_scenario_id_and_subarea_type(session[:scenario_id], name)
-    update_wsa("-", subarea.wsa)
-    #subarea.delete
+	if !(subarea == nil) then 
+		return update_wsa("+", subarea.wsa) 
+	else
+		return "OK"
+	end
+    subarea.delete
   end
 ##############################  PRIVATE  ###############################
 
