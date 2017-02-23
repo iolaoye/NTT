@@ -561,11 +561,20 @@ module SimulationsHelper
       soil.ffc = 0 unless soil.ffc!=nil
       records = records + sprintf("%8.2f", soil.ffc)
       soil.wtmn = 0 unless soil.wtmn!=nil
-      records = records + sprintf("%8.2f", soil.wtmn)
       soil.wtmx = 0 unless !(soil.wtmx==nil)
-      records = records + sprintf("%8.2f", soil.wtmx)
       soil.wtbl = 0 unless !(soil.wtbl==nil)
-      records = records + sprintf("%8.2f", soil.wtbl)
+  	  ##if tile drain was set up wtmx, wtmn, and wtbl should be zero. Otherwise keep the numbers. 11 06 2016.
+      ##Goin back to the values for drainage type as before. Keep this here just in case Ali wants to have it latter 11 08 2016. Oscar Gallego
+	  bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 3)
+	  if !bmp == nil and bmp.depth > 0 then
+		  records = records + sprintf("%8.2f", 0)
+		  records = records + sprintf("%8.2f", 0)
+		  records = records + sprintf("%8.2f", 0)
+	  else
+		  records = records + sprintf("%8.2f", soil.wtmn)
+		  records = records + sprintf("%8.2f", soil.wtmx)
+		  records = records + sprintf("%8.2f", soil.wtbl)
+	  end
       soil.gwst = 0 unless !(soil.gwst==nil)
       records = records + sprintf("%8.2f", soil.gwst)
       soil.gwmx = 0 unless !(soil.gwmx==nil)
@@ -830,22 +839,29 @@ module SimulationsHelper
     end
     #/line 2
     @last_soil2 = j + @last_soil_sub
+    last_owner1 = @last_soil2
 	if buffer then
-		sLine = sprintf("%4d", 1)  #soil
+		#sLine = sprintf("%4d", @last_soil2-1)  #soil
+		sLine = sprintf("%4d", _subarea_info.inps)  #soil
 		if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
 			sLine += sprintf("%4d", 1) #operation
 		else
-			sLine += sprintf("%4d", @soil_number + 1)   #operation
+			#sLine += sprintf("%4d", @soil_number + 1)   #operation
+			sLine += sprintf("%4d", _subarea_info.iops)   #operation
 		end
+		#sLine += sprintf("%4d", last_owner1-1) #owner id. Should change for each field
+		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
 	else
-		sLine = sprintf("%4d", @soil_number + 1)  #soil
-		sLine += sprintf("%4d", @soil_number + 1)   #operation
+		#sLine = sprintf("%4d", @soil_number + 1)  #soil
+		#sLine += sprintf("%4d", @soil_number + 1)   #operation
+		#sLine += sprintf("%4d", last_owner1) #owner id. Should change for each field
+		sLine = sprintf("%4d", _subarea_info.inps)  #soil
+		sLine += sprintf("%4d", _subarea_info.iops)   #operation
+		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
 	end
     if _subarea_info.iow == 0 then
       _subarea_info.iow = 1
     end
-    last_owner1 = @last_soil2
-    sLine += sprintf("%4d", last_owner1) #owner id. Should change for each field
     sLine += sprintf("%4d", _subarea_info.ii)
     sLine += sprintf("%4d", _subarea_info.iapl)
     sLine += sprintf("%4d", 0) #column 6 line 1 is not used
@@ -1107,7 +1123,6 @@ module SimulationsHelper
 
     if crop_ant != operation.apex_crop then
       crop = Crop.find_by_number(operation.apex_crop)
-	  session[:depth] = operation
       if crop != nil then
         #if crop.number == operation.apex_crop then
         lu_number = crop.lu_number
@@ -1172,7 +1187,7 @@ module SimulationsHelper
     apex_string += sprintf("%5d", operation.apex_crop) #Crop Code             #APEX0604
     case operation.activity_id
       when 1 #planting
-        if operation.apex_crop == "18" then
+        if operation.apex_crop == "18" then    # rice
           rice_crop = true
         end
         if lu_number == 28 then
