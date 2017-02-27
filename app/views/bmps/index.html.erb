@@ -173,7 +173,7 @@
 				<% when 9 %>
 				  <tr>
 					<td class="field indent" id = "fraction_control_by_pond" >
-						<%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_max')  %>
+						<%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_one')  %>
 						<%= text_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency %>
 					</td>
 				  </tr>
@@ -845,7 +845,7 @@
         var pnd_inputs = $('[name^=bmp_pnd]').valueOf();
         validateBmpPnd.addValidation(pnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>');
         validateBmpPnd.addValidation(pnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPnd.addValidation(pnd_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+        validateBmpPnd.addValidation(pnd_inputs[0].name, "lte=1.0", '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
       }
       function validationsBmpSf() {
         var sf_inputs = $('[name^=bmp_sf]').valueOf();
@@ -1005,8 +1005,5 @@
             return false;
         }
       }
-      //Developer notes:
-      //make errors translatable & specific to each field to help client identify where their input error lies
-      //bug: if user clicks a checkbox (add requirements) and unchecks another(remove requirements), it will clear requirements and allow submission of form
     });
 </script>
