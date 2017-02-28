@@ -17,11 +17,11 @@
   </div>
   <div class="field">
     <%= f.label :soil_p, t('soil.soilp') %>
-	<% if @layer.depth > 3.95 %>
-		<%= f.number_field :soil_p, :class => 'numbers', min: 0, :step => 'any', :disabled => 'disabled'%>
-	<% else %>
+	<%# if @layer.depth > 3.95 %>
+		<%#= f.number_field :soil_p, :class => 'numbers', min: 0, :step => 'any', :disabled => 'disabled'%>
+	<%# else %>
 		<%= f.number_field :soil_p, :class => 'numbers', min: 0, :step => 'any' %>
-	<% end %>
+	<%# end %>
   </div>
   <div class="field">
     <%= f.label :bulk_density, t('soil.bulk_density') %>
