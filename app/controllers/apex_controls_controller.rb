@@ -4,7 +4,8 @@ class ApexControlsController < ApplicationController
   # GET /apex_controls
   # GET /apex_controls.json
   def index
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
   	@apex_controls = ApexControl.includes(:control_description).where(:project_id => session[:project_id])
     respond_to do |format|
       format.html # index.html.erb

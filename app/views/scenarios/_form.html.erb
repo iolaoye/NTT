@@ -1,4 +1,4 @@
-<%= form_for(@scenario) do |f| %>
+<%= form_for [@project, @field, @scenario] do |f| %>
   <% if @scenario.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @scenario.errors.count, :model => t('models.scenario').downcase) %></h2>

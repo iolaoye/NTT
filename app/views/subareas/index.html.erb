@@ -7,12 +7,12 @@
     </div>
 <% end %>
 
-<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-primary' %>
-<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-default' %>
-<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.site'), sites_path(:id => session[:field_id]), :class => 'btn btn-default' %>
+<%= link_to t('menu.control_file'), project_field_apex_controls_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.parameters_file'), project_field_apex_parameters_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.subarea_file'), project_field_subareas_path(@project, @field), :class => 'btn btn-primary' %>
+<%= link_to t('menu.apex_soil'), project_field_apex_soils_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.operation_file'), project_field_soil_operations_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.site'), project_field_sites_path(@project, @field), :class => 'btn btn-default' %>
 
 <br>
 
@@ -20,8 +20,10 @@
   <table>
     <tr>
       <td><%= label :bmp_id, t('scenario.scenario') %></td>
-      <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => session[:scenario_id]}, {:required => true} %></td>
-      <td><%= button_to t('subarea.load_subarea'), subareas_path, class: 'btn btn-primary' %></td>
+    </tr>
+    <tr>
+      <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => session[:scenario_id]}, {:required => true} %></td>
+      <td><%= button_to t('subarea.load_subarea'), project_field_subareas_path(@project, @field), class: 'btn btn-primary' %></td>
     </tr>
   </table>
 <% end %>
@@ -50,8 +52,8 @@
       <td class="gvCellStyleText"><%= sub[:subarea_number] %></td>
       <td class="gvCellStyleText"><%= sub[:subarea_description] %></td>
       <td class="gvCellStyleCheckbox">
-        <%= link_to image_tag("view.png"), subarea_path(sub[:subarea_id]), title: t('general.show') %>
-        <%= link_to image_tag("edit.png"), edit_subarea_path(sub[:subarea_id]), title: t('general.edit') %>
+        <%= link_to image_tag("view.png"), project_field_subarea_path(@project.id, @field.id, sub[:subarea_id]), title: t('general.show') %>
+        <%= link_to image_tag("edit.png"), edit_project_field_subarea_path(@project.id, @field.id, sub[:subarea_id]), title: t('general.edit') %>
       </td>
     <% i += 1 %><% end %>
 </tr>

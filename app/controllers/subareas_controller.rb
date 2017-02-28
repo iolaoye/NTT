@@ -2,9 +2,10 @@ class SubareasController < ApplicationController
   # GET /subareas
   # GET /subareas.json
   def index
-    @field = Field.find(session[:field_id])
-	@soils = Soil.where(:field_id => session[:field_id], :selected => true)
-	if @soils != nil then
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+	  @soils = Soil.where(:field_id => @field.id, :selected => true)
+	  if @soils != nil then
 		  subarea = Subarea.where(:soil_id => @soils[0].id).first
 		  if subarea != nil then
 		    session[:scenario_id] = subarea.scenario_id
