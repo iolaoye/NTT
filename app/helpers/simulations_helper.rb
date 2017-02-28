@@ -516,33 +516,33 @@ module SimulationsHelper
       @bulk_density = bulk_density
       #if first layer is less than 0.1 m a new layer is added as first one
       initial_layer = 1
-      if (depth[initial_layer] / 100).round(3) > 0.100
-        initial_layer = 0
-        depth[initial_layer] = 10.0
-        bulk_density[initial_layer] = bulk_density[initial_layer + 1]
-        uw[initial_layer] = uw[initial_layer + 1]
-        fc[initial_layer] = fc[initial_layer + 1]
-        sand[initial_layer] = sand[initial_layer + 1]
-        silt[initial_layer] = silt[initial_layer + 1]
-        wn[initial_layer] = wn[initial_layer + 1]
-        ph[initial_layer] = ph[initial_layer + 1]
-        smb[initial_layer] = smb[initial_layer + 1]
-        woc[initial_layer] = woc[initial_layer + 1]
-        cac[initial_layer] = cac[initial_layer + 1]
-        cec[initial_layer] = cec[initial_layer + 1]
-        rok[initial_layer] = rok[initial_layer + 1]
-        cnds[initial_layer] = cnds[initial_layer + 1]
-        ssf[initial_layer] = ssf[initial_layer + 1]
-        rsd[initial_layer] = rsd[initial_layer + 1]
-        bdd[initial_layer] = bdd[initial_layer + 1]
-        psp[initial_layer] = psp[initial_layer + 1]
-        satc[initial_layer] = satc[initial_layer + 1]
-        hcl[initial_layer] = hcl[initial_layer + 1]
-        wpo[initial_layer] = wpo[initial_layer + 1]
-        cprv[initial_layer] = cprv[initial_layer + 1]
-        cprh[initial_layer] = cprh[initial_layer + 1]
-      end #end depth
-      #Line 2 Column 1 and 2
+      #if (depth[initial_layer] / 100).round(3) > 0.100
+        #initial_layer = 0
+        #depth[initial_layer] = 10.0
+        #bulk_density[initial_layer] = bulk_density[initial_layer + 1]
+        #uw[initial_layer] = uw[initial_layer + 1]
+        #fc[initial_layer] = fc[initial_layer + 1]
+        #sand[initial_layer] = sand[initial_layer + 1]
+        #silt[initial_layer] = silt[initial_layer + 1]
+        #wn[initial_layer] = wn[initial_layer + 1]
+        #ph[initial_layer] = ph[initial_layer + 1]
+        #smb[initial_layer] = smb[initial_layer + 1]
+        #woc[initial_layer] = woc[initial_layer + 1]
+        #cac[initial_layer] = cac[initial_layer + 1]
+        #cec[initial_layer] = cec[initial_layer + 1]
+        #rok[initial_layer] = rok[initial_layer + 1]
+        #cnds[initial_layer] = cnds[initial_layer + 1]
+        #ssf[initial_layer] = ssf[initial_layer + 1]
+        #rsd[initial_layer] = rsd[initial_layer + 1]
+        #bdd[initial_layer] = bdd[initial_layer + 1]
+        #psp[initial_layer] = psp[initial_layer + 1]
+        #satc[initial_layer] = satc[initial_layer + 1]
+        #hcl[initial_layer] = hcl[initial_layer + 1]
+        #wpo[initial_layer] = wpo[initial_layer + 1]
+        #cprv[initial_layer] = cprv[initial_layer + 1]
+        #cprh[initial_layer] = cprh[initial_layer + 1]
+      #end #end depth
+      #Line 2 and line 3 col 5 and 7
       if albedo == 0
         albedo = 0.2
       end
@@ -563,6 +563,8 @@ module SimulationsHelper
       soil.wtmn = 0 unless soil.wtmn!=nil
       soil.wtmx = 0 unless !(soil.wtmx==nil)
       soil.wtbl = 0 unless !(soil.wtbl==nil)
+      soil.zqt = 0 unless !(soil.zqt==nil)
+      soil.ztk = 0 unless !(soil.ztk==nil)
   	  ##if tile drain was set up wtmx, wtmn, and wtbl should be zero. Otherwise keep the numbers. 11 06 2016.
       ##Goin back to the values for drainage type as before. Keep this here just in case Ali wants to have it latter 11 08 2016. Oscar Gallego
 	  bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 3)
@@ -570,6 +572,9 @@ module SimulationsHelper
 		  records = records + sprintf("%8.2f", 0)
 		  records = records + sprintf("%8.2f", 0)
 		  records = records + sprintf("%8.2f", 0)
+		  records = records + sprintf("%8.2f", 0)
+		  soil.zqt = 0
+		  soil.ztk = 0
 	  else
 		  records = records + sprintf("%8.2f", soil.wtmn)
 		  records = records + sprintf("%8.2f", soil.wtmx)
@@ -594,12 +599,10 @@ module SimulationsHelper
       records = records + sprintf("%8.2f", soil.rtn1)
       soil.xidk = 0 unless !(soil.xidk==nil)
       records = records + sprintf("%8.2f", soil.xidk)
-      soil.zqt = 0 unless !(soil.zqt==nil)
-      records = records + sprintf("%8.2f", soil.zqt)
+	  records = records + sprintf("%8.2f", soil.zqt)
       soil.zf = 0 unless !(soil.zf==nil)
       records = records + sprintf("%8.2f", soil.zf)
-      soil.ztk = 0 unless !(soil.ztk==nil)
-      records = records + sprintf("%8.2f", soil.ztk)
+	  records = records + sprintf("%8.2f", soil.ztk)
       soil_info.push(records + "\n")
       #line 4 to 24 Layers information
       records = ""
@@ -1678,9 +1681,8 @@ module SimulationsHelper
 
     msg = average_totals(results_data) # average totals
     msg = load_monthly_values(apex_start_year)
-    return msg
-    #todo activate this method. This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
-    update_results_table
+    #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
+    return update_results_table_with_fencing
   end
 
   def average_totals(results_data)
@@ -1735,59 +1737,62 @@ module SimulationsHelper
     return "OK"
   end
 
-  def update_results_table
+  def update_results_table_with_fencing
     no3 = 0
     po4 = 0
     org_n = 0
     org_p =0
 
-    bmp = Bmp.where(:scenario_id => session[:scenario_id], :bmpsublist_id => 10)
+    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 10)
+	if !(bmp.blank? || bmp == nil) then
+		total_manure = bmp.number_of_animals.to_f * bmp.hours.to_f / 24 * bmp.dry_manure
+		no3 += total_manure * bmp.days * bmp.no3_n
+		po4 += total_manure * bmp.days * bmp.po4_p
+		org_n += total_manure * bmp.days * bmp.org_n
+		org_p += total_manure * bmp.days * bmp.org_p
+		if session[:simulation] == 'scenario'
+		  soils = Soil.where(:field_id => session[:field_id], :selected => true)
+		  soils.each do |soil|
+			results = Result.where(:soil_id => soil.id, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+			results.each do |result|
+			  update_value_of_results(result, false, Field.find(session[:field_id]).field_area * (soil.percentage / 100), no3, po4, org_n, org_p)
+			  result.save
+			end
+		  end
+		end
+		if session[:simulation] == 'scenario'
+		  results = Result.where(:soil_id => 0, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+		else
+		  results = Result.where(:watershed_id => @watershed_id)
+		end
 
-    total_manure = bmp.number_of_animals * bmp.hours / 24 * bmp.dry_manure
-    no3 += total_manure * bmp.days * bmp.no3_n
-    po4 += total_manure * bmp.days * bmp.po4_p
-    org_n += total_manure * bmp.days * bmp.org_n
-    org_p += total_manure * bmp.days * bmp.org_p
-
-    if session[:simulation] == 'scenario'
-      soils = Soil.where(:field_id => session[:field_id], :soil_selected => true)
-      soils.each do |soil|
-        results = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
-        results.each do |result|
-          update_value_of_results(result, false)
-        end
-      end
-    end
-    if session[:simulation] == 'scenario'
-      results = Result.where(:soil_id => 0, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
-    else
-      results = Result.where(:watershed_id => @watershed_id)
-    end
-
-    results.each do |result|
-      update_value_of_results(result, true)
-    end
+		results.each do |result|
+		  update_value_of_results(result, true, Field.find(session[:field_id]).field_area, no3, po4, org_n, org_p)
+		  result.save
+		end
+	end  # end if bmp blank or nil
+	return "OK"
   end
 
-  def update_value_of_results(result, is_total)
-    if is_total
-      percentage = 1
-    else
-      percentage = soil.percentage / 100
-    end
+  def update_value_of_results(result, is_total, percentage, no3, po4, org_n, org_p)
+    #if is_total
+      #percentage = 1
+    #else
+      #percentage = soil.percentage / 100
+    #end
     case result.description_id
       when 20
-        result.value += no3 * percentage + org_n * percentage
+        result.value += no3 / percentage + org_n / percentage
       when 21
-        result.value += org_n * percentage
+        result.value += org_n / percentage
       when 22
-        result.value += no3 * percentage
+        result.value += no3 / percentage
       when 30
-        result.value += po4 * percentage + org_p * percentage
+        result.value += po4 / percentage + org_p / percentage
       when 31
-        result.value += org_p * percentage
+        result.value += org_p / percentage
       when 32
-        result.value += po4 * percentage
+        result.value += po4 / percentage
     end
   end
 
