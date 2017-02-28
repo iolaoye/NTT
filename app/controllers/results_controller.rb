@@ -19,6 +19,7 @@ class ResultsController < ApplicationController
   end
   ###############################  SUMMARY ###################################
   def summary
+    @project = Project.find(params[:project_id])
 	@type = t("result.summary")
 	index
 	render "index"
@@ -45,7 +46,8 @@ class ResultsController < ApplicationController
     @total_area = 0
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 70 OR id > 79")
-    @project_name = Project.find(session[:project_id]).name
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     if session[:simulation].eql?('scenario') then
       @total_area = Field.find(session[:field_id]).field_area
       @field_name = Field.find(session[:field_id]).field_name

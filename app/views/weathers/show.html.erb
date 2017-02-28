@@ -1,4 +1,4 @@
-<%= form_for(@weather) do |f| %>   
+<%= form_for [@project, @field, @weather] do |f| %>   
   <table >
     <tr>
       <td>
@@ -21,7 +21,7 @@
 		  <div class="actions">
 			<%= f.submit %>
 		  </div>
-          <%= button_to "Save Coordinates", save_coordinates_weather_path(session[:field_id]) %>
+          <%= button_to "Save Coordinates", save_coordinates_project_field_weather_path(@project, @field, @weather) %>
         </fieldset>
       </td>
     </tr>

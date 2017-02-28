@@ -23,8 +23,8 @@ class WeathersController < ApplicationController
 # GET /weathers/1.json
   def show
     @weather = Weather.find_by_field_id(session[:field_id])
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     if !(@weather == :nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
@@ -105,10 +105,13 @@ class WeathersController < ApplicationController
 # PATCH/PUT /weathers/1.json
   def update
     @weather = Weather.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+
     if (params[:weather][:way_id] == "2")
       if params[:weather][:weather_file] == nil 
 		if @weather.weather_file == nil || @weather.weather_file == ""
-			redirect_to edit_weather_path(session[:field_id])
+			redirect_to edit_project_field_weather_path(@project, @field)
 			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
 		end
       else
@@ -118,7 +121,7 @@ class WeathersController < ApplicationController
     end
       respond_to do |format|
         if @weather.save
-          format.html { redirect_to list_soil_path(session[:field_id]), notice: t('models.weather') + " " + t('general.updated') }
+          format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }

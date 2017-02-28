@@ -24,7 +24,10 @@ class BmpsController < ApplicationController
 ################################  INDEX  #################################
 # GET /bmps
 # GET /bmps.json
-  def index  
+  def index
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     get_bmps()
 	take_names()
     respond_to do |format|
@@ -36,7 +39,7 @@ class BmpsController < ApplicationController
 ################################  Get CURRENT BMPS #########################
   def get_bmps
     bmpsublists = Bmpsublist.where(:status => true)
-	@bmps = Bmp.where(:bmpsublist_id => 0)
+  @bmps = Bmp.where(:bmpsublist_id => 0)
     @bmps[0] = Bmp.new
 	@climates = Climate.where(:id => 0)
 	

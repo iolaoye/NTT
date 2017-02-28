@@ -1,16 +1,20 @@
 include ScenariosHelper
 
 class OperationsController < ApplicationController
+  include ScenariosHelper
   require "open-uri"
 ################################  operations list   #################################
 # GET /operations/1
 # GET /1/operations.json
   def list
-    @field = Field.find(session[:field_id])
-    @operations = Operation.where(:scenario_id => session[:scenario_id]) # used to be params[:id]
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
-    @scenario_name = Scenario.find(session[:scenario_id]).name
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+    @scenario = Scenario.find(params[:scenario_id])
+    @operations = @scenario.operations
+
+    array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
+    @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
+
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @fields }
@@ -21,6 +25,9 @@ class OperationsController < ApplicationController
 # GET /operations
 # GET /operations.json
   def index
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     @operations = Operation.all
     respond_to do |format|
       format.html # index.html.erb
@@ -45,9 +52,10 @@ class OperationsController < ApplicationController
 # GET /operations/new.json
   def new
     @operation = Operation.new
-    @field = Field.find(session[:field_id])
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
-    @scenario = Scenario.find(session[:scenario_id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @operation }
@@ -65,6 +73,9 @@ class OperationsController < ApplicationController
 # POST /operations
 # POST /operations.json
   def create
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     saved = false
     soil_op_saved = false
     msg = "Unknown error"
@@ -93,7 +104,7 @@ class OperationsController < ApplicationController
             format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
             format.json { render json: @operation, status: :created, location: @operation }
           elsif params[:finish] == "Finish" && params[:add_more] == nil
-            format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+            format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
             format.json { render json: @operation, status: :created, location: @operation }
           end
         else
@@ -113,6 +124,9 @@ class OperationsController < ApplicationController
   def update
     @operation = Operation.find(params[:id])
 	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+  @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
       if @operation.update_attributes(operation_params)
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
@@ -139,6 +153,9 @@ class OperationsController < ApplicationController
   def destroy
     @operation = Operation.find(params[:id])
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     if @operation.destroy
       flash[:notice] = t('models.operation') + t('notices.deleted')
     end
@@ -146,23 +163,29 @@ class OperationsController < ApplicationController
       soil_operations.delete_all
     end
     respond_to do |format|
-      format.html { redirect_to list_operation_path(session[:scenario_id]) }
+      format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario) }
       format.json { head :no_content }
     end
   end
 
 ##############################  DESTROY ALL  ###############################
   def delete_all
-    @operations = Operation.where(:scenario_id =>  session[:scenario_id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
+    @operations = @scenario.operations
     @operations.destroy_all
     respond_to do |format|
-      format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('notices.all') }
+      format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('notices.all') }
       format.json { head :no_content }
     end
   end
 
 ################################  CALL WHEN CLICK IN UPLOAD CROPPING SYSTEM  #################################
   def cropping_system
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     @operations = Operation.where(:scenario_id => session[:scenario_id])
     @count = @operations.count
     @highest_year = 0
@@ -270,6 +293,9 @@ class OperationsController < ApplicationController
 
 ################################  CALL WHEN CLICK IN UPLOAD CROP SCHEDULE  #################################
   def crop_schedule
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     @operations = Operation.where(:scenario_id => session[:scenario_id])
     @count = @operations.count
     @highest_year = 0
@@ -351,7 +377,7 @@ class OperationsController < ApplicationController
                 @operation.amount = event.apex_opv1
             end #end case
             @operation.depth = event.apex_opv2
-            @operation.scenario_id = params[:id]
+            @operation.scenario_id = @scenario.id
             if @operation.save
               msg = add_soil_operation()
 			  notice = t('scenario.operation') + " " + t('general.created')
@@ -372,7 +398,7 @@ class OperationsController < ApplicationController
           I18n.locale = :en
         end
       end
-      redirect_to scenario_operations_scenario_path(session[:scenario_id])
+      redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario)
     else
       render action: 'upload'
     end # end if cropping_system_id != nil
@@ -447,6 +473,12 @@ class OperationsController < ApplicationController
 	redirect_to list_operation_path(params[:id])
   end
 
+  def open
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
+  end
+
   #########################################################################################################################
   ############## private methods - Just to be seen from inside this controller. ###########################################
   private
@@ -459,6 +491,9 @@ class OperationsController < ApplicationController
   end
 
   def add_soil_operation()
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     soils = Soil.where(:field_id => Scenario.find(@operation.scenario_id).field_id)
     msg = "OK"
     soils.each do |soil|
@@ -472,6 +507,7 @@ class OperationsController < ApplicationController
   end
 
   def upload_operation_info(node, scenario_id, field_id)
+    debugger
     @operation = Operation.new
     @operation.scenario_id = scenario_id
     event_id = 0
