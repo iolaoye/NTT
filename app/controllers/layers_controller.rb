@@ -5,35 +5,32 @@ class LayersController < ApplicationController
   def list
     layer_first = Layer.where(:soil_id => params[:id]).first
 	#check if first layer depth is more than 10m. if so new layer is added
-	if layer_first != nil && layer_first.depth > 3.94 then
-		layer = Layer.new
-		layer.depth = 3.94
-		layer.soil_p = layer_first.soil_p
-		layer.bulk_density = layer_first.bulk_density
-		layer.sand = layer_first.sand
-		layer.silt = layer_first.silt
-		layer.clay = layer_first.clay
-		layer.organic_matter = layer_first.organic_matter
-		layer.ph = layer_first.ph
-		layer.soil_id = layer_first.soil_id
-		layer.uw = layer_first.uw
-		layer.fc = layer_first.fc
-		layer.wn = layer_first.wn
-		layer.smb = layer_first.smb
-		layer.cac = layer_first.cac
-		layer.cec = layer_first.cec
-		layer.rok = layer_first.rok
-		layer.cnds = layer_first.cnds
-		layer.rsd = layer_first.rsd
-		layer.bdd = layer_first.bdd
-		layer.psp = layer_first.psp
-		layer.satc = layer_first.satc
-		if layer.save 
-		else
-			session[:depth] = layer
-			nnn
-		end
-	end
+	#if layer_first != nil && layer_first.depth > 3.94 then
+		#layer = Layer.new
+		#layer.depth = 3.94
+		#layer.soil_p = layer_first.soil_p
+		#layer.bulk_density = layer_first.bulk_density
+		#layer.sand = layer_first.sand
+		#layer.silt = layer_first.silt
+		#layer.clay = layer_first.clay
+		#layer.organic_matter = layer_first.organic_matter
+		#layer.ph = layer_first.ph
+		#layer.soil_id = layer_first.soil_id
+		#layer.uw = layer_first.uw
+		#layer.fc = layer_first.fc
+		#layer.wn = layer_first.wn
+		#layer.smb = layer_first.smb
+		#layer.cac = layer_first.cac
+		#layer.cec = layer_first.cec
+		#layer.rok = layer_first.rok
+		#layer.cnds = layer_first.cnds
+		#layer.rsd = layer_first.rsd
+		#layer.bdd = layer_first.bdd
+		#layer.psp = layer_first.psp
+		#layer.satc = layer_first.satc
+		#if layer.save 
+		#end
+	#end
     @layers = Layer.where(:soil_id => params[:id])
     @soil = Soil.find(session[:soil_id])
     @soil_name = Soil.find(session[:soil_id]).name[0..20]

@@ -306,10 +306,10 @@
 					<td class="indent">
 						<%= label :crop_id, t('operation.crop') %>
 						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_ww, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege')} %>
-						<% else %>
-						  <%= collection_select :bmp_ww, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege')} %>
-						<% end %>
+						  <%= collection_select :bmp_ww, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                <% else %>
+						  <%= collection_select :bmp_ww, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                <% end %>
 					</td>
 				  </tr>
 				  <tr>
@@ -323,10 +323,10 @@
 					<td class="indent">
 						<%= label :crop_id, t('operation.crop') %>
 						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_cb, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege')} %>
-						<% else %>
-						  <%= collection_select :bmp_cb, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege')} %>
-						<% end %>
+						  <%= collection_select :bmp_cb, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                <% else %>
+						  <%= collection_select :bmp_cb, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                <% end %>
 					</td>
 				  </tr>
 				  <tr>

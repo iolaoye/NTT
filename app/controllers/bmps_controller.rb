@@ -687,13 +687,13 @@ class BmpsController < ApplicationController
     case type
       when "create"
   		if @bmp.save then
-			return create_new_subarea("RFFS", 12)
+			return create_new_subarea("RF", 12)
 		end
       when "update"
         update_existing_subarea("RFFS", 12)
       when "delete"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first
-        return update_wsa("+", subarea.wsa)
+	    delete_existing_subarea("RF")
+	    return delete_existing_subarea("RFFS")
     end
   end  # end riparian forest
 
@@ -712,9 +712,7 @@ class BmpsController < ApplicationController
       when "update"
         update_existing_subarea("FS", 13)
       when "delete"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first
-        update_wsa("+", subarea.wsa)
-      #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first.delete
+	    return delete_existing_subarea("FS")
     end
   end
 
@@ -734,8 +732,7 @@ class BmpsController < ApplicationController
       when "update"
         update_existing_subarea("WW", 14)
       when "delete"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first
-        update_wsa("+", subarea.wsa)
+	    return delete_existing_subarea("WW")
     end
   end    # end method waterway
 
