@@ -1,7 +1,7 @@
 class ScenariosController < ApplicationController
   include ScenariosHelper
   include SimulationsHelper
-################################  list of bmps #################################
+################################  scenario bmps #################################
 # GET /scenarios/1
 # GET /1/scenarios.json
   def scenario_bmps
@@ -12,7 +12,7 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /1/scenarios.json
   def scenario_operations
-    session[:scenario_id] = params[:id]
+    params[:scenario_id] = params[:id]
     redirect_to list_operation_path(params[:id])
   end
 ################################  scenarios list  #################################
@@ -21,6 +21,8 @@ class ScenariosController < ApplicationController
   def list
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => session[:field_id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     #@field = Field.find(session[:field_id])
     respond_to do |format|
       format.html # list.html.erb
@@ -31,8 +33,8 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def index
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => session[:field_id])
     respond_to do |format|
@@ -53,7 +55,7 @@ class ScenariosController < ApplicationController
 		  session[:scenario_id] = @scenario.id
 		  msg = run_scenario
 		  unless msg.eql?("OK")
-          @errors.push("Error simulating scenario " + scenario.name + " (" + msg + ")")
+          @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
           raise ActiveRecord::Rollback
 	      end # end if msg
       end # end each do params loop
@@ -63,6 +65,7 @@ class ScenariosController < ApplicationController
       @scenarios = Scenario.where(:field_id => session[:field_id])
       render "list", notice: "Simulation process end succesfully"
     else
+      @scenarios = Scenario.where(:field_id => session[:field_id])
       render "list", error: msg
     end # end if msg
   end
@@ -73,7 +76,8 @@ class ScenariosController < ApplicationController
   def new
     @errors = Array.new
     @scenario = Scenario.new
-    @field = Field.find(session[:field_id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -86,6 +90,8 @@ class ScenariosController < ApplicationController
   def edit
     #@errors = Array.new
     @scenario = Scenario.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
   end
 
 ################################  CREATE  #################################
@@ -94,7 +100,9 @@ class ScenariosController < ApplicationController
   def create
     @errors = Array.new
     @scenario = Scenario.new(scenario_params)
-    @scenario.field_id = session[:field_id]
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario.field_id = @field.id
     @watershed = Watershed.new(scenario_params)
     @watershed.save
     respond_to do |format|
@@ -104,7 +112,7 @@ class ScenariosController < ApplicationController
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
         add_scenario_to_soils(@scenario)
         session[:scenario_id] = @scenario.id
-        format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('models.scenario') + " " + t('general.success') }
+        format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
         format.html { render action: "list" }
         format.json { render json: scenario.errors, status: :unprocessable_entity }
@@ -118,11 +126,13 @@ class ScenariosController < ApplicationController
   def update
     @errors = Array.new
     @scenario = Scenario.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
 
     respond_to do |format|
       if @scenario.update_attributes(scenario_params)
         session[:scenario_id] = @scenario.id
-        format.html { redirect_to field_scenarios_field_path(session[:field_id]), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
+        format.html { redirect_to project_field_scenarios_path(@project, @field), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -137,13 +147,15 @@ class ScenariosController < ApplicationController
   def destroy
     @errors = Array.new
     @scenario = Scenario.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     Subarea.where(:scenario_id => @scenario.id).delete_all
     if @scenario.destroy
       flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.deleted')
     end
 
     respond_to do |format|
-      format.html { redirect_to scenarios_url }
+      format.html { redirect_to project_field_scenarios_path(@project, @field) }
       format.json { head :no_content }
     end
   end
@@ -152,6 +164,8 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /scenarios/1.json
   def show()
+  	@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     @errors = Array.new
     ActiveRecord::Base.transaction do
 		msg = run_scenario
@@ -161,7 +175,7 @@ class ScenariosController < ApplicationController
 		respond_to do |format|
 		  if msg.eql?("OK") then
 			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-			format.html { redirect_to field_scenarios_field_path(session[:field_id]) }
+			format.html { redirect_to project_field_scenarios_path(@project, @field) }
 		  else
 			flash[:error] = "Error simulating scenario - " + msg
 			format.html { render action: "list" }
@@ -385,7 +399,7 @@ class ScenariosController < ApplicationController
     if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
     if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg  end
     if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) else return msg  end  #this operation will run a simulation and return ntt file.
-    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg  end
+    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
     @scenario.last_simulation = Time.now
     if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
     @scenarios = Scenario.where(:field_id => session[:field_id])

@@ -14,6 +14,7 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find(params[:id])
+    @project = Project.find(params[:project_id])
     @project_name = Project.find(session[:project_id]).name
     session[:location_id] = params[:id]
     respond_to do |format|
@@ -44,13 +45,11 @@ class LocationsController < ApplicationController
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site
     @location = Location.find_by_project_id(params[:id])
-    @project_name = Project.find(params[:id]).name
-    session[:project_id] = params[:id]
-    session[:location_id] = @location.id
+    @project = Project.find(params[:project_id])
 
     respond_to do |format|
       if !(params[:error] == "") then
-        format.html { redirect_to location_path(@location.id), notice: params[:error] }
+        format.html { redirect_to project_location_path(@project, @location), notice: params[:error] }
       else
         if (session[:session_id] == params[:source_id]) then
           # step 1: delete fields not found
@@ -139,9 +138,6 @@ class LocationsController < ApplicationController
             @weather.station_way = "map"
             if @weather.save then
               @field.weather_id = @weather.id
-			else
-			  session[:depth] = @weather
-			  #ooo
             end
             if @field.save then
 				@weather.field_id = @field.id

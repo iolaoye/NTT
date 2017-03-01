@@ -23,14 +23,14 @@ class ProjectsController < ApplicationController
     if params[:id] == "upload" then
       redirect_to "upload"
     end
-    session[:project_id] = params[:id]
+    @project = Project.find(params[:id])
     @location = Location.find_by_project_id(params[:id])
     session[:location_id] = @location.id
 	case true
 		when Project.find(params[:id]).version == "NTTG3_special"
 			redirect_to states_path()
         when Field.where(:location_id => @location.id).count > 0 && Project.find(params[:id]).version == "NTTG3"  # load fields
-			redirect_to list_field_path(session[:location_id])
+			redirect_to project_fields_path(@project)
         else # Load map
 			redirect_to location_path(@location.id)
     end # end case true
@@ -1582,11 +1582,11 @@ class ProjectsController < ApplicationController
         when "SubareaNumber"
           subarea.number = p.text
         when "Inps"
-          subarea.inps = p.text
+          subarea.inps = p.text.to_i + 1
         when "Iops"
           subarea.iops = p.text
         when "Iow"
-          subarea.iow = p.text
+          subarea.iow = subarea.inps
         when "Ii"
           subarea.ii = p.text
         when "Iapl"
@@ -2095,6 +2095,7 @@ class ProjectsController < ApplicationController
           operation.org_p = p.text
         when "ApexOpv1"
           operation.amount = p.text
+		  if operation.activity_id == 1 then (operation.amount /= AC_TO_FT2).round(2) end
         when "ApexOpv2"
           operation.depth = p.text
         when "ApexTillCode"

@@ -3,10 +3,10 @@ class BmpsController < ApplicationController
   before_filter :take_names
 
   def take_names
-    @project_name = Project.find(session[:project_id]).name
+    @project_name = Project.find(params[:project_id]).name
 	field = Field.find(session[:field_id])
     @field_name = field.field_name
-    @scenario_name = Scenario.find(session[:scenario_id]).name
+    @scenario_name = Scenario.find(params[:scenario_id]).name
 	@field_type = field.field_type
   end
 
@@ -24,7 +24,10 @@ class BmpsController < ApplicationController
 ################################  INDEX  #################################
 # GET /bmps
 # GET /bmps.json
-  def index  
+  def index
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
     get_bmps()
 	take_names()
     respond_to do |format|
@@ -36,12 +39,12 @@ class BmpsController < ApplicationController
 ################################  Get CURRENT BMPS #########################
   def get_bmps
     bmpsublists = Bmpsublist.where(:status => true)
-	@bmps = Bmp.where(:bmpsublist_id => 0)
+    @bmps = Bmp.where(:bmpsublist_id => 0)
     @bmps[0] = Bmp.new
 	@climates = Climate.where(:id => 0)
 	
 	bmpsublists.each do |bmpsublist|
-		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], bmpsublist.id)
+		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(params[:scenario_id], bmpsublist.id)
 		if bmp.blank? || bmp == nil then
 			bmp = Bmp.new
 			bmp.bmpsublist_id = bmpsublist.id
@@ -83,7 +86,7 @@ class BmpsController < ApplicationController
 	if params[:button] == "Save"
 		@slope = 100
 		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
-		bmps = Bmp.where(:scenario_id => session[:scenario_id])
+		bmps = Bmp.where(:scenario_id => params[:scenario_id])
 		bmps.each do |bmp|		
 			@bmp = bmp
 			msg = input_fields("delete")
@@ -91,7 +94,7 @@ class BmpsController < ApplicationController
 				bmp.destroy
 			end 
 		end  # bmps.each
-		#Bmp.where(:scenario_id => session[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
+		#Bmp.where(:scenario_id => params[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
 		if !(params[:bmp_ai][:irrigation_id] == "") then
 			if !(params[:bmp_cb1] == nil)
 				if params[:bmp_cb1] == "1" then
@@ -150,7 +153,7 @@ class BmpsController < ApplicationController
 		if !(params[:bmp_mc][:animal_id] == "") then
 			create(18)
 		end
-		if params[:select][:"19"] == "1" then
+		if !(params[:select] == nil) and params[:select][:"19"] == "1" then
 			create(19)
 		end
 		redirect_to bmps_path
@@ -177,7 +180,7 @@ class BmpsController < ApplicationController
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
     @field = Field.find(session[:field_id])
-    @scenario = Scenario.find(session[:scenario_id])
+    @scenario = Scenario.find(params[:scenario_id])
     #@type = "create"
     if Field.find(session[:field_id]).field_type
       @bmp_list = Bmplist.where(:id => 8)
@@ -220,7 +223,7 @@ class BmpsController < ApplicationController
     @bmpsublist_name = "create"
 	msg = "OK"
     @bmp = Bmp.new()
-    @bmp.scenario_id = session[:scenario_id]
+    @bmp.scenario_id = params[:scenario_id]
 	@bmp.bmpsublist_id = bmpsublist
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @irrigation = Irrigation.arel_table
@@ -243,7 +246,7 @@ class BmpsController < ApplicationController
 			end
         #end
     #end
-	if params[:select][:"19"] == "1" && bmpsublist == 19 then
+	if !(params[:select] == nil) && params[:select][:"19"] == "1" && bmpsublist == 19 then
 		create_climate("create")
 	end
 	if msg == "OK" then
@@ -270,7 +273,7 @@ class BmpsController < ApplicationController
     respond_to do |format|
       if msg == "OK"
         if @bmp.update_attributes(bmp_params)
-          format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('operation.bmp') + " " + t('general.updated') }
+          format.html { redirect_to list_bmp_path(params[:scenario_id]), notice: t('operation.bmp') + " " + t('general.updated') }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
@@ -291,7 +294,7 @@ class BmpsController < ApplicationController
 # DELETE /bmps/1.json
   def destroy()
     @slope = 100
-    Bmp.where(:scenario_id => session[:scenario_id]).delete_all
+    Bmp.where(:scenario_id => params[:scenario_id]).delete_all
 
     msg = input_fields("delete")
     if @bmp.destroy
@@ -299,7 +302,7 @@ class BmpsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to list_bmp_path(session[:scenario_id]) }
+      format.html { redirect_to list_bmp_path(params[:scenario_id]) }
       format.json { head :no_content }
     end
   end
@@ -406,7 +409,7 @@ class BmpsController < ApplicationController
   def autoirrigation(type)
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
+      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
       if subarea != nil then
         case type
           when "create", "update"
@@ -471,7 +474,7 @@ class BmpsController < ApplicationController
   def fertigation(type)
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
+      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
       if subarea != nil then
         case type
           when "create", "update"
@@ -529,7 +532,7 @@ class BmpsController < ApplicationController
   def tile_drain(type)
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -619,8 +622,7 @@ class BmpsController < ApplicationController
       when "update"
         update_existing_subarea("WL", 8)
       when "delete"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WL").first
-        return update_wsa("-", subarea.wsa)
+	    return delete_existing_subarea("WL")
     end
   end   # end method
 
@@ -629,7 +631,7 @@ class BmpsController < ApplicationController
   	@bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency]
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -662,7 +664,7 @@ class BmpsController < ApplicationController
   def streambank_stabilization(type)
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -685,13 +687,13 @@ class BmpsController < ApplicationController
     case type
       when "create"
   		if @bmp.save then
-			return create_new_subarea("RFFS", 12)
+			return create_new_subarea("RF", 12)
 		end
       when "update"
         update_existing_subarea("RFFS", 12)
       when "delete"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "RF").first
-        return update_wsa("-", subarea.wsa)
+	    delete_existing_subarea("RF")
+	    return delete_existing_subarea("RFFS")
     end
   end  # end riparian forest
 
@@ -710,9 +712,7 @@ class BmpsController < ApplicationController
       when "update"
         update_existing_subarea("FS", 13)
       when "delete"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first
-        update_wsa("-", subarea.wsa)
-      #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "FS").first.delete
+	    return delete_existing_subarea("FS")
     end
   end
 
@@ -732,8 +732,7 @@ class BmpsController < ApplicationController
       when "update"
         update_existing_subarea("WW", 14)
       when "delete"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "WW").first
-        update_wsa("-", subarea.wsa)
+	    return delete_existing_subarea("WW")
     end
   end    # end method waterway
 
@@ -743,7 +742,7 @@ class BmpsController < ApplicationController
 	@bmp.slope_reduction = params[:bmp_ll][:slope_reduction]  
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
       if subarea != nil then
         case type
           when "create"
@@ -780,7 +779,6 @@ class BmpsController < ApplicationController
 ### ID: 19
   def climate_change(type)
 	return "OK"
-  ooo
 	#@bmp.bmp = params[:bmp_mc][:animal_id]
   end
 
@@ -804,7 +802,7 @@ class BmpsController < ApplicationController
   def asphalt_concrete(type)
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -833,7 +831,7 @@ class BmpsController < ApplicationController
   def grass_cover(type)
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -870,9 +868,9 @@ class BmpsController < ApplicationController
       when "update"
         update_existing_subarea("Sdg", 23)
       when "delete"
-        subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first
-        update_wsa("-", subarea.wsa)
-      #Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => "Sdg").first.delete
+        subarea = Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => "Sdg").first
+        update_wsa("+", subarea.wsa)
+      #Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => "Sdg").first.delete
     end
   end
 
@@ -972,7 +970,7 @@ class BmpsController < ApplicationController
   def terrace_and_slope(type)
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -1013,7 +1011,7 @@ class BmpsController < ApplicationController
           @slope = soil.slope
         end
       end
-      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])
+      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
       if subarea != nil then
         if i == 0 then
           @inps = subarea.inps #select the first soil, which is with bigest area
@@ -1044,7 +1042,7 @@ class BmpsController < ApplicationController
 		else
 		end
       end #end if subarea !nil
-      soil_ops = SoilOperation.where(:soil_id => soil.id, :scenario_id => session[:scenario_id], :activity_id => 1)
+      soil_ops = SoilOperation.where(:soil_id => soil.id, :scenario_id => params[:scenario_id], :activity_id => 1)
       soil_ops.each do |soil_op|
         case type
           when "create"
@@ -1087,7 +1085,7 @@ class BmpsController < ApplicationController
 
     if is_filled
       @soils = Soil.where(:field_id => session[:field_id])
-      i = 0
+      #i = 0
       #@inps = i
       @soils.each do |soil|
         if soil.selected
@@ -1095,14 +1093,14 @@ class BmpsController < ApplicationController
             @slope = soil.slope
           end
         end
-        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
         if subarea != nil then
-          if i == 0 then
-            @inps = subarea.inps #select the first soil, which is with bigest area
-            i += 1
-          end
+          #if i == 0 then
+            @inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
+            #i += 1
+          #end
           if soil.selected
-            @iops = subarea.iops #selected the last iops to inform the subarea the folowing iops to create.
+            @iops = subarea.iops + 1 #selected the last iops to inform the subarea the folowing iops to create.
           end
         end
       end
@@ -1147,7 +1145,7 @@ class BmpsController < ApplicationController
             @slope = soil.slope
           end
         end
-        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => session[:scenario_id]).first
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
         if subarea != nil then
           if i == 0 then
             @inps = subarea.inps #select the first soil, which is with bigest area
@@ -1158,7 +1156,7 @@ class BmpsController < ApplicationController
           end
         end
       end
-      subarea = Subarea.where(:scenario_id => session[:scenario_id], :subarea_type => name).first
+      subarea = Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => name).first
       update_wsa("-", subarea.wsa)
       update_subarea(subarea, name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "update")
       return "OK"
@@ -1168,9 +1166,13 @@ class BmpsController < ApplicationController
   end
 
   def delete_existing_subarea(name)
-    subarea = Subarea.find_by_scenario_id_and_subarea_type(session[:scenario_id], name)
-    update_wsa("-", subarea.wsa)
-    #subarea.delete
+    subarea = Subarea.find_by_scenario_id_and_subarea_type(params[:scenario_id], name)
+	if !(subarea == nil) then 
+		return update_wsa("+", subarea.wsa) 
+	else
+		return "OK"
+	end
+    subarea.delete
   end
 ##############################  PRIVATE  ###############################
 

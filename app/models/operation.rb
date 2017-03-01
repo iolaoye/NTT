@@ -19,4 +19,23 @@ class Operation < ActiveRecord::Base
       end
     end
   end
+
+
+  def type_name
+    case self.activity_id
+      when 1
+        Tillage.find_by_code(self.type_id).eqp
+      when 2
+        Fertilizer.find(self.subtype_id).name
+      when 3
+        Tillage.find_by_code(self.type_id).eqp
+      when 6
+        Irrigation.find(self.type_id).name
+      when 7
+        Fertilizer.find(self.type_id).name
+      else
+        ""
+    end
+  end
+  
 end
