@@ -1,9 +1,9 @@
 
 class Bmp < ActiveRecord::Base
-  attr_accessible :scenario_id, :bmp_id, :crop_id, :irrigation_id, :water_stress_factor, :irrigation_efficiency, :maximum_single_application, :safety_factor, :depth, 
+  attr_accessible :scenario_id, :bmp_id, :crop_id, :irrigation_id, :water_stress_factor, :irrigation_efficiency, :maximum_single_application, :safety_factor, :depth,
 	         :area, :number_of_animals, :days, :hours, :animal_id, :dry_manure, :no3_n, :po4_p, :org_n, :org_p, :width, :grass_field_portion, :buffer_slope_upland, :crop_width,
 			 :slope_reduction, :sides, :bmpsublist_id
-  #associations 
+  #associations
 	  has_many :crops
 	  has_many :subareas, :dependent => :destroy
 	  has_many :climates, :dependent => :destroy
@@ -32,8 +32,9 @@ class Bmp < ActiveRecord::Base
     validates :crop_width, numericality: { greater_than: 0 }, if: "bmpsublist_id == 15"
     validates :slope_reduction, numericality: { greater_than: 0,  less_than_or_equal_to: 100 }, if: "bmpsublist_id == 16"
     validates :sides, numericality: { greater_than: 0, less_than_or_equal_to: 4.0 }, if: "bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7"
-    validates_uniqueness_of :bmp_id, :scope => :scenario_id, :message => "of this group already exists", if: "bmp_id == 1 || bmp_id == 8"
+    #validates_uniqueness_of :bmp_id, :scope => :scenario_id, :message => "of this group already exists", if: "bmp_id == 1 || bmp_id == 8"
     validates_uniqueness_of :bmp_id, :scope => :scenario_id, if: :pad_and_pipes_exists
+    validate :only_one_from_group, if: "bmpsublist_id == 12 || bmpsublist_id == 13 || bmpsublist_id == 14 || bmpsublist_id == 15"
   #Functions
   def pad_and_pipes_exists
     if bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7
@@ -46,5 +47,10 @@ class Bmp < ActiveRecord::Base
       end #end each
 	  end #end first if
 	  return pads_exists
+  end #end function
+
+  def only_one_from_group #function WIP 
+    errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
+      "bmpsublist_id == 12 && (bmpsublist_id == 13 || bmpsublist_id == 14 || bmpsublist_id ==15)"
   end #end function
 end
