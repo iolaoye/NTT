@@ -39,7 +39,7 @@ class OperationsController < ApplicationController
 # GET /operations/1
 # GET /operations/1.json
   def show
-    @operation = Operation.find(params[:id])
+    @operation = Operation.find(params[:scenario_id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -66,7 +66,7 @@ class OperationsController < ApplicationController
 # GET /operations/1/edit
   def edit
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
-    @operation = Operation.find(params[:id])
+    @operation = Operation.find(params[:scenario_id])
   end
 
 ################################  CREATE  #################################
@@ -122,9 +122,9 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
-    @operation = Operation.find(params[:id])
+    @operation = Operation.find(params[:scenario_id])
 	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
-  @project = Project.find(params[:project_id])
+    @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
@@ -151,7 +151,7 @@ class OperationsController < ApplicationController
 # DELETE /operations/1
 # DELETE /operations/1.json
   def destroy
-    @operation = Operation.find(params[:id])
+    @operation = Operation.find(params[:scenario_id])
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
@@ -204,13 +204,13 @@ class OperationsController < ApplicationController
           @cropping_system_id = params[:cropping_system][:id]
           if params[:replace] != nil
             #Delete operations for the scenario selected
-            Operation.where(:scenario_id => params[:id]).destroy_all
+            Operation.where(:scenario_id => params[:scenario_id]).destroy_all
           end
           #take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
           events = Event.where(:cropping_system_id => params[:cropping_system][:id])
           events.each do |event|
             @operation = Operation.new
-            @operation.scenario_id = params[:id]
+            @operation.scenario_id = params[:scenario_id]
             #get crop_id from croppingsystem and state_id
             state_id = Location.find(session[:location_id]).state_id
             crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
@@ -264,7 +264,7 @@ class OperationsController < ApplicationController
                 @operation.amount = event.apex_opv1
             end #end case
             @operation.depth = event.apex_opv2
-            @operation.scenario_id = params[:id]
+            @operation.scenario_id = params[:scenario_id]
             if @operation.save
               msg = add_soil_operation()
 			  notice = t('scenario.operation') + " " + t('general.created')
@@ -277,7 +277,7 @@ class OperationsController < ApplicationController
           end # end events.each
         end
       end #end if cropping_system_id != ""
-      @operations = Operation.where(:scenario_id => params[:id])
+      @operations = Operation.where(:scenario_id => params[:scenario_id])
       if params[:language] != nil then
         if params[:language][:language].eql?("es")
           I18n.locale = :es
@@ -296,7 +296,7 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
-    @operations = Operation.where(:scenario_id => session[:scenario_id])
+    @operations = Operation.where(:scenario_id => params[:scenario_id])
     @count = @operations.count
     @highest_year = 0
     @operations.each do |operation|
@@ -314,13 +314,13 @@ class OperationsController < ApplicationController
           @cropping_system_id = params[:cropping_system][:id]
           if params[:replace] != nil
             #Delete operations for the scenario selected
-            Operation.where(:scenario_id => params[:id]).destroy_all
+            Operation.where(:scenario_id => params[:scenario_id]).destroy_all
           end
           #take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
           events = Schedule.where(:crop_schedule_id => params[:cropping_system][:id])
           events.each do |event|
             @operation = Operation.new
-            @operation.scenario_id = params[:id]
+            @operation.scenario_id = params[:scenario_id]
             #get crop_id from croppingsystem and state_id
             state_id = Location.find(session[:location_id]).state_id
             crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
@@ -390,7 +390,7 @@ class OperationsController < ApplicationController
           end # end events.each
         end
       end #end if cropping_system_id != ""
-      @operations = Operation.where(:scenario_id => params[:id])
+      @operations = Operation.where(:scenario_id => params[:scenario_id])
       if params[:language] != nil then
         if params[:language][:language].eql?("es")
           I18n.locale = :es
@@ -410,7 +410,7 @@ class OperationsController < ApplicationController
     #require 'net/http'
     #require 'rubygems'
 
-    operations = Operation.where(:scenario_id => params[:id])
+    operations = Operation.where(:scenario_id => params[:scenario_id])
 
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.operations {
@@ -452,6 +452,7 @@ class OperationsController < ApplicationController
 
   ########################################### UPLOAD CROPPING SYSTEM FILE IN XML FORMAT ##################
   def upload_system
+  uuu
     saved = false
     msg = ""
     ActiveRecord::Base.transaction do
@@ -465,12 +466,12 @@ class OperationsController < ApplicationController
 		@data.root.elements.each do |node|
 			case node.name
 			  when "operation"
-				msg = upload_operation_info(node, params[:id], session[:field_id])
+				msg = upload_operation_info(node, params[:scenario_id], params[:field_id])
 			  else
 			end
 		end    
     end
-	redirect_to list_operation_path(params[:id])
+	redirect_to list_operation_path(params[:scenario_id])
   end
 
   def open
