@@ -1,7 +1,7 @@
 class ScenariosController < ApplicationController
   include ScenariosHelper
   include SimulationsHelper
-################################  list of bmps #################################
+################################  scenario bmps #################################
 # GET /scenarios/1
 # GET /1/scenarios.json
   def scenario_bmps
@@ -12,7 +12,7 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /1/scenarios.json
   def scenario_operations
-    session[:scenario_id] = params[:id]
+    params[:scenario_id] = params[:id]
     redirect_to list_operation_path(params[:id])
   end
 ################################  scenarios list  #################################

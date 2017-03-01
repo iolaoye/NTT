@@ -53,7 +53,7 @@ class WeathersController < ApplicationController
 # GET /weathers/1/edit
   def edit
     @weather = Weather.find_by_field_id(params[:id])
-    @project = Project.find(session[:project_id])
+    @project = Project.find(params[:project_id])
     @field = Field.find(params[:id])
 
     #add_breadcrumb t('menu.projects'), user_projects_path(current_user)

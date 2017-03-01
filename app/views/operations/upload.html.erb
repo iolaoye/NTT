@@ -1,23 +1,21 @@
-<div class="page-header"><h1><%= t('operation.upload') + " " + t('operation.cropping_system') %></h1></div>
+<div class="page-header"><h1><%= t('operation.upload') + " " + t('operation.crop') + " " + t('operation.schedule') %></h1></div>
 <form id="myForm">
   <div class="field">
-    <%= label "select", t('operation.cropping_system') %>
-    <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id}, :required => true %>
+    <%= label "select", t('operation.crop') + " " + t('operation.schedule') %>
+      <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id}, :required => true %>
     <% if @operations.first != nil %>&nbsp&nbsp&nbsp
       <%= label :year, t('pdf.year'), :id => "year_label" %>
       <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true %>
-      <br><br>
+      <br>
       <%= label "replace", t("operation.replace") %>
       <%= check_box_tag :replace, 'replace', false %>
-    <% else %>
-      <br><br>
     <% end %>
     <%= hidden_field(:language, :language, :value => I18n.locale) %>
     <div class="actions">
       <span style="display: inline-block">
         <%= button_to t('operation.upload'), cropping_system_project_field_scenario_operations_path(@project, @field, @scenario), :name => "add_more", :id => "operation_upload", :class => "btn btn-primary", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
+        <%= link_to t('general.back'), list_project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
       </span>
-      <%# link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]), :class => "btn btn-primary" %>
       </div>
   </div>
 </form>

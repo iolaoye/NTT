@@ -29,7 +29,7 @@ class FieldsController < ApplicationController
     session[:simulation] = "watershed"
 
     @fields = Field.where(:location_id => location_id)
-    @project_name = Project.find(session[:project_id]).name
+    @project_name = Project.find(params[:project_id]).name
 
     #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
     #add_breadcrumb @project_name
