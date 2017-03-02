@@ -1001,7 +1001,7 @@ es:
         windows: '<b>Windows:</b> X86 o X64 1.6 GHz o con un procesador más alto de 512-MB de RAM'
         mac: '<b>Macintosh (Intel-based):</b> Intel Core Duo 1.86 GHz o con un procesador más alto de 512-MB de RAM'
     webbrowsers:
-        header: Supported Web Browsers
+        header: Navegadores compatibles
         statement: 'la Nutrient Tracking Tool <b>(NTT)</b> ha sido probado en los siguientes navegadores:'
         mac: 'Apple Macintosh OS 10.5.7+ (Intel-based):'
         win81: 'Microsoft Windows 8.1 Desktop:'
@@ -1073,6 +1073,11 @@ es:
         body: 'Haga clic en un área de texto para introducir una o más líneas de información como se muestra en este ejemplo:'
   validate:
     required: Requerido campo(s) que falta en
+    input_greater:  Input must be greater than
+    input_lessthan: Input must be less than
+    input_greaterequal: Input must be greater than or equal to
+    input_lessequal:  Input must be less than or equal to
+    checkbox: Checkbox must be checked
   projpage:
     header: Iniciar un Proyecto
     statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'
@@ -1155,9 +1160,7 @@ es:
         body2: 'After you have entered the location, the State and County you selected (or the General and Specific location) will show up on the top of the screen (along with the project name) for the remainder of the program. An example is shown below:'
   weathpage:
     header: Weather Page
-    overview:
-        header: Overview
-        body: 'Depending on the particular method that was chosen in the previous (Location) page, the user has different options available when choosing the weather. Only the options that are actually available to the user (depending on the method selected) will show up as selections. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.'
+    body: 'Depending on the particular method that was chosen in the previous (Location) page, the user has different options available when choosing the weather. Only the options that are actually available to the user (depending on the method selected) will show up as selections. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.'
     selectinfo:
         header: Selecting Weather Information
         body: 'There are four different methods to select the weather information. However, the options available depend on the selection made for the Location method in the previous page.'
@@ -1189,10 +1192,8 @@ es:
         body: 'The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>'
   fieldpage:
     header: Fields Page
-    overview:
-        header: Overview
-        body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
-        body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
+    body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
+    body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
     createdel:
         header: Creating/Deleting a Field
         create:
@@ -1210,9 +1211,8 @@ es:
         area:
             header: Changing the Field Area
             body: 'The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 0.00) and type in the correct area, as shown below:'
-    advance:
-        header: Advancing
-        body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. Once all of the fields and corresponding information has been entered, the user can click <strong>Save and Continue</strong> to save the information and continue to the Soils page.'
+    advance: Advancing
+    advance_body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. Once all of the fields and corresponding information has been entered, the user can click on the "Field Name" of a field from the list by which they can gain access to the weather, soils, scenarios, results, and apex page.'
   soilpage:
     header: Soils Page
     overview:

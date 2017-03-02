@@ -1582,11 +1582,11 @@ class ProjectsController < ApplicationController
         when "SubareaNumber"
           subarea.number = p.text
         when "Inps"
-          subarea.inps = p.text
+          subarea.inps = p.text.to_i + 1
         when "Iops"
           subarea.iops = p.text
         when "Iow"
-          subarea.iow = p.text
+          subarea.iow = subarea.inps
         when "Ii"
           subarea.ii = p.text
         when "Iapl"
@@ -2095,6 +2095,7 @@ class ProjectsController < ApplicationController
           operation.org_p = p.text
         when "ApexOpv1"
           operation.amount = p.text
+		  if operation.activity_id == 1 then (operation.amount /= AC_TO_FT2).round(2) end
         when "ApexOpv2"
           operation.depth = p.text
         when "ApexTillCode"

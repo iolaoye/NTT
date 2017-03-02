@@ -1,4 +1,4 @@
-<% if Project.find(session[:project_id]).version == "NTTG3" %>
+<% if Project.find(params[:project_id]).version == "NTTG3" %>
   <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
 <% else %>
   <li class="<%= controller_name == "states" %>"><%= link_to t('menu.state'), states_path() %></li>
@@ -58,7 +58,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-			<% unless Rails.application.config.which_version == "modified" %><%= link_to t('menu.aplcat'), edit_aplcat_parameter_path(session[:scenario_id]) %><% end %>
+			<% unless Rails.application.config.which_version == "modified" %><%= link_to t('menu.aplcat'), edit_aplcat_parameter_path(params[:scenario_id]) %><% end %>
 
 			<% if aplcats_submenu %>
 				<ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub-sub">

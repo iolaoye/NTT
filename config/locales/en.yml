@@ -1074,6 +1074,11 @@ en:
         body: 'Click in a text area to enter one or more lines of information as shown in this example:'
   validate:
     required: Required field(s) missing in
+    input_greater:  Input must be greater than
+    input_lessthan: Input must be less than
+    input_greaterequal: Input must be greater than or equal to
+    input_lessequal:  Input must be less than or equal to
+    checkbox: Checkbox must be checked
   projpage_html:
     <strong>Start of a Project</strong> <br><br>
     Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
@@ -1099,6 +1104,7 @@ en:
     You can also use the <strong>Close Active Project</strong> button to close the current project that you are working on.
     When you attempt to close, a warning message will come up.
     Closing an active project will erase all of that projects information. Because of this, if you would like to project for later use, it is extremely important that you save the project before closing it. By clicking the <strong>OK</strong> button on the warning message, the information will be cleared (and lost if not previously saved). If you have not yet saved and would like to, click cancel and follow the instructions for <strong>Save Active Project</strong> above.
+  
   locpage_html:
     <strong>Location Information</strong><br>
     The map allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.
@@ -1130,6 +1136,39 @@ en:
 
     <strong>Choose State and County</strong><br>To zoom to a particular state/county in the United States the user can select the State and County from the corresponding drop down list boxes.
 
+  weathpage:
+    header: Weather Page
+    body: 'Depending on the particular method that was chosen in the previous (Location) page, the user has different options available when choosing the weather. Only the options that are actually available to the user (depending on the method selected) will show up as selections. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.'
+    selectinfo:
+        header: Selecting Weather Information
+        body: 'There are four different methods to select the weather information. However, the options available depend on the selection made for the Location method in the previous page.'
+        method1:
+            header: Use Weather Information Close to your Location
+            body: 'This method of weather selection is only available when the user used the <a href=/help/page_4>Mapping System</a> to select the area of interest in the Location page. Using this method allows the user to simply confirm the weather that was already chosen by the model. After selecting the period to simulate (which is explained below under Period to Simulate) the user can simply click <strong>Save and Continue</strong> to verify the information, save it, and advance to the next page.'
+        method2:
+            header: Weather Station Using PRISM Data
+            body1: 'This method is available only when the <a href=/help/page_4>State/County</a> method was chosen to select the area of interest in the preceding page. This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <strong>Weather Station Using PRISM Data</strong> and then select the preferred weather station:'
+            body2: 'Finally, once the station has been selected, click <strong>Update Weather</strong> to save the information and continue to the next page.'
+        method3:
+            header: Load Your Own Weather File
+            body: 'This method of weather selection is always available regardless of the method used for selecting an area of interest. This option is also the only option that is available when using the NTT tool for locations outside of the mainland United States. To use this method the following are the instructions:'
+            item1:
+                body1: '<strong>Create a Weather File:</strong> In order to upload a weather file, the user must first create one. The weather file needs to be in a text file, and it should have the following format: blanks (columns 1-2), year (columns 3-6), month (columns 7-10), day (columns 11-14), solar radiation (columns 15-20; could be blank or zero), maximum temperature in Celsius (columns 21-26), minimum temperature in Celsius (columns 27-32), precipitation in millimeters (columns 33-38). This is for the first year/month/day as shown below:'
+                body2: 'The same pattern is used for the rest of the days that you want to add to the simulation. Specific weather information for each day can simply be added by adding new records. Each record should contain the weather information for a specific day.'
+                body3: 'The information above, for example, would show weather information for January 1, 1981 (where the solar radiation was 0, the max temperature was 10.1 degrees Celsius, the min temperature was -0.9 degrees Celsius, and precipitation was 0.00 millimeters), and the weather information for January 2, 1981 (where the solar radiation was 0, the max temperature was 5.7 degrees Celsius, the min temperature was -5.9 degrees Celsius, and precipitation was 0.00 millimeters). Ideally, you would have a file that contains detailed information for the weather for an extended period. This would look as shown below:'
+                body4: 'Even though the file is significantly larger, all of the days for which we have data follow the same format.'
+            item2:
+                body1: '<strong>Upload the Weather File:</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select the <b>Choose File</b> button to select a file to be uploaded. This will bring up an “Open” window where the user can search their computer for the weather file. When you have selected the file click “Open”. This will show a progress bar as the system uploads the information.'
+                body2: 'The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Update Weather</strong> to save the information and advance to the next page'
+            item3: '<strong>NOTE:</strong> It is important to note that when you click <strong>Update Weather</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate, run the simulations again.'
+        method4:
+            header: Load Using Specific Coordinates (U.S.A only)
+            body1: 'This method of weather selection will always appear as available regardless of the location method that was selected in the <a href=/help/page_4>Location</a> page (this method will work for the User Input method). However, the coordinates selected must be coordinates within the United States. This means that while the option will appear as available if the user selected “User Input” in the <a href=/help/page_4>Location</a> page, if they are looking at an area of interest that is outside the mainland United States an error message will come up.'
+            body2: 'To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates. You will (like in all the other methods) need to select a period to simulate (which is discussed below) and after this has been done, you can click <strong>Update Weather</strong> to save the information and continue.'
+    simulate:
+        header: Period to Simulate
+        body: 'The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>'
+  
   weathpage_html:
     <strong>Weather Page</strong>
     The user has different options available when choosing the weather. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.
@@ -1152,6 +1191,29 @@ en:
     To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates and click the <strong>Save Coordinates</strong> button. You will (like in all the other methods) need to select a period to simulate (which is discussed below) but after this has been done, you can click <strong>Save and Continue</strong> to save the information and continue.<br>
     <strong>Period to Simulate</strong><br>
     The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>
+  fieldpage:
+    header: Fields Page
+    body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
+    body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
+    createdel:
+        header: Creating/Deleting a Field
+        create:
+            header: '<b>Creating a field(only for State/County and User Input <a href=/help/page_4>Location</a> Methods)</b> '
+            body: 'This will bring up a field with the NTT standard field characteristics. Users can then edit the field information. Instructions to do this are also on the <a href=/help/page_4>Location</a> page.'
+        delete:
+            header: <b>Deleting a Field</b>
+            body: 'To delete a field, simply click the "Red Cross" icon on the actions column.'
+    characteristics:
+        header: Changing Field Characteristics
+        body: 'In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.'
+        name:
+            header: Changing the Field Name
+            body: 'In order to change field’s name, simply click on the current name of the field (in this case Field 1) and type in the name of the field. Once all the changes have been made, simply click on "Update Field" button to save the changes made to the field.'
+        area:
+            header: Changing the Field Area
+            body: 'The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 5.74) and type in the correct area, as shown in the picture above. Once all the changes have been made, simply click on "Update Field" button to save the changes made to the field.'
+    advance: Advancing
+    advance_body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. Once all of the fields and corresponding information has been entered, the user can click on the "Field Name" of a field from the list by which they can access the weather, soils, scenarios, results, and apex page.'
   fieldpage_html:
     <strong>Fields Page</strong><br>
     The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.

@@ -138,9 +138,6 @@ class LocationsController < ApplicationController
             @weather.station_way = "map"
             if @weather.save then
               @field.weather_id = @weather.id
-			else
-			  session[:depth] = @weather
-			  #ooo
             end
             if @field.save then
 				@weather.field_id = @field.id

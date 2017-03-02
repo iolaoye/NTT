@@ -516,33 +516,33 @@ module SimulationsHelper
       @bulk_density = bulk_density
       #if first layer is less than 0.1 m a new layer is added as first one
       initial_layer = 1
-      if (depth[initial_layer] / 100).round(3) > 0.100
-        initial_layer = 0
-        depth[initial_layer] = 10.0
-        bulk_density[initial_layer] = bulk_density[initial_layer + 1]
-        uw[initial_layer] = uw[initial_layer + 1]
-        fc[initial_layer] = fc[initial_layer + 1]
-        sand[initial_layer] = sand[initial_layer + 1]
-        silt[initial_layer] = silt[initial_layer + 1]
-        wn[initial_layer] = wn[initial_layer + 1]
-        ph[initial_layer] = ph[initial_layer + 1]
-        smb[initial_layer] = smb[initial_layer + 1]
-        woc[initial_layer] = woc[initial_layer + 1]
-        cac[initial_layer] = cac[initial_layer + 1]
-        cec[initial_layer] = cec[initial_layer + 1]
-        rok[initial_layer] = rok[initial_layer + 1]
-        cnds[initial_layer] = cnds[initial_layer + 1]
-        ssf[initial_layer] = ssf[initial_layer + 1]
-        rsd[initial_layer] = rsd[initial_layer + 1]
-        bdd[initial_layer] = bdd[initial_layer + 1]
-        psp[initial_layer] = psp[initial_layer + 1]
-        satc[initial_layer] = satc[initial_layer + 1]
-        hcl[initial_layer] = hcl[initial_layer + 1]
-        wpo[initial_layer] = wpo[initial_layer + 1]
-        cprv[initial_layer] = cprv[initial_layer + 1]
-        cprh[initial_layer] = cprh[initial_layer + 1]
-      end #end depth
-      #Line 2 Column 1 and 2
+      #if (depth[initial_layer] / 100).round(3) > 0.100
+        #initial_layer = 0
+        #depth[initial_layer] = 10.0
+        #bulk_density[initial_layer] = bulk_density[initial_layer + 1]
+        #uw[initial_layer] = uw[initial_layer + 1]
+        #fc[initial_layer] = fc[initial_layer + 1]
+        #sand[initial_layer] = sand[initial_layer + 1]
+        #silt[initial_layer] = silt[initial_layer + 1]
+        #wn[initial_layer] = wn[initial_layer + 1]
+        #ph[initial_layer] = ph[initial_layer + 1]
+        #smb[initial_layer] = smb[initial_layer + 1]
+        #woc[initial_layer] = woc[initial_layer + 1]
+        #cac[initial_layer] = cac[initial_layer + 1]
+        #cec[initial_layer] = cec[initial_layer + 1]
+        #rok[initial_layer] = rok[initial_layer + 1]
+        #cnds[initial_layer] = cnds[initial_layer + 1]
+        #ssf[initial_layer] = ssf[initial_layer + 1]
+        #rsd[initial_layer] = rsd[initial_layer + 1]
+        #bdd[initial_layer] = bdd[initial_layer + 1]
+        #psp[initial_layer] = psp[initial_layer + 1]
+        #satc[initial_layer] = satc[initial_layer + 1]
+        #hcl[initial_layer] = hcl[initial_layer + 1]
+        #wpo[initial_layer] = wpo[initial_layer + 1]
+        #cprv[initial_layer] = cprv[initial_layer + 1]
+        #cprh[initial_layer] = cprh[initial_layer + 1]
+      #end #end depth
+      #Line 2 and line 3 col 5 and 7
       if albedo == 0
         albedo = 0.2
       end
@@ -561,11 +561,25 @@ module SimulationsHelper
       soil.ffc = 0 unless soil.ffc!=nil
       records = records + sprintf("%8.2f", soil.ffc)
       soil.wtmn = 0 unless soil.wtmn!=nil
-      records = records + sprintf("%8.2f", soil.wtmn)
       soil.wtmx = 0 unless !(soil.wtmx==nil)
-      records = records + sprintf("%8.2f", soil.wtmx)
       soil.wtbl = 0 unless !(soil.wtbl==nil)
-      records = records + sprintf("%8.2f", soil.wtbl)
+      soil.zqt = 0 unless !(soil.zqt==nil)
+      soil.ztk = 0 unless !(soil.ztk==nil)
+  	  ##if tile drain was set up wtmx, wtmn, and wtbl should be zero. Otherwise keep the numbers. 11 06 2016.
+      ##Goin back to the values for drainage type as before. Keep this here just in case Ali wants to have it latter 11 08 2016. Oscar Gallego
+	  bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 3)
+	  if !(bmp == nil) and bmp.depth > 0 then
+		  records = records + sprintf("%8.2f", 0)
+		  records = records + sprintf("%8.2f", 0)
+		  records = records + sprintf("%8.2f", 0)
+		  records = records + sprintf("%8.2f", 0)
+		  soil.zqt = 0
+		  soil.ztk = 0
+	  else
+		  records = records + sprintf("%8.2f", soil.wtmn)
+		  records = records + sprintf("%8.2f", soil.wtmx)
+		  records = records + sprintf("%8.2f", soil.wtbl)
+	  end
       soil.gwst = 0 unless !(soil.gwst==nil)
       records = records + sprintf("%8.2f", soil.gwst)
       soil.gwmx = 0 unless !(soil.gwmx==nil)
@@ -585,12 +599,10 @@ module SimulationsHelper
       records = records + sprintf("%8.2f", soil.rtn1)
       soil.xidk = 0 unless !(soil.xidk==nil)
       records = records + sprintf("%8.2f", soil.xidk)
-      soil.zqt = 0 unless !(soil.zqt==nil)
-      records = records + sprintf("%8.2f", soil.zqt)
+	  records = records + sprintf("%8.2f", soil.zqt)
       soil.zf = 0 unless !(soil.zf==nil)
       records = records + sprintf("%8.2f", soil.zf)
-      soil.ztk = 0 unless !(soil.ztk==nil)
-      records = records + sprintf("%8.2f", soil.ztk)
+	  records = records + sprintf("%8.2f", soil.ztk)
       soil_info.push(records + "\n")
       #line 4 to 24 Layers information
       records = ""
@@ -830,22 +842,29 @@ module SimulationsHelper
     end
     #/line 2
     @last_soil2 = j + @last_soil_sub
+    last_owner1 = @last_soil2
 	if buffer then
-		sLine = sprintf("%4d", 1)  #soil
+		#sLine = sprintf("%4d", @last_soil2-1)  #soil
+		sLine = sprintf("%4d", _subarea_info.inps)  #soil
 		if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
 			sLine += sprintf("%4d", 1) #operation
 		else
-			sLine += sprintf("%4d", @soil_number + 1)   #operation
+			#sLine += sprintf("%4d", @soil_number + 1)   #operation
+			sLine += sprintf("%4d", _subarea_info.iops)   #operation
 		end
+		#sLine += sprintf("%4d", last_owner1-1) #owner id. Should change for each field
+		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
 	else
-		sLine = sprintf("%4d", @soil_number + 1)  #soil
-		sLine += sprintf("%4d", @soil_number + 1)   #operation
+		#sLine = sprintf("%4d", @soil_number + 1)  #soil
+		#sLine += sprintf("%4d", @soil_number + 1)   #operation
+		#sLine += sprintf("%4d", last_owner1) #owner id. Should change for each field
+		sLine = sprintf("%4d", _subarea_info.inps)  #soil
+		sLine += sprintf("%4d", _subarea_info.iops)   #operation
+		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
 	end
     if _subarea_info.iow == 0 then
       _subarea_info.iow = 1
     end
-    last_owner1 = @last_soil2
-    sLine += sprintf("%4d", last_owner1) #owner id. Should change for each field
     sLine += sprintf("%4d", _subarea_info.ii)
     sLine += sprintf("%4d", _subarea_info.iapl)
     sLine += sprintf("%4d", 0) #column 6 line 1 is not used
@@ -883,15 +902,17 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.urbf)
     @subarea_file.push(sLine + "\n")
     #/line 5
-    if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
-      _subarea_info.rchl = _subarea_info.chl
-    end
-    if (operation_number > 1 && i == 0) || i > 0 then
-      #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
-      sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
-    else
-      sLine = sprintf("%8.4f", _subarea_info.rchl)
-    end
+	if (_subarea_info.bmp_id == 0 || _subarea_info.bmp_id == nil)  && _subarea_info.subarea_type == "Soil"
+		if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
+		  _subarea_info.rchl = _subarea_info.chl
+		end
+		if (operation_number > 1 && i == 0) || i > 0 then
+		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
+		  _subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
+		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
+		end
+	end
+    sLine = sprintf("%8.4f", _subarea_info.rchl)
     sLine += sprintf("%8.2f", _subarea_info.rchd)
     sLine += sprintf("%8.2f", _subarea_info.rcbw)
     sLine += sprintf("%8.2f", _subarea_info.rctw)
@@ -1055,8 +1076,6 @@ module SimulationsHelper
   end  #end Create Operations
 
   def fix_operation_file()
-    #drOuts = SoilOperation.new
-
     if @soil_operations.count > 0 then
       total_records = @soil_operations.count - 1
       first_date = sprintf("%2d", @soil_operations[0].month) + sprintf("%2d", @soil_operations[0].day)
@@ -1107,7 +1126,6 @@ module SimulationsHelper
 
     if crop_ant != operation.apex_crop then
       crop = Crop.find_by_number(operation.apex_crop)
-	  session[:depth] = operation
       if crop != nil then
         #if crop.number == operation.apex_crop then
         lu_number = crop.lu_number
@@ -1172,7 +1190,7 @@ module SimulationsHelper
     apex_string += sprintf("%5d", operation.apex_crop) #Crop Code             #APEX0604
     case operation.activity_id
       when 1 #planting
-        if operation.apex_crop == "18" then
+        if operation.apex_crop == "18" then    # rice
           rice_crop = true
         end
         if lu_number == 28 then
@@ -1556,8 +1574,8 @@ module SimulationsHelper
     #@watershed = Watershed.new
     #@watershed.name = "BEFORE"
     #@watershed.save
-    ActiveRecord::Base.transaction do
-      begin
+    #ActiveRecord::Base.transaction do
+      #begin
         #@watershed = Watershed.new
         #@watershed.name = "AFTER"
         #@watershed.save
@@ -1567,14 +1585,16 @@ module SimulationsHelper
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results(apex_start_year, msg)
+		#session[:depth]=msg
+		#ppp
         msg = load_crop_results(apex_start_year)
-      rescue => e
-        msg = "Failed, Error: " + e.inspect
-        raise ActiveRecord::Rollback
-      ensure
+      #rescue => e
+        #msg = "Failed, Error: " + e.inspect
+        #raise ActiveRecord::Rollback
+      #ensure
         return msg
-      end
-    end
+      #end
+    #end
   end
 
   def load_results(apex_start_year, data)
@@ -1593,7 +1613,6 @@ module SimulationsHelper
       if i > 3 then
         year = tempa[7, 4].to_i
         subs = tempa[0, 5].to_i
-
         next if year < apex_start_year #take years greater or equal than ApexStartYear.
         if subs != 0 and subs != sub_ant then
           total_subs += 1
@@ -1647,23 +1666,23 @@ module SimulationsHelper
             add_value_to_chart_table(one_result.ymnu, 62, 0, year)
             add_value_to_chart_table(one_result.sed + one_result.ymnu, 60, 0, year)
             add_value_to_chart_table(one_result.pcp, 100, 0, year)
-          end
+          end   # end initial_chart
         else
           irri_sum += one_result.irri
           dprk_sum += one_result.dprk
           pcp += one_result.pcp
-        end
+        end  # end if sub == 0
 
         results_data.push(one_result)
       else
-        i+=1
-      end
-    end
+        i = i + 1
+      end   # end if i > 3
+    end   #end data.each_line
+
     msg = average_totals(results_data) # average totals
     msg = load_monthly_values(apex_start_year)
-    return msg
-    #todo activate this method. This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
-    update_results_table
+    #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
+    return update_results_table_with_fencing
   end
 
   def average_totals(results_data)
@@ -1718,59 +1737,62 @@ module SimulationsHelper
     return "OK"
   end
 
-  def update_results_table
+  def update_results_table_with_fencing
     no3 = 0
     po4 = 0
     org_n = 0
     org_p =0
 
-    bmp = Bmp.where(:scenario_id => session[:scenario_id], :bmpsublist_id => 10)
+    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 10)
+	if !(bmp.blank? || bmp == nil) then
+		total_manure = bmp.number_of_animals.to_f * bmp.hours.to_f / 24 * bmp.dry_manure
+		no3 += total_manure * bmp.days * bmp.no3_n
+		po4 += total_manure * bmp.days * bmp.po4_p
+		org_n += total_manure * bmp.days * bmp.org_n
+		org_p += total_manure * bmp.days * bmp.org_p
+		if session[:simulation] == 'scenario'
+		  soils = Soil.where(:field_id => session[:field_id], :selected => true)
+		  soils.each do |soil|
+			results = Result.where(:soil_id => soil.id, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+			results.each do |result|
+			  update_value_of_results(result, false, Field.find(session[:field_id]).field_area * (soil.percentage / 100), no3, po4, org_n, org_p)
+			  result.save
+			end
+		  end
+		end
+		if session[:simulation] == 'scenario'
+		  results = Result.where(:soil_id => 0, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+		else
+		  results = Result.where(:watershed_id => @watershed_id)
+		end
 
-    total_manure = bmp.number_of_animals * bmp.hours / 24 * bmp.dry_manure
-    no3 += total_manure * bmp.days * bmp.no3_n
-    po4 += total_manure * bmp.days * bmp.po4_p
-    org_n += total_manure * bmp.days * bmp.org_n
-    org_p += total_manure * bmp.days * bmp.org_p
-
-    if session[:simulation] == 'scenario'
-      soils = Soil.where(:field_id => session[:field_id], :soil_selected => true)
-      soils.each do |soil|
-        results = Result.where(:field_id => session[:field_id], :scenario_id => session[:scenario_id])
-        results.each do |result|
-          update_value_of_results(result, false)
-        end
-      end
-    end
-    if session[:simulation] == 'scenario'
-      results = Result.where(:soil_id => 0, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
-    else
-      results = Result.where(:watershed_id => @watershed_id)
-    end
-
-    results.each do |result|
-      update_value_of_results(result, true)
-    end
+		results.each do |result|
+		  update_value_of_results(result, true, Field.find(session[:field_id]).field_area, no3, po4, org_n, org_p)
+		  result.save
+		end
+	end  # end if bmp blank or nil
+	return "OK"
   end
 
-  def update_value_of_results(result, is_total)
-    if is_total
-      percentage = 1
-    else
-      percentage = soil.percentage / 100
-    end
+  def update_value_of_results(result, is_total, percentage, no3, po4, org_n, org_p)
+    #if is_total
+      #percentage = 1
+    #else
+      #percentage = soil.percentage / 100
+    #end
     case result.description_id
       when 20
-        result.value += no3 * percentage + org_n * percentage
+        result.value += no3 / percentage + org_n / percentage
       when 21
-        result.value += org_n * percentage
+        result.value += org_n / percentage
       when 22
-        result.value += no3 * percentage
+        result.value += no3 / percentage
       when 30
-        result.value += po4 * percentage + org_p * percentage
+        result.value += po4 / percentage + org_p / percentage
       when 31
-        result.value += org_p * percentage
+        result.value += org_p / percentage
       when 32
-        result.value += po4 * percentage
+        result.value += po4 / percentage
     end
   end
 
@@ -1822,39 +1844,42 @@ module SimulationsHelper
     #other water info = 50, irrigation = 51, deep percolation = 52
     #total sediment = 60, sediment = 61, manure erosion = 62
     for i in 0..values.count-1
-      values[i][0] == 0 ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
-      add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
-      if session[:simulation].eql?('scenario') then
-        case description_id #Total area for summary report is beeing calculated
-          when 4 #calculate total area
-            #todo
-          when 24 #calculate total N
-            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
-          when 33 #calculate total P
-            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
-          when 43 #calculate total flow
-            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
-          when 52 #calculate total other water info
-            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
-          when 62 #calculate total sediment
-            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-        end #end case when
-      else
-        case description_id #Total area for summary report is beeing calculated
-          when 4 #calculate total area
-            #todo
-          when 24 #calculate total N
-            add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
-          when 33 #calculate total P
-            add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
-          when 43 #calculate total flow
-            add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
-          when 52 #calculate total other water info
-            add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
-          when 62 #calculate total sediment
-            add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-        end #end case when
-      end # end if simulation == scenario
+	# todo. this is not taken the buffer subareas such as FS, WL, etc.
+	  if values[i][0] <= @soils.count then
+		  values[i][0] == 0 ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
+		  add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
+		  if session[:simulation].eql?('scenario') then
+			case description_id #Total area for summary report is beeing calculated
+			  when 4 #calculate total area
+				#todo
+			  when 24 #calculate total N
+				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
+			  when 33 #calculate total P
+				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
+			  when 43 #calculate total flow
+				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
+			  when 52 #calculate total other water info
+				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
+			  when 62 #calculate total sediment
+				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
+			end #end case when
+		  else
+			case description_id #Total area for summary report is beeing calculated
+			  when 4 #calculate total area
+				#todo
+			  when 24 #calculate total N
+				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
+			  when 33 #calculate total P
+				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
+			  when 43 #calculate total flow
+				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
+			  when 52 #calculate total other water info
+				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
+			  when 62 #calculate total sediment
+				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
+			end #end case when
+		  end # end if simulation == scenario
+	  end  # end if <= @soils 
     end #end for i
     return "OK"
   end
