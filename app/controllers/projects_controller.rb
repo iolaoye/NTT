@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
         when Field.where(:location_id => @location.id).count > 0 && Project.find(params[:id]).version == "NTTG3"  # load fields
 			redirect_to project_fields_path(@project)
         else # Load map
-			redirect_to location_path(@location.id)
+			redirect_to project_location_path(@project, @location)
     end # end case true
   end
 
