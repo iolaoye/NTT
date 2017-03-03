@@ -71,7 +71,10 @@ NTTG3::Application.routes.draw do
     resources :fields do
       resources :scenarios do
         post :simulate_all, on: :collection
-        get 'aplcat', on: :member
+        resources :aplcat_parameters do
+	        get 'aplcat', on: :member
+		end
+		resources :grazing_parameters
         post :simulate_checked, on: :collection
         resources :operations do
           get :list, on: :collection

@@ -2,6 +2,9 @@ class GrazingParametersController < ApplicationController
   # GET /grazing_parameters
   # GET /grazing_parameters.json
   def index
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+    @scenario = Scenario.find(params[:scenario_id])
     @grazing_parameters = GrazingParameter.where(:scenario_id => session[:scenario_id])
     respond_to do |format|
       format.html # index.html.erb

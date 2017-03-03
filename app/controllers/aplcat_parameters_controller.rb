@@ -25,22 +25,25 @@ class AplcatParametersController < ApplicationController
   # GET /aplcat_parameters/new.json
   def new
     @aplcat_parameter = AplcatParameter.new
-	@aplcat_parameter.scenario_id = params[:id]
+	@aplcat_parameter.scenario_id = params[:scenario_id]
 	@aplcat_parameter.save
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @aplcat_parameter }
-    end
+    #respond_to do |format|
+      #format.html # new.html.erb
+      #format.json { render json: @aplcat_parameter }
+    #end
   end
 
   # GET /aplcat_parameters/1/edit
   def edit
-  	if params[:type] == nil then
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+    @scenario = Scenario.find(params[:scenario_id])
+  	if params[:id] == nil then
 		@type = 1
 	else
-		@type = params[:type].to_i
+		@type = params[:id].to_i
 	end
-    @aplcat_parameter = AplcatParameter.find_by_scenario_id(params[:id])
+    @aplcat_parameter = AplcatParameter.find_by_scenario_id(params[:scenario_id])
 	if @aplcat_parameter == nil then
 		new()
 	end
@@ -50,10 +53,10 @@ class AplcatParametersController < ApplicationController
   # POST /aplcat_parameters.json
   def create
     @aplcat_parameter = AplcatParameter.new(aplcat_parameter_params)
-	@aplcat_parameter.scenario_id = session[:scenario_id]
+	@aplcat_parameter.scenario_id = params[:scenario_id]
     respond_to do |format|
       if @aplcat_parameter.save
-        format.html { redirect_to edit_aplcat_parameter_path(session[:scenario_id]), notice: 'Aplcat parameter was successfully created.' }
+        format.html { redirect_to edit_aplcat_parameter_path(params[:scenario_id]), notice: 'Aplcat parameter was successfully created.' }
         format.json { render json: @aplcat_parameter, status: :created, location: @aplcat_parameter }
       else
         format.html { render action: "new" }
@@ -65,10 +68,14 @@ class AplcatParametersController < ApplicationController
   # PATCH/PUT /aplcat_parameters/1
   # PATCH/PUT /aplcat_parameters/1.json
   def update
+    @type = params[:type]
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+    @scenario = Scenario.find(params[:scenario_id])
     @aplcat_parameter = AplcatParameter.find(params[:id])
     respond_to do |format|
       if @aplcat_parameter.update_attributes(aplcat_parameter_params)
-        format.html { redirect_to edit_aplcat_parameter_path(session[:scenario_id]), notice: 'Aplcat parameter was successfully updated.' }
+        format.html { redirect_to edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, @type), notice: 'Aplcat parameter was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

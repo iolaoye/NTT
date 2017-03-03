@@ -33,6 +33,7 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def index
+  ooo
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @errors = Array.new
