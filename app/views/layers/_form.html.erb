@@ -1,4 +1,4 @@
-<%= form_for(@layer) do |f| %>
+<%= form_for [@project, @field, @soil, @layer] do |f| %>
   <% if @layer.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @layer.errors.count, :model => t('models.layer').downcase) %></h2>
@@ -17,11 +17,11 @@
   </div>
   <div class="field">
     <%= f.label :soil_p, t('soil.soilp') %>
-	<% if @layer.depth > 3.95 %>
-		<%= f.number_field :soil_p, :class => 'numbers', min: 0, :step => 'any', :disabled => 'disabled'%>
-	<% else %>
+	<%# if @layer.depth > 3.95 %>
+		<%#= f.number_field :soil_p, :class => 'numbers', min: 0, :step => 'any', :disabled => 'disabled'%>
+	<%# else %>
 		<%= f.number_field :soil_p, :class => 'numbers', min: 0, :step => 'any' %>
-	<% end %>
+	<%# end %>
   </div>
   <div class="field">
     <%= f.label :bulk_density, t('soil.bulk_density') %>
@@ -50,6 +50,6 @@
   <div class="actions">
     <%#= f.submit "Finish", :name => "finish", :class => "btn btn-primary" %>
     <%= f.submit t('helpers.submit.submit'), :name => "add_more", :class => "btn btn-primary" %>
-    <%= link_to t('general.back'), soil_layers_soil_path(session[:soil_id]), :class => "btn btn-primary" %>
+    <%= link_to t('general.back'), project_field_soil_layers_path(@project, @field, @soil), :class => "btn btn-primary" %>
   </div>
 <% end %>

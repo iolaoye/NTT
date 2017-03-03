@@ -1,4 +1,4 @@
-<%= form_for(@weather) do |f| %>
+<%= form_for [@project, @field, @weather] do |f| %>
     <% case %>
 	<% when @weather.errors.any? %>
         <div id="error_explanation">
@@ -81,6 +81,6 @@
     </fieldset><br>
     <div class="actions">
       <%= f.submit t('weather.update'), name: 'update', :class => "btn btn-primary" %>
-      <%= link_to t('general.continue'), list_soil_path(session[:field_id]), :class => 'btn btn-success' %>
+      <%= link_to t('general.continue'), project_field_soils_path(@project, @field), :class => 'btn btn-success' %>
     </div>
 <% end %>

@@ -49,8 +49,14 @@ class Bmp < ActiveRecord::Base
 	  return pads_exists
   end #end function
 
-  def only_one_from_group #function WIP 
+  def only_one_from_group #function WIP
     errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
-      "bmpsublist_id == 12 && (bmpsublist_id == 13 || bmpsublist_id == 14 || bmpsublist_id ==15)"
+      "bmpsublist_id == 12 && (bmpsublist_id == 13 || bmpsublist_id == 14 || bmpsublist_id == 15)"
+    error.sadd(:bmpsublist_id, "cannot save bmps from the same group!") if
+      "bmpsublist_id == 13 && (bmpsublist_id == 12 || bmpsublist_id == 14 || bmpsublist_id == 15)"
+    error.sadd(:bmpsublist_id, "cannot save bmps from the same group!") if
+      "bmpsublist_id == 14 && (bmpsublist_id == 12 || bmpsublist_id == 13 || bmpsublist_id == 15)"
+    error.sadd(:bmpsublist_id, "cannot save bmps from the same group!") if
+      "bmpsublist_id == 15 && (bmpsublist_id == 12 || bmpsublist_id == 13 || bmpsublist_id == 14)"
   end #end function
 end

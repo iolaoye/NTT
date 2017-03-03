@@ -7,12 +7,12 @@
 
  <div class="page-header"><h1><%= t('menu.site') %></h1></div>
 <h1></h1>
-<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-default' %>
-<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.site'), sites_path(:id => session[:field_id]), :class => 'btn btn-primary' %><br><br>
+<%= link_to t('menu.control_file'), project_field_apex_controls_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.parameters_file'), project_field_apex_parameters_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.subarea_file'), project_field_subareas_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.apex_soil'), project_field_apex_soils_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.operation_file'), project_field_soil_operations_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.site'), project_field_sites_path(@project, @field), :class => 'btn btn-primary' %><br><br>
 <br>
 
 
@@ -49,9 +49,9 @@
 			  <td class="gvCellStyleNumber"><%= site.unr %></td>
 			  <td class="gvCellStyleNumber"><%= site.fir0 %></td>
 			  <td class="gvCellStyleActions">
-				<%= link_to image_tag("view.png"), site, title: t('general.show') %>
-				<%= link_to image_tag("edit.png"), edit_site_path(site), title: t('general.edit') %>
-				<%= link_to image_tag("delete.png"), site, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+				<%= link_to image_tag("view.png"), project_field_site_path(@project, @field, site), title: t('general.show') %>
+				<%= link_to image_tag("edit.png"), edit_project_field_site_path(@project, @field, site), title: t('general.edit') %>
+				<%= link_to image_tag("delete.png"), project_field_site_path(@project, @field, site), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
 			  </td>
 		    </tr>
 		  <% end %>
