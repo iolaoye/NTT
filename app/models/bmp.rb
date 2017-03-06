@@ -34,7 +34,7 @@ class Bmp < ActiveRecord::Base
     validates :sides, numericality: { greater_than: 0, less_than_or_equal_to: 4.0 }, if: "bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7"
     #validates_uniqueness_of :bmp_id, :scope => :scenario_id, :message => "of this group already exists", if: "bmp_id == 1 || bmp_id == 8"
     validates_uniqueness_of :bmp_id, :scope => :scenario_id, if: :pad_and_pipes_exists
-    validate :only_one_from_group, if: "bmpsublist_id == 12 || bmpsublist_id == 13 || bmpsublist_id == 14 || bmpsublist_id == 15"
+    validate :only_one_from_group
   #Functions
   def pad_and_pipes_exists
     if bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7
@@ -49,14 +49,24 @@ class Bmp < ActiveRecord::Base
 	  return pads_exists
   end #end function
 
-  def only_one_from_group #function WIP
+  def only_one_from_group
+    #pads & pipes
+    errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
+      "bmpsublist_id == 4 && (bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7)"
+    errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
+      "bmpsublist_id == 5 && (bmpsublist_id == 4 || bmpsublist_id == 6 || bmpsublist_id == 7)"
+    errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
+      "bmpsublist_id == 6 && (bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 7)"
+    errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
+      "bmpsublist_id == 7 && (bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6)"
+    #riparian forest, filter strip, waterway, countour buffer
     errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
       "bmpsublist_id == 12 && (bmpsublist_id == 13 || bmpsublist_id == 14 || bmpsublist_id == 15)"
-    error.sadd(:bmpsublist_id, "cannot save bmps from the same group!") if
+    errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
       "bmpsublist_id == 13 && (bmpsublist_id == 12 || bmpsublist_id == 14 || bmpsublist_id == 15)"
-    error.sadd(:bmpsublist_id, "cannot save bmps from the same group!") if
+    errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
       "bmpsublist_id == 14 && (bmpsublist_id == 12 || bmpsublist_id == 13 || bmpsublist_id == 15)"
-    error.sadd(:bmpsublist_id, "cannot save bmps from the same group!") if
+    errors.add(:bmpsublist_id, "cannot save bmps from the same group!") if
       "bmpsublist_id == 15 && (bmpsublist_id == 12 || bmpsublist_id == 13 || bmpsublist_id == 14)"
   end #end function
 end
