@@ -2,18 +2,6 @@
   <script src="assets/javascripts/gen_validatorv4.js" type="text/javascript"></script>
 </head>
 <%= form_for :bmp, :html => { :id => "bmpsForm" }, :url => save_bmps_project_field_scenario_bmps_path(@project, @field, @scenario), method: :post do %>
-  <% @bmps.each do |bmp| %>
-    <% if bmp.errors.any? %>
-      <div id="errorExplanation">
-        <h2><%= pluralize(bmp.errors.count, "error") %> prohibited this record from being saved:</h2>
-        <ul>
-        <% bmp.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
-  <% end %>
   <div class="page-header">
     <h1><%= t('menu.bmps') %></h1>
   </div>

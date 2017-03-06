@@ -63,13 +63,13 @@ module ApplicationHelper
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
 			true
 		elsif current_page?(url_for(:controller => 'aplcat_parameters', :action => 'edit'))
-			@scenario_name = Scenario.find(session[:scenario_id]).name
+			@scenario_name = Scenario.find(params[:scenario_id]).name
 			true
 		elsif request.url.include?(url_for("/aplcat_parameters"))
-			@scenario_name = Scenario.find(session[:scenario_id]).name
+			@scenario_name = Scenario.find(params[:scenario_id]).name
 			true
 		elsif request.url.include?(url_for("/grazing_parameters"))
-			@scenario_name = Scenario.find(session[:scenario_id]).name
+			@scenario_name = Scenario.find(params[:scenario_id]).name
 			true
 		else
 			false
