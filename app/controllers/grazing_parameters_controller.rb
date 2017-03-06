@@ -1,11 +1,16 @@
 class GrazingParametersController < ApplicationController
-  # GET /grazing_parameters
-  # GET /grazing_parameters.json
-  def index
+  before_filter :set_params
+
+  def set_params
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-    @grazing_parameters = GrazingParameter.where(:scenario_id => session[:scenario_id])
+  end
+
+  # GET /grazing_parameters
+  # GET /grazing_parameters.json
+  def index
+    @grazing_parameters = GrazingParameter.where(:scenario_id => params[:scenario_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @grazing_parameters }
@@ -43,10 +48,10 @@ class GrazingParametersController < ApplicationController
   # POST /grazing_parameters.json
   def create
     @grazing_parameter = GrazingParameter.new(grazing_parameter_params)
-	@grazing_parameter.scenario_id = session[:scenario_id]
+	@grazing_parameter.scenario_id = params[:scenario_id]
     respond_to do |format|
       if @grazing_parameter.save
-        format.html { redirect_to @grazing_parameter, notice: 'Grazing parameter was successfully created.' }
+        format.html { redirect_to project_field_scenario_grazing_parameters_path(@project, @field, @scenario), notice: 'Grazing parameter was successfully created.' }
         format.json { render json: @grazing_parameter, status: :created, location: @grazing_parameter }
       else
         format.html { render action: "new" }
@@ -62,7 +67,7 @@ class GrazingParametersController < ApplicationController
 
     respond_to do |format|
       if @grazing_parameter.update_attributes(grazing_parameter_params)
-        format.html { redirect_to @grazing_parameter, notice: 'Grazing parameter was successfully updated.' }
+        format.html { redirect_to project_field_scenario_grazing_parameters_path(@project, @field, @scenario), notice: 'Grazing parameter was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -78,7 +83,7 @@ class GrazingParametersController < ApplicationController
     @grazing_parameter.destroy
 
     respond_to do |format|
-      format.html { redirect_to grazing_parameters_url }
+        format.html { redirect_to project_field_scenario_grazing_parameters_path(@project, @field, @scenario), notice: 'Grazing parameter was successfully updated.' }
       format.json { head :no_content }
     end
   end
