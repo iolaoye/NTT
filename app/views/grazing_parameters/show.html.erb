@@ -18,5 +18,5 @@
 
 <p><b>Green water footprint:</b><%= @grazing_parameter.green_water_footprint %></p>
 
-<%= link_to 'Edit', edit_grazing_parameter_path(@grazing_parameter) %> |
-<%= link_to 'Back', grazing_parameters_path %>
+<%= link_to 'Edit', edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, @grazing_parameter.id), :class => "btn btn-primary" %> 
+<%= link_to 'Back', project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :class => "btn btn-primary" %>
