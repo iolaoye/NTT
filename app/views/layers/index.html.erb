@@ -1,0 +1,159 @@
+<% case %>
+<% when notice %>
+	<div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
+<% when flash[:info] %>
+	<div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:info] %>
+    </div>
+<% end %>
+
+<% if Rails.application.config.which_version == "modified" %>
+<div class="page-header"><h1><!--<%= t('general.listing') + " " + t('soil.layers') %>-->Soil Layers</h1></div>
+<%= link_to t('general.back') + " " + t('general.to') + " " + t('menu.soils'), project_field_soils_path(@project, @field), :class => 'btn btn-primary' %>
+<%= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br><br>
+
+<b><%= @soil.name %></b> <br><br>
+  <div class="field">
+    <%= t('soil.key') %>: <%= @soil.key %>
+  </div>
+
+  <div class="field">
+    <%= t('soil.symbol') %>: <%= @soil.symbol %>
+  </div>
+
+  <div class="field">
+    <%= t('soil.group') %>: <%= @soil.group %>
+  </div>
+
+  <div class="field">
+    <%= t('soil.albedo') %>: <%= @soil.albedo %>
+  </div>
+
+  <div class="field">
+    <%= t('soil.slope') %>: <%= @soil.slope %>
+
+  </div>
+  <div class="field">
+    <%= t('soil.percentage') %>: <%= @soil.percentage %>
+
+  </div>
+  <div class="field">
+    <%= t('soil.drainage_type') %>: <%= Drainage.find(@soil.drainage_id).name %>
+
+  </div>
+
+<br><br>
+<div class="table-responsive">
+	<div class="panel panel-default">
+		<table class='table table-striped'>
+			<thead>
+			  <tr>
+			    <th><%= t('soil.depth') %></th>
+			    <th><%= t('soil.soilp') %></th>
+			    <th><%= t('soil.bulk_density') %></th>
+			    <th><%= t('soil.sand') %></th>
+			    <th><%= t('soil.silt') %></th>
+			    <th><%= t('soil.clay') %></th>
+			    <th><%= t('soil.organic_matter') %></th>
+			    <th><%= t('soil.ph') %></th>
+			    <th><%=t('general.actions')%></th>
+			  </tr>
+			</thead>
+			<tbody>
+		  	<% i=1 %>
+		    <% @layers.each do |layer| %>
+		      <% if (i % 2  == 0) %>
+			      <tr class="gvRowStyleEven">
+			         <td class="gvCellStyleNumber"><%= layer.depth %></td>
+			         <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+			         <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
+			         <td class="gvCellStyleNumber"><%= layer.sand %></td>
+			         <td class="gvCellStyleNumber"><%= layer.silt %></td>
+			         <td class="gvCellStyleNumber"><%= layer.clay %></td>
+			         <td class="gvCellStyleNumber"><%= layer.organic_matter %></td>
+			         <td class="gvCellStyleNumber"><%= layer.ph %></td>
+			         <td>
+			            <%= link_to image_tag("edit.png"), edit_project_field_soil_layer_path(@project, @field, @soil, layer), title: t('general.edit') %>
+							<%= link_to image_tag("delete.png"), project_field_soil_layer_path(@project, @field, @soil, layer), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+			         </td>
+			      </tr>
+		      <% else %>
+			      <tr class="gvRowStyleOdd">
+			         <td class="gvCellStyleNumber"><%= layer.depth %></td>
+			         <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+			         <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
+			         <td class="gvCellStyleNumber"><%= layer.sand %></td>
+			         <td class="gvCellStyleNumber"><%= layer.silt %></td>
+			         <td class="gvCellStyleNumber"><%= layer.clay %></td>
+			         <td class="gvCellStyleNumber"><%= layer.organic_matter %></td>
+			         <td class="gvCellStyleNumber"><%= layer.ph %></td>
+			         <td>
+			            <%= link_to image_tag("edit.png"), edit_project_field_soil_layer_path(@project, @field, @soil, layer), title: t('general.edit') %>
+							<%= link_to image_tag("delete.png"), project_field_soil_layer_path(@project, @field, @soil, layer), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+			         </td>
+			      </tr>
+		      <% end %>
+		    	<% i = i + 1 %>
+		   	<% end %>
+		  </tbody>
+		</table>
+	</div>
+</div>
+
+
+<% else %>
+
+<div class="page-header"><h1><%= t('soil.layers') %></h1></div>
+<%= link_to t('general.new') + ' ' + t('soil.layer'), new_project_field_soil_layer_path, :class => 'btn btn-primary' %>
+<%= link_to t('general.back') + " " + t('general.to') + " " + t('menu.soils'), project_field_soils_path(@project, @field), :class => 'btn btn-primary' %>
+<%= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %>
+<br><br>
+<div class="table-responsive">
+	<div class="panel panel-default">
+		<table class='table table-striped'>
+			<thead>
+			  <tr>
+			    <th><%= t('soil.depth') %></th>
+			    <th><%= t('soil.soilp') %></th>
+			    <th><%= t('soil.bulk_density') %></th>
+			    <th><%= t('soil.sand') %></th>
+			    <th><%= t('soil.silt') %></th>
+			    <th><%= t('soil.clay') %></th>
+			    <th><%= t('soil.organic_matter') %></th>
+			    <th><%= t('soil.ph') %></th>
+			    <th><%=t('general.actions')%></th>
+			  </tr>
+			</thead>
+			<tbody>
+		  		<% i=1 %>
+				<% @layers.each do |layer| %>
+				  <% if (i % 2  == 0) %>
+					  <tr class="gvRowStyleEven">
+				  <% else %>
+					  <tr class="gvRowStyleOdd">
+				  <% end %>
+						<td class="gvCellStyleNumber"><%= layer.depth %></td>
+						<td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+						<td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
+						<td class="gvCellStyleNumber"><%= layer.sand %></td>
+						<td class="gvCellStyleNumber"><%= layer.silt %></td>
+						<td class="gvCellStyleNumber"><%= layer.clay %></td>
+						<td class="gvCellStyleNumber"><%= layer.organic_matter %></td>
+						<td class="gvCellStyleNumber"><%= layer.ph %></td>
+						<td>
+							<%= link_to image_tag("edit.png"), edit_project_field_soil_layer_path(@project, @field, @soil, layer), title: t('general.edit') %>
+							<%= link_to image_tag("delete.png"), project_field_soil_layer_path(@project, @field, @soil, layer), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+						</td>
+					  </tr>
+		    		<% i = i + 1 %>
+		   	   <% end %>
+		  </tbody>
+		</table>
+	</div>
+</div>
+
+<% end %>

@@ -19,6 +19,7 @@ class ResultsController < ApplicationController
   end
   ###############################  SUMMARY ###################################
   def summary
+    @project = Project.find(params[:project_id])
 	@type = t("result.summary")
 	index
 	render "index"
@@ -45,7 +46,8 @@ class ResultsController < ApplicationController
     @total_area = 0
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 70 OR id > 79")
-    @project_name = Project.find(session[:project_id]).name
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     if session[:simulation].eql?('scenario') then
       @total_area = Field.find(session[:field_id]).field_area
       @field_name = Field.find(session[:field_id]).field_name
@@ -257,16 +259,7 @@ class ResultsController < ApplicationController
     end # if format is pdf
   end
 
-  #def download
-  #respond_to do |format|
-  #format.pdf do
-  #render pdf: "tester",
-  #layout: "pdf",
-  #template: "/results/tester"
-  #end
-  #end 
-  # results?result1%5Bscenario_id%5D=4&result2%5Bscenario_id%5D=5&result3%5Bscenario_id%5D=&language%5Blanguage%5D=en&field%5Bid%5D=3
-  # results?result1%5Bscenario_id%5D=4&result2%5Bscenario_id%5D=5&result3%5Bscenario_id%5D=&language%5Blanguage%5D=en&field%5Bid%5D=3
+
   # GET /results/1
   # GET /results/1.json
   def show

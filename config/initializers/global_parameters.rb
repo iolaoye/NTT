@@ -11,10 +11,10 @@
 	VERSION = "NTTG3"
 
 # URL to send information to NTT, which return the results
-	URL_NTT = 'http://nn.tarleton.edu/NttApex/NNRestService.ashx'
+	#URL_NTT = 'http://nn.tarleton.edu/NttApex/NNRestService.ashx'  No being used
 
 # URL to get heat units
-	URL_HU = 'http://nn.tarleton.edu/NTTCalcHU/NTTService.asmx?WSDL'
+	URL_HU = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
 # URL to get weather information
 	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
@@ -33,6 +33,8 @@
 
 #folder for Prism weather, wind, and wp1 files
 	PRISM = 'E:/Weather/weatherFiles/US'
+	PRISM1 = 'E:/Weather/weatherFiles/1981-2015'
+	PRISM2 = 'E:/Weather/weatherFiles/borrar'
 	WP1 = 'E:/Weather/wp1File'
 	WIND = 'E:/Weather/wndFile'
 
@@ -61,6 +63,7 @@
 
 #convertion values
 	AC_TO_HA = 0.404685645
+	AC_TO_FT2 = 43560
 	FT_TO_M = 0.3048
 	FT_TO_KM = 0.0003048
 	FT_TO_HA = 0.0000093
@@ -75,7 +78,7 @@
 	T_STATISTIC_EVALUATED = 1.645
 	FT2_TO_M2 = 0.092903
 	FT_TO_MM = 304.8
-	AC_TO_KM2 = 0.0040468564224
+	AC_TO_KM2 = 0.00404685643
 	KM2_TO_HA = 247.10538147
 	HA_TO_M2 = 10000
 	KM_TO_M = 1000

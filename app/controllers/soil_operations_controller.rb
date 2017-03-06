@@ -2,7 +2,8 @@ class SoilOperationsController < ApplicationController
   # GET /soil_operations
   # GET /soil_operations.json
   def index
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
   	@soil = 0
   	@scenario = 0
     soils = Soil.where(:field_id => session[:field_id])
@@ -85,6 +86,10 @@ class SoilOperationsController < ApplicationController
       format.html { redirect_to soil_operations_url }
       format.json { head :no_content }
     end
+  end
+
+  def download
+	download_apex_files()
   end
 
   private

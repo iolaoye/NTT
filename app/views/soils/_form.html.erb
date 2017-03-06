@@ -1,4 +1,4 @@
-<%= form_for (@soil) do |f| %>
+<%= form_for [@project, @field, @soil] do |f| %>
   <% if @soil.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @soil.errors.count, :model => t('models.soil').downcase) %></h2>

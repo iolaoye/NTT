@@ -1,8 +1,11 @@
+  include ApplicationHelper
+
 class ApexControlsController < ApplicationController
   # GET /apex_controls
   # GET /apex_controls.json
   def index
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
   	@apex_controls = ApexControl.includes(:control_description).where(:project_id => session[:project_id])
     respond_to do |format|
       format.html # index.html.erb
@@ -102,6 +105,10 @@ class ApexControlsController < ApplicationController
 		end
     end
     redirect_to apex_controls_url, notice: t('models.apex_control') + " " + t('general.reset')
+  end
+
+  def download
+	download_apex_files()
   end
 
   private

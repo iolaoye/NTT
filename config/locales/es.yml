@@ -1,4 +1,6 @@
-﻿es:
+﻿# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+es:
   activerecord:
     form_errors:
         one: No se pudo guardar este/a %{model} porque se encontró un error
@@ -9,9 +11,16 @@
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"
+        projects:
+          no_saved: "Projecto no pudo ser salvado"
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
+    notices:
+       messages:
+          saved: "%{model} Salvado"
+          created: "%{model} Creado"
+          deleted: "%{model} Borrado"
     models:
       project: "Proyecto"
       location: "Ubicación"
@@ -37,7 +46,8 @@
         soil: "Suelos"
         layer: "Capas"
         operation: "Operaciones"
-        site: "Sitio"  
+        site: "Sitio"
+        download: Bajar
     attributes:
       project:
         name: "Nombre"
@@ -285,13 +295,13 @@
   helpers:
     select:
       prompt: Por favor seleccione
-      field: Seleccione la Parcela 
+      field: Seleccione la Parcela
       scenario: Seleccione el Scenario
     submit:
       create: Salvar
       submit: Salvar
       update: Salvar
-      savecontinue: Salvar y Continuar     
+      savecontinue: Salvar y Continuar
     label:
       project:
         name: Nombre
@@ -392,7 +402,8 @@
     confirm: ¿Está seguro?
     begin: Empezar
     to: a
-  welcome_note: 
+    copy: copiar
+  welcome_note:
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
     note2: '2.	Esta versión de NTT esta escrita tanto en Inglés como en Español.'
@@ -479,15 +490,15 @@
     silt: Limo
     clay: Arcilla
     organic_matter: Materia Orgánica
-    ph: PH  
-    select_soil: Seleccione Suelo 
+    ph: PH
+    select_soil: Seleccione Suelo
     load_soil: Cargar Suelo
     create_soil: Crear Suelo
   layer:
     new_layer: Nueva Capa
     create_layer: Crear Capa
     layer_number: Número de Capa
-    more_than: mas de 
+    more_than: mas de
     sum: 'Arcilla, arena, y limo debe añadir un máximo de 100 porcentaje'
     error_depth: 'La profundidad es obligatorio y debe ser mayor que 0. '
   scenario:
@@ -526,7 +537,7 @@
     saved: 'Sistema de Cultivo guardado'
   bmp:
     bmp_group: Grupo de BPG
-    select_bmp:  Seleccione Grupo de BPG   
+    select_bmp:  Seleccione Grupo de BPG
     create_bmp: Crear BPG
     zero_to_one: "(0.00 - 1.00)"
     zero_to_max: "(0.00 – 99999.00)"
@@ -578,6 +589,7 @@
     fill: Duplicar
     select_vege: Seleccione la Vegetación
     select_animal: Seleccione el tipo de Animal
+    manure_control: Manure Control
   months:
     january: Enero
     february: Febrero
@@ -683,7 +695,7 @@
     user: Usuario
   subarea:
     subarea_type: Tipo de Subárea
-    subarea_number: Número Subárea 
+    subarea_number: Número Subárea
     subarea_description: Descripción de subárea
     select_subarea: Seleccione Subárea
     load_subarea: Cargar Subárea
@@ -743,14 +755,14 @@
     getstarted1: Requisitos de Sistema
     getstarted2: Conceptos Básicos de Navegación
     getstarted3: Página del Proyecto
-    getstarted4: Página de Ubicación 
-    getstarted5: Página del Clima 
-    getstarted6: Página de Parcela 
-    getstarted7: Página de Suelos 
+    getstarted4: Página de Ubicación
+    getstarted5: Página del Clima
+    getstarted6: Página de Parcela
+    getstarted7: Página de Suelos
     getstarted8: Página del Gestión
     getstarted9: Página del Cuenca
     getstarted10: Página del Simulación
-    getstarted11: Página de resultados 
+    getstarted11: Página de resultados
     getstarted12: Página de Archivos APEX
     understanding: La Comprensión de NTT
     understanding1: APEX
@@ -853,6 +865,130 @@
     difference: Diferencia
     reduction: Reducción
     total_area: Área Total
+  aplcat:
+      noc: Número de Vacas
+      nomb: Número de toros maduros
+      norh: Número de novillas de reemplazo
+      abwc: Peso corporal promedio de las vacas (lb)
+      abwmb: Peso corporal promedio de los toros maduros (lb)
+      abwh: Peso corporal promedio de las novillas (lb)
+      prh: Proporción novillas de reemplazo (%)
+      prb: Proporción toros de reemplazo (%)
+      adwgbc: Aumento promedio de peso diario (lb) por terneros/ganado en crecimiento
+      adwgbh: Aumento promedio de peso diario (lb) by novillas
+      mrga: Tasa de mortalidad en crecimiento de animales (%)
+      jdcc: Día juliano en que las vacas conciben
+      gpc: Período de gestación de las vacas
+      tpwg: Total pregnancy weight gain (lb)
+      csefa: Terneros empiezan a comer forraje (days)
+      srop: Rata de embarazos exitosos (%)
+      bwoc: Peso de los terneros al nacer (lb)
+      jdbs: Día juliano de compra/venta
+      dmd: Digestibilidad de la materia seca (DMD) (%)
+      dmi: "DMI (% de peso corporal)"
+      napanr: Tasa de población en el rango nativo. Número de animales / acre
+      napaip: Tasa de almacenamiento en pastos introducidos. Número de animales / acre
+      mpsm: Humedad presente en el abono sólido (%)
+      splm: Sólidos presentes en el abono líquido (orina) (%)
+      pmme: Proporción de abono (sólido + líquido) evaporado (%)
+      rhaeba: Humedad relativa del aire exhalado por los animales (%)
+      toaboba: Temperatura del aire respirado por los animales (grados F)
+      vsim: Sólidos volátiles en abono [kg de materia orgánica seca]
+      foue: Fracción de la energía urinaria expresada como fracción de GE
+      ash: Contenido de ceniza en el estiércol (fracción de la ingesta de materia seca)
+      mmppfm: Potencial máximo de producción de metano para el abono (Bo)
+      cfmms: Conversion factor for manure management system
+      fnemimms: Fraction of nitrogen excretion managed in manure management system
+      effn2ofmms: Emission factor for direct N2O emissions from manure management system
+      dwawfga: Drinking water adjustment factor for weight:Growing animals
+      dwawflc: Drinking water adjustment factor for weight:Lactating cows
+      dwawfmb: Drinking water adjustment factor for weight:Mature bulls
+      pgu: Proporción de agua subterránea utilizada (%) en la producción animal
+      ada: Profundidad media del acuífero (ft)
+      ape: Rendimiento medio de bombeo (%)
+      platc: Proporción de animales vivos con respecto a la carcasa (%)
+      pctbb: Proporción de carcasa a la carne deshuesada (%)
+      ptdife: Proporción (para subproductos de la carne de vacuno) que se descontará en la estimación de la huella
+      tnggbc: Número total de pastos pastoreados por el ganado
+      animal_paramters: Parámetros de los Animales
+      animal_manure_parameters: Parámetros de abono animal
+      animal_growth_parameters: Parámetros de crecimiento y nutrición de los animales
+      environmental_parameters: Parámetros del medio ambiente
+      greenhouse_parameters: Parámetros Invernaderos
+      water_use_pumping_parameters: Parámetros del uso y bombeo del agua
+      other_parameters: Otros Parámetros
+      animal_feed_parameters: Parámetros del alimento de los animales
+      avg_temp: Temperatura promedio diaria for cada mes
+      avg_rh: Humedad relativa diaria por cas mes
+      grazing: Pastoreo
+  aplcat_tooltip:
+      noc: Número total de vacas in la finca bajo el sistema vaca-ternera
+      nomb: 'Total number of Bulls in the farm under Cow-Calf system'
+      norh: 'Total number of female animals kept by the producer as a replacement for the cows sold'
+      abwc: 'Body weight of Cows in pounds'
+      abwmb: 'Body weight of Bulls in pounds'
+      abwh: 'Body weight of Heifers in pounds'
+      prh: 'A value of 10  % means Cows live in the Cow-Calf system for ten years before slaughter'
+      prb: 'A value of 20  % means Bulls live in the Cow-Calf system for five years before slaughter'
+      adwgbc: 'Weight gain by Calves and growing cattle in lb/day'
+      adwgbh: 'Weight gain by Heifers in lb/day'
+      mrga: 'Likely proportion of dead animals in the growing cattle in the Cow-Calf system'
+      jdcc: 'Date/Julian day of Cows conceiving (Date will be converted to Julian day from 1 to 365)'
+      gpc: 'Typical total duration (in days) of pregnancy in Cows'
+      tpwg: 'Maximum weight gain by cows during their pregnancy in pounds'
+      csefa: 'Young calves typically start grazing forage three months after their birth'
+      srop: 'Not all cows in the farm can have a successful pregnancy'
+      bwoc: 'Birth weight of calves in pounds'
+      jdbs: 'Date/Julian day of buying/selling animals'
+      dmd: 'Dry Matter Digestibility (DMD): Varies with different animal feed items'
+      dmi: 'Dry Matter Intake (DMI) as a proportion (%) of body weight of animals'
+      napanr: 'Total number of animals allowed to graze an acre of native range (Headcount/ac)'
+      napaip: 'Total number of animals allowed to graze an acre of introduced pasture (Headcount/ac)'
+      mpsm:
+      splm:
+      pmme:
+      rhaeba:
+      toaboba:
+      vsim:
+      foue:
+      ash:
+      mmppfm:
+      cfmms:
+      fnemimms:
+      effn2ofmms:
+      dwawfga:
+      dwawflc:
+      dwawfmb:
+      pgu:
+      ada:
+      ape:
+      platc:
+      pctbb:
+      ptdife:
+      tnggbc:
+      animal_paramters:
+      animal_manure_parameters:
+      animal_growth_parameters:
+      environmental_parameters:
+      greenhouse_parameters:
+      water_use_pumping_parameters:
+      other_parameters:
+      animal_feed_parameters:
+  graze:
+    total: 'Total number of grasses grazed by cattle'
+    code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
+    sjd: 'Starting julian day of grazing'
+    ejd: 'Ending julian day of grazing'
+    dmi_code: 'Dry Matter Intake (DMI) code Use 1: Prop. of animal weight 2: Absolute rates 3:Estimate'
+    dmi_cows: 'DMI of cows (% of animal bodyweight (OR) lb/day)'
+    dmi_bulls: 'DMI of bulls (% of animal bodyweight (OR) lb/day)'
+    dmi_heifers: 'DMI of heifers (% of animal bodyweight (OR) lb/day)'
+    dmi_calves: 'DMI of calves (% of animal bodyweight (OR) lb/day)'
+    gwf: 'Green water footprint (L/kg)'
+    ln1: 'Line 1: Total number of animal feed cattle have access to'
+    ln2: 'Animal feed code (refer to feed composition table file "FCT-NASEM-2016.txt")'
+    ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
+    ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   instructions:
     projects: Para seleccionar un proyecto, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
@@ -865,7 +1001,7 @@
         windows: '<b>Windows:</b> X86 o X64 1.6 GHz o con un procesador más alto de 512-MB de RAM'
         mac: '<b>Macintosh (Intel-based):</b> Intel Core Duo 1.86 GHz o con un procesador más alto de 512-MB de RAM'
     webbrowsers:
-        header: Supported Web Browsers
+        header: Navegadores compatibles
         statement: 'la Nutrient Tracking Tool <b>(NTT)</b> ha sido probado en los siguientes navegadores:'
         mac: 'Apple Macintosh OS 10.5.7+ (Intel-based):'
         win81: 'Microsoft Windows 8.1 Desktop:'
@@ -935,6 +1071,13 @@
     textarea:
         header: Área de texto
         body: 'Haga clic en un área de texto para introducir una o más líneas de información como se muestra en este ejemplo:'
+  validate:
+    required: Requerido campo(s) que falta en
+    input_greater:  Input must be greater than
+    input_lessthan: Input must be less than
+    input_greaterequal: Input must be greater than or equal to
+    input_lessequal:  Input must be less than or equal to
+    checkbox: Checkbox must be checked
   projpage:
     header: Iniciar un Proyecto
     statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'
@@ -959,7 +1102,7 @@
         body2: 'Después de haber introducido la información, haga clic a <b>Salvar y Continuar</b> para salvar la información y continuar.'
     save:
         header: Save Active Project
-        body: 'También se puede utilizar <b>Salvar Proyecto Activo...</b> botón para salvar el proyecto actual con el que el usuario trabajando.' 
+        body: 'También se puede utilizar <b>Salvar Proyecto Activo...</b> botón para salvar el proyecto actual con el que el usuario trabajando.'
         note: '<b>Importante:</b> si el usuario cargo sus propios archivos de clima, es importante cargar estos y simular de nuevo, estos archivos no son salvado con el proyecto original cuando este proyecto es salvado.'
     close:
         header: Close Active Project
@@ -1017,9 +1160,7 @@
         body2: 'After you have entered the location, the State and County you selected (or the General and Specific location) will show up on the top of the screen (along with the project name) for the remainder of the program. An example is shown below:'
   weathpage:
     header: Weather Page
-    overview:
-        header: Overview
-        body: 'Depending on the particular method that was chosen in the previous (Location) page, the user has different options available when choosing the weather. Only the options that are actually available to the user (depending on the method selected) will show up as selections. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.'
+    body: 'Depending on the particular method that was chosen in the previous (Location) page, the user has different options available when choosing the weather. Only the options that are actually available to the user (depending on the method selected) will show up as selections. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.'
     selectinfo:
         header: Selecting Weather Information
         body: 'There are four different methods to select the weather information. However, the options available depend on the selection made for the Location method in the previous page.'
@@ -1051,10 +1192,8 @@
         body: 'The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>'
   fieldpage:
     header: Fields Page
-    overview:
-        header: Overview
-        body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
-        body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
+    body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
+    body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
     createdel:
         header: Creating/Deleting a Field
         create:
@@ -1072,9 +1211,8 @@
         area:
             header: Changing the Field Area
             body: 'The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 0.00) and type in the correct area, as shown below:'
-    advance:
-        header: Advancing
-        body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. Once all of the fields and corresponding information has been entered, the user can click <strong>Save and Continue</strong> to save the information and continue to the Soils page.'
+    advance: Advancing
+    advance_body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. Once all of the fields and corresponding information has been entered, the user can click on the "Field Name" of a field from the list by which they can gain access to the weather, soils, scenarios, results, and apex page.'
   soilpage:
     header: Soils Page
     overview:
@@ -1191,7 +1329,7 @@
         body: 'Below are the descriptions of the different BMPs that are available under NTT. The heading is the group under which you can find the BMPs and the text in bold is the actual BMP.'
         auto:
             header: 'Auto Irrigation and Fertigation'
-            irrigation: 
+            irrigation:
                 header: 'Auto Irrigation'
                 body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
                 item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
@@ -1219,7 +1357,7 @@
             pp2stage:
                 header: 'Pads and Pipes - Two Stage Ditch System'
                 body1: 'This particular method of Pads and Pipes is very similar to the Pads and Pipes – No Ditch Improvement (see above for more information). The main difference is that using this method improves the ditch, creating a collection of water inside the ditch before the water is drained. The inputs for this method are the same as Pads and Pipes – No Ditch Improvement (see above).'
-            ppreservoir: 
+            ppreservoir:
                 header: 'Pads and Pipes – Ditch Enlargement and Reservoir System'
                 body1: 'This particular method of pads and pipes is very similar to the Pads and Pipes – Two Stage Ditch System. This method also has an improved ditch system. However, in this method, the water in the ditch is drained into a reservoir system. The inputs are the same as Pads and Pipes – No Ditch Improvement, with one additional input:'
                 item1: '<strong>Reservoir Area (ac.):</strong> This is the reservoir area in acres. Since this area is being used a reservoir, crops cannot be grown in this area.'
@@ -1457,7 +1595,7 @@
                 </ul>
                 <p>Para subir su propio archivo de clima, seleccione <strong><em>Usar su propio archivo del Clima</em></strong> y después has clic en <strong><em>Choose File</em></strong>, después seleccione el archivo de clima de su equipo y, finalmente, haga clic en Abrir. Despues, seleccione <strong><em>Actualizar el Clima</em></strong> para finalizar los cambios.</p>
                 <p><strong>Nota:</strong> Tenga en cuenta que si carga su propio archivo de clima, no se guardará al guardar el proyecto. Si sube un proyecto previamente guardado y utilizó la posibilidad de subir su propio archivo de clima, tendrá que cargar el archivo de clima de nuevo, pero para seguridad, debe simular cualquier escenario de nuevo.</p>
-    soils: > 
+    soils: >
                 La página de suelos permite al usuario crear o ver los suelos para cada parcela. Ellos (los tres suelos dominantes) son automáticamente subido basado en el área de interés y los campos seleccionados.<br><br>
                 Ahora tiene un par de opciones
                 <ol>
@@ -1486,7 +1624,7 @@
                 Para <strong>Simular</strong> un escenario, seleccione el folder con el engranaje debajo de <strong>Opciones</strong>.<br>
                 Para <strong>Editar</strong> un escenario, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
                 Para <strong>Borrar</strong> un escenario, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
-    results: > 
+    results: >
                 Después de que los escenarios se han simulado los resultados para ese escenario estan listo para ver.
                 Aquí puede comparar escenarios, o simplemente mostrar un escenario. Las siguientes comparaciones son posibles.
                 <ul>
@@ -1568,4 +1706,4 @@
                 <p><strong>Nota:</strong> Por defecto, el primer suelo y el primer escenario se cargan automáticamente</p>
     sites: >
                 Esta es toda la información sobre el sitio de APEX.<br><br>
-                Para <strong>Editar</strong> este sitio, seleccione <strong><em>Editar</em></strong> 
+                Para <strong>Editar</strong> este sitio, seleccione <strong><em>Editar</em></strong>

@@ -3,7 +3,8 @@ class SitesController < ApplicationController
   # GET /sites.json
   def index
     @sites = Site.where(:field_id => session[:field_id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -82,6 +83,10 @@ class SitesController < ApplicationController
       format.html { redirect_to sites_url, notice: t('models.site') + "" + t('notices.deleted') }
       format.json { head :no_content }
     end
+  end
+
+  def download
+	download_apex_files()
   end
 
   private

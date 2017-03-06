@@ -3,8 +3,9 @@
   # GET /soils
   # GET /soils.json
   def index
-    @soils = Soil.where(:field_id => session[:field_id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+    @soils = @field.soils
 
     respond_to do |format|
       format.html # index.html.erb
@@ -81,6 +82,10 @@
       format.html { redirect_to list_soil_path(@soil.field_id) }
       format.json { head :no_content }
     end
+  end
+
+  def download
+	download_apex_files()
   end
 
   private

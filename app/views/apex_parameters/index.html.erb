@@ -7,12 +7,12 @@
     </div>
 <% end %>
 
-<%= link_to t('menu.control_file'), apex_controls_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.parameters_file'), apex_parameters_path, :class => 'btn btn-primary' %>
-<%= link_to t('menu.subarea_file'), subareas_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.apex_soil'), apex_soils_path(:id => session[:field_id]), :class => 'btn btn-default' %>
-<%= link_to t('menu.operation_file'), soil_operations_path, :class => 'btn btn-default' %>
-<%= link_to t('menu.site'), sites_path(:id => session[:field_id]), :class => 'btn btn-default' %>
+<%= link_to t('menu.control_file'), project_field_apex_controls_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.parameters_file'), project_field_apex_parameters_path(@project, @field), :class => 'btn btn-primary' %>
+<%= link_to t('menu.subarea_file'), project_field_subareas_path, :class => 'btn btn-default' %>
+<%= link_to t('menu.apex_soil'), project_field_apex_soils_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.operation_file'), project_field_soil_operations_path(@project, @field), :class => 'btn btn-default' %>
+<%= link_to t('menu.site'), project_field_sites_path(@project, @field), :class => 'btn btn-default' %>
 
 
 <br><br>
@@ -24,36 +24,36 @@
     <table class="table table-striped">
       <thead>
         <tr>
-    <th class="gvCellStyleTitle"><%= t('menu.parameters_file') %></th>
-    <th class="gvCellStyleTitle"><%= t('general.name') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.line') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.value') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.low_range') %></th>
-    <th class="gvCellStyleTitle"><%= t('apex.high_range') %></th>
-    <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
-  </tr>
-  </thead>
+          <th class="gvCellStyleTitle"><%= t('menu.parameters_file') %></th>
+          <th class="gvCellStyleTitle"><%= t('general.name') %></th>
+          <th class="gvCellStyleTitle"><%= t('apex.line') %></th>
+          <th class="gvCellStyleTitle"><%= t('apex.value') %></th>
+          <th class="gvCellStyleTitle"><%= t('apex.low_range') %></th>
+          <th class="gvCellStyleTitle"><%= t('apex.high_range') %></th>
+          <th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+        </tr>
+      </thead>
       <tbody>
-<% i=1 %>
-<% @apex_parameters.each do |apex_parameter| %>
-	<% if i % 2 == 0 %>
-      <tr class="gvRowStyleEven">
-	<% else %>
-	  <tr class="gvRowStyleOdd">
-	<% end %>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.number %></td>
-      <td class="gvCellStyleString"><%= apex_parameter.parameter_description.name %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.line %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.value %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.range_low %></td>
-      <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.range_high %></td>
-      <td><%= link_to image_tag("edit.png"), edit_apex_parameter_path(apex_parameter), title: t('general.edit') %></td>
-    <% i+=1 %>
-<% end %>
-</tr>
-    </tbody>
-  </table>
-</div>
+        <% i=1 %>
+        <% @apex_parameters.each do |apex_parameter| %>
+	        <% if i % 2 == 0 %>
+              <tr class="gvRowStyleEven">
+	        <% else %>
+	          <tr class="gvRowStyleOdd">
+	        <% end %>
+              <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.number %></td>
+              <td class="gvCellStyleString"><%= apex_parameter.parameter_description.name %></td>
+              <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.line %></td>
+              <td class="gvCellStyleNumber"><%= apex_parameter.value %></td>
+              <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.range_low %></td>
+              <td class="gvCellStyleNumber"><%= apex_parameter.parameter_description.range_high %></td>
+              <td><%= link_to image_tag("edit.png"), edit_apex_parameter_path(apex_parameter), title: t('general.edit') %></td>
+            <% i+=1 %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <br>

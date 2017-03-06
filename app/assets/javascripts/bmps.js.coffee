@@ -15,13 +15,22 @@ update_pcp_row = ->
     $(".pcp").val(top)
 
 update_animal_options = ->
-  url = "/fertilizers/" + $("#bmp_animal_id").val() + ".json"
+  url = "/fertilizers/" + $("#bmp_sf_animal_id").val() + ".json"
   $.getJSON url, (fertilizer) ->
-     $("#bmp_dry_manure").val(fertilizer.dry_matter)
-     $("#bmp_no3_n").val(fertilizer.qn)
-     $("#bmp_po4_p").val(fertilizer.qp)
-     $("#bmp_org_n").val(fertilizer.yn)
-     $("#bmp_org_p").val(fertilizer.yp)
+     $("#bmp_sf_dry_manure").val(fertilizer.dry_matter)
+     $("#bmp_sf_no3_n").val(fertilizer.qn)
+     $("#bmp_sf_po4_p").val(fertilizer.qp)
+     $("#bmp_sf_org_n").val(fertilizer.yn)
+     $("#bmp_sf_org_p").val(fertilizer.yp)
+
+#update nutrients for manure control
+update_manure_control_options = ->
+  url = "/manure_controls/" + $("#bmp_mc_animal_id").val() + ".json"
+  $.getJSON url, (control) ->
+     $("#bmp_mc_no3_n").val(control.no3n)
+     $("#bmp_mc_po4_p").val(control.po4p)
+     $("#bmp_mc_org_n").val(control.orgn)
+     $("#bmp_mc_org_p").val(control.orgp)
 
 #update bmp sublist depending on the bmp selected.
 update_bmpsublist = ->
@@ -280,12 +289,14 @@ $(document).ready ->
 	    update_bmpsublist()
     $("#bmp_bmpsublist_id").change ->
 	    activate_bmp_controls()
-    $("#bmp_animal_id").change ->
+    $("#bmp_sf_animal_id").change ->
 	    update_animal_options()
     $("#bmp_irrigation_id").change ->
         update_irrigation_options()
     $("#autofertigation").change ->
         update_fertigation_options()
+    $("#bmp_mc_animal_id").change ->
+	    update_manure_control_options()
     $("#fill_max").click ->
         update_max_row()
     $("#fill_pcp").click ->

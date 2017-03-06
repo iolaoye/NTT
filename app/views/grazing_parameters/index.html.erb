@@ -1,0 +1,51 @@
+<div class="page-header"><h1><%= t("menu.animal_feed_parameters") %></h1></div>
+
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr class='gvHeaderStyle'>
+          <th class="gvCellStyleTitle">Type of Grass</th>
+          <th class="gvCellStyleTitle">Starting julian day</th>
+          <th class="gvCellStyleTitle">Ending julian day</th>
+          <th class="gvCellStyleTitle">Dmi code</th>
+          <th class="gvCellStyleTitle">Dmi cows</th>
+          <th class="gvCellStyleTitle">Dmi bulls</th>
+          <th class="gvCellStyleTitle">Dmi heifers</th>
+          <th class="gvCellStyleTitle">Dmi calves</th>
+          <th class="gvCellStyleTitle">Green water footprint</th>
+          <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% i=1 %>
+        <% @grazing_parameters.each do |grazing_parameter| %>
+				<% if (i % 2 == 0) %>
+					<tr class="gvRowStyleEven">
+				<% else %>
+					<tr class="gvRowStyleOdd">
+				<% end %>
+        <td><%= grazing_parameter.code %></td>
+        <td><%= grazing_parameter.starting_julian_day %></td>
+        <td><%= grazing_parameter.ending_julian_day %></td>
+        <td><%= grazing_parameter.dmi_code %></td>
+        <td><%= grazing_parameter.dmi_cows %></td>
+        <td><%= grazing_parameter.dmi_bulls %></td>
+        <td><%= grazing_parameter.dmi_heifers %></td>
+        <td><%= grazing_parameter.dmi_calves %></td>
+        <td><%= grazing_parameter.green_water_footprint %></td>
+        <td>
+            <%= link_to image_tag("view.png"), project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
+            <%= link_to image_tag("edit.png"), edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
+            <%= link_to image_tag("delete.png"), project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
+            </td>
+      </tr>
+      <% i = i + 1 %>
+      <% end %>
+	  </tbody>
+    </table>
+  </div>
+  </div>
+      
+<%= link_to 'New Grazing parameter', new_project_field_scenario_grazing_parameter_path(@project, @field, @scenario), :class => 'btn btn-success' %>

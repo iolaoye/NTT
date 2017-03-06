@@ -7,12 +7,166 @@
 
 <div class="page-header"><h1><%= t('menu.managements') %></h1></div>
 
-<%= link_to t('operation.new_operation'), new_operation_path, :class => 'btn btn-primary' %>
-<%= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_operation_path(session[:scenario_id]), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'}, :class => 'btn btn-primary' %>
-<%= link_to t('operation.save') + " " + t('operation.cropping_system'), download_operation_path(session[:scenario_id]), :class => 'btn btn-primary' %><br><br>
-<%= link_to t('operation.open'), open_operation_path, :class => 'btn btn-primary' %>
+<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
+<%= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@project, @field, @scenario), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'}, :class => 'btn btn-primary' %>
+
+<% if Rails.application.config.which_version == "modified" %>
+
 <%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
-<%= link_to t('general.continue'), scenario_bmps_scenario_path(session[:scenario_id]), :class => 'btn btn-success' %><br><br>
+<%# link_to t('general.continue'), scenario_bmps_scenario_path(session[:scenario_id]), :class => 'btn btn-success' %><br><br>
+
+<% @crops.each do |crop| %>
+<div class="panel panel-success">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><%= crop.name %></div>
+
+  <% if @scenario.planting_operations(crop).any? %>
+  <div class="panel-body">
+    <p><h4>Planting</h4> </p>
+  </div>
+
+  <table class="table">
+    <tr class="optable"><td class="optable"><b>Date</b></td><td class="optable"><b>Type</b></td><td class="optable"><b>Seeding amount (seeds/ac)</b></td></tr>
+     <% @scenario.planting_operations(crop).each do |op| %>
+    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td></tr>
+    <% end %>
+  </table>
+  <% end %>
+
+<% if @scenario.fertilizer_operations(crop).any? %>
+<br>
+   <div class="panel-body">
+    <p><h4>Fertilizer</h4> </p>
+  </div>
+
+  <table class="table">
+    <tr><td class="optable"><b>Date</b></td><td class="optable"><b>Fertilizer Type</b></td><td class="optable"><b>Application Rate (lbs/ac)</b></td><td class="optable"><b>Depth (in)</b></td><td class="optable"><b>Moisture</b></td><td class="optable"><b>NO3 N</b></td><td class="optable"><b>PO4 P</b></td><td class="optable"><b>Org N</b></td><td class="optable"><b>Org P</b></td></tr>
+    <% @scenario.fertilizer_operations(crop).each do |op| %>
+    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td><td><%= op.moisture %></td><td><%= op.no3_n %></td><td><%= op.po4_p %></td><td><%= op.org_n %></td><td><%= op.org_p %></td></tr>
+    <% end %>
+  </table>
+  <% end %>
+
+<% if @scenario.tillage_operations(crop).any? %>
+<br>
+ <div class="panel-body">
+    <p><h4>Tillage</h4> </p>
+  </div>
+
+  <table class="table">
+    <tr><td class="optable"><b>Date</b></td><td class="optable"><b>Type</b></td></tr>
+    <% @scenario.tillage_operations(crop).each do |op| %>
+    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td></tr>
+    <% end %>
+  </table>
+  <% end %>
+<% if @scenario.harvest_operations(crop).any? %>
+<br>
+   <div class="panel-body">
+    <p><h4>Harvest </h4></p>
+  </div>
+
+  <table class="table">
+  <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td></tr>
+    <% @scenario.harvest_operations(crop).each do |op| %>
+    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td></tr>
+    <% end %>
+  </table>
+  <% end %>
+
+  <% if @scenario.kill_operations(crop).any? %>
+  <br>
+   <div class="panel-body">
+    <p><h4>Kill</h4> </p>
+  </div>
+
+  <table class="table">
+    <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td></tr>
+    <% @scenario.kill_operations(crop).each do |op| %>
+    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td></tr>
+    <% end %>
+  </table>
+  <% end %>
+
+  <% if @scenario.irrigation_operations(crop).any? %>
+  <br>
+   <div class="panel-body">
+    <p><h4>Irrigation</h4> </p>
+  </div>
+
+  <table class="table">
+    <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable"><b>Type</b></td><td class="optable">Volume (in)</td><td class="optable">Depth</td></tr>
+     <% @scenario.irrigation_operations(crop).each do |op| %>
+    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td></tr>
+    <% end %>
+  </table>
+  <% end %>
+
+<!-- not imlpemented yet
+
+<% if @scenario.grazing_operations(crop).any? %>
+   <div class="panel-body">
+    <p>Grazing </p>
+  </div>
+
+  <table class="table">
+    <tr><td><b>abc</b></td><td><b>def</b></td></tr>
+    <tr><td>abc</td><td>def</td></tr>
+    <tr><td>abc</td><td>def</td></tr>
+  </table>
+  <% end %>
+
+  -->
+
+  <% if @scenario.burn_operations(crop).any? %>
+  <br>
+   <div class="panel-body">
+    <p><h4>Burn</h4> </p>
+  </div>
+
+  <table class="table">
+   <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td></tr>
+    <% @scenario.burn_operations(crop).each do |op| %>
+    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td></tr>
+    <% end %>
+    </table>
+  <% end %>
+
+<% if @scenario.liming_operations(crop).any? %>
+<br>
+   <div class="panel-body">
+    <p><h4>Liming</h4> </p>
+  </div>
+  <table class="table">
+     <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable">Amount</td></tr>
+    <% @scenario.liming_operations(crop).each do |op| %>
+    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= op.amount %></td></tr>
+    <% end %>
+  </table>
+  <% end %>
+
+  <% if @scenario.pesticide_operations(crop).any? %>
+  <br>
+   <div class="panel-body">
+    <p><h4>Pesticide</h4> </p>
+  </div>
+  <table class="table">
+   <tr><td><b class="optable">Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td></tr>
+    <% @scenario.pesticide_operations(crop).each do |op| %>
+    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td></tr>
+    <% end %>
+  </table>
+  <% end %>
+
+</div>
+<% end %>
+
+<% else %>
+
+<%= link_to t('operation.save') + " " + t('operation.cropping_system'), download_project_field_scenario_operations_path(@project, @field, @scenario), :class => 'btn btn-primary' %><br><br>
+<%= link_to t('operation.open'), open_project_field_scenario_operations_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
+<%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
+<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 <div class="table-responsive">
   <div class="panel panel-default">
     <table class="table table-striped">
@@ -57,10 +211,10 @@
 					<% case operation.activity_id %>
 					  <% when 1  # planting %>
 						<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
+					  <% when 2  # fertilizer %>
+						<td class="gvCellStyleText"><%= FertilizerType.find(operation.type_id).name %></td>
 					  <% when 3  # tillage %>
 						<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
-					  <% when 2  # fertilizer %>
-						<td class="gvCellStyleText"><%= Fertilizer.find(operation.subtype_id).name %></td>
 					  <% when 6  # irrigation %>
 						<td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).name %></td>
 					  <% when 7  # grazing%>
@@ -92,8 +246,8 @@
 				<td class="gvCellStyleNumber"><%= operation.org_n %></td>
 				<td class="gvCellStyleNumber"><%= operation.org_p %></td>
 				<td >
-					<%= link_to image_tag("edit.png"), edit_operation_path(operation), title: t('general.edit') %>
-					<%= link_to image_tag("delete.png"), operation, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+					<%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.edit') %>
+					<%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
 				</td>
 			</tr>
 		  <% end %>
@@ -102,3 +256,5 @@
   </div>
 </div>
 <br>
+
+<% end %>

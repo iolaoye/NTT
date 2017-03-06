@@ -1,4 +1,4 @@
-<%= form_for(@operation) do |f| %>
+<%= form_for [@project, @field, @scenario, @operation] do |f| %>
   <% if @operation.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @operation.errors.count, :model => t('models.operation').downcase) %></h2>
@@ -334,6 +334,6 @@
   <div class="actions">
     <%= f.submit "Add more", :name => "add_more", :class => "btn btn-primary" %>
     <%= f.submit "Finish", :name => "finish", :class => "btn btn-primary" %>
-		<%= link_to t('general.back'), scenario_operations_scenario_path(session[:scenario_id]), :class => "btn btn-primary" %>
+	<%= link_to t('general.back'), list_project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
   </div>
 <% end %>

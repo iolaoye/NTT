@@ -1,0 +1,49 @@
+<%= form_for(@manure_control) do |f| %>
+  <% if @manure_control.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@manure_control.errors.count, "error") %> prohibited this manure_control from being saved:</h2>
+
+      <ul>
+      <% @manure_control.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id %><br />
+    <%= f.number_field :id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :spanish_name %><br />
+    <%= f.text_field :spanish_name %>
+  </div>
+  <div class="field">
+    <%= f.label :no3n %><br />
+    <%= f.text_field :no3n %>
+  </div>
+  <div class="field">
+    <%= f.label :po4p %><br />
+    <%= f.text_field :po4p %>
+  </div>
+  <div class="field">
+    <%= f.label :orgn %><br />
+    <%= f.text_field :orgn %>
+  </div>
+  <div class="field">
+    <%= f.label :orgp %><br />
+    <%= f.text_field :orgp %>
+  </div>
+  <div class="field">
+    <%= f.label :om %><br />
+    <%= f.text_field :om %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

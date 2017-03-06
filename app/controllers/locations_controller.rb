@@ -1,3 +1,4 @@
+include LocationsHelper
 include ScenariosHelper
 class LocationsController < ApplicationController
 
@@ -13,6 +14,7 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find(params[:id])
+    @project = Project.find(params[:project_id])
     @project_name = Project.find(session[:project_id]).name
     session[:location_id] = params[:id]
     respond_to do |format|
@@ -43,13 +45,11 @@ class LocationsController < ApplicationController
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site
     @location = Location.find_by_project_id(params[:id])
-    @project_name = Project.find(params[:id]).name
-    session[:project_id] = params[:id]
-    session[:location_id] = @location.id
+    @project = Project.find(params[:project_id])
 
     respond_to do |format|
       if !(params[:error] == "") then
-        format.html { redirect_to location_path(@location.id), notice: params[:error] }
+        format.html { redirect_to project_location_path(@project, @location), notice: params[:error] }
       else
         if (session[:session_id] == params[:source_id]) then
           # step 1: delete fields not found
@@ -118,17 +118,17 @@ class LocationsController < ApplicationController
 			end
 			@weather.simulation_initial_year += 5
             if params["field#{i}finalYear"] == nil then
-				@weather.simulation_final_year = 0
+				@weather.simulation_final_year = @weather.simulation_initial_year + 5
 			else
 				@weather.simulation_final_year = params["field#{i}finalYear"]
 			end
             if params["field#{i}initialYear"] == nil then
-				@weather.weather_initial_year = 0
+				@weather.weather_initial_year = @weather.simulation_initial_year - 5
 			else
 				@weather.weather_initial_year = params["field#{i}initialYear"]
 			end
             if params["field#{i}finalYear"] == nil then
-				@weather.weather_final_year = 0
+				@weather.weather_final_year = @weather.simulation_final_year
 			else
 				@weather.weather_final_year = params["field#{i}finalYear"]
 			end
@@ -140,10 +140,9 @@ class LocationsController < ApplicationController
               @field.weather_id = @weather.id
             end
             if @field.save then
-            else
+				@weather.field_id = @field.id
+				session[:field_id] = @field.id
             end
-            @weather.field_id = @field.id
-            session[:field_id] = @field.id
             @weather.save
           end # end for fields
 
@@ -156,18 +155,23 @@ class LocationsController < ApplicationController
 			@location.state_id = state.id
 		  end
 		  county_name = params[:county]
+		  session[:depth] = county_name
           if county_name == nil then
 			  @location.county_id = 0
 		  else
 			  county_name.slice! " County"
 			  county = County.find_by_county_name(county_name)
-			  @location.county_id = county.id
+			  if county == nil then 
+				@location.county_id = 0
+			  else
+				@location.county_id = county.id
+			  end 
 		  end
           @location.coordinates = params[:parcelcoords]
           @location.save
           # step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
           load_controls()
-          load_parameters()
+          load_parameters(0)
         end # end if of session_id check
         format.html # Runs receive_from_mapping_site.html.erb view in location folder
       end # end if error
@@ -382,23 +386,6 @@ class LocationsController < ApplicationController
         apex_control.save
       end # end control all
     end # end if
-  end
-
-  def load_parameters()
-    apex_parameters = ApexParameter.where(:project_id => session[:project_id])
-	if apex_parameters == [] then
-      parameters = Parameter.where(:state_id => Location.find(session[:location_id]).state_id)
-      if parameters.blank? || parameters == nil then
-		parameters = Parameter.where(:state_id => 99)
-	  end
-      parameters.each do |c|
-		apex_parameter = ApexParameter.new
-		apex_parameter.parameter_description_id = c.id
-		apex_parameter.value = c.default_value
-		apex_parameter.project_id = session[:project_id]
-		apex_parameter.save
-      end # end Parameter.all
-	end # end if apex_controls == []
-  end # end def
+  end  #end method
 
 end

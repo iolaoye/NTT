@@ -23,8 +23,8 @@ class WeathersController < ApplicationController
 # GET /weathers/1.json
   def show
     @weather = Weather.find_by_field_id(session[:field_id])
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     if !(@weather == :nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
@@ -38,6 +38,7 @@ class WeathersController < ApplicationController
     end
   end
 
+################################  NEW   #################################
 # GET /weathers/new
 # GET /weathers/new.json
   def new
@@ -48,25 +49,25 @@ class WeathersController < ApplicationController
     end
   end
 
+################################  EDIT   #################################
 # GET /weathers/1/edit
   def edit
-
     @weather = Weather.find_by_field_id(params[:id])
-    @project = Project.find(session[:project_id])
+    @project = Project.find(params[:project_id])
     @field = Field.find(params[:id])
 
-    add_breadcrumb t('menu.projects'), user_projects_path(current_user)
-    add_breadcrumb @project.name
-    add_breadcrumb t('menu.fields'), list_field_path(@project)
-    add_breadcrumb @field.field_name
-    add_breadcrumb t('menu.weather')
+    #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
+    #add_breadcrumb @project.name
+    #add_breadcrumb t('menu.fields'), list_field_path(@project)
+    #add_breadcrumb @field.field_name
+    #add_breadcrumb t('menu.weather')
 
     if !(@weather == nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
       else
         @way = Way.find(@weather.way_id)
-      end
+      end	  
     else
       @weather = Weather.new
       @weather.field_id = session[:field_id]
@@ -82,10 +83,10 @@ class WeathersController < ApplicationController
     end
   end
 
+################################  CREATE   #################################
 # POST /weathers
 # POST /weathers.json
   def create
-    create
     @weather = Weather.new(weather_params)
 
     respond_to do |format|
@@ -99,29 +100,41 @@ class WeathersController < ApplicationController
     end
   end
 
+################################  UPDATE   #################################
 # PATCH/PUT /weathers/1
 # PATCH/PUT /weathers/1.json
   def update
     @weather = Weather.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+
     if (params[:weather][:way_id] == "2")
-      if (params[:weather][:weather_file] == nil)
-        redirect_to edit_weather_path(session[:field_id])
-        flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
+      if params[:weather][:weather_file] == nil 
+		if @weather.weather_file == nil || @weather.weather_file == ""
+			redirect_to edit_project_field_weather_path(@project, @field)
+			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
+		end
       else
         msg = upload_weather
-        redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
+        #redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
       end
-    else
+    end
       respond_to do |format|
-        if @weather.update_attributes(weather_params)
-          format.html { redirect_to list_soil_path(session[:field_id]), notice: t('models.weather') + " " + t('general.updated') }
+        if @weather.save
+          format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
           format.json { render json: @weather.errors, status: :unprocessable_entity }
         end
       end
-    end
+    #end
+	apex_control = ApexControl.find_by_project_id_and_control_description_id(session[:project_id], 1)
+	apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
+	apex_control.save
+	apex_control = ApexControl.find_by_project_id_and_control_description_id(session[:project_id], 2)
+	apex_control.value = @weather.simulation_initial_year - 5
+	apex_control.save
   end
 
 # DELETE /weathers/1
@@ -139,26 +152,39 @@ class WeathersController < ApplicationController
 ########################################### UPLOAD weather FILE IN TEXT FORMAT ##################
   def upload_weather
     msg = "Error loading file"
-    #@weather = Weather.find_by_field_id(session[:field_id])
     name = params[:weather][:weather_file].original_filename
     # create the file path
     path = File.join(OWN, name)
-    # write the file
-    File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) }
+    # open the weather file for writing.
+	weather_file = open(path, "w") 
+    #File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) }
+	input_file = params[:weather][:weather_file].read.split(/\r\n/)
     i=0
     data = ""
-    File.open(path, "r").each_line do |line|
-      data = line.split(/\r\n/)
-      break if data[0][2, 5].blank?
-      line1 = data[0][2, 5].to_i
-      @weather.simulation_final_year = line1
-      @weather.weather_final_year = line1
+    #File.open(path, "r").each_line do |line|
+	input_file.each do |line|
+      #data = line.split(/\r\n/)
+      data = line.split(" ")
+      break if data[0].blank?
+      year = data[0].to_i
+      @weather.simulation_final_year = year
+      @weather.weather_final_year = year
       if i == 0
-        @weather.simulation_initial_year = line1 + 5
-        @weather.weather_initial_year = line1
+        @weather.simulation_initial_year = year + 5
+        @weather.weather_initial_year = year
         i = i + 1
       end
-    end
+	  # print the new wehater file in the correct format
+	  case data.length
+		when 7
+			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.1f",data[3]) + sprintf("%6.1f",data[4]) + sprintf("%6.1f",data[5]) + sprintf("%6.2f",data[6]) + "\n")
+		when 8
+			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.1f",data[3]) + sprintf("%6.1f",data[4]) + sprintf("%6.1f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + "\n")
+		when 9
+			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.1f",data[3]) + sprintf("%6.1f",data[4]) + sprintf("%6.1f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + sprintf("%6.2f",data[8]) + "\n")
+	  end   # end case data.len
+    end  # end file.open
+	weather_file.close
     @weather.weather_file = name
     @weather.way_id = 2
     @weather.save
