@@ -1079,6 +1079,32 @@ en:
     input_greaterequal: Input must be greater than or equal to
     input_lessequal:  Input must be less than or equal to
     checkbox: Checkbox must be checked
+  projpage:
+    header: Start of a Project
+    statement: "Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>"
+    navadir: ''
+    initial:
+        header: To Start a Project
+        statement: There are <b>three initial choices</b> to start a new project:<br>
+        item1: Select the <b>New Project</b> option to start a project from scratch<br>
+        item2: Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br>
+        item3: Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br>
+    create:
+        header: New Project Option
+        body1: Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.
+        body2: After you have entered the information, click the <strong>Save and Continue</strong> button to save the information and continue.
+    open:
+        header: Upload Project Option
+        body1: You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
+        body2: First select <b>Choose File</b> to select the saved project. After you have selected the project, click the <strong>Upload Project</strong> button to upload the project and continue.
+    example:
+        header: Upload Example Project Option
+        body1: You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.
+        body2: First select an example from the <b>Please select</b> drop down menu. After you have selected an example, click the <strong>Upload Example</strong> button to upload the example and continue.
+    save:
+        header: Download
+        body: Once you have created a project you can use the <strong>Download</strong> button which is the arrow pointing downwards, to save the current project that you are working on.
+        note: <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.  
   projpage_html:
     <strong>Start of a Project</strong> <br><br>
     Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
@@ -1104,7 +1130,40 @@ en:
     You can also use the <strong>Close Active Project</strong> button to close the current project that you are working on.
     When you attempt to close, a warning message will come up.
     Closing an active project will erase all of that projects information. Because of this, if you would like to project for later use, it is extremely important that you save the project before closing it. By clicking the <strong>OK</strong> button on the warning message, the information will be cleared (and lost if not previously saved). If you have not yet saved and would like to, click cancel and follow the instructions for <strong>Save Active Project</strong> above.
-  
+  locpage:
+    header: Location Information
+    mapsystem:
+        header: Mapping System
+        body1: 'Mapping System allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.'
+        body2: 'When using this system, the weather and soil information can be uploaded from weather stations and databases, so minimal or no user input is required in later pages.'
+        body3: 'To zoom to a particular state/county in the United States the user can select the State and County using the zoom tool:'
+        body4: 'There are <strong>4 options</strong> within the mapping system:'
+        option1:
+            header: 'Option 1: Choose an AOI type to begin drawing'
+            item1:
+                body1: '<strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure, as shown circled in the figure below. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm as shown circled below. Enter the name of the farm and advance.'
+                body2: 'As the user enters the name, it will replace the default name in the text box for the farm as shown in the following figure. From this point the farm name entered will refer to the selected location (encircled in the figure).'
+                body3: 'Once the user clicks <strong>OK</strong>, the farm location will be highlighted as shown below.'
+            item2: '<strong>Drawing Fields:</strong> Next, you will need to draw fields within the farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.'
+            item3:
+                body1: '<strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT. If you do not click submit before advancing, the following message will come up:'
+                body2: 'If this occurs, click the <strong>Submit</strong> button to submit the changes. Once the submission is successful, the following message from NTT will pop up:'
+                body3: 'Once this message appears, click <strong>OK</strong> and then the <strong>Save and Continue</strong> button.'
+            item4: '<strong>Deleting Farms and Fields:</strong> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.'
+        option2:
+            header: 'Option 2: Choose a farm and a field(s) shapefile to upload'
+            item1: '<strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder. '
+            item2: '<strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button for the farm and for the field. The farm and field shapefile can be the same parameters, since, as mentioned above, the farm is simply a reference tool, and the data is drawn from the field shapefile that is uploaded. Nevertheless, you need to choose <strong>BOTH</strong> a <strong>farm shapefile</strong> and a <strong>field shapefile</strong> before uploading.'
+            item3: '<strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile for both a field and a farm.'
+            item4: '<strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.'
+        option3:
+            header: 'Option 3: Choose area of interest by address'
+            item1: '<strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.'
+            item2: '<strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.'
+        option4:
+            header: 'Option 4: Choose an area of interest by latitude/longitude'
+            item1: '<strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).'
+            item2: '<strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.'
   locpage_html:
     <strong>Location Information</strong><br>
     The map allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.
