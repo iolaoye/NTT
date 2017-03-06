@@ -1,7 +1,19 @@
 <head>
-  <script src="assets/gen_validatorv4.js" type="text/javascript"></script>
+  <script src="assets/javascripts/gen_validatorv4.js" type="text/javascript"></script>
 </head>
-<% form_for :bmp, :html => { :id => "bmpsForm" }, :url => save_bmps_project_field_scenario_bmps_path(@project, @field, @scenario), method: :post do %>
+<%= form_for :bmp, :html => { :id => "bmpsForm" }, :url => save_bmps_project_field_scenario_bmps_path(@project, @field, @scenario), method: :post do %>
+  <% @bmps.each do |bmp| %>
+    <% if bmp.errors.any? %>
+      <div id="errorExplanation">
+        <h2><%= pluralize(bmp.errors.count, "error") %> prohibited this record from being saved:</h2>
+        <ul>
+        <% bmp.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
   <div class="page-header">
     <h1><%= t('menu.bmps') %></h1>
   </div>
@@ -15,7 +27,6 @@
           <th><%= t('general.select')%></th>
         </tr>
       </thead>
-
       <% @bmps.each do |bmp| %>
 		<tbody>
       <% if bmp.bmpsublist_id != 2 %>
@@ -813,14 +824,6 @@
         validateBmpPpde.addValidation(ppde_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
       }
       function validationsBmpPptw(i) {
-        if (promptMsg("This BMP requires Autoirrigation. Continuing will clear any data you may have entered in Autofertigation.")) {
-          validationsBmpAi(0);
-          $('#select_1').prop('checked', true);
-          $('#1').show();
-          $('#2').hide();
-        } else {
-          confirm_check(7);
-        }
         var pptw_inputs = $('[name^=bmp_pptw]').valueOf();
         if (i == 0) {
           validateBmpPpnd.clearAllValidations();
@@ -829,11 +832,18 @@
           $("#select_4, #select_5, #select_6").prop('checked', false);
           $("tbody#4 input, tbody#5 input, tbody#6 input").val("");
         }
-        validateBmpPptw.addValidation(pptw_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
-        validateBmpPptw.addValidation(pptw_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
-        validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPptw.addValidation(pptw_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
+        if (promptMsg("This BMP requires Autoirrigation. Continuing will clear any data you may have entered in Autofertigation.")) {
+          validationsBmpAi(0);
+          $('#select_1').prop('checked', true);
+          $('#1').show();
+          validateBmpPptw.addValidation(pptw_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
+          validateBmpPptw.addValidation(pptw_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
+          validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpPptw.addValidation(pptw_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
+        } else {
+          confirm_check(7);
+        }
       }
       function validationsBmpWl() {
         var wl_inputs = $('[name^=bmp_wl]').valueOf();
@@ -849,25 +859,32 @@
       }
       function validationsBmpSf() {
         var sf_inputs = $('[name^=bmp_sf]').valueOf();
-        for(n = 0; n < sf_inputs.length; n++) {
-          validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
+        if (promptMsg("This BMP requires a Filter Strip. Continuing will clear any data you may have entered for any BMP belonging to the same group as Filter Strip.")) {//check with Oscar for best prompt msg for user
+          validationsBmpFs(0);
+          $('#select_13').prop('checked', true);
+          $('#13').show();
+          for(n = 0; n < sf_inputs.length; n++) {
+            validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
+          }
+          validateBmpSf.addValidation(sf_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpSf.addValidation(sf_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+          validateBmpSf.addValidation(sf_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpSf.addValidation(sf_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
+          validateBmpSf.addValidation(sf_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpSf.addValidation(sf_inputs[2].name, "lte=24.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 24");
+          validateBmpSf.addValidation(sf_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpSf.addValidation(sf_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+          validateBmpSf.addValidation(sf_inputs[5].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpSf.addValidation(sf_inputs[5].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+          validateBmpSf.addValidation(sf_inputs[6].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpSf.addValidation(sf_inputs[6].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+          validateBmpSf.addValidation(sf_inputs[7].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpSf.addValidation(sf_inputs[7].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+          validateBmpSf.addValidation(sf_inputs[8].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpSf.addValidation(sf_inputs[8].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+        } else {
+          confirm_check(10);
         }
-        validateBmpSf.addValidation(sf_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpSf.addValidation(sf_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
-        validateBmpSf.addValidation(sf_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpSf.addValidation(sf_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
-        validateBmpSf.addValidation(sf_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpSf.addValidation(sf_inputs[2].name, "lte=24.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 24");
-        validateBmpSf.addValidation(sf_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpSf.addValidation(sf_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
-        validateBmpSf.addValidation(sf_inputs[5].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpSf.addValidation(sf_inputs[5].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
-        validateBmpSf.addValidation(sf_inputs[6].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpSf.addValidation(sf_inputs[6].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
-        validateBmpSf.addValidation(sf_inputs[7].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpSf.addValidation(sf_inputs[7].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
-        validateBmpSf.addValidation(sf_inputs[8].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpSf.addValidation(sf_inputs[8].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
       }
       function validationsBmpSbs() {
         var sbs_inputs = $('[name^=bmp_sbs]').valueOf();
@@ -960,19 +977,21 @@
         for (n = 0; n < mc_inputs.length; n++) {
           validateBmpMc.addValidation(mc_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("bmp.manure_control") %>');
         }
-        validateBmpMc.addValidation(mc_inputs[1].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
-        validateBmpMc.addValidation(mc_inputs[2].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
-        validateBmpMc.addValidation(mc_inputs[3].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
-        validateBmpMc.addValidation(mc_inputs[4].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
-        validateBmpMc.addValidation(mc_inputs[1].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
-        validateBmpMc.addValidation(mc_inputs[2].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
-        validateBmpMc.addValidation(mc_inputs[3].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0");
-        validateBmpMc.addValidation(mc_inputs[4].name, "lte=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " " + " 0")
+        validateBmpMc.addValidation(mc_inputs[1].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpMc.addValidation(mc_inputs[2].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpMc.addValidation(mc_inputs[3].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpMc.addValidation(mc_inputs[4].name, "gt=0", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpMc.addValidation(mc_inputs[1].name, "lte=100", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
+        validateBmpMc.addValidation(mc_inputs[2].name, "lte=100", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
+        validateBmpMc.addValidation(mc_inputs[3].name, "lte=100", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
+        validateBmpMc.addValidation(mc_inputs[4].name, "lte=100", '<%= t("bmp.manure_control") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
       }
       function validationsBmpCc() {
         var cc_inputs = $('[name^=bmp_cc]').valueOf();
-        //add validation: inputs must be between 0 & 100
-        //validateBmpCc.addValidation();
+        for (n = 0; n < cc_inputs.length; n++) {
+          validateBmpCc.addValidation(cc_inputs[n].name, "gt=0", '<%= t("pdf.climate") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpCc.addValidation(cc_inputs[n].name, "lte=100", '<%= t("pdf.climate") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
+        }
       }
       function validationsBmpAc() {
         var ac_inputs = $('[name^=bmp_ac]').valueOf();
