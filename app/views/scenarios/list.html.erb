@@ -24,10 +24,10 @@
       <%= flash[:error] %>
     </div>
 <% end %>
-<%= form_tag simulate_checked_project_field_scenarios_path, method: :post do |f| %>
+<%= form_tag simulate_ntt_project_field_scenarios_path, method: :post do |f| %>
 <div class="page-header"><h1><%= t('menu.scenarios') %></h1></div>
 <%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_project_field_scenario_path(@project, @field), :class => 'btn btn-primary' %>
-<%= link_to t('scenario.simulate') + ' ' + t('general.all'), {:action => :simulate_all}, :method => :post, data: {disable_with: 'Please wait. Simulation in progress . . .'}, :class => 'btn btn-primary' %>
+<%= link_to t('scenario.simulate') + ' ' + 'NTT', {:action => :simulate_ntt}, :method => :post, data: {disable_with: 'Please wait. Simulation in progress . . .'}, :class => 'btn btn-primary' %>
 <%= link_to t('general.continue'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
 <br><br>
 <%= t('instructions.scenarios') %>
@@ -37,7 +37,7 @@
     <table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
       <thead>
         <tr>
-          <th class="gvCellStyleTitle"><%= check_box_tag "select_all", t('general.select') %> </th>
+          <th class="gvCellStyleTitle"><%= check_box_tag "select_all" %> </th>
           <th class="gvCellStyleTitle"><%= t('general.name') %></th>
           <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
           <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>

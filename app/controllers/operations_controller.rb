@@ -134,10 +134,10 @@ class OperationsController < ApplicationController
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
         if params[:add_more] == "Add more" && params[:finish] == nil
-          format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+          format.html { redirect_to list_bmp_path(params[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
         elsif params[:finish] == "Finish" && params[:add_more] == nil
-          format.html { redirect_to list_operation_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+          format.html { redirect_to list_operation_path(params[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
         end
       else
