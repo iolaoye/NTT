@@ -5,7 +5,6 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /1/scenarios.json
   def scenario_bmps
-    session[:scenario_id] = params[:id]
     redirect_to bmps_path()
   end
 ################################  list of operations   #################################
@@ -29,31 +28,29 @@ class ScenariosController < ApplicationController
       format.json { render json: @scenarios }
     end
   end
-################################  index - respond to the button simulate all  #################################
+################################  index  #################################
 # GET /scenarios
 # GET /scenarios.json
   def index
-  ooo
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @errors = Array.new
-    @scenarios = Scenario.where(:field_id => session[:field_id])
+    @scenarios = Scenario.where(:field_id => @field.id)
     respond_to do |format|
       format.html { render action: "list" }
       format.json { render json: @scenarios }
     end
   end
-################################  Simulate  #################################
-  def simulate_checked    
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
+################################  Simulate NTT for selected scenarios  #################################
+  def simulate_ntt
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     @errors = Array.new
     #@scenarios = Scenario.where(:field_id => session[:field_id])
     msg = "OK"
     ActiveRecord::Base.transaction do
 	  params[:select_scenario].each do |scenario_id|
 		  @scenario = Scenario.find(scenario_id)
-		  session[:scenario_id] = @scenario.id
 		  msg = run_scenario
 		  unless msg.eql?("OK")
           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
@@ -112,7 +109,6 @@ class ScenariosController < ApplicationController
         #add new scenario to soils
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
         add_scenario_to_soils(@scenario)
-        session[:scenario_id] = @scenario.id
         format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
         format.html { render action: "list" }
@@ -132,7 +128,6 @@ class ScenariosController < ApplicationController
 
     respond_to do |format|
       if @scenario.update_attributes(scenario_params)
-        session[:scenario_id] = @scenario.id
         format.html { redirect_to project_field_scenarios_path(@project, @field), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
         format.json { head :no_content }
       else
@@ -170,7 +165,7 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     ActiveRecord::Base.transaction do
 		msg = run_scenario
-		@scenarios = Scenario.where(:field_id => session[:field_id])
+		@scenarios = Scenario.where(:field_id => params[:field_id])
 		@project_name = Project.find(session[:project_id]).name
 		@field_name = Field.find(session[:field_id]).field_name
 		respond_to do |format|
@@ -185,7 +180,8 @@ class ScenariosController < ApplicationController
 	end
   end
 
-  def aplcat
+################################  aplcat - simulate the selected scenario for aplcat #################################
+  def simulate_aplcat
     #find the aplcat parameters for the sceanrio selected
 	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
 	grazing = GrazingParameter.where(:scenario_id => params[:id])
@@ -360,10 +356,6 @@ class ScenariosController < ApplicationController
     @last_herd = 0
 	@herd_list = Array.new
 	msg = "OK"
-    #if @scenarios == nil then
-      #session[:scenario_id] = params[:id]
-    #end
-    #@scenario = Scenario.find(session[:scenario_id])
     dir_name = APEX + "/APEX" + session[:session_id]
     #dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
     if !File.exists?(dir_name)

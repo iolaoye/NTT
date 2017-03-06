@@ -75,7 +75,8 @@ NTTG3::Application.routes.draw do
 	        get 'aplcat', on: :member
 		end
 		resources :grazing_parameters
-        post :simulate_checked, on: :collection
+        post :simulate_ntt, on: :collection
+        post :simulate_aplcat, on: :collection
         resources :operations do
           get :list, on: :collection
           get :cropping_system, on: :collection
