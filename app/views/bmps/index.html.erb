@@ -6,7 +6,7 @@
     <h1><%= t('menu.bmps') %></h1>
   </div>
 	<%= submit_tag t("submit.save"), name: "button", class: "btn btn-primary" %>
-  <%= link_to t('general.continue'), scenarios_path(), :class => 'btn btn-success' %><br>
+  <%= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br>
     <br>
       <table class="table table-striped">
       <thead>
