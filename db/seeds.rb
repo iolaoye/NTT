@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/bin/env ruby
 # encoding: utf-8
 # This file should contain all the record creation needed to seed the database with its default values.
@@ -8,7 +7,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-=======
 Bmpsublist.delete_all
 Bmpsublist.create!({:id => 1, :name => "Autoirrigation/Autofertigation", :spanish_name => "Irrigacion/Fertirrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 2, :name => "Autofertigation", :spanish_name => "Fertirrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
@@ -578,7 +576,6 @@ ControlDescription.create!({:id => 74, :line => 6, :column => 6, :code =>'BUS(2)
 ControlDescription.create!({:id => 75, :line => 6, :column => 7, :code =>'BUS(3)', :name => 'MUSI input according to equation above(Range: 0-0.9)', :range_low =>0, :range_high => 0.9}, :without_protection => true)
 ControlDescription.create!({:id => 76, :line => 6, :column => 8, :code =>'BUS(4)', :name => 'MUSI input according to equation above(Range: 0-1.2)', :range_low =>0, :range_high => 1.2}, :without_protection => true)
 
->>>>>>> master
 CropSchedule.delete_all
 CropSchedule.create!({:id => 1, :name =>'Corn', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 2, :name =>'Soybean', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
@@ -8359,7 +8356,7 @@ County.create!({:id => 3032, :county_name => 'Uinta', :state_id => 51, :county_c
 County.create!({:id => 3033, :county_name => 'Washakie', :state_id => 51, :county_code => '56043', :status => 0, :county_state_code => 'WY043', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)
 County.create!({:id => 3034, :county_name => 'Weston', :state_id => 51, :county_code => '56045', :status => 0, :county_state_code => 'WY045', :wind_wp1_code => 999, :wind_wp1_name => 'CHINAG'}, :without_protection => true)
 
-<<<<<<< HEAD
+
 #populate Parameters table.
 ParameterDescription.delete_all
 ParameterDescription.create!({:id => 1, :line => 1, :number => 1 , :name => 'Crop canopy-PET(1-2)', :range_low => 1, :range_high => 2}, :without_protection => true)
@@ -8897,7 +8894,7 @@ Control.create!({:id => 149, :number => 73, :default_value => 0, :state_id => 36
 Control.create!({:id => 150, :number => 74, :default_value => 0, :state_id => 36 }, :without_protection => true)           
 Control.create!({:id => 151, :number => 75, :default_value => 0, :state_id => 36 }, :without_protection => true)           
 Control.create!({:id => 152, :number => 76, :default_value => 0, :state_id => 36 }, :without_protection => true)           
-=======
+
 Crop.delete_all
 Crop.create!({:id => 1,:number => 1,:dndc => 3,:code => 'SOYB',:name => 'SOYBEANS',:plant_population_mt => 76,:plant_population_ac => 307561,:plant_population_ft => 7.06,:heat_units => 1550,:lu_number => 3,:soil_group_a => 67,:soil_group_b => 78,:soil_group_c => 85,:soil_group_d => 89,:type1 =>'nil',:yield_unit => 'bu',:bushel_weight => 60,:conversion_factor => 36.66663,:dry_matter => 87,:harvest_code => 568,:planting_code => 136,:state_id => '**',:itil => 1,:to1 => 25,:tb => 10,:dd => 0,:dyam => 120,:spanish_name => 'SOYA'}, :without_protection => true)
 Crop.create!({:id => 2,:number => 2,:dndc => 1,:code => 'CORN',:name => 'CORN',:plant_population_mt => 10,:plant_population_ac => 40469,:plant_population_ft => 0.93,:heat_units => 1800,:lu_number => 3,:soil_group_a => 67,:soil_group_b => 78,:soil_group_c => 85,:soil_group_d => 89,:type1 =>'nil',:yield_unit => 'bu',:bushel_weight => 56,:conversion_factor => 39.28573,:dry_matter => 85,:harvest_code => 568,:planting_code => 136,:state_id => '**',:itil => 1,:to1 => 25,:tb => 8,:dd => 0,:dyam => 110,:spanish_name => 'MAIZ'}, :without_protection => true)
@@ -9121,4 +9118,3 @@ Crop.create!({:id => 219,:number => 50,:dndc => 18,:code => 'POTA',:name => 'POT
 Crop.create!({:id => 220,:number => 51,:dndc => 999,:code => 'ASPR',:name => 'ASPARAGUS',:plant_population_mt => 100,:plant_population_ac => 404686,:plant_population_ft => 9.29,:heat_units => 1900,:lu_number => 15,:soil_group_a => 58,:soil_group_b => 72,:soil_group_c => 81,:soil_group_d => 85,:type1 =>'nil',:yield_unit => 'cwt',:bushel_weight => 0,:conversion_factor => 1,:dry_matter => 6.78,:harvest_code => 410,:planting_code => 136,:state_id => '**',:itil => 1,:to1 => 35,:tb => 10,:dd => 0,:dyam => 800,:spanish_name => 'ESPARRAGOS'}, :without_protection => true)
 Crop.create!({:id => 221,:number => 52,:dndc => 53,:code => 'BROC',:name => 'BROCCOLI',:plant_population_mt => 50,:plant_population_ac => 202343,:plant_population_ft => 4.65,:heat_units => 1500,:lu_number => 15,:soil_group_a => 58,:soil_group_b => 72,:soil_group_c => 81,:soil_group_d => 85,:type1 =>'nil',:yield_unit => 'cwt',:bushel_weight => 0,:conversion_factor => 1,:dry_matter => 10.7,:harvest_code => 410,:planting_code => 136,:state_id => '**',:itil => 1,:to1 => 24,:tb => 4,:dd => 0,:dyam => 100,:spanish_name => 'BROCOLI'}, :without_protection => true)
 Crop.create!({:id => 222,:number => 53,:dndc => 55,:code => 'CABG',:name => 'CABBAGE',:plant_population_mt => 50,:plant_population_ac => 202343,:plant_population_ft => 4.65,:heat_units => 1300,:lu_number => 15,:soil_group_a => 58,:soil_group_b => 72,:soil_group_c => 81,:soil_group_d => 85,:type1 =>'nil',:yield_unit => 'cwt',:bushel_weight => 0,:conversion_factor => 1,:dry_matter => 7.82,:harvest_code => 410,:planting_code => 136,:state_id => '**',:itil => 1,:to1 => 24,:tb => 4,:dd => 0,:dyam => 90,:spanish_name => 'REPOLLO'}, :without_protection => true)
->>>>>>> master
