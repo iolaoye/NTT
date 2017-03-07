@@ -70,13 +70,11 @@ NTTG3::Application.routes.draw do
     get :group, on: :member
     resources :fields do
       resources :scenarios do
-        post :simulate_all, on: :collection
         resources :aplcat_parameters do
 	        get 'aplcat', on: :member
 		end
 		resources :grazing_parameters
-        post :simulate_ntt, on: :collection
-        post :simulate_aplcat, on: :collection
+        post :simulate, on: :collection
         resources :operations do
           get :list, on: :collection
           get :cropping_system, on: :collection

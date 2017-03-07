@@ -41,6 +41,25 @@ class ScenariosController < ApplicationController
       format.json { render json: @scenarios }
     end
   end
+
+
+  def simulate
+	case params[:commit]
+		when "Simulate NTT"
+			msg = simulate_ntt
+		when "Simulate Aplcat"
+			msg = simulate_aplcat
+	end
+
+    @scenarios = Scenario.where(:field_id => params[:field_id])
+    if msg.eql?("OK") then
+      flash[:notice] = @scenarios.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
+      render "list", notice: "Simulation process end succesfully"
+    else
+      render "list", error: msg
+    end # end if msg
+  end 
+
 ################################  Simulate NTT for selected scenarios  #################################
   def simulate_ntt
     @project = Project.find(params[:project_id])
@@ -58,16 +77,8 @@ class ScenariosController < ApplicationController
 	      end # end if msg
       end # end each do params loop
     end
-    if msg.eql?("OK") then
-      flash[:notice] = @scenarios.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
-      @scenarios = Scenario.where(:field_id => session[:field_id])
-      render "list", notice: "Simulation process end succesfully"
-    else
-      @scenarios = Scenario.where(:field_id => session[:field_id])
-      render "list", error: msg
-    end # end if msg
+	return msg
   end
-
 ################################  NEW   #################################
 # GET /scenarios/new
 # GET /scenarios/new.json
@@ -182,6 +193,7 @@ class ScenariosController < ApplicationController
 
 ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
+  msg = "OK"
     #find the aplcat parameters for the sceanrio selected
 	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
 	grazing = GrazingParameter.where(:scenario_id => params[:id])
@@ -343,11 +355,7 @@ class ScenariosController < ApplicationController
 	apex_string += sprintf("%8.2f", aplcat.napanr) + "\t" + "! " + t('aplcat.napanr') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.napaip) + "\t" + "! " + t('aplcat.napaip') + "\n"
 	msg = send_file_to_APEX(apex_string, "DrinkingWaterInput.txt")
-    @scenarios = Scenario.where(:field_id => session[:field_id])
-    respond_to do |format|
-      format.html { redirect_to scenarios_url }
-      format.json { head :no_content }
-    end
+	return msg
   end	
   
   private
