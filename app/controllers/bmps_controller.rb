@@ -83,6 +83,9 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
 	if params[:button] == "Save"
 		@slope = 100
 		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
@@ -156,7 +159,7 @@ class BmpsController < ApplicationController
 		if !(params[:select] == nil) and params[:select][:"19"] == "1" then
 			create(19)
 		end
-		redirect_to bmps_path
+		redirect_to project_field_scenario_bmps_path(@project, @field, @scenario)
 	else
 		redirect_to scenarios_path
 	end # end fi save
