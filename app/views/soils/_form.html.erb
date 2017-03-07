@@ -58,5 +58,6 @@
 	<% else %>
 		<%= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
 	<% end %>
+	<%= link_to t('general.back'), project_field_soils_path(@project, @field), :class => "btn btn-primary" %>
   </div>
 <% end %>

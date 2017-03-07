@@ -25,9 +25,9 @@
   <div class="page-header"><h1><%=t('menu.projects')%></h1>
           
   </div>
-  <%= button_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
-  <%= button_to t('project.upload_project'), upload_project_path(0), :method => "get", :class => "btn btn-primary" %>
-  <%= button_to t('project.upload_example'), upload_project_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
+  <%= link_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
+  <%= link_to t('project.upload_project'), upload_project_path(0), :method => "get", :class => "btn btn-primary" %>
+  <%= link_to t('project.upload_example'), upload_project_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
 
 <% end %>
   <%= t('instructions.projects') %>.<br><br>
