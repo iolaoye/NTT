@@ -13,12 +13,8 @@ module SimulationsHelper
 
   def create_control_file()
     apex_string = ""
-    apex_control = ApexControl.where(:project_id => session[:project_id])
+    apex_control = ApexControl.where(:project_id => params[:project_id])
     require 'net/http'
-    coor = '(39.307505,-75.963721),(39.303686,-75.964451),(39.304683,-75.965910),(39.305413,-75.966253),(39.307007,-75.965738),(39.307406,-75.964837)'
-    county = 'md029'
-    state = 'Maryland'
-    t = 'cbntt'
     apex_control.each do |c|
       case c.control_description_id
         when 1..19 #line 1
@@ -93,7 +89,7 @@ module SimulationsHelper
     apex_string +="                " + "\n"
     apex_string +="                " + "\n"
     apex_string +="   50.00   10.00" + "\n"
-    apex_parameter = ApexParameter.where(:project_id => session[:project_id])
+    apex_parameter = ApexParameter.where(:project_id => params[:project_id])
     apex_parameter.each do |p|
       #number = Parameter.find(p.parameter_description_id).number
       case p.parameter_description_id
@@ -1607,7 +1603,7 @@ module SimulationsHelper
     pcp = 0
     total_subs = 0
     i=1
-    apex_control = ApexControl.where(:project_id => session[:project_id])
+    apex_control = ApexControl.where(:project_id => params[:project_id])
     initial_chart_year = apex_control[0].value - 12 + apex_control[1].value
     data.each_line do |tempa|
       if i > 3 then

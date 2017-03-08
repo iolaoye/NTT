@@ -1,4 +1,4 @@
-<%= form_for(@project) do |f| %>
+<%= form_for [@user, @project] do |f| %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @project.errors.count, :model => t('models.project').downcase) %></h2>
@@ -20,7 +20,7 @@
     <%= f.text_area :description, :rows => 5 %>
   </div>
   <div class="actions">
-    <%= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
+    <%= f.submit t('submit.save'), :class => "btn btn-primary" %>
     <%= link_to t('general.back'), welcomes_path, :class => "btn btn-primary" %>
   </div>
 <% end %>
