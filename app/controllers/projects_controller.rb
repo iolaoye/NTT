@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
+    @user = User.find(params[:user_id])
     @projects = Project.where(:user_id => params[:user_id])
     session[:simulation] = "watershed"
     respond_to do |format|
@@ -62,6 +63,7 @@ class ProjectsController < ApplicationController
   ########################################### EDIT ######################################################
   # GET /projects/1/edit
   def edit
+    @user = User.find(params[:user_id])
     @project = Project.find(params[:id])
   end
 
@@ -127,6 +129,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+	@user = User.find(params[:user_id])
     @project = Project.find(params[:id])
     if params[:special] != nil
 	  @project.version = "NTTG3_special"
@@ -135,7 +138,7 @@ class ProjectsController < ApplicationController
 	end
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to project_fields_path(@project), notice: t('models.project') + "" + t('notices.updated') }
+        format.html { redirect_to user_projects_path(params[:user_id]), notice: t('models.project') + "" + t('notices.updated') 
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -173,6 +176,7 @@ class ProjectsController < ApplicationController
   #end
 
   def upload
+  ooo
     @id = params[:id]
     #nothing to do here. Just render the upload view
   end
