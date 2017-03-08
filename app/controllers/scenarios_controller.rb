@@ -42,7 +42,6 @@ class ScenariosController < ApplicationController
     end
   end
 
-
   def simulate
 	case params[:commit]
 		when "Simulate NTT"
@@ -399,11 +398,11 @@ class ScenariosController < ApplicationController
     @soil_number = 0
     if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
     if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg  end
-    if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) else return msg  end  #this operation will run a simulation and return ntt file.
+    if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
     if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
     @scenario.last_simulation = Time.now
     if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
-    @scenarios = Scenario.where(:field_id => session[:field_id])
+    @scenarios = Scenario.where(:field_id => params[:field_id])
     return msg
   end # end show method
 
