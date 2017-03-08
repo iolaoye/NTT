@@ -159,7 +159,7 @@ class BmpsController < ApplicationController
 		if !(params[:select] == nil) and params[:select][:"19"] == "1" then
 			create(19)
 		end
-    flash[:error] = @bmp.errors.to_a
+    #flash[:error] = @bmp.errors.to_a
 		redirect_to project_field_scenario_bmps_path(@project, @field, @scenario)
 	else
 		redirect_to scenarios_path
