@@ -27,7 +27,7 @@
       </thead>
       <% @bmps.each do |bmp| %>
 		<tbody>
-      <% if bmp.bmpsublist_id != 2 %>
+      <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 %>
 			<tr>
 				<% if I18n.locale.equal?(:en) %>
 					<td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
@@ -245,7 +245,7 @@
 						<%= text_field :bmp_sf, :org_p, :value => bmp.org_p %>
 				    </td>
 				  </tr>
-				<% when 11 %>
+        <!--<% when 11 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
@@ -255,7 +255,7 @@
 							<%= check_box :bmp_sbs, :id, checked: false %>
 						<%end%>
 					</td>
-				  </tr>
+        </tr> -->
 				<% when 12 %>
 				  <tr>
 					<td class="indent">
