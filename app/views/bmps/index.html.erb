@@ -5,7 +5,17 @@
   <div class="page-header">
     <h1><%= t('menu.bmps') %></h1>
   </div>
-	<%= submit_tag t("submit.save"), name: "button", class: "btn btn-primary" %>
+  <div id="flash_messages">
+    <% flash.each do |key, value|
+      if value.class == String # regular flash notices, alerts, etc. will be strings
+        value = [value]
+      end
+      value.each do |value| %>
+        <%= content_tag(:p, value, :class => "flash #{key}") unless value.empty? %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= submit_tag t("submit.save"), name: "button", class: "btn btn-primary" %>
   <%= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br>
     <br>
       <table class="table table-striped">
