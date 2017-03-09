@@ -46,7 +46,6 @@ class LocationsController < ApplicationController
   def receive_from_mapping_site
     @location = Location.find_by_project_id(params[:id])
     @project = Project.find(params[:project_id])
-
     respond_to do |format|
       if !(params[:error] == "") then
         format.html { redirect_to project_location_path(@project, @location), notice: params[:error] }
@@ -70,7 +69,6 @@ class LocationsController < ApplicationController
             @field = @location.fields.where(:field_name => params["field#{i}id"]).first || @location.fields.build(:field_name => params["field#{i}id"])
             @field.coordinates = params["field#{i}coords"]
             @field.field_area = params["field#{i}acres"]
-
             #verify if this field aready has its soils. If not the soils coming from the map are added
             if !(params["field#{i}error"] == 1) then
               #if @field.id == nil then
@@ -80,8 +78,11 @@ class LocationsController < ApplicationController
               #		@field.id = Field.last.id += 1
               #	end
               #end
-              @field.save
-              create_soils(i, @field.id, @field.field_type)
+              if @field.save
+				create_soils(i, @field.id, @field.field_type)
+			  else
+				msg = "Error saving soils"
+			  end 
             end
             #step 3 find or create site
             site = Site.find_by_field_id(@field.id)
