@@ -138,7 +138,7 @@ class ProjectsController < ApplicationController
 	end
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to user_projects_path(params[:user_id]), notice: t('models.project') + "" + t('notices.updated') 
+        format.html { redirect_to user_projects_path(params[:user_id]), notice: t('models.project') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -185,7 +185,7 @@ class ProjectsController < ApplicationController
 	saved = upload_prj()
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
-      redirect_to list_field_path(session[:location_id]), notice: t('activerecord.notices.messages.created', model: "Project")
+      redirect_to user_projects_path(session[:user_id]), notice: t('activerecord.notices.messages.created', model: "Project")
     else
       redirect_to upload_project_path(@upload_id)
       flash[:notice] = t('activerecord.errors.messages.projects.no_saved') and return false
@@ -1300,7 +1300,7 @@ class ProjectsController < ApplicationController
     soil.selected = false
     node.elements.each do |p|
       case p.name
-	      when "id"
+	    when "id"
           soil.soil_id_old = p.text
         when "key"
           soil.key = p.text
@@ -1347,6 +1347,7 @@ class ProjectsController < ApplicationController
           #end
       end # case end
     end # each element end
+	debugger
     if soil.save
       return "OK"
     else
@@ -1810,6 +1811,9 @@ class ProjectsController < ApplicationController
 			if p.text == "0"
 				subarea.soil_id = 0
 			else
+			    if Soil.find_by_soil_id_old(p.text) == nil then 
+					return "OK"
+				end
 				subarea.soil_id = Soil.find_by_soil_id_old(p.text).id
 			end
         when "number"
@@ -2227,6 +2231,9 @@ class ProjectsController < ApplicationController
 			if p.text == "0"
 				soil_operation.soil_id = 0
 			else
+				if Soil.find_by_soil_id_old(p.text) == nil then
+					return "OK"
+				end
 				soil_operation.soil_id = Soil.find_by_soil_id_old(p.text).id
 			end
       end  # end case 
