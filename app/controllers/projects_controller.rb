@@ -176,7 +176,6 @@ class ProjectsController < ApplicationController
   #end
 
   def upload
-  ooo
     @id = params[:id]
     #nothing to do here. Just render the upload view
   end
