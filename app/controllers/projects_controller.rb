@@ -138,7 +138,7 @@ class ProjectsController < ApplicationController
 	end
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to user_projects_path(params[:user_id]), notice: t('models.project') + "" + t('notices.updated') }
+        format.html { redirect_to user_projects_path(params[:user_id]), notice: t('models.project') + "" + t('notices.updated') 
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

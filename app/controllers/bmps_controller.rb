@@ -42,7 +42,7 @@ class BmpsController < ApplicationController
     @bmps = Bmp.where(:bmpsublist_id => 0)
     @bmps[0] = Bmp.new
 	@climates = Climate.where(:id => 0)
-	
+
 	bmpsublists.each do |bmpsublist|
 		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(params[:scenario_id], bmpsublist.id)
 		if bmp.blank? || bmp == nil then
@@ -68,10 +68,10 @@ class BmpsController < ApplicationController
 				else
 					@climates[i] = climates[i]
 				end
-			end 
+			end
 		end
 		bmp_list = 23
-		if @field_type != false then 
+		if @field_type != false then
 			bmp_list = 19
 		end
 		if bmp.bmpsublist_id == bmp_list then
@@ -90,12 +90,12 @@ class BmpsController < ApplicationController
 		@slope = 100
 		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
 		bmps = Bmp.where(:scenario_id => params[:scenario_id])
-		bmps.each do |bmp|		
+		bmps.each do |bmp|
 			@bmp = bmp
 			msg = input_fields("delete")
 			if msg == "OK" then
 				bmp.destroy
-			end 
+			end
 		end  # bmps.each
 		#Bmp.where(:scenario_id => params[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
 		if !(params[:bmp_ai][:irrigation_id] == "") then
@@ -159,6 +159,7 @@ class BmpsController < ApplicationController
 		if !(params[:select] == nil) and params[:select][:"19"] == "1" then
 			create(19)
 		end
+    #flash[:error] = @bmp.errors.to_a
 		redirect_to project_field_scenario_bmps_path(@project, @field, @scenario)
 	else
 		redirect_to scenarios_path
@@ -314,7 +315,7 @@ class BmpsController < ApplicationController
 
   def input_fields(type)
     case @bmp.bmpsublist_id
-      when 1		
+      when 1
         return autoirrigation(type)
       when 2
         return fertigation(type)
@@ -465,8 +466,8 @@ class BmpsController < ApplicationController
               subarea.bft = 0.0
             end
         end   # end case type
-        if !subarea.save then 
-			return "Unable to save value in the subarea file" 
+        if !subarea.save then
+			return "Unable to save value in the subarea file"
 		end
       end #end if subarea !nil
     end # end soils.each
@@ -554,25 +555,25 @@ class BmpsController < ApplicationController
 
 ### ID: 4
   def ppnd(type)
-    @bmp.width = params[:bmp_ppnd][:width]  
-    @bmp.sides = params[:bmp_ppnd][:sides]  
+    @bmp.width = params[:bmp_ppnd][:width]
+    @bmp.sides = params[:bmp_ppnd][:sides]
     return pads_pipes(type)
   end    # end method
 
 
 ### ID: 5
   def ppds(type)
-    @bmp.width = params[:bmp_ppds][:width]  
-    @bmp.sides = params[:bmp_ppds][:sides] 
+    @bmp.width = params[:bmp_ppds][:width]
+    @bmp.sides = params[:bmp_ppds][:sides]
     return pads_pipes(type)
   end   # end method
 
 
 ### ID: 6
   def ppde(type)
-    @bmp.width = params[:bmp_ppde][:width]  
-    @bmp.sides = params[:bmp_ppde][:sides]  
-    @bmp.area = params[:bmp_ppde][:area]  
+    @bmp.width = params[:bmp_ppde][:width]
+    @bmp.sides = params[:bmp_ppde][:sides]
+    @bmp.area = params[:bmp_ppde][:area]
 	@bmp.save
     msg = pads_pipes(type)
     case type
@@ -661,7 +662,7 @@ class BmpsController < ApplicationController
 	@bmp.org_n = params[:bmp_sf][:org_n]
 	@bmp.org_p = params[:bmp_sf][:org_p]
 	return "OK"
-  end 
+  end
 
 ### ID: 11
   def streambank_stabilization(type)
@@ -742,7 +743,7 @@ class BmpsController < ApplicationController
 
 ### ID: 16
   def land_leveling(type)
-	@bmp.slope_reduction = params[:bmp_ll][:slope_reduction]  
+	@bmp.slope_reduction = params[:bmp_ll][:slope_reduction]
     @soils = Soil.where(:field_id => session[:field_id])
     @soils.each do |soil|
       subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
@@ -771,7 +772,7 @@ class BmpsController < ApplicationController
 
 ### ID: 18
   def manure_control(type)
-	@bmp.animal_id = params[:bmp_mc][:animal_id]  
+	@bmp.animal_id = params[:bmp_mc][:animal_id]
 	@bmp.no3_n =params[:bmp_mc][:no3_n]
 	@bmp.po4_p =params[:bmp_mc][:po4_p]
 	@bmp.org_n =params[:bmp_mc][:org_n]
@@ -795,7 +796,7 @@ class BmpsController < ApplicationController
 		climate.max_temp = params[:bmp_cc]["max_temp" + i.to_s]
 		climate.min_temp = params[:bmp_cc]["min_temp" + i.to_s]
 		climate.precipitation = params[:bmp_cc]["precipitation" + i.to_s]
-		climate.save		
+		climate.save
 	end
     return "OK"
   end
@@ -1038,8 +1039,8 @@ class BmpsController < ApplicationController
 		if subarea.subarea_type != "Soil" then
 			subarea.bmp_id = @bmp.id
 		else
-			subarea.bmp_id = 0			
-		end 
+			subarea.bmp_id = 0
+		end
         if !subarea.save then
 			return "Enable to save value in the subarea file"
 		else
@@ -1170,8 +1171,8 @@ class BmpsController < ApplicationController
 
   def delete_existing_subarea(name)
     subarea = Subarea.find_by_scenario_id_and_subarea_type(params[:scenario_id], name)
-	if !(subarea == nil) then 
-		return update_wsa("+", subarea.wsa) 
+	if !(subarea == nil) then
+		return update_wsa("+", subarea.wsa)
 	else
 		return "OK"
 	end
