@@ -65,6 +65,7 @@ NTTG3::Application.routes.draw do
       post :receive_from_mapping_site, on: :member
       get :location_fields, on: :member
     end 
+	post 'upload_project', on: :member
     get 'upload', on: :member
     get 'download', on: :member
     get :group, on: :member
@@ -151,7 +152,6 @@ NTTG3::Application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
   get 'users/new'
-  post 'projects/upload_project'
   post 'weathers/upload_weather'
   root to: 'welcomes#index'
 
