@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @user = User.find(params[:user_id])
+    @user = User.find(session[:user_id])
     @projects = Project.where(:user_id => params[:user_id])
     session[:simulation] = "watershed"
     respond_to do |format|
@@ -70,11 +70,10 @@ class ProjectsController < ApplicationController
   ################  copy the selected project  ###################
   def copy_project
 	download_project(params[:id], "copy")
-	@projects = Project.where(:user_id => session[:user_id])
+	render :action => "index"
   end
 
   ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
-
   def self.wipe_database
     ApexControl.delete_all
     ApexParameter.delete_all
@@ -102,7 +101,7 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-    session[:project_id] = @project.id
+    #session[:project_id] = @project.id
     @project.user_id = session[:user_id]
     if params[:special] != nil
 	  @project.version = "NTTG3_special"
@@ -111,7 +110,7 @@ class ProjectsController < ApplicationController
 	end
 	respond_to do |format|
       if @project.save
-        session[:project_id] = @project.id
+        #session[:project_id] = @project.id
         location = Location.new
         location.project_id = @project.id
         location.save
@@ -250,7 +249,7 @@ class ProjectsController < ApplicationController
         break if (msg != "OK" && msg != true)
       end
       if msg == "OK" then
-		load_parameters(ApexParameter.where(:project_id => session[:project_id]).count)
+		load_parameters(ApexParameter.where(:project_id => @project.id).count)
 	  end 
 
 	  if (msg == "OK" || msg == true)
@@ -317,7 +316,7 @@ class ProjectsController < ApplicationController
 	if type == "copy"
 		#call upload to copy project
 		params[:examples] = "2"
-		upload_prj()
+		saved = upload_prj()
 	end
   end   #download project def end
 
@@ -835,19 +834,19 @@ class ProjectsController < ApplicationController
 
   def upload_project_info(node)
     #begin  #check this one
-      project = Project.new
-      project.user_id = session[:user_id]
+      @project = Project.new
+      @project.user_id = session[:user_id]
       node.elements.each do |p|
         case p.name
           when "projectName"
-            project.name = p.text
+            @project.name = p.text
           when "Description"
-            project.description = p.text
+            @project.description = p.text
         end
       end
-      project.version = "NTTG3"
-      if project.save then
-        session[:project_id] = project.id
+      @project.version = "NTTG3"
+      if @project.save then
+        #session[:project_id] = @project.id
         msg = upload_location_info(node)
         msg = upload_weather_info(node)
         return "OK"
@@ -861,22 +860,22 @@ class ProjectsController < ApplicationController
 
   def upload_project_new_version(node)
     #begin
-      project = Project.new
-      project.user_id = session[:user_id]
+      @project = Project.new
+      @project.user_id = session[:user_id]
       node.elements.each do |p|
         case p.name
           when "project_name" #if project name exists, save fails
-			project.name = p.text
+			@project.name = p.text
 			if params[:examples] == "2"
-				project.name = project.name + " copy"
+				@project.name = @project.name + " copy"
 			end
           when "project_description"
-            project.description = p.text
+            @project.description = p.text
         end
       end
-      project.version = "NTTG3"
-      if project.save
-        session[:project_id] = project.id
+      @project.version = "NTTG3"
+      if @project.save
+        #session[:project_id] = @project.id
         return "OK"
       else
         return t('activerecord.errors.messages.projects.no_saved')
@@ -888,7 +887,7 @@ class ProjectsController < ApplicationController
 
   def upload_location_info(node)
     location = Location.new
-    location.project_id = session[:project_id]
+    location.project_id = @project.id
     node.elements.each do |p|
       case p.name
         when "StateAbrev"
@@ -931,7 +930,7 @@ class ProjectsController < ApplicationController
     #begin  #TODO CHECK THIS ONE. WHEN IT IS ACTIVE THE PROCCESS DOES NOT RUN FOR SOME REASON.
       msg = "OK"
       location = Location.new
-      location.project_id = session[:project_id]
+      location.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "state_id"
@@ -1347,7 +1346,6 @@ class ProjectsController < ApplicationController
           #end
       end # case end
     end # each element end
-	debugger
     if soil.save
       return "OK"
     else
@@ -3173,7 +3171,7 @@ class ProjectsController < ApplicationController
   def upload_control_values(node)
     #begin
       control = ApexControl.new
-      control.project_id = session[:project_id]
+      control.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "Code"
@@ -3185,7 +3183,7 @@ class ProjectsController < ApplicationController
                 control.save
                 # get the first year of simulation from weather
                 control = ApexControl.new
-                control.project_id = session[:project_id]
+                control.project_id = @project.id
                 control.control_description_id = Control.find_by_id(2).id
                 control.value = weather.simulation_initial_year - 5
                 control.save
@@ -3210,7 +3208,7 @@ class ProjectsController < ApplicationController
   def upload_control_values_new_version(node) 
     begin
 	  control = ApexControl.new
-      control.project_id = session[:project_id]
+      control.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "control_description_id"
@@ -3242,7 +3240,7 @@ class ProjectsController < ApplicationController
   def upload_parameter_values(node)
     begin
       parameter = ApexParameter.new
-      parameter.project_id = session[:project_id]
+      parameter.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "Code"
@@ -3273,7 +3271,7 @@ class ProjectsController < ApplicationController
   def upload_parameter_values_new_version(node)
     begin
 	  parameter = ApexParameter.new
-      parameter.project_id = session[:project_id]
+      parameter.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "parameter_description_id"
