@@ -5,7 +5,17 @@
   <div class="page-header">
     <h1><%= t('menu.bmps') %></h1>
   </div>
-	<%= submit_tag t("submit.save"), name: "button", class: "btn btn-primary" %>
+  <div id="flash_messages">
+    <% flash.each do |key, value|
+      if value.class == String # regular flash notices, alerts, etc. will be strings
+        value = [value]
+      end
+      value.each do |value| %>
+        <%= content_tag(:p, value, :class => "flash #{key}") unless value.empty? %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= submit_tag t("submit.save"), name: "button", class: "btn btn-primary" %>
   <%= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br>
     <br>
       <table class="table table-striped">
@@ -17,7 +27,7 @@
       </thead>
       <% @bmps.each do |bmp| %>
 		<tbody>
-      <% if bmp.bmpsublist_id != 2 %>
+      <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 %>
 			<tr>
 				<% if I18n.locale.equal?(:en) %>
 					<td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
@@ -235,7 +245,7 @@
 						<%= text_field :bmp_sf, :org_p, :value => bmp.org_p %>
 				    </td>
 				  </tr>
-				<% when 11 %>
+        <!--<% when 11 %>
 				  <tr>
 					<td class="indent">
 						<%= t('general.select') %>
@@ -245,7 +255,7 @@
 							<%= check_box :bmp_sbs, :id, checked: false %>
 						<%end%>
 					</td>
-				  </tr>
+        </tr> -->
 				<% when 12 %>
 				  <tr>
 					<td class="indent">
@@ -794,7 +804,7 @@
         validateBmpPpds.addValidation(ppds_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>');
         validateBmpPpds.addValidation(ppds_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
         validateBmpPpds.addValidation(ppds_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpds.addValidation(ppds_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.0");
+        validateBmpPpds.addValidation(ppds_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4");
       }
       function validationsBmpPpde(i) {
         var ppde_inputs = $('[name^=bmp_ppde]').valueOf();
@@ -807,9 +817,12 @@
         }
         validateBmpPpde.addValidation(ppde_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
         validateBmpPpde.addValidation(ppde_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
-        validateBmpPpde.addValidation(ppde_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpde.addValidation(ppde_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
+        validateBmpPpde.addValidation(ppde_inputs[2].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
+        validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpde.addValidation(ppde_inputs[2].name, "lte=99999", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+        validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpde.addValidation(ppde_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpde.addValidation(ppde_inputs[2].name, "lte=4", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4");
       }
       function validationsBmpPptw(i) {
         var pptw_inputs = $('[name^=bmp_pptw]').valueOf();
@@ -826,9 +839,12 @@
           $('#1').show();
           validateBmpPptw.addValidation(pptw_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
           validateBmpPptw.addValidation(pptw_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
-          validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-          validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-          validateBmpPptw.addValidation(pptw_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
+          validateBmpPptw.addValidation(pptw_inputs[2].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
+          validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpPptw.addValidation(pptw_inputs[0].name, "lte=99999", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+          validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpPptw.addValidation(pptw_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpPptw.addValidation(pptw_inputs[2].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
         } else {
           confirm_check(7);
         }
