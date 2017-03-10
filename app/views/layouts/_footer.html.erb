@@ -101,7 +101,7 @@
                    <li><a href="#" data-toggle="modal" data-target="#instructions"><%= t('footer.instructions')%></a></li>
                    <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
                    <li><%= link_to t("footer.about_ntt"), about_path %></li>
-                   <li><%= link_to t("footer.help"), help_path("index") %></li>
+                   <li><%= link_to t("footer.help"), help_path("index", :project_id => params[:project_id]) %></li>
                    <li><div class="language">Language
                       <span class="tooltiptext">
                         <%= link_to t("languages.english"), :locale=>'en'%><br>
