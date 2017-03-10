@@ -1,18 +1,35 @@
-<div class="page-header"><h1>Listing watersheds</h1></div>
+<div class="page-header"><h1>List of Field Routing Scenarios</h1></div>
 
-<table>
+<%= link_to t('watershed.new'), new_watershed_path(:project_id  => @project.id), :class => "btn btn-primary" %>
+<div class="table-responsive">
+  <div class="panel panel-default">
+    <table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
+      <thead>
+        <tr>
+          <th class="gvCellStyleTitle"><%= t('general.name') %></th>
+          <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i=1 %>
+        <% @watersheds.each do |watershed| %>
+            <% if (i % 2 == 0) %>
+                <tr class="gvRowStyleEven">
+            <% else %>
+                <tr class="gvRowStyleOdd">
+	          <% end %>
+            <td><%= watershed.name %></td>
+            <td>
+                <%= link_to image_tag("edit.png"), edit_watershed_path(watershed, :project_id => @project.id) %>
+                <%= link_to image_tag("delete.png"), watershed, method: :delete, data: { confirm: t('general.confirm') } %>
+            </td>
+          </tr>
+          <% i = i + 1 %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 
-<% @watersheds.each do |watershed| %>
-  <tr>
-    <td><%= watershed.name %></td>
-    <td><%= link_to t('general.show'), watershed %></td>
-    <td><%= link_to t('general.edit'), edit_watershed_path(watershed) %></td>
-    <td><%= link_to 'Destroy', watershed, method: :delete, data: { confirm: t('general.confirm') } %></td>
-  </tr>
-<% end %>
-</table>
 
-<br>
-
-<%= link_to t('watershed.new_watershed'), new_watershed_path, :class => "btn btn-primary" %>
