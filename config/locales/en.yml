@@ -366,6 +366,7 @@ en:
       short: "%d %b %H:%M"
     pm: pm
   general:
+    view: View
     note: 'NOTE:'
     name: 'Name'
     description: Description

@@ -31,7 +31,9 @@
 	<%= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
 	<%= submit_tag t('scenario.simulate') + ' ' + 'Aplcat', data: {disable_with: 'Please wait. Aplcat simulation in progress . . .'}, :class => 'btn btn-primary' %>
 <% end %>
-<%= link_to t('general.continue'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
+<% if @field.results.count > 0 %>
+	<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
+<% end %>
 <br><br>
 <%= t('instructions.scenarios') %>
 
@@ -49,7 +51,7 @@
           <th class="gvCellStyleTitle"><%= t('scenario.last_simulation') %></th>
           <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
         </tr>
-        </thead>
+      </thead>
       <tbody>
   <% i=1 %>
   <% @scenarios.each do |scenario| %>

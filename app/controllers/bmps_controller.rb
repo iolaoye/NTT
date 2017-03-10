@@ -132,8 +132,10 @@ class BmpsController < ApplicationController
 		if !(params[:bmp_sf][:number_of_animals] == "") then
 			create(10)
 		end
-		if params[:bmp_sbs][:id] == "1" then
-			create(11)
+		if !(params[:bmp_sbs] == nil)
+			if params[:bmp_sbs][:id] == "1" then
+				create(11)
+			end
 		end
 		if !(params[:bmp_rf][:width] == "") then
 			create(12)
@@ -160,7 +162,7 @@ class BmpsController < ApplicationController
 			create(19)
 		end
     #flash[:error] = @bmp.errors.to_a
-		redirect_to project_field_scenario_bmps_path(@project, @field, @scenario)
+		redirect_to project_field_scenarios_path(@project, @field)
 	else
 		redirect_to scenarios_path
 	end # end fi save
