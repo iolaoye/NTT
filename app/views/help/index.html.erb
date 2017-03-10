@@ -5,7 +5,7 @@
 	<div class="container">
 		<strong><%= t('help.overview') %></strong>
 		<ol>
-			<li><%= link_to t('help.overview1'), about_path %></li>
+			<li><%= link_to t('help.overview1'), about_path(:project_id => params[:project_id]) %></li>
 			<li><%= link_to t('help.overview2'), contact_path %></li>
 		</ol>
 		<strong><%= t('help.getstarted') %></strong>

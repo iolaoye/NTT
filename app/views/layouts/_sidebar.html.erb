@@ -205,11 +205,12 @@
 <% else %>
 <li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || (controller_name == "results") || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>"><%= link_to t('menu.fields'), project_fields_path(@project) %></li>
 <% end %>
+<% if !(session[:location_id] == nil) %>
+	<ul class="nav nav-pills nav-stacked nav-sidebar">
+	  <li class="<%= controller_name == "watersheds" ? "active" : "" %>"><%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
+	</ul>
 
-<ul class="nav nav-pills nav-stacked nav-sidebar">
-  <li class="<%= controller_name == "watersheds" ? "active" : "" %>"><%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
-</ul>
-
-<ul class="nav nav-pills nav-stacked nav-sidebar-sub">
-  <li><%= link_to t('menu.results') + "-" + t('menu.watershed'), results_path(:button => t('result.summary')) %></li>
-</ul>
+	<ul class="nav nav-pills nav-stacked nav-sidebar-sub">
+	  <li><%= link_to t('menu.results') + "-" + t('menu.watershed'), results_path(:button => t('result.summary')) %></li>
+	</ul>
+<% end %>

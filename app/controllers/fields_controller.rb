@@ -58,8 +58,8 @@ class FieldsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
     @location = @project.location
-	  get_field_list(@location.id)
-
+	session[:location_id] = @location.id
+	get_field_list(@location.id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @fields }
