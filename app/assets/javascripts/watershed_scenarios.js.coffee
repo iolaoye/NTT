@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 select_scenarios = ->
-  url = "/scenarios/" + $("#watershed_field_id").val() + "/list.json"
+  url = "/projects/" + $("#watershed_project_id").val() + "/fields/" + $("#watershed_field_id").val() + "/scenarios.json"
   if $("#watershed_field_id").val() > 0
     $.getJSON url, (scenarios) ->
       items = []

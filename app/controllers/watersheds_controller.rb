@@ -30,7 +30,7 @@ class WatershedsController < ApplicationController
   ################################  SHOW used for simulation   #################################
   # GET /watersheds/1
   # GET /watersheds/1.json
-  def show
+  def simulate
     @watershed_id = params[:id]
     @dtNow1 = Time.now.to_s
     dir_name = APEX + "/APEX" + session[:session_id]
@@ -134,8 +134,7 @@ class WatershedsController < ApplicationController
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @watershed.save
-        session[:watershed_id] = @watershed.id
-        format.html { redirect_to watershed_scenario_path(session[:watershed_id]), notice: t('watershed.watershed') + " " + t('general.created') }
+        format.html { redirect_to watershed_scenario_path(@watershed, :project_id => @project_id), notice: t('watershed.watershed') + " " + t('general.created') }
         format.json { render json: @watershed, status: :created, location: @watershed }
       else
         format.html { render action: "new" }
