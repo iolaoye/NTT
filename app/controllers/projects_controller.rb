@@ -101,7 +101,7 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-    #session[:project_id] = @project.id
+    #params[:project_id] = @project.id
     @project.user_id = session[:user_id]
     if params[:special] != nil
 	  @project.version = "NTTG3_special"
@@ -110,7 +110,7 @@ class ProjectsController < ApplicationController
 	end
 	respond_to do |format|
       if @project.save
-        #session[:project_id] = @project.id
+        #params[:project_id] = @project.id
         location = Location.new
         location.project_id = @project.id
         location.save
@@ -846,7 +846,7 @@ class ProjectsController < ApplicationController
       end
       @project.version = "NTTG3"
       if @project.save then
-        #session[:project_id] = @project.id
+        #params[:project_id] = @project.id
         msg = upload_location_info(node)
         msg = upload_weather_info(node)
         return "OK"

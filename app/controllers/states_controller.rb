@@ -91,9 +91,9 @@ class StatesController < ApplicationController
   def show_counties
      #@counties = County.find(params["county_ids"])
 	 #Create location for this selection with just project_id
-	 Location.where(:project_id => session[:project_id]).delete_all
+	 Location.where(:project_id => params[:project_id]).delete_all
 	 location = Location.new
-	 location.project_id = session[:project_id]
+	 location.project_id = params[:project_id]
 	 i = 0
 	 params["county_ids"].each do |county|
 		if i == 0 then
