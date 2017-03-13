@@ -85,6 +85,8 @@ module ApplicationHelper
 			true
 		elsif request.url.include?(url_for("/summary"))
 			true
+		elsif request.url.include?(url_for("/results"))
+			true
 		else
 			false
 		end
