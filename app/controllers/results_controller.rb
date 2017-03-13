@@ -240,9 +240,6 @@ class ResultsController < ApplicationController
             @y = ""
           end
       end # end case type
-      if @present
-
-      end
     end # end if != nill <!--<h1><%=@type + " " + @title%></h1>-->
     if params[:format] == "pdf" then
       pdf = render_to_string pdf: "report",
@@ -257,9 +254,9 @@ class ResultsController < ApplicationController
       #format.json { render json: "index"}
       #end # end respond to do
     end # if format is pdf
-  end
+  end  # end Method Index
 
-
+  ###############################  SHOW  ###################################
   # GET /results/1
   # GET /results/1.json
   def show
@@ -270,6 +267,7 @@ class ResultsController < ApplicationController
     #end
   end
 
+  ###############################  NEW  ###################################
   # GET /results/new
   # GET /results/new.json
   def new
@@ -281,6 +279,7 @@ class ResultsController < ApplicationController
     end
   end
 
+  ###############################  EDIT  ###################################
   # GET /results/1/edit
   def edit
     @result = Result.find(params[:id])
