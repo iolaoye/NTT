@@ -367,7 +367,7 @@ class LocationsController < ApplicationController
 
   #todo Update years of simulation + initialyear in weather.
   def load_controls()
-    apex_controls = ApexControl.where(:project_id => session[:project_id])
+    apex_controls = ApexControl.where(:project_id => params[:project_id])
     if apex_controls == [] then
       controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
 	  if controls.blank? || controls == nil then
@@ -377,7 +377,7 @@ class LocationsController < ApplicationController
         apex_control = ApexControl.new
         apex_control.control_description_id = c.id
         apex_control.value = c.default_value
-        apex_control.project_id = session[:project_id]
+        apex_control.project_id = params[:project_id]
         if apex_control.control_description_id == 1 then
           apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
         end

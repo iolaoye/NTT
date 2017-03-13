@@ -35,8 +35,8 @@ class LayersController < ApplicationController
     @soil = Soil.find(session[:soil_id])
     @soil_name = Soil.find(session[:soil_id]).name[0..20]
     @soil_name += ". . ." unless @soil_name.length < 20
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
+    @project_name = Project.find(params[:project_id]).name
+    @field_name = Field.find(params[:field_id]).field_name
 
     respond_to do |format|
       format.html # index.html.erb

@@ -129,10 +129,10 @@ class WeathersController < ApplicationController
         end
       end
     #end
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(session[:project_id], 1)
+	apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
 	apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
 	apex_control.save
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(session[:project_id], 2)
+	apex_control = ApexControl.find_by_project_id_and_control_description_id(para[:project_id], 2)
 	apex_control.value = @weather.simulation_initial_year - 5
 	apex_control.save
   end

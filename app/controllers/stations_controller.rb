@@ -3,7 +3,7 @@ class StationsController < ApplicationController
   # GET /stations.json
   def index
     @stations = Station.all
-	@location = Location.where(:project_id => session[:project_id]).first
+	@location = Location.where(:project_id => params[:project_id]).first
 
     respond_to do |format|
       format.html # index.html.erb
