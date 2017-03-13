@@ -50,16 +50,11 @@ NTTG3::Application.routes.draw do
   resources :apex_soils
   resources :apex_layers
 
-  resources :watershed_scenarios do
-     post 'new_scenario', on: :member
-  end
-
   resources :users do
     resources :projects
   end
 
   resources :projects do
-    resources :watersheds
     resources :locations do
       get :send_to_mapping_site, on: :member
       post :receive_from_mapping_site, on: :member
@@ -124,7 +119,6 @@ NTTG3::Application.routes.draw do
 	  get 'copy_project', on: :member
   end
 
-
   resources :states do
     resources :counties
   post :show_counties, on: :collection
@@ -140,6 +134,10 @@ NTTG3::Application.routes.draw do
 
   resources :watersheds do
     get :list, on: :member
+	post :simulate, on: :collection
+	resources :watershed_scenarios do
+		post 'new_scenario', on: :member
+	end
   end
 
   resources :bmplists do

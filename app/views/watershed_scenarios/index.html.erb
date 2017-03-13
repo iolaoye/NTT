@@ -12,19 +12,20 @@
 <% end %>
 <div class="page-header"><h1><%= t('watershed_scenario.watershed_scenario_title')%></h1></div>
 
-<%= form_for :watershed, url: new_scenario_watershed_scenario_path do |f| %>
+<%= form_for :watershed, :method => :get, url: new_watershed_scenario_path() do |f| %>
 <table>
   <tr>
-    <td><%= f.label t('menu.fields') %></td>
-    <td><%= f.label t('menu.scenarios') %></td>
+    <td><%=  t('menu.fields') %></td>
+    <td><%= t('menu.scenarios') %></td>
     <td></td>
   </tr>
   <tr>
     <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
     <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
-    <td class='action'><%= f.submit t('watershed_scenario.add_to_watershed'), :class => "btn btn-primary" %></td>
+    <td class='action'><%= f.button t('watershed_scenario.add_to_watershed'), name: :watershed_id, value: @watershed_id, :class => "btn btn-primary" %></td>
   </tr>
 </table>
+<%= f.hidden_field( :project_id, :value => @project.id) %>
 <% end %>
 <br>
 
@@ -32,35 +33,28 @@
 	<div class="panel panel-default">
 		<table class='table table-striped'>
 			<thead>
-				<tr>
+			  <tr>
     			<th class="gvCellStyleTitle"><%= t('watershed.watershed_name')%></th>
     			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
     			<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
     			<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
-  			</tr>
+  			  </tr>
 			</thead>
 			<tbody>
   			<% i=1 %>
   			<% @watershed_scenarios.each do |watershed_scenario| %>
     			<% if (i % 2  == 0) %>
-      			<tr class="gvRowStyleEven">
-        			<td class="gvCellStyleText"><%= Watershed.find_by_id(watershed_scenario.watershed_id).name %></td>
-        			<td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
-        			<td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
-        			<td class="gvCellStyleCheckbox">
-          			<%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
-        			</td>
-      			</tr>
+      				<tr class="gvRowStyleEven">
     			<% else %>
-      			<tr class="gvRowStyleOdd">
+      				<tr class="gvRowStyleOdd">
+    			<% end %>
         			<td class="gvCellStyleText"><%= Watershed.find_by_id(watershed_scenario.watershed_id).name %></td>
         			<td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
         			<td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
         			<td class="gvCellStyleCheckbox">
-          			<%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+          				<%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
         			</td>
       			</tr>
-    			<% end %>
   				<% i = i + 1 %>
   			<% end %>
 			</tbody>
