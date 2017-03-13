@@ -371,6 +371,7 @@ es:
       short: "%d de %b %H:%M"
     pm: pm
   general:
+    view: Ver
     note: 'NOTA:'
     name: Nombre
     description: Descripción

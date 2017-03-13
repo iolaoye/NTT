@@ -134,17 +134,18 @@
 	  		<%= link_to t('menu.scenarios'), project_field_scenarios_path(@project, @field) %></li>
       <% end %>
     </li>
+		<% if @field.results.count > 0 %>
+			<li class="<%= controller_name == "results" ? "active" : "" %>">
+			  <% if controller_name == "results" %>
+				<div class="header-icon">
+				  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				</div>
+			  <% end %>
+			  <%= link_to t('menu.results'), project_field_results_path(@project, @field) %>
+			</li>
+		<% end %>
 
-    <li class="<%= controller_name == "results" ? "active" : "" %>">
-      <% if controller_name == "results" %>
-        <div class="header-icon">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        </div>
-      <% end %>
-      <%= link_to t('menu.results'), project_field_results_path(@project, @field) %>
-    </li>
-
-	<% if result_submenu %>
+	  <% if result_submenu %>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <li class="<%= controller_name == "results" ? "active" : "0" %>">
             <% if controller.action_name == "summary" %>
@@ -152,7 +153,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.results'), project_field_results_path(@project, @field) %>
+            <%= link_to t('result.summary'), summary_project_field_result_path(@project, @field, 0) %>
           </li>
           <li class="<%= controller_name == "results" ? "active" : "" %>">
             <% if controller.action_name == "by_soils" %>
@@ -160,7 +161,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('result.by_soil'), by_soils_result_path(session[:field_id]) %>
+            <%= link_to t('result.by_soil'), by_soils_project_field_result_path(@project, @field, 0) %>
           </li>
           <li class="<%= controller_name == "results" ? "active" : "" %>">
             <% if controller.action_name == "annual_charts" %>
@@ -168,7 +169,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t("result.annual")  + "-" + t('result.charts'), annual_charts_result_path(session[:field_id]) %>
+            <%= link_to t("result.annual")  + "-" + t('result.charts'), annual_charts_project_field_result_path(@project, @field, 0)%>
           </li>
           <li class="<%= controller_name == "results" ? "active" : "" %>">
             <% if controller.action_name == "monthly_charts" %>
@@ -176,11 +177,10 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t("result.monthly")  + "-" + t('result.charts'), monthly_charts_result_path(session[:field_id]) %>
+            <%= link_to t("result.monthly")  + "-" + t('result.charts'), monthly_charts_project_field_result_path(@project, @field, 0) %>
           </li>
         </ul>
       <% end %>
-    </li>
 
     <% unless Rails.application.config.which_version == "modified" %><li class="<%= ((controller_name == "apex_controls")|| (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>">
       <% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) %>
@@ -205,11 +205,12 @@
 <% else %>
 <li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || (controller_name == "results") || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>"><%= link_to t('menu.fields'), project_fields_path(@project) %></li>
 <% end %>
+<% if !(session[:location_id] == nil) %>
+	<ul class="nav nav-pills nav-stacked nav-sidebar">
+	  <li class="<%= controller_name == "watersheds" ? "active" : "" %>"><%= link_to t('menu.field_routing_scenarios'), watersheds_path(:project_id => params[:project_id]) %></li>
+	</ul>
 
-<ul class="nav nav-pills nav-stacked nav-sidebar">
-  <li class="<%= controller_name == "watersheds" ? "active" : "" %>"><%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
-</ul>
-
-<ul class="nav nav-pills nav-stacked nav-sidebar-sub">
-  <li><%= link_to t('menu.results') + "-" + t('menu.watershed'), results_path(:button => t('result.summary')) %></li>
-</ul>
+	<ul class="nav nav-pills nav-stacked nav-sidebar-sub">
+	  <li><%= link_to t('menu.results') , results_path(:button => t('result.summary')) %></li>
+	</ul>
+<% end %>

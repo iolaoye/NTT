@@ -1,5 +1,6 @@
 class AboutController < ApplicationController
 	def index
+		@project = Project.find(params[:project_id])
 	end
 	
 	def show

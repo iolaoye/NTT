@@ -1,11 +1,13 @@
 class WatershedScenariosController < ApplicationController
 
+################################ INDEX #################################
   # GET /watershed_scenarios
   # GET /watershed_scenarios.json
   def index
-    @watershed_scenarios = WatershedScenario.all
+    @watershed_id = params[:watershed_id]
+    @watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed_id)
     @scenarios = Scenario.where(:field_id => 0)
-
+	@project = Project.find(params[:project_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @watershed_scenarios }
@@ -15,7 +17,6 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios/1
   # GET /watershed_scenarios/1.json
   def show
-    session[:watershed_id] = params[:id]
     item = WatershedScenario.where(:field_id => params[:field_id], :scenario_id => params[:scenario_id]).first
     @watershed_name = Watershed.find(params[:id]).name
     @watershed_scenarios = WatershedScenario.where(:watershed_id => params[:id])
@@ -26,12 +27,8 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios/new
   # GET /watershed_scenarios/new.json
   def new
-    @watershed_scenarios = WatershedScenario.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @watershed_scenarios }
-    end
+	@project = Project.find(params[:watershed][:project_id])
+	new_scenario()
   end
 
   # GET /watershed_scenarios/1/edit
@@ -83,23 +80,25 @@ class WatershedScenariosController < ApplicationController
     end
   end
 
+################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
   def new_scenario
     @scenarios = Scenario.where(:field_id => 0)
-    @watershed_name = Watershed.find(params[:id]).name
+	watershed = Watershed.find(params[:watershed_id])
+    @watershed_name = watershed.name
     item = WatershedScenario.where(:field_id => params[:watershed][:field_id], :scenario_id => params[:watershed][:scenario_id], :watershed_id => params[:id]).first
     respond_to do |format|
       if item == nil
         @new_watershed_scenario = WatershedScenario.new
         @new_watershed_scenario.field_id = params[:watershed][:field_id]
         @new_watershed_scenario.scenario_id = params[:watershed][:scenario_id]
-        @new_watershed_scenario.watershed_id = params[:id]
+        @new_watershed_scenario.watershed_id = params[:watershed_id]
         if @new_watershed_scenario.save
-          format.html { redirect_to watershed_scenario_path(params[:id]), notice: t('models.watershed_scenario') + t('notices.created') }
+          format.html { redirect_to watershed_watershed_scenarios_path(watershed, :project_id => @project.id), notice: t('models.watershed_scenario') + t('notices.created') }
         else
-          format.html { redirect_to watershed_scenario_path(params[:id]), notice: @new_watershed_scenario.errors }
+          format.html { redirect_to watershed_watershed_scenarios_path(watershed, :project_id => @project.id), notice: @new_watershed_scenario.errors }
         end
       else
-        format.html { redirect_to watershed_scenario_path(params[:id]), notice: 'That field/scenario combination has already been selected for this watershed. Please choose again.' }
+        format.html { redirect_to watershed_watershed_scenarios_path(watershed, :project_id => @project.id), notice: 'That field/scenario combination has already been selected for this watershed. Please choose again.' }
       end
     end
   end

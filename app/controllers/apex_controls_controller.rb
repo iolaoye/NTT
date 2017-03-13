@@ -6,7 +6,7 @@ class ApexControlsController < ApplicationController
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => session[:project_id])
+  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_controls }
@@ -16,7 +16,7 @@ class ApexControlsController < ApplicationController
   # GET /apex_controls/1
   # GET /apex_controls/1.json
   def show
-    @apex_control = ApexControl.where(:project_id => session[:project_id]).find(params[:id])
+    @apex_control = ApexControl.where(:project_id => params[:project_id]).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,7 +37,7 @@ class ApexControlsController < ApplicationController
 
   # GET /apex_controls/1/edit
   def edit
-	@apex_control = ApexControl.includes(:control_description).where(:project_id => session[:project_id]).find(params[:id])
+	@apex_control = ApexControl.includes(:control_description).where(:project_id => params[:project_id]).find(params[:id])
 	@control_code = @apex_control.control.code
 	@low_range = @apex_control.control.range_low
 	@high_range = @apex_control.control.range_high
@@ -62,7 +62,7 @@ class ApexControlsController < ApplicationController
   # PATCH/PUT /apex_controls/1
   # PATCH/PUT /apex_controls/1.json
   def update
-    @apex_control = ApexControl.where(:project_id => session[:project_id]).find(params[:id])
+    @apex_control = ApexControl.where(:project_id => params[:project_id]).find(params[:id])
 
     respond_to do |format|
       if @apex_control.update_attributes(apex_control_params)
@@ -78,7 +78,7 @@ class ApexControlsController < ApplicationController
   # DELETE /apex_controls/1
   # DELETE /apex_controls/1.json
   def destroy
-    @apex_control = ApexControl.where(:project_id => session[:project_id]).find(params[:id])
+    @apex_control = ApexControl.where(:project_id => params[:project_id]).find(params[:id])
     @apex_control.destroy
 
     respond_to do |format|
@@ -92,7 +92,7 @@ class ApexControlsController < ApplicationController
     if controls.blank? || controls == nil then
 		controls = Control.where(:state_id => 99)
 	end
-    @apex_controls = ApexControl.where("project_id == " + session[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2")
+    @apex_controls = ApexControl.where("project_id == " + params[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2")
     @apex_controls.delete_all()
 
     controls.each do |control|
@@ -100,7 +100,7 @@ class ApexControlsController < ApplicationController
 		  apex_control = ApexControl.new
 		  apex_control.control_description_id = control.id
 		  apex_control.value = control.default_value
-		  apex_control.project_id = session[:project_id]
+		  apex_control.project_id = params[:project_id]
 		  apex_control.save
 		end
     end
