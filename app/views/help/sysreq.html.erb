@@ -98,5 +98,5 @@
 		<p><%= t('sysreq.popup.body2') %></p>
 	</div>
 </div>
-<br><%= link_to "Next >", help_path("nav") %></br>
-<br><%= link_to t('help.return_to_table'), help_path("index") %></br>
+<br><%= link_to "Next >", help_path("nav", :project_id => params[:project_id]) %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]) %></br>

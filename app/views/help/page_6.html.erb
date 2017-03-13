@@ -1,29 +1,41 @@
 <div class="main">
 	<div class="container">
-		<h1><%= t('fieldpage.header') %></h1><br>
-			<p><%= raw t('fieldpage.body1') %></p>
-      <%= image_tag("help/page_6/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>
-      <p><%= raw t('fieldpage.body2') %></p>
-      <br>
-    <h2><%= t('fieldpage.createdel.header') %></h2>
-			<%= raw t('fieldpage.createdel.create.header') %><br>
-				<p><%= raw t('fieldpage.createdel.create.body') %></p>
-				<%= raw t('fieldpage.createdel.delete.header') %><br>
-				<%= raw t('fieldpage.createdel.delete.body') %>
-        <br></br>
-		<h2><%= t('fieldpage.characteristics.header') %></h2>
-      <p><%= raw t('fieldpage.characteristics.body') %></p>
-    <%= image_tag("help/page_6/image002.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>
-			<p></p>
-      <b><%= t('fieldpage.characteristics.name.header') %><br></b>
-				<p><%= raw t('fieldpage.characteristics.name.body') %></p>
-        <!-- <%= image_tag("help/page_6/image003.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>-->
-      <b><%= t('fieldpage.characteristics.area.header') %><br></b>
-				<p><%= raw t('fieldpage.characteristics.area.body') %></p>
-        <!-- <%= image_tag("help/page_6/image004.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>-->
-      <b><%= t('fieldpage.advance') %><br></b>
-				<p><%= raw t('fieldpage.advance_body') %></p>
+		<h1><%= t('weathpage.header') %></h1>
+			<p><%= raw t('weathpage.body') %></p>
+		
+		<h2><%= t('weathpage.selectinfo.header') %></h2>
+			<p><%= raw t('weathpage.selectinfo.body') %></p>
+			<h3><%= t('weathpage.selectinfo.method1.header') %></h3><br>
+				<p><%= raw t('weathpage.selectinfo.method1.body') %></p>
+			<h3><%= t('weathpage.selectinfo.method2.header') %></h3><br>
+				<p><%= raw t('weathpage.selectinfo.method2.body1') %></p>
+        <%= image_tag("help/page5/image001.png", :alt => "Image 001") %>
+				<p><%= raw t('weathpage.selectinfo.method2.body2') %></p>
+			<h3><%= t('weathpage.selectinfo.method3.header') %></h3><br>
+				<p><%= raw t('weathpage.selectinfo.method3.body') %></p>
+				<ol>
+					<li>
+						<p><%= raw t('weathpage.selectinfo.method3.item1.body1') %></p>
+            <%= image_tag("help/page5/image002.png", :alt => "Image 002") %>
+						<p><%= raw t('weathpage.selectinfo.method3.item1.body2') %></p>
+						<p><%= raw t('weathpage.selectinfo.method3.item1.body3') %></p>
+            <%= image_tag("help/page5/image003.png", :alt => "Image 003") %>
+						<p><%= raw t('weathpage.selectinfo.method3.item1.body4') %></p>
+					</li>
+					<li>
+						<p><%= raw t('weathpage.selectinfo.method3.item2.body1') %></p>
+            <%= image_tag("help/page5/image004.png", :alt => "Image 004") %>
+						<p><%= raw t('weathpage.selectinfo.method3.item2.body2') %></p>
+					</li>
+					<li><p><%= raw t('weathpage.selectinfo.method3.item3') %></p></li>
+				</ol>
+			<h3><%= t('weathpage.selectinfo.method4.header') %></h3><br>
+				<p><%= raw t('weathpage.selectinfo.method4.body1') %></p>
+				<p><%= raw t('weathpage.selectinfo.method4.body2') %></p>
+			<h2><%= t('weathpage.simulate.header') %></h2>
+				<p><%= raw t('weathpage.simulate.body') %></p>
+    <%= image_tag("help/page5/image005.png", :alt => "Image 005") %>
 	</div>
 </div>
-<br><%= link_to "< Prev", help_path("page_4") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_5") %></br>
-<br><%= link_to t('help.return_to_table'), help_path("index") %></br>
+<br><%= link_to "< Prev", help_path("page_5", :project_id => params[:project_id]) %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_7", :project_id => params[:project_id]) %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]) %></br>

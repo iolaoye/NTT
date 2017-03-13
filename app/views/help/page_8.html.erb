@@ -188,5 +188,5 @@
 			<p><%= raw t('managepage.reference.body1') %></p>
 	</div>
 </div>
-<br><%= link_to "< Prev", help_path("page_7") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_9") %></br>
-<br><%= link_to t('help.return_to_table'), help_path("index") %></br>
+<br><%= link_to "< Prev", help_path("page_7", :project_id => params[:project_id]) %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_9", :project_id => params[:project_id]) %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]) %></br>
