@@ -1165,6 +1165,18 @@ en:
             header: 'Option 4: Choose an area of interest by latitude/longitude'
             item1: '<strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).'
             item2: '<strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.'
+    statecounty:
+        header: State/County Method
+        body1: 'The State/County Method allows you to select a particular area of interest based on the state and county. When using this method, the weather and soil information can be uploaded from weather stations and databases for that region, so minimal or no user input is required in later pages.'
+        body2: 'Note that this method only works for mainland United States. Furthermore, the current version only includes states where specific verification has been completed. Users needing to run this version of NTT for states not yet included are encouraged to contact the developers. Like the Mapping System, this method is <strong>ONLY</strong> for <strong>mainland United States.</strong>'
+        body3: 'There are <strong>two steps</strong> in selecting an area of interest using the State/County Method:'
+        item1: '<strong>Select a State:</strong> Select a state from the drop down menu labeled <strong>States</strong> as shown below. Note that while you Hawaii and Alaska are on the menu, you cannot use this method for these two states, as this only works in mainland United States.'
+        item2: '<strong>Select a County:</strong> Once you have selected a state, the corresponding counties will come up on the drop down box as shown below. To select a county, simply select the county of interest. If you selected Alaska or Hawaii, you will not see any counties. This is because this method is only for <strong>mainland United States</strong> and does not work with Alaska or Hawaii.'
+        body4: 'Once you have selected a state and county, click <strong>Save and Continue</strong> to advance to the next page.'
+    userinput:
+        header: User Input Method
+        body1: 'The User Input Method allows the user to select regions <strong>outside of mainland United States.</strong> However, to do this, the user must have significantly more information, including the user’s own weather files and soil information. In this page, the user will simply enter the General Location and Specific Location as shown below. This can be any sequence of letters, numbers, or characters. It is simply used as name. The information will be entered in the following pages.'
+        body2: 'After you have entered the location, the State and County you selected (or the General and Specific location) will show up on the top of the screen (along with the project name) for the remainder of the program. An example is shown below:'
   locpage_html:
     <strong>Location Information</strong><br>
     The map allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.

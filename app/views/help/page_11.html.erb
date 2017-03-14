@@ -40,5 +40,5 @@
 			<p><%= raw t('resultspage.saving.body2') %></p>
 	</div>
 </div>
-<br><%= link_to "< Prev", help_path("page_10", :project_id => params[:project_id]) %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_12", :project_id => params[:project_id]) %></br>
-<br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]) %><br>
+<br><%= link_to "< Prev", help_path("page_10", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_12", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]), :class => "btn btn-primary" %><br>
