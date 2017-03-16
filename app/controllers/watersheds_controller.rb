@@ -7,20 +7,21 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
     @project = Project.find(params[:project_id])
-    @field = Field.find(session[:field_id])
+    #@field = Field.find(session[:field_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @watersheds }
     end
   end
 
+  ################################  Index   #################################
   # GET /watersheds
   # GET /watersheds.json
   def index
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
     @project = Project.find(params[:project_id])
-    @field = Field.find(session[:field_id])
+    #@field = Field.find(session[:field_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @watersheds }
@@ -31,11 +32,12 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /watersheds/1.json
   def simulate
-    @watershed_id = params[:id]
+  debugger
+    @watershed_id = params[:select_watershed][0]
     @dtNow1 = Time.now.to_s
     dir_name = APEX + "/APEX" + session[:session_id]
 
-    watershed_scenarios = WatershedScenario.where(:watershed_id => params[:id])
+    watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed_id)
     msg = send_file_to_APEX("APEX", session[:session_id]) #this operation will create APEX folder from APEX1 folder
     if msg.eql?("OK") then
       msg = create_control_file()
@@ -66,6 +68,7 @@ class WatershedsController < ApplicationController
     j=0
     watershed_scenarios.each do |p|
       @scenario = Scenario.find(p.scenario_id)
+	  @field = Field.find(p.field_id)
       session[:scenario_id] = p.scenario_id
       session[:field_id] = p.field_id
       if msg.eql?("OK") then
@@ -101,9 +104,9 @@ class WatershedsController < ApplicationController
 
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
-    @project_name = Project.find(session[:project_id]).name
+    @project = Project.find(params[:project_id])
 
-    render "list"
+    render "index"
   end
 
   ################################ NEW #################################
@@ -134,7 +137,7 @@ class WatershedsController < ApplicationController
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @watershed.save
-        format.html { redirect_to watershed_scenario_path(@watershed, :project_id => @project_id), notice: t('watershed.watershed') + " " + t('general.created') }
+        format.html { redirect_to project_watershed_watershed_scenarios_path(@project, @watershed), notice: t('watershed.watershed') + " " + t('general.created') }
         format.json { render json: @watershed, status: :created, location: @watershed }
       else
         format.html { render action: "new" }

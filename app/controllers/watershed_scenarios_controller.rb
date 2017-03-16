@@ -1,11 +1,10 @@
 class WatershedScenariosController < ApplicationController
-
 ################################ INDEX #################################
   # GET /watershed_scenarios
   # GET /watershed_scenarios.json
   def index
-    @watershed_id = params[:watershed_id]
-    @watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed_id)
+    @watershed = Watershed.find(params[:watershed_id])
+    @watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed.id)
     @scenarios = Scenario.where(:field_id => 0)
 	@project = Project.find(params[:project_id])
     respond_to do |format|
@@ -36,19 +35,28 @@ class WatershedScenariosController < ApplicationController
     @watershed_scenarios = WatershedScenario.find(params[:id])
   end
 
+  #********************** Create a new field/scenario to add to the watershed selected ***********************
   # POST /watershed_scenarios
   # POST /watershed_scenarios.json
   def create
-    @watershed_scenarios = WatershedScenario.new(watershed_scenario_params)
-
+    @project = Project.find(params[:project_id])
+    @scenarios = Scenario.where(:field_id => 0)
+	watershed = Watershed.find(params[:watershed_id])
+    @watershed_name = watershed.name
+    item = WatershedScenario.where(:field_id => params[:field][:id], :scenario_id => params[:scenario][:id], :watershed_id => params[:watershed_id]).first
     respond_to do |format|
-      if @watershed_scenarios.save
-        format.html { redirect_to @watershed_scenarios, notice: t('models.watershed_scenario') + "" + t('notices.created') }
-        format.json { render json: @watershed_scenarios, status: :created, location: @watershed_scenarios }
+      if item == nil
+        @new_watershed_scenario = WatershedScenario.new
+        @new_watershed_scenario.field_id = params[:field][:id]
+        @new_watershed_scenario.scenario_id = params[:scenario][:id]
+        @new_watershed_scenario.watershed_id = params[:watershed_id]
+        if @new_watershed_scenario.save
+          format.html { redirect_to project_watershed_watershed_scenarios_path(@project, watershed ), notice: t('models.watershed_scenario') + t('notices.created') }
+        else
+          format.html { redirect_to project_watershed_watershed_scenarios_path(@project, watershed), notice: @new_watershed_scenario.errors }
+        end
       else
-        flash[:error] = @watershed_scenarios.errors
-        format.html { render action: "new" }
-        format.json { render json: @watershed_scenarios.errors, status: :unprocessable_entity }
+        format.html { redirect_to project_watershed_watershed_scenarios_path(@project, watershed), notice: 'That field/scenario combination has already been selected for this watershed. Please choose again.' }
       end
     end
   end

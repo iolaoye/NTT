@@ -1,3 +1,4 @@
+<%#= form_for [@project, @watershed, @watershed_scenarios] do |f| %>
 <% case %>
 <% when notice %>
 	<div class="success_alert">
@@ -12,7 +13,7 @@
 <% end %>
 <div class="page-header"><h1><%= t('watershed_scenario.watershed_scenario_title')%></h1></div>
 
-<%= form_for :watershed, :method => :get, url: new_watershed_scenario_path() do |f| %>
+<%= form_tag new_project_watershed_watershed_scenario_path[@project.id, @watershed.id], method: :post do |f| %>
 <table>
   <tr>
     <td><%=  t('menu.fields') %></td>
@@ -20,12 +21,12 @@
     <td></td>
   </tr>
   <tr>
-    <td><%= collection_select :watershed, :field_id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
-    <td><%= collection_select :watershed, :scenario_id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
-    <td class='action'><%= f.button t('watershed_scenario.add_to_watershed'), name: :watershed_id, value: @watershed_id, :class => "btn btn-primary" %></td>
+    <td><%= collection_select :field, :id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
+    <td><%= collection_select :scenario, :id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
+    <td class='action'><%= submit_tag t('watershed_scenario.add_to') + " " + @watershed.name, :class => "btn btn-primary" %></td>
   </tr>
 </table>
-<%= f.hidden_field( :project_id, :value => @project.id) %>
+<%= hidden_field_tag( :project_id, @project.id) %>
 <% end %>
 <br>
 

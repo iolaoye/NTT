@@ -1581,8 +1581,6 @@ module SimulationsHelper
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results(apex_start_year, msg)
-		#session[:depth]=msg
-		#ppp
         msg = load_crop_results(apex_start_year)
       #rescue => e
         #msg = "Failed, Error: " + e.inspect

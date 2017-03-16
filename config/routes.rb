@@ -55,6 +55,11 @@ NTTG3::Application.routes.draw do
   end
 
   resources :projects do
+    resources :watersheds do
+		get :list, on: :member
+		post :simulate, on: :collection
+		resources :watershed_scenarios
+	end
     resources :locations do
       get :send_to_mapping_site, on: :member
       post :receive_from_mapping_site, on: :member
@@ -130,14 +135,6 @@ NTTG3::Application.routes.draw do
 
   resources :fertilizer_types do
     resources :fertilizers
-  end
-
-  resources :watersheds do
-    get :list, on: :member
-	post :simulate, on: :collection
-	resources :watershed_scenarios do
-		post 'new_scenario', on: :member
-	end
   end
 
   resources :bmplists do
