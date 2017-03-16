@@ -632,7 +632,7 @@ es:
   watershed_scenario:
     watershed_scenario_name: Nombre de la cuenca
     watershed_scenario_title: Lista de Escenario de Cuencas
-    add_to_watershed: Adicionar a la cuenca
+    add_to: Adicionar a
   submit:
     create: Crear
     save: Guardar

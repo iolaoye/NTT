@@ -633,7 +633,7 @@ en:
     watershed_scenario: Watershed Scenario
     new_watershed: New Watershed Scenario
     watershed_scenario_title: Listing Watershed Scenarios
-    add_to_watershed: Add to watershed
+    add_to: Add to
   submit:
     create: Create
     save: Save

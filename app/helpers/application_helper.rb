@@ -34,7 +34,7 @@ module ApplicationHelper
 			true
 		elsif request.url.include?(url_for("/scenarios"))
 			true
-		elsif request.url.include?(url_for("/results"))
+		elsif request.url.include?(url_for("/results")) && session[:simulation] == 'scenario'
 			true
 		elsif request.url.include?(url_for("/layers"))
 			true
@@ -112,6 +112,15 @@ module ApplicationHelper
 		elsif request.url.include?(url_for('soils'))
 			true
 		elsif request.url.include?(url_for('operations'))
+			true
+		else
+			false
+		end
+	end
+
+	def watershed_submenu
+		if (request.url.include?(url_for('results')) && request.url.include?(url_for('simulation=Watershed')) || request.url.include?(url_for('watersheds')))
+			session[:simulation] = 'Watershed'
 			true
 		else
 			false

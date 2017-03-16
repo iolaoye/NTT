@@ -1,7 +1,7 @@
-<%= form_tag simulate_watersheds_path, method: :post do |f| %>
+<%= form_tag simulate_project_watersheds_path(@project), method: :post do |f| %>
 <div class="page-header"><h1>List of Field Routing Scenarios</h1></div>
 
-<%= link_to t('watershed.new'), new_watershed_path(:project_id  => @project.id), :class => "btn btn-primary" %>
+<%= link_to t('watershed.new'), new_project_watershed_path(@project.id), :class => "btn btn-primary" %>
 <% if @watersheds.count > 0 %>
 	<%= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
 <% end %>
@@ -24,9 +24,11 @@
                 <tr class="gvRowStyleOdd">
 	          <% end %>
             <td><%= check_box_tag "select_watershed[]", watershed.id %></td>
-            <td><%= link_to watershed.name, watershed_watershed_scenarios_path(watershed, :project_id => @project.id) %></td>
             <td>
-                <%= link_to image_tag("edit.png"), edit_watershed_path(watershed, :project_id => @project.id) %>
+              <%= link_to watershed.name, project_watershed_watershed_scenarios_path(watershed, :project_id => @project.id) %>
+            </td>
+            <td>
+                <%= link_to image_tag("edit.png"), edit_project_watershed_path(watershed, :project_id => @project.id) %>
                 <%= link_to image_tag("delete.png"), watershed, method: :delete, data: { confirm: t('general.confirm') } %>
             </td>
           </tr>
