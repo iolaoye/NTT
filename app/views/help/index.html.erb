@@ -6,27 +6,27 @@
 		<strong><%= t('help.overview') %></strong>
 		<ol>
 			<li><%= link_to t('help.overview1'), about_path(:project_id => params[:project_id]) %></li>
-			<li><%= link_to t('help.overview2'), contact_path %></li>
+			<li><%= link_to t('help.overview2'), contact_path(:project_id => params[:project_id]) %></li>
 		</ol>
 		<strong><%= t('help.getstarted') %></strong>
 		<ol>
-			<li><%= link_to t('help.getstarted1'), help_path("sysreq") %></li>
-			<li><%= link_to t('help.getstarted2'), help_path("nav") %></li>
-			<li><%= link_to t('help.getstarted3'), help_path("page_3") %></li>
-			<li><%= link_to t('help.getstarted4'), help_path("page_4") %></li>
-			<li><%= link_to t('help.getstarted6'), help_path("page_6") %></li>
- 			<li><%= link_to t('help.getstarted5'), help_path("page_5") %></li>
-			<li><%= link_to t('help.getstarted7'), help_path("page_7") %></li>
-			<li><%= link_to t('help.getstarted8'), help_path("page_8") %></li>
-			<li><%= link_to t('help.getstarted9'), help_path("page_9") %></li>
-			<li><%= link_to t('help.getstarted10'), help_path("page_10")  %></li>
-			<li><%= link_to t('help.getstarted11'), help_path("page_11") %></li>
-			<li><%= link_to t('help.getstarted12'), help_path("page_12") %></li>
+			<li><%= link_to t('help.getstarted1'), help_path("sysreq", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.getstarted2'), help_path("nav", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.getstarted3'), help_path("page_3", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.getstarted4'), help_path("page_4", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.getstarted6'), help_path("page_5", :project_id => params[:project_id]) %></li>
+ 			<li><%= link_to t('help.getstarted5'), help_path("page_6", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.getstarted7'), help_path("page_7", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.getstarted8'), help_path("page_8", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.getstarted9'), help_path("page_9", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.getstarted10'), help_path("page_10", :project_id => params[:project_id])  %></li>
+			<li><%= link_to t('help.getstarted11'), help_path("page_11", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.getstarted12'), help_path("page_12", :project_id => params[:project_id]) %></li>
 		</ol>
 		<strong><%= t('help.understanding') %></strong>
 		<ol>
-			<li><%= link_to t('help.understanding1'), help_path("apex") %></li>
-			<li><%= link_to t('help.understanding2'), help_path("ntt_disclaimer") %></li>
+			<li><%= link_to t('help.understanding1'), help_path("apex", :project_id => params[:project_id]) %></li>
+			<li><%= link_to t('help.understanding2'), help_path("ntt_disclaimer", :project_id => params[:project_id]) %></li>
 		</ol>
 	</div>
 </div>
