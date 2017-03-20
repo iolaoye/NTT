@@ -34,7 +34,7 @@ module ApplicationHelper
 			true
 		elsif request.url.include?(url_for("/scenarios"))
 			true
-		elsif request.url.include?(url_for("/results"))
+		elsif request.url.include?(url_for("/results")) && session[:simulation] == 'scenario'
 			true
 		elsif request.url.include?(url_for("/layers"))
 			true
@@ -49,6 +49,8 @@ module ApplicationHelper
 		elsif request.url.include?(url_for("/aplcat_parameters"))
 			true
 		elsif request.url.include?(url_for("/grazing_parameters"))
+			true
+		elsif request.url.include?(url_for("/supplement_parameters"))
 			true
 		else
 			false
@@ -68,7 +70,7 @@ module ApplicationHelper
 		elsif request.url.include?(url_for("/aplcat_parameters"))
 			@scenario_name = Scenario.find(params[:scenario_id]).name
 			true
-		elsif request.url.include?(url_for("/grazing_parameters"))
+		elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters"))
 			@scenario_name = Scenario.find(params[:scenario_id]).name
 			true
 		else
@@ -95,7 +97,7 @@ module ApplicationHelper
 	def aplcats_submenu
 		if request.url.include?(url_for('aplcat_parameters'))
 			true
-		elsif request.url.include?(url_for('grazing_parameters'))
+		elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))
 			true
 		else
 			false
@@ -112,6 +114,15 @@ module ApplicationHelper
 		elsif request.url.include?(url_for('soils'))
 			true
 		elsif request.url.include?(url_for('operations'))
+			true
+		else
+			false
+		end
+	end
+
+	def watershed_submenu
+		if (request.url.include?(url_for('results')) && request.url.include?(url_for('simulation=Watershed')) || request.url.include?(url_for('watersheds')))
+			session[:simulation] = 'Watershed'
 			true
 		else
 			false

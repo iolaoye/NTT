@@ -28,9 +28,9 @@
       </tr>
       <tr>
         <% if session[:simulation] == 'scenario' %>
-          <td><%= collection_select :result1, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario1'), :selected => @scenario1}, {:required => true} %></td>
-          <td><%= collection_select :result2, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario2'), :required => false, :selected => @scenario2} %></td>
-          <td><%= collection_select :result3, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('result.select_scenario3'), :required => false, :selected => @scenario3} %></td>
+          <td><%= collection_select :result1, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario1'), :selected => @scenario1}, {:required => true} %></td>
+          <td><%= collection_select :result2, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario2'), :required => false, :selected => @scenario2} %></td>
+          <td><%= collection_select :result3, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario3'), :required => false, :selected => @scenario3} %></td>
         <% else %>
           <td><%= collection_select :result1, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed1'), :selected => @scenario1}, {:required => true} %></td>
           <td><%= collection_select :result2, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed2'), :required => false, :selected => @scenario2} %></td>
@@ -47,7 +47,7 @@
 			</tr>
 			<tr><td colspan = "3"><%= "(±) = Confindence Interval" %></td></tr>
           <% when t("result.summary") + " " + t("result.by_soil") %>
-            <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => session[:field_id], :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil }, { :required => true }%></td>
+            <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => @field.id, :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil }, { :required => true }%></td>
             <td><%= submit_tag t("result.summary") + " " + t("result.by_soil"), name: "button", :class => "btn btn-primary" %>
 			</tr>
 			<tr ><td colspan = "3"><%= "(±) = Confindence Interval" %></td></tr>
@@ -69,7 +69,7 @@
 			</tr>
         <% end %>
         <%= hidden_field(:language, :language, :value => I18n.locale) %>
-        <%= hidden_field(:field, :id, :value => session[:field_id]) %>
+        <%#= hidden_field(:field, :id, :value => @field.id) %>
     </table>
   </div>
 </form>

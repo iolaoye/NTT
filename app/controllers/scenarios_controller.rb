@@ -44,11 +44,13 @@ class ScenariosController < ApplicationController
 
   def simulate
 	case params[:commit]
-		when "Simulate NTT"
+		when "Simulate NTT", "Simular NTT"
 			msg = simulate_ntt
-		when "Simulate Aplcat"
+		when "Simulate Aplcat", "Simular Aplcat"
 			msg = simulate_aplcat
 	end
+	@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
 
     @scenarios = Scenario.where(:field_id => params[:field_id])
     if msg.eql?("OK") then
@@ -192,7 +194,7 @@ class ScenariosController < ApplicationController
 
 ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
-  msg = "OK"
+	msg = "OK"
     #find the aplcat parameters for the sceanrio selected
 	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
 	grazing = GrazingParameter.where(:scenario_id => params[:id])
@@ -201,6 +203,7 @@ class ScenariosController < ApplicationController
 		aplcat.scenario_id = params[:id]
 		aplcat.save
 	end
+    msg = send_file_to_APEX("APLCAT", session[:session_id])  #this operation will create APLCAT+session folder from APLCAT folder
 	# create string for the Cow_Calf_EME_final.txt file
 	apex_string = "This is the input file containing nutritional information for cattle in the cow-calf system" + "\n"
 	apex_string += "\n"
@@ -293,7 +296,8 @@ class ScenariosController < ApplicationController
 	apex_string += "Line 9: " + t('graze.dmi_calves') + "\n"
 	apex_string += t('graze.ln10') + "\n"
 	apex_string += "\n"
-	msg = send_file_to_APEX(apex_string, "Cow_Calf_EME_final.txt")
+	#***** send file to server "
+	msg = send_file_to_APEX(apex_string, "EmissionInputCowCalf.txt")
 	# create string for the DRINKIGWATER.txt file
 	apex_string = "Input file for estimating drinking water requirement of cattle" + "\n"
 	apex_string += "\n"
@@ -353,7 +357,7 @@ class ScenariosController < ApplicationController
 	apex_string += sprintf("%8.2f", aplcat.ape) + "\t" + "! " + t('aplcat.ape') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.napanr) + "\t" + "! " + t('aplcat.napanr') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.napaip) + "\t" + "! " + t('aplcat.napaip') + "\n"
-	msg = send_file_to_APEX(apex_string, "DrinkingWaterInput.txt")
+	msg = send_file_to_APEX(apex_string, "WaterEnergyInputCowCalf.txt")
 	return msg
   end	
   

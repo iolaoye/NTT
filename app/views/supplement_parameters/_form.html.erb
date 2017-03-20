@@ -1,0 +1,46 @@
+<%= form_for [@project, @field, @scenario, @supplement_parameter] do |f| %>
+  <% if @supplement_parameter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@supplement_parameter.errors.count, "error") %> prohibited this supplement_parameter from being saved:</h2>
+
+      <ul>
+      <% @supplement_parameter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code %><br />
+    <%= f.number_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_code %><br />
+    <%= f.number_field :dmi_code %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_cows %><br />
+    <%= f.text_field :dmi_cows %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_bulls %><br />
+    <%= f.text_field :dmi_bulls %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_heifers %><br />
+    <%= f.text_field :dmi_heifers %>
+  </div>
+  <div class="field">
+    <%= f.label :dmi_calves %><br />
+    <%= f.text_field :dmi_calves %>
+  </div>
+  <div class="field">
+    <%= f.label :green_water_footprint %><br />
+    <%= f.number_field :green_water_footprint %>
+  </div>
+  <div class="actions">
+    <%= f.submit :class => "btn btn-primary" %>
+	<%= link_to 'Back', project_field_scenario_supplement_parameters_path %>
+  </div>
+<% end %>

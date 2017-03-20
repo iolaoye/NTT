@@ -18,6 +18,6 @@
   <br>
   <div class="actions">
     <%= f.submit t('operation.save'), :class => "btn btn-primary" %>
-    <%= link_to t('general.back'), list_watershed_path(session[:location_id]), :class => "btn btn-primary" %>
+    <%= link_to t('general.back'), project_watersheds_path(params[:project_id]), :class => "btn btn-primary" %>
   </div>
 <% end %>
