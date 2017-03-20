@@ -67,6 +67,10 @@ class OperationsController < ApplicationController
   def edit
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @operation = Operation.find(params[:scenario_id])
+
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+    @scenario = Scenario.find(params[:scenario_id])
   end
 
 ################################  CREATE  #################################
