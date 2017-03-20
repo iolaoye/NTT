@@ -1,4 +1,8 @@
 class FieldsController < ApplicationController
+  load_and_authorize_resource :project
+  load_and_authorize_resource :field, :through => :project
+
+
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
@@ -87,7 +91,7 @@ class FieldsController < ApplicationController
     @field = Field.find(params[:id])
 
     respond_to do |format|
-      if Rails.application.config.which_version == "modified"
+      if ENV["APP_VERSION"] == "modified"
         format.html { redirect_to project_field_soils_path(@field.location.project, @field) }
       else
         format.html { redirect_to edit_project_field_weather_path(@project, @field) }

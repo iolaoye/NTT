@@ -14,7 +14,7 @@
 <div class="container">
     <div class="row">
       <div class="col-sm-10 col-md-10 main">
-        <% if Rails.application.config.which_version == "modified" %>
+        <% if ENV["APP_VERSION"] == "modified" %>
       <div class="page-header"><h1><small><%= current_user.name %></small><br>My Projects</h1>
           
     </div>

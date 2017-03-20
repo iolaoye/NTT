@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }.merge options
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+
 end

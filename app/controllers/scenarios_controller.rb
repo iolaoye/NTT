@@ -1,4 +1,7 @@
 class ScenariosController < ApplicationController
+  load_and_authorize_resource :field
+  load_and_authorize_resource :scenario, :through => :field
+	
   include ScenariosHelper
   include SimulationsHelper
 ################################  scenario bmps #################################
@@ -194,7 +197,7 @@ class ScenariosController < ApplicationController
 
 ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
-	msg = "OK"
+    msg = "OK"
     #find the aplcat parameters for the sceanrio selected
 	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
 	grazing = GrazingParameter.where(:scenario_id => params[:id])
