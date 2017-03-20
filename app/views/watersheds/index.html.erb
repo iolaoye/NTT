@@ -1,5 +1,5 @@
 <%= form_tag simulate_project_watersheds_path(@project), method: :post do |f| %>
-<div class="page-header"><h1>List of Field Routing Scenarios</h1></div>
+<div class="page-header"><h1>Field Routing Scenarios</h1></div>
 
 <%= link_to t('watershed.new'), new_project_watershed_path(@project.id), :class => "btn btn-primary" %>
 <% if @watersheds.count > 0 %>
