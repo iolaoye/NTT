@@ -11,7 +11,7 @@
     </div>
 <% end %>
 
-<% if Rails.application.config.which_version == "modified" %>
+<% if ENV["APP_VERSION"] == "modified" %>
 <div class="page-header"><h1><!--<%= t('general.listing') + " " + t('soil.layers') %>-->Soil Layers</h1></div>
 <%= link_to t('general.back'), list_soil_path(session[:field_id]), :class => 'btn btn-primary' %>
 <%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'btn btn-success' %><br><br>

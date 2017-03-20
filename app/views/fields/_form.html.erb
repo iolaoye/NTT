@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <% if Rails.application.config.which_version == "modified" %>
+  <% if ENV["APP_VERSION"] == "modified" %>
 
   <div class="field" title="Name of Field">
     <%= f.label t('field.field_name') %>
