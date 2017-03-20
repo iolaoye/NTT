@@ -1341,8 +1341,7 @@ en:
         body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
     operation:
         header: Operation Page
-        body1: 'A cropping system is REQUIRED for the user to be able to advance and simulate. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. Regardless of the particular option that the user will use for the cropping system, the user needs to expand the Cropping System title by clicking on the arrow or double clicking on the title. This will bring up the options for adding a cropping system, as shown below:'
-        body2: 'Now the user has several options to select a cropping system.'
+        body: 'A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below: '
         item1: '<b.Select Cropping System:</strong> Using this option allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
         item2: '<strong>Upload Saved Crop Rotation:</strong> This option allows the user to upload a previously saved crop rotation, however this file must have previously been saved on your computer, and be in *.prj format. To save a crop rotation, first create one and then click on <strong><em>Save Current Crop Rotation</em></strong>.'
         item3:

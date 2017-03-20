@@ -198,6 +198,7 @@ class ScenariosController < ApplicationController
     #find the aplcat parameters for the sceanrio selected
 	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
 	grazing = GrazingParameter.where(:scenario_id => params[:id])
+	supplement = SupplementParameter.where(:scenario_id => params[:id])
 	if aplcat == nil then
 		aplcat = AplcatParameter.new
 		aplcat.scenario_id = params[:id]
@@ -280,6 +281,37 @@ class ScenariosController < ApplicationController
 	apex_string += "| " + t('graze.dmi_calves') + "\n"
 	for i in 0..grazing.count-1
 		apex_string += sprintf("%.f", grazing[i].green_water_footprint) + "\t"
+	end
+	apex_string += "| " + t('graze.gwf') + "\n"
+	apex_string += "\n"
+	apex_string += "Data on animalfeed (Supplement/Concentrate)" + "\n"
+	apex_string += "\n"
+	for j in 0..supplement.count-1
+		apex_string += sprintf("%.f", supplement[j].code) + "\t"
+	end
+	apex_string += "| " + t('supplement.code') + "\n"
+	for j in 0..supplement.count-1
+		apex_string += sprintf("%.f", supplement[j].dmi_code) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_code') + "\n"
+	for j in 0..supplement.count-1
+		apex_string += sprintf("%.f", supplement[j].dmi_cows) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_cows') + "\n"
+	for j in 0..supplement.count-1
+		apex_string += sprintf("%.f", supplement[j].dmi_bulls) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_bulls') + "\n"
+	for j in 0..supplement.count-1
+		apex_string += sprintf("%.f", supplement[j].dmi_heifers) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_heifers') + "\n"
+	for j in 0..supplement.count-1
+		apex_string += sprintf("%.f", supplement[j].dmi_calves) + "\t"
+	end
+	apex_string += "| " + t('graze.dmi_calves') + "\n"
+	for j in 0..supplement.count-1
+		apex_string += sprintf("%.f", supplement[j].green_water_footprint) + "\t"
 	end
 	apex_string += "| " + t('graze.gwf') + "\n"
 	apex_string += "\n"
