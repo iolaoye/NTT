@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p><b>Code:</b><%= @supplement_parameter.code %></p>
+
+<p><b>Dmi code:</b><%= @supplement_parameter.dmi_code %></p>
+
+<p><b>Dmi cows:</b><%= @supplement_parameter.dmi_cows %></p>
+
+<p><b>Dmi bulls:</b><%= @supplement_parameter.dmi_bulls %></p>
+
+<p><b>Dmi heifers:</b><%= @supplement_parameter.dmi_heifers %></p>
+
+<p><b>Dmi calves:</b><%= @supplement_parameter.dmi_calves %></p>
+
+<p><b>Green water footprint:</b><%= @supplement_parameter.green_water_footprint %></p>
+
+<%= link_to 'Edit', edit_project_field_scenario_supplement_parameter_path(@project, @field, @scenario, @supplement_parameter.id), :class => "btn btn-primary" %> 
+<%= link_to 'Back', project_field_scenario_supplement_parameters_path(@project, @field, @scenario), :class => "btn btn-primary" %>
