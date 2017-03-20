@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  load_and_authorize_resource
+
   include LocationsHelper
 
   layout 'welcome'
@@ -9,7 +11,11 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @user = User.find(session[:user_id])
-    @projects = Project.where(:user_id => params[:user_id])
+    if @user.admin?
+      @projects = Project.all
+    else
+      @projects = Project.where(:user_id => params[:user_id])
+    end
     session[:simulation] = "watershed"
     respond_to do |format|
       format.html # index.html.erb
