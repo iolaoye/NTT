@@ -923,6 +923,9 @@ en:
       avg_temp: Daily average temperature for each month
       avg_rh: Daily average relative humidity for each month
       grazing: Grazing
+      mm_type: Enter 1 to use IPCC tier 2 and 2 to use a fraction of manure to estimate manure methane
+      fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excreted)
+      supplement_parameters: Supplement Parameters
   aplcat_tooltip:
       noc: 'Total number of Cows in the farm under Cow-Calf system'
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'
@@ -968,7 +971,7 @@ en:
       pctbb:
       ptdife:
       tnggbc:
-      animal_paramters:
+      animal_parameters:
       animal_manure_parameters:
       animal_growth_parameters:
       environmental_parameters:
@@ -976,6 +979,7 @@ en:
       water_use_pumping_parameters:
       other_parameters:
       animal_feed_parameters:
+      supplement_parameters: 
   graze:
     total: 'Total number of grasses grazed by cattle'
     code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'

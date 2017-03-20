@@ -83,7 +83,7 @@ class GrazingParametersController < ApplicationController
     @grazing_parameter.destroy
 
     respond_to do |format|
-        format.html { redirect_to project_field_scenario_grazing_parameters_path(@project, @field, @scenario), notice: 'Grazing parameter was successfully updated.' }
+      format.html { redirect_to project_field_scenario_grazing_parameters_path(@project, @field, @scenario), notice: 'Grazing parameter was successfully updated.' }
       format.json { head :no_content }
     end
   end

@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :supplement_parameters
+
+
   resources :manure_controls
   resources :grazing_parameters
   resources :aplcat_parameters
@@ -75,6 +78,7 @@ NTTG3::Application.routes.draw do
 	        get 'aplcat', on: :member
 		end
 		resources :grazing_parameters
+		resources :supplement_parameters
         post :simulate, on: :collection
         resources :operations do
           get :list, on: :collection

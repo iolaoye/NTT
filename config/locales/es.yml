@@ -922,6 +922,7 @@ es:
       avg_temp: Temperatura promedio diaria for cada mes
       avg_rh: Humedad relativa diaria por cas mes
       grazing: Pastoreo
+      supplement_parameters: Parameteros de suplemento
   aplcat_tooltip:
       noc: Número total de vacas in la finca bajo el sistema vaca-ternera
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'
@@ -975,6 +976,7 @@ es:
       water_use_pumping_parameters:
       other_parameters:
       animal_feed_parameters:
+      supplement_parameters: 
   graze:
     total: 'Total number of grasses grazed by cattle'
     code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
