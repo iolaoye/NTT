@@ -1169,6 +1169,18 @@ en:
             header: 'Option 4: Choose an area of interest by latitude/longitude'
             item1: '<strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).'
             item2: '<strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.'
+    statecounty:
+        header: State/County Method
+        body1: 'The State/County Method allows you to select a particular area of interest based on the state and county. When using this method, the weather and soil information can be uploaded from weather stations and databases for that region, so minimal or no user input is required in later pages.'
+        body2: 'Note that this method only works for mainland United States. Furthermore, the current version only includes states where specific verification has been completed. Users needing to run this version of NTT for states not yet included are encouraged to contact the developers. Like the Mapping System, this method is <strong>ONLY</strong> for <strong>mainland United States.</strong>'
+        body3: 'There are <strong>two steps</strong> in selecting an area of interest using the State/County Method:'
+        item1: '<strong>Select a State:</strong> Select a state from the drop down menu labeled <strong>States</strong> as shown below. Note that while you Hawaii and Alaska are on the menu, you cannot use this method for these two states, as this only works in mainland United States.'
+        item2: '<strong>Select a County:</strong> Once you have selected a state, the corresponding counties will come up on the drop down box as shown below. To select a county, simply select the county of interest. If you selected Alaska or Hawaii, you will not see any counties. This is because this method is only for <strong>mainland United States</strong> and does not work with Alaska or Hawaii.'
+        body4: 'Once you have selected a state and county, click <strong>Save and Continue</strong> to advance to the next page.'
+    userinput:
+        header: User Input Method
+        body1: 'The User Input Method allows the user to select regions <strong>outside of mainland United States.</strong> However, to do this, the user must have significantly more information, including the user’s own weather files and soil information. In this page, the user will simply enter the General Location and Specific Location as shown below. This can be any sequence of letters, numbers, or characters. It is simply used as name. The information will be entered in the following pages.'
+        body2: 'After you have entered the location, the State and County you selected (or the General and Specific location) will show up on the top of the screen (along with the project name) for the remainder of the program. An example is shown below:'
   locpage_html:
     <strong>Location Information</strong><br>
     The map allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.
@@ -1205,15 +1217,12 @@ en:
     body: 'Depending on the particular method that was chosen in the previous (Location) page, the user has different options available when choosing the weather. Only the options that are actually available to the user (depending on the method selected) will show up as selections. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.'
     selectinfo:
         header: Selecting Weather Information
-        body: 'There are four different methods to select the weather information. However, the options available depend on the selection made for the Location method in the previous page.'
+        body: 'There are three different methods to select the weather information.'
         method1:
-            header: Use Weather Information Close to your Location
-            body: 'This method of weather selection is only available when the user used the <a href=/help/page_4>Mapping System</a> to select the area of interest in the Location page. Using this method allows the user to simply confirm the weather that was already chosen by the model. After selecting the period to simulate (which is explained below under Period to Simulate) the user can simply click <strong>Save and Continue</strong> to verify the information, save it, and advance to the next page.'
-        method2:
             header: Weather Station Using PRISM Data
             body1: 'This method is available only when the <a href=/help/page_4>State/County</a> method was chosen to select the area of interest in the preceding page. This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <strong>Weather Station Using PRISM Data</strong> and then select the preferred weather station:'
             body2: 'Finally, once the station has been selected, click <strong>Update Weather</strong> to save the information and continue to the next page.'
-        method3:
+        method2:
             header: Load Your Own Weather File
             body: 'This method of weather selection is always available regardless of the method used for selecting an area of interest. This option is also the only option that is available when using the NTT tool for locations outside of the mainland United States. To use this method the following are the instructions:'
             item1:
@@ -1223,12 +1232,12 @@ en:
                 body4: 'Even though the file is significantly larger, all of the days for which we have data follow the same format.'
             item2:
                 body1: '<strong>Upload the Weather File:</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select the <b>Choose File</b> button to select a file to be uploaded. This will bring up an “Open” window where the user can search their computer for the weather file. When you have selected the file click “Open”. This will show a progress bar as the system uploads the information.'
-                body2: 'The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Update Weather</strong> to save the information and advance to the next page'
+                body2: 'The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Update Weather</strong> to save the information and the <strong>Continue</strong> button to advance to the next page.'
             item3: '<strong>NOTE:</strong> It is important to note that when you click <strong>Update Weather</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate, run the simulations again.'
-        method4:
+        method3:
             header: Load Using Specific Coordinates (U.S.A only)
             body1: 'This method of weather selection will always appear as available regardless of the location method that was selected in the <a href=/help/page_4>Location</a> page (this method will work for the User Input method). However, the coordinates selected must be coordinates within the United States. This means that while the option will appear as available if the user selected “User Input” in the <a href=/help/page_4>Location</a> page, if they are looking at an area of interest that is outside the mainland United States an error message will come up.'
-            body2: 'To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates. You will (like in all the other methods) need to select a period to simulate (which is discussed below) and after this has been done, you can click <strong>Update Weather</strong> to save the information and continue.'
+            body2: 'To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates. You will (like in all the other methods) need to select a period to simulate (which is discussed below) and after this has been done, you can click <strong>Update Weather</strong> to save the information and the <strong>Continue</strong> button to advance to the next page.'
     simulate:
         header: Period to Simulate
         body: 'The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>'
@@ -1293,69 +1302,39 @@ en:
     header: Soils Page
     overview:
         header: Overview
-        body: 'The Soils page allows the user to verify, select, or create the soils that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
+        body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
         item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics, as shown circled in red below. To find the total soil percentage of the selected soils, add the percentages of the soils which are selected. Selected soils will have a check mark next to them (as shown below circled in yellow).'
         item3: ' However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will give the user the following error message:'
-        item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the particular soil of interest. This will show the layers information for this particular soil in Layers information. The heading Soil in the Layers Information will tell you what soil’s layers you are looking at. This is shown in below as circled in red. If the Soil does not have layers, the user needs to manually enter them.'
+        item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the "Soil Layers" icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
     mapsystem:
-        header: Soil Information When Using Mapping System
-        body: 'If the user selected Mapping System in the <a href=/help/page_4>Location</a> page, the user simply has to select or verify the soils that they would like to use for the simulation. The user can also change the Albedo, Slope, and Percentage of each soil. Finally, the user is able to add layers to soils. Using the Mapping System basically ensures that all the soils will have corresponding layers; but the user can add layers to any soil if they decide to do so.'
+        header: Soil Information
+        body: 'Users have different options of modifying their soil information. The list below shows all the possible ways that are available in NTT for modifying the soil information.'
         select:
-            header: Selecting the Field
-            body1: 'The first step in verifying or selecting the correct soils is to be able to view all the soils for all the fields. In order to be able to change between fields, the user needs to click on the <strong>Select Field</strong> drop down menu. This will present all the available fields, as shown below:'
-            body2: 'The user needs to select the field that they want to verify or change as this will allow them to view the soils and layers for the selected field. To delete a soil simply click on the <strong>Delete</strong> button.'
+            header: Adding/Deleting a Soil
+            body1: 'Users can add a new soil by clicking on the <strong>New</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
+            body2: 'After the soil has been added the user needs to enter at least one layer. The user needs to go to the layers page by clicking on the <b>Soil Layers</b> icon in the <b>Actions</b> column. The rest of the steps are described below in the "Adding/Deleting Layers" description.'
+            body3: 'To delete a soil simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
         info:
-            header: Manipulating Soil/Layer Information
-            body: 'Some of the soil and all of the layer information can be manipulated when the Mapping System was used. The user can change the soil information for Albedo, Slope, and Percentage by clicking on the value that they would like to manipulate. Once they have done this they can type in the new value.'
+            header: Editing Soil/Layer Information
+            body: 'Some of the soil and all of the layer information can be edited when the Mapping System was used. The user can change the soil/layer information by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. It will open a new page that lets the user edit and change the different informations available for the soil. This option is also available for the layers. Once they have done this, they can save the changed inforamtion by clicking on the <b>Save</b> button.'
         addremove:
             header: Adding/Deleting Layers
-            body1: 'While using this method users should complete edits to layers for the selected soil before attempting to add additional soils to the project.. Users can add a new layer by clicking on the <strong>Add Empty Layer</strong> button. This will create a new layer for which the user will enter valid information. Values in red mean that they are inaccurate and need to be fixed before advancing.'
-            body2: 'To delete a layer simply click on the <strong>Delete</strong> button.'
-    statecounty:
-        header: Soil Information When Using State/County Method
-        body: 'If the user selected State/County Method, he or she will have the option to select specific soils that are particular to the field that the user selected. Doing this will automatically upload the layers for the corresponding soils but, like with Mapping System, the user can add, delete, or manipulate any of them.'
-        select:
-            header: Adding a Soil
-            body1: 'To add a soil the user needs to:'
-            body2: 'Select the correct field to add the soil to by clicking on the drop down menu. This will come up with all the available fields, as shown below:'
-            body3: 'Select the Soil Survey Area. Most of the time, there will only be one option, as this the county and state that you selected. However, there may be instances in which more than one option is available.'
-            body4: 'Once this is selected, the user can select the particular soil that they would like to add. They can do this by clicking on the <strong>Soils</strong> drop down menu. This will come up with a vast array of soils as shown below. The user can then select the specific soil they want to add.'
-            body5: 'Finally, once the soil is selected, the user can click on <strong>Add Soil Selected</strong> to add the soil. This will give the user the majority of the soil and layer information that they need, as shown below:'
-            body6: 'The user needs to set the percentage of the added soil to the desired value.'
-        info:
-            header: Manipulating Soil/Layer Information
-            body: 'Some of the soil and all of the layer information can be manipulated when the State/County Method was used. The user can change the soil information for Albedo, Slope, and Percentage by clicking on the value that they would like to manipulate. Once they have done this they can type in the new value.'
-        addremove:
-            header: Adding/Deleting Layers
-            body1: 'While using this method does not permit the user to add soils, it does allow the user to add layers to the particular soils. The user can do this by clicking on the <strong>Add Empty Layer</strong> button. This will create a new layer for which the user will enter valid information. Values in red mean that they are inaccurate and need to be fixed before advancing.'
-            body2: 'To delete a layer simply click on the <strong>Delete</strong> button.'
-    userinput:
-        header: Soil Information When Using "User Input" Method
-        body: 'If the user selected User Input Method, he or she will have to manually enter all of the information for the soils. If NTT is being used outside of mainland United States, this will be the method that will have to be used.'
-        create:
-            header: Creating a Soil
-            body1: 'To create a soil the user needs to use the following steps:'
-            body2: 'Select the correct field to add the soil to by clicking on the drop down menu. This will come up with all the available fields, as shown below:'
-            body3: 'Click on <strong>Add Empty Soil</strong>. This will bring up a new soil information page that allows you to enter the information as shown below:'
-            body4: 'Enter the Information by clicking on the particular value you want to change and typing in the correct value. By hovering over the text box you can see what acceptable values to enter are. Any value in red means that it is incorrect. An example of a completed soil information page would look like below:'
-            body5: 'After the soil has been added the user needs to enter at least one layer. This is done by clicking the <strong>Add Empty Layer</strong> button. Again, the same method of adding values (and hovering over the text box to see acceptable values) is done (as with adding soils). <strong>You need to be certain to add at least one layer, or NTT will not allow you to advance.</strong>'
+            body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
+            body2: 'To delete a layer simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
     advance:
         header: Advancing
-        body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click to <strong>Save and Continue</strong> save the information and advance to the next page.'
+        body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
   managepage:
     header: Management Page Help
     overview:
         header: Overview
-        body: 'The Management page is where you actually enter the operations and scenarios for your fields. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
+        body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
     create:
         header: Creating a Scenario
-        select:
-            header: Selecting Desired Field
-            body: 'Before beginning, the user needs to select the particular field they want to add the scenarios to. To do this, the user needs to click on the <strong><em>Select Field</em></strong> button and select the desired field, as shown below:'
         add:
             header: Adding a Scenario
-            body1: 'Once the field has been selected, the user can add a scenario by entering the  name of scenario , for example “Baseline” or “Alternative” or “Auto-Irrigation”, and then clicking the <strong><em>Add New Scenario</em></strong> button.  This will create a page that looks like the one below.'
+            body1: 'The user can add a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
             body2: 'To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results. You can add as many scenarios as necessary.'
         nav:
             header: Navigation
