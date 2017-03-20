@@ -127,6 +127,14 @@
 					<% end %>
 					<%= link_to t('aplcat.animal_feed_parameters'), project_field_scenario_grazing_parameters_path(@project, @field, @scenario) %>
 					</li>
+					<li class="<%= controller_name == "supplement_parameters" ? "active" : "" %>">
+						<% if controller_name == "supplement_parameters" %>
+							<div class="sub-sub-header-icon">
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							</div>
+						<% end %>
+						<%= link_to t('aplcat.supplement_parameters'), project_field_scenario_supplement_parameters_path(@project, @field, @scenario) %>
+					</li>
 				</ul>
 			<% end %>
           </li>
