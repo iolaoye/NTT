@@ -16,7 +16,7 @@
 <%= link_to t('soil.new'), new_project_field_soil_path(@project, @field), :class => 'btn btn-primary' %>
 <%= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br><br>
 
-<% if Rails.application.config.which_version == "modified" %>
+<% if ENV["APP_VERSION"] == "modified" %>
 <div class="table-responsive">
   <div class="panel panel-default">
     <table class="table table-striped">
