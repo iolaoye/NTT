@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170320132544) do
+ActiveRecord::Schema.define(:version => 20170320185950) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -771,6 +771,7 @@ ActiveRecord::Schema.define(:version => 20170320132544) do
     t.string   "company"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.boolean  "admin"
   end
 
   create_table "watershed_scenarios", :force => true do |t|

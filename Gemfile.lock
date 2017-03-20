@@ -40,6 +40,7 @@ GEM
       sass (>= 3.2.19)
     breadcrumbs_on_rails (2.3.1)
     builder (3.0.4)
+    cancan (1.6.10)
     chartkick (1.5.2)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -167,6 +168,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass
   breadcrumbs_on_rails
+  cancan
   chartkick (~> 1.5, >= 1.5.2)
   coffee-rails (~> 3.2.1)
   coffee-script-source (= 1.8.0)
@@ -187,4 +189,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.12.5
+   1.13.6
