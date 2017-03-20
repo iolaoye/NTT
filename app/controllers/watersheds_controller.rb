@@ -32,7 +32,6 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /watersheds/1.json
   def simulate
-  debugger
     @watershed_id = params[:select_watershed][0]
     @dtNow1 = Time.now.to_s
     dir_name = APEX + "/APEX" + session[:session_id]
