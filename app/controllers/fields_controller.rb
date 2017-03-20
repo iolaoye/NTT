@@ -1,4 +1,8 @@
 class FieldsController < ApplicationController
+  load_and_authorize_resource :project
+  load_and_authorize_resource :field, :through => :project
+
+
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
