@@ -1,4 +1,7 @@
 class ScenariosController < ApplicationController
+  load_and_authorize_resource :field
+  load_and_authorize_resource :scenario, :through => :field
+	
   include ScenariosHelper
   include SimulationsHelper
 ################################  scenario bmps #################################
