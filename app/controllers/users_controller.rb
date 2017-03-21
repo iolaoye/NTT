@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+	load_and_authorize_resource
+	
 	def index
 		@user = User.new
 	end
@@ -21,7 +23,11 @@ class UsersController < ApplicationController
 			if @user.save
 				session[:user_id] = @user.id 		# store user id in session
 				#format.html { redirect_to "welcomes/0", notice: 'User successfully added' }
-				format.html { redirect_to welcome_path(0), :notice => "User successfully added"	}# redirect is successful	  
+				if ENV["APP_VERSION"] == "modified"
+					format.html { redirect_to root_path, :notice => "User successfully added"	}# redirect is successful	  
+				else
+					format.html { redirect_to welcome_path(0), :notice => "User successfully added"	}# redirect is successful	  
+				end
 			else
 				format.html { render action: :new }
 				format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -47,6 +53,6 @@ class UsersController < ApplicationController
 	end
 
 	def user_params
-		params.require(:user).permit(:email, :hashed_password, :name, :company, :password, :password_confirmation)
+		params.require(:user).permit(:email, :hashed_password, :name, :company, :password, :password_confirmation, :admin)
 	end
 end
