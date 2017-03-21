@@ -2,19 +2,19 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
   include LocationsHelper
-
-  layout 'welcome'
-  
-  #EXAMPLES = "public/Examples"
+  layout 'welcome'  
   require 'nokogiri'
+  helper_method :sort_column, :sort_direction
+
+  ########################################### INDEX ##################
   # GET /projects
   # GET /projects.json
   def index
     @user = User.find(session[:user_id])
     if @user.admin?
-      @projects = Project.all
+      @projects = Project.order("#{sort_column} #{sort_direction}")
     else
-      @projects = Project.where(:user_id => params[:user_id])
+      @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
     end
     session[:simulation] = "watershed"
     respond_to do |format|
@@ -836,6 +836,20 @@ class ProjectsController < ApplicationController
   # Also, you can specialize this method with per-user checking of permissible attributes.
   def project_params
     params.require(:project).permit(:description, :name)
+  end
+
+  def sortable_columns
+    ["Name", "Last Modified"]
+  end
+
+  def sort_column
+    if sortable_columns.include?(params[:column]) ? params[:column] : "name" == "Last Modified" then
+		return "updated_at"
+	end
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
   def upload_project_info(node)
