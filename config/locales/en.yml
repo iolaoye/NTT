@@ -1333,31 +1333,32 @@ en:
     create:
         header: Creating a Scenario
         add:
-            header: Adding a Scenario
-            body1: 'The user can add a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
-            body2: 'To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results. You can add as many scenarios as necessary.'
+            body1: 'The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
+            body2: 'To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
+    manipulate:
+        header:  Manipulating a Scenario’s Characteristics
+        body1: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices '
+        body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
+    operation:
+        header: Operation Page
+        body: 'A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below: '
+        item1: '<b.Select Cropping System:</strong> Using this option allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
+        item2: '<strong>Upload Saved Crop Rotation:</strong> This option allows the user to upload a previously saved crop rotation, however this file must have previously been saved on your computer, and be in *.prj format. To save a crop rotation, first create one and then click on <strong><em>Save Current Crop Rotation</em></strong>.'
+        item3:
+            body1: '<strong>Copying Crop Rotation:</strong> In order to do this option, the user needs to click this option in the Tree View Menu as shown below:'
+            body2: 'This will bring up a drop down menu to select the field and the scenario that the user would like to upload.'
+            body3: 'Select the Field and the Scenario you want to copy the operations from and click the <strong><em>Copy</em></strong> button. This will add the operations to this particular field/scenario.'
+        item4:
+            body1: '<strong>Creating Operations from Scratch:</strong> The user can also create a new Cropping System from scratch. To do this, the user needs to expand the Management operations, as explained under Option 3 above, and then click on the <strong><em>Add New Operation</em></strong> button. Then, the user needs to select the crop and operation, type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
+            body2: 'The things that need to be changed when a new operation is created are the values that, when the user double clicks, turn into a drop down box or a text box. If this does not happen, this particular option is not necessary for the selected operation. A successful entry of one operation in the Cropping System would look as it does below:'
+            body3: 'If you decide that an operation you selected was not necessary, the user can select the operation by clicking the check box under “Select”'
+            body4: 'And then clicking on <strong><em>Delete Operations Selected</em></strong>.'
         nav:
             header: Navigation
             body1: 'To open a particular BMP, the BMP title, or the Cropping System, the user can double click on the title. This will expand the folder. If a BMP is selected, or a cropping system has been selected, this particular BMP or title will be expanded. If there is nothing expanded, this means nothing has been selected.'
-            body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to expand the corresponding title and follow the instructions below '
         edit:
             header: Manipulating a Scenario’s Characteristics
-            body: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. There are two main characteristics the user needs to manipulate.'
-            add:
-                header: Adding a Cropping System
-                body1: 'A cropping system is REQUIRED for the user to be able to advance and simulate. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. Regardless of the particular option that the user will use for the cropping system, the user needs to expand the Cropping System title by clicking on the arrow or double clicking on the title. This will bring up the options for adding a cropping system, as shown below:'
-                body2: 'Now the user has several options to select a cropping system.'
-                item1: '<b.Select Cropping System:</strong> Using this option allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
-                item2: '<strong>Upload Saved Crop Rotation:</strong> This option allows the user to upload a previously saved crop rotation, however this file must have previously been saved on your computer, and be in *.prj format. To save a crop rotation, first create one and then click on <strong><em>Save Current Crop Rotation</em></strong>.'
-                item3:
-                    body1: '<strong>Copying Crop Rotation:</strong> In order to do this option, the user needs to click this option in the Tree View Menu as shown below:'
-                    body2: 'This will bring up a drop down menu to select the field and the scenario that the user would like to upload.'
-                    body3: 'Select the Field and the Scenario you want to copy the operations from and click the <strong><em>Copy</em></strong> button. This will add the operations to this particular field/scenario.'
-                item4:
-                    body1: '<strong>Creating Operations from Scratch:</strong> The user can also create a new Cropping System from scratch. To do this, the user needs to expand the Management operations, as explained under Option 3 above, and then click on the <strong><em>Add New Operation</em></strong> button. Then, the user needs to select the crop and operation, type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
-                    body2: 'The things that need to be changed when a new operation is created are the values that, when the user double clicks, turn into a drop down box or a text box. If this does not happen, this particular option is not necessary for the selected operation. A successful entry of one operation in the Cropping System would look as it does below:'
-                    body3: 'If you decide that an operation you selected was not necessary, the user can select the operation by clicking the check box under “Select”'
-                    body4: 'And then clicking on <strong><em>Delete Operations Selected</em></strong>.'
+            
     bmpnav:
         header: Best Management Practices (BMPs) Navigation
         body: 'Once a cropping system has been added, the user can simply save and continue to the Subproject or Simulation pages. However, if the user would like to apply a best management practice, he or she can do so.'

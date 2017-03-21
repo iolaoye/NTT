@@ -67,7 +67,7 @@ class WeathersController < ApplicationController
         @way = ""
       else
         @way = Way.find(@weather.way_id)
-      end	  
+      end
     else
       @weather = Weather.new
       @weather.field_id = session[:field_id]
@@ -109,7 +109,7 @@ class WeathersController < ApplicationController
     @field = Field.find(params[:field_id])
 
     if (params[:weather][:way_id] == "2")
-      if params[:weather][:weather_file] == nil 
+      if params[:weather][:weather_file] == nil
 		if @weather.weather_file == nil || @weather.weather_file == ""
 			redirect_to edit_project_field_weather_path(@project, @field)
 			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
@@ -132,7 +132,7 @@ class WeathersController < ApplicationController
 	apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
 	apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
 	apex_control.save
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(para[:project_id], 2)
+	apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 2)
 	apex_control.value = @weather.simulation_initial_year - 5
 	apex_control.save
   end
@@ -156,7 +156,7 @@ class WeathersController < ApplicationController
     # create the file path
     path = File.join(OWN, name)
     # open the weather file for writing.
-	weather_file = open(path, "w") 
+	weather_file = open(path, "w")
     #File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) }
 	input_file = params[:weather][:weather_file].read.split(/\r\n/)
     i=0
