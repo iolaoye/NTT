@@ -142,6 +142,25 @@ $(document).ready ->
     $("#rowIdEven").click ->
       updateTitles()
 
+    $("#add").click ->
+       crop_schedule = document.getElementById('cropping_system_id');
+       $('#tblCrops').append($("<tr>"));
+       $('#tblCrops tr').append($("<td>"));
+       tbl = $('#tblCrops')
+       tbl[0].rows[tbl[0].rows.length-1].cells[0].innerText = crop_schedule[crop_schedule.selectedIndex].text
+       year = +$('#year').val();
+       $('#tblCrops tr').append($("<td>"));
+       tbl = $('#tblCrops')
+       tbl[0].rows[tbl[0].rows.length-1].cells[1].innerText = $('#year').val();
+       year = year + 1;
+       $('#year').val(year);
+       $('#tblCrops tr').append($("<td>"));
+       tbl = $('#tblCrops');
+       button= document.createElement("button_tag");
+       button.innerHTML = "Remove";
+       cell = tbl[0].rows[tbl[0].rows.length-1].cells[2];
+       a = 1;
+
     $('#replace').click ->
       $('#year').toggle(!@checked)
       $('#year_label').toggle(!@checked)
