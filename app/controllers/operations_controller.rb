@@ -155,7 +155,7 @@ class OperationsController < ApplicationController
 # DELETE /operations/1
 # DELETE /operations/1.json
   def destroy
-    @operation = Operation.find(params[:scenario_id])
+    @operation = Operation.find(params[:id])
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
