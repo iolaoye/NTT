@@ -44,6 +44,7 @@ module SimulationsHelper
       end
     end
     msg = send_file_to_APEX(apex_string, "Apexcont.dat")
+    #print_string_to_file(apex_string, "Apexcont.dat")
   end
 
   def send_file_to_APEX(apex_string, file)

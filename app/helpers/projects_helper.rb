@@ -1,9 +1,15 @@
 module ProjectsHelper
   def sort_link(column, title = nil)
     title ||= column.titleize
-    if column == "Last Modified" then
-		column = "updated_at"
-	end
+	debugger
+	case column
+		when "Last Modifed"
+			column = "updated_at"
+		when "Ultima Modificacion"
+			column = "updated_at"
+		when "Nombre"
+			column = "name"
+	end  #end case
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     icon = sort_direction == "asc" ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down"
     icon = column == sort_column ? icon : ""
