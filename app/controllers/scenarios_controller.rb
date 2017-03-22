@@ -69,7 +69,6 @@ class ScenariosController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @errors = Array.new
-    #@scenarios = Scenario.where(:field_id => session[:field_id])
     msg = "OK"
     ActiveRecord::Base.transaction do
 	  params[:select_scenario].each do |scenario_id|
