@@ -35,18 +35,14 @@ class WatershedsController < ApplicationController
     @watershed_id = params[:select_watershed][0]
     @dtNow1 = Time.now.to_s
     dir_name = APEX + "/APEX" + session[:session_id]
-
+    if !File.exists?(dir_name) 
+      FileUtils.mkdir_p(dir_name)
+    end
     watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed_id)
     msg = send_file_to_APEX("APEX", session[:session_id]) #this operation will create APEX folder from APEX1 folder
-    if msg.eql?("OK") then
-      msg = create_control_file()
-    end
-    if msg.eql?("OK") then
-      msg = create_parameter_file()
-    end
-    if msg.eql?("OK") then
-      msg = create_site_file(Field.find_by_location_id(session[:location_id]).id)
-    end
+    if msg.eql?("OK") then msg = create_control_file() else return msg end
+    if msg.eql?("OK") then msg = create_parameter_file() else return msg end 
+    if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(session[:location_id]).id) else return msg end
     @last_soil = 0
     @last_soil_sub = 0
     @last_subarea = 0
@@ -67,28 +63,18 @@ class WatershedsController < ApplicationController
 	  @field = Field.find(p.field_id)
       #session[:scenario_id] = p.scenario_id
       #session[:field_id] = p.field_id
-      if msg.eql?("OK") then
-        msg = create_weather_file(dir_name, p.field_id)
-      end
+      if msg.eql?("OK") then msg = create_weather_file(dir_name, p.field_id) else return msg end
       @soils = Soil.where(:field_id => p.field_id).where(:selected => true)
-      if msg.eql?("OK") then
-        msg = create_soils()
-      end
-      if msg.eql?("OK") then
-        msg = send_file_to_APEX(@soil_list, "soil.dat")
-      end
-      if msg.eql?("OK") then
-        msg = create_subareas(j+1)
-      end
-      if msg.eql?("OK") then
-        msg = send_file_to_APEX(@opcs_list_file, "opcs.dat")
-      end
+      if msg.eql?("OK") then msg = create_soils() else return msg end
+      if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg end
+      if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+      if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg end
       j+=1
     end # end watershed_scenarios.each
     print_array_to_file(@soil_list, "soil.dat")
     print_array_to_file(@opcs_list_file, "OPCS.dat")
-    if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) end
-    if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) end #this operation will run a simulation
+    if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) else return msg end
+    if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) else return msg end #this operation will run a simulation
     read_apex_results(msg)
     if @scenario != nil
       @scenario.last_simulation = Time.now
