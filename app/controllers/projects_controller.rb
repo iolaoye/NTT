@@ -839,13 +839,11 @@ class ProjectsController < ApplicationController
   end
 
   def sortable_columns
-    ["Name", "Last Modified"]
+    ["Name", "updated_at"]
   end
 
   def sort_column
-    if sortable_columns.include?(params[:column]) ? params[:column] : "name" == "Last Modified" then
-		return "updated_at"
-	end
+    sortable_columns.include?(params[:column]) ? params[:column] : "updated_at"
   end
 
   def sort_direction
