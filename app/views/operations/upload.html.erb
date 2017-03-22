@@ -10,12 +10,22 @@
       <%= label "replace", t("operation.replace") %>
       <%= check_box_tag :replace, 'replace', false %>
     <% end %>
+    <%= button_tag "Add to list", id: 'add', type: 'button', class: 'btn btn-primary' %>
     <%= hidden_field(:language, :language, :value => I18n.locale) %>
     <div class="actions">
         <span style="display: inline-block">
         <%= button_to t('operation.upload'), cropping_system_project_field_scenario_operations_path(@project, @field, @scenario), :name => "add_more", :id => "operation_upload", :class => "btn btn-primary", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
         </span>
         <%= link_to t('general.back'), list_project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
+      </div>
+      <div>
+        <table id='tblCrops' class='gvTableStyle'>
+          <tr class='gvHeaderStyle'>
+            <th class="gvCellStyleTitle"><%= t('operation.crop') + " " + t('operation.schedule')%></th>
+            <th class="gvCellStyleTitle"><%= t('pdf.year')%></th>
+            <th class="gvCellStyleTitle"><%= t('general.remove')%></th>
+          </tr>
+        </table>
       </div>
   </div>
 </form>
