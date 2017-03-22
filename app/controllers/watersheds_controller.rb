@@ -47,9 +47,6 @@ class WatershedsController < ApplicationController
     if msg.eql?("OK") then
       msg = create_site_file(Field.find_by_location_id(session[:location_id]).id)
     end
-    if msg.eql?("OK") then
-      msg = create_wind_wp1_files(dir_name)
-    end
     @last_soil = 0
     @last_soil_sub = 0
     @last_subarea = 0
@@ -68,8 +65,8 @@ class WatershedsController < ApplicationController
     watershed_scenarios.each do |p|
       @scenario = Scenario.find(p.scenario_id)
 	  @field = Field.find(p.field_id)
-      session[:scenario_id] = p.scenario_id
-      session[:field_id] = p.field_id
+      #session[:scenario_id] = p.scenario_id
+      #session[:field_id] = p.field_id
       if msg.eql?("OK") then
         msg = create_weather_file(dir_name, p.field_id)
       end
@@ -90,9 +87,8 @@ class WatershedsController < ApplicationController
     end # end watershed_scenarios.each
     print_array_to_file(@soil_list, "soil.dat")
     print_array_to_file(@opcs_list_file, "OPCS.dat")
-    if msg.eql?("OK") then
-      msg = send_file_to_APEX("RUN", session[:session])
-    end #this operation will run a simulation
+    if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) end
+    if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) end #this operation will run a simulation
     read_apex_results(msg)
     if @scenario != nil
       @scenario.last_simulation = Time.now
