@@ -684,13 +684,13 @@ module ScenariosHelper
       when 1 #planting. Take curve number
         case Soil.find(soil_id).group[0, 1]
           when "A"
-            opv2 = Crop.find_by_number(operation.crop_id).soil_group_a
+            opv2 = Crop.find(operation.crop_id).soil_group_a
           when "B"
-            opv2 = Crop.find_by_number(operation.crop_id).soil_group_b
+            opv2 = Crop.find(operation.crop_id).soil_group_b
           when "C"
-            opv2 = Crop.find_by_number(operation.crop_id).soil_group_c
+            opv2 = Crop.find(operation.crop_id).soil_group_c
           when "D"
-            opv2 = Crop.find_by_number(operation.crop_id).soil_group_d
+            opv2 = Crop.find(operation.crop_id).soil_group_d
         end #end case Soil
         if opv2 > 0 then
           opv2 = opv2 * -1
