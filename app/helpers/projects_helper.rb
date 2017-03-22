@@ -1,11 +1,10 @@
 module ProjectsHelper
   def sort_link(column, title = nil)
     title ||= column.titleize
-	debugger
-	case column
+	case column.include?
 		when "Last Modifed"
 			column = "updated_at"
-		when "Ultima Modificacion"
+		when "ltima Modificaci"
 			column = "updated_at"
 		when "Nombre"
 			column = "name"
