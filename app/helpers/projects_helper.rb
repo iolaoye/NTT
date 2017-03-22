@@ -1,13 +1,12 @@
 module ProjectsHelper
   def sort_link(column, title = nil)
     title ||= column.titleize
-	debugger
-	case column
-		when "Last Modifed"
+	case true
+		when column.include?("Last Modified")
 			column = "updated_at"
-		when "Ultima Modificacion"
+		when ("ltima Modificaci")
 			column = "updated_at"
-		when "Nombre"
+		when ("Nombre")
 			column = "name"
 	end  #end case
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
