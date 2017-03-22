@@ -1359,19 +1359,13 @@ en:
             body1: 'This option allows the user to upload a previously saved crop rotation, however this file must have previously been saved on your computer, and be in *.opr format. To save a crop rotation, first create one and then click on <strong><em>Save Cropping System</em></strong>.'
         item5:
             header: <b>Delete All</b>
-            body1: 'Users can delete individual operations by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column, but if they want to delete all the operations present currently in the scenario, they can select the <b><em>Delete All</em></b> option, to delete all available operations.'
-        nav:
-            header: Navigation
-            body1: 'To open a particular BMP, the BMP title, or the Cropping System, the user can double click on the title. This will expand the folder. If a BMP is selected, or a cropping system has been selected, this particular BMP or title will be expanded. If there is nothing expanded, this means nothing has been selected.'
-        edit:
-            header: Manipulating a Scenario’s Characteristics
-            
+            body1: 'Users can delete individual operations by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column, but if they want to delete all the operations present currently in the scenario, they can select the <b><em>Delete All</em></b> option, to delete all available operations.'          
     bmpnav:
         header: Best Management Practices (BMPs) Navigation
-        body: 'Once a cropping system has been added, the user can simply save and continue to the Subproject or Simulation pages. However, if the user would like to apply a best management practice, he or she can do so.'
+        body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
         add:
             header: Adding a BMP
-            body1: 'To add a BMP, the user first needs to expand the Best Management Practices (BMPs) title if it is not already done so. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then expand the specific BMP (for example Auto Irrigation), as shown below:'
+            body1: 'To add a BMP, the user needs to select a BMP by clicking on the check box under the <b><em>Select</em></b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then expand the specific BMP (for example Auto Irrigation), as shown below:'
             body2: 'Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.'
             body3: 'Where there is a drop-down menu with the title “Select One” allows the user to select from a range of options.'
             body4: 'Where there is a checkbox, the user can simply click on it to select the BMP.'
