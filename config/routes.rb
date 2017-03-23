@@ -116,8 +116,12 @@ NTTG3::Application.routes.draw do
         get :monthly_charts, on: :member
         get :download_apex_files, on: :member
       end
-      resources :apex_parameters
-      resources :apex_controls
+      resources :apex_parameters do 
+		post 'reset', on: :member
+	  end
+      resources :apex_controls do
+		post 'reset', on: :member
+	  end
       resources :apex_soils
       resources :apex_layers
       resources :subareas
@@ -159,7 +163,6 @@ NTTG3::Application.routes.draw do
   get '/help/' => redirect('/help/index')
   get '/help/:page' => "help#show", :as => "help"
 
-  post 'apex_controls/reset'
   post 'apex_controls/download'
   post 'apex_parameters/reset'
   post 'apex_parameters/download'

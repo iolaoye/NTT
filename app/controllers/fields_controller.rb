@@ -94,7 +94,7 @@ class FieldsController < ApplicationController
       if ENV["APP_VERSION"] == "modified"
         format.html { redirect_to project_field_soils_path(@field.location.project, @field) }
       else
-        format.html { redirect_to edit_project_field_weather_path(@project, @field) }
+        format.html { redirect_to edit_project_field_weather_path(@project, @field, @field.weather.id) }
       end
       format.json { render json: @field, status: :created, weather: @field.id }
     end
