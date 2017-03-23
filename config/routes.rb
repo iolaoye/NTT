@@ -1,7 +1,5 @@
 NTTG3::Application.routes.draw do
   resources :supplement_parameters
-
-
   resources :manure_controls
   resources :grazing_parameters
   resources :aplcat_parameters
@@ -57,6 +55,9 @@ NTTG3::Application.routes.draw do
     resources :projects
   end
 
+  get 'projects/upload'
+  post 'projects/upload_project'
+
   resources :projects do
     resources :watersheds do
 		get :list, on: :member
@@ -68,8 +69,6 @@ NTTG3::Application.routes.draw do
       post :receive_from_mapping_site, on: :member
       get :location_fields, on: :member
     end 
-	post 'upload_project', on: :member
-    get 'upload', on: :member
     get 'download', on: :member
     get :group, on: :member
     resources :fields do
@@ -130,7 +129,7 @@ NTTG3::Application.routes.draw do
 
   resources :states do
     resources :counties
-  post :show_counties, on: :collection
+	post :show_counties, on: :collection
   end
 
   resources :activities do
