@@ -16,8 +16,8 @@
 
 
 <br><br>
-  <%= link_to "Reset to Default", {:action => :reset}, :method => :post, :class => 'btn btn-primary' %>
-<br><br>
+  <%= link_to t("general.reset_to"), reset_project_field_apex_control_path(@project, @field, 0), :class => 'btn btn-primary' %>
+    <br><br>
 <div class="table-responsive">
   <div class="panel panel-default">
     <table class="table table-striped">

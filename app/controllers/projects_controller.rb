@@ -2338,14 +2338,14 @@ class ProjectsController < ApplicationController
 		  total_n_ci = total_n_ci + @result.ci_value
         when "OrgP"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 31)
-		  total_n = total_n + @result.value
+		  total_p = total_p + @result.value
         when "OrgPCI"
           @result.ci_value = p.text
           @result.save
 		  total_p_ci = total_p_ci + @result.ci_value
         when "PO4"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 32)
-		  total_n = total_n + @result.value
+		  total_p = total_p + @result.value
         when "PO4CI"
           @result.ci_value = p.text
           @result.save
