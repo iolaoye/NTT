@@ -86,7 +86,7 @@ class BmpsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
-	if params[:button] == "Save"
+	if params[:button] == t('submit.save')
 		@slope = 100
 		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
 		bmps = Bmp.where(:scenario_id => params[:scenario_id])
@@ -184,7 +184,7 @@ class BmpsController < ApplicationController
     @climate_array = create_hash()
     @bmp = Bmp.new
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
-    @irrigation = Irrigation.arel_table
+    #@irrigation = Irrigation.arel_table
     @field = Field.find(session[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     #@type = "create"
@@ -211,7 +211,7 @@ class BmpsController < ApplicationController
     @bmp = Bmp.find(params[:id])
     @bmp_id = @bmp.bmp_id
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
-    @irrigation = Irrigation.arel_table
+    #@irrigation = Irrigation.arel_table
     @climates = Climate.where(:bmp_id => @bmp.id)
     @climate_array = create_hash()
     if @bmp.bmpsublist_id == 19
@@ -232,7 +232,7 @@ class BmpsController < ApplicationController
     @bmp.scenario_id = params[:scenario_id]
 	@bmp.bmpsublist_id = bmpsublist
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
-    @irrigation = Irrigation.arel_table
+    #@irrigation = Irrigation.arel_table
     @climate_array = create_hash()
     @state = Location.find(session[:location_id]).state_id
     #if bmpsublist == 19
@@ -268,7 +268,7 @@ class BmpsController < ApplicationController
     @bmp = Bmp.find(params[:id])
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @climates = Climate.where(:bmp_id => @bmp.id)
-    @irrigation = Irrigation.arel_table
+    #@irrigation = Irrigation.arel_table
     @climate_array = create_hash()
     if @bmp.bmpsublist_id == 19
       @climate_array = populate_array(@climates, @climate_array)

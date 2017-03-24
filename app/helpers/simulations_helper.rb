@@ -44,6 +44,7 @@ module SimulationsHelper
       end
     end
     msg = send_file_to_APEX(apex_string, "Apexcont.dat")
+    #print_string_to_file(apex_string, "Apexcont.dat")
   end
 
   def send_file_to_APEX(apex_string, file)
@@ -734,7 +735,7 @@ module SimulationsHelper
   end  # end method create_soils
 
   #this is the new subarea creation method. This take first the subareas for the scenario and then choose those soils selected and bmp buffers.
-  def create_subareas(operation_number)  # operation_number is used for subprojects as for now it is just 1 - todo
+  def create_subareas(operation_number)  # operation_number is used for subprojects. for simple scenarios is 1
     last_owner1 = 0
     i=0
 	nirr = 0

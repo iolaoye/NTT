@@ -392,13 +392,15 @@ en:
     success: was successfully created.
     created: was successfully created.
     updated: was successfully updated.
-    reset: was successfully reset to defaults.
+    reset: reset to default was successful.
+    reset_to: reset to default
     uploading: uploading
     continue: Continue
     confirm: Are you sure?
     begin: Begin
     to: to
     copy: copy
+    last_modified: Last Modified
   welcome_note:
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -1342,32 +1344,32 @@ en:
     operation:
         header: Operation Page
         body: 'A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below: '
-        item1: '<b.Select Cropping System:</strong> Using this option allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
-        item2: '<strong>Upload Saved Crop Rotation:</strong> This option allows the user to upload a previously saved crop rotation, however this file must have previously been saved on your computer, and be in *.prj format. To save a crop rotation, first create one and then click on <strong><em>Save Current Crop Rotation</em></strong>.'
+        item1:
+            header: <b>Add Crop Schedule:</b>
+            body1: 'Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
+        item2: 
+            header: <b>New Operation (Creating Operations from Scratch):</b>
+            body1: 'The user can also create a new Cropping System from scratch. To do this, the user needs to  click on the <strong><em>New Operation</em></strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
+            body2: 'If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b><em>Edit</em></b> icon in the <b><em>Actions</em></b> column. This will take the user to a new page where they can make the required changes to the operation.'
+            body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column.'
         item3:
-            body1: '<strong>Copying Crop Rotation:</strong> In order to do this option, the user needs to click this option in the Tree View Menu as shown below:'
-            body2: 'This will bring up a drop down menu to select the field and the scenario that the user would like to upload.'
-            body3: 'Select the Field and the Scenario you want to copy the operations from and click the <strong><em>Copy</em></strong> button. This will add the operations to this particular field/scenario.'
+            header: <b>Save Cropping System:</b>
+            body1: 'Using this option saves the cropping system directly to the users computer. A file “#########.opr” is saved in the user’s computer, usually in the “Downloads” folder, which they can upload in the future by selecting the <b><em>Open Saved Cropping System</em></b>.'
         item4:
-            body1: '<strong>Creating Operations from Scratch:</strong> The user can also create a new Cropping System from scratch. To do this, the user needs to expand the Management operations, as explained under Option 3 above, and then click on the <strong><em>Add New Operation</em></strong> button. Then, the user needs to select the crop and operation, type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
-            body2: 'The things that need to be changed when a new operation is created are the values that, when the user double clicks, turn into a drop down box or a text box. If this does not happen, this particular option is not necessary for the selected operation. A successful entry of one operation in the Cropping System would look as it does below:'
-            body3: 'If you decide that an operation you selected was not necessary, the user can select the operation by clicking the check box under “Select”'
-            body4: 'And then clicking on <strong><em>Delete Operations Selected</em></strong>.'
-        nav:
-            header: Navigation
-            body1: 'To open a particular BMP, the BMP title, or the Cropping System, the user can double click on the title. This will expand the folder. If a BMP is selected, or a cropping system has been selected, this particular BMP or title will be expanded. If there is nothing expanded, this means nothing has been selected.'
-        edit:
-            header: Manipulating a Scenario’s Characteristics
-            
+            header: <b>Open saved Cropping System:</b>
+            body1: 'This option allows the user to upload a previously saved crop rotation, however this file must have previously been saved on your computer, and be in *.opr format. To save a crop rotation, first create one and then click on <strong><em>Save Cropping System</em></strong>.'
+        item5:
+            header: <b>Delete All</b>
+            body1: 'Users can delete individual operations by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column, but if they want to delete all the operations present currently in the scenario, they can select the <b><em>Delete All</em></b> option, to delete all available operations.'          
     bmpnav:
         header: Best Management Practices (BMPs) Navigation
-        body: 'Once a cropping system has been added, the user can simply save and continue to the Subproject or Simulation pages. However, if the user would like to apply a best management practice, he or she can do so.'
+        body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
         add:
-            header: Adding a BMP
-            body1: 'To add a BMP, the user first needs to expand the Best Management Practices (BMPs) title if it is not already done so. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then expand the specific BMP (for example Auto Irrigation), as shown below:'
+            header: 'Adding a BMP:'
+            body1: 'To add a BMP, the user needs to select a BMP by clicking on the check box under the <b><em>Select</em></b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then select the specific BMP (for example Auto Irrigation), as shown below:'
             body2: 'Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.'
             body3: 'Where there is a drop-down menu with the title “Select One” allows the user to select from a range of options.'
-            body4: 'Where there is a checkbox, the user can simply click on it to select the BMP.'
+            body4: 'Where there is a checkbox,<b><em>Select</em></b> , the user can simply click on it to select the BMP.'
             body5: 'Finally, the <strong><em>Clear</em></strong> button allows the user to clear the information that was entered. While simply erasing the information should clear the info, clicking the <strong><em>Clear</em></strong> should ensure that it does. Remember that if a BMP is expanded when you first get to the page, it means that this BMP has been selected.'
         mutualbmp:
             header: 'Mutually Exclusive BMPs'
@@ -1382,11 +1384,11 @@ en:
             body2: 'Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.'
     bmpdesc:
         header: 'Best Management Practices (BMPs) Descriptions'
-        body: 'Below are the descriptions of the different BMPs that are available under NTT. The heading is the group under which you can find the BMPs and the text in bold is the actual BMP.'
+        body: 'Below are the descriptions of the different BMPs that are available under NTT.'
         auto:
             header: 'Auto Irrigation and Fertigation'
             irrigation:
-                header: 'Auto Irrigation'
+                header: 'Auto Irrigation:'
                 body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
                 item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
                 item2: '<strong>Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
@@ -1395,47 +1397,47 @@ en:
                 item5: '<strong>Maximum Single Application:</strong> This value signifies the amount of water than can be applied in a single day. It is in inches, and it can be any number greater than 0. However, it is set to a default value of 3.'
                 item6: '<strong>Furrow Dike Safety Factor:</strong> This is the fraction of furrow dike volume that is available for water storage. If the user is uncertain of the volume of the furrow dike then a lower value should be input. This value is a value greater than or equal to 0 but less than 1. The closer the value is to 1 the more volume is available for water storage. A higher value will lower runoff and erosion.'
             fertigation:
-                header: 'Auto Fertigation'
+                header: 'Auto Fertigation:'
                 body: 'Fertigation is the application of fertilizers, soil amendments, or other water-soluble products through an irrigation system. Auto Fertigation is an automatic fertilization process in which fertilizer is dissolved and distributed along with water in your drip or spray irrigation system*. This makes Auto Fertigation very similar to Auto Irrigation. In fact, all of the inputs into Auto Irrigation are in Auto Fertigation. To see these inputs, see Auto Irrigation. However, there is one additional input in Auto Fertigation:'
                 item1: '<strong>Nitrogen Concentration:</strong> The amount of nitrogen in the Automatic Fertigation in parts per million.'
         drainsystem:
             header: Drainage Water Management System
             tile:
-                header: Tile Drain
+                header: 'Tile Drain:'
                 body1: 'Tile drainage is a practice for removing excess water from the subsurface of soil intended for agriculture. Drainage brings excessive soil moisture levels down for optimal crop growth. Tile drainage is often the best recourse for reducing high subsurface water levels to improve crop yields. Too much subsurface water can be counterproductive to agriculture by preventing root development, and inhibiting the growth of crops. Excessive water also can limit access to the land, particularly by farm machinery.'
                 body2: 'For NTT applications, underground drainage systems are simulated in APEX. The depth of the drainage system to reduce plant stress is a key parameter used in simulating tile drainage systems in NTT. Tile drainage simulation in NTT increases subsurface flow, which may provide an avenue for increased nutrient losses in subsurface flow. The input for Tile Drain is:'
                 item1: '<strong>Depth:</strong> this is the depth in feet at which the drainage system is installed. It is any number greater than 0.'
             ppnoditch:
-                header: 'Pads and Pipes - No Ditch Improvement'
+                header: 'Pads and Pipes - No Ditch Improvement:'
                 body1: 'Pads and Pipes are an above ground water drainage system that is used to both drain excess water and slow down flow of the water. In this type of drainage system the farmer raises the land on a certain number of sides of the field. Pipes are then applied through which the water can flow out of. In this particular method of pads and pipes, there is no improvement to the ditch into where the excess water flows.'
                 item1: '<strong>Pads and Pipes Width:</strong> This is the raised area of the field in feet. This area is not able to be used for planting crops. This can be any number greater than 0 on NTT.'
                 item2: '<strong># of Sides Covered by Pipes:</strong> The farmer can apply pads and pipes to one or more sides of the field. This is the number of sides where the farmer applied the pads and pipes. This is mostly an economic issue, since applying more pipes reduces the amount of area that is available for planting.'
             pp2stage:
-                header: 'Pads and Pipes - Two Stage Ditch System'
+                header: 'Pads and Pipes - Two Stage Ditch System:'
                 body1: 'This particular method of Pads and Pipes is very similar to the Pads and Pipes – No Ditch Improvement (see above for more information). The main difference is that using this method improves the ditch, creating a collection of water inside the ditch before the water is drained. The inputs for this method are the same as Pads and Pipes – No Ditch Improvement (see above).'
             ppreservoir:
-                header: 'Pads and Pipes – Ditch Enlargement and Reservoir System'
+                header: 'Pads and Pipes – Ditch Enlargement and Reservoir System:'
                 body1: 'This particular method of pads and pipes is very similar to the Pads and Pipes – Two Stage Ditch System. This method also has an improved ditch system. However, in this method, the water in the ditch is drained into a reservoir system. The inputs are the same as Pads and Pipes – No Ditch Improvement, with one additional input:'
                 item1: '<strong>Reservoir Area (ac.):</strong> This is the reservoir area in acres. Since this area is being used a reservoir, crops cannot be grown in this area.'
             pptailwater:
-                header: 'Pads and Pipes – Tailwater Irrigation'
+                header: 'Pads and Pipes – Tailwater Irrigation:'
                 body1: 'This particular method of pads and pipes is very similar to Pads and Pipes – Ditch Enlargement and Reservoir System (see above). The only difference is that once the water has gone to the reservoir system, the water is then pumped back to the crop field, where irrigation is then applied to the crops.'
                 body2: 'This system requires the inputs for Pads and Pipes –Ditch Enlargement and Reservoir System, as well as the inputs for Auto Irrigation (see Auto Irrigation). A message will come up on NTT to input the Auto Irrigation information.'
         wetponds:
             header: Wetlands and Ponds
             wetlands:
-                header: Wetlands
+                header: 'Wetlands:'
                 body1: 'Wetlands are those areas that are inundated or saturated by surface or groundwater at a frequency and duration sufficient to support, and that under normal circumstances do support, a prevalence of vegetation typically adapted for life in saturated soil conditions. Wetlands generally include swamps, marshes, bogs and similar areas.'
                 body2: 'The wetland area is simulated as a shallow reservoir (1 ft. depth) with growing wetland vegetation – it is essentially simulated as an artificial wetland and not a natural wetland. The slope of wetland area is set as one percent. Simulated wetlands trap sediment, reduce runoff, increase infiltration, and also increase uptake of water and nutrients by the vegetation in the area covered by the wetland. The only input required for wetlands is:'
                 item1: '<strong>Area:</strong> The area of the wetland is input in acres. Since this area is no longer able to be used for crop production, there may be a lower total crop yield (although there may be a greater crop yield/acre).'
             ponds:
-                header: Ponds
+                header: 'Ponds:'
                 body1: 'Ponds are used to provide water for livestock, fish and wildlife, recreation, fire control, develop renewable energy systems, and other related uses, and to maintain or improve water quality by retaining the runoff from upland field. Only one input is required for ponds:'
                 item1: '<strong>Fraction of Area Controlled by Ponds:</strong> This is the fraction (a value between 0 and 1) and is simply the fraction of the subareas which flows through (is controlled by) ponds. This only affects only the hydrology that originates in this subarea. Inflow from other subareas is not routed through the ponds in this subarea. The exact location of the ponds, however, is unknown. A greater value could help improve water quality by retaining the runoff from the upland fields.'
         stream:
             header: Stream and Riparian Management
             fencing:
-                header: Stream Fencing (Livestock Access Control)
+                header: 'Stream Fencing (Livestock Access Control):'
                 body1: 'Access control means the temporary or permanent exclusion of animals from an area to achieve and maintain the desired resource conditions. * If it is only a temporary exclusion, the user can enter the information regarding how much time the animals actually spend within the fenced area. Because excluding the animals from the stream allows a grassed area to grow, the user must also add the information for a filter strip.'
                 body2: 'The following are the inputs for Stream Fencing:'
                 item1: '<strong>Number of Animals:</strong> These are the number of animals that will be temporarily excluded (and therefore also temporarily allowed) into the area. This is a number greater than 0.'
@@ -1446,11 +1448,11 @@ en:
                 item6: '<strong>Nutrient Fractions:</strong> NO3, PO4, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
                 item7: '<strong>Filter Strip Inputs:</strong> (See Filter Strip)'
             stabilization:
-                header: Streambank Stabilization
+                header: 'Streambank Stabilization:'
                 body1: 'Stabilization of streambanks is done to prevent the loss of land or damage to land uses or facilities adjacent to the banks of streams or constructed channels properties. Streambank stabilization results in 1) maintaining the flow capacity of streams or channels; 2) Reducing the offsite or downstream effects of sediment resulting from bank erosion; and 3) improving or enhance the stream corridor for fish and wildlife habitat, aesthetics, recreation.'
                 body2: 'If you would like to use the Streambank Stabilization, click on the <strong><em>Select</em></strong> button.'
             forestbuffer:
-                header: Riparian Forest Buffer
+                header: 'Riparian Forest Buffer:'
                 body1: 'A riparian forest is a forested area of land adjacent to a body of water such as a river, stream, pond, lake, marshland, estuary, canal, playa or reservoir. Riparian forests are simulated in a manner similar to the filter strip practice with the additional assumption that there are trees along the length of the riparian zone in addition to selected crops that are growing in the simulated area. The forested area traps sediment and increases infiltration, thereby reducing sediment and nutrient losses. Plant uptake of nutrient in the forested area also reduces nutrient losses downstream.'
                 body2: 'The inputs for Riparian Forest are the following:'
                 item1: '<strong>Efficiency:</strong> This is the efficiency of the forest buffer, and is any fraction between 0.1 and 1.0.'
@@ -1459,7 +1461,7 @@ en:
                 item4: '<strong>Grass Field Portion:</strong> This is the percentage of the Forest Buffer that is composed of grass rather than of trees, and needs to be a number between 0.25 and 0.75.'
                 item5: '<strong>Buffer Slope Ration to Upland:</strong> This is the slope ratio (a number between 0.25 and 1.00) to the upland.'
             filterstrip:
-                header: Filter Strip
+                header: 'Filter Strip:'
                 body1: 'A filter strip is a type of buffer strip that is an area of vegetation, generally narrow in width and long across the downslope edge of a field, that slows the rate of runoff, allowing sediments, organic matter, and other pollutants that are being conveyed by the water to be removed by settling out. Filter strips reduce erosion and the accompanying sediment-bound pollution.'
                 body2: 'A filter strip is specified in NTT by indicating its width and the type of crop planted.  The width of filter strip is used to calculate its area. The area of filter strip is subtracted from the main farmland and is simulated as a separate field. Flow, sediment, and nutrients are routed from the farmland to this filter strip before leaving the edge of the farmland.'
                 body3: 'In NTT, filter strips function by providing for better infiltration of soluble nutrients, trapping of sediment, and uptake of water and nutrients by the filter strip vegetation. The saturated conductivity value is also modified for filter strip simulation in NTT.'
@@ -1470,13 +1472,13 @@ en:
                 item4: '<strong>Width:</strong> This is the width in feet of the filter strip. Filter Strips are typically narrow in width. This can be any value greater than 0.'
                 item5: '<strong>Strip Slope to Upland:</strong> This value is a fraction between 0.25 and 0.75 and indicates the slope towards the farmland (which is upland).'
             waterway:
-                header: Waterway
+                header: 'Waterway:'
                 body1: 'Waterways are vegetated channels that conduct and dispose of overland flow from upstream areas. Waterways typically work by increasing the surface roughness (with the vegetation) which reduces the velocity of flow.'
                 body2: 'The inputs for Waterways are the following:'
                 item1: '<strong>Vegetation:</strong> This is the type of grass or vegetation that is used in the channel.'
                 item2: '<strong>Width:</strong> This is the width, in feet, including both sides of the vegetated channel. This can be any number greater than 0.'
         contour:
-            header: Contour Buffer (Strip Farming)
+            header: 'Contour Buffer (Strip Farming):'
             body1: 'A contour buffer strip is an area of land maintained in permanent vegetation that helps to control air, soil, and water quality and other environmental problems primarily on land that is used for agriculture. Buffer strips trap sediment and enhance filtration of nutrients and pesticides by slowing down runoff that could enter the local surface waters.'
             body2: 'The buffer strip is simulated based on the width of the buffer and main crop, and the vegetation planted in the buffer.  The number of strips and area are calculated according to the total field area and the widths of buffer and main field, which are inputs to the model.'
             body3: 'The inputs for Contour Buffer are:'
@@ -1484,17 +1486,40 @@ en:
             item2: '<strong>Buffer Width:</strong> This is the width, in feet, of the buffer strips. It can be any number greater than 0. Buffer width, along with crop width, determine the number of buffer and crop strips in the field.'
             item3: '<strong>Crop Width:</strong> This is the width, in feet, of the strips of the main crop that was planted. It can be any number greater than 0. Crop width, along with buffer width, determine the number of buffer and crop strips in the field.'
         landgrading:
-            header: Land Grading
+            header: 'Land Grading'
             leveling:
-                header: Land Leveling
+                header: 'Land Leveling:'
                 body1: 'Land leveling is used to reduce the slope on very high soil slopes. By reducing the slope, the surface land is better able to retain irrigation and soil water. The input for land leveling is:'
                 item1: '<strong>Slope Reduction:</strong> This is the percent reduction in the slope of the soil. The number can be any percentage between 0% and 100%. The closer the slope is to 100, the more the slope is reduced.'
             terrace:
-                header: Terrace System
+                header: 'Terrace System:'
                 body1: 'A terrace system is a leveled section of a hill cultivated area, designed as a method of soil conservation to slow or prevent the rapid surface runoff of water. Terraces decrease hill slope-length, reduce formation of gullies, and intercept and conduct runoff to a safe outlet thereby reducing sediment content in runoff water. Often, in application the landscape is formed into multiple terraces, giving a stepped appearance. Terraces are simulated by reducing the practice factor (PEC). If you would like to apply a terrace system, click on the <strong><em>Select</em></strong> button.'
             liming:
-                header: Liming
+                header: 'Liming:'
                 body1: 'In agriculture, the application of agricultural limestone is used to prevent the acidification of the soil. This most often occurs when nitrogen fertilizers are applied over long periods of time. For many soils, the simulation of liming is needed to simulate the application of agricultural limestone (which increases soil pH/reduces aluminum saturation). However, since this is not needed for all soils, the user has the ability to turn it off. When the user first reaches the Management page, liming is turned on by default. To turn it off, the user can uncheck the <strong><em>Select</em></strong> button.'
+            manure:
+                header: 'Manure Control:'
+                body1: 'Users need to enter manure operation in their cropping system before applying the manure control.'
+            tmp:
+                header: 'Temperature and Precipitation Changes:'
+                body1: ''
+            asphalt:
+                header: 'Asphalt or Concrete:'
+                body1: 'Users can select if the cropping system is Asfalt or Concrete.'
+            grass:
+                header: 'Grass Cover:'
+                body1: 'Users can select if the cropping system is Grass Cover.'
+            slope:
+                header: 'Slope Adjustment:'
+                body1: 'Users can select if the cropping system had slope adjustment.'
+            shade:
+                header: 'Shading:'
+                body1: 'Shading is similar to Filter Strip. For more information on shading, see Filter Strip. '
+                body2: 'The inputs for Shading are the following:'
+                item1: '<strong>Vegetation:</strong> This is the type of grass or vegetation that is planted in the shading. To select one, click on the drop down box and make your selection.'
+                item2: '<strong>Area:</strong> This is the area of the shading in acres, which is subtracted from the total area of the field in the results page and is simulated as a separate field. It must be a number greater than 0.'
+                item3: '<strong>Width:</strong> This is the width in feet of the shading. Shadings are typically narrow in width. This can be any value greater than 0.'
+                item4: '<strong>Buffer Slope Ration to Upland:</strong> This value is a fraction between 0.25 and 1.00 and indicates the slope towards the farmland (which is upland).'
     reference:
         header: Reference
         body1: '* See USDA website: http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849 for more detailed term descriptions.'
