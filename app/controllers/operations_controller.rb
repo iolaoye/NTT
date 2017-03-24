@@ -85,7 +85,7 @@ class OperationsController < ApplicationController
     msg = "Unknown error"
     ActiveRecord::Base.transaction do
       @operation = Operation.new(operation_params)
-      @operation.scenario_id = params[:id]
+      @operation.scenario_id = params[:scenario_id]
       @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
       if @operation.save
         saved = true
