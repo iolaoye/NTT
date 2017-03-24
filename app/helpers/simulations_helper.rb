@@ -766,7 +766,6 @@ module SimulationsHelper
 	return msg
   end   # end create_subareas
 	
-
   def create_subareas1(operation_number) # operation_number is used for subprojects as for now it is just 1 - todo
     @last_soil2 = 0
     last_owner1 = 0

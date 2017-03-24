@@ -102,7 +102,6 @@ class WeathersController < ApplicationController
     @weather = Weather.find(params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-
     if (params[:weather][:way_id] == "2")
       if params[:weather][:weather_file] == nil
 		      if @weather.weather_file == nil || @weather.weather_file == ""

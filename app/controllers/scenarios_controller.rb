@@ -196,11 +196,26 @@ class ScenariosController < ApplicationController
 
 ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
+    @errors = Array.new
+    ActiveRecord::Base.transaction do
+	  params[:select_scenario].each do |scenario_id|
+		  @scenario = Scenario.find(scenario_id)
+		  msg = run_aplcat
+		  unless msg.eql?("OK")
+		      session[:depth] = msg
+			  @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+			  raise ActiveRecord::Rollback
+	      end # end if msg
+      end # end each do params loop
+	end
+  end  # end method simulate_aplcat
+
+  def run_aplcat
     msg = "OK"
     #find the aplcat parameters for the sceanrio selected
-	aplcat = AplcatParameter.find_by_scenario_id(params[:id])
-	grazing = GrazingParameter.where(:scenario_id => params[:id])
-	supplement = SupplementParameter.where(:scenario_id => params[:id])
+	aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
+	grazing = GrazingParameter.where(:scenario_id => @scenario.id)
+	supplement = SupplementParameter.where(:scenario_id => @scenario.id)
 	if aplcat == nil then
 		aplcat = AplcatParameter.new
 		aplcat.scenario_id = params[:id]
@@ -212,26 +227,28 @@ class ScenariosController < ApplicationController
 	apex_string += "\n"
 	apex_string += "General data on cow-calf system" + "\n"
 	apex_string += "\n"
-	apex_string += sprintf("%8.2f", aplcat.noc) + "\t" + "! " + t('aplcat.noc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.abwc) + "\t" + "! " + t('aplcat.abwc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.norh) + "\t" + "! " + t('aplcat.norh') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.abwh) + "\t" + "! " + t('aplcat.abwh') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.nomb) + "\t" + "! " + t('aplcat.nomb') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.abwmb) + "\t" + "! " + t('aplcat.abwmb') + "\n"
+	apex_string += sprintf("%8d", aplcat.noc) + "\t" + "! " + t('aplcat.noc') + "\n"
+	apex_string += sprintf("%8d", aplcat.abwc) + "\t" + "! " + t('aplcat.abwc') + "\n"
+	apex_string += sprintf("%8d", aplcat.norh) + "\t" + "! " + t('aplcat.norh') + "\n"
+	apex_string += sprintf("%8d", aplcat.abwh) + "\t" + "! " + t('aplcat.abwh') + "\n"
+	apex_string += sprintf("%8d", aplcat.nomb) + "\t" + "! " + t('aplcat.nomb') + "\n"
+	apex_string += sprintf("%8d", aplcat.abwmb) + "\t" + "! " + t('aplcat.abwmb') + "\n"   #average body weight of mature cows
 	apex_string += sprintf("%8.2f", aplcat.adwgbc) + "\t" + "! " + t('aplcat.adwgbc') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.adwgbh) + "\t" + "! " + t('aplcat.adwgbh') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"	
 	apex_string += sprintf("%8.2f", aplcat.prh) + "\t" + "! " + t('aplcat.prh') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"	
-	apex_string += sprintf("%8.2f", aplcat.jdcc) + "\t" + "! " + t('aplcat.jdcc') + "\n"
+	apex_string += sprintf("%8d", aplcat.jdcc) + "\t" + "! " + t('aplcat.jdcc') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.gpc) + "\t" + "! " + t('aplcat.gpc') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.tpwg) + "\t" + "! " + t('aplcat.tpwg') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.csefa) + "\t" + "! " + t('aplcat.csefa') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.srop) + "\t" + "! " + t('aplcat.srop') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.bwoc) + "\t" + "! " + t('aplcat.bwoc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.jdbs) + "\t" + "! " + t('aplcat.jdbs') + "\n"
+	apex_string += sprintf("%8d", aplcat.jdbs) + "\t" + "! " + t('aplcat.jdbs') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.platc) + "\t" + "! " + t('aplcat.platc') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.pctbb) + "\t" + "! " + t('aplcat.pctbb') + "\n"
+	apex_string += sprintf("%8d", aplcat.mm_type) + "\t" + "! " + t('aplcat.mm_type') + "\n"
+	apex_string += sprintf("%8.2f", aplcat.fmbmm) + "\t" + "! " + t('aplcat.fmbmm') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.dmd) + "\t" + "! " + t('aplcat.dmd') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.vsim) + "\t" + "! " + t('aplcat.vsim') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.foue) + "\t" + "! " + t('aplcat.foue') + "\n"
@@ -244,25 +261,25 @@ class ScenariosController < ApplicationController
 	apex_string += "\n"
 	apex_string += "Data on animalfeed (grasses, hay and concentrates)" + "\n"
 	apex_string += "\n"
-	apex_string += sprintf("%.f", grazing.count) 
+	apex_string += sprintf("%8d", grazing.count) 
 	for i in 0..grazing.count-1
 		apex_string += "\t" 
 	end
-	apex_string += "| " + t('graze.total') + "\n"
+	apex_string += "| " + t('graze.total') + "\n\n"
 	for i in 0..grazing.count-1
-		apex_string += sprintf("%.f", grazing[i].code) + "\t"
+		apex_string += sprintf("%8d", grazing[i].code) + "\t"
 	end 
 	apex_string += "| " + t('graze.code') + "\n"
 	for i in 0..grazing.count-1
-		apex_string += sprintf("%.f", grazing[i].starting_julian_day) + "\t"
+		apex_string += sprintf("%8d", grazing[i].starting_julian_day) + "\t"
 	end
 	apex_string += "| " + t('graze.sjd') + "\n"
 	for i in 0..grazing.count-1
-		apex_string += sprintf("%.f", grazing[i].ending_julian_day) + "\t"
+		apex_string += sprintf("%8d", grazing[i].ending_julian_day) + "\t"
 	end
 	apex_string += "| " + t('graze.ejd') + "\n"
 	for i in 0..grazing.count-1
-		apex_string += sprintf("%.f", grazing[i].dmi_code) + "\t"
+		apex_string += sprintf("%8d", grazing[i].dmi_code) + "\t"
 	end
 	apex_string += "| " + t('graze.dmi_code') + "\n"
 	for i in 0..grazing.count-1
@@ -282,38 +299,38 @@ class ScenariosController < ApplicationController
 	end
 	apex_string += "| " + t('graze.dmi_calves') + "\n"
 	for i in 0..grazing.count-1
-		apex_string += sprintf("%.f", grazing[i].green_water_footprint) + "\t"
+		apex_string += sprintf("%8d", grazing[i].green_water_footprint) + "\t"
 	end
 	apex_string += "| " + t('graze.gwf') + "\n"
 	apex_string += "\n"
 	apex_string += "Data on animalfeed (Supplement/Concentrate)" + "\n"
 	apex_string += "\n"
 	for j in 0..supplement.count-1
-		apex_string += sprintf("%.f", supplement[j].code) + "\t"
+		apex_string += sprintf("%8d", supplement[j].code) + "\t"
 	end
 	apex_string += "| " + t('supplement.code') + "\n"
 	for j in 0..supplement.count-1
-		apex_string += sprintf("%.f", supplement[j].dmi_code) + "\t"
+		apex_string += sprintf("%8d", supplement[j].dmi_code) + "\t"
 	end
 	apex_string += "| " + t('graze.dmi_code') + "\n"
 	for j in 0..supplement.count-1
-		apex_string += sprintf("%.f", supplement[j].dmi_cows) + "\t"
+		apex_string += sprintf("%8.2f", supplement[j].dmi_cows) + "\t"
 	end
 	apex_string += "| " + t('graze.dmi_cows') + "\n"
 	for j in 0..supplement.count-1
-		apex_string += sprintf("%.f", supplement[j].dmi_bulls) + "\t"
+		apex_string += sprintf("%8.2f", supplement[j].dmi_bulls) + "\t"
 	end
 	apex_string += "| " + t('graze.dmi_bulls') + "\n"
 	for j in 0..supplement.count-1
-		apex_string += sprintf("%.f", supplement[j].dmi_heifers) + "\t"
+		apex_string += sprintf("%8.2f", supplement[j].dmi_heifers) + "\t"
 	end
 	apex_string += "| " + t('graze.dmi_heifers') + "\n"
 	for j in 0..supplement.count-1
-		apex_string += sprintf("%.f", supplement[j].dmi_calves) + "\t"
+		apex_string += sprintf("%8.2f", supplement[j].dmi_calves) + "\t"
 	end
 	apex_string += "| " + t('graze.dmi_calves') + "\n"
 	for j in 0..supplement.count-1
-		apex_string += sprintf("%.f", supplement[j].green_water_footprint) + "\t"
+		apex_string += sprintf("%8d", supplement[j].green_water_footprint) + "\t"
 	end
 	apex_string += "| " + t('graze.gwf') + "\n"
 	apex_string += "\n"
@@ -335,15 +352,15 @@ class ScenariosController < ApplicationController
 	# create string for the DRINKIGWATER.txt file
 	apex_string = "Input file for estimating drinking water requirement of cattle" + "\n"
 	apex_string += "\n"
-	apex_string += sprintf("%8.2f", aplcat.noc) + "\t" + "! " + t('aplcat.noc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.abwc) + "\t" + "! " + t('aplcat.abwc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.norh) + "\t" + "! " + t('aplcat.norh') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.abwh) + "\t" + "! " + t('aplcat.abwh') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.nomb) + "\t" + "! " + t('aplcat.nomb') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.abwmb) + "\t" + "! " + t('aplcat.abwmb') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.dwawfga) + "\t" + "! " + t('aplcat.dwawfga') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.dwawflc) + "\t" + "! " + t('aplcat.dwawflc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.dwawfmb) + "\t" + "! " + t('aplcat.dwawfmb') + "\n"
+	apex_string += sprintf("%8d", aplcat.noc) + "\t" + "! " + t('aplcat.noc') + "\n"
+	apex_string += sprintf("%8d", aplcat.abwc) + "\t" + "! " + t('aplcat.abwc') + "\n"
+	apex_string += sprintf("%8d", aplcat.norh) + "\t" + "! " + t('aplcat.norh') + "\n"
+	apex_string += sprintf("%8d", aplcat.abwh) + "\t" + "! " + t('aplcat.abwh') + "\n"
+	apex_string += sprintf("%8d", aplcat.nomb) + "\t" + "! " + t('aplcat.nomb') + "\n"
+	apex_string += sprintf("%8d", aplcat.abwmb) + "\t" + "! " + t('aplcat.abwmb') + "\n"
+	apex_string += sprintf("%8.4f", aplcat.dwawfga) + "\t" + "! " + t('aplcat.dwawfga') + "\n"
+	apex_string += sprintf("%8.3f", aplcat.dwawflc) + "\t" + "! " + t('aplcat.dwawflc') + "\n"
+	apex_string += sprintf("%8.3f", aplcat.dwawfmb) + "\t" + "! " + t('aplcat.dwawfmb') + "\n"
 	# take monthly avg max and min temp and get an average of those two
 	# take monthly rh to add to dringking water.
 	county = County.find(Location.find(session[:location_id]).county_id)
@@ -357,7 +374,6 @@ class ScenariosController < ApplicationController
 	  rh = weather_data[14].split
 	  for i in 0..max_temp.count-1
 		min_temp[i] = sprintf("%5.1f",((max_temp[i].to_f + min_temp[i].to_f) / 2) * 9/5 + 32)
-		session[:depth] = rh[i]
 		rh[i] = 100 * (Math.exp((17.625 * rh[i].to_f) / (243.04 + rh[i].to_f)) / Math.exp((17.625 * min_temp[i].to_f) / (243.04 + min_temp[i].to_f)))
 		apex_string += sprintf("%5.1f", min_temp[i]) + "  "
 	  end
@@ -372,32 +388,35 @@ class ScenariosController < ApplicationController
 	apex_string += sprintf("%8.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"	
 	apex_string += sprintf("%8.2f", aplcat.prh) + "\t" + "! " + t('aplcat.prh') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"	
-	apex_string += sprintf("%8.2f", aplcat.jdcc) + "\t" + "! " + t('aplcat.jdcc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.gpc) + "\t" + "! " + t('aplcat.gpc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.srop) + "\t" + "! " + t('aplcat.srop') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.bwoc) + "\t" + "! " + t('aplcat.bwoc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.jdbs) + "\t" + "! " + t('aplcat.jdbs') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.platc) + "\t" + "! " + t('aplcat.platc') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.pctbb) + "\t" + "! " + t('aplcat.pctbb') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.rhaeba) + "\t" + "! " + t('aplcat.rhaeba') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.toaboba) + "\t" + "! " + t('aplcat.toaboba') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.dmi) + "\t" + "! " + t('aplcat.dmi') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.dmd) + "\t" + "! " + t('aplcat.dmd') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.mpsm) + "\t" + "! " + t('aplcat.mpsm') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.splm) + "\t" + "! " + t('aplcat.splm') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.pmme) + "\t" + "! " + t('aplcat.pmme') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.pgu) + "\t" + "! " + t('aplcat.pgu') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.ada) + "\t" + "! " + t('aplcat.ada') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.ape) + "\t" + "! " + t('aplcat.ape') + "\n"
+	apex_string += sprintf("%8d", aplcat.jdcc) + "\t" + "! " + t('aplcat.jdcc') + "\n"
+	apex_string += sprintf("%8d", aplcat.gpc) + "\t" + "! " + t('aplcat.gpc') + "\n"
+	apex_string += sprintf("%8d", aplcat.srop) + "\t" + "! " + t('aplcat.srop') + "\n"
+	apex_string += sprintf("%8d", aplcat.bwoc) + "\t" + "! " + t('aplcat.bwoc') + "\n"
+	apex_string += sprintf("%8d", aplcat.jdbs) + "\t" + "! " + t('aplcat.jdbs') + "\n"
+	apex_string += sprintf("%8d", aplcat.platc) + "\t" + "! " + t('aplcat.platc') + "\n"
+	apex_string += sprintf("%8d", aplcat.pctbb) + "\t" + "! " + t('aplcat.pctbb') + "\n"
+	apex_string += sprintf("%8.1f", aplcat.rhaeba) + "\t" + "! " + t('aplcat.rhaeba') + "\n"
+	apex_string += sprintf("%8.1f", aplcat.toaboba) + "\t" + "! " + t('aplcat.toaboba') + "\n"
+	apex_string += sprintf("%8.1f", aplcat.dmi) + "\t" + "! " + t('aplcat.dmi') + "\n"
+	apex_string += sprintf("%8d", aplcat.dmd) + "\t" + "! " + t('aplcat.dmd') + "\n"
+	apex_string += sprintf("%8d", aplcat.mpsm) + "\t" + "! " + t('aplcat.mpsm') + "\n"
+	apex_string += sprintf("%8.1f", aplcat.splm) + "\t" + "! " + t('aplcat.splm') + "\n"
+	apex_string += sprintf("%8.1f", aplcat.pmme) + "\t" + "! " + t('aplcat.pmme') + "\n"
 	apex_string += sprintf("%8.2f", aplcat.napanr) + "\t" + "! " + t('aplcat.napanr') + "\n"
-	apex_string += sprintf("%8.2f", aplcat.napaip) + "\t" + "! " + t('aplcat.napaip') + "\n"
+	apex_string += sprintf("%8.3f", aplcat.napaip) + "\t" + "! " + t('aplcat.napaip') + "\n"
+	apex_string += sprintf("%8.1f", aplcat.pgu) + "\t" + "! " + t('aplcat.pgu') + "\n"
+	apex_string += sprintf("%8.1f", aplcat.ada) + "\t" + "! " + t('aplcat.ada') + "\n"
+	apex_string += sprintf("%8d", aplcat.ape) + "\t" + "! " + t('aplcat.ape') + "\n"
 	msg = send_file_to_APEX(apex_string, "WaterEnergyInputCowCalf.txt")
+    if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
+    if msg.include?("Bull output file") then msg="OK" end
 	return msg
   end	
   
   private
   ################################  run_scenario - run simulation called from show or index  #################################
   def run_scenario()
+    @project = Project.find(params[:project_id])
     @last_herd = 0
 	@herd_list = Array.new
 	msg = "OK"
@@ -407,7 +426,8 @@ class ScenariosController < ApplicationController
       FileUtils.mkdir_p(dir_name)
     end
     #FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
-    msg = send_file_to_APEX("APEX", session[:session_id])  #this operation will create APEX folder from APEX1 folder
+    msg = send_file_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation, session[:session_id])  #this operation will create APEX folder from APEX1 folder
+	debugger
     #CREATE structure for nutrients that go with fert file
     @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
     @current_nutrients = Array.new
