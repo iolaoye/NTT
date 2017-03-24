@@ -392,7 +392,8 @@ en:
     success: was successfully created.
     created: was successfully created.
     updated: was successfully updated.
-    reset: was successfully reset to defaults.
+    reset: reset to default was successful.
+    reset_to: reset to default
     uploading: uploading
     continue: Continue
     confirm: Are you sure?

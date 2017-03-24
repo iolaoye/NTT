@@ -181,7 +181,7 @@ class ProjectsController < ApplicationController
   #end
 
   def upload
-    @id = params[:id]
+    @id = params[:format]
     #nothing to do here. Just render the upload view
   end
 
@@ -192,7 +192,7 @@ class ProjectsController < ApplicationController
       flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), notice: t('activerecord.notices.messages.created', model: "Project")
     else
-      redirect_to upload_project_path(@upload_id)
+      redirect_to projects_upload_path(@id)
       flash[:notice] = t('activerecord.errors.messages.projects.no_saved') and return false
     end
   end
@@ -259,8 +259,6 @@ class ProjectsController < ApplicationController
 	  end 
 
 	  if (msg == "OK" || msg == true)
-        # summarizes results for totals and soils.
-        #summarize_total()
         @projects = Project.where(:user_id => session[:user_id])
         saved = true
       else
@@ -2340,14 +2338,14 @@ class ProjectsController < ApplicationController
 		  total_n_ci = total_n_ci + @result.ci_value
         when "OrgP"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 31)
-		  total_n = total_n + @result.value
+		  total_p = total_p + @result.value
         when "OrgPCI"
           @result.ci_value = p.text
           @result.save
 		  total_p_ci = total_p_ci + @result.ci_value
         when "PO4"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 32)
-		  total_n = total_n + @result.value
+		  total_p = total_p + @result.value
         when "PO4CI"
           @result.ci_value = p.text
           @result.save

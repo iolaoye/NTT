@@ -397,7 +397,8 @@ es:
     success: fue creado exitosamente.
     created: fue creado exitosamente.
     updated: fue actualizado exitosamente.
-    reset: fue restablecido exitosamente a los valores predeterminados.
+    reset: reestablecer los valores predeterminados fue exitoso
+    reset_to: reestablecer los valores predeterminados
     uploading: cargando
     continue: Continuar
     confirm: ¿Está seguro?
