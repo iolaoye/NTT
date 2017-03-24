@@ -52,8 +52,8 @@
       <td class="gvCellStyleText"><%= sub[:subarea_number] %></td>
       <td class="gvCellStyleText"><%= sub[:subarea_description] %></td>
       <td class="gvCellStyleCheckbox">
-        <%= link_to image_tag("view.png"), project_field_subarea_path(@project.id, @field.id, sub[:subarea_id]), title: t('general.show') %>
-        <%= link_to image_tag("edit.png"), edit_project_field_subarea_path(@project.id, @field.id, sub[:subarea_id]), title: t('general.edit') %>
+        <%= link_to image_tag("view.png"), project_field_subarea_path(@project, @field, sub[:subarea_id]), title: t('general.show') %>
+        <%= link_to image_tag("edit.png"), edit_project_field_subarea_path(@project, @field, sub[:subarea_id]), title: t('general.edit') %>
       </td>
     <% i += 1 %><% end %>
 </tr>
@@ -63,4 +63,3 @@
 </div>
 
 <br>
-

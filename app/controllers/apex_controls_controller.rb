@@ -37,10 +37,12 @@ class ApexControlsController < ApplicationController
 
   # GET /apex_controls/1/edit
   def edit
-	@apex_control = ApexControl.includes(:control_description).where(:project_id => params[:project_id]).find(params[:id])
-	@control_code = @apex_control.control.code
-	@low_range = @apex_control.control.range_low
-	@high_range = @apex_control.control.range_high
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+  	@apex_control = ApexControl.includes(:control_description).where(:project_id => params[:project_id]).find(params[:id])
+  	@control_code = @apex_control.control_description.code
+  	@low_range = @apex_control.control_description.range_low
+  	@high_range = @apex_control.control_description.range_high
   end
 
   # POST /apex_controls
