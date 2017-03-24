@@ -61,37 +61,37 @@
             <div class="nav navbar-nav navbar-right">
                 <ul class="footerright">
                   <%if request.url.include?(url_for=("/projects?")) %>
-                    <li><%= image_tag('download.gif') %> Download</li>
-                    <li><%= image_tag('edit.png') %> Edit</li>
-                    <li><%= image_tag('copy.jpg') %> Copy</li>
-                    <li><%= image_tag('delete.png') %> Delete</li>
+                    <li><%= image_tag('download.gif') %> <%= t('general.download') %></li>
+                    <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
+                    <li><%= image_tag('copy.jpg') %> <%= t('general.copy') %></li>
+                    <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
                   <%if request.url.include?(url_for=("/fields?")) || request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/layers?")) || request.url.include?(url_for=("/list?")) ||  request.url.include?(url_for=("/scenarios?"))%>  
                       <%if request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/apex_soils?"))%>
-                          <li><%= image_tag('layers.png') %> Soil Layers</li>
+                          <li><%= image_tag('layers.png') %> <%= t('.soil_layer') %></li>
                       <% end %>
-                      <li><%= image_tag('edit.png') %> Edit</li>
-                      <li><%= image_tag('delete.png') %> Delete</li>
+                      <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
+                      <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
                   <%if request.url.include?(url_for=("/grazing_parameters?")) %>
-                    <li><%= image_tag('view.png') %> View</li>
-                    <li><%= image_tag('edit.png') %> Edit</li>
-                    <li><%= image_tag('delete.png') %> Delete</li>
+                    <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
+                    <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
+                    <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
                   <%if request.url.include?(url_for=("/apex_controls?")) || request.url.include?(url_for=("/apex_parameters?")) || request.url.include?(url_for=("/subareas?")) || request.url.include?(url_for=("/apex_soils?")) || request.url.include?(url_for=("/apex_layers?")) || request.url.include?(url_for=("/soil_operations?"))%>  
                       <%if request.url.include?(url_for=("/subareas?"))%>
-                          <li><%= image_tag('view.png') %> View</li>
+                          <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
                       <% end %>
                       <%if request.url.include?(url_for=("/apex_soils"))%>            
-                          <li><%= image_tag('layers.png') %> Soil Layers</li>   
-                          <li><%= image_tag('view.png') %> View</li>
+                          <li><%= image_tag('layers.png') %> <%= t('.soil_Layer') %></li>   
+                          <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
                       <% end %>
-                      <li><%= image_tag('edit.png') %> Edit</li>
+                      <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                   <% end %>
                   <%if request.url.include?(url_for=("/sites?"))%>   
-                      <li><%= image_tag('view.png') %> View</li>
-                      <li><%= image_tag('edit.png') %> Edit</li>
-                      <li><%= image_tag('delete.png') %> Delete</li>
+                      <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
+                      <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
+                      <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
                 </ul>
             </div>
@@ -119,9 +119,8 @@
       <div class="modal-body">
         <table>
         <% case controller_name %>
-          <% when "projects" %>
+        <% when "projects" %>
               <tr><td><%= t('projpage_html')%></td></tr>
-          </table>
         <% when "locations" %>
               <tr><td><%= t('locpage_html')%></td></tr>
         <% when "weathers" %>
@@ -143,12 +142,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
-        <h4 class="modal-title">Contact Information</h4>
+        <h4 class="modal-title"> <%= t('contact1.header') %></h4>
       </div>
       <div class="modal-body">
-<%=t('contact1.statement')%><br><br>
-<ul><li><b>Ali Saleh</b></li>
-Associate Director<br>
+<%= raw t('contact1.statement')%><br><br>
+<ul>
+<li><b>Ali Saleh</b></li>
+<%= t('contact1.position') %><br>
 P.O. Box T410<br>
 Tarleton State University<br>
 Stephenville, TX 76402<br>
@@ -156,10 +156,11 @@ Stephenville, TX 76402<br>
 (254)968-9790 (Fax)<br>
 saleh@tarleton.edu</li></ul>
 <br>
-For <b>technical </b>questions or comments regarding the Nutrient Tracking Tool <b>(NTT)</b>, please contact:<br><br>
+  
+<%= raw t('contact2.statement') %><br><br>
 
 <ul><li><b>Oscar Gallego</b></li>
-Senior Research Associate<br>
+<%= t('contact2.position') %><br>
 P.O. Box T410<br>
 Tarleton State University<br>
 Stephenville, TX 76402<br>

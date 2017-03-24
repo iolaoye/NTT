@@ -35,10 +35,12 @@ class ApexParametersController < ApplicationController
 
   # GET /apex_parameters/1/edit
   def edit
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
     @apex_parameter = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id]).find(params[:id])
-    @parameter_name = @apex_parameter.parameter.name
-    @low_range = @apex_parameter.parameter.range_low
-    @high_range = @apex_parameter.parameter.range_high
+    @parameter_name = @apex_parameter.parameter_description.name
+    @low_range = @apex_parameter.parameter_description.range_low
+    @high_range = @apex_parameter.parameter_description.range_high
     #@apex_parameter = ApexParameter.where(:project_id => params[:project_id]).find(params[:id])
   end
 

@@ -401,6 +401,7 @@ en:
     to: to
     copy: copy
     last_modified: Last Modified
+    download: Download
   welcome_note:
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -1527,18 +1528,18 @@ en:
     header: Watershed Page Help
     body1: 'The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.'
     create:
-        header: Creating a Watershed
+        header: Creating a Field Routing Scenario
         name:
             header: Naming Your Watershed
-            body1: 'To begin creating a watershed, click <strong><em>New Watershed</em></strong>. Once you do this, a text box will pop up where you can type in the name of the watershed:'
-            body2: 'Once you enter the name, click <strong><em>Create Watershed</em></strong>.'
+            body1: 'To begin creating a field routing scenario, click <strong><em>New</em></strong>. Once you do this, a text box will pop up where you can type in the name of the scneario:'
+            body2: 'Once you enter the name, click <strong><em>Save</em></strong>.'
         select:
             header: Selecting Fields/Scenarios to Simulate
-            body1: 'Once you have named your Watershed, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same watershed (the idea is combining fields to simulate as one field). To add field/scenario combinations to the watershed, select the Field/scenario combinations, and click <strong><em>Select Scenario</em></strong>.'
-            body2: 'Once you have finished, click on <strong><em>Add to Watershed</em></strong>.'
+            body1: 'Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the Field/scenario combinations, and click <strong><em>Select Scenario</em></strong>.'
+            body2: 'Once you have finished, click on <strong><em>Add to ......</em></strong>. The dots represent the name you gave to the field routing scenario.'
         simulate:
-            header: Simulating/Viewing Results for Watersheds
-            body1: 'To simulate or to view results for Watersheds, go to Results-Watershed Page and select the watersheds and click on <strong><em>Summary</em></strong> to get the results.'
+            header: Simulating/Viewing Results for Field Routing
+            body1: 'To simulate or to view results for field routings, go to <b><em>Results</em><b> Page and select the watersheds and click on <strong><em>Summary</em></strong> to get the results.'
   simpage:
     header: Simulation Page Help
     body1: 'In this page the user is able to run the simulations for the fields/scenarios or subprojects that were created.'

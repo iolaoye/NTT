@@ -17,12 +17,12 @@
 
     <div class="field">
     <%= label :crop_id, t('operation.crop') %>
-		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => 'Select crop'}, {:required => true} %>
+		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => 'Select crop', :selected => params[:crop]}, {:required => true} %>
 	</div>
 	<div class="field">
 		<%= label :activity_id, t('scenario.operation') %>
 		<% if I18n.locale.eql?(:en) %>
-			<%= collection_select :operation, :activity_id, Activity.all, :id, :name, {:prompt => 'Select Operation'}, {:required => true} %>
+			<%= collection_select :operation, :activity_id, Activity.all, :id, :name, {:prompt => 'Select Operation', :selected => params[:operation]}, {:required => true} %>
 		<% else %>
 			<%= collection_select :operation, :activity_id, Activity.all, :id, :spanish_name, {:prompt => 'Seleccione Operacion'}, {:required => true} %>
 		<% end %>

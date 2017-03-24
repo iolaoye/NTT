@@ -58,8 +58,8 @@
 </p>
 
 <div class="actions">
-  <%= link_to t('general.edit'), edit_site_path(@site), :class => "btn btn-primary" %>
-  <%= link_to t('general.back'), sites_path, :class => "btn btn-primary" %>
+  <%= link_to t('general.edit'), edit_project_field_site_path(@project, @field, @site), :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), project_field_sites_path, :class => "btn btn-primary" %>
 </div>
 
 <br><br>

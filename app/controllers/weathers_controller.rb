@@ -2,8 +2,9 @@ class WeathersController < ApplicationController
 ################################  Save_coordinates   #################################
 # GET /weathers/1
 # GET /weathers/1.json
-  def Save_coordinates
-
+  def save_coordinates
+    @weather.latitude = params[:weather][:latitude]
+    @weather.longitude = params[:weather][:longitude]
   end
 
 ################################  INDEX   #################################
@@ -101,34 +102,40 @@ class WeathersController < ApplicationController
     @weather = Weather.find(params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-	debugger
+
     if (params[:weather][:way_id] == "2")
       if params[:weather][:weather_file] == nil
-		if @weather.weather_file == nil || @weather.weather_file == ""
-			redirect_to edit_project_field_weather_path(@project, @field)
-			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
-		end
+		      if @weather.weather_file == nil || @weather.weather_file == ""
+			        redirect_to edit_project_field_weather_path(@project, @field)
+			        flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
+		      end
       else
-        msg = upload_weather
+        @weather.way_id = 2
         #redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
       end
     end
-      respond_to do |format|
-        if @weather.save
-          format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @weather.errors, status: :unprocessable_entity }
-        end
+
+    if (params[:weather][:way_id] == "3")
+      save_coordinates
+      @weather.way_id = 3
+    end
+
+    respond_to do |format|
+      if @weather.save
+        format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @weather.errors, status: :unprocessable_entity }
       end
-    #end
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
-	apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
-	apex_control.save
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 2)
-	apex_control.value = @weather.simulation_initial_year - 5
-	apex_control.save
+    end
+
+	  apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
+    apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
+	  apex_control.save
+    apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 2)
+    apex_control.value = @weather.simulation_initial_year - 5
+    apex_control.save
   end
 
 # DELETE /weathers/1
