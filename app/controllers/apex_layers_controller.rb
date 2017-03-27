@@ -3,8 +3,9 @@
   # GET /layers
   # GET /layers.json
   def index
+    @project = Project.find(params[:project_id])
     @apex_layers = Layer.where(:soil_id => params[:id])
-
+    @field = Field.find(params[:field_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_layers }
@@ -14,8 +15,11 @@
   # GET /layers/1
   # GET /layers/1.json
   def show
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
     @apex_layer_id = params[:id]
     @apex_layer = Layer.find(params[:id])
+    @location = Location.where(:project_id => params[:project_id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -38,6 +42,9 @@
   def edit
     @apex_layer_id = params[:id]
     @apex_layer = Layer.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @location = Location.where(:project_id => params[:project_id])
   end
 
   # POST /layers
@@ -60,9 +67,12 @@
   # PATCH/PUT /layers/1.json
   def update
     @apex_layer = Layer.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+
     respond_to do |format|
       if @apex_layer.update_attributes(layer_params)
-        format.html { redirect_to apex_layers_path(:id => @apex_layer.soil_id), notice: t('models.layer') + "" + t('notices.updated') }
+        format.html { redirect_to project_field_apex_layers_path(:id => @apex_layer.soil_id), notice: t('models.layer') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -89,7 +99,7 @@
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def layer_params
-      params.require(:layer).permit(:bulk_density, :clay, :depth, :organic_matter, :ph, :sand, :silt, :soil_id, :soil_p, 
+      params.require(:layer).permit(:bulk_density, :clay, :depth, :organic_matter, :ph, :sand, :silt, :soil_id, :soil_p,
 	  :uw, :fc, :wn, :smb, :cac, :cec, :rok, :cnds, :rsd, :bdd, :psp, :satc )
     end
 end

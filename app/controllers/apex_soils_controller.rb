@@ -16,8 +16,10 @@
   # GET /soils/1
   # GET /soils/1.json
   def show
+    @project = Project.find(params[:project_id])
     @soil = Soil.find(params[:id])
     @field = Field.find(session[:field_id])
+    @location = Location.where(:project_id => params[:project_id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @soil }
@@ -37,8 +39,10 @@
 
   # GET /soils/1/edit
   def edit
+    @project = Project.find(params[:project_id])
     @soil = Soil.find(params[:id])
     @field = Field.find(session[:field_id])
+    @location = Location.where(:project_id => params[:project_id])
   end
 
   # POST /soils
