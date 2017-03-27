@@ -882,7 +882,7 @@ module SimulationsHelper
     @subarea_file.push(sLine + "\n")
     #/line 4
     if _subarea_info.wsa > 0 && i > 0 then
-      sLine = sprintf("%8.2f", _subarea_info.wsa * 1)
+      sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
     else
       sLine = sprintf("%8.2f", _subarea_info.wsa)
     end
@@ -903,7 +903,7 @@ module SimulationsHelper
 		end
 		if (operation_number > 1 && i == 0) || i > 0 then
 		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
-		  _subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
+		  #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
 		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
 		end
 	end
