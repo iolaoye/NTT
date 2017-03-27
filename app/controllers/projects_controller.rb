@@ -198,6 +198,7 @@ class ProjectsController < ApplicationController
   end
 
   def upload_prj
+  	@inps1 = 0
     saved = false
     msg = ""
     @upload_id = 0
@@ -237,6 +238,7 @@ class ProjectsController < ApplicationController
             msg = upload_location_info1(node)
           when "FieldInfo"
             msg = upload_field_info(node)
+			msg = renumber_subareas()
           when "SiteInfo"
             msg = upload_site_info(node)
           when "controls"
@@ -273,6 +275,27 @@ class ProjectsController < ApplicationController
     end
 	return saved
   end
+
+  ########################################### RENUMERATE THE SUBAREAS FILES FOR PREVIOUS VERSION PROJECTS ##################
+  def renumber_subareas()
+    msg = "OK"
+    @iops1 = 1
+  	#renumber the subarea inps, iops, iown
+	@project.location.fields.each do |field|
+		field.soils.each do |soil|
+			if soil.selected
+				soil.subarea.iops = @iops1
+				soil.subarea.inps = @iops1
+				soil.subarea.iow = @iops1
+				@iops1 +=1
+				if !soil.subarea.save
+					msg = "Error renumber subareas"
+				end
+			end   # end if soil selected
+		end   # end soils.each
+	end  # end field.each
+	return msg
+  end  # end method
 
   ########################################### DOWNLOAD PROJECT FILE IN XML FORMAT ##################
   def download()
@@ -1600,9 +1623,9 @@ class ProjectsController < ApplicationController
         when "SubareaNumber"
           subarea.number = p.text
         when "Inps"
-          subarea.inps = p.text.to_i + 1
+          subarea.inps = @inps1
         when "Iops"
-          subarea.iops = p.text
+          subarea.iops = subarea.inps
         when "Iow"
           subarea.iow = subarea.inps
         when "Ii"

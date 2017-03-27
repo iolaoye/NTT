@@ -32,6 +32,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /watersheds/1.json
   def simulate
+    @project = Project.find(params[:project_id])
     @watershed_id = params[:select_watershed][0]
     @dtNow1 = Time.now.to_s
     dir_name = APEX + "/APEX" + session[:session_id]
@@ -39,7 +40,7 @@ class WatershedsController < ApplicationController
       FileUtils.mkdir_p(dir_name)
     end
     watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed_id)
-    msg = send_file_to_APEX("APEX", session[:session_id]) #this operation will create APEX folder from APEX1 folder
+    msg = send_file_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation, session[:session_id]) #this operation will create APEX folder from APEX1 folder
     if msg.eql?("OK") then msg = create_control_file() else return msg end
     if msg.eql?("OK") then msg = create_parameter_file() else return msg end 
     if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(session[:location_id]).id) else return msg end
@@ -85,7 +86,6 @@ class WatershedsController < ApplicationController
 
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
-    @project = Project.find(params[:project_id])
 
     render "index"
   end
