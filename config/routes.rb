@@ -85,8 +85,8 @@ NTTG3::Application.routes.draw do
           get :crop_schedule, on: :collection
           get 'download', on: :collection
           get :open, on: :collection
-          get :upload_system, on: :member
           post :delete_all, on: :collection
+		  post :upload_system, on: :member
         end
         resources :bmps do
           get :list, on: :collection
