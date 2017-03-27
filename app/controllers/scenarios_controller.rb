@@ -427,7 +427,6 @@ class ScenariosController < ApplicationController
     end
     #FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
     msg = send_file_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation, session[:session_id])  #this operation will create APEX folder from APEX1 folder
-	debugger
     #CREATE structure for nutrients that go with fert file
     @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
     @current_nutrients = Array.new
