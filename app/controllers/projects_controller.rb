@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
   include LocationsHelper
-  layout 'welcome'  
+  layout 'welcome'
   require 'nokogiri'
   helper_method :sort_column, :sort_direction
 
@@ -75,8 +75,7 @@ class ProjectsController < ApplicationController
 
   ################  copy the selected project  ###################
   def copy_project
-	download_project(params[:id], "copy")
-	render :action => "index"
+	  download_project(params[:id], "copy")
   end
 
   ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
@@ -187,7 +186,7 @@ class ProjectsController < ApplicationController
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_project
-	saved = upload_prj()
+	  saved = upload_prj()
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), notice: t('activerecord.notices.messages.created', model: "Project")
@@ -242,25 +241,25 @@ class ProjectsController < ApplicationController
           when "SiteInfo"
             msg = upload_site_info(node)
           when "controls"
-			  node.elements.each do |c|
-				msg = upload_control_values_new_version(c)
-			  end
+			      node.elements.each do |c|
+				      msg = upload_control_values_new_version(c)
+			      end
           when "ControlValues"
             msg = upload_control_values(node)
           when "ParmValues"
             msg = upload_parameter_values(node)
           when "parameters"
-			  node.elements.each do |c|
-				msg = upload_parameter_values_new_version(c)
-			  end
+			      node.elements.each do |c|
+				      msg = upload_parameter_values_new_version(c)
+			      end
         end
         break if (msg != "OK" && msg != true)
       end
       if msg == "OK" then
-		load_parameters(ApexParameter.where(:project_id => @project.id).count)
-	  end 
+		    load_parameters(ApexParameter.where(:project_id => @project.id).count)
+	    end
 
-	  if (msg == "OK" || msg == true)
+  	  if (msg == "OK" || msg == true)
         @projects = Project.where(:user_id => session[:user_id])
         saved = true
       else
@@ -273,7 +272,7 @@ class ProjectsController < ApplicationController
       #raise ActiveRecord::Rollback
       #end
     end
-	return saved
+	  return saved
   end
 
   ########################################### RENUMERATE THE SUBAREAS FILES FOR PREVIOUS VERSION PROJECTS ##################
@@ -318,33 +317,33 @@ class ProjectsController < ApplicationController
         } # end xml.project
         #save location information
         save_location_information(xml, project_id)
-		xml.controls {
-		  controls = ApexControl.where(:project_id => project_id)
-		  controls.each do |c|
-			save_control_information(xml, c)
-		  end
-		} # xml each control end
+    		xml.controls {
+    		  controls = ApexControl.where(:project_id => project_id)
+    		  controls.each do |c|
+    			save_control_information(xml, c)
+    		  end
+    		} # xml each control end
 
-		xml.parameters {
-		  parameters = ApexParameter.where(:project_id => project_id)
-		  parameters.each do |c|
-			save_parameter_information(xml, c)
-		  end
-		} # xml each control end
+    		xml.parameters {
+    		  parameters = ApexParameter.where(:project_id => project_id)
+    		  parameters.each do |c|
+    			save_parameter_information(xml, c)
+    		  end
+    		} # xml each control end
       } # end xml.projects
     end #builder do end
 
     file_name = session[:session_id] + ".prj"
     @path = File.join(DOWNLOAD, file_name)
     content = builder.to_xml
-	File.open(@path, "w") { |f| f.write(content) }
-	#file.write(content)
-	send_file @path, :type => "application/xml", :x_sendfile => true
-	if type == "copy"
-		#call upload to copy project
-		params[:examples] = "2"
-		saved = upload_prj()
-	end
+  	File.open(@path, "w") { |f| f.write(content) }
+  	#file.write(content)
+  	send_file @path, :type => "application/xml", :x_sendfile => true
+  	if type == "copy"
+  		#call upload to copy project
+  		params[:examples] = "2"
+  		saved = upload_prj()
+  	end
   end   #download project def end
 
   def save_location_information(xml, project_id)
@@ -920,7 +919,7 @@ class ProjectsController < ApplicationController
         return t('activerecord.errors.messages.projects.no_saved')
       end
     #rescue
-      return t('activerecord.errors.messages.projects.no_saved') 
+      return t('activerecord.errors.messages.projects.no_saved')
     #end
   end
 
@@ -959,7 +958,7 @@ class ProjectsController < ApplicationController
       if location.save
 		session[:location_id] = location.id
 		return "OK"
-	  end 
+	  end
     rescue
       return "Location could not be saved"
     end
@@ -1280,7 +1279,7 @@ class ProjectsController < ApplicationController
           soil.wtmn = p.text
         when "Wtmx"
           soil.wtmx = p.text
-		  case soil.wtmx 
+		  case soil.wtmx
 			when 5
 				soil.drainage_id = 2
 			when 6
@@ -1848,7 +1847,7 @@ class ProjectsController < ApplicationController
 			if p.text == "0"
 				subarea.soil_id = 0
 			else
-			    if Soil.find_by_soil_id_old(p.text) == nil then 
+			    if Soil.find_by_soil_id_old(p.text) == nil then
 					return "OK"
 				end
 				subarea.soil_id = Soil.find_by_soil_id_old(p.text).id
@@ -2273,7 +2272,7 @@ class ProjectsController < ApplicationController
 				end
 				soil_operation.soil_id = Soil.find_by_soil_id_old(p.text).id
 			end
-      end  # end case 
+      end  # end case
     end  # node
     if soil_operation.save
       return "OK"
@@ -3244,7 +3243,7 @@ class ProjectsController < ApplicationController
     #end
   end
 
-  def upload_control_values_new_version(node) 
+  def upload_control_values_new_version(node)
     begin
 	  control = ApexControl.new
       control.project_id = @project.id
