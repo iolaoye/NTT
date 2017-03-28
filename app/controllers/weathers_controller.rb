@@ -1,10 +1,42 @@
 class WeathersController < ApplicationController
+include SimulationsHelper
+include ScenariosHelper
 ################################  Save_coordinates   #################################
 # GET /weathers/1
 # GET /weathers/1.json
   def save_coordinates
     @weather.latitude = params[:weather][:latitude]
     @weather.longitude = params[:weather][:longitude]
+	weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+	data = weather_data.split(",")
+	@weather.weather_file = data[0]
+	data[2].slice! "\r\n"
+	@weather.simulation_final_year = data[2]
+	@weather.weather_final_year = @weather.simulation_final_year
+    @weather.weather_initial_year = data[1]
+    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+    @weather.way_id = 3
+	@weather.save
+  end
+
+################################  Save Prism data #################################
+# GET /weathers/1
+# GET /weathers/1.json
+  def save_prism
+    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
+    centroid = calculate_centroid()
+    @weather.latitude = centroid.cy
+    @weather.longitude = centroid.cx
+	weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+	data = weather_data.split(",")
+	@weather.weather_file = data[0]
+	data[2].slice! "\r\n"
+	@weather.simulation_final_year = data[2]
+	@weather.weather_final_year = @weather.simulation_final_year
+    @weather.weather_initial_year = data[1]
+    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+    @weather.way_id = 1
+	@weather.save
   end
 
 ################################  INDEX   #################################
@@ -116,7 +148,10 @@ class WeathersController < ApplicationController
 
     if (params[:weather][:way_id] == "3")
       save_coordinates
-      @weather.way_id = 3
+    end
+
+    if (params[:weather][:way_id] == "1")
+      save_prism
     end
 
     respond_to do |format|

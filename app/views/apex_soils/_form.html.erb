@@ -1,4 +1,4 @@
-<%= form_for @soil, url: apex_soil_path do |f| %>
+<%= form_for ([@project, @field, @soil]) do |f| %>
   <% if @soil.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @soil.errors.count, :model => t('models.apex_soil')) %></h2>
@@ -92,6 +92,6 @@
 <br>
 <div class="actions">
 	<%= f.submit t('submit.update'), :class => "btn btn-primary" %>
-	<%= link_to t('general.back'), apex_soils_path, :class => "btn btn-primary" %>
+	<%= link_to t('general.back'), project_field_apex_soils_path, :class => "btn btn-primary" %>
 </div>
 <% end %>
