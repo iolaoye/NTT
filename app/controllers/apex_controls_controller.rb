@@ -68,7 +68,7 @@ class ApexControlsController < ApplicationController
 
     respond_to do |format|
       if @apex_control.update_attributes(apex_control_params)
-        format.html { redirect_to apex_controls_url, notice: t('models.apex_control') + " " + t('general.updated') }
+        format.html { redirect_to project_field_apex_controls_url, notice: t('models.apex_control') + " " + t('general.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -92,8 +92,8 @@ class ApexControlsController < ApplicationController
   def reset
     controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
     if controls.blank? || controls == nil then
-		controls = Control.where(:state_id => 99)
-	end
+		  controls = Control.where(:state_id => 99)
+	  end
     @apex_controls = ApexControl.where("project_id == " + params[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2")
     @apex_controls.delete_all()
 

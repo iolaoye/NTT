@@ -47,6 +47,7 @@ class SoilOperationsController < ApplicationController
   def edit
     @soil_operation = SoilOperation.find(params[:id])
     @field = Field.find(session[:field_id])
+    @project = Project.find(params[:project_id])
   end
 
   # POST /soil_operations
@@ -67,7 +68,7 @@ class SoilOperationsController < ApplicationController
 
     respond_to do |format|
       if @soil_operation.update_attributes(soil_operation_params)
-        format.html { redirect_to soil_operations_path, notice: t('models.soil_operation') + " " + t('notices.updated') }
+        format.html { redirect_to project_field_soil_operations_path, notice: t('models.soil_operation') + " " + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
