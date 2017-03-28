@@ -700,4 +700,22 @@ module ScenariosHelper
     end #end case operation
     return opv2
   end #end set_opval2
+
+  def calculate_centroid()
+    #https://en.wikipedia.org/wiki/Centroid.
+    centroid_structure = Struct.new(:cy, :cx)
+    centroid = centroid_structure.new(0.0, 0.0)
+    points = @field.coordinates.split(" ")
+    i=0
+
+    points.each do |point|
+      i+=1
+      centroid.cx += point.split(",")[0].to_f
+      centroid.cy += point.split(",")[1].to_f
+    end
+    centroid.cx = centroid.cx / (i)
+    centroid.cy = centroid.cy / (i)
+    return centroid
+  end
+
 end
