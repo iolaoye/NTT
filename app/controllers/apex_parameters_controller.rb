@@ -67,7 +67,7 @@ class ApexParametersController < ApplicationController
 
     respond_to do |format|
       if @apex_parameter.update_attributes(apex_parameter_params)
-        format.html { redirect_to apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.updated')}
+        format.html { redirect_to project_field_apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.updated')}
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
