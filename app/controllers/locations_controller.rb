@@ -156,7 +156,6 @@ class LocationsController < ApplicationController
 			@location.state_id = state.id
 		  end
 		  county_name = params[:county]
-		  session[:depth] = county_name
           if county_name == nil then
 			  @location.county_id = 0
 		  else

@@ -61,8 +61,9 @@ class SubareasController < ApplicationController
     @soils = Soil.where(:field_id => session[:field_id], :selected => true)
     session[:scenario_id] = params[:subarea][:scenario_id]
 	get_subareas()
-    @field = Field.find(session[:field_id])
-	  render "index"
+    @field = Field.find(params[:field_id])
+	@project = Project.find(params[:project_id])
+	render "index"
   end
 
   # PATCH/PUT /subareas/1

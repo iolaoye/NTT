@@ -202,7 +202,6 @@ class ScenariosController < ApplicationController
 		  @scenario = Scenario.find(scenario_id)
 		  msg = run_aplcat
 		  unless msg.eql?("OK")
-		      session[:depth] = msg
 			  @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
 			  raise ActiveRecord::Rollback
 	      end # end if msg
