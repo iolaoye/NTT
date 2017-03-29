@@ -47,14 +47,14 @@
 			</div>
 			<div id="div_fertilizer" class="field" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
+				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id}, {:required => true} %>
 			</div>
 			<div class="field" id="div_amount">
 			  <%= f.label t('operation.plant_population') %>
 			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
-			  <%= f.label :depth, t('soil.depth') %>
+			  <%= f.label :depth, t('operation.depth') %>
 			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
@@ -63,19 +63,19 @@
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
-					<%= f.label :no3_n %>
+					<%= f.label :no3_n, t('operation.no3_n') %>
 					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :po4_p %>
+					<%= f.label :po4_p, t('operation.po4_p') %>
 					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_n %>
+					<%= f.label :org_n, t('operation.org_n') %>
 					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_p %>
+					<%= f.label :org_p, t('operation.org_p') %>
 					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
@@ -83,25 +83,25 @@
 			<div class="field" id="div_type"  >
 				<%= label :type_id, t('general.type') %>
 				<% if I18n.locale.eql?(:en) %>
-				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => 'Select Fertilizer Type'}, {:required => true} %>
+				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => 'Select Fertilizer Type', :selected => @operation.subtype_id}, {:required => true} %>
 				<% else %>
-				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :spanish_name, {:prompt => 'Seleccione Tipo de Fertilizante'}, {:required => true} %>
+				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :spanish_name, {:prompt => 'Seleccione Tipo de Fertilizante', :selected => @operation.subtype_id}, {:required => true} %>
 				<% end %>
 			</div>
 			<div class="field" id="div_fertilizer" >
 				<%= f.label :type_id, t('operation.fertilizer') %>
 				<% if I18n.locale.eql?(:en) %>
-					<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
+					<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 				<% else %>
-					<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante'} %>
+					<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante', :selected => @operation.subtype_id} %>
 				<% end %>
 			</div>
 			<div class="field" id="div_amount">
-				<%= f.label :amount, t('operation.amount') %>
+				<%= f.label :amount, t('operation.amount'), t('operation.amount') %>
 				<%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
-				<%= f.label :depth, t('soil.depth') %>
+				<%= f.label :depth, t('operation.depth') %>
 				<%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture">
@@ -110,19 +110,19 @@
 			</div>
 			<div class="field" id="div_nutrients" >
 				<div class="field" >
-					<%= f.label :no3_n %>
+					<%= f.label :no3_n, t('operation.no3_n') %>
 					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 				<div class="field" >
-					<%= f.label :po4_p %>
+					<%= f.label :po4_p, t('operation.po4_p') %>
 					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 				<div class="field" >
-					<%= f.label :org_n %>
+					<%= f.label :org_n, t('operation.org_n') %>
 					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 				<div class="field" >
-					<%= f.label :org_p %>
+					<%= f.label :org_p, t('operation.org_p') %>
 					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 			</div>
@@ -137,14 +137,14 @@
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Method'} %>
+				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Method', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount" style="display:none">
-			  <%= f.label :amount %>
+			  <%= f.label :amount, t('operation.amount') %>
 			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
-			  <%= f.label :depth, t('soil.depth') %>
+			  <%= f.label :depth, t('operation.depth') %>
 			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
@@ -153,19 +153,19 @@
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
-					<%= f.label :no3_n %>
+					<%= f.label :no3_n, t('operation.no3_n') %>
 					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :po4_p %>
+					<%= f.label :po4_p, t('operation.po4_p') %>
 					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_n %>
+					<%= f.label :org_n, t('operation.org_n') %>
 					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 				</div>
 			  <div class="field" >
-					<%= f.label :org_p %>
+					<%= f.label :org_p, t('operation.org_p') %>
 					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
@@ -180,14 +180,14 @@
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
+				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount">
-			  <%= f.label :volume %>
+			  <%= f.label :volume, t('operation.volume') %>
 			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
-			  <%= f.label :efficiency %>
+			  <%= f.label :efficiency, t('operation.efficiency') %>
 			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
@@ -196,19 +196,19 @@
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 				<div class="field" >
-					<%= f.label :no3_n %>
+					<%= f.label :no3_n, t('operation.no3_n') %>
 					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :po4_p %>
+					<%= f.label :po4_p, t('operation.po4_p') %>
 					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_n %>
+					<%= f.label :org_n, t('operation.org_n') %>
 					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_p %>
+					<%= f.label :org_p, t('operation.org_p') %>
 					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
@@ -219,14 +219,14 @@
 			</div>
 			<div id="div_fertilizer" style="display:none">
 				<%= f.label :type_id, t('operation.fertilizer') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
+				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount">
-			  <%= f.label :animals %>
+			  <%= f.label :animals, t('operation.animals') %>
 			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
-			  <%= f.label :hours_in_field %>
+			  <%= f.label :hours_in_field, t('operation.hours') %>
 			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 		    </div>
 			<div class="field" id="div_moisture" style="display:none">
@@ -235,19 +235,19 @@
 			</div>
 			<div class="field" id="div_nutrients" >
 			  <div class="field" >
-					<%= f.label :no3_n %>
+					<%= f.label :no3_n, t('operation.no3_n') %>
 					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :po4_p %>
+					<%= f.label :po4_p, t('operation.po4_p') %>
 					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_n %>
+					<%= f.label :org_n, t('operation.org_n') %>
 					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_p %>
+					<%= f.label :org_p, t('operation.org_p') %>
 					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
@@ -258,14 +258,14 @@
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
+				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount" >
-			  <%= f.label :amount %>
+			  <%= f.label :amount, t('operation.amount') %>
 			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
-			  <%= f.label :depth, t('soil.depth') %>
+			  <%= f.label :depth, t('operation.depth') %>
 			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
@@ -274,19 +274,19 @@
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
-					<%= f.label :no3_n %>
+					<%= f.label :no3_n, t('operation.no3_n') %>
 					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :po4_p %>
+					<%= f.label :po4_p, t('operation.po4_p') %>
 					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_n %>
+					<%= f.label :org_n, t('operation.org_n') %>
 					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_p %>
+					<%= f.label :org_p, t('operation.org_p') %>
 					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
@@ -297,14 +297,14 @@
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer'} %>
+				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount" style="display:none">
-			  <%= f.label :amount %>
+			  <%= f.label :amount, t('operation.amount') %>
 			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
-			  <%= f.label :depth, t('soil.depth') %>
+			  <%= f.label :depth, t('operation.depth') %>
 			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
@@ -313,19 +313,19 @@
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
-					<%= f.label :no3_n %>
+					<%= f.label :no3_n, t('operation.no3_n') %>
 					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :po4_p %>
+					<%= f.label :po4_p, t('operation.po4_p') %>
 					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_n %>
+					<%= f.label :org_n, t('operation.org_n') %>
 					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
-					<%= f.label :org_p %>
+					<%= f.label :org_p, t('operation.org_p') %>
 					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>

@@ -525,18 +525,27 @@ en:
     crop: Crop
     schedule: "Schedule"
     moisture: Moisture
-    nutrients: Nutrients
+    nutrients: 'Nutrients (0-1)'
     distribution: Distribution
     fertilizer: Fertilizer
-    amount: Amount
+    amount: 'Amount (lbs/ac)'
     bmp: BMP
     irrigation: Irrigation
-    plant_population: Plant Population
+    plant_population: 'Plant Population (seeds/ac)'
     load_operation: Load Operation
     sum: 'total nutrients should be less or equal to 1'
     save: Save
     open: 'Open Saved Cropping System'
     saved: 'saved Cropping System'
+    volume: 'Volume (in)'
+    efficiency: 'Efficiency (0-1)'
+    animals: 'Number of animals'
+    hours: 'Hours in field (0-24)'
+    depth: 'Depth (in)'
+    no3_n: 'No3 n (0-1)'
+    po4_p: 'Po4 p (0-1)'
+    org_n: 'Org n (0-1)'
+    org_p: 'Org p (0-1)'
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
