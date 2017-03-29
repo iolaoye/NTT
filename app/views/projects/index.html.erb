@@ -15,50 +15,47 @@
     <div class="row">
       <div class="col-sm-10 col-md-10 main">
         <% if ENV["APP_VERSION"] == "modified" %>
-      <div class="page-header"><h1><small><%= current_user.name %></small><br>My Projects</h1>
-          
-    </div>
-    <%= button_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %><br><br>
-
-<% else %>
-
-  <div class="page-header"><h1><%=t('menu.projects')%></h1></div>
-  <%= link_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
-  <%= link_to t('project.upload_project'), upload_project_path(0), :method => "get", :class => "btn btn-primary" %>
-  <%= link_to t('project.upload_example'), upload_project_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
-
-<% end %>
-  <%= t('instructions.projects') %>.<br><br>
+			<div class="page-header"><h1><small><%= current_user.name %></small><br>My Projects</h1></div>
+			<%= button_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %><br><br>
+		<% else %>
+			<div class="page-header"><h1><%=t('menu.projects')%></h1></div>
+			<%= link_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
+			<%= link_to t('project.upload_project'), projects_upload_path(0), :method => "get", :class => "btn btn-primary" %>
+			<%= link_to t('project.upload_example'), projects_upload_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
+		<% end %>
+		<%= t('instructions.projects') %>.<br><br>
   
-  <div class="panel panel-default">
-        <div class="table-responsive">
-       <table class="table table-striped">
-        <thead>
-          <tr>
-            <th><%= sort_link t('general.name') %></th>
-            <th><%= t('general.description') %></th>
-            <th><%= sort_link t('general.last_modified') %></th>
-            <th><%= t('general.actions') %></th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @projects.each do |project| %>
-          <tr>
-            <td><%= link_to project.name, project_fields_path(project) %></td>
-            <td><%= project.description %></td>
-            <td><%= project.updated_at.to_date %></td>
-            <td><%= link_to image_tag("download.gif"), download_project_path(project) %>
-          <%= link_to image_tag("edit.png"), edit_user_project_path(@user, project) %>
-          <%= link_to image_tag("copy.jpg"), copy_project_project_path(project.id) %>
-          <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-        </div>
-      </div>
-    </div>
+		<div class="panel panel-default">
+			<div class="table-responsive">
+			   <table class="table table-striped">
+				<thead>
+				  <tr>
+					<th><%= sort_link t('general.name') %></th>
+					<th><%= t('general.description') %></th>
+					<th><%= sort_link t('general.last_modified') %></th>
+					<th><%= t('general.actions') %></th>
+				  </tr>
+				</thead>
+				<tbody>
+				<% @projects.each do |project| %>
+				  <tr>
+					  <td><%= link_to project.name, project_fields_path(project) %></td>
+					  <td><%= project.description %></td>
+					  <td><%= project.updated_at.to_date %></td>
+					  <td>
+						  <%= link_to image_tag("download.gif"), download_project_path(project) %>
+						  <%= link_to image_tag("edit.png"), edit_user_project_path(@user, project) %>
+						  <%= link_to image_tag("copy.jpg"), copy_project_project_path(project) %>
+						  <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
+					  </td>
+				  </tr>
+				  <% end %>
+				</tbody>
+			  </table>
+			</div>
+		</div>
+	  </div>
+	</div>
 </div>
 
 

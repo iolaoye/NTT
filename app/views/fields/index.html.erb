@@ -22,16 +22,6 @@
   <% @fields.each do |field| %>
     <% if (i % 2  == 0) %>
       <tr class="gvRowStyleEven">
-        <td class="gvCellStyleText"><%= link_to field.field_name, project_field_path(@project.id, field) %></td>
-        <td class="gvCellStyleNumber", class="numbers"><%= field.field_area %></td>
-        <td class="gvCellStyleNumber"><%= field.field_average_slope %></td>
-        <td class="gvCellStyleCheckbox"><%= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
-        <td class="gvCellStyleCheckbox">
-          <%#= link_to image_tag("view.png"), field %>
-          <%= link_to image_tag("edit.png"), edit_project_field_path(@project, field), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), project_field_path(@project, field), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
-        </td>
-      </tr>
     <% else %>
       <tr class="gvRowStyleOdd">
         <td class="gvCellStyleText"><%= link_to field.field_name, project_field_path(@project.id, field) %></td>
