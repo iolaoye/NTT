@@ -28,7 +28,7 @@
 	<div class="page-header"><h1><%= t('menu.scenarios') %></h1></div>
 	<%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_project_field_scenario_path(@project, @field), :class => 'btn btn-primary' %>
 	<% if @scenarios.count > 0 %>
-		<%= submit_tag t('scenario.simulate') + ' ' + 'Scenario', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
+		<%= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
 		<% unless ENV["APP_VERSION"] == "modified" %><%= submit_tag t('scenario.simulate') + ' ' + 'Aplcat', data: {disable_with: 'Please wait. Aplcat simulation in progress . . .'}, :class => 'btn btn-primary' %><% end %>
 	<% end %>
 	<% if @field.results.count > 0 %>
