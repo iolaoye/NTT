@@ -22,7 +22,7 @@
 	<div class="field">
 		<%= label :activity_id, t('scenario.operation') %>
 		<% if I18n.locale.eql?(:en) %>
-			<%= collection_select :operation, :activity_id, Activity.all, :id, :name, {:prompt => 'Select Operation', :selected => @operation.activity_id}, {:required => true} %>
+			<%= collection_select :operation, :activity_id, Activity.all, :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
 		<% else %>
 			<%= collection_select :operation, :activity_id, Activity.all, :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => @operation.activity_id}, {:required => true} %>
 		<% end %>
