@@ -1,4 +1,4 @@
-<%= form_for(@site) do |f| %>
+<%= form_for([@project, @field, @site]) do |f| %>
   <% if @site.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @site.errors.count, :model => t('models.site').downcase) %></h2>
@@ -54,7 +54,7 @@
   <br>
   <div class="actions">
     <%= f.submit t("submit.update") + " " + t("menu.site"), :class => "btn btn-primary" %>
-    <%= link_to t('general.back'), site_path, :class => "btn btn-primary" %>
+    <%= link_to t('general.back'), project_field_sites_path, :class => "btn btn-primary" %>
   </div>
 <% end %>
 

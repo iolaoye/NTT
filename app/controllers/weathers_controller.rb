@@ -1,9 +1,42 @@
 class WeathersController < ApplicationController
+include SimulationsHelper
+include ScenariosHelper
 ################################  Save_coordinates   #################################
 # GET /weathers/1
 # GET /weathers/1.json
-  def Save_coordinates
+  def save_coordinates
+    @weather.latitude = params[:weather][:latitude]
+    @weather.longitude = params[:weather][:longitude]
+	weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+	data = weather_data.split(",")
+	@weather.weather_file = data[0]
+	data[2].slice! "\r\n"
+	@weather.simulation_final_year = data[2]
+	@weather.weather_final_year = @weather.simulation_final_year
+    @weather.weather_initial_year = data[1]
+    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+    @weather.way_id = 3
+	@weather.save
+  end
 
+################################  Save Prism data #################################
+# GET /weathers/1
+# GET /weathers/1.json
+  def save_prism
+    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
+    centroid = calculate_centroid()
+    @weather.latitude = centroid.cy
+    @weather.longitude = centroid.cx
+	weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+	data = weather_data.split(",")
+	@weather.weather_file = data[0]
+	data[2].slice! "\r\n"
+	@weather.simulation_final_year = data[2]
+	@weather.weather_final_year = @weather.simulation_final_year
+    @weather.weather_initial_year = data[1]
+    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+    @weather.way_id = 1
+	@weather.save
   end
 
 ################################  INDEX   #################################
@@ -101,34 +134,42 @@ class WeathersController < ApplicationController
     @weather = Weather.find(params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-	debugger
     if (params[:weather][:way_id] == "2")
       if params[:weather][:weather_file] == nil
-		if @weather.weather_file == nil || @weather.weather_file == ""
-			redirect_to edit_project_field_weather_path(@project, @field)
-			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
-		end
+		      if @weather.weather_file == nil || @weather.weather_file == ""
+			        redirect_to edit_project_field_weather_path(@project, @field)
+			        flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
+		      end
       else
-        msg = upload_weather
+        @weather.way_id = 2
         #redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
       end
     end
-      respond_to do |format|
-        if @weather.save
-          format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @weather.errors, status: :unprocessable_entity }
-        end
+
+    if (params[:weather][:way_id] == "3")
+      save_coordinates
+    end
+
+    if (params[:weather][:way_id] == "1")
+      save_prism
+    end
+
+    respond_to do |format|
+      if @weather.save
+        format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @weather.errors, status: :unprocessable_entity }
       end
-    #end
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
-	apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
-	apex_control.save
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 2)
-	apex_control.value = @weather.simulation_initial_year - 5
-	apex_control.save
+    end
+
+	  apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
+    apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
+	  apex_control.save
+    apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 2)
+    apex_control.value = @weather.simulation_initial_year - 5
+    apex_control.save
   end
 
 # DELETE /weathers/1

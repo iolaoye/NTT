@@ -456,7 +456,6 @@ class OperationsController < ApplicationController
 
   ########################################### UPLOAD CROPPING SYSTEM FILE IN XML FORMAT ##################
   def upload_system
-  uuu
     saved = false
     msg = ""
     ActiveRecord::Base.transaction do
@@ -475,7 +474,7 @@ class OperationsController < ApplicationController
 			end
 		end    
     end
-	redirect_to list_operation_path(params[:scenario_id])
+	redirect_to list_project_field_scenario_operations_path(params[:project_id], params[:field_id], params[:scenario_id])
   end
 
   def open

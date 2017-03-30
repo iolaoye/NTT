@@ -47,16 +47,17 @@ class SoilOperationsController < ApplicationController
   def edit
     @soil_operation = SoilOperation.find(params[:id])
     @field = Field.find(session[:field_id])
+    @project = Project.find(params[:project_id])
   end
 
   # POST /soil_operations
   # POST /soil_operations.json
   def create
   	@soil = params[:soil_operation][:soil_id]
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
   	@scenario = params[:soil_operation][:scenario_id]
     @soil_operations = SoilOperation.where(:soil_id => @soil, :scenario_id => @scenario)
-
+	@project = Project.find(params[:project_id])
     render "index"
   end
 
@@ -67,7 +68,7 @@ class SoilOperationsController < ApplicationController
 
     respond_to do |format|
       if @soil_operation.update_attributes(soil_operation_params)
-        format.html { redirect_to soil_operations_path, notice: t('models.soil_operation') + " " + t('notices.updated') }
+        format.html { redirect_to project_field_soil_operations_path, notice: t('models.soil_operation') + " " + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

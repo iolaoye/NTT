@@ -4,7 +4,7 @@ class SubareasController < ApplicationController
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-	@soils = Soil.where(:field_id => @field.id, :selected => true)
+	  @soils = Soil.where(:field_id => @field.id, :selected => true)
 	  if @soils != nil then
 		  subarea = Subarea.where(:soil_id => @soils[0].id).first
 		  if subarea != nil then
@@ -16,7 +16,7 @@ class SubareasController < ApplicationController
 		  session[:scenario_id] = 0
 	end
 	get_subareas()
-    
+
 	respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @subareas }
@@ -28,6 +28,8 @@ class SubareasController < ApplicationController
   def show
     @subarea = Subarea.find(params[:id])
     @field = Field.find(session[:field_id])
+    @project = Project.find(params[:project_id])
+    @location = Location.where(:project_id => params[:project_id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -50,6 +52,7 @@ class SubareasController < ApplicationController
   def edit
     @subarea = Subarea.find(params[:id])
     @field = Field.find(session[:field_id])
+    @project = Project.find(params[:project_id])
   end
 
   # POST /subareas
@@ -58,8 +61,9 @@ class SubareasController < ApplicationController
     @soils = Soil.where(:field_id => session[:field_id], :selected => true)
     session[:scenario_id] = params[:subarea][:scenario_id]
 	get_subareas()
-    @field = Field.find(session[:field_id])
-	  render "index"
+    @field = Field.find(params[:field_id])
+	@project = Project.find(params[:project_id])
+	render "index"
   end
 
   # PATCH/PUT /subareas/1
@@ -69,7 +73,7 @@ class SubareasController < ApplicationController
 
     respond_to do |format|
       if @subarea.update_attributes(subarea_params)
-        format.html { redirect_to subareas_path, notice: t('models.subarea') + " " + t('notices.updated')  }
+        format.html { redirect_to project_field_subareas_path, notice: t('models.subarea') + " " + t('notices.updated')  }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

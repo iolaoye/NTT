@@ -17,6 +17,7 @@ class SitesController < ApplicationController
   def show
     @site = Site.find_by_field_id(params[:id])
     @field = Field.find(session[:field_id])
+    @project = Project.find(params[:project_id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -39,6 +40,7 @@ class SitesController < ApplicationController
   def edit
     @site = Site.find(params[:id])
     @field = Field.find(session[:field_id])
+    @project = Project.find(params[:project_id])
   end
 
   # POST /sites
@@ -64,7 +66,7 @@ class SitesController < ApplicationController
 
     respond_to do |format|
       if @site.update_attributes(site_params)
-        format.html { redirect_to sites_url, notice: t('models.site') + "" + t('notices.updated') }
+        format.html { redirect_to project_field_sites_url, notice: t('models.site') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

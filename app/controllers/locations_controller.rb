@@ -156,7 +156,6 @@ class LocationsController < ApplicationController
 			@location.state_id = state.id
 		  end
 		  county_name = params[:county]
-		  session[:depth] = county_name
           if county_name == nil then
 			  @location.county_id = 0
 		  else
@@ -346,23 +345,6 @@ class LocationsController < ApplicationController
       else
       end
     end #end for create_layers
-  end
-
-  def calculate_centroid()
-    #https://en.wikipedia.org/wiki/Centroid.
-    centroid_structure = Struct.new(:cy, :cx)
-    centroid = centroid_structure.new(0.0, 0.0)
-    points = @field.coordinates.split(" ")
-    i=0
-
-    points.each do |point|
-      i+=1
-      centroid.cx += point.split(",")[0].to_f
-      centroid.cy += point.split(",")[1].to_f
-    end
-    centroid.cx = centroid.cx / (i)
-    centroid.cy = centroid.cy / (i)
-    return centroid
   end
 
   #todo Update years of simulation + initialyear in weather.
