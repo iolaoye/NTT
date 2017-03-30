@@ -119,12 +119,12 @@ module SimulationsHelper
     #site_file = Array.new
     apex_string = ""
     apex_string +=
-        apex_string += " .sit file Subbasin:1  Date: " + @dtNow1 + "\n"
+    apex_string += " .sit file Subbasin:1  Date: " + @dtNow1 + "\n"
     apex_string += "" + "\n"
     apex_string += "" + "\n"
     apex_string += sprintf("%8.2f", site.ylat) + sprintf("%8.2f", site.xlog) + sprintf("%8.2f", site.elev) +
-        sprintf("%8.2f", site.apm) + sprintf("%8.2f", site.co2x) + sprintf("%8.2f", site.cqnx) + sprintf("%8.2f", site.rfnx) +
-        sprintf("%8.2f", site.upr) + sprintf("%8.2f", site.unr) + sprintf("%8.2f", site.fir0)
+    sprintf("%8.2f", site.apm) + sprintf("%8.2f", site.co2x) + sprintf("%8.2f", site.cqnx) + sprintf("%8.2f", site.rfnx) +
+    sprintf("%8.2f", site.upr) + sprintf("%8.2f", site.unr) + sprintf("%8.2f", site.fir0)
     for i in 5..25 #print 21 additonal lines in the site file, which do not need any information at this time.
       apex_string += "" + "\n"
     end # end for
