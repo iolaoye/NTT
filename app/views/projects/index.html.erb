@@ -30,10 +30,10 @@
 			   <table class="table table-striped">
 				<thead>
 				  <tr>
-					<th><%= sort_link t('general.name') %></th>
-					<th><%= t('general.description') %></th>
-					<th><%= sort_link t('general.last_modified') %></th>
-					<th><%= t('general.actions') %></th>
+					<th class="project_column"><%= sort_link 'Project Name' %></th>
+					<th class="project_column"><%= t('general.description') %></th>
+					<th class="project_column"><%= sort_link t('general.last_modified') %></th>
+					<th class="project_column"><%= t('general.actions') %></th>
 				  </tr>
 				</thead>
 				<tbody>
@@ -43,7 +43,7 @@
 					  <td><%= project.description %></td>
 					  <td><%= project.updated_at.to_date %></td>
 					  <td>
-						  <%= link_to image_tag("download.gif"), download_project_path(project) %>
+						  <% unless ENV["APP_VERSION"] == "modified" %><%= link_to image_tag("download.gif"), download_project_path(project) %><% end %>
 						  <%= link_to image_tag("edit.png"), edit_user_project_path(@user, project) %>
 						  <%= link_to image_tag("copy.jpg"), copy_project_project_path(project) %>
 						  <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>

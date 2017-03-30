@@ -61,7 +61,7 @@
             <div class="nav navbar-nav navbar-right">
                 <ul class="footerright">
                   <%if request.url.include?(url_for=("/projects?")) %>
-                    <li><%= image_tag('download.gif') %> <%= t('general.download') %></li>
+                    <% unless ENV["APP_VERSION"] == "modified" %><li><%= image_tag('download.gif') %> <%= t('general.download') %></li><% end %>
                     <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                     <li><%= image_tag('copy.jpg') %> <%= t('general.copy') %></li>
                     <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
