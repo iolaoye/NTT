@@ -15,38 +15,38 @@
     </div>
   <% end %>
 
-    <div class="field">
+  <div class="field">
     <%= label :crop_id, t('operation.crop') %>
 		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => 'Select crop', :selected => params[:crop]}, {:required => true} %>
-	</div>
-	<div class="field">
+  </div>
+  <div class="field">
 		<%= label :activity_id, t('scenario.operation') %>
 		<% if I18n.locale.eql?(:en) %>
 			<%= collection_select :operation, :activity_id, Activity.all, :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
 		<% else %>
 			<%= collection_select :operation, :activity_id, Activity.all, :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => @operation.activity_id}, {:required => true} %>
 		<% end %>
-	</div>
-	<div class="field">
+  </div>
+  <div class="field">
     <li>
 			<%= f.label :date, t('general.date'), :class => 'field' %>
 			<%= f.select :year, options_for_select(listYears, :selected => @operation.year), {:prompt => t('datetime.prompts.year')}, {:required => true, :style => 'width:70px'} %>
 			<%= f.select :month_id, options_for_select(listMonths, :selected => @operation.month_id), {:prompt => t('datetime.prompts.month')}, {:required => true, :style => 'width:100px'} %>
 			<%= f.select :day, options_for_select(listDays, :selected => @operation.day), {:prompt => t('datetime.prompts.day')}, {:required => true, :style => 'width:50px'} %>
     </li>
-    </div>
-	<% case @operation.activity_id %>
+  </div>
+  <% case @operation.activity_id %>
 		<% when 1  # planting %>
 			<div id="div_type" class="field spacer_bottom" >
 				<%= label :type_id, t('general.select') + " " + t('general.one') %>
 				<% if I18n.locale.eql?(:en) %>
-					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one')}, {:required => true} %>
+					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one'), :selected => @operation.type_id}, {:required => true} %>
 				<% else %>
-					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :spanish_name, {:prompt => 'Seleccione Unoa'}, {:required => true} %>
+					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :spanish_name, {:prompt => 'Seleccione Unoa', :selected => @operation.type_id}, {:required => true} %>
 				<% end %>
 			</div>
 			<div id="div_fertilizer" class="field" style="display:none" >
-				<%= f.label :type_id, t('general.type') %>
+				<%= f.label t('general.type') %>
 				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id}, {:required => true} %>
 			</div>
 			<div class="field" id="div_amount">
@@ -83,9 +83,9 @@
 			<div class="field" id="div_type"  >
 				<%= label :type_id, t('general.type') %>
 				<% if I18n.locale.eql?(:en) %>
-				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => 'Select Fertilizer Type', :selected => @operation.subtype_id}, {:required => true} %>
+				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => 'Select Fertilizer Type', :selected => @operation.type_id}, {:required => true} %>
 				<% else %>
-				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :spanish_name, {:prompt => 'Seleccione Tipo de Fertilizante', :selected => @operation.subtype_id}, {:required => true} %>
+				 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :spanish_name, {:prompt => 'Seleccione Tipo de Fertilizante', :selected => @operation.type_id}, {:required => true} %>
 				<% end %>
 			</div>
 			<div class="field" id="div_fertilizer" >
@@ -97,7 +97,7 @@
 				<% end %>
 			</div>
 			<div class="field" id="div_amount">
-				<%= f.label :amount, t('operation.amount'), t('operation.amount') %>
+				<%= f.label :amount, t('operation.amount') %>
 				<%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
@@ -329,7 +329,7 @@
 					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
-	<% end %>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "Add more", :name => "add_more", :class => "btn btn-primary" %>
