@@ -150,7 +150,7 @@ table {
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
-  text-align: right;
+  text-align: left;
 }
 
 .gvCellStyleCheckbox {
@@ -175,13 +175,13 @@ table {
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
-  text-align: center;
+  text-align: left;
 }
 
 .gvCellStyleImage {
   height: 14px;
   padding: 8px;
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
 }
 
@@ -215,7 +215,7 @@ table {
   vertical-align: middle;
   font-weight: 100;
   font-size: 16px;
-  text-align: center;
+  text-align: left;
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
@@ -690,4 +690,8 @@ iframe {
     }
 
   }
+}
+
+.project_column > a {
+  color: #ffffff;
 }

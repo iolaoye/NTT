@@ -28,8 +28,8 @@
 	<div class="page-header"><h1><%= t('menu.scenarios') %></h1></div>
 	<%= link_to t('general.new') + ' ' + t('scenario.scenario'), new_project_field_scenario_path(@project, @field), :class => 'btn btn-primary' %>
 	<% if @scenarios.count > 0 %>
-		<%= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
-		<%= submit_tag t('scenario.simulate') + ' ' + 'Aplcat', data: {disable_with: 'Please wait. Aplcat simulation in progress . . .'}, :class => 'btn btn-primary' %>
+		<%= submit_tag t('scenario.simulate') + ' ' + 'Scenario', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
+		<% unless ENV["APP_VERSION"] == "modified" %><%= submit_tag t('scenario.simulate') + ' ' + 'Aplcat', data: {disable_with: 'Please wait. Aplcat simulation in progress . . .'}, :class => 'btn btn-primary' %><% end %>
 	<% end %>
 	<% if @field.results.count > 0 %>
 		<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
@@ -60,8 +60,8 @@
 				  <% else %>
 					  <tr class="gvRowStyleOdd">
 				  <% end %>
-						<td><%= check_box_tag "select_scenario[]", scenario.id %></td>
-						<td class="btn btn-link"><%= link_to scenario.name, list_project_field_scenario_operations_path(@project, @field, scenario) %></td>
+						<td class="gvCellStyleText"><%= check_box_tag "select_scenario[]", scenario.id %></td>
+						<td class="gvCellStyleText"><%= link_to scenario.name, list_project_field_scenario_operations_path(@project, @field, scenario) %></td>
 						<td class="gvCellStyleImage">
 						  <% if Weather.find_by_field_id(scenario.field_id) == nil %>
 							  <%= "bad" %>
@@ -106,7 +106,7 @@
 							  <%= image_tag("go_icon.png", size: "13x13", :title => t('menu.operation_file') + " OK") %>
 						  <% end %>
 						</td>
-						<td calss="gvCellStyleText"><%= scenario.last_simulation %></td>
+						<td class="gvCellStyleText"><%= scenario.last_simulation %></td>
 						<td class="gvCellStyleActions">
 						  <% if warning == false %>
 							  <%#= link_to image_tag("aplcat_simulation.png"), aplcat_scenario_path(scenario.id), title: t('scenario.simulate') + " APLCAT", data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'} %>

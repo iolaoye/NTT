@@ -124,8 +124,8 @@ updateTitles = ->
   $("#typeTitle").text(title)
 	
 $(document).ready ->
-    updateTypes()
-    updateFerts()
+    #updateTypes()
+    #updateFerts()
 
     $("#operation_activity_id").change ->
       updateTypes()

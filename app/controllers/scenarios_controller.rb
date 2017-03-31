@@ -47,7 +47,7 @@ class ScenariosController < ApplicationController
 
   def simulate
 	case params[:commit]
-		when "Simulate NTT", "Simular NTT"
+		when "Simulate NTT", "Simular NTT", "Simulate Scenario", "Simulate Scenarios"
 			msg = simulate_ntt
 		when "Simulate Aplcat", "Simular Aplcat"
 			msg = simulate_aplcat

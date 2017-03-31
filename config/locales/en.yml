@@ -376,7 +376,7 @@ en:
     delete_all: Delete All
     back: Back
     actions: Actions
-    new: New
+    new: Add New
     all: All
     listing: Listing
     editing: Editing
@@ -439,7 +439,7 @@ en:
     state: States
   project:
     project: Project
-    new_project: 'New Project'
+    new_project: 'Create New Project'
     upload_project: 'Upload Project'
     upload_example: Upload Example
     upload_button_desc: 'Project to Upload:'
