@@ -1,3 +1,4 @@
+<% if !(@project == nil) %>
 <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
 <%#= controller_name %>
 <%#= scenario_submenu %>
@@ -228,4 +229,5 @@
 			</li>
 		</ul>
 	<% end %>
+<% end %>
 <% end %>
