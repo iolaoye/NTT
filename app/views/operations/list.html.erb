@@ -11,7 +11,7 @@
 <%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
 <% if ENV["APP_VERSION"] == "modified" %>
 <%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
-<%# link_to t('general.continue'), scenario_bmps_scenario_path(session[:scenario_id]), :class => 'btn btn-success' %><br><br>
+<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 
 <% @crops.each do |crop| %>
 <div class="panel panel-success">
