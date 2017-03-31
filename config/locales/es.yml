@@ -527,18 +527,27 @@ es:
     crop: Cultivo
     schedule: "Calendario"
     moisture: Humedad
-    nutrients: Nutrientes
+    nutrients: 'Nutrientes (0-1)'
     distribution: Distribución
     fertilizer: Fertilizante
     amount: Cantidad
     bmp: BPG
     irrigation: Irrigación
-    plant_population: Población de Planta
+    plant_population: 'Población de Planta (seeds/ac)'
     load_operation: Cargar Operación
     sum: 'El total de los nutrientes deben ser menor o igual a 1'
     save: Guardar
     open: 'Abrir Sistema de Cultivo guardado'
     saved: 'Sistema de Cultivo guardado'
+    volume: 'Volumen (pulg.)'
+    efficiency: 'Eficiencia (0-1)'
+    animals: 'Número de animales'
+    hours: 'Horas en parcela (0-24)'
+    depth: 'Profundidad (pulg.)'
+    no3_n: 'No3 n (0-1)'
+    po4_p: 'Po4 p (0-1)'
+    org_n: 'Org n (0-1)'
+    org_p: 'Org p (0-1)'
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
