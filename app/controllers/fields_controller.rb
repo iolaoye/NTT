@@ -193,7 +193,7 @@ class FieldsController < ApplicationController
         session[:field_id] = @field.id
         #format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Field was successfully updated.' }
 		    get_field_list(@field.location_id)
-		    format.html { redirect_to project_fields_path(@project), notice: 'Field was successfully updated.' }
+		    format.html { redirect_to project_field_scenarios_path(@project, @field), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit", notice: msg }
