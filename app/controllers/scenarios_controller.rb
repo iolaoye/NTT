@@ -56,8 +56,9 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
 
     @scenarios = Scenario.where(:field_id => params[:field_id])
+	@scenario = Scenario.find(params[:select_scenario])
     if msg.eql?("OK") then
-      flash[:notice] = @scenarios.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
+      flash[:notice] = @scenario.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
       render "list", notice: "Simulation process end succesfully"
     else
       render "list", error: msg
