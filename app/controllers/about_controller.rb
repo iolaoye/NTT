@@ -1,6 +1,6 @@
 class AboutController < ApplicationController
 	def index
-		@project = Project.find(params[:project_id])
+		@user = User.find(session[:user_id])
 	end
 	
 	def show
