@@ -49,7 +49,7 @@
 				<%= f.label t('general.type') %>
 				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id}, {:required => true} %>
 			</div>
-			<div class="field" id="div_amount">
+			<div class="field" id="div_amount_plant_population">
 			  <%= f.label t('operation.plant_population') %>
 			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
 			</div>

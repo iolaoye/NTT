@@ -55,4 +55,5 @@ gem 'wkhtmltopdf-binary'
 
 gem 'breadcrumbs_on_rails'
 
-gem "cancan"
+gem 'cancan'
+gem 'breadcrumbs_on_rails'

@@ -2,6 +2,9 @@ class FieldsController < ApplicationController
   load_and_authorize_resource :project
   load_and_authorize_resource :field, :through => :project
 
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
+
 
 ################################  scenarios list   #################################
 # GET /locations
@@ -61,9 +64,13 @@ class FieldsController < ApplicationController
 # GET /1/fields.json
   def index
     @project = Project.find(params[:project_id])
+
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb 'Fields'
+
     @location = @project.location
-	session[:location_id] = @location.id
-	get_field_list(@location.id)
+	  session[:location_id] = @location.id
+	  get_field_list(@location.id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @fields }

@@ -1,6 +1,9 @@
 class ScenariosController < ApplicationController
   load_and_authorize_resource :field
   load_and_authorize_resource :scenario, :through => :field
+
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
 	
   include ScenariosHelper
   include SimulationsHelper
@@ -39,6 +42,11 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => @field.id)
+
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name
+    add_breadcrumb 'Scenarios'
+
     respond_to do |format|
       format.html { render action: "list" }
       format.json { render json: @scenarios }
