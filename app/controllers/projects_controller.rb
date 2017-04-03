@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
 
   ################  copy the selected project  ###################
   def copy_project
-	  download_project(params[:id], "copy")
+    download_project(params[:id], "copy")
   end
 
   ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
@@ -220,9 +220,9 @@ class ProjectsController < ApplicationController
             flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
           when "1" # Load OH two fields
             @data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
-		  when "2"  # load just the saved project to be copied
-		    @data = Nokogiri::XML(File.open(@path))
-			@upload_id = 2
+		      when "2"  # load just the saved project to be copied
+		        @data = Nokogiri::XML(File.open(@path))
+			      @upload_id = 2
         end # end case examples
       end
       @data.root.elements.each do |node|
@@ -237,7 +237,7 @@ class ProjectsController < ApplicationController
             msg = upload_location_info1(node)
           when "FieldInfo"
             msg = upload_field_info(node)
-			msg = renumber_subareas()
+			      msg = renumber_subareas()
           when "SiteInfo"
             msg = upload_site_info(node)
           when "controls"
@@ -280,25 +280,25 @@ class ProjectsController < ApplicationController
     msg = "OK"
     @iops1 = 1
   	#renumber the subarea inps, iops, iown
-	@project.location.fields.each do |field|
-		field.soils.each do |soil|
-			if soil.selected && !soil.subarea.blank?
-				soil.subarea.iops = @iops1
-				soil.subarea.inps = @iops1
-				soil.subarea.iow = @iops1
-				@iops1 +=1
-				if !soil.subarea.save
-					msg = "Error renumber subareas"
-				end
-			end   # end if soil selected
-		end   # end soils.each
-	end  # end field.each
-	return msg
+  	@project.location.fields.each do |field|
+  		field.soils.each do |soil|
+  			if soil.selected && !soil.subarea.blank?
+  				soil.subarea.iops = @iops1
+  				soil.subarea.inps = @iops1
+  				soil.subarea.iow = @iops1
+  				@iops1 +=1
+  				if !soil.subarea.save
+  					msg = "Error renumber subareas"
+  				end
+  			end   # end if soil selected
+  		end   # end soils.each
+  	end  # end field.each
+  	return msg
   end  # end method
 
   ########################################### DOWNLOAD PROJECT FILE IN XML FORMAT ##################
   def download()
-	download_project(params[:id], "download")
+	  download_project(params[:id], "download")
   end
 
   def download_project(project_id, type)
