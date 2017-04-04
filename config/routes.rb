@@ -68,7 +68,7 @@ NTTG3::Application.routes.draw do
       get :send_to_mapping_site, on: :member
       post :receive_from_mapping_site, on: :member
       get :location_fields, on: :member
-    end 
+    end
     get 'download', on: :member
     get :group, on: :member
     resources :fields do
@@ -95,6 +95,7 @@ NTTG3::Application.routes.draw do
       end
       resources :weathers do
         member do
+          post 'save_simulation'
           post 'save_coordinates'
         end
       end
@@ -116,7 +117,7 @@ NTTG3::Application.routes.draw do
         get :monthly_charts, on: :member
         get :download_apex_files, on: :member
       end
-      resources :apex_parameters do 
+      resources :apex_parameters do
 		post 'reset', on: :member
 	  end
       resources :apex_controls do

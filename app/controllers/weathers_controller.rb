@@ -7,16 +7,16 @@ include ScenariosHelper
   def save_coordinates
     @weather.latitude = params[:weather][:latitude]
     @weather.longitude = params[:weather][:longitude]
-	weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
-	data = weather_data.split(",")
-	@weather.weather_file = data[0]
-	data[2].slice! "\r\n"
-	@weather.simulation_final_year = data[2]
-	@weather.weather_final_year = @weather.simulation_final_year
+    weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+    data = weather_data.split(",")
+    @weather.weather_file = data[0]
+    data[2].slice! "\r\n"
+    @weather.simulation_final_year = data[2]
+    @weather.weather_final_year = @weather.simulation_final_year
     @weather.weather_initial_year = data[1]
     @weather.simulation_initial_year = @weather.weather_initial_year + 5
     @weather.way_id = 3
-	@weather.save
+    @weather.save
   end
 
 ################################  Save Prism data #################################
@@ -27,16 +27,37 @@ include ScenariosHelper
     centroid = calculate_centroid()
     @weather.latitude = centroid.cy
     @weather.longitude = centroid.cx
-	weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
-	data = weather_data.split(",")
-	@weather.weather_file = data[0]
-	data[2].slice! "\r\n"
-	@weather.simulation_final_year = data[2]
-	@weather.weather_final_year = @weather.simulation_final_year
+    weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+    data = weather_data.split(",")
+    @weather.weather_file = data[0]
+    data[2].slice! "\r\n"
+    @weather.simulation_final_year = data[2]
+    @weather.weather_final_year = @weather.simulation_final_year
     @weather.weather_initial_year = data[1]
     @weather.simulation_initial_year = @weather.weather_initial_year + 5
     @weather.way_id = 1
-	@weather.save
+    @weather.save
+  end
+
+################################  Save Simulation   #################################
+# GET /weathers/1
+# GET /weathers/1.json
+  def save_simulation
+    @weather = Weather.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @weather.simulation_initial_year = params[:weather][:simulation_initial_year]
+    @weather.simulation_final_year = params[:weather][:simulation_final_year]
+
+    respond_to do |format|
+      if @weather.save
+        format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @weather.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 ################################  INDEX   #################################
@@ -134,6 +155,7 @@ include ScenariosHelper
     @weather = Weather.find(params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
+    debugger
     if (params[:weather][:way_id] == "2")
       if params[:weather][:weather_file] == nil
 		      if @weather.weather_file == nil || @weather.weather_file == ""
@@ -156,7 +178,7 @@ include ScenariosHelper
 
     respond_to do |format|
       if @weather.save
-        format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
+        format.html { redirect_to edit_project_field_weather_path(@project, @field, @weather), notice: t('models.weather') + " " + t('general.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
