@@ -3,6 +3,9 @@ include ScenariosHelper
 class OperationsController < ApplicationController
   include ScenariosHelper
   require "open-uri"
+
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
 ################################  operations list   #################################
 # GET /operations/1
 # GET /1/operations.json
@@ -11,6 +14,11 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
+
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name
+    add_breadcrumb @scenario.name
+    add_breadcrumb 'Operations'
 
     array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
@@ -56,6 +64,12 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
+
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name
+    add_breadcrumb @scenario.name
+    add_breadcrumb 'New Operation'
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @operation }
@@ -301,6 +315,12 @@ class OperationsController < ApplicationController
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     @operations = Operation.where(:scenario_id => params[:scenario_id])
+
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name
+    add_breadcrumb @scenario.name
+    add_breadcrumb 'Add Crop Schedule'
+
     @count = @operations.count
     @highest_year = 0
     @operations.each do |operation|
