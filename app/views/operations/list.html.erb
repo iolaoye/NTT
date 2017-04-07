@@ -14,9 +14,8 @@
 <%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 
 <% @crops.each do |crop| %>
-<div class="panel panel-success">
-  <!-- Default panel contents -->
-  <div class="panel-heading"><%= crop.name %></div>
+<div class="panel panel-primary">
+  <div class="panel-heading"><h3><%= crop.name %></h3></div>
 
   <% if @scenario.planting_operations(crop).any? %>
   <div class="panel-body">
@@ -30,7 +29,7 @@
           <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
     <% end %>
   </table><br>
-  <%= link_to "New Planting Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => crop.id), :class => 'btn btn-success'  %>
+  <%= link_to "Add Planting Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => crop.id), :class => 'btn btn-success'  %>
   <% end %>
 
 <% if @scenario.fertilizer_operations(crop).any? %>
@@ -40,14 +39,14 @@
   </div>
 
   <table class="table">
-    <tr><td class="optable"><b>Date</b></td><td class="optable"><b>Fertilizer Type</b></td><td class="optable"><b>Application Rate (lbs/ac)</b></td><td class="optable"><b>Depth (in)</b></td><td class="optable"><b>Moisture</b></td><td class="optable"><b>NO3 N</b></td><td class="optable"><b>PO4 P</b></td><td class="optable"><b>Org N</b></td><td class="optable"><b>Org P</b></td><td class="optable"><b>Actions</b></td></tr>
+    <tr><td class="optable"><b>Date</b></td><td class="optable"><b>Fertilizer Type</b></td><td class="optable"><b>Application Rate (lbs/ac)</b></td><td class="optable"><b>Depth (in)</b></td><td class="optable"><b>Actions</b></td></tr>
     <% @scenario.fertilizer_operations(crop).each do |op| %>
-    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td><td><%= op.moisture %></td><td><%= op.no3_n %></td><td><%= op.po4_p %></td><td><%= op.org_n %></td><td><%= op.org_p %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
           <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
     <% end %>
   </table>
   <br>
-  <%= link_to "New Fertilizer Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 2, :crop => crop.id), :class => 'btn btn-success'  %>
+  <%= link_to "Add Fertilizer Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 2, :crop => crop.id), :class => 'btn btn-success'  %>
   <% end %>
 
 <% if @scenario.tillage_operations(crop).any? %>
@@ -64,7 +63,7 @@
     <% end %>
   </table>
   <br>
-   <%= link_to "New Tillage Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 3, :crop => crop.id), :class => 'btn btn-success'  %>
+   <%= link_to "Add Tillage Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 3, :crop => crop.id), :class => 'btn btn-success'  %>
   <% end %>
 
 <% if @scenario.harvest_operations(crop).any? %>
@@ -80,7 +79,7 @@
           <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
     <% end %>
   </table>  <br>
-   <%= link_to "New Harvest Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 4, :crop => crop.id), :class => 'btn btn-success'  %>
+   <%= link_to "Add Harvest Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 4, :crop => crop.id), :class => 'btn btn-success'  %>
   <% end %>
 
 
@@ -97,7 +96,7 @@
           <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
     <% end %>
   </table>   <br>
-   <%= link_to "New Kill Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 5, :crop => crop.id), :class => 'btn btn-success'  %>
+   <%= link_to "Add Kill Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 5, :crop => crop.id), :class => 'btn btn-success'  %>
   <% end %>
 
 
@@ -114,7 +113,7 @@
           <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
     <% end %>
   </table>     <br>
-   <%= link_to "New Irrigation Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 6, :crop => crop.id), :class => 'btn btn-success'  %>
+   <%= link_to "Add Irrigation Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 6, :crop => crop.id), :class => 'btn btn-success'  %>
   <% end %>
 
 
@@ -147,7 +146,7 @@
           <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
     <% end %>
     </table>     <br>
-   <%= link_to "New Burn Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 9, :crop => crop.id), :class => 'btn btn-success'  %>
+   <%= link_to "Add Burn Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 9, :crop => crop.id), :class => 'btn btn-success'  %>
   <% end %>
 
 
@@ -163,7 +162,7 @@
           <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
     <% end %>
   </table>     <br>
-   <%= link_to "New Liming Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 10, :crop => crop.id), :class => 'btn btn-success'  %>
+   <%= link_to "Add Liming Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 10, :crop => crop.id), :class => 'btn btn-success'  %>
   <% end %>
 
 
@@ -179,7 +178,7 @@
           <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
     <% end %>
   </table>     <br>
-   <%= link_to "New Kill Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 11, :crop => crop.id), :class => 'btn btn-success'  %>
+   <%= link_to "Add Kill Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 11, :crop => crop.id), :class => 'btn btn-success'  %>
   <% end %>
 
 

@@ -474,6 +474,7 @@ es:
     simulation_only_error: debe ser mayor que o igual a la simulación primer año
     initial_simulation_error: debe ser al menos 5 años después del año inicial de información meteorológica . El valor mínimo es
     final_simulation_error: no debe ser mayor que el último año de información meteorológica. El valor máximo es
+    update_simulation: Actualizar Período de Simulación
   soil:
     layers: Capas
     soil: Suelo
@@ -603,6 +604,7 @@ es:
     select_vege: Seleccione la Vegetación
     select_animal: Seleccione el tipo de Animal
     manure_control: Manure Control
+    pp: Almohadillas y Tuberias
   months:
     january: Enero
     february: Febrero
@@ -988,7 +990,7 @@ es:
       water_use_pumping_parameters:
       other_parameters:
       animal_feed_parameters:
-      supplement_parameters: 
+      supplement_parameters:
   graze:
     total: 'Total number of grasses grazed by cattle'
     code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'

@@ -16,7 +16,7 @@
 //= require_tree .
 //= require chartkick
 
-$('.dropdown-toggle').dropdown()  
+$('.dropdown-toggle').dropdown()
 
 function rbtnStation_onclick(way) {
     document.getElementById("fsetUploadWeatherFile").style.display = "none";

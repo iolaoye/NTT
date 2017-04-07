@@ -31,7 +31,7 @@ en:
       layer: "Layers"
       scenario: "Scenario"
       operation: "Operations"
-      bmp: "Best Management Practices"
+      bmp: "Conservation Practices"
       result:
         result: "Results"
         summary: "Summary"
@@ -418,7 +418,7 @@ en:
     soils: Soils
     scenarios: Scenarios
     managements: Operations
-    bmps: Best Management Practices
+    bmps: Conservation Practices
     subprojects: Subprojects
     economics: Economics
     simulations: Simulations
@@ -470,6 +470,7 @@ en:
     simulation_only_error: must be greater than or equal to simulation initial year
     initial_simulation_error: value must be at least 5 years after initial year of weather info. Minimum value is
     final_simulation_error: must not be greater than the final year of weather information. Maximum value is
+    update_simulation: Update Simulation Period
   soil:
     layers: Layers
     soil: Soil
@@ -601,6 +602,7 @@ en:
     select_vege: Select Vegetation
     select_animal: Select Animal Type
     manure_control: Manure Control
+    pp: Pads and Pipes
   months:
     january: January
     february: February
@@ -991,7 +993,7 @@ en:
       water_use_pumping_parameters:
       other_parameters:
       animal_feed_parameters:
-      supplement_parameters: 
+      supplement_parameters:
   graze:
     total: 'Total number of grasses grazed by cattle'
     code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
@@ -1121,7 +1123,7 @@ en:
     save:
         header: Download
         body: Once you have created a project you can use the <strong>Download</strong> button which is the arrow pointing downwards, to save the current project that you are working on.
-        note: <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.  
+        note: <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.
   projpage_html:
     <strong>Start of a Project</strong> <br><br>
     Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
@@ -1253,7 +1255,7 @@ en:
     simulate:
         header: Period to Simulate
         body: 'The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>'
-  
+
   weathpage_html:
     <strong>Weather Page</strong>
     The user has different options available when choosing the weather. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.
@@ -1357,7 +1359,7 @@ en:
         item1:
             header: <b>Add Crop Schedule:</b>
             body1: 'Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
-        item2: 
+        item2:
             header: <b>New Operation (Creating Operations from Scratch):</b>
             body1: 'The user can also create a new Cropping System from scratch. To do this, the user needs to  click on the <strong><em>New Operation</em></strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
             body2: 'If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b><em>Edit</em></b> icon in the <b><em>Actions</em></b> column. This will take the user to a new page where they can make the required changes to the operation.'
@@ -1370,7 +1372,7 @@ en:
             body1: 'This option allows the user to upload a previously saved crop rotation, however this file must have previously been saved on your computer, and be in *.opr format. To save a crop rotation, first create one and then click on <strong><em>Save Cropping System</em></strong>.'
         item5:
             header: <b>Delete All</b>
-            body1: 'Users can delete individual operations by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column, but if they want to delete all the operations present currently in the scenario, they can select the <b><em>Delete All</em></b> option, to delete all available operations.'          
+            body1: 'Users can delete individual operations by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column, but if they want to delete all the operations present currently in the scenario, they can select the <b><em>Delete All</em></b> option, to delete all available operations.'
     bmpnav:
         header: Best Management Practices (BMPs) Navigation
         body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
