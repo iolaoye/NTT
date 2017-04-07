@@ -14,3 +14,7 @@ Crop.create!({:id => 30,:number => 29,:dndc => 43,:code => 'CSIL',:name => 'CORN
 County.find(2312).delete
 County.create!({:id => 2312, :county_name => 'Washington', :state_id => 38, :county_code => '41067', :status => 1, :county_state_code => 'OR067', :wind_wp1_code => 714, :wind_wp1_name => 'ORPORTLA'}, :without_protection => true)
 
+Bmpsublist.find(4).delete
+Bmpsublist.find(13).delete
+Bmpsublist.create!({:id => 4, :name => "Pads and Pipes", :spanish_name => "Almohadillas y Tuberias", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 13, :name => "Filter Strip/Riparian Forest", :spanish_name => "Zona de Contencion Filtrante/Bosque Ribereno", :bmplist_id => 4, :status => true}, :without_protection => true)

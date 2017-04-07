@@ -602,6 +602,7 @@ en:
     select_vege: Select Vegetation
     select_animal: Select Animal Type
     manure_control: Manure Control
+    pp: Pads and Pipes
   months:
     january: January
     february: February
