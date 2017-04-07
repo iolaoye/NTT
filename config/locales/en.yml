@@ -31,7 +31,7 @@ en:
       layer: "Layers"
       scenario: "Scenario"
       operation: "Operations"
-      bmp: "Best Management Practices"
+      bmp: "Conservation Practices"
       result:
         result: "Results"
         summary: "Summary"
@@ -418,7 +418,7 @@ en:
     soils: Soils
     scenarios: Scenarios
     managements: Operations
-    bmps: Best Management Practices
+    bmps: Conservation Practices
     subprojects: Subprojects
     economics: Economics
     simulations: Simulations
@@ -603,6 +603,7 @@ en:
     select_vege: Select Vegetation
     select_animal: Select Animal Type
     manure_control: Manure Control
+    pp: Pads and Pipes
   months:
     january: January
     february: February

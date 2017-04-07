@@ -530,9 +530,9 @@ module ScenariosHelper
     end
 
 	def update_wsa(operation, wsa)
-		soils = Soil.where(:field_id => session[:field_id], :selected => true)
+		soils = Soil.where(:field_id => params[:field_id], :selected => true)
 		soils.each do |soil|
-			subarea = Subarea.find_by_scenario_id_and_soil_id(session[:scenario_id], soil.id)
+			subarea = Subarea.find_by_scenario_id_and_soil_id(params[:scenario_id], soil.id)
 			if operation == "+"
 				subarea.wsa += wsa * soil.percentage / 100
 			else
