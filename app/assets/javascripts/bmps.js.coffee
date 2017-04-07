@@ -100,7 +100,7 @@ switch_all_to_off = ->
     $("#slow_warning").toggle(false)
     $("#climate_table").toggle(false)
     $("#slope_reduction").toggle(false)
-    
+    $("#tr_bmp_pp_area").toggle(false)   
     switch_all_labels_off()
 
 switch_all_labels_off = ->
@@ -257,7 +257,22 @@ update_fertigation_options = ->
             $("#days").toggle(true)
             $("#irrigation_frequency_label").toggle(true)
             
+pads_and_pipes = (opt) -> 
+    $("#tr_bmp_pp_area").toggle(false)
+    switch opt
+        when 6 #Ditch Enlargement and Reservoir System	
+            $("#tr_bmp_pp_area").toggle(true)
+        when 7 #Tailwater Irrigation
+            $("#tr_bmp_pp_area").toggle(true)
 
+buffers = (opt) -> 
+    $("#tr_fs_vegetation").toggle(false)
+    $("#tr_grass_field_portion").toggle(false)
+    switch opt
+        when 12 #Ditch Enlargement and Reservoir System	
+            $("#tr_grass_field_portion").toggle(true)
+        when 13 #Tailwater Irrigation
+            $("#tr_fs_vegetation").toggle(true)
 
 #bmpsublist_irrigation_selector = ->
     #bmp_collection = $('#bmp_bmpsublist_id')
@@ -279,6 +294,7 @@ update_fertigation_options = ->
     #else
     #  drip_option.removeAttr 'disabled'
 
+#determine the radio button selected for P & P and shows reservoir area if it is 6 or 7.
 
 #bmp_irrigation_id
 #["Sprinkle", "Furrow/Flood", "Drip", "Furrow Diking", "Pads and Pipes - Tailwater Irrigation"]
@@ -303,4 +319,16 @@ $(document).ready ->
         update_pcp_row()
     $("#fill_min").click ->
         update_min_row()
+    $("#bmp_cb1_4").click ->
+        pads_and_pipes(4)
+    $("#bmp_cb1_5").click ->
+        pads_and_pipes(5)
+    $("#bmp_cb1_6").click ->
+        pads_and_pipes(6)
+    $("#bmp_cb1_7").click ->
+        pads_and_pipes(7)
+    $("#bmp_cb1_12").click ->
+        buffers(12)
+    $("#bmp_cb1_13").click ->
+        buffers(13)
 

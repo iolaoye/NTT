@@ -120,17 +120,28 @@ class BmpsController < ApplicationController
 			create(3)
 		end
 		if !(params[:bmp_ppnd][:width] == "") then
-			create(4)
+			if params[:bmp_cb1] == "4" then
+				create(4)
+			end
+			if params[:bmp_cb1] == "5" then
+				create(4)
+			end
+			if params[:bmp_cb1] == "6" then
+				create(4)
+			end
+			if params[:bmp_cb1] == "7" then
+				create(4)
+			end
 		end
-		if !(params[:bmp_ppds][:width] == "") then
-			create(5)
-		end
-		if !(params[:bmp_ppde][:width] == "") then
-			create(6)
-		end
-		if !(params[:bmp_pptw][:width] == "") then
-			create(7)
-		end
+		#if !(params[:bmp_ppds][:width] == "") then
+			#create(5)
+		#end
+		#if !(params[:bmp_ppde][:width] == "") then
+		#	create(6)
+		#end
+		#if !(params[:bmp_pptw][:width] == "") then
+		#	create(7)
+		#end
 		if !(params[:bmp_wl][:area] == "") then
 			create(8)
 		end
@@ -145,11 +156,15 @@ class BmpsController < ApplicationController
 				create(11)
 			end
 		end
-		if !(params[:bmp_rf][:width] == "") then
-			create(12)
-		end
-		if !(params[:bmp_fs][:width] == "") then
-			create(13)
+		if !(params[:bmp_ai][:width] == "") then
+			if !(params[:bmp_cb1] == nil)
+				if params[:bmp_cb1] == "12" then
+					create(13)   #riparian forest
+				end
+				if params[:bmp_cb1] == "13" then
+					create(13)   #filter strip
+				end
+			end
 		end
 		if !(params[:bmp_ww][:width] == "") then
 			create(14)
@@ -567,6 +582,8 @@ class BmpsController < ApplicationController
   def ppnd(type)
     @bmp.width = params[:bmp_ppnd][:width]
     @bmp.sides = params[:bmp_ppnd][:sides]
+    @bmp.area = params[:bmp_ppde][:area]
+	@bmp.depth = params[:bmp_cb1]
     return pads_pipes(type)
   end    # end method
 
@@ -575,6 +592,8 @@ class BmpsController < ApplicationController
   def ppds(type)
     @bmp.width = params[:bmp_ppds][:width]
     @bmp.sides = params[:bmp_ppds][:sides]
+    @bmp.area = 0
+	@bmp.depth = params[:bmp_cb1]
     return pads_pipes(type)
   end   # end method
 
@@ -584,6 +603,7 @@ class BmpsController < ApplicationController
     @bmp.width = params[:bmp_ppde][:width]
     @bmp.sides = params[:bmp_ppde][:sides]
     @bmp.area = params[:bmp_ppde][:area]
+	@bmp.depth = params[:bmp_cb1]
 	@bmp.save
     msg = pads_pipes(type)
     case type
@@ -607,6 +627,7 @@ class BmpsController < ApplicationController
     @bmp.width = params[:bmp_pptw][:width]
     @bmp.sides = params[:bmp_pptw][:sides]
     @bmp.area = params[:bmp_pptw][:area]
+	@bmp.depth = params[:bmp_cb1]
 	@bmp.save
     msg = pads_pipes(type)
     case type
@@ -694,12 +715,14 @@ class BmpsController < ApplicationController
 
 ### ID: 12
   def riparian_forest(type)
-	@bmp.area = params[:bmp_rf][:area]
-	@bmp.width = params[:bmp_rf][:width]
-	@bmp.grass_field_portion = params[:bmp_rf][:grass_field_portion]
-	@bmp.buffer_slope_upland = params[:bmp_rf][:buffer_slope_upland]
     case type
       when "create"
+		@bmp.area = params[:bmp_fs][:area]
+		@bmp.width = params[:bmp_fs][:width]
+		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
+		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
+		@bmp.crop_id = 0
+		@bmp.depth = params[:bmp_cb1]
   		if @bmp.save then
 			return create_new_subarea("RF", 12)
 		end
@@ -716,17 +739,32 @@ class BmpsController < ApplicationController
   def filter_strip(type)
 	@bmp.area = params[:bmp_fs][:area]
 	@bmp.width = params[:bmp_fs][:width]
+	@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
 	@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
 	@bmp.crop_id = params[:bmp_fs][:crop_id]
+	@bmp.depth = params[:bmp_cb1]
     case type
       when "create"
   		if @bmp.save then
-	        return create_new_subarea("FS", 13)
+			if @bmp.depth == 13 then
+				return create_new_subarea("FS", 13)
+			else
+				return create_new_subarea("RF", 12)
+			end
 		end
       when "update"
-        update_existing_subarea("FS", 13)
+		if @bmp.depth == 13 then
+		    update_existing_subarea("FS", 13)
+		else
+			update_existing_subarea("RFFS", 12)
+		end
       when "delete"
-	    return delete_existing_subarea("FS")
+		if @bmp.depth == 13 then
+			return delete_existing_subarea("FS")
+		else
+			delete_existing_subarea("RF")
+			return delete_existing_subarea("RFFS")
+		end
     end
   end
 
