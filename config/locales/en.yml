@@ -435,6 +435,7 @@ en:
     operation_file: Operations
     site_file: Site
     apex_file: APEX Files
+    aplcat_file: APLCAT Files
     layers: Layers
     state: States
   project:
