@@ -156,7 +156,7 @@ class BmpsController < ApplicationController
 				create(11)
 			end
 		end
-		if !(params[:bmp_ai][:width] == "") then
+		if !(params[:bmp_fs][:width] == "") then
 			if !(params[:bmp_cb1] == nil)
 				if params[:bmp_cb1] == "12" then
 					create(13)   #riparian forest
@@ -721,7 +721,7 @@ class BmpsController < ApplicationController
 		@bmp.width = params[:bmp_fs][:width]
 		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
 		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
-		@bmp.crop_id = 0
+		@bmp.crop_id = 1
 		@bmp.depth = params[:bmp_cb1]
   		if @bmp.save then
 			return create_new_subarea("RF", 12)
@@ -739,10 +739,15 @@ class BmpsController < ApplicationController
   def filter_strip(type)
 	@bmp.area = params[:bmp_fs][:area]
 	@bmp.width = params[:bmp_fs][:width]
-	@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
 	@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
+	@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
 	@bmp.crop_id = params[:bmp_fs][:crop_id]
 	@bmp.depth = params[:bmp_cb1]
+	if @bmp.depth == 12 then
+		@bmp.crop_id = 1
+	else
+		@bmp.grass_field_portion = 1
+	end	
     case type
       when "create"
   		if @bmp.save then
