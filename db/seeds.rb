@@ -14,7 +14,17 @@ Crop.create!({:id => 30,:number => 29,:dndc => 43,:code => 'CSIL',:name => 'CORN
 County.find(2312).delete
 County.create!({:id => 2312, :county_name => 'Washington', :state_id => 38, :county_code => '41067', :status => 1, :county_state_code => 'OR067', :wind_wp1_code => 714, :wind_wp1_name => 'ORPORTLA'}, :without_protection => true)
 
+Bmpsublist.find(2).delete
 Bmpsublist.find(4).delete
+Bmpsublist.find(5).delete
+Bmpsublist.find(6).delete
+Bmpsublist.find(7).delete
+Bmpsublist.find(12).delete
 Bmpsublist.find(13).delete
+Bmpsublist.create!({:id => 2, :name => "Autofertigation", :spanish_name => "Fertirrigacion Automatica", :bmplist_id => 1, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 4, :name => "Pads and Pipes", :spanish_name => "Almohadillas y Tuberias", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 5, :name => "Pads and Pipes - Two-Stage Ditch System", :spanish_name => "Almohadillas y Tuberias - Sistema de Zanja de Dos Etapas", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 6, :name => "Pads and Pipes - Ditch Enlargement and Reservoir System", :spanish_name => "Almohadillas y Tuberias - Ampliacion de la Zanja y Sistema de Represa", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 7, :name => "Pads and Pipes - Tailwater Irrigation", :spanish_name => "Almohadillas y Tuberias - Irrigacion desde Reserva", :bmplist_id => 2, :status => true}, :without_protection => true)
+Bmpsublist.create!({:id => 12, :name => "Riparian Forest Buffer", :spanish_name => "Bosque Ribereno", :bmplist_id => 4, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 13, :name => "Filter Strip/Riparian Forest", :spanish_name => "Zona de Contencion Filtrante/Bosque Ribereno", :bmplist_id => 4, :status => true}, :without_protection => true)
