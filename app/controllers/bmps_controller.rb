@@ -728,7 +728,7 @@ class BmpsController < ApplicationController
     		@bmp.width = params[:bmp_fs][:width]
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
     		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
-    		@bmp.crop_id = 0 #record not found error
+    		@bmp.crop_id = 1 #record not found error
     		@bmp.depth = params[:bmp_cb3]
     		if @bmp.save then
   			  return create_new_subarea("RF", 12)

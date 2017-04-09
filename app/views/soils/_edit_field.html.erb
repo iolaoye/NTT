@@ -19,7 +19,7 @@
     <%= f.label t('field.field_area') %>
     <%= f.number_field :field_area, :class => 'numbers', :step => "any" %>
   </div>
-  <div class="field">
+  <div class="field" style="display:none">
   <%= f.label t('field.field_avg_slope') %>
     <%= f.number_field :field_average_slope, :class => 'numbers', :step => "any", disabled: true  %>  <a href="#" id="trigger">[?]</a>
   </div>
@@ -32,7 +32,7 @@
   <%# end %>
   </div>
     <% unless ENV["APP_VERSION"] == "modified" %>
-   <div class="field">
+   <div class="field" style="display:none">
     <%= f.label t('field.coordinate') + " (long, lat)" %><br>
     <%= f.text_area :coordinates, :required => 'true', disabled: true %>
   </div><% end %>
