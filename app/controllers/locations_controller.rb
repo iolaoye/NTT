@@ -52,10 +52,7 @@ class LocationsController < ApplicationController
   def receive_from_mapping_site
     @location = Location.find_by_project_id(params[:id])
     @project = Project.find(params[:project_id])
-    respond_to do |format|
-      if !(params[:error] == "") then
-        format.html { redirect_to project_location_path(@project, @location), notice: params[:error] }
-      else
+    if (params[:error] == "") then
         if (session[:session_id] == params[:source_id]) then
           # step 1: delete fields not found
           @location.fields.each do |field|
@@ -179,9 +176,10 @@ class LocationsController < ApplicationController
           load_controls()
           load_parameters(0)
         end # end if of session_id check
-        format.html # Runs receive_from_mapping_site.html.erb view in location folder
       end # end if error
-    end
+  	  respond_to do |format|
+		format.html # Runs receive_from_mapping_site.html.erb view in location folder
+	  end
   end
 
   #end method receiving from map site
