@@ -96,6 +96,10 @@ class AplcatParametersController < ApplicationController
     end
   end
 
+  def download
+	  download_aplcat_files()
+  end
+
   private
 
     # Use this method to whitelist the permissible parameters. Example:
@@ -104,7 +108,7 @@ class AplcatParametersController < ApplicationController
     def aplcat_parameter_params
       params.require(:aplcat_parameter).permit(:abwc, :abwh, :abwmb, :adwgbc, :noc, :nomb, :norh, :prh, :adwgbh, :mrga, :jdcc, :gpc,
 				 :tpwg, :csefa , :srop, :bwoc, :jdbs, :dmd, :dmi, :napanr, :napaip, :mpsm, :splm, :pmme, :rhaeba, :toaboba,
-				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape, 
+				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape,
 				 :platc, :pctbb, :ptdife, :tnggbc, :prb)
     end
 end
