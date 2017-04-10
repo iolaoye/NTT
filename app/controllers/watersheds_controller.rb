@@ -32,6 +32,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /watersheds/1.json
   def simulate
+	session[:simulation] = 'watershed'
     @project = Project.find(params[:project_id])
     @watershed_id = params[:select_watershed][0]
     @dtNow1 = Time.now.to_s

@@ -54,6 +54,7 @@ class ScenariosController < ApplicationController
   end
 
   def simulate
+	session[:simulation] = 'scenario'
 	case params[:commit]
 		when "Simulate NTT", "Simular NTT", "Simulate Scenario", "Simulate Scenarios"
 			msg = simulate_ntt
