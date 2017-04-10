@@ -59,8 +59,8 @@ class ResultsController < ApplicationController
 
 
     if session[:simulation].eql?('scenario') then
-      @total_area = Field.find(session[:field_id]).field_area
-      @field_name = Field.find(session[:field_id]).field_name
+      @total_area = Field.find(params[:field_id]).field_area
+      @field_name = Field.find(params[:field_id]).field_name
     end
 	if !(params[:field_id] == "0")
 		@field = Field.find(params[:field_id])
@@ -79,20 +79,20 @@ class ResultsController < ApplicationController
       if session[:simulation] == 'scenario' then
         case true
           when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
-            results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario1], :scenario_id => params[:result2][:scenario2], :scenario_id => params[:result3][:scenario3], :soil_id => 0).where("crop_id > 0")
+            results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id], :scenario_id => params[:result2][:scenario_id], :scenario_id => params[:result3][:scenario_id], :soil_id => 0).where("crop_id > 0")
           when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != ""
-            results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario1], :scenario_id => params[:result2][:scenario2]).where("crop_id > 0")
+            results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id], :scenario_id => params[:result2][:scenario_id]).where("crop_id > 0")
           when params[:result1][:scenario_id] != ""
-            results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario1]).where("crop_id > 0")
+            results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id]).where("crop_id > 0")
         end # end case true
       else
         case true
           when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
-            results = Result.where(:watershed_id => params[:result1][:scenario1], :watershed_id => params[:result2][:scenario2], :watershed_id => params[:result3][:scenario3]).where("crop_id > 0")
+            results = Result.where(:watershed_id => params[:result1][:scenario_id], :watershed_id => params[:result2][:scenario_id], :watershed_id => params[:result3][:scenario_id]).where("crop_id > 0")
           when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != ""
-            results = Result.where(:watershed_id => params[:result1][:scenario1], :watershed_id => params[:result2][:scenario2]).where("crop_id > 0")
+            results = Result.where(:watershed_id => params[:result1][:scenario_id], :watershed_id => params[:result2][:scenario_id]).where("crop_id > 0")
           when params[:result1][:scenario_id] != ""
-            results = Result.where(:watershed_id => params[:result1][:scenario1]).where("crop_id > 0")
+            results = Result.where(:watershed_id => params[:result1][:scenario_id]).where("crop_id > 0")
         end # end case true
       end
       results.each do |result|
@@ -120,7 +120,7 @@ class ResultsController < ApplicationController
                 @scenario1 = params[:result1][:scenario_id]
                 session[:scenario1] = @scenario1
                 if session[:simulation] == 'scenario'
-                  @results1 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
+                  @results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
                 else
                   @results1 = Result.where(:watershed_id => @scenario1)
                 end
@@ -137,7 +137,7 @@ class ResultsController < ApplicationController
                 @scenario2 = params[:result2][:scenario_id]
                 session[:scenario2] = @scenario2
                 if session[:simulation] == 'scenario'
-                  @results2 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
+                  @results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
                 else
                   @results2 = Result.where(:watershed_id => @scenario2)
                 end
@@ -153,7 +153,7 @@ class ResultsController < ApplicationController
                 @scenario3 = params[:result3][:scenario_id]
                 session[:scenario3] = @scenario3
                 if session[:simulation] == 'scenario'
-                  @results3 = Result.where(:field_id => session[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
+                  @results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
                 else
                   @results3 = Result.where(:watershed_id => @scenario3)
                 end
