@@ -251,81 +251,56 @@
 						    <%end%>
 					    </td>
             </tr> -->
-				    <% when 12 %>  
-				      <tr>
-					    <td class="indent">
-						    <%= t('general.area') + " " + t('bmp.acres') %>
-						    <%= text_field :bmp_rf, :area, :value => bmp.area %>
-					    </td>
-				      </tr>
-				      <tr>
-					    <td class="indent">
-						    <%= t('bmp.width') + " " + t('bmp.ft') %>
-						    <%= text_field :bmp_rf, :width, :value => bmp.width %>
-					    </td>
-				      </tr>
-				      <tr>
-					      <td class="indent">
-						      <%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
-						      <%= text_field :bmp_rf, :grass_field_portion, :value => bmp.grass_field_portion %>
-					      </td>
-				      </tr>
-				      <tr>
-					    <td class="indent">
-						    <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
-						    <%= text_field :bmp_rf, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
-					    </td>
-				      </tr>
-				    <% when 13 %>   
+				    <% when 13 %>
               <tr>
                 <td>
                   <% case bmp.depth%>
-                    <% when 1 %>
+                    <% when 13 %>
                       <%= radio_button_tag :bmp_cb1, "13", true  %> <%= t('pdf.filter_strip') %>
                       <%= radio_button_tag :bmp_cb1, "12"%> <%= t('pdf.riparian_forest') %>
-                    <% when 2 %>
+                    <% when 12 %>
                       <%= radio_button_tag :bmp_cb1, "13" %> <%= t('pdf.filter_strip') %>
                       <%= radio_button_tag :bmp_cb1, "12", true %> <%= t('pdf.riparian_forest') %>
                     <% else %>
                       <%= radio_button_tag :bmp_cb1, "13"%> <%= t('pdf.filter_strip') %>
-                      <%= radio_button_tag :bmp_cb1, "12" %> <%= t('pdf.riparian_forest') %>
+                      <%= radio_button_tag :bmp_cb1, "12"%> <%= t('pdf.riparian_forest') %>
                     <%end%>
                 </td>
               </tr>
-				      <tr id = "tr_fs_vegetation" style="display:none">
-					      <td class="indent">
-						      <%= label :crop_id, t('operation.crop') %>
-						      <% if I18n.locale.equal?(:en) %>
-						        <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
-						      <% else %>
-						        <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
-						      <% end %>
-					      </td>
-				      </tr>
-				      <tr>
-					    <td class="indent">
-						    <%= t('general.area') + " " + t('bmp.acres') %>
-						    <%= text_field :bmp_fs, :area, :value => bmp.area %>
-					    </td>
-				      </tr>
-				      <tr>
-					    <td class="indent">
-						    <%= t('bmp.width') + " " + t('bmp.ft') %>
-						    <%= text_field :bmp_fs, :width, :value => bmp.width %>
-					    </td>
-				      </tr>
-              <tr id = "tr_grass_field_portion" style="display:none">
+              <tr id = "tr_fs_vegetation" <%= "style=display:none" if bmp.depth == 12%>>
                 <td class="indent">
-                  <%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
-                  <%= text_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion %>
+                  <%= label :crop_id, t('operation.crop') %>
+                  <% if I18n.locale.equal?(:en) %>
+						          <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
+                  <% else %>
+						          <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                  <% end %>
                 </td>
               </tr>
               <tr>
 					      <td class="indent">
-						      <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
-						      <%= text_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
+						      <%= t('general.area') + " " + t('bmp.acres') %>
+						      <%= text_field :bmp_fs, :area, :value => bmp.area %>
 					      </td>
-				      </tr>
+				        </tr>
+				        <tr>
+					      <td class="indent">
+						      <%= t('bmp.width') + " " + t('bmp.ft') %>
+						      <%= text_field :bmp_fs, :width, :value => bmp.width %>
+					      </td>
+				        </tr>
+                <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
+                  <td class="indent">
+                    <%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
+                    <%= text_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion %>
+                  </td>
+                </tr>
+                <tr>
+					        <td class="indent">
+						        <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
+						        <%= text_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
+					        </td>
+				        </tr>
 				    <% when 14 %>
 				      <tr>
 					    <td class="indent">

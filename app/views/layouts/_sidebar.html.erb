@@ -15,11 +15,6 @@
 <li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || ((controller_name == "results") && request.url.include?(url_for("simulation=scenario"))) || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations") || (controller_name == "sites") || session[:simulation] == 'scenario')? "active" : "" %>"><%= link_to t('menu.fields') + field_name, project_fields_path(@project) %></li>
 <% if field_submenu %>
   <ul class="nav nav-pills nav-stacked nav-sidebar-sub">
-    <% unless ENV["APP_VERSION"] == "modified" %><li class="<%= controller_name == "weathers" ? "active" : "" %>">
-      <% if controller_name == "weathers" %><div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div><% end %>
-      <%= link_to t('menu.weather'), edit_project_field_weather_path(@project, @field, @field.weather) %>
-    </li><% end %>
-
     <li class="<%= controller_name == "soils" || controller_name == "layers" ? "active" : "" %>">
       <% if controller_name == "soils" || controller_name == "layers" %>
         <div class="header-icon">
@@ -28,6 +23,11 @@
       <% end %>
       <%= link_to t('menu.soils'), project_field_soils_path(@project, @field) %>
     </li>
+    <% unless ENV["APP_VERSION"] == "modified" %><li class="<%= controller_name == "weathers" ? "active" : "" %>">
+      <% if controller_name == "weathers" %><div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div><% end %>
+      <%= link_to t('menu.weather'), edit_project_field_weather_path(@project, @field, @field.weather) %>
+    </li><% end %>
+
     <li class="<%= controller_name == "scenarios" ? "active" : "" %>">
       <% if controller_name == "scenarios" %>
         <div class="header-icon">
