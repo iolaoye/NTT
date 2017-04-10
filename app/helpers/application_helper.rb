@@ -122,7 +122,7 @@ module ApplicationHelper
 
 	def watershed_submenu
 		if (request.url.include?(url_for('results')) && request.url.include?(url_for('simulation=Watershed')) || request.url.include?(url_for('watersheds')))
-			session[:simulation] = 'Watershed'
+			session[:simulation] = 'watershed'
 			true
 		else
 			false
