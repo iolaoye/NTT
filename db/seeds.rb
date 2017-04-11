@@ -28,3 +28,6 @@ Bmpsublist.create!({:id => 6, :name => "Pads and Pipes - Ditch Enlargement and R
 Bmpsublist.create!({:id => 7, :name => "Pads and Pipes - Tailwater Irrigation", :spanish_name => "Almohadillas y Tuberias - Irrigacion desde Reserva", :bmplist_id => 2, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 12, :name => "Riparian Forest Buffer", :spanish_name => "Bosque Ribereno", :bmplist_id => 4, :status => true}, :without_protection => true)
 Bmpsublist.create!({:id => 13, :name => "Filter Strip/Riparian Forest", :spanish_name => "Zona de Contencion Filtrante/Bosque Ribereno", :bmplist_id => 4, :status => true}, :without_protection => true)
+
+Crop.find(51).delete
+Crop.create!({:id => 51,:number => 79,:dndc => 64,:code => 'PINE',:name => 'PINE TREES',:plant_population_mt => 824,:plant_population_ac => 333,:plant_population_ft => 0.01,:heat_units => 7400,:lu_number => 28,:soil_group_a => 36,:soil_group_b => 60,:soil_group_c => 73,:soil_group_d => 79,:type1 =>'350',:yield_unit => 't',:bushel_weight => 0,:conversion_factor => 1,:dry_matter => 100,:harvest_code => 731,:planting_code => 136,:state_id => '**',:itil => 1,:to1 => 20,:tb => 2,:dd => 0,:dyam => 1000,:spanish_name => 'PINOS'}, :without_protection => true)
