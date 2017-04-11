@@ -70,7 +70,9 @@
                       <%if request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/apex_soils?"))%>
                           <li><%= image_tag('layers.png') %> <%= t('.soil_layer') %></li>
                       <% end %>
-                      <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
+                      <%if !(request.url.include?(url_for=("/fields?"))) %>  
+                          <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
+                      <% end %>
                       <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
                   <%if request.url.include?(url_for=("/grazing_parameters?")) %>
