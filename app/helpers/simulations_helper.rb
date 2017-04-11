@@ -1236,7 +1236,6 @@ module SimulationsHelper
         oper = Operation.where(:id => operation.operation_id).first
 		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
 		if oper.activity_id == 2 && oper.type_id == 2 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-		debugger
 			add_fert(oper.no3_n * bmp.no3_n, oper.po4_p * bmp.po4_p, oper.org_n * bmp.org_n, oper.org_p * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
 		else
 			add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
