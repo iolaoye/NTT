@@ -469,7 +469,7 @@ class BmpsController < ApplicationController
 				subarea.fdsf = params[:bmp_ai][:safety_factor]
 			end
 			@bmp.safety_factor = subarea.fdsf
-			if @bmp.depth == "1" then
+			if @bmp.depth == 1 then
 				subarea.idf4 = 0.0
 				subarea.bft = 0.0
 			else
@@ -600,14 +600,14 @@ class BmpsController < ApplicationController
 
 ### ID: 6
   def ppde(type)
-    @bmp.width = params[:bmp_ppde][:width]
-    @bmp.sides = params[:bmp_ppde][:sides]
-    @bmp.area = params[:bmp_ppde][:area]
-	@bmp.depth = params[:bmp_cb1]
-	@bmp.save
-    msg = pads_pipes(type)
     case type
       when "create"
+		@bmp.width = params[:bmp_ppde][:width]
+		@bmp.sides = params[:bmp_ppde][:sides]
+		@bmp.area = params[:bmp_ppde][:area]
+		@bmp.depth = params[:bmp_cb1]
+		@bmp.save
+		msg = pads_pipes(type)
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
           create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
         end
@@ -624,14 +624,14 @@ class BmpsController < ApplicationController
 
 ### ID: 7
   def pptw(type)
-    @bmp.width = params[:bmp_pptw][:width]
-    @bmp.sides = params[:bmp_pptw][:sides]
-    @bmp.area = params[:bmp_pptw][:area]
-	@bmp.depth = params[:bmp_cb1]
-	@bmp.save
-    msg = pads_pipes(type)
     case type
       when "create"
+		@bmp.width = params[:bmp_pptw][:width]
+		@bmp.sides = params[:bmp_pptw][:sides]
+		@bmp.area = params[:bmp_pptw][:area]
+		@bmp.depth = params[:bmp_cb1]
+		@bmp.save
+		msg = pads_pipes(type)
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
           create_subarea("PPTW", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
         end
@@ -648,9 +648,9 @@ class BmpsController < ApplicationController
 
 ### ID: 8
   def wetlands(type)
-	@bmp.area = params[:bmp_wl][:area]
     case type
       when "create"
+		@bmp.area = params[:bmp_wl][:area]
 		if @bmp.save then
 			return create_new_subarea("WL", 8)
 		end
@@ -737,19 +737,19 @@ class BmpsController < ApplicationController
 
 ### ID: 13
   def filter_strip(type)
-	@bmp.area = params[:bmp_fs][:area]
-	@bmp.width = params[:bmp_fs][:width]
-	@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
-	@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
-	@bmp.crop_id = params[:bmp_fs][:crop_id]
-	@bmp.depth = params[:bmp_cb1]
-	if @bmp.depth == 12 then
-		@bmp.crop_id = 1
-	else
-		@bmp.grass_field_portion = 1
-	end	
     case type
       when "create"
+		@bmp.area = params[:bmp_fs][:area]
+		@bmp.width = params[:bmp_fs][:width]
+		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
+		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
+		@bmp.crop_id = params[:bmp_fs][:crop_id]
+		@bmp.depth = params[:bmp_cb1]
+		if @bmp.depth == 12 then
+			@bmp.crop_id = 1
+		else
+			@bmp.grass_field_portion = 0.25
+		end	
   		if @bmp.save then
 			if @bmp.depth == 13 then
 				return create_new_subarea("FS", 13)
@@ -758,7 +758,7 @@ class BmpsController < ApplicationController
 			end
 		end
       when "update"
-		if @bmp.depth == 13 then
+		if params[:bmp_cb1] == "13" then
 		    update_existing_subarea("FS", 13)
 		else
 			update_existing_subarea("RFFS", 12)
@@ -771,17 +771,15 @@ class BmpsController < ApplicationController
 			return delete_existing_subarea("RFFS")
 		end
     end
-  end
-
-  # end method
+  end   # end method
 
 
 ### ID: 14
   def waterway(type)
-	@bmp.width = params[:bmp_ww][:width]
-	@bmp.crop_id = params[:bmp_ww][:crop_id]
     case type
       when "create"
+		@bmp.width = params[:bmp_ww][:width]
+		@bmp.crop_id = params[:bmp_ww][:crop_id]
         @bmp.area = 0
   		if @bmp.save then
 	        return create_new_subarea("WW", 14)
@@ -921,6 +919,11 @@ class BmpsController < ApplicationController
   def shading(type)
     case type
       when "create"
+		@bmp.area = params[:bmp_fs][:area]
+		@bmp.width = params[:bmp_fs][:width]
+		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
+		@bmp.crop_id = params[:bmp_fs][:crop_id]
+		@bmp.depth = params[:bmp_cb1]
         return create_new_subarea("Sdg", 23)
       when "update"
         update_existing_subarea("Sdg", 23)
@@ -929,9 +932,7 @@ class BmpsController < ApplicationController
         update_wsa("+", subarea.wsa)
       #Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => "Sdg").first.delete
     end
-  end
-
-  # end method
+  end  # end method
 
 ################### METHODS FOR INDIVIDUAL SUBLIST ACTIONS ###################
   def edit_climate(climate, i)
@@ -1141,7 +1142,7 @@ class BmpsController < ApplicationController
     end
 
     if is_filled
-      @soils = Soil.where(:field_id => session[:field_id])
+      @soils = Soil.where(:field_id => params[:field_id])
       #i = 0
       #@inps = i
       @soils.each do |soil|
@@ -1150,7 +1151,7 @@ class BmpsController < ApplicationController
             @slope = soil.slope
           end
         end
-        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+        subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
         if subarea != nil then
           #if i == 0 then
             @inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
@@ -1161,7 +1162,7 @@ class BmpsController < ApplicationController
           end
         end
       end
-      create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
+      create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, id, false, "create")
       return "OK"
     else
       return "OK"

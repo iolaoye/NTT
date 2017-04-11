@@ -253,19 +253,19 @@ module ScenariosHelper
 				subarea.rsbd = 0.8
 				#line 10
 				subarea.pec = 1
-				add_buffer_operation(subarea, 139, 129, 0, 2000, 0, 33, 1, scenario_id)
+				add_buffer_operation(subarea, 139, 129, 0, 2000, 0, 33, 2, scenario_id)
 			when 12    #Riperian Forest
 				if !checker
 					#line 2
 					subarea.number = 102
-					subarea.iops = soil_id
+					subarea.iops = soil_id + 1
 					#subarea.iow = 1
 					#line 5					
-					subarea.rchl = (@bmp.width * FT_TO_KM * @bmp.grass_field_portion).round(4)    #soil_area here is the reservior area
+					subarea.rchl = (@bmp.width * FT_TO_KM * (1 - @bmp.grass_field_portion)).round(4)    #soil_area here is the reservior area
 					#line 4
 					if soil_area != nil
-						fs_area = soil_area * AC_TO_HA * @bmp.grass_field_portion
-						subarea.wsa = fs_area      #soil_area here is the reservior area
+						fs_area = soil_area * AC_TO_HA * (1-@bmp.grass_field_portion)
+						subarea.wsa = fs_area       #soil_area here is the reservior area
 					else
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 						fs_area = subarea.wsa
@@ -304,20 +304,22 @@ module ScenariosHelper
 						update_wsa("-", subarea.wsa)
 						update_subarea(subarea, "RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
 					end
-					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 2, scenario_id)
+					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, 1, scenario_id)
+					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 1, scenario_id)
 				else
 					#line 2
 					subarea.number = 103
-					subarea.iops = soil_id + 1
+					subarea.iops = soil_id
 					#subarea.iow = 1
 					#line 5
-					subarea.rchl = (@bmp.width * FT_TO_KM * (1 - @bmp.grass_field_portion)).round(4)    #soil_area here is the reservior area
+					subarea.rchl = (@bmp.width * FT_TO_KM * @bmp.grass_field_portion).round(4)    #soil_area here is the reservior area
 					#line 4
 					if soil_area != nil
-						subarea.wsa = soil_area * AC_TO_HA * (1 - @bmp.grass_field_portion)      #soil_area here is the reservior area
+						subarea.wsa = soil_area * AC_TO_HA * @bmp.grass_field_portion      #soil_area here is the reservior area
 					else
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 					end
+					subarea.wsa = subarea.wsa
 					update_wsa("-", subarea.wsa)
 					subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 					subarea.slp = subarea.slp * @bmp.buffer_slope_upland
@@ -346,8 +348,7 @@ module ScenariosHelper
 					subarea.rfpl = 0
 					#line 10
 					subarea.pec = 1.0
-					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, 1, scenario_id)
-					add_buffer_operation(subarea, 136, 49, 0, 1400, 0, 22, 1, scenario_id)
+					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 2, scenario_id)
 				end
 			when 13    #Filter Strip
 				#line 2
@@ -388,7 +389,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 1, scenario_id)
+				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
 			when 14    #Waterway
 				#line 2
 				subarea.number = 104
@@ -424,7 +425,7 @@ module ScenariosHelper
                 subarea.rfpl = subarea.rchl
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 1, scenario_id)
+				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
 			when 23    #Shading
 				#line 2
 				subarea.number = 101
@@ -463,7 +464,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, 1, scenario_id)
+				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, 2, scenario_id)
 		end # end bmpsublist_id
 
 		#this is when the subarea is added from a scenario
@@ -569,9 +570,9 @@ module ScenariosHelper
 		operation.bmp_id = @bmp.id
 		operation.activity_id = 1
 		if operation.save then
-			#sss
+			temp = 1
 		else
-			#nnn
+			temp = 0
 		end
 		#TODO oper.LuNumber = lunum <- visual basic code
 	end
