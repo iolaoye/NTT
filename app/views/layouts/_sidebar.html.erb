@@ -192,24 +192,34 @@
         </ul>
       <% end %>
 
-    <% unless ENV["APP_VERSION"] == "modified" %><li class="<%= ((controller_name == "apex_controls")|| (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>">
-      <% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) %>
-        <div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
-      <% end %>
-      <%= link_to t('menu.apex_file'),  project_field_apex_controls_path(@project, @field) %>
-		<% if apex_files_submenu %>
-        <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-          <li class="<%= ((controller_name == "apex_controls")|| (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "0" %>">
-            <% if controller.action_name == "download" %>
-              <div class="sub-header-icon">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              </div>
-            <% end %>
-			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post %>
-          </li><% end %>
-		 </ul>
-      <% end %>
-    </li>
+    <% unless ENV["APP_VERSION"] == "modified" %>
+			<li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>">
+	      <% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) %>
+	        <div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
+	      <% end %>
+	      <%= link_to t('menu.apex_file'),  project_field_apex_controls_path(@project, @field) %>
+				<% if apex_files_submenu %>
+		        <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
+		          <li class="<%= ((controller_name == 'apex_controls') || (controller_name == 'aplcat_parameters') || (controller_name == 'apex_parameters') || (controller_name == 'subareas')|| (controller_name == 'apex_soils')|| (controller_name == 'soil_operations')|| (controller_name == 'sites')) ? 'active' : '0' %>">
+		            <% if controller.action_name == "download" %>
+		              <div class="sub-header-icon">
+		                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		              </div>
+		            <% end %>
+								<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post %>
+							</li>
+							<li class="<%= controller_name == 'aplcat_parameters' ? "active" : "" %>">
+								<% if controller_name == "aplcat_parameters" %>
+									<div class="sub-sub-header-icon">
+										<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									</div>
+								<% end %>
+								<%= link_to t('activerecord.models.apex.download') + " " + t('menu.aplcat_file'), aplcat_parameters_download_path, :method => :post %>
+							</li>
+						</ul>
+				<% end %>
+			</li>
+    <% end %>
   </ul>
 <% else %>
 <% end %>
