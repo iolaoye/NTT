@@ -749,13 +749,14 @@ module SimulationsHelper
 			@soil_number += 1
 		end  # end if soil.selected
 	end  # end subareas.each for soil_id > 0
+	#add subareas and operations for buffer BMPs.
 	subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id = 0 AND bmp_id > 0")
-	buffer_type = 1
+	buffer_type = 2
 	subareas.each do |subarea|
 		add_subarea_file(subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
 		if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
-			if subarea.subarea_type == "RFFS" then 
-				buffer_type = 2 
+			if subarea.subarea_type == "RF" then 
+				buffer_type = 1 
 			end
 			create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
 			i+=1
@@ -796,7 +797,6 @@ module SimulationsHelper
     @last_subarea = 0
 
     #for Each buf In _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bufferInfo
-    #todo if buffer is used. Maybe just subarea are used means all of the buffer are created directly as subareas.
 	  buffer = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND bmp_id != 'nil' AND bmp_id != 0 AND soil_id = 0")
       buffer.each do |buf|
         if !(buf.subarea_type == "PPDE" || buf.subarea_type == "PPTW" || buf.subarea_type == "AITW" || buf.subarea_type == "CBMain")
@@ -881,7 +881,7 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.angl)
     @subarea_file.push(sLine + "\n")
     #/line 4
-    if _subarea_info.wsa > 0 && i > 0 then
+    if _subarea_info.wsa > 0 && i > 0 && !buffer then
       sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
     else
       sLine = sprintf("%8.2f", _subarea_info.wsa)
@@ -1029,10 +1029,10 @@ module SimulationsHelper
     bmp = Bmp.where("scenario_id = " + @scenario.id.to_s + " and irrigation_id > 0").first
     irrigation_type = Irrigation.find(bmp.irrigation_id).code unless bmp == nil
     #check and fix the operation list
-	if buffer_type == 0 then
-		@soil_operations = SoilOperation.where("soil_id = " + soil_id.to_s + " and scenario_id = " + @scenario.id.to_s)
-	else
-		@soil_operations = SoilOperation.where("bmp_id = " + soil_id.to_s + " and scenario_id = " + @scenario.id.to_s + " and opv6 = " + buffer_type.to_s)
+	if buffer_type == 0 then   #when subarea from soils
+		@soil_operations = SoilOperation.where(:soil_id => soil_id.to_s, :scenario_id => @scenario.id.to_s)
+	else   # when subarea from BMP. soil_id is the bmp_id.
+		@soil_operations = SoilOperation.where(:bmp_id => soil_id.to_s, :scenario_id => @scenario.id.to_s, :opv6 => buffer_type.to_s)
 	end  # end if type
     if @soil_operations.count > 0 then
       #fix_operation_file()

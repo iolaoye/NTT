@@ -110,7 +110,7 @@ class ApexControlsController < ApplicationController
   end
 
   def download
-	download_apex_files()
+	  download_apex_files()
   end
 
   private

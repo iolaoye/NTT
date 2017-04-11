@@ -94,101 +94,101 @@ class BmpsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
-	if params[:button] == t('submit.save')
-		@slope = 100
-		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
-		bmps = Bmp.where(:scenario_id => params[:scenario_id])
-		bmps.each do |bmp|
-			@bmp = bmp
-			msg = input_fields("delete")
-			if msg == "OK" then
-				bmp.destroy
-			end
-		end  # bmps.each
-		#Bmp.where(:scenario_id => params[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
-		if !(params[:bmp_ai][:irrigation_id] == "") then
-			if !(params[:bmp_cb1] == nil)
-				if params[:bmp_cb1] == "1" then
-					create(1)   #autoirrigation
-				end
-				if params[:bmp_cb1] == "2" then
-					create(1)   #autofertigation
-				end
-			end
-		end
-		if !(params[:bmp_td][:depth] == "") then
-			create(3)
-		end
-		if !(params[:bmp_ppnd][:width] == "") then
-			if params[:bmp_cb1] == "4" then
-				create(4)
-			end
-			if params[:bmp_cb1] == "5" then
-				create(4)
-			end
-			if params[:bmp_cb1] == "6" then
-				create(4)
-			end
-			if params[:bmp_cb1] == "7" then
-				create(4)
-			end
-		end
-		#if !(params[:bmp_ppds][:width] == "") then
-			#create(5)
-		#end
-		#if !(params[:bmp_ppde][:width] == "") then
-		#	create(6)
-		#end
-		#if !(params[:bmp_pptw][:width] == "") then
-		#	create(7)
-		#end
-		if !(params[:bmp_wl][:area] == "") then
-			create(8)
-		end
-		if !(params[:bmp_pnd][:irrigation_efficiency] == "") then
-			create(9)
-		end
-		if !(params[:bmp_sf][:number_of_animals] == "") then
-			create(10)
-		end
-		if !(params[:bmp_sbs] == nil)
-			if params[:bmp_sbs][:id] == "1" then
-				create(11)
-			end
-		end
-		if !(params[:bmp_fs][:width] == "") then
-			if !(params[:bmp_cb1] == nil)
-				if params[:bmp_cb1] == "12" then
-					create(13)   #riparian forest
-				end
-				if params[:bmp_cb1] == "13" then
-					create(13)   #filter strip
-				end
-			end
-		end
-		if !(params[:bmp_ww][:width] == "") then
-			create(14)
-		end
-		if !(params[:bmp_cb][:width] == "") then
-			create(15)
-		end
-		if !(params[:bmp_ll][:slope_reduction] == "") then
-			create(16)
-		end
-		if params[:bmp_ts][:id] == "1" then
-			create(17)
-		end
-		if !(params[:bmp_mc][:animal_id] == "") then
-			create(18)
-		end
-		if !(params[:select] == nil) and params[:select][:"19"] == "1" then
-			create(19)
-		end
-    #flash[:error] = @bmp.errors.to_a
-		redirect_to project_field_scenarios_path(@project, @field)
-	else
-		redirect_to scenarios_path
-	end # end fi save
+	  if params[:button] == t('submit.save')
+  		@slope = 100
+  		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
+  		bmps = Bmp.where(:scenario_id => params[:scenario_id])
+  		bmps.each do |bmp|
+  			@bmp = bmp
+  			msg = input_fields("delete")
+  			if msg == "OK" then
+  				bmp.destroy
+  			end
+  		end  # bmps.each
+  		#Bmp.where(:scenario_id => params[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
+  		if !(params[:bmp_ai][:irrigation_id] == "") then
+  			if !(params[:bmp_cb1] == nil)
+  				if params[:bmp_cb1] == "1" then
+  					create(1)   #autoirrigation
+  				end
+  				if params[:bmp_cb1] == "2" then
+  					create(1)   #autofertigation
+  				end
+  			end
+  		end
+  		if !(params[:bmp_td][:depth] == "") then
+  			create(3)
+  		end
+  		if !(params[:bmp_ppnd][:width] == "") then
+  			if params[:bmp_cb2] == "4" then
+  				create(4)
+  			end
+  			if params[:bmp_cb2] == "5" then
+  				create(4)
+  			end
+  			if params[:bmp_cb2] == "6" then
+  				create(4)
+  			end
+  			if params[:bmp_cb2] == "7" then
+  				create(4)
+  			end
+  		end
+  		#if !(params[:bmp_ppds][:width] == "") then
+  			#create(5)
+  		#end
+  		#if !(params[:bmp_ppde][:width] == "") then
+  		#	create(6)
+  		#end
+  		#if !(params[:bmp_pptw][:width] == "") then
+  		#	create(7)
+  		#end
+  		if !(params[:bmp_wl][:area] == "") then
+  			create(8)
+  		end
+  		if !(params[:bmp_pnd][:irrigation_efficiency] == "") then
+  			create(9)
+  		end
+  		if !(params[:bmp_sf][:number_of_animals] == "") then
+  			create(10)
+  		end
+  		if !(params[:bmp_sbs] == nil)
+  			if params[:bmp_sbs][:id] == "1" then
+  				create(11)
+  			end
+  		end
+  		if !(params[:bmp_ai][:width] == "") then
+  			if !(params[:bmp_cb3] == nil)
+  				if params[:bmp_cb3] == "12" then
+  					create(13)   #riparian forest
+  				end
+  				if params[:bmp_cb3] == "13" then
+  					create(13)   #filter strip
+  				end
+  			end
+  		end
+  		if !(params[:bmp_ww][:width] == "") then
+  			create(14)
+  		end
+  		if !(params[:bmp_cb][:width] == "") then
+  			create(15)
+  		end
+  		if !(params[:bmp_ll][:slope_reduction] == "") then
+  			create(16)
+  		end
+  		if params[:bmp_ts][:id] == "1" then
+  			create(17)
+  		end
+  		if !(params[:bmp_mc][:animal_id] == "") then
+  			create(18)
+  		end
+  		if !(params[:select] == nil) and params[:select][:"19"] == "1" then
+  			create(19)
+  		end
+      #flash[:error] = @bmp.errors.to_a
+  		redirect_to project_field_scenarios_path(@project, @field)
+	  else
+		    redirect_to scenarios_path
+	  end # end if save
   end
 ################################  SHOW  #################################
 # GET /bmps/1
@@ -250,10 +250,10 @@ class BmpsController < ApplicationController
   def create(bmpsublist)
     @bmplist_name = "create"
     @bmpsublist_name = "create"
-	msg = "OK"
+	  msg = "OK"
     @bmp = Bmp.new()
     @bmp.scenario_id = params[:scenario_id]
-	@bmp.bmpsublist_id = bmpsublist
+	  @bmp.bmpsublist_id = bmpsublist
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     #@irrigation = Irrigation.arel_table
     @climate_array = create_hash()
@@ -275,12 +275,12 @@ class BmpsController < ApplicationController
 			end
         #end
     #end
-	if !(params[:select] == nil) && params[:select][:"19"] == "1" && bmpsublist == 19 then
-		create_climate("create")
-	end
-	if msg == "OK" then
-	if !@bmp.save then return "Error saving BMP" end
-	end #if msg == OK
+  	if !(params[:select] == nil) && params[:select][:"19"] == "1" && bmpsublist == 19 then
+  		create_climate("create")
+  	end
+  	if msg == "OK" then
+  	   if !@bmp.save then return "Error saving BMP" end
+  	end #if msg == OK
   end
 
 ################################  UPDATE  #################################
@@ -342,18 +342,18 @@ class BmpsController < ApplicationController
     case @bmp.bmpsublist_id
       when 1
         return autoirrigation(type)
-      when 2
-        return fertigation(type)
+      #when 2
+      #  return fertigation(type)
       when 3
         return tile_drain(type)
       when 4
         return ppnd(type)
-      when 5
-        return ppds(type)
-      when 6
-        return ppde(type)
-      when 7
-        return pptw(type)
+      #when 5
+      #  return ppds(type)
+      #when 6
+      #  return ppde(type)
+      #when 7
+      #  return pptw(type)
       when 8
         return wetlands(type)
       when 9
@@ -362,8 +362,8 @@ class BmpsController < ApplicationController
         return stream_fencing(type)
       when 11
         return streambank_stabilization(type)
-      when 12
-        return riparian_forest(type)
+      #when 12
+      #  return riparian_forest(type)
       when 13
         return filter_strip(type)
       when 14
@@ -469,7 +469,7 @@ class BmpsController < ApplicationController
 				subarea.fdsf = params[:bmp_ai][:safety_factor]
 			end
 			@bmp.safety_factor = subarea.fdsf
-			if @bmp.depth == "1" then
+			if @bmp.depth == 1 then
 				subarea.idf4 = 0.0
 				subarea.bft = 0.0
 			else
@@ -580,34 +580,41 @@ class BmpsController < ApplicationController
 
 ### ID: 4
   def ppnd(type)
-    @bmp.width = params[:bmp_ppnd][:width]
-    @bmp.sides = params[:bmp_ppnd][:sides]
-    @bmp.area = params[:bmp_ppde][:area]
-	@bmp.depth = params[:bmp_cb1]
+    @bmp.depth = params[:bmp_cb2]
+    case @bmp.depth
+      when 4, 5
+        @bmp.width = params[:bmp_ppnd][:width]
+        @bmp.sides = params[:bmp_ppnd][:sides]
+        @bmp.area = 0
+      when 6
+        ppde(type)
+      when 7
+        pptw(type)
+    end
     return pads_pipes(type)
   end    # end method
 
 
 ### ID: 5
   def ppds(type)
-    @bmp.width = params[:bmp_ppds][:width]
-    @bmp.sides = params[:bmp_ppds][:sides]
+    @bmp.width = params[:bmp_ppnd][:width]
+    @bmp.sides = params[:bmp_ppnd][:sides]
     @bmp.area = 0
-	@bmp.depth = params[:bmp_cb1]
+	  @bmp.depth = params[:bmp_cb2]
     return pads_pipes(type)
   end   # end method
 
 
 ### ID: 6
   def ppde(type)
-    @bmp.width = params[:bmp_ppde][:width]
-    @bmp.sides = params[:bmp_ppde][:sides]
-    @bmp.area = params[:bmp_ppde][:area]
-	@bmp.depth = params[:bmp_cb1]
-	@bmp.save
-    msg = pads_pipes(type)
     case type
       when "create"
+		@bmp.width = params[:bmp_ppde][:width]
+		@bmp.sides = params[:bmp_ppde][:sides]
+		@bmp.area = params[:bmp_ppde][:area]
+		@bmp.depth = params[:bmp_cb1]
+		@bmp.save
+		msg = pads_pipes(type)
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
           create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
         end
@@ -618,20 +625,20 @@ class BmpsController < ApplicationController
       when "delete"
         delete_existing_subarea("PPDE")
     end
-    return msg
+    #return msg
   end   # end method
 
 
 ### ID: 7
   def pptw(type)
-    @bmp.width = params[:bmp_pptw][:width]
-    @bmp.sides = params[:bmp_pptw][:sides]
-    @bmp.area = params[:bmp_pptw][:area]
-	@bmp.depth = params[:bmp_cb1]
-	@bmp.save
-    msg = pads_pipes(type)
     case type
       when "create"
+      @bmp.width = params[:bmp_pptw][:width]
+      @bmp.sides = params[:bmp_pptw][:sides]
+      @bmp.area = params[:bmp_pptw][:area]
+      @bmp.depth = params[:bmp_cb1]
+      @bmp.save
+      msg = pads_pipes(type)
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
           create_subarea("PPTW", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
         end
@@ -642,15 +649,15 @@ class BmpsController < ApplicationController
       when "delete"
         delete_existing_subarea("PPTW")
     end
-    return pads_pipes(type)
+    #return pads_pipes(type)
   end   # end method
 
 
 ### ID: 8
   def wetlands(type)
-	@bmp.area = params[:bmp_wl][:area]
     case type
       when "create"
+		@bmp.area = params[:bmp_wl][:area]
 		if @bmp.save then
 			return create_new_subarea("WL", 8)
 		end
@@ -717,39 +724,39 @@ class BmpsController < ApplicationController
   def riparian_forest(type)
     case type
       when "create"
-		@bmp.area = params[:bmp_fs][:area]
-		@bmp.width = params[:bmp_fs][:width]
-		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
-		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
-		@bmp.crop_id = 1
-		@bmp.depth = params[:bmp_cb1]
-  		if @bmp.save then
-			return create_new_subarea("RF", 12)
-		end
+    		@bmp.area = params[:bmp_fs][:area]
+    		@bmp.width = params[:bmp_fs][:width]
+    		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
+    		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
+    		@bmp.crop_id = 1 #record not found error
+    		@bmp.depth = params[:bmp_cb3]
+    		if @bmp.save then
+  			  return create_new_subarea("RF", 12)
+		    end
       when "update"
         update_existing_subarea("RFFS", 12)
       when "delete"
-	    delete_existing_subarea("RF")
-	    return delete_existing_subarea("RFFS")
-    end
+	      delete_existing_subarea("RF")
+        return delete_existing_subarea("RFFS")
+      end
   end  # end riparian forest
 
 
 ### ID: 13
   def filter_strip(type)
-	@bmp.area = params[:bmp_fs][:area]
-	@bmp.width = params[:bmp_fs][:width]
-	@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
-	@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
-	@bmp.crop_id = params[:bmp_fs][:crop_id]
-	@bmp.depth = params[:bmp_cb1]
-	if @bmp.depth == 12 then
-		@bmp.crop_id = 1
-	else
-		@bmp.grass_field_portion = 1
-	end	
     case type
       when "create"
+		@bmp.area = params[:bmp_fs][:area]
+		@bmp.width = params[:bmp_fs][:width]
+		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
+		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
+		@bmp.crop_id = params[:bmp_fs][:crop_id]
+		@bmp.depth = params[:bmp_cb1]
+		if @bmp.depth == 12 then
+			@bmp.crop_id = 1
+		else
+			@bmp.grass_field_portion = 0.25
+		end	
   		if @bmp.save then
 			if @bmp.depth == 13 then
 				return create_new_subarea("FS", 13)
@@ -758,7 +765,7 @@ class BmpsController < ApplicationController
 			end
 		end
       when "update"
-		if @bmp.depth == 13 then
+		if params[:bmp_cb1] == "13" then
 		    update_existing_subarea("FS", 13)
 		else
 			update_existing_subarea("RFFS", 12)
@@ -770,18 +777,15 @@ class BmpsController < ApplicationController
 			delete_existing_subarea("RF")
 			return delete_existing_subarea("RFFS")
 		end
-    end
-  end
-
-  # end method
+  end   # end method
 
 
 ### ID: 14
   def waterway(type)
-	@bmp.width = params[:bmp_ww][:width]
-	@bmp.crop_id = params[:bmp_ww][:crop_id]
     case type
       when "create"
+		@bmp.width = params[:bmp_ww][:width]
+		@bmp.crop_id = params[:bmp_ww][:crop_id]
         @bmp.area = 0
   		if @bmp.save then
 	        return create_new_subarea("WW", 14)
@@ -921,6 +925,11 @@ class BmpsController < ApplicationController
   def shading(type)
     case type
       when "create"
+		@bmp.area = params[:bmp_fs][:area]
+		@bmp.width = params[:bmp_fs][:width]
+		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
+		@bmp.crop_id = params[:bmp_fs][:crop_id]
+		@bmp.depth = params[:bmp_cb1]
         return create_new_subarea("Sdg", 23)
       when "update"
         update_existing_subarea("Sdg", 23)
@@ -929,9 +938,7 @@ class BmpsController < ApplicationController
         update_wsa("+", subarea.wsa)
       #Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => "Sdg").first.delete
     end
-  end
-
-  # end method
+  end  # end method
 
 ################### METHODS FOR INDIVIDUAL SUBLIST ACTIONS ###################
   def edit_climate(climate, i)
@@ -1141,7 +1148,7 @@ class BmpsController < ApplicationController
     end
 
     if is_filled
-      @soils = Soil.where(:field_id => session[:field_id])
+      @soils = Soil.where(:field_id => params[:field_id])
       #i = 0
       #@inps = i
       @soils.each do |soil|
@@ -1150,7 +1157,7 @@ class BmpsController < ApplicationController
             @slope = soil.slope
           end
         end
-        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+        subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
         if subarea != nil then
           #if i == 0 then
             @inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
@@ -1161,7 +1168,7 @@ class BmpsController < ApplicationController
           end
         end
       end
-      create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(session[:field_id]).field_area, @bmp.id, @bmp.bmpsublist_id, false, "create")
+      create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, id, false, "create")
       return "OK"
     else
       return "OK"
