@@ -439,6 +439,7 @@ es:
     operation_file: Operaciones
     site_file: Sitio
     apex_file: Archivos APEX
+    aplcat_file: Archivos APLCAT
     layers: Capas
     state: Estado
   project:

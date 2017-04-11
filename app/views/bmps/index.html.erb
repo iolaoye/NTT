@@ -113,33 +113,33 @@
                 <td>
                   <% case bmp.depth%>
                     <% when 4 %>
-                      <%= radio_button_tag :bmp_cb1, "4", true  %> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb1, "5"%> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb1, "6"%> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb1, "7"%> <%= t('pdf.ppti') %>
+                      <%= radio_button_tag :bmp_cb2, "4", true  %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
                     <% when 5 %>
-                      <%= radio_button_tag :bmp_cb1, "4" %> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb1, "5", true %> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb1, "6"%> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb1, "7"%> <%= t('pdf.ppds') %>
+                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5", true %> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppds') %>
                     <% when 6 %>
-                      <%= radio_button_tag :bmp_cb1, "4" %> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb1, "5"%> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb1, "6", true %> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb1, "7"%> <%= t('pdf.ppti') %>
+                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6", true %> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
                     <% when 7 %>
-                      <%= radio_button_tag :bmp_cb1, "4" %> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb1, "5"%> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb1, "6"%> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb1, "7", true %> <%= t('pdf.ppti') %>
+                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7", true %> <%= t('pdf.ppti') %>
                     <% else %>
-                      <%= radio_button_tag :bmp_cb1, "4"%> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb1, "5" %> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb1, "6"%> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb1, "7"%> <%= t('pdf.ppti') %>
+                      <%= radio_button_tag :bmp_cb2, "4"%> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5" %> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
                     <%end%>
                 </td>
-              </tr>                            
+              </tr>
               <tr>
 					      <td class="indent">
 						      <%= t('bmp.width') + " " + t('bmp.ft') %>
@@ -159,7 +159,7 @@
 						          <%= text_field :bmp_ppnd, :area, :value => bmp.area %>
 					          </td>
 			          </tr>
-              <% else %>                
+              <% else %>
 			          <tr id = "tr_bmp_pp_area" style="display:none" >
 					          <td class="indent">
 						          <%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
@@ -256,15 +256,15 @@
                 <td>
                   <% case bmp.depth%>
                     <% when 13 %>
-                      <%= radio_button_tag :bmp_cb1, "13", true  %> <%= t('pdf.filter_strip') %>
-                      <%= radio_button_tag :bmp_cb1, "12"%> <%= t('pdf.riparian_forest') %>
+                      <%= radio_button_tag :bmp_cb3, "13", true  %> <%= t('pdf.filter_strip') %>
+                      <%= radio_button_tag :bmp_cb3, "12"%> <%= t('pdf.riparian_forest') %>
                     <% when 12 %>
-                      <%= radio_button_tag :bmp_cb1, "13" %> <%= t('pdf.filter_strip') %>
-                      <%= radio_button_tag :bmp_cb1, "12", true %> <%= t('pdf.riparian_forest') %>
+                      <%= radio_button_tag :bmp_cb3, "13" %> <%= t('pdf.filter_strip') %>
+                      <%= radio_button_tag :bmp_cb3, "12", true %> <%= t('pdf.riparian_forest') %>
                     <% else %>
-                      <%= radio_button_tag :bmp_cb1, "13"%> <%= t('pdf.filter_strip') %>
-                      <%= radio_button_tag :bmp_cb1, "12"%> <%= t('pdf.riparian_forest') %>
-                    <%end%>
+                      <%= radio_button_tag :bmp_cb3, "13"%> <%= t('pdf.filter_strip') %>
+                      <%= radio_button_tag :bmp_cb3, "12" %> <%= t('pdf.riparian_forest') %>
+                  <%end%>
                 </td>
               </tr>
               <tr id = "tr_fs_vegetation" <%= "style=display:none" if bmp.depth == 12%>>
