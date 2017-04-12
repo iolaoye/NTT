@@ -1211,7 +1211,7 @@ module SimulationsHelper
         items[1] = "Curve Number"
         values[1] = operation.opv2
 		#find if there are Pads & Pipes Bmps set up.
-        bmps_count = Bmp.where("bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7").count
+        bmps_count = Bmp.where("(bmpsublist_id == 4 OR bmpsublist_id == 5 OR bmpsublist_id == 6 OR bmpsublist_id == 7) AND scenario_id == " + params[:select_scenario][0]).count
         if bmps_count > 0 then
           apex_string += sprintf("%8.1f", (operation.opv2 * 0.9)) #curve number
         else
