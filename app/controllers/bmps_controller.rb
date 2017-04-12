@@ -1056,9 +1056,9 @@ class BmpsController < ApplicationController
   end # end method
 
 
-## USED FOR PADS AND PIPES FIELDS (ID: 4 - ID: 7)
+## USED FOR PADS AND PIPES FIELDS (ID: 4 to ID: 7)
   def pads_pipes(type)
-    @soils = Soil.where(:field_id => session[:field_id])
+    @soils = Soil.where(:field_id => params[:field_id])
     i = 0
     @soils.each do |soil|
       if soil.selected
@@ -1078,7 +1078,7 @@ class BmpsController < ApplicationController
 
         case type
           when "create", "update"
-            if @bmp.bmpsublist_id == 4
+            if @bmp.depth == 4
               subarea.pcof = 0.0
             else
               subarea.pcof = 0.5
