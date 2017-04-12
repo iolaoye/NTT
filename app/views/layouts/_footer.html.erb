@@ -68,7 +68,7 @@
                   <% end %>
                   <%if request.url.include?(url_for=("/fields?")) || request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/layers?")) || request.url.include?(url_for=("/list?")) ||  request.url.include?(url_for=("/scenarios?"))%>  
                       <%if request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/apex_soils?"))%>
-                          <li><%= image_tag('layers.png') %> <%= t('.soil_layer') %></li>
+                          <li><%= image_tag('layers.png') %> <%= t('soil.layer') %></li>
                       <% end %>
                       <%if !(request.url.include?(url_for=("/fields?"))) %>  
                           <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
@@ -85,7 +85,7 @@
                           <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
                       <% end %>
                       <%if request.url.include?(url_for=("/apex_soils"))%>            
-                          <li><%= image_tag('layers.png') %> <%= t('.soil_Layer') %></li>   
+                          <li><%= image_tag('layers.png') %> <%= t('soil.layer') %></li>   
                           <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
                       <% end %>
                       <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
@@ -103,7 +103,7 @@
                    <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
                    <li><%= link_to t("footer.about_ntt"), about_path(@user) %></li>
                    <li><%= link_to t("footer.help"), help_path("index", @user) %></li>
-                   <% unless ENV["APP_VERSION"] == "modified" %><li><div class="language">Language
+                   <% unless ENV["APP_VERSION"] == "modified" %><li><div class="language"><%= t('help.language') %>
                       <span class="tooltiptext">
                         <%= link_to t("languages.english"), :locale=>'en', :project_id => params[:project_id]%><br>
                         <%= link_to t("languages.spanish"), :locale=>'es', :project_id => params[:project_id]%>
