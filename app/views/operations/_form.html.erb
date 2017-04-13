@@ -17,7 +17,7 @@
 
   <div class="field">
     <%= label :crop_id, t('operation.crop') %>
-		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => 'Select crop', :selected => @operation.crop_id}, {:required => true} %>
+		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id}, {:required => true} %>
   </div>
   <div class="field">
 		<%= label :activity_id, t('scenario.operation') %>
@@ -332,8 +332,8 @@
   <% end %>
 
   <div class="actions">
-    <%= f.submit "Add more", :name => "add_more", :class => "btn btn-primary" %>
-    <%= f.submit "Finish", :name => "finish", :class => "btn btn-primary" %>
+    <%= f.submit t('submit.add_more'), :name => "add_more", :class => "btn btn-primary" %>
+    <%= f.submit t('submit.finish'), :name => "finish", :class => "btn btn-primary" %>
 	<%= link_to t('general.back'), list_project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
   </div>
 <% end %>

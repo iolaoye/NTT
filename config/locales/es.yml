@@ -407,6 +407,7 @@ es:
     copy: Copiar
     last_modified: Última Modificación
     download: Bajar
+    remove: Retirar
   welcome_note:
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
@@ -451,6 +452,7 @@ es:
     editing_project: 'Revisión de Proyecto'
     upload_error: 'No se pudo subir este archivo'
     group_project: 'Proyecto Especial'
+    project_name: 'Nombre del Proyecto'
   footer:
     instructions: Instrucciones
     contact_us: 'Contactarnos'
@@ -500,6 +502,8 @@ es:
     select_soil: Seleccione Suelo
     load_soil: Cargar Suelo
     create_soil: Crear Suelo
+    new: Nuevo
+    layer: Capa de Suelo
   layer:
     new_layer: Nueva Capa
     create_layer: Crear Capa
@@ -550,6 +554,8 @@ es:
     po4_p: 'Po4 p (0-1)'
     org_n: 'Org n (0-1)'
     org_p: 'Org p (0-1)'
+    add_list: Agregar a la lista
+    select_crop: Seleccionar el cultivo
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
@@ -606,6 +612,9 @@ es:
     select_animal: Seleccione el tipo de Animal
     manure_control: Manure Control
     pp: Almohadillas y Tuberias
+    autoirrigation: Irrigacion Automatica
+    autofertigation: Fertirrigacion Automatica
+    manure_control: Control de estiércol
   months:
     january: Enero
     february: Febrero
@@ -638,7 +647,7 @@ es:
     create_field: Crear Parcela
     max_slope: Inclinación Máxima
   watershed:
-    watershed: Cuenca
+    field_routing: Escenario de Enrutamiento de Parcela
     watershed_name: Nombre de la Cuenca
     new_watershed: Nueva Cuenca
     watershed_title: Listado de Cuencas
@@ -656,6 +665,9 @@ es:
     new_user: Usuario Nuevo
     savecontinue: Salvar y Continuar
     continue: Continuar
+    cancel: 'Cancelar'
+    add_more: Añadir más
+    finish: Terminar
   sessions:
     index:
       email: Correo Electrónico
@@ -783,6 +795,7 @@ es:
     understanding: La Comprensión de NTT
     understanding1: APEX
     understanding2: Descargo de responsabilidad del NTT
+    language: Idioma
   pdf:
     ntt_report: Nutrient Tracking Tool - Informe
     user: Usuario
@@ -926,7 +939,7 @@ es:
       pctbb: Proporción de carcasa a la carne deshuesada (%)
       ptdife: Proporción (para subproductos de la carne de vacuno) que se descontará en la estimación de la huella
       tnggbc: Número total de pastos pastoreados por el ganado
-      animal_paramters: Parámetros de los Animales
+      animal_parameters: Parámetros de los Animales
       animal_manure_parameters: Parámetros de abono animal
       animal_growth_parameters: Parámetros de crecimiento y nutrición de los animales
       environmental_parameters: Parámetros del medio ambiente
@@ -938,6 +951,11 @@ es:
       avg_rh: Humedad relativa diaria por cas mes
       grazing: Pastoreo
       supplement_parameters: Parameteros de suplemento
+  grazing:
+      type:
+      start_julian:
+      end_julian:
+      gwf:
   aplcat_tooltip:
       noc: Número total de vacas in la finca bajo el sistema vaca-ternera
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'
