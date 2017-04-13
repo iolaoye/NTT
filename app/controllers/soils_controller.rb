@@ -16,7 +16,7 @@ class SoilsController < ApplicationController
   def list
     @soils = Soil.where(:field_id => params[:id])
     @project = Project.find(params[:project_id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
 
     #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
     #add_breadcrumb @project.name
@@ -36,7 +36,7 @@ class SoilsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-    @soils = Soil.where(:field_id => session[:field_id])
+    @soils = Soil.where(:field_id => params[:field_id])
     @weather = @field.weather
 
     add_breadcrumb @project.name, project_path(@project)

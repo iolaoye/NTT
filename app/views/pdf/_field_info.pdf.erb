@@ -1,4 +1,4 @@
-<% @field = Field.find(session[:field_id]) %>
+<% @field = Field.find(params[:field_id]) %>
 <div class="group_header"><%=t('pdf.field_info')%></div>
     <div class="data_titles">
         <%=t('pdf.name')%>:</br>

@@ -4,14 +4,14 @@ class SubareasController < ApplicationController
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-	  @soils = Soil.where(:field_id => @field.id, :selected => true)
-	  if @soils != nil then
-		  subarea = Subarea.where(:soil_id => @soils[0].id).first
-		  if subarea != nil then
-		    session[:scenario_id] = subarea.scenario_id
-		  else
-		    session[:scenario_id] = 0
-		  end
+	@soils = Soil.where(:field_id => @field.id, :selected => true)
+	if @soils != nil then
+		subarea = Subarea.where(:soil_id => @soils[0].id).first
+		if subarea != nil then
+			session[:scenario_id] = subarea.scenario_id
+		else
+			session[:scenario_id] = 0
+		end
 	else
 		  session[:scenario_id] = 0
 	end
@@ -27,7 +27,7 @@ class SubareasController < ApplicationController
   # GET /subareas/1.json
   def show
     @subarea = Subarea.find(params[:id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @location = Location.where(:project_id => params[:project_id])
 
@@ -51,18 +51,18 @@ class SubareasController < ApplicationController
   # GET /subareas/1/edit
   def edit
     @subarea = Subarea.find(params[:id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
   end
 
   # POST /subareas
   # POST /subareas.json
   def create
-    @soils = Soil.where(:field_id => session[:field_id], :selected => true)
     session[:scenario_id] = params[:subarea][:scenario_id]
-	get_subareas()
     @field = Field.find(params[:field_id])
+    @soils = @field.soils.where(:selected => true)
 	@project = Project.find(params[:project_id])
+	get_subareas()
 	render "index"
   end
 
@@ -99,7 +99,7 @@ class SubareasController < ApplicationController
 	  i=1
 	  if session[:scenario_id] != 0 then
 		  @soils.each do |soil|
-			  subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, session[:scenario_id])   #no needed because subarea depends on soil
+			  subarea = soil.subareas.find_by_scenario_id(session[:scenario_id])   
 			  @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
 			  i+=1
 		  end
