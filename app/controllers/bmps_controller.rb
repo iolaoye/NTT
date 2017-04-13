@@ -78,7 +78,7 @@ class BmpsController < ApplicationController
 				end
 			end
 		end
-		bmp_list = 23
+		bmp_list = 19
 		if @field_type != false then
 			bmp_list = 19
 		end

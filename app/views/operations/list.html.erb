@@ -9,22 +9,20 @@
 
 <%= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@project, @field, @scenario), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'}, :class => 'btn btn-primary' %>
 <%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
-<% if session[:oper_type] == 0 %>
+<% if ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" ||  ENV["APP_VERSION"] == nil %>
 <%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
 <%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 
 <% @crops.each do |crop| %>
 <div class="panel panel-primary" id="expand_crop_<%= crop.id %>" onclick="show_crop(this)">
-  <div class="panel-heading"><h3><%= crop.name %> [+]</h3></div>
+  <div class="panel-heading"><h4><%= crop.name %> [+]</h4></div>
 </div>
 <div id="crop_<%= crop.id %>" style="display:none" onclick="hide_crop(this)">
 <div class="panel panel-primary">
-  <div class="panel-heading"><h3><%= crop.name %> [-]</h3></div>
+  <div class="panel-heading"><h4><%= crop.name %> [-]</h4></div>
 
   <% if @scenario.planting_operations(crop).any? %>
-  <div class="panel-body">
-    <p><h4>Planting</h4> </p>
-  </div>
+    <h4>Planting</h4> 
 
   <table class="table">
     <tr class="optable"><td class="optable"><b>Date</b></td><td class="optable"><b>Type</b></td><td class="optable"><b>Seeding amount (seeds/ac)</b></td><td class="optable"><b>Actions</b></td></tr>
@@ -195,6 +193,7 @@
 <%= link_to t('operation.save') + " " + t('operation.cropping_system'), download_project_field_scenario_operations_path(@project, @field, @scenario), :class => 'btn btn-primary' %><br><br>
 <%= link_to t('operation.open'), open_project_field_scenario_operations_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
 <%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
+<!-- <%= link_to t('general.change') + " " + t('general.format'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %> -->
 <%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 <div class="table-responsive">
   <div class="panel panel-default">

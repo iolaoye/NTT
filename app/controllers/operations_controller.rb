@@ -14,10 +14,9 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
-	debugger
-	if session[:oper_type] == nil then
-		session[:oper_type] = 0
-	end
+	#if session[:oper_type] == nil then
+		#session[:oper_type] = 0
+	#end
 
     add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb @field.field_name
