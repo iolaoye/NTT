@@ -842,7 +842,7 @@ module SimulationsHelper
 		#sLine = sprintf("%4d", @last_soil2-1)  #soil
 		sLine = sprintf("%4d", _subarea_info.inps)  #soil
 		if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
-			sLine += sprintf("%4d", 1) #operation
+			sLine += sprintf("%4d", _subarea_info.iops) #operation
 		else
 			#sLine += sprintf("%4d", @soil_number + 1)   #operation
 			sLine += sprintf("%4d", _subarea_info.iops)   #operation

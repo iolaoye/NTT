@@ -20,7 +20,7 @@ class FieldsController < ApplicationController
 # GET /locations
 # GET /locations.json
   def field_scenarios
-    session[:field_id] = params[:id]
+    #session[:field_id] = params[:id]
     redirect_to list_scenario_path
   end
 
@@ -28,7 +28,7 @@ class FieldsController < ApplicationController
 # GET /locations
 # GET /locations.json
   def field_soils
-    session[:field_id] = params[:id]
+    #session[:field_id] = params[:id]
     redirect_to list_soil_path(params[:id])
   end
 ################################  get list of fields   #################################
@@ -93,7 +93,7 @@ class FieldsController < ApplicationController
 # GET /fields/1.json
   def show
     session[:simulation] = "scenario"
-    session[:field_id] = params[:id]
+    #session[:field_id] = params[:id]
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:id])
 
@@ -190,8 +190,8 @@ class FieldsController < ApplicationController
     end
     respond_to do |format|
       if msg.eql?("OK") then
-        session[:field_id] = @field.id
-        #format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Field was successfully updated.' }
+        #session[:field_id] = @field.id
+        #format.html { redirect_to edit_weather_path(params[:field_id]), notice: 'Field was successfully updated.' }
 		    get_field_list(@field.location_id)
 		    format.html { redirect_to project_field_scenarios_path(@project, @field), notice: 'Field was successfully updated.' }
         format.json { head :no_content }

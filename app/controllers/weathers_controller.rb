@@ -76,7 +76,7 @@ include ScenariosHelper
 # GET /weathers/1
 # GET /weathers/1.json
   def show
-    @weather = Weather.find_by_field_id(session[:field_id])
+    @weather = Weather.find_by_field_id(params[:field_id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     if !(@weather == :nil) # no empty array
@@ -118,7 +118,7 @@ include ScenariosHelper
       end
     else
       @weather = Weather.new
-      @weather.field_id = session[:field_id]
+      @weather.field_id = params[:field_id]
       @weather.way_id = 0
       @weather.simulation_initial_year = 0
       @weather.simulation_final_year = 0
@@ -163,7 +163,7 @@ include ScenariosHelper
 		      end
       else
         @weather.way_id = 2
-        #redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
+        #redirect_to edit_weather_path(params[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
       end
     end
 

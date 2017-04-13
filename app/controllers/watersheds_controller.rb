@@ -7,7 +7,7 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
     @project = Project.find(params[:project_id])
-    #@field = Field.find(session[:field_id])
+    #@field = Field.find(params[:field_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @watersheds }
@@ -21,7 +21,7 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
     @project = Project.find(params[:project_id])
-    #@field = Field.find(session[:field_id])
+    #@field = Field.find(params[:field_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @watersheds }
@@ -63,8 +63,7 @@ class WatershedsController < ApplicationController
     watershed_scenarios.each do |p|
       @scenario = Scenario.find(p.scenario_id)
 	  @field = Field.find(p.field_id)
-      #session[:scenario_id] = p.scenario_id
-      #session[:field_id] = p.field_id
+      #params[:field_id] = p.field_id
       if msg.eql?("OK") then msg = create_weather_file(dir_name, p.field_id) else return msg end
       @soils = Soil.where(:field_id => p.field_id).where(:selected => true)
       if msg.eql?("OK") then msg = create_soils() else return msg end

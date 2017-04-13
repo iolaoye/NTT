@@ -13,8 +13,8 @@
 
 <% if ENV["APP_VERSION"] == "modified" %>
 <div class="page-header"><h1><!--<%= t('general.listing') + " " + t('soil.layers') %>-->Soil Layers</h1></div>
-<%= link_to t('general.back'), list_soil_path(session[:field_id]), :class => 'btn btn-primary' %>
-<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'btn btn-success' %><br><br>
+<%= link_to t('general.back'), list_soil_path(params[:field_id]), :class => 'btn btn-primary' %>
+<%= link_to t('general.continue'), list_scenario_path(params[:field_id]), :class => 'btn btn-success' %><br><br>
 
 <b><%= @soil.name %></b> <br><br>
   <div class="field">
@@ -109,8 +109,8 @@
 
 <div class="page-header"><h1><%= t('soil.soil') + " " + t('soil.layers') %></h1></div>
 <%= link_to t('general.new') + ' ' + t('soil.layer'), new_layer_path, :class => 'btn btn-primary' %>
-<%= link_to t('general.back') + " " + t('general.to') + " " + t('menu.soils'), field_soils_field_path(session[:field_id]), :class => 'btn btn-primary' %>
-<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'btn btn-success' %>
+<%= link_to t('general.back') + " " + t('general.to') + " " + t('menu.soils'), field_soils_field_path(params[:field_id]), :class => 'btn btn-primary' %>
+<%= link_to t('general.continue'), list_scenario_path(params[:field_id]), :class => 'btn btn-success' %>
 <br><br>
 <div class="table-responsive">
 	<div class="panel panel-default">

@@ -2,7 +2,7 @@ class SitesController < ApplicationController
   # GET /sites
   # GET /sites.json
   def index
-    @sites = Site.where(:field_id => session[:field_id])
+    @sites = Site.where(:field_id => params[:field_id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
 
@@ -16,7 +16,7 @@ class SitesController < ApplicationController
   # GET /sites/1.json
   def show
     @site = Site.find_by_field_id(params[:id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
 
     respond_to do |format|
@@ -39,7 +39,7 @@ class SitesController < ApplicationController
   # GET /sites/1/edit
   def edit
     @site = Site.find(params[:id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
   end
 

@@ -3,7 +3,7 @@ class Soil < ActiveRecord::Base
   #associations
      belongs_to :field
 	 has_many :layers, :dependent => :destroy
-	 has_one :subarea, :dependent => :destroy
+	 has_many :subareas, :dependent => :destroy
 	 has_many :results, :dependent => :destroy
 	 has_many :soil_operations, :dependent => :destroy
 	 has_many :charts, :dependent => :destroy

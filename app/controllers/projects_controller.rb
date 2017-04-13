@@ -282,14 +282,16 @@ class ProjectsController < ApplicationController
   	#renumber the subarea inps, iops, iown
   	@project.location.fields.each do |field|
   		field.soils.each do |soil|
-  			if soil.selected && !soil.subarea.blank?
-  				soil.subarea.iops = @iops1
-  				soil.subarea.inps = @iops1
-  				soil.subarea.iow = @iops1
-  				@iops1 +=1
-  				if !soil.subarea.save
-  					msg = "Error renumber subareas"
-  				end
+  			if soil.selected then
+				soil.subareas.each do |subarea|
+  					subarea.iops = @iops1
+  					subarea.inps = @iops1
+  					subarea.iow = @iops1
+  					@iops1 +=1
+  					if !subarea.save
+  						msg = "Error renumber subareas"
+  					end
+				end # end subareas.each
   			end   # end if soil selected
   		end   # end soils.each
   	end  # end field.each
