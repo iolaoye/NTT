@@ -14,8 +14,12 @@
 <%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 
 <% @crops.each do |crop| %>
+<div class="panel panel-primary" id="expand_crop_<%= crop.id %>" onclick="show_crop(this)">
+  <div class="panel-heading"><h3><%= crop.name %> [+]</h3></div>
+</div>
+<div id="crop_<%= crop.id %>" style="display:none" onclick="hide_crop(this)">
 <div class="panel panel-primary">
-  <div class="panel-heading"><h3><%= crop.name %></h3></div>
+  <div class="panel-heading"><h3><%= crop.name %> [-]</h3></div>
 
   <% if @scenario.planting_operations(crop).any? %>
   <div class="panel-body">
@@ -183,6 +187,7 @@
 
 
 </div>
+</div>
 <% end %>
 
 <% else %>
@@ -282,3 +287,25 @@
 <br>
 
 <% end %>
+
+<script>
+
+function show_crop(ele) {
+  var crop_id = ele.id.substr(12, ele.length)
+
+  var crop_show_div = document.getElementById("crop_" + crop_id);
+  crop_show_div.style = "display:block"
+  ele.style = "display:none"
+
+  }
+
+function hide_crop(ele) {
+  var crop_id = ele.id.substr(5, ele.length)
+
+  var crop_show_div = document.getElementById("expand_crop_" + crop_id);
+  crop_show_div.style = "display:block"
+  ele.style = "display:none"
+
+  }
+
+  </script>
