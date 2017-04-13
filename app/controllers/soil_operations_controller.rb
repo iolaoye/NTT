@@ -6,11 +6,11 @@ class SoilOperationsController < ApplicationController
     @project = Project.find(params[:project_id])
   	@soil = 0
   	@scenario = 0
-    soils = Soil.where(:field_id => session[:field_id])
+    soils = Soil.where(:field_id => params[:field_id])
   	if soils != nil then
   		@soil = soils[0].id
   	end
-  	scenarios = Scenario.where(:field_id => session[:field_id])
+  	scenarios = Scenario.where(:field_id => params[:field_id])
   	if scenarios != nil then
   		@scenario = scenarios[0].id
   	end
@@ -46,7 +46,7 @@ class SoilOperationsController < ApplicationController
   # GET /soil_operations/1/edit
   def edit
     @soil_operation = SoilOperation.find(params[:id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
   end
 

@@ -33,7 +33,7 @@ class Bmp < ActiveRecord::Base
     validates :slope_reduction, numericality: { greater_than: 0,  less_than_or_equal_to: 100 }, if: "bmpsublist_id == 16"
     validates :sides, numericality: { greater_than: 0, less_than_or_equal_to: 4.0 }, if: "bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7"
     #validates_uniqueness_of :bmp_id, :scope => :scenario_id, :message => "of this group already exists", if: "bmp_id == 1 || bmp_id == 8"
-    validates_uniqueness_of :bmp_id, :scope => :scenario_id, if: :pad_and_pipes_exists
+    #validates_uniqueness_of :bmp_id, :scope => :scenario_id, if: :pad_and_pipes_exists
     #validate :only_one_from_group, if: 'bmpsublist_id > 3 && bmpsublist_id < 8 || bmpsublist_id > 11 && bmpsublist_id < 16'
   #Functions
   def pad_and_pipes_exists

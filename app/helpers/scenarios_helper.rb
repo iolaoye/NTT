@@ -170,7 +170,7 @@ module ScenariosHelper
 
 		#the default values are going to be overwritten if the addition is a buffer
 		case bmpsublist_id
-			when 6    #PPDE
+			when 6, 7    #PPDE
 				#line 2
 				subarea.number = 106
 				subarea.iops = soil_id
@@ -179,28 +179,31 @@ module ScenariosHelper
 				subarea.rchl = soil_area * AC_TO_KM2 / temp_length    #soil_area here is the reservior area
 				#line 4
 				subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
+				# reduce the area of others subareas proportionally
+				update_wsa("-", subarea.wsa)
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 				subarea.chs = subarea.slp
+				subarea.slp *= 0.25
 				subarea.chn = 0.05
 				subarea.upn = 0.41
 				subarea.ffpq = 0.8
 				#line 5
 				subarea.rchd = 0.1
 				subarea.rcbw = 0.1
-				subarea.rctw = 0.1
-				subarea.rchs = subarea.slp
+				subarea.rctw = 0.2
+				subarea.rchs = subarea.chs
 				subarea.rchn = 0.15
 				subarea.rchk = 0.01
 				#line 6
-				subarea.rsee = 0.01
+				subarea.rsee = 0.10
 				subarea.rsae = subarea.wsa
 				subarea.rsve = 75
 				subarea.rsep = 0.1
 				subarea.rsap = subarea.wsa
 				subarea.rsvp = 25
 				subarea.rsrr = 1
-				subarea.rsv = 1
+				subarea.rsv = 0
 				subarea.rsys = 300
 				subarea.rsyn = 300
 				#line 7
@@ -648,7 +651,7 @@ module ScenariosHelper
       when 1 #planting take heat units
 		#this code will calculate Heat Unist base on location and crop - Was taken back to take from database- Ali 11/2/2016 
         #client = Savon.client(wsdl: URL_Weather)
-        #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
+        #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(params[:field_id]).latitude, "nlon" => Weather.find_by_field_id(params[:field_id]).longitude})
         #opv1 = response.body[:get_hu_response][:get_hu_result]
 		#this code will take Heat Units from database according to Ali 11/2/216
 		opv1 = Crop.find(operation.crop_id).heat_units

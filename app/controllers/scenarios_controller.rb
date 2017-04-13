@@ -25,10 +25,10 @@ class ScenariosController < ApplicationController
 # GET /1/scenarios.json
   def list
     @errors = Array.new
-    @scenarios = Scenario.where(:field_id => session[:field_id])
+    @scenarios = Scenario.where(:field_id => params[:field_id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-    #@field = Field.find(session[:field_id])
+    #@field = Field.find(params[:field_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @scenarios }
@@ -129,7 +129,7 @@ class ScenariosController < ApplicationController
     @watershed.save
     respond_to do |format|
       if @scenario.save
-        @scenarios = Scenario.where(:field_id => session[:field_id])
+        @scenarios = Scenario.where(:field_id => params[:field_id])
         #add new scenario to soils
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
         add_scenario_to_soils(@scenario)
@@ -190,8 +190,8 @@ class ScenariosController < ApplicationController
     ActiveRecord::Base.transaction do
 		msg = run_scenario
 		@scenarios = Scenario.where(:field_id => params[:field_id])
-		@project_name = Project.find(session[:project_id]).name
-		@field_name = Field.find(session[:field_id]).field_name
+		@project_name = Project.find(params[:project_id]).name
+		@field_name = Field.find(params[:field_id]).field_name
 		respond_to do |format|
 		  if msg.eql?("OK") then
 			flash[:notice] = t('scenario.scenario') + " " + t('general.success')

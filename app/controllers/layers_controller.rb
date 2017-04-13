@@ -128,7 +128,7 @@ class LayersController < ApplicationController
           format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil), notice: t('models.layer') + "" + t('notices.created') }
           format.json { render json: @layer, status: :created, location: @layer }
         elsif params[:finish] == "Finish" && params[:add_more] == nil
-          format.html { redirect_to list_scenario_path(session[:field_id]), notice: t('models.layer') + "" + t('notices.created') }
+          format.html { redirect_to list_scenario_path(params[:field_id]), notice: t('models.layer') + "" + t('notices.created') }
           format.json { render json: @layer, status: :created, location: @layer }
         end
       else

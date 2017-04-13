@@ -18,7 +18,7 @@
   def show
     @project = Project.find(params[:project_id])
     @soil = Soil.find(params[:id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
     @location = Location.where(:project_id => params[:project_id])
     respond_to do |format|
       format.html # show.html.erb
@@ -41,7 +41,7 @@
   def edit
     @project = Project.find(params[:project_id])
     @soil = Soil.find(params[:id])
-    @field = Field.find(session[:field_id])
+    @field = Field.find(params[:field_id])
     @location = Location.where(:project_id => params[:project_id])
   end
 

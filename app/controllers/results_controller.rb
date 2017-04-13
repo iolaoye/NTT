@@ -359,9 +359,9 @@ class ResultsController < ApplicationController
 
   def get_chart_serie(scenario_id, month_or_year)
     if month_or_year == 1 then #means chart is annual
-      chart_values = Chart.select("month_year, value").where("field_id == " + session[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12")
+      chart_values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12")
     else #means chart is monthly average
-      chart_values = Chart.select("month_year, value").where("field_id == " + session[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")
+      chart_values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")
     end
     charts = Array.new
     chart_values.each do |c|
