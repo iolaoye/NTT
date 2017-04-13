@@ -566,13 +566,17 @@ class BmpsController < ApplicationController
 
 ### ID: 4
   def ppnd(type)
-  debugger
-    @bmp.depth = params[:bmp_cb2]
-    case @bmp.depth
+	if type == "create" then
+		pad_and_pipe = params[:bmp_cb2].to_i
+	else
+		pad_and_pipe = @bmp.depth
+	end
+    case pad_and_pipe
       when 4, 5
         @bmp.width = params[:bmp_ppnd][:width]
         @bmp.sides = params[:bmp_ppnd][:sides]
         @bmp.area = 0
+		@bmp.depth = params[:bmp_cb2]
       when 6
         ppde(type)
       when 7
@@ -599,7 +603,7 @@ class BmpsController < ApplicationController
 		@bmp.width = params[:bmp_ppnd][:width]
 		@bmp.sides = params[:bmp_ppnd][:sides]
 		@bmp.area = params[:bmp_ppnd][:area]
-		#@bmp.depth = params[:bmp_cb2]
+		@bmp.depth = params[:bmp_cb2]
 		@bmp.save
 		msg = pads_pipes(type)
 		@iops = @field.soils.count
@@ -621,13 +625,12 @@ class BmpsController < ApplicationController
 
 ### ID: 7
   def pptw(type)
-  debugger
     case type
       when "create"
 		  @bmp.width = params[:bmp_ppnd][:width]
 		  @bmp.sides = params[:bmp_ppnd][:sides]
 		  @bmp.area = params[:bmp_ppnd][:area]
-		  #@bmp.depth = params[:bmp_cb2]
+		  @bmp.depth = params[:bmp_cb2]
 		  @iops = @field.soils.count
 		  @inps = @field.soils.count
 		  if @bmp.save then
@@ -643,7 +646,6 @@ class BmpsController < ApplicationController
           update_existing_subarea("PPTW")
         end
       when "delete"
-	  debugger
         delete_existing_subarea("PPTW")
     end
     #return pads_pipes(type)
@@ -1228,7 +1230,6 @@ class BmpsController < ApplicationController
   end
 
   def delete_existing_subarea(name)
-  debugger
     subarea = Subarea.find_by_scenario_id_and_subarea_type(params[:scenario_id], name)
 	if !(subarea == nil) then
 		return update_wsa("+", subarea.wsa)
