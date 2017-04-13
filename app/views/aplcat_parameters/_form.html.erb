@@ -256,6 +256,6 @@
   <div class="actions">
     <%= hidden_field_tag(:type, @type) %>
     <%= f.submit %>
-    <%= link_to 'Back', project_field_scenarios_path(@project, @field)  %>
+    <%= link_to t('general.back'), project_field_scenarios_path(@project, @field)  %>
   </div>
 <% end %>

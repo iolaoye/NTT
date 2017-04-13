@@ -553,6 +553,7 @@ en:
     org_n: 'Org n (0-1)'
     org_p: 'Org p (0-1)'
     add_list: Add to list
+    select_crop: Select crop
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
@@ -609,6 +610,9 @@ en:
     select_animal: Select Animal Type
     manure_control: Manure Control
     pp: Pads and Pipes
+    autoirrigation: Autoirrigation
+    autofertigation: Autofertigation
+    manure_control: Manure Control
   months:
     january: January
     february: February
@@ -663,6 +667,8 @@ en:
     savecontinue: Save and Continue
     continue: Continue
     cancel: Cancel
+    add_more: Add more
+    finish: Finish
   sessions:
     index:
       email: Email
@@ -934,7 +940,7 @@ en:
       pctbb: proportion of carcass to boneless beef (%)
       ptdife: Proportion (for beef by-products) to be discounted in footprint estimation
       tnggbc: Total number of grasses grazed by cattle
-      animal_paramters: ANIMAL PARAMETERS
+      animal_parameters: ANIMAL PARAMETERS
       animal_manure_parameters: Animal Manure Parameters
       animal_growth_parameters: Animal Growth and Nutrition Parameters
       environmental_parameters: Environmental Parameters
@@ -948,6 +954,11 @@ en:
       mm_type: Enter 1 to use IPCC tier 2 and 2 to use a fraction of manure to estimate manure methane
       fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excreted)
       supplement_parameters: Supplement Parameters
+  grazing:
+      type:
+      start_julian:
+      end_julian:
+      gwf:
   aplcat_tooltip:
       noc: 'Total number of Cows in the farm under Cow-Calf system'
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'

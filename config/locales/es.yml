@@ -555,6 +555,7 @@ es:
     org_n: 'Org n (0-1)'
     org_p: 'Org p (0-1)'
     add_list: Agregar a la lista
+    select_crop: Seleccionar el cultivo
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
@@ -611,6 +612,9 @@ es:
     select_animal: Seleccione el tipo de Animal
     manure_control: Manure Control
     pp: Almohadillas y Tuberias
+    autoirrigation: Irrigacion Automatica
+    autofertigation: Fertirrigacion Automatica
+    manure_control: Control de estiércol
   months:
     january: Enero
     february: Febrero
@@ -662,6 +666,8 @@ es:
     savecontinue: Salvar y Continuar
     continue: Continuar
     cancel: 'Cancelar'
+    add_more: Añadir más
+    finish: Terminar
   sessions:
     index:
       email: Correo Electrónico
@@ -933,7 +939,7 @@ es:
       pctbb: Proporción de carcasa a la carne deshuesada (%)
       ptdife: Proporción (para subproductos de la carne de vacuno) que se descontará en la estimación de la huella
       tnggbc: Número total de pastos pastoreados por el ganado
-      animal_paramters: Parámetros de los Animales
+      animal_parameters: Parámetros de los Animales
       animal_manure_parameters: Parámetros de abono animal
       animal_growth_parameters: Parámetros de crecimiento y nutrición de los animales
       environmental_parameters: Parámetros del medio ambiente
@@ -945,6 +951,11 @@ es:
       avg_rh: Humedad relativa diaria por cas mes
       grazing: Pastoreo
       supplement_parameters: Parameteros de suplemento
+  grazing:
+      type:
+      start_julian:
+      end_julian:
+      gwf:
   aplcat_tooltip:
       noc: Número total de vacas in la finca bajo el sistema vaca-ternera
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'
