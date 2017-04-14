@@ -858,6 +858,8 @@
           validationsBmpFs(0);
           $('#select_13').prop('checked', true);
           $('#13').show();
+          $('input[type=radio][id=bmp_cb3_13]').prop("checked", true);
+          $("#tr_grass_field_portion").hide();
           for(n = 0; n < sf_inputs.length; n++) {
             validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
           }
@@ -916,6 +918,7 @@
           $("tbody#12 input, tbody#14 input, tbody#15 input").val("");
           $("tbody#14 select, tbody#15 select").val([]);
         }
+
         validateBmpFs.addValidation("bmp_cb3", "selone", "A selection is required.");
         $('input[type=radio][name=bmp_cb3]').change(function() {
           validateBmpFs.clearAllValidations();
