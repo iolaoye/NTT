@@ -78,7 +78,7 @@ class BmpsController < ApplicationController
 				end
 			end
 		end
-		bmp_list = 23
+		bmp_list = 19
 		if @field_type != false then
 			bmp_list = 19
 		end
@@ -178,7 +178,7 @@ class BmpsController < ApplicationController
   		if params[:bmp_ts][:id] == "1" then
   			create(17)
   		end
-  		if !(params[:bmp_mc][:animal_id] == "") then
+  		if !(params[:bmp_mc][:animal_id] == "") && !(params[:bmp_mc][:animal_id] == nil) then
   			create(18)
   		end
   		if !(params[:select] == nil) and params[:select][:"19"] == "1" then

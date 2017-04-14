@@ -1551,52 +1551,43 @@ module SimulationsHelper
     return sat_cond_out
   end
 
-  #def run_scenario()
-    #path = File.join(APEX, "APEX" + session[:session_id])
-    #file_name = File.join(path, "APEX001.NTT")
-    #File.delete(file_name) if File.exist?(file_name)
-    #file_name = File.join(path, "APEX001.msw")  #monthly values for flow, nutrients, and sediment
-    #File.delete(file_name) if File.exist?(file_name)
-    #file_name = File.join(path, "APEX001.mws")  #monthly values for flow, nutrients, and sediment
-    #File.delete(file_name) if File.exist?(file_name)
-    #curret_directory = Dir.pwd
-    #Dir.chdir path
-    #result = system("apex0806.exe")
-    #Dir.chdir curret_directory
-  #end
-
   def read_apex_results(msg)
-    #@watershed = Watershed.new
-    #@watershed.name = "BEFORE"
-    #@watershed.save
-    #ActiveRecord::Base.transaction do
-      #begin
-        #@watershed = Watershed.new
-        #@watershed.name = "AFTER"
-        #@watershed.save
+    ActiveRecord::Base.transaction do
+      begin
+	    #clean all of the results exiting for this scenario.
+		if session[:simulation] == "scenario" then
+			# clean results for scenario to avoid keeping some results from previous simulation
+			Result.where(:scenario_id => params[:select_scenario][0], :field_id => params[:field_id]).destroy_all
+			Chart.where(:scenario_id => params[:select_scenario][0], :field_id => params[:field_id]).destroy_all
+		else
+			#todo - clean results for watershed to avoid keeping some results from previous simulation
+			#Result.where(:watershed_id => params[:select_scenario][0]).destroy_all
+		end
         ntt_apex_results = Array.new
-        #todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
+        #todo check this with new projects. Check if the simulation_initial_year has the 5 years controled.
         start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results(apex_start_year, msg)
         msg = load_crop_results(apex_start_year)
-      #rescue => e
-        #msg = "Failed, Error: " + e.inspect
-        #raise ActiveRecord::Rollback
-      #ensure
+      rescue => e
+        msg = "Failed, Error: " + e.inspect
+        raise ActiveRecord::Rollback
+      ensure
         return msg
-      #end
-    #end
+      end
+    end
   end
 
   def load_results(apex_start_year, data)
     msg = "OK"
     results_data = Array.new
-    oneResult = Struct.new(:sub1, :year, :flow, :qdr, :surface_flow, :sed, :ymnu, :orgp, :po4, :orgn, :no3, :qdrn, :qdrp, :qn, :dprk, :irri, :pcp)
+    oneResult = Struct.new(:sub1, :year, :flow, :qdr, :surface_flow, :sed, :ymnu, :orgp, :po4, :orgn, :no3, :qdrn, :qdrp, :qn, :dprk, :irri, :pcp, :prkn, :n2o)
     sub_ant = 99
     irri_sum = 0
     dprk_sum = 0
+	prkn_sum = 0
+	n2o_sum = 0
     pcp = 0
     total_subs = 0
     i=1
@@ -1630,9 +1621,13 @@ module SimulationsHelper
         one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
         one_result.irri = tempa[237, 8].to_f * MM_TO_IN
         one_result.pcp = tempa[229, 8].to_f * MM_TO_IN
+        one_result.prkn = tempa[13, 9].to_f * MM_TO_IN
+        one_result.n2o = tempa[153, 9].to_f * MM_TO_IN
         if subs == 0 then
           one_result.dprk = dprk_sum / total_subs
           one_result.irri = irri_sum / total_subs
+          one_result.prkn = prkn_sum / total_subs
+          one_result.n2o = n2o_sum / total_subs
           one_result.pcp = pcp / total_subs
           irri_sum = 0
           dprk_sum = 0
@@ -1663,6 +1658,8 @@ module SimulationsHelper
         else
           irri_sum += one_result.irri
           dprk_sum += one_result.dprk
+          prkn_sum += one_result.prkn
+          n2o_sum += one_result.n2o
           pcp += one_result.pcp
         end  # end if sub == 0
 
