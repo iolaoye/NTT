@@ -28,16 +28,15 @@ class WatershedsController < ApplicationController
   end
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
-  def new_scenario
-    @scenarios = Scenario.where(:field_id => 0)
+  def new_scenario(id)
 	watershed = Watershed.find(params[:id])
     @watershed_name = watershed.name
-    item = WatershedScenario.where(:field_id => params[:field][:id], :scenario_id => params[:scenario][:id], :watershed_id => params[:id]).first
+    item = WatershedScenario.where(:field_id => params[:field][id], :scenario_id => params[:scenario][id], :watershed_id => params[:id]).first
     respond_to do |format|
       if item == nil
         @new_watershed_scenario = WatershedScenario.new
-        @new_watershed_scenario.field_id = params[:field][:id]
-        @new_watershed_scenario.scenario_id = params[:scenario][:id]
+        @new_watershed_scenario.field_id = params[:field][id]
+        @new_watershed_scenario.scenario_id = params[:scenario][id]
         @new_watershed_scenario.watershed_id = params[:id]
         if @new_watershed_scenario.save
           return "saved"
@@ -56,7 +55,7 @@ class WatershedsController < ApplicationController
   def simulate
 	session[:simulation] = 'watershed'
     @project = Project.find(params[:project_id])
-    @watershed_id = params[:select_watershed][0]
+    @watershed_id = params[:id]
     @dtNow1 = Time.now.to_s
     dir_name = APEX + "/APEX" + session[:session_id]
     if !File.exists?(dir_name) 
@@ -138,7 +137,7 @@ class WatershedsController < ApplicationController
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @watershed.save
-        format.html { redirect_to project_watershed_watershed_scenarios_path(@project, @watershed), notice: t('watershed.watershed') + " " + t('general.created') }
+        format.html { redirect_to  project_watersheds_path(@project), notice: t('watershed.watershed') + " " + t('general.created') }
         format.json { render json: @watershed, status: :created, location: @watershed }
       else
         format.html { render action: "new" }
@@ -151,11 +150,19 @@ class WatershedsController < ApplicationController
   # PATCH/PUT /watersheds/1
   # PATCH/PUT /watersheds/1.json
   def update
-	new_scenario()
-	@project = Project.find(Watershed.find(params[:id]).project_id)
+    #find the number for the collection
+	for i in 1..20
+		id = "id" + i.to_s
+		if !(params[:field][id] == nil) then
+			break
+		end
+	end
+	status = new_scenario(id)
 	@project = Project.find(Location.find(Watershed.find(params[:id]).location_id).project_id)
-	@watersheds = Watershed.where(:location_id => @project.location.id)
-	redner "index"
+    @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
+    @watersheds = Watershed.where(:location_id => session[:location_id])
+	params[:project_id] = @project.id
+    render "index"
   end
 
   ################################ destroy #################################
@@ -163,16 +170,16 @@ class WatershedsController < ApplicationController
   # DELETE /watersheds/1.json
   def destroy
     @watershed = Watershed.find(params[:id])
-	project_id = Location.find(Watershed.find(params[:id]).location_id).project_id
+	@project = Project.find(Location.find(Watershed.find(params[:id]).location_id).project_id)
 
     if @watershed.destroy
       flash[:notice] = t('models.watershed') + " " + @watershed.name + t('notices.deleted')
     end
 	
-    respond_to do |format|
-      format.html { redirect_to watersheds_path(:project_id => project_id) }
-      format.json { head :no_content }
-    end
+    @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
+    @watersheds = Watershed.where(:location_id => session[:location_id])
+	params[:project_id] = @project.id
+    render "index"
   end
 
   private

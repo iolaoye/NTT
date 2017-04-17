@@ -7,65 +7,86 @@
 
 <div class="page-header"><h1>Field Routing Scenarios</h1></div>
 <%= link_to t('watershed.new'), new_project_watershed_path(@project.id), :class => "btn btn-primary" %>
-
-<% if @watersheds.count > 0 %>
-	<%= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
-<% end %>
+	<% if @watersheds.count > 0 %>
+		<%#= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
+		<%#= link_to t('scenario.simulate') + ' ' + 'NTT', simulate_project_watersheds_path(@project.id), :class => "btn btn-primary" %>
+	<% end %>
 <%= hidden_field_tag( :project_id, @project.id) %>
+<% j = 0 %>
 <% @watersheds.each do |watershed| %>
-<%= form_for(watershed) do |f| %>
-	<div class="panel panel-primary" id="expand_crop_<%= watershed.id %>" onclick="show_crop(<%=watershed.id%>)">
-	  <div class="panel-heading"><h4><%= watershed.name %> [+]</h4></div>
-	</div>
-	<div class="panel panel-primary" id="hide_crop_<%= watershed.id %>" style="display:none" onclick="hide_crop(<%=watershed.id%>)">
-	  <div class="panel-heading"><h4><%= watershed.name %> [-]</h4></div>
-	</div>
-	<div id="crop_<%= watershed.id %>" style="display:none">
-		<div class="panel panel-primary">
-			  <% @watershed_scenarios = WatershedScenario.where(:watershed_id => watershed.id ) %>
-			  <% if !(@watershed_scenarios.blank? || @watershed_scenarios == nil) %>
-				  <% @watershed_scenarios.each do |ws| %>
-		<table class='table table-striped'>
-			<thead>
-			  <tr>
-    			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
-    			<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
-    			<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
-  			  </tr>
-			</thead>
-			<tbody>
-  			<% i=1 %>
-  			<% @watershed_scenarios.each do |watershed_scenario| %>
-    			<% if (i % 2  == 0) %>
-      				<tr class="gvRowStyleEven">
-    			<% else %>
-      				<tr class="gvRowStyleOdd">
-    			<% end %>
-        			<td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
-        			<td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
-        			<td class="gvCellStyleCheckbox">
-          				<%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
-        			</td>
-      			</tr>
-  				<% i = i + 1 %>
-  			<% end %>
-			</tbody>
-		</table>
-				  <% end %>
-			  <% end %>
-  			  <table>
+	<% j = j + 1 %>
+	<% sim = t('scenario.simulate') + '-NTT' %>
+	<%= form_for(watershed) do |f| %>
+	  <div class="panel panel-primary">
+		<div class="panel panel-primary" id="expand_crop_<%= watershed.id %>">
+		  <div class="panel-heading">
+			<table>
 				<tr>
-					<td><%=  t('menu.fields') %></td>
-					<td><%= collection_select :field, :id, Field.where(:location_id => @project.location.id), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
-					<td><%= t('menu.scenarios') %></td>
-					<td><%= collection_select :scenario, :id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
- 					<td class='action'><%#= submit_tag t('watershed_scenario.add_to') + " " + watershed.name, :class => "btn btn-primary" %></td>
-					<td> <%= link_to t('watershed_scenario.add_to') + " " + watershed.name, new_scenario_project_watershed_path(@project, watershed), :class => "btn btn-primary" %>  </td>
-<%= f.submit "Finish", :name => "finish", :class => "btn btn-primary" %>				</tr>
-			  </table>
+					<td class="pointer"  onclick="show_crop(<%=watershed.id%>)"><h4 style="cursor:pointer"><%= watershed.name %> [+]</h4></td>
+					<td class="col-md-1 text-rigth", title= <%= sim %>><%= link_to image_tag("run.png"), simulate_project_watershed_path(@project.id, watershed), data: {disable_with: 'Please wait. NTT simulation in progress . . .'} %></td>
+					<td class="col-md-1 text-rigth"><%= link_to image_tag("delete.png"), watershed, method: :delete, data: { confirm: t('general.confirm') } %></td>
+				</tr>
+			</table>
+		  </div>
 		</div>
-	</div>
-<%end%>
+		<div class="panel panel-primary" id="hide_crop_<%= watershed.id %>" style="display:none">
+		  <div class="panel-heading">
+			<table>
+				<tr>
+					<td class="pointer"  onclick="hide_crop(<%=watershed.id%>)"><h4 style="cursor:pointer"><%= watershed.name %> [-]</h4></td>
+					<td class="col-md-1 text-rigth"><%= link_to image_tag("run.png"), simulate_project_watershed_path(@project.id, watershed), data: {disable_with: 'Please wait. NTT simulation in progress . . .'} %></td>
+					<td class="col-md-1 text-rigth"><%= link_to image_tag("delete.png"), watershed, method: :delete, data: { confirm: t('general.confirm') } %></td>
+				</tr>
+			</table>
+		  </div>
+		</div>
+		<div id="crop_<%= watershed.id %>" style="display:none">
+			<div class="panel panel-primary">
+  				  <table style="margin-rigth: 15px">
+					<tr>
+						<td><%=  t('menu.fields') %></td>
+						<td><%= collection_select :field, "id"  + j.to_s, Field.where(:location_id => @project.location.id), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
+						<td><%= t('menu.scenarios') %></td>
+						<td><%= collection_select :scenario, "id" + j.to_s, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
+ 						<td class='action'><%#= submit_tag t('watershed_scenario.add_to') + " " + watershed.name, :class => "btn btn-primary" %></td>
+						<td> <%= f.submit t('watershed_scenario.add_to') + " " + watershed.name, :name => "finish", :class => "btn btn-primary" %></td>
+					</tr>
+				  </table>
+				  <% @watershed_scenarios = WatershedScenario.where(:watershed_id => watershed.id ) %>
+				  <% if !(@watershed_scenarios.blank? || @watershed_scenarios == nil) %>
+					  <% @watershed_scenarios.each do |ws| %>
+						<table class='table table-striped'>
+							<thead>
+							  <tr>
+    							<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
+    							<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
+    							<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+  							  </tr>
+							</thead>
+							<tbody>
+  								<% i=1 %>
+  								<% @watershed_scenarios.each do |watershed_scenario| %>
+    								<% if (i % 2  == 0) %>
+      									<tr class="gvRowStyleEven">
+    								<% else %>
+      									<tr class="gvRowStyleOdd">
+    								<% end %>
+        								<td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
+        								<td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
+        								<td class="gvCellStyleCheckbox">
+          									<%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+        								</td>
+      								</tr>
+  									<% i = i + 1 %>
+  								<% end %>
+							</tbody>
+						</table>
+					  <% end %>
+				  <% end %>
+			</div>
+		</div>
+	  </div>
+	<%end%>
 <% end %>
 
 <script>
