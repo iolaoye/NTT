@@ -769,8 +769,8 @@
       }
       function validationsBmpPpnd(i) {
         var ppnd_inputs = $('[name^=bmp_ppnd]').valueOf();
-        validateBmpPpnd.addValidation("bmp_cb2", "selone", "A selection is required.");
         $('input[type=radio][name=bmp_cb2]').change(function() {
+          validateBmpPpnd.clearAllValidations();
           if (this.value == '7') {
             if (promptMsg("This BMP requires the addition of Autoirrigation. Continuing will add Autoirrigation.")) {
               validationsBmpAi(0);
@@ -789,6 +789,12 @@
               validateBmpPpnd.addValidation(ppnd_inputs[2].name, "lte=99999", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
           }
         });
+        validateBmpPpnd.addValidation("bmp_cb2", "selone", "A selection is required.");
+        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
+        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4");
         if(i == 0) {
           validateBmpPpds.clearAllValidations();
           validateBmpPpde.clearAllValidations();
@@ -796,11 +802,6 @@
           $("#select_5, #select_6, #select_7").prop('checked', false);
           $("tbody#5 input, tbody#6 input, tbody#7 input").val("");
         }
-        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
-        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4");
       }
       function validationsBmpPpds(i) {
         var ppds_inputs = $('[name^=bmp_ppds]').valueOf();
