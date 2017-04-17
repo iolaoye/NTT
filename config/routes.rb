@@ -61,7 +61,7 @@ NTTG3::Application.routes.draw do
   resources :projects do
     resources :watersheds do
 		get :list, on: :member
-		post :simulate, on: :collection
+		get :simulate, on: :member
 		get :new_scenario, on: :member
 		resources :watershed_scenarios
 	end
