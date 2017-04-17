@@ -1,5 +1,11 @@
 class WatershedsController < ApplicationController
   include SimulationsHelper
+  before_filter :set_notifications
+
+  def set_notifications
+	@notice = nil
+	@error = nil
+  end
   ################################  watershed list   #################################
   # GET /watersheds/1
   # GET /1/watersheds.json
@@ -7,9 +13,8 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
     @project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     respond_to do |format|
-      format.html # list.html.erb
+      format.html notice: t('watershed.watershed') + " " + t('general.created') # list.html.erb
       format.json { render json: @watersheds }
     end
   end
@@ -22,21 +27,21 @@ class WatershedsController < ApplicationController
     @project = Project.find(params[:project_id])
     @watersheds = Watershed.where(:location_id => @project.location.id)
     respond_to do |format|
-      format.html # index.html.erb
+      format.html  # index.html.erb
       format.json { render json: @watersheds }
     end
   end
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
-  def new_scenario(id)
+  def new_scenario(field, scenario)
 	watershed = Watershed.find(params[:id])
     @watershed_name = watershed.name
-    item = WatershedScenario.where(:field_id => params[:field][id], :scenario_id => params[:scenario][id], :watershed_id => params[:id]).first
+    item = WatershedScenario.where(:field_id => params[field][:id], :scenario_id => params[scenario][:id], :watershed_id => params[:id]).first
     respond_to do |format|
       if item == nil
         @new_watershed_scenario = WatershedScenario.new
-        @new_watershed_scenario.field_id = params[:field][id]
-        @new_watershed_scenario.scenario_id = params[:scenario][id]
+        @new_watershed_scenario.field_id = params[field][:id]
+        @new_watershed_scenario.scenario_id = params[scenario][:id]
         @new_watershed_scenario.watershed_id = params[:id]
         if @new_watershed_scenario.save
           return "saved"
@@ -97,15 +102,19 @@ class WatershedsController < ApplicationController
     print_array_to_file(@opcs_list_file, "OPCS.dat")
     if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) else return msg end
     if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) else return msg end #this operation will run a simulation
-    read_apex_results(msg)
+    msg = read_apex_results(msg)
     if @scenario != nil
       @scenario.last_simulation = Time.now
       @scenario.save
     end
-
+	if msg = "OK"
+		@notice = "Simulation ran succesfully"
+	else
+		@error = "Error running simulation"
+	end
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
-    @watersheds = Watershed.where(:location_id => session[:location_id])
-
+    @watersheds = Watershed.where(:location_id => @project.location.id)
+	
     render "index"
   end
 
@@ -152,15 +161,25 @@ class WatershedsController < ApplicationController
   def update
     #find the number for the collection
 	for i in 1..20
-		id = "id" + i.to_s
-		if !(params[:field][id] == nil) then
+		field = "field" + i.to_s
+		scenario = "scenario" + i.to_s
+		if !(params[field] == nil) then
 			break
 		end
 	end
-	status = new_scenario(id)
+	status = new_scenario(field, scenario)
+	@notice = nil
+	case status
+		when "saved"
+			@notice = "Saved"
+		when "exist"
+			@error = "Already Exist"
+		when "error"
+			@error = "Error"
+	end
 	@project = Project.find(Location.find(Watershed.find(params[:id]).location_id).project_id)
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
-    @watersheds = Watershed.where(:location_id => session[:location_id])
+    @watersheds = Watershed.where(:location_id => @project.location.id)
 	params[:project_id] = @project.id
     render "index"
   end
@@ -173,13 +192,32 @@ class WatershedsController < ApplicationController
 	@project = Project.find(Location.find(Watershed.find(params[:id]).location_id).project_id)
 
     if @watershed.destroy
-      flash[:notice] = t('models.watershed') + " " + @watershed.name + t('notices.deleted')
+        @notice = t('models.watershed') + " " + @watershed.name + t('notices.deleted')
+	else
+		@error = "Error deleting Field Routing"
     end
 	
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
 	params[:project_id] = @project.id
     render "index"
+  end
+
+  ################################ destroy #################################
+  # DELETE /watershed_scenario/1
+  # DELETE /watershed_scenario/1.json
+  def destroy_watershed_scenario
+    @watershed_scenarios = WatershedScenario.find(params[:id])
+    if @watershed_scenarios.destroy
+		@project = Project.find(params[:project_id])
+		@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
+		@watersheds = Watershed.where(:location_id => session[:location_id])
+		params[:project_id] = @project.id
+		@notice = t('models.watershed_scenario') + t('notices.deleted')
+		render "index"
+	else
+		@error = "Error deleting Field/scenario"
+    end
   end
 
   private

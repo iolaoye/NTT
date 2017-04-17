@@ -63,6 +63,7 @@ NTTG3::Application.routes.draw do
 		get :list, on: :member
 		get :simulate, on: :member
 		get :new_scenario, on: :member
+		get :destroy_watershed_scenario, on: :member
 		resources :watershed_scenarios
 	end
     resources :locations do
