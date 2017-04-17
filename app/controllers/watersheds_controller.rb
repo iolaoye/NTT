@@ -19,12 +19,34 @@ class WatershedsController < ApplicationController
   # GET /watersheds.json
   def index
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
-    @watersheds = Watershed.where(:location_id => session[:location_id])
     @project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
+    @watersheds = Watershed.where(:location_id => @project.location.id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @watersheds }
+    end
+  end
+
+################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
+  def new_scenario
+    @scenarios = Scenario.where(:field_id => 0)
+	watershed = Watershed.find(params[:id])
+    @watershed_name = watershed.name
+    item = WatershedScenario.where(:field_id => params[:field][:id], :scenario_id => params[:scenario][:id], :watershed_id => params[:id]).first
+    respond_to do |format|
+      if item == nil
+        @new_watershed_scenario = WatershedScenario.new
+        @new_watershed_scenario.field_id = params[:field][:id]
+        @new_watershed_scenario.scenario_id = params[:scenario][:id]
+        @new_watershed_scenario.watershed_id = params[:id]
+        if @new_watershed_scenario.save
+          return "saved"
+        else
+          return "error"
+        end
+      else
+        return "exist"
+      end
     end
   end
 
@@ -80,8 +102,6 @@ class WatershedsController < ApplicationController
     if @scenario != nil
       @scenario.last_simulation = Time.now
       @scenario.save
-    else
-
     end
 
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
@@ -131,20 +151,14 @@ class WatershedsController < ApplicationController
   # PATCH/PUT /watersheds/1
   # PATCH/PUT /watersheds/1.json
   def update
-    @watershed = Watershed.find(params[:id])
-	@project = Project.find(params[:project_id])
-
-    respond_to do |format|
-      if @watershed.update_attributes(watershed_params)
-        format.html { redirect_to watersheds_path(:project_id => @project.id), notice: t('watershed.watershed') + " " + t('general.updated') }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @watershed.errors, status: :unprocessable_entity }
-      end
-    end
+	new_scenario()
+	@project = Project.find(Watershed.find(params[:id]).project_id)
+	@project = Project.find(Location.find(Watershed.find(params[:id]).location_id).project_id)
+	@watersheds = Watershed.where(:location_id => @project.location.id)
+	redner "index"
   end
 
+  ################################ destroy #################################
   # DELETE /watersheds/1
   # DELETE /watersheds/1.json
   def destroy
