@@ -3,8 +3,8 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 select_scenarios = (num) ->
-  field = "#field_id" + num
-  scenario = "#scenario_id" + num
+  field = "#field" + num + "_id"
+  scenario = "#scenario" + num + "_id" 
   url = "/projects/" + $("#project_id").val() + "/fields/" + $(field).val() + "/scenarios.json"
   if $(field).val() > 0
     $.getJSON url, (scenarios) ->
@@ -21,62 +21,62 @@ select_scenarios = (num) ->
     $(scenario).removeAttr("disabled")
 
 $(document).ready ->
-  $("#field_id1").change ->
+  $("#field1_id").change ->
     select_scenarios(1)
 
-  $("#field_id2").change ->
+  $("#field2_id").change ->
     select_scenarios(2)
 
-  $("#field_id3").change ->
+  $("#field3_id").change ->
     select_scenarios(3)
 
-  $("#field_id4").change ->
+  $("#field4_id").change ->
     select_scenarios(4)
 
-  $("#field_id5").change ->
+  $("#field5_id").change ->
     select_scenarios(5)
 
-  $("#field_id6").change ->
-    select_scenarios(6)
+  $("#field_id").change ->
+    select6_scenarios(6)
 
-  $("#field_id7").change ->
+  $("#field7_id").change ->
     select_scenarios(7)
 
-  $("#field_id8").change ->
+  $("#field8_id").change ->
     select_scenarios(8)
 
-  $("#field_id9").change ->
+  $("#field9_id").change ->
     select_scenarios(9)
 
-  $("#field_id10").change ->
+  $("#field10_id").change ->
     select_scenarios(10)
 
-  $("#field_id11").change ->
+  $("#field11_id").change ->
     select_scenarios(11)
 
-  $("#field_id12").change ->
+  $("#field12_id").change ->
     select_scenarios(12)
 
-  $("#field_id13").change ->
+  $("#field13_id").change ->
     select_scenarios(13)
 
-  $("#field_id14").change ->
+  $("#field14_id").change ->
     select_scenarios(14)
 
-  $("#field_id15").change ->
+  $("#field15_id").change ->
     select_scenarios(15)
 
-  $("#field_id16").change ->
+  $("#field16_id").change ->
     select_scenarios(16)
 
-  $("#field_id17").change ->
+  $("#field17_id").change ->
     select_scenarios(17)
 
-  $("#field_id18").change ->
+  $("#field18_id").change ->
     select_scenarios(18)
 
-  $("#field_id19").change ->
+  $("#field19_id").change ->
     select_scenarios(19)
 
-  $("#field_id20").change ->
+  $("#field20_id").change ->
     select_scenarios(20)
