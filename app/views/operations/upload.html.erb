@@ -9,7 +9,7 @@
       <%= label "replace", t("operation.replace") %>
       <%= check_box_tag :replace, 'replace', false %>
     <% end %>
-    <%= button_tag t('operation.add_list'), id: 'add', type: 'button', class: 'btn btn-primary' %>
+    <%#= button_tag t('operation.add_list'), id: 'add', type: 'button', class: 'btn btn-primary' %>
     <%= hidden_field(:language, :language, :value => I18n.locale) %>
     <div class="actions">
         <span style="display: inline-block">
