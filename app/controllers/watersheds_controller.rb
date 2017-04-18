@@ -107,7 +107,7 @@ class WatershedsController < ApplicationController
       @scenario.last_simulation = Time.now
       @scenario.save
     end
-	if msg = "OK"
+	if msg == "OK"
 		@notice = "Simulation ran succesfully"
 	else
 		@error = "Error running simulation"
