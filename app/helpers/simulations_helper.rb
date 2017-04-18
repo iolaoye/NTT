@@ -1211,7 +1211,7 @@ module SimulationsHelper
         items[1] = "Curve Number"
         values[1] = operation.opv2
 		#find if there are Pads & Pipes Bmps set up.
-        bmps_count = Bmp.where("(bmpsublist_id == 4 OR bmpsublist_id == 5 OR bmpsublist_id == 6 OR bmpsublist_id == 7) AND scenario_id == " + params[:select_scenario][0]).count
+        bmps_count = Bmp.where("(bmpsublist_id == 4 OR bmpsublist_id == 5 OR bmpsublist_id == 6 OR bmpsublist_id == 7) AND scenario_id == " + @scenario.id.to_s).count
         if bmps_count > 0 then
           apex_string += sprintf("%8.1f", (operation.opv2 * 0.9)) #curve number
         else
@@ -1601,7 +1601,8 @@ module SimulationsHelper
         if subs != 0 and subs != sub_ant then
           total_subs += 1
         end
-        next if subs == sub_ant || (session[:simulation] == "watershed" && subs != 0) #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
+        #next if (subs == sub_ant || (session[:simulation] == "watershed" && subs != 0)) && subs != 0 #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
+        next if subs == sub_ant  #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
         sub_ant = subs
         one_result = oneResult.new
         one_result.sub1 = subs
@@ -1662,13 +1663,11 @@ module SimulationsHelper
           n2o_sum += one_result.n2o
           pcp += one_result.pcp
         end  # end if sub == 0
-
         results_data.push(one_result)
       else
         i = i + 1
       end   # end if i > 3
     end   #end data.each_line
-
     msg = average_totals(results_data) # average totals
     msg = load_monthly_values(apex_start_year)
     #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed

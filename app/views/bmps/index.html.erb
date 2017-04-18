@@ -769,6 +769,32 @@
       }
       function validationsBmpPpnd(i) {
         var ppnd_inputs = $('[name^=bmp_ppnd]').valueOf();
+        $('input[type=radio][name=bmp_cb2]').change(function() {
+          validateBmpPpnd.clearAllValidations();
+          if (this.value == '7') {
+            if (promptMsg("This BMP requires the addition of Autoirrigation. Continuing will add Autoirrigation.")) {
+              validationsBmpAi(0);
+              $('#select_1').prop('checked', true);
+              $('input[type=radio][id=bmp_cb1_1]').prop("checked", true);
+              $('#1').show();
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "lte=99999", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+            } else {
+              $('input[type=radio][id=bmp_cb2_7]').prop("checked", false);
+            }
+          } else if (this.value == '6') {
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "lte=99999", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+          }
+        });
+        validateBmpPpnd.addValidation("bmp_cb2", "selone", "A selection is required.");
+        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
+        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4");
         if(i == 0) {
           validateBmpPpds.clearAllValidations();
           validateBmpPpde.clearAllValidations();
@@ -776,11 +802,6 @@
           $("#select_5, #select_6, #select_7").prop('checked', false);
           $("tbody#5 input, tbody#6 input, tbody#7 input").val("");
         }
-        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
-        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
       }
       function validationsBmpPpds(i) {
         var ppds_inputs = $('[name^=bmp_ppds]').valueOf();
@@ -858,6 +879,8 @@
           validationsBmpFs(0);
           $('#select_13').prop('checked', true);
           $('#13').show();
+          $('input[type=radio][id=bmp_cb3_13]').prop("checked", true);
+          $("#tr_grass_field_portion").hide();
           for(n = 0; n < sf_inputs.length; n++) {
             validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
           }
@@ -911,11 +934,12 @@
         if (i == 0) {
           validateBmpCb.clearAllValidations();
           validateBmpWw.clearAllValidations();
-          validateBmpRf.clearAllValidations();
+          //validateBmpRf.clearAllValidations();
           $("#select_12, #select_14, #select_15").prop('checked', false);
           $("tbody#12 input, tbody#14 input, tbody#15 input").val("");
           $("tbody#14 select, tbody#15 select").val([]);
         }
+
         validateBmpFs.addValidation("bmp_cb3", "selone", "A selection is required.");
         $('input[type=radio][name=bmp_cb3]').change(function() {
           validateBmpFs.clearAllValidations();
@@ -932,7 +956,6 @@
                 if (n != 3)
                   validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %> ' + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
               }
-              //validateBmpFs.addValidation("fs_inputs[0].name", "selone", "A selection is required for crop vegetation.");
             }
         });
         validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("pdf.area")%> ' + '<%= t("bmp.acres") %>: ' + '<%= t("validate.input_greater") %>' + " 0");
