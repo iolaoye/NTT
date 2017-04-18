@@ -191,7 +191,7 @@ class ProjectsController < ApplicationController
       flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), notice: t('activerecord.notices.messages.created', model: "Project")
     else
-      redirect_to projects_upload_path(@id)
+      redirect_to projects_upload_path(@upload_id)
       flash[:notice] = t('activerecord.errors.messages.projects.no_saved') and return false
     end
   end
@@ -207,7 +207,7 @@ class ProjectsController < ApplicationController
       @upload_id = 0
       if params[:commit].eql? t('project.upload_project') then
         if params[:project] == nil then
-          redirect_to upload_project_path(@upload_id)
+          redirect_to projects_upload_path(@upload_id)
           flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
         end
         @data = Nokogiri::XML(params[:project])
@@ -216,8 +216,11 @@ class ProjectsController < ApplicationController
         @upload_id = 1
         case params[:examples]
           when "0"
-            redirect_to upload_project_path(@upload_id)
-            flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
+            respond_to do |format|
+				format.html { redirect_to projects_upload_path(@upload_id)}
+				format.json { head :no_content }
+				flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
+			end
           when "1" # Load OH two fields
             @data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
 		      when "2"  # load just the saved project to be copied

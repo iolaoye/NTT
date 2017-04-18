@@ -25,10 +25,22 @@
     <h4>Planting</h4> 
 
   <table class="table">
-    <tr class="optable"><td class="optable"><b>Date</b></td><td class="optable"><b>Type</b></td><td class="optable"><b>Seeding amount (seeds/ac)</b></td><td class="optable"><b>Actions</b></td></tr>
+    <tr class="optable">
+		<td class="optable"><b><%= t('general.date') %></b></td>
+	    <td class="optable"><b><%= t('general.type') %></b></td>
+		<td class="optable"><b>Seeding amount (seeds/ac)</b></td>
+	    <td class="optable"><b><%= t('general.actions') %></b></td>
+	</tr>
      <% @scenario.planting_operations(crop).each do |op| %>
-    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
+    <tr>
+		<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
+		<td><%= op.type_name %></td>
+		<td><%= op.amount %></td>
+		<td>
+		  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+		</td>
+    </tr>
     <% end %>
   </table><br>
   <%= link_to "Add Planting Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => crop.id), :class => 'btn btn-success'  %>
@@ -41,10 +53,23 @@
   </div>
 
   <table class="table">
-    <tr><td class="optable"><b>Date</b></td><td class="optable"><b>Fertilizer Type</b></td><td class="optable"><b>Application Rate (lbs/ac)</b></td><td class="optable"><b>Depth (in)</b></td><td class="optable"><b>Actions</b></td></tr>
+    <tr>
+		<td class="optable"><b><td class="optable"><b><%= t('general.date') %></b></td>
+		<td class="optable"><b>Fertilizer Type</b></td>
+		<td class="optable"><b>Application Rate (lbs/ac)</b></td>
+		<td class="optable"><b><%= t('operation.depth') %></b></td>
+		<td class="optable"><b><%= t('general.actions') %></b></td></tr>
     <% @scenario.fertilizer_operations(crop).each do |op| %>
-    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
+    <tr>
+		<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
+		<td><%= op.type_name %></td>
+		<td><%= op.amount %></td>
+		<td><%= op.depth %></td>
+		<td>
+		  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+		</td>
+    </tr>
     <% end %>
   </table>
   <br>
@@ -58,10 +83,19 @@
   </div>
 
   <table class="table">
-    <tr><td class="optable"><b>Date</b></td><td class="optable"><b>Type</b></td><td class="optable"><b>Actions</b></td></tr>
+    <tr>
+		<td class="optable"><b><td class="optable"><b><%= t('general.date') %></b></td>
+		<td class="optable"><b><%= t('general.type') %></b></td>
+		<td class="optable"><b><%= t('general.actions') %></b></td></tr>
     <% @scenario.tillage_operations(crop).each do |op| %>
-    <tr><td>Year <%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td><td><%= op.type_name %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
+    <tr>
+		<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
+		<td><%= op.type_name %></td>
+		<td>
+		  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+		</td>
+	</tr>
     <% end %>
   </table>
   <br>
@@ -75,10 +109,22 @@
   </div>
 
   <table class="table">
-  <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable"><b>Actions</b></td></tr>
+  <tr>
+	<td class="optable"><b><%= (t'pdf.year') %></b></td>
+	<td class="optable"><b><%= (t'pdf.month') %></b></td>
+	<td class="optable"><b><%= (t'pdf.day') %></b></td>
+	<td class="optable"><b><%= t('general.actions') %></b></td>
+  </tr>
     <% @scenario.harvest_operations(crop).each do |op| %>
-    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
+    <tr>
+		<td><%= op.year %></td>
+		<td><%= Date::MONTHNAMES[op.month_id] %></td>
+		<td><%= op.day %></td>
+		<td>
+		  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+		  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+		</td>
+    </tr>
     <% end %>
   </table>  <br>
    <%= link_to "Add Harvest Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 4, :crop => crop.id), :class => 'btn btn-success'  %>
@@ -92,10 +138,22 @@
   </div>
 
   <table class="table">
-    <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable"><b>Actions</b></td></tr>
+    <tr>
+		<td class="optable"><b><%= (t'pdf.year') %></b></td>
+		<td class="optable"><b><%= (t'pdf.month') %></b></td>
+		<td class="optable"><b><%= (t'pdf.day') %></b></td>
+		<td class="optable"><b><%= t('general.actions') %></b></td>
+	</tr>
     <% @scenario.kill_operations(crop).each do |op| %>
-    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
+    <tr>
+		<td><%= op.year %></td>
+		<td><%= Date::MONTHNAMES[op.month_id] %></td>
+		<td><%= op.day %></td>
+		<td>
+		  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+		</td>
+	</tr>
     <% end %>
   </table>   <br>
    <%= link_to "Add Kill Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 5, :crop => crop.id), :class => 'btn btn-success'  %>
@@ -109,10 +167,28 @@
   </div>
 
   <table class="table">
-    <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable"><b>Type</b></td><td class="optable">Volume (in)</td><td class="optable">Depth</td><td class="optable"><b>Actions</b></td></tr>
+    <tr>
+		<td class="optable"><b><%= (t'pdf.year') %></b></td>
+		<td class="optable"><b><%= (t'pdf.month') %></b></td>
+		<td class="optable"><b><%= (t'pdf.day') %></b></td>
+		<td class="optable"><b><%= t('general.type') %></b></td>
+		<td class="optable"><%= t('operation.volume') %></td>
+		<td class="optable"><%= t('bmp.depth') %></td>
+		<td class="optable"><b><%= t('general.actions') %></b></td>
+	</tr>
      <% @scenario.irrigation_operations(crop).each do |op| %>
-    <tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= op.type_name %></td><td><%= op.amount %></td><td><%= op.depth %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
-          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
+    <tr>
+		<td><%= op.year %></td>
+		<td><%= Date::MONTHNAMES[op.month_id] %></td>
+		<td><%= op.day %></td>
+		<td><%= op.type_name %></td>
+		<td><%= op.amount %></td>
+		<td><%= op.depth %></td>
+		<td>
+		  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+          <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+		</td>
+	</tr>
     <% end %>
   </table>     <br>
    <%= link_to "Add Irrigation Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 6, :crop => crop.id), :class => 'btn btn-success'  %>
