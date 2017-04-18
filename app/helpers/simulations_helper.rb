@@ -1668,7 +1668,6 @@ module SimulationsHelper
         i = i + 1
       end   # end if i > 3
     end   #end data.each_line
-	debugger
     msg = average_totals(results_data) # average totals
     msg = load_monthly_values(apex_start_year)
     #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
