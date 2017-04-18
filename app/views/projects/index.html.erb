@@ -34,6 +34,7 @@
 					<th class="project_column"><%= t('general.description') %></th>
 					<th class="project_column"><%= sort_link t('general.last_modified') %></th>
 					<th class="project_column"><%= t('general.actions') %></th>
+					<% if @user.admin %> <th class="project_column"><%= t('general.user') %></th> <% end %>
 				  </tr>
 				</thead>
 				<tbody>
@@ -48,6 +49,7 @@
 						  <%= link_to image_tag("copy.jpg"), copy_project_project_path(project) %>
 						  <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
 					  </td>
+					  <% if @user.admin %> <td><%= @user.name %></td> <% end %>
 				  </tr>
 				  <% end %>
 				</tbody>
