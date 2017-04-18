@@ -14,8 +14,8 @@
 <div class="page-header"><h1><%= t("menu.soils") %></h1></div>
 <%= render 'edit_field' %>
 
-<% unless ENV["APP_VERSION"] == "modified" %><%= link_to t('soil.new'), new_project_field_soil_path(@project, @field), :class => 'btn btn-primary' %><% end %>
-
+<% unless ENV["APP_VERSION"] == "modified" %><%= link_to t('soil.new') + " " + t('soil.soil'), new_project_field_soil_path(@project, @field), :class => 'btn btn-primary' %><% end %>
+<p>
 <% if ENV["APP_VERSION"] == "modified" %>
 	<div class="table-responsive">
 	  <div class="panel panel-default">

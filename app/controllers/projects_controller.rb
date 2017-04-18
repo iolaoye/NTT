@@ -192,7 +192,7 @@ class ProjectsController < ApplicationController
       redirect_to user_projects_path(session[:user_id]), notice: t('activerecord.notices.messages.created', model: "Project")
     else
       redirect_to projects_upload_path(@upload_id)
-      flash[:notice] = t('activerecord.errors.messages.projects.no_saved') and return false
+      flash[:notice] = t('activerecord.errors.messages.projects.exist') and return false
     end
   end
 

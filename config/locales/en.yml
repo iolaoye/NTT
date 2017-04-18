@@ -13,6 +13,7 @@ en:
         record_invalid: "Validation failed: %{errors}"
         projects:
           no_saved: "Project could not be saved"
+          exist: "Project already exists"
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
@@ -489,13 +490,13 @@ en:
     slope: Slope
     percentage: Percentage
     drainage: Drainage
-    depth: Depth
-    soilp: Soil P
-    bulk_density: Bulk Density
-    sand: Sand
-    silt: Silt
-    clay: Clay
-    organic_matter: Organic Matter
+    depth: 'Depth (in)'
+    soilp: 'Soil P (ppm)'
+    bulk_density: 'Bulk Density (Mg/m3)'
+    sand: 'Sand (%)' 
+    silt: 'Silt (%)'
+    clay: 'Clay (%)'
+    organic_matter: 'Organic Matter (%)'
     select_soil: Select Soil
     load_soil: Load Soil
     create_soil: Create Soil
