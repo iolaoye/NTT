@@ -54,10 +54,10 @@
 
   <table class="table">
     <tr>
-		<td class="optable"><b><td class="optable"><b><%= t('general.date') %></b></td>
-		<td class="optable"><b>Fertilizer Type</b></td>
-		<td class="optable"><b>Application Rate (lbs/ac)</b></td>
-		<td class="optable"><b><%= t('operation.depth') %></b></td>
+		<td class="optable"><b><%= t('general.date') %></b></td>
+      <td class="optable"><b><%= t('general.type') %></b></td>
+    <td class="optable"><b>Seeding amount (seeds/ac)</b></td>
+      <td class="optable"><b>Depth</b></td>
 		<td class="optable"><b><%= t('general.actions') %></b></td></tr>
     <% @scenario.fertilizer_operations(crop).each do |op| %>
     <tr>
@@ -84,9 +84,9 @@
 
   <table class="table">
     <tr>
-		<td class="optable"><b><td class="optable"><b><%= t('general.date') %></b></td>
-		<td class="optable"><b><%= t('general.type') %></b></td>
-		<td class="optable"><b><%= t('general.actions') %></b></td></tr>
+    <td class="optable"><b><%= t('general.date') %></b></td>
+      <td class="optable"><b><%= t('general.type') %></b></td>
+    <td class="optable"><b><%= t('general.actions') %></b></td></tr>
     <% @scenario.tillage_operations(crop).each do |op| %>
     <tr>
 		<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
