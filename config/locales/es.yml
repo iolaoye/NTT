@@ -1028,7 +1028,7 @@ es:
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
     ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   instructions:
-    projects: Para seleccionar un proyecto, haga clic en el nombre del proyecto
+    projects: Para seleccionar un proyecto existente, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
     watersheds: Para seleccionar un cuenca, haga clic en el nombre de la cuenca
     scenarios: Para seleccionar un escenario, haga clic en el nombre del escenario
