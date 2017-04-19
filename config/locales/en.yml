@@ -518,7 +518,7 @@ en:
     create_scenario: Create Scenario
     select_scenario: Select Scenario
     load_scenario: Load Scenario
-    last_simulation: Last Simulation
+    last_simulation: Simulation date
   location:
     new_location: New Location
     edit: Editing Location
@@ -697,9 +697,9 @@ en:
     result: Result
     add: Add
     submit: Submit
-    scenario1: 1st scenario
-    scenario2: 2nd scenario
-    scenario3: 3rd scenario
+    scenario1: first scenario
+    scenario2: second scenario
+    scenario3: third scenario
     watershed1: 1st watershed
     watershed2: 2nd watershed
     watershed3: 3rd watershed
@@ -1031,7 +1031,7 @@ en:
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
     ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   instructions:
-    projects: To select a project, click on the project name
+    projects: To select an existing project, click on the project name
     fields: To select a field, click on the field name
     watersheds: To select a watershed, click on the watershed name
     scenarios: To select a scenario, click on the scenario name
