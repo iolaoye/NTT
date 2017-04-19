@@ -291,6 +291,8 @@ es:
     deleted: " ha sido borrado/a."
     updated: " fue actualizado/a satisfactoriamente."
     created: " fue creado correctamente."
+    uploaded: " se ha subido/a."
+    downloaded: " ha sido descargado/a."
     simulation: "Simulación fue Exitoso."
     all: "Todas las operaciones se han eliminado."
   helpers:

@@ -291,6 +291,8 @@ en:
     deleted: " has been deleted."
     updated: " was successfully updated."
     created: " was sucessfully created."
+    uploaded: " has been uploaded."
+    downloaded: " has been downloaded."
     simulation: "Simulaion was Successfull."
     all: "All Operations have been deleted."
   helpers:
