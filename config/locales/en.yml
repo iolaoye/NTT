@@ -518,7 +518,7 @@ en:
     create_scenario: Create Scenario
     select_scenario: Select Scenario
     load_scenario: Load Scenario
-    last_simulation: Last Simulation
+    last_simulation: Simulation date
   location:
     new_location: New Location
     edit: Editing Location
@@ -697,9 +697,9 @@ en:
     result: Result
     add: Add
     submit: Submit
-    scenario1: 1st scenario
-    scenario2: 2nd scenario
-    scenario3: 3rd scenario
+    scenario1: first scenario
+    scenario2: second scenario
+    scenario3: third scenario
     watershed1: 1st watershed
     watershed2: 2nd watershed
     watershed3: 3rd watershed
