@@ -101,6 +101,11 @@ class ScenariosController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
 
+    add_breadcrumb @field.field_name, project_field_path(@project, @field)
+    add_breadcrumb t('general.scenarios')
+    add_breadcrumb 'Add New Scenario'
+
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @scenario }

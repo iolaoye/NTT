@@ -437,7 +437,7 @@ en:
     layer_file: Layers
     operation_file: Operations
     site_file: Site
-    apex_file: APEX Files
+    apex_file: Utility Files
     aplcat_file: APLCAT Files
     layers: Layers
     state: States
@@ -687,7 +687,7 @@ en:
   navbar:
     by_soil: By+Soil
   result:
-    summary: Summary
+    summary: General
     by_soil: By Soil
     download_pdf: Download PDF
     charts: Charts
