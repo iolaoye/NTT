@@ -103,7 +103,7 @@
 				    <% when 3 %>
 				      <tr>
 					    <td class="field indent" id = "depth" >
-						    <%= label :depth, t('bmp.depth') + " " + t('bmp.zero_to_max') + " " + t('bmp.ft') %>
+						    <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
 						    <%= text_field :bmp_td, :depth, :value => bmp.depth %>
 					    </td>
 				      </tr>
@@ -169,7 +169,7 @@
 				    <% when 8 %>
 				      <tr>
 					    <td class="field indent" id = "area" >
-						    <%= label :depth, t('pdf.area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
+						    <%= label :depth, t('pdf.area') + " (" + t('bmp.acres')  + ")"%>
 						    <%= text_field :bmp_wl, :area, :value => bmp.area %>
 					    </td>
 				      </tr>
@@ -183,7 +183,7 @@
 				    <% when 10 %>
 				      <tr>
 					    <td class="indent">
-						    <%= label :depth, t('operation.animals') + " " + t('bmp.zero_to_max')  %>
+						    <%= label :depth, t('operation.animals')  %>
 						    <%= text_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals %>
 					    </td>
 				      </tr>
@@ -211,7 +211,7 @@
 				      </tr>
 				      <tr>
 				        <td class="indent2">
-						    <%= label :dry_manure, t('bmp.dry_manure') + " " + t('bmp.zero_to_max') + " " + t('bmp.lbs') %>
+						    <%= label :dry_manure, t('bmp.dry_manure') + " (" + t('bmp.lbs')  + ")"%>
 						    <%= text_field :bmp_sf, :dry_manure, :value => bmp.dry_manure %>
 				        </td>
 				      </tr>
@@ -278,14 +278,14 @@
               </tr>
               <tr>
 					      <td class="indent">
-						      <%= t('general.area') + " " + t('bmp.acres') %>
+						      <%= t('general.area') + " (" + t('bmp.acres') + ")"%>
 						      <%= text_field :bmp_fs, :area, :value => bmp.area %>
 					      </td>
 				        </tr>
 				        <tr>
 					      <td class="indent">
-						      <%= t('bmp.width') + " " + t('bmp.ft') %>
-						      <%= text_field :bmp_fs, :width, :value => bmp.width %>
+						      <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
+                    <%= text_field :bmp_fs, :width, :value => bmp.width %>
 					      </td>
 				        </tr>
                 <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
@@ -313,8 +313,8 @@
 				      </tr>
 				      <tr>
 					    <td class="indent">
-						    <%= t('bmp.width') + " " + t('bmp.ft') %>
-						    <%= text_field :bmp_ww, :width, :value => bmp.width %>
+						    <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
+                  <%= text_field :bmp_ww, :width, :value => bmp.width %>
 					    </td>
 				      </tr>
 				    <% when 15 %>
