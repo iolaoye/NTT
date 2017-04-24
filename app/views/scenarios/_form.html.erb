@@ -9,17 +9,18 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name, t('general.name') %><br>
-    <%= f.text_field :name %>
-  </div>
+  <br>
   <div class="actions">
-    <% if type1 == 'Edit' %><br>
-		<%= f.submit t('submit.save'), :class => "btn btn-primary" %>
-	<% else %><br>
-		<%= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
-	<% end %>
+	<span class="create_font">
+    <%= f.label :name, t('general.name') %>
+    <%= f.text_field :name %>
+	</span>
+    <%# if type1 == 'Edit' %>
+		<%#= f.submit t('submit.save'), :class => "btn btn-primary" %>
+	<%# else %><br>
+		<%#= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
+	<%# end %>
+	<%= f.submit t('submit.save'), :class => "btn btn-primary" %>
 	<%= link_to t('general.back'), project_field_scenarios_path(@project, @field), :class => "btn btn-primary" %>
   </div>
 <% end %>

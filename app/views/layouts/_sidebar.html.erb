@@ -1,4 +1,5 @@
 <% if !(@project == nil) %>
+<!-- <span class="sidebar_font"> -->
 <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
 <%#= controller_name %>
 <%#= scenario_submenu %>
@@ -36,7 +37,7 @@
       <% end %>
 
       <% if scenario_submenu %>
-		<%= link_to t('menu.scenarios') + "   (" + @scenario.name + ")", project_field_scenarios_path(@project, @field) %></li>
+		<%= link_to t('general.management') + " " + t('menu.scenarios') + "   (" + @scenario.name + ")", project_field_scenarios_path(@project, @field) %></li>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <li class="<%= controller_name == "operations" ? "active" : "" %>">
             <% if controller_name == "operations" %>
@@ -141,7 +142,7 @@
           </li>
         </ul>
 	  <% else %>
-	  		<%= link_to t('menu.scenarios'), project_field_scenarios_path(@project, @field) %></li>
+	  		<%= link_to t('menu.management') + " " + t('general.scenarios'), project_field_scenarios_path(@project, @field) %></li>
       <% end %>
     </li>
 		<% if @field.results.count > 0 %>
@@ -247,3 +248,4 @@
 	<% end %>
 <% end %>
 <% end %>
+</span>

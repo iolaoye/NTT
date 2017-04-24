@@ -19,11 +19,17 @@
 			<%= button_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %><br><br>
 		<% else %>
 			<div class="page-header"><h1><%=t('menu.projects')%></h1></div>
-			<%= link_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
+			<%#= link_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary", :id => 'new_project' %>
+			<%= button_tag t('project.new_project'), :class => "btn btn-primary", :id => 'new_project' %>
 			<%= link_to t('project.upload_project'), projects_upload_path(0), :method => "get", :class => "btn btn-primary" %>
 			<%= link_to t('project.upload_example'), projects_upload_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
 		<% end %>
-		<%= t('instructions.projects') %>.<br><br>
+		<% @project = Project.new %>
+		<div id="div_new" style="display:none" >
+			<%= render 'form' %>
+		</div>
+		<% if @projects.count > 0 %>
+			<%= t('instructions.projects') %>.<br><br>
   
 		<div class="panel panel-default">
 			<div class="table-responsive">
@@ -55,7 +61,7 @@
 				</tbody>
 			  </table>
 			</div>
-		</div>
+		<% end %>
 	  </div>
 	</div>
 </div>

@@ -53,11 +53,11 @@
 	<% end %>
   </div>
   <div class="actions">
-    <%if type1 == 'Edit' %>
+    <%#if type1 == 'Edit' %>
 		<%= f.submit t('submit.save'), :class => "btn btn-primary" %>
-	<% else %>
-		<%= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
-	<% end %>
+	<%# else %>
+		<%#= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
+	<%# end %>
 	<%= link_to t('general.back'), project_field_soils_path(@project, @field), :class => "btn btn-primary" %>
   </div>
 <% end %>
