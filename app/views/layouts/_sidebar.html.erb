@@ -232,7 +232,7 @@
 <% end %>
 <% if !(session[:location_id] == nil) %>
 	<ul class="nav nav-pills nav-stacked nav-sidebar">
-		<li class="<%= (controller_name == "watersheds" || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.field_routing'), project_watersheds_path(params[:project_id]) %></li>
+		<li class="<%= (controller_name == "watersheds" || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(params[:project_id]) %></li>
 	</ul>
 	<% if watershed_submenu %>
 		<ul class="nav nav-pills nav-stacked nav-sidebar-sub">
