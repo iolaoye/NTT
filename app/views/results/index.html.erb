@@ -11,6 +11,14 @@
     </div>
   <% end %>
 <% end %>
+
+<% if flash[:info] %>
+  <div class="flash_alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <%= flash[:info] %>
+  </div>
+<% end %>
+
 <div class="page-header"><h1><%=@type %> <% @title%></h1></div>
 <form id="myForm">
   <div class="field">

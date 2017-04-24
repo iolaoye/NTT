@@ -127,7 +127,8 @@ class ResultsController < ApplicationController
                 if @results1.count > 0
                   @present1 = true
                 else
-                  @errors.push(t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase)
+                  redirect_to project_field_results_path(@project, @field)
+                  flash[:info] = t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase and return false
                 end
                 session[:scenario2] = ""
                 session[:scenario3] = ""
@@ -144,7 +145,8 @@ class ResultsController < ApplicationController
                 if @results2.count > 0
                   @present2 = true
                 else
-                  @errors.push(t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase)
+                  redirect_to project_field_results_path(@project, @field)
+                  flash[:info] = t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase and return false
                 end
                 session[:scenario3] = ""
               end
@@ -160,7 +162,8 @@ class ResultsController < ApplicationController
                 if @results3.count > 0
                   @present3 = true
                 else
-                  @errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase)
+                  redirect_to project_field_results_path(@project, @field)
+                  flash[:info] = t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase and return false
                 end
               end
             end # end if params[:result1] != nill
