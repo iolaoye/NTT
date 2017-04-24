@@ -52,8 +52,8 @@
 		<table class='table table-striped'>
 			<thead>
 			  <tr>
-			    <th><%= t('soil.depth') %></th>
-			    <th><%= t('soil.soilp') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.depth') %></th>
+			    <!-- <th><%= t('soil.soilp') %></th> -->
 			    <th><%= t('soil.bulk_density') %></th>
 			    <th><%= t('soil.sand') %></th>
 			    <th><%= t('soil.silt') %></th>
@@ -69,7 +69,7 @@
 		      <% if (i % 2  == 0) %>
 			      <tr class="gvRowStyleEven">
 			         <td class="gvCellStyleNumber"><%= layer.depth %></td>
-			         <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+			         <!-- <td class="gvCellStyleNumber"><%= layer.soil_p %></td> -->
 			         <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
 			         <td class="gvCellStyleNumber"><%= layer.sand %></td>
 			         <td class="gvCellStyleNumber"><%= layer.silt %></td>
@@ -117,14 +117,14 @@
 		<table class='table table-striped'>
 			<thead>
 			  <tr>
-			    <th><%= t('soil.depth') %></th>
-			    <th><%= t('soil.soilp') %></th>
-			    <th><%= t('soil.bulk_density') %></th>
-			    <th><%= t('soil.sand') %></th>
-			    <th><%= t('soil.silt') %></th>
-			    <th><%= t('soil.clay') %></th>
-			    <th><%= t('soil.organic_matter') %></th>
-			    <th><%= t('soil.ph') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.depth') %></th>
+			    <!-- <th class="gvCellStyleNumber"><%= t('soil.soilp') %></th> -->
+			    <th class="gvCellStyleNumber"><%= t('soil.bulk_density') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.sand') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.silt') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.clay') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.organic_matter') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.ph') %></th>
 			    <th><%=t('general.actions')%></th>
 			  </tr>
 			</thead>
@@ -137,7 +137,7 @@
 					  <tr class="gvRowStyleOdd">
 				  <% end %>
 						<td class="gvCellStyleNumber"><%= layer.depth %></td>
-						<td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+						<!-- <td class="gvCellStyleNumber"><%= layer.soil_p %></td> -->
 						<td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
 						<td class="gvCellStyleNumber"><%= layer.sand %></td>
 						<td class="gvCellStyleNumber"><%= layer.silt %></td>
