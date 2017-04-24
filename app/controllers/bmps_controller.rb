@@ -34,6 +34,7 @@ class BmpsController < ApplicationController
 
     add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb @field.field_name
+    add_breadcrumb @scenario.name
     add_breadcrumb 'Conservation Practices'
 
     get_bmps()
