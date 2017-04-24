@@ -151,15 +151,13 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     location = Location.where(:project_id => params[:id])
     location.destroy_all unless location == []
-    if @project.destroy
-      flash[:info] = t('models.project') + " " + @project.name + t('notices.deleted')
-    end
-    @projects = Project.where(:user_id => params[:user_id])
-
     respond_to do |format|
-      format.html { redirect_to welcomes_path, notice: 'Project was successfully deleted.' }
-      format.json { head :no_content }
-    end
+	  if @project.destroy
+	    format.html { redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.deleted') }
+		format.json { head :no_content }
+      end
+	end
+    @projects = Project.where(:user_id => params[:user_id])
   end
 
   #def record_not_found(exception)
@@ -179,13 +177,13 @@ class ProjectsController < ApplicationController
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_project
-	  saved = upload_prj()
+	saved = upload_prj()
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
-      redirect_to user_projects_path(session[:user_id]), notice: t('activerecord.notices.messages.created', model: "Project")
+      redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
       redirect_to projects_upload_path(@upload_id)
-      flash[:notice] = t('activerecord.errors.messages.projects.no_saved') and return false
+      flash[:notice] = t('activerecord.errors.messages.projects.exist') and return false
     end
   end
 

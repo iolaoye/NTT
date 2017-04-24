@@ -146,11 +146,10 @@ class LayersController < ApplicationController
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     if @layer.destroy
-      flash[:info] = t('models.layer') + "" + t('notices.deleted')
-    end
-    respond_to do |format|
-      format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil) }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil), notice: t('models.layer') + "" + t('notices.deleted') }
+        format.json { head :no_content }
+      end
     end
   end
 
