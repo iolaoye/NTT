@@ -1,4 +1,5 @@
 <% if !(@project == nil) %>
+<!-- <span class="sidebar_font"> -->
 <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
 <%#= controller_name %>
 <%#= scenario_submenu %>
@@ -36,7 +37,7 @@
       <% end %>
 
       <% if scenario_submenu %>
-		<%= link_to t('menu.scenarios') + "   (" + @scenario.name + ")", project_field_scenarios_path(@project, @field) %></li>
+		<%= link_to t('general.management') + " " + t('menu.scenarios') + "   (" + @scenario.name + ")", project_field_scenarios_path(@project, @field) %></li>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <li class="<%= controller_name == "operations" ? "active" : "" %>">
             <% if controller_name == "operations" %>
@@ -141,7 +142,7 @@
           </li>
         </ul>
 	  <% else %>
-	  		<%= link_to t('menu.scenarios'), project_field_scenarios_path(@project, @field) %></li>
+	  		<%= link_to t('menu.management') + " " + t('general.scenarios'), project_field_scenarios_path(@project, @field) %></li>
       <% end %>
     </li>
 		<% if @field.results.count > 0 %>
@@ -157,7 +158,8 @@
 
 	  <% if result_submenu %>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-          <li class="<%= controller_name == "results" ? "active" : "0" %>">
+        	<li class="results-label">Tabular</li>
+          <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'summary'))) ? "active" : "0" %>">
             <% if controller.action_name == "summary" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -165,7 +167,7 @@
             <% end %>
             <%= link_to t('result.summary'), summary_project_field_result_path(@project, @field, 0) %>
           </li>
-          <li class="<%= controller_name == "results" ? "active" : "" %>">
+          <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'by_soils'))) ? "active" : "" %>">
             <% if controller.action_name == "by_soils" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -173,26 +175,29 @@
             <% end %>
             <%= link_to t('result.by_soil'), by_soils_project_field_result_path(@project, @field, 0) %>
           </li>
-          <li class="<%= controller_name == "results" ? "active" : "" %>">
+          <li class="results-label">Graphic</a></li>
+          <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'annual_charts'))) ? "active" : "" %>">
             <% if controller.action_name == "annual_charts" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t("result.annual")  + "-" + t('result.charts'), annual_charts_project_field_result_path(@project, @field, 0)%>
+            
+            <%= link_to t("result.annual"), annual_charts_project_field_result_path(@project, @field, 0)%>
           </li>
-          <li class="<%= controller_name == "results" ? "active" : "" %>">
+          <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'monthly_charts'))) ? "active" : "" %>">
             <% if controller.action_name == "monthly_charts" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t("result.monthly")  + "-" + t('result.charts'), monthly_charts_project_field_result_path(@project, @field, 0) %>
+            <%= link_to t("result.monthly"), monthly_charts_project_field_result_path(@project, @field, 0) %>
           </li>
         </ul>
       <% end %>
 
     <% unless ENV["APP_VERSION"] == "modified" %>
+
 			<li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>">
 	      <% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) %>
 	        <div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
@@ -201,6 +206,7 @@
 				<% if apex_files_submenu %>
 		        <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
 		          <li class="<%= ((controller_name == 'apex_controls') || (controller_name == 'aplcat_parameters') || (controller_name == 'apex_parameters') || (controller_name == 'subareas')|| (controller_name == 'apex_soils')|| (controller_name == 'soil_operations')|| (controller_name == 'sites')) ? 'active' : '0' %>">
+		          	<div class="results-label">APEX</div>
 		            <% if controller.action_name == "download" %>
 		              <div class="sub-header-icon">
 		                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -209,6 +215,7 @@
 								<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post %>
 							</li>
 							<li class="<%= controller_name == 'aplcat_parameters' ? "active" : "" %>">
+								<div class="results-label">APLCAT</div>
 								<% if controller_name == "aplcat_parameters" %>
 									<div class="sub-sub-header-icon">
 										<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -241,3 +248,4 @@
 	<% end %>
 <% end %>
 <% end %>
+</span>

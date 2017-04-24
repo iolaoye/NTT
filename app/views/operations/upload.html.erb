@@ -1,15 +1,15 @@
 <div class="page-header"><h1><%= t('operation.upload') + " " + t('operation.crop') + " " + t('operation.schedule') %></h1></div>
 <form id="myForm">
   <div class="field">
-    <%= label "select", t('operation.crop') + " " + t('operation.schedule') %>
+    <%#= label "select", t('operation.crop') + " " + t('operation.schedule') %>
       <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id}, :required => true %>
-    <% if @operations.first != nil %>&nbsp&nbsp&nbsp
-      <%= label :year, t('pdf.year'), :id => "year_label" %>
-      <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true, class: "numbers", min: '1' %>
-        <%= label "replace", t("operation.replace") %>
+        <%= label :year, t('pdf.year'), :id => "year_label" %>
+        <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true %>
+        <% if @operations.first != nil %>&nbsp&nbsp&nbsp
+      <%= label "replace", t("operation.replace") %>
       <%= check_box_tag :replace, 'replace', false %>
     <% end %>
-    <%= button_tag t('operation.add_list'), id: 'add', type: 'button', class: 'btn btn-primary' %>
+    <%#= button_tag t('operation.add_list'), id: 'add', type: 'button', class: 'btn btn-primary' %>
     <%= hidden_field(:language, :language, :value => I18n.locale) %>
     <div class="actions">
         <span style="display: inline-block">

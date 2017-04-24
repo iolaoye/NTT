@@ -105,27 +105,24 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+	@user = User.find(params[:user_id])
     @project = Project.new(project_params)
     #params[:project_id] = @project.id
     @project.user_id = session[:user_id]
-    if params[:special] != nil
-	  @project.version = "NTTG3_special"
-    else
-	  @project.version = "NTTG3"
-	end
+	@project.version = "NTTG3"
 	respond_to do |format|
       if @project.save
         #params[:project_id] = @project.id
-        location = Location.new
-        location.project_id = @project.id
-        location.save
-        session[:location_id] = location.id
-        format.html { redirect_to @project, notice: t('models.project') + "" + t('notices.created') }
+        #location = Location.new
+        #location.project_id = @project.id
+        #location.save
+        #session[:location_id] = location.id
+        format.html { redirect_to @user, notice: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
-        flash[:error] = @project.errors
-        format.html { render action: "new" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        flash[:info] = "Error"
+        format.html { redirect_to @user, notice: t('models.project') + "" + t('notices.created') }
+        #format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -135,11 +132,7 @@ class ProjectsController < ApplicationController
   def update
 	@user = User.find(params[:user_id])
     @project = Project.find(params[:id])
-    if params[:special] != nil
-	  @project.version = "NTTG3_special"
-    else
-	  @project.version = "NTTG3"
-	end
+	@project.version = "NTTG3"
     respond_to do |format|
       if @project.update_attributes(project_params)
         format.html { redirect_to user_projects_path(params[:user_id]), notice: t('models.project') + "" + t('notices.updated') }
