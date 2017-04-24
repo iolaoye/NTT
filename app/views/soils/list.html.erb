@@ -26,7 +26,7 @@
           <th class="gvCellStyleTitle"><%= t('soil.symbol') %></th>
           <th class="gvCellStyleTitle"><%= t('soil.group') %></th> 
           <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
-          <th class="gvCellStyleTitle"><%= t('soil.albedo') %></th>
+          <th# class="gvCellStyleTitle"><%= t('soil.albedo') %></th>
           <th class="gvCellStyleTitle"><%= t('soil.slope') %></th>
           <th class="gvCellStyleTitle"><%= t('soil.percentage') %></th>
           <th class="gvCellStyleTitle"><%= t('soil.drainage') %></th>
@@ -46,7 +46,7 @@
 					<td class="gvCellStyleText"><%= soil.symbol %></td>
 					<td class="gvCellStyleText"><%= soil.group %></td>
 					<td class="gvCellStyleText"><%= soil.name %></td>
-					<td class="gvCellStyleNumber"><%= soil.albedo %></td>
+					<td# class="gvCellStyleNumber"><%= soil.albedo %></td>
 					<td class="gvCellStyleNumber"><%= soil.slope %></td>
 					<td class="gvCellStyleNumber"><%= soil.percentage %></td>
 					<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>

@@ -19,43 +19,50 @@
 			<%= button_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %><br><br>
 		<% else %>
 			<div class="page-header"><h1><%=t('menu.projects')%></h1></div>
-			<%= link_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
+			<%#= link_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary", :id => 'new_project' %>
+			<%= button_tag t('project.new_project'), :class => "btn btn-primary", :id => 'new_project' %>
 			<%= link_to t('project.upload_project'), projects_upload_path(0), :method => "get", :class => "btn btn-primary" %>
 			<%= link_to t('project.upload_example'), projects_upload_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
 		<% end %>
-		<%= t('instructions.projects') %>.<br><br>
-  
-		<div class="panel panel-default">
-			<div class="table-responsive">
-			   <table class="table table-striped">
-				<thead>
-				  <tr>
-					<th class="project_column"><%= sort_link t('project.project_name') %></th>
-					<th class="project_column"><%= t('general.description') %></th>
-					<th class="project_column"><%= sort_link t('general.last_modified') %></th>
-					<th class="project_column"><%= t('general.actions') %></th>
-					<% if @user.admin %> <th class="project_column"><%= t('general.user') %></th> <% end %>
-				  </tr>
-				</thead>
-				<tbody>
-				<% @projects.each do |project| %>
-				  <tr>
-					  <td><%= link_to project.name, project_fields_path(project) %></td>
-					  <td><%= project.description %></td>
-					  <td><%= project.updated_at.to_date %></td>
-					  <td>
-						  <% unless ENV["APP_VERSION"] == "modified" %><%= link_to image_tag("download.gif"), download_project_path(project) %><% end %>
-						  <%= link_to image_tag("edit.png"), edit_user_project_path(@user, project) %>
-						  <%= link_to image_tag("copy.jpg"), copy_project_project_path(project) %>
-						  <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
-					  </td>
-					  <% if @user.admin %> <td><%= User.find(Project.find(project.id).user_id).name %></td> <% end %>
-				  </tr>
-				  <% end %>
-				</tbody>
-			  </table>
-			</div>
+		<% @project = Project.new %>
+		<div id="div_new" style="display:none" >
+			<%= render 'form' %>
 		</div>
+		<% if @projects.count > 0 %>
+			<%= t('instructions.projects') %>.<br><br>
+  
+			<div class="panel panel-default">
+				<div class="table-responsive">
+				   <table class="table table-striped">
+					<thead>
+					  <tr>
+						<th class="project_column"><%= sort_link t('project.project_name') %></th>
+						<th class="project_column"><%= t('general.description') %></th>
+						<th class="project_column"><%= sort_link t('general.last_modified') %></th>
+						<th class="project_column"><%= t('general.actions') %></th>
+						<% if @user.admin %> <th class="project_column"><%= t('general.user') %></th> <% end %>
+					  </tr>
+					</thead>
+					<tbody>
+					<% @projects.each do |project| %>
+					  <tr>
+						  <td><%= link_to project.name, project_fields_path(project) %></td>
+						  <td><%= project.description %></td>
+						  <td><%= project.updated_at.to_date %></td>
+						  <td>
+							  <% unless ENV["APP_VERSION"] == "modified" %><%= link_to image_tag("download.gif"), download_project_path(project) %><% end %>
+							  <%= link_to image_tag("edit.png"), edit_user_project_path(@user, project) %>
+							  <%= link_to image_tag("copy.jpg"), copy_project_project_path(project) %>
+							  <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
+						  </td>
+						  <% if @user.admin %> <td><%= User.find(Project.find(project.id).user_id).name %></td> <% end %>
+					  </tr>
+					  <% end %>
+					</tbody>
+				  </table>
+				</div>
+			</div>
+		<% end %>
 	  </div>
 	</div>
 </div>
