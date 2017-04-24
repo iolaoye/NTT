@@ -406,6 +406,7 @@ en:
     format: Format
     remove: Remove
     management: Management
+    yes: Yes
   welcome_note:
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -565,9 +566,9 @@ en:
     zero_to_max: "(0.00 – 99999.00)"
     quarter_to_one: "(0.25 - 1.00)"
     quarter_to_three_fourths: "(0.25 - 0.75)"
-    days_range: "(Days: 0 – 365)"
-    days_range_number: "(0 - 365)"
-    hours_range: "(0 - 24)"
+    days_range: "(Days:0–365)"
+    days_range_number: "(0-365)"
+    hours_range: "(0-24)"
     percentage_range: "(0 - 100)"
     lbs_per_day: lbs per day
     ft: ft
@@ -579,7 +580,7 @@ en:
     crop: Crop
     water_stress_factor: Water stress factor
     irrigation_efficiency: Irrigation efficiency
-    area_control: Fraction of area control by pond
+    area_control: Fraction of area controled by pond
     maximum_single_application: Maximum single application
     safety_factor: Safety factor
     depth: Depth
@@ -589,18 +590,18 @@ en:
     irrigation_frequency: Irrigation frequency
     stream_fencing_frequency: Days in Stream
     hours: Hours per day
-    dry_manure: Dry manure
+    dry_manure: Dry defecated manure
     no3_n: No3 n
     po4_p: Po4 p
     org_n: Org n
     org_p: Org p
     width: Width
-    buffer_width: Buffer Width
+    buffer_width: Grass Buffer Width
     waterways_info: Including both sides of channel
     grass_field_portion: Grass field portion
     slope_ratio: Slope ratio
     slope_ratio_label: Buffer Slope Ratio to Upland
-    crop_width: Crop width
+    crop_width: Crop buffer width
     slope_reduction: Slope reduction
     sides: Sides
     no_input: This BMP does not require any input
