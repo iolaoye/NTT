@@ -1037,7 +1037,7 @@ en:
     projects: To select an existing project, click on the project name
     fields: To select a field, click on the field name
     watersheds: To select a watershed, click on the watershed name
-    scenarios: To select a scenario, click on the scenario name
+    scenarios: To edit a scenario click on the scenario name, to simulate scenarios click on the check box for those scenario
   sysreq:
     header: System Requirements
     minreq:
