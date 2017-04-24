@@ -652,7 +652,7 @@ es:
     create_field: Crear Parcela
     max_slope: Inclinación Máxima
   watershed:
-    field_routing: Escenario de Enrutamiento de Parcela
+    field_routing: Enrutamiento de Parcela (Cuenca)
     watershed_name: Nombre de la Cuenca
     new_watershed: Nueva Cuenca
     watershed_title: Listado de Cuencas

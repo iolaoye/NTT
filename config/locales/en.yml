@@ -650,7 +650,7 @@ en:
     create_field: Create Field
     max_slope: Maximum Slope
   watershed:
-    watershed: Field Routing Scenario
+    watershed: Field Routing (Watershed)
     watershed_name: Watershed Name
     new_watershed: New Watershed
     watershed_title: Listing Watershed
@@ -1036,7 +1036,7 @@ en:
   instructions:
     projects: To select an existing project, click on the project name
     fields: To select a field, click on the field name
-    watersheds: To select a watershed, click on the watershed name
+    watersheds: "Select management scenario from each field and add to %{watershed}. Repeat this proccess to complete each %{watershed} option"
     scenarios: To edit a scenario click on the scenario name, to simulate scenarios click on the check box for those scenario
   sysreq:
     header: System Requirements
