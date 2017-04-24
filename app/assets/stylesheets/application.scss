@@ -77,6 +77,10 @@
   color: #e9e9e9;
 }
 
+.create_font { font-weight: bold; font-size:20px; }
+
+.sidebar_font { font-weight: normal; font-size:40px; }
+
 /* When moving the mouse over the close button */
 .closebtn:hover {
   color: black;
@@ -150,7 +154,7 @@ table {
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
-  text-align: left;
+  text-align: right;
 }
 
 .gvCellStyleCheckbox {

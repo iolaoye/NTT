@@ -101,6 +101,11 @@ class ScenariosController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
 
+    add_breadcrumb @field.field_name, project_field_path(@project, @field)
+    add_breadcrumb t('general.scenarios')
+    add_breadcrumb 'Add New Scenario'
+
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @scenario }
@@ -135,7 +140,7 @@ class ScenariosController < ApplicationController
         add_scenario_to_soils(@scenario)
         format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
-        format.html { render action: "list" }
+        format.html { render action: "new" }
         format.json { render json: scenario.errors, status: :unprocessable_entity }
       end
     end

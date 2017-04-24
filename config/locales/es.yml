@@ -13,6 +13,7 @@ es:
         record_invalid: "La validación falló: %{errors}"
         projects:
           no_saved: "Projecto no pudo ser salvado"
+          exist: "El proyecto ya existe"
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
@@ -290,6 +291,8 @@ es:
     deleted: " ha sido borrado/a."
     updated: " fue actualizado/a satisfactoriamente."
     created: " fue creado correctamente."
+    uploaded: " se ha subido/a."
+    downloaded: " ha sido descargado/a."
     simulation: "Simulación fue Exitoso."
     all: "Todas las operaciones se han eliminado."
   helpers:
@@ -410,6 +413,7 @@ es:
     change: Cambiar
     format: Formato
     remove: Retirar
+    management: Administrar
   welcome_note:
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
@@ -493,13 +497,13 @@ es:
     slope: Inclinación
     percentage: Porcentaje
     drainage: Drenaje
-    depth: Profundidad
-    soilp: P en el Suelo
-    bulk_density: Densidad de la masa
-    sand: Arena
-    silt: Limo
-    clay: Arcilla
-    organic_matter: Materia Orgánica
+    depth: 'Profundidad (pulg.)'
+    soilp: 'P en el Suelo (ppm)'
+    bulk_density: 'Densidad de la masa (Mg/m3)'
+    sand: 'Arena (%)'
+    silt: 'Limo (%)'
+    clay: 'Arcilla (%)'
+    organic_matter: 'Materia Orgánica (%)'
     ph: PH
     select_soil: Seleccione Suelo
     load_soil: Cargar Suelo
@@ -526,14 +530,14 @@ es:
     new_location: Localización Nuevo
     edit: Revisión de Localización
   operation:
-    new_operation: Nueva Operación
+    new_operation: Adicionar Nueva Operación
     edit: Revisión de Operación
     create_operation: Crear Operación
     upload: 'Cargar'
     replace: Reemplazar todas las operaciones actuales
     cropping_system: 'Sistema de Cultivo'
     crop: Cultivo
-    schedule: "Calendario"
+    schedule: "Rotacion"
     moisture: Humedad
     nutrients: 'Nutrientes (0-1)'
     distribution: Distribución
@@ -696,17 +700,17 @@ es:
     result: Resultado
     add: Añadir
     submit: Enviar
-    scenario1: 1er Escenario
-    scenario2: 2do Escenario
-    scenario3: 3er Escenario
+    scenario1: primer Escenario
+    scenario2: Segundo Escenario
+    scenario3: Tercero Escenario
     watershed1: 1a cuenca
     watershed2: 2da cuenca
     watershed3: 3ra cuenca
     last: (últimos 12 años)
     avg: Promedio Mensual (Todo el Periodo)
-    select_scenario1: Seleccione 1er Escenario
-    select_scenario2: Seleccione 2do Escenario
-    select_scenario3: Seleccione 3er Escenario
+    select_scenario1: Seleccione Uno
+    select_scenario2: Seleccione Uno
+    select_scenario3: Seleccione Uno
     select_watershed1: Seleccione 1ra cuenca
     select_watershed2: Seleccione 2da cuenca
     select_watershed3: Seleccione 3ra cuenca

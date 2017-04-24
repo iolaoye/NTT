@@ -13,6 +13,7 @@ en:
         record_invalid: "Validation failed: %{errors}"
         projects:
           no_saved: "Project could not be saved"
+          exist: "Project already exists"
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
@@ -290,6 +291,8 @@ en:
     deleted: " has been deleted."
     updated: " was successfully updated."
     created: " was sucessfully created."
+    uploaded: " has been uploaded."
+    downloaded: " has been downloaded."
     simulation: "Simulaion was Successfull."
     all: "All Operations have been deleted."
   helpers:
@@ -405,6 +408,7 @@ en:
     change: Change
     format: Format
     remove: Remove
+    management: Management
   welcome_note:
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -437,7 +441,7 @@ en:
     layer_file: Layers
     operation_file: Operations
     site_file: Site
-    apex_file: APEX Files
+    apex_file: Utility Files
     aplcat_file: APLCAT Files
     layers: Layers
     state: States
@@ -489,13 +493,13 @@ en:
     slope: Slope
     percentage: Percentage
     drainage: Drainage
-    depth: Depth
-    soilp: Soil P
-    bulk_density: Bulk Density
-    sand: Sand
-    silt: Silt
-    clay: Clay
-    organic_matter: Organic Matter
+    depth: 'Depth (in)'
+    soilp: 'Soil P (ppm)'
+    bulk_density: 'Bulk Density (Mg/m3)'
+    sand: 'Sand (%)' 
+    silt: 'Silt (%)'
+    clay: 'Clay (%)'
+    organic_matter: 'Organic Matter (%)'
     select_soil: Select Soil
     load_soil: Load Soil
     create_soil: Create Soil
@@ -523,7 +527,7 @@ en:
     new_location: New Location
     edit: Editing Location
   operation:
-    new_operation: New Operation
+    new_operation: Add New Operation
     edit: Editing Operation
     create_operation: Create Operation
     upload: 'Upload'
@@ -531,7 +535,7 @@ en:
     cropping_system: 'Cropping System'
     fertilizer: Fertilizer Type
     crop: Crop
-    schedule: "Schedule"
+    schedule: "Rotation"
     moisture: Moisture
     nutrients: 'Nutrients (0-1)'
     distribution: Distribution
@@ -687,7 +691,7 @@ en:
   navbar:
     by_soil: By+Soil
   result:
-    summary: Summary
+    summary: General
     by_soil: By Soil
     download_pdf: Download PDF
     charts: Charts
@@ -699,15 +703,15 @@ en:
     submit: Submit
     scenario1: first scenario
     scenario2: second scenario
-    scenario3: third scenario
+    scenario3: th scenario
     watershed1: 1st watershed
     watershed2: 2nd watershed
     watershed3: 3rd watershed
     last: (last 12 years)
     avg: Monthly average (whole period)
-    select_scenario1: Select 1st Scenario
-    select_scenario2: Select 2nd Scenario
-    select_scenario3: Select 3rd Scenario
+    select_scenario1: Select one
+    select_scenario2: Select one
+    select_scenario3: Select one
     select_watershed1: Select 1st watershed
     select_watershed2: Select 2nd watershed
     select_watershed3: Select 3rd watershed

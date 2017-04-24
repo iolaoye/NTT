@@ -18,6 +18,7 @@
   <div class="field" title="Field Area (Ac.). Must be greater than 0.">
     <%= f.label t('field.field_area') %>
     <%= f.number_field :field_area, :class => 'numbers', :step => "any" %>
+	<%= '(ac.)' %>
   </div>
   <div class="field" style="display:none">
 	<%= f.label t('field.field_avg_slope') %>

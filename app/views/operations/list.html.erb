@@ -7,19 +7,19 @@
 
 <div class="page-header"><h1><%= t('menu.managements') %></h1></div>
 
-<%= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@project, @field, @scenario), data: {disable_with: 'Please wait. Saving the seleted cropping system . . .'}, :class => 'btn btn-primary' %>
+<%= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@project, @field, @scenario), data: {disable_with: 'Please wait. Saving the seleted crop rotation . . .'}, :class => 'btn btn-primary' %>
 <%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
 <% if ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" ||  ENV["APP_VERSION"] == nil %>
-<%= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
+<%#= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
 <%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 
 <% @crops.each do |crop| %>
 <div class="panel panel-primary" id="expand_crop_<%= crop.id %>" onclick="show_crop(this)">
   <div class="panel-heading"><h4><%= crop.name %> [+]</h4></div>
 </div>
-<div id="crop_<%= crop.id %>" style="display:none" onclick="hide_crop(this)">
+<div id="crop_<%= crop.id %>" style="display:none">
 <div class="panel panel-primary">
-  <div class="panel-heading"><h4><%= crop.name %> [-]</h4></div>
+  <div id="header_<%= crop.id %>" class="panel-heading" onclick="hide_crop(this)"><h4><%= crop.name %> [-]</h4></div>
 
   <% if @scenario.planting_operations(crop).any? %>
     <h4>Planting</h4> 
@@ -54,10 +54,10 @@
 
   <table class="table">
     <tr>
-		<td class="optable"><b><td class="optable"><b><%= t('general.date') %></b></td>
-		<td class="optable"><b>Fertilizer Type</b></td>
-		<td class="optable"><b>Application Rate (lbs/ac)</b></td>
-		<td class="optable"><b><%= t('operation.depth') %></b></td>
+		<td class="optable"><b><%= t('general.date') %></b></td>
+      <td class="optable"><b><%= t('general.type') %></b></td>
+    <td class="optable"><b>Seeding amount (seeds/ac)</b></td>
+      <td class="optable"><b>Depth</b></td>
 		<td class="optable"><b><%= t('general.actions') %></b></td></tr>
     <% @scenario.fertilizer_operations(crop).each do |op| %>
     <tr>
@@ -84,9 +84,9 @@
 
   <table class="table">
     <tr>
-		<td class="optable"><b><td class="optable"><b><%= t('general.date') %></b></td>
-		<td class="optable"><b><%= t('general.type') %></b></td>
-		<td class="optable"><b><%= t('general.actions') %></b></td></tr>
+    <td class="optable"><b><%= t('general.date') %></b></td>
+      <td class="optable"><b><%= t('general.type') %></b></td>
+    <td class="optable"><b><%= t('general.actions') %></b></td></tr>
     <% @scenario.tillage_operations(crop).each do |op| %>
     <tr>
 		<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
@@ -375,11 +375,12 @@ function show_crop(ele) {
   }
 
 function hide_crop(ele) {
-  var crop_id = ele.id.substr(5, ele.length)
+  var crop_id = ele.id.substr(7, ele.length)
 
   var crop_show_div = document.getElementById("expand_crop_" + crop_id);
   crop_show_div.style = "display:block"
-  ele.style = "display:none"
+  var crop_hide_div = document.getElementById("crop_" + crop_id);
+  crop_hide_div.style = "display:none"
 
   }
 
