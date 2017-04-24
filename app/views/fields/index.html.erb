@@ -24,7 +24,7 @@
         <tbody>
 			<% @fields.each do |field| %>
 			<tr>
-				<td><%= link_to field.field_name, project_field_soils_path(@project, field) %></td>
+				<td class="table-link"><%= link_to field.field_name, project_field_soils_path(@project, field) %></td>
 				<td><%= field.field_area %></td>
 				<td><%= field.field_average_slope %></td>
 				<td><%#= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
