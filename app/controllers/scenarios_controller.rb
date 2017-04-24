@@ -56,9 +56,9 @@ class ScenariosController < ApplicationController
   def simulate
 	session[:simulation] = 'scenario'
 	case params[:commit]
-		when "Simulate NTT", "Simular NTT", "Simulate Scenario", "Simulate Scenarios"
+		when "Simulate Selected NTT", "Simular NTT", "Simulate Selected Scenario", "Simulate Scenarios"
 			msg = simulate_ntt
-		when "Simulate Aplcat", "Simular Aplcat"
+		when "Simulate Selected Aplcat", "Simular Aplcat"
 			msg = simulate_aplcat
 	end
 	@project = Project.find(params[:project_id])
