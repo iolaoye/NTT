@@ -145,6 +145,8 @@ table {
   text-align: right;
 }
 
+.gvTitleStyleNumber { text-align: right; }
+
 .gvCellStyleNumber {
   height: 20px;
   padding: 8px;
@@ -154,7 +156,7 @@ table {
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
-  text-align: left;
+  text-align: right;
 }
 
 .gvCellStyleCheckbox {

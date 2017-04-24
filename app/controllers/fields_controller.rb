@@ -38,10 +38,6 @@ class FieldsController < ApplicationController
     @fields = Field.where(:location_id => location_id)
     @project_name = Project.find(params[:project_id]).name
 
-    #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
-    #add_breadcrumb @project_name
-    #add_breadcrumb t('menu.fields')
-
     @fields.each do |field|
       field_average_slope = 0
       i = 0
@@ -164,7 +160,7 @@ class FieldsController < ApplicationController
       field_type = true
     end
     @field = Field.find(params[:id])
-    @project = Project.find(params[:project_id])
+    @project = Project.find(params[:project_id])	
     msg = "OK"
     if @field.field_type != field_type then
       if field_type == true then
@@ -187,6 +183,13 @@ class FieldsController < ApplicationController
     end
     if !@field.update_attributes(field_params)
       msg = "Error saving field"
+	else
+	  #save soil p information in the first layer of the soil.
+	  @field.soils.each do |soil|
+		layer = soil.layers[0]
+		layer.soil_p = params[:field][:soilp]
+		layer.save
+	  end
     end
     respond_to do |format|
       if msg.eql?("OK") then
