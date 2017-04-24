@@ -46,9 +46,9 @@
 					<td class="gvCellStyleText"><%= soil.symbol %></td>
 					<td class="gvCellStyleText"><%= soil.group %></td>
 					<td class="gvCellStyleText"><%= soil.name %></td>
-					<td# class="gvCellStyleNumber"><%= soil.albedo %></td>
-					<td class="gvCellStyleNumber"><%= soil.slope %></td>
-					<td class="gvCellStyleNumber"><%= soil.percentage %></td>
+					<td# class="gvTitleStyleNumber"><%= soil.albedo %></td>
+					<td class="gvTitleStyleNumber"><%= soil.slope %></td>
+					<td class="gvTitleStyleNumber"><%= soil.percentage %></td>
 					<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
 					<td class="gvCellStyleActions">
 						<%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
@@ -92,9 +92,9 @@
 					<td class="gvCellStyleText"><%= soil.symbol %></td>
 					<td class="gvCellStyleText"><%= soil.group %></td>
 					<td class="gvCellStyleText"><%= soil.name %></td>
-					<td class="gvCellStyleNumber"><%= soil.albedo %></td>
-					<td class="gvCellStyleNumber"><%= soil.slope %></td>
-					<td class="gvCellStyleNumber"><%= soil.percentage %></td>
+					<td class="gvTitleStyleNumber"><%= soil.albedo %></td>
+					<td class="gvTitleStyleNumber"><%= soil.slope %></td>
+					<td class="gvTitleStyleNumber"><%= soil.percentage %></td>
 					<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
 					<td class="gvCellStyleActions">
 						<%= link_to image_tag("layers.png"), soil_layers_soil_path(soil.id), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>

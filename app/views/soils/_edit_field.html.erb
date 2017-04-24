@@ -17,12 +17,12 @@
   </div>
   <div class="field" title="Field Area (Ac.). Must be greater than 0.">
     <%= f.label t('field.field_area') %>
-    <%= f.number_field :field_area, :class => 'numbers', :step => "any" %>
+    <%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any" %>
 	<%= '(ac.)' %>
   </div>
   <div class="field" style="display:none">
 	<%= f.label t('field.field_avg_slope') %>
-    <%= f.number_field :field_average_slope, :class => 'numbers', :step => "any", disabled: true  %>  <a href="#" id="trigger">[?]</a>
+    <%= f.number_field :field_average_slope, :class => 'gvTitleStyleNumber', :step => "any", disabled: true  %>  <a href="#" id="trigger">[?]</a>
   </div>
   <div class="field" style="display:none">
 	<%= f.label t('field.coordinate') + " (long, lat)" %><br>
@@ -39,7 +39,7 @@
   <% if ENV["APP_VERSION"] == "modified" %>
 	<div class="field" title="">
 		Soil P
-		<%= f.number_field :soilp, :class => 'numbers', :step => "any" %>
+		<%= f.number_field :soilp, :class => 'gvTitleStyleNumber', :step => "any" %>
 	</div>
   <% end %>
   <div class="actions">

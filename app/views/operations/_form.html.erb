@@ -51,32 +51,32 @@
 			</div>
 			<div class="field" id="div_amount_plant_population">
 			  <%= f.label t('operation.plant_population') %>
-			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('operation.depth') %>
-			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.number_field :moisture, :class => "numbers" %>
+			  <%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
 					<%= f.label :no3_n, t('operation.no3_n') %>
-					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p, t('operation.po4_p') %>
-					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n, t('operation.org_n') %>
-					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p, t('operation.org_p') %>
-					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% when 2 # fertilizer %>
@@ -98,32 +98,32 @@
 			</div>
 			<div class="field" id="div_amount">
 				<%= f.label :amount, t('operation.amount') %>
-				<%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
+				<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
 				<%= f.label :depth, t('operation.depth') %>
-				<%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
+				<%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture">
 					<%= f.label :moisture, t('operation.moisture') %>
-					<%= f.number_field :moisture, :class => "numbers" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
 			</div>
 			<div class="field" id="div_nutrients" >
 				<div class="field" >
 					<%= f.label :no3_n, t('operation.no3_n') %>
-					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 				</div>
 				<div class="field" >
 					<%= f.label :po4_p, t('operation.po4_p') %>
-					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 				</div>
 				<div class="field" >
 					<%= f.label :org_n, t('operation.org_n') %>
-					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 				</div>
 				<div class="field" >
 					<%= f.label :org_p, t('operation.org_p') %>
-					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 				</div>
 			</div>
 		<% when 3 # tillage %>
@@ -141,32 +141,32 @@
 			</div>
 			<div class="field" id="div_amount" style="display:none">
 			  <%= f.label :amount, t('operation.amount') %>
-			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('operation.depth') %>
-			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.number_field :moisture, :class => "numbers"%>
+			  <%= f.number_field :moisture, :class => "gvTitleStyleNumber"%>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
 					<%= f.label :no3_n, t('operation.no3_n') %>
-					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p, t('operation.po4_p') %>
-					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n, t('operation.org_n') %>
-					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 				</div>
 			  <div class="field" >
 					<%= f.label :org_p, t('operation.org_p') %>
-					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% when 6 # irrigation%>
@@ -184,32 +184,32 @@
 			</div>
 			<div class="field" id="div_amount">
 			  <%= f.label :volume, t('operation.volume') %>
-			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
 			  <%= f.label :efficiency, t('operation.efficiency') %>
-			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.number_field :moisture, :class => "numbers" %>
+			  <%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 				<div class="field" >
 					<%= f.label :no3_n, t('operation.no3_n') %>
-					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p, t('operation.po4_p') %>
-					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n, t('operation.org_n') %>
-					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p, t('operation.org_p') %>
-					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% when 7 # grazing %>
@@ -223,11 +223,11 @@
 			</div>
 			<div class="field" id="div_amount">
 			  <%= f.label :animals, t('operation.animals') %>
-			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
 			  <%= f.label :hours_in_field, t('operation.hours') %>
-			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		    </div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
@@ -236,19 +236,19 @@
 			<div class="field" id="div_nutrients" >
 			  <div class="field" >
 					<%= f.label :no3_n, t('operation.no3_n') %>
-					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p, t('operation.po4_p') %>
-					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n, t('operation.org_n') %>
-					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p, t('operation.org_p') %>
-					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% when 10 # liming %>
@@ -262,32 +262,32 @@
 			</div>
 			<div class="field" id="div_amount" >
 			  <%= f.label :amount, t('operation.amount') %>
-			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('operation.depth') %>
-			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.number_field :moisture, :class => "numbers" %>
+			  <%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
 					<%= f.label :no3_n, t('operation.no3_n') %>
-					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p, t('operation.po4_p') %>
-					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n, t('operation.org_n') %>
-					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p, t('operation.org_p') %>
-					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
 		<% else # harvest, kill, stop grazing, burn%>
@@ -301,32 +301,32 @@
 			</div>
 			<div class="field" id="div_amount" style="display:none">
 			  <%= f.label :amount, t('operation.amount') %>
-			  <%= f.number_field :amount, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth" style="display:none">
 			  <%= f.label :depth, t('operation.depth') %>
-			  <%= f.number_field :depth, :class => "numbers", min: 0, :step => 'any' %>
+			  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_moisture" style="display:none">
 			  <%= f.label :moisture, t('operation.moisture') %>
-			  <%= f.number_field :moisture, :class => "numbers" %>
+			  <%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
 			</div>
 			<div class="field" id="div_nutrients" style="display:none">
 			  <div class="field" >
 					<%= f.label :no3_n, t('operation.no3_n') %>
-					<%= f.number_field :no3_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :po4_p, t('operation.po4_p') %>
-					<%= f.number_field :po4_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_n, t('operation.org_n') %>
-					<%= f.number_field :org_n, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			  <div class="field" >
 					<%= f.label :org_p, t('operation.org_p') %>
-					<%= f.number_field :org_p, :class => "numbers", min: 0, max: 1, :step => 'any' %>
+					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
   <% end %>
