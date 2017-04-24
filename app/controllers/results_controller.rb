@@ -11,7 +11,7 @@ class ResultsController < ApplicationController
   end  
   ###############################  ANNUAL CHART  ###################################
   def annual_charts
-	@type = t('result.annual') + "-" + t('result.charts')
+	@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
 	index
 	render "index"	
   end  
@@ -24,7 +24,7 @@ class ResultsController < ApplicationController
   ###############################  SUMMARY ###################################
   def summary
     @project = Project.find(params[:project_id])
-	@type = t("result.summary")
+	@type = t("general.view")
 	index
 	render "index"
   end
@@ -56,7 +56,6 @@ class ResultsController < ApplicationController
 
     add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb 'Results'
-
 
     if session[:simulation].eql?('scenario') then
       @total_area = Field.find(params[:field_id]).field_area
@@ -105,13 +104,13 @@ class ResultsController < ApplicationController
 		@type = params[:button]
 	end
 	if @type == nil then
-		@type = t("result.summary")
+		@type = t("general.view")
 	end
     if @type != nil then
-      (@type.eql?(t("result.summary") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
+      (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
-        when t("result.summary"), t("result.summary") + " " + t("result.by_soil")
-          if @type.include? t('result.summary') then
+        when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil")
+          if @type.include? t('general.view') then
             if params[:result1] != nil
               #session[:first_if] = true
               #session[:result1] = !params[:result1][:scenario_id].eql?("")
@@ -169,7 +168,7 @@ class ResultsController < ApplicationController
         when t('result.download_pdf')
           #@result_selected = t('result.summary')
 
-        when t('result.annual') + "-" + t('result.charts')
+        when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
           @x = "Year"
           if params[:result5] != nil && params[:result5][:description_id] != "" then
             @description = params[:result5][:description_id]
@@ -209,7 +208,7 @@ class ResultsController < ApplicationController
             @title = ""
             @y = ""
           end
-        when t('result.monthly') + "-" + t('result.charts')
+        when t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
           @x = "Month"
           if params[:result6] != nil && params[:result6][:description_id] != "" then
             @description = params[:result6][:description_id]
