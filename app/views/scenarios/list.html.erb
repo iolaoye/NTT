@@ -66,7 +66,7 @@
 					  <tr class="gvRowStyleOdd">
 				  <% end %>
 						<td class="gvCellStyleText"><%= check_box_tag "select_scenario[]", scenario.id %></td>
-						<td class="gvCellStyleText"><%= link_to scenario.name, list_project_field_scenario_operations_path(@project, @field, scenario) %></td>
+						<td class="table-link"><%= link_to scenario.name, list_project_field_scenario_operations_path(@project, @field, scenario) %></td>
 						<td class="gvCellStyleImage">
 						  <% if Weather.find_by_field_id(scenario.field_id) == nil %>
 							  <%= "bad" %>
