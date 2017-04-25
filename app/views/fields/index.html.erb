@@ -15,8 +15,8 @@
         <thead>
         <tr>
             <th><%= t('field.field_name')%></th>
-            <th><%= t('field.field_area')%></th>
-			<th><%= t('field.field_avg_slope')%></th>
+            <th class="gvTitleStyleNumber"><%= t('field.field_area')%></th>
+			<!-- <th><%= t('field.field_avg_slope')%></th> -->
             <th><%#= t('field.field_type')%></th>
             <th><%= t('general.actions')%></th>
         </tr>
@@ -25,8 +25,8 @@
 			<% @fields.each do |field| %>
 			<tr>
 				<td class="table-link"><%= link_to field.field_name, project_field_soils_path(@project, field) %></td>
-				<td><%= field.field_area %></td>
-				<td><%= field.field_average_slope %></td>
+				<td class="gvCellStyleNumber"><%= field.field_area %></td>
+				<!-- <td><%= field.field_average_slope %></td> -->
 				<td><%#= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
 				<td><%#= link_to image_tag("edit.png"), project_field_path(@project.id, field), title: t('general.edit') %>
 					<%= link_to image_tag("delete.png"), project_field_path(@project.id, field), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
