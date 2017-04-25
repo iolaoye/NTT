@@ -48,7 +48,7 @@ class ScenariosController < ApplicationController
     add_breadcrumb 'Scenarios'
 
     respond_to do |format|
-      format.html { render action: "list" }
+      format.html { render action: "index" }
       format.json { render json: @scenarios }
     end
   end

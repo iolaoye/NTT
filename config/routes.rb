@@ -34,7 +34,7 @@ NTTG3::Application.routes.draw do
   resources :activities
   resources :crops
   resources :bmps
-  get "operations/list"
+  #get "operations/list"
   resources :operations
   resources :scenarios
   #resources :ways
@@ -87,7 +87,7 @@ NTTG3::Application.routes.draw do
           get :crop_schedule, on: :collection
           get 'download', on: :collection
           get :open, on: :collection
-          post :delete_all, on: :collection
+          get :delete_all, on: :member
 		  post :upload_system, on: :member
         end
         resources :bmps do
