@@ -1,4 +1,8 @@
 class LayersController < ApplicationController
+
+add_breadcrumb 'Home', :root_path
+add_breadcrumb 'Projects', :root_path
+
 ################################  LAYERS list   #################################
 # GET /soils/1
 # GET /1/soils.json
@@ -52,7 +56,10 @@ class LayersController < ApplicationController
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     @layers = Layer.where(:soil_id => params[:soil_id])
-
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name
+	add_breadcrumb @soil.name
+	add_breadcrumb 'Layers' 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @layers }
