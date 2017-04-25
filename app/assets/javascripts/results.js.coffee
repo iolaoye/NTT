@@ -5,6 +5,18 @@
 #		description.description = Crop.find(crop.crop_id).name + " Yield"
 #		@descriptions.push(description)
 #	end
+
+turn_on_off = (row) ->
+    i=1
+    while i<=10
+        row1 = row + i
+        i+=1
+        if ($("#row" + row1).is(":hidden"))
+            $("#row" + row1).toggle(true)
+        else
+            $("#row" + row1).toggle(false)
+
+
 update_crops = ->
 # take the descriptions and populate the items with period = 2 Annual
   items = []
@@ -68,3 +80,18 @@ $(document).ready ->
 
   $("#summary").click (event) ->
     set_buttons(true)
+
+  $("#row10").click () ->
+    turn_on_off(10)
+  $("#row20").click () ->
+    turn_on_off(20)
+  $("#row30").click () ->
+    turn_on_off(30)
+  $("#row40").click () ->
+    turn_on_off(40)
+  $("#row50").click () ->
+    turn_on_off(50)
+  $("#row60").click () ->
+    turn_on_off(60)
+  $("#row70").click () ->
+    turn_on_off(70)
