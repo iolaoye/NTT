@@ -572,7 +572,7 @@ en:
     days_range: "(Days:0–365)"
     days_range_number: "(0-365)"
     hours_range: "(0-24)"
-    percentage_range: "(0 - 100)"
+    percentage_range: "(0 - 100%)"
     lbs_per_day: lbs per day
     ft: ft
     acres: acres

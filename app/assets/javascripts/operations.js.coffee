@@ -1,6 +1,9 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+upload_crop = ->
+  $("#div_new").toggle(true)
+  
 updatePlantPopulation = ->
   if ($("#operation_activity_id").val() == "1") 
      url = "/crops/" + $("#operation_crop_id").val() + ".json"
@@ -124,7 +127,10 @@ updateTitles = ->
   $("#typeTitle").text(title)
 	
 $(document).ready ->
-    #updateTypes()
+    $("#new_crop").click ->
+        upload_crop()
+
+	#updateTypes()
     #updateFerts()
 
     $("#operation_activity_id").change ->
