@@ -4,8 +4,8 @@
     <%#= label "select", t('operation.crop') + " " + t('operation.schedule') %>
       <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id}, :required => true %>
         <%= label :year, t('pdf.year'), :id => "year_label" %>
-        <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true %>
-        <% if @operations.first != nil %>&nbsp&nbsp&nbsp
+        <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>
+          <% if @operations.first != nil %>&nbsp&nbsp&nbsp
       <%= label "replace", t("operation.replace") %>
       <%= check_box_tag :replace, 'replace', false %>
     <% end %>

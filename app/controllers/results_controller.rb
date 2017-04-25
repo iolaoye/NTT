@@ -7,19 +7,19 @@ class ResultsController < ApplicationController
   def monthly_charts
 	@type = t('result.monthly') + "-" + t('result.charts')
 	index
-	render "index"	
-  end  
+	render "index"
+  end
   ###############################  ANNUAL CHART  ###################################
   def annual_charts
 	@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
 	index
-	render "index"	
-  end  
+	render "index"
+  end
   ###############################  BY SOIL  ###################################
   def by_soils
 	@type = t("result.summary") + " " + t("result.by_soil")
 	index
-	render "index"	
+	render "index"
   end
   ###############################  SUMMARY ###################################
   def summary
@@ -33,9 +33,9 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
-	if params[:simulation] != nil then
-		session[:simulation] = params[:simulation]
-	end
+  	if params[:simulation] != nil then
+  		session[:simulation] = params[:simulation]
+  	end
     if params[:language] != nil then
       if params[:language][:language].eql?("es")
         I18n.locale = :es
@@ -47,13 +47,12 @@ class ResultsController < ApplicationController
     @present1 = false
     @present2 = false
     @present3 = false
-    @descrition = 0
+    @description = 0
     @title = ""
     @total_area = 0
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 70 OR id > 79")
     @project = Project.find(params[:project_id])
-
     add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb 'Results'
 
@@ -61,12 +60,12 @@ class ResultsController < ApplicationController
       @total_area = Field.find(params[:field_id]).field_area
       @field_name = Field.find(params[:field_id]).field_name
     end
-	if !(params[:field_id] == "0")
-		@field = Field.find(params[:field_id])
-	end
-	@scenario1 = session[:scenario1]
-	@scenario2 = session[:scenario2]
-	@scenario3 = session[:scenario3]
+  	if !(params[:field_id] == "0")
+  		@field = Field.find(params[:field_id])
+  	end
+  	@scenario1 = session[:scenario1]
+  	@scenario2 = session[:scenario2]
+  	@scenario3 = session[:scenario3]
     @soil = "0"
     #load crop for each scenario selected
     i = 70
@@ -100,12 +99,12 @@ class ResultsController < ApplicationController
         crop = Crop.find(result.crop_id)
       end # end results.each
     end # end if params[:result1] != nil
-	if params[:button] != nil
-		@type = params[:button]
-	end
-	if @type == nil then
-		@type = t("general.view")
-	end
+  	if params[:button] != nil
+  		@type = params[:button]
+  	end
+  	if @type == nil then
+  		@type = t("general.view")
+  	end
     if @type != nil then
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
@@ -126,7 +125,8 @@ class ResultsController < ApplicationController
                 if @results1.count > 0
                   @present1 = true
                 else
-                  @errors.push(t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase)
+                  redirect_to project_field_results_path(@project, @field)
+                  flash[:info] = t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase and return false
                 end
                 session[:scenario2] = ""
                 session[:scenario3] = ""
@@ -143,7 +143,8 @@ class ResultsController < ApplicationController
                 if @results2.count > 0
                   @present2 = true
                 else
-                  @errors.push(t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase)
+                  redirect_to project_field_results_path(@project, @field)
+                  flash[:info] = t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase and return false
                 end
                 session[:scenario3] = ""
               end
@@ -159,7 +160,8 @@ class ResultsController < ApplicationController
                 if @results3.count > 0
                   @present3 = true
                 else
-                  @errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase)
+                  redirect_to project_field_results_path(@project, @field)
+                  flash[:info] = t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase and return false
                 end
               end
             end # end if params[:result1] != nill
@@ -252,11 +254,11 @@ class ResultsController < ApplicationController
     end # end if != nill <!--<h1><%=@type + " " + @title%></h1>-->
     if params[:format] == "pdf" then
       pdf = render_to_string pdf: "report",
-	  page_size: "Letter", layout: "pdf",
-	  template: "/results/report",
-	  footer: {center: '[page] of [topage]'},
-	  header: {spacing: -6, html: {template: '/layouts/_report_header.html'}},
-	  margin: {top: 16}
+  	  page_size: "Letter", layout: "pdf",
+  	  template: "/results/report",
+  	  footer: {center: '[page] of [topage]'},
+  	  header: {spacing: -6, html: {template: '/layouts/_report_header.html'}},
+  	  margin: {top: 16}
       send_data(pdf, :filename => "report.pdf")
       #end  # end format pdf
       #format.html { render action: "index" }

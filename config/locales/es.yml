@@ -13,6 +13,7 @@ es:
         record_invalid: "La validación falló: %{errors}"
         projects:
           no_saved: "Projecto no pudo ser salvado"
+          exist: "El proyecto ya existe"
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
@@ -290,6 +291,8 @@ es:
     deleted: " ha sido borrado/a."
     updated: " fue actualizado/a satisfactoriamente."
     created: " fue creado correctamente."
+    uploaded: " se ha subido/a."
+    downloaded: " ha sido descargado/a."
     simulation: "Simulación fue Exitoso."
     all: "Todas las operaciones se han eliminado."
   helpers:
@@ -495,13 +498,13 @@ es:
     slope: Inclinación
     percentage: Porcentaje
     drainage: Drenaje
-    depth: Profundidad
-    soilp: P en el Suelo
-    bulk_density: Densidad de la masa
-    sand: Arena
-    silt: Limo
-    clay: Arcilla
-    organic_matter: Materia Orgánica
+    depth: 'Profundidad (pulg.)'
+    soilp: 'P en el Suelo (ppm)'
+    bulk_density: 'Densidad de la masa (Mg/m3)'
+    sand: 'Arena (%)'
+    silt: 'Limo (%)'
+    clay: 'Arcilla (%)'
+    organic_matter: 'Materia Orgánica (%)'
     ph: PH
     select_soil: Seleccione Suelo
     load_soil: Cargar Suelo
