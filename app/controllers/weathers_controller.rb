@@ -1,6 +1,10 @@
 class WeathersController < ApplicationController
 include SimulationsHelper
 include ScenariosHelper
+
+add_breadcrumb 'Home', :root_path
+add_breadcrumb 'Projects', :root_path
+
 ################################  Save_coordinates   #################################
 # GET /weathers/1
 # GET /weathers/1.json
@@ -109,7 +113,9 @@ include ScenariosHelper
     @weather = Weather.find(params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-
+    add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name
+	add_breadcrumb 'Weather'
     if !(@weather == nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
