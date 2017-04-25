@@ -62,13 +62,14 @@ class FieldsController < ApplicationController
     add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb 'Fields'
 
-    @location = @project.location
-	  session[:location_id] = @location.id
-	  get_field_list(@location.id)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @fields }
-    end
+		@location = @project.location
+		session[:location_id] = @location.id
+		get_field_list(@location.id)
+		respond_to do |format|
+		  format.html # index.html.erb
+		  format.json { render json: @fields }
+		end
+    
   end
 
 ################################  soils   #################################
