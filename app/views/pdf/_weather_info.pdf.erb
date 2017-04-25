@@ -1,4 +1,4 @@
-<% @weather = Weather.find_by_field_id(session[:field_id]) %>
+<% @weather = Weather.find_by_field_id(params[:field_id]) %>
 <div class="group_header"><%=t('pdf.weather_info')%></div>
     <div class="data_titles">
         <%=t('pdf.weather_option')%>:</br>

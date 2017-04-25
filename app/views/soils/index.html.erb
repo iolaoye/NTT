@@ -13,8 +13,8 @@
 
 <div class="page-header"><h1><%= t("menu.soils") %></h1></di:v>
 
-<%= form_tag update_project_field_soil_path(@project, @field, @soil), method: :post do |f| %>
-<%= render 'edit_field' %>
+<%#= form_tag update_project_field_soil_path(@project, @field, @soil), method: :post do |f| %>
+	<%= render 'edit_field' %>
 	<% unless ENV["APP_VERSION"] == "modified" %>
 		<%#= button_tag t('soil.new'), :class => 'btn btn-primary', :id=>"new_soil" %>
 		<%#= link_to t('soil.new'), new_project_field_soil_path(@project, @field), :class => 'btn btn-primary' %>
@@ -35,21 +35,67 @@
 					  <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
 					</tr>
 				  </thead>
-    
 				  <tbody>
-						  <% i=1 %>
-							<% @soils.each do |soil| %>
+					  <% i=1 %>
+						<% @soils.each do |soil| %>
+						<% if (i % 2 == 0) %>
+							<tr class="gvRowStyleEven">
+						<% else %>
+							<tr class="gvRowStyleOdd">
+						<% end %>
+							<td class="gvCellStyleText"><%= soil.name %></td>
+							<td class="gvCellStyleText"><%= soil.group %></td>
+							<td class="gvTitleStyleNumber"><%= soil.slope %></td>
+							<td class="gvTitleStyleNumber"><%= soil.layers.first.organic_matter %></td>
+							<td class="gvTitleStyleNumber"><%= soil.percentage %></td>
+							<td class="gvCellStyleActions">
+								<%= link_to image_tag("delete.png"), project_field_soil_path(@project, @field, soil), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
+							</td>
+						</tr>
+  						<% i = i + 1 %>
+					  <% end %>
+				  </tbody>
+			</table>
+		  </div>
+		</div>
+		<br>
+	<% else %>
+		<div class="table-responsive">
+		  <div class="panel panel-default">
+			<table class="table table-striped">
+			  <thead>
+				<tr>
+				  <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
+				 <!-- <th class="gvCellStyleTitle"><%= t('soil.symbol') %></th> -->
+				  <th class="gvCellStyleTitle"><%= t('soil.group') %></th> 
+				  <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
+				  <!-- <th class="gvCellStyleTitle"><%= t('soil.albedo') %></th> -->
+				  <th class="gvCellStyleTitle"><%= t('soil.slope') %></th>
+				  <th class="gvCellStyleTitle"><%= t('soil.percentage') %></th>
+				  <th class="gvCellStyleTitle"><%= t('soil.drainage') %></th>
+				  <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+				</tr>
+			  </thead>
+ 			  <tbody>
+					  <% i=1 %>
+					  <% @soils.each do |soil| %>
 							<% if (i % 2 == 0) %>
 								<tr class="gvRowStyleEven">
 							<% else %>
 								<tr class="gvRowStyleOdd">
 							<% end %>
-								<td class="gvCellStyleText"><%= soil.name %></td>
+								<td class="gvCellStyleCheckbox"><%= check_box_tag :soil, "1", soil.selected, disabled: true %></td>
+								<!-- <td class="gvCellStyleText"><%= soil.symbol %></td> -->
 								<td class="gvCellStyleText"><%= soil.group %></td>
+								<td class="gvCellStyleText"><%= soil.name %></td>
+								<!-- <td class="gvTitleStyleNumber"><%= soil.albedo %></td> -->
 								<td class="gvCellStyleNumber"><%= soil.slope %></td>
 								<td class="gvCellStyleNumber"><%= number_field :field, "om[]", :value=>soil.layers.first.organic_matter, :class => 'numbers', :step => "any" %></td>
 								<td class="gvCellStyleNumber"><%= soil.percentage %></td>
+								<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
 								<td class="gvCellStyleActions">
+									<%= link_to image_tag("layers.png"), project_field_soil_layers_path(@project, @field, soil), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
+									<%= link_to image_tag("edit.png"), edit_project_field_soil_path(@project, @field, soil), title: t('general.edit')%>
 									<%= link_to image_tag("delete.png"), project_field_soil_path(@project, @field, soil), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
 								</td>
 							</tr>
@@ -60,56 +106,6 @@
 			  </div>
 			</div>
 			<br>
-		<% else %>
-			<!-- <% @soil = Soil.new %>
-			<div id="div_new" style="display:none" >
-				<%= render 'form' %>
-			</div> -->
-			<div class="table-responsive">
-			  <div class="panel panel-default">
-				<table class="table table-striped">
-				  <thead>
-					<tr>
-					  <th class="gvCellStyleTitle"><%= t('soil.selected') %></th>
-					 <!-- <th class="gvCellStyleTitle"><%= t('soil.symbol') %></th> -->
-					  <th class="gvCellStyleTitle"><%= t('soil.group') %></th> 
-					  <th class="gvCellStyleTitle"><%= t('soil.name') %></th>
-					  <!-- <th class="gvCellStyleTitle"><%= t('soil.albedo') %></th> -->
-					  <th class="gvCellStyleTitle"><%= t('soil.slope') %></th>
-					  <th class="gvCellStyleTitle"><%= t('soil.percentage') %></th>
-					  <th class="gvCellStyleTitle"><%= t('soil.drainage') %></th>
-					  <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
-					</tr>
-				  </thead>
- 				  <tbody>
-						  <% i=1 %>
-						  <% @soils.each do |soil| %>
-								<% if (i % 2 == 0) %>
-									<tr class="gvRowStyleEven">
-								<% else %>
-									<tr class="gvRowStyleOdd">
-								<% end %>
-									<td class="gvCellStyleCheckbox"><%= check_box_tag :soil, "1", soil.selected, disabled: true %></td>
-									<!-- <td class="gvCellStyleText"><%= soil.symbol %></td> -->
-									<td class="gvCellStyleText"><%= soil.group %></td>
-									<td class="gvCellStyleText"><%= soil.name %></td>
-									<!-- <td class="gvCellStyleNumber"><%= soil.albedo %></td> -->
-									<td class="gvCellStyleNumber"><%= soil.slope %></td>
-									<td class="gvCellStyleNumber"><%= soil.percentage %></td>
-									<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
-									<td class="gvCellStyleActions">
-										<%= link_to image_tag("layers.png"), project_field_soil_layers_path(@project, @field, soil), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
-										<%= link_to image_tag("edit.png"), edit_project_field_soil_path(@project, @field, soil), title: t('general.edit')%>
-										<%= link_to image_tag("delete.png"), project_field_soil_path(@project, @field, soil), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
-									</td>
-								</tr>
-  								<% i = i + 1 %>
-						  <% end %>
-				  </tbody>
-				</table>
-			  </div>
-			</div>
-			<br>
 		<% end %>
 	<% end %>
-<% end %>
+<%# end %>

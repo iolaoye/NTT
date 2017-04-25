@@ -62,28 +62,28 @@
   </div>
   <div class="field" id = "water_stress_factor" style="display:none">
     <%= f.label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %> <br>
-    <%= f.number_field :water_stress_factor, :step => 'any' %>
+    <%= f.number_field :water_stress_factor, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id = "irrigation_efficiency" style="display:none">
     <%= f.label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one'), :id => 'irrigation_efficiency_label' %>
     <%= f.label :irrigation_efficiency, t('bmp.area_control') + " " + t('bmp.zero_to_one'), :id => 'area_control_label' %><br>
-    <%= f.number_field :irrigation_efficiency, :step => 'any' %>
+    <%= f.number_field :irrigation_efficiency, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="maximum_single_application" style="display:none">
     <%= f.label :maximum_single_application, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') %><br>
-    <%= f.number_field :maximum_single_application, :step => 'any' %> <%= t('bmp.inches') %>
+    <%= f.number_field :maximum_single_application, :step => 'any' %> <%= t('bmp.inches'), :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="safety_factor" style="display:none">
     <%= f.label :safety_factor, t('bmp.safety_factor') + " " + t('bmp.zero_to_max') %><br>
-    <%= f.number_field :safety_factor, :step => 'any' %>
+    <%= f.number_field :safety_factor, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="depth" style="display:none">
     <%= f.label :depth, t('bmp.depth') + " (" + t('bmp.ft') + ")" %><br>
-    <%= f.number_field :depth, :step => 'any' %> <%= t('bmp.ft') %>
+    <%= f.number_field :depth, :step => 'any' %> <%= t('bmp.ft'), :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="area" style="display:none">
     <%= f.label :area, t('bmp.area') + " " + t('bmp.zero_to_max')%><br>
-    <%= f.number_field :area, :step => 'any' %> <%= t('bmp.acres') %>
+    <%= f.number_field :area, :step => 'any' %> <%= t('bmp.acres'), :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="animals" style="display:none">
     <%= label :animal_id, t("bmp.animals") %>
@@ -95,62 +95,62 @@
   </div>
   <div class="field" id="number_of_animals" style="display:none">
     <%= f.label :number_of_animals, t('bmp.number_of_animals') %><br>
-    <%= f.number_field :number_of_animals %>
+    <%= f.number_field :number_of_animals, :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id = "days" style="display:none">
     <%= f.label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range'), :id => "irrigation_frequency_label" %>
     <%= f.label :days, t('bmp.stream_fencing_frequency') + " " + t('bmp.days_range_number'), :id => "stream_fencing_label" %><br>
-    <%= f.number_field :days, :step => 'any' %>
+    <%= f.number_field :days, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="hours" style="display:none">
     <%= f.label :hours, t('bmp.hours') %><br>
-    <%= f.number_field :hours, :step => 'any' %>
+    <%= f.number_field :hours, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="dry_manure" style="display:none">
     <%= f.label :dry_manure, t('bmp.dry_manure') + " " + t('bmp.lbs_per_day') %><br>
-    <%= f.number_field :dry_manure, :step => 'any' %> <%= t('bmp.lbs') %>
+    <%= f.number_field :dry_manure, :step => 'any' %> <%= t('bmp.lbs'), :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="no3_n" style="display:none">
     <%= f.label :no3_n, t('bmp.no3_n') %><br>
-    <%= f.number_field :no3_n, :step => 'any' %>
+    <%= f.number_field :no3_n, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="po4_p" style="display:none">
     <%= f.label :po4_p, t('bmp.po4_p') %><br>
-    <%= f.number_field :po4_p, :step => 'any' %>
+    <%= f.number_field :po4_p, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="org_n" style="display:none">
     <%= f.label :org_n, t('bmp.org_n') %><br>
-    <%= f.number_field :org_n, :step => 'any' %>
+    <%= f.number_field :org_n, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="org_p" style="display:none">
     <%= f.label :org_p, t('bmp.org_p') %><br>
-    <%= f.number_field :org_p, :step => 'any' %>
+    <%= f.number_field :org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="width" style="display:none">
     <%= f.label :width, t('bmp.width') + " (" + t('bmp.ft') + ")", :id => "width_label" %>
     <%= f.label :width, t('bmp.buffer_width') + " (" + t('bmp.ft') + ")", :id => "contour_buffer_label" %>
     <%= f.label :width, t('bmp.width') + " (" + t('bmp.ft') + ") *" + t('bmp.waterways_info'), :id => "waterways_label" %><br>
-    <%= f.number_field :width, :step => 'any' %> ft
+    <%= f.number_field :width, :step => 'any', :class => "gvTitleStyleNumber" %> ft
   </div>
   <div class="field" id="grass_field_portion" style="display:none">
     <%= f.label :grass_field_portion, t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %><br>
-    <%= f.number_field :grass_field_portion, :step => 'any' %>
+    <%= f.number_field :grass_field_portion, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="buffer_slope_upland" style="display:none">
     <%= f.label :buffer_slope_upland, t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %><br>
-    <%= f.number_field :buffer_slope_upland, :step => 'any' %>
+    <%= f.number_field :buffer_slope_upland, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="crop_width" style="display:none">
     <%= f.label :crop_width, t('bmp.crop_width') + " (" + t('bmp.ft') + ")" %><br>
-    <%= f.number_field :crop_width, :step => 'any' %> <%= t('bmp.ft') %>
+    <%= f.number_field :crop_width, :step => 'any' %> <%= t('bmp.ft'), :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="slope_reduction" style="display:none">
     <%= f.label :slope_reduction, t('bmp.slope_reduction') + " %" %><br>
-    <%= f.number_field :slope_reduction, :step => 'any' %>
+    <%= f.number_field :slope_reduction, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="sides" style="display:none">
     <%= f.label :sides, t('bmp.sides') %><br>
-    <%= f.number_field :sides, :step => 'any' %>
+    <%= f.number_field :sides, :step => 'any', :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field" id="no_input" style="display:none">
     <%= t('bmp.no_input') %>
