@@ -152,7 +152,11 @@ class LocationsController < ApplicationController
 
           # step 5: update location
           state_abbreviation = params[:state]
-          state = State.find_by_state_abbreviation(state_abbreviation)
+		  if state_abbreviation.length > 2 then  #if state_abbreviation.length > 2 means it is state name
+			state = State.find_by_state_name(state_abbreviation.strip)		  
+		  else
+			state = State.find_by_state_abbreviation(state_abbreviation)
+		  end
 		  if state == nil then
 			@location.state_id = 0
 		  else
