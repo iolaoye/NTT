@@ -705,10 +705,10 @@ en:
     submit: Submit
     scenario1: first scenario
     scenario2: second scenario
-    scenario3: th scenario
-    watershed1: 1st watershed
-    watershed2: 2nd watershed
-    watershed3: 3rd watershed
+    scenario3: third scenario
+    watershed1: first watershed
+    watershed2: second watershed
+    watershed3: third watershed
     last: (last 12 years)
     avg: Monthly average (whole period)
     select_scenario1: Select one
