@@ -3,10 +3,18 @@
 class ApexControlsController < ApplicationController
   # GET /apex_controls
   # GET /apex_controls.json
+
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
+  
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
   	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Controls'
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_controls }
@@ -43,6 +51,10 @@ class ApexControlsController < ApplicationController
   	@control_code = @apex_control.control_description.code
   	@low_range = @apex_control.control_description.range_low
   	@high_range = @apex_control.control_description.range_high
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Controls', controller: "apex_controls", action: "index"
   end
 
   # POST /apex_controls
