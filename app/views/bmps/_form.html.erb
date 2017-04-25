@@ -4,9 +4,9 @@
       <h2><%= t('activerecord.form_errors', :count => @bmp.errors.count, :model => t('models.bmp')) %></h2>
 
       <ul>
-      <% @bmp.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+		  <% @bmp.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		  <% end %>
       </ul>
     </div>
   <% end %>
