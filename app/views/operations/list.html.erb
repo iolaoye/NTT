@@ -7,12 +7,15 @@
 
 <div class="page-header"><h1><%= t('menu.managements') %></h1></div>
 
-<%= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@project, @field, @scenario), data: {disable_with: 'Please wait. Saving the seleted crop rotation . . .'}, :class => 'btn btn-primary' %>
+<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
+<%#= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@project, @field, @scenario), data: {disable_with: 'Please wait. Saving the seleted crop rotation . . .'}, :class => 'btn btn-primary', :id => 'new_crop' %>
 <%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
 <% if ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" ||  ENV["APP_VERSION"] == nil %>
 <%#= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
 <%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
-
+<div id="div_new" style="display:none" >
+	<%= render "upload" %>
+</div>
 <% @crops.each do |crop| %>
 <div class="panel panel-primary" id="expand_crop_<%= crop.id %>" onclick="show_crop(this)">
   <div class="panel-heading"><h4><%= crop.name %> [+]</h4></div>
