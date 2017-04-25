@@ -25,9 +25,14 @@
             <th><%= t('general.select')%></th>
           </tr>
         </thead>
+        <% manure_operations = @scenario.operations.where(:activity_id => 2, :type_id => 2).count %>
+
         <% @bmps.each do |bmp| %>
 		      <tbody>
             <% if !(@project.location.state_id == 25 || @project.location.state_id == 26) && bmp.bmpsublist_id == 4 %>
+              <% next %>
+            <% end %>
+            <% if manure_operations == 0 && bmp.bmpsublist_id == 18 %>
               <% next %>
             <% end %>
 
@@ -366,6 +371,7 @@
 					    </td>
 				      </tr>
 				    <% when 18 %>
+              <% if manure_operations > 0%>
 				      <tr>
 				        <td class="indent">
 						    <%= label :manure_control_id, t('bmp.manure_control') %>
@@ -400,6 +406,7 @@
 						    <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
+              <% end %>
             <% when 19 %>
               <tr>
                 <th class="gvCellStyleTitle">
