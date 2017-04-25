@@ -2,6 +2,9 @@ include LocationsHelper
 include ScenariosHelper
 class LocationsController < ApplicationController
 
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
+
   # GET /locations
   # GET /locations.json
   def location_fields
@@ -15,7 +18,10 @@ class LocationsController < ApplicationController
   def show
     @location = Location.find(params[:id])
     @project = Project.find(params[:project_id])
-    @project_name = Project.find(session[:project_id]).name
+    @project = Project.find(params[:project_id])
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb "Location"
+    @project_name = Project.find(params[:project_id]).name
     session[:location_id] = params[:id]
     respond_to do |format|
       format.html # show.html.erb
@@ -46,11 +52,7 @@ class LocationsController < ApplicationController
   def receive_from_mapping_site
     @location = Location.find_by_project_id(params[:id])
     @project = Project.find(params[:project_id])
-
-    respond_to do |format|
-      if !(params[:error] == "") then
-        format.html { redirect_to project_location_path(@project, @location), notice: params[:error] }
-      else
+    if (params[:error] == "") then
         if (session[:session_id] == params[:source_id]) then
           # step 1: delete fields not found
           @location.fields.each do |field|
@@ -70,7 +72,6 @@ class LocationsController < ApplicationController
             @field = @location.fields.where(:field_name => params["field#{i}id"]).first || @location.fields.build(:field_name => params["field#{i}id"])
             @field.coordinates = params["field#{i}coords"]
             @field.field_area = params["field#{i}acres"]
-
             #verify if this field aready has its soils. If not the soils coming from the map are added
             if !(params["field#{i}error"] == 1) then
               #if @field.id == nil then
@@ -80,8 +81,11 @@ class LocationsController < ApplicationController
               #		@field.id = Field.last.id += 1
               #	end
               #end
-              @field.save
-              create_soils(i, @field.id, @field.field_type)
+              if @field.save
+				create_soils(i, @field.id, @field.field_type)
+			  else
+				msg = "Error saving soils"
+			  end 
             end
             #step 3 find or create site
             site = Site.find_by_field_id(@field.id)
@@ -155,7 +159,6 @@ class LocationsController < ApplicationController
 			@location.state_id = state.id
 		  end
 		  county_name = params[:county]
-		  session[:depth] = county_name
           if county_name == nil then
 			  @location.county_id = 0
 		  else
@@ -173,9 +176,10 @@ class LocationsController < ApplicationController
           load_controls()
           load_parameters(0)
         end # end if of session_id check
-        format.html # Runs receive_from_mapping_site.html.erb view in location folder
       end # end if error
-    end
+  	  respond_to do |format|
+		format.html # Runs receive_from_mapping_site.html.erb view in location folder
+	  end
   end
 
   #end method receiving from map site
@@ -347,26 +351,9 @@ class LocationsController < ApplicationController
     end #end for create_layers
   end
 
-  def calculate_centroid()
-    #https://en.wikipedia.org/wiki/Centroid.
-    centroid_structure = Struct.new(:cy, :cx)
-    centroid = centroid_structure.new(0.0, 0.0)
-    points = @field.coordinates.split(" ")
-    i=0
-
-    points.each do |point|
-      i+=1
-      centroid.cx += point.split(",")[0].to_f
-      centroid.cy += point.split(",")[1].to_f
-    end
-    centroid.cx = centroid.cx / (i)
-    centroid.cy = centroid.cy / (i)
-    return centroid
-  end
-
   #todo Update years of simulation + initialyear in weather.
   def load_controls()
-    apex_controls = ApexControl.where(:project_id => session[:project_id])
+    apex_controls = ApexControl.where(:project_id => params[:project_id])
     if apex_controls == [] then
       controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
 	  if controls.blank? || controls == nil then
@@ -376,7 +363,7 @@ class LocationsController < ApplicationController
         apex_control = ApexControl.new
         apex_control.control_description_id = c.id
         apex_control.value = c.default_value
-        apex_control.project_id = session[:project_id]
+        apex_control.project_id = params[:project_id]
         if apex_control.control_description_id == 1 then
           apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
         end

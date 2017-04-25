@@ -35,8 +35,8 @@ class LayersController < ApplicationController
     @soil = Soil.find(session[:soil_id])
     @soil_name = Soil.find(session[:soil_id]).name[0..20]
     @soil_name += ". . ." unless @soil_name.length < 20
-    @project_name = Project.find(session[:project_id]).name
-    @field_name = Field.find(session[:field_id]).field_name
+    @project_name = Project.find(params[:project_id]).name
+    @field_name = Field.find(params[:field_id]).field_name
 
     respond_to do |format|
       format.html # index.html.erb
@@ -128,7 +128,7 @@ class LayersController < ApplicationController
           format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil), notice: t('models.layer') + "" + t('notices.created') }
           format.json { render json: @layer, status: :created, location: @layer }
         elsif params[:finish] == "Finish" && params[:add_more] == nil
-          format.html { redirect_to list_scenario_path(session[:field_id]), notice: t('models.layer') + "" + t('notices.created') }
+          format.html { redirect_to list_scenario_path(params[:field_id]), notice: t('models.layer') + "" + t('notices.created') }
           format.json { render json: @layer, status: :created, location: @layer }
         end
       else
@@ -146,11 +146,10 @@ class LayersController < ApplicationController
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     if @layer.destroy
-      flash[:info] = t('models.layer') + "" + t('notices.deleted')
-    end
-    respond_to do |format|
-      format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil) }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil), notice: t('models.layer') + "" + t('notices.deleted') }
+        format.json { head :no_content }
+      end
     end
   end
 

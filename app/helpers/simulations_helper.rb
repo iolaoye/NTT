@@ -13,12 +13,8 @@ module SimulationsHelper
 
   def create_control_file()
     apex_string = ""
-    apex_control = ApexControl.where(:project_id => session[:project_id])
+    apex_control = ApexControl.where(:project_id => params[:project_id])
     require 'net/http'
-    coor = '(39.307505,-75.963721),(39.303686,-75.964451),(39.304683,-75.965910),(39.305413,-75.966253),(39.307007,-75.965738),(39.307406,-75.964837)'
-    county = 'md029'
-    state = 'Maryland'
-    t = 'cbntt'
     apex_control.each do |c|
       case c.control_description_id
         when 1..19 #line 1
@@ -93,7 +89,7 @@ module SimulationsHelper
     apex_string +="                " + "\n"
     apex_string +="                " + "\n"
     apex_string +="   50.00   10.00" + "\n"
-    apex_parameter = ApexParameter.where(:project_id => session[:project_id])
+    apex_parameter = ApexParameter.where(:project_id => params[:project_id])
     apex_parameter.each do |p|
       #number = Parameter.find(p.parameter_description_id).number
       case p.parameter_description_id
@@ -123,12 +119,12 @@ module SimulationsHelper
     #site_file = Array.new
     apex_string = ""
     apex_string +=
-        apex_string += " .sit file Subbasin:1  Date: " + @dtNow1 + "\n"
+    apex_string += " .sit file Subbasin:1  Date: " + @dtNow1 + "\n"
     apex_string += "" + "\n"
     apex_string += "" + "\n"
     apex_string += sprintf("%8.2f", site.ylat) + sprintf("%8.2f", site.xlog) + sprintf("%8.2f", site.elev) +
-        sprintf("%8.2f", site.apm) + sprintf("%8.2f", site.co2x) + sprintf("%8.2f", site.cqnx) + sprintf("%8.2f", site.rfnx) +
-        sprintf("%8.2f", site.upr) + sprintf("%8.2f", site.unr) + sprintf("%8.2f", site.fir0)
+    sprintf("%8.2f", site.apm) + sprintf("%8.2f", site.co2x) + sprintf("%8.2f", site.cqnx) + sprintf("%8.2f", site.rfnx) +
+    sprintf("%8.2f", site.upr) + sprintf("%8.2f", site.unr) + sprintf("%8.2f", site.fir0)
     for i in 5..25 #print 21 additonal lines in the site file, which do not need any information at this time.
       apex_string += "" + "\n"
     end # end for
@@ -184,7 +180,7 @@ module SimulationsHelper
       data = send_file_to_APEX("WTH", path)
     end
     #todo after file is copied if climate bmp is in place modified the weather file.
-    bmp_id = Bmp.select(:id).where(:scenario_id => session[:scenario_id])
+    bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)
     climate_array = Array.new
     climates = Climate.where(:bmp_id => bmp_id)
     climates.each do |climate|
@@ -567,7 +563,7 @@ module SimulationsHelper
       soil.ztk = 0 unless !(soil.ztk==nil)
   	  ##if tile drain was set up wtmx, wtmn, and wtbl should be zero. Otherwise keep the numbers. 11 06 2016.
       ##Goin back to the values for drainage type as before. Keep this here just in case Ali wants to have it latter 11 08 2016. Oscar Gallego
-	  bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 3)
+	  bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 3)
 	  if !(bmp == nil) and bmp.depth > 0 then
 		  records = records + sprintf("%8.2f", 0)
 		  records = records + sprintf("%8.2f", 0)
@@ -739,11 +735,11 @@ module SimulationsHelper
   end  # end method create_soils
 
   #this is the new subarea creation method. This take first the subareas for the scenario and then choose those soils selected and bmp buffers.
-  def create_subareas(operation_number)  # operation_number is used for subprojects as for now it is just 1 - todo
+  def create_subareas(operation_number)  # operation_number is used for subprojects. for simple scenarios is 1
     last_owner1 = 0
     i=0
 	nirr = 0
-	subareas = Subarea.where("scenario_id = " + session[:scenario_id].to_s + " AND soil_id > 0")
+	subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id > 0")
 	subareas.each do |subarea|
 		soil = Soil.find(subarea.soil_id)
 		if soil.selected then
@@ -753,13 +749,14 @@ module SimulationsHelper
 			@soil_number += 1
 		end  # end if soil.selected
 	end  # end subareas.each for soil_id > 0
-	subareas = Subarea.where("scenario_id = " + session[:scenario_id].to_s + " AND soil_id = 0 AND bmp_id > 0")
-	buffer_type = 1
+	#add subareas and operations for buffer BMPs.
+	subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id = 0 AND bmp_id > 0")
+	buffer_type = 2
 	subareas.each do |subarea|
 		add_subarea_file(subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
 		if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
-			if subarea.subarea_type == "RFFS" then 
-				buffer_type = 2 
+			if subarea.subarea_type == "RF" then 
+				buffer_type = 1 
 			end
 			create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
 			i+=1
@@ -770,7 +767,6 @@ module SimulationsHelper
 	return msg
   end   # end create_subareas
 	
-
   def create_subareas1(operation_number) # operation_number is used for subprojects as for now it is just 1 - todo
     @last_soil2 = 0
     last_owner1 = 0
@@ -801,7 +797,6 @@ module SimulationsHelper
     @last_subarea = 0
 
     #for Each buf In _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bufferInfo
-    #todo if buffer is used. Maybe just subarea are used means all of the buffer are created directly as subareas.
 	  buffer = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND bmp_id != 'nil' AND bmp_id != 0 AND soil_id = 0")
       buffer.each do |buf|
         if !(buf.subarea_type == "PPDE" || buf.subarea_type == "PPTW" || buf.subarea_type == "AITW" || buf.subarea_type == "CBMain")
@@ -847,7 +842,7 @@ module SimulationsHelper
 		#sLine = sprintf("%4d", @last_soil2-1)  #soil
 		sLine = sprintf("%4d", _subarea_info.inps)  #soil
 		if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
-			sLine += sprintf("%4d", 1) #operation
+			sLine += sprintf("%4d", _subarea_info.iops) #operation
 		else
 			#sLine += sprintf("%4d", @soil_number + 1)   #operation
 			sLine += sprintf("%4d", _subarea_info.iops)   #operation
@@ -886,8 +881,8 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.angl)
     @subarea_file.push(sLine + "\n")
     #/line 4
-    if _subarea_info.wsa > 0 && i > 0 then
-      sLine = sprintf("%8.2f", _subarea_info.wsa * 1)
+    if _subarea_info.wsa > 0 && i > 0 && !buffer then
+      sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
     else
       sLine = sprintf("%8.2f", _subarea_info.wsa)
     end
@@ -908,7 +903,7 @@ module SimulationsHelper
 		end
 		if (operation_number > 1 && i == 0) || i > 0 then
 		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
-		  _subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
+		  #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
 		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
 		end
 	end
@@ -1031,13 +1026,13 @@ module SimulationsHelper
     @grazingb = false
     @opcs_file = Array.new
     irrigation_type = 0
-    bmp = Bmp.where("scenario_id = " + session[:scenario_id].to_s + " and irrigation_id > 0").first
+    bmp = Bmp.where("scenario_id = " + @scenario.id.to_s + " and irrigation_id > 0").first
     irrigation_type = Irrigation.find(bmp.irrigation_id).code unless bmp == nil
     #check and fix the operation list
-	if buffer_type == 0 then
-		@soil_operations = SoilOperation.where("soil_id = " + soil_id.to_s + " and scenario_id = " + @scenario.id.to_s)
-	else
-		@soil_operations = SoilOperation.where("bmp_id = " + soil_id.to_s + " and scenario_id = " + @scenario.id.to_s + " and opv6 = " + buffer_type.to_s)
+	if buffer_type == 0 then   #when subarea from soils
+		@soil_operations = SoilOperation.where(:soil_id => soil_id.to_s, :scenario_id => @scenario.id.to_s)
+	else   # when subarea from BMP. soil_id is the bmp_id.
+		@soil_operations = SoilOperation.where(:bmp_id => soil_id.to_s, :scenario_id => @scenario.id.to_s, :opv6 => buffer_type.to_s)
 	end  # end if type
     if @soil_operations.count > 0 then
       #fix_operation_file()
@@ -1202,10 +1197,10 @@ module SimulationsHelper
           apex_string += sprintf("%5d", 0) #TIME TO MATURITY       #APEX0604
         end
         #if operation.opv1 == 0 then
-        #uri = URI.parse(URL_HU +  "?op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(session[:field_id]).latitude.to_s + "&nlon=" + Weather.find_by_field_id(session[:field_id]).longitude.to_s)
+        #uri = URI.parse(URL_HU +  "?op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(@field.id).latitude.to_s + "&nlon=" + Weather.find_by_field_id(@field.id).longitude.to_s)
         #uri.open
         #operation.opv1 = uri.read
-        #operation.opv1 = endpoint.post("op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(session[:field_id]).latitude + "&nlon=" + Weather.find_by_field_id(session[:field_id]).longitude)
+        #operation.opv1 = endpoint.post("op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(@field.id).latitude + "&nlon=" + Weather.find_by_field_id(@field.id).longitude)
         #Dim getHu As New GetHU
         #operation.opv1 = getHu.calcHU(operation.apex_crop, wp1Files + "\" + _startInfo.Wp1Name + ".WP1", folder + "\App_Data\PHUCRP.DAT")
         #operation.opv1 = calcHU(operation.apex_crop, _crops, _startInfo)
@@ -1216,7 +1211,7 @@ module SimulationsHelper
         items[1] = "Curve Number"
         values[1] = operation.opv2
 		#find if there are Pads & Pipes Bmps set up.
-        bmps_count = Bmp.where("bmpsublist_id == 4 || bmpsublist_id == 5 || bmpsublist_id == 6 || bmpsublist_id == 7").count
+        bmps_count = Bmp.where("(bmpsublist_id == 4 OR bmpsublist_id == 5 OR bmpsublist_id == 6 OR bmpsublist_id == 7) AND scenario_id == " + @scenario.id.to_s).count
         if bmps_count > 0 then
           apex_string += sprintf("%8.1f", (operation.opv2 * 0.9)) #curve number
         else
@@ -1239,7 +1234,7 @@ module SimulationsHelper
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
         oper = Operation.where(:id => operation.operation_id).first
-		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 18)
+		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
 		if oper.activity_id == 2 && oper.type_id == 2 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
 			add_fert(oper.no3_n * bmp.no3_n, oper.po4_p * bmp.po4_p, oper.org_n * bmp.org_n, oper.org_p * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
 		else
@@ -1295,7 +1290,7 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0)
         items[1] = "Curve Number"
         values[1] = operation.opv2
-        if Field.find(session[:field_id]).field_type then
+        if Field.find(@field.id).field_type then
           change_till_for_HE(operation.type_id, operation.opv1)
         end
         apex_string += sprintf("%8.2f", 0) #opval2
@@ -1556,58 +1551,47 @@ module SimulationsHelper
     return sat_cond_out
   end
 
-  #def run_scenario()
-    #path = File.join(APEX, "APEX" + session[:session_id])
-    #file_name = File.join(path, "APEX001.NTT")
-    #File.delete(file_name) if File.exist?(file_name)
-    #file_name = File.join(path, "APEX001.msw")  #monthly values for flow, nutrients, and sediment
-    #File.delete(file_name) if File.exist?(file_name)
-    #file_name = File.join(path, "APEX001.mws")  #monthly values for flow, nutrients, and sediment
-    #File.delete(file_name) if File.exist?(file_name)
-    #curret_directory = Dir.pwd
-    #Dir.chdir path
-    #result = system("apex0806.exe")
-    #Dir.chdir curret_directory
-  #end
-
   def read_apex_results(msg)
-    #@watershed = Watershed.new
-    #@watershed.name = "BEFORE"
-    #@watershed.save
-    #ActiveRecord::Base.transaction do
-      #begin
-        #@watershed = Watershed.new
-        #@watershed.name = "AFTER"
-        #@watershed.save
+    ActiveRecord::Base.transaction do
+      begin
+	    #clean all of the results exiting for this scenario.
+		if session[:simulation] == "scenario" then
+			# clean results for scenario to avoid keeping some results from previous simulation
+			Result.where(:scenario_id => params[:select_scenario][0], :field_id => params[:field_id]).destroy_all
+			Chart.where(:scenario_id => params[:select_scenario][0], :field_id => params[:field_id]).destroy_all
+		else
+			#todo - clean results for watershed to avoid keeping some results from previous simulation
+			#Result.where(:watershed_id => params[:select_scenario][0]).destroy_all
+		end
         ntt_apex_results = Array.new
-        #todo check this with new projects. Check if the simulatin_initial_year has the 5 years controled.
-        start_year = Weather.find_by_field_id(Scenario.find(session[:scenario_id]).field_id).simulation_initial_year - 5
+        #todo check this with new projects. Check if the simulation_initial_year has the 5 years controled.
+        start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results(apex_start_year, msg)
-		#session[:depth]=msg
-		#ppp
         msg = load_crop_results(apex_start_year)
-      #rescue => e
-        #msg = "Failed, Error: " + e.inspect
-        #raise ActiveRecord::Rollback
-      #ensure
+      rescue => e
+        msg = "Failed, Error: " + e.inspect
+        raise ActiveRecord::Rollback
+      ensure
         return msg
-      #end
-    #end
+      end
+    end
   end
 
   def load_results(apex_start_year, data)
     msg = "OK"
     results_data = Array.new
-    oneResult = Struct.new(:sub1, :year, :flow, :qdr, :surface_flow, :sed, :ymnu, :orgp, :po4, :orgn, :no3, :qdrn, :qdrp, :qn, :dprk, :irri, :pcp)
+    oneResult = Struct.new(:sub1, :year, :flow, :qdr, :surface_flow, :sed, :ymnu, :orgp, :po4, :orgn, :no3, :qdrn, :qdrp, :qn, :dprk, :irri, :pcp, :prkn, :n2o)
     sub_ant = 99
     irri_sum = 0
     dprk_sum = 0
+	prkn_sum = 0
+	n2o_sum = 0
     pcp = 0
     total_subs = 0
     i=1
-    apex_control = ApexControl.where(:project_id => session[:project_id])
+    apex_control = ApexControl.where(:project_id => params[:project_id])
     initial_chart_year = apex_control[0].value - 12 + apex_control[1].value
     data.each_line do |tempa|
       if i > 3 then
@@ -1617,7 +1601,8 @@ module SimulationsHelper
         if subs != 0 and subs != sub_ant then
           total_subs += 1
         end
-        next if subs == sub_ant || (session[:simulation] == "watershed" && subs != 0) #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
+        #next if (subs == sub_ant || (session[:simulation] == "watershed" && subs != 0)) && subs != 0 #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
+        next if subs == sub_ant  #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
         sub_ant = subs
         one_result = oneResult.new
         one_result.sub1 = subs
@@ -1637,9 +1622,13 @@ module SimulationsHelper
         one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
         one_result.irri = tempa[237, 8].to_f * MM_TO_IN
         one_result.pcp = tempa[229, 8].to_f * MM_TO_IN
+        one_result.prkn = tempa[13, 9].to_f * MM_TO_IN
+        one_result.n2o = tempa[153, 9].to_f * MM_TO_IN
         if subs == 0 then
           one_result.dprk = dprk_sum / total_subs
           one_result.irri = irri_sum / total_subs
+          one_result.prkn = prkn_sum / total_subs
+          one_result.n2o = n2o_sum / total_subs
           one_result.pcp = pcp / total_subs
           irri_sum = 0
           dprk_sum = 0
@@ -1670,15 +1659,15 @@ module SimulationsHelper
         else
           irri_sum += one_result.irri
           dprk_sum += one_result.dprk
+          prkn_sum += one_result.prkn
+          n2o_sum += one_result.n2o
           pcp += one_result.pcp
         end  # end if sub == 0
-
         results_data.push(one_result)
       else
         i = i + 1
       end   # end if i > 3
     end   #end data.each_line
-
     msg = average_totals(results_data) # average totals
     msg = load_monthly_values(apex_start_year)
     #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
@@ -1743,7 +1732,7 @@ module SimulationsHelper
     org_n = 0
     org_p =0
 
-    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(session[:scenario_id], 10)
+    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 10)
 	if !(bmp.blank? || bmp == nil) then
 		total_manure = bmp.number_of_animals.to_f * bmp.hours.to_f / 24 * bmp.dry_manure
 		no3 += total_manure * bmp.days * bmp.no3_n
@@ -1751,23 +1740,23 @@ module SimulationsHelper
 		org_n += total_manure * bmp.days * bmp.org_n
 		org_p += total_manure * bmp.days * bmp.org_p
 		if session[:simulation] == 'scenario'
-		  soils = Soil.where(:field_id => session[:field_id], :selected => true)
+		  soils = Soil.where(:field_id => @field.id, :selected => true)
 		  soils.each do |soil|
-			results = Result.where(:soil_id => soil.id, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+			results = Result.where(:soil_id => soil.id, :field_id => @field.id, :scenario_id => @scenario.id)
 			results.each do |result|
-			  update_value_of_results(result, false, Field.find(session[:field_id]).field_area * (soil.percentage / 100), no3, po4, org_n, org_p)
+			  update_value_of_results(result, false, Field.find(@field.id).field_area * (soil.percentage / 100), no3, po4, org_n, org_p)
 			  result.save
 			end
 		  end
 		end
 		if session[:simulation] == 'scenario'
-		  results = Result.where(:soil_id => 0, :field_id => session[:field_id], :scenario_id => session[:scenario_id])
+		  results = Result.where(:soil_id => 0, :field_id => @field.id, :scenario_id => @scenario.id)
 		else
 		  results = Result.where(:watershed_id => @watershed_id)
 		end
 
 		results.each do |result|
-		  update_value_of_results(result, true, Field.find(session[:field_id]).field_area, no3, po4, org_n, org_p)
+		  update_value_of_results(result, true, Field.find(@field.id).field_area, no3, po4, org_n, org_p)
 		  result.save
 		end
 	end  # end if bmp blank or nil

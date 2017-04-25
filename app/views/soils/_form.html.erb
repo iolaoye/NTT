@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :key, t('soil.key') %>
-    <%= f.number_field :key, :class => "numbers" %>
+    <%= f.number_field :key, :class => "gvTitleStyleNumber" %>
   </div>
   <div class="field">
     <%= f.label :symbol, t('soil.symbol') %>
@@ -33,15 +33,15 @@
   </div>
   <div class="field">
     <%= f.label :albedo, t('soil.albedo') %>
-    <%= f.number_field :albedo, :class => "numbers", :step => 'any'  %>
+    <%= f.number_field :albedo, :class => "gvTitleStyleNumber", :step => 'any'  %>
   </div>
   <div class="field">
     <%= f.label :slope, t('soil.slope') %>
-    <%= f.number_field :slope, :class => "numbers", :step => 'any' %>
+    <%= f.number_field :slope, :class => "gvTitleStyleNumber", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :percentage, t('soil.percentage') %>
-    <%= f.number_field :percentage, :class => "numbers", :step => 'any' %>
+    <%= f.number_field :percentage, :class => "gvTitleStyleNumber", :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :drainage_id, t('soil.drainage') %>
@@ -53,10 +53,11 @@
 	<% end %>
   </div>
   <div class="actions">
-    <%if type1 == 'Edit' %>
+    <%#if type1 == 'Edit' %>
 		<%= f.submit t('submit.save'), :class => "btn btn-primary" %>
-	<% else %>
-		<%= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
-	<% end %>
+	<%# else %>
+		<%#= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
+	<%# end %>
+	<%= link_to t('general.back'), project_field_soils_path(@project, @field), :class => "btn btn-primary" %>
   </div>
 <% end %>

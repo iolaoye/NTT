@@ -1,8 +1,6 @@
-<% if Project.find(params[:project_id]).version == "NTTG3" %>
-  <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
-<% else %>
-  <li class="<%= controller_name == "states" %>"><%= link_to t('menu.state'), states_path() %></li>
-<% end %>
+<% if !(@project == nil) %>
+<!-- <span class="sidebar_font"> -->
+<li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
 <%#= controller_name %>
 <%#= scenario_submenu %>
 <%#= field_submenu %>
@@ -10,14 +8,14 @@
 <%#= controller.action_name %>
 <%#= url_for %>
 <%#= @type %>
+<% if params[:field_id] == nil || params[:field_id] == "0" %>
+	<% field_name = "" %>
+<% else %>
+	<% field_name = "   (" + Field.find(params[:field_id]).field_name + ")"	 %>
+<% end %>
+<li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || ((controller_name == "results") && request.url.include?(url_for("simulation=scenario"))) || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations") || (controller_name == "sites") || session[:simulation] == 'scenario')? "active" : "" %>"><%= link_to t('menu.fields') + field_name, project_fields_path(@project) %></li>
 <% if field_submenu %>
-  <li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || (controller_name == "results") || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>"><%= link_to t('menu.fields') + "   (" + Field.find(session[:field_id]).field_name + ")", project_fields_path(@project) %></li>
   <ul class="nav nav-pills nav-stacked nav-sidebar-sub">
-    <% if Rails.application.config.which_version == "standard" %><li class="<%= controller_name == "weathers" ? "active" : "" %>">
-      <% if controller_name == "weathers" %><div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div><% end %>
-      <%= link_to t('menu.weather'), edit_project_field_weather_path(@project, @field, @field.weather) %>
-    </li><% end %>
-
     <li class="<%= controller_name == "soils" || controller_name == "layers" ? "active" : "" %>">
       <% if controller_name == "soils" || controller_name == "layers" %>
         <div class="header-icon">
@@ -26,6 +24,11 @@
       <% end %>
       <%= link_to t('menu.soils'), project_field_soils_path(@project, @field) %>
     </li>
+    <% unless ENV["APP_VERSION"] == "modified" %><li class="<%= controller_name == "weathers" ? "active" : "" %>">
+      <% if controller_name == "weathers" %><div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div><% end %>
+      <%= link_to t('menu.weather'), edit_project_field_weather_path(@project, @field, @field.weather) %>
+    </li><% end %>
+
     <li class="<%= controller_name == "scenarios" ? "active" : "" %>">
       <% if controller_name == "scenarios" %>
         <div class="header-icon">
@@ -34,7 +37,7 @@
       <% end %>
 
       <% if scenario_submenu %>
-		<%= link_to t('menu.scenarios') + "   (" + @scenario.name + ")", project_field_scenarios_path(@project, @field) %></li>
+		<%= link_to t('general.management') + " " + t('menu.scenarios') + "   (" + @scenario.name + ")", project_field_scenarios_path(@project, @field) %></li>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <li class="<%= controller_name == "operations" ? "active" : "" %>">
             <% if controller_name == "operations" %>
@@ -58,7 +61,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-			<% unless Rails.application.config.which_version == "modified" %><%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %><% end %>
+			<% unless ENV["APP_VERSION"] == "modified" %><%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %><% end %>
 
 			<% if aplcats_submenu %>
 				<ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub-sub">
@@ -126,90 +129,123 @@
 					<% end %>
 					<%= link_to t('aplcat.animal_feed_parameters'), project_field_scenario_grazing_parameters_path(@project, @field, @scenario) %>
 					</li>
+					<li class="<%= controller_name == "supplement_parameters" ? "active" : "" %>">
+						<% if controller_name == "supplement_parameters" %>
+							<div class="sub-sub-header-icon">
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							</div>
+						<% end %>
+						<%= link_to t('aplcat.supplement_parameters'), project_field_scenario_supplement_parameters_path(@project, @field, @scenario) %>
+					</li>
 				</ul>
 			<% end %>
           </li>
         </ul>
 	  <% else %>
-	  		<%= link_to t('menu.scenarios'), project_field_scenarios_path(@project, @field) %></li>
+	  		<%= link_to t('menu.management') + " " + t('general.scenarios'), project_field_scenarios_path(@project, @field) %></li>
       <% end %>
     </li>
+		<% if @field.results.count > 0 %>
+			<li class="<%= controller_name == "results" ? "active" : "" %>">
+			  <% if controller_name == "results" %>
+				<div class="header-icon">
+				  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				</div>
+			  <% end %>
+			  <%= link_to t('menu.results'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario') %>
+			</li>
+		<% end %>
 
-    <li class="<%= controller_name == "results" ? "active" : "" %>">
-      <% if controller_name == "results" %>
-        <div class="header-icon">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        </div>
-      <% end %>
-      <%= link_to t('menu.results'), project_field_results_path(@project, @field) %>
-    </li>
-
-	<% if result_submenu %>
+	  <% if result_submenu %>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-          <li class="<%= controller_name == "results" ? "active" : "0" %>">
+        	<li class="results-label">Tabular</li>
+          <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'summary'))) ? "active" : "0" %>">
             <% if controller.action_name == "summary" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.results'), project_field_results_path(@project, @field) %>
+            <%= link_to t('result.summary'), summary_project_field_result_path(@project, @field, 0) %>
           </li>
-          <li class="<%= controller_name == "results" ? "active" : "" %>">
+          <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'by_soils'))) ? "active" : "" %>">
             <% if controller.action_name == "by_soils" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('result.by_soil'), by_soils_result_path(session[:field_id]) %>
+            <%= link_to t('result.by_soil'), by_soils_project_field_result_path(@project, @field, 0) %>
           </li>
-          <li class="<%= controller_name == "results" ? "active" : "" %>">
+          <li class="results-label">Graphic</a></li>
+          <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'annual_charts'))) ? "active" : "" %>">
             <% if controller.action_name == "annual_charts" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t("result.annual")  + "-" + t('result.charts'), annual_charts_result_path(session[:field_id]) %>
+            
+            <%= link_to t("result.annual"), annual_charts_project_field_result_path(@project, @field, 0)%>
           </li>
-          <li class="<%= controller_name == "results" ? "active" : "" %>">
+          <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'monthly_charts'))) ? "active" : "" %>">
             <% if controller.action_name == "monthly_charts" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t("result.monthly")  + "-" + t('result.charts'), monthly_charts_result_path(session[:field_id]) %>
+            <%= link_to t("result.monthly"), monthly_charts_project_field_result_path(@project, @field, 0) %>
           </li>
         </ul>
       <% end %>
-    </li>
 
-    <% unless Rails.application.config.which_version == "modified" %><li class="<%= ((controller_name == "apex_controls")|| (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>">
-      <% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) %>
-        <div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
-      <% end %>
-      <%= link_to t('menu.apex_file'),  project_field_apex_controls_path(@project, @field) %>
-		<% if apex_files_submenu %>
-        <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-          <li class="<%= ((controller_name == "apex_controls")|| (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "0" %>">
-            <% if controller.action_name == "download" %>
-              <div class="sub-header-icon">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              </div>
-            <% end %>
-			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post %>
+    <% unless ENV["APP_VERSION"] == "modified" %>
 
-          </li><% end %>
-		 </ul>
-      <% end %>
-    </li>
+			<li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>">
+	      <% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) %>
+	        <div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
+	      <% end %>
+	      <%= link_to t('menu.apex_file'),  project_field_apex_controls_path(@project, @field) %>
+				<% if apex_files_submenu %>
+		        <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
+		          <li class="<%= ((controller_name == 'apex_controls') || (controller_name == 'aplcat_parameters') || (controller_name == 'apex_parameters') || (controller_name == 'subareas')|| (controller_name == 'apex_soils')|| (controller_name == 'soil_operations')|| (controller_name == 'sites')) ? 'active' : '0' %>">
+		          	<div class="results-label">APEX</div>
+		            <% if controller.action_name == "download" %>
+		              <div class="sub-header-icon">
+		                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		              </div>
+		            <% end %>
+								<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post %>
+							</li>
+							<li class="<%= controller_name == 'aplcat_parameters' ? "active" : "" %>">
+								<div class="results-label">APLCAT</div>
+								<% if controller_name == "aplcat_parameters" %>
+									<div class="sub-sub-header-icon">
+										<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									</div>
+								<% end %>
+								<%= link_to t('activerecord.models.apex.download') + " " + t('menu.aplcat_file'), aplcat_parameters_download_path, :method => :post %>
+							</li>
+						</ul>
+				<% end %>
+			</li>
+    <% end %>
   </ul>
 <% else %>
-<li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || (controller_name == "results") || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>"><%= link_to t('menu.fields'), project_fields_path(@project) %></li>
 <% end %>
-
-<ul class="nav nav-pills nav-stacked nav-sidebar">
-  <li class="<%= controller_name == "watersheds" ? "active" : "" %>"><%= link_to t('menu.watershed'), list_watershed_path(session[:location_id]) %></li>
-</ul>
-
-<ul class="nav nav-pills nav-stacked nav-sidebar-sub">
-  <li><%= link_to t('menu.results') + "-" + t('menu.watershed'), results_path(:button => t('result.summary')) %></li>
-</ul>
+<% if !(session[:location_id] == nil) %>
+	<ul class="nav nav-pills nav-stacked nav-sidebar">
+		<li class="<%= (controller_name == "watersheds" || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(params[:project_id]) %></li>
+	</ul>
+	<% if watershed_submenu %>
+		<ul class="nav nav-pills nav-stacked nav-sidebar-sub">
+			<li class="<%= controller_name == "results" ? "active" : "" %>">
+				<% if controller_name == "results" %>
+					<div class="header-icon">
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					</div>
+				<% end %>
+				<%= link_to t('menu.results') , project_field_results_path(@project, 0,:button => t('result.summary'), :simulation => 'Watershed') %>
+			</li>
+		</ul>
+	<% end %>
+<% end %>
+<% end %>
+</span>

@@ -36,51 +36,67 @@
       </div>
     </div>
 
-    <% if @weather.way_id == 2 %>
-        <fieldset id="fsetUploadWeatherFile" class="section"></fieldset>
-    <% else %>
-        <fieldset id="fsetUploadWeatherFile" class="section" style="display:none">
-    <% end %>
-    <div class="panel panel-default">
-    <div class="panel-heading"><%= t('weather.choose_file_lenged') %></div>
-    <div class="panel-body">
-    <%= f.file_field :weather_file %>
-    </div></div>
-    </fieldset>
-
-    <% if @weather.way_id == 3 %>
-        <fieldset id="fsetCoordinates" class="section"></fieldset>
-    <% else %>
-        <fieldset id="fsetCoordinates" class="section" style="display:none">
-    <% end %>
-    <div class="panel panel-default">
-    <div class="panel-heading"><%= t('weather.enter_coordinates') %></div>
-    <div class="panel-body">
-    <div class="field">
-      <%= f.label t('weather.latitude') %>
-      <%= f.number_field :latitude, :class => "numbers", :step => 'any' %>
-      <%= f.label t('weather.longitude') %>
-      <%= f.number_field :longitude, :class => "numbers", :step => 'any' %>
-    </div></div></div>
-    </fieldset>
-
-    <div class="field">
-      <%= f.label t('weather.years_of_weather') + ": " %>
-      <%= f.label @weather.weather_initial_year %>
-      <%= f.label "-" %>
-      <%= f.label @weather.weather_final_year %>
-    </div>
-    <fieldset class="section">
-      <div class="field">
-        <%= t('weather.note') %></p>
-        <%= f.label t('weather.years_of_simulation') + ": " + t('weather.initial_year') %>
-        <%= f.number_field :simulation_initial_year, :class => "fieldNumbers" %>
-        <%= f.label " " + t('weather.final_year') %>
-        <%= f.number_field :simulation_final_year, :class => "fieldNumbers" %>
+    <div id="fsetUploadWeatherFile" class="panel panel-default">
+      <div class="panel-heading"><%= t('weather.choose_file_lenged') %></div>
+      <div class="panel-body">
+        <%= f.file_field :weather_file %>
       </div>
-    </fieldset><br>
+    </div>
+
+    <div id="fsetCoordinates" class="panel panel-default">
+      <div class="panel-heading"><%= t('weather.enter_coordinates') %></div>
+      <div class="panel-body">
+        <div class="field">
+          <%= f.label t('weather.latitude') %>
+          <%= f.number_field :latitude, :class => "gvTitleStyleNumber", :step => 'any' %>
+          <%= f.label t('weather.longitude') %>
+          <%= f.number_field :longitude, :class => "gvTitleStyleNumber", :step => 'any' %>
+        </div>
+      </div>
+    </div>
+
     <div class="actions">
       <%= f.submit t('weather.update'), name: 'update', :class => "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <%= form_for [@project, @field, @weather], :url => save_simulation_project_field_weather_path(@project, @field, @weather), method: :post do |f| %>
+    <div id="fsetSimulation" class="panel panel-default">
+      <div class="panel-heading"><%= t('weather.years_of_simulation') %></div>
+      <div class="panel-body">
+        <div class="field">
+          <div class="field">
+            <%= f.label t('weather.years_of_weather') + ": " %>
+            <%= f.label @weather.weather_initial_year %>
+            <%= f.label "-" %>
+            <%= f.label @weather.weather_final_year %>
+          </div>
+          <%= t('weather.note') %></p>
+          <%= f.label t('weather.years_of_simulation') + ": " + t('weather.initial_year') %>
+          <%= f.number_field :simulation_initial_year, :class => "fieldNumbers" %>
+          <%= f.label " " + t('weather.final_year') %>
+          <%= f.number_field :simulation_final_year, :class => "fieldNumbers" %>  <%= f.submit t('weather.update_simulation'), :class => 'btn btn-success' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+    <div class="actions">
       <%= link_to t('general.continue'), project_field_soils_path(@project, @field), :class => 'btn btn-success' %>
     </div>
-<% end %>
+
+<script type="text/javascript">
+    //script to hide elements on page load and show selected radio
+    $(document).ready(function(){
+        document.getElementById("fsetUploadWeatherFile").style.display = "none";
+        document.getElementById("fsetCoordinates").style.display = "none";
+        var way_id = $("input[type=radio][id^=weather_way_id]:checked").val()
+        if (way_id == 1) {
+          document.getElementById("fsetPrism").style.display = "";
+        }else if (way_id == 2) {
+          document.getElementById("fsetUploadWeatherFile").style.display = "";
+        }else if (way_id == 3) {
+          document.getElementById("fsetCoordinates").style.display = "";
+        }
+    });
+</script>

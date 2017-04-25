@@ -1,0 +1,46 @@
+<%#= form_for [@project, @watershed, @watershed_scenarios] do |f| %>
+<% case %>
+<% when notice %>
+	<div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
+<% when flash[:info] %>
+	<div class="flash_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= flash[:info] %>
+    </div>
+<% end %>
+
+<div class="table-responsive">
+	<div class="panel panel-default">
+		<table class='table'>
+			<thead>
+			  <tr class='optable'>
+    			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
+    			<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
+    			<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+  			  </tr>
+			</thead>
+			<tbody>
+  			<% i=1 %>
+  			<% @watershed_scenarios.each do |watershed_scenario| %>
+    			<% if (i % 2  == 0) %>
+      				<tr class="gvRowStyleEven">
+    			<% else %>
+      				<tr class="gvRowStyleOdd">
+    			<% end %>
+        			<td class="optable"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
+        			<td class="optable"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
+        			<td class="optable">
+          				<%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+        			</td>
+      			</tr>
+  				<% i = i + 1 %>
+  			<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<br>

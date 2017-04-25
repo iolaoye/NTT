@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :supplement_parameters
   resources :manure_controls
   resources :grazing_parameters
   resources :aplcat_parameters
@@ -50,41 +51,44 @@ NTTG3::Application.routes.draw do
   resources :apex_soils
   resources :apex_layers
 
-  resources :watershed_scenarios do
-     post 'new_scenario', on: :member
-  end
-
   resources :users do
     resources :projects
   end
 
+  get 'projects/upload'
+  post 'projects/upload_project'
+
   resources :projects do
-    resources :watersheds
+    resources :watersheds do
+		get :list, on: :member
+		get :simulate, on: :member
+		get :new_scenario, on: :member
+		get :destroy_watershed_scenario, on: :member
+		resources :watershed_scenarios
+	end
     resources :locations do
       get :send_to_mapping_site, on: :member
       post :receive_from_mapping_site, on: :member
       get :location_fields, on: :member
-    end 
-    get 'upload', on: :member
+    end
     get 'download', on: :member
     get :group, on: :member
     resources :fields do
       resources :scenarios do
-        post :simulate_all, on: :collection
         resources :aplcat_parameters do
 	        get 'aplcat', on: :member
 		end
 		resources :grazing_parameters
-        post :simulate_ntt, on: :collection
-        post :simulate_aplcat, on: :collection
+		resources :supplement_parameters
+        post :simulate, on: :collection
         resources :operations do
           get :list, on: :collection
           get :cropping_system, on: :collection
           get :crop_schedule, on: :collection
           get 'download', on: :collection
           get :open, on: :collection
-          get :upload_system, on: :member
           post :delete_all, on: :collection
+		  post :upload_system, on: :member
         end
         resources :bmps do
           get :list, on: :collection
@@ -93,6 +97,7 @@ NTTG3::Application.routes.draw do
       end
       resources :weathers do
         member do
+          post 'save_simulation'
           post 'save_coordinates'
         end
       end
@@ -114,8 +119,12 @@ NTTG3::Application.routes.draw do
         get :monthly_charts, on: :member
         get :download_apex_files, on: :member
       end
-      resources :apex_parameters
-      resources :apex_controls
+      resources :apex_parameters do
+		post 'reset', on: :member
+	  end
+      resources :apex_controls do
+		post 'reset', on: :member
+	  end
       resources :apex_soils
       resources :apex_layers
       resources :subareas
@@ -125,10 +134,9 @@ NTTG3::Application.routes.draw do
 	  get 'copy_project', on: :member
   end
 
-
   resources :states do
     resources :counties
-  post :show_counties, on: :collection
+	post :show_counties, on: :collection
   end
 
   resources :activities do
@@ -137,10 +145,6 @@ NTTG3::Application.routes.draw do
 
   resources :fertilizer_types do
     resources :fertilizers
-  end
-
-  resources :watersheds do
-    get :list, on: :member
   end
 
   resources :bmplists do
@@ -153,7 +157,6 @@ NTTG3::Application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
   get 'users/new'
-  post 'projects/upload_project'
   post 'weathers/upload_weather'
   root to: 'welcomes#index'
 
@@ -163,10 +166,10 @@ NTTG3::Application.routes.draw do
   get '/help/' => redirect('/help/index')
   get '/help/:page' => "help#show", :as => "help"
 
-  post 'apex_controls/reset'
   post 'apex_controls/download'
   post 'apex_parameters/reset'
   post 'apex_parameters/download'
+  post 'aplcat_parameters/download'
   post 'subareas/download'
   post 'apex_soils/download'
   post 'sites/download'

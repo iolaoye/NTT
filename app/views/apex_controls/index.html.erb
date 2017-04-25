@@ -16,8 +16,8 @@
 
 
 <br><br>
-  <%= link_to "Reset to Default", {:action => :reset}, :method => :post, :class => 'btn btn-primary' %>
-<br><br>
+  <%= link_to t("general.reset_to"), reset_project_field_apex_control_path(@project, @field, 0), :class => 'btn btn-primary' %>
+    <br><br>
 <div class="table-responsive">
   <div class="panel panel-default">
     <table class="table table-striped">
@@ -49,7 +49,7 @@
       <td><%= apex_control.value %></td>
       <td><%= apex_control.control_description.range_low %></td>
       <td><%= apex_control.control_description.range_high %></td>
-      <td><%= link_to image_tag("edit.png"), edit_apex_control_path(apex_control), title: t('general.edit') %></td>
+      <td><%= link_to image_tag("edit.png"), edit_project_field_apex_control_path(@project, @field, apex_control), title: t('general.edit') %></td>
       <% i+=1 %>
 <% end %>
 </tr>

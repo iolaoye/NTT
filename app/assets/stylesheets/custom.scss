@@ -16,6 +16,11 @@ a {
   color: #20689B;
 }
 
+.table-link a {
+  text-decoration: underline;
+  color: blue;
+  }
+
 section {
   overflow: auto;
 }
@@ -75,6 +80,7 @@ h2 {
 
 h3 {
 margin-bottom: 0px;
+    margin-top: 0px;
     font-size: 2em;
     font-weight: lighter;
 }
@@ -82,6 +88,11 @@ margin-bottom: 0px;
 p {
   font-size: 1.1em;
   line-height: 1.7em;
+}
+
+.flash {
+  color: red;
+  font-size: large;
 }
 
 /* header */
@@ -322,7 +333,7 @@ footer a:hover{
 }
 
 .nav-sidebar-sub-sub > li > a {
-    padding-left: 80px;
+    padding-left: 100px;
 }
 
 .nav-sidebar-sub-sub-sub > li > a {
@@ -348,7 +359,7 @@ footer a:hover{
 .sub-header-icon {
     position: absolute;
     z-index: 1;
-    margin-left: 55px;
+    margin-left: 75px;
     margin-top: 10px;
     color: #204060;
     }
@@ -543,8 +554,18 @@ table.results_table td {
 
 }
 
+.results-label {
+  padding-left: 65px;
+  padding-top: 5px;
+  font-size: 14px;
+}
+
 .table > tbody > tr > td.indent {
   padding-left: 50px;
+}
+
+.table > tbody > tr > td.indent2 {
+  padding-left: 90px;
 }
 
 .btn-header, .btn-header:hover {
@@ -657,8 +678,8 @@ div#pop-up {
 }
 
 td.optable {
-    background-color: #20689B;
-    color: #ffffff;
+    background-color: #dff0d8;
+    color: #3c763d;
     font-size: 12px;
     text-shadow: 0 0 1px rgba(0,0,0,0.3);
 }

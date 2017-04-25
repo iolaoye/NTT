@@ -1,4 +1,4 @@
-<%= form_for(@site) do |f| %>
+<%= form_for([@project, @field, @site]) do |f| %>
   <% if @site.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @site.errors.count, :model => t('models.site').downcase) %></h2>
@@ -13,48 +13,48 @@
 
   <div class="field">
     <%= f.label :ylat %><br>
-    <%= f.text_field :ylat %>
+    <%= f.number_field :ylat, :class => 'gvTitleStyleNumber' %>
   </div>
   <div class="field">
     <%= f.label :xlog %><br>
-    <%= f.text_field :xlog %>
+    <%= f.number_field :xlog, :class => 'gvTitleStyleNumber' %>
   </div>
   <div class="field">
     <%= f.label :elev %><br>
-    <%= f.text_field :elev %>
+    <%= f.number_field :elev, :class => 'gvTitleStyleNumber' %>
   </div>
   <div class="field">
     <%= f.label :apm %><br>
-    <%= f.text_field :apm %>
+    <%= f.number_field :apm, :class => 'gvTitleStyleNumber'%>
   </div>
   <div class="field">
     <%= f.label :co2x %><br>
-    <%= f.text_field :co2x %>
+    <%= f.number_field :co2x, :class => 'gvTitleStyleNumber' %>
   </div>
   <div class="field">
     <%= f.label :cqnx %><br>
-    <%= f.text_field :cqnx %>
+    <%= f.number_field :cqnx, :class => 'gvTitleStyleNumber' %>
   </div>
   <div class="field">
     <%= f.label :rfnx %><br>
-    <%= f.text_field :rfnx %>
+    <%= f.number_field :rfnx, :class => 'gvTitleStyleNumber' %>
   </div>
   <div class="field">
     <%= f.label :upr %><br>
-    <%= f.text_field :upr %>
+    <%= f.number_field :upr, :class => 'gvTitleStyleNumber' %>
   </div>
   <div class="field">
     <%= f.label :unr %><br>
-    <%= f.text_field :unr %>
+    <%= f.number_field :unr, :class => 'gvTitleStyleNumber' %>
   </div>
   <div class="field">
     <%= f.label :fir0 %><br>
-    <%= f.text_field :fir0 %>
+    <%= f.number_field :fir0, :class => 'gvTitleStyleNumber' %>
   </div>
   <br>
   <div class="actions">
     <%= f.submit t("submit.update") + " " + t("menu.site"), :class => "btn btn-primary" %>
-    <%= link_to t('general.back'), site_path, :class => "btn btn-primary" %>
+    <%= link_to t('general.back'), project_field_sites_path, :class => "btn btn-primary" %>
   </div>
 <% end %>
 

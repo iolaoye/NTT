@@ -3,6 +3,9 @@ include ScenariosHelper
 class OperationsController < ApplicationController
   include ScenariosHelper
   require "open-uri"
+
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
 ################################  operations list   #################################
 # GET /operations/1
 # GET /1/operations.json
@@ -11,6 +14,14 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
+	#if session[:oper_type] == nil then
+		#session[:oper_type] = 0
+	#end
+
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name
+    add_breadcrumb @scenario.name
+    add_breadcrumb 'Operations'
 
     array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
@@ -39,7 +50,7 @@ class OperationsController < ApplicationController
 # GET /operations/1
 # GET /operations/1.json
   def show
-    @operation = Operation.find(params[:scenario_id])
+    @operation = Operation.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -56,6 +67,12 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
+
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name
+    add_breadcrumb @scenario.name
+    add_breadcrumb 'New Operation'
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @operation }
@@ -66,7 +83,11 @@ class OperationsController < ApplicationController
 # GET /operations/1/edit
   def edit
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
-    @operation = Operation.find(params[:scenario_id])
+    @operation = Operation.find(params[:id])
+
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+    @scenario = Scenario.find(params[:scenario_id])
   end
 
 ################################  CREATE  #################################
@@ -81,7 +102,7 @@ class OperationsController < ApplicationController
     msg = "Unknown error"
     ActiveRecord::Base.transaction do
       @operation = Operation.new(operation_params)
-      @operation.scenario_id = session[:scenario_id]
+      @operation.scenario_id = params[:scenario_id]
       @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
       if @operation.save
         saved = true
@@ -101,7 +122,7 @@ class OperationsController < ApplicationController
       if saved
         if soil_op_saved
           if params[:add_more] == "Add more" && params[:finish] == nil
-            format.html { redirect_to list_bmp_path(session[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+            format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
             format.json { render json: @operation, status: :created, location: @operation }
           elsif params[:finish] == "Finish" && params[:add_more] == nil
             format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
@@ -122,7 +143,7 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
-    @operation = Operation.find(params[:scenario_id])
+    @operation = Operation.find(params[:id])
 	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
@@ -134,10 +155,10 @@ class OperationsController < ApplicationController
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
         if params[:add_more] == "Add more" && params[:finish] == nil
-          format.html { redirect_to list_bmp_path(params[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+          format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
         elsif params[:finish] == "Finish" && params[:add_more] == nil
-          format.html { redirect_to list_operation_path(params[:scenario_id]), notice: t('scenario.operation') + " " + t('general.created') }
+          format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
         end
       else
@@ -151,7 +172,7 @@ class OperationsController < ApplicationController
 # DELETE /operations/1
 # DELETE /operations/1.json
   def destroy
-    @operation = Operation.find(params[:scenario_id])
+    @operation = Operation.find(params[:id])
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
@@ -297,6 +318,12 @@ class OperationsController < ApplicationController
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     @operations = Operation.where(:scenario_id => params[:scenario_id])
+
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name
+    add_breadcrumb @scenario.name
+    add_breadcrumb 'Add Crop Schedule'
+
     @count = @operations.count
     @highest_year = 0
     @operations.each do |operation|
@@ -452,7 +479,6 @@ class OperationsController < ApplicationController
 
   ########################################### UPLOAD CROPPING SYSTEM FILE IN XML FORMAT ##################
   def upload_system
-  uuu
     saved = false
     msg = ""
     ActiveRecord::Base.transaction do
@@ -471,7 +497,7 @@ class OperationsController < ApplicationController
 			end
 		end    
     end
-	redirect_to list_operation_path(params[:scenario_id])
+	redirect_to list_project_field_scenario_operations_path(params[:project_id], params[:field_id], params[:scenario_id])
   end
 
   def open
@@ -508,7 +534,6 @@ class OperationsController < ApplicationController
   end
 
   def upload_operation_info(node, scenario_id, field_id)
-    debugger
     @operation = Operation.new
     @operation.scenario_id = scenario_id
     event_id = 0

@@ -11,10 +11,10 @@
     </div>
 <% end %>
 
-<% if Rails.application.config.which_version == "modified" %>
+<% if ENV["APP_VERSION"] == "modified" %>
 <div class="page-header"><h1><!--<%= t('general.listing') + " " + t('soil.layers') %>-->Soil Layers</h1></div>
-<%= link_to t('general.back'), list_soil_path(session[:field_id]), :class => 'btn btn-primary' %>
-<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'btn btn-success' %><br><br>
+<%= link_to t('general.back'), list_soil_path(params[:field_id]), :class => 'btn btn-primary' %>
+<%= link_to t('general.continue'), list_scenario_path(params[:field_id]), :class => 'btn btn-success' %><br><br>
 
 <b><%= @soil.name %></b> <br><br>
   <div class="field">
@@ -52,8 +52,8 @@
 		<table class='table table-striped'>
 			<thead>
 			  <tr>
-			    <th><%= t('soil.depth') %></th>
-			    <th><%= t('soil.soilp') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.depth') %></th>
+			    <!-- <th><%= t('soil.soilp') %></th> -->
 			    <th><%= t('soil.bulk_density') %></th>
 			    <th><%= t('soil.sand') %></th>
 			    <th><%= t('soil.silt') %></th>
@@ -69,7 +69,7 @@
 		      <% if (i % 2  == 0) %>
 			      <tr class="gvRowStyleEven">
 			         <td class="gvCellStyleNumber"><%= layer.depth %></td>
-			         <td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+			         <!-- <td class="gvCellStyleNumber"><%= layer.soil_p %></td> -->
 			         <td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
 			         <td class="gvCellStyleNumber"><%= layer.sand %></td>
 			         <td class="gvCellStyleNumber"><%= layer.silt %></td>
@@ -109,22 +109,22 @@
 
 <div class="page-header"><h1><%= t('soil.soil') + " " + t('soil.layers') %></h1></div>
 <%= link_to t('general.new') + ' ' + t('soil.layer'), new_layer_path, :class => 'btn btn-primary' %>
-<%= link_to t('general.back') + " " + t('general.to') + " " + t('menu.soils'), field_soils_field_path(session[:field_id]), :class => 'btn btn-primary' %>
-<%= link_to t('general.continue'), list_scenario_path(session[:field_id]), :class => 'btn btn-success' %>
+<%= link_to t('general.back') + " " + t('general.to') + " " + t('menu.soils'), field_soils_field_path(params[:field_id]), :class => 'btn btn-primary' %>
+<%= link_to t('general.continue'), list_scenario_path(params[:field_id]), :class => 'btn btn-success' %>
 <br><br>
 <div class="table-responsive">
 	<div class="panel panel-default">
 		<table class='table table-striped'>
 			<thead>
 			  <tr>
-			    <th><%= t('soil.depth') %></th>
-			    <th><%= t('soil.soilp') %></th>
-			    <th><%= t('soil.bulk_density') %></th>
-			    <th><%= t('soil.sand') %></th>
-			    <th><%= t('soil.silt') %></th>
-			    <th><%= t('soil.clay') %></th>
-			    <th><%= t('soil.organic_matter') %></th>
-			    <th><%= t('soil.ph') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.depth') %></th>
+			    <!-- <th class="gvCellStyleNumber"><%= t('soil.soilp') %></th> -->
+			    <th class="gvCellStyleNumber"><%= t('soil.bulk_density') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.sand') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.silt') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.clay') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.organic_matter') %></th>
+			    <th class="gvCellStyleNumber"><%= t('soil.ph') %></th>
 			    <th><%=t('general.actions')%></th>
 			  </tr>
 			</thead>
@@ -137,7 +137,7 @@
 					  <tr class="gvRowStyleOdd">
 				  <% end %>
 						<td class="gvCellStyleNumber"><%= layer.depth %></td>
-						<td class="gvCellStyleNumber"><%= layer.soil_p %></td>
+						<!-- <td class="gvCellStyleNumber"><%= layer.soil_p %></td> -->
 						<td class="gvCellStyleNumber"><%= layer.bulk_density %></td>
 						<td class="gvCellStyleNumber"><%= layer.sand %></td>
 						<td class="gvCellStyleNumber"><%= layer.silt %></td>

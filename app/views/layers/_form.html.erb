@@ -13,39 +13,39 @@
 
   <div class="field">
     <%= f.label :depth, t('soil.depth') %>
-	<%= f.number_field :depth, :class => 'numbers', min: 0, :step => 'any'  %>
+	<%= f.number_field :depth, :class => 'gvTitleStyleNumber', min: 0, :step => 'any'  %>
   </div>
   <div class="field">
     <%= f.label :soil_p, t('soil.soilp') %>
 	<%# if @layer.depth > 3.95 %>
-		<%#= f.number_field :soil_p, :class => 'numbers', min: 0, :step => 'any', :disabled => 'disabled'%>
+		<%#= f.number_field :soil_p, :class => 'gvTitleStyleNumber', min: 0, :step => 'any', :disabled => 'disabled'%>
 	<%# else %>
-		<%= f.number_field :soil_p, :class => 'numbers', min: 0, :step => 'any' %>
+		<%= f.number_field :soil_p, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
 	<%# end %>
   </div>
   <div class="field">
     <%= f.label :bulk_density, t('soil.bulk_density') %>
-    <%= f.number_field :bulk_density, :class => 'numbers', min: 0, :step => 'any' %>
+    <%= f.number_field :bulk_density, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :sand, t('soil.sand') %>
-    <%= f.number_field :sand, :class => 'numbers', min: 0, :step => 'any' %>
+    <%= f.number_field :sand, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :silt, t('soil.silt') %>
-    <%= f.number_field :silt, :class => 'numbers', min: 0, :step => 'any' %>
+    <%= f.number_field :silt, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :clay, t('soil.clay') %>
-    <%= f.number_field :clay, :class => 'numbers', min: 0, :step => 'any' %>
+    <%= f.number_field :clay, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :organic_matter, t('soil.organic_matter') %>
-    <%= f.number_field :organic_matter, :class => 'numbers', min: 0, :step => 'any' %>
+    <%= f.number_field :organic_matter, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
   </div>
   <div class="field">
     <%= f.label :ph, t('soil.ph') %>
-    <%= f.number_field :ph, :class => 'numbers', min: 0, :step => 'any' %>
+    <%= f.number_field :ph, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
   </div>
   <div class="actions">
     <%#= f.submit "Finish", :name => "finish", :class => "btn btn-primary" %>

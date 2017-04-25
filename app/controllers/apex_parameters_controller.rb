@@ -4,7 +4,7 @@ class ApexParametersController < ApplicationController
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-    @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => session[:project_id])
+    @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_parameters }
@@ -14,7 +14,7 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters/1
   # GET /apex_parameters/1.json
   def show
-    @apex_parameter = ApexParameter.where(:project_id => session[:project_id]).find(params[:id])
+    @apex_parameter = ApexParameter.where(:project_id => params[:project_id]).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -35,11 +35,13 @@ class ApexParametersController < ApplicationController
 
   # GET /apex_parameters/1/edit
   def edit
-    @apex_parameter = ApexParameter.includes(:parameter_description).where(:project_id => session[:project_id]).find(params[:id])
-    @parameter_name = @apex_parameter.parameter.name
-    @low_range = @apex_parameter.parameter.range_low
-    @high_range = @apex_parameter.parameter.range_high
-    #@apex_parameter = ApexParameter.where(:project_id => session[:project_id]).find(params[:id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+    @apex_parameter = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id]).find(params[:id])
+    @parameter_name = @apex_parameter.parameter_description.name
+    @low_range = @apex_parameter.parameter_description.range_low
+    @high_range = @apex_parameter.parameter_description.range_high
+    #@apex_parameter = ApexParameter.where(:project_id => params[:project_id]).find(params[:id])
   end
 
   # POST /apex_parameters
@@ -61,11 +63,11 @@ class ApexParametersController < ApplicationController
   # PATCH/PUT /apex_parameters/1
   # PATCH/PUT /apex_parameters/1.json
   def update
-    @apex_parameter = ApexParameter.where(:project_id => session[:project_id]).find(params[:id])
+    @apex_parameter = ApexParameter.where(:project_id => params[:project_id]).find(params[:id])
 
     respond_to do |format|
       if @apex_parameter.update_attributes(apex_parameter_params)
-        format.html { redirect_to apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.updated')}
+        format.html { redirect_to project_field_apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.updated')}
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -77,7 +79,7 @@ class ApexParametersController < ApplicationController
   # DELETE /apex_parameters/1
   # DELETE /apex_parameters/1.json
   def destroy
-    @apex_parameter = ApexParameter.where(:project_id => session[:project_id]).find(params[:id])
+    @apex_parameter = ApexParameter.where(:project_id => params[:project_id]).find(params[:id])
     @apex_parameter.destroy
 
     respond_to do |format|
@@ -92,14 +94,14 @@ class ApexParametersController < ApplicationController
 		parameters = Parameter.where(:state_id => 99)
 	end
 
-    @apex_parameters = ApexParameter.where(:project_id => session[:project_id])
+    @apex_parameters = ApexParameter.where(:project_id => params[:project_id])
     @apex_parameters.delete_all()
 
     parameters.each do |parameter|
 		  apex_parameter = ApexParameter.new
 		  apex_parameter.parameter_description_id = parameter.number
 		  apex_parameter.value = parameter.default_value
-		  apex_parameter.project_id = session[:project_id]
+		  apex_parameter.project_id = params[:project_id]
 		  apex_parameter.save
     end
     redirect_to apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.reset')

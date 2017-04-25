@@ -5,7 +5,7 @@
   </div>
 <% end %>
 
-<%= form_tag({action: :upload_system}, multipart: true) do %>
+<%= form_tag upload_system_project_field_scenario_operation_path(@project, @field, @scenario,0), method: :post, multipart: true do |f| %>
   <div>
       <div class="page-header"><h1><%= t('operation.open') %></h1></div>
       <%= file_field_tag "Cropping_system" %>

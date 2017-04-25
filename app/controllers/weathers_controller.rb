@@ -1,9 +1,63 @@
 class WeathersController < ApplicationController
+include SimulationsHelper
+include ScenariosHelper
 ################################  Save_coordinates   #################################
 # GET /weathers/1
 # GET /weathers/1.json
-  def Save_coordinates
+  def save_coordinates
+    @weather.latitude = params[:weather][:latitude]
+    @weather.longitude = params[:weather][:longitude]
+    weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+    data = weather_data.split(",")
+    @weather.weather_file = data[0]
+    data[2].slice! "\r\n"
+    @weather.simulation_final_year = data[2]
+    @weather.weather_final_year = @weather.simulation_final_year
+    @weather.weather_initial_year = data[1]
+    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+    @weather.way_id = 3
+    @weather.save
+  end
 
+################################  Save Prism data #################################
+# GET /weathers/1
+# GET /weathers/1.json
+  def save_prism
+    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
+    centroid = calculate_centroid()
+    @weather.latitude = centroid.cy
+    @weather.longitude = centroid.cx
+    weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+    data = weather_data.split(",")
+    @weather.weather_file = data[0]
+    data[2].slice! "\r\n"
+    @weather.simulation_final_year = data[2]
+    @weather.weather_final_year = @weather.simulation_final_year
+    @weather.weather_initial_year = data[1]
+    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+    @weather.way_id = 1
+    @weather.save
+  end
+
+################################  Save Simulation   #################################
+# GET /weathers/1
+# GET /weathers/1.json
+  def save_simulation
+    @weather = Weather.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @weather.simulation_initial_year = params[:weather][:simulation_initial_year]
+    @weather.simulation_final_year = params[:weather][:simulation_final_year]
+
+    respond_to do |format|
+      if @weather.save
+        format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @weather.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 ################################  INDEX   #################################
@@ -22,7 +76,7 @@ class WeathersController < ApplicationController
 # GET /weathers/1
 # GET /weathers/1.json
   def show
-    @weather = Weather.find_by_field_id(session[:field_id])
+    @weather = Weather.find_by_field_id(params[:field_id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     if !(@weather == :nil) # no empty array
@@ -52,25 +106,19 @@ class WeathersController < ApplicationController
 ################################  EDIT   #################################
 # GET /weathers/1/edit
   def edit
-    @weather = Weather.find_by_field_id(params[:id])
+    @weather = Weather.find(params[:id])
     @project = Project.find(params[:project_id])
-    @field = Field.find(params[:id])
-
-    #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
-    #add_breadcrumb @project.name
-    #add_breadcrumb t('menu.fields'), list_field_path(@project)
-    #add_breadcrumb @field.field_name
-    #add_breadcrumb t('menu.weather')
+    @field = Field.find(params[:field_id])
 
     if !(@weather == nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
       else
         @way = Way.find(@weather.way_id)
-      end	  
+      end
     else
       @weather = Weather.new
-      @weather.field_id = session[:field_id]
+      @weather.field_id = params[:field_id]
       @weather.way_id = 0
       @weather.simulation_initial_year = 0
       @weather.simulation_final_year = 0
@@ -107,34 +155,42 @@ class WeathersController < ApplicationController
     @weather = Weather.find(params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-
     if (params[:weather][:way_id] == "2")
-      if params[:weather][:weather_file] == nil 
-		if @weather.weather_file == nil || @weather.weather_file == ""
-			redirect_to edit_project_field_weather_path(@project, @field)
-			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
-		end
+      if params[:weather][:weather_file] == nil
+		      if @weather.weather_file == nil || @weather.weather_file == ""
+			        redirect_to edit_project_field_weather_path(@project, @field)
+			        flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
+		      end
       else
-        msg = upload_weather
-        #redirect_to edit_weather_path(session[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
+        @weather.way_id = 2
+        #redirect_to edit_weather_path(params[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
       end
     end
-      respond_to do |format|
-        if @weather.save
-          format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @weather.errors, status: :unprocessable_entity }
-        end
+
+    if (params[:weather][:way_id] == "3")
+      save_coordinates
+    end
+
+    if (params[:weather][:way_id] == "1")
+      save_prism
+    end
+
+    respond_to do |format|
+      if @weather.save
+        format.html { redirect_to edit_project_field_weather_path(@project, @field, @weather), notice: t('models.weather') + " " + t('general.updated') }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @weather.errors, status: :unprocessable_entity }
       end
-    #end
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(session[:project_id], 1)
-	apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
-	apex_control.save
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(session[:project_id], 2)
-	apex_control.value = @weather.simulation_initial_year - 5
-	apex_control.save
+    end
+
+	  apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
+    apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
+	  apex_control.save
+    apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 2)
+    apex_control.value = @weather.simulation_initial_year - 5
+    apex_control.save
   end
 
 # DELETE /weathers/1
@@ -156,7 +212,7 @@ class WeathersController < ApplicationController
     # create the file path
     path = File.join(OWN, name)
     # open the weather file for writing.
-	weather_file = open(path, "w") 
+	weather_file = open(path, "w")
     #File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) }
 	input_file = params[:weather][:weather_file].read.split(/\r\n/)
     i=0

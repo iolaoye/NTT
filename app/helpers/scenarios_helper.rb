@@ -170,7 +170,7 @@ module ScenariosHelper
 
 		#the default values are going to be overwritten if the addition is a buffer
 		case bmpsublist_id
-			when 6    #PPDE
+			when 6, 7    #PPDE
 				#line 2
 				subarea.number = 106
 				subarea.iops = soil_id
@@ -179,28 +179,31 @@ module ScenariosHelper
 				subarea.rchl = soil_area * AC_TO_KM2 / temp_length    #soil_area here is the reservior area
 				#line 4
 				subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
+				# reduce the area of others subareas proportionally
+				update_wsa("-", subarea.wsa)
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 				subarea.chs = subarea.slp
+				subarea.slp *= 0.25
 				subarea.chn = 0.05
 				subarea.upn = 0.41
 				subarea.ffpq = 0.8
 				#line 5
 				subarea.rchd = 0.1
 				subarea.rcbw = 0.1
-				subarea.rctw = 0.1
-				subarea.rchs = subarea.slp
+				subarea.rctw = 0.2
+				subarea.rchs = subarea.chs
 				subarea.rchn = 0.15
 				subarea.rchk = 0.01
 				#line 6
-				subarea.rsee = 0.01
+				subarea.rsee = 0.10
 				subarea.rsae = subarea.wsa
 				subarea.rsve = 75
 				subarea.rsep = 0.1
 				subarea.rsap = subarea.wsa
 				subarea.rsvp = 25
 				subarea.rsrr = 1
-				subarea.rsv = 1
+				subarea.rsv = 0
 				subarea.rsys = 300
 				subarea.rsyn = 300
 				#line 7
@@ -253,19 +256,19 @@ module ScenariosHelper
 				subarea.rsbd = 0.8
 				#line 10
 				subarea.pec = 1
-				add_buffer_operation(subarea, 139, 129, 0, 2000, 0, 33, 1, scenario_id)
+				add_buffer_operation(subarea, 139, 129, 0, 2000, 0, 33, 2, scenario_id)
 			when 12    #Riperian Forest
 				if !checker
 					#line 2
 					subarea.number = 102
-					subarea.iops = soil_id
+					subarea.iops = soil_id + 1
 					#subarea.iow = 1
 					#line 5					
-					subarea.rchl = (@bmp.width * FT_TO_KM * @bmp.grass_field_portion).round(4)    #soil_area here is the reservior area
+					subarea.rchl = (@bmp.width * FT_TO_KM * (1 - @bmp.grass_field_portion)).round(4)    #soil_area here is the reservior area
 					#line 4
 					if soil_area != nil
-						fs_area = soil_area * AC_TO_HA * @bmp.grass_field_portion
-						subarea.wsa = fs_area      #soil_area here is the reservior area
+						fs_area = soil_area * AC_TO_HA * (1-@bmp.grass_field_portion)
+						subarea.wsa = fs_area       #soil_area here is the reservior area
 					else
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 						fs_area = subarea.wsa
@@ -304,20 +307,22 @@ module ScenariosHelper
 						update_wsa("-", subarea.wsa)
 						update_subarea(subarea, "RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
 					end
-					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 2, scenario_id)
+					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, 1, scenario_id)
+					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 1, scenario_id)
 				else
 					#line 2
 					subarea.number = 103
-					subarea.iops = soil_id + 1
+					subarea.iops = soil_id
 					#subarea.iow = 1
 					#line 5
-					subarea.rchl = (@bmp.width * FT_TO_KM * (1 - @bmp.grass_field_portion)).round(4)    #soil_area here is the reservior area
+					subarea.rchl = (@bmp.width * FT_TO_KM * @bmp.grass_field_portion).round(4)    #soil_area here is the reservior area
 					#line 4
 					if soil_area != nil
-						subarea.wsa = soil_area * AC_TO_HA * (1 - @bmp.grass_field_portion)      #soil_area here is the reservior area
+						subarea.wsa = soil_area * AC_TO_HA * @bmp.grass_field_portion      #soil_area here is the reservior area
 					else
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 					end
+					subarea.wsa = subarea.wsa
 					update_wsa("-", subarea.wsa)
 					subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 					subarea.slp = subarea.slp * @bmp.buffer_slope_upland
@@ -346,8 +351,7 @@ module ScenariosHelper
 					subarea.rfpl = 0
 					#line 10
 					subarea.pec = 1.0
-					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, 1, scenario_id)
-					add_buffer_operation(subarea, 136, 49, 0, 1400, 0, 22, 1, scenario_id)
+					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 2, scenario_id)
 				end
 			when 13    #Filter Strip
 				#line 2
@@ -388,7 +392,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 1, scenario_id)
+				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
 			when 14    #Waterway
 				#line 2
 				subarea.number = 104
@@ -424,7 +428,7 @@ module ScenariosHelper
                 subarea.rfpl = subarea.rchl
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 1, scenario_id)
+				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
 			when 23    #Shading
 				#line 2
 				subarea.number = 101
@@ -463,7 +467,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, 1, scenario_id)
+				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, 2, scenario_id)
 		end # end bmpsublist_id
 
 		#this is when the subarea is added from a scenario
@@ -530,9 +534,9 @@ module ScenariosHelper
     end
 
 	def update_wsa(operation, wsa)
-		soils = Soil.where(:field_id => session[:field_id], :selected => true)
+		soils = Soil.where(:field_id => params[:field_id], :selected => true)
 		soils.each do |soil|
-			subarea = Subarea.find_by_scenario_id_and_soil_id(session[:scenario_id], soil.id)
+			subarea = Subarea.find_by_scenario_id_and_soil_id(params[:scenario_id], soil.id)
 			if operation == "+"
 				subarea.wsa += wsa * soil.percentage / 100
 			else
@@ -569,9 +573,9 @@ module ScenariosHelper
 		operation.bmp_id = @bmp.id
 		operation.activity_id = 1
 		if operation.save then
-			#sss
+			temp = 1
 		else
-			#nnn
+			temp = 0
 		end
 		#TODO oper.LuNumber = lunum <- visual basic code
 	end
@@ -647,7 +651,7 @@ module ScenariosHelper
       when 1 #planting take heat units
 		#this code will calculate Heat Unist base on location and crop - Was taken back to take from database- Ali 11/2/2016 
         #client = Savon.client(wsdl: URL_Weather)
-        #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(session[:field_id]).latitude, "nlon" => Weather.find_by_field_id(session[:field_id]).longitude})
+        #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(params[:field_id]).latitude, "nlon" => Weather.find_by_field_id(params[:field_id]).longitude})
         #opv1 = response.body[:get_hu_response][:get_hu_result]
 		#this code will take Heat Units from database according to Ali 11/2/216
 		opv1 = Crop.find(operation.crop_id).heat_units
@@ -684,13 +688,13 @@ module ScenariosHelper
       when 1 #planting. Take curve number
         case Soil.find(soil_id).group[0, 1]
           when "A"
-            opv2 = Crop.find_by_number(operation.crop_id).soil_group_a
+            opv2 = Crop.find(operation.crop_id).soil_group_a
           when "B"
-            opv2 = Crop.find_by_number(operation.crop_id).soil_group_b
+            opv2 = Crop.find(operation.crop_id).soil_group_b
           when "C"
-            opv2 = Crop.find_by_number(operation.crop_id).soil_group_c
+            opv2 = Crop.find(operation.crop_id).soil_group_c
           when "D"
-            opv2 = Crop.find_by_number(operation.crop_id).soil_group_d
+            opv2 = Crop.find(operation.crop_id).soil_group_d
         end #end case Soil
         if opv2 > 0 then
           opv2 = opv2 * -1
@@ -700,4 +704,22 @@ module ScenariosHelper
     end #end case operation
     return opv2
   end #end set_opval2
+
+  def calculate_centroid()
+    #https://en.wikipedia.org/wiki/Centroid.
+    centroid_structure = Struct.new(:cy, :cx)
+    centroid = centroid_structure.new(0.0, 0.0)
+    points = @field.coordinates.split(" ")
+    i=0
+
+    points.each do |point|
+      i+=1
+      centroid.cx += point.split(",")[0].to_f
+      centroid.cy += point.split(",")[1].to_f
+    end
+    centroid.cx = centroid.cx / (i)
+    centroid.cy = centroid.cy / (i)
+    return centroid
+  end
+
 end

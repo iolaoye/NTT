@@ -2,6 +2,9 @@ class SoilsController < ApplicationController
   # GET /locations
   # GET /locations.json
 
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
+
   def soil_layers
     session[:soil_id] = params[:id]
     redirect_to list_layer_path(params[:id])
@@ -12,8 +15,8 @@ class SoilsController < ApplicationController
 # GET /1/soils.json
   def list
     @soils = Soil.where(:field_id => params[:id])
-    @project = Project.find(session[:project_id])
-    @field = Field.find(session[:field_id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
 
     #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
     #add_breadcrumb @project.name
@@ -33,8 +36,12 @@ class SoilsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-    @soils = Soil.where(:field_id => session[:field_id])
+    @soils = Soil.where(:field_id => params[:field_id])
     @weather = @field.weather
+
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name
+    add_breadcrumb 'Soils'
 
     respond_to do |format|
       format.html # index.html.erb

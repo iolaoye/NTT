@@ -1,14 +1,21 @@
 class ProjectsController < ApplicationController
-  include LocationsHelper
+  load_and_authorize_resource
 
+  include LocationsHelper
   layout 'welcome'
-  
-  #EXAMPLES = "public/Examples"
   require 'nokogiri'
+  helper_method :sort_column, :sort_direction
+
+  ########################################### INDEX ##################
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.where(:user_id => params[:user_id])
+    @user = User.find(session[:user_id])
+    if @user.admin?
+      @projects = Project.order("#{sort_column} #{sort_direction}")
+    else
+      @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
+    end
     session[:simulation] = "watershed"
     respond_to do |format|
       format.html # index.html.erb
@@ -62,17 +69,16 @@ class ProjectsController < ApplicationController
   ########################################### EDIT ######################################################
   # GET /projects/1/edit
   def edit
+    @user = User.find(params[:user_id])
     @project = Project.find(params[:id])
   end
 
   ################  copy the selected project  ###################
   def copy_project
-	download_project(params[:id], "copy")
-	@projects = Project.where(:user_id => session[:user_id])
+    download_project(params[:id], "copy")
   end
 
   ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
-
   def self.wipe_database
     ApexControl.delete_all
     ApexParameter.delete_all
@@ -99,27 +105,24 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+	@user = User.find(params[:user_id])
     @project = Project.new(project_params)
-    session[:project_id] = @project.id
+    #params[:project_id] = @project.id
     @project.user_id = session[:user_id]
-    if params[:special] != nil
-	  @project.version = "NTTG3_special"
-    else
-	  @project.version = "NTTG3"
-	end
+	@project.version = "NTTG3"
 	respond_to do |format|
       if @project.save
-        session[:project_id] = @project.id
-        location = Location.new
-        location.project_id = @project.id
-        location.save
-        session[:location_id] = location.id
-        format.html { redirect_to @project, notice: t('models.project') + "" + t('notices.created') }
+        #params[:project_id] = @project.id
+        #location = Location.new
+        #location.project_id = @project.id
+        #location.save
+        #session[:location_id] = location.id
+        format.html { redirect_to @user, notice: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
-        flash[:error] = @project.errors
-        format.html { render action: "new" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        flash[:info] = "Error"
+        format.html { redirect_to @user, notice: t('models.project') + "" + t('notices.created') }
+        #format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -127,15 +130,12 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+	@user = User.find(params[:user_id])
     @project = Project.find(params[:id])
-    if params[:special] != nil
-	  @project.version = "NTTG3_special"
-    else
-	  @project.version = "NTTG3"
-	end
+	@project.version = "NTTG3"
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to list_field_path(session[:location_id]), notice: t('models.project') + "" + t('notices.updated') }
+        format.html { redirect_to user_projects_path(params[:user_id]), notice: t('models.project') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -151,15 +151,13 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     location = Location.where(:project_id => params[:id])
     location.destroy_all unless location == []
-    if @project.destroy
-      flash[:info] = t('models.project') + " " + @project.name + t('notices.deleted')
-    end
-    @projects = Project.where(:user_id => params[:user_id])
-
     respond_to do |format|
-      format.html { redirect_to welcomes_path, notice: 'Project was successfully deleted.' }
-      format.json { head :no_content }
-    end
+	  if @project.destroy
+	    format.html { redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.deleted') }
+		format.json { head :no_content }
+      end
+	end
+    @projects = Project.where(:user_id => params[:user_id])
   end
 
   #def record_not_found(exception)
@@ -173,7 +171,7 @@ class ProjectsController < ApplicationController
   #end
 
   def upload
-    @id = params[:id]
+    @id = params[:format]
     #nothing to do here. Just render the upload view
   end
 
@@ -182,14 +180,15 @@ class ProjectsController < ApplicationController
 	saved = upload_prj()
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
-      redirect_to list_field_path(session[:location_id]), notice: t('activerecord.notices.messages.created', model: "Project")
+      redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
-      redirect_to upload_project_path(@upload_id)
-      flash[:notice] = t('activerecord.errors.messages.projects.no_saved') and return false
+      redirect_to projects_upload_path(@upload_id)
+      flash[:notice] = t('activerecord.errors.messages.projects.exist') and return false
     end
   end
 
   def upload_prj
+  	@inps1 = 0
     saved = false
     msg = ""
     @upload_id = 0
@@ -199,7 +198,7 @@ class ProjectsController < ApplicationController
       @upload_id = 0
       if params[:commit].eql? t('project.upload_project') then
         if params[:project] == nil then
-          redirect_to upload_project_path(@upload_id)
+          redirect_to projects_upload_path(@upload_id)
           flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
         end
         @data = Nokogiri::XML(params[:project])
@@ -208,13 +207,16 @@ class ProjectsController < ApplicationController
         @upload_id = 1
         case params[:examples]
           when "0"
-            redirect_to upload_project_path(@upload_id)
-            flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
+            respond_to do |format|
+				format.html { redirect_to projects_upload_path(@upload_id)}
+				format.json { head :no_content }
+				flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
+			end
           when "1" # Load OH two fields
             @data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
-		  when "2"  # load just the saved project to be copied
-		    @data = Nokogiri::XML(File.open(@path))
-			@upload_id = 2
+		      when "2"  # load just the saved project to be copied
+		        @data = Nokogiri::XML(File.open(@path))
+			      @upload_id = 2
         end # end case examples
       end
       @data.root.elements.each do |node|
@@ -229,30 +231,29 @@ class ProjectsController < ApplicationController
             msg = upload_location_info1(node)
           when "FieldInfo"
             msg = upload_field_info(node)
+			      msg = renumber_subareas()
           when "SiteInfo"
             msg = upload_site_info(node)
           when "controls"
-			  node.elements.each do |c|
-				msg = upload_control_values_new_version(c)
-			  end
+			      node.elements.each do |c|
+				      msg = upload_control_values_new_version(c)
+			      end
           when "ControlValues"
             msg = upload_control_values(node)
           when "ParmValues"
             msg = upload_parameter_values(node)
           when "parameters"
-			  node.elements.each do |c|
-				msg = upload_parameter_values_new_version(c)
-			  end
+			      node.elements.each do |c|
+				      msg = upload_parameter_values_new_version(c)
+			      end
         end
         break if (msg != "OK" && msg != true)
       end
       if msg == "OK" then
-		load_parameters(ApexParameter.where(:project_id => session[:project_id]).count)
-	  end 
+		    load_parameters(ApexParameter.where(:project_id => @project.id).count)
+	    end
 
-	  if (msg == "OK" || msg == true)
-        # summarizes results for totals and soils.
-        #summarize_total()
+  	  if (msg == "OK" || msg == true)
         @projects = Project.where(:user_id => session[:user_id])
         saved = true
       else
@@ -265,12 +266,35 @@ class ProjectsController < ApplicationController
       #raise ActiveRecord::Rollback
       #end
     end
-	return saved
+	  return saved
   end
+
+  ########################################### RENUMERATE THE SUBAREAS FILES FOR PREVIOUS VERSION PROJECTS ##################
+  def renumber_subareas()
+    msg = "OK"
+    @iops1 = 1
+  	#renumber the subarea inps, iops, iown
+  	@project.location.fields.each do |field|
+  		field.soils.each do |soil|
+  			if soil.selected then
+				soil.subareas.each do |subarea|
+  					subarea.iops = @iops1
+  					subarea.inps = @iops1
+  					subarea.iow = @iops1
+  					@iops1 +=1
+  					if !subarea.save
+  						msg = "Error renumber subareas"
+  					end
+				end # end subareas.each
+  			end   # end if soil selected
+  		end   # end soils.each
+  	end  # end field.each
+  	return msg
+  end  # end method
 
   ########################################### DOWNLOAD PROJECT FILE IN XML FORMAT ##################
   def download()
-	download_project(params[:id], "download")
+	  download_project(params[:id], "download")
   end
 
   def download_project(project_id, type)
@@ -289,33 +313,33 @@ class ProjectsController < ApplicationController
         } # end xml.project
         #save location information
         save_location_information(xml, project_id)
-		xml.controls {
-		  controls = ApexControl.where(:project_id => project_id)
-		  controls.each do |c|
-			save_control_information(xml, c)
-		  end
-		} # xml each control end
+    		xml.controls {
+    		  controls = ApexControl.where(:project_id => project_id)
+    		  controls.each do |c|
+    			save_control_information(xml, c)
+    		  end
+    		} # xml each control end
 
-		xml.parameters {
-		  parameters = ApexParameter.where(:project_id => project_id)
-		  parameters.each do |c|
-			save_parameter_information(xml, c)
-		  end
-		} # xml each control end
+    		xml.parameters {
+    		  parameters = ApexParameter.where(:project_id => project_id)
+    		  parameters.each do |c|
+    			save_parameter_information(xml, c)
+    		  end
+    		} # xml each control end
       } # end xml.projects
     end #builder do end
 
     file_name = session[:session_id] + ".prj"
     @path = File.join(DOWNLOAD, file_name)
     content = builder.to_xml
-	File.open(@path, "w") { |f| f.write(content) }
-	#file.write(content)
-	send_file @path, :type => "application/xml", :x_sendfile => true
-	if type == "copy"
-		#call upload to copy project
-		params[:examples] = "2"
-		upload_prj()
-	end
+  	File.open(@path, "w") { |f| f.write(content) }
+  	#file.write(content)
+  	send_file @path, :type => "application/xml", :x_sendfile => true
+  	if type == "copy"
+  		#call upload to copy project
+  		params[:examples] = "2"
+  		saved = upload_prj()
+  	end
   end   #download project def end
 
   def save_location_information(xml, project_id)
@@ -830,21 +854,33 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:description, :name)
   end
 
+  def sortable_columns
+    ["Name", "updated_at"]
+  end
+
+  def sort_column
+    sortable_columns.include?(params[:column]) ? params[:column] : "updated_at"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
   def upload_project_info(node)
     #begin  #check this one
-      project = Project.new
-      project.user_id = session[:user_id]
+      @project = Project.new
+      @project.user_id = session[:user_id]
       node.elements.each do |p|
         case p.name
           when "projectName"
-            project.name = p.text
+            @project.name = p.text
           when "Description"
-            project.description = p.text
+            @project.description = p.text
         end
       end
-      project.version = "NTTG3"
-      if project.save then
-        session[:project_id] = project.id
+      @project.version = "NTTG3"
+      if @project.save then
+        #params[:project_id] = @project.id
         msg = upload_location_info(node)
         msg = upload_weather_info(node)
         return "OK"
@@ -858,34 +894,34 @@ class ProjectsController < ApplicationController
 
   def upload_project_new_version(node)
     #begin
-      project = Project.new
-      project.user_id = session[:user_id]
+      @project = Project.new
+      @project.user_id = session[:user_id]
       node.elements.each do |p|
         case p.name
           when "project_name" #if project name exists, save fails
-			project.name = p.text
+			@project.name = p.text
 			if params[:examples] == "2"
-				project.name = project.name + " copy"
+				@project.name = @project.name + " copy"
 			end
           when "project_description"
-            project.description = p.text
+            @project.description = p.text
         end
       end
-      project.version = "NTTG3"
-      if project.save
-        session[:project_id] = project.id
+      @project.version = "NTTG3"
+      if @project.save
+        #session[:project_id] = @project.id
         return "OK"
       else
         return t('activerecord.errors.messages.projects.no_saved')
       end
     #rescue
-      return t('activerecord.errors.messages.projects.no_saved') 
+      return t('activerecord.errors.messages.projects.no_saved')
     #end
   end
 
   def upload_location_info(node)
     location = Location.new
-    location.project_id = session[:project_id]
+    location.project_id = @project.id
     node.elements.each do |p|
       case p.name
         when "StateAbrev"
@@ -918,7 +954,7 @@ class ProjectsController < ApplicationController
       if location.save
 		session[:location_id] = location.id
 		return "OK"
-	  end 
+	  end
     rescue
       return "Location could not be saved"
     end
@@ -928,7 +964,7 @@ class ProjectsController < ApplicationController
     #begin  #TODO CHECK THIS ONE. WHEN IT IS ACTIVE THE PROCCESS DOES NOT RUN FOR SOME REASON.
       msg = "OK"
       location = Location.new
-      location.project_id = session[:project_id]
+      location.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "state_id"
@@ -1239,7 +1275,7 @@ class ProjectsController < ApplicationController
           soil.wtmn = p.text
         when "Wtmx"
           soil.wtmx = p.text
-		  case soil.wtmx 
+		  case soil.wtmx
 			when 5
 				soil.drainage_id = 2
 			when 6
@@ -1297,7 +1333,7 @@ class ProjectsController < ApplicationController
     soil.selected = false
     node.elements.each do |p|
       case p.name
-	      when "id"
+	    when "id"
           soil.soil_id_old = p.text
         when "key"
           soil.key = p.text
@@ -1582,9 +1618,9 @@ class ProjectsController < ApplicationController
         when "SubareaNumber"
           subarea.number = p.text
         when "Inps"
-          subarea.inps = p.text.to_i + 1
+          subarea.inps = @inps1
         when "Iops"
-          subarea.iops = p.text
+          subarea.iops = subarea.inps
         when "Iow"
           subarea.iow = subarea.inps
         when "Ii"
@@ -1807,6 +1843,9 @@ class ProjectsController < ApplicationController
 			if p.text == "0"
 				subarea.soil_id = 0
 			else
+			    if Soil.find_by_soil_id_old(p.text) == nil then
+					return "OK"
+				end
 				subarea.soil_id = Soil.find_by_soil_id_old(p.text).id
 			end
         when "number"
@@ -2224,9 +2263,12 @@ class ProjectsController < ApplicationController
 			if p.text == "0"
 				soil_operation.soil_id = 0
 			else
+				if Soil.find_by_soil_id_old(p.text) == nil then
+					return "OK"
+				end
 				soil_operation.soil_id = Soil.find_by_soil_id_old(p.text).id
 			end
-      end  # end case 
+      end  # end case
     end  # node
     if soil_operation.save
       return "OK"
@@ -2314,14 +2356,14 @@ class ProjectsController < ApplicationController
 		  total_n_ci = total_n_ci + @result.ci_value
         when "OrgP"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 31)
-		  total_n = total_n + @result.value
+		  total_p = total_p + @result.value
         when "OrgPCI"
           @result.ci_value = p.text
           @result.save
 		  total_p_ci = total_p_ci + @result.ci_value
         when "PO4"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 32)
-		  total_n = total_n + @result.value
+		  total_p = total_p + @result.value
         when "PO4CI"
           @result.ci_value = p.text
           @result.save
@@ -3163,7 +3205,7 @@ class ProjectsController < ApplicationController
   def upload_control_values(node)
     #begin
       control = ApexControl.new
-      control.project_id = session[:project_id]
+      control.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "Code"
@@ -3175,7 +3217,7 @@ class ProjectsController < ApplicationController
                 control.save
                 # get the first year of simulation from weather
                 control = ApexControl.new
-                control.project_id = session[:project_id]
+                control.project_id = @project.id
                 control.control_description_id = Control.find_by_id(2).id
                 control.value = weather.simulation_initial_year - 5
                 control.save
@@ -3197,10 +3239,10 @@ class ProjectsController < ApplicationController
     #end
   end
 
-  def upload_control_values_new_version(node) 
+  def upload_control_values_new_version(node)
     begin
 	  control = ApexControl.new
-      control.project_id = session[:project_id]
+      control.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "control_description_id"
@@ -3232,7 +3274,7 @@ class ProjectsController < ApplicationController
   def upload_parameter_values(node)
     begin
       parameter = ApexParameter.new
-      parameter.project_id = session[:project_id]
+      parameter.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "Code"
@@ -3263,7 +3305,7 @@ class ProjectsController < ApplicationController
   def upload_parameter_values_new_version(node)
     begin
 	  parameter = ApexParameter.new
-      parameter.project_id = session[:project_id]
+      parameter.project_id = @project.id
       node.elements.each do |p|
         case p.name
           when "parameter_description_id"

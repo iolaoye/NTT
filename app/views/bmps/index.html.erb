@@ -5,479 +5,479 @@
   <div class="page-header">
     <h1><%= t('menu.bmps') %></h1>
   </div>
-	<%= submit_tag t("submit.save"), name: "button", class: "btn btn-primary" %>
-  <%= link_to t('general.continue'), scenarios_path(), :class => 'btn btn-success' %><br>
+  <div id="flash_messages">
+    <% flash.each do |key, value|
+      if value.class == String # regular flash notices, alerts, etc. will be strings
+        value = [value]
+      end
+      value.each do |value| %>
+        <%= content_tag(:p, value, :class => "flash #{key}") unless value.empty? %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= submit_tag t("submit.save"), name: "button", class: "btn btn-primary" %>
+  <%= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br>
     <br>
       <table class="table table-striped">
-      <thead>
-        <tr class='gvHeaderStyle'>
-          <th><%= t('general.name')%></th>
-          <th><%= t('general.select')%></th>
-        </tr>
-      </thead>
-      <% @bmps.each do |bmp| %>
-		<tbody>
-      <% if bmp.bmpsublist_id != 2 %>
-			<tr>
-				<% if I18n.locale.equal?(:en) %>
-					<td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
-				<% else %>
-					<td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
-				<% end %>
-				<% if bmp.id != nil %>
-					<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
-				<% else %>
-					<td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
-				<% end %>
-			</tr>
-        <%end %>
-		</tbody>
-		<tbody id=<%="#{bmp.bmpsublist_id}"%>>
-			<% case bmp.bmpsublist_id %>
-				<% when 1 %>
-          <tr>
-            <td>
-              <% case bmp.depth%>
-                <% when 1 %>
-                  <%= radio_button_tag :bmp_cb1, "1", true  %> <%= t('bmp.autoirrigation') %>
-                  <%= radio_button_tag :bmp_cb1, "2"%> <%= t('bmp.autofertigation') %>
-                <% when 2 %>
-                  <%= radio_button_tag :bmp_cb1, "1" %> <%= t('bmp.autoirrigation') %>
-                  <%= radio_button_tag :bmp_cb1, "2", true %> <%= t('bmp.autofertigation') %>
-                <% else %>
-                  <%= radio_button_tag :bmp_cb1, "1"%> <%= t('bmp.autoirrigation') %>
-                    <%= radio_button_tag :bmp_cb1, "2" %> <%= t('bmp.autofertigation') %>
-              <%end%>
-            </td>
+        <thead>
+          <tr class='gvHeaderStyle'>
+            <th><%= t('general.name')%></th>
+            <th><%= t('general.select')%></th>
           </tr>
-				  <tr>
-					<td class="indent">
-						<%= label :irrigation_id, t('bmp.irrigation')  %>
-						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_ai, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id}%>
-						<% else %>
-						  <%= collection_select :bmp_ai, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id} %>
-						<% end %>
-					</td>
-				  </tr>
+        </thead>
+        <% @bmps.each do |bmp| %>
+		    <tbody>
+          <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
           <tr>
-            <td class="field indent" id = "frequency" >
-              <%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
-              <%= text_field :bmp_ai, :days, :value => bmp.days %>
-            </td>
-          </tr>
-          <tr>
-					<td class="indent">
-						<%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %>
-						<%=bmp.water_stress_factor%>
-						<%= text_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor %>
-					</td>
-				  </tr>
-				  <tr>
-				    <td class="field indent" id = "irrigation_efficiency" >
-						<%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_ai, :irrigation_efficiency, :value => bmp.irrigation_efficiency  %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="field indent" id = "maximum_single_application" >
-						<%= label :days, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') + " " + t('bmp.inches') %>
-						<%= text_field :bmp_ai, :maximum_single_application, :value => bmp.maximum_single_application %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="field indent" id = "reservoir_area" style="display: none;">
-						<%= label :days, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') %>
-						<%= text_field :bmp_ai, :area, :value => bmp.area%>
-				    </td>
-				  </tr>
-				<% when 3 %>
-				  <tr>
-					<td class="field indent" id = "depth" >
-						<%= label :depth, t('bmp.depth') + " " + t('bmp.zero_to_max') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_td, :depth, :value => bmp.depth %>
-					</td>
-				  </tr>
-				<% when 4 %>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_ppnd, :width, :value => bmp.width %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.sides')  %>
-						<%= text_field :bmp_ppnd, :sides, :value => bmp.sides %>
-					</td>
-				  </tr>
-				<% when 5 %>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_ppds, :width, :value => bmp.width %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.sides')  %>
-						<%= text_field :bmp_ppds, :sides, :value => bmp.sides %>
-					</td>
-				  </tr>
-				<% when 6 %>
-				  <tr>
-					<td class="indent">
-						<%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_ppde, :area, :value => bmp.area %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_ppde, :width, :value => bmp.width %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.sides')  %>
-						<%= text_field :bmp_ppde, :sides, :value => bmp.sides %>
-					</td>
-				  </tr>
-				<% when 7 %>
-				  <tr>
-					<td class="indent">
-						<%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_pptw, :area, :value => bmp.area %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_pptw, :width, :value => bmp.width %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.sides')  %>
-						<%= text_field :bmp_pptw, :sides, :value => bmp.sides %>
-					</td>
-				  </tr>
-				<% when 8 %>
-				  <tr>
-					<td class="field indent" id = "area" >
-						<%= label :depth, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_wl, :area, :value => bmp.area %>
-					</td>
-				  </tr>
-				<% when 9 %>
-				  <tr>
-					<td class="field indent" id = "fraction_control_by_pond" >
-						<%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_one')  %>
-						<%= text_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency %>
-					</td>
-				  </tr>
-				<% when 10 %>
-				  <tr>
-					<td class="indent">
-						<%= label :depth, t('bmp.animals') + " " + t('bmp.zero_to_max')  %>
-						<%= text_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals %>
-					</td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :days, t('bmp.stream_fencing_frequency') + " " + t('bmp.days_range') %>
-						<%= text_field :bmp_sf, :days, :value => bmp.days %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :hours, t('bmp.hours') + " " + t('bmp.hours_range') %>
-						<%= text_field :bmp_sf, :hours, :value => bmp.hours %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :animal_id, t('bmp.animals') %>
-						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
-						<% else %>
-						  <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
-						<% end %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :dry_manure, t('bmp.dry_manure') + " " + t('bmp.zero_to_max') + " " + t('bmp.lbs') %>
-						<%= text_field :bmp_sf, :dry_manure, :value => bmp.dry_manure %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_sf, :no3_n, :value => bmp.no3_n %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_sf, :po4_p, :value => bmp.po4_p %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :org_n, t('bmp.org_n') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_sf, :org_n, :value => bmp.org_n %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :org_p, t('bmp.org_p') + " " + t('bmp.zero_to_one') %>
-						<%= text_field :bmp_sf, :org_p, :value => bmp.org_p %>
-				    </td>
-				  </tr>
-				<% when 11 %>
-				  <tr>
-					<td class="indent">
-						<%= t('general.select') %>
-						<% if bmp.id != nil %>
-							<%= check_box :bmp_sbs, :id, checked: true %>
-						<%else%>
-							<%= check_box :bmp_sbs, :id, checked: false %>
-						<%end%>
-					</td>
-				  </tr>
-				<% when 12 %>
-				  <tr>
-					<td class="indent">
-						<%= t('general.area') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_rf, :area, :value => bmp.area %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_rf, :width, :value => bmp.width %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
-						<%= text_field :bmp_rf, :grass_field_portion, :value => bmp.grass_field_portion %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
-						<%= text_field :bmp_rf, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
-					</td>
-				  </tr>
-				<% when 13 %>
-				  <tr>
-					<td class="indent">
-						<%= label :crop_id, t('operation.crop') %>
-						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
-						<% else %>
-						  <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
-						<% end %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('general.area') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_fs, :area, :value => bmp.area %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_fs, :width, :value => bmp.width %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
-						<%= text_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
-					</td>
-				  </tr>
-				<% when 14 %>
-				  <tr>
-					<td class="indent">
-						<%= label :crop_id, t('operation.crop') %>
-						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_ww, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
-                <% else %>
-						  <%= collection_select :bmp_ww, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
-                <% end %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_ww, :width, :value => bmp.width %>
-					</td>
-				  </tr>
-				<% when 15 %>
-				  <tr>
-					<td class="indent">
-						<%= label :crop_id, t('operation.crop') %>
-						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_cb, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
-                <% else %>
-						  <%= collection_select :bmp_cb, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
-                <% end %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.buffer_width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_cb, :width, :value => bmp.width %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.crop_width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_cb, :crop_width, :value => bmp.crop_width %>
-					</td>
-				  </tr>
-				<% when 16 %>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.slope_reduction') + " " + t('bmp.percentage_range') %>
-						<%= text_field :bmp_ll, :slope_reduction, :value => bmp.slope_reduction %>
-					</td>
-				  </tr>
-				<% when 17 %>
-				  <tr>
-					<td class="indent">
-						<%= t('general.select') %>
-						<% if bmp.id != nil %>
-							<%= check_box :bmp_ts, :id, checked: true %>
-						<%else%>
-							<%= check_box :bmp_ts, :id, checked: false %>
-						<%end%>
-					</td>
-				  </tr>
-				<% when 18 %>
-				  <tr>
-				    <td class="indent">
-						<%= label :manure_control_id, t('bmp.manure_control') %>
-						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_mc, :animal_id, ManureControl.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
-						<% else %>
-						  <%= collection_select :bmp_mc, :animal_id, ManureControl.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
-						<% end %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.percentage_range') %>
-						<%= text_field :bmp_mc, :no3_n, :value => bmp.no3_n %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.percentage_range') %>
-						<%= text_field :bmp_mc, :po4_p, :value => bmp.po4_p %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :org_n, t('bmp.org_n') + " " + t('bmp.percentage_range') %>
-						<%= text_field :bmp_mc, :org_n, :value => bmp.org_n %>
-				    </td>
-				  </tr>
-				  <tr>
-				    <td class="indent">
-						<%= label :org_p, t('bmp.org_p') + " " + t('bmp.percentage_range') %>
-						<%= text_field :bmp_mc, :org_p, :value => bmp.org_p %>
-				    </td>
-				  </tr>
-        <% when 19 %>
-          <tr>
-            <th class="gvCellStyleTitle">
-              <%= t('bmp.month')%>
-            </th>
-            <th class="gvCellStyleTitle">
-              <%= t('bmp.max_temp')%>
-            </th>
-            <th class="gvCellStyleTitle">
-              <%= t('bmp.min_temp')%>
-            </th>
-              <th class="gvCellStyleTitle">
-                <%= t('bmp.precipitation')%>
-              </th>
-          </tr>
+				    <% if I18n.locale.equal?(:en) %>
+					    <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+				    <% else %>
+					    <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
+				    <% end %>
+				    <% if bmp.id != nil %>
+					    <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
+				    <% else %>
+					    <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
+				    <% end %>
+			    </tr>
+            <%end %>
+		    </tbody>
+		    <tbody id=<%="#{bmp.bmpsublist_id}"%>>
+			    <% case bmp.bmpsublist_id %>
+				    <% when 1 %>
+              <tr>
+                <td>
+                  <% case bmp.depth%>
+                    <% when 1 %>
+                      <%= radio_button_tag :bmp_cb1, "1", true  %> <%= t('bmp.autoirrigation') %>
+                      <%= radio_button_tag :bmp_cb1, "2"%> <%= t('bmp.autofertigation') %>
+                    <% when 2 %>
+                      <%= radio_button_tag :bmp_cb1, "1" %> <%= t('bmp.autoirrigation') %>
+                      <%= radio_button_tag :bmp_cb1, "2", true %> <%= t('bmp.autofertigation') %>
+                    <% else %>
+                      <%= radio_button_tag :bmp_cb1, "1"%> <%= t('bmp.autoirrigation') %>
+                        <%= radio_button_tag :bmp_cb1, "2" %> <%= t('bmp.autofertigation') %>
+                  <%end%>
+                </td>
+              </tr>
+				      <tr>
+					    <td class="indent">
+						    <%= label :irrigation_id, t('bmp.irrigation')  %>
+						    <% if I18n.locale.equal?(:en) %>
+						      <%= collection_select :bmp_ai, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id}%>
+						    <% else %>
+						      <%= collection_select :bmp_ai, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id} %>
+						    <% end %>
+					    </td>
+				      </tr>
+              <tr>
+                <td class="field indent" id = "frequency" >
+                  <%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
+                  <%= number_field :bmp_ai, :days, :value => bmp.days, :class => "gvTitleStyleNumber" %>
+                </td>
+              </tr>
+              <tr>
+					    <td class="indent">
+						    <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %>
+						    <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="field indent" id = "irrigation_efficiency" >
+						    <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one') %>
+						    <%= number_field :bmp_ai, :irrigation_efficiency, :value => bmp.irrigation_efficiency, :class => "gvTitleStyleNumber"  %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="field indent" id = "maximum_single_application" >
+						    <%= label :days, t('bmp.maximum_single_application') + " " + t('bmp.zero_to_max') + " " + t('bmp.inches') %>
+						    <%= number_field :bmp_ai, :maximum_single_application, :value => bmp.maximum_single_application, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="field indent" id = "reservoir_area" style="display: none;">
+						    <%= label :days, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') %>
+						    <%= number_field :bmp_ai, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				    <% when 3 %>
+				      <tr>
+					    <td class="field indent" id = "depth" >
+						    <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
+						    <%= number_field :bmp_td, :depth, :value => bmp.depth, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				    <% when 4 %>
+              <tr>
+                <td>
+                  <% case bmp.depth%>
+                    <% when 4 %>
+                      <%= radio_button_tag :bmp_cb2, "4", true  %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
+                    <% when 5 %>
+                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5", true %> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppds') %>
+                    <% when 6 %>
+                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6", true %> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
+                    <% when 7 %>
+                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7", true %> <%= t('pdf.ppti') %>
+                    <% else %>
+                      <%= radio_button_tag :bmp_cb2, "4"%> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5" %> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
+                    <%end%>
+                </td>
+              </tr>
+              <tr>
+					      <td class="indent">
+						      <%= t('bmp.pad') + " " + t('bmp.width') + " (" + t('bmp.ft')  + ")"%>
+						      <%= number_field :bmp_ppnd, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="indent">
+                    <%= t('bmp.sides')  %>
+                    <%= number_field :bmp_ppnd, :sides, :value => bmp.sides, :class => "gvTitleStyleNumber" %>
+                  </td>
+				      </tr>
+              <% if bmp.depth == 6 || bmp.depth == 7 %>
+			          <tr id = "tr_bmp_pp_area" >
+					          <td class="indent">
+						          <%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
+						          <%= number_field :bmp_ppnd, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+                      </td>
+			          </tr>
+              <% else %>
+			          <tr id = "tr_bmp_pp_area" style="display:none" >
+					          <td class="indent">
+						          <%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
+						          <%= number_field :bmp_ppnd, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+					          </td>
+			          </tr>
+              <% end %>
+				    <% when 8 %>
+				      <tr>
+					    <td class="field indent" id = "area" >
+						    <%= label :depth, t('pdf.area') + " (" + t('bmp.acres')  + ")"%>
+						    <%= number_field :bmp_wl, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				    <% when 9 %>
+				      <tr>
+					    <td class="field indent" id = "fraction_control_by_pond" >
+						    <%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_one')  %>
+						    <%= number_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				    <% when 10 %>
+				      <tr>
+					    <td class="indent">
+						    <%= label :depth, t('operation.animals')  %>
+						    <%= number_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="indent">
+						      <%= label :days, t('bmp.stream_fencing_frequency') + " " + t('bmp.days_range') %>
+						      <%= number_field :bmp_sf, :days, :value => bmp.days, :style=>"width:50px", :class => "gvTitleStyleNumber" %>
+                    <%= label :hours, t('bmp.hours') + " " + t('bmp.hours_range') %>
+                  <%= number_field :bmp_sf, :hours, :value => bmp.hours, :style=>"width:50px", :class => "gvTitleStyleNumber" %>
+                  </td>
+				      </tr>
+				      <tr>
+				        <td class="indent">
+				        </td>
+				      </tr>
+				      <tr>
+				        <td class="indent">
+						    <%= label :animal_id, t('bmp.animals') %>
+						    <% if I18n.locale.equal?(:en) %>
+						      <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
+						    <% else %>
+						      <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
+						    <% end %>
+				        </td>
+				      </tr>
+				      <tr>
+				        <td class="indent2">
+						    <%= label :dry_manure, t('bmp.dry_manure') + " (" + t('bmp.lbs')  + ")"%>
+						    <%= number_field :bmp_sf, :dry_manure, :value => bmp.dry_manure, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="indent2">
+						    <%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.zero_to_one') %>
+						    <%= number_field :bmp_sf, :no3_n, :value => bmp.no3_n, :class => "gvTitleStyleNumber" %>
+				        </td>
+				      </tr>
+				      <tr>
+				        <td class="indent2">
+						    <%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.zero_to_one') %>
+						    <%= number_field :bmp_sf, :po4_p, :value => bmp.po4_p, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="indent2">
+						    <%= label :org_n, t('bmp.org_n') + " " + t('bmp.zero_to_one') %>
+						    <%= number_field :bmp_sf, :org_n, :value => bmp.org_n, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="indent2">
+						    <%= label :org_p, t('bmp.org_p') + " " + t('bmp.zero_to_one') %>
+						    <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+            <!--<% when 11 %>
+				      <tr>
+					    <td class="indent">
+						    <%= t('general.select') %>
+						    <% if bmp.id != nil %>
+							    <%= check_box :bmp_sbs, :id, checked: true %>
+						    <%else%>
+							    <%= check_box :bmp_sbs, :id, checked: false %>
+						    <%end%>
+					    </td>
+            </tr> -->
+				    <% when 13 %>
+              <tr>
+                <td>
+                  <% case bmp.depth%>
+                    <% when 13 %>
+                      <%= radio_button_tag :bmp_cb3, "13", true  %> <%= t('pdf.filter_strip') %>
+                      <%= radio_button_tag :bmp_cb3, "12"%> <%= t('pdf.riparian_forest') %>
+                    <% when 12 %>
+                      <%= radio_button_tag :bmp_cb3, "13" %> <%= t('pdf.filter_strip') %>
+                      <%= radio_button_tag :bmp_cb3, "12", true %> <%= t('pdf.riparian_forest') %>
+                    <% else %>
+                      <%= radio_button_tag :bmp_cb3, "13"%> <%= t('pdf.filter_strip') %>
+                      <%= radio_button_tag :bmp_cb3, "12" %> <%= t('pdf.riparian_forest') %>
+                  <%end%>
+                </td>
+              </tr>
+              <tr id = "tr_fs_vegetation" <%= "style=display:none" if bmp.depth == 12%>>
+                <td class="indent">
+                  <%= label :crop_id, t('operation.crop') %>
+                  <% if I18n.locale.equal?(:en) %>
+						          <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
+                  <% else %>
+						          <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+					      <td class="indent">
+						      <%= t('general.area') + " (" + t('bmp.acres') + ")"%>
+						      <%= number_field :bmp_fs, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+                  </td>
+				        </tr>
+				        <tr>
+					      <td class="indent">
+						      <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
+                    <%= number_field :bmp_fs, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
+					      </td>
+				        </tr>
+                <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
+                  <td class="indent">
+                    <%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
+                    <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :class => "gvTitleStyleNumber" %>
+                    </td>
+                </tr>
+                <tr>
+					        <td class="indent">
+						        <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
+						        <%= number_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland, :class => "gvTitleStyleNumber" %>
+                    </td>
+				        </tr>
+				    <% when 14 %>
+				      <tr>
+					    <td class="indent">
+						    <%= label :crop_id, t('operation.crop') %>
+						    <% if I18n.locale.equal?(:en) %>
+						      <%= collection_select :bmp_ww, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                    <% else %>
+						      <%= collection_select :bmp_ww, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                    <% end %>
+					    </td>
+				      </tr>
+				      <tr>
+					    <td class="indent">
+						    <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
+                  <%= number_field :bmp_ww, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
+                  </td>
+				      </tr>
+				    <% when 15 %>
+				      <tr>
+					    <td class="indent">
+						    <%= label :crop_id, t('operation.crop') %>
+						    <% if I18n.locale.equal?(:en) %>
+						      <%= collection_select :bmp_cb, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                    <% else %>
+						      <%= collection_select :bmp_cb, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+                    <% end %>
+					    </td>
+				      </tr>
+				      <tr>
+					    <td class="indent">
+						    <%= t('bmp.buffer_width') + " (" + t('bmp.ft') + ")" %>
+                  <%= number_field :bmp_cb, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="indent">
+                    <%= t('bmp.crop_width') + " (" + t('bmp.ft') + ")"%>
+                    <%= number_field :bmp_cb, :crop_width, :value => bmp.crop_width, :class => "gvTitleStyleNumber" %>
+                  </td>
+				      </tr>
+				    <% when 16 %>
+				      <tr>
+					    <td class="indent">
+						    <%= t('bmp.slope_reduction') + " " + t('bmp.percentage_range') %>
+						    <%= number_field :bmp_ll, :slope_reduction, :value => bmp.slope_reduction, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				    <% when 17 %>
+				      <tr>
+					    <td class="indent">
+						    <%= t('general.yes') %>
+						    <% if bmp.id != nil %>
+							    <%= check_box :bmp_ts, :id, checked: true %>
+						    <%else%>
+							    <%= check_box :bmp_ts, :id, checked: false %>
+						    <%end%>
+					    </td>
+				      </tr>
+				    <% when 18 %>
+				      <tr>
+				        <td class="indent">
+						    <%= label :manure_control_id, t('bmp.manure_control') %>
+						    <% if I18n.locale.equal?(:en) %>
+						      <%= collection_select :bmp_mc, :animal_id, ManureControl.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
+						    <% else %>
+						      <%= collection_select :bmp_mc, :animal_id, ManureControl.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
+						    <% end %>
+				        </td>
+				      </tr>
+				      <tr>
+				        <td class="indent">
+						    <%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.percentage_range') %>
+						    <%= number_field :bmp_mc, :no3_n, :value => bmp.no3_n, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="indent">
+						    <%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.percentage_range') %>
+						    <%= number_field :bmp_mc, :po4_p, :value => bmp.po4_p, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="indent">
+						    <%= label :org_n, t('bmp.org_n') + " " + t('bmp.percentage_range') %>
+						    <%= number_field :bmp_mc, :org_n, :value => bmp.org_n, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+				        <td class="indent">
+						    <%= label :org_p, t('bmp.org_p') + " " + t('bmp.percentage_range') %>
+						    <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+            <% when 19 %>
+              <tr>
+                <th class="gvCellStyleTitle">
+                  <%= t('bmp.month')%>
+                </th>
+                <th class="gvCellStyleTitle">
+                  <%= t('bmp.max_temp')%>
+                </th>
+                <th class="gvCellStyleTitle">
+                  <%= t('bmp.min_temp')%>
+                </th>
+                  <th class="gvCellStyleTitle">
+                    <%= t('bmp.precipitation')%>
+                  </th>
+              </tr>
 
-          <% @climates.each do |climate| %>
-            <tr class="indent">
-              <td style="text-align: center">
-                <%= climate.month %>
-              </td>
-              <td class="gvCellStyleNumber">
-                <%= number_field "bmp_cc", "max_temp" + climate.month.to_s, :value  => climate.max_temp %>
-              </td>
-              <td class="gvCellStyleNumber">
-                <%= number_field "bmp_cc", "min_temp" + climate.month.to_s, :value => climate.min_temp  %>
-              </td>
-              <td class="gvCellStyleNumber">
-                <%= number_field "bmp_cc", "precipitation" + climate.month.to_s, :value  => climate.precipitation %>
-              </td>
-            </tr>
-          <% end %>
+              <% @climates.each do |climate| %>
+                <tr class="indent">
+                  <td style="text-align: center">
+                    <%= climate.month %>
+                  </td>
+                  <td class="gvTitleStyleNumber">
+                    <%= number_field "bmp_cc", "max_temp" + climate.month.to_s, :value  => climate.max_temp %>
+                  </td>
+                  <td class="gvTitleStyleNumber">
+                    <%= number_field "bmp_cc", "min_temp" + climate.month.to_s, :value => climate.min_temp  %>
+                  </td>
+                  <td class="gvTitleStyleNumber">
+                    <%= number_field "bmp_cc", "precipitation" + climate.month.to_s, :value  => climate.precipitation %>
+                  </td>
+                </tr>
+              <% end %>
 
-        <% when 20 %>
-				  <tr>
-					<td class="indent">
-						<%= t('general.select') %>
-						<%= check_box :bmp_ac, :id, :value => bmp.id %>
-					</td>
-				  </tr>
-				<% when 21 %>
-				  <tr>
-					<td class="indent">
-						<%= t('general.select') %>
-						<%= check_box :bmp_gc, :id, :value => bmp.id %>
-					</td>
-				  </tr>
-				<% when 22 %>
-				  <tr>
-					<td class="indent">
-						<%= t('general.select') %>
-						<%= check_box :bmp_sa, :id, :value => bmp.id %>
-					</td>
-				  </tr>
-				<% when 23 %>
-				  <tr>
-					<td class="indent">
-						<%= label :crop_id, t('operation.crop') %>
-						<% if I18n.locale.equal?(:en) %>
-						  <%= collection_select :bmp_sdg, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
-						<% else %>
-						  <%= collection_select :bmp_sdg, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
-						<% end %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('general.area') + " " + t('bmp.acres') %>
-						<%= text_field :bmp_sdg, :area, :value => bmp.area %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.width') + " " + t('bmp.ft') %>
-						<%= text_field :bmp_sdg, :width, :value => bmp.width %>
-					</td>
-				  </tr>
-				  <tr>
-					<td class="indent">
-						<%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
-						<%= text_field :bmp_sdg, :buffer_slope_upland, :value => bmp.buffer_slope_upland %>
-					</td>
-				  </tr>
-			<% end %>
-		</tbody>
+            <% when 20 %>
+				      <tr>
+					    <td class="indent">
+						    <%= t('general.select') %>
+						    <%= check_box :bmp_ac, :id, :value => bmp.id %>
+					    </td>
+				      </tr>
+				    <% when 21 %>
+				      <tr>
+					    <td class="indent">
+						    <%= t('general.select') %>
+						    <%= check_box :bmp_gc, :id, :value => bmp.id %>
+					    </td>
+				      </tr>
+				    <% when 22 %>
+				      <tr>
+					    <td class="indent">
+						    <%= t('general.select') %>
+						    <%= check_box :bmp_sa, :id, :value => bmp.id %>
+					    </td>
+				      </tr>
+				    <% when 23 %>
+				      <tr>
+					    <td class="indent">
+						    <%= label :crop_id, t('operation.crop') %>
+						    <% if I18n.locale.equal?(:en) %>
+						      <%= collection_select :bmp_sdg, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
+						    <% else %>
+						      <%= collection_select :bmp_sdg, :crop_id, Crop.where(:type1 => "FS"), :id, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
+						    <% end %>
+					    </td>
+				      </tr>
+				      <tr>
+					    <td class="indent">
+						    <%= t('general.area') + " " + t('bmp.acres') %>
+						    <%= number_field :bmp_sdg, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+					    <td class="indent">
+						    <%= t('bmp.width') + " " + t('bmp.ft') %>
+						    <%= number_field :bmp_sdg, :width, :value => bmp.width, :class => "gvTitleStyleNumber", :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+				      <tr>
+					    <td class="indent">
+						    <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
+						    <%= number_field :bmp_sdg, :buffer_slope_upland, :value => bmp.buffer_slope_upland, :class => "gvTitleStyleNumber" %>
+                </td>
+				      </tr>
+			    <% end %>
+		    </tbody>
 	  <% end %>
     </table>
   </div>
@@ -768,6 +768,32 @@
       }
       function validationsBmpPpnd(i) {
         var ppnd_inputs = $('[name^=bmp_ppnd]').valueOf();
+        $('input[type=radio][name=bmp_cb2]').change(function() {
+          validateBmpPpnd.clearAllValidations();
+          if (this.value == '7') {
+            if (promptMsg("This BMP requires the addition of Autoirrigation. Continuing will add Autoirrigation.")) {
+              validationsBmpAi(0);
+              $('#select_1').prop('checked', true);
+              $('input[type=radio][id=bmp_cb1_1]').prop("checked", true);
+              $('#1').show();
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "lte=99999", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+            } else {
+              $('input[type=radio][id=bmp_cb2_7]').prop("checked", false);
+            }
+          } else if (this.value == '6') {
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+              validateBmpPpnd.addValidation(ppnd_inputs[2].name, "lte=99999", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+          }
+        });
+        validateBmpPpnd.addValidation("bmp_cb2", "selone", "A selection is required.");
+        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
+        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4");
         if(i == 0) {
           validateBmpPpds.clearAllValidations();
           validateBmpPpde.clearAllValidations();
@@ -775,11 +801,6 @@
           $("#select_5, #select_6, #select_7").prop('checked', false);
           $("tbody#5 input, tbody#6 input, tbody#7 input").val("");
         }
-        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>');
-        validateBmpPpnd.addValidation(ppnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpnd.addValidation(ppnd_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.ppnoditch.header") %>' +  " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
       }
       function validationsBmpPpds(i) {
         var ppds_inputs = $('[name^=bmp_ppds]').valueOf();
@@ -794,7 +815,7 @@
         validateBmpPpds.addValidation(ppds_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>');
         validateBmpPpds.addValidation(ppds_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
         validateBmpPpds.addValidation(ppds_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpds.addValidation(ppds_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.0");
+        validateBmpPpds.addValidation(ppds_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pp2stage.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4");
       }
       function validationsBmpPpde(i) {
         var ppde_inputs = $('[name^=bmp_ppde]').valueOf();
@@ -807,9 +828,12 @@
         }
         validateBmpPpde.addValidation(ppde_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
         validateBmpPpde.addValidation(ppde_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
-        validateBmpPpde.addValidation(ppde_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpPpde.addValidation(ppde_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
+        validateBmpPpde.addValidation(ppde_inputs[2].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>');
+        validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpde.addValidation(ppde_inputs[2].name, "lte=99999", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+        validateBmpPpde.addValidation(ppde_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpde.addValidation(ppde_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpPpde.addValidation(ppde_inputs[2].name, "lte=4", '<%= t("managepage.bmpdesc.drainsystem.ppreservoir.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4");
       }
       function validationsBmpPptw(i) {
         var pptw_inputs = $('[name^=bmp_pptw]').valueOf();
@@ -826,9 +850,12 @@
           $('#1').show();
           validateBmpPptw.addValidation(pptw_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
           validateBmpPptw.addValidation(pptw_inputs[1].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
-          validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-          validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-          validateBmpPptw.addValidation(pptw_inputs[1].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
+          validateBmpPptw.addValidation(pptw_inputs[2].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>');
+          validateBmpPptw.addValidation(pptw_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpPptw.addValidation(pptw_inputs[0].name, "lte=99999", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.reservoir_area") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+          validateBmpPptw.addValidation(pptw_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpPptw.addValidation(pptw_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          validateBmpPptw.addValidation(pptw_inputs[2].name, "lte=4.00", '<%= t("managepage.bmpdesc.drainsystem.pptailwater.header") %>' + " " + '<%= t("bmp.sides") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 4.00");
         } else {
           confirm_check(7);
         }
@@ -851,6 +878,8 @@
           validationsBmpFs(0);
           $('#select_13').prop('checked', true);
           $('#13').show();
+          $('input[type=radio][id=bmp_cb3_13]').prop("checked", true);
+          $("#tr_grass_field_portion").hide();
           for(n = 0; n < sf_inputs.length; n++) {
             validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
           }
@@ -889,7 +918,7 @@
           $("tbody#13 select, tbody#14 select, tbody#15 select").val([]);
         }
         for(n = 0; n < rf_inputs.length; n++){
-          validateBmpRf.addValidation(rf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>');
+          //validateBmpRf.addValidation(rf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>');
         }
         validateBmpRf.addValidation(rf_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>' + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
         validateBmpRf.addValidation(rf_inputs[0].name, "lte=100000", '<%= t("managepage.bmpdesc.stream.forestbuffer.header") %>' + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100000");
@@ -904,20 +933,35 @@
         if (i == 0) {
           validateBmpCb.clearAllValidations();
           validateBmpWw.clearAllValidations();
-          validateBmpRf.clearAllValidations();
+          //validateBmpRf.clearAllValidations();
           $("#select_12, #select_14, #select_15").prop('checked', false);
           $("tbody#12 input, tbody#14 input, tbody#15 input").val("");
           $("tbody#14 select, tbody#15 select").val([]);
         }
-        for(n = 0; n < fs_inputs.length; n++){
-          if(n != 1)
-            validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>');
-        }
-        validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpFs.addValidation(fs_inputs[1].name, "lte=100000", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + '<%= t("pdf.area")%>' + " " + '<%= t("bmp.acres") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100000");
-        validateBmpFs.addValidation(fs_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + " " + '<%= t("bmp.width") %>' + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + " Buffer slope ratio: " + '<%= t("validate.input_greaterequal") %>' + " 0.25");
-        validateBmpFs.addValidation(fs_inputs[3].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + " Buffer slope ratio: " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+
+        validateBmpFs.addValidation("bmp_cb3", "selone", "A selection is required.");
+        $('input[type=radio][name=bmp_cb3]').change(function() {
+          validateBmpFs.clearAllValidations();
+            if (this.value == '12') {
+              for(n = 0; n < fs_inputs.length; n++){
+                if (n != 0)
+                  validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
+              }
+              validateBmpFs.addValidation(fs_inputs[3].name, "lte=0.75", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_lessequal") %>' + " 0.75");
+              validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
+            }
+            else if (this.value == '13') {
+              for(n = 0; n < fs_inputs.length; n++){
+                if (n != 3)
+                  validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %> ' + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
+              }
+            }
+        });
+        validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("pdf.area")%> ' + '<%= t("bmp.acres") %>: ' + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpFs.addValidation(fs_inputs[1].name, "lte=100000", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("pdf.area")%> ' + '<%= t("bmp.acres") %>: ' + '<%= t("validate.input_lessequal") %>' + " 100000");
+        validateBmpFs.addValidation(fs_inputs[2].name, "gt=0", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("bmp.width") %>: ' + '<%= t("validate.input_greater") %>' + " 0");
+        validateBmpFs.addValidation(fs_inputs[4].name, "lte=1.00", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("bmp.slope_ratio_label") %>: ' + '<%= t("validate.input_lessequal") %>' + " 1.00");
+        validateBmpFs.addValidation(fs_inputs[4].name, "gte=0.25", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("bmp.slope_ratio_label") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
       }
       function validationsBmpWw(i) {
         var ww_inputs = $('[name^=bmp_ww]').valueOf();

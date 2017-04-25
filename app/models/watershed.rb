@@ -6,6 +6,8 @@ class Watershed < ActiveRecord::Base
 	has_many :results, :dependent => :destroy
     belongs_to :location
   #validations
-    validates_uniqueness_of :name
     validates :name, length: { minimum: 1 }
+    validates_uniqueness_of :name, :scope => :location_id
+  #scopes
+    default_scope :order => "name"
 end

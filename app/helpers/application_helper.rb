@@ -34,7 +34,7 @@ module ApplicationHelper
 			true
 		elsif request.url.include?(url_for("/scenarios"))
 			true
-		elsif request.url.include?(url_for("/results"))
+		elsif request.url.include?(url_for("/results")) && session[:simulation] == 'scenario'
 			true
 		elsif request.url.include?(url_for("/layers"))
 			true
@@ -49,6 +49,8 @@ module ApplicationHelper
 		elsif request.url.include?(url_for("/aplcat_parameters"))
 			true
 		elsif request.url.include?(url_for("/grazing_parameters"))
+			true
+		elsif request.url.include?(url_for("/supplement_parameters"))
 			true
 		else
 			false
@@ -68,7 +70,7 @@ module ApplicationHelper
 		elsif request.url.include?(url_for("/aplcat_parameters"))
 			@scenario_name = Scenario.find(params[:scenario_id]).name
 			true
-		elsif request.url.include?(url_for("/grazing_parameters"))
+		elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters"))
 			@scenario_name = Scenario.find(params[:scenario_id]).name
 			true
 		else
@@ -85,6 +87,8 @@ module ApplicationHelper
 			true
 		elsif request.url.include?(url_for("/summary"))
 			true
+		elsif request.url.include?(url_for("/results"))
+			true
 		else
 			false
 		end
@@ -93,7 +97,7 @@ module ApplicationHelper
 	def aplcats_submenu
 		if request.url.include?(url_for('aplcat_parameters'))
 			true
-		elsif request.url.include?(url_for('grazing_parameters'))
+		elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))
 			true
 		else
 			false
@@ -116,20 +120,45 @@ module ApplicationHelper
 		end
 	end
 
-    def download_apex_files
-      client = Savon.client(wsdl: URL_Weather)
-      response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APEX", "session1" => session[:session_id], "type" => "apex"})
-      path = response.body[:download_apex_folder_response][:download_apex_folder_result]
+	def watershed_submenu
+		if (request.url.include?(url_for('results')) && request.url.include?(url_for('simulation=Watershed')) || request.url.include?(url_for('watersheds')))
+			session[:simulation] = 'watershed'
+			true
+		else
+			false
+		end
+	end
+
+  def download_apex_files
+    client = Savon.client(wsdl: URL_Weather)
+    response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APEX", "session1" => session[:session_id], "type" => "apex"})
+    path = response.body[:download_apex_folder_response][:download_apex_folder_result]
 	  file_name = path.split("\\")
 	  path = File.join(DOWNLOAD, file_name[2])
 	  require 'open-uri'
 	  File.open(DOWNLOAD + "/" + file_name[2], "wb") do |saved_file|
-	     # the following "open" is provided by open-uri
-	     open("http://nn.tarleton.edu//download/" + file_name[2], "rb") do |read_file|
-            saved_file.write(read_file.read)
-        end
-		send_file path, :type => "application/xml", :x_sendfile => true
-	  end
-    end 
+	    # the following "open" is provided by open-uri
+	    open("http://nn.tarleton.edu//download/" + file_name[2], "rb") do |read_file|
+	      saved_file.write(read_file.read)
+      end
+			send_file path, :type => "application/xml", :x_sendfile => true
+  	end
+  end
+
+	def download_aplcat_files
+    client = Savon.client(wsdl: URL_Weather)
+    response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APLCAT", "session1" => session[:session_id], "type" => "aplcat"})
+    path = response.body[:download_apex_folder_response][:download_apex_folder_result]
+	  file_name = path.split("\\")
+	  path = File.join(DOWNLOAD, file_name[2])
+	  require 'open-uri'
+	  File.open(DOWNLOAD + "/" + file_name[2], "wb") do |saved_file|
+	    # the following "open" is provided by open-uri
+	    open("http://nn.tarleton.edu//download/" + file_name[2], "rb") do |read_file|
+	      saved_file.write(read_file.read)
+      end
+			send_file path, :type => "application/xml", :x_sendfile => true
+  	end
+  end
 
 end

@@ -1,4 +1,11 @@
 class FieldsController < ApplicationController
+  load_and_authorize_resource :project
+  load_and_authorize_resource :field, :through => :project
+
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
+
+
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
@@ -13,7 +20,7 @@ class FieldsController < ApplicationController
 # GET /locations
 # GET /locations.json
   def field_scenarios
-    session[:field_id] = params[:id]
+    #session[:field_id] = params[:id]
     redirect_to list_scenario_path
   end
 
@@ -21,7 +28,7 @@ class FieldsController < ApplicationController
 # GET /locations
 # GET /locations.json
   def field_soils
-    session[:field_id] = params[:id]
+    #session[:field_id] = params[:id]
     redirect_to list_soil_path(params[:id])
   end
 ################################  get list of fields   #################################
@@ -57,9 +64,13 @@ class FieldsController < ApplicationController
 # GET /1/fields.json
   def index
     @project = Project.find(params[:project_id])
-    @location = @project.location
-	  get_field_list(@location.id)
 
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb 'Fields'
+
+    @location = @project.location
+	  session[:location_id] = @location.id
+	  get_field_list(@location.id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @fields }
@@ -82,15 +93,15 @@ class FieldsController < ApplicationController
 # GET /fields/1.json
   def show
     session[:simulation] = "scenario"
-    session[:field_id] = params[:id]
+    #session[:field_id] = params[:id]
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:id])
 
     respond_to do |format|
-      if Rails.application.config.which_version == "modified"
+      if ENV["APP_VERSION"] == "modified"
         format.html { redirect_to project_field_soils_path(@field.location.project, @field) }
       else
-        format.html { redirect_to edit_project_field_weather_path(@project, @field) }
+        format.html { redirect_to edit_project_field_weather_path(@project, @field, @field.weather.id) }
       end
       format.json { render json: @field, status: :created, weather: @field.id }
     end
@@ -179,10 +190,10 @@ class FieldsController < ApplicationController
     end
     respond_to do |format|
       if msg.eql?("OK") then
-        session[:field_id] = @field.id
-        #format.html { redirect_to edit_weather_path(session[:field_id]), notice: 'Field was successfully updated.' }
+        #session[:field_id] = @field.id
+        #format.html { redirect_to edit_weather_path(params[:field_id]), notice: 'Field was successfully updated.' }
 		    get_field_list(@field.location_id)
-		    format.html { redirect_to project_fields_path(@project), notice: 'Field was successfully updated.' }
+		    format.html { redirect_to project_field_scenarios_path(@project, @field), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit", notice: msg }
@@ -212,7 +223,7 @@ class FieldsController < ApplicationController
 # params.require(:person).permit(:name, :age)
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def field_params
-    params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at)
+    params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at, :soilp)
   end
 
   def add_forestry_field(typ, area)

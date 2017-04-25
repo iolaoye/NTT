@@ -1,16 +1,16 @@
 <div class="page-header"><h1>About</h1></div>
 <div class="main">
 	<div class="container">
-		<h3><%= t('about.overview0') %></h3>
+		<h2><%= t('about.overview0') %></h2>
 		<p><%= raw t('about.overview1') %></p>
 		<p><%= raw t('about.overview2') %></p>
 		<p><%= raw t('about.overview3') %></p>
-		<h3><%= t('about.process0') %></h3>
+		<h2><%= t('about.process0') %></h2>
 		<p><%= raw t('about.process') %></p>
-		<h3><%= t('about.disclaimer0') %></h3>
+		<h2><%= t('about.disclaimer0') %></h2>
 		<p><%= raw t('about.disclaimer1') %></p>
 		<p><%= raw t('about.disclaimer2') %></p>
-		<h3><%= t('about.selections0') %></h3>
+		<h2><%= t('about.selections0') %></h2>
 		<p><%= raw t('about.selections1') %></p>
 		<p><%= raw t('about.selections2') %></p>
 		<p><%= raw t('about.note1') %></p>
@@ -19,5 +19,5 @@
 	</div>
 </div>
 
-<%= link_to t('help.return_to_table'), help_path("index") %>
+<%= link_to t('help.return_to_table'), help_path("index", @user), :class => "btn btn-primary" %>
 <br><br>

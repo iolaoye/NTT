@@ -13,6 +13,7 @@ es:
         record_invalid: "La validación falló: %{errors}"
         projects:
           no_saved: "Projecto no pudo ser salvado"
+          exist: "El proyecto ya existe"
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
@@ -290,6 +291,8 @@ es:
     deleted: " ha sido borrado/a."
     updated: " fue actualizado/a satisfactoriamente."
     created: " fue creado correctamente."
+    uploaded: " se ha subido/a."
+    downloaded: " ha sido descargado/a."
     simulation: "Simulación fue Exitoso."
     all: "Todas las operaciones se han eliminado."
   helpers:
@@ -371,6 +374,7 @@ es:
       short: "%d de %b %H:%M"
     pm: pm
   general:
+    view: Ver
     note: 'NOTA:'
     name: Nombre
     description: Descripción
@@ -396,13 +400,21 @@ es:
     success: fue creado exitosamente.
     created: fue creado exitosamente.
     updated: fue actualizado exitosamente.
-    reset: fue restablecido exitosamente a los valores predeterminados.
+    reset: reestablecer los valores predeterminados fue exitoso
+    reset_to: reestablecer los valores predeterminados
     uploading: cargando
     continue: Continuar
     confirm: ¿Está seguro?
     begin: Empezar
     to: a
-    copy: copiar
+    copy: Copiar
+    last_modified: Última Modificación
+    download: Bajar
+    change: Cambiar
+    format: Formato
+    remove: Retirar
+    management: Administrar
+    yes: Si
   welcome_note:
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
@@ -435,6 +447,7 @@ es:
     operation_file: Operaciones
     site_file: Sitio
     apex_file: Archivos APEX
+    aplcat_file: Archivos APLCAT
     layers: Capas
     state: Estado
   project:
@@ -446,6 +459,7 @@ es:
     editing_project: 'Revisión de Proyecto'
     upload_error: 'No se pudo subir este archivo'
     group_project: 'Proyecto Especial'
+    project_name: 'Nombre del Proyecto'
   footer:
     instructions: Instrucciones
     contact_us: 'Contactarnos'
@@ -470,6 +484,7 @@ es:
     simulation_only_error: debe ser mayor que o igual a la simulación primer año
     initial_simulation_error: debe ser al menos 5 años después del año inicial de información meteorológica . El valor mínimo es
     final_simulation_error: no debe ser mayor que el último año de información meteorológica. El valor máximo es
+    update_simulation: Actualizar Período de Simulación
   soil:
     layers: Capas
     soil: Suelo
@@ -483,17 +498,19 @@ es:
     slope: Inclinación
     percentage: Porcentaje
     drainage: Drenaje
-    depth: Profundidad
-    soilp: P en el Suelo
-    bulk_density: Densidad de la masa
-    sand: Arena
-    silt: Limo
-    clay: Arcilla
-    organic_matter: Materia Orgánica
+    depth: 'Profundidad (pulg.)'
+    soilp: 'P en el Suelo (ppm)'
+    bulk_density: 'Densidad de la masa (Mg/m3)'
+    sand: 'Arena (%)'
+    silt: 'Limo (%)'
+    clay: 'Arcilla (%)'
+    organic_matter: 'Materia Orgánica (%)'
     ph: PH
     select_soil: Seleccione Suelo
     load_soil: Cargar Suelo
     create_soil: Crear Suelo
+    new: Nuevo
+    layer: Capa de Suelo
   layer:
     new_layer: Nueva Capa
     create_layer: Crear Capa
@@ -509,32 +526,43 @@ es:
     create_scenario: Crear Escenario
     select_scenario: Seleccione Escenario
     load_scenario: Cargar Escenario
-    last_simulation: Ultima Simulación
+    last_simulation: Date of Simulación
   location:
     new_location: Localización Nuevo
     edit: Revisión de Localización
   operation:
-    new_operation: Nueva Operación
+    new_operation: Adicionar Nueva Operación
     edit: Revisión de Operación
     create_operation: Crear Operación
     upload: 'Cargar'
     replace: Reemplazar todas las operaciones actuales
     cropping_system: 'Sistema de Cultivo'
     crop: Cultivo
-    schedule: "Calendario"
+    schedule: "Rotacion"
     moisture: Humedad
-    nutrients: Nutrientes
+    nutrients: 'Nutrientes (0-1)'
     distribution: Distribución
     fertilizer: Fertilizante
     amount: Cantidad
     bmp: BPG
     irrigation: Irrigación
-    plant_population: Población de Planta
+    plant_population: 'Población de Planta (seeds/ac)'
     load_operation: Cargar Operación
     sum: 'El total de los nutrientes deben ser menor o igual a 1'
     save: Guardar
     open: 'Abrir Sistema de Cultivo guardado'
     saved: 'Sistema de Cultivo guardado'
+    volume: 'Volumen (pulg.)'
+    efficiency: 'Eficiencia (0-1)'
+    animals: 'Número de animales'
+    hours: 'Horas en parcela (0-24)'
+    depth: 'Profundidad (pulg.)'
+    no3_n: 'No3 n (0-1)'
+    po4_p: 'Po4 p (0-1)'
+    org_n: 'Org n (0-1)'
+    org_p: 'Org p (0-1)'
+    add_list: Agregar a la lista
+    select_crop: Seleccionar el cultivo
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
@@ -543,9 +571,9 @@ es:
     zero_to_max: "(0.00 – 99999.00)"
     quarter_to_one: "(0.25 - 1.00)"
     quarter_to_three_fourths: "(0.25 - 0.75)"
-    days_range: "(Días: 0 – 365)"
-    days_range_number: "(0 – 365)"
-    hours_range: "(0 - 24)"
+    days_range: "(Días:0–365)"
+    days_range_number: "(0–365)"
+    hours_range: "(0-24)"
     percentage_range: "(0 - 100)"
     lbs_per_day: libras por día
     ft: ft
@@ -573,12 +601,12 @@ es:
     org_n: Org n
     org_p: Org a
     width: Ancho
-    buffer_width: Ancho del Buffer
+    buffer_width: Ancho del Buffer de pasto
     waterways_info: Incluyendo ambos lados del canal
     grass_field_portion: Porción de pasto del campo
     slope_ratio: Proporción de inclinación
     slope_ratio_label: Proporción de inclinación del Buffer al Upland
-    crop_width: Ancho de cultivo
+    crop_width: Ancho del buffer del cultivo
     slope_reduction: Reducción de inclinación
     sides: Lados
     no_input: Este BPG no requiere ninguna entrada
@@ -590,6 +618,11 @@ es:
     select_vege: Seleccione la Vegetación
     select_animal: Seleccione el tipo de Animal
     manure_control: Manure Control
+    pp: Almohadillas y Tuberias
+    autoirrigation: Irrigacion Automatica
+    autofertigation: Fertirrigacion Automatica
+    manure_control: Control de estiércol
+    pad: Almohadilla
   months:
     january: Enero
     february: Febrero
@@ -622,7 +655,7 @@ es:
     create_field: Crear Parcela
     max_slope: Inclinación Máxima
   watershed:
-    watershed: Cuenca
+    field_routing: Enrutamiento de Parcela (Cuenca)
     watershed_name: Nombre de la Cuenca
     new_watershed: Nueva Cuenca
     watershed_title: Listado de Cuencas
@@ -631,7 +664,7 @@ es:
   watershed_scenario:
     watershed_scenario_name: Nombre de la cuenca
     watershed_scenario_title: Lista de Escenario de Cuencas
-    add_to_watershed: Adicionar a la cuenca
+    add_to: Adicionar a
   submit:
     create: Crear
     save: Guardar
@@ -640,6 +673,9 @@ es:
     new_user: Usuario Nuevo
     savecontinue: Salvar y Continuar
     continue: Continuar
+    cancel: 'Cancelar'
+    add_more: Añadir más
+    finish: Terminar
   sessions:
     index:
       email: Correo Electrónico
@@ -666,17 +702,17 @@ es:
     result: Resultado
     add: Añadir
     submit: Enviar
-    scenario1: 1er Escenario
-    scenario2: 2do Escenario
-    scenario3: 3er Escenario
+    scenario1: primer Escenario
+    scenario2: Segundo Escenario
+    scenario3: Tercero Escenario
     watershed1: 1a cuenca
     watershed2: 2da cuenca
     watershed3: 3ra cuenca
     last: (últimos 12 años)
     avg: Promedio Mensual (Todo el Periodo)
-    select_scenario1: Seleccione 1er Escenario
-    select_scenario2: Seleccione 2do Escenario
-    select_scenario3: Seleccione 3er Escenario
+    select_scenario1: Seleccione Uno
+    select_scenario2: Seleccione Uno
+    select_scenario3: Seleccione Uno
     select_watershed1: Seleccione 1ra cuenca
     select_watershed2: Seleccione 2da cuenca
     select_watershed3: Seleccione 3ra cuenca
@@ -767,6 +803,7 @@ es:
     understanding: La Comprensión de NTT
     understanding1: APEX
     understanding2: Descargo de responsabilidad del NTT
+    language: Idioma
   pdf:
     ntt_report: Nutrient Tracking Tool - Informe
     user: Usuario
@@ -910,7 +947,7 @@ es:
       pctbb: Proporción de carcasa a la carne deshuesada (%)
       ptdife: Proporción (para subproductos de la carne de vacuno) que se descontará en la estimación de la huella
       tnggbc: Número total de pastos pastoreados por el ganado
-      animal_paramters: Parámetros de los Animales
+      animal_parameters: Parámetros de los Animales
       animal_manure_parameters: Parámetros de abono animal
       animal_growth_parameters: Parámetros de crecimiento y nutrición de los animales
       environmental_parameters: Parámetros del medio ambiente
@@ -921,6 +958,12 @@ es:
       avg_temp: Temperatura promedio diaria for cada mes
       avg_rh: Humedad relativa diaria por cas mes
       grazing: Pastoreo
+      supplement_parameters: Parameteros de suplemento
+  grazing:
+      type:
+      start_julian:
+      end_julian:
+      gwf:
   aplcat_tooltip:
       noc: Número total de vacas in la finca bajo el sistema vaca-ternera
       nomb: 'Total number of Bulls in the farm under Cow-Calf system'
@@ -974,6 +1017,7 @@ es:
       water_use_pumping_parameters:
       other_parameters:
       animal_feed_parameters:
+      supplement_parameters:
   graze:
     total: 'Total number of grasses grazed by cattle'
     code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
@@ -990,7 +1034,7 @@ es:
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
     ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   instructions:
-    projects: Para seleccionar un proyecto, haga clic en el nombre del proyecto
+    projects: Para seleccionar un proyecto existente, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
     watersheds: Para seleccionar un cuenca, haga clic en el nombre de la cuenca
     scenarios: Para seleccionar un escenario, haga clic en el nombre del escenario
@@ -1073,11 +1117,11 @@ es:
         body: 'Haga clic en un área de texto para introducir una o más líneas de información como se muestra en este ejemplo:'
   validate:
     required: Requerido campo(s) que falta en
-    input_greater:  Input must be greater than
-    input_lessthan: Input must be less than
-    input_greaterequal: Input must be greater than or equal to
-    input_lessequal:  Input must be less than or equal to
-    checkbox: Checkbox must be checked
+    input_greater: El valor entrado debe ser mayor que
+    input_lessthan: El valor entrado debe ser menor que
+    input_greaterequal: El valor entrado debe ser mayor que o igual a
+    input_lessequal:  El valor entrado debe ser menor que o igual a
+    checkbox: Checkbox debe ser seleccionado
   projpage:
     header: Iniciar un Proyecto
     statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'

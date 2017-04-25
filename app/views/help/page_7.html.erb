@@ -16,11 +16,12 @@
 		
 		<h2><%= t('soilpage.mapsystem.header') %></h2>
 			<p><%= raw t('soilpage.mapsystem.body') %></p><br>
-			<b><%= t('soilpage.mapsystem.select.header') %></b>
+      <b><%= t('soilpage.mapsystem.select.header') %></b>
 				<p><%= raw t('soilpage.mapsystem.select.body1') %></p>
-        <%= image_tag("help/page7/image004.png", :alt => "Image 004") %>
+        <%= image_tag("help/page7/image007.png", :alt => "Image 004") %>
         <p><%= raw t('soilpage.mapsystem.select.body2') %></p>
-        <%= image_tag("help/page7/image005.png", :alt => "Image 005") %><br>
+        <%= image_tag("help/page7/image007.png", :alt => "Image 005") %>
+        <p><%= raw t('soilpage.mapsystem.select.body3') %></p><br>
       <b><%= t('soilpage.mapsystem.info.header') %></b>
 				<p><%= raw t('soilpage.mapsystem.info.body') %></p><br>
 			<b><%= t('soilpage.mapsystem.addremove.header') %></b>
@@ -28,41 +29,11 @@
         <%= image_tag("help/page7/image006.png", :alt => "Image 006") %>
         <p><%= raw t('soilpage.mapsystem.addremove.body2') %></p>
         <br></br>
-			
-		<h2><%= t('soilpage.statecounty.header') %></h2>
-			<p><%= raw t('soilpage.statecounty.body') %></p>
-			<b><%= t('soilpage.statecounty.select.header') %></b>
-				<p><%= raw t('soilpage.statecounty.select.body1') %></p>
-				<p><%= raw t('soilpage.statecounty.select.body2') %></p>
-        <%= image_tag("help/page7/image007.png", :alt => "Image 007") %>
-				<p><%= raw t('soilpage.statecounty.select.body3') %></p>
-        <%= image_tag("help/page7/image008.png", :alt => "Image 008") %>
-				<p><%= raw t('soilpage.statecounty.select.body4') %></p>
-        <%= image_tag("help/page7/image009.png", :alt => "Image 009") %>
-				<p><%= raw t('soilpage.statecounty.select.body5') %></p>
-
-			<b><%= t('soilpage.statecounty.info.header') %></b>
-				<p><%= raw t('soilpage.statecounty.info.body') %></p>
-			<b><%= t('soilpage.statecounty.addremove.header') %></b>
-				<p><%= raw t('soilpage.statecounty.addremove.body1') %></p>
-				<p><%= raw t('soilpage.statecounty.addremove.body2') %></p>
-				
-		<h2><%= t('soilpage.userinput.header') %></h2>
-			<p><%= raw t('soilpage.userinput.body') %></p>
-			<b><%= t('soilpage.userinput.create.header') %></b>
-				<p><%= raw t('soilpage.userinput.create.body1') %></p>
-				<p><%= raw t('soilpage.userinput.create.body2') %></p>
-        <%= image_tag("help/page7/image010.png", :alt => "Image 010") %>
-				<p><%= raw t('soilpage.userinput.create.body3') %></p>
-        <%= image_tag("help/page7/image011.png", :alt => "Image 011") %>
-				<p><%= raw t('soilpage.userinput.create.body4') %></p>
-        <%= image_tag("help/page7/image012.png", :alt => "Image 012") %>
-				<p><%= raw t('soilpage.userinput.create.body5') %></p>
 				
 		<h2><%= t('soilpage.advance.header') %></h2>
 			<p><%= raw t('soilpage.advance.body') %></p>
 
 	</div>
 </div>
-<br><%= link_to "< Prev", help_path("page_5") %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_8") %></br>
-<br><%= link_to t('help.return_to_table'), help_path("index") %></br>
+<br><%= link_to "< Prev", help_path("page_5", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_8", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
+<br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
