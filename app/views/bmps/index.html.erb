@@ -27,20 +27,24 @@
         </thead>
         <% @bmps.each do |bmp| %>
 		    <tbody>
+          <% if !(@project.location.state_id == 25 || @project.location.state_id == 26) && bmp.bmpsublist_id == 4 %>
+            <% next %>
+          <% end %>
+
           <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
-          <tr>
-				    <% if I18n.locale.equal?(:en) %>
-					    <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
-				    <% else %>
-					    <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
-				    <% end %>
-				    <% if bmp.id != nil %>
-					    <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
-				    <% else %>
-					    <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
-				    <% end %>
-			    </tr>
-            <%end %>
+            <tr>
+				      <% if I18n.locale.equal?(:en) %>
+					      <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+				      <% else %>
+					      <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
+				      <% end %>
+				      <% if bmp.id != nil %>
+					      <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
+				      <% else %>
+					      <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
+				      <% end %>
+			      </tr>
+          <%end %>
 		    </tbody>
 		    <tbody id=<%="#{bmp.bmpsublist_id}"%>>
 			    <% case bmp.bmpsublist_id %>
@@ -78,14 +82,14 @@
               </tr>
               <tr>
 					    <td class="indent">
-						    <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_one') %>
-						    <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor, :class => "gvTitleStyleNumber" %>
+						    <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.percentage_range') %>
+						    <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
 				        <td class="field indent" id = "irrigation_efficiency" >
-						    <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.zero_to_one') %>
-						    <%= number_field :bmp_ai, :irrigation_efficiency, :value => bmp.irrigation_efficiency, :class => "gvTitleStyleNumber"  %>
+                  <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.percentage_range') %>
+                  <%= number_field :bmp_ai, :irrigation_efficiency, :value => bmp.irrigation_efficiency * 100, :class => "gvTitleStyleNumber"  %>
                 </td>
 				      </tr>
 				      <tr>
@@ -108,38 +112,39 @@
                 </td>
 				      </tr>
 				    <% when 4 %>
-              <tr>
-                <td>
-                  <% case bmp.depth%>
-                    <% when 4 %>
-                      <%= radio_button_tag :bmp_cb2, "4", true  %> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
-                    <% when 5 %>
-                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb2, "5", true %> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppds') %>
-                    <% when 6 %>
-                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb2, "6", true %> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
-                    <% when 7 %>
-                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb2, "7", true %> <%= t('pdf.ppti') %>
-                    <% else %>
-                      <%= radio_button_tag :bmp_cb2, "4"%> <%= t('pdf.ppdi') %></br>
-                      <%= radio_button_tag :bmp_cb2, "5" %> <%= t('pdf.ppds') %></br>
-                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
-                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
-                    <%end%>
-                </td>
-              </tr>
-              <tr>
+              <% if @project.location.state_id == 25 || @project.location.state_id == 26 %>
+                <tr>
+                  <td>
+                    <% case bmp.depth%>
+                      <% when 4 %>
+                        <%= radio_button_tag :bmp_cb2, "4", true  %> <%= t('pdf.ppdi') %></br>
+                        <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
+                      <% when 5 %>
+                        <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                        <%= radio_button_tag :bmp_cb2, "5", true %> <%= t('pdf.ppds') %></br>
+                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppds') %>
+                      <% when 6 %>
+                        <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                        <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                        <%= radio_button_tag :bmp_cb2, "6", true %> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
+                      <% when 7 %>
+                        <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                        <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "7", true %> <%= t('pdf.ppti') %>
+                      <% else %>
+                        <%= radio_button_tag :bmp_cb2, "4"%> <%= t('pdf.ppdi') %></br>
+                        <%= radio_button_tag :bmp_cb2, "5" %> <%= t('pdf.ppds') %></br>
+                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
+                      <%end%>
+                  </td>
+                </tr>
+                          <tr>
 					      <td class="indent">
 						      <%= t('bmp.pad') + " " + t('bmp.width') + " (" + t('bmp.ft')  + ")"%>
 						      <%= number_field :bmp_ppnd, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
@@ -154,17 +159,18 @@
               <% if bmp.depth == 6 || bmp.depth == 7 %>
 			          <tr id = "tr_bmp_pp_area" >
 					          <td class="indent">
-						          <%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
+						          <%= label :area, t('bmp.reservoir_area') + " (" + t('bmp.acres')  + ")"%>
 						          <%= number_field :bmp_ppnd, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                       </td>
 			          </tr>
               <% else %>
 			          <tr id = "tr_bmp_pp_area" style="display:none" >
-					          <td class="indent">
-						          <%= label :area, t('bmp.reservoir_area') + " " + t('bmp.zero_to_max') + " " + t('bmp.acres') %>
-						          <%= number_field :bmp_ppnd, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
-					          </td>
-			          </tr>
+					            <td class="indent">
+						            <%= label :area, t('bmp.reservoir_area') + " (" + t('bmp.acres')  + ")"%>
+						            <%= text_field :bmp_ppnd, :area, :value => bmp.area %>
+					            </td>
+			            </tr>
+                <% end %>
               <% end %>
 				    <% when 8 %>
 				      <tr>
@@ -720,9 +726,9 @@
         validateBmpAi.addValidation(ai_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
         validateBmpAi.addValidation(ai_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
         validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpAi.addValidation(ai_inputs[2].name, "lte=1.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
+        validateBmpAi.addValidation(ai_inputs[2].name, "lte=100.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
         validateBmpAi.addValidation(ai_inputs[3].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpAi.addValidation(ai_inputs[3].name, "lte=1.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
+        validateBmpAi.addValidation(ai_inputs[3].name, "lte=100.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
         validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
         validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
       }

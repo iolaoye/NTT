@@ -36,12 +36,12 @@
 		<%#= f.check_box :field_type %>
 	<%# end %>
   </div>
-  <% if ENV["APP_VERSION"] == "modified" %>
+  <%# if ENV["APP_VERSION"] == "modified" %>
 	<div class="field" title="">
 		Soil P
 		<%= f.number_field :soilp, :class => 'gvTitleStyleNumber', :step => "any" %>
 	</div>
-  <% end %>
+  <%# end %>
   <div class="actions">
 		<%= f.submit t('submit.savecontinue'), :class => "btn btn-primary" %>
 		<br><br>

@@ -243,13 +243,13 @@ class ProjectsController < ApplicationController
           when "ParmValues"
             msg = upload_parameter_values(node)
           when "parameters"
-			      node.elements.each do |c|
-				      msg = upload_parameter_values_new_version(c)
-			      end
+			node.elements.each do |c|
+				msg = upload_parameter_values_new_version(c)
+			end
         end
         break if (msg != "OK" && msg != true)
       end
-      if msg == "OK" then
+      if msg == "OK" && Location.find(@project.location.id).state_id != nil && Location.find(@project.location.id).state_id.to_s != "" then
 		    load_parameters(ApexParameter.where(:project_id => @project.id).count)
 	    end
 
