@@ -4,8 +4,6 @@ class FieldsController < ApplicationController
 
   add_breadcrumb 'Home', :root_path
   add_breadcrumb 'Projects', :root_path
-
-
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
@@ -155,6 +153,7 @@ class FieldsController < ApplicationController
 # PATCH/PUT /fields/1
 # PATCH/PUT /fields/1.json
   def update
+  ooo
     field_type = false
     if params[:field][:field_type].eql?("1") then
       field_type = true
