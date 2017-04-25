@@ -102,7 +102,7 @@ NTTG3::Application.routes.draw do
         end
       end
       get :field_soils, on: :member
-      get :field_scenarios, on: :member
+      put :field_scenarios, on: :collection
       get 'create_soils', on: :member
       resources :soils do
         get :list, on: :member

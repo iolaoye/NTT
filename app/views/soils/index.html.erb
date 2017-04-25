@@ -13,7 +13,7 @@
 
 <div class="page-header"><h1><%= t("menu.soils") %></h1></di:v>
 
-<%#= form_tag update_project_field_soil_path(@project, @field, @soil), method: :post do |f| %>
+<%= form_tag field_scenarios_project_fields_path(@project, @field), method: :post do |f| %>
 	<%= render 'edit_field' %>
 	<% unless ENV["APP_VERSION"] == "modified" %>
 		<%#= button_tag t('soil.new'), :class => 'btn btn-primary', :id=>"new_soil" %>
@@ -21,7 +21,7 @@
 	<% end %>
 
 	<% if @soils.count > 0 %>
-		<% if ENV["APP_VERSION"] == "modified" %>
+		<% if ENV["APP_VERSION"] == "modified" or ENV["APP_VERSION"] == "standard" or ENV["APP_VERSION"] == nil %>
 			<div class="table-responsive">
 			  <div class="panel panel-default">
 				<table class="table table-striped">
@@ -46,8 +46,7 @@
 							<td class="gvCellStyleText"><%= soil.name %></td>
 							<td class="gvCellStyleText"><%= soil.group %></td>
 							<td class="gvTitleStyleNumber"><%= soil.slope %></td>
-							<td class="gvCellStyleNumber"><%= number_field :field, "om[]", :value=>soil.layers.first.organic_matter, :class => 'numbers', :step => "any" %></td>
-							<td class="gvCellStyleNumber"><%= soil.layers.first.organic_matter %></td>
+							<td class="gvCellStyleNumber"><%= text_field_tag "organic_matter[]", soil.id, :value=>soil.layers.first.organic_matter, :class => 'numbers', :step => "any" %></td>
 							<td class="gvCellStyleNumber"><%= soil.percentage %></td>
 							<td class="gvCellStyleActions">
 								<%= link_to image_tag("delete.png"), project_field_soil_path(@project, @field, soil), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
@@ -108,4 +107,4 @@
 			<br>
 		<% end %>
 	<% end %>
-<%# end %>
+<% end %>
