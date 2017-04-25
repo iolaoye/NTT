@@ -6,10 +6,11 @@ class OperationsController < ApplicationController
 
   add_breadcrumb 'Home', :root_path
   add_breadcrumb 'Projects', :root_path
-################################  operations list   #################################
-# GET /operations/1
-# GET /1/operations.json
-  def list
+
+################################  INDEX  #################################
+# GET /operations
+# GET /operations.json
+  def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
 	#if session[:oper_type] == nil then
@@ -29,20 +30,6 @@ class OperationsController < ApplicationController
     array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
 
-    respond_to do |format|
-      format.html # list.html.erb
-      format.json { render json: @fields }
-    end
-  end
-
-################################  INDEX  #################################
-# GET /operations
-# GET /operations.json
-  def index
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @scenario = Scenario.find(params[:scenario_id])
-    @operations = Operation.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @operations }
@@ -197,10 +184,10 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
-    @operations = @scenario.operations
+    @operations = @scenario.operations.where(:crop_id => params[:id])
     @operations.destroy_all
     respond_to do |format|
-      format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('notices.all') }
+      format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('notices.all') }
       format.json { head :no_content }
     end
   end

@@ -293,8 +293,8 @@ en:
     created: " was sucessfully created."
     uploaded: " has been uploaded."
     downloaded: " has been downloaded."
-    simulation: "Simulaion was Successfull."
-    all: "All Operations have been deleted."
+    simulation: "Simulation was Successfull."
+    all: "Operations deleted successfully."
   helpers:
     select:
       prompt: Please select

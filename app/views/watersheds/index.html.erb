@@ -28,7 +28,7 @@
 		  <div class="panel-heading">
 			<table>
 				<tr>
-					<td class="pointer"  onclick="show_crop(<%=watershed.id%>)"><h4 style="cursor:pointer"><%= watershed.name %> [+]</h4></td>
+					<td class="pointer" onclick="show_crop(<%=watershed.id%>)"><h4 style="cursor:pointer"><%= watershed.name %> [+]</h4></td>
 					<% if @watershed_scenarios.count > 0 %>
 						<td class="col-md-1 text-rigth", title= <%= sim %>><%= link_to image_tag("run.png"), simulate_project_watershed_path(@project.id, watershed), data: {disable_with: 'Please wait'} %></td>
 					<% end %>

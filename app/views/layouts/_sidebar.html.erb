@@ -45,7 +45,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.managements') + "(" + Operation.where(:scenario_id => @scenario.id).count.to_s + ")", list_project_field_scenario_operations_path(@project, @field, @scenario) %>
+            <%= link_to t('menu.managements') + "(" + Operation.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_operations_path(@project, @field, @scenario) %>
           </li>
           <li class="<%= controller_name == "bmps" ? "active" : "" %>">
             <% if controller_name == "bmps" %>

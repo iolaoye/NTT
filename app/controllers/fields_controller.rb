@@ -18,8 +18,15 @@ class FieldsController < ApplicationController
 # GET /locations
 # GET /locations.json
   def field_scenarios
-    #session[:field_id] = params[:id]
-    redirect_to list_scenario_path
+	params[:id] = params[:format]
+	update_field()
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb 'Fields'
+
+		@location = @project.location
+		session[:location_id] = @location.id
+		get_field_list(@location.id)
+	render "index"
   end
 
 ################################  soils list   #################################
@@ -154,43 +161,6 @@ class FieldsController < ApplicationController
 # PATCH/PUT /fields/1
 # PATCH/PUT /fields/1.json
   def update
-  ooo
-    field_type = false
-    if params[:field][:field_type].eql?("1") then
-      field_type = true
-    end
-    @field = Field.find(params[:id])
-    @project = Project.find(params[:project_id])	
-    msg = "OK"
-    if @field.field_type != field_type then
-      if field_type == true then
-        #create the forestry additional fields
-        msg = add_forestry_field(ROAD, 0.05)
-        if msg.eql?("OK") then
-          msg = add_forestry_field(SMZ, 0.10)
-        end
-      else
-        #delete the forestry additional fields
-        field = Field.find_by_field_name(@field.field_name + ROAD)
-        if !(field == nil) then
-          field.destroy
-        end
-        field = Field.find_by_field_name(@field.field_name + SMZ)
-        if !(field == nil) then
-          field.destroy
-        end
-      end
-    end
-    if !@field.update_attributes(field_params)
-      msg = "Error saving field"
-	else
-	  #save soil p information in the first layer of the soil.
-	  @field.soils.each do |soil|
-		layer = soil.layers[0]
-		layer.soil_p = params[:field][:soilp]
-		layer.save
-	  end
-    end
     respond_to do |format|
       if msg.eql?("OK") then
         #session[:field_id] = @field.id
@@ -227,6 +197,45 @@ class FieldsController < ApplicationController
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def field_params
     params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at, :soilp)
+  end
+
+  def update_field()
+    field_type = false
+    if params[:field][:field_type].eql?("1") then
+      field_type = true
+    end
+    @field = Field.find(params[:id])
+    @project = Project.find(params[:project_id])	
+    msg = "OK"
+    if @field.field_type != field_type then
+      if field_type == true then
+        #create the forestry additional fields
+        msg = add_forestry_field(ROAD, 0.05)
+        if msg.eql?("OK") then
+          msg = add_forestry_field(SMZ, 0.10)
+        end
+      else
+        #delete the forestry additional fields
+        field = Field.find_by_field_name(@field.field_name + ROAD)
+        if !(field == nil) then
+          field.destroy
+        end
+        field = Field.find_by_field_name(@field.field_name + SMZ)
+        if !(field == nil) then
+          field.destroy
+        end
+      end
+    end
+    if !@field.update_attributes(field_params)
+      msg = "Error saving field"
+	else
+	  #save soil p information in the first layer of the soil.
+	  @field.soils.each do |soil|
+		layer = soil.layers[0]
+		layer.soil_p = params[:field][:soilp]
+		layer.save
+	  end
+    end
   end
 
   def add_forestry_field(typ, area)
