@@ -13,7 +13,7 @@
 
 <div class="page-header"><h1><%= t("menu.soils") %></h1></di:v>
 
-<%= form_tag update_project_field_soil_path(@project, @field, @soil), method: :post do |f| %>
+<%#= form_tag update_project_field_soil_path(@project, @field, @soil), method: :post do |f| %>
 <%= render 'edit_field' %>
 	<% unless ENV["APP_VERSION"] == "modified" %>
 		<%#= button_tag t('soil.new'), :class => 'btn btn-primary', :id=>"new_soil" %>
@@ -21,7 +21,7 @@
 	<% end %>
 
 	<% if @soils.count > 0 %>
-		<% if !(ENV["APP_VERSION"] == "modified") %>
+		<% if ENV["APP_VERSION"] == "modified" %>
 			<div class="table-responsive">
 			  <div class="panel panel-default">
 				<table class="table table-striped">
@@ -112,4 +112,4 @@
 			<br>
 		<% end %>
 	<% end %>
-<% end %>
+<%# end %>
