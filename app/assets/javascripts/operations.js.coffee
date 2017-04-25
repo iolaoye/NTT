@@ -1,6 +1,17 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+switch_view = ->
+  if $("#div_crop_schdule").is(":hidden")
+      $("#div_crop_schdule").toggle(true)
+  else
+      $("#div_crop_schdule").toggle(false)
+
+  if $("#div_operations").is(":hidden")
+      $("#div_operations").toggle(true)
+  else
+      $("#div_operations").toggle(false)
+	  
 upload_crop = ->
   $("#div_new").toggle(true)
   
@@ -129,6 +140,9 @@ updateTitles = ->
 $(document).ready ->
     $("#new_crop").click ->
         upload_crop()
+
+    $("#btn_views").click ->
+        switch_view()
 
 	#updateTypes()
     #updateFerts()
