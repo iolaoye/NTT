@@ -40,6 +40,7 @@ class OperationsController < ApplicationController
 # GET /operations/1
 # GET /operations/1.json
   def show
+  sss
     @operation = Operation.find(params[:id])
 
     respond_to do |format|
@@ -52,6 +53,7 @@ class OperationsController < ApplicationController
 # GET /operations/new
 # GET /operations/new.json
   def new
+  nnn
     @operation = Operation.new
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
@@ -72,6 +74,7 @@ class OperationsController < ApplicationController
 ################################  Edit  #################################
 # GET /operations/1/edit
   def edit
+  eee
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @operation = Operation.find(params[:id])
 
@@ -84,6 +87,7 @@ class OperationsController < ApplicationController
 # POST /operations
 # POST /operations.json
   def create
+  ccc
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
@@ -133,6 +137,7 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
+  uuu
     @operation = Operation.find(params[:id])
 	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
@@ -194,6 +199,7 @@ class OperationsController < ApplicationController
 
 ################################  CALL WHEN CLICK IN UPLOAD CROPPING SYSTEM  #################################
   def cropping_system
+  cscs
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])

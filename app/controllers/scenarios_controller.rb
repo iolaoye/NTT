@@ -53,6 +53,7 @@ class ScenariosController < ApplicationController
     end
   end
 
+################################  simualte either NTT or APLCAT  #################################
   def simulate
 	session[:simulation] = 'scenario'
 	case params[:commit]
@@ -68,9 +69,9 @@ class ScenariosController < ApplicationController
 	@scenario = Scenario.find(params[:select_scenario])
     if msg.eql?("OK") then
       flash[:notice] = @scenario.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
-      render "list", notice: "Simulation process end succesfully"
+      render "index", notice: "Simulation process end succesfully"
     else
-      render "list", error: msg
+      render "index", error: msg
     end # end if msg
   end 
 
