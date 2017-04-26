@@ -1,56 +1,400 @@
 <% if notice != nil %>
-  <div class="success_alert">
+	<div class="success_alert">
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     <%= notice %>
   </div>
 <% end %>
 
-<div class="page-header"><h1>Listing operations</h1></div>
+<div class="page-header"><h1><%= t('menu.managements') %></h1></div>
 
-<table class='gvTableStyle'>
-  <tr class='gvHeaderStyle'>
-    <th>Crop</th>
-    <th>Operation</th>
-    <th>Day</th>
-    <th>Month</th>
-    <th>Year</th>
-    <th>Type</th>
-    <th>Amount</th>
-    <th>Depth</th>
-    <th>Moisture</th>
-    <th>No3 n</th>
-    <th>Po4 p</th>
-    <th>Org n</th>
-    <th>Org p</th>
-    <th>Nh3</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
+<%#= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@project, @field, @scenario), data: {disable_with: 'Please wait. Saving the seleted crop rotation . . .'}, :class => 'btn btn-primary', :id => 'new_crop' %>
+<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
+<%# if ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" || ENV["APP_VERSION"] == nil %>
+	<%#= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
+	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %>
+	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views"} %><br><br>
+	<div id="div_new" style="display:none">
+		<%= render "upload" %>
+	</div>
+	<div id="div_crop_schdule">
+		<% @crops.each do |crop| %>
+		  <div class="panel panel-primary" id="expand_crop_<%= crop.id %>">
+			  <div class="panel-heading">
+				<table>
+					<tr>
+						<td onclick="show_crop(<%= crop.id %>)"><h4><%= crop.name %> [+]</h4></td>
+						<td class="col-md-1 text-rigth">
+							<%= link_to image_tag("delete.png"), delete_all_project_field_scenario_operation_path(@project, @field, @scenario, crop.id), data: { confirm: t('general.confirm') } %>
+						</td>
+					</tr>
+				</table>			
+			  </div>
+			</div>
+			<div class="panel panel-primary" id="crop_<%= crop.id %>" style="display:none">
+			  <div class="panel-heading">
+				<table>
+					<tr>
+						<td onclick="hide_crop(<%= crop.id %>)"><h4><%= crop.name %> [-]</h4></td>
+						<td class="col-md-1 text-rigth">
+							<%= link_to image_tag("delete.png"), delete_all_project_field_scenario_operation_path(@project, @field, @scenario, crop.id), data: { confirm: t('general.confirm') } %>
+						</td>
+					</tr>
+				</table>
+			  </div>
+		  </div>
 
-<% @operations.each do |operation| %>
-  <tr class="gvRowStyle">
-    <td><%= operation.crop_id %></td>
-    <td><%= operation.activity_id %></td>
-    <td><%= operation.day %></td>
-    <td><%= operation.month_id %></td>
-    <td><%= operation.year %></td>
-    <td><%= operation.type_id %></td>
-    <td><%= operation.amount %></td>
-    <td><%= operation.depth %></td>
-    <td><%= operation.moisture %></td>
-    <td><%= operation.no3_n %></td>
-    <td><%= operation.po4_p %></td>
-    <td><%= operation.org_n %></td>
-    <td><%= operation.org_p %></td>
-    <td><%= operation.nh3 %></td>
-    <td><%= link_to t('general.show'), operation %></td>
-    <td><%= link_to t('general.edit'), edit_operation_path(operation) %></td>
-    <td><%= link_to 'Destroy', operation, method: :delete, data: { confirm: t('general.confirm') } %></td>
-  </tr>
-<% end %>
-</table>
+		  <div id="crop_detail_<%= crop.id %>" style="display:none">
+			  <% if @scenario.planting_operations(crop).any? %>
+				<div class="panel panel-primary">
+				  <h4>Planting</h4> 
+				  <table class="table">
+					<tr class="optable">
+						<td class="optable"><b><%= t('general.date') %></b></td>
+						<td class="optable"><b><%= t('general.type') %></b></td>
+						<td class="optable" style="text-align: right" ><b>Seeding amount (seeds/ac)</b></td>
+						<td class="optable"><b><%= t('general.actions') %></b></td>
+					</tr>
+					<% @scenario.planting_operations(crop).each do |op| %>
+						<tr>
+							<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
+							<td><%= op.type_name %></td>
+							<td class="gvCellStyleNumber"><%= op.amount %></td>
+							<td>
+							  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+							  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+							</td>
+						</tr>
+					<% end %>
+				  </table>
+				  <%= link_to "Add Planting Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => crop.id), :class => 'btn btn-success'  %>
+			   </div>
+			  <% end %>
 
-<br>
+			  <% if @scenario.fertilizer_operations(crop).any? %>
+				<div class="panel panel-primary">
+				  <h4>Fertilizer</h4>
 
-<%= link_to 'New Operation', new_operation_path %>
+				  <table class="table">
+					<tr>
+						<td class="optable"><b><%= t('general.date') %></b></td>
+						<td class="optable"><b><%= t('general.type') %></b></td>
+						<td class="optable" style="text-align: right"><b>Amount applied (kg/ac)</b></td>
+						<td class="optable" style="text-align: right"><b>Depth</b></td>
+						<td class="optable"><b><%= t('general.actions') %></b></td></tr>
+					<% @scenario.fertilizer_operations(crop).each do |op| %>
+						<tr>
+							<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
+							<td><%= op.type_name %></td>
+							<td class="gvCellStyleNumber"><%= op.amount %></td>
+							<td class="gvCellStyleNumber"><%= op.depth %></td>
+							<td>
+							  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+							  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+							</td>
+						</tr>
+					<% end %>
+				  </table>
+				  <%= link_to "Add Fertilizer Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 2, :crop => crop.id), :class => 'btn btn-success'  %>
+				</div>
+			  <% end %>
+
+			  <% if @scenario.tillage_operations(crop).any? %>
+				<div class="panel panel-primary">
+				  <h4>Tillage</h4>
+
+				  <table class="table">
+					<tr>
+						<td class="optable"><b><%= t('general.date') %></b></td>
+						<td class="optable"><b><%= t('general.type') %></b></td>
+						<td class="optable"><b><%= t('general.actions') %></b></td></tr>
+						<% @scenario.tillage_operations(crop).each do |op| %>
+					<tr>
+						<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
+						<td><%= op.type_name %></td>
+						<td>
+						  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+						  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+						</td>
+					</tr>
+					<% end %>
+				  </table>
+				  <%= link_to "Add Tillage Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 3, :crop => crop.id), :class => 'btn btn-success'  %>
+				</div>
+			  <% end %>
+
+			  <% if @scenario.harvest_operations(crop).any? %>
+				<div class="panel panel-primary">
+				  <h4>Harvest </h4>
+
+				  <table class="table">
+					  <tr>
+						<td class="optable"><b><%= (t'pdf.year') %></b></td>
+						<td class="optable"><b><%= (t'pdf.month') %></b></td>
+						<td class="optable"><b><%= (t'pdf.day') %></b></td>
+						<td class="optable"><b><%= t('general.actions') %></b></td>
+					  </tr>
+						<% @scenario.harvest_operations(crop).each do |op| %>
+							<tr>
+								<td><%= op.year %></td>
+								<td><%= Date::MONTHNAMES[op.month_id] %></td>
+								<td><%= op.day %></td>
+								<td>
+								  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+								  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+								</td>
+							</tr>
+						<% end %>
+				  </table>  <br>
+				  <%= link_to "Add Harvest Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 4, :crop => crop.id), :class => 'btn btn-success'  %>
+				</div>
+			  <% end %>
+
+			  <% if @scenario.kill_operations(crop).any? %>
+			  <div class="panel panel-primary">
+				<h4>Kill</h4>
+
+				<table class="table">
+					<tr>
+						<td class="optable"><b><%= (t'pdf.year') %></b></td>
+						<td class="optable"><b><%= (t'pdf.month') %></b></td>
+						<td class="optable"><b><%= (t'pdf.day') %></b></td>
+						<td class="optable"><b><%= t('general.actions') %></b></td>
+					</tr>
+					<% @scenario.kill_operations(crop).each do |op| %>
+						<tr>
+							<td><%= op.year %></td>
+							<td><%= Date::MONTHNAMES[op.month_id] %></td>
+							<td><%= op.day %></td>
+							<td>
+							  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+							  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+							</td>
+						</tr>
+					<% end %>
+				</table>
+				<%= link_to "Add Kill Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 5, :crop => crop.id), :class => 'btn btn-success'  %>
+			  </div>
+			<% end %>
+
+			<% if @scenario.irrigation_operations(crop).any? %>
+			  <div class="panel panel-primary">
+				<h4>Irrigation</h4>
+
+			   <table class="table">
+				<tr>
+					<td class="optable"><b><%= (t'pdf.year') %></b></td>
+					<td class="optable"><b><%= (t'pdf.month') %></b></td>
+					<td class="optable"><b><%= (t'pdf.day') %></b></td>
+					<td class="optable"><b><%= t('general.type') %></b></td>
+					<td class="optable" style="text-align: right"><%= t('operation.volume') %></td>
+					<td class="optable"><%= t('bmp.depth') %></td>
+					<td class="optable"><b><%= t('general.actions') %></b></td>
+				</tr>
+				 <% @scenario.irrigation_operations(crop).each do |op| %>
+				<tr>
+					<td><%= op.year %></td>
+					<td><%= Date::MONTHNAMES[op.month_id] %></td>
+					<td><%= op.day %></td>
+					<td><%= op.type_name %></td>
+					<td class="gvTitleStyleNumber"><%= op.amount %></td>
+					<td><%= op.depth %></td>
+					<td>
+					  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+					  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+					</td>
+				</tr>
+				<% end %>
+			   </table>     <br>
+			   <%= link_to "Add Irrigation Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 6, :crop => crop.id), :class => 'btn btn-success'  %>
+			 </div>
+			<% end %>
+
+			<!-- not imlpemented yet
+
+			<% if @scenario.grazing_operations(crop).any? %>
+			   <div class="panel-body">
+				<p>Grazing </p>
+			  </div>
+
+			  <table class="table">
+				<tr><td><b>abc</b></td><td><b>def</b></td></tr>
+				<tr><td>abc</td><td>def</td></tr>
+				<tr><td>abc</td><td>def</td></tr>
+			  </table>
+			  <% end %>
+
+			  -->
+
+			<% if @scenario.burn_operations(crop).any? %>
+			  <div class="panel panel-primary">
+				<h4>Burn</h4>
+
+			  <table class="table">
+			   <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable"><b>Actions</b></td></tr>
+				<% @scenario.burn_operations(crop).each do |op| %>
+				<tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+					  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
+				<% end %>
+				</table>     <br>
+			   <%= link_to "Add Burn Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 9, :crop => crop.id), :class => 'btn btn-success'  %>
+			  </div>
+			<% end %>
+
+		  <% if @scenario.liming_operations(crop).any? %>
+			<div class="panel panel-primary">
+			  <h4>Liming</h4>
+			  <table class="table">
+				 <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable">Amount</td><td class="optable"><b>Actions</b></td></tr>
+				<% @scenario.liming_operations(crop).each do |op| %>
+				<tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= op.amount %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+					  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
+				<% end %>
+			  </table>     <br>
+			   <%= link_to "Add Liming Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 10, :crop => crop.id), :class => 'btn btn-success'  %>
+			  </div>
+			  <% end %>
+
+			<% if @scenario.pesticide_operations(crop).any? %>
+			  <div class="panel panel-primary">
+				<h4>Pesticide</h4>
+			  <table class="table">
+			   <tr><td><b class="optable">Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable"><b>Actions</b></td></tr>
+				<% @scenario.pesticide_operations(crop).each do |op| %>
+				<tr><td><%= op.year %></td><td><%= Date::MONTHNAMES[op.month_id] %></td><td><%= op.day %></td><td><%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+					  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
+				<% end %>
+			  </table>     <br>
+			   <%= link_to "Add Kill Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 11, :crop => crop.id), :class => 'btn btn-success'  %>
+			  </div>
+			 <% end %>
+			</div>
+			<% end %>
+		</div>
+	</div>
+
+<% else %>
+	<div id="div_operations" style="display:none">
+	<%#= link_to t('operation.save') + " " + t('operation.cropping_system'), download_project_field_scenario_operations_path(@project, @field, @scenario), :class => 'btn btn-primary' %><br><br>
+	<%#= link_to t('operation.open'), open_project_field_scenario_operations_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
+	<%#= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
+	<!-- <%= link_to t('general.change') + " " + t('general.format'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %> -->
+	<%#= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
+	<div class="table-responsive">
+	  <div class="panel panel-default">
+		<table class="table table-striped">
+		  <thead>
+			<tr>
+				<th class="gvCellStyleTitle upper_border"><%= t('operation.crop') %></th>
+				<th class="gvCellStyleTitle upper_border"><%= t('scenario.operation') %></th>
+				<th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.year') %></th>
+				<th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.month') %></th>
+				<th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.day') %></th>
+				<th class="gvCellStyleTitle upper_border"><%= t('general.type') %></th>
+				<th class="gvCellStyleTitle upper_border"><%= t('general.value') + '1' %></th>
+				<th class="gvCellStyleTitle upper_border"><%= t('general.value') + '2' %></th>
+				<th class="gvCellStyleTitle upper_border"><%= t('operation.moisture') %></th>
+				<th class="gvCellStyleTitle upper_border">No3 N</th>
+				<th class="gvCellStyleTitle upper_border">Po4 P</th>
+				<th class="gvCellStyleTitle upper_border">Org N</th>
+				<th class="gvCellStyleTitle upper_border">Org P</th>
+				<th class="gvCellStyleTitle upper_border"><%= t('general.actions') %></th>
+			</tr>
+		  </thead>
+		  <tbody>
+			  <% i=1 %>
+			  <% @operations.each do |operation| %>
+				<% if (i % 2  == 0) %>
+				  <tr id="rowIdEven" class="gvRowStyleEven">
+				<% else %>
+				  <tr id="rowIdOdd" class="gvRowStyleOdd">
+				<% end %>
+				<% i = i + 1 %>
+					<% if (I18n.locale == :en) %>
+						<td class="gvCellStyleText"><%= Crop.find(operation.crop_id).name %></td>
+						<td id="operationType" class="gvCellStyleText"><%= Activity.find(operation.activity_id).name %></td>
+					<% else %>
+						<td class="gvCellStyleText"><%= Crop.find(operation.crop_id).spanish_name %></td>
+						<td id="operationType" class="gvCellStyleText"><%= Activity.find(operation.activity_id).spanish_name %></td>
+					<% end %>
+					<td class="gvCellStyleNumber"><%= listYears.detect { |val, index| index == operation.year}[0] %></td>
+					<td class="gvCellStyleText"><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
+					<td class="gvCellStyleNumber"><%= operation.day %></td>
+					<% if (I18n.locale.eql?(:en)) %>
+						<% case operation.activity_id %>
+						  <% when 1  # planting %>
+							<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
+						  <% when 2  # fertilizer %>
+							<td class="gvCellStyleText"><%= FertilizerType.find(operation.type_id).name %></td>
+						  <% when 3  # tillage %>
+							<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
+						  <% when 6  # irrigation %>
+							<td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).name %></td>
+						  <% when 7  # grazing%>
+							<td class="gvCellStyleText"><%= Fertilizer.find(operation.type_id).name %></td>
+						  <% else # harvest, kill, stop grazin, burn, liming%>
+							<td class="gvCellStyleText"><%= :"" %></td>
+						<% end %>
+					<% else %>
+						<% case operation.activity_id %>
+						  <% when 1  # planting%>
+							<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).spanish_name %></td>
+						  <% when 3  # tillage%>
+							<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).spanish_name %></td>
+						  <% when 2  # fertilizer %>
+							<td class="gvCellStyleText"><%= Fertilizer.find(operation.subtype_id).spanish_name %></td>
+						  <% when 6  # irrigation %>
+							<td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).spanish_name %></td>
+						  <% when 7  # grazing%>
+							<td class="gvCellStyleText"><%= Fertilizer.find(operation.type_id).spanish_name %></td>
+						  <% else # harvest, kill, stop grazin, burn, liming%>
+							<td class="gvCellStyleText"><%= :"" %></td>
+						<% end %>
+					<% end %>
+					<td class="gvCellStyleNumber"><%= operation.amount %></td>
+					<td class="gvCellStyleNumber"><%= operation.depth %></td>
+					<td class="gvCellStyleNumber"><%= operation.moisture %></td>
+					<td class="gvCellStyleNumber"><%= operation.no3_n %></td>
+					<td class="gvCellStyleNumber"><%= operation.po4_p %></td>
+					<td class="gvCellStyleNumber"><%= operation.org_n %></td>
+					<td class="gvCellStyleNumber"><%= operation.org_p %></td>
+					<td >
+						<%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.edit') %>
+						<%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+					</td>
+				</tr>
+			  <% end %>
+		  </tbody>
+		</table>
+	  </div>
+	</div>
+	</div>
+<%# end %>
+
+<script>
+
+function show_crop(ele) {
+  var crop_id = ele
+
+  var crop_show_div = document.getElementById("expand_crop_" + crop_id);
+  var crop_hide_div = document.getElementById("crop_" + crop_id);
+  var crop_detail_div = document.getElementById("crop_detail_" + crop_id);
+
+  crop_show_div.style = "display:none"
+  crop_hide_div.style = "display:block"
+  crop_detail_div.style = "display:block"
+  }
+
+function hide_crop(ele) {
+  var crop_id = ele
+
+  var crop_show_div = document.getElementById("expand_crop_" + crop_id);
+  var crop_hide_div = document.getElementById("crop_" + crop_id);
+  var crop_detail_div = document.getElementById("crop_detail_" + crop_id);
+
+  crop_show_div.style = "display:block"
+  crop_hide_div.style = "display:none"
+  crop_detail_div.style = "display:none"
+  }
+
+  </script>

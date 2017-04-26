@@ -11,7 +11,6 @@
     </div>
   <% end %>
 <% end %>
-
 <% if flash[:info] %>
   <div class="flash_alert">
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -20,6 +19,7 @@
 <% end %>
 
 <div class="page-header"><h1><%=@type %> <% @title%></h1></div>
+
 <form id="myForm">
   <div class="field">
     <table>
@@ -36,13 +36,13 @@
       </tr>
       <tr>
         <% if session[:simulation] == 'scenario' %>
-          <td><%= collection_select :result1, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario1'), :selected => @scenario1}, {:required => true} %></td>
-          <td><%= collection_select :result2, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario2'), :required => false, :selected => @scenario2} %></td>
-          <td><%= collection_select :result3, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario3'), :required => false, :selected => @scenario3} %></td>
+          <td><%= collection_select :result1, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:140px"} %></td>
+          <td><%= collection_select :result2, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:140px"}  %></td>
+          <td><%= collection_select :result3, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:140px"} %></td>
         <% else %>
-          <td><%= collection_select :result1, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed1'), :selected => @scenario1}, {:required => true} %></td>
-          <td><%= collection_select :result2, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed2'), :required => false, :selected => @scenario2} %></td>
-          <td><%= collection_select :result3, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed3'), :required => false, :selected => @scenario3} %></td>
+          <td><%= collection_select :result1, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed1'), :selected => @scenario1}, {:required => true, :style => "width:140px"} %></td>
+          <td><%= collection_select :result2, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed2'), :selected => @scenario2}, {:required => false, :style =>"width:140px"} %></td>
+          <td><%= collection_select :result3, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed3'), :selected => @scenario3}, {:required => false, :style =>"width:140px"} %></td>
         <% end %>
         <% case @type %>
           <% when t('general.view'), t('result.summary') %>
@@ -77,7 +77,6 @@
 			</tr>
         <% end %>
         <%= hidden_field(:language, :language, :value => I18n.locale) %>
-        <%#= hidden_field(:field, :id, :value => @field.id) %>
     </table>
   </div>
 </form>
@@ -135,14 +134,21 @@
 					  <% difference2 = value3- result.value%>
 					  <% reduction2 = difference2 / result.value * 100%>
 					  <% total_area2 = difference2 * @total_area%>
+						  <% row_id = "row" + result.description_id.to_s %>
 					  <% case (result.description_id % 10) %>
 						<% when 0 %>
-						  <tr class="gvRowStyleOdd">
+						  <tr class="gvRowStyleOdd", id = <%=row_id%>>
 							<% if result.description_id == 70 %>
 								<% if I18n.locale.eql?(:en) %>
-								  <td class="gvTotalText"><%= Description.find(result.description_id).description %></td>
+								  <td class="gvTotalText">
+									<%= Description.find(result.description_id).description %>
+									<%= check_box_tag Description.find(result.description_id).description%>
+								  </td>
 								<% else %>
-								  <td class="gvTotalText"><%= Description.find(result.description_id).spanish_description %></td>
+								  <td class="gvTotalText">
+								    <%= Description.find(result.description_id).spanish_description %>
+									<%= check_box_tag Description.find(result.description_id).description %>
+								  </td>
 								<% end %>
 								<td class="gvTotalNumber"><%= "" %></td>
 								<td class="gvTotalNumber"><%= "" %></td>
@@ -176,9 +182,15 @@
 								<% end %>
 							<% else %>
 								<% if I18n.locale.eql?(:en) %>
-								  <td class="gvTotalText"><%= Description.find(result.description_id).description %></td>
+								  <td class="gvTotalText">
+									<%= Description.find(result.description_id).description %>
+									<%= check_box_tag Description.find(result.description_id).description %>
+								  </td>
 								<% else %>
-								  <td class="gvTotalText"><%= Description.find(result.description_id).spanish_description %></td>
+								  <td class="gvTotalText">
+									<%= Description.find(result.description_id).spanish_description %>
+									<%= check_box_tag Description.find(result.description_id).description %>
+								  </td>
 								<% end %>
 								<td class="gvTotalText"><%= sprintf("%8.2f", result.value).to_s %></td>
 								<td class="gvTotalText"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
@@ -213,7 +225,7 @@
 							<% end %>
 						  </tr>
 						<% else %>
-						  <tr class="gvRowStyleEven">
+						  <tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 							<% if result.description_id > 70 && result.description_id < 90 %>
 							  <% if I18n.locale.eql?(:en) %>
 								  <td class="gvDetailText bottom_border"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>

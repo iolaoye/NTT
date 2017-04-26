@@ -25,28 +25,34 @@
             <th><%= t('general.select')%></th>
           </tr>
         </thead>
-        <% @bmps.each do |bmp| %>
-		    <tbody>
-          <% if !(@project.location.state_id == 25 || @project.location.state_id == 26) && bmp.bmpsublist_id == 4 %>
-            <% next %>
-          <% end %>
+        <% manure_operations = @scenario.operations.where(:activity_id => 2, :type_id => 2).count %>
 
-          <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
-            <tr>
-				      <% if I18n.locale.equal?(:en) %>
-					      <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
-				      <% else %>
-					      <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
-				      <% end %>
-				      <% if bmp.id != nil %>
-					      <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
-				      <% else %>
-					      <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
-				      <% end %>
-			      </tr>
-          <%end %>
-		    </tbody>
+        <% @bmps.each do |bmp| %>
+		      <tbody>
+            <% if !(@project.location.state_id == 25 || @project.location.state_id == 26) && bmp.bmpsublist_id == 4 %>
+              <% next %>
+            <% end %>
+            <% if manure_operations == 0 && bmp.bmpsublist_id == 18 %>
+              <% next %>
+            <% end %>
+
+            <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
+              <tr>
+				        <% if I18n.locale.equal?(:en) %>
+					        <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+				        <% else %>
+					        <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
+				        <% end %>
+				        <% if bmp.id != nil %>
+					        <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
+				        <% else %>
+					        <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
+				        <% end %>
+			        </tr>
+            <%end %>
+		      </tbody>
 		    <tbody id=<%="#{bmp.bmpsublist_id}"%>>
+
 			    <% case bmp.bmpsublist_id %>
 				    <% when 1 %>
               <tr>
@@ -365,6 +371,7 @@
 					    </td>
 				      </tr>
 				    <% when 18 %>
+              <% if manure_operations > 0%>
 				      <tr>
 				        <td class="indent">
 						    <%= label :manure_control_id, t('bmp.manure_control') %>
@@ -399,6 +406,7 @@
 						    <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
+              <% end %>
             <% when 19 %>
               <tr>
                 <th class="gvCellStyleTitle">

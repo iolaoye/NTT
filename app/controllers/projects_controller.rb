@@ -112,12 +112,12 @@ class ProjectsController < ApplicationController
 	@project.version = "NTTG3"
 	respond_to do |format|
       if @project.save
-        #params[:project_id] = @project.id
-        #location = Location.new
-        #location.project_id = @project.id
-        #location.save
-        #session[:location_id] = location.id
-        format.html { redirect_to @user, notice: t('models.project') + "" + t('notices.created') }
+        params[:project_id] = @project.id
+        location = Location.new
+        location.project_id = @project.id
+        location.save
+        session[:location_id] = location.id
+        format.html { redirect_to @project, notice: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
         flash[:info] = "Error"
@@ -127,6 +127,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+  ########################################### update PROJECT##################
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
@@ -235,9 +236,9 @@ class ProjectsController < ApplicationController
           when "SiteInfo"
             msg = upload_site_info(node)
           when "controls"
-			      node.elements.each do |c|
-				      msg = upload_control_values_new_version(c)
-			      end
+			node.elements.each do |c|
+				msg = upload_control_values_new_version(c)
+			end
           when "ControlValues"
             msg = upload_control_values(node)
           when "ParmValues"
