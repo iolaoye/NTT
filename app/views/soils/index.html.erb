@@ -21,7 +21,8 @@
 	<% end %>
 
 	<% if @soils.count > 0 %>
-		<% if ENV["APP_VERSION"] == "modified" or ENV["APP_VERSION"] == "standard" or ENV["APP_VERSION"] == nil %>
+		<% if ENV["APP_VERSION"] == "modified" %>
+		<%# if ENV["APP_VERSION"] == "modified" or ENV["APP_VERSION"] == "standard" or ENV["APP_VERSION"] == nil %>
 			<div class="table-responsive">
 			  <div class="panel panel-default">
 				<table class="table table-striped">
