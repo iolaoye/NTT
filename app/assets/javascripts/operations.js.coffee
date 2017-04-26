@@ -12,8 +12,8 @@ switch_view = ->
   else
       $("#div_operations").toggle(false)
 	  
-upload_crop = ->
-  $("#div_new").toggle(true)
+upload_crop = (show) ->
+  $("#div_new").toggle(show)
   
 updatePlantPopulation = ->
   if ($("#operation_activity_id").val() == "1") 
@@ -138,8 +138,11 @@ updateTitles = ->
   $("#typeTitle").text(title)
 	
 $(document).ready ->
+    $("#btnBack").click ->
+        upload_crop(false)
+
     $("#new_crop").click ->
-        upload_crop()
+        upload_crop(true)
 
     $("#btn_views").click ->
         switch_view()
