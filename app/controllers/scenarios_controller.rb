@@ -44,7 +44,7 @@ class ScenariosController < ApplicationController
     @scenarios = Scenario.where(:field_id => @field.id)
 
     add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name
+    add_breadcrumb @field.field_name, project_fields_path(@project)
     add_breadcrumb 'Scenarios'
 
     respond_to do |format|
@@ -120,6 +120,9 @@ class ScenariosController < ApplicationController
     @scenario = Scenario.find(params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
+	add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name, project_fields_path(@project)
+    add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
   end
 
 ################################  CREATE  #################################

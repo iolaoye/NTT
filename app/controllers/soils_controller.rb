@@ -42,7 +42,7 @@ class SoilsController < ApplicationController
     @weather = @field.weather
 
     add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name
+    add_breadcrumb @field.field_name, project_fields_path(@project)
     add_breadcrumb 'Soils'
 
     respond_to do |format|
@@ -87,6 +87,9 @@ class SoilsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:id])
+	add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name, project_fields_path(@project)
+    add_breadcrumb 'Soils', project_field_soils_path(@project, @field)
   end
 
 ################################  CREATE   #################################
