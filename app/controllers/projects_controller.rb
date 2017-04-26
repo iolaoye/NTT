@@ -206,7 +206,7 @@ class ProjectsController < ApplicationController
         @upload_id = 0
       else
         @upload_id = 1
-        case params[:examples]
+        case params[:examples]  # No example was selected
           when "0"
             respond_to do |format|
 				format.html { redirect_to projects_upload_path(@upload_id)}
@@ -215,9 +215,9 @@ class ProjectsController < ApplicationController
 			end
           when "1" # Load OH two fields
             @data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
-		      when "2"  # load just the saved project to be copied
-		        @data = Nokogiri::XML(File.open(@path))
-			      @upload_id = 2
+		  when "2"  # load just the saved project to be copied
+		    @data = Nokogiri::XML(File.open(@path))
+			@upload_id = 2
         end # end case examples
       end
       @data.root.elements.each do |node|
@@ -2149,10 +2149,10 @@ class ProjectsController < ApplicationController
             when 2 # fertilizer
               if p.text == "Commercial Fertilizer"
                 operation.type_id = 1
-                #operation.subtype_id = Fertilizer.find_by_name(p.text.upcase).code
+                operation.subtype_id = 1
               else
                 operation.type_id = 2
-                #operation.subtype_id = Fertilizer.find_by_name(p.text.upcase).code
+                operation.subtype_id = 56
               end
 			when 7  # Grazing
 				operation.type_id = Fertilizer.find_by_name(p.text.upcase).code

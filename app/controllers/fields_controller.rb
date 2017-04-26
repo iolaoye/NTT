@@ -38,8 +38,6 @@ class FieldsController < ApplicationController
   end
 ################################  get list of fields   #################################
   def get_field_list(location_id)
-    session[:simulation] = "watershed"
-
     @fields = Field.where(:location_id => location_id)
     @project_name = Project.find(params[:project_id]).name
 
@@ -64,6 +62,7 @@ class FieldsController < ApplicationController
 # GET /fields/1
 # GET /1/fields.json
   def index
+	session[:simulation] = "scenario"
     @project = Project.find(params[:project_id])
 
     add_breadcrumb @project.name, project_path(@project)
