@@ -1,10 +1,18 @@
 class SitesController < ApplicationController
   # GET /sites
   # GET /sites.json
+
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
+
   def index
     @sites = Site.where(:field_id => params[:field_id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
+    add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Sites'
 
     respond_to do |format|
       format.html # index.html.erb
@@ -18,7 +26,6 @@ class SitesController < ApplicationController
     @site = Site.find_by_field_id(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @site }

@@ -1,11 +1,19 @@
 class SoilOperationsController < ApplicationController
   # GET /soil_operations
   # GET /soil_operations.json
+
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
+  
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
   	@soil = 0
   	@scenario = 0
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Operations'
     soils = Soil.where(:field_id => params[:field_id])
   	if soils != nil then
   		@soil = soils[0].id
@@ -48,6 +56,10 @@ class SoilOperationsController < ApplicationController
     @soil_operation = SoilOperation.find(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Operations', controller: "soil_operations", action: "index"
   end
 
   # POST /soil_operations

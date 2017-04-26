@@ -43,14 +43,32 @@ class AplcatParametersController < ApplicationController
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
 	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name
-	add_breadcrumb @scenario.name
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb @scenario.name, project_field_scenarios_path(@project, @field)
 	add_breadcrumb 'Aplcat'
   	if params[:id] == nil then
 		@type = 1
 	else
 		@type = params[:id].to_i
 	end
+
+	case @type
+	when 2
+      add_breadcrumb 'Animal Growth and Nutrition Parameters'
+	when 3
+	  add_breadcrumb 'Animal Manure Parameters' 
+	when 4
+	  add_breadcrumb 'Environmental Parameters' 
+	when 5
+	  add_breadcrumb 'Greenhouse Parameters'
+	when 6
+	  add_breadcrumb 'Water use and Pumping Parameters'
+	when 7
+	  add_breadcrumb 'Other Parameters'
+	else
+	  add_breadcrumb 'Animal Parameters'
+	end
+
     @aplcat_parameter = AplcatParameter.find_by_scenario_id(params[:scenario_id])
 	if @aplcat_parameter == nil then
 		new()
