@@ -7,6 +7,7 @@ class Field < ActiveRecord::Base
 	has_many :scenarios, :dependent => :destroy
 	has_many :results, :dependent => :destroy
     has_many :charts, :dependent => :destroy
+	has_many :watershed_scenarios, :dependent => :destroy
 	belongs_to :location
   belongs_to :project
   #validations
