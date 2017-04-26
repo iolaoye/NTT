@@ -2,10 +2,19 @@
 ################################  INDEX  #################################
   # GET /layers
   # GET /layers.json
+
+  add_breadcrumb 'Home', :root_path
+  add_breadcrumb 'Projects', :root_path
+
   def index
     @project = Project.find(params[:project_id])
     @apex_layers = Layer.where(:soil_id => params[:id])
     @field = Field.find(params[:field_id])
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Soils', controller: "apex_soils", action: "index"
+	add_breadcrumb 'Layers'
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_layers }
