@@ -23,7 +23,7 @@
 			  <div class="panel-heading">
 				<table>
 					<tr>
-						<td onclick="show_crop(<%= crop.id %>)"><h4><%= crop.name %> [+]</h4></td>
+						<td onclick="show_crop(<%= crop.id %>)"><h4 style="cursor:pointer"><%= crop.name %> [+]</h4></td>
 						<td class="col-md-1 text-rigth">
 							<%= link_to image_tag("delete.png"), delete_all_project_field_scenario_operation_path(@project, @field, @scenario, crop.id), data: { confirm: t('general.confirm') } %>
 						</td>
@@ -35,7 +35,7 @@
 			  <div class="panel-heading">
 				<table>
 					<tr>
-						<td onclick="hide_crop(<%= crop.id %>)"><h4><%= crop.name %> [-]</h4></td>
+						<td onclick="hide_crop(<%= crop.id %>)"><h4 style="cursor:pointer"><%= crop.name %> [-]</h4></td>
 						<td class="col-md-1 text-rigth">
 							<%= link_to image_tag("delete.png"), delete_all_project_field_scenario_operation_path(@project, @field, @scenario, crop.id), data: { confirm: t('general.confirm') } %>
 						</td>

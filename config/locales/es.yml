@@ -697,6 +697,7 @@ es:
     summary: Resumen
     by_soil: Por Suelo
     download_pdf: Descargar PDF
+    download_csv: Descargar CSV
     charts: Gráficas
     monthly: Mensual
     annual: Anual

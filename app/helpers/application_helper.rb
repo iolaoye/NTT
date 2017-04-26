@@ -58,7 +58,7 @@ module ApplicationHelper
 	end
 
 	def scenario_submenu
-		if current_page?(url_for(:controller => 'operations', :action => 'list'))
+		if current_page?(url_for(:controller => 'operations', :action => 'index'))
 			true
 		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
 			true

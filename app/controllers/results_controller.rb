@@ -5,28 +5,28 @@ class ResultsController < ApplicationController
 
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
-	@type = t('result.monthly') + "-" + t('result.charts')
-	index
-	render "index"
+  	@type = t('result.monthly') + "-" + t('result.charts')
+  	index
+  	render "index"
   end
   ###############################  ANNUAL CHART  ###################################
   def annual_charts
-	@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
-	index
-	render "index"
+  	@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
+  	index
+  	render "index"
   end
   ###############################  BY SOIL  ###################################
   def by_soils
-	@type = t("result.summary") + " " + t("result.by_soil")
-	index
-	render "index"
+  	@type = t("result.summary") + " " + t("result.by_soil")
+  	index
+  	render "index"
   end
   ###############################  SUMMARY ###################################
   def summary
     @project = Project.find(params[:project_id])
-	@type = t("general.view")
-	index
-	render "index"
+  	@type = t("general.view")
+  	index
+  	render "index"
   end
 
   ###############################  INDEX  ###################################
@@ -265,6 +265,16 @@ class ResultsController < ApplicationController
       #format.json { render json: "index"}
       #end # end respond to do
     end # if format is pdf
+
+    if params[:format] == "csv" then
+      #results to excel catch with debugger for now (testing WIP)
+      debugger
+      #respond_to do |format|
+      #  format.html
+      #  format.xls { send_data @products.to_csv(col_sep: "\t") }
+      #end
+    end # if format is excel
+
   end  # end Method Index
 
   ###############################  SHOW  ###################################

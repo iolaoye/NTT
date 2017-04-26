@@ -43,6 +43,10 @@ generate_pdf = ->
   $("#pdf_download").click (event) ->
     $("#myForm").submit()
 
+generate_excel = ->
+  $("#csv_download").click (event) ->
+    $("#myForm").submit()
+
 display_button = ->
   string = window.location.href
   substring = 'results?button'
@@ -53,7 +57,9 @@ display_button = ->
 
 set_buttons = (view) ->
   $("#pdf_download").toggle(view)
+  $("#csv_download").toggle(view)
   $("#pdf_no_click").toggle(!view)
+  $("#csv_no_click").toggle(!view)
 
 check_for_errors = ->
   errors = $("#errors").val() + ""

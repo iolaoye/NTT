@@ -15,7 +15,6 @@ class SoilsController < ApplicationController
 # GET /soils/1
 # GET /1/soils.json
   def list
-  lll
     @soils = Soil.where(:field_id => params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
@@ -96,7 +95,6 @@ class SoilsController < ApplicationController
 # POST /soils
 # POST /soils.json
   def create
-  ccc
     @soil = Soil.new(soil_params)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
@@ -118,7 +116,6 @@ class SoilsController < ApplicationController
 # PATCH/PUT /soils/1
 # PATCH/PUT /soils/1.json
   def update
-  uuu
     @soil = Soil.find(params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
@@ -156,6 +153,27 @@ class SoilsController < ApplicationController
 		end
     end
   end
+
+################################  DELETE  #################################
+# DELETE /soils/1
+# DELETE /soils/1.json
+  def save_soils
+	@project = Project.find(params[:project_id])
+	@field = Field.find(params[:field_id])
+	@weather = @field.weather
+
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Soils'
+
+	for i in 0..(@field.soils.count - 1)
+		layer = @field.soils[i].layers[0]
+		layer.organic_matter = params[:om][i]
+		layer.save
+	end		# end soils.each
+	@soils = Soil.where(:field_id => params[:field_id])
+	render "index"
+  end		# end method
 
   private
 

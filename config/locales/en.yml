@@ -499,7 +499,7 @@ en:
     depth: 'Depth (in)'
     soilp: 'Soil P (ppm)'
     bulk_density: 'Bulk Density (Mg/m3)'
-    sand: 'Sand (%)' 
+    sand: 'Sand (%)'
     silt: 'Silt (%)'
     clay: 'Clay (%)'
     organic_matter: 'Organic Matter (%)'
@@ -698,6 +698,7 @@ en:
     summary: General
     by_soil: By Soil
     download_pdf: Download PDF
+    download_csv: Download CSV
     charts: Charts
     monthly: Monthly
     annual: Annual
