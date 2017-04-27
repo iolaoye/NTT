@@ -70,6 +70,7 @@ class SubareasController < ApplicationController
 	add_breadcrumb 'Subareas', controller: "subareas", action: "index"
   end
 
+############################# LOAD SUBAREAS WHEN CLICK ON "Load Subarea" button #############################
   # POST /subareas
   # POST /subareas.json
   def create

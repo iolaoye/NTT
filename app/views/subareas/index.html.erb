@@ -23,11 +23,10 @@
     </tr>
     <tr>
       <td><%= collection_select :subarea, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => session[:scenario_id]}, {:required => true} %></td>
-      <td><%= button_to t('subarea.load_subarea'), project_field_subareas_path(@project, @field), class: 'btn btn-primary' %></td>
+      <td><%= button_to t('subarea.load_subarea'),  class: 'btn btn-primary' %></td>
     </tr>
   </table>
 <% end %>
-<br>
 <div class="table-responsive">
   <div class="panel panel-default">
     <table class="table table-striped">

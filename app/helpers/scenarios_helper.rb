@@ -722,4 +722,96 @@ module ScenariosHelper
     return centroid
   end
 
+  def duplicate_scenario(scenario_id)
+	scenario = Scenario.find(scenario_id)   #1. find scenario to copy
+	#2. copy scenario to new scenario
+  	new_scenario = scenario.dup  
+	new_scenario.name = scenario.name + " copy" 
+	if new_scenario.save
+		#3. Copy operations info
+		scenario.operations.each do |operation|
+			new = operation.dup
+			new.scenario_id = new_scenario.id
+			if !new.save
+				#todo send error message
+			end
+		end   # end operations.each
+
+		#4. Copy bmps info
+		scenario.bmps.each do |bmp|
+			new_bmp = bmp.dup
+			new_bmp.scenario_id = new_scenario.id
+			if new_bmp.save
+				# 4.1 copy subareas that belonge to a BMP
+				subareas = Subarea.where(:bmp_id => bmp.id)
+				if !(subareas.blank? || subareas == nil) then
+					subareas.each do |subarea|
+						new = subarea.dup
+						new.scenario_id = new_scenario.id
+						new.bmp_id = new_bmp.id
+						if !new.save
+							#todo send error message
+						else
+							#todo send error message
+						end
+					end    # end subareas.each
+				end # end if subareas
+
+				# 4.2 copy soil_operations that belonge to a BMP
+				soil_operations = SoilOperation.where(:bmp_id => bmp.id)
+				if !(soil_operations.blank? || soil_operations == nil) then
+					soil_operations.each do |soil_operation|
+						new = soil_operation.dup
+						new.scenario_id = new_scenario.id
+						new.bmp_id = new_bmp.id
+						if !new.save
+							#todo send error message
+						else
+							#todo send error message
+						end
+					end    # end subareas.each
+				end # end if subareas
+
+				# 4.3 copy climates that belonge to a BMP
+				climates = Climate.where(:bmp_id => bmp.id)
+				if !(climates.blank? || climates == nil) then
+					climates.each do |climate|
+						new = climate.dup
+						new.bmp_id = bmp.id
+						if !new.save
+							#todo send error message
+						else
+							#todo send error message
+						end
+					end    # end subareas.each
+				end # end if subareas
+			end    # end if new.save
+		end   # end operations.each
+
+		#5. Copy soil_operations info
+		soil_operations = scenario.soil_operations.where("bmp_id is null or bmp_id == 0")
+		soil_operations.each do |soil_operation|
+			new = soil_operation.dup
+			new.scenario_id = new_scenario.id
+			if !new.save
+				#todo send error message
+			end
+		end   # end operations.each
+
+		#6. Copy subareas info
+			debugger
+		subareas = scenario.subareas.where("bmp_id is null or bmp_id == 0")
+		subareas.each do |subarea|
+			debugger
+			new = subarea.dup
+			new.scenario_id = new_scenario.id
+			if !new.save
+				#todo send error message
+			end
+		end   # end operations.each
+	else
+		#todo return error
+	end   # end if scenario saved
+  end
+
 end

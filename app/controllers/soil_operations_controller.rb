@@ -22,6 +22,7 @@ class SoilOperationsController < ApplicationController
   	if scenarios != nil then
   		@scenario = scenarios[0].id
   	end
+	debugger
     @soil_operations = SoilOperation.where(:soil_id => @soil, :scenario_id => @scenario)
 
     respond_to do |format|
