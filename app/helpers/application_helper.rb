@@ -99,6 +99,8 @@ module ApplicationHelper
 			true
 		elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))
 			true
+		elsif request.url.include?(url_for("scenario"))
+			true
 		else
 			false
 		end
