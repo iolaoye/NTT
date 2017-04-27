@@ -46,11 +46,11 @@
   <div class="field">
     <%= f.label :drainage_id, t('soil.drainage') %>
     <%#= f.text_field :drainage_id %>
-	<% if I18n.locale.equal?(:en) %>
+	<%# if I18n.locale.equal?(:en) %>
 		<%= collection_select :soil, :drainage_id, Drainage.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :selected => @soil.drainage_id}%>
-	<% else %>
-		<%= collection_select :soil, :drainage_id, Drainage.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :selected => @soil.drainage_id} %>
-	<% end %>
+	<%# else %>
+		<%#= collection_select :soil, :drainage_id, Drainage.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :selected => @soil.drainage_id} %>
+	<%# end %>
   </div>
   <div class="actions">
     <%#if type1 == 'Edit' %>
