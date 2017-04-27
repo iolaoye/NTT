@@ -8,7 +8,7 @@
 
 turn_on_off = (row) ->
     i=1
-    while i<=10
+    while i<=9
         row1 = row + i
         i+=1
         if ($("#row" + row1).is(":hidden"))
