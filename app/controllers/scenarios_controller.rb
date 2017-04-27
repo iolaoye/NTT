@@ -433,9 +433,16 @@ class ScenariosController < ApplicationController
   
   ################################  copy scenario selected  #################################
   def copy_scenario	
-	new_scenario = Scenario.new   #1. Create new Scenario\
-	scenario = Scenario.find(params[:id])   #2. 
+	duplicate_scenario(params[:id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenarios = Scenario.where(:field_id => @field.id)
 
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @field.field_name, project_fields_path(@project)
+    add_breadcrumb 'Scenarios'
+
+	render "index"
   end	
   
   private

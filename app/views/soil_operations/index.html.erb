@@ -7,7 +7,6 @@
 
 <div class="page-header"><h1><small><%= t('menu.operation_file') %></h1></div>
 
-
 <%= link_to t('menu.control_file'), project_field_apex_controls_path(@project, @field), :class => 'btn btn-default' %>
 <%= link_to t('menu.parameters_file'), project_field_apex_parameters_path(@project, @field), :class => 'btn btn-default' %>
 <%= link_to t('menu.subarea_file'), project_field_subareas_path(@project, @field), :class => 'btn btn-default' %>
@@ -24,8 +23,8 @@
     <td><%= label :bmp_id, t('scenario.scenario') %></td>
   </tr>
   <tr>
-    <td><%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil}, {:required => true} %></td>
-    <td><%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => session[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => @scenario}, {:required => true} %></td>
+    <td><%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => params[:field_id]), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil}, {:required => true} %></td>
+    <td><%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => params[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => @scenario}, {:required => true} %></td>
 	  <td class='action'><%= f.submit t('operation.load_operation'), :class => "btn btn-primary" %></td>
   </tr>
 </table>
