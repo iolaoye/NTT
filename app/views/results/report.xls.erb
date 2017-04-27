@@ -6,7 +6,7 @@
   xmlns:html="http://www.w3.org/TR/REC-html40">
   <Worksheet ss:Name="Sheet1">
     <Table>
-      <Row>
+      <Row> <!--Header for Results Table -->
         <Cell><Data ss:Type="String"><%= t('result.description') %></Data></Cell>
         <% if session[:simulation] == 'scenario' %>
 				  <% if !@present1 %>

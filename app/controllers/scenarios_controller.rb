@@ -429,6 +429,13 @@ class ScenariosController < ApplicationController
     if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
     if msg.include?("Bull output file") then msg="OK" end
 	return msg
+  end
+  
+  ################################  copy scenario selected  #################################
+  def copy_scenario	
+	new_scenario = Scenario.new   #1. Create new Scenario\
+	scenario = Scenario.find(params[:id])   #2. 
+
   end	
   
   private

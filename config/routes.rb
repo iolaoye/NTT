@@ -66,6 +66,7 @@ NTTG3::Application.routes.draw do
     get :group, on: :member
     resources :fields do
       resources :scenarios do
+		get 'copy_scenario', on: :member
         resources :aplcat_parameters do
 	        get 'aplcat', on: :member
 		end
