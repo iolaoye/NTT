@@ -34,20 +34,11 @@ NTTG3::Application.routes.draw do
   resources :activities
   resources :crops
   resources :bmps
-  #get "operations/list"
   resources :operations
   resources :scenarios
-  #resources :ways
-  #resources :weathers
-  #resources :stations
   resources :counties
-  #resources :states
-  #resources :locations
-  #resources :projects
   resource :session
-  #resources :users
   resources :welcomes
-  #resources :fields
   resources :apex_soils
   resources :apex_layers
 
@@ -109,6 +100,7 @@ NTTG3::Application.routes.draw do
         resources :layers do
           get :list, on: :member
         end
+		post :save_soils, on: :collection
         get :soil_layers, on: :member
       end
       resources :results do

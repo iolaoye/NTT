@@ -24,7 +24,7 @@ class OperationsController < ApplicationController
 
     add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb @field.field_name, project_fields_path(@project)
-    add_breadcrumb @scenario.name, project_field_scenarios_path(@project, @field)
+    add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
     add_breadcrumb 'Operations'
 
     array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
@@ -59,8 +59,8 @@ class OperationsController < ApplicationController
     @scenario = Scenario.find(params[:scenario_id])
 
     add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name
-    add_breadcrumb @scenario.name
+    add_breadcrumb @field.field_name, project_fields_path(@project)
+    add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
     add_breadcrumb 'New Operation'
 
     respond_to do |format|
@@ -80,8 +80,8 @@ class OperationsController < ApplicationController
     @scenario = Scenario.find(params[:scenario_id])
 	add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb @field.field_name, project_fields_path(@project)
-    add_breadcrumb @scenario.name, project_field_scenarios_path(@project, @field)
-    add_breadcrumb 'Operations', list_project_field_scenario_operations_path(@project, @field, @scenario)
+    add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
+    add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
   end
 
 ################################  CREATE  #################################

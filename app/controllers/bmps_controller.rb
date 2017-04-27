@@ -121,22 +121,22 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_td][:depth] == "") then
   			create(3)
   		end
-      if !(params[:bmp_ppnd] == nil) then
-    		if !(params[:bmp_ppnd][:width] == "") then
-    			if params[:bmp_cb2] == "4" then
-    				create(4)
-    			end
-    			if params[:bmp_cb2] == "5" then
-    				create(4)
-    			end
-    			if params[:bmp_cb2] == "6" then
-    				create(4)
-    			end
-    			if params[:bmp_cb2] == "7" then
-    				create(4)
-    			end
-    		end
-      end
+		if !(params[:bmp_ppnd] == nil)  # when this is hidden because it is not MO, MS states
+  			if !(params[:bmp_ppnd][:width] == "") then
+  				if params[:bmp_cb2] == "4" then
+  					create(4)
+  				end
+  				if params[:bmp_cb2] == "5" then
+  					create(4)
+  				end
+  				if params[:bmp_cb2] == "6" then
+  					create(4)
+  				end
+  				if params[:bmp_cb2] == "7" then
+  					create(4)
+  				end
+  			end
+		end
   		#if !(params[:bmp_ppds][:width] == "") then
   			#create(5)
   		#end
@@ -182,11 +182,12 @@ class BmpsController < ApplicationController
   		if params[:bmp_ts][:id] == "1" then
   			create(17)
   		end
-      if !(params[:bmp_mc] == nil) then
-    		if !(params[:bmp_mc][:animal_id] == "") && !(params[:bmp_mc][:animal_id] == nil) then
-    			create(18)
-    		end
-      end
+		if !(params[:bmp_mc] == nil) # when this is hidden because there is not manure application
+  			if !(params[:bmp_mc][:animal_id] == "") && !(params[:bmp_mc][:animal_id] == nil) then 
+  				create(18)
+  			end
+		end
+
   		if !(params[:select] == nil) and params[:select][:"19"] == "1" then
   			create(19)
   		end
@@ -451,11 +452,12 @@ class BmpsController < ApplicationController
             subarea.vimx = 5000
             subarea.bir = 0.8
             subarea.iri = params[:bmp_ai][:days]
-  		      @bmp.days = subarea.iri
-            subarea.bir = params[:bmp_ai][:water_stress_factor].to_f / 100
-  		      @bmp.water_stress_factor = subarea.bir
-            subarea.efi = params[:bmp_ai][:irrigation_efficiency].to_f / 100
-  		      @bmp.irrigation_efficiency = subarea.efi
+			      @bmp.days = subarea.iri
+            subarea.bir = params[:bmp_ai][:water_stress_factor]
+			      subarea.bir /= 100
+			      @bmp.water_stress_factor = subarea.bir
+            subarea.efi = 1.0 - (params[:bmp_ai][:irrigation_efficiency].to_f / 100)
+			      @bmp.irrigation_efficiency = subarea.efi
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
   		      @bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
       			subarea.fdsf = 0

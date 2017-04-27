@@ -57,12 +57,12 @@
 				<% end %>
 			</td>
 			</tr>
-			<tr><td colspan = "3"><%= "(±) = Confindence Interval" %></td></tr>
+			<tr><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
           <% when t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil")  %>
             <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => @field.id, :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil }, { :required => true }%></td>
             <td><%= submit_tag t("general.view") + " " + t("result.by_soil"), name: "button", :class => "btn btn-primary" %>
 			</tr>
-			<tr ><td colspan = "3"><%= "(±) = Confindence Interval" %></td></tr>
+			<tr ><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
           <% when t('result.annual')  + "-" + t('result.charts'), t("general.view") + " " + t('result.annual')  + "-" + t('result.charts')%>
             <% if I18n.locale.eql?(:en) %>
               <td><%= collection_select :result5, :description_id, @descriptions, :id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>

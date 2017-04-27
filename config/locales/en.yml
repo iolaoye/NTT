@@ -458,6 +458,7 @@ en:
     upload_error: 'Unable to upload this file'
     special_project: 'Special Project'
     project_name: 'Project Name'
+    description: 'Project Description'
   footer:
     instructions: Instructions
     contact_us: 'Contact Us'
@@ -729,6 +730,7 @@ en:
     second_scenario_error: Second scenario has no
     third_scenario_error: Third scenario has no
     pdf_download_error: You must run a summary before you can download a pdf
+    confidence: Confindence Interval
   users:
     confirmation: Password confirmation
     company: Company

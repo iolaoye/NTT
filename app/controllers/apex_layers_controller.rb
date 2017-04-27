@@ -54,6 +54,11 @@
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @location = Location.where(:project_id => params[:project_id])
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Soils', controller: "apex_soils", action: "index"
+	add_breadcrumb 'Layers', controller: "apex_layers", action: "index"
   end
 
   # POST /layers

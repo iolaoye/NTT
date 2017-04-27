@@ -326,18 +326,22 @@ footer a:hover{
 
 .nav-sidebar-sub > li > a {
     padding-left: 50px;
+	font-size: 17px;
 }
 
 .nav-sidebar > li > a {
     padding-left: 36px;
+	font-size: 17px;
 }
 
 .nav-sidebar-sub-sub > li > a {
     padding-left: 100px;
+	font-size: 17px;
 }
 
 .nav-sidebar-sub-sub-sub > li > a {
     padding-left: 100px;
+	font-size: 17px;
 }
 
 
@@ -681,5 +685,20 @@ td.optable {
     background-color: #dff0d8;
     color: #3c763d;
     font-size: 12px;
+    text-shadow: 0 0 1px rgba(0,0,0,0.3);
+}
+
+th.optable {
+    background-color: #dff0d8;
+    color: #3c763d;
+    font-size: 12px;
+    text-shadow: 0 0 1px rgba(0,0,0,0.3);
+}
+.table > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #000;
+    background-color: #204060;
+    color: #ffffff;
+    font-size: 16px;
     text-shadow: 0 0 1px rgba(0,0,0,0.3);
 }
