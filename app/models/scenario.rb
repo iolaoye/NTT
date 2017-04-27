@@ -9,6 +9,7 @@ class Scenario < ActiveRecord::Base
 	  has_many :charts, :dependent => :destroy
 	  has_many :aplcat_parameters, :dependent => :destroy
 	  has_many :grazing_parameters, :dependent => :destroy
+	  has_many :supplement_parameters, :dependent => :destroy
 	  has_many :watershed_scenarios, :dependent => :destroy
 	  belongs_to :field
   #validations
