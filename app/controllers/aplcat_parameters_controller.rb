@@ -2,8 +2,8 @@ class AplcatParametersController < ApplicationController
   # GET /aplcat_parameters
   # GET /aplcat_parameters.json
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
+  
+  
 
   def index
     @aplcat_parameters = AplcatParameter.all
@@ -42,9 +42,7 @@ class AplcatParametersController < ApplicationController
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
-	add_breadcrumb @scenario.name, project_field_scenarios_path(@project, @field)
+	
 	add_breadcrumb 'Aplcat'
   	if params[:id] == nil then
 		@type = 1

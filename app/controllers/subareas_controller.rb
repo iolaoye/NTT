@@ -2,15 +2,15 @@ class SubareasController < ApplicationController
   # GET /subareas
   # GET /subareas.json
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
+  
+  
   
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
 	@soils = Soil.where(:field_id => @field.id, :selected => true)
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
+	
+	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Subareas'
 	if @soils != nil then
@@ -38,8 +38,8 @@ class SubareasController < ApplicationController
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @location = Location.where(:project_id => params[:project_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
+	
+	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Subareas', controller: "subareas", action: "index"
     respond_to do |format|
@@ -64,12 +64,13 @@ class SubareasController < ApplicationController
     @subarea = Subarea.find(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
+	
+	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Subareas', controller: "subareas", action: "index"
   end
 
+############################# LOAD SUBAREAS WHEN CLICK ON "Load Subarea" button #############################
   # POST /subareas
   # POST /subareas.json
   def create

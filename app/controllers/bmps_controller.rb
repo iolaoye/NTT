@@ -2,8 +2,8 @@ include ScenariosHelper
 class BmpsController < ApplicationController
   before_filter :take_names
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
+  
+  
 
   def take_names
     @project_name = Project.find(params[:project_id]).name
@@ -32,9 +32,9 @@ class BmpsController < ApplicationController
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 
-    add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name, project_fields_path(@project)
-    add_breadcrumb @scenario.name, project_field_scenarios_path(@project, @field)
+    
+    
+    
     add_breadcrumb 'Conservation Practices'
 
     get_bmps()

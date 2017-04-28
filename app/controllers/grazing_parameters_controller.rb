@@ -1,8 +1,8 @@
 class GrazingParametersController < ApplicationController
   before_filter :set_params
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
+  
+  
 
   def set_params
     @field = Field.find(params[:field_id])
@@ -14,9 +14,7 @@ class GrazingParametersController < ApplicationController
   # GET /grazing_parameters.json
   def index
     @grazing_parameters = GrazingParameter.where(:scenario_id => params[:scenario_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
-	add_breadcrumb @scenario.name, project_field_scenarios_path(@project, @field)
+	
 	add_breadcrumb 'Aplcat'
 	add_breadcrumb 'Animal Feed Parameters'
     respond_to do |format|

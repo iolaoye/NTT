@@ -2,15 +2,15 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters
   # GET /apex_parameters.json
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
+  
+  
   
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
+	
+	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Parameters'
     respond_to do |format|
@@ -50,8 +50,8 @@ class ApexParametersController < ApplicationController
     @low_range = @apex_parameter.parameter_description.range_low
     @high_range = @apex_parameter.parameter_description.range_high
     #@apex_parameter = ApexParameter.where(:project_id => params[:project_id]).find(params[:id])
-    add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
+    
+	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Parameters', controller: "apex_parameters", action: "index"
   end
