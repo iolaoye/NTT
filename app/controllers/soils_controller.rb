@@ -2,11 +2,7 @@ class SoilsController < ApplicationController
   # GET /locations
   # GET /locations.json
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
-
   def soil_layers
-  slsl
     session[:soil_id] = params[:id]
     redirect_to list_layer_path(params[:id])
   end
@@ -18,12 +14,6 @@ class SoilsController < ApplicationController
     @soils = Soil.where(:field_id => params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-
-    #add_breadcrumb t('menu.projects'), user_projects_path(current_user)
-    #add_breadcrumb @project.name
-    #add_breadcrumb t('menu.fields'), list_field_path(@project)
-    #add_breadcrumb @field.field_name
-    #add_breadcrumb t('menu.soils')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -39,9 +29,7 @@ class SoilsController < ApplicationController
     @field = Field.find(params[:field_id])
     @soils = Soil.where(:field_id => params[:field_id])
     @weather = @field.weather
-
-    add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name, project_fields_path(@project)
+	
     add_breadcrumb 'Soils'
 
     respond_to do |format|
@@ -68,10 +56,6 @@ class SoilsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
 
-    add_breadcrumb t('menu.projects'), user_projects_path(current_user)
-    add_breadcrumb @project.name
-    add_breadcrumb t('menu.fields'), list_field_path(@project)
-    add_breadcrumb @field_name
     add_breadcrumb t('menu.soils')
 
     respond_to do |format|
@@ -86,8 +70,7 @@ class SoilsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:id])
-	add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name, project_fields_path(@project)
+
     add_breadcrumb 'Soils', project_field_soils_path(@project, @field)
   end
 
@@ -162,8 +145,6 @@ class SoilsController < ApplicationController
 	@field = Field.find(params[:field_id])
 	@weather = @field.weather
 
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
 	add_breadcrumb 'Soils'
 
 	for i in 0..(@field.soils.count - 1)
