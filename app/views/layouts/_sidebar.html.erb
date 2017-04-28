@@ -19,7 +19,7 @@
 	<% when current_url.include?("ntt2.cbntt.org") %>
 		<% ENV["APP_VERSION"] = "modified" %>
 	<% else %>
-		<% ENV["APP_VERSION"] = "modified" %>
+		<% ENV["APP_VERSION"] = "standard" %>
 <% end %>
 <% request.url %>
 <% if params[:field_id] == nil || params[:field_id] == "0" %>

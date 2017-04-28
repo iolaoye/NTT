@@ -14,4 +14,260 @@ module ProjectsHelper
     icon = column == sort_column ? icon : ""
     link_to "#{title} <span class='#{icon}'></span>".html_safe, {column: title, direction: direction}
   end
+
+  ######################### Duplicate charts #################################################
+  def duplicate_chart(chart_id, new_field_id)
+	#1. copy chart to new result
+		chart = Chart.find(chart_id)   #1. find chart to copy
+		new_chart = chart.dup
+		new_chart.field_id = new_field_id
+		new_chart.scenario_id = @new_scenario_id
+		if new_chart.save
+			"OK"
+		else
+			"Error Saving charts"
+		end # end if chart saved
+  end   # end duplicate location
+
+  ######################### Duplicate results #################################################
+  def duplicate_result(result_id, new_field_id)
+	#1. copy result to new result
+		result = Result.find(result_id)   #1. find result to copy
+		new_result = result.dup
+		new_result.field_id = new_field_id
+		new_result.scenario_id = @new_scenario_id
+		
+		soil = Soil.find(result.soild_id)
+		new_result.soil_id = soil.soil_id_old
+		if new_result.save
+			"OK"
+		else
+			"Error Saving results"
+		end # end if result saved
+  end   # end duplicate location
+
+  ######################### Duplicate Weathers #################################################
+  def duplicate_weather(field_id, new_field_id)
+	#1. copy weather to new weather
+		weather = Weather.find_by_field_id(field_id)   #1. find weather to copy
+		new_weather = weather.dup
+		new_weather.field_id = new_field_id
+		if new_weather.save
+			"OK"
+		else
+			"Error Saving weather"
+		end # end if field saved
+  end   # end duplicate location
+
+  ######################### Duplicate Soils #################################################
+  def duplicate_layer(layer_id, new_soil_id)
+	#1. copy layer to new layer
+	debugger 
+		layer = Layer.find(layer_id)   #1. find layer to copy
+		new_layer = layer.dup
+		new_layer.soil_id = new_soil_id
+		if new_layer.save
+			"OK"
+		else
+			"Error Saving layers"
+		end # end if soil saved
+  end   # end duplicate layer
+
+  ######################### Duplicate Soils #################################################
+  def duplicate_soil(soil_id, new_field_id)
+	#1. copy soil to new soil
+		soil = Soil.find(soil_id)   #1. find soil to copy
+		new_soil = soil.dup
+		new_soil.field_id = new_field_id
+		new_soil.soil__id_old =  soil.id
+		if new_soil.save
+			soil.layers.each do |l|
+				duplicate_layer(l.id, new_soil.id)
+			end
+			"OK"
+		else
+			"Error Saving soils"
+		end # end if soil saved
+  end   # end duplicate soil
+
+  ######################### Duplicate Fields #################################################
+  def duplicate_field(field_id, new_location_id)
+	#1. copy field to new field
+		field = Field.find(field_id)   #1. find field to copy
+		new_field = field.dup
+		new_field.location_id = new_location_id
+		if new_field.save
+			field.soils.each do |s|
+				duplicate_soil(s.id, new_field.id)
+			end
+			duplicate_weather(field.id, new_field.id)
+			# duplicate results when soli_id => 0. totals
+			results = field.results.where(:field_id => field.id, :soil_id => 0)
+			results.each do |r|
+				duplicate_result(r.id, new_field.id)
+			end
+			# duplicate charts when soli_id => 0. totals
+			charts = field.charts.where(:field_id => field.id, :soil_id => 0)
+			charts.each do |c|
+				duplicate_chart(c.id, new_field.id)
+			end
+			field.scenarios.each do |s|
+	debugger 
+				duplicate_scenario(s.id, "", new_field.id)
+				# DUPLIATE results when soil_id > 0. 
+				results = field.results.where("field_id == field.id AND scenario_id == s.id AND soil_id > 0")
+				results.each do |r|
+					duplicate_result(r.id, new_field.id)
+				end
+				charts = field.charts.where("field_id == field.id AND scenario_id == s.id AND soil_id > 0")
+				charts.each do |c|
+					duplicate_chart(c.id, new_field.id)
+				end
+			end   # end scnearios.each
+			"OK"
+		else
+			"Error Saving fields"
+		end # end if field saved
+  end   # end duplicate location
+
+  ######################### Duplicate a location #################################################
+  def duplicate_location(new_project_id)
+	#1. copy location to new location
+  	new_location = @project.location.dup
+	new_location.project_id = new_project_id
+	if new_location.save
+		@project.location.fields.each do |f|
+	debugger 
+			duplicate_field(f.id, new_location.id)
+		end
+			"OK"
+		else
+			"Error Saving location"
+	end  # end if location saved
+  end   # end duplicate location
+
+  ######################### Duplicate a Project #################################################
+  def duplicate_project
+	#1. find project to copy
+	@project = Project.find(params[:id])
+	#2. copy project to new project
+  	new_project = @project.dup  
+	new_project.name = @project.name + " copy" 
+	if new_project.save
+	debugger 
+		duplicate_location(new_project.id)
+			"OK"
+		else
+			"Error Saving project"
+	end   # end if project saved
+  end   # end duplicate project method
+
+  ######################### Duplicate an operation #################################################
+  def duplicate_operation(operation_id, name, new_scenario_id)
+	new_operation = Operation.find(operation_id)
+	new_operation = operation.dup
+	new_operation.scenario_id = new_scenario.id
+	if !new_operation.save
+		"Error saving operation"
+	end
+  end
+
+  ######################### Duplicate a bmp #################################################
+  def duplicate_bmp(bmp_id, name, new_scenario_id)
+	new_bmp = Bmp.find(bmp_id)
+	new_bmp = bmp.dup
+	new_bmp.scenario_id = new_scenario.id
+	if new_bmp.save
+		# 4.1 copy subareas that belonge to a BMP
+		subareas = Subarea.where(:bmp_id => bmp.id)
+		if !(subareas.blank? || subareas == nil) then
+			subareas.each do |subarea|
+				new = subarea.dup
+				new.scenario_id = new_scenario.id
+				new.bmp_id = new_bmp.id
+				if !new.save
+					#todo send error message
+				else
+					#todo send error message
+				end
+			end    # end subareas.each
+		end # end if subareas
+
+		# 4.2 copy soil_operations that belonge to a BMP
+		soil_operations = SoilOperation.where(:bmp_id => bmp.id)
+		if !(soil_operations.blank? || soil_operations == nil) then
+			soil_operations.each do |soil_operation|
+				new = soil_operation.dup
+				new.scenario_id = new_scenario.id
+				new.bmp_id = new_bmp.id
+				if !new.save
+					return "Error Saving soil operation"
+				else
+					"OK"
+				end
+			end    # end subareas.each
+		end # end if subareas
+
+		# 4.3 copy climates that belonge to a BMP
+		climates = Climate.where(:bmp_id => bmp.id)
+		if !(climates.blank? || climates == nil) then
+			climates.each do |climate|
+				new = climate.dup
+				new.bmp_id = bmp.id
+				if !new.save
+					return "Error Saving climates"
+				else
+					"OK"
+				end
+			end    # end climate.each
+		end # end if climate
+	else
+		"Error saving bmp"
+	end
+  end
+
+  ######################### Duplicate a Scenario  #################################################
+  def duplicate_scenario(scenario_id, name, new_field_id)
+		debugger 
+	scenario = Scenario.find(scenario_id)   #1. find scenario to copy
+	#2. copy scenario to new scenario
+  	new_scenario = scenario.dup
+	new_scenario.name = scenario.name + name 
+	new_scenario.field_id = new_field_id
+	if new_scenario.save
+		@new_scenario_id = new_scenario.id
+		#3. Copy operations info
+		scenario.operations.each do |o|
+			duplicate_operation(o.id, new_scenario_id)
+		end   # end operations.each
+
+		#4. Copy bmps info
+		scenario.bmps.each do |b|
+			duplicate_bmp(b.id, new_scenario_id)
+		end   # end bmps.each
+
+		#5. Copy soil_operations info
+		soil_operations = scenario.soil_operations.where("bmp_id is null or bmp_id == 0")
+		soil_operations.each do |soil_operation|
+			new = soil_operation.dup
+			new.scenario_id = new_scenario.id
+			if !new.save
+				return "Error Saving soil operation"
+			end
+		end   # end operations.each
+
+		#6. Copy subareas info
+		subareas = scenario.subareas.where("bmp_id is null or bmp_id == 0")
+		subareas.each do |subarea|
+			new = subarea.dup
+			new.scenario_id = new_scenario.id
+			if !new.save
+				return "Error Saving subarea"
+			end
+		end   # end operations.each
+	else
+		return "Error Saving scenario"
+	end   # end if scenario saved
+  end
+
 end

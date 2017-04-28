@@ -9,7 +9,6 @@ class Field < ActiveRecord::Base
     has_many :charts, :dependent => :destroy
 	has_many :watershed_scenarios, :dependent => :destroy
 	belongs_to :location
-  belongs_to :project
   #validations
 	 validates_uniqueness_of :location_id, :scope => :field_name
 	 validates_presence_of :field_name, :field_area
