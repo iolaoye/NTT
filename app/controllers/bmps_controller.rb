@@ -182,7 +182,6 @@ class BmpsController < ApplicationController
   		if params[:bmp_ts][:id] == "1" then
   			create(17)
   		end
-	
 		if !(params[:bmp_mc] == nil) # when this is hidden because there is not manure application
   			if !(params[:bmp_mc][:animal_id] == "") && !(params[:bmp_mc][:animal_id] == nil) then 
   				create(18)
@@ -435,12 +434,13 @@ class BmpsController < ApplicationController
 ### ID: 1
   def autoirrigation(type)
     @soils = Soil.where(:field_id => params[:field_id])
+    debugger
     @soils.each do |soil|
       subarea = soil.subareas.find_by_scenario_id(params[:scenario_id])
       if subarea != nil then
         case type
           when "create", "update"
-			@bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
+  		      @bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
             case @bmp.irrigation_id
               when 1
                 subarea.nirr = 1.0
@@ -452,43 +452,43 @@ class BmpsController < ApplicationController
             subarea.vimx = 5000
             subarea.bir = 0.8
             subarea.iri = params[:bmp_ai][:days]
-			@bmp.days = subarea.iri
+			      @bmp.days = subarea.iri
             subarea.bir = params[:bmp_ai][:water_stress_factor]
-			subarea.bir /= 100
-			@bmp.water_stress_factor = subarea.bir
+			      subarea.bir /= 100
+			      @bmp.water_stress_factor = subarea.bir
             subarea.efi = 1.0 - (params[:bmp_ai][:irrigation_efficiency].to_f / 100)
-			@bmp.irrigation_efficiency = subarea.efi
+			      @bmp.irrigation_efficiency = subarea.efi
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
-			@bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
-			subarea.fdsf = 0
-			@bmp.depth = params[:bmp_cb1]
-			if params[:bmp_ai][:safety_factor] == nil then
-				subarea.fdsf = 0
-			else
-				subarea.fdsf = params[:bmp_ai][:safety_factor]
-			end
-			@bmp.safety_factor = subarea.fdsf
-			if @bmp.depth == 1 then
-				subarea.idf4 = 0.0
-				subarea.bft = 0.0
-			else
-				subarea.idf4 = 1.0
-				subarea.bft = 0.8
-			end
-          when "delete"
-            subarea.nirr = 0.0
-            subarea.vimx = 0.0
-            subarea.bir = 0.0
-            subarea.armx = 0.0
-            subarea.iri = 0.0
-            subarea.bir = 0.0
-            subarea.efi = 0.0
-            subarea.armx = 0.0
-            subarea.fdsf = 0.0
-        end   # end case type
-        if !subarea.save then
-			return "Unable to save value in the subarea file"
-		end
+  		      @bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
+      			subarea.fdsf = 0
+      			@bmp.depth = params[:bmp_cb1]
+      			if params[:bmp_ai][:safety_factor] == nil then
+      				subarea.fdsf = 0
+      			else
+      				subarea.fdsf = params[:bmp_ai][:safety_factor]
+      			end
+      			@bmp.safety_factor = subarea.fdsf
+      			if @bmp.depth == 1 then
+      				subarea.idf4 = 0.0
+      				subarea.bft = 0.0
+      			else
+      				subarea.idf4 = 1.0
+      				subarea.bft = 0.8
+      			end
+            when "delete"
+              subarea.nirr = 0.0
+              subarea.vimx = 0.0
+              subarea.bir = 0.0
+              subarea.armx = 0.0
+              subarea.iri = 0.0
+              subarea.bir = 0.0
+              subarea.efi = 0.0
+              subarea.armx = 0.0
+              subarea.fdsf = 0.0
+          end   # end case type
+          if !subarea.save then
+  			    return "Unable to save value in the subarea file"
+  		    end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
@@ -764,7 +764,7 @@ class BmpsController < ApplicationController
 			@bmp.crop_id = 1
 		else
 			@bmp.grass_field_portion = 0.25
-		end	
+		end
   		if @bmp.save then
 			if @bmp.depth == 13 then
 				return create_new_subarea("FS", 13)

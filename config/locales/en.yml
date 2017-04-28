@@ -458,6 +458,7 @@ en:
     upload_error: 'Unable to upload this file'
     special_project: 'Special Project'
     project_name: 'Project Name'
+    description: 'Project Description'
   footer:
     instructions: Instructions
     contact_us: 'Contact Us'
@@ -499,7 +500,7 @@ en:
     depth: 'Depth (in)'
     soilp: 'Soil P (ppm)'
     bulk_density: 'Bulk Density (Mg/m3)'
-    sand: 'Sand (%)' 
+    sand: 'Sand (%)'
     silt: 'Silt (%)'
     clay: 'Clay (%)'
     organic_matter: 'Organic Matter (%)'
@@ -698,6 +699,7 @@ en:
     summary: General
     by_soil: By Soil
     download_pdf: Download PDF
+    download_csv: Download CSV
     charts: Charts
     monthly: Monthly
     annual: Annual
@@ -728,6 +730,7 @@ en:
     second_scenario_error: Second scenario has no
     third_scenario_error: Third scenario has no
     pdf_download_error: You must run a summary before you can download a pdf
+    confidence: Confindence Interval
   users:
     confirmation: Password confirmation
     company: Company
