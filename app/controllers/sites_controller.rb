@@ -26,6 +26,10 @@ class SitesController < ApplicationController
     @site = Site.find_by_field_id(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Sites', controller: "sites", action: "index"
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @site }
@@ -48,6 +52,10 @@ class SitesController < ApplicationController
     @site = Site.find(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
+	add_breadcrumb @project.name, project_path(@project)
+	add_breadcrumb @field.field_name, project_fields_path(@project)
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Sites', controller: "sites", action: "index"
   end
 
   # POST /sites

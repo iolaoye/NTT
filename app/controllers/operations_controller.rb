@@ -73,9 +73,6 @@ class OperationsController < ApplicationController
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-	
-    
-    
     add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
   end
 

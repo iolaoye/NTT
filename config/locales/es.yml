@@ -462,6 +462,7 @@ es:
     upload_error: 'No se pudo subir este archivo'
     group_project: 'Proyecto Especial'
     project_name: 'Nombre del Proyecto'
+    description: 'Descripción del Proyecto'
   footer:
     instructions: Instrucciones
     contact_us: 'Contactarnos'
@@ -528,7 +529,7 @@ es:
     create_scenario: Crear Escenario
     select_scenario: Seleccione Escenario
     load_scenario: Cargar Escenario
-    last_simulation: Date of Simulación
+    last_simulation: Fecha de Simulación
   location:
     new_location: Localización Nuevo
     edit: Revisión de Localización
@@ -657,7 +658,7 @@ es:
     create_field: Crear Parcela
     max_slope: Inclinación Máxima
   watershed:
-    field_routing: Enrutamiento de Parcela (Cuenca)
+    watershed: Enrutamiento de Parcela (Cuenca)
     watershed_name: Nombre de la Cuenca
     new_watershed: Nueva Cuenca
     watershed_title: Listado de Cuencas
@@ -697,6 +698,7 @@ es:
     summary: Resumen
     by_soil: Por Suelo
     download_pdf: Descargar PDF
+    download_csv: Descargar CSV
     charts: Gráficas
     monthly: Mensual
     annual: Anual
@@ -727,6 +729,7 @@ es:
     second_scenario_error: El segundo escenario no tiene
     third_scenario_error: El tercero escenario no tiene
     pdf_download_error: You must run a summary before you can download a pdf
+    confidence: Intervalo de Confidencia
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa
