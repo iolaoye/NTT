@@ -1,7 +1,7 @@
 class ResultsController < ApplicationController
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
+  
+  
 
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
@@ -53,7 +53,7 @@ class ResultsController < ApplicationController
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 70 OR id > 79")
     @project = Project.find(params[:project_id])
-    add_breadcrumb @project.name, project_path(@project)
+    
     add_breadcrumb 'Results'
 
     if session[:simulation].eql?('scenario') then

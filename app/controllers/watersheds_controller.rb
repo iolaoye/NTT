@@ -2,8 +2,8 @@ class WatershedsController < ApplicationController
   include SimulationsHelper
   before_filter :set_notifications
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
+  
+  
 
   def set_notifications
 	@notice = nil
@@ -29,7 +29,7 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
     @project = Project.find(params[:project_id])
     @watersheds = Watershed.where(:location_id => @project.location.id)
-	add_breadcrumb @project.name, project_path(@project)
+	
 	add_breadcrumb 'Field Routing (Watershed)'
     respond_to do |format|
       format.html  # index.html.erb

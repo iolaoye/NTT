@@ -2,15 +2,15 @@ class SitesController < ApplicationController
   # GET /sites
   # GET /sites.json
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
+  
+  
 
   def index
     @sites = Site.where(:field_id => params[:field_id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-    add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
+    
+	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Sites'
 

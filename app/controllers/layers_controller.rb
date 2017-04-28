@@ -1,8 +1,5 @@
 class LayersController < ApplicationController
 
-add_breadcrumb 'Home', :root_path
-add_breadcrumb 'Projects', :root_path
-
 ################################  LAYERS list   #################################
 # GET /soils/1
 # GET /1/soils.json
@@ -56,8 +53,7 @@ add_breadcrumb 'Projects', :root_path
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     @layers = Layer.where(:soil_id => params[:soil_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
+		
 	add_breadcrumb 'Soil', project_field_soils_path(@project, @field)
 	add_breadcrumb 'Layers' 
     respond_to do |format|
@@ -99,8 +95,8 @@ add_breadcrumb 'Projects', :root_path
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     @layer = Layer.find(params[:id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
+	
+	
 	add_breadcrumb 'Soil', project_field_soils_path(@project, @field)
 	add_breadcrumb 'Layers', project_field_soil_layers_path(@project, @field)
   end
