@@ -101,6 +101,50 @@ class ProjectsController < ApplicationController
     Weather.delete_all
   end
 
+  def create_seeds
+	create_seed("User")
+  end
+
+  def create_seed(type)
+    record_string = type + ".delete_all" + "\n"
+	case type
+		when "User"
+			columns = User.column_names
+			records = User.all			
+	end
+	records.each do |record|
+		first = true
+		record_string += type + ".create!({"
+		columns.each do |column|
+			if first == false then record_string += "," end
+			first = false
+			value = record[column.to_sym]
+			if value.class == "String" then
+				record_string += ":" + column + " => '" + value.to_s + "'"
+			else
+				record_string += ":" + column + " => " + value.to_s
+		  end
+		end
+		if type == "User" then
+			record_string += ",:password => '1234'"
+			record_string += "}, :without_protection => true)" + "\n"
+		else
+			record_string += "}, :without_protection => true)" + "\n"
+		end
+	end
+	print_string_to_file(record_string, "seeds.rb")
+  end
+
+  def print_string_to_file(data, file)
+    #path = File.join(APEX, "APEX" + session[:session_id])
+    #FileUtils.mkdir(path) unless File.directory?(path)
+    path = File.join("db", file)
+    File.open(path, "w+") do |f|
+      f << data
+      f.close
+    end
+  end
+
   ########################################### CREATE NEW PROJECT##################
   # POST /projects
   # POST /projects.json

@@ -2,8 +2,8 @@ class ScenariosController < ApplicationController
   load_and_authorize_resource :field
   load_and_authorize_resource :scenario, :through => :field
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
+  
+  
 	
   include ScenariosHelper
   include SimulationsHelper
@@ -43,8 +43,8 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => @field.id)
 
-    add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name, project_fields_path(@project)
+    
+    
     add_breadcrumb 'Scenarios'
 
     respond_to do |format|
@@ -120,8 +120,8 @@ class ScenariosController < ApplicationController
     @scenario = Scenario.find(params[:id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-	add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name, project_fields_path(@project)
+	
+    
     add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
   end
 
@@ -142,7 +142,7 @@ class ScenariosController < ApplicationController
         #add new scenario to soils
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
         add_scenario_to_soils(@scenario)
-        format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
+        format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
         format.html { render action: "new" }
         format.json { render json: scenario.errors, status: :unprocessable_entity }
@@ -438,8 +438,8 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
 
-    add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name, project_fields_path(@project)
+    
+    
     add_breadcrumb 'Scenarios'
 
 	render "index"
