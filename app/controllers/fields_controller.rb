@@ -19,10 +19,14 @@ class FieldsController < ApplicationController
 	params[:id] = params[:format]
 	update_field()
 
-		@location = @project.location
-		session[:location_id] = @location.id
-		get_field_list(@location.id)
-	render "index"
+	@location = @project.location
+	session[:location_id] = @location.id
+	get_field_list(@location.id)
+	if ENV["APP_VERSION"] == "modified"
+		redirect_to project_field_scenarios_path(@project, @field)
+	else
+		redirect_to edit_project_field_weather_path(@project, @field, @field.weather)
+	end
   end
 
 ################################  soils list   #################################
@@ -151,7 +155,7 @@ class FieldsController < ApplicationController
 ################################  UPDATE  #################################
 # PATCH/PUT /fields/1
 # PATCH/PUT /fields/1.json
-  def update
+  def update 
     respond_to do |format|
       if msg.eql?("OK") then
         #session[:field_id] = @field.id

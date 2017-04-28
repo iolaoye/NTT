@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
   include LocationsHelper
+  include ProjectsHelper
   layout 'welcome'
   require 'nokogiri'
   helper_method :sort_column, :sort_direction
@@ -75,7 +76,16 @@ class ProjectsController < ApplicationController
 
   ################  copy the selected project  ###################
   def copy_project
-    download_project(params[:id], "copy")
+  debugger
+	duplicate_project()
+    #download_project(params[:id], "copy")
+    @user = User.find(session[:user_id])
+    if @user.admin?
+      @projects = Project.order("#{sort_column} #{sort_direction}")
+    else
+      @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
+    end
+	render "index"
   end
 
   ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
@@ -101,6 +111,7 @@ class ProjectsController < ApplicationController
     Weather.delete_all
   end
 
+  ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
   def create_seeds
 	create_seed("User")
   end
@@ -149,7 +160,8 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-	@user = User.find(params[:user_id])
+    debugger
+	@user = User.find(session[:user_id])
     @project = Project.new(project_params)
     #params[:project_id] = @project.id
     @project.user_id = session[:user_id]

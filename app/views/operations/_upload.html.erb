@@ -1,31 +1,19 @@
-<div class="page-header"><h2><%= t('operation.upload') + " " + t('operation.crop') + " " + t('operation.schedule') %></h2></div>
+
 <form id="myForm">
-  <div class="field">
-    <%#= label "select", t('operation.crop') + " " + t('operation.schedule') %>
-      <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id}, :required => true %>
+    <h2><%= t('operation.upload') + " " + t('operation.crop') + " " + t('operation.schedule') %></h2>
+        <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id}, :required => true %>
         <%= label :year, t('pdf.year'), :id => "year_label" %>
         <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>
-          <% if @operations.first != nil %>&nbsp&nbsp&nbsp
-      <%= label "replace", t("operation.replace") %>
-      <%= check_box_tag :replace, 'replace', false %>
-    <% end %>
-    <%#= button_tag t('operation.add_list'), id: 'add', type: 'button', class: 'btn btn-primary' %>
-    <%= hidden_field(:language, :language, :value => I18n.locale) %>
-    <div class="actions">
-        <span style="display: inline-block">
-        <%= button_to t('operation.upload'), cropping_system_project_field_scenario_operations_path(@project, @field, @scenario), :name => "add_more", :id => "operation_upload", :class => "btn btn-primary", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
-        </span>
-        <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
-        <%#= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
-        </div>
-      <!--<div>
-        <table id='tblCrops' class='gvTableStyle'>
-          <tr class='gvHeaderStyle'>
-            <th class="gvCellStyleTitle"><%= t('operation.crop') + " " + t('operation.schedule')%></th>
-            <th class="gvCellStyleTitle"><%= t('pdf.year')%></th>
-            <th class="gvCellStyleTitle"><%= t('general.remove')%></th>
-          </tr>
-        </table>
-      </div>-->
-  </div>
+        <% if @operations.first != nil %>&nbsp&nbsp&nbsp
+          <%= label "replace", t("operation.replace") %>
+          <%= check_box_tag :replace, 'replace', false %>
+        <% end %>
+        <%= hidden_field(:language, :language, :value => I18n.locale) %>
+        <div class="actions">
+          <span style="display: inline-block">
+            <%= button_to t('operation.upload'), :name => "add_more", :id => "operation_upload", :class => "btn btn-primary", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
+          </span>
+          <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
+        
+    </div>
 </form>

@@ -4,9 +4,6 @@ class OperationsController < ApplicationController
   include ScenariosHelper
   require "open-uri"
 
-  
-  
-
 ################################  INDEX  #################################
 # GET /operations
 # GET /operations.json
@@ -21,7 +18,6 @@ class OperationsController < ApplicationController
     @operations = @scenario.operations
 
 	crop_schedule()
-
     
     add_breadcrumb 'Operations'
 

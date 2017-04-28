@@ -51,7 +51,7 @@
 			        </tr>
             <%end %>
 		      </tbody>
-		    <tbody id=<%="#{bmp.bmpsublist_id}"%>>
+		    <tbody class="toggable" id=<%="#{bmp.bmpsublist_id}"%>>
 
 			    <% case bmp.bmpsublist_id %>
 				    <% when 1 %>
@@ -523,20 +523,21 @@
       var validateBmpGc = new Validator("bmpsForm");
       var validateBmpSa = new Validator("bmpsForm");
       var validateBmpSdg = new Validator("bmpsForm");
-      //hides all Bmps on page load - (i < integer) integer = bmpsublist count
-      for(i = 1; i < 24; i++) {
-        $('#'+i).hide();
-      }
       //show/hide bmps on click-'let' makes 'i' local to loop instead of global
       for(let i = 1; i < 24; i++) {
+        //hides all Bmps on page load
+        $('#'+i).hide();
+        //reveal bmp if checkbox checked
         if ($('#select_'+i).is(':checked')){
-          $('#'+i).show();
-        } else {
-          $('#'+i).hide();
+          $('#'+i).toggle();
         }
         //gives all BMPs toggle(show/hide) functionality
         $("#bmp"+i).click(function(){
-          $("#"+i).toggle();
+          //$("#"+i).toggle(); //all bmps can be shown
+          //shows clicked bmp and hides the others
+          var $this = $("#"+i);
+          $(".toggable").not($this).hide();
+          $this.toggle();
         });
         //checking box will open/show BMP, unchecking hides & clears BMP info.
         $('#select_'+i).change(function () {

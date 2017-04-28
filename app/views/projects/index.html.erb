@@ -30,7 +30,7 @@
 		</div>
 		<% if @projects.count > 0 %>
 			<%= t('instructions.projects') %>.<br><br>
-  
+
 		<div class="panel panel-default">
 			<div class="table-responsive">
 			   <table class="table table-striped">
@@ -46,7 +46,7 @@
 				<tbody>
 				<% @projects.each do |project| %>
 				  <tr>
-					  <% if project.location == nil %> <td class="table-link"><%= link_to project.name, project_path(project) %></td>
+					  <% if project.location == nil || project.fields.count == 0 %> <td class="table-link"><%= link_to project.name, project_path(project) %></td>
 					  <% else %> <td class="table-link"><%= link_to project.name, project_fields_path(project) %></td>
 					  <% end %>
 					  <td><%= project.description %></td>
@@ -54,7 +54,7 @@
 					  <td>
 						  <% unless ENV["APP_VERSION"] == "modified" %><%= link_to image_tag("download.gif"), download_project_path(project) %><% end %>
 						  <%= link_to image_tag("edit.png"), edit_user_project_path(@user, project) %>
-						  <%= link_to image_tag("copy.jpg"), copy_project_project_path(project) %>
+						  <%= link_to image_tag("copy.jpg"), copy_project_project_path(project), data: {disable_with: 'Please wait, copying this project . . .'} %>
 						  <%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
 					  </td>
 					  <% if @user.admin %> <td><%= User.find(Project.find(project.id).user_id).name %></td> <% end %>
@@ -67,5 +67,3 @@
 	  </div>
 	</div>
 </div>
-
-

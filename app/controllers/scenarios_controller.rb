@@ -1,12 +1,10 @@
 class ScenariosController < ApplicationController
   load_and_authorize_resource :field
   load_and_authorize_resource :scenario, :through => :field
-
-  
-  
-	
+ 
   include ScenariosHelper
   include SimulationsHelper
+  include ProjectsHelper
 ################################  scenario bmps #################################
 # GET /scenarios/1
 # GET /1/scenarios.json
@@ -42,8 +40,6 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => @field.id)
-
-    
     
     add_breadcrumb 'Scenarios'
 
@@ -66,7 +62,7 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
 
     @scenarios = Scenario.where(:field_id => params[:field_id])
-	@scenario = Scenario.find(params[:select_scenario])
+	#@scenario = Scenario.find(params[:select_scenario])
     if msg.eql?("OK") then
       flash[:notice] = @scenario.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
       render "index", notice: "Simulation process end succesfully"
@@ -81,6 +77,10 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
     @errors = Array.new
     msg = "OK"
+	if params[:select_scenario] == nil then
+		@errors.push("Select at list one scenario to simulate ")
+		return "Select at list one scenario to simulate "
+	end
     ActiveRecord::Base.transaction do
 	  params[:select_scenario].each do |scenario_id|
 		  @scenario = Scenario.find(scenario_id)
@@ -102,10 +102,8 @@ class ScenariosController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
 
-    add_breadcrumb @field.field_name, project_field_path(@project, @field)
     add_breadcrumb t('general.scenarios')
     add_breadcrumb 'Add New Scenario'
-
 
     respond_to do |format|
       format.html # new.html.erb
@@ -435,12 +433,10 @@ class ScenariosController < ApplicationController
   
   ################################  copy scenario selected  #################################
   def copy_scenario	
-	duplicate_scenario(params[:id])
+	duplicate_scenario(params[:id], " copy", params[:field_id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
-
-    
     
     add_breadcrumb 'Scenarios'
 

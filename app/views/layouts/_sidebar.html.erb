@@ -19,7 +19,7 @@
 	<% when current_url.include?("ntt2.cbntt.org") %>
 		<% ENV["APP_VERSION"] = "modified" %>
 	<% else %>
-		<% ENV["APP_VERSION"] = "modified" %>
+		<% ENV["APP_VERSION"] = "standard" %>
 <% end %>
 <% request.url %>
 <% if params[:field_id] == nil || params[:field_id] == "0" %>
@@ -27,7 +27,11 @@
 <% else %>
 	<% field_name = "   (" + Field.find(params[:field_id]).field_name + ")"	 %>
 <% end %>
-<li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || ((controller_name == "results") && request.url.include?(url_for("simulation=scenario"))) || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations") || (controller_name == "sites") || session[:simulation] == 'scenario')? "active" : "" %>"><%= link_to t('menu.fields') + field_name, project_fields_path(@project) %></li>
+<% if Project.find(params[:project_id]).fields.count > 0 %>
+<li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || ((controller_name == "results") && request.url.include?(url_for("simulation=scenario"))) || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations") || (controller_name == "sites") || session[:simulation] == 'scenario')? "active" : "" %>">
+	<%= link_to t('menu.fields') + field_name, project_fields_path(@project) %>
+</li>
+<% end %>
 <% if field_submenu %>
   <ul class="nav nav-pills nav-stacked nav-sidebar-sub">
     <li class="<%= controller_name == "soils" || controller_name == "layers" ? "active" : "" %>">
@@ -190,7 +194,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            
+
             <%= link_to t("result.annual"), annual_charts_project_field_result_path(@project, @field, 0)%>
           </li>
           <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'monthly_charts'))) ? "active" : "" %>">
