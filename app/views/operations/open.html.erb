@@ -13,6 +13,6 @@
   </br>
   <div class="actions">
       <%= submit_tag(value = t('operation.open'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('operation.saved')}) %>
-      <%= link_to t('general.back'), list_project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
+      <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
   </div>
 <% end %>

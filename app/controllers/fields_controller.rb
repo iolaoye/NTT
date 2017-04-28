@@ -2,8 +2,6 @@ class FieldsController < ApplicationController
   load_and_authorize_resource :project
   load_and_authorize_resource :field, :through => :project
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
@@ -20,8 +18,6 @@ class FieldsController < ApplicationController
   def field_scenarios
 	params[:id] = params[:format]
 	update_field()
-    add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb 'Fields'
 
 		@location = @project.location
 		session[:location_id] = @location.id
@@ -64,10 +60,6 @@ class FieldsController < ApplicationController
   def index
 	session[:simulation] = "scenario"
     @project = Project.find(params[:project_id])
-
-    add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb 'Fields'
-
 		@location = @project.location
 		session[:location_id] = @location.id
 		get_field_list(@location.id)

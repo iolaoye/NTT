@@ -145,7 +145,7 @@ module ApplicationHelper
   	end
   end
 
-	def download_aplcat_files
+  def download_aplcat_files
     client = Savon.client(wsdl: URL_Weather)
     response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APLCAT", "session1" => session[:session_id], "type" => "aplcat"})
     path = response.body[:download_apex_folder_response][:download_apex_folder_result]
