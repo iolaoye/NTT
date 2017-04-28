@@ -142,7 +142,7 @@ class ScenariosController < ApplicationController
         #add new scenario to soils
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
         add_scenario_to_soils(@scenario)
-        format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
+        format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
         format.html { render action: "new" }
         format.json { render json: scenario.errors, status: :unprocessable_entity }

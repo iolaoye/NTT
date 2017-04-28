@@ -22,9 +22,7 @@ class OperationsController < ApplicationController
 
 	crop_schedule()
 
-    add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @field.field_name, project_fields_path(@project)
-    add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
+    add_breadcrumb @scenario.name, project_field_scenarios_path(@project, @field)
     add_breadcrumb 'Operations'
 
     array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
@@ -78,9 +76,8 @@ class OperationsController < ApplicationController
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-	add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb @field.field_name, project_fields_path(@project)
-    add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
+    add_breadcrumb @scenario.name, project_field_scenarios_path(@project, @field)
     add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
   end
 
@@ -119,7 +116,7 @@ class OperationsController < ApplicationController
             format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
             format.json { render json: @operation, status: :created, location: @operation }
           elsif params[:finish] == "Finish" && params[:add_more] == nil
-            format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
+            format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
             format.json { render json: @operation, status: :created, location: @operation }
           end
         else
@@ -152,7 +149,7 @@ class OperationsController < ApplicationController
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
         elsif params[:finish] == "Finish" && params[:add_more] == nil
-          format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
+          format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
         end
       else
@@ -178,7 +175,7 @@ class OperationsController < ApplicationController
       soil_operations.delete_all
     end
     respond_to do |format|
-      format.html { redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario) }
+      format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario) }
       format.json { head :no_content }
     end
   end
@@ -308,15 +305,13 @@ class OperationsController < ApplicationController
 
 ################################  CALL WHEN CLICK IN UPLOAD CROP SCHEDULE  #################################
   def crop_schedule
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
-    #@operations = Operation.where(:scenario_id => params[:scenario_id])
+    @project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenario = Scenario.find(params[:scenario_id])
+    @operations = Operation.where(:scenario_id => params[:scenario_id])
 
-    #add_breadcrumb @project.name, project_path(@project)
-    #add_breadcrumb @field.field_name
-    #add_breadcrumb @scenario.name
-    #add_breadcrumb 'Add Crop Schedule'
+    add_breadcrumb @scenario.name
+    add_breadcrumb 'Add Crop Schedule'
 
     @count = @operations.count
     @highest_year = 0
@@ -419,7 +414,7 @@ class OperationsController < ApplicationController
           I18n.locale = :en
         end
       end
-      #redirect_to list_project_field_scenario_operations_path(@project, @field, @scenario)
+      #redirect_to project_field_scenario_operations_path(@project, @field, @scenario)
     #else
       #render action: 'upload'
     end # end if cropping_system_id != nil
@@ -491,7 +486,7 @@ class OperationsController < ApplicationController
 			end
 		end    
     end
-	redirect_to list_project_field_scenario_operations_path(params[:project_id], params[:field_id], params[:scenario_id])
+	redirect_to project_field_scenario_operations_path(params[:project_id], params[:field_id], params[:scenario_id])
   end
 
   def open

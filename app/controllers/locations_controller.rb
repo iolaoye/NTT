@@ -2,9 +2,6 @@ include LocationsHelper
 include ScenariosHelper
 class LocationsController < ApplicationController
 
-  add_breadcrumb 'Home', :root_path
-  add_breadcrumb 'Projects', :root_path
-
   # GET /locations
   # GET /locations.json
   def location_fields
@@ -19,7 +16,6 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
     @project = Project.find(params[:project_id])
     @project = Project.find(params[:project_id])
-    add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb "Location"
     @project_name = Project.find(params[:project_id]).name
     session[:location_id] = params[:id]
