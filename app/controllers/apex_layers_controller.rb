@@ -29,6 +29,7 @@
     @apex_layer_id = params[:id]
     @apex_layer = Layer.find(params[:id])
     @location = Location.where(:project_id => params[:project_id])
+	add_breadcrumb 'Viewing Layers'
 
     respond_to do |format|
       format.html # show.html.erb
@@ -59,6 +60,7 @@
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Soils', controller: "apex_soils", action: "index"
 	add_breadcrumb 'Layers', controller: "apex_layers", action: "index"
+	add_breadcrumb 'Editing Layers'
   end
 
   # POST /layers

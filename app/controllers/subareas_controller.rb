@@ -42,6 +42,7 @@ class SubareasController < ApplicationController
 	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Subareas', controller: "subareas", action: "index"
+	add_breadcrumb 'Viewing Subarea File'
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @subarea }
@@ -68,6 +69,7 @@ class SubareasController < ApplicationController
 	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Subareas', controller: "subareas", action: "index"
+	add_breadcrumb 'Editing Subarea File'
   end
 
 ############################# LOAD SUBAREAS WHEN CLICK ON "Load Subarea" button #############################

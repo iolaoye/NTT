@@ -123,7 +123,7 @@ class ScenariosController < ApplicationController
 	
     
     add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
-	add_breadcrumb 'Edit Scenario'
+	add_breadcrumb 'Editing Scenario'
   end
 
 ################################  CREATE  #################################

@@ -96,7 +96,7 @@ class LayersController < ApplicationController
     @layer = Layer.find(params[:id])
 	add_breadcrumb 'Soils', project_field_soils_path(@project, @field)
 	add_breadcrumb 'Layers', project_field_soil_layers_path(@project, @field)
-	add_breadcrumb 'Edit layer'
+	add_breadcrumb 'Editing layer'
   end
 
 # POST /layers
