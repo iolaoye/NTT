@@ -160,7 +160,8 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-	@user = User.find(params[:user_id])
+    debugger
+	@user = User.find(session[:user_id])
     @project = Project.new(project_params)
     #params[:project_id] = @project.id
     @project.user_id = session[:user_id]
