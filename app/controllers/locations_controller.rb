@@ -361,7 +361,7 @@ class LocationsController < ApplicationController
 	  end
       controls.each do |c|
         apex_control = ApexControl.new
-        apex_control.control_description_id = c.id
+        apex_control.control_description_id = c.number
         apex_control.value = c.default_value
         apex_control.project_id = params[:project_id]
         if apex_control.control_description_id == 1 then
