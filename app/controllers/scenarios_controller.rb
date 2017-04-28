@@ -123,6 +123,7 @@ class ScenariosController < ApplicationController
 	
     
     add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
+	add_breadcrumb 'Edit Scenario'
   end
 
 ################################  CREATE  #################################
@@ -144,7 +145,8 @@ class ScenariosController < ApplicationController
         add_scenario_to_soils(@scenario)
         format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
-        format.html { render action: "new" }
+	    flash[:error] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+        format.html { redirect_to project_field_scenarios_path(@project, @field) }
         format.json { render json: scenario.errors, status: :unprocessable_entity }
       end
     end

@@ -48,7 +48,7 @@
 							<td class="gvCellStyleText"><%= soil.name %></td>
 							<td class="gvCellStyleText"><%= soil.group %></td>
 							<td class="gvTitleStyleNumber"><%= soil.slope %></td>
-							<td class="gvCellStyleNumber"><%= text_field_tag "om[]", soil.id, :value=>soil.layers.first.organic_matter, :class => 'numbers', :step => "any" %></td>
+							<td class="gvCellStyleNumber"><%= number_field_tag "om[]", soil.id, :value=>soil.layers.first.organic_matter, :class => 'numbers', :step => "any", :min => '0' %></td>
 							<td class="gvCellStyleNumber"><%= soil.percentage %></td>
 							<td class="gvCellStyleActions">
 								<%= link_to image_tag("delete.png"), project_field_soil_path(@project, @field, soil), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>

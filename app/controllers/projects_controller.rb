@@ -164,8 +164,8 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, notice: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
-        flash[:info] = "Error"
-        format.html { redirect_to @user, notice: t('models.project') + "" + t('notices.created') }
+        flash[:info] = t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+        format.html { redirect_to user_projects_path(session[:user_id]) }
         #format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
@@ -228,7 +228,6 @@ class ProjectsController < ApplicationController
       redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
       redirect_to projects_upload_path(@upload_id)
-      flash[:notice] = t('activerecord.errors.messages.projects.exist') and return false
     end
   end
 
@@ -303,6 +302,7 @@ class ProjectsController < ApplicationController
         saved = true
       else
         saved = false
+		flash[:notice] = t('activerecord.errors.messages.projects.exist')
         raise ActiveRecord::Rollback
       end
       #rescue NoMethodError => e
