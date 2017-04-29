@@ -125,7 +125,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/new.json
   def new
     @watershed = Watershed.new
-	@watershed.watershed_scenarios.build
+	#@watershed.watershed_scenarios.build
     @project = Project.find(params[:project_id])
     respond_to do |format|
       format.html # new.html.erb

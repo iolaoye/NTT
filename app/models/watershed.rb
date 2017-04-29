@@ -6,7 +6,7 @@ class Watershed < ActiveRecord::Base
 	has_many :results, :dependent => :destroy
     belongs_to :location
 
-	accepts_nested_attributes_for :watershed_scenarios
+	#accepts_nested_attributes_for :watershed_scenarios
   #validations
     validates :name, length: { minimum: 1 }
     validates_uniqueness_of :name, :scope => :location_id
