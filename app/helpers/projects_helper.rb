@@ -159,20 +159,20 @@ module ProjectsHelper
   end   # end duplicate project method
 
   ######################### Duplicate an operation #################################################
-  def duplicate_operation(operation_id, name, new_scenario_id)
-	new_operation = Operation.find(operation_id)
+  def duplicate_operation(operation_id, name)
+	operation = Operation.find(operation_id)
 	new_operation = operation.dup
-	new_operation.scenario_id = new_scenario.id
+	new_operation.scenario_id = @new_scenario_id
 	if !new_operation.save
 		"Error saving operation"
 	end
   end
 
   ######################### Duplicate a bmp #################################################
-  def duplicate_bmp(bmp_id, name, new_scenario_id)
-	new_bmp = Bmp.find(bmp_id)
+  def duplicate_bmp(bmp_id, name)
+	bmp = Bmp.find(bmp_id)
 	new_bmp = bmp.dup
-	new_bmp.scenario_id = new_scenario.id
+	new_bmp.scenario_id = @new_scenario_id
 	if new_bmp.save
 		# 4.1 copy subareas that belonge to a BMP
 		subareas = Subarea.where(:bmp_id => bmp.id)
@@ -233,12 +233,12 @@ module ProjectsHelper
 		@new_scenario_id = new_scenario.id
 		#3. Copy operations info
 		scenario.operations.each do |o|
-			duplicate_operation(o.id, new_scenario_id)
+			duplicate_operation(o.id, @new_scenario_id)
 		end   # end operations.each
 
 		#4. Copy bmps info
 		scenario.bmps.each do |b|
-			duplicate_bmp(b.id, new_scenario_id)
+			duplicate_bmp(b.id, @new_scenario_id)
 		end   # end bmps.each
 
 		#5. Copy soil_operations info
@@ -255,7 +255,7 @@ module ProjectsHelper
 		subareas = scenario.subareas.where("bmp_id is null or bmp_id == 0")
 		subareas.each do |subarea|
 			new = subarea.dup
-			new.scenario_id = new_scenario.id
+			#new.scenario_id = new_scenario.id
 			if !new.save
 				return "Error Saving subarea"
 			end
