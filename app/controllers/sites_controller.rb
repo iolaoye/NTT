@@ -30,6 +30,7 @@ class SitesController < ApplicationController
 	add_breadcrumb @field.field_name, project_fields_path(@project)
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Sites', controller: "sites", action: "index"
+	add_breadcrumb 'Viewing Site'
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @site }
@@ -56,6 +57,7 @@ class SitesController < ApplicationController
 	add_breadcrumb @field.field_name, project_fields_path(@project)
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Sites', controller: "sites", action: "index"
+	add_breadcrumb 'Editing Site'
   end
 
   # POST /sites

@@ -54,6 +54,7 @@ class ApexParametersController < ApplicationController
 	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Parameters', controller: "apex_parameters", action: "index"
+	add_breadcrumb 'Editing Parameters File'
   end
 
   # POST /apex_parameters

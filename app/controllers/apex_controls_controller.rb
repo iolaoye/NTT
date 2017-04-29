@@ -55,6 +55,7 @@ class ApexControlsController < ApplicationController
 	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Controls', controller: "apex_controls", action: "index"
+	add_breadcrumb 'Editing Control Files"
   end
 
   # POST /apex_controls
