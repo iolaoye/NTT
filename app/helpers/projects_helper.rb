@@ -62,7 +62,6 @@ module ProjectsHelper
   ######################### Duplicate Soils #################################################
   def duplicate_layer(layer_id, new_soil_id)
 	#1. copy layer to new layer
-	debugger 
 		layer = Layer.find(layer_id)   #1. find layer to copy
 		new_layer = layer.dup
 		new_layer.soil_id = new_soil_id
@@ -112,7 +111,6 @@ module ProjectsHelper
 				duplicate_chart(c.id, new_field.id)
 			end
 			field.scenarios.each do |s|
-	debugger 
 				duplicate_scenario(s.id, "", new_field.id)
 				# DUPLIATE results when soil_id > 0. 
 				results = field.results.where("field_id == field.id AND scenario_id == s.id AND soil_id > 0")
@@ -137,7 +135,6 @@ module ProjectsHelper
 	new_location.project_id = new_project_id
 	if new_location.save
 		@project.location.fields.each do |f|
-	debugger 
 			duplicate_field(f.id, new_location.id)
 		end
 			"OK"
@@ -154,7 +151,6 @@ module ProjectsHelper
   	new_project = @project.dup  
 	new_project.name = @project.name + " copy" 
 	if new_project.save
-	debugger 
 		duplicate_location(new_project.id)
 			"OK"
 		else
@@ -228,7 +224,6 @@ module ProjectsHelper
 
   ######################### Duplicate a Scenario  #################################################
   def duplicate_scenario(scenario_id, name, new_field_id)
-		debugger 
 	scenario = Scenario.find(scenario_id)   #1. find scenario to copy
 	#2. copy scenario to new scenario
   	new_scenario = scenario.dup

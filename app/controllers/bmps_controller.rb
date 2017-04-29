@@ -434,7 +434,6 @@ class BmpsController < ApplicationController
 ### ID: 1
   def autoirrigation(type)
     @soils = Soil.where(:field_id => params[:field_id])
-    debugger
     @soils.each do |soil|
       subarea = soil.subareas.find_by_scenario_id(params[:scenario_id])
       if subarea != nil then
