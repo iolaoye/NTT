@@ -1,46 +1,37 @@
-<%#= form_for [@project, @watershed, @watershed_scenarios] do |f| %>
-<% case %>
-<% when notice %>
-	<div class="success_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= notice %>
-    </div>
-<% when flash[:info] %>
-	<div class="flash_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= flash[:info] %>
-    </div>
-<% end %>
-
-<div class="table-responsive">
-	<div class="panel panel-default">
-		<table class='table'>
-			<thead>
-			  <tr class='optable'>
-    			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
-    			<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
-    			<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
-  			  </tr>
-			</thead>
-			<tbody>
-  			<% i=1 %>
-  			<% @watershed_scenarios.each do |watershed_scenario| %>
-    			<% if (i % 2  == 0) %>
-      				<tr class="gvRowStyleEven">
-    			<% else %>
-      				<tr class="gvRowStyleOdd">
-    			<% end %>
-        			<td class="optable"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
-        			<td class="optable"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
-        			<td class="optable">
-          				<%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
-        			</td>
-      			</tr>
-  				<% i = i + 1 %>
-  			<% end %>
-			</tbody>
-		</table>
+<%= form_for(watershed) do |f| %> 
+	<div class="table-responsive">
+		<div class="panel panel-default">
+			<table class='table'>
+				<thead>
+				  <tr class='optable'>
+						<% fields = Field.where(:location_id => @project.location.id) %>
+						<%= hidden_field(:watershed, :id, :value => watershed.id) %>
+						<td><%=  t('menu.fields') %></td>
+						<td><%= collection_select "field" + @j.to_s, :id, fields, :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
+						<td><%= t('menu.scenarios') %></td>
+						<td><%= collection_select "scenario" + @j.to_s, :id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
+						<td><%= f.submit t('watershed_scenario.add_to') + " " + watershed.name, :name => "finish", :class => "btn btn-primary" %></td>
+  				  </tr>
+				</thead>
+				<tbody>
+  				<% i=1 %>
+  				<% @watershed_scenarios.each do |watershed_scenario| %>
+    				<% if (i % 2  == 0) %>
+      					<tr class="gvRowStyleEven">
+    				<% else %>
+      					<tr class="gvRowStyleOdd">
+    				<% end %>
+        				<td class="optable"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
+        				<td class="optable"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
+        				<td class="optable">
+          					<%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+        				</td>
+      				</tr>
+  					<% i = i + 1 %>
+  				<% end %>
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
-
+<% end %>
 <br>

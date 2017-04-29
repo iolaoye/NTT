@@ -2,9 +2,6 @@ class WatershedsController < ApplicationController
   include SimulationsHelper
   before_filter :set_notifications
 
-  
-  
-
   def set_notifications
 	@notice = nil
 	@error = nil
@@ -128,6 +125,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/new.json
   def new
     @watershed = Watershed.new
+	@watershed.watershed_scenarios.build
     @project = Project.find(params[:project_id])
     respond_to do |format|
       format.html # new.html.erb
@@ -146,9 +144,11 @@ class WatershedsController < ApplicationController
   # POST /watersheds
   # POST /watersheds.json
   def create
-    @watershed = Watershed.new(watershed_params)
-    @watershed.location_id = session[:location_id]
-    @project = Project.find(params[:project_id])
+	if params[:commit] != nil then
+		@watershed = Watershed.new(watershed_params)
+		@watershed.location_id = session[:location_id]
+    end 
+	@project = Project.find(params[:project_id])
     respond_to do |format|
       if @watershed.save
         format.html { redirect_to  project_watersheds_path(@project), notice: t('watershed.watershed') + " " + t('general.created') }

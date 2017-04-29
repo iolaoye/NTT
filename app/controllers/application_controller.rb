@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 		@project = Project.find(params[:project_id]) 
 		add_breadcrumb @project.name		
 	end
-	if params[:field_id] != nil then
+	if params[:field_id] != nil and params[:field_id].to_i != 0 then
 		@field = Field.find(params[:field_id])
 		add_breadcrumb "Fields", project_fields_path(@project)
 		add_breadcrumb @field.field_name
