@@ -31,6 +31,7 @@
 	add_breadcrumb @field.field_name, project_fields_path(@project)
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Soils', controller: "apex_soils", action: "index"
+	add_breadcrumb 'Viewing Soils'
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @soil }
@@ -58,6 +59,7 @@
 	add_breadcrumb @field.field_name, project_fields_path(@project)
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Soils', controller: "apex_soils", action: "index"
+	add_breadcrumb 'Editing Soils'
   end
 
   # POST /soils

@@ -60,13 +60,15 @@
         <div class="container-fluid">
             <div class="nav navbar-nav navbar-right">
                 <ul class="footerright">
-                  <%if request.url.include?(url_for=("/projects?")) %>
-                    <% unless ENV["APP_VERSION"] == "modified" %><li><%= image_tag('download.gif') %> <%= t('general.download') + " " + t('project.project') %></li><% end %>
+                  <%if request.url.include?(url_for=("/projects?")) || request.url.include?(url_for=("/scenarios?"))  %>
+                    <%if request.url.include?(url_for=("/projects?")) %>
+                      <% unless ENV["APP_VERSION"] == "modified" %><li><%= image_tag('download.gif') %> <%= t('general.download') + " " + t('project.project') %></li><% end %>
+                    <% end %>
                     <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                     <li><%= image_tag('copy.jpg') %> <%= t('general.copy') %></li>
                     <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
-                  <%if request.url.include?(url_for=("/fields?")) || request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/layers?")) || request.url.include?(url_for=("/list?")) ||  request.url.include?(url_for=("/scenarios?")) || request.url.include?(url_for=("/operations?"))%>  
+                  <%if request.url.include?(url_for=("/fields?")) || request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/layers?")) || request.url.include?(url_for=("/list?")) || request.url.include?(url_for=("/operations?"))%>  
                       <%if !(ENV["APP_VERSION"] == "modified") %>
                         <%if request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/apex_soils?"))%>
                           <li><%= image_tag('layers.png') %> <%= t('soil.layer') %></li>

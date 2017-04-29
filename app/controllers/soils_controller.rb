@@ -72,6 +72,7 @@ class SoilsController < ApplicationController
     @soil = Soil.find(params[:id])
 
     add_breadcrumb 'Soils', project_field_soils_path(@project, @field)
+	add_breadcrumb 'Editing Soil'
   end
 
 ################################  CREATE   #################################

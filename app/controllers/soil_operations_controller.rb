@@ -49,6 +49,7 @@ class SoilOperationsController < ApplicationController
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
 	add_breadcrumb 'Operations', controller: "soil_operations", action: "index"
+	add_breadcrumb 'Editing Operation File'
   end
 
   # POST /soil_operations
