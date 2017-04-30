@@ -134,7 +134,7 @@
 							<%= link_to image_tag("run.png"), project_field_scenario_path(@project, @field, scenario.id), title: t('scenario.simulate') + " NTT", data: {disable_with: 'Please wait. NTT simulation in progress . . .'} %>
 						<% end %>
 						<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
-						<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario) %>
+						<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....'} %>
 						<%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
 					</td>
 				  </tr>

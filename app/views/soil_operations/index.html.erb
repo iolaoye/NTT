@@ -23,8 +23,8 @@
     <td><%= label :bmp_id, t('scenario.scenario') %></td>
   </tr>
   <tr>
-    <td><%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => params[:field_id]), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil}, {:required => true} %></td>
-    <td><%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => params[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => @scenario}, {:required => true} %></td>
+    <td><%= collection_select :soil_operation, :soil_id, Soil.where(:field_id => params[:field_id]), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil.id}, {:required => true} %></td>
+    <td><%= collection_select :soil_operation, :scenario_id, Scenario.where(:field_id => params[:field_id]), :id, :name, {:prompt => t('scenario.select_scenario'), :selected => @scenario.id}, {:required => true} %></td>
 	  <td class='action'><%= f.submit t('operation.load_operation'), :class => "btn btn-primary" %></td>
   </tr>
 </table>

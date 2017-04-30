@@ -432,14 +432,14 @@ class ScenariosController < ApplicationController
   end
   
   ################################  copy scenario selected  #################################
-  def copy_scenario	
+  def copy_scenario
+	@use_old_soil = false
 	duplicate_scenario(params[:id], " copy", params[:field_id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
     
     add_breadcrumb 'Scenarios'
-
 	render "index"
   end	
   
