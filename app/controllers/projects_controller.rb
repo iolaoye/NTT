@@ -76,6 +76,7 @@ class ProjectsController < ApplicationController
 
   ################  copy the selected project  ###################
   def copy_project
+    @use_old_soil = true
 	duplicate_project()
     #download_project(params[:id], "copy")
     @user = User.find(session[:user_id])

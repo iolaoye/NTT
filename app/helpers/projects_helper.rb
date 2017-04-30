@@ -222,6 +222,85 @@ module ProjectsHelper
 	end
   end
 
+  ######################### Duplicate a Subareas by scenario/soil #################################################
+  def duplicate_subareas_by_scenario(scenario_id)
+	subareas = Subarea.where(:scenario_id => scenario_id)
+	subareas.each do |subarea|
+  		new = subarea.dup
+		new.scenario_id = @new_scenario_id
+		if @use_old_soil == true then
+			new.soil_id = Soil.find(subarea.soil_id).soil_id_old
+		end
+		if !new.save
+			return "Error Saving subarea"
+		end
+	end   # end subareas.each
+end 
+
+  ######################### Duplicate a Subareas by scenario/bmp #################################################
+  def duplicate_subareas_by_bmp(bmp_id, new_bmp_id)
+	subareas = Subarea.where(:bmp_id => bmp_id, :scenario_id => @new_scenario_id)
+	subareas.each do |subarea|
+		subarea.bmp_id = new_bmp_id
+		if !subarea.save
+			return "Error Saving subarea by bmp"
+		end
+	end   # end subareas.each
+  end 
+
+  ######################### Duplicate a Operations #################################################
+  def duplicate_operations(scenario_id)
+	operations = Operation.where(:scenario_id => scenario_id)
+	operations.each do |operation|
+  		new = operation.dup
+		new.scenario_id = @new_scenario_id
+		if !new.save
+			return "Error Saving operation"
+		else
+			duplicate_soil_operations_by_scenarios(operation.id, new.id)
+		end
+	end   # end operation.each
+  end 
+
+  ######################### Duplicate a SoilOperation by operation/soil #################################################
+  def duplicate_soil_operations_by_scenarios(operation_id, new_operation_id)
+	soil_operations = SoilOperation.where(:operation_id => operation_id)
+	soil_operations.each do |soil_operation|
+  		new = soil_operation.dup
+		new.scenario_id = @new_scenario_id
+		new.operation_id = new_operation_id
+		if @use_old_soil == true then
+			new.soil_id = Soil.find(soil_operation.soil_id).soil_id_old
+		end
+		if !new.save
+			return "Error Saving soil operation"
+		end
+	end
+  end 
+
+  ######################### Duplicate a SoilOperation by bmp #################################################
+  def duplicate_soil_operation_by_bmp(bmp_id, new_bmp_id)
+	soil_operation = SoilOperation.find_by_bmp_id(bmp_id)
+  	new = soil_operation.dup
+	new.scenario_id = @new_scenario_id
+	new.bmp_id = new_bmp_id
+	if !new.save
+		return "Error Saving soil operation by Bmp"
+	end
+  end 
+
+  ######################### Duplicate a Bmps #################################################
+  def duplicate_bmp(bmp)
+  	new = bmp.dup
+	new.scenario_id = @new_scenario_id
+	if !new.save
+		return "Error Saving Bmp"
+	else
+		duplicate_soil_operation_by_bmp(bmp.id, new.id)
+		duplicate_subareas_by_bmp(bmp.id, new.id)
+	end
+end 
+
   ######################### Duplicate a Scenario  #################################################
   def duplicate_scenario(scenario_id, name, new_field_id)
 	scenario = Scenario.find(scenario_id)   #1. find scenario to copy
@@ -231,35 +310,14 @@ module ProjectsHelper
 	new_scenario.field_id = new_field_id
 	if new_scenario.save
 		@new_scenario_id = new_scenario.id
-		#3. Copy operations info
-		scenario.operations.each do |o|
-			duplicate_operation(o.id, @new_scenario_id)
-		end   # end operations.each
-
-		#4. Copy bmps info
+		#3. Copy subareas info by scenario
+		duplicate_subareas_by_scenario(scenario.id)
+		#4. Copy operations info
+		duplicate_operations(scenario.id)
+		#5. Copy bmps info
 		scenario.bmps.each do |b|
-			duplicate_bmp(b.id, @new_scenario_id)
+			duplicate_bmp(b)
 		end   # end bmps.each
-
-		#5. Copy soil_operations info
-		soil_operations = scenario.soil_operations.where("bmp_id is null or bmp_id == 0")
-		soil_operations.each do |soil_operation|
-			new = soil_operation.dup
-			new.scenario_id = new_scenario.id
-			if !new.save
-				return "Error Saving soil operation"
-			end
-		end   # end operations.each
-
-		#6. Copy subareas info
-		subareas = scenario.subareas.where("bmp_id is null or bmp_id == 0")
-		subareas.each do |subarea|
-			new = subarea.dup
-			#new.scenario_id = new_scenario.id
-			if !new.save
-				return "Error Saving subarea"
-			end
-		end   # end operations.each
 	else
 		return "Error Saving scenario"
 	end   # end if scenario saved
