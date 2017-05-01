@@ -55,7 +55,7 @@ class ApexControlsController < ApplicationController
 	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Controls', controller: "apex_controls", action: "index"
-	add_breadcrumb 'Editing Control Files"
+	add_breadcrumb "Editing Control Files"
   end
 
   # POST /apex_controls
@@ -65,7 +65,7 @@ class ApexControlsController < ApplicationController
 
     respond_to do |format|
       if @apex_control.save
-        format.html { redirect_to @apex_control, notice: 'Apex control was successfully created.' }
+        format.html { redirect_to @apex_control, notice: "Apex control was successfully created." }
         format.json { render json: @apex_control, status: :created, location: @apex_control }
       else
         format.html { render action: "new" }
@@ -81,7 +81,7 @@ class ApexControlsController < ApplicationController
 
     respond_to do |format|
       if @apex_control.update_attributes(apex_control_params)
-        format.html { redirect_to project_field_apex_controls_url, notice: t('models.apex_control') + " " + t('general.updated') }
+        format.html { redirect_to project_field_apex_controls_url, notice: t("models.apex_control") + " " + t("general.updated") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -119,7 +119,7 @@ class ApexControlsController < ApplicationController
 		  apex_control.save
 		end
     end
-    redirect_to apex_controls_url, notice: t('models.apex_control') + " " + t('general.reset')
+    redirect_to apex_controls_url, notice: t("models.apex_control") + " " + t("general.reset")
   end
 
   def download

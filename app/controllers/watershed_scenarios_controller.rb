@@ -39,6 +39,7 @@ class WatershedScenariosController < ApplicationController
   # POST /watershed_scenarios
   # POST /watershed_scenarios.json
   def create
+  ooo
     @project = Project.find(params[:project_id])
     @scenarios = Scenario.where(:field_id => 0)
 	watershed = Watershed.find(params[:watershed_id])

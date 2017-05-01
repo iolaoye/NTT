@@ -4,21 +4,20 @@ class SoilOperationsController < ApplicationController
 
    def index
 	add_breadcrumb 'Utility Files', controller: "soil_operations", action: "index"
-  	@soil = 0
-  	@scenario = 0
-    soils = Soil.where(:field_id => params[:field_id])
-  	if soils != nil then
-  		@soil = soils[0].id
-  	end
-  	scenarios = Scenario.where(:field_id => params[:field_id])
-  	if scenarios != nil then
-  		@scenario = scenarios[0].id
-  	end
-    @soil_operations = SoilOperation.where(:soil_id => @soil, :scenario_id => @scenario)
-
+  	#@soil = 0
+  	#@scenario = 0
+    @soil = Soil.where(:field_id => params[:field_id]).first
+  	#if soils != nil then
+  		#@soil = soils[0]
+  	#end
+  	@scenario = Scenario.where(:field_id => params[:field_id]).first
+  	#if scenarios != nil then
+  		#@scenario = scenarios[0]
+  	#end
+    @soil_operations = SoilOperation.where(:soil_id => @soil.id, :scenario_id => @scenario.id)
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @soil_operations }
+      #format.json { render json: @soil_operations }
     end
   end
 
@@ -55,10 +54,10 @@ class SoilOperationsController < ApplicationController
   # POST /soil_operations
   # POST /soil_operations.json
   def create
-  	@soil = params[:soil_operation][:soil_id]
+  	@soil = Soil.find(params[:soil_operation][:soil_id])
     @field = Field.find(params[:field_id])
-  	@scenario = params[:soil_operation][:scenario_id]
-    @soil_operations = SoilOperation.where(:soil_id => @soil, :scenario_id => @scenario)
+  	@scenario = Scenario.find(params[:soil_operation][:scenario_id])
+    @soil_operations = SoilOperation.where(:soil_id => @soil.id, :scenario_id => @scenario.id)
 	@project = Project.find(params[:project_id])
     render "index"
   end

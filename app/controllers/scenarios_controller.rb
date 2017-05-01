@@ -62,7 +62,7 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
 
     @scenarios = Scenario.where(:field_id => params[:field_id])
-	#@scenario = Scenario.find(params[:select_scenario])
+	@scenario = Scenario.find(params[:select_scenario])
     if msg.eql?("OK") then
       flash[:notice] = @scenario.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
       render "index", notice: "Simulation process end succesfully"
@@ -432,14 +432,14 @@ class ScenariosController < ApplicationController
   end
   
   ################################  copy scenario selected  #################################
-  def copy_scenario	
+  def copy_scenario
+	@use_old_soil = false
 	duplicate_scenario(params[:id], " copy", params[:field_id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
     
     add_breadcrumb 'Scenarios'
-
 	render "index"
   end	
   

@@ -1,31 +1,34 @@
 <% if notice != nil %>
     <div class="success_alert">
-  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-  <%= notice %>
-</div>
+	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+	  <%= notice %>
+	</div>
 <% end %>
 <% if @errors != nil %>
     <% if @errors.length > 0 %>
         <div id="error_explanation">
-  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-  <h2>Simulation failed to run</h2>
-  <ul>
-    <% @errors.each do |error| %>
-    <li>
-      <%= error %>
-    </li>
-    <% end %>
-  </ul>
-</div>
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			<h2>Simulation failed to run</h2>
+			<ul>
+				<% @errors.each do |error| %>
+				<li>
+				  <%= error %>
+				</li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
 <% end %>
-<% end %>
+
 <% if flash[:error] != nil %>
-    <div class="flash_alert">
-  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-  <!--<h2>Simulation failed to run</h2>-->
-  <%= flash[:error] %>
-</div>
+
+    <div class="danger_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <!--<h2>Simulation failed to run</h2>-->
+      <%= flash[:error] %>
+	  </div>
 <% end %>
+
 <div class="page-header">
   <h1>
     <%= t('menu.management') + " " + t('menu.scenarios') %>
@@ -33,9 +36,10 @@
 </div>
 <%= button_tag t('general.new') + ' ' + t('scenario.scenario'), :class => 'btn btn-primary', :id => "new_scenario" %>
 <% @scenario = Scenario.new %>
-	<div id="div_new" style="display:none" >
+<div id="div_new" style="display:none" >
 	<%= render 'form' %>
 </div>
+
 <%= form_tag simulate_project_field_scenarios_path(@project, @field), method: :post do |f| %>
     <%#= link_to t('general.new') + ' ' + t('scenario.scenario'), new_project_field_scenario_path(@project, @field), :class => 'btn btn-primary' %>
     <% if @scenarios.count > 0 %>
@@ -130,7 +134,7 @@
 							<%= link_to image_tag("run.png"), project_field_scenario_path(@project, @field, scenario.id), title: t('scenario.simulate') + " NTT", data: {disable_with: 'Please wait. NTT simulation in progress . . .'} %>
 						<% end %>
 						<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
-						<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario) %>
+						<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....'} %>
 						<%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
 					</td>
 				  </tr>

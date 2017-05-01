@@ -268,7 +268,6 @@ class ResultsController < ApplicationController
 
     if params[:format] == "csv" then
       #results to excel catch with debugger for now (testing WIP)
-      debugger
       #respond_to do |format|
       #  format.html
       #  format.xls { send_data @products.to_csv(col_sep: "\t") }
