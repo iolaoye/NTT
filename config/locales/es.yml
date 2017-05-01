@@ -1042,7 +1042,8 @@ es:
     projects: Para seleccionar un proyecto existente, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
     watersheds: Para seleccionar un cuenca, haga clic en el nombre de la cuenca
-    scenarios: Para seleccionar un escenario, haga clic en el nombre del escenario
+    scenarios: Para editar un escenario haga clic en el nombre del escenario, para currer la simulación cheque el check box
+    scenarios: To edit a scenario click on the scenario name, to simulate scenarios click on the check box
   sysreq:
     header: Requisitos del Sistema
     minreq:
