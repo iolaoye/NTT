@@ -13,7 +13,7 @@
 <%# if ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" || ENV["APP_VERSION"] == nil %>
 	<%#= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
 	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %>
-	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views"} %><br><br>
+	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views", :class => 'btn btn-primary' } %><br><br>
 	<div id="div_new" style="display:none">
 		<%= render "upload" %>
 	</div>
@@ -28,7 +28,7 @@
 							<%= link_to image_tag("delete.png"), delete_all_project_field_scenario_operation_path(@project, @field, @scenario, crop.id), data: { confirm: t('general.confirm') } %>
 						</td>
 					</tr>
-				</table>			
+				</table>
 			  </div>
 			</div>
 			<div class="panel panel-primary" id="crop_<%= crop.id %>" style="display:none">
@@ -47,7 +47,7 @@
 		<div id="crop_detail_<%= crop.id %>" style="display:none">
 		  <% if @scenario.planting_operations(crop).any? %>
 				<div class="panel panel-primary">
-				  <h4>Planting</h4> 
+				  <h4>Planting</h4>
 				  <table class="table">
 					<tr class="optable">
 						<td class="optable"><b><%= t('general.date') %></b></td>
