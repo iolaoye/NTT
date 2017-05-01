@@ -36,9 +36,10 @@ module ProjectsHelper
 		new_result = result.dup
 		new_result.field_id = new_field_id
 		new_result.scenario_id = @new_scenario_id
-		
-		soil = Soil.find(result.soild_id)
-		new_result.soil_id = soil.soil_id_old
+		if result.soil_id > 0 then
+			soil = Soil.find(result.soil_id)
+			new_result.soil_id = soil.soil_id_old
+		end 
 		if new_result.save
 			"OK"
 		else
@@ -78,7 +79,7 @@ module ProjectsHelper
 		soil = Soil.find(soil_id)   #1. find soil to copy
 		new_soil = soil.dup
 		new_soil.field_id = new_field_id
-		new_soil.soil__id_old =  soil.id
+		new_soil.soil_id_old =  soil.id
 		if new_soil.save
 			soil.layers.each do |l|
 				duplicate_layer(l.id, new_soil.id)
@@ -112,12 +113,12 @@ module ProjectsHelper
 			end
 			field.scenarios.each do |s|
 				duplicate_scenario(s.id, "", new_field.id)
-				# DUPLIATE results when soil_id > 0. 
-				results = field.results.where("field_id == field.id AND scenario_id == s.id AND soil_id > 0")
+				# DUPLIATE results when soil_id > 0.
+				results = field.results.where("field_id == field.id AND scenario_id == s.id")
 				results.each do |r|
 					duplicate_result(r.id, new_field.id)
 				end
-				charts = field.charts.where("field_id == field.id AND scenario_id == s.id AND soil_id > 0")
+				charts = field.charts.where("field_id == field.id AND scenario_id == s.id")
 				charts.each do |c|
 					duplicate_chart(c.id, new_field.id)
 				end
@@ -281,11 +282,13 @@ end
   ######################### Duplicate a SoilOperation by bmp #################################################
   def duplicate_soil_operation_by_bmp(bmp_id, new_bmp_id)
 	soil_operation = SoilOperation.find_by_bmp_id(bmp_id)
-  	new = soil_operation.dup
-	new.scenario_id = @new_scenario_id
-	new.bmp_id = new_bmp_id
-	if !new.save
-		return "Error Saving soil operation by Bmp"
+	if soil_operation != nil 
+  		new = soil_operation.dup
+		new.scenario_id = @new_scenario_id
+		new.bmp_id = new_bmp_id
+		if !new.save
+			return "Error Saving soil operation by Bmp"
+		end
 	end
   end 
 
