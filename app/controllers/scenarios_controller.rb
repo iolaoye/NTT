@@ -143,7 +143,7 @@ class ScenariosController < ApplicationController
         add_scenario_to_soils(@scenario)
         format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
-	    flash[:error] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+	    flash[:info] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
         format.html { redirect_to project_field_scenarios_path(@project, @field) }
         format.json { render json: scenario.errors, status: :unprocessable_entity }
       end

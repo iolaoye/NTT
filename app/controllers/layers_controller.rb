@@ -103,7 +103,7 @@ class LayersController < ApplicationController
 # POST /layers.json
   def create
     @layer = Layer.new(layer_params)
-    @layer.soil_id = session[:soil_id]
+    @layer.soil_id = params[:soil_id]
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
@@ -130,10 +130,10 @@ class LayersController < ApplicationController
     respond_to do |format|
       if @layer.update_attributes(layer_params)
         if params[:add_more] == "Save" && params[:finish] == nil
-          format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil), notice: t('models.layer') + "" + t('notices.created') }
+          format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil), notice: t('models.layer') + "" + t('notices.updated') }
           format.json { render json: @layer, status: :created, location: @layer }
         elsif params[:finish] == "Finish" && params[:add_more] == nil
-          format.html { redirect_to list_scenario_path(params[:field_id]), notice: t('models.layer') + "" + t('notices.created') }
+          format.html { redirect_to list_scenario_path(params[:field_id]), notice: t('models.layer') + "" + t('notices.updated') }
           format.json { render json: @layer, status: :created, location: @layer }
         end
       else
