@@ -60,10 +60,10 @@ class ScenariosController < ApplicationController
 	end
 	@project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-
     @scenarios = Scenario.where(:field_id => params[:field_id])
-	@scenario = Scenario.find(params[:select_scenario])
+	
     if msg.eql?("OK") then
+	  @scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenario.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
       render "index", notice: "Simulation process end succesfully"
     else
@@ -78,8 +78,8 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     msg = "OK"
 	if params[:select_scenario] == nil then
-		@errors.push("Select at list one scenario to simulate ")
-		return "Select at list one scenario to simulate "
+		@errors.push("Select at least one scenario to simulate ")
+		return "Select at least one scenario to simulate "
 	end
     ActiveRecord::Base.transaction do
 	  params[:select_scenario].each do |scenario_id|
@@ -216,6 +216,10 @@ class ScenariosController < ApplicationController
 ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
     @errors = Array.new
+	if params[:select_scenario] == nil then
+		@errors.push("Select at least one Aplcat to simulate ")
+		return "Select at least one Aplcat to simulate "
+	end
     ActiveRecord::Base.transaction do
 	  params[:select_scenario].each do |scenario_id|
 		  @scenario = Scenario.find(scenario_id)
