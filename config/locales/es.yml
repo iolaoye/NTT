@@ -272,6 +272,8 @@ es:
       odd: debe ser impar
       required: debe existir
       taken: ya está en uso
+      scenario_simulation: 'Seleccione al menos un Escenario para simular.'
+      aplcat_simulation: 'Seleccione al menos un Aplcat para simular.'
       too_long:
         one: "es demasiado largo (1 carácter máximo)"
         other: "es demasiado largo (%{count} caracteres máximo)"
