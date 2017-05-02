@@ -13,11 +13,11 @@
 
   <div class="field" title="Name of Field">
     <%= f.label t('field.field_name') %>
-    <%= f.text_field :field_name %>
+    <%= f.text_field :field_name, :required => true %>
   </div>
   <div class="field" title="Field Area (Ac.). Must be greater than 0.">
     <%= f.label t('field.field_area') %>
-    <%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any" %>
+    <%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any", :required => true %>
 	<%= '(ac.)' %>
   </div>
   <div class="field" style="display:none">
