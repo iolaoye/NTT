@@ -97,6 +97,13 @@ module ProjectsHelper
 		new_field = field.dup
 		new_field.location_id = new_location_id
 		if new_field.save
+			#duplicate site
+			debugger
+			new_site = field.site.dup
+			new_site.field_id = new_field.id
+			if !new_site.save then
+				return "Error saving Site"
+			end
 			field.soils.each do |s|
 				duplicate_soil(s.id, new_field.id)
 			end
@@ -114,11 +121,11 @@ module ProjectsHelper
 			field.scenarios.each do |s|
 				duplicate_scenario(s.id, "", new_field.id)
 				# DUPLIATE results when soil_id > 0.
-				results = field.results.where("field_id == field.id AND scenario_id == s.id")
+				results = field.results.where(:field_id => field.id, :scenario_id => s.id)
 				results.each do |r|
 					duplicate_result(r.id, new_field.id)
 				end
-				charts = field.charts.where("field_id == field.id AND scenario_id == s.id")
+				charts = field.charts.where(:field_id => field.id, :scenario_id => s.id)
 				charts.each do |c|
 					duplicate_chart(c.id, new_field.id)
 				end
@@ -144,6 +151,34 @@ module ProjectsHelper
 	end  # end if location saved
   end   # end duplicate location
 
+  ######################### Duplicate a apex_control #################################################
+  def duplicate_apex_control(new_project_id)
+	#1. copy apexcontrol 
+	@project.apex_controls.each do |apex_control|
+		new_apex_control = apex_control.dup
+		new_apex_control.project_id = new_project_id
+		if new_apex_control.save
+			return "OK"
+		else
+			return "Error saving controls"
+		end
+	end  # end apex_controls.each
+  end   # end duplicate apex_control
+
+  ######################### Duplicate a apex_parameter #################################################
+  def duplicate_apex_parameter(new_project_id)
+	#1. copy apexparameter 
+	@project.apex_parameters.each do |apex_parameter|
+		new_apex_parameter = apex_parameter.dup
+		new_apex_parameter.project_id = new_project_id
+		if new_apex_parameter.save
+			return "OK"
+		else
+			return "Error saving parameters"
+		end
+	end  # end apex_parameters.each
+  end   # end duplicate apex_parameter
+
   ######################### Duplicate a Project #################################################
   def duplicate_project
 	#1. find project to copy
@@ -153,9 +188,11 @@ module ProjectsHelper
 	new_project.name = @project.name + " copy" 
 	if new_project.save
 		duplicate_location(new_project.id)
-			"OK"
-		else
-			"Error Saving project"
+		duplicate_apex_control(new_project.id)
+		duplicate_apex_parameter(new_project.id)
+		"OK"
+	else
+		"Error Saving project"
 	end   # end if project saved
   end   # end duplicate project method
 
