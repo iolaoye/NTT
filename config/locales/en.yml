@@ -272,6 +272,8 @@ en:
       odd: must be odd
       required: must exist
       taken: has already been taken
+      scenario_simulation: 'Select at least one Scenario to simulate.'
+      aplcat_simulation: 'Select at least one Aplcat to simulate.'
       too_long:
         one: is too long (maximum is 1 character)
         other: is too long (maximum is %{count} characters)

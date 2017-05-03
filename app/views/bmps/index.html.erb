@@ -735,9 +735,9 @@
         validateBmpAi.addValidation(ai_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
         validateBmpAi.addValidation(ai_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
         validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpAi.addValidation(ai_inputs[2].name, "lte=1.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
+        validateBmpAi.addValidation(ai_inputs[2].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
         validateBmpAi.addValidation(ai_inputs[3].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-        validateBmpAi.addValidation(ai_inputs[3].name, "lte=1.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
+        validateBmpAi.addValidation(ai_inputs[3].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
         validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
         validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
       }

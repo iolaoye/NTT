@@ -20,13 +20,18 @@
 	<% end %>
 <% end %>
 
-<% if flash[:error] != nil %>
-
+<% case %>
+  <% when flash[:error] != nil %>
     <div class="danger_alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       <!--<h2>Simulation failed to run</h2>-->
       <%= flash[:error] %>
-	  </div>
+	</div>
+  <% when flash[:info] %>
+	<div class="flash_alert">
+	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+	  <%= flash[:info] %>
+   </div>
 <% end %>
 
 <div class="page-header">
