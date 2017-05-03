@@ -303,13 +303,13 @@
                 <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
                   <td class="indent">
                     <%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
-                    <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :class => "gvTitleStyleNumber" %>
+                    <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :step => '0.01', :min => 0.25, :max => 0.75, :class => "gvTitleStyleNumber" %>
                     </td>
                 </tr>
                 <tr>
 					        <td class="indent">
 						        <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
-						        <%= number_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland, :class => "gvTitleStyleNumber" %>
+						        <%= number_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland, :step => '0.01', :min => 0.25, :max => 1.00, :class => "gvTitleStyleNumber" %>
                     </td>
 				        </tr>
 				    <% when 14 %>
