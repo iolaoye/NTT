@@ -111,45 +111,60 @@ class ProjectsController < ApplicationController
     Weather.delete_all
   end
 
-  ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
+  ################## Read all of the tables in the DB and create a seed file ##################
   def create_seeds
-	create_seed("User")
+	files_string = ""
+	tables = ActiveRecord::Base.connection.tables
+	i = 0
+	tables.each do |table|
+		if i == 0 then
+			i+=1
+			next
+		end
+		create_seed(table)			
+		files_string += "file = " + "\"" + File.join(Rails.root, 'db', 'seeds', table + '.rb') +"\"" + "\n" + "load file" + "\n" + "\n" 
+	end
+	print_string_to_file(files_string, File.join(Rails.root, 'db', 'seeds', 'seeds.rb'))
   end
 
-  def create_seed(type)
-    record_string = type + ".delete_all" + "\n"
-	case type
-		when "User"
-			columns = User.column_names
-			records = User.all			
-	end
+  def create_seed(table)
+	type = table.classify.constantize
+	@record_string = ""
+    table_name = type.to_s
+    # delete all of the records for the table
+    @record_string += table_name + ".delete_all" + "\n"
+	# take all ot the columns and rows of the table
+	
+	columns = type.column_names
+	records = type.all
+	#read record by record and create a line for each record in the seeds file
 	records.each do |record|
 		first = true
-		record_string += type + ".create!({"
+		@record_string += table_name + ".create!({"
 		columns.each do |column|
-			if first == false then record_string += "," end
+			if column == "created_at" || column == "updated_at" then next end
+			if first == false then @record_string += "," end
 			first = false
 			value = record[column.to_sym]
-			if value.class == "String" then
-				record_string += ":" + column + " => '" + value.to_s + "'"
+			if value.class.to_s == "String" then
+				@record_string += ":" + column + " => \"" + value.to_s + "\""
 			else
-				record_string += ":" + column + " => " + value.to_s
-		  end
+				@record_string += ":" + column + " => " + value.to_s
+		    end
 		end
-		if type == "User" then
-			record_string += ",:password => '1234'"
-			record_string += "}, :without_protection => true)" + "\n"
-		else
-			record_string += "}, :without_protection => true)" + "\n"
+		if table_name == "User" then
+			@record_string += ",:password => '1234'"
 		end
+		@record_string += "}, :without_protection => true)" + "\n"
 	end
-	print_string_to_file(record_string, "seeds.rb")
+	@record_string += "\n"
+	print_string_to_file(@record_string, File.join(Rails.root, 'db', 'seeds', table + '.rb'))
   end
 
   def print_string_to_file(data, file)
     #path = File.join(APEX, "APEX" + session[:session_id])
     #FileUtils.mkdir(path) unless File.directory?(path)
-    path = File.join("db", file)
+    path = File.join(file)
     File.open(path, "w+") do |f|
       f << data
       f.close
