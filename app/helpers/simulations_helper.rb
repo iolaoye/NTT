@@ -1454,7 +1454,7 @@ module SimulationsHelper
   def change_till_for_depth(oper, depthAnt)
     newLine = "  " + oper.to_s
     newLine += " C:FERT 5 CUST      5.      0.      0.      0.      0.     0.0    0.00   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000"
-    newLine += sprintf("%8.2f", depthAnt * 25.4)
+    newLine += sprintf("%8.2f", depthAnt)
     newLine += "   0.000   0.000   0.000   0.000   9.000   0.000   0.000   0.000   0.000   5.000   5.363  FERTILIZER APP        " + oper.to_s + "\n"
     @change_till_depth.push(newLine)
   end
@@ -1557,14 +1557,15 @@ module SimulationsHelper
 	    #clean all of the results exiting for this scenario.
 		if session[:simulation] == "scenario" then
 			# clean results for scenario to avoid keeping some results from previous simulation
-			Result.where(:scenario_id => params[:select_scenario][0], :field_id => params[:field_id]).destroy_all
-			Chart.where(:scenario_id => params[:select_scenario][0], :field_id => params[:field_id]).destroy_all
+			Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).destroy_all
+			Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).destroy_all
 		else
-			#todo - clean results for watershed to avoid keeping some results from previous simulation
-			#Result.where(:watershed_id => params[:select_scenario][0]).destroy_all
+			# clean results for watershed to avoid keeping some results from previous simulation
+			Result.where(:watershed_id => @watershed_id).destroy_all
+			Chart.where(:watershed_id => @watershed_id).destroy_all
 		end
         ntt_apex_results = Array.new
-        #todo check this with new projects. Check if the simulation_initial_year has the 5 years controled.
+        #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
         start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops

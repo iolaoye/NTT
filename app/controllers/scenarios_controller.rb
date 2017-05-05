@@ -26,7 +26,6 @@ class ScenariosController < ApplicationController
     @scenarios = Scenario.where(:field_id => params[:field_id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-    #@field = Field.find(params[:field_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @scenarios }
@@ -450,7 +449,6 @@ class ScenariosController < ApplicationController
   private
   ################################  run_scenario - run simulation called from show or index  #################################
   def run_scenario()
-    @project = Project.find(params[:project_id])
     @last_herd = 0
 	@herd_list = Array.new
 	msg = "OK"
