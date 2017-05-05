@@ -454,6 +454,7 @@ es:
     aplcat_file: Archivos APLCAT
     layers: Capas
     state: Estado
+    utility_file: Mantenimiento de archivos
   project:
     project: Proyecto
     new_project: 'Proyecto Nuevo'

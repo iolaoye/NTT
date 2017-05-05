@@ -446,10 +446,11 @@ en:
     layer_file: Layers
     operation_file: Operations
     site_file: Site
-    apex_file: Utility Files
+    apex_file: APEX Files
     aplcat_file: APLCAT Files
     layers: Layers
     state: States
+    utility_file: Utility Files
   project:
     project: Project
     new_project: 'Create New Project'

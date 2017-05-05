@@ -157,7 +157,7 @@
 	  		<%= link_to t('menu.management') + " " + t('general.scenarios'), project_field_scenarios_path(@project, @field) %></li>
       <% end %>
     </li>
-		<% if @field.results.count > 0 %>
+	  <% if @field.results.count > 0 %>
 			<li class="<%= controller_name == "results" ? "active" : "" %>">
 			  <% if controller_name == "results" %>
 				<div class="header-icon">
@@ -166,11 +166,11 @@
 			  <% end %>
 			  <%= link_to t('menu.results'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario') %>
 			</li>
-		<% end %>
+	  <% end %>
 
 	  <% if result_submenu %>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-        	<li class="results-label">Tabular</li>
+          <li class="results-label">Tabular</li>
           <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'summary'))) ? "active" : "0" %>">
             <% if controller.action_name == "summary" %>
               <div class="sub-header-icon">
@@ -209,34 +209,14 @@
       <% end %>
 
     <% unless ENV["APP_VERSION"] == "modified" %>
-		  <li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) ? "active" : "" %>">
-	      <% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils")|| (controller_name == "soil_operations")|| (controller_name == "sites")) %>
-	        <div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
-	      <% end %>
-	      <%= link_to t('menu.apex_file'),  project_field_apex_controls_path(@project, @field) %>
-				<% if apex_files_submenu %>
-		        <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-		          <li class="<%= ((controller_name == 'apex_controls') || (controller_name == 'aplcat_parameters') || (controller_name == 'apex_parameters') || (controller_name == 'subareas')|| (controller_name == 'apex_soils')|| (controller_name == 'soil_operations')|| (controller_name == 'sites')) ? 'active' : '0' %>">
-		          	<div class="results-label">APEX</div>
-		            <% if controller.action_name == "download" %>
-		              <div class="sub-header-icon">
-		                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-		              </div>
-		            <% end %>
-								<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post %>
-							</li>
-							<li class="<%= controller_name == 'aplcat_parameters' ? "active" : "" %>">
-								<div class="results-label">APLCAT</div>
-								<% if controller_name == "aplcat_parameters" %>
-									<div class="sub-sub-header-icon">
-										<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-									</div>
-								<% end %>
-								<%= link_to t('activerecord.models.apex.download') + " " + t('menu.aplcat_file'), aplcat_parameters_download_path, :method => :post %>
-							</li>
-						</ul>
-				<% end %>
-			</li>
+
+		  <li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites") || (controller_name == 'aplcat_parameters')) ? "active" : "" %>">
+			<% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites") || (controller_name == 'aplcat_parameters')) %>
+				<div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
+			<% end %>
+			<%= link_to t('menu.utility_file'),  project_field_apex_controls_path(@project, @field) %>
+		  </li>
+		</li>
     <% end %>
   </ul>
 <% else %>
