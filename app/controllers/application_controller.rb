@@ -36,4 +36,91 @@ class ApplicationController < ActionController::Base
 	end
   end  # end method
 
+  ################## Read all of the tables in the DB and create a seed file ##################
+  def create_seeds
+	files_string = ""
+	tables = ActiveRecord::Base.connection.tables
+	i = 0
+	tables.each do |table|
+		if i == 0 then
+			i+=1
+			next
+		end
+		create_seed(table)			
+		files_string += "file = " + "\"" + File.join(Rails.root, 'db', 'seeds', table + '.rb') +"\"" + "\n" + "load file" + "\n" + "\n" 
+	end
+	print_string(files_string, File.join(Rails.root, 'db', 'seeds', 'seeds.rb'))
+  end
+
+  def create_seed(table)
+	type = table.classify.constantize
+	@record_string = ""
+    table_name = type.to_s
+    # delete all of the records for the table
+    @record_string += table_name + ".delete_all" + "\n"
+	# take all ot the columns and rows of the table
+	
+	columns = type.column_names
+	records = type.all
+	#read record by record and create a line for each record in the seeds file
+	records.each do |record|
+		first = true
+		@record_string += table_name + ".create!({"
+		columns.each do |column|
+			if column == "created_at" || column == "updated_at" then next end
+			if first == false then @record_string += "," end
+			first = false
+			value = record[column.to_sym]
+			case true
+				when (value.class.to_s.include? "String")
+					@record_string += ":" + column + " => \"" + value.to_s + "\""
+				when (value.class.to_s.include? "NilClass")
+					@record_string += ":" + column + " => " + "nil"
+				when (value.class.to_s.include? "TimeWithZone")
+					@record_string += ":" + column + " => \"" + value.to_s + "\""
+				else
+					@record_string += ":" + column + " => " + value.to_s
+		    end
+		end
+		if table_name == "User" then
+			@record_string += ",:password => '1234'"
+		end
+		@record_string += "}, :without_protection => true)" + "\n"
+	end
+	@record_string += "\n"
+	print_string(@record_string, File.join(Rails.root, 'db', 'seeds', table + '.rb'))
+  end
+
+  def print_string(data, file)
+    #path = File.join(APEX, "APEX" + session[:session_id])
+    #FileUtils.mkdir(path) unless File.directory?(path)
+    path = File.join(file)
+    File.open(path, "w+") do |f|
+      f << data
+      f.close
+    end
+  end
+
+  ################## ERASE ALL PROJECTS AND CORRESPONDING FILES ##################
+  def self.wipe_database
+    ApexControl.delete_all
+    ApexParameter.delete_all
+    Bmp.delete_all
+    Chart.delete_all
+    Climate.delete_all
+    Field.delete_all
+    Layer.delete_all
+    Location.delete_all
+    Operation.delete_all
+    Project.delete_all
+    Result.delete_all
+    Scenario.delete_all
+    Site.delete_all
+    Soil.delete_all
+    SoilOperation.delete_all
+    Subarea.delete_all
+    Watershed.delete_all
+    WatershedScenario.delete_all
+    Weather.delete_all
+  end
 end  # end class
