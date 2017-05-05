@@ -460,7 +460,6 @@ class ScenariosController < ApplicationController
       FileUtils.mkdir_p(dir_name)
     end
     #FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
-    msg = send_file_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation, session[:session_id])  #this operation will create APEX folder from APEX1 folder
     #CREATE structure for nutrients that go with fert file
     @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
     @current_nutrients = Array.new
@@ -474,6 +473,8 @@ class ScenariosController < ApplicationController
     @change_till_depth = Array.new
     @last_soil_sub = 0
     @last_subarea = 0
+	@apex_string = ""
+    msg = send_file_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation, session[:session_id])  #this operation will create APEX folder from APEX1 folder
     if msg.eql?("OK") then msg = create_control_file() else return msg end
     if msg.eql?("OK") then msg = create_parameter_file() else return msg  end
     if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end
