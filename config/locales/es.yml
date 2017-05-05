@@ -12,7 +12,7 @@ es:
       messages:
         record_invalid: "La validación falló: %{errors}"
         projects:
-          no_saved: "Projecto no pudo ser salvado"
+          no_saved: "Proyecto no pudo ser salvado"
           exist: "El proyecto ya existe"
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente

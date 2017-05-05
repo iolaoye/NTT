@@ -47,6 +47,7 @@ class OperationsController < ApplicationController
 # GET /operations/new.json
   def new
     @operation = Operation.new
+	@operation.activity_id = params[:operation]
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])

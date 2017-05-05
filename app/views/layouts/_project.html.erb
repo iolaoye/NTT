@@ -1,22 +1,21 @@
 <div class="container">
-	<div class="container-fluid">
-		<div class="row">
-
+  <div class="container-fluid">
+    <div class="row">
       <% if !(@project == nil) %>
-        <div class="col-sm-3 col-md-3"><h3><%=t('project.project')%></h3></div>
-		 	  <div class="col-sm-9 col-md-9"><h3>&nbsp&nbsp<%= @project.name %></h3></div>
+        <div class="col-sm-3 col-md-3"><h3><%=t('project.project') + ": " + @project.name %></h3></div>
+        <!-- <div class="col-sm-9 col-md-9"><h3>&nbsp&nbsp<%= @project.name %></h3></div>-->
       <% end %>
-			</div>
-		    <div class="row">
+    </div>
+  </div>
+  <div class="container-fluid">
 		    	<div class="row2">
 		        	<div class="col-sm-3 col-md-3 sidebar">
 		        		<ul class="nav nav-sidebar nav-pills nav-stacked"><%= render "layouts/sidebar" %></ul>
 					    </div>
-        		</div>
-        		<div class="col-sm-9 col-md-9 main">
+        	</div>
+        	<div class="col-sm-9 col-md-9 main">
         		<%= render_breadcrumbs %>
-      				<%= yield %>
-      			</div>
-			</div>
+      			<%= yield %>
+      		</div>
 		</div>
-	</div>
+</div>
