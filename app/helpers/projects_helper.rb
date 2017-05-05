@@ -1,6 +1,7 @@
 module ProjectsHelper
   def sort_link(column, title = nil)
     title ||= column.titleize
+	#todo check this.
 	case true
 		when column.include?("Last Modified")
 			column = "updated_at"
@@ -98,7 +99,6 @@ module ProjectsHelper
 		new_field.location_id = new_location_id
 		if new_field.save
 			#duplicate site
-			debugger
 			new_site = field.site.dup
 			new_site.field_id = new_field.id
 			if !new_site.save then
