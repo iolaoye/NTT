@@ -109,6 +109,7 @@
             <% end %>
             <%= link_to t('result.summary'), summary_project_field_result_path(@project, @field, 0) %>
           </li>
+    <% unless ENV["APP_VERSION"] == "modified" %>
           <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'by_soils'))) ? "active" : "" %>">
             <% if controller.action_name == "by_soils" %>
               <div class="sub-header-icon">
@@ -117,6 +118,7 @@
             <% end %>
             <%= link_to t('result.by_soil'), by_soils_project_field_result_path(@project, @field, 0) %>
           </li>
+	<% end %>
           <li class="results-label">Graphic</a></li>
           <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'annual_charts'))) ? "active" : "" %>">
             <% if controller.action_name == "annual_charts" %>
