@@ -239,7 +239,7 @@
 							  <% end %>
 							  <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", result.value.round(2)).to_s %></td>
 							  <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
-							  <% if @results2 != nil %>
+							  <% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value2.round(2)).to_s %></td>
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
 								<% if difference1 <= 0 %>
@@ -252,7 +252,7 @@
 								  <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", total_area1.round(2)) %></td>
 								<% end %>
 							  <% end %>
-							  <% if @results3 != nil %>
+							  <% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil  %>
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value3.round(2)).to_s %></td>
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
 								<% if difference2 <= 0 %>
@@ -291,7 +291,7 @@
 							  <% end %>
 							  <td class="gvCellStyleNumber bottom_border"><%= sprintf(format, result.value).to_s %></td>
 							  <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
-							  <% if @results2 != nil %>
+							  <% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value2).to_s %></td>
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
 								<% if difference1 >= 0 %>
@@ -304,7 +304,7 @@
 								  <td class="nutrients_positive bottom_border"><%= sprintf(format, total_area1) %></td>
 								<% end %>
 							  <% end %>
-							  <% if @results3 != nil %>
+							  <% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil  %>
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value3).to_s %></td>
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
 								<% if difference2 >= 0 %>
