@@ -73,9 +73,9 @@
 			</tr>
           <% when t('result.monthly') + "-" + t('result.charts'), t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') %>
             <% if I18n.locale.eql?(:en) %>
-              <td><%= collection_select :result6, :description_id, Description.where("period == 3 OR period == 1"), :id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
+              <td><%= collection_select :result6, :description_id, Description.where("period == 2 OR period == 1"), :id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
             <% else %>
-              <td><%= collection_select :result6, :description_id, Description.where("period == 3 OR period == 1"), :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
+              <td><%= collection_select :result6, :description_id, Description.where("period == 2 OR period == 1"), :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
             <% end %>
             <td><%= submit_tag t("general.view") + " " + t("result.monthly")  + "-" + t('result.charts'), name: "button", :class => "btn btn-primary" %></td>
 			</tr>
@@ -128,30 +128,31 @@
 		  <tbody>
 			  <% if @results1 != nil && @present %>
 				  <% @results1.each do |result| %>
+					  <% description = Description.find(result.description_id) %>
 					  <% value2 = 0 %>
-					  <% if @results2 != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
+					  <% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
 					  <% difference1 = value2 - result.value %>
 					  <% reduction1 = difference1 / result.value * 100 %>
 					  <% total_area1 = difference1 * @total_area%>
 					  <% value3 = 0 %>
-					  <% if @results3 != nil %> <%value3 = @results3.find_by_description_id(result.description_id).value %> <% end %>
+					  <% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil then %> <%value3 = @results3.find_by_description_id(result.description_id).value %> <% end %>
 					  <% difference2 = value3- result.value%>
 					  <% reduction2 = difference2 / result.value * 100%>
 					  <% total_area2 = difference2 * @total_area%>
-						  <% row_id = "row" + result.description_id.to_s %>
+					  <% row_id = "row" + result.description_id.to_s %>
 					  <% case (result.description_id % 10) %>
 						<% when 0 %>
 						  <tr class="gvRowStyleOdd", id = <%=row_id%>>
-							<% if result.description_id == 70 %>
+							<% if result.description_id == 70 %>								
 								<% if I18n.locale.eql?(:en) %>
 								  <td class="gvTotalText">
-									<%= Description.find(result.description_id).description %>
-									<%= check_box_tag Description.find(result.description_id).description%>
+									<%= description.description  %>
+									<%= check_box_tag description.description%>
 								  </td>
 								<% else %>
 								  <td class="gvTotalText">
-								    <%= Description.find(result.description_id).spanish_description %>
-									<%= check_box_tag Description.find(result.description_id).description %>
+								    <%= description.spanish_description %>
+									<%= check_box_tag description.description %>
 								  </td>
 								<% end %>
 								<td class="gvTotalNumber"><%= "" %></td>
@@ -187,13 +188,13 @@
 							<% else %>
 								<% if I18n.locale.eql?(:en) %>
 								  <td class="gvTotalText">
-									<%= Description.find(result.description_id).description %>
-									<%= check_box_tag Description.find(result.description_id).description %>
+									<%= description.description + "(" + description.unit + ")" %>
+									<%= check_box_tag description.description %>
 								  </td>
 								<% else %>
 								  <td class="gvTotalText">
-									<%= Description.find(result.description_id).spanish_description %>
-									<%= check_box_tag Description.find(result.description_id).description %>
+									<%= description.spanish_description + "(" + description.unit + ")" %>
+									<%= check_box_tag description.description %>
 								  </td>
 								<% end %>
 								<td class="gvTotalText"><%= sprintf("%8.2f", result.value).to_s %></td>
@@ -284,9 +285,9 @@
     							<% format = "%8.4f" %>
     						  <% end %>
 							  <% if I18n.locale.eql?(:en) %>
-								  <td class="gvDetailText bottom_border"><%= Description.find(result.description_id).description %></td>
+								  <td class="gvDetailText bottom_border"><%= description.description + "(" + description.unit + ")" %></td>
 								<% else %>
-								  <td class="gvDetailText bottom_border"><%= Description.find(result.description_id).spanish_description %></td>
+								  <td class="gvDetailText bottom_border"><%= description.spanish_description + "(" + description.unit + ")" %></td>
 							  <% end %>
 							  <td class="gvCellStyleNumber bottom_border"><%= sprintf(format, result.value).to_s %></td>
 							  <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", result.ci_value).to_s %></td>

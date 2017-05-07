@@ -155,13 +155,26 @@ class FieldsController < ApplicationController
 ################################  UPDATE  #################################
 # PATCH/PUT /fields/1
 # PATCH/PUT /fields/1.json
-  def update 
+  def update
+	msg = ""
+	field = Field.find(params[:id])
+	field.field_name = params[:field][:field_name]
+	field.field_area = params[:field][:field_area]
+	field.soilp = params[:field][:soilp]
+	if field.save
+		#save soils and layers information
+		for i in 0..(@field.soils.count - 1)
+			layer = @field.soils[i].layers[0]
+			layer.organic_matter = params[:om][i]
+			layer.soil_p = params[:field][:soilp]
+			if layer.save then msg = "OK" end
+		end		# end soils.each
+	end
+
     respond_to do |format|
       if msg.eql?("OK") then
-        #session[:field_id] = @field.id
-        #format.html { redirect_to edit_weather_path(params[:field_id]), notice: 'Field was successfully updated.' }
-		    get_field_list(@field.location_id)
-		    format.html { redirect_to project_field_scenarios_path(@project, @field), notice: 'Field was successfully updated.' }
+		#get_field_list(@field.location_id)
+		format.html { redirect_to project_field_scenarios_path(@project, @field), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit", notice: msg }
