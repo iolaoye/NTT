@@ -1,21 +1,26 @@
 <%= form_for [@project, @field, @scenario, @aplcat_parameter] do |f| %>
   <% if @aplcat_parameter.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@aplcat_parameter.errors.count, "error") %> prohibited this aplcat_parameter from being saved:</h2>
-
-      <ul>
-      <% @aplcat_parameter.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+        <h2><%= pluralize(@aplcat_parameter.errors.count, "error") %> prohibited this aplcat_parameter from being saved:</h2>
+        <ul>
+			<% @aplcat_parameter.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+        </ul>
     </div>
   <% end %>
-  <% if @type == 1 %>
-	  <div>
-  <%else%>
-	  <div style='display:none'>
-  <%end%>
-  	<%= field_set_tag t('aplcat.animal_parameters'), class:'fieldset' do %>
+
+  <div>
+	  <table>
+		<tr>
+		  <td><h4><%= label :bmp_id, t('result.select_scenario1') %></h4></td>
+		  <td><%= select_tag "id", options_for_select(@aplcat), :onchange => "show_div()" %></td>
+		  <td><%#= button_to t('subarea.load_subarea'),  class: 'btn btn-primary' %></td>
+		</tr>
+	  </table>
+  </div>
+  <div id="div_1">
+    <%= field_set_tag t('aplcat.animal_parameters'), class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.noc') %>
 		<%= f.number_field :noc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.noc')  %> 
@@ -48,14 +53,10 @@
 		<%=  t('aplcat.prb') %>
 		<%= f.number_field :prb, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.prb') %>
 	  </div>
-  <% end %>
+	<%end%>
   </div>
 
-  <% if @type == 2 %>
-	  <div>
-  <%else%>
-	  <div style='display:none'>
-  <%end%>
+  <div style='display:none' id="div_2">
 	<%= field_set_tag t('aplcat.animal_growth_parameters') , class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.adwgbc') %>
@@ -114,13 +115,9 @@
 		<%= f.number_field :napaip, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.napaip') %>
 	  </div>
 	<% end %>
-	</div>
+  </div>
 
-  <% if @type == 3 %>
-	  <div>
-  <%else%>
-	  <div style='display:none'>
-  <%end%>
+  <div style='display:none' id="div_3">
     <%= field_set_tag t('aplcat.animal_manure_parameters') , class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.mpsm') %>
@@ -128,28 +125,24 @@
 	  </div>
 	  <div class="field">
 		<%=  t('aplcat.splm') %>
-		<%= f.number_field :splm, class: 'gvTitleStyleNumber' %>
+		<%= f.number_field :splm, class: 'gvTitleStyleNumber', step: :any %>
 	  </div>
 	  <div class="field">
 		<%=  t('aplcat.pmme') %>
-		<%= f.number_field :pmme, class: 'gvTitleStyleNumber' %>
+		<%= f.number_field :pmme, class: 'gvTitleStyleNumber', step: :any %>
 	  </div>
 	  <div class="field">
 		<%=  t('aplcat.mm_type') %>
-		<%= f.number_field :mm_type, class: 'gvTitleStyleNumber' %>
+		<%= f.number_field :mm_type, class: 'gvTitleStyleNumber', step: :any %>
 	  </div>
 	  <div class="field">
 		<%=  t('aplcat.fmbmm') %>
-		<%= f.number_field :fmbmm, class: 'gvTitleStyleNumber' %>
+		<%= f.number_field :fmbmm, class: 'gvTitleStyleNumber', step: :any %>
 	  </div>
 	<% end %>
-	</div>
+  </div>
 
-  <% if @type == 4 %>
-	  <div>
-  <%else%>
-	  <div style='display:none'>
-  <%end%>
+  <div style='display:none' id="div_4">
     <%= field_set_tag t('aplcat.environmental_parameters') , class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.rhaeba') %>
@@ -160,13 +153,9 @@
 		<%= f.number_field :toaboba, class: 'gvTitleStyleNumber' %>
 	  </div>
 	<% end %>
-	</div>
+  </div>
 
-  <% if @type == 5 %>
-	  <div>
-  <%else%>
-	  <div style='display:none'>
-  <%end%>
+  <div style='display:none' id="div_5">
     <%= field_set_tag t('aplcat.greenhouse_parameters') , class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.vsim') %>
@@ -197,13 +186,9 @@
 		<%= f.number_field :effn2ofmms, class: 'gvTitleStyleNumber' %>
 	  </div>
 	<% end %>
-	</div>
+  </div>
 
-  <% if @type == 6 %>
-	  <div>
-  <%else%>
-	  <div style='display:none'>
-  <%end%>
+  <div style='display:none' id="div_6">
     <%= field_set_tag t('aplcat.water_use_pumping_parameters'), class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.dwawfga') %>
@@ -230,13 +215,9 @@
 		<%= f.number_field :ape, class: 'gvTitleStyleNumber' %>
 	  </div>
 	<% end %>
-	</div>
+  </div>
 
-  <% if @type == 7 %>
-	  <div>
-  <%else%>
-	  <div style='display:none'>
-  <%end%>
+  <div style='display:none' id="div_7">
     <%= field_set_tag t('aplcat.other_parameters'), class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.platc') %>
@@ -251,11 +232,25 @@
 		<%= f.number_field :ptdife, class: 'gvTitleStyleNumber' %>
 	  </div>
 	<% end %>
-	</div>
+  </div>
 
   <div class="actions">
     <%= hidden_field_tag(:type, @type) %>
-    <%= f.submit %>
+	<%= f.submit  t('submit.save'), :class => "btn btn-primary"  %>
     <%= link_to t('general.back'), project_field_scenarios_path(@project, @field)  %>
   </div>
 <% end %>
+
+<script>
+	function show_div() {
+	    var div_id = ""
+		for(i=1; i<= 7; i++) {
+			div_id = "div_".concat(i);			
+		    document.getElementById(div_id).style.display="none";
+		}
+
+		var num = document.getElementById("id").selectedIndex + 1;
+		var div_id = "div_".concat(num);
+		var div_id = document.getElementById(div_id).style.display="block";
+	}
+</script>

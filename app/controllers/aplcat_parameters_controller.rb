@@ -2,12 +2,8 @@ class AplcatParametersController < ApplicationController
   # GET /aplcat_parameters
   # GET /aplcat_parameters.json
 
-  
-  
-
   def index
     @aplcat_parameters = AplcatParameter.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @aplcat_parameters }
@@ -42,6 +38,14 @@ class AplcatParametersController < ApplicationController
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
+	@aplcat = Hash.new
+	@aplcat[t('aplcat.animal_parameters')] = 1
+	@aplcat[t('aplcat.animal_growth_parameters')] = 2
+	@aplcat[t('aplcat.animal_manure_parameters')] = 3
+	@aplcat[t('aplcat.environmental_parameters')] = 4
+	@aplcat[t('aplcat.greenhouse_parameters')] = 5
+	@aplcat[t('aplcat.water_use_pumping_parameters')] = 6
+	@aplcat[t('aplcat.other_parameters')] = 7
 	
 	add_breadcrumb 'Aplcat'
   	if params[:id] == nil then
@@ -92,20 +96,25 @@ class AplcatParametersController < ApplicationController
   # PATCH/PUT /aplcat_parameters/1
   # PATCH/PUT /aplcat_parameters/1.json
   def update
-    @type = params[:type]
+    saved = false
+    #@type = params[:type]
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-    @aplcat_parameter = AplcatParameter.find(params[:id])
-    respond_to do |format|
-      if @aplcat_parameter.update_attributes(aplcat_parameter_params)
-        format.html { redirect_to edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, @type), notice: 'Aplcat parameter was successfully updated.' }
-        format.json { head :no_content }
-      else
+	@aplcat_parameter = AplcatParameter.find_by_id(params[:id])
+	if @aplcat_parameter == nil then
+		@aplcat_parameter = AplcatParameter.new(aplcat_parameter_params)
+		@aplcat_parameter.scenario_id = params[:scenario_id]
+		if @aplcat_parameter.save then saved = true end
+	else
+		if @aplcat_parameter.update_attributes(aplcat_parameter_params) then saved = true end
+	end
+	
+    if saved
+        redirect_to edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, @aplcat_parameter), notice: 'Aplcat parameter was successfully updated.', :method => 'GET' 
+    else
         format.html { render action: "edit" }
-        format.json { render json: @aplcat_parameter.errors, status: :unprocessable_entity }
-      end
-    end
+	end
   end
 
   # DELETE /aplcat_parameters/1
