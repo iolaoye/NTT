@@ -105,6 +105,11 @@ updateTypes = ->
     $("#operation_type_id").html items.join("")
     $("#operation_type_id").removeAttr("disabled")
 
+  url1 = "/activities/" + $("#operation_activity_id").val() + ".json"
+  $.getJSON url1, (labels) ->
+	  $("#div_amount")[0].children[0].innerText = labels.amount_label.split(",")[0] + labels.amount_units.split(",")[0]
+	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units.split(",")[0]
+
 updateFerts = ->
   if ($("#operation_type_id").val() == "2")
     $("#div_moisture").show();

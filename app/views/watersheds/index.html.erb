@@ -11,12 +11,17 @@
   </div>
 <% end %>
 <div class="page-header"><h1><%=t('watershed.watershed')%></h1></div>
-<%= link_to t('general.new') + " " + t('watershed.watershed'), new_project_watershed_path(@project.id), :class => "btn btn-primary" %>
+<%#= link_to t('general.new') + " " + t('watershed.watershed'), new_project_watershed_path(@project.id), :class => "btn btn-primary" %>
+<%= button_tag t('general.new') + ' ' + t('watershed.watershed'), :class => 'btn btn-primary', :id => "new_watershed" %>
 <% if @watersheds.count > 0 %>
 	<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, 0), :class => 'btn btn-success' %></td>
 	<%#= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
 	<%#= link_to t('scenario.simulate') + ' ' + 'NTT', simulate_project_watersheds_path(@project.id), :class => "btn btn-primary" %>
 <% end %>
+<% @watershed = Watershed.new %>
+<div id="div_new" style="display:none" >
+	<%= render 'form' %>
+</div>
 <%= hidden_field_tag( :project_id, @project.id) %>
 <% j = 0 %>
 <% @watersheds.each do |watershed| %>

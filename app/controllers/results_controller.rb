@@ -55,10 +55,17 @@ class ResultsController < ApplicationController
     @project = Project.find(params[:project_id])
     
     add_breadcrumb 'Results'
-
     if session[:simulation].eql?('scenario') then
       @total_area = Field.find(params[:field_id]).field_area
       @field_name = Field.find(params[:field_id]).field_name
+	else
+	  @total_area = 0
+	  if params[:result1] != nil then
+		watershed_scenarios = WatershedScenario.where(:watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
+		watershed_scenarios.each do |ws|
+			@total_area += Field.find(ws.field_id).field_area
+		end
+	  end
     end
   	if !(params[:field_id] == "0")
   		@field = Field.find(params[:field_id])

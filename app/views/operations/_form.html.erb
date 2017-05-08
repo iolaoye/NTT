@@ -17,7 +17,7 @@
 
   <div class="field">
     <%= label :crop_id, t('operation.crop') %>
-		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id}, {:required => true} %>
+	<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id}, {:required => true} %>
   </div>
   <div class="field">
 		<%= label :activity_id, t('scenario.operation') %>

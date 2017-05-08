@@ -87,6 +87,6 @@ class ActivitiesController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def activity_params
-      params.require(:activity).permit(:abbreviation, :apex_code, :code, :name, :spanish_name)
+      params.require(:activity).permit(:abbreviation, :apex_code, :code, :name, :spanish_name, :amount_units, :amount_label, :depth_label, :depth_units)
     end
 end
