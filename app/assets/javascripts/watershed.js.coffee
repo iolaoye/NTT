@@ -2,6 +2,9 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+create_watershed = ->
+    $("#div_new").toggle(true)
+
 select_scenarios = (num) ->
   field = "#field" + num + "_id"
   scenario = "#scenario" + num + "_id" 
@@ -21,6 +24,9 @@ select_scenarios = (num) ->
     $(scenario).removeAttr("disabled")
 
 $(document).ready ->
+  $("#new_watershed").click ->
+    create_watershed()
+
   $("#field1_id").change ->
     select_scenarios(1)
 

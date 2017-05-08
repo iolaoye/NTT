@@ -41,7 +41,7 @@ NTTG3::Application.routes.draw do
   resources :welcomes
   resources :apex_soils
   resources :apex_layers
-
+  
   resources :users do
     resources :projects
   end

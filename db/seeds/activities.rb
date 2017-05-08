@@ -1,8 +1,3 @@
-#Crop.find(3).delete
-
-Bmpsublist.find(14).delete
-Bmpsublist.create!({:id => 14, :name => "Grass Waterway", :spanish_name => "Canal de Agua ", :bmplist_id => 4, :status => true}, :without_protection => true)
-
 Activity.delete_all
 Activity.create!({:id => 1,:name => "Planting",:code => 1,:abbreviation => "PLNT",:spanish_name => "Plantar",:apex_code => 136,:amount_label => "Seeding Amount, Cantidad de Semillas",:amount_units => "(seeds/ft)",:depth_label => "",:depth_units => ""}, :without_protection => true)
 Activity.create!({:id => 2,:name => "Fertilizer",:code => 2,:abbreviation => "NUTC",:spanish_name => "Fertilizante",:apex_code => 580,:amount_label => "Amount, Cantidad",:amount_units => "(lbs/ac)",:depth_label => "Depth, Profundidad",:depth_units => "(in)"}, :without_protection => true)
@@ -14,3 +9,4 @@ Activity.create!({:id => 7,:name => "Start Grazing",:code => 7,:abbreviation => 
 Activity.create!({:id => 8,:name => "Stop Grazing",:code => 8,:abbreviation => "STOP",:spanish_name => "Terminar Pasteo",:apex_code => 427,:amount_label => nil,:amount_units => nil,:depth_label => nil,:depth_units => nil}, :without_protection => true)
 Activity.create!({:id => 9,:name => "Burn",:code => 9,:abbreviation => "BURN",:spanish_name => "Quema",:apex_code => 397,:amount_label => nil,:amount_units => nil,:depth_label => nil,:depth_units => nil}, :without_protection => true)
 Activity.create!({:id => 10,:name => "Liming",:code => 10,:abbreviation => "LIME",:spanish_name => "Encalado",:apex_code => 734,:amount_label => "Amount, Cantidad",:amount_units => "(lbs/ac)",:depth_label => "",:depth_units => ""}, :without_protection => true)
+
