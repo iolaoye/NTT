@@ -189,7 +189,7 @@
 				      <tr>
 					    <td class="field indent" id = "fraction_control_by_pond" >
 						    <%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_one')  %>
-						    <%= number_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency, :class => "gvTitleStyleNumber", :step => 'any' %>
                 </td>
 				      </tr>
 				    <% when 10 %>
