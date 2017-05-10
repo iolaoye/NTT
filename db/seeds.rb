@@ -14,3 +14,10 @@ Activity.create!({:id => 7,:name => "Start Grazing",:code => 7,:abbreviation => 
 Activity.create!({:id => 8,:name => "Stop Grazing",:code => 8,:abbreviation => "STOP",:spanish_name => "Terminar Pasteo",:apex_code => 427,:amount_label => nil,:amount_units => nil,:depth_label => nil,:depth_units => nil}, :without_protection => true)
 Activity.create!({:id => 9,:name => "Burn",:code => 9,:abbreviation => "BURN",:spanish_name => "Quema",:apex_code => 397,:amount_label => nil,:amount_units => nil,:depth_label => nil,:depth_units => nil}, :without_protection => true)
 Activity.create!({:id => 10,:name => "Liming",:code => 10,:abbreviation => "LIME",:spanish_name => "Encalado",:apex_code => 734,:amount_label => "Amount, Cantidad",:amount_units => "(lbs/ac)",:depth_label => "",:depth_units => ""}, :without_protection => true)
+
+CropSchedule.delete_all
+CropSchedule.create!({:id => 1, :name =>'Corn', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 2, :name =>'Soybean', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 3, :name =>'Barley Cover Crop', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 4, :name =>'Winter Wheat Cover Crop', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 5, :name =>'Argentine Canola', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
