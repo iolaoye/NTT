@@ -35,87 +35,128 @@ class WatershedsController < ApplicationController
   end
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
-  def new_scenario(field, scenario)
-	watershed = Watershed.find(params[:id])
-    @watershed_name = watershed.name
-    item = WatershedScenario.where(:field_id => params[field][:id], :scenario_id => params[scenario][:id], :watershed_id => params[:id]).first
-    respond_to do |format|
-      if item == nil
-        @new_watershed_scenario = WatershedScenario.new
-        @new_watershed_scenario.field_id = params[field][:id]
-        @new_watershed_scenario.scenario_id = params[scenario][:id]
-        @new_watershed_scenario.watershed_id = params[:id]
-        if @new_watershed_scenario.save
-          return "saved"
-        else
-          return "error"
-        end
-      else
-        return "exist"
-      end
-    end
+  def new_scenario()  
+    #find the name for the collection
+	watersheds = Watershed.where(:location_id => Project.find(params[:project_id]).location)
+	i = 1
+	field_id = ""
+	scenario_id = ""
+	watersheds.each do |watershed|
+		if watershed.name.eql? @watershed_name then
+			field_id = params[("field" + i.to_s).to_sym][:id]
+			scenario_id = params[("scenario" + i.to_s).to_sym][:id]
+		end
+		i +=1
+	end
+
+	if !(field_id == "" || scenario_id == "") then
+		item = WatershedScenario.where(:field_id => field_id, :scenario_id => scenario_id, :watershed_id => @watershed.id).first
+		respond_to do |format|
+		  ## if item nil
+		  if item == nil
+			@new_watershed_scenario = WatershedScenario.new
+			@new_watershed_scenario.field_id = field_id
+			@new_watershed_scenario.scenario_id = scenario_id
+			@new_watershed_scenario.watershed_id = @watershed.id
+			#### Save new watershed
+			if @new_watershed_scenario.save
+			  return "saved"
+			else
+			  return "error"
+			end
+			#### Save new watershed
+		  else
+			return "exist"
+		  end
+		  ## if item nil
+		end  #Respond to format
+	else
+		return "error"
+	end  # if field or scenario <> ""
+	
   end
 
   ################################  SHOW used for simulation   #################################
   # GET /watersheds/1
   # GET /watersheds/1.json
   def simulate
-	session[:simulation] = 'watershed'
     @project = Project.find(params[:project_id])
-    @watershed_id = params[:id]
-    @dtNow1 = Time.now.to_s
-    dir_name = APEX + "/APEX" + session[:session_id]
-    if !File.exists?(dir_name) 
-      FileUtils.mkdir_p(dir_name)
-    end
-    watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed_id)
-    msg = send_file_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation, session[:session_id]) #this operation will create APEX folder from APEX1 folder
-    if msg.eql?("OK") then msg = create_control_file() else return msg end
-    if msg.eql?("OK") then msg = create_parameter_file() else return msg end 
-    if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(session[:location_id]).id) else return msg end
-    @last_soil = 0
-    @last_soil_sub = 0
-    @last_subarea = 0
-    @soil_list = Array.new
-    @opcs_list_file = Array.new
-    @opers = Array.new
-    @depth_ant = Array.new
-    @change_till_depth = Array.new
-    @fem_list = Array.new
-    @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
-    @current_nutrients = Array.new
-    @new_fert_line = Array.new
-    @subarea_file = Array.new
-    @soil_number = 0
-    j=0
-    watershed_scenarios.each do |p|
-      @scenario = Scenario.find(p.scenario_id)
-	  @field = Field.find(p.field_id)
-      #params[:field_id] = p.field_id
-      if msg.eql?("OK") then msg = create_weather_file(dir_name, p.field_id) else return msg end
-      @soils = Soil.where(:field_id => p.field_id).where(:selected => true)
-      if msg.eql?("OK") then msg = create_soils() else return msg end
-      if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg end
-      if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-      if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg end
-      j+=1
-    end # end watershed_scenarios.each
-    print_array_to_file(@soil_list, "soil.dat")
-    print_array_to_file(@opcs_list_file, "OPCS.dat")
-    if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) else return msg end
-    if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) else return msg end #this operation will run a simulation
-    msg = read_apex_results(msg)
-    if @scenario != nil
-      @scenario.last_simulation = Time.now
-      @scenario.save
-    end
-	if msg == "OK"
-		@notice = "Simulation ran succesfully"
+	if !(params[:commit].include?("Simulate")) then 
+		#update watershed_scenarios
+		@watershed_name = params[:commit]
+		@watershed_name.slice! "Add to "
+		@watershed = Watershed.find_by_name_and_location_id(@watershed_name, @project.location.id)
+		status = new_scenario()
+		@notice = nil
+		case status
+			when "saved"
+				@notice = "Saved"
+			when "exist"
+				@error = "Already Exist"
+			when "error"
+				@error = "Error Adding field/scenario"
+		end
 	else
-		@error = "Error running simulation"
+		#run simulations
+		params[:select_watershed].each do |ws|
+			session[:simulation] = 'watershed'
+			@project = Project.find(params[:project_id])
+			@watershed_id = ws
+			@dtNow1 = Time.now.to_s
+			dir_name = APEX + "/APEX" + session[:session_id]
+			if !File.exists?(dir_name) 
+			  FileUtils.mkdir_p(dir_name)
+			end
+			watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed_id)
+			msg = send_file_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation, session[:session_id]) #this operation will create APEX folder from APEX1 folder
+			if msg.eql?("OK") then msg = create_control_file() else return msg end
+			if msg.eql?("OK") then msg = create_parameter_file() else return msg end 
+			if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(session[:location_id]).id) else return msg end
+			@last_soil = 0
+			@last_soil_sub = 0
+			@last_subarea = 0
+			@soil_list = Array.new
+			@opcs_list_file = Array.new
+			@opers = Array.new
+			@depth_ant = Array.new
+			@change_till_depth = Array.new
+			@fem_list = Array.new
+			@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
+			@current_nutrients = Array.new
+			@new_fert_line = Array.new
+			@subarea_file = Array.new
+			@soil_number = 0
+			j=0
+			watershed_scenarios.each do |p|
+			  @scenario = Scenario.find(p.scenario_id)
+			  @field = Field.find(p.field_id)
+			  #params[:field_id] = p.field_id
+			  if msg.eql?("OK") then msg = create_weather_file(dir_name, p.field_id) else return msg end
+			  @soils = Soil.where(:field_id => p.field_id).where(:selected => true)
+			  if msg.eql?("OK") then msg = create_soils() else return msg end
+			  if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg end
+			  if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+			  if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg end
+			  j+=1
+			end # end watershed_scenarios.each
+			print_array_to_file(@soil_list, "soil.dat")
+			print_array_to_file(@opcs_list_file, "OPCS.dat")
+			if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) else return msg end
+			if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session]) else return msg end #this operation will run a simulation
+			msg = read_apex_results(msg)
+			if @scenario != nil
+			  @scenario.last_simulation = Time.now
+			  @scenario.save
+			end
+			if msg == "OK"
+				@notice = "Simulation ran succesfully"
+			else
+				@error = "Error running simulation"
+			end
+		end   # end params[:select_watershed].each
 	end
-    @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
-    @watersheds = Watershed.where(:location_id => @project.location.id)
+	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
+	@watersheds = Watershed.where(:location_id => @project.location.id)
 	
     render "index"
   end
@@ -172,7 +213,7 @@ class WatershedsController < ApplicationController
 			break
 		end
 	end
-	status = new_scenario(field, scenario)
+	#status = new_scenario(field, scenario)
 	@notice = nil
 	case status
 		when "saved"

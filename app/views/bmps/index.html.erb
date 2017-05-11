@@ -189,7 +189,7 @@
 				      <tr>
 					    <td class="field indent" id = "fraction_control_by_pond" >
 						    <%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_one')  %>
-						    <%= number_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency, :class => "gvTitleStyleNumber", :step => 'any' %>
                 </td>
 				      </tr>
 				    <% when 10 %>
@@ -224,31 +224,31 @@
 				      <tr>
 				        <td class="indent2">
 						    <%= label :dry_manure, t('bmp.dry_manure') + " (" + t('bmp.lbs')  + ")"%>
-						    <%= number_field :bmp_sf, :dry_manure, :value => bmp.dry_manure, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_sf, :dry_manure, :value => bmp.dry_manure, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
 				        <td class="indent2">
 						    <%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.zero_to_one') %>
-						    <%= number_field :bmp_sf, :no3_n, :value => bmp.no3_n, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_sf, :no3_n, :value => bmp.no3_n, :step => 'any', :class => "gvTitleStyleNumber" %>
 				        </td>
 				      </tr>
 				      <tr>
 				        <td class="indent2">
 						    <%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.zero_to_one') %>
-						    <%= number_field :bmp_sf, :po4_p, :value => bmp.po4_p, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_sf, :po4_p, :value => bmp.po4_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
 				        <td class="indent2">
 						    <%= label :org_n, t('bmp.org_n') + " " + t('bmp.zero_to_one') %>
-						    <%= number_field :bmp_sf, :org_n, :value => bmp.org_n, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_sf, :org_n, :value => bmp.org_n, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
 				        <td class="indent2">
 						    <%= label :org_p, t('bmp.org_p') + " " + t('bmp.zero_to_one') %>
-						    <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
             <!--<% when 11 %>
@@ -292,26 +292,27 @@
 					      <td class="indent">
 						      <%= t('general.area') + " (" + t('bmp.acres') + ")"%>
 						      <%= number_field :bmp_fs, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+                  <%= label :area, " (" + t('general.optional') + ")", :style => "color:blue" %>
                   </td>
-				        </tr>
-				        <tr>
+				      </tr>
+				      <tr>
+					    <td class="indent">
+						    <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
+                  <%= number_field :bmp_fs, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
+					    </td>
+				      </tr>
+              <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
+                <td class="indent">
+                  <%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
+                  <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :step => '0.01', :min => 0.25, :max => 0.75, :class => "gvTitleStyleNumber" %>
+                  </td>
+              </tr>
+              <tr>
 					      <td class="indent">
-						      <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
-                    <%= number_field :bmp_fs, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
-					      </td>
-				        </tr>
-                <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
-                  <td class="indent">
-                    <%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
-                    <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :step => '0.01', :min => 0.25, :max => 0.75, :class => "gvTitleStyleNumber" %>
-                    </td>
-                </tr>
-                <tr>
-					        <td class="indent">
-						        <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
-						        <%= number_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland, :step => '0.01', :min => 0.25, :max => 1.00, :class => "gvTitleStyleNumber" %>
-                    </td>
-				        </tr>
+						      <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
+						      <%= number_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland, :step => '0.01', :min => 0.25, :max => 1.00, :class => "gvTitleStyleNumber" %>
+                  </td>
+				      </tr>
 				    <% when 14 %>
 				      <tr>
 					    <td class="indent">
@@ -385,25 +386,25 @@
 				      <tr>
 				        <td class="indent">
 						    <%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.percentage_range') %>
-						    <%= number_field :bmp_mc, :no3_n, :value => bmp.no3_n, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_mc, :no3_n, :value => bmp.no3_n, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
 				        <td class="indent">
 						    <%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.percentage_range') %>
-						    <%= number_field :bmp_mc, :po4_p, :value => bmp.po4_p, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_mc, :po4_p, :value => bmp.po4_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
 				        <td class="indent">
 						    <%= label :org_n, t('bmp.org_n') + " " + t('bmp.percentage_range') %>
-						    <%= number_field :bmp_mc, :org_n, :value => bmp.org_n, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_mc, :org_n, :value => bmp.org_n, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
 				        <td class="indent">
 						    <%= label :org_p, t('bmp.org_p') + " " + t('bmp.percentage_range') %>
-						    <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :class => "gvTitleStyleNumber" %>
+						    <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
               <% end %>
