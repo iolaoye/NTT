@@ -343,13 +343,15 @@
 				<% row_id = "row" + id.to_s %>
 				<% description = Crop.find(result[0]).name %>
 				<% value2 = 0 %>
+				<% reduction1 = 0 %>
 				<% if @scenario2 != "" then %> 
 					<%value2 = result[3] %> 
 					<% difference1 = value2 - result[1] %>
-					<% reduction1 = difference1 / result[1] * 100 %>
+					<% reduction1 = difference1 / result[1] * 100 unless result[1] == 0%>
 					<% total_area1 = difference1 * @total_area%>
 				<% end %>
 				<% value3 = 0 %>
+				<% reduction2 = 0 %>
 				<% if @scenario3 != "" then %>
 					<%value3 = result[5] %>
 					<% difference2 = value3 - result[1] %>
