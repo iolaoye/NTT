@@ -34,11 +34,8 @@
    </div>
 <% end %>
 
-<div class="page-header">
-  <h1>
-    <%= t('menu.management') + " " + t('menu.scenarios') %>
-  </h1>
-</div>
+<div class="page-header"><h1><%= t('menu.management') + " " + t('menu.scenarios') %></h1></div>
+
 <%= button_tag t('general.new') + ' ' + t('scenario.scenario'), :class => 'btn btn-primary', :id => "new_scenario" %>
 <% @scenario = Scenario.new %>
 <div id="div_new" style="display:none" >
@@ -46,7 +43,6 @@
 </div>
 
 <%= form_tag simulate_project_field_scenarios_path(@project, @field), method: :post do |f| %>
-    <%#= link_to t('general.new') + ' ' + t('scenario.scenario'), new_project_field_scenario_path(@project, @field), :class => 'btn btn-primary' %>
     <% if @scenarios.count > 0 %>
 		<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('scenario.scenario'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
         <% unless ENV["APP_VERSION"] == "modified" %><%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + 'Aplcat', data: {disable_with: 'Please wait. Aplcat simulation in progress . . .'}, :class => 'btn btn-primary' %><% end %>

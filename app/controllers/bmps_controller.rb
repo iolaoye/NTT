@@ -2,15 +2,12 @@ include ScenariosHelper
 class BmpsController < ApplicationController
   before_filter :take_names
 
-  
-  
-
   def take_names
     @project_name = Project.find(params[:project_id]).name
-	field = Field.find(params[:field_id])
-    @field_name = field.field_name
+	@field = Field.find(params[:field_id])
+    @field_name = @field.field_name
     @scenario_name = Scenario.find(params[:scenario_id]).name
-	@field_type = field.field_type
+	@field_type = @field.field_type
   end
 
 ################################  BMPs list   #################################
@@ -29,12 +26,9 @@ class BmpsController < ApplicationController
 # GET /bmps.json
   def index
     @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 
-    
-    
-    
     add_breadcrumb 'Conservation Practices'
 
     get_bmps()
@@ -759,6 +753,11 @@ class BmpsController < ApplicationController
 		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
 		@bmp.crop_id = params[:bmp_fs][:crop_id]
 		@bmp.depth = params[:bmp_cb3]
+		if @bmp.area == 0 || @bmp.area == nil then 
+			length = Math.sqrt(@field.field_area)			# find the length of the field
+			width = @bmp.width * FT_TO_KM			# convert width from ft to km
+			@bmp.area = (length * width / AC_TO_KM2).round(2)	# calculate area in km and convert to ac
+		end
 		if @bmp.depth == 12 then
 			@bmp.crop_id = 1
 		else

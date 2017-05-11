@@ -42,12 +42,14 @@ class ApplicationController < ActionController::Base
 	tables = ActiveRecord::Base.connection.tables
 	i = 0
 	tables.each do |table|
-		if i == 0 then
-			i+=1
-			next
+		if ActiveRecord::Base.connection.table_exists? table then
+			if i == 0 then
+				i+=1
+				next
+			end
+			create_seed(table)			
+			files_string += "file = " + "\"" + File.join(Rails.root, 'db', 'seeds', table + '.rb') +"\"" + "\n" + "load file" + "\n" + "\n"
 		end
-		create_seed(table)			
-		files_string += "file = " + "\"" + File.join(Rails.root, 'db', 'seeds', table + '.rb') +"\"" + "\n" + "load file" + "\n" + "\n" 
 	end
 	print_string(files_string, File.join(Rails.root, 'db', 'seeds', 'seeds.rb'))
   end
