@@ -1,0 +1,2 @@
+Station.delete_all
+

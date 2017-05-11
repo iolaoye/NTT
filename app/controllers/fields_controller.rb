@@ -162,13 +162,20 @@ class FieldsController < ApplicationController
 	field.field_area = params[:field][:field_area]
 	field.soilp = params[:field][:soilp]
 	if field.save
-		#save soils and layers information
-		for i in 0..(@field.soils.count - 1)
-			layer = @field.soils[i].layers[0]
-			layer.organic_matter = params[:om][i]
-			layer.soil_p = params[:field][:soilp]
-			if layer.save then msg = "OK" end
-		end		# end soils.each
+		msg = "OK"
+		if ENV["APP_VERSION"] == "modified" then
+			#save soils and layers information for modified version only.
+			for i in 0..(@field.soils.count - 1)
+				layer = @field.soils[i].layers[0]
+				layer.organic_matter = params[:om][i]
+				layer.soil_p = params[:field][:soilp]
+				if layer.save then 
+					msg = "OK" 
+				else
+					msg = "Error saving soil information"
+				end
+			end		# end soils.each
+		end  # end if modified version
 	end
 
     respond_to do |format|

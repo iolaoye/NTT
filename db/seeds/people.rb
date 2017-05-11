@@ -1,0 +1,2 @@
+Person.delete_all
+

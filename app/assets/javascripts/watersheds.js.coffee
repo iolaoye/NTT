@@ -23,7 +23,16 @@ select_scenarios = (num) ->
     $(scenario).html items.join("")
     $(scenario).removeAttr("disabled")
 
+change_selection = ->
+    tbl_watersheds = $("#tbl_watersheds")
+    for i in [1..tbl_watersheds[0].rows.length]
+        tbl_watersheds[0].rows[i].cells[0].children[0].checked = tbl_watersheds[0].rows[0].cells[0].children[0].checked
+
+
 $(document).ready ->
+  $("#select_todo").click ->
+    change_selection()
+
   $("#new_watershed").click ->
     create_watershed()
 

@@ -11,5 +11,5 @@ class Watershed < ActiveRecord::Base
     validates :name, length: { minimum: 1 }
     validates_uniqueness_of :name, :scope => :location_id
   #scopes
-    default_scope :order => "name"
+    default_scope :order => "name ASC"
 end
