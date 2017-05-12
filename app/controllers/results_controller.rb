@@ -197,7 +197,7 @@ class ResultsController < ApplicationController
 							@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id > 0")
 						else
 							@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0)
-							@results3 = Result.where(:watershed_id => @scenario3).where("crop_id > 0")
+							@crop_results3 = Result.where(:watershed_id => @scenario3).where("crop_id > 0")
 						end
 						found = false
 						found = false
