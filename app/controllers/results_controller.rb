@@ -112,67 +112,125 @@ class ResultsController < ApplicationController
   	if @type == nil then
   		@type = t("general.view")
   	end
+	@crop_results = []
     if @type != nil then
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
         when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil")
-          if @type.include? t('general.view') then
-            if params[:result1] != nil
-              #session[:first_if] = true
-              #session[:result1] = !params[:result1][:scenario_id].eql?("")
-              if !params[:result1][:scenario_id].eql?("") then
-                #session[:result1] = params[:result1][:scenario_id]
-                @scenario1 = params[:result1][:scenario_id]
-                session[:scenario1] = @scenario1
-                if session[:simulation] == 'scenario'
-                  @results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil)
-                else
-                  @results1 = Result.where(:watershed_id => @scenario1)
-                end
-                if @results1.count > 0
-                  @present1 = true
-                else
-                  redirect_to project_field_results_path(@project, @field)
-                  flash[:info] = t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase and return false
-                end
-                session[:scenario2] = ""
-                session[:scenario3] = ""
-              end
-              if params[:result2][:scenario_id] != "" then
-                #session[:result2] = params[:result2][:scenario_id]
-                @scenario2 = params[:result2][:scenario_id]
-                session[:scenario2] = @scenario2
-                if session[:simulation] == 'scenario'
-                  @results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil)
-                else
-                  @results2 = Result.where(:watershed_id => @scenario2)
-                end
-                if @results2.count > 0
-                  @present2 = true
-                else
-                  redirect_to project_field_results_path(@project, @field)
-                  flash[:info] = t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase and return false
-                end
-                session[:scenario3] = ""
-              end
-              if params[:result3][:scenario_id] != "" then
-                #session[:result3] = params[:result3][:scenario_id]
-                @scenario3 = params[:result3][:scenario_id]
-                session[:scenario3] = @scenario3
-                if session[:simulation] == 'scenario'
-                  @results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil)
-                else
-                  @results3 = Result.where(:watershed_id => @scenario3)
-                end
-                if @results3.count > 0
-                  @present3 = true
-                else
-                  redirect_to project_field_results_path(@project, @field)
-                  flash[:info] = t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase and return false
-                end
-              end
-            end # end if params[:result1] != nill
-          end #end if params button summary
+			if @type.include? t('general.view') then
+				if params[:result1] != nil
+					if !params[:result1][:scenario_id].eql?("") then
+						@scenario1 = params[:result1][:scenario_id]
+						session[:scenario1] = @scenario1
+						if session[:simulation] == 'scenario'
+							@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil, :crop_id => 0)
+							@crop_results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id > 0")
+						else
+							@results1 = Result.where(:watershed_id => @scenario1, :crop_id => 0)
+							@crop_results1 = Result.where(:watershed_id => @scenario1).where("crop_id > 0")
+						end
+						@crop_results1.each do |cr|
+							crop_result = []
+							crop_result[0] = cr.crop_id
+							crop_result[1] = cr.value
+							crop_result[2] = cr.ci_value
+							crop_result[3] = 0
+							crop_result[4] = 0
+							crop_result[5] = 0
+							crop_result[6] = 0
+							@crop_results.push(crop_result)
+						end
+						if @results1.count > 0
+							@present1 = true
+						else
+							redirect_to project_field_results_path(@project, @field)
+							flash[:info] = t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase and return false
+						end
+						session[:scenario2] = ""
+						session[:scenario3] = ""
+					end
+					if params[:result2][:scenario_id] != "" then
+						@scenario2 = params[:result2][:scenario_id]
+						session[:scenario2] = @scenario2
+						if session[:simulation] == 'scenario'
+							@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil, :crop_id => 0)
+							@crop_results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id > 0")
+						else
+							@results2 = Result.where(:watershed_id => @scenario2, :crop_id => 0)
+							@crop_results2 = Result.where(:watershed_id => @scenario2).where("crop_id > 0")
+						end
+						found = false
+						@crop_results2.each do |crop2|
+							@crop_results.each do |crop|
+								if crop2.crop_id == crop[0] then
+									crop[3] = crop2.value
+									crop[4] = crop2.ci_value
+									found = true
+									break
+								end
+							end
+							if found == false then
+								crop_result = []
+								crop_result[0] = crop2.crop_id
+								crop_result[1] = 0
+								crop_result[2] = 0
+								crop_result[3] = crop2.value
+								crop_result[4] = crop2.ci_value
+								crop_result[5] = 0
+								crop_result[6] = 0
+								@crop_results.push(crop_result)
+							end
+						end
+						if @results2.count > 0
+							@present2 = true
+						else
+							redirect_to project_field_results_path(@project, @field)
+							flash[:info] = t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase and return false
+						end
+						session[:scenario3] = ""
+					end
+					if params[:result3][:scenario_id] != "" then
+						@scenario3 = params[:result3][:scenario_id]
+						session[:scenario3] = @scenario3
+						if session[:simulation] == 'scenario'
+							@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil, :crop_id => 0)
+							@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id > 0")
+						else
+							@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0)
+							@crop_results3 = Result.where(:watershed_id => @scenario3).where("crop_id > 0")
+						end
+						found = false
+						found = false
+						@crop_results3.each do |crop3|
+							@crop_results.each do |crop|
+								if crop3.crop_id == crop[0] then
+									crop[5] = crop3.value
+									crop[6] = crop3.ci_value
+									found = true
+									break
+								end
+							end
+							if found == false then
+								crop_result = []
+								crop_result[0] = crop3.crop_id
+								crop_result[1] = 0
+								crop_result[2] = 0
+								crop_result[3] = 0
+								crop_result[4] = 0
+								crop_result[5] = crop3.value
+								crop_result[6] = crop3.ci_value
+								@crop_results.push(crop_result)
+							end
+						end
+						if @results3.count > 0
+							@present3 = true
+						else
+							redirect_to project_field_results_path(@project, @field)
+							flash[:info] = t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase and return false
+						end
+					end   # end result 3
+				end # end if params[:result1] != nill
+			end #end if params button summary
 
         when t('result.download_pdf')
           #@result_selected = t('result.summary')
