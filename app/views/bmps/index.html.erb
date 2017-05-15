@@ -506,7 +506,7 @@
     var trident = ua.indexOf("Trident/");
     var edge = ua.indexOf("Edge/");
     //declare validation variables for each BMP (exclude IE browser)
-    if (msie == -1 || trident == -1 || edge == -1) {
+    if (msie < 0 && trident < 0 && edge < 0) {
       var validateBmpAi = new Validator("bmpsForm");
       var validateBmpTd = new Validator("bmpsForm");
       var validateBmpWl = new Validator("bmpsForm");
@@ -524,7 +524,6 @@
     for(let i = 1; i < 24; i++) {
         //hides all Bmps on page load
         $('#'+i).hide();
-        //JavaScript/Jquery based on web browser
         //BMP toggle (show/hide)
         $("#bmp"+i).click(function() {
           if (msie > 0 || trident > 0 || edge > 0) { //If IE
