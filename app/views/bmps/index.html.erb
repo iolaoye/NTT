@@ -505,8 +505,9 @@
     var msie = ua.indexOf("MSIE ");
     var trident = ua.indexOf("Trident/");
     var edge = ua.indexOf("Edge/");
+    alert("msie: " + msie + " trident: " + trident + " edge: " + edge);
     //declare validation variables for each BMP (exclude IE browser)
-    if (msie == 0 || trident == 0 || edge == 0) {
+    if (msie == -1 || trident == -1 || edge == -1) {
       var validateBmpAi = new Validator("bmpsForm");
       var validateBmpTd = new Validator("bmpsForm");
       var validateBmpWl = new Validator("bmpsForm");
