@@ -501,25 +501,27 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
-  //declare validation variables for each BMP
-  var validateBmpAi = new Validator("bmpsForm");
-  var validateBmpTd = new Validator("bmpsForm");
-  var validateBmpWl = new Validator("bmpsForm");
-  var validateBmpPnd = new Validator("bmpsForm");
-  var validateBmpSf = new Validator("bmpsForm");
-  var validateBmpRf = new Validator("bmpsForm");
-  var validateBmpFs = new Validator("bmpsForm");
-  var validateBmpWw = new Validator("bmpsForm");
-  var validateBmpCb = new Validator("bmpsForm");
-  var validateBmpLl = new Validator("bmpsForm");
-  var validateBmpTs = new Validator("bmpsForm");
-  var validateBmpCc = new Validator("bmpsForm");
-  var ua = window.navigator.userAgent;
-  var msie = ua.indexOf("MSIE ");
-  var trident = ua.indexOf("Trident/");
-  var edge = ua.indexOf("Edge/");
-  //show/hide bmps on click-'let' makes 'i' local to loop instead of global
-  for(let i = 1; i < 24; i++) {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+    var trident = ua.indexOf("Trident/");
+    var edge = ua.indexOf("Edge/");
+    //declare validation variables for each BMP (exclude IE browser)
+    if !(msie > 0 || trident > 0 || edge > 0) {
+      var validateBmpAi = new Validator("bmpsForm");
+      var validateBmpTd = new Validator("bmpsForm");
+      var validateBmpWl = new Validator("bmpsForm");
+      var validateBmpPnd = new Validator("bmpsForm");
+      var validateBmpSf = new Validator("bmpsForm");
+      var validateBmpRf = new Validator("bmpsForm");
+      var validateBmpFs = new Validator("bmpsForm");
+      var validateBmpWw = new Validator("bmpsForm");
+      var validateBmpCb = new Validator("bmpsForm");
+      var validateBmpLl = new Validator("bmpsForm");
+      var validateBmpTs = new Validator("bmpsForm");
+      var validateBmpCc = new Validator("bmpsForm");
+    }
+    //show/hide bmps on click-'let' makes 'i' local to loop instead of global
+    for(let i = 1; i < 24; i++) {
         //hides all Bmps on page load
         $('#'+i).hide();
         //JavaScript/Jquery based on web browser
@@ -586,7 +588,7 @@
             }
           } else { //checkbox checked
             if (msie > 0 || trident > 0 || edge > 0) { //If IE
-              check.hide();
+              check.show();
             } else {
               $("tbody#"+i).show();
             }
@@ -628,9 +630,9 @@
                   validationsBmpCb(0);
                 } else { confirm_check(i); }
               }
-            }
-          });
-        }
+          }
+        });
+    }
   function prompt_user() {
     var r = confirm("It appears you have a similar BMP already checked. Continuing will clear any input you may have had for the other BMP.");
     if (r == true) {
@@ -672,144 +674,142 @@
     validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
   }
   function validationsBmpTd() {
-  var td_inputs = $('[name^=bmp_td]').valueOf();
-  validateBmpTd.addValidation(td_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>');
-  validateBmpTd.addValidation(td_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpTd.addValidation(td_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+    var td_inputs = $('[name^=bmp_td]').valueOf();
+    validateBmpTd.addValidation(td_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>');
+    validateBmpTd.addValidation(td_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+    validateBmpTd.addValidation(td_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.drainsystem.tile.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
   }
   function validationsBmpWl() {
-  var wl_inputs = $('[name^=bmp_wl]').valueOf();
-  validateBmpWl.addValidation(wl_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>');
-  validateBmpWl.addValidation(wl_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpWl.addValidation(wl_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+    var wl_inputs = $('[name^=bmp_wl]').valueOf();
+    validateBmpWl.addValidation(wl_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>');
+    validateBmpWl.addValidation(wl_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+    validateBmpWl.addValidation(wl_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.wetponds.wetlands.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
   }
   function validationsBmpPnd() {
-  var pnd_inputs = $('[name^=bmp_pnd]').valueOf();
-  validateBmpPnd.addValidation(pnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>');
-  validateBmpPnd.addValidation(pnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpPnd.addValidation(pnd_inputs[0].name, "lte=1.0", '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
+    var pnd_inputs = $('[name^=bmp_pnd]').valueOf();
+    validateBmpPnd.addValidation(pnd_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>');
+    validateBmpPnd.addValidation(pnd_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+    validateBmpPnd.addValidation(pnd_inputs[0].name, "lte=1.0", '<%= t("managepage.bmpdesc.wetponds.ponds.header") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.00");
   }
   function validationsBmpSf() {
-  var sf_inputs = $('[name^=bmp_sf]').valueOf();
-  if (promptMsg("This BMP requires a Filter Strip. Continuing will clear any data you may have entered for any BMP belonging to the same group as Filter Strip.")) {//check with Oscar for best prompt msg for user
-  validationsBmpFs(0);
-  $('#select_13').prop('checked', true);
-  $('#13').show();
-  $('input[type=radio][id=bmp_cb3_13]').prop("checked", true);
-  $("#tr_grass_field_portion").hide();
-  for(n = 0; n < sf_inputs.length; n++) {
-            validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
-  }
-  validateBmpSf.addValidation(sf_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpSf.addValidation(sf_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
-  validateBmpSf.addValidation(sf_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpSf.addValidation(sf_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
-  validateBmpSf.addValidation(sf_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpSf.addValidation(sf_inputs[2].name, "lte=24.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 24");
-  validateBmpSf.addValidation(sf_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpSf.addValidation(sf_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
-  validateBmpSf.addValidation(sf_inputs[5].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpSf.addValidation(sf_inputs[5].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
-  validateBmpSf.addValidation(sf_inputs[6].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpSf.addValidation(sf_inputs[6].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
-  validateBmpSf.addValidation(sf_inputs[7].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpSf.addValidation(sf_inputs[7].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
-  validateBmpSf.addValidation(sf_inputs[8].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpSf.addValidation(sf_inputs[8].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
-  } else {
-  confirm_check(10);
-  }
+    var sf_inputs = $('[name^=bmp_sf]').valueOf();
+    if (promptMsg("This BMP requires a Filter Strip. Continuing will clear any data you may have entered for any BMP belonging to the same group as Filter Strip.")) {//check with Oscar for best prompt msg for user
+      validationsBmpFs(0);
+      $('#select_13').prop('checked', true);
+      $('#13').show();
+      $('input[type=radio][id=bmp_cb3_13]').prop("checked", true);
+      $("#tr_grass_field_portion").hide();
+      for(n = 0; n < sf_inputs.length; n++) {
+                validateBmpSf.addValidation(sf_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.fencing.header") %>');
+      }
+      validateBmpSf.addValidation(sf_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpSf.addValidation(sf_inputs[0].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.animals") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+      validateBmpSf.addValidation(sf_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpSf.addValidation(sf_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.stream_fencing_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
+      validateBmpSf.addValidation(sf_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpSf.addValidation(sf_inputs[2].name, "lte=24.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.hours") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 24");
+      validateBmpSf.addValidation(sf_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpSf.addValidation(sf_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.dry_manure") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+      validateBmpSf.addValidation(sf_inputs[5].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpSf.addValidation(sf_inputs[5].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.no3_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+      validateBmpSf.addValidation(sf_inputs[6].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpSf.addValidation(sf_inputs[6].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.po4_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+      validateBmpSf.addValidation(sf_inputs[7].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpSf.addValidation(sf_inputs[7].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_n") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+      validateBmpSf.addValidation(sf_inputs[8].name, "gt=0", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpSf.addValidation(sf_inputs[8].name, "lte=1.00", '<%= t("managepage.bmpdesc.stream.fencing.header") %>' + " " + '<%= t("bmp.org_p") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 1.0");
+    } else {
+      confirm_check(10);
+    }
   }
   function validationsBmpFs(i) {
-  var fs_inputs = $('[name^=bmp_fs]').valueOf();
-  if (i == 0) {
-  validateBmpCb.clearAllValidations();
-  validateBmpWw.clearAllValidations();
-  //validateBmpRf.clearAllValidations();
-  $("#select_12, #select_14, #select_15").prop('checked', false);
-  $("tbody#12 input, tbody#14 input, tbody#15 input").val("");
-  $("tbody#14 select, tbody#15 select").val([]);
-  }
-
-  validateBmpFs.addValidation("bmp_cb3", "selone", "A selection is required.");
-  $('input[type=radio][name=bmp_cb3]').change(function() {
-  validateBmpFs.clearAllValidations();
-  if (this.value == '12') {
-  for(n = 0; n < fs_inputs.length; n++){
-                if (n != 0)
-                  validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
-  }
-  validateBmpFs.addValidation(fs_inputs[3].name, "lte=0.75", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_lessequal") %>' + " 0.75");
-  validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
-  }
-  else if (this.value == '13') {
-  for(n = 0; n < fs_inputs.length; n++){
-                if (n != 3)
-                  validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %> ' + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
-  }
-  }
-  });
-  validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("pdf.area")%> ' + '<%= t("bmp.acres") %>: ' + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpFs.addValidation(fs_inputs[1].name, "lte=100000", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("pdf.area")%> ' + '<%= t("bmp.acres") %>: ' + '<%= t("validate.input_lessequal") %>' + " 100000");
-  validateBmpFs.addValidation(fs_inputs[2].name, "gt=0", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("bmp.width") %>: ' + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpFs.addValidation(fs_inputs[4].name, "lte=1.00", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("bmp.slope_ratio_label") %>: ' + '<%= t("validate.input_lessequal") %>' + " 1.00");
-  validateBmpFs.addValidation(fs_inputs[4].name, "gte=0.25", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("bmp.slope_ratio_label") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
+    var fs_inputs = $('[name^=bmp_fs]').valueOf();
+    if (i == 0) {
+      validateBmpCb.clearAllValidations();
+      validateBmpWw.clearAllValidations();
+      $("#select_12, #select_14, #select_15").prop('checked', false);
+      $("tbody#12 input, tbody#14 input, tbody#15 input").val("");
+      $("tbody#14 select, tbody#15 select").val([]);
+    }
+    validateBmpFs.addValidation("bmp_cb3", "selone", "A selection is required.");
+    $('input[type=radio][name=bmp_cb3]').change(function() {
+      validateBmpFs.clearAllValidations();
+      if (this.value == '12') {
+      for(n = 0; n < fs_inputs.length; n++){
+                    if (n != 0)
+                      validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
+      }
+      validateBmpFs.addValidation(fs_inputs[3].name, "lte=0.75", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_lessequal") %>' + " 0.75");
+      validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
+      }
+      else if (this.value == '13') {
+        for(n = 0; n < fs_inputs.length; n++){
+          if (n != 3)
+            validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %> ' + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
+          }
+      }
+    });
+    validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("pdf.area")%> ' + '<%= t("bmp.acres") %>: ' + '<%= t("validate.input_greater") %>' + " 0");
+    validateBmpFs.addValidation(fs_inputs[1].name, "lte=100000", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("pdf.area")%> ' + '<%= t("bmp.acres") %>: ' + '<%= t("validate.input_lessequal") %>' + " 100000");
+    validateBmpFs.addValidation(fs_inputs[2].name, "gt=0", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("bmp.width") %>: ' + '<%= t("validate.input_greater") %>' + " 0");
+    validateBmpFs.addValidation(fs_inputs[4].name, "lte=1.00", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("bmp.slope_ratio_label") %>: ' + '<%= t("validate.input_lessequal") %>' + " 1.00");
+    validateBmpFs.addValidation(fs_inputs[4].name, "gte=0.25", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("bmp.slope_ratio_label") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
   }
   function validationsBmpWw(i) {
-  var ww_inputs = $('[name^=bmp_ww]').valueOf();
-  if (i == 0) {
-  validateBmpCb.clearAllValidations();
-  validateBmpFs.clearAllValidations();
-  validateBmpRf.clearAllValidations();
-  $("#select_12, #select_13, #select_15").prop('checked', false);
-  $("tbody#12 input, tbody#13 input, tbody#15 input").val("");
-  $("tbody#13 select, tbody#15 select").val([]);
-  }
-  for(n = 0; n < ww_inputs.length; n++){
-            validateBmpWw.addValidation(ww_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.waterway.header") %>');
-  }
-  validateBmpWw.addValidation(ww_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.waterway.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+    var ww_inputs = $('[name^=bmp_ww]').valueOf();
+    if (i == 0) {
+      validateBmpCb.clearAllValidations();
+      validateBmpFs.clearAllValidations();
+      validateBmpRf.clearAllValidations();
+      $("#select_12, #select_13, #select_15").prop('checked', false);
+      $("tbody#12 input, tbody#13 input, tbody#15 input").val("");
+      $("tbody#13 select, tbody#15 select").val([]);
+    }
+    for(n = 0; n < ww_inputs.length; n++){
+      validateBmpWw.addValidation(ww_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.stream.waterway.header") %>');
+    }
+    validateBmpWw.addValidation(ww_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.stream.waterway.header") %>' + " " + '<%= t("bmp.width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
   }
   function validationsBmpCb(i) {
-  var cb_inputs = $('[name^=bmp_cb]').valueOf();
-  if (i == 0) {
-  validateBmpRf.clearAllValidations();
-  validateBmpFs.clearAllValidations();
-  validateBmpWw.clearAllValidations();
-  $("#select_12, #select_13, #select_14").prop('checked', false);
-  $("tbody#12 input, tbody#13 input, tbody#14 input").val("");
-  $("tbody#13 select, tbody#14 select").val([]);
-  }
-  for(n = 0; n < cb_inputs.length; n++){
-            validateBmpCb.addValidation(cb_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.contour.header") %>');
-  }
-  validateBmpCb.addValidation(cb_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.contour.header") %>' + " " + '<%= t("bmp.buffer_width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpCb.addValidation(cb_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.contour.header") %>' + " " + '<%= t("bmp.crop_width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+    var cb_inputs = $('[name^=bmp_cb]').valueOf();
+    if (i == 0) {
+      validateBmpRf.clearAllValidations();
+      validateBmpFs.clearAllValidations();
+      validateBmpWw.clearAllValidations();
+      $("#select_12, #select_13, #select_14").prop('checked', false);
+      $("tbody#12 input, tbody#13 input, tbody#14 input").val("");
+      $("tbody#13 select, tbody#14 select").val([]);
+    }
+    for(n = 0; n < cb_inputs.length; n++){
+      validateBmpCb.addValidation(cb_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.contour.header") %>');
+    }
+    validateBmpCb.addValidation(cb_inputs[0].name, "gt=0", '<%= t("managepage.bmpdesc.contour.header") %>' + " " + '<%= t("bmp.buffer_width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+    validateBmpCb.addValidation(cb_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.contour.header") %>' + " " + '<%= t("bmp.crop_width") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
   }
   function validationsBmpLl() {
-  var ll_inputs = $('[name^=bmp_ll]').valueOf();
-  validateBmpLl.addValidation(ll_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("pdf.land_leveling") %>');
-  validateBmpLl.addValidation(ll_inputs[0].name, "gt=0", '<%= t("pdf.land_leveling") %>' + " " + '<%= t("bmp.slope_reduction") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpLl.addValidation(ll_inputs[0].name, "lte=100.00", '<%= t("pdf.land_leveling") %>' + " " + '<%= t("bmp.slope_reduction") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100.00");
+    var ll_inputs = $('[name^=bmp_ll]').valueOf();
+    validateBmpLl.addValidation(ll_inputs[0].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("pdf.land_leveling") %>');
+    validateBmpLl.addValidation(ll_inputs[0].name, "gt=0", '<%= t("pdf.land_leveling") %>' + " " + '<%= t("bmp.slope_reduction") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+    validateBmpLl.addValidation(ll_inputs[0].name, "lte=100.00", '<%= t("pdf.land_leveling") %>' + " " + '<%= t("bmp.slope_reduction") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100.00");
   }
   function validationsBmpTs() {
-  var ts_inputs = $('[name^=bmp_ts]').valueOf();
-  validateBmpTs.addValidation(ts_inputs[0].name, "selone", '<%= t("managepage.bmpdesc.landgrading.terrace.header")%>' + ": " + '<%= t("validate.checkbox") %>');
+    var ts_inputs = $('[name^=bmp_ts]').valueOf();
+    validateBmpTs.addValidation(ts_inputs[0].name, "selone", '<%= t("managepage.bmpdesc.landgrading.terrace.header")%>' + ": " + '<%= t("validate.checkbox") %>');
   }
   function validationsBmpCc() {
   var cc_inputs = $('[name^=bmp_cc]').valueOf();
-  for (n = 0; n < cc_inputs.length; n++) {
-          validateBmpCc.addValidation(cc_inputs[n].name, "gt=0", '<%= t("pdf.climate") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-  validateBmpCc.addValidation(cc_inputs[n].name, "lte=100", '<%= t("pdf.climate") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
-  }
+    for (n = 0; n < cc_inputs.length; n++) {
+      validateBmpCc.addValidation(cc_inputs[n].name, "gt=0", '<%= t("pdf.climate") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpCc.addValidation(cc_inputs[n].name, "lte=100", '<%= t("pdf.climate") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
+    }
   }
   function promptMsg(msg) {
-  var r = confirm(msg);
-  if (r == true) {
-  return true;
-  } else {
-  return false;
-  }
-  }
+    var r = confirm(msg);
+    if (r == true) {
+      return true;
+      } else {
+        return false;
+      }
+    }
   });
 </script>
