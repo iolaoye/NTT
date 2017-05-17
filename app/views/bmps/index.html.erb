@@ -521,7 +521,7 @@
 	var validateBmpTs = new Validator("bmpsForm");
 	var validateBmpCc = new Validator("bmpsForm");
     //show/hide bmps on click-'let' makes 'i' local to loop instead of global
-    for(let i = 1; i < 24; i++) {
+    for(let i = 1; i < 20; i++) {
         //BMP toggle (show/hide)
         $("#bmp"+i).click(function() {
           if (msie > 0 || trident > 0 || edge > 0) { //If IE
@@ -543,89 +543,74 @@
           var elementIDNum = (this.id).replace(/[^0-9]+/g, "");
           var check = $("#"+elementIDNum);
           if (!this.checked) { //unchecked
-            if (msie > 0 || trident > 0 || edge > 0) { //If IE unchecked
-              check.hide();
-              $("tbody#" + elementIDNum + " input").each(function() {
+          	check.hide();
+          	$("tbody#" + elementIDNum + " input").each(function() {
                 this.value="";
                 $("tbody#" + elementIDNum + " input").not(this).attr('checked', false);
                 $("tbody#" + elementIDNum + " select").val([]);
               });
-            } else { //other browser unchecked
-              $("tbody#"+i).hide();
-              $("tbody#"+i + " input").each(function() {
-                this.value="";
-                $("tbody#"+i + " input").not(this).attr('checked', false);
-                $("tbody#"+i + " select").val([]);
-              });
-            }
             //removes validations when checkbox unchecked
-            if (i == 1) {
+            if (elementIDNum == 1) {
               validateBmpAi.clearAllValidations();
-            } else if (i == 3) {
+            } else if (elementIDNum == 3) {
                 validateBmpTd.clearAllValidations();
-            } else if (i == 8) {
+            } else if (elementIDNum == 8) {
                 validateBmpWl.clearAllValidations();
-            } else if (i == 9) {
+            } else if (elementIDNum == 9) {
                 validateBmpPnd.clearAllValidations();
-            } else if (i == 10) {
+            } else if (elementIDNum == 10) {
                 validateBmpSf.clearAllValidations();
-            } else if (i == 13) {
+            } else if (elementIDNum == 13) {
                 validateBmpFs.clearAllValidations();
-            } else if (i == 14) {
+            } else if (elementIDNum == 14) {
                 validateBmpWw.clearAllValidations();
-            } else if (i == 15) {
+            } else if (elementIDNum == 15) {
                 validateBmpCb.clearAllValidations();
-                validationsBmpCb();
-            } else if (i == 16) {
+            } else if (elementIDNum == 16) {
                 validateBmpLl.clearAllValidations();
-            } else if (i == 17) {
+            } else if (elementIDNum == 17) {
                 validateBmpTs.clearAllValidations();
-            } else if (i == 19) {
+            } else if (elementIDNum == 19) {
                 validateBmpCc.clearAllValidations();
             }
-          } else { //checkbox checked
-            if (msie > 0 || trident > 0 || edge > 0) { //If IE
-              check.show();
-            } else {
-              $("tbody#"+i).show();
-            }
-            //add validations for inputs when checkbox checked
-            if (i == 1 || elementIDNum == 1) {
+          } else { //add validations for inputs when checkbox checked
+            check.show();
+            if (elementIDNum == 1) {
               validationsBmpAi();
-            } else if (i == 3 || elementIDNum == 3) {
+            } else if (elementIDNum == 3) {
                 validationsBmpTd();
-            } else if (i == 8 || elementIDNum == 8) {
+            } else if (elementIDNum == 8) {
                 validationsBmpWl();
-            } else if (i == 9 || elementIDNum == 9) {
+            } else if (elementIDNum == 9) {
                 validationsBmpPnd();
-            } else if (i == 10 || elementIDNum == 10) {
+            } else if (elementIDNum == 10) {
                 validationsBmpSf();
-            } else if (i == 13 || elementIDNum == 13) {
+            } else if (elementIDNum == 13) {
                 validationsBmpFs();
-            } else if (i == 14 || elementIDNum == 14) {
+            } else if (elementIDNum == 14) {
                 validationsBmpWw();
-            } else if (i == 15 || elementIDNum == 15) {
+            } else if (elementIDNum == 15) {
                 validationsBmpCb();
-            } else if (i == 16 || elementIDNum == 16) {
+            } else if (elementIDNum == 16) {
                 validationsBmpLl();
-            } else if (i == 17 || elementIDNum == 17) {
+            } else if (elementIDNum == 17) {
                 validationsBmpTs();
-            } else if (i == 19 || elementIDNum == 19) {
+            } else if (elementIDNum == 19) {
                 validationsBmpCc();
             }
-          } if (i > 12 && i < 16 || elementIDNum > 12 && elementIDNum < 16) {
-              if ((i == 13 || elementIDNum == 13)&& ($('#select_12').is(':checked') || $('#select_14').is(':checked') || $('#select_15').is(':checked'))) {
+          } if (elementIDNum > 12 && elementIDNum < 16) {
+              if (elementIDNum == 13 && ($('#select_12').is(':checked') || $('#select_14').is(':checked') || $('#select_15').is(':checked'))) {
                 if (prompt_user()) {
                   validationsBmpFs(0);
-                } else { confirm_check(i); }
-              } else if ((i == 14 || elementIDNum == 14) && ($('#select_12').is(':checked') || $('#select_13').is(':checked') || $('#select_15').is(':checked'))) {
+                } else { confirm_check(elementIDNum); }
+              } else if (elementIDNum == 14 && ($('#select_12').is(':checked') || $('#select_13').is(':checked') || $('#select_15').is(':checked'))) {
                 if (prompt_user()) {
                   validationsBmpWw(0);
-                } else { confirm_check(i); }
-              } else if ((i == 15 || elementIDNum == 15) && ($('#select_12').is(':checked') || $('#select_13').is(':checked') || $('#select_14').is(':checked'))) {
+                } else { confirm_check(elementIDNum); }
+              } else if (elementIDNum == 15 && ($('#select_12').is(':checked') || $('#select_13').is(':checked') || $('#select_14').is(':checked'))) {
                 if (prompt_user()) {
                   validationsBmpCb(0);
-                } else { confirm_check(i); }
+                } else { confirm_check(elementIDNum); }
               }
           }
         });
