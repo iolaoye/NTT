@@ -181,17 +181,19 @@ p {
   text-decoration: underline;
 }
 
-.nav-sidebar > .active > a:hover {
-
-}
-
 .nav-pills > li.active > a {
     color: #fff;
     background-color: #20689B;
     text-decoration: none;
 }
 
+.nav-sidebar-sub > li > a:hover {
+  background-color: #337ab7;
+}
 
+.nav-sidebar > li > a:hover {
+  background-color: #337ab7;
+}
 
 /*
  * Main content
