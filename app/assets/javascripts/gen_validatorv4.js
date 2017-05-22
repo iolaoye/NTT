@@ -15,6 +15,7 @@
     -------------------------------------------------------------------------
 */
 
+
 function Validator(frmname)
 {
     this.validate_on_killfocus = false;
