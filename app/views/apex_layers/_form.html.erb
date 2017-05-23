@@ -41,7 +41,7 @@
   </div>
   <div class="field">
     <%= f.label "PH" + ":" %>
-    <%= f.number_field :ph, :class => "gvTitleStyleNumber", min: 0 %>
+    <%= f.number_field :ph, :class => "gvTitleStyleNumber", min: 0, :step => '0.1' %>
   </div>
   <div class="field">
     <%= f.label "SMB" + ":" %>
