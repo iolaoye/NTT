@@ -23,7 +23,7 @@
     <%= field_set_tag t('aplcat.animal_parameters'), class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.noc') %>
-		<%= f.number_field :noc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.noc'), :step => 'any'  %> 
+		<%= f.number_field :noc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.noc'), :step => 'any'  %>
 	  </div>
 	  <div class="field">
 		<%=  t('aplcat.nomb') %>
@@ -236,8 +236,8 @@
 
   <div class="actions">
     <%= hidden_field_tag(:type, @type) %>
-	<%= f.submit  t('submit.save'), :class => "btn btn-primary"  %>
-    <%= link_to t('general.back'), project_field_scenarios_path(@project, @field)  %>
+	  <%= f.submit  t('submit.save'), :class => "btn btn-primary"  %>
+    <%= link_to t('general.back'), project_field_scenarios_path(@project, @field), :class => "btn btn-primary"  %>
   </div>
 <% end %>
 
@@ -245,7 +245,7 @@
 	function show_div() {
 	    var div_id = ""
 		for(i=1; i<= 7; i++) {
-			div_id = "div_".concat(i);			
+			div_id = "div_".concat(i);
 		    document.getElementById(div_id).style.display="none";
 		}
 
