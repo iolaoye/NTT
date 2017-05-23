@@ -69,6 +69,8 @@ class ResultsController < ApplicationController
     end
   	if !(params[:field_id] == "0")
   		@field = Field.find(params[:field_id])
+	else
+	    @field = 0
   	end
   	@scenario1 = session[:scenario1]
   	@scenario2 = session[:scenario2]
