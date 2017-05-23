@@ -39,9 +39,9 @@
             <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
               <tr>
 				        <% if I18n.locale.equal?(:en) %>
-					        <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+					        <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %> class="bmp"><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
 				        <% else %>
-					        <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %>><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
+					        <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %> class="bmp"><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
 				        <% end %>
 				        <% if bmp.id != nil %>
 					        <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
@@ -66,7 +66,7 @@
                       <%= radio_button_tag :bmp_cb1, "2", true %> <%= t('bmp.autofertigation') %>
                     <% else %>
                       <%= radio_button_tag :bmp_cb1, "1"%> <%= t('bmp.autoirrigation') %>
-                        <%= radio_button_tag :bmp_cb1, "2" %> <%= t('bmp.autofertigation') %>
+                      <%= radio_button_tag :bmp_cb1, "2" %> <%= t('bmp.autofertigation') %>
                   <%end%>
                 </td>
               </tr>
@@ -498,7 +498,7 @@
   </div>
 <% end %>
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
     var ua = window.navigator.userAgent;
@@ -508,26 +508,25 @@
     //Hide all BMPs on page load
     $(".toggable").hide();
     //declare validation variables for each BMP
-	var validateBmpAi = new Validator("bmpsForm");
-	var validateBmpTd = new Validator("bmpsForm");
-	var validateBmpWl = new Validator("bmpsForm");
-	var validateBmpPnd = new Validator("bmpsForm");
-	var validateBmpSf = new Validator("bmpsForm");
-	var validateBmpRf = new Validator("bmpsForm");
-	var validateBmpFs = new Validator("bmpsForm");
-	var validateBmpWw = new Validator("bmpsForm");
-	var validateBmpCb = new Validator("bmpsForm");
-	var validateBmpLl = new Validator("bmpsForm");
-	var validateBmpTs = new Validator("bmpsForm");
-	var validateBmpCc = new Validator("bmpsForm");
+  	var validateBmpAi = new Validator("bmpsForm");
+  	var validateBmpTd = new Validator("bmpsForm");
+  	var validateBmpWl = new Validator("bmpsForm");
+  	var validateBmpPnd = new Validator("bmpsForm");
+  	var validateBmpSf = new Validator("bmpsForm");
+  	var validateBmpRf = new Validator("bmpsForm");
+  	var validateBmpFs = new Validator("bmpsForm");
+  	var validateBmpWw = new Validator("bmpsForm");
+  	var validateBmpCb = new Validator("bmpsForm");
+  	var validateBmpLl = new Validator("bmpsForm");
+  	var validateBmpTs = new Validator("bmpsForm");
+  	var validateBmpCc = new Validator("bmpsForm");
     //BMP Toggle (show/hide)
-    $('[id^=bmp]').click(function() {
+    $('[class^=bmp]').click(function() {
     	//extracts id # from id of element clicked (e.g. bmp3 = 3)
 		var elementIDNum = (this.id).replace(/[^0-9]+/g, "");
-		var concat = "#" + elementIDNum;
-		var clicked = $("#"+elementIDNum);
+		var clicked = $('#'+elementIDNum);
 		clicked.each(function(i, elem) {
-			$(".toggable").not(this).hide(); //shows one BMP at a time
+			$(".toggable").not(elem).hide(); //shows one BMP at a time
 			//toggle functionality workaround compatible with IE
 			$(elem).toggle($(elem).css('display') == 'none');
      	});
