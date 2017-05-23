@@ -28,7 +28,7 @@
 	<% field_name = "   (" + Field.find(params[:field_id]).field_name + ")"	 %>
 <% end %>
 <% if Project.find(params[:project_id]).fields.count > 0 %>
-<li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || ((controller_name == "results") && request.url.include?(url_for("simulation=scenario"))) || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations") || (controller_name == "sites") || session[:simulation] == 'scenario')? "active" : "" %>">
+<li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || ((controller_name == "results") && request.url.include?(url_for("simulation=scenario"))) || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations") || (controller_name == "sites") || (session[:simulation] == 'scenario')) ? "active" : "" %>">
 	<%= link_to t('menu.fields') + field_name, project_fields_path(@project) %>
 </li>
 <% end %>
