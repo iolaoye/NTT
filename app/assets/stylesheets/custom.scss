@@ -565,7 +565,11 @@ table.results_table td {
 .results-label {
   padding-left: 65px;
   padding-top: 5px;
-  font-size: 14px;
+  font-size: 17px;
+}
+
+.results-label-sub {
+  font-size: 14px !important;
 }
 
 .table > tbody > tr > td.indent {
