@@ -11,12 +11,12 @@ switch_view = ->
       $("#div_operations").toggle(true)
   else
       $("#div_operations").toggle(false)
-	  
+
 upload_crop = (show) ->
   $("#div_new").toggle(show)
-  
+
 updatePlantPopulation = ->
-  if ($("#operation_activity_id").val() == "1") 
+  if ($("#operation_activity_id").val() == "1")
      url = "/crops/" + $("#operation_crop_id").val() + ".json"
 	 $.getJSON url, (crop) ->
         $("#operation_amount").val(crop.plant_population_ft)
@@ -61,6 +61,7 @@ updateTypes = ->
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
+      $("#operation_subtype_id").prop('disabled',true)
     when "3"   # tillage
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
@@ -101,7 +102,6 @@ updateTypes = ->
           items.push "<option value=\"" + tillage.id + "\">" + tillage.name + "</option>"
         else
           items.push "<option value=\"" + tillage.code + "\">" + tillage.eqp + "</option>"
-        
     $("#operation_type_id").html items.join("")
     $("#operation_type_id").removeAttr("disabled")
 
@@ -121,9 +121,14 @@ updateFerts = ->
     items.push "<option value>Select One</option>"
     $.each fertilizers, (key, fertilizer) ->
         items.push "<option value=\"" + fertilizer.id + "\">" + fertilizer.name + "</option>"
-        
+
     $("#operation_subtype_id").html items.join("")
     $("#operation_subtype_id").removeAttr("disabled")
+    $("#operation_moisture").val("")
+    $("#operation_no3_n").val("")
+    $("#operation_po4_p").val("")
+    $("#operation_org_n").val("")
+    $("#operation_org_p").val("")
     if ($("#operation_activity_id").val() == "7")
         updateNutrients(1)
 
@@ -134,14 +139,14 @@ updateAnimals = ->
     items.push "<option value>Select One</option>"
     $.each fertilizers, (key, fertilizer) ->
         items.push "<option value=\"" + fertilizer.id + "\">" + fertilizer.name + "</option>"
-        
+
     $("#operation_subtype_id").html items.join("")
     $("#operation_subtype_id").removeAttr("disabled")
-	
+
 updateTitles = ->
   title = t 'operations.fertilizer'
   $("#typeTitle").text(title)
-	
+
 $(document).ready ->
     $("#btnBack").click ->
         upload_crop(false)
@@ -157,7 +162,7 @@ $(document).ready ->
 
     $("#operation_activity_id").change ->
       updateTypes()
-	
+
     $("#operation_type_id").change ->
       updateFerts()
 
@@ -165,7 +170,7 @@ $(document).ready ->
       updateNutrients(0)
 
     $("#operation_crop_id").change ->
-      updatePlantPopulation() 
+      updatePlantPopulation()
 
     $("#rowIdOdd").click ->
       updateTitles()
