@@ -96,8 +96,19 @@
 <% end %>
 
 <script>
+window.onload = function() {
+	var id = 0;
+	while (id < 500) { //find alternative due to id limitations. watershed count?
+		var watershed = localStorage.getItem('watershed'+id);
+		if (watershed != null && watershed === 'true') {
+			show_crop(id);
+		}
+		id++;
+	}
+}
 
 function show_crop(id) {
+	localStorage.setItem('watershed'+id, 'true');
   var lbl_name = document.getElementById("lbl_name" + id);
   if (lbl_name.innerText == "[+]") {lbl_name.innerText = "[-]";} else { lbl_name.innerText = "[+]";}
   var crop_div = document.getElementById("crop_" + id);
@@ -105,6 +116,7 @@ function show_crop(id) {
   }
 
 function hide_crop(id) {
+	localStorage.setItem('watershed'+id, 'true');
   var expand_crop_div = document.getElementById("expand_crop_" + id);
   var hide_crop_div = document.getElementById("hide_crop_" + id);
   var crop_div = document.getElementById("crop_" + id);

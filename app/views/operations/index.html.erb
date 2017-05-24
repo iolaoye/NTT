@@ -362,8 +362,18 @@
 
 <script>
 
+window.onload = function() {
+	for(ele = 0; ele < 223; ele++) {
+		var bmp = localStorage.getItem('bmp'+ele);
+		if (bmp != null && bmp === 'true') {
+			show_crop(ele);
+		}
+	}
+}
+
 function show_crop(ele) {
   var crop_id = ele
+	localStorage.setItem('bmp'+ele, 'true');
 
   var crop_show_div = document.getElementById("expand_crop_" + crop_id);
   var crop_hide_div = document.getElementById("crop_" + crop_id);
@@ -376,6 +386,7 @@ function show_crop(ele) {
 
 function hide_crop(ele) {
   var crop_id = ele
+	localStorage.setItem('bmp'+ele, 'false');
 
   var crop_show_div = document.getElementById("expand_crop_" + crop_id);
   var crop_hide_div = document.getElementById("crop_" + crop_id);
