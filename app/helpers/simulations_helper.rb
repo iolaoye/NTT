@@ -12,44 +12,55 @@ module SimulationsHelper
   COMA = ", "
 
   def create_control_file()
-    apex_string = ""
+    @apex_control = ""
     apex_control = ApexControl.where(:project_id => params[:project_id])
     require 'net/http'
     apex_control.each do |c|
       case c.control_description_id
         when 1..19 #line 1
-          apex_string += sprintf("%4d", c.value)
+          @apex_control += sprintf("%4d", c.value)
         when 20
-          apex_string += sprintf("%4d", c.value) + "\n"
+          @apex_control += sprintf("%4d", c.value) + "\n"
         when 21..37 #line 2
-          apex_string += sprintf("%4d", c.value)
+          @apex_control += sprintf("%4d", c.value)
         when 38
-          apex_string += sprintf("%4d", c.value) + "\n"
+          @apex_control += sprintf("%4d", c.value) + "\n"
         when 39..47 #line 3
-          apex_string += sprintf("%8.2f", c.value)
+          @apex_control += sprintf("%8.2f", c.value)
         when 48
-          apex_string += sprintf("%8.2f", c.value) + "\n"
+          @apex_control += sprintf("%8.2f", c.value) + "\n"
         when 49..57 #line 4
-          apex_string += sprintf("%8.2f", c.value)
+          @apex_control += sprintf("%8.2f", c.value)
         when 58
-          apex_string += sprintf("%8.2f", c.value) + "\n"
+          @apex_control += sprintf("%8.2f", c.value) + "\n"
         when 59..67 #line 5
-          apex_string += sprintf("%8.2f", c.value)
+          @apex_control += sprintf("%8.2f", c.value)
         when 68
-          apex_string += sprintf("%8.2f", c.value) + "\n"
+          @apex_control += sprintf("%8.2f", c.value) + "\n"
         when 69..75 #line 6
-          apex_string += sprintf("%8.2f", c.value)
+          @apex_control += sprintf("%8.2f", c.value)
         when 76
-          apex_string += sprintf("%8.2f", c.value) + "\n"
+          @apex_control += sprintf("%8.2f", c.value) + "\n"
       end
     end
-    msg = send_file_to_APEX(apex_string, "Apexcont.dat")
-    #print_string_to_file(apex_string, "Apexcont.dat")
+    #msg = send_file_to_APEX(apex_string, "Apexcont.dat")
+	msg = "OK"
+  end
+
+  def send_files_to_APEX(file)
+    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+	if file == "FILES" then debugger end
+    res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth)
+    if res.body.include?("Created") then
+      return "OK"
+    else
+      return res.body
+    end
   end
 
   def send_file_to_APEX(apex_string, file)
     uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes")
+    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -58,78 +69,79 @@ module SimulationsHelper
   end
 
   def create_parameter_file()
-    apex_string = ""
-    apex_string +="  90.050  99.950" + "\n"
-    apex_string +="   10.50  100.95" + "\n"
-    apex_string +="   50.10   95.95" + "\n"
-    apex_string +="    0.00    0.00" + "\n"
-    apex_string +="   25.05   75.90" + "\n"
-    apex_string +="    5.10  100.95" + "\n"
-    apex_string +="    5.25   50.95" + "\n"
-    apex_string +="    20.5   80.99" + "\n"
-    apex_string +="    1.10   10.99" + "\n"
-    apex_string +="   10.05  100.90" + "\n"
-    apex_string +="    5.01   20.90" + "\n"
-    apex_string +="    5.05  100.50" + "\n"
-    apex_string +="    1.80    3.99" + "\n"
-    apex_string +="    5.10   20.95" + "\n"
-    apex_string +="   10.10  100.95" + "\n"
-    apex_string +="    3.10   20.99" + "\n"
-    apex_string +="   20.10   50.95" + "\n"
-    apex_string +="    5.10   50.30" + "\n"
-    apex_string +="   10.01   25.95" + "\n"
-    apex_string +="  400.05  600.80" + "\n"
-    apex_string +="    10.5   100.9" + "\n"
-    apex_string +="  100.01  1000.9" + "\n"
-    apex_string +="    1.50    3.99" + "\n"
-    apex_string +="    1.25    5.95" + "\n"
-    apex_string +="   50.10   55.90" + "\n"
-    apex_string +="                " + "\n"
-    apex_string +="                " + "\n"
-    apex_string +="                " + "\n"
-    apex_string +="                " + "\n"
-    apex_string +="   50.00   10.00" + "\n"
+    @apex_parm = ""
+    @apex_parm +="  90.050  99.950" + "\n"
+    @apex_parm +="   10.50  100.95" + "\n"
+    @apex_parm +="   50.10   95.95" + "\n"
+    @apex_parm +="    0.00    0.00" + "\n"
+    @apex_parm +="   25.05   75.90" + "\n"
+    @apex_parm +="    5.10  100.95" + "\n"
+    @apex_parm +="    5.25   50.95" + "\n"
+    @apex_parm +="    20.5   80.99" + "\n"
+    @apex_parm +="    1.10   10.99" + "\n"
+    @apex_parm +="   10.05  100.90" + "\n"
+    @apex_parm +="    5.01   20.90" + "\n"
+    @apex_parm +="    5.05  100.50" + "\n"
+    @apex_parm +="    1.80    3.99" + "\n"
+    @apex_parm +="    5.10   20.95" + "\n"
+    @apex_parm +="   10.10  100.95" + "\n"
+    @apex_parm +="    3.10   20.99" + "\n"
+    @apex_parm +="   20.10   50.95" + "\n"
+    @apex_parm +="    5.10   50.30" + "\n"
+    @apex_parm +="   10.01   25.95" + "\n"
+    @apex_parm +="  400.05  600.80" + "\n"
+    @apex_parm +="    10.5   100.9" + "\n"
+    @apex_parm +="  100.01  1000.9" + "\n"
+    @apex_parm +="    1.50    3.99" + "\n"
+    @apex_parm +="    1.25    5.95" + "\n"
+    @apex_parm +="   50.10   55.90" + "\n"
+    @apex_parm +="                " + "\n"
+    @apex_parm +="                " + "\n"
+    @apex_parm +="                " + "\n"
+    @apex_parm +="                " + "\n"
+    @apex_parm +="   50.00   10.00" + "\n"
     apex_parameter = ApexParameter.where(:project_id => params[:project_id])
     apex_parameter.each do |p|
       #number = Parameter.find(p.parameter_description_id).number
       case p.parameter_description_id
         when 10, 20, 30, 50, 60, 70, 80, 90
-          apex_string += sprintf("%8.2f", p.value) + "\n"
+          @apex_parm += sprintf("%8.2f", p.value) + "\n"
         when 19, 36, 65, 76, 87, 88
-          apex_string += sprintf("%8.3f", p.value)
+          @apex_parm += sprintf("%8.3f", p.value)
         when 40
-          apex_string += sprintf("%8.3f", p.value) + "\n"
+          @apex_parm += sprintf("%8.3f", p.value) + "\n"
         when 23, 43, 55, 58, 84, 85
-          apex_string += sprintf("%8.4f", p.value)
+          @apex_parm += sprintf("%8.4f", p.value)
         when 39
-          apex_string += sprintf("%8.5f", p.value)
+          @apex_parm += sprintf("%8.5f", p.value)
         else
-          apex_string += sprintf("%8.2f", p.value)
+          @apex_parm += sprintf("%8.2f", p.value)
       end #end case p.line
     end #end each do p
-    apex_string +="\n"
-    apex_string +="    .044     31.     .51     .57     10." + "\n"
-    apex_string +=" " + "\n"
-    msg = send_file_to_APEX(apex_string, "parm.dat")
-    #print_string_to_file(apex_string, "parm.dat")
+    @apex_parm +="\n"
+    @apex_parm +="    .044     31.     .51     .57     10." + "\n"
+    @apex_parm +=" " + "\n"
+    #msg = send_files_to_APEX("FILES")
+	return "OK"
   end
 
   def create_site_file(field_id)
     site = Site.find_by_field_id(field_id)
     #site_file = Array.new
-    apex_string = ""
-    apex_string +=
-    apex_string += " .sit file Subbasin:1  Date: " + @dtNow1 + "\n"
-    apex_string += "" + "\n"
-    apex_string += "" + "\n"
-    apex_string += sprintf("%8.2f", site.ylat) + sprintf("%8.2f", site.xlog) + sprintf("%8.2f", site.elev) +
+    @apex_site = ""
+    @apex_site +=
+    @apex_site += " .sit file Subbasin:1  Date: " + @dtNow1 + "\n"
+    @apex_site += "" + "\n"
+    @apex_site += "" + "\n"
+    @apex_site += sprintf("%8.2f", site.ylat) + sprintf("%8.2f", site.xlog) + sprintf("%8.2f", site.elev) +
     sprintf("%8.2f", site.apm) + sprintf("%8.2f", site.co2x) + sprintf("%8.2f", site.cqnx) + sprintf("%8.2f", site.rfnx) +
     sprintf("%8.2f", site.upr) + sprintf("%8.2f", site.unr) + sprintf("%8.2f", site.fir0)
     for i in 5..25 #print 21 additonal lines in the site file, which do not need any information at this time.
-      apex_string += "" + "\n"
+      @apex_site += "" + "\n"
     end # end for
-    msg = send_file_to_APEX(apex_string, "APEX.sit")
+    #msg = send_files_to_APEX("FILES")
     #print_array_to_file(site_file, "APEX.sit")
+	return "OK"
   end
 
   def create_wind_wp1_files(dir_name)
@@ -170,14 +182,14 @@ module SimulationsHelper
       #copy the file path
       path = File.join(OWN, weather.weather_file)
       FileUtils.cp_r(path, dir_name + "/APEX.wth")
-      data = read_file(File.join(OWN, weather.weather_file), true)
+      @apex_wth = read_file(File.join(OWN, weather.weather_file), true)
     else
       path = File.join(PRISM1, weather.weather_file)
       #client = Savon.client(wsdl: URL_Weather)
       #response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
       #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
       #print_array_to_file(PATH, "APEX.wth")
-      data = send_file_to_APEX("WTH", path)
+      @apex_wth = send_file_to_APEX("WTH", path)
     end
     #todo after file is copied if climate bmp is in place modified the weather file.
     bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)
@@ -187,21 +199,21 @@ module SimulationsHelper
       climate_array = update_hash(climate, climate_array)
     end
     if climates.first != nil
-      data.each_line do |day|
-        month = data[6, 4].to_i
+      @apex_wth.each_line do |day|
+        month = @apex_wth[6, 4].to_i
         max_input = climate_array[month]["max"]
         min_input = climate_array[month]["min"]
         pcp_input = climate_array[month]["pcp"] / 100
-        max_file = data[20, 6].to_f
-        min_file = data[26, 6].to_f
-        pcp_file = data[32, 7].to_f
+        max_file = @apex_wth[20, 6].to_f
+        min_file = @apex_wth[26, 6].to_f
+        pcp_file = @apex_wth[32, 7].to_f
         if max_input != 0
           max = max_file + max_input
           max = sprintf("%.1f", max)
           while max.length < 6
             max = " " + max
           end
-          data[20, 6] = max
+          @apex_wth[20, 6] = max
         end #end if max
         if min_input != 0
           min = min_file + min_input
@@ -209,7 +221,7 @@ module SimulationsHelper
           while min.length < 6
             min = " " + min
           end
-          data[26, 6] = min
+          @apex_wth[26, 6] = min
         end #end if min
         if pcp_input != 0
           pcp = pcp_file + pcp_file * pcp_input
@@ -217,30 +229,17 @@ module SimulationsHelper
           while pcp.length < 7
             pcp = " " + pcp
           end
-          data[32, 7] = pcp
+          @apex_wth[32, 7] = pcp
         end #end if pcp
-        #climate_array[month]["key"]
-        #session[:month] = str[6, 4].to_i
-        #session[:max] = str[20, 6].to_f
-        #session[:min] = str[26, 6].to_f
-        #session[:pcp] = str[32, 7].to_f
       end # end each
-      #@climate_file_array = Array.new
-      #newLine = "  " + oper.to_s
-      #newLine += " C:FERT 5 CUST      5.      0.      0.      0.      0.     0.0    0.00   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000"
-      #newLine += sprintf("%8.2f", depthAnt * 25.4)
-      #newLine += "   0.000   0.000   0.000   0.000   9.000   0.000   0.000   0.000   0.000   5.000   5.363  FERTILIZER APP        " + oper.to_s + "\n"
-      #@change_till_depth.push(newLine)
     end #end if
-    #print_array_to_file(data, "Apex.wth")
-    msg = send_file_to_APEX(data, "APEX.wth")
+    #msg = send_file_to_APEX(@apex_wth, "APEX.wth")
     #todo fix widn and wp1 files with the real name
+	msg = send_files_to_APEX("FILES")
   end
 
   def create_soils()
     msg = "OK"
-    #APEXStrings1 As New System.Text.StringBuilder
-    #Dim ds1 As IEnumerable(Of LayersData)
     soilSlope =0
     series = ""
     horizgen = ""
