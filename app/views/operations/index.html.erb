@@ -67,7 +67,7 @@
 						</tr>
 					<% end %>
 				  </table>
-				  <%= link_to t('operation.add_planting'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => crop.id), :class => 'btn btn-success'  %>
+				  <%= link_to "Add New Planting Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => crop.id), :class => 'btn btn-success'  %>
 			   </div>
 		  <% end %>
 
@@ -95,7 +95,7 @@
 						</tr>
 					<% end %>
 				  </table>
-				  <%= link_to t('operation.add_fertilizer'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 2, :crop => crop.id), :class => 'btn btn-success'  %>
+				  <%= link_to "Add New Fertilizer Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 2, :crop => crop.id), :class => 'btn btn-success'  %>
 				</div>
 		  <% end %>
 
@@ -119,7 +119,7 @@
 					</tr>
 					<% end %>
 				  </table>
-				  <%= link_to t('operation.add_tillage'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 3, :crop => crop.id), :class => 'btn btn-success'  %>
+				  <%= link_to "Add New Tillage Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 3, :crop => crop.id), :class => 'btn btn-success'  %>
 				</div>
 		  <% end %>
 
@@ -142,7 +142,7 @@
 							</tr>
 						<% end %>
 				  </table>  <br>
-				  <%= link_to t('operation.add_harvest'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 4, :crop => crop.id), :class => 'btn btn-success'  %>
+				  <%= link_to "Add New Harvest Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 4, :crop => crop.id), :class => 'btn btn-success'  %>
 				</div>
 		  <% end %>
 
@@ -165,7 +165,7 @@
 						</tr>
 					<% end %>
 				</table>
-				<%= link_to t('operation.add_kill'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 5, :crop => crop.id), :class => 'btn btn-success'  %>
+				<%= link_to "Add New Kill Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 5, :crop => crop.id), :class => 'btn btn-success'  %>
 			  </div>
 		  <% end %>
 
@@ -198,7 +198,7 @@
 				</tr>
 				<% end %>
 			   </table>     <br>
-			   <%= link_to t('operation.add_irrigation'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 6, :crop => crop.id), :class => 'btn btn-success'  %>
+			   <%= link_to "Add New Irrigation Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 6, :crop => crop.id), :class => 'btn btn-success'  %>
 			 </div>
 		  <% end %>
 
@@ -229,7 +229,7 @@
 					  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
 				<% end %>
 				</table>     <br>
-			   <%= link_to t('operation.add_burn'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 9, :crop => crop.id), :class => 'btn btn-success'  %>
+			   <%= link_to "Add New Burn Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 9, :crop => crop.id), :class => 'btn btn-success'  %>
 			  </div>
 	      <% end %>
 
@@ -243,7 +243,7 @@
 					  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %></td></tr>
 				<% end %>
 			  </table>     <br>
-			   <%= link_to t('operation.add_liming'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 10, :crop => crop.id), :class => 'btn btn-success'  %>
+			   <%= link_to "Add New Liming Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 10, :crop => crop.id), :class => 'btn btn-success'  %>
 			  </div>
 			<% end %>
 
@@ -258,7 +258,7 @@
 						</td></tr>
 					<% end %>
 			      </table>     <br>
-			      <%= link_to "Add Pesticide Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 11, :crop => crop.id), :class => 'btn btn-success'  %>
+			      <%= link_to "Add New Pesticide Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 11, :crop => crop.id), :class => 'btn btn-success'  %>
 			    </div>
 			 <% end %>
 		</div>

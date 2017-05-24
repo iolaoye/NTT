@@ -50,7 +50,7 @@
 							<div class="panel panel-primary">
   								<table class="optable" style="margin-rigth: 15px">
 									<tr><td colspan = "5"><%= t('instructions.watersheds', watershed: watershed.name) %></td></tr>
-									<tr>						
+									<tr>
 										<% fields = Field.where(:location_id => @project.location.id) %>
 										<td><b><%=  t('menu.fields') %></b></td>
 										<td><%= collection_select "field" + j.to_s, :id, fields, :id, :field_name, {:prompt => t('helpers.select.field')} %></td>
