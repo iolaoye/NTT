@@ -672,6 +672,18 @@ label {
   margin: 0 auto;
 }
 
+@-webkit-keyframes buttonPulse {
+  from { background-color: dodgerblue; -webkit-box-shadow: 0 0 9px #ffffff; }
+  50% { background-color: #337ab7; -webkit-box-shadow: 0 0 18px #2e6da4; }
+  to { background-color: dodgerblue; -webkit-box-shadow: 0 0 9px #ffffff; }
+}
+
+.btn-primary[disabled] {
+  -webkit-animation-name: buttonPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
 /* HOVER STYLES */
 div#pop-up {
   display: none;
