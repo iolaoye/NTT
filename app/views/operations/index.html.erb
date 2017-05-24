@@ -5,7 +5,7 @@
   </div>
 <% end %>
 
-<div class="page-header"><h1><%= t('menu.managements') %></h1></div>
+<div class="page-header"><h1><%= t('menu.operations') %></h1></div>
 
 <%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
 <%#= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@project, @field, @scenario), data: {disable_with: 'Please wait. Saving the seleted crop rotation . . .'}, :class => 'btn btn-primary', :id => 'new_crop' %>
@@ -47,12 +47,12 @@
 		<div id="crop_detail_<%= crop.id %>" style="display:none">
 		  <% if @scenario.planting_operations(crop).any? %>
 				<div class="panel panel-primary">
-				  <h4>Planting</h4>
+				  <h4><%= t('operation.planting') %></h4>
 				  <table class="table">
 					<tr class="optable">
 						<td class="optable"><b><%= t('general.date') %></b></td>
 						<td class="optable"><b><%= t('general.type') %></b></td>
-						<td class="optable" style="text-align: right"><b>Seeding amount (seeds/ft)</b></td>
+						<td class="optable" style="text-align: right"><b><%= t('operation.seed') %></b></td>
 						<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
 					</tr>
 					<% @scenario.planting_operations(crop).each do |op| %>
@@ -73,14 +73,14 @@
 
 		  <% if @scenario.fertilizer_operations(crop).any? %>
 				<div class="panel panel-primary">
-				  <h4>Fertilizer</h4>
+				  <h4><%= t('operation.fertilizer') %></h4>
 
 				  <table class="table">
 					<tr>
 						<td class="optable"><b><%= t('general.date') %></b></td>
 						<td class="optable"><b><%= t('general.type') %></b></td>
-						<td class="optable" style="text-align: right"><b>Amount applied (lbs/ac)</b></td>
-						<td class="optable" style="text-align: right"><b>Depth</b></td>
+						<td class="optable" style="text-align: right"><b><%= t('operation.amount_applied') %></b></td>
+						<td class="optable" style="text-align: right"><b><%= t('bmp.depth') %></b></td>
 						<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td></tr>
 					<% @scenario.fertilizer_operations(crop).each do |op| %>
 						<tr>
@@ -101,7 +101,7 @@
 
 		  <% if @scenario.tillage_operations(crop).any? %>
 				<div class="panel panel-primary">
-				  <h4>Tillage</h4>
+				  <h4><%= t('operation.tillage') %></h4>
 
 				  <table class="table">
 					<tr>
@@ -125,11 +125,11 @@
 
 		  <% if @scenario.harvest_operations(crop).any? %>
 				<div class="panel panel-primary">
-				  <h4>Harvest </h4>
+				  <h4><%= t('operation.harvest') %></h4>
 
 				  <table class="table">
 					  <tr>
-						<td class="optable"><b><%= (t'pdf.date') %></b></td>
+						<td class="optable"><b><%= t('general.date') %></b></td>
 						<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
 					  </tr>
 						<% @scenario.harvest_operations(crop).each do |op| %>
@@ -148,11 +148,11 @@
 
 		  <% if @scenario.kill_operations(crop).any? %>
 			  <div class="panel panel-primary">
-				<h4>Kill</h4>
+				<h4><%= t('operation.kill') %></h4>
 
 				<table class="table">
 					<tr>
-						<td class="optable"><b><%= (t'pdf.date') %></b></td>
+						<td class="optable"><b><%= t('general.date') %></b></td>
 						<td class="optable"; style="text-align:right"><b><%= t('general.actions') %></b></td>
 					</tr>
 					<% @scenario.kill_operations(crop).each do |op| %>
@@ -171,7 +171,7 @@
 
 		  <% if @scenario.irrigation_operations(crop).any? %>
 			  <div class="panel panel-primary">
-				<h4>Irrigation</h4>
+				<h4><%= t('operation.irrigation') %></h4>
 
 			   <table class="table">
 				<tr>
@@ -220,7 +220,7 @@
 
 		  <% if @scenario.burn_operations(crop).any? %>
 			  <div class="panel panel-primary">
-				<h4>Burn</h4>
+				<h4><%= t('operation.burn') %></h4>
 
 			  <table class="table">
 			   <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable"><b>Actions</b></td></tr>
@@ -235,7 +235,7 @@
 
 		  <% if @scenario.liming_operations(crop).any? %>
 			<div class="panel panel-primary">
-			  <h4>Liming</h4>
+			  <h4><%= t('operation.liming') %></h4>
 			  <table class="table">
 				 <tr><td class="optable"><b>Year</b></td><td class="optable"><b>Month</b></td><td class="optable"><b>Day</b></td><td class="optable">Amount</td><td class="optable"><b>Actions</b></td></tr>
 				<% @scenario.liming_operations(crop).each do |op| %>

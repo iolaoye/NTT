@@ -150,8 +150,8 @@
                         <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
                       <%end%>
                   </td>
-                </tr>
-                          <tr>
+              </tr>
+              <tr>
 					      <td class="indent">
 						      <%= t('bmp.pad') + " " + t('bmp.width') + " (" + t('bmp.ft')  + ")"%>
 						      <%= number_field :bmp_ppnd, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
@@ -181,12 +181,20 @@
               <% end %>
 				    <% when 8 %>
 				      <tr>
-					    <td class="field indent" id = "area" >
-						    <%= label :depth, t('pdf.area') + " (" + t('bmp.acres')  + ")"%>
-						    <%= number_field :bmp_wl, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+					      <td class="field indent" id = "area" >
+						      <%= label :depth, t('pdf.area') + " (" + t('bmp.acres')  + ")"%>
+						      <%= number_field :bmp_wl, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
-				    <% when 9 %>
+              <tr >
+                <td class="indent">
+                  <%= t('bmp.additional_land') %>
+                  <% checked = false %>
+                  <% checked = true if bmp.sides == 1 %>
+                  <%= check_box :bmp_wl, :buffer_land, {checked: checked}  %>
+                </td>
+              </tr>
+              <% when 9 %>
 				      <tr>
 					    <td class="field indent" id = "fraction_control_by_pond" >
 						    <%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_one')  %>
@@ -263,7 +271,7 @@
 						    <%end%>
 					    </td>
             </tr> -->
-				    <% when 13 %>
+            <% when 13 %>
               <tr>
                 <td>
                   <% case bmp.depth%>
@@ -308,13 +316,21 @@
                   <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :step => '0.01', :min => 0.25, :max => 0.75, :class => "gvTitleStyleNumber" %>
                   </td>
               </tr>
-              <tr>
+              <tr style='display:none'>
 					      <td class="indent">
 						      <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
 						      <%= number_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland, :step => '0.01', :min => 0.25, :max => 1.00, :class => "gvTitleStyleNumber" %>
                   </td>
 				      </tr>
-				    <% when 14 %>
+              <tr >
+                <td class="indent">
+                  <%= t('bmp.additional_land') %>
+                  <% checked = false %>
+                  <% checked = true if bmp.sides == 1 %>
+                  <%= check_box :bmp_fs, :buffer_land, {checked: checked}  %>
+                </td>
+              </tr>
+            <% when 14 %>
 				      <tr>
 					    <td class="indent">
 						    <%= label :crop_id, t('operation.crop') %>

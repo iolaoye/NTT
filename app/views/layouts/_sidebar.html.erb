@@ -63,7 +63,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.managements') + "(" + Operation.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_operations_path(@project, @field, @scenario) %>
+            <%= link_to t('menu.operations') + " (" + Operation.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_operations_path(@project, @field, @scenario) %>
           </li>
           <li class="<%= controller_name == "bmps" ? "active" : "" %>">
             <% if controller_name == "bmps" %>
@@ -71,7 +71,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('menu.bmps') + "(" + Bmp.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_bmps_path(@project, @field, @scenario) %>
+            <%= link_to t('menu.bmps') + " (" + Bmp.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_bmps_path(@project, @field, @scenario) %>
           </li>
           <li class="<%= controller_name == "aplcat_paramters" ? "active" : "" %>">
             <% if controller_name == "aplcat_parameters" %>
@@ -84,7 +84,7 @@
           </li>
         </ul>
 	  <% else %>
-	  		<%= link_to t('menu.management') + " " + t('general.scenarios'), project_field_scenarios_path(@project, @field) %></li>
+	  		<%= link_to t('general.management') + " " + t('menu.scenarios'), project_field_scenarios_path(@project, @field) %></li>
       <% end %>
     </li>
 	  <% if @field.results.count > 0 %>

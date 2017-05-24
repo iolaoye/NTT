@@ -430,7 +430,7 @@ en:
     fields: Fields
     soils: Soils
     scenarios: Scenarios
-    managements: Operations
+    operations: Operations
     bmps: Conservation Practices
     subprojects: Subprojects
     economics: Economics
@@ -568,6 +568,22 @@ en:
     org_p: 'Org p (0-1)'
     add_list: Add to list
     select_crop: Select crop
+    planting: Planting
+    tillage: Tillage
+    harvest: Harvest
+    kill: Kill
+    burn: Burn
+    liming: Liming
+    seed: 'Seeding Amount (seeds/ft)'
+    amount_applied: 'Amount Applied (lbs/ac)'
+    add_planting: 'Add Planting Operation'
+    add_fertilizer: 'Add Fertilizer Operation'
+    add_tillage: 'Add Tillage Operation'
+    add_harvest: 'Add Harvest Operation'
+    add_kill: 'Add Kill Operation'
+    add_irrigation: 'Add Irrigation Operation'
+    add_burn: 'Add Burn operation'
+    add_liming: 'Add Liming Operation'
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
@@ -628,6 +644,7 @@ en:
     autofertigation: Autofertigation
     manure_control: Manure Control
     pad: Pad
+    additional_land: Click if this is an additional land
   months:
     january: January
     february: February
