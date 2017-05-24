@@ -628,6 +628,7 @@ en:
     autofertigation: Autofertigation
     manure_control: Manure Control
     pad: Pad
+    additional_land: Click if this is an additional land
   months:
     january: January
     february: February

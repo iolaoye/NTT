@@ -630,6 +630,7 @@ es:
     autofertigation: Fertirrigacion Automatica
     manure_control: Control de estiércol
     pad: Almohadilla
+    additional_land: Seleccione si este Bmp es un terreno adicional
   months:
     january: Enero
     february: Febrero
