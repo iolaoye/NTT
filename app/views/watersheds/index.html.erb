@@ -116,7 +116,7 @@ function show_crop(id) {
   }
 
 function hide_crop(id) {
-	localStorage.setItem('watershed'+id, 'true');
+	localStorage.setItem('watershed'+id, 'false');
   var expand_crop_div = document.getElementById("expand_crop_" + id);
   var hide_crop_div = document.getElementById("hide_crop_" + id);
   var crop_div = document.getElementById("crop_" + id);
