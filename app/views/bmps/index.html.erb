@@ -96,7 +96,14 @@
 				      <tr>
 				        <td class="field indent" id = "irrigation_efficiency" >
                   <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.percentage_range') %>
-                  <%= number_field :bmp_ai, :irrigation_efficiency, :value => (1 - bmp.irrigation_efficiency) * 100, :class => "gvTitleStyleNumber"  %>
+                  <%= number_field :bmp_ai, :irrigation_efficiency, :value => (1 - bmp.irrigation_efficiency) * 100, :class => "gvTitleStyleNumber" %>
+                  <% if bmp.irrigation_id == 1 %> <% range = "70-80%" %>
+                    <% elsif bmp.irrigation_id == 2 %> <% range = "50-70%" %>
+                    <% elsif bmp.irrigation_id == 3 %> <% range = "80-95%" %>
+                    <% elsif bmp.irrigation_id == 7 %> <% range = "80-95%" %>
+                    <% elsif bmp.irrigation_id == 8 %> <% range = "50-70%" %>
+                  <% end %>
+                  <input type="text" readonly style="border:none;" id="bmp_ai_irrigation_efficiency_lable" value=<%=range%>
                 </td>
 				      </tr>
 				      <tr>
