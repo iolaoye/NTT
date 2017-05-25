@@ -20,8 +20,7 @@ class OperationsController < ApplicationController
 	crop_schedule()
     
     add_breadcrumb 'Operations'
-
-    array_of_ids = @scenario.operations.order(:year).map(&:crop_id)
+    array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
 
     respond_to do |format|
@@ -323,6 +322,7 @@ class OperationsController < ApplicationController
             Operation.where(:scenario_id => params[:scenario_id]).destroy_all
           end
           #take the event for the cropping_system selected and replace the operation and soilOperaition files for the scenario selected.
+		  crop_schedule_class_id = @cropping_systems.find(params[:cropping_system][:id]).class_id
           events = Schedule.where(:crop_schedule_id => params[:cropping_system][:id])
           events.each do |event|
             @operation = Operation.new
@@ -349,6 +349,15 @@ class OperationsController < ApplicationController
                 @operation.year = event.year
               end
             end
+			if crop_schedule_class_id == 2 then
+				case true
+					when @highest_year > 1 && params[:year].to_i >= @highest_year
+						if event.activity_id == 5 then @operation.year = 1 else @operation.year = @highest_year end
+					when @highest_year > 1 && params[:year].to_i < @highest_year
+					debugger
+						if event.activity_id == 5 then @operation.year = params[:year].to_i + 1 else @operation.year = params[:year].to_i end
+				end
+			end
 			if event.crop_schedule_id == 4 && @highest_year > @operation.year && @operation.activity_id == 5 # ask if corp rotation is winter wheat and the highest year is > than the kill operation. Since the kill is first in the table we need to be sure where to put it.
 				@operation.year += 1
 			end

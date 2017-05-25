@@ -2,6 +2,24 @@
 # All this logic will automatically be irrigation in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+take_efficiency = ->
+   switch $("#bmp_ai_irrigation_id").val()
+       when "1" #Sprinkle
+           $("#bmp_ai_irrigation_efficiency").val(70)
+           $("#bmp_ai_irrigation_efficiency_lable").val("70 - 80%")
+       when "2" #Furrow/Flood
+           $("#bmp_ai_irrigation_efficiency").val(65)
+           $("#bmp_ai_irrigation_efficiency_lable").val("50 - 70%")
+       when "3" #Drip
+           $("#bmp_ai_irrigation_efficiency").val(85)
+           $("#bmp_ai_irrigation_efficiency_lable").val("80 - 95%")
+       when "7" #Furow Diken
+           $("#bmp_ai_irrigation_efficiency").val(90)
+           $("#bmp_ai_irrigation_efficiency_lable").val("80 - 95%")
+       when "8" #Tailwater
+           $("#bmp_ai_irrigation_efficiency").val(65)
+           $("#bmp_ai_irrigation_efficiency_lable").val("50 - 70%")
+
 update_max_row = ->
     top = $("#climate_max_1").val()
     $(".max").val(top)
@@ -301,6 +319,8 @@ buffers = (opt) ->
 #bmp_bmpsublist_id
 $(document).ready ->
     #activate_bmp_controls()
+    $("#bmp_ai_irrigation_id").change ->
+        take_efficiency()
     $("#bmp_bmp_id").change ->
 	    update_bmpsublist()
     $("#bmp_bmpsublist_id").change ->
