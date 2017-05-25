@@ -646,6 +646,7 @@ es:
     autofertigation: Fertirrigacion Automatica
     manure_control: Control de estiércol
     pad: Almohadilla
+    additional_land: Seleccione si este Bmp es un terreno adicional
   months:
     january: Enero
     february: Febrero
@@ -729,17 +730,19 @@ es:
     scenario1: primer Escenario
     scenario2: Segundo Escenario
     scenario3: Tercero Escenario
-    watershed1: 1a cuenca
+    watershed1: 1ra cuenca
     watershed2: 2da cuenca
     watershed3: 3ra cuenca
     last: (últimos 12 años)
     avg: Promedio Mensual (Todo el Periodo)
-    select_scenario1: Seleccione Uno
-    select_scenario2: Seleccione Uno
-    select_scenario3: Seleccione Uno
+    select_scenario1: Seleccione 1ra escenario
+    select_scenario2: Seleccione 2da escenario
+    select_scenario3: Seleccione 3ra escenario
     select_watershed1: Seleccione 1ra cuenca
     select_watershed2: Seleccione 2da cuenca
     select_watershed3: Seleccione 3ra cuenca
+    select_prompt_scenario: Seleccione hasta 3 escenarios para ver
+    select_prompt_watershed: Seleccione hasta 3 cuencas para ver
     select_chart: Seleccione tipo de Gráfico
     description: Descripción
     difference: Diferencia

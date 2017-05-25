@@ -37,11 +37,11 @@
 			<% sim = t('scenario.simulate') + '-NTT' %>
 			<% @watershed_scenarios = WatershedScenario.where(:watershed_id => watershed.id ) %>
 				<tbody>
-					<tr>
-						<td id="tbl" + j.to_s class="gvCellStyleText" width="20%"><%= check_box_tag "select_watershed[]", watershed.id %></td>
+					<tr >
+						<td id="tbl" + j.to_s class="gvCellStyleText" width="20%" bgcolor="lightblue"><%= check_box_tag "select_watershed[]", watershed.id %></td>
 						<% lbl_name = "lbl_name" + watershed.id.to_s %>
-						<td width="80%"><h4 ><%=watershed.name + " "%><input type="text" onclick="show_crop(<%=watershed.id%>)" style="cursor:pointer" id=<%=lbl_name%> value = "[+]"/> </h4></td>
-						<td style="text-align: right" width="20%"><%= link_to image_tag("delete.png"), watershed, method: :delete, data: { confirm: t('general.confirm') } %></td>
+						<td width="80%" bgcolor="lightblue"><h4><%=watershed.name + " "%><input type="text" onclick="show_crop(<%=watershed.id.to_s%>)" readonly size="1px" style="cursor:pointer; border:none; background-color: lightblue" id=<%=lbl_name%> value = "[ + ]"/> </h4></td>
+						<td style="text-align: right" width="20%" bgcolor="lightblue"><%= link_to image_tag("delete.png"), watershed, method: :delete, data: { confirm: t('general.confirm') } %></td>
 					</tr>
 				</tbody>
 				<tr id="crop_<%= watershed.id %>" style="display:none">
@@ -50,7 +50,7 @@
 							<div class="panel panel-primary">
   								<table class="optable" style="margin-rigth: 15px">
 									<tr><td colspan = "5"><%= t('instructions.watersheds', watershed: watershed.name) %></td></tr>
-									<tr>						
+									<tr>
 										<% fields = Field.where(:location_id => @project.location.id) %>
 										<td><b><%=  t('menu.fields') %></b></td>
 										<td><%= collection_select "field" + j.to_s, :id, fields, :id, :field_name, {:prompt => t('helpers.select.field')} %></td>
@@ -96,21 +96,22 @@
 <% end %>
 
 <script>
+window.onload = function() {
+	var id = 0;
+	while (id < 500) { //find alternative due to id limitations. watershed count?
+		var watershed = localStorage.getItem('watershed'+id);
+		if (watershed != null && watershed === 'true') {
+			show_crop(id);
+		}
+		id++;
+	}
+}
 
-function show_crop(id) {
+function show_crop(id) 
+  {
   var lbl_name = document.getElementById("lbl_name" + id);
-  if (lbl_name.innerText == "[+]") {lbl_name.innerText = "[-]";} else { lbl_name.innerText = "[+]";}
+  if (lbl_name.value == "[ + ]") {lbl_name.value = "[ - ]";} else { lbl_name.value = "[ + ]";}
   var crop_div = document.getElementById("crop_" + id);
   if (crop_div.style.display == "none") { crop_div.style.display = ""; } else { crop_div.style.display = "none"; }
   }
-
-function hide_crop(id) {
-  var expand_crop_div = document.getElementById("expand_crop_" + id);
-  var hide_crop_div = document.getElementById("hide_crop_" + id);
-  var crop_div = document.getElementById("crop_" + id);
-  hide_crop_div.style.display = "none";
-  expand_crop_div.style.display = "block";
-  crop_div.style.display = "none";
-  }
-
   </script>

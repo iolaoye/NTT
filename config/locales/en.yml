@@ -644,6 +644,7 @@ en:
     autofertigation: Autofertigation
     manure_control: Manure Control
     pad: Pad
+    additional_land: Click if this is an additional land
   months:
     january: January
     february: February
@@ -735,12 +736,14 @@ en:
     watershed3: third watershed
     last: (last 12 years)
     avg: Monthly average (whole period)
-    select_scenario1: Select one
-    select_scenario2: Select one
-    select_scenario3: Select one
+    select_scenario1: Select 1st scenario
+    select_scenario2: Select 2nd scenario
+    select_scenario3: Select 3rd scenario
     select_watershed1: Select 1st watershed
     select_watershed2: Select 2nd watershed
     select_watershed3: Select 3rd watershed
+    select_prompt_scenario: Select up to 3 scenarios for view
+    select_prompt_watershed: Select up to 3 watersheds for view
     select_chart: Select kind of Chart
     description: Description
     difference: Difference

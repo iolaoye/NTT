@@ -222,7 +222,9 @@ module ScenariosHelper
 				#line 4
 				subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
 				# reduce the area of others subareas proportionally
-				update_wsa("-", subarea.wsa)
+				if @bmp.sides == 0 then
+					update_wsa("-", subarea.wsa)
+				end
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 				subarea.slp = 0.01
@@ -273,7 +275,9 @@ module ScenariosHelper
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 						fs_area = subarea.wsa
 					end
-					update_wsa("-", subarea.wsa)
+					if @bmp.sides == 0 then
+						update_wsa("-", subarea	.wsa)
+					end
 					subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 					subarea.slp = subarea.slp * @bmp.buffer_slope_upland
 					subarea.splg = calculate_slope_length(subarea.slp * 100)
@@ -323,7 +327,9 @@ module ScenariosHelper
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 					end
 					subarea.wsa = subarea.wsa
-					update_wsa("-", subarea.wsa)
+					if @bmp.sides == 0 then
+						update_wsa("-", subarea.wsa)
+					end
 					subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 					subarea.slp = subarea.slp * @bmp.buffer_slope_upland
 					subarea.splg = calculate_slope_length(subarea.slp * 100)
@@ -368,7 +374,9 @@ module ScenariosHelper
 					subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 					soil_area = subarea.wsa * HA_TO_AC
 				end
-				update_wsa("-", subarea.wsa)
+				if @bmp.sides == 0 then
+					update_wsa("-", subarea.wsa)
+				end
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 				subarea.slp = subarea.slp * @bmp.buffer_slope_upland

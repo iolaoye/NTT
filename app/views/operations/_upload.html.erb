@@ -11,9 +11,9 @@
         <%= hidden_field(:language, :language, :value => I18n.locale) %>
         <div class="actions">
           <span style="display: inline-block">
-            <%= button_to t('operation.upload'), :name => "add_more", :id => "operation_upload", :class => "btn btn-primary", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
+            <%= button_to t('operation.upload'), {:name => "add_more", :id => "operation_upload"}, :class => "btn btn-primary", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
           </span>
           <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
-        
+
     </div>
 </form>

@@ -26,7 +26,6 @@ class BmpsController < ApplicationController
 # GET /bmps.json
   def index
     @project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 
     add_breadcrumb 'Conservation Practices'
@@ -659,6 +658,7 @@ class BmpsController < ApplicationController
     case type
       when "create"
 		@bmp.area = params[:bmp_wl][:area]
+		@bmp.sides = params[:bmp_wl][:buffer_land]
 		if @bmp.save then
 			return create_new_subarea("WL", 8)
 		end
@@ -730,6 +730,7 @@ class BmpsController < ApplicationController
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
     		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
     		@bmp.crop_id = 1 #record not found error
+			@bmp.sides = params[:bmp_fs][:buffer_land]
     		@bmp.depth = params[:bmp_cb3]
     		if @bmp.save then
   			  return create_new_subarea("RF", 12)
@@ -752,6 +753,7 @@ class BmpsController < ApplicationController
 		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
 		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
 		@bmp.crop_id = params[:bmp_fs][:crop_id]
+		@bmp.sides = params[:bmp_fs][:buffer_land]
 		@bmp.depth = params[:bmp_cb3]
 		if @bmp.area == 0 || @bmp.area == nil then 
 			length = Math.sqrt(@field.field_area)			# find the length of the field
@@ -1238,7 +1240,7 @@ class BmpsController < ApplicationController
 
   def delete_existing_subarea(name)
     subarea = Subarea.find_by_scenario_id_and_subarea_type(params[:scenario_id], name)
-	if !(subarea == nil) then
+	if !(subarea == nil) && @bmp.sides == 0 then
 		return update_wsa("+", subarea.wsa)
 	else
 		return "OK"

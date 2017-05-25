@@ -4,11 +4,13 @@
 switch_view = ->
   if $("#div_crop_schdule").is(":hidden")
       $("#div_crop_schdule").toggle(true)
+      $("#btn_views").html("Summary View")
   else
       $("#div_crop_schdule").toggle(false)
 
   if $("#div_operations").is(":hidden")
       $("#div_operations").toggle(true)
+      $("#btn_views").html("Crop View")
   else
       $("#div_operations").toggle(false)
 
