@@ -26,7 +26,8 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
     @project = Project.find(params[:project_id])
     @watersheds = Watershed.where(:location_id => @project.location.id)
-	
+    session[:simulation] = 'watershed'
+
 	add_breadcrumb 'Field Routing (Watershed)'
     respond_to do |format|
       format.html  # index.html.erb
@@ -35,7 +36,7 @@ class WatershedsController < ApplicationController
   end
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
-  def new_scenario()  
+  def new_scenario()
     #find the name for the collection
 	watersheds = Watershed.where(:location_id => Project.find(params[:project_id]).location)
 	i = 1
@@ -73,7 +74,7 @@ class WatershedsController < ApplicationController
 	else
 		return "error"
 	end  # if field or scenario <> ""
-	
+
   end
 
   ################################  SHOW used for simulation   #################################
@@ -81,7 +82,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1.json
   def simulate
     @project = Project.find(params[:project_id])
-	if !(params[:commit].include?("Simulate")) then 
+	if !(params[:commit].include?("Simulate")) then
 		#update watershed_scenarios
 		@watershed_name = params[:commit]
 		@watershed_name.slice! "Add to "
@@ -104,7 +105,7 @@ class WatershedsController < ApplicationController
 			@watershed_id = ws
 			@dtNow1 = Time.now.to_s
 			dir_name = APEX + "/APEX" + session[:session_id]
-			if !File.exists?(dir_name) 
+			if !File.exists?(dir_name)
 			  FileUtils.mkdir_p(dir_name)
 			end
 			watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed_id)
@@ -115,6 +116,7 @@ class WatershedsController < ApplicationController
 			if msg.eql?("OK") then msg = create_weather_file(dir_name, watershed_scenarios[0].field_id) else return msg end
 			if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(@project.location.id)) else return msg end
 			if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) else return msg end #this operation will create APEX folder from APEX1 folder
+
 			@last_soil = 0
 			@last_soil_sub = 0
 			@last_subarea = 0
@@ -159,7 +161,7 @@ class WatershedsController < ApplicationController
 	end
 	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
 	@watersheds = Watershed.where(:location_id => @project.location.id)
-	
+
     render "index"
   end
 
@@ -190,7 +192,7 @@ class WatershedsController < ApplicationController
 	if params[:commit] != nil then
 		@watershed = Watershed.new(watershed_params)
 		@watershed.location_id = session[:location_id]
-    end 
+    end
 	@project = Project.find(params[:project_id])
     respond_to do |format|
       if @watershed.save
@@ -244,7 +246,7 @@ class WatershedsController < ApplicationController
 	else
 		@error = "Error deleting Field Routing"
     end
-	
+
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
 	params[:project_id] = @project.id

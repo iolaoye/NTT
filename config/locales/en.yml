@@ -430,7 +430,7 @@ en:
     fields: Fields
     soils: Soils
     scenarios: Scenarios
-    managements: Operations
+    operations: Operations
     bmps: Conservation Practices
     subprojects: Subprojects
     economics: Economics
@@ -568,6 +568,22 @@ en:
     org_p: 'Org p (0-1)'
     add_list: Add to list
     select_crop: Select crop
+    planting: Planting
+    tillage: Tillage
+    harvest: Harvest
+    kill: Kill
+    burn: Burn
+    liming: Liming
+    seed: 'Seeding Amount (seeds/ft)'
+    amount_applied: 'Amount Applied (lbs/ac)'
+    add_planting: 'Add Planting Operation'
+    add_fertilizer: 'Add Fertilizer Operation'
+    add_tillage: 'Add Tillage Operation'
+    add_harvest: 'Add Harvest Operation'
+    add_kill: 'Add Kill Operation'
+    add_irrigation: 'Add Irrigation Operation'
+    add_burn: 'Add Burn operation'
+    add_liming: 'Add Liming Operation'
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
@@ -720,12 +736,14 @@ en:
     watershed3: third watershed
     last: (last 12 years)
     avg: Monthly average (whole period)
-    select_scenario1: Select one
-    select_scenario2: Select one
-    select_scenario3: Select one
+    select_scenario1: Select 1st scenario
+    select_scenario2: Select 2nd scenario
+    select_scenario3: Select 3rd scenario
     select_watershed1: Select 1st watershed
     select_watershed2: Select 2nd watershed
     select_watershed3: Select 3rd watershed
+    select_prompt_scenario: Select up to 3 scenarios for view
+    select_prompt_watershed: Select up to 3 watersheds for view
     select_chart: Select kind of Chart
     description: Description
     difference: Difference

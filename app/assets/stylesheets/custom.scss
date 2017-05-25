@@ -565,7 +565,11 @@ table.results_table td {
 .results-label {
   padding-left: 65px;
   padding-top: 5px;
-  font-size: 14px;
+  font-size: 17px;
+}
+
+.results-label-sub {
+  font-size: 14px !important;
 }
 
 .table > tbody > tr > td.indent {
@@ -666,6 +670,18 @@ label {
   width: 192px;
   padding-top: 10px;
   margin: 0 auto;
+}
+
+@-webkit-keyframes buttonPulse {
+  from { background-color: dodgerblue; -webkit-box-shadow: 0 0 9px #ffffff; }
+  50% { background-color: #337ab7; -webkit-box-shadow: 0 0 18px #2e6da4; }
+  to { background-color: dodgerblue; -webkit-box-shadow: 0 0 9px #ffffff; }
+}
+
+.btn-primary[disabled] {
+  -webkit-animation-name: buttonPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
 }
 
 /* HOVER STYLES */
