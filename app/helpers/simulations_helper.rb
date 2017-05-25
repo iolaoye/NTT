@@ -49,6 +49,7 @@ module SimulationsHelper
 
   def send_files_to_APEX(file)
     uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth)
     if res.body.include?("Created") then
       return "OK"
@@ -59,6 +60,7 @@ module SimulationsHelper
 
   def send_files1_to_APEX(file)
     uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file)
     if res.body.include?("Created") then
       return "OK"
@@ -68,6 +70,17 @@ module SimulationsHelper
   end
 
   def send_file_to_APEX(apex_string, file)
+    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
+    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
+    if res.body.include?("Created") then
+      return "OK"
+    else
+      return res.body
+    end
+  end
+
+  def send_file1_to_APEX(apex_string, file)
     uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
     if res.body.include?("Created") then
@@ -198,7 +211,7 @@ module SimulationsHelper
       #response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
       #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
       #print_array_to_file(PATH, "APEX.wth")
-      @apex_wth = send_file_to_APEX("WTH", path)
+      @apex_wth = send_file1_to_APEX("WTH", path)
     end
     #todo after file is copied if climate bmp is in place modified the weather file.
     bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)
@@ -1361,7 +1374,7 @@ module SimulationsHelper
 		state_abbreviation = State.find(state_id).state_abbreviation
 	end
     @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
-                   COMA + Crop.find(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
+                   COMA + Crop.find_by_number(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
     #End With
   end  # end add_operation method

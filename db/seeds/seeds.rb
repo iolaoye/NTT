@@ -23,6 +23,8 @@ CropSchedule.create!({:id => 5, :name =>'Argentine Canola', :state_id => 0, :cla
 CropSchedule.create!({:id => 6, :name =>'Canadian Barley', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 7, :name =>'Field Peas', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 8, :name =>'Fallow', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 9, :name =>'Winter Wheat', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 10, :name =>'Grain Sorghum', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
 
 Schedule.delete_all
 Schedule.create!({:id => 1, :event_order => 1, :month => 4, :day => 15, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 2, :apex_fertilizer => 1, :apex_opv1 => 180, :apex_opv2 => 0, :crop_schedule_id => 1}, :without_protection => true)
@@ -51,6 +53,13 @@ Schedule.create!({:id => 23, :event_order => 6, :month => 6, :day => 30, :year =
 Schedule.create!({:id => 24, :event_order => 7, :month => 7, :day => 6, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 23, :apex_fertilizer => 57, :apex_opv1 => 17.29, :apex_opv2 => 0, :crop_schedule_id => 5}, :without_protection => true)
 Schedule.create!({:id => 25, :event_order => 8, :month => 9, :day => 15, :year => 1, :activity_id => 4, :apex_operation => 568, :apex_crop => 23, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 5}, :without_protection => true)
 Schedule.create!({:id => 26, :event_order => 9, :month => 10, :day => 20, :year => 1, :activity_id => 5, :apex_operation => 451, :apex_crop => 23, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 5}, :without_protection => true)
+Schedule.create!({:id => 27, :event_order => 1, :month => 10, :day => 12, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 10, :apex_fertilizer => 1, :apex_opv1 => 120, :apex_opv2 => 0, :crop_schedule_id => 9}, :without_protection => true)
+Schedule.create!({:id => 28, :event_order => 2, :month => 10, :day => 12, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 10, :apex_fertilizer => 2, :apex_opv1 => 60, :apex_opv2 => 0, :crop_schedule_id => 9}, :without_protection => true)
+Schedule.create!({:id => 29, :event_order => 3, :month => 10, :day => 15, :year => 1, :activity_id => 1, :apex_operation => 132, :apex_crop => 10, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 9}, :without_protection => true)
+Schedule.create!({:id => 30, :event_order => 4, :month => 5, :day => 10, :year => 2, :activity_id => 2, :apex_operation => 580, :apex_crop => 10, :apex_fertilizer => 1, :apex_opv1 => 105, :apex_opv2 => 0, :crop_schedule_id => 9}, :without_protection => true)
+Schedule.create!({:id => 31, :event_order => 5, :month => 5, :day => 10, :year => 2, :activity_id => 2, :apex_operation => 580, :apex_crop => 10, :apex_fertilizer => 2, :apex_opv1 => 65, :apex_opv2 => 0, :crop_schedule_id => 9}, :without_protection => true)
+Schedule.create!({:id => 32, :event_order => 6, :month => 7, :day => 30, :year => 2, :activity_id => 4, :apex_operation => 623, :apex_crop => 10, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 9}, :without_protection => true)
+Schedule.create!({:id => 33, :event_order => 7, :month => 7, :day => 31, :year => 2, :activity_id => 5, :apex_operation => 451, :apex_crop => 10, :apex_fertilizer => 0, :apex_opv1 => 0, :apex_opv2 => 0, :crop_schedule_id => 9}, :without_protection => true)
 
 
 Drainage.delete_all
