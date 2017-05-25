@@ -158,16 +158,24 @@
 		<li class="<%= (controller_name == "watersheds" || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(params[:project_id]) %></li>
 	</ul>
 	<% if watershed_submenu %>
-		<ul class="nav nav-pills nav-stacked nav-sidebar-sub">
-			<li class="<%= controller_name == "results" ? "active" : "" %>">
-				<% if controller_name == "results" %>
-					<div class="header-icon">
-						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-					</div>
-				<% end %>
-				<%= link_to t('menu.results') , project_field_results_path(@project, 0,:button => t('result.summary'), :simulation => 'Watershed') %>
-			</li>
-		</ul>
+		<% results = 0 %>
+		<% Project.find(params[:project_id]).location.watersheds.each do |watershed| %>
+			<% if watershed.results.count > 0 %>
+				<% results = 1 %>
+			<% end %>
+		<% end %>
+		<% if results > 0 %>
+			<ul class="nav nav-pills nav-stacked nav-sidebar-sub">
+				<li class="<%= controller_name == "results" ? "active" : "" %>">
+					<% if controller_name == "results" %>
+						<div class="header-icon">
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						</div>
+					<% end %>
+					<%= link_to t('menu.results') , project_field_results_path(@project, 0,:button => t('result.summary'), :simulation => 'Watershed') %>
+				</li>
+			</ul>
+		<% end %>
 	<% end %>
 <% end %>
 <% end %>
