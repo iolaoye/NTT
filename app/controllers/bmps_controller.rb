@@ -27,7 +27,11 @@ class BmpsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-
+	if @project.location.state_id == 25 || @project.location.state_id == 26 then
+		@irrigations = Irrigation.all
+	else
+		@irrigations = Irrigation.where("id < 8")
+	end
     add_breadcrumb 'Conservation Practices'
 
     get_bmps()

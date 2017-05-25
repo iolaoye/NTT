@@ -20,7 +20,6 @@ class OperationsController < ApplicationController
 	crop_schedule()
     
     add_breadcrumb 'Operations'
-	debugger
     array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
 
