@@ -75,9 +75,9 @@
 					    <td class="indent">
 						    <%= label :irrigation_id, t('bmp.irrigation')  %>
 						    <% if I18n.locale.equal?(:en) %>
-						      <%= collection_select :bmp_ai, :irrigation_id, Irrigation.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id}%>
+						      <%= collection_select :bmp_ai, :irrigation_id, @irrigations, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id}%>
 						    <% else %>
-						      <%= collection_select :bmp_ai, :irrigation_id, Irrigation.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id} %>
+						      <%= collection_select :bmp_ai, :irrigation_id, @irrigations, :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id} %>
 						    <% end %>
 					    </td>
 				      </tr>
