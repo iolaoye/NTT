@@ -13,9 +13,9 @@ module SimulationsHelper
 
   def create_control_file()
     @apex_control = ""
-    apex_control = ApexControl.where(:project_id => params[:project_id])
+    @apex_controls = ApexControl.where(:project_id => params[:project_id])
     require 'net/http'
-    apex_control.each do |c|
+    @apex_controls.each do |c|
       case c.control_description_id
         when 1..19 #line 1
           @apex_control += sprintf("%4d", c.value)
@@ -49,8 +49,17 @@ module SimulationsHelper
 
   def send_files_to_APEX(file)
     uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-	if file == "FILES" then debugger end
     res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth)
+    if res.body.include?("Created") then
+      return "OK"
+    else
+      return res.body
+    end
+  end
+
+  def send_files1_to_APEX(file)
+    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    res = Net::HTTP.post_form(uri, "data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file)
     if res.body.include?("Created") then
       return "OK"
     else
@@ -60,7 +69,7 @@ module SimulationsHelper
 
   def send_file_to_APEX(apex_string, file)
     uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "")
+    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -235,7 +244,8 @@ module SimulationsHelper
     end #end if
     #msg = send_file_to_APEX(@apex_wth, "APEX.wth")
     #todo fix widn and wp1 files with the real name
-	msg = send_files_to_APEX("FILES")
+	#msg = send_files_to_APEX("FILES")
+	return "OK"
   end
 
   def create_soils()
@@ -822,7 +832,8 @@ module SimulationsHelper
     #todo check this one.
     #$last_subarea += _fieldsInfo1(currentFieldNumber)._soilsInfo(i - 1)._scenariosInfo(currentScenarioNumber)._subareasInfo_subarea_info..Iops
     #print_array_to_file(@subarea_file, "APEX.sub")
-    msg = send_file_to_APEX(@subarea_file, "APEX.sub")
+    #msg = send_file_to_APEX(@subarea_file, "APEX.sub")
+	msg = "OK"
     return msg
   end  #end method create_subarea1
 
@@ -1591,8 +1602,8 @@ module SimulationsHelper
     pcp = 0
     total_subs = 0
     i=1
-    apex_control = ApexControl.where(:project_id => params[:project_id])
-    initial_chart_year = apex_control[0].value - 12 + apex_control[1].value
+    #apex_control = ApexControl.where(:project_id => params[:project_id])
+    initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
     data.each_line do |tempa|
       if i > 3 then
         year = tempa[7, 4].to_i

@@ -50,6 +50,8 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT  #################################
   def simulate
+	msg = "OK"
+	time_begin = Time.now
 	session[:simulation] = 'scenario'
 	case params[:commit]
 		when "Simulate Selected NTT", "Simular NTT", "Simulate Selected Scenario", "Simulate Scenarios"
@@ -60,10 +62,9 @@ class ScenariosController < ApplicationController
 	@project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => params[:field_id])
-	
     if msg.eql?("OK") then
 	  @scenario = Scenario.find(params[:select_scenario])
-      flash[:notice] = @scenario.count.to_s + " scenarios simulated successfully" if @scenarios.count > 0
+      flash[:notice] = @scenario.count.to_s + " scenarios simulated successfully in " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " seconds" if @scenarios.count > 0
       render "index", notice: "Simulation process end succesfully"
     else
       render "index", error: msg
@@ -85,8 +86,8 @@ class ScenariosController < ApplicationController
 		  @scenario = Scenario.find(scenario_id)
 		  msg = run_scenario
 		  unless msg.eql?("OK")
-          @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-          raise ActiveRecord::Rollback
+			@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+			raise ActiveRecord::Rollback
 	      end # end if msg
       end # end each do params loop
     end
@@ -458,7 +459,6 @@ class ScenariosController < ApplicationController
       FileUtils.mkdir_p(dir_name)
     end
     #FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
-    msg = send_file_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation, session[:session_id])  #this operation will create APEX folder from APEX1 folder
     #CREATE structure for nutrients that go with fert file
     @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
     @current_nutrients = Array.new
@@ -476,22 +476,22 @@ class ScenariosController < ApplicationController
     if msg.eql?("OK") then msg = create_parameter_file() else return msg  end
     if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end
     if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end
+    if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create APEX folder from APEX1 folder
     if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) else return msg  end
     @last_soil = 0
     @soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
     @soil_list = Array.new
     if msg.eql?("OK") then msg = create_soils() else return msg  end
-    if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg  end
-    #print_array_to_file(@soil_list, "soil.dat")
+    #if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg  end
     @subarea_file = Array.new
     @soil_number = 0
     if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
-    if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg  end
-    if msg.eql?("OK") then msg = send_file_to_APEX("RUN", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
+    #if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg  end
+    if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
     if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
     @scenario.last_simulation = Time.now
     if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
-    @scenarios = Scenario.where(:field_id => params[:field_id])
+    #@scenarios = Scenario.where(:field_id => params[:field_id])
     return msg
   end # end show method
 
