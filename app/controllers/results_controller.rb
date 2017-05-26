@@ -154,7 +154,6 @@ class ResultsController < ApplicationController
 					if params[:result2][:scenario_id] != "" then
 						@scenario2 = params[:result2][:scenario_id]
 						session[:scenario2] = @scenario2
-						debugger
 						if session[:simulation] == 'scenario'
 							@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id == 0 or crop_id is null")
 							@crop_results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id > 0")
