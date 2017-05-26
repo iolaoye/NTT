@@ -73,14 +73,13 @@
             <% end %>
             <%= link_to t('menu.bmps') + " (" + Bmp.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_bmps_path(@project, @field, @scenario) %>
           </li>
-          <li class="<%= controller_name == "aplcat_paramters" ? "active" : "" %>">
+					<li class="<%= controller_name == "aplcat_parameters" ? "active" : "" %>">
             <% if controller_name == "aplcat_parameters" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
 			<% unless ENV["APP_VERSION"] == "modified" %><%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %><% end %>
-
           </li>
         </ul>
 	  <% else %>
@@ -142,13 +141,12 @@
 
     <% unless ENV["APP_VERSION"] == "modified" %>
 
-		  <li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites") || (controller_name == 'aplcat_parameters')) ? "active" : "" %>">
-			<% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites") || (controller_name == 'aplcat_parameters')) %>
+		  <li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites")) ? "active" : "" %>">
+			<% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites")) %>
 				<div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
 			<% end %>
 			<%= link_to t('menu.utility_file'),  project_field_apex_controls_path(@project, @field) %>
 		  </li>
-		</li>
     <% end %>
   </ul>
 <% else %>

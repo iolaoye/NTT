@@ -12,7 +12,7 @@
 <%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
 <%# if ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" || ENV["APP_VERSION"] == nil %>
 	<%#= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
-	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views", :class => 'btn btn-primary' } %>
+	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views", :class => 'btn btn-primary', "onclick" => "saveView()" } %>
 	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 	<div id="div_new" style="display:none">
 		<%= render "upload" %>
@@ -363,11 +363,32 @@
 <script>
 
 window.onload = function() {
+	var view = localStorage.getItem('view');
+	var crops = document.getElementById("div_crop_schdule");
+	var summary = document.getElementById("div_operations");
+	
+	if (view == "summary") {
+		crops.style.display = "none";
+		summary.style.display = "block";
+	} else {
+		summary.style.display = "none";
+		crops.style.display = "block";
+	}
+
 	for(ele = 0; ele < 223; ele++) {
 		var bmp = localStorage.getItem('bmp'+ele);
 		if (bmp != null && bmp === 'true') {
 			show_crop(ele);
 		}
+	}
+}
+
+function saveView() {
+	var crops = document.getElementById("div_crop_schdule");
+	if (crops.style.display == "none") {
+		localStorage.setItem('view', 'crop');
+	} else {
+		localStorage.setItem('view', 'summary');
 	}
 }
 

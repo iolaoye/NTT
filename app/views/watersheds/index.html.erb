@@ -107,11 +107,19 @@ window.onload = function() {
 	}
 }
 
-function show_crop(id) 
-  {
+function show_crop(id){
   var lbl_name = document.getElementById("lbl_name" + id);
-  if (lbl_name.value == "[+]") {lbl_name.value = "[-]";} else { lbl_name.value = "[+]";}
+  if (lbl_name.value == "[+]") {
+		lbl_name.value = "[-]";
+		localStorage.setItem('watershed'+id, 'true');
+	} else {
+		lbl_name.value = "[+]";
+		localStorage.setItem('watershed'+id, 'false');
+	}
   var crop_div = document.getElementById("crop_" + id);
-  if (crop_div.style.display == "none") { crop_div.style.display = ""; } else { crop_div.style.display = "none"; }
+  if (crop_div.style.display == "none") {
+		crop_div.style.display = "";
+	} else {
+		crop_div.style.display = "none"; }
   }
   </script>
