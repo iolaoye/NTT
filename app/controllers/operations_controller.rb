@@ -354,7 +354,6 @@ class OperationsController < ApplicationController
 					when @highest_year > 1 && params[:year].to_i >= @highest_year
 						if event.activity_id == 5 then @operation.year = 1 else @operation.year = @highest_year end
 					when @highest_year > 1 && params[:year].to_i < @highest_year
-					debugger
 						if event.activity_id == 5 then @operation.year = params[:year].to_i + 1 else @operation.year = params[:year].to_i end
 				end
 			end
