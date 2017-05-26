@@ -1,4 +1,5 @@
 Fertilizer.delete_all
+
 Fertilizer.create!({:id => 1, :code => 1, :spanish_name => 'Elemento-N', :name => 'Elem-N', :qn => 1, :qp => 0, :yn => 0, :yp => 0, :nh3 => 0, :dry_matter => 0, :fertilizer_type_id => 1, :convertion_unit => 1, :status => 1, :animal => 0}, :without_protection => true)
 Fertilizer.create!({:id => 2, :code => 2, :spanish_name => 'Elemento-P', :name => 'Elem-P', :qn => 0, :qp => 1, :yn => 0, :yp => 0, :nh3 => 0, :dry_matter => 0, :fertilizer_type_id => 1, :convertion_unit => 1, :status => 1, :animal => 0}, :without_protection => true)
 Fertilizer.create!({:id => 3, :code => 3, :spanish_name => 'ANH-NH3', :name => 'ANH-NH3', :qn => 0, :qp => 0, :yn => 0, :yp => 0, :nh3 => 1, :dry_matter => 0, :fertilizer_type_id => 1, :convertion_unit => 1, :status => 1, :animal => 0}, :without_protection => true)
