@@ -218,7 +218,7 @@ class ProjectsController < ApplicationController
             msg = upload_location_info1(node)
           when "FieldInfo"
             msg = upload_field_info(node)
-			      msg = renumber_subareas()
+			msg = renumber_subareas()
           when "SiteInfo"
             msg = upload_site_info(node)
           when "controls"
@@ -260,21 +260,21 @@ class ProjectsController < ApplicationController
   ########################################### RENUMERATE THE SUBAREAS FILES FOR PREVIOUS VERSION PROJECTS ##################
   def renumber_subareas()
     msg = "OK"
-    @iops1 = 1
   	#renumber the subarea inps, iops, iown
   	@project.location.fields.each do |field|
+		@iops1 = 1
   		field.soils.each do |soil|
-  			if soil.selected then
+  			#if soil.selected then
 				soil.subareas.each do |subarea|
   					subarea.iops = @iops1
   					subarea.inps = @iops1
   					subarea.iow = @iops1
-  					@iops1 +=1
   					if !subarea.save
   						msg = "Error renumber subareas"
   					end
 				end # end subareas.each
-  			end   # end if soil selected
+  				@iops1 +=1
+  			#end   # end if soil selected
   		end   # end soils.each
   	end  # end field.each
   	return msg
@@ -1242,6 +1242,8 @@ class ProjectsController < ApplicationController
         when "Selected"
           if p.text == "True" then
             soil.selected = true
+		  else
+			return
           end
         when "Key"
           soil.key = p.text
