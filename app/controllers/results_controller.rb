@@ -125,7 +125,7 @@ class ResultsController < ApplicationController
 						@scenario1 = params[:result1][:scenario_id]
 						session[:scenario1] = @scenario1
 						if session[:simulation] == 'scenario'
-							@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil, :crop_id => 0)
+							@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id == 0 or crop_id is null")
 							@crop_results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id > 0")
 						else
 							@results1 = Result.where(:watershed_id => @scenario1, :crop_id => 0)
@@ -195,7 +195,7 @@ class ResultsController < ApplicationController
 						@scenario3 = params[:result3][:scenario_id]
 						session[:scenario3] = @scenario3
 						if session[:simulation] == 'scenario'
-							@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil, :crop_id => 0)
+							@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id == 0 or crop_id is null")
 							@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id > 0")
 						else
 							@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0)

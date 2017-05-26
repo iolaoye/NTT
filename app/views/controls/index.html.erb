@@ -2,25 +2,18 @@
 
 <table>
   <tr>
-    <th>Line</th>
-    <th>Column</th>
-    <th>Code</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Low Range</th>
-    <th>High Range</th>
+    <th>id</th>
+    <th>state</th>
+    <th>number</th>
     <th>Default Value</th>
+    <th>Actions</th>
   </tr>
 
 <% @controls.each do |control| %>
   <tr>
-    <td><%=control.line%></td>
-    <td><%=control.column%></td>
-    <td><%=control.code%></td>
-    <td><%=control.name%></td>
-    <td><%=control.description%></td>
-    <td><%=control.range_low%></td>
-    <td><%=control.range_high%></td>
+    <td><%=control.id%></td>
+    <td><%=control.state_id%></td>
+    <td><%=control.number%></td>
     <td><%=control.default_value%></td>
     <td><%= link_to t('general.show'), control %></td>
     <td><%= link_to t('general.edit'), edit_control_path(control) %></td>

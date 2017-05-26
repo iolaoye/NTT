@@ -2397,20 +2397,20 @@ class ProjectsController < ApplicationController
         when "deepPerFlowCI"
           @result.ci_value = p.text
           @result.save
-		  total_other_water_ci = total_other_water_ci + @result.value
+		  total_other_water_ci = total_other_water_ci + @result.ci_value
         when "Sediment"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 61)
 		  total_sediment = total_sediment + @result.value
         when "SedimentCI"
           @result.ci_value = p.text
           @result.save
-		  total_sediment_ci = total_sediment_ci + @result.value
+		  total_sediment_ci = total_sediment_ci + @result.ci_value
           #add manure. It is not in the old version projects
           @result = add_result(field_id, soil_id, scenario_id, 0, 62)
 		  total_sediment = total_sediment + @result.value
           @result.ci_value = 0
           @result.save
-		  total_sediment_ci = total_sediment_ci + @result.value
+		  total_sediment_ci = total_sediment_ci + @result.ci_value
         when "Manure" # just in case this exist in some projects the values for manuer (62) are updated
           @result = Result.where(:field_id => field_id, :soil_id => soil_id, :scenario_id => scenario_id, description_id => 62)
           if @result != nil then
