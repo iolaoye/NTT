@@ -218,7 +218,7 @@ class ProjectsController < ApplicationController
             msg = upload_location_info1(node)
           when "FieldInfo"
             msg = upload_field_info(node)
-			      msg = renumber_subareas()
+			msg = renumber_subareas()
           when "SiteInfo"
             msg = upload_site_info(node)
           when "controls"
@@ -260,21 +260,21 @@ class ProjectsController < ApplicationController
   ########################################### RENUMERATE THE SUBAREAS FILES FOR PREVIOUS VERSION PROJECTS ##################
   def renumber_subareas()
     msg = "OK"
-    @iops1 = 1
   	#renumber the subarea inps, iops, iown
   	@project.location.fields.each do |field|
+		@iops1 = 1
   		field.soils.each do |soil|
-  			if soil.selected then
+  			#if soil.selected then
 				soil.subareas.each do |subarea|
   					subarea.iops = @iops1
   					subarea.inps = @iops1
   					subarea.iow = @iops1
-  					@iops1 +=1
   					if !subarea.save
   						msg = "Error renumber subareas"
   					end
 				end # end subareas.each
-  			end   # end if soil selected
+  				@iops1 +=1
+  			#end   # end if soil selected
   		end   # end soils.each
   	end  # end field.each
   	return msg
@@ -1242,6 +1242,8 @@ class ProjectsController < ApplicationController
         when "Selected"
           if p.text == "True" then
             soil.selected = true
+		  else
+			return
           end
         when "Key"
           soil.key = p.text
@@ -2395,20 +2397,20 @@ class ProjectsController < ApplicationController
         when "deepPerFlowCI"
           @result.ci_value = p.text
           @result.save
-		  total_other_water_ci = total_other_water_ci + @result.value
+		  total_other_water_ci = total_other_water_ci + @result.ci_value
         when "Sediment"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 61)
 		  total_sediment = total_sediment + @result.value
         when "SedimentCI"
           @result.ci_value = p.text
           @result.save
-		  total_sediment_ci = total_sediment_ci + @result.value
+		  total_sediment_ci = total_sediment_ci + @result.ci_value
           #add manure. It is not in the old version projects
           @result = add_result(field_id, soil_id, scenario_id, 0, 62)
 		  total_sediment = total_sediment + @result.value
           @result.ci_value = 0
           @result.save
-		  total_sediment_ci = total_sediment_ci + @result.value
+		  total_sediment_ci = total_sediment_ci + @result.ci_value
         when "Manure" # just in case this exist in some projects the values for manuer (62) are updated
           @result = Result.where(:field_id => field_id, :soil_id => soil_id, :scenario_id => scenario_id, description_id => 62)
           if @result != nil then

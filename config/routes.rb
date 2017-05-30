@@ -113,10 +113,10 @@ NTTG3::Application.routes.draw do
         get :download_apex_files, on: :member
       end
       resources :apex_parameters do
-		post 'reset', on: :member
+		get 'reset', on: :member
 	  end
       resources :apex_controls do
-		post 'reset', on: :member
+		get 'reset', on: :member
 	  end
       resources :apex_soils
       resources :apex_layers

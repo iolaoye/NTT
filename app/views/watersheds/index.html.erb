@@ -42,7 +42,7 @@
 					<tr >
 						<td id="tbl" + j.to_s class="gvCellStyleText" width="20%" bgcolor="lightblue"><%= check_box_tag "select_watershed[]", watershed.id %></td>
 						<% lbl_name = "lbl_name" + watershed.id.to_s %>
-						<td width="80%" bgcolor="lightblue"><h4><%=watershed.name + " "%><input type="text" onclick="show_crop(<%=watershed.id.to_s%>)" readonly size="1px" style="cursor:pointer; border:none; background-color: lightblue" id=<%=lbl_name%> value = "[ + ]"/> </h4></td>
+						<td width="80%" bgcolor="lightblue"><h4><%=watershed.name + " "%><input type="text" onclick="show_crop(<%=watershed.id.to_s%>)" readonly size="1px" style="cursor:pointer; border:none; background-color: lightblue" id=<%=lbl_name%> value = "[+]"/> </h4></td>
 						<td style="text-align: right" width="20%" bgcolor="lightblue"><%= link_to image_tag("delete.png"), watershed, method: :delete, data: { confirm: t('general.confirm') } %></td>
 					</tr>
 				</tbody>
@@ -109,11 +109,19 @@ window.onload = function() {
 	}
 }
 
-function show_crop(id) 
-  {
+function show_crop(id){
   var lbl_name = document.getElementById("lbl_name" + id);
-  if (lbl_name.value == "[ + ]") {lbl_name.value = "[ - ]";} else { lbl_name.value = "[ + ]";}
+  if (lbl_name.value == "[+]") {
+		lbl_name.value = "[-]";
+		localStorage.setItem('watershed'+id, 'true');
+	} else {
+		lbl_name.value = "[+]";
+		localStorage.setItem('watershed'+id, 'false');
+	}
   var crop_div = document.getElementById("crop_" + id);
-  if (crop_div.style.display == "none") { crop_div.style.display = ""; } else { crop_div.style.display = "none"; }
+  if (crop_div.style.display == "none") {
+		crop_div.style.display = "";
+	} else {
+		crop_div.style.display = "none"; }
   }
   </script>

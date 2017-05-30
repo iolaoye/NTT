@@ -1,17 +1,13 @@
-  include ApplicationHelper
+include ApplicationHelper
 
 class ApexControlsController < ApplicationController
   # GET /apex_controls
   # GET /apex_controls.json
-
-  
-  
   
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])
-	
+  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])	
 	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Controls'
@@ -51,8 +47,7 @@ class ApexControlsController < ApplicationController
   	@control_code = @apex_control.control_description.code
   	@low_range = @apex_control.control_description.range_low
   	@high_range = @apex_control.control_description.range_high
-	
-	
+		
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Controls', controller: "apex_controls", action: "index"
 	add_breadcrumb "Editing Control Files"
@@ -105,21 +100,27 @@ class ApexControlsController < ApplicationController
   def reset
     controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
     if controls.blank? || controls == nil then
-		  controls = Control.where(:state_id => 99)
-	  end
-    @apex_controls = ApexControl.where("project_id == " + params[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2")
-    @apex_controls.delete_all()
+		controls = Control.where(:state_id => 99)
+	end
+    ApexControl.where("project_id == " + params[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2").delete_all()
 
     controls.each do |control|
 		if control.id != 1 && control.id != 2
 		  apex_control = ApexControl.new
-		  apex_control.control_description_id = control.id
+		  apex_control.control_description_id = control.number
 		  apex_control.value = control.default_value
 		  apex_control.project_id = params[:project_id]
 		  apex_control.save
 		end
     end
-    redirect_to apex_controls_url, notice: t("models.apex_control") + " " + t("general.reset")
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
+  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])	
+	
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Controls'
+	render "index"
+    #redirect_to apex_controls_url, notice: t("models.apex_control") + " " + t("general.reset")
   end
 
   def download
@@ -127,7 +128,6 @@ class ApexControlsController < ApplicationController
   end
 
   private
-
     # Use this method to whitelist the permissible parameters. Example:
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
