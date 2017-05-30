@@ -1,11 +1,11 @@
 class ResultsController < ApplicationController
 
-  
-  
+
+
 
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
-  	@type = t('result.monthly') + "-" + t('result.charts')
+  	@type = t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
   	index
   	render "index"
   end
@@ -53,7 +53,7 @@ class ResultsController < ApplicationController
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 70 OR id > 79")
     @project = Project.find(params[:project_id])
-    
+
     add_breadcrumb 'Results'
     if session[:simulation].eql?('scenario') then
       @total_area = Field.find(params[:field_id]).field_area
