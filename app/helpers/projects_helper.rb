@@ -153,43 +153,38 @@ module ProjectsHelper
 
   ######################### Duplicate a apex_control #################################################
   def duplicate_apex_control(new_project_id)
-	#1. copy apexcontrol 
+	#1. copy apexcontrol
 	@project.apex_controls.each do |apex_control|
 		new_apex_control = apex_control.dup
 		new_apex_control.project_id = new_project_id
-		if new_apex_control.save
-			return "OK"
-		else
-			return "Error saving controls"
-		end
+		if !new_apex_control.save then return "Error copying control values" end 
 	end  # end apex_controls.each
+	return "OK"
   end   # end duplicate apex_control
 
   ######################### Duplicate a apex_parameter #################################################
   def duplicate_apex_parameter(new_project_id)
-	#1. copy apexparameter 
+	#2. copy apexparameter 
 	@project.apex_parameters.each do |apex_parameter|
 		new_apex_parameter = apex_parameter.dup
 		new_apex_parameter.project_id = new_project_id
-		if new_apex_parameter.save
-			return "OK"
-		else
-			return "Error saving parameters"
-		end
+		if !new_apex_parameter.save then return "Error copying parameters values" end 
 	end  # end apex_parameters.each
+	return "OK"
   end   # end duplicate apex_parameter
 
   ######################### Duplicate a Project #################################################
   def duplicate_project
+	msg = "OK"
 	#1. find project to copy
 	@project = Project.find(params[:id])
 	#2. copy project to new project
   	new_project = @project.dup  
 	new_project.name = @project.name + " copy" 
 	if new_project.save
+		msg = duplicate_apex_control(new_project.id)
+		if msg == "OK" then duplicate_apex_parameter(new_project.id) else return msg end
 		duplicate_location(new_project.id)
-		duplicate_apex_control(new_project.id)
-		duplicate_apex_parameter(new_project.id)
 		"OK"
 	else
 		"Error Saving project"
@@ -262,12 +257,12 @@ module ProjectsHelper
 
   ######################### Duplicate a Subareas by scenario/soil #################################################
   def duplicate_subareas_by_scenario(scenario_id)
-	subareas = Subarea.where(:scenario_id => scenario_id)
+	subareas = Subarea.where("scenario_id == " + scenario_id.to_s + " and soil_id > 0")
 	subareas.each do |subarea|
   		new = subarea.dup
 		new.scenario_id = @new_scenario_id
 		if @use_old_soil == true then
-			new.soil_id = Soil.find(subarea.soil_id).soil_id_old
+			new.soil_id = Soil.find_by_soil_id_old(subarea.soil_id).id
 		end
 		if !new.save
 			return "Error Saving subarea"
@@ -308,7 +303,7 @@ end
 		new.scenario_id = @new_scenario_id
 		new.operation_id = new_operation_id
 		if @use_old_soil == true then
-			new.soil_id = Soil.find(soil_operation.soil_id).soil_id_old
+			new.soil_id = Soil.find_by_soil_id_old(soil_operation.soil_id).id
 		end
 		if !new.save
 			return "Error Saving soil operation"
