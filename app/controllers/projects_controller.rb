@@ -77,14 +77,18 @@ class ProjectsController < ApplicationController
   ################  copy the selected project  ###################
   def copy_project
     @use_old_soil = true
-	duplicate_project()
-    #download_project(params[:id], "copy")
-    @user = User.find(session[:user_id])
-    if @user.admin?
-      @projects = Project.order("#{sort_column} #{sort_direction}")
-    else
-      @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
-    end
+	msg = duplicate_project()
+	if !msg == "OK" then
+		#download_project(params[:id], "copy")
+		@user = User.find(session[:user_id])
+		if @user.admin?
+		  @projects = Project.order("#{sort_column} #{sort_direction}")
+		else
+		  @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
+		end
+	else
+		
+	end # end if msg
 	render "index"
   end
 
