@@ -87,7 +87,7 @@ class ProjectsController < ApplicationController
 		  @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
 		end
 	else
-		
+
 	end # end if msg
 	render "index"
   end
@@ -1327,7 +1327,7 @@ class ProjectsController < ApplicationController
     soil.selected = false
     node.elements.each do |p|
       case p.name
-	    when "id"
+	      when "id"
           soil.soil_id_old = p.text
         when "key"
           soil.key = p.text
@@ -1358,6 +1358,40 @@ class ProjectsController < ApplicationController
               end
             end
           end
+        when "ffc"
+          soil.ffc = p.text
+        when "wtmn"
+          soil.wtmn = p.text
+        when "wtmx"
+          soil.wtmx = p.text
+        when "wtbl"
+          soil.wtbl = p.text
+        when "gwst"
+          soil.gwst = p.text
+        when "gwmx"
+          soil.gwmx = p.text
+        when "rft"
+          soil.rft = p.text
+        when "rfpk"
+          soil.rfpk = p.text
+        when "tsla"
+          soil.tsla = p.text
+        when "xids"
+          soil.xids = p.text
+        when "rtn1"
+          soil.rtn1 = p.text
+        when "xidk"
+          soil.xidk = p.text
+        when "zqt"
+          soil.zqt = p.text
+        when "zf"
+          soil.zf = p.text
+        when "ztk"
+          soil.ztk = p.text
+        when "fbm"
+          soil.fbm = p.text
+        when "fhp"
+          soil.fhp = p.text
         #when "subareas"
           #p.elements.each do |sa|
             #msg = upload_subarea_new_version(0, 0, soil.id, sa)
@@ -1831,17 +1865,17 @@ class ProjectsController < ApplicationController
           subarea.subarea_type = p.text
         when "description"
           subarea.description = p.text
-		when "bmp_id"
-			subarea.bmp_id = bmp_id
-		when "soil_id"
-			if p.text == "0"
-				subarea.soil_id = 0
-			else
-			    if Soil.find_by_soil_id_old(p.text) == nil then
-					return "OK"
-				end
-				subarea.soil_id = Soil.find_by_soil_id_old(p.text).id
-			end
+    		when "bmp_id"
+    			subarea.bmp_id = bmp_id
+    		when "soil_id"
+			    if p.text == "0"
+				    subarea.soil_id = 0
+			    else
+			      if Soil.find_by_soil_id_old(p.text) == nil then
+					    return "OK"
+				    end
+            subarea.soil_id = Soil.find_by_soil_id_old(p.text).id
+			    end
         when "number"
           subarea.number = p.text
         when "inps"
@@ -2032,8 +2066,8 @@ class ProjectsController < ApplicationController
           subarea.xtp3 = p.text
         when "xtp4"
           subarea.xtp4 = p.text
-      end
-    end
+      end #end case
+    end #end each
     if subarea.save then
       return "OK"
     else
@@ -2168,7 +2202,7 @@ class ProjectsController < ApplicationController
   def upload_operation_new_version(scenario_id, new_operation)
     operation = Operation.new
     operation.scenario_id = scenario_id
-	operation.save
+	  operation.save
     new_operation.elements.each do |p|
       case p.name
         when "crop_id"
@@ -2253,15 +2287,16 @@ class ProjectsController < ApplicationController
           soil_operation.type_id = p.text
         when "apex_operation"
           soil_operation.apex_operation = p.text
-		when "soil_id"
-			if p.text == "0"
-				soil_operation.soil_id = 0
-			else
-				if Soil.find_by_soil_id_old(p.text) == nil then
-					return "OK"
-				end
-				soil_operation.soil_id = Soil.find_by_soil_id_old(p.text).id
-			end
+    		when "soil_id"
+    			if p.text == "0"
+    				soil_operation.soil_id = 0
+    			else
+    				if Soil.find_by_soil_id_old(p.text) == nil then
+    					return "OK"
+            else
+              soil_operation.soil_id = Soil.find_by_soil_id_old(p.text).id
+    				end
+    			end
       end  # end case
     end  # node
     if soil_operation.save
