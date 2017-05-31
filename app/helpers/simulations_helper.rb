@@ -1285,7 +1285,7 @@ module SimulationsHelper
           @grazingb = true
           if current_oper.no3_n != 0 || current_oper.po4_p != 0 || current_oper.org_n != 0 || current_oper.org_p != 0 || current_oper.nh3 != 0 then
             #animal_code = get_animal_code(operation.type_id)
-            change_fert_for_grazing(current_oper.no3_n, current_oper.po4_p, current_oper.org_n, current_oper.org_p, operation.type_id, current_oper.nh3)
+            change_fert_for_grazing(current_oper.no3_n, current_oper.po4_p, current_oper.org_n, current_oper.org_p, current_oper.type_id, current_oper.nh3)
           end
         end
         apex_string += sprintf("%8.4f", operation.opv1)
