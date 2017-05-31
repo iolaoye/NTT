@@ -28,7 +28,7 @@ class WatershedsController < ApplicationController
     @watersheds = Watershed.where(:location_id => @project.location.id)
     session[:simulation] = 'watershed'
 
-	add_breadcrumb 'Field Routing (Watershed)'
+	add_breadcrumb t('watershed.watershed')
     respond_to do |format|
       format.html  # index.html.erb
       format.json { render json: @watersheds }

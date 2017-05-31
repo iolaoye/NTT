@@ -40,7 +40,7 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => @field.id)
     
-    add_breadcrumb 'Scenarios'
+    add_breadcrumb t('menu.scenarios')
 
     respond_to do |format|
       format.html { render action: "index" }
@@ -120,8 +120,8 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
 	
     
-    add_breadcrumb 'Scenarios', project_field_scenarios_path(@project, @field)
-	add_breadcrumb 'Editing Scenario'
+    add_breadcrumb t('menu.scenarios'), project_field_scenarios_path(@project, @field)
+	add_breadcrumb t('general.editing') + " " +  t('scenario.scenario')
   end
 
 ################################  CREATE  #################################

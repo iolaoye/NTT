@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_breadcrumbs	
-	add_breadcrumb 'Home', :root_path
-	add_breadcrumb 'Projects', :root_path
+	add_breadcrumb t('general.home'), :root_path
+	add_breadcrumb t('menu.projects'), :root_path
 	
 	if params[:project_id] != nil then 
 		@project = Project.find(params[:project_id]) 
@@ -26,12 +26,12 @@ class ApplicationController < ActionController::Base
 	end
 	if params[:field_id] != nil and params[:field_id].to_i != 0 then
 		@field = Field.find(params[:field_id])
-		add_breadcrumb "Fields", project_fields_path(@project)
+		add_breadcrumb t('menu.fields'), project_fields_path(@project)
 		add_breadcrumb @field.field_name
 	end
 	if params[:scenario_id] != nil then
 		@scenario = Scenario.find(params[:scenario_id])
-		add_breadcrumb "Scenarios", project_field_scenarios_path(@project, @field)
+		add_breadcrumb t('menu.scenarios'), project_field_scenarios_path(@project, @field)
 		add_breadcrumb @scenario.name
 	end
   end  # end method

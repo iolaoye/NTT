@@ -16,7 +16,7 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
     @project = Project.find(params[:project_id])
     @project = Project.find(params[:project_id])
-    add_breadcrumb "Location"
+    add_breadcrumb t('menu.location')
     @project_name = Project.find(params[:project_id]).name
     session[:location_id] = params[:id]
     respond_to do |format|

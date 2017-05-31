@@ -7,8 +7,8 @@ class ApexParametersController < ApplicationController
     @project = Project.find(params[:project_id])
     @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id])
 		
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Parameters'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.parameters_file')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_parameters }
@@ -46,9 +46,9 @@ class ApexParametersController < ApplicationController
     @low_range = @apex_parameter.parameter_description.range_low
     @high_range = @apex_parameter.parameter_description.range_high
 	
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Parameters', controller: "apex_parameters", action: "index"
-	add_breadcrumb 'Editing Parameters File'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.parameters_file'), controller: "apex_parameters", action: "index"
+	add_breadcrumb t('general.editing') + " " + t('menu.parameters_file')
   end
 
   # POST /apex_parameters
