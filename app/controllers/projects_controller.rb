@@ -516,9 +516,9 @@ class ProjectsController < ApplicationController
         end # end bmps.each
       } # end xml.bmp operation
       subareas = Subarea.where(:scenario_id => scenario.id, :bmp_id => nil)
-	  if subareas == nil then
-		subareas = Subarea.where(:scenario_id => scenario.id, :bmp_id => 0)
-	  end
+  	  if subareas.blank?
+  		  subareas = Subarea.where(:scenario_id => scenario.id, :bmp_id => 0)
+  	  end
       xml.subareas {
         subareas.each do |subarea|
           save_subarea_information(xml, subarea)
