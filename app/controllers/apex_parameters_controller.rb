@@ -117,8 +117,8 @@ class ApexParametersController < ApplicationController
 		
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Parameters'
-	render "index"
-    #redirect_to apex_parameters_url, notice: t('models.apex_parameter') + " " + t('general.reset')
+	#render "index"
+    redirect_to project_field_apex_parameters_path(@project, @field), notice: t('models.apex_parameter') + " " + t('general.reset')
   end
 
   def download
