@@ -119,8 +119,8 @@ class ApexControlsController < ApplicationController
 	
 	add_breadcrumb 'Utility Files'
 	add_breadcrumb 'Controls'
-	render "index"
-    #redirect_to apex_controls_url, notice: t("models.apex_control") + " " + t("general.reset")
+	#render "index"
+    redirect_to project_field_apex_controls_path(@project, @field), notice: t("models.apex_control") + " " + t("general.reset")
   end
 
   def download
