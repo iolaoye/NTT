@@ -778,21 +778,21 @@ class ProjectsController < ApplicationController
       xml.ny3 subarea.ny3
       xml.ny4 subarea.ny4
       xml.ny5 subarea.ny5
-      xml.ny5 subarea.ny6
-      xml.ny5 subarea.ny7
-      xml.ny5 subarea.ny8
-      xml.ny5 subarea.ny9
-      xml.ny5 subarea.ny10
+      xml.ny6 subarea.ny6
+      xml.ny7 subarea.ny7
+      xml.ny8 subarea.ny8
+      xml.ny9 subarea.ny9
+      xml.ny10 subarea.ny10
       xml.xtp1 subarea.xtp1
       xml.xtp2 subarea.xtp2
       xml.xtp3 subarea.xtp3
       xml.xtp4 subarea.xtp4
-      xml.xtp4 subarea.xtp5
-      xml.xtp4 subarea.xtp6
-      xml.xtp4 subarea.xtp7
-      xml.xtp4 subarea.xtp8
-      xml.xtp4 subarea.xtp9
-      xml.xtp4 subarea.xtp10
+      xml.xtp5 subarea.xtp5
+      xml.xtp6 subarea.xtp6
+      xml.xtp7 subarea.xtp7
+      xml.xtp8 subarea.xtp8
+      xml.xtp9 subarea.xtp9
+      xml.xtp10 subarea.xtp10
     } # xml each subarea end
   end
 
