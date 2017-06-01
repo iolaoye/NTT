@@ -735,18 +735,20 @@
     $('input[type=radio][name=bmp_cb3]').change(function() {
       validateBmpFs.clearAllValidations();
       if (this.value == '12') {
-      for(n = 0; n < fs_inputs.length; n++){
-                    if (n != 0)
-                      validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
-      }
-      validateBmpFs.addValidation(fs_inputs[3].name, "lte=0.75", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_lessequal") %>' + " 0.75");
-      validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
+        for(n = 0; n < fs_inputs.length; n++){
+          if (n != 0) {
+            validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
+          }
+        }
+        validateBmpFs.addValidation(fs_inputs[3].name, "lte=0.75", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_lessequal") %>' + " 0.75");
+        validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
       }
       else if (this.value == '13') {
         for(n = 0; n < fs_inputs.length; n++){
-          if (n != 3)
+          if (n != 3 && n != 4) {
             validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %> ' + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
           }
+        }
       }
     });
     validateBmpFs.addValidation(fs_inputs[1].name, "gt=0", '<%= t("managepage.bmpnav.mutualbmp.item4") %>' + ' <%= t("pdf.area")%> ' + '<%= t("bmp.acres") %>: ' + '<%= t("validate.input_greater") %>' + " 0");
