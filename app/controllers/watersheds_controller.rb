@@ -91,11 +91,11 @@ class WatershedsController < ApplicationController
 		@notice = nil
 		case status
 			when "saved"
-				@notice = "Saved"
+				@notice = t('field.field') + "/" + t('scenario.scenario') + " " + t('general.created')
 			when "exist"
-				@error = "Already Exist"
+				@error = t('field.field') + "/" + t('scenario.scenario') + " " + t('errors.messages.exist')
 			when "error"
-				@error = "Error Adding field/scenario"
+				@error = "Error " + t('general.adding') + " " + t('field.field') + "/" + t('scenario.scenario')
 		end
 	else
 		#run simulations
@@ -194,6 +194,7 @@ class WatershedsController < ApplicationController
 		@watershed.location_id = session[:location_id]
     end
 	@project = Project.find(params[:project_id])
+	add_breadcrumb t('watershed.watershed'), project_watersheds_path(@project)
     respond_to do |format|
       if @watershed.save
         format.html { redirect_to  project_watersheds_path(@project), notice: t('watershed.watershed') + " " + t('general.created') }
