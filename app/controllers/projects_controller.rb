@@ -79,16 +79,17 @@ class ProjectsController < ApplicationController
     @use_old_soil = true
 	msg = duplicate_project()
 	if !msg == "OK" then
-		#download_project(params[:id], "copy")
-		@user = User.find(session[:user_id])
-		if @user.admin?
-		  @projects = Project.order("#{sort_column} #{sort_direction}")
-		else
-		  @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
-		end
+		flash[:info] = msg
 	else
-
+		notice = msg
 	end # end if msg
+	#download_project(params[:id], "copy")
+	@user = User.find(session[:user_id])
+	if @user.admin?
+		@projects = Project.order("#{sort_column} #{sort_direction}")
+	else
+		@projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
+	end
 	render "index"
   end
 
@@ -459,6 +460,7 @@ class ProjectsController < ApplicationController
       xml.ztk soil.ztk
       xml.fbm soil.fbm
       xml.fhp soil.fhp
+	  xml.soil_id_old soil.id
       layers = Layer.where(:soil_id => soil.id)
       xml.layers {
         layers.each do |layer|

@@ -115,7 +115,7 @@ include ScenariosHelper
     @field = Field.find(params[:field_id])
     
 	
-	add_breadcrumb 'Weather'
+	add_breadcrumb t('menu.weather')
     if !(@weather == nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""

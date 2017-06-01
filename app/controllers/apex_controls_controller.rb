@@ -9,8 +9,8 @@ class ApexControlsController < ApplicationController
     @project = Project.find(params[:project_id])
   	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])	
 	
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Controls'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.control_file')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_controls }
@@ -48,9 +48,9 @@ class ApexControlsController < ApplicationController
   	@low_range = @apex_control.control_description.range_low
   	@high_range = @apex_control.control_description.range_high
 		
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Controls', controller: "apex_controls", action: "index"
-	add_breadcrumb "Editing Control Files"
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.control_file'), controller: "apex_controls", action: "index"
+	add_breadcrumb t('general.editing') + " " +  t('menu.control_file')
   end
 
   # POST /apex_controls
