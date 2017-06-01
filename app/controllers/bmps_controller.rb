@@ -32,7 +32,7 @@ class BmpsController < ApplicationController
 	else
 		@irrigations = Irrigation.where("id < 8")
 	end
-    add_breadcrumb 'Conservation Practices'
+    add_breadcrumb t('menu.bmps')
 
     get_bmps()
 	take_names()

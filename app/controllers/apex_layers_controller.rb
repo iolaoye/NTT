@@ -12,9 +12,9 @@
     @field = Field.find(params[:field_id])
 	
 	
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Soils', controller: "apex_soils", action: "index"
-	add_breadcrumb 'Layers'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.soils'), controller: "apex_soils", action: "index"
+	add_breadcrumb t('menu.layers')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_layers }
@@ -29,7 +29,6 @@
     @apex_layer_id = params[:id]
     @apex_layer = Layer.find(params[:id])
     @location = Location.where(:project_id => params[:project_id])
-	add_breadcrumb 'Viewing Layers'
 
     respond_to do |format|
       format.html # show.html.erb
@@ -55,12 +54,10 @@
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @location = Location.where(:project_id => params[:project_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Soils', controller: "apex_soils", action: "index"
-	add_breadcrumb 'Layers', controller: "apex_layers", action: "index"
-	add_breadcrumb 'Editing Layers'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.soils'), controller: "apex_soils", action: "index"
+	add_breadcrumb t('menu.layers'), controller: "apex_layers", action: "index"
+	add_breadcrumb t('general.editing') + " " + t('menu.layers')
   end
 
   # POST /layers

@@ -3,7 +3,8 @@ class SoilOperationsController < ApplicationController
   # GET /soil_operations.json
 
    def index
-	add_breadcrumb 'Utility Files', controller: "soil_operations", action: "index"
+	add_breadcrumb t('menu.utility_file'), controller: "soil_operations", action: "index"
+	add_breadcrumb t('menu.operations')
   	#@soil = 0
   	#@scenario = 0
     @soil = Soil.where(:field_id => params[:field_id]).first
@@ -47,8 +48,9 @@ class SoilOperationsController < ApplicationController
     @soil_operation = SoilOperation.find(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-	add_breadcrumb 'Operations', controller: "soil_operations", action: "index"
-	add_breadcrumb 'Editing Operation File'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.operations'), controller: "soil_operations", action: "index"
+	add_breadcrumb t('general.editing') + " " + t('menu.oerations')
   end
 
   # POST /soil_operations

@@ -30,7 +30,7 @@ class SoilsController < ApplicationController
     @soils = Soil.where(:field_id => params[:field_id])
     @weather = @field.weather
 	
-    add_breadcrumb 'Soils'
+    add_breadcrumb t('menu.soils')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -71,8 +71,8 @@ class SoilsController < ApplicationController
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:id])
 
-    add_breadcrumb 'Soils', project_field_soils_path(@project, @field)
-	add_breadcrumb 'Editing Soil'
+    add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
+	add_breadcrumb t('general.editing') + " " + t('menu.soils')
   end
 
 ################################  CREATE   #################################

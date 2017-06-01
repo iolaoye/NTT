@@ -11,8 +11,8 @@ class SitesController < ApplicationController
     @project = Project.find(params[:project_id])
     
 	
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Sites'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.site')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,11 +26,8 @@ class SitesController < ApplicationController
     @site = Site.find_by_field_id(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Sites', controller: "sites", action: "index"
-	add_breadcrumb 'Viewing Site'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.site'), controller: "sites", action: "index"
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @site }
@@ -53,11 +50,9 @@ class SitesController < ApplicationController
     @site = Site.find(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Sites', controller: "sites", action: "index"
-	add_breadcrumb 'Editing Site'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.site'), controller: "sites", action: "index"
+	add_breadcrumb t('general.editing') + " " + t('menu.site')
   end
 
   # POST /sites
