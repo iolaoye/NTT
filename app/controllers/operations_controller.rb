@@ -19,7 +19,7 @@ class OperationsController < ApplicationController
 
 	crop_schedule()
     
-    add_breadcrumb 'Operations'
+    add_breadcrumb t('menu.operations')
     array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
 
@@ -53,7 +53,8 @@ class OperationsController < ApplicationController
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 
-    add_breadcrumb 'New Operation'
+    add_breadcrumb t('menu.operations'), project_field_scenario_operations_path(@project, @field, @scenario)
+	add_breadcrumb t('operation.new_operation')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -71,6 +72,7 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
+	add_breadcrumb t('operation.edit')
   end
 
 ################################  CREATE  #################################

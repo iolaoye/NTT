@@ -53,8 +53,8 @@ class LayersController < ApplicationController
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     @layers = Layer.where(:soil_id => params[:soil_id])
-	add_breadcrumb 'Soil', project_field_soils_path(@project, @field)
-	add_breadcrumb 'Layers' 
+	add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
+	add_breadcrumb t('menu.layers') 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @layers }
@@ -81,7 +81,9 @@ class LayersController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
-
+	add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
+	add_breadcrumb t('menu.layers'), project_field_soil_layers_path(@project, @field)
+	add_breadcrumb t('layer.new_layer')
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @layer }
@@ -94,9 +96,9 @@ class LayersController < ApplicationController
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     @layer = Layer.find(params[:id])
-	add_breadcrumb 'Soils', project_field_soils_path(@project, @field)
-	add_breadcrumb 'Layers', project_field_soil_layers_path(@project, @field)
-	add_breadcrumb 'Editing layer'
+	add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
+	add_breadcrumb t('menu.layers'), project_field_soil_layers_path(@project, @field)
+	add_breadcrumb t('general.editing') + " " +  t('menu.layers')
   end
 
 # POST /layers

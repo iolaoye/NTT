@@ -12,8 +12,8 @@
     @soils = @field.soils
 	
 	
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Soils'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.soils')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @soils }
@@ -27,11 +27,8 @@
     @soil = Soil.find(params[:id])
     @field = Field.find(params[:field_id])
     @location = Location.where(:project_id => params[:project_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Soils', controller: "apex_soils", action: "index"
-	add_breadcrumb 'Viewing Soils'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.soils'), controller: "apex_soils", action: "index"
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @soil }
@@ -55,11 +52,9 @@
     @soil = Soil.find(params[:id])
     @field = Field.find(params[:field_id])
     @location = Location.where(:project_id => params[:project_id])
-	add_breadcrumb @project.name, project_path(@project)
-	add_breadcrumb @field.field_name, project_fields_path(@project)
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Soils', controller: "apex_soils", action: "index"
-	add_breadcrumb 'Editing Soils'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.soils'), controller: "apex_soils", action: "index"
+	add_breadcrumb t('general.editing') + " " + t('menu.soils')
   end
 
   # POST /soils
