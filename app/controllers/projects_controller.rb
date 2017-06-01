@@ -459,6 +459,7 @@ class ProjectsController < ApplicationController
       xml.ztk soil.ztk
       xml.fbm soil.fbm
       xml.fhp soil.fhp
+	  xml.soil_id_old soil.id
       layers = Layer.where(:soil_id => soil.id)
       xml.layers {
         layers.each do |layer|
