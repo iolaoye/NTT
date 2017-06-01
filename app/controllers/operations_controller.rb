@@ -67,7 +67,7 @@ class OperationsController < ApplicationController
   def edit
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @operation = Operation.find(params[:id])
-
+	@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
