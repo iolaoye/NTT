@@ -45,7 +45,7 @@
 			</div>
 			<div id="div_fertilizer" class="field" style="display:none" >
 				<%= f.label t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id}, {:required => true} %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id}, {:required => true} %>
 			</div>
 			<div class="field" id="div_amount">
 			  <%= f.label t('operation.plant_population') %>
@@ -89,9 +89,9 @@
 			<div class="field" id="div_fertilizer" >
 				<%= f.label :type_id, t('operation.fertilizer') %>
 				<% if I18n.locale.eql?(:en) %>
-					<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
+					<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 				<% else %>
-					<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante', :selected => @operation.subtype_id} %>
+					<%= collection_select :operation, :subtype_id, @fertilizers, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante', :selected => @operation.subtype_id} %>
 				<% end %>
 			</div>
 			<div class="field" id="div_amount">
@@ -135,7 +135,7 @@
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Method', :selected => @operation.subtype_id} %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Method', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount" style="display:none">
 			  <%= f.label :amount, t('operation.amount') %>
@@ -178,7 +178,7 @@
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount">
 			  <%= f.label :volume, t('operation.volume') %>
@@ -217,7 +217,7 @@
 			</div>
 			<div id="div_fertilizer" style="display:none">
 				<%= f.label :type_id, t('operation.fertilizer') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount">
 			  <%= f.label :animals, t('operation.animals') %>
@@ -256,7 +256,7 @@
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount" >
 			  <%= f.label :amount, t('operation.amount') %>
@@ -295,7 +295,7 @@
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<%= collection_select :operation, :subtype_id, Fertilizer.all, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			</div>
 			<div class="field" id="div_amount" style="display:none">
 			  <%= f.label :amount, t('operation.amount') %>
