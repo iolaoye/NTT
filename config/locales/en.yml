@@ -271,6 +271,7 @@ en:
       not_an_integer: must be an integer
       odd: must be odd
       required: must exist
+      exist: already exists
       taken: has already been taken
       scenario_simulation: 'Select at least one Scenario to simulate.'
       aplcat_simulation: 'Select at least one Aplcat to simulate.'
@@ -385,6 +386,7 @@ en:
     all: All
     listing: Listing
     editing: Editing
+    adding: Adding
     type: Type
     value: Value
     fraction: fraction

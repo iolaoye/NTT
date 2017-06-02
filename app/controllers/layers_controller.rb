@@ -131,13 +131,13 @@ class LayersController < ApplicationController
 
     respond_to do |format|
       if @layer.update_attributes(layer_params)
-        if params[:add_more] == "Save" && params[:finish] == nil
+        #if params[:add_more] == "Save" && params[:finish] == nil
           format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil), notice: t('models.layer') + "" + t('notices.updated') }
           format.json { render json: @layer, status: :created, location: @layer }
-        elsif params[:finish] == "Finish" && params[:add_more] == nil
-          format.html { redirect_to list_scenario_path(params[:field_id]), notice: t('models.layer') + "" + t('notices.updated') }
-          format.json { render json: @layer, status: :created, location: @layer }
-        end
+        #elsif params[:finish] == "Finish" && params[:add_more] == nil
+          #format.html { redirect_to list_scenario_path(params[:field_id]), notice: t('models.layer') + "" + t('notices.updated') }
+          #format.json { render json: @layer, status: :created, location: @layer }
+        #end
       else
         format.html { render action: "edit" }
         format.json { render json: @layer.errors, status: :unprocessable_entity }
