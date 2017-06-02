@@ -3,9 +3,9 @@ class FertilizersController < ApplicationController
   # GET /fertilizers.json
   def index
     if (params[:id] == "animal") then
-		@fertilizers = Fertilizer.where(:fertilizer_type_id => "2").where(:status => true).where(:animal => true)
+		@fertilizers = Fertilizer.where(:fertilizer_type_id => "2", :status => true, :animal => true)
 	else
-		@fertilizers = Fertilizer.where(:fertilizer_type_id => params[:fertilizer_type_id]).where(:status => true)
+		@fertilizers = Fertilizer.where(:fertilizer_type_id => params[:fertilizer_type_id], :status => true)
 	end 
 
     respond_to do |format|
