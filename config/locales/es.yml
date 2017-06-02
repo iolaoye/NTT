@@ -271,6 +271,7 @@ es:
       not_an_integer: debe ser un entero
       odd: debe ser impar
       required: debe existir
+      exist: ya existe
       taken: ya está en uso
       scenario_simulation: 'Seleccione al menos un Escenario para simular.'
       aplcat_simulation: 'Seleccione al menos un Aplcat para simular.'
@@ -390,6 +391,7 @@ es:
     all: Todos
     listing: Lista de
     editing: Editando
+    adding: Añadiendo
     type: Clase
     value: Valor
     fraction: fracción
