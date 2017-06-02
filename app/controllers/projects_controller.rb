@@ -90,7 +90,8 @@ class ProjectsController < ApplicationController
 	else
 		@projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
 	end
-	render "index"
+	#render "index"
+  redirect_to(request.env['HTTP_REFERER']) #return to previous page
   end
 
   ########################################### CREATE NEW PROJECT##################

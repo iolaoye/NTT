@@ -10,18 +10,18 @@ class OperationsController < ApplicationController
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-	#if session[:oper_type] == nil then
-		#session[:oper_type] = 0
-	#end
+  	#if session[:oper_type] == nil then
+  		#session[:oper_type] = 0
+  	#end
 
-	@scenario = Scenario.find(params[:scenario_id])
+  	@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
+  	crop_schedule()
 
-	crop_schedule()
-    
     add_breadcrumb t('menu.operations')
     array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
+    @operations.sort_by! { |date| [date.year, date.month_id, date.day] }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,15 +46,15 @@ class OperationsController < ApplicationController
 # GET /operations/new.json
   def new
     @operation = Operation.new
-	@operation.activity_id = params[:operation]
-	@operation.crop_id = params[:crop]
+  	@operation.activity_id = params[:operation]
+  	@operation.crop_id = params[:crop]
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 
     add_breadcrumb t('menu.operations'), project_field_scenario_operations_path(@project, @field, @scenario)
-	add_breadcrumb t('operation.new_operation')
+	  add_breadcrumb t('operation.new_operation')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -72,7 +72,7 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
-	add_breadcrumb t('operation.edit')
+	  add_breadcrumb t('operation.edit')
   end
 
 ################################  CREATE  #################################
@@ -129,7 +129,7 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1.json
   def update
     @operation = Operation.find(params[:id])
-	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+	  @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
@@ -452,7 +452,7 @@ class OperationsController < ApplicationController
 				  #save_soil_operation_information(xml, so)
 				#end # end soil_operations.each
 			  #} # end xml.soil_operation
-			} # xml each operation end      
+			} # xml each operation end
 		end # end operations.each
       } # end xml.operations
     end #builder do end
@@ -464,7 +464,7 @@ class OperationsController < ApplicationController
     #file.write(content)
     send_file path, :type => "application/xml", :x_sendfile => true
   end
-  #download operation def end 
+  #download operation def end
 
   ########################################### UPLOAD CROPPING SYSTEM FILE IN XML FORMAT ##################
   def upload_system
@@ -484,7 +484,7 @@ class OperationsController < ApplicationController
 				msg = upload_operation_info(node, params[:scenario_id], params[:field_id])
 			  else
 			end
-		end    
+		end
     end
 	redirect_to project_field_scenario_operations_path(params[:project_id], params[:field_id], params[:scenario_id])
   end
@@ -530,7 +530,7 @@ class OperationsController < ApplicationController
     apex_till_code = 0
     node.elements.each do |p|
       case p.name
-        when "crop_id" 
+        when "crop_id"
           @operation.crop_id = p.text
         when "activity_id"
           @operation.activity_id = p.text
