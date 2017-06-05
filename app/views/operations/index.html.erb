@@ -157,7 +157,7 @@
 		  <% end %>
 		  
 
-		  <% if @operations.where(:activity_id => 7).any?%>
+		  <% if @scenario.grazing_operations(crop).any?%>
 			<div class="panel panel-primary">
 			  <h4><%= t('operation.start_grazing') %></h4>
 			    <table class="table">
@@ -170,7 +170,7 @@
 					<td class="optable" style="text-align: right"><b><%= t('operation.hours') %></b></td>
 					<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
                   </tr>
-				  <% @operations.where(:activity_id => 7).each do |op| %>
+				  <% @operations.where(:activity_id => 7, :crop_id => crop).each do |op| %>
 				  <tr>
 					<td><%= op.year %></td>
 					<td><%= Date::MONTHNAMES[op.month_id] %></td>
@@ -190,7 +190,7 @@
 		  <% end %>
 
           
-		  <% if @operations.where(:activity_id => 8).any?%>
+		  <% if @scenario.grazing_operations(crop).any?%>
 			<div class="panel panel-primary">
 			  <h4><%= t('operation.stop_grazing') %></h4>
 			    <table class="table">
@@ -200,7 +200,7 @@
 					<td class="optable"><b><%= (t'pdf.day') %></b></td>
 					<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
                   </tr>
-				  <% @operations.where(:activity_id => 8).each do |op| %>
+				  <% @operations.where(:activity_id => 8, :crop_id => crop).each do |op| %>
 				  <tr>
 					<td><%= op.year %></td>
 					<td><%= Date::MONTHNAMES[op.month_id] %></td>
