@@ -54,7 +54,7 @@ class ScenariosController < ApplicationController
 	time_begin = Time.now
 	session[:simulation] = 'scenario'
 	case params[:commit]
-		when "Simulate Selected NTT", "Simular NTT", "Simulate Selected Scenario", "Simulate Scenarios"
+		when "Simulate Selected NTT", "Simular NTT", "Simulate Selected Scenario", "Simulate Scenarios", "Simular Seleccionado Escenario"
 			msg = simulate_ntt
 		when "Simulate Selected Aplcat", "Simular Aplcat"
 			msg = simulate_aplcat
@@ -65,7 +65,7 @@ class ScenariosController < ApplicationController
     if msg.eql?("OK") then
 	  @scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenario.count.to_s + " scenarios simulated successfully in " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " seconds" if @scenarios.count > 0
-      render "index", notice: "Simulation process end succesfully"
+	  redirect_to project_field_scenarios_path(@project, @field)
     else
       render "index", error: msg
     end # end if msg
