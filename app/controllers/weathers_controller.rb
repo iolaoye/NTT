@@ -2,9 +2,6 @@ class WeathersController < ApplicationController
 include SimulationsHelper
 include ScenariosHelper
 
-
-
-
 ################################  Save_coordinates   #################################
 # GET /weathers/1
 # GET /weathers/1.json
@@ -163,13 +160,13 @@ include ScenariosHelper
     @field = Field.find(params[:field_id])
     if (params[:weather][:way_id] == "2")
       if params[:weather][:weather_file] == nil
-		      if @weather.weather_file == nil || @weather.weather_file == ""
-			        redirect_to edit_project_field_weather_path(@project, @field)
-			        flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
-		      end
+		if @weather.weather_file == nil || @weather.weather_file == ""
+			redirect_to edit_project_field_weather_path(@project, @field)
+			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
+		end
       else
         @weather.way_id = 2
-        #redirect_to edit_weather_path(params[:field_id]), notice: t('models.weather') + " " + t('notices.updated')
+		upload_weather
       end
     end
 
@@ -191,9 +188,9 @@ include ScenariosHelper
       end
     end
 
-	  apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
+	apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
     apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
-	  apex_control.save
+	apex_control.save
     apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 2)
     apex_control.value = @weather.simulation_initial_year - 5
     apex_control.save
@@ -247,6 +244,11 @@ include ScenariosHelper
 	  end   # end case data.len
     end  # end file.open
 	weather_file.close
+	#verify that there are more than 5 years of weather period.
+	if @weather.simulation_initial_year >= @weather.weather_final_year then
+		@weather.simulation_initial_year = @weather.weather_initial_year
+		@weather.weather_initial_year -= 5 
+	end
     @weather.weather_file = name
     @weather.way_id = 2
     @weather.save
