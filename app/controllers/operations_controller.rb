@@ -107,10 +107,10 @@ class OperationsController < ApplicationController
     respond_to do |format|
       if saved
         if soil_op_saved
-          if params[:add_more] == "Add more" && params[:finish] == nil
+          if params[:add_more] == t('submit.add_more') && params[:finish] == nil
             format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
             format.json { render json: @operation, status: :created, location: @operation }
-          elsif params[:finish] == "Finish" && params[:add_more] == nil
+          elsif params[:finish] == t('submit.finish') && params[:add_more] == nil
             format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
             format.json { render json: @operation, status: :created, location: @operation }
           end
@@ -140,10 +140,10 @@ class OperationsController < ApplicationController
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
-        if params[:add_more] == "Add more" && params[:finish] == nil
+        if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
-        elsif params[:finish] == "Finish" && params[:add_more] == nil
+        elsif params[:finish] == t('submit.finish') && params[:add_more] == nil
           format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
         end

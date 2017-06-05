@@ -25,6 +25,8 @@
 #APEX folders.
 	APEX = "public/NTTFiles"
 	APEX_FOLDER = "E:/NTTHTML5Files"
+	APEX_ORIGINAL = 'public/APEX1'
+
 #folder for examples
 	EXAMPLES = "public/Examples"
 
@@ -40,9 +42,6 @@
 
 #folder for download project files
 	DOWNLOAD = 'public/download'
-
-#public folder
-	APEX_ORIGINAL = 'public/APEX1'
 
 #folder for wick program - this is to print results in pdf file
 	r_root = Rails.root.to_s
