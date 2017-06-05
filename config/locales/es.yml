@@ -578,6 +578,8 @@ es:
     kill: Terminar
     burn: Quema
     liming: Encalado
+    start_grazing: Iniciar Pasteo
+    stop_grazing: Terminar Pasteo
     seed: 'Cantidad de Siembra (seeds/ft)'
     amount_applied: 'Cantidad Aplicada (lbs/ac)'
     add_planting: 'Añadir la operación de Plantar'
@@ -588,6 +590,8 @@ es:
     add_irrigation: 'Añadir la operación de Irrigación'
     add_burn: 'Añadir la operación de Quema'
     add_liming: 'Añadir la operación de Encalado'
+    add_start_grazing: 'Añadir la operación de Iniciar Pasteo'
+    add_stop_grazing: 'Añadir la operación de Terminar Pasteo'
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG

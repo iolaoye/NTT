@@ -48,11 +48,12 @@ class OperationsController < ApplicationController
     @operation = Operation.new
   	@operation.activity_id = params[:operation]
   	@operation.crop_id = params[:crop]
+    @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
-
+	@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     add_breadcrumb t('menu.operations'), project_field_scenario_operations_path(@project, @field, @scenario)
 	  add_breadcrumb t('operation.new_operation')
 
