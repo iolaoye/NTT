@@ -61,7 +61,6 @@ module SimulationsHelper
   def send_files1_to_APEX(file)
     uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-	debugger
     res = Net::HTTP.post_form(uri, "data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file)
     if res.body.include?("Created") then
       return "OK"
@@ -2230,7 +2229,6 @@ module SimulationsHelper
 
 		conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
         @last_herd += 1
-		debugger
         animalField = animals * soil_percentage / 100
         herdFile = sprintf("%4d", @last_herd) #For different owners
         #comentarized because there is not field divided anymore
