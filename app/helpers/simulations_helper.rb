@@ -1112,7 +1112,7 @@ module SimulationsHelper
           @soil_operations[j].year = "1"
           #drOuts.Add(drOut)
         end
-		@soil_operations.sort_by! { |date| [date.year, date.month, date.day] }
+		@soil_operations.sort_by! { |date| [date.year, date.month, date.day, date.id] }
         #if i > 0 then
         #for j = 0 To i - 1
         #drOut = drIn(j)
