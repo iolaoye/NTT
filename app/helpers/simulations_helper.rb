@@ -61,6 +61,7 @@ module SimulationsHelper
   def send_files1_to_APEX(file)
     uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
+	debugger
     res = Net::HTTP.post_form(uri, "data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file)
     if res.body.include?("Created") then
       return "OK"

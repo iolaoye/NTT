@@ -10,9 +10,6 @@ class OperationsController < ApplicationController
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-  	#if session[:oper_type] == nil then
-  		#session[:oper_type] = 0
-  	#end
 
   	@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
@@ -22,7 +19,7 @@ class OperationsController < ApplicationController
     array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
     @operations.sort_by! { |date| [date.year, date.month_id, date.day] }
-
+	@highest_year = @operations.last.year
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @operations }
