@@ -22,8 +22,12 @@
       <table class="table table-striped">
         <thead>
           <tr class='gvHeaderStyle'>
-            <th><%= t('general.name')%></th>
-            <th><%= t('general.select')%></th>
+            <th>
+              <%= t('general.select')%>
+            </th>
+            <th>
+              <%= t('general.name')%>
+            </th>
           </tr>
         </thead>
         <% manure_operations = @scenario.operations.where(:activity_id => 2, :type_id => 2).count %>
@@ -39,25 +43,24 @@
 
             <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
               <tr>
+                <% if bmp.id != nil %>
+                  <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
+                <% else %>
+                  <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
+                <% end %>
 				        <% if I18n.locale.equal?(:en) %>
 					        <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %> class="bmp"><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
 				        <% else %>
 					        <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %> class="bmp"><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
 				        <% end %>
-				        <% if bmp.id != nil %>
-					        <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
-				        <% else %>
-					        <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
-				        <% end %>
 			        </tr>
             <%end %>
 		      </tbody>
-		    <tbody class="toggable" id=<%="#{bmp.bmpsublist_id}"%>>
-
+		    <tbody class="toggable borders" id=<%="#{bmp.bmpsublist_id}"%>>
 			    <% case bmp.bmpsublist_id %>
 				    <% when 1 %>
               <tr>
-                <td>
+                <td class="indent" colspan="2">
                   <% case bmp.depth%>
                     <% when 1 %>
                       <%= radio_button_tag :bmp_cb1, "1", true  %> <%= t('bmp.autoirrigation') %>
@@ -72,7 +75,7 @@
                 </td>
               </tr>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent2" colspan="2">
 						    <%= label :irrigation_id, t('bmp.irrigation')  %>
 						    <% if I18n.locale.equal?(:en) %>
 						      <%= collection_select :bmp_ai, :irrigation_id, @irrigations, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id}%>
@@ -82,19 +85,19 @@
 					    </td>
 				      </tr>
               <tr>
-                <td class="field indent" id = "frequency" >
+                <td class="field indent2" id = "frequency" colspan="2" >
                   <%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
                   <%= number_field :bmp_ai, :days, :value => bmp.days, :class => "gvTitleStyleNumber" %>
                 </td>
               </tr>
               <tr>
-					    <td class="indent">
+					    <td class="indent2" colspan="2">
 						    <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.percentage_range') %>
 						    <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="field indent" id = "irrigation_efficiency" >
+				        <td class="field indent2" id = "irrigation_efficiency" colspan="2" >
                   <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.percentage_range') %>
                   <%= number_field :bmp_ai, :irrigation_efficiency, :value => (1 - bmp.irrigation_efficiency) * 100, :class => "gvTitleStyleNumber" %>
                   <% if bmp.irrigation_id == 1 %> <% range = "70-80%" %>
@@ -107,20 +110,20 @@
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="field indent" id = "maximum_single_application" >
+				        <td class="field indent2" id = "maximum_single_application" colspan="2" >
 						    <%= label :days, t('bmp.maximum_single_application') + " (" + t('bmp.inches')  + ")"%>
 						    <%= number_field :bmp_ai, :maximum_single_application, :value => bmp.maximum_single_application, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="field indent" id = "reservoir_area" style="display: none;">
+				        <td class="field indent2" id = "reservoir_area" style="display: none;" colspan="2">
 						    <%= label :days, t('bmp.reservoir_area') + " (" + t('bmp.acres')  + ")"%>
 						    <%= number_field :bmp_ai, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				    <% when 3 %>
 				      <tr>
-					    <td class="field indent" id = "depth" >
+					    <td class="field indent" id = "depth" colspan="2" >
 						    <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
 						    <%= number_field :bmp_td, :depth, :value => bmp.depth, :class => "gvTitleStyleNumber" %>
                 </td>
@@ -159,13 +162,13 @@
                   </td>
               </tr>
               <tr>
-					      <td class="indent">
+					      <td class="indent" colspan="2">
 						      <%= t('bmp.pad') + " " + t('bmp.width') + " (" + t('bmp.ft')  + ")"%>
 						      <%= number_field :bmp_ppnd, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
                   </td>
                 </tr>
                 <tr>
-                  <td class="indent">
+                  <td class="indent" colspan="2">
                     <%= t('bmp.sides')  %>
                     <%= number_field :bmp_ppnd, :sides, :value => bmp.sides, :class => "gvTitleStyleNumber" %>
                   </td>
@@ -188,13 +191,13 @@
               <% end %>
 				    <% when 8 %>
 				      <tr>
-					      <td class="field indent" id = "area" >
+					      <td class="field indent" colspan="2" id = "area" colspan="2">
 						      <%= label :depth, t('pdf.area') + " (" + t('bmp.acres')  + ")"%>
 						      <%= number_field :bmp_wl, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
               <tr >
-                <td class="indent">
+                <td class="indent" colspan="2">
                   <%= t('bmp.additional_land') %>
                   <% checked = false %>
                   <% checked = true if bmp.sides == 1 %>
@@ -203,20 +206,20 @@
               </tr>
               <% when 9 %>
 				      <tr>
-					    <td class="field indent" id = "fraction_control_by_pond" >
+					    <td class="field indent" colspan="2" id = "fraction_control_by_pond" >
 						    <%= label :control, t('bmp.area_control') + " " + t('bmp.zero_to_one')  %>
 						    <%= number_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency, :class => "gvTitleStyleNumber", :step => 'any' %>
                 </td>
 				      </tr>
 				    <% when 10 %>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= label :depth, t('operation.animals')  %>
 						    <%= number_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="indent">
+				        <td class="indent" colspan="2">
 						      <%= label :days, t('bmp.stream_fencing_frequency') + " " + t('bmp.days_range') %>
 						      <%= number_field :bmp_sf, :days, :value => bmp.days, :style=>"width:50px", :class => "gvTitleStyleNumber" %>
                     <%= label :hours, t('bmp.hours') + " " + t('bmp.hours_range') %>
@@ -224,11 +227,11 @@
                   </td>
 				      </tr>
 				      <tr>
-				        <td class="indent">
+				        <td class="indent" colspan="2">
 				        </td>
 				      </tr>
 				      <tr>
-				        <td class="indent">
+				        <td class="indent" colspan="2">
 						    <%= label :animal_id, t('bmp.animals') %>
 						    <% if I18n.locale.equal?(:en) %>
 						      <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
@@ -238,31 +241,31 @@
 				        </td>
 				      </tr>
 				      <tr>
-				        <td class="indent2">
+				        <td class="indent2" colspan="2">
 						    <%= label :dry_manure, t('bmp.dry_manure') + " (" + t('bmp.lbs')  + ")"%>
 						    <%= number_field :bmp_sf, :dry_manure, :value => bmp.dry_manure, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="indent2">
+				        <td class="indent2" colspan="2">
 						    <%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.zero_to_one') %>
 						    <%= number_field :bmp_sf, :no3_n, :value => bmp.no3_n, :step => 'any', :class => "gvTitleStyleNumber" %>
 				        </td>
 				      </tr>
 				      <tr>
-				        <td class="indent2">
+				        <td class="indent2" colspan="2">
 						    <%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.zero_to_one') %>
 						    <%= number_field :bmp_sf, :po4_p, :value => bmp.po4_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="indent2">
+				        <td class="indent2" colspan="2">
 						    <%= label :org_n, t('bmp.org_n') + " " + t('bmp.zero_to_one') %>
 						    <%= number_field :bmp_sf, :org_n, :value => bmp.org_n, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="indent2">
+				        <td class="indent2" colspan="2">
 						    <%= label :org_p, t('bmp.org_p') + " " + t('bmp.zero_to_one') %>
 						    <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
@@ -280,7 +283,7 @@
             </tr> -->
             <% when 13 %>
               <tr>
-                <td>
+                <td class="indent" colspan="2">
                   <% case bmp.depth%>
                     <% when 13 %>
                       <%= radio_button_tag :bmp_cb3, "13", true  %> <%= t('pdf.filter_strip') %>
@@ -295,7 +298,7 @@
                 </td>
               </tr>
               <tr id = "tr_fs_vegetation" <%= "style=display:none" if bmp.depth == 12%>>
-                <td class="indent">
+                <td class="indent2" colspan="2">
                   <%= label :crop_id, t('operation.crop') %>
                   <% if I18n.locale.equal?(:en) %>
 						          <%= collection_select :bmp_fs, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
@@ -305,32 +308,32 @@
                 </td>
               </tr>
               <tr>
-					      <td class="indent">
+					      <td class="indent2" colspan="2">
 						      <%= t('general.area') + " (" + t('bmp.acres') + ")"%>
 						      <%= number_field :bmp_fs, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                   <%= label :area, " (" + t('general.optional') + ")", :style => "color:blue" %>
                   </td>
 				      </tr>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent2" colspan="2">
 						    <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
                   <%= number_field :bmp_fs, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
 					    </td>
 				      </tr>
               <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
-                <td class="indent">
+                <td class="indent2" colspan="2">
                   <%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
                   <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :step => '0.01', :min => 0.25, :max => 0.75, :class => "gvTitleStyleNumber" %>
                   </td>
               </tr>
               <tr style='display:none'>
-					      <td class="indent">
+					      <td class="indent2" colspan="2">
 						      <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
 						      <%= number_field :bmp_fs, :buffer_slope_upland, :value => bmp.buffer_slope_upland, :step => '0.01', :min => 0.25, :max => 1.00, :class => "gvTitleStyleNumber" %>
                   </td>
 				      </tr>
               <tr >
-                <td class="indent">
+                <td class="indent2" colspan="2">
                   <%= t('bmp.additional_land') %>
                   <% checked = false %>
                   <% checked = true if bmp.sides == 1 %>
@@ -339,7 +342,7 @@
               </tr>
             <% when 14 %>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= label :crop_id, t('operation.crop') %>
 						    <% if I18n.locale.equal?(:en) %>
 						      <%= collection_select :bmp_ww, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
@@ -349,14 +352,14 @@
 					    </td>
 				      </tr>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
                   <%= number_field :bmp_ww, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
                   </td>
 				      </tr>
 				    <% when 15 %>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= label :crop_id, t('operation.crop') %>
 						    <% if I18n.locale.equal?(:en) %>
 						      <%= collection_select :bmp_cb, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
@@ -366,27 +369,27 @@
 					    </td>
 				      </tr>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('bmp.buffer_width') + " (" + t('bmp.ft') + ")" %>
                   <%= number_field :bmp_cb, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
                   </td>
                 </tr>
                 <tr>
-                  <td class="indent">
+                  <td class="indent" colspan="2">
                     <%= t('bmp.crop_width') + " (" + t('bmp.ft') + ")"%>
                     <%= number_field :bmp_cb, :crop_width, :value => bmp.crop_width, :class => "gvTitleStyleNumber" %>
                   </td>
 				      </tr>
 				    <% when 16 %>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('bmp.slope_reduction') + " " + t('bmp.percentage_range') %>
 						    <%= number_field :bmp_ll, :slope_reduction, :value => bmp.slope_reduction, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				    <% when 17 %>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('general.yes') %>
 						    <% if bmp.id != nil %>
 							    <%= check_box :bmp_ts, :id, checked: true %>
@@ -398,7 +401,7 @@
 				    <% when 18 %>
               <% if manure_operations > 0%>
 				      <tr>
-				        <td class="indent">
+				        <td class="indent" colspan="2">
 						    <%= label :manure_control_id, t('bmp.manure_control') %>
 						    <% if I18n.locale.equal?(:en) %>
 						      <%= collection_select :bmp_mc, :animal_id, ManureControl.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
@@ -408,25 +411,25 @@
 				        </td>
 				      </tr>
 				      <tr>
-				        <td class="indent">
+				        <td class="indent" colspan="2">
 						    <%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.percentage_range') %>
 						    <%= number_field :bmp_mc, :no3_n, :value => bmp.no3_n, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="indent">
+				        <td class="indent" colspan="2">
 						    <%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.percentage_range') %>
 						    <%= number_field :bmp_mc, :po4_p, :value => bmp.po4_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="indent">
+				        <td class="indent" colspan="2">
 						    <%= label :org_n, t('bmp.org_n') + " " + t('bmp.percentage_range') %>
 						    <%= number_field :bmp_mc, :org_n, :value => bmp.org_n, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-				        <td class="indent">
+				        <td class="indent" colspan="2">
 						    <%= label :org_p, t('bmp.org_p') + " " + t('bmp.percentage_range') %>
 						    <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
@@ -449,7 +452,7 @@
               </tr>
 
               <% @climates.each do |climate| %>
-                <tr class="indent">
+                <tr class="indent" colspan="4">
                   <td style="text-align: center">
                     <%= climate.month %>
                   </td>
@@ -467,28 +470,28 @@
 
             <% when 20 %>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('general.select') %>
 						    <%= check_box :bmp_ac, :id, :value => bmp.id %>
 					    </td>
 				      </tr>
 				    <% when 21 %>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('general.select') %>
 						    <%= check_box :bmp_gc, :id, :value => bmp.id %>
 					    </td>
 				      </tr>
 				    <% when 22 %>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('general.select') %>
 						    <%= check_box :bmp_sa, :id, :value => bmp.id %>
 					    </td>
 				      </tr>
 				    <% when 23 %>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= label :crop_id, t('operation.crop') %>
 						    <% if I18n.locale.equal?(:en) %>
 						      <%= collection_select :bmp_sdg, :crop_id, Crop.where(:type1 => "FS"), :id, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
@@ -498,19 +501,19 @@
 					    </td>
 				      </tr>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('general.area') + " " + t('bmp.acres') %>
 						    <%= number_field :bmp_sdg, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('bmp.width') + " " + t('bmp.ft') %>
 						    <%= number_field :bmp_sdg, :width, :value => bmp.width, :class => "gvTitleStyleNumber", :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
-					    <td class="indent">
+					    <td class="indent" colspan="2">
 						    <%= t('bmp.slope_ratio_label') + " " + t('bmp.quarter_to_one') %>
 						    <%= number_field :bmp_sdg, :buffer_slope_upland, :value => bmp.buffer_slope_upland, :class => "gvTitleStyleNumber" %>
                 </td>

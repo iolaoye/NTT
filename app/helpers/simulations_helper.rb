@@ -61,6 +61,7 @@ module SimulationsHelper
   def send_files1_to_APEX(file)
     uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
+	debugger
     res = Net::HTTP.post_form(uri, "data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file)
     if res.body.include?("Created") then
       return "OK"
@@ -167,7 +168,7 @@ module SimulationsHelper
   end
 
   def create_wind_wp1_files(dir_name)
-	county_id = Location.find(session[:location_id]).county_id
+	county_id = @project.location.county_id
 	if county_id > 0
 		county = County.find(county_id)
 	else
@@ -765,8 +766,8 @@ module SimulationsHelper
 	subareas.each do |subarea|
 		soil = Soil.find(subarea.soil_id)
 		if soil.selected then
-			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
 			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
+			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
 			i+=1
 			@soil_number += 1
 		end  # end if soil.selected
@@ -1086,7 +1087,7 @@ module SimulationsHelper
       end #end soil_operations.each do
       # add to the tillage file the new fertilizer operations - one for each depth
       append_file("tillOrg.dat", true, "till.dat", "till")
-      append_file("fertOrg.dat", true, "fert.dat", "fert")
+      append_file("ferts.dat", true, "fert.dat", "fert")
       msg = send_file_to_APEX(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")
       @opcs_list_file.push((@soil_number+1).to_s.rjust(5, '0') + " " + "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
     end #end if
@@ -1382,7 +1383,7 @@ module SimulationsHelper
   def append_file(original_file, copy_file, target_file, file_type)
     path = File.join(APEX, "APEX" + session[:session_id])
     if copy_file then
-      FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
+      FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
     else
       target_file = original_file
     end
@@ -2229,7 +2230,7 @@ module SimulationsHelper
 
 		conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
         @last_herd += 1
-
+		debugger
         animalField = animals * soil_percentage / 100
         herdFile = sprintf("%4d", @last_herd) #For different owners
         #comentarized because there is not field divided anymore

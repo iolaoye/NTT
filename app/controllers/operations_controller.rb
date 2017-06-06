@@ -10,9 +10,6 @@ class OperationsController < ApplicationController
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-  	#if session[:oper_type] == nil then
-  		#session[:oper_type] = 0
-  	#end
 
   	@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
@@ -22,7 +19,7 @@ class OperationsController < ApplicationController
     array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
     @operations.sort_by! { |date| [date.year, date.month_id, date.day] }
-
+	@highest_year = @operations.last.year
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @operations }
@@ -48,6 +45,7 @@ class OperationsController < ApplicationController
     @operation = Operation.new
   	@operation.activity_id = params[:operation]
   	@operation.crop_id = params[:crop]
+    @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
@@ -106,10 +104,10 @@ class OperationsController < ApplicationController
     respond_to do |format|
       if saved
         if soil_op_saved
-          if params[:add_more] == "Add more" && params[:finish] == nil
+          if params[:add_more] == t('submit.add_more') && params[:finish] == nil
             format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
             format.json { render json: @operation, status: :created, location: @operation }
-          elsif params[:finish] == "Finish" && params[:add_more] == nil
+          elsif params[:finish] == t('submit.finish') && params[:add_more] == nil
             format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
             format.json { render json: @operation, status: :created, location: @operation }
           end
@@ -139,10 +137,10 @@ class OperationsController < ApplicationController
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
-        if params[:add_more] == "Add more" && params[:finish] == nil
+        if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
-        elsif params[:finish] == "Finish" && params[:add_more] == nil
+        elsif params[:finish] == t('submit.finish') && params[:add_more] == nil
           format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
         end
