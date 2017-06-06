@@ -168,7 +168,7 @@ module SimulationsHelper
   end
 
   def create_wind_wp1_files(dir_name)
-	county_id = Location.find(session[:location_id]).county_id
+	county_id = @project.location.county_id
 	if county_id > 0
 		county = County.find(county_id)
 	else
