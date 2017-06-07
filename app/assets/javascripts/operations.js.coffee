@@ -16,6 +16,7 @@ switch_view = ->
 
 upload_crop = (show) ->
   $("#div_new").toggle(show)
+  $("#year").val($("#year").val() +"1")
 
 updatePlantPopulation = ->
   if ($("#operation_activity_id").val() == "1")

@@ -167,7 +167,7 @@ module SimulationsHelper
   end
 
   def create_wind_wp1_files(dir_name)
-	county_id = Location.find(session[:location_id]).county_id
+	county_id = @project.location.county_id
 	if county_id > 0
 		county = County.find(county_id)
 	else
@@ -1058,7 +1058,7 @@ module SimulationsHelper
 		@soil_operations = SoilOperation.where(:bmp_id => soil_id.to_s, :scenario_id => @scenario.id.to_s, :opv6 => buffer_type.to_s)
 	end  # end if type
     if @soil_operations.count > 0 then
-      #fix_operation_file()
+      fix_operation_file()
       #line 1
       @opcs_file.push(" .Opc file created directly by the user. Date: " + @dtNow1 + "\n")
       j = 0
@@ -1102,7 +1102,7 @@ module SimulationsHelper
         last_year = sprintf("%2d", @soil_operations[total_records].year)
         #if this is the case the operation for the last year need to be put before the first record.
         for i in 0..@soil_operations.count-1
-          if last_year = @soil_operations[i].year then
+          if last_year.strip.to_i == @soil_operations[i].year then
             break
           end
         end
@@ -1112,6 +1112,7 @@ module SimulationsHelper
           @soil_operations[j].year = "1"
           #drOuts.Add(drOut)
         end
+		@soil_operations.sort_by! { |date| [date.year, date.month, date.day, date.activity_id, date.id] }
         #if i > 0 then
         #for j = 0 To i - 1
         #drOut = drIn(j)
@@ -2237,7 +2238,6 @@ module SimulationsHelper
 
 		conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
         @last_herd += 1
-		debugger
         animalField = animals * soil_percentage / 100
         herdFile = sprintf("%4d", @last_herd) #For different owners
         #comentarized because there is not field divided anymore

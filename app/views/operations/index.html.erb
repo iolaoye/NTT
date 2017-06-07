@@ -7,11 +7,8 @@
 
 <div class="page-header"><h1><%= t('menu.operations') %></h1></div>
 
-<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
-<%#= link_to t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), crop_schedule_project_field_scenario_operations_path(@project, @field, @scenario), data: {disable_with: 'Please wait. Saving the seleted crop rotation . . .'}, :class => 'btn btn-primary', :id => 'new_crop' %>
-<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
-<%# if ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" || ENV["APP_VERSION"] == nil %>
-	<%#= link_to t('general.delete_all'), {:action => :delete_all}, :method => :post, :confirm=>'Are you sure?', :class => 'btn btn-primary' %>
+	<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
+	<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
 	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views", :class => 'btn btn-primary', "onclick" => "saveView()" } %>
 	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 	<div id="div_new" style="display:none">
@@ -57,8 +54,12 @@
 					</tr>
 					<% @scenario.planting_operations(crop).each do |op| %>
 						<tr>
-							<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
-							<td><%= op.type_name %></td>
+							<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= listMonths.detect { |val, index| index == op.month_id}[0] %> <%= op.day %></td>
+							<% if (I18n.locale.eql?(:en)) %>
+							  <td><%= op.type_name %></td>
+							<% else %>
+							  <td><%= Tillage.find_by_code(op.type_id).spanish_name %></td>
+							<% end %>
 							<td class="gvCellStyleNumber"><%= op.amount %></td>
 							<td style="text-align:right">
 							  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
@@ -84,8 +85,12 @@
 						<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td></tr>
 					<% @scenario.fertilizer_operations(crop).each do |op| %>
 						<tr>
-							<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
-							<td><%= op.type_name %></td>
+							<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= listMonths.detect { |val, index| index == op.month_id}[0] %> <%= op.day %></td>
+							<% if (I18n.locale.eql?(:en)) %>
+							  <td><%= op.type_name %></td>
+							<% else %>
+							  <td><%= Fertilizer.find(op.type_id).spanish_name %></td>
+							<% end %>
 							<td class="gvCellStyleNumber"><%= op.amount %></td>
 							<td class="gvCellStyleNumber"><%= op.depth %></td>
 							<td style="text-align:right">
@@ -110,8 +115,12 @@
 						<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td></tr>
 						<% @scenario.tillage_operations(crop).each do |op| %>
 					<tr>
-						<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
-						<td><%= op.type_name %></td>
+						<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= listMonths.detect { |val, index| index == op.month_id}[0] %> <%= op.day %></td>
+						<% if (I18n.locale.eql?(:en)) %> 
+						  <td><%= op.type_name %></td>
+						<% else %>
+						  <td><%= Tillage.find_by_code(op.type_id).spanish_name %></td>
+						<% end %>
 						<td style="text-align:right">
 						  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
 						  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
@@ -140,9 +149,13 @@
 				 <% @scenario.irrigation_operations(crop).each do |op| %>
 				<tr>
 					<td><%= op.year %></td>
-					<td><%= Date::MONTHNAMES[op.month_id] %></td>
+					<td><%= listMonths.detect { |val, index| index == op.month_id}[0] %></td>
 					<td><%= op.day %></td>
-					<td><%= op.type_name %></td>
+					<% if (I18n.locale.eql?(:en)) %>
+					  <td><%= op.type_name %></td>
+					<% else %>
+					  <td><%= Irrigation.find(op.type_id).spanish_name %></td>
+					<% end %>
 					<td class="gvTitleStyleNumber"><%= op.amount %></td>
 					<td class="gvTitleStyleNumber"><%= op.depth %></td>
 					<td style="text-align:right">
@@ -173,9 +186,13 @@
 				  <% @operations.where(:activity_id => 7, :crop_id => crop).each do |op| %>
 				  <tr>
 					<td><%= op.year %></td>
-					<td><%= Date::MONTHNAMES[op.month_id] %></td>
+					<td><%= listMonths.detect { |val, index| index == op.month_id}[0] %></td>
 					<td><%= op.day %></td>
-					<td><%= op.type_name %></td>
+					<% if (I18n.locale.eql?(:en)) %>
+					  <td><%= op.type_name %></td>
+					<% else %>
+					  <td><%= Fertilizer.find(op.type_id).spanish_name %></td>
+					<% end %>
 					<td class="gvTitleStyleNumber"><%= op.amount %></td>
 					<td class="gvTitleStyleNumber"><%= op.depth %></td>
 					<td style="text-align:right">
@@ -203,7 +220,7 @@
 				  <% @operations.where(:activity_id => 8, :crop_id => crop).each do |op| %>
 				  <tr>
 					<td><%= op.year %></td>
-					<td><%= Date::MONTHNAMES[op.month_id] %></td>
+					<td><%= listMonths.detect { |val, index| index == op.month_id}[0] %></td>
 					<td><%= op.day %></td>
 					<td style="text-align:right">
 					  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
@@ -231,7 +248,7 @@
 				<% @scenario.liming_operations(crop).each do |op| %>
 				<tr>
 				  <td><%= op.year %></td>
-				  <td><%= Date::MONTHNAMES[op.month_id] %></td>
+				  <td><%= listMonths.detect { |val, index| index == op.month_id}[0] %></td>
 				  <td><%= op.day %></td>
 				  <td><%= op.amount %></td>
 				  <td style="text-align:right">
@@ -258,7 +275,7 @@
 				<% @scenario.burn_operations(crop).each do |op| %>
 				<tr
 				  ><td><%= op.year %></td>
-				  <td><%= Date::MONTHNAMES[op.month_id] %></td>
+				  <td><%= listMonths.detect { |val, index| index == op.month_id}[0] %></td>
 				  <td><%= op.day %></td>
 				  <td style="text-align:right">
 				    <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
@@ -282,7 +299,7 @@
 					  </tr>
 						<% @scenario.harvest_operations(crop).each do |op| %>
 							<tr>
-								<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
+								<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= listMonths.detect { |val, index| index == op.month_id}[0] %> <%= op.day %></td>
 								<td style="text-align:right">
 								  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
 								  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
@@ -305,7 +322,7 @@
 					</tr>
 					<% @scenario.kill_operations(crop).each do |op| %>
 						<tr >
-							<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= Date::MONTHNAMES[op.month_id] %> <%= op.day %></td>
+							<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= listMonths.detect { |val, index| index == op.month_id}[0] %> <%= op.day %></td>
 							<td style="text-align:right">
 							  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
 							  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
@@ -329,7 +346,7 @@
 					<% @scenario.pesticide_operations(crop).each do |op| %>
 						<tr>
 						  <td><%= op.year %></td>
-						  <td><%= Date::MONTHNAMES[op.month_id] %></td>
+						  <td><%= listMonths.detect { |val, index| index == op.month_id}[0] %></td>
 						  <td><%= op.day %></td>
 						  <td style="text-align:right">
 						    <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
