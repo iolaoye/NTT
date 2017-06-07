@@ -108,5 +108,3 @@ $(document).ready ->
     turn_on_off(60)
   $("#row70").click () ->
     turn_on_off(70)
-  $("#row71").click () ->
-    turn_on_off(71)
