@@ -365,7 +365,7 @@ module SimulationsHelper
             albedo = 0.37
           end
         end
-		
+
         depth[layer_number] = layer.depth * IN_TO_CM
         #if current layer is deeper than maxDept  no more layers are needed.
         #if Depth[layer_number] > maxDepth(i) && maxDepth(i) > 0  Exit for
@@ -777,8 +777,8 @@ module SimulationsHelper
 	subareas.each do |subarea|
 		add_subarea_file(subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
 		if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
-			if subarea.subarea_type == "RF" then 
-				buffer_type = 1 
+			if subarea.subarea_type == "RF" then
+				buffer_type = 1
 			end
 			create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
 			i+=1
@@ -788,7 +788,7 @@ module SimulationsHelper
 	msg = send_file_to_APEX(@subarea_file, "APEX.sub")
 	return msg
   end   # end create_subareas
-	
+
   def create_subareas1(operation_number) # operation_number is used for subprojects as for now it is just 1 - todo
     @last_soil2 = 0
     last_owner1 = 0
@@ -957,12 +957,12 @@ module SimulationsHelper
     sLine = sprintf("%8.3f", _subarea_info.rshc)
     sLine += sprintf("%8.2f", _subarea_info.rsdp)
     sLine += sprintf("%8.2f", _subarea_info.rsbd)
-	if _subarea_info.pcof == nil then 
-		_subarea_info.pcof = 0 
+	if _subarea_info.pcof == nil then
+		_subarea_info.pcof = 0
 	end
     sLine += sprintf("%8.2f", _subarea_info.pcof)
-	if _subarea_info.bcof == nil then 
-		_subarea_info.bcof = 0 
+	if _subarea_info.bcof == nil then
+		_subarea_info.bcof = 0
 	end
     sLine += sprintf("%8.2f", _subarea_info.bcof)
     sLine += sprintf("%8.2f", _subarea_info.bffl)
@@ -1033,7 +1033,7 @@ module SimulationsHelper
 		sLine = sprintf("%8.2f", 0.01)
 	else
 		sLine = sprintf("%8.2f", _subarea_info.xtp1)
-	end 
+	end
     sLine += sprintf("%8.2f", _subarea_info.xtp2)
     sLine += sprintf("%8.2f", _subarea_info.xtp3)
     sLine += sprintf("%8.2f", _subarea_info.xtp4)
@@ -1892,7 +1892,7 @@ module SimulationsHelper
 				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
 			end #end case when
 		  end # end if simulation == scenario
-	  end  # end if <= @soils 
+	  end  # end if <= @soils
     end #end for i
     return "OK"
   end
@@ -2050,9 +2050,13 @@ module SimulationsHelper
       end # end if j>=10
       j+=1
     end #end data.each
-    crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean] }
+    crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean, v.map(&:ns).mean, v.map(&:ts).mean, v.map(&:ps).mean, v.map(&:ws).mean] }
     average_crops_result(crops_data_by_crop_year)
-    return "OK"
+    if @scenario != nil
+      return "OK"
+    else
+      return crops_data_by_crop_year
+    end
   end
 
   #end method
@@ -2067,7 +2071,9 @@ module SimulationsHelper
           found = true
           array["yield"] += item[1]
           array["total"] += 1
-          add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1])
+          if @scenario != nil
+            add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1])
+          end
           break
         end # end if same crop
       end # end each name
@@ -2078,26 +2084,28 @@ module SimulationsHelper
       #first = false
     end
 
-    yield_by_name.each do |crop|
-      if session[:simulation] == "scenario"
-        crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
-      else
-        crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
+    if @scenario != nil
+      yield_by_name.each do |crop|
+        if session[:simulation] == "scenario"
+          crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
+        else
+          crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
+        end
+        ci = Array.new
+        crop_ci.each do |c|
+          ci.push c.value
+        end
+        crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
+        #todo check why the ci is crashing with watershed simulations
+        if session[:simulation].eql?('scenario') then
+          add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+        else
+          #0 used for ci.confidence_interval because it is crashing with watersheds.
+          add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
+        end
       end
-      ci = Array.new
-      crop_ci.each do |c|
-        ci.push c.value
-      end
-      crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
-      #todo check why the ci is crashing with watershed simulations
-      if session[:simulation].eql?('scenario') then
-        add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
-      else
-        #0 used for ci.confidence_interval because it is crashing with watersheds.
-        add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
-      end
-    end
-    add_summary(0, 70, 0, 0, 0)
+      add_summary(0, 70, 0, 0, 0)
+    end #end scenario nil
   end
 
   def create_hash_by_name(item, crop_count)
@@ -2219,7 +2227,7 @@ module SimulationsHelper
 
         if animals < 1 then
             animals = 1
-        end 
+        end
         #If _animals.Count = 0 Then LoadAnimalUnits()
         #For Each animal In _animals
         #    If animal.Number.Split("|")(0) = manureId Then
