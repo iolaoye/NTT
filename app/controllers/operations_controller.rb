@@ -21,7 +21,9 @@ class OperationsController < ApplicationController
     @operations.sort_by! { |date| [date.year, date.month_id, date.day] }
 	if @operations.last != nil
 	  @highest_year = @operations.last.year
-    end
+    else
+	  @highest_year = 0
+	end
 	respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @operations }
