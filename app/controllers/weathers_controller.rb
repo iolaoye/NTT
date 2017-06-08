@@ -236,11 +236,11 @@ include ScenariosHelper
 	  # print the new wehater file in the correct format
 	  case data.length
 		when 7
-			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.1f",data[3]) + sprintf("%6.1f",data[4]) + sprintf("%6.1f",data[5]) + sprintf("%6.2f",data[6]) + "\n")
+			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.2f",data[3]) + sprintf("%6.2f",data[4]) + sprintf("%6.2f",data[5]) + sprintf("%6.2f",data[6]) + "\n")
 		when 8
-			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.1f",data[3]) + sprintf("%6.1f",data[4]) + sprintf("%6.1f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + "\n")
+			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.2f",data[3]) + sprintf("%6.2f",data[4]) + sprintf("%6.2f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + "\n")
 		when 9
-			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.1f",data[3]) + sprintf("%6.1f",data[4]) + sprintf("%6.1f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + sprintf("%6.2f",data[8]) + "\n")
+			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.2f",data[3]) + sprintf("%6.2f",data[4]) + sprintf("%6.2f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + sprintf("%6.2f",data[8]) + "\n")
 	  end   # end case data.len
     end  # end file.open
 	weather_file.close

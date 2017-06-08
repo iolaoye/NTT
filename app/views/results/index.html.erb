@@ -471,7 +471,7 @@
 				<% end %>
 				<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 					<% if I18n.locale.eql?(:en) %>
-						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")" %></td>
+						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")" %><%= check_box_tag Crop.find(result[0]).name %></td>
 					<% else %>
 						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")" %></td>
 					<% end %>
@@ -521,6 +521,30 @@
 			</tbody>
 		  </table>
 	  </div>
+    <div class="table-responsive" id="stress_table" style="display:none">
+      <div class="panel panel-default">
+        <table class='table table-bordered' style="white-space: nowrap;">
+          <thead>
+            <tr class='gvHeaderStyle'>
+              <th class="gvCellStyle Title"><%= 'Crop Name' %></th>
+              <th class="gvCellStyle Title"><%= 'NS' %></th>
+              <th class="gvCellStyle Title"><%= 'Temperature Stress' %></th>
+              <th class="gvCellStyle Title"><%= 'PS' %></th>
+              <th class="gvCellStyle Title"><%= 'Water Stress' %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gvRowStyleEven">
+              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][0][0] %></td>
+              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][2] %></td>
+              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][3] %></td>
+              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][4] %></td>
+              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][5] %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 	</div>
  <% end %>
  <br>
