@@ -256,7 +256,7 @@
 		<% when 10 # liming %>
 			<div id="div_type"  style="display:none" >
 				<%= label :type_id, t('general.select') + " " + t('general.one') %>
-				<% if I18n.locale.eql?(en) %>
+				<% if I18n.locale.eql?(:en) %>
 					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :eqp, {:prompt => t('general.select') + " " + t('general.one')} %>
 				<% else %>
 					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one')} %>
@@ -299,7 +299,7 @@
 		<% else # harvest, kill, stop grazing, burn%>
 			<div id="div_type"  style="display:none" >
 				<%= label :type_id, t('general.select') + " " + t('general.one') %>
-				<% if I18n.locale.eql?(en) %>
+				<% if I18n.locale.eql?(:en) %>
 					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one')} %>
 				<% else %>
 					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one')} %>
@@ -307,7 +307,7 @@
 			</div>
 			<div id="div_fertilizer" style="display:none" >
 				<%= f.label :type_id, t('general.type') %>
-				<% if I18n.locale.eql?(en) %>
+				<% if I18n.locale.eql?(:en) %>
 					<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 				<% else %>
 					<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
