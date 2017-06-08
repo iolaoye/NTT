@@ -145,7 +145,7 @@ class WatershedsController < ApplicationController
 			end # end watershed_scenarios.each
 			print_array_to_file(@soil_list, "soil.dat")
 			print_array_to_file(@opcs_list_file, "OPCS.dat")
-			if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) else return msg end
+			if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
 			if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
 			msg = read_apex_results(msg)
 			if @scenario != nil
