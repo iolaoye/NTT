@@ -93,7 +93,7 @@
 				  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 				</div>
 			  <% end %>
-			  <%= link_to t('menu.results'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario') %>
+			  <%= link_to t('menu.results'), project_field_results_path(@project, @field, :button => t('general.view'), :simulation => 'scenario') %>
 			</li>
 	  <% end %>
 
@@ -106,7 +106,7 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
-            <%= link_to t('result.summary'), summary_project_field_result_path(@project, @field, 0), :class=>"results-label-sub" %>
+            <%= link_to t('result.summary'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario'), :class=>"results-label-sub" %>
           </li>
     <% unless ENV["APP_VERSION"] == "modified" %>
           <li class="<%= (current_page?(url_for(:controller => 'results', :action => 'by_soils'))) ? "active" : "" %>">
