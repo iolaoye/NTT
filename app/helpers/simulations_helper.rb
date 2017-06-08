@@ -166,7 +166,7 @@ module SimulationsHelper
 	return "OK"
   end
 
-  def create_wind_wp1_files(dir_name)
+  def create_wind_wp1_files()
 	county_id = @project.location.county_id
 	if county_id > 0
 		county = County.find(county_id)
@@ -183,18 +183,26 @@ module SimulationsHelper
     apex_run_string = "APEX001   1IWPNIWND   1   0   0"
     client = Savon.client(wsdl: URL_Weather)
 	###### create wp1 file from weather and send to server ########
-    response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s, "pgm" => 'APEX'})
-    weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
-    msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wp1")
+    #response = client.call(:create_wp1_from_weather1, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => wind_wp1_code})
+    #response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "pgm" => 'APEX'})
+	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => wind_wp1_code})
+    #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result][:string]
+    if response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] == "created" then
+		return "OK"
+	else
+		return "Error creating wp1 and wind files"
+	end
+	
+    #msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wp1")
     #client = Savon.client(wsdl: URL_Weather)
 	######### create eind file and send to server ########
-    response = client.call(:get_weather, message: {"path" => WIND + "/" + wind_wp1_name + ".wnd"})
-    weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-    msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wnd")
+    #response = client.call(:get_weather, message: {"path" => WIND + "/" + wind_wp1_name + ".wnd"})
+    #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+    #msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wnd")
 	######### create apexrun file and send to server ########
-    apex_run_string["IWPN"] = sprintf("%4d", wind_wp1_code)
-    apex_run_string["IWND"] = sprintf("%4d", wind_wp1_code)
-    msg = send_file_to_APEX(apex_run_string, "Apexrun.dat")
+    #apex_run_string["IWPN"] = sprintf("%4d", wind_wp1_code)
+    #apex_run_string["IWND"] = sprintf("%4d", wind_wp1_code)
+    #msg = send_file_to_APEX(apex_run_string, "Apexrun.dat")
   end
 
   def create_weather_file(dir_name, field_id)

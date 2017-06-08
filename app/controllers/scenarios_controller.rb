@@ -477,7 +477,7 @@ class ScenariosController < ApplicationController
     if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end
     if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end
     if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create APEX folder from APEX1 folder
-    if msg.eql?("OK") then msg = create_wind_wp1_files(dir_name) else return msg  end
+    if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg  end
     @last_soil = 0
     @soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
     @soil_list = Array.new
