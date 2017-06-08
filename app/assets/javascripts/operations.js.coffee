@@ -31,7 +31,7 @@ updateNutrients = (animal) ->
      url = "/fertilizers/" + $("#operation_type_id").val() + ".json"
 
   $.getJSON url, (fertilizer) ->
-    $("#operation_moisture").val(100-fertilizer.dry_matter)
+    $("#operation_moisture").val(100-fertilizer.dry_matter.to_f)
     $("#operation_no3_n").val(fertilizer.qn)
     $("#operation_po4_p").val(fertilizer.qp)
     $("#operation_org_n").val(fertilizer.yn)
