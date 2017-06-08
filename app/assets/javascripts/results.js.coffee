@@ -8,13 +8,20 @@
 
 turn_on_off = (row) ->
     i=1
-    while i<=9
-        row1 = row + i
-        i+=1
-        if ($("#row" + row1).is(":hidden"))
-            $("#row" + row1).toggle(true)
-        else
-            $("#row" + row1).toggle(false)
+    if (row < 70)
+      while i<=9
+          row1 = row + i
+          i+=1
+          if ($("#row" + row1).is(":hidden"))
+              $("#row" + row1).toggle(true)
+          else
+              $("#row" + row1).toggle(false)
+    else
+      if ($("#stress_table").is(":hidden"))
+          $("#stress_table").toggle(true)
+      else
+          $("#stress_table").toggle(false)
+
 
 
 update_crops = ->
