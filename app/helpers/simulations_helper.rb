@@ -182,10 +182,11 @@ module SimulationsHelper
 	end
     apex_run_string = "APEX001   1IWPNIWND   1   0   0"
     client = Savon.client(wsdl: URL_Weather)
+	debugger
 	###### create wp1 file from weather and send to server ########
     #response = client.call(:create_wp1_from_weather1, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => wind_wp1_code})
     #response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "pgm" => 'APEX'})
-	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => wind_wp1_code})
+	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => county.county_state_code})
     #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result][:string]
     if response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] == "created" then
 		return "OK"

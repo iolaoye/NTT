@@ -143,7 +143,7 @@ class ResultsController < ApplicationController
 						end
             start_year1 = Weather.find_by_field_id(Scenario.find(@scenario1).field_id).simulation_initial_year - 5
             apex_start_year1 = start_year1 + 1
-            @crop_stress1 = load_crop_results(apex_start_year1)
+            #@crop_stress1 = load_crop_results(apex_start_year1)
 						if @results1.count > 0
 							@present1 = true
 						else
