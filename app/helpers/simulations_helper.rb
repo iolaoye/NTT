@@ -1372,7 +1372,6 @@ module SimulationsHelper
     operation_name = ""
     case operation.activity_id
       when 1, 3
-	  debugger
         operation_name = Tillage.find_by_code(operation.apex_operation).name
       else
         operation_name = Activity.find(operation.activity_id).name
