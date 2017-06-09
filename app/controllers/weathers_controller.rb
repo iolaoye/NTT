@@ -234,14 +234,28 @@ include ScenariosHelper
         i = i + 1
       end
 	  # print the new wehater file in the correct format
+	  sr = ""
+	  tmax = ""
+	  tmin = ""
+	  pcp = ""
+	  rh = ""
+	  ws = ""
+	  if data.length < 7 then 
+		return "There are missing empty values in this file in " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + ". Please fix the problem and try again."
+      end 
+	  if data[3].to_f < -900 then sr = sprintf("%6.1f",data[3]) else sr = sprintf("%6.2f",data[3]) end
+	  if data[4].to_f < -900 then tmax = sprintf("%6.1f",data[4]) else tmax = sprintf("%6.2f",data[4]) end
+	  if data[5].to_f < -900 then tmin = sprintf("%6.1f",data[5]) else tmin = sprintf("%6.2f",data[5]) end 
+	  if data[6].to_f < -900 then pcp = sprintf("%6.1f",data[6]) else pcp = sprintf("%6.2f",data[6]) end
+	  rh = sprintf("%6.2f",0)
+	  ws = sprintf("%6.2f",0)
 	  case data.length
-		when 7
-			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.2f",data[3]) + sprintf("%6.2f",data[4]) + sprintf("%6.2f",data[5]) + sprintf("%6.2f",data[6]) + "\n")
 		when 8
-			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.2f",data[3]) + sprintf("%6.2f",data[4]) + sprintf("%6.2f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + "\n")
+			if data[7].to_f < -900 then rh = sprintf("%6.1f",data[7]) else rh = sprintf("%6.2f",data[7]) end
 		when 9
-			weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sprintf("%6.2f",data[3]) + sprintf("%6.2f",data[4]) + sprintf("%6.2f",data[5]) + sprintf("%6.2f",data[6]) + sprintf("%6.2f",data[7]) + sprintf("%6.2f",data[8]) + "\n")
+			if data[8].to_f < -900 then ws = sprintf("%6.1f",data[8]) else ws = sprintf("%6.2f",data[8]) end
 	  end   # end case data.len
+	  weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sr + tmax + tmin + pcp + rh + ws + "\n")
     end  # end file.open
 	weather_file.close
 	#verify that there are more than 5 years of weather period.

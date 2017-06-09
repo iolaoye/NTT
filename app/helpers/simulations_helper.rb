@@ -211,7 +211,7 @@ module SimulationsHelper
     if (weather.way_id == 2)
       #copy the file path
       path = File.join(OWN, weather.weather_file)
-      FileUtils.cp_r(path, dir_name + "/APEX.wth")
+	  if File.exist?(path) then FileUtils.cp_r(path, dir_name + "/APEX.wth") else return "You need to upload your weather file before trying to simulate scenarios" end
       @apex_wth = read_file(File.join(OWN, weather.weather_file), true)
     else
       path = File.join(PRISM1, weather.weather_file)
@@ -1372,6 +1372,7 @@ module SimulationsHelper
     operation_name = ""
     case operation.activity_id
       when 1, 3
+	  debugger
         operation_name = Tillage.find_by_code(operation.apex_operation).name
       else
         operation_name = Activity.find(operation.activity_id).name
