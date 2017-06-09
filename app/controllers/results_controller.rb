@@ -112,7 +112,8 @@ class ResultsController < ApplicationController
   	if @type == nil then
   		@type = t("general.view")
   	end
-	@crop_results = []
+	  @crop_results = []
+    @crop_stress1 = []
     if @type != nil then
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
