@@ -185,7 +185,7 @@ module SimulationsHelper
 	###### create wp1 file from weather and send to server ########
     #response = client.call(:create_wp1_from_weather1, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => wind_wp1_code})
     #response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "pgm" => 'APEX'})
-	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => wind_wp1_code})
+	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => county.county_state_code})
     #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result][:string]
     if response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] == "created" then
 		return "OK"
@@ -211,7 +211,7 @@ module SimulationsHelper
     if (weather.way_id == 2)
       #copy the file path
       path = File.join(OWN, weather.weather_file)
-      FileUtils.cp_r(path, dir_name + "/APEX.wth")
+	  if File.exist?(path) then FileUtils.cp_r(path, dir_name + "/APEX.wth") else return "You need to upload your weather file before trying to simulate scenarios" end
       @apex_wth = read_file(File.join(OWN, weather.weather_file), true)
     else
       path = File.join(PRISM1, weather.weather_file)

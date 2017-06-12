@@ -1143,10 +1143,12 @@ class BmpsController < ApplicationController
           is_filled = true;
         end
       when 12
+	    @bmp.buffer_slope_upland			# buffer_slope_upland is not used anymore; therefor it is set to 1
         if @bmp.area != nil && @bmp.width != nil && @bmp.grass_field_portion != nil && @bmp.buffer_slope_upland != nil
           is_filled = true;
         end
       when 13
+	    @bmp.buffer_slope_upland			# buffer_slope_upland is not used anymore; therefor it is set to 1
         if @bmp.area != nil && @bmp.width != nil && @bmp.buffer_slope_upland != nil
           is_filled = true;
         end
