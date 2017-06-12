@@ -31,7 +31,7 @@ updateNutrients = (animal) ->
      url = "/fertilizers/" + $("#operation_type_id").val() + ".json"
 
   $.getJSON url, (fertilizer) ->
-    $("#operation_moisture").val(100-fertilizer.dry_matter.to_f)
+    $("#operation_moisture").val(100.0-fertilizer.dry_matter.to_f)
     $("#operation_no3_n").val(fertilizer.qn)
     $("#operation_po4_p").val(fertilizer.qp)
     $("#operation_org_n").val(fertilizer.yn)
@@ -49,7 +49,6 @@ updateTypes = ->
       updatePlantPopulation()
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
-      $("#div_type").hide()
       $("#div_amount").show()
       $("#div_tillage").show()
       $("#div_type").show()
@@ -59,7 +58,7 @@ updateTypes = ->
       $("#div_fertilizer").show()
       $("#div_amount").show()
       $("#div_depth").show()
-      $("#div_moisture").hide;
+      $("#div_moisture").hide()
       $("#div_nutrients").show()
       $("#div_tillage").show()
       $("#div_type").show()
@@ -91,10 +90,12 @@ updateTypes = ->
     when "10"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
+      $("#div_type").disable()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
       $("#div_tillage").hide()
+      $("#div_type").disable()
 
   $.getJSON url, (tillages) ->
     items = []
