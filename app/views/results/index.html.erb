@@ -452,7 +452,6 @@
 			<% @crop_results.each do |result| %>
 				<% id += 1%>
 				<% row_id = "row" + id.to_s %>
-				<% description = Crop.find(result[0]).name %>
 				<% value2 = 0 %>
 				<% reduction1 = 0 %>
 				<% if @scenario2 != "" then %>
@@ -521,7 +520,7 @@
 			</tbody>
 		  </table>
 	  </div>
-    <% if !@crop_stress1.empty? %>
+    <% if !@crop_stress1_ws.empty? %>
     <div class="table-responsive" id="stress_table" style="display:none">
       <div class="panel panel-default">
         <table class='table table-bordered' style="white-space: nowrap;">
@@ -535,13 +534,54 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="gvRowStyleEven">
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][0][0] %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][2] %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][3] %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][4] %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][5] %></td>
-            </tr>
+            <!-- Scenario 1 stress results -->
+            <% @crop_stress1_ws.each do |result_ws| %>
+            <% @crop_stress1_ns.each do |result_ns| %>
+            <% @crop_stress1_ts.each do |result_ts| %>
+            <% @crop_stress1_ps.each do |result_ps| %>
+              <tr class="gvRowStyleOdd">
+                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(result_ws.crop_id).name %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ns.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ts.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ps.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ws.value %></td>
+              </tr>
+            <% end %>
+            <% end %>
+            <% end %>
+            <% end %>
+            <!-- Scenario 2 stress results -->
+            <% @crop_stress2_ws.each do |result_ws| %>
+            <% @crop_stress2_ns.each do |result_ns| %>
+            <% @crop_stress2_ts.each do |result_ts| %>
+            <% @crop_stress2_ps.each do |result_ps| %>
+              <tr class="gvRowStyleEven">
+                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(result_ws.crop_id).name %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ns.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ts.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ps.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ws.value %></td>
+              </tr>
+            <% end %>
+            <% end %>
+            <% end %>
+            <% end %>
+            <!-- Scenario 3 stress results -->
+            <% @crop_stress3_ws.each do |result_ws| %>
+            <% @crop_stress3_ns.each do |result_ns| %>
+            <% @crop_stress3_ts.each do |result_ts| %>
+            <% @crop_stress3_ps.each do |result_ps| %>
+              <tr class="gvRowStyleOdd">
+                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(result_ws.crop_id).name %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ns.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ts.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ps.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ws.value %></td>
+              </tr>
+            <% end %>
+            <% end %>
+            <% end %>
+            <% end %>
           </tbody>
         </table>
       </div>
