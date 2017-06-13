@@ -2113,7 +2113,7 @@ module SimulationsHelper
           add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
         end
       end
-      add_summary(0, 70, 0, 0, 0)
+      add_summary(0, 70, 0, 0, 0)  # add total for crops. Just in case is needed for some reason
     end #end scenario nil
   end
 

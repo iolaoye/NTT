@@ -20,8 +20,10 @@ turn_on_off = (row) ->
         else
             $("#stress_table").toggle(false)
 
-
-
+show_crops = ->
+   $("#td_crops").toggle(false)
+   if ($("#result5_description_id").val() == "70")
+      $("#td_crops").toggle(true)
 
 update_crops = ->
 # take the descriptions and populate the items with period = 2 Annual
@@ -85,6 +87,9 @@ $(document).ready ->
   $("#result2_scenario_id").change ->
     update_crops()
     set_buttons(false)
+
+  $("#result5_description_id").change ->
+    show_crops()
 
   $("#result3_scenario_id").change ->
     update_crops()

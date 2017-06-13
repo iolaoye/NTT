@@ -42,6 +42,7 @@ class ResultsController < ApplicationController
       end
     end
     @before_button_clicked = true
+	@crops = []
     @present1 = false
     @present2 = false
     @present3 = false
@@ -49,9 +50,8 @@ class ResultsController < ApplicationController
     @title = ""
     @total_area = 0
     @field_name = ""
-    @descriptions = Description.select("id, description, spanish_description").where("id < 70 OR id > 79")
+    @descriptions = Description.select("id, description, spanish_description").where("id < 71 or id > 80")
     @project = Project.find(params[:project_id])
-
     add_breadcrumb t('menu.results')
     if session[:simulation].eql?('scenario') then
       @total_area = Field.find(params[:field_id]).field_area
@@ -70,9 +70,9 @@ class ResultsController < ApplicationController
 	else
 	    @field = 0
   	end
-  	@scenario1 = session[:scenario1]
-  	@scenario2 = session[:scenario2]
-  	@scenario3 = session[:scenario3]
+  	if session[:scenario1] == nil or session[:scenario1] == "" then @scenario1 = 0 else @scenario1 = session[:scenario1] end
+  	if session[:scenario1] != nil or session[:scenario2] == "" then @scenario2 = 0 else @scenario2 = session[:scenario2] end
+  	if session[:scenario1] != nil or session[:scenario3] == "" then @scenario3 = 0 else @scenario3 = session[:scenario3] end
     @soil = "0"
     #load crop for each scenario selected
     i = 70
@@ -141,9 +141,9 @@ class ResultsController < ApplicationController
 							crop_result[6] = 0
 							@crop_results.push(crop_result)
 						end
-            start_year1 = Weather.find_by_field_id(Scenario.find(@scenario1).field_id).simulation_initial_year - 5
-            apex_start_year1 = start_year1 + 1
-            #@crop_stress1 = load_crop_results(apex_start_year1)
+						start_year1 = Weather.find_by_field_id(Scenario.find(@scenario1).field_id).simulation_initial_year - 5
+						apex_start_year1 = start_year1 + 1
+						#@crop_stress1 = load_crop_results(apex_start_year1)
 						if @results1.count > 0
 							@present1 = true
 						else
@@ -241,6 +241,7 @@ class ResultsController < ApplicationController
 
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
           @x = "Year"
+		  @crops = Result.select("crop_id, description_id, crops.name, crops.spanish_name").joins(:crop).where("scenario_id == " + @scenario1.to_s + " or scenario_id == " + @scenario2.to_s + " or scenario_id == " + @scenario3.to_s).uniq
           if params[:result5] != nil && params[:result5][:description_id] != "" then
             @description = params[:result5][:description_id]
             @title = Description.find(@description).description
@@ -438,7 +439,8 @@ class ResultsController < ApplicationController
 
   def get_chart_serie(scenario_id, month_or_year)
     if month_or_year == 1 then #means chart is annual
-      chart_values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12")
+	  if @description == "70" then @description = @crops.find_by_crop_id(params[:result7][:description_id]).description_id.to_s end
+      chart_values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12").order("month_year desc").limit(12).reverse
     else #means chart is monthly average
       chart_values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")
     end
