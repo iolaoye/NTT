@@ -3813,7 +3813,7 @@ Description.create!({:id => 52, :description => "Deep Percolation", :spanish_des
 Description.create!({:id => 60, :description => "Total Sediment", :spanish_description => "Total Sedimento", :unit => "t/ac", :detail => false, :period => 2}, :without_protection => true)
 Description.create!({:id => 61, :description => "Sediment", :spanish_description => "Sedimento", :unit => "t/ac", :detail => true, :period => 1}, :without_protection => true)
 Description.create!({:id => 62, :description => "Manure Erosion", :spanish_description => "Sedimento por Estiercol", :unit => "t/ac", :detail => true, :period => 2}, :without_protection => true)
-Description.create!({:id => 70, :description => "Crop Yield", :spanish_description => "Cosecha Producida", :unit => "", :detail => false, :period => 2}, :without_protection => true)
+Description.create!({:id => 70, :description => "Crops Yield", :spanish_description => "Cosechas Producidas", :unit => "", :detail => false, :period => 2}, :without_protection => true)
 Description.create!({:id => 71, :description => "Crop 1", :spanish_description => "Crop 1", :unit => "", :detail => true, :period => 2}, :without_protection => true)
 Description.create!({:id => 72, :description => "Crop 2", :spanish_description => "Crop 2", :unit => "", :detail => true, :period => 2}, :without_protection => true)
 Description.create!({:id => 73, :description => "Crop 3", :spanish_description => "Crop 3", :unit => "", :detail => true, :period => 2}, :without_protection => true)
