@@ -41,7 +41,6 @@ class ResultsController < ApplicationController
       end
     end
     @before_button_clicked = true
-	@crops = []
     @present1 = false
     @present2 = false
     @present3 = false
@@ -251,7 +250,8 @@ class ResultsController < ApplicationController
 
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
           @x = "Year"
-		  @crops = Result.select("crop_id, description_id, crops.name, crops.spanish_name").joins(:crop).where("scenario_id == " + @scenario1.to_s + " or scenario_id == " + @scenario2.to_s + " or scenario_id == " + @scenario3.to_s).uniq
+		  debugger
+		  @crops = Result.select("crop_id, description_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < 100 and (scenario_id == " + @scenario1.to_s + " or scenario_id == " + @scenario2.to_s + " or scenario_id == " + @scenario3.to_s + ")").uniq
           if params[:result5] != nil && params[:result5][:description_id] != "" then
             @description = params[:result5][:description_id]
             @title = Description.find(@description).description
