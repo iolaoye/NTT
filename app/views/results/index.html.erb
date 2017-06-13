@@ -533,9 +533,9 @@
           <thead>
             <tr class='gvHeaderStyle'>
               <th class="gvCellStyle Title"><%= 'Crop Name' %></th>
-              <th class="gvCellStyle Title"><%= 'NS' %></th>
+              <th class="gvCellStyle Title"><%= 'N Stress' %></th>
               <th class="gvCellStyle Title"><%= 'Temperature Stress' %></th>
-              <th class="gvCellStyle Title"><%= 'PS' %></th>
+              <th class="gvCellStyle Title"><%= 'P Stress' %></th>
               <th class="gvCellStyle Title"><%= 'Water Stress' %></th>
             </tr>
           </thead>
@@ -546,11 +546,11 @@
             <% @crop_stress1_ts.each do |result_ts| %>
             <% @crop_stress1_ps.each do |result_ps| %>
               <tr class="gvRowStyleOdd">
-                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(result_ws.crop_id).name %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ns.value %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ts.value %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ps.value %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ws.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(result_ws.crop_id).name + ' (days)' %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ns.value.round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ts.value.round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ps.value.round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ws.value.round(2) %></td>
               </tr>
             <% end %>
             <% end %>
@@ -562,11 +562,11 @@
             <% @crop_stress2_ts.each do |result_ts| %>
             <% @crop_stress2_ps.each do |result_ps| %>
               <tr class="gvRowStyleEven">
-                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(result_ws.crop_id).name %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ns.value %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ts.value %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ps.value %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ws.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(result_ws.crop_id).name + ' (days)' %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ns.value.round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ts.value.round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ps.value.round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ws.value.round(2) %></td>
               </tr>
             <% end %>
             <% end %>
@@ -578,11 +578,11 @@
             <% @crop_stress3_ts.each do |result_ts| %>
             <% @crop_stress3_ps.each do |result_ps| %>
               <tr class="gvRowStyleOdd">
-                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(result_ws.crop_id).name %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ns.value %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ts.value %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ps.value %></td>
-                <td class="gvCellStyleNumber bottom_border"><%= result_ws.value %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(result_ws.crop_id).name + ' (days)' %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ns.value.round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ts.value.round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ps.value.round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= result_ws.value.round(2) %></td>
               </tr>
             <% end %>
             <% end %>
