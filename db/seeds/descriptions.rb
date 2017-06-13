@@ -18,7 +18,7 @@ Description.create!({:id => 51,:detail => true,:description => "Irrigation",:spa
 Description.create!({:id => 52,:detail => true,:description => "Deep Percolation",:spanish_description => "Filtracion Profunda",:unit => "in",:position => nil,:period => 2}, :without_protection => true)
 Description.create!({:id => 60,:detail => false,:description => "Total Sediment",:spanish_description => "Total Sedimento",:unit => "t/ac",:position => nil,:period => 2}, :without_protection => true)
 Description.create!({:id => 61,:detail => true,:description => "Sediment",:spanish_description => "Sedimento",:unit => "t/ac",:position => nil,:period => 1}, :without_protection => true)
-Description.create!({:id => 62,:detail => true,:description => "Manure Erosion",:spanish_description => "Sedimento por Estíercol",:unit => "t/ac",:position => nil,:period => 2}, :without_protection => true)
+Description.create!({:id => 62,:detail => true,:description => "Manure Erosion",:spanish_description => "Sedimento por Estiercol",:unit => "t/ac",:position => nil,:period => 2}, :without_protection => true)
 Description.create!({:id => 70,:detail => false,:description => "Total Crop Yield",:spanish_description => "Cosecha Producida",:unit => "",:position => nil,:period => 2}, :without_protection => true)
 Description.create!({:id => 71,:detail => true,:description => "Crop 1",:spanish_description => "Crop 1",:unit => nil,:position => nil,:period => 2}, :without_protection => true)
 Description.create!({:id => 72,:detail => true,:description => "Crop 2",:spanish_description => "Crop 2",:unit => nil,:position => nil,:period => 2}, :without_protection => true)
