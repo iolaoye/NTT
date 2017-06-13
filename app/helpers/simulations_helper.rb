@@ -801,7 +801,7 @@ module SimulationsHelper
     @last_soil2 = 0
     last_owner1 = 0
     i=0
-	nirr = 0
+	  nirr = 0
     @soils.each do |soil|
       #create the operation file for this subarea.
       nirr = create_operations(soil, operation_number)
@@ -2060,19 +2060,19 @@ module SimulationsHelper
       j+=1
     end #end data.each
     crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean, v.map(&:ns).mean, v.map(&:ts).mean, v.map(&:ps).mean, v.map(&:ws).mean] }
-    average_crops_result(crops_data_by_crop_year)
-    if @scenario != nil
-      return "OK"
-    else
-      return crops_data_by_crop_year
-    end
+    average_crops_result(crops_data_by_crop_year, 70) #crop results
+    average_crops_result(crops_data_by_crop_year, 200) #water stress results
+    average_crops_result(crops_data_by_crop_year, 210) #n stress results
+    average_crops_result(crops_data_by_crop_year, 220) #temperature stress results
+    average_crops_result(crops_data_by_crop_year, 230) #p stress results
+    return "OK"
   end
 
   #end method
 
-  def average_crops_result(items)
+  def average_crops_result(items, desc_id)
     yield_by_name = Array.new
-    description_id = 70
+    description_id = desc_id
     items.each do |item|
       found = false
       yield_by_name.each do |array|
@@ -2080,9 +2080,7 @@ module SimulationsHelper
           found = true
           array["yield"] += item[1]
           array["total"] += 1
-          if @scenario != nil
-            add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1])
-          end
+          add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1])
           break
         end # end if same crop
       end # end each name
@@ -2093,28 +2091,41 @@ module SimulationsHelper
       #first = false
     end
 
-    if @scenario != nil
-      yield_by_name.each do |crop|
-        if session[:simulation] == "scenario"
-          crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
-        else
-          crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
-        end
-        ci = Array.new
-        crop_ci.each do |c|
-          ci.push c.value
-        end
-        crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
-        #todo check why the ci is crashing with watershed simulations
-        if session[:simulation].eql?('scenario') then
-          add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
-        else
-          #0 used for ci.confidence_interval because it is crashing with watersheds.
-          add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
-        end
+    yield_by_name.each do |crop|
+      if session[:simulation] == "scenario"
+        crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
+      else
+        crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
       end
-      add_summary(0, 70, 0, 0, 0)  # add total for crops. Just in case is needed for some reason
-    end #end scenario nil
+      stresses = []
+      stresses[0] = crop["ws"]
+      stresses[1] = crop["ns"]
+      stresses[2] = crop["ts"]
+      stresses[3] = crop["ps"]
+      ci = Array.new
+      crop_ci.each do |c|
+        ci.push c.value
+      end
+      crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
+      #todo check why the ci is crashing with watershed simulations
+      if session[:simulation].eql?('scenario')
+        if (crop["description_id"] > 70 && crop["description_id"] < 81)
+          add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+        elsif (crop["description_id"] > 200 && crop["description_id"] < 211)
+          add_summary(crop["ws"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+        elsif (crop["description_id"] > 210 && crop["description_id"] < 221)
+          add_summary(crop["ns"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+        elsif (crop["description_id"] > 220 && crop["description_id"] < 231)
+          add_summary(crop["ts"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+        elsif (crop["description_id"] > 230 && crop["description_id"] < 241)
+          add_summary(crop["ps"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+        end
+      else
+        #0 used for ci.confidence_interval because it is crashing with watersheds.
+        add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
+      end
+    end
+    add_summary(0, 70, 0, 0, 0) # add total for crops. Just in case is needed for some reason
   end
 
   def create_hash_by_name(item, crop_count)
@@ -2133,6 +2144,10 @@ module SimulationsHelper
     new_hash["total"] = 1
     new_hash["description_id"] = crop_count
     new_hash["crop_id"] = crop.id
+    new_hash["ns"] = item[2]
+    new_hash["ts"] = item[3]
+    new_hash["ps"] = item[4]
+    new_hash["ws"] = item[5]
     return new_hash
   end
 
