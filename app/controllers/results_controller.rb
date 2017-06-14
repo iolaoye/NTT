@@ -49,7 +49,7 @@ class ResultsController < ApplicationController
     @title = ""
     @total_area = 0
     @field_name = ""
-    @descriptions = Description.select("id, description, spanish_description").where("id < 71 or id > 80")
+    @descriptions = Description.select("id, description, spanish_description").where("id < 71 or (id > 80 and id < 200)")
     @project = Project.find(params[:project_id])
     add_breadcrumb t('menu.results')
     if session[:simulation].eql?('scenario') then
@@ -252,14 +252,17 @@ class ResultsController < ApplicationController
           #@result_selected = t('result.summary')
 
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
+		  @chart_type = 0
           @x = "Year"
 		  @crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id == ? or scenario_id == ? or scenario_id == ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
           if params[:result5] != nil && params[:result5][:description_id] != "" then
             @description = params[:result5][:description_id]
 			if params[:result5][:description_id] == "70" then 
 				@title = Crop.find(params[:result7][:crop_id]).name
+				@chart_type = params[:result7][:crop_id].to_i
 			else
 				@title = Description.find(@description).description
+				@chart_type = 0
 			end
             @y = Description.find(@description).unit
             if params[:result1] != nil
@@ -459,9 +462,13 @@ class ResultsController < ApplicationController
     if month_or_year == 1 then #means chart is annual
 	  #if @description == "70" then @description = @crops.find_by_crop_id(params[:result7][:crop_id]).description_id.to_s end
 	  #debugger
-	  result_temp = Result.where("scenario_id==? and soil_id==? and description_id>? and description_id<? and crop_id==?", scenario_id,0,70,80,params[:result7][:crop_id]).first
-	  if @description == "70" then if result_temp != nil then @description = result_temp.description_id.to_s else @description = "0" end end
-      chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND description_id == ? AND month_year > ?", params[:field_id], scenario_id, @soil, @description,Field.find(params[:field_id]).weather.simulation_final_year-11).order("month_year desc").limit(12).reverse
+	  #result_temp = Result.where("scenario_id==? and soil_id==? and description_id>? and description_id<? and crop_id==?", scenario_id,0,70,80,params[:result7][:crop_id]).first
+	  #if @description == "70" then if result_temp != nil then @description = result_temp.description_id.to_s else @description = "0" end end
+	  if @chart_type > 0 then
+		chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND crop_id == ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type,Field.find(params[:field_id]).weather.simulation_final_year-11,80).order("month_year desc").limit(12).reverse
+	  else
+		chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND description_id == ? AND month_year > ?", params[:field_id], scenario_id, @soil, @description,Field.find(params[:field_id]).weather.simulation_final_year-11).order("month_year desc").limit(12).reverse
+	  end
     else #means chart is monthly average
       chart_values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")
     end
