@@ -1589,12 +1589,12 @@ module SimulationsHelper
 	    #clean all of the results exiting for this scenario.
 		if session[:simulation] == "scenario" then
 			# clean results for scenario to avoid keeping some results from previous simulation
-			Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).destroy_all
-			Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).destroy_all
+			Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
+			Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
 		else
 			# clean results for watershed to avoid keeping some results from previous simulation
-			Result.where(:watershed_id => @watershed_id).destroy_all
-			Chart.where(:watershed_id => @watershed_id).destroy_all
+			Result.where(:watershed_id => @watershed_id).delete_all
+			Chart.where(:watershed_id => @watershed_id).delete_all
 		end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
