@@ -84,6 +84,7 @@ check_for_errors = ->
     set_buttons(false)
 
 $(document).ready ->
+  show_crops()
   set_buttons(false)
   display_button()
   generate_pdf()
