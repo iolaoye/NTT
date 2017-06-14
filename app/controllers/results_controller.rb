@@ -279,7 +279,6 @@ class ResultsController < ApplicationController
 		  @chart_type = 0
           @x = "Year"
 		  @crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id == ? or scenario_id == ? or scenario_id == ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
-		  debugger
           if params[:result5] != nil && params[:result5][:description_id] != "" then
             @description = params[:result5][:description_id]
 			if params[:result5][:description_id] == "70" then
