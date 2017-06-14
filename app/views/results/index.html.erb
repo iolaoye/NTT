@@ -67,7 +67,6 @@
               <td><%= collection_select :result5, :description_id, @descriptions, :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
             <% end %>
 			<% if I18n.locale.eql?(:en) %>
-<%debugger%>
 				<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
 			<% else %>
 				<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
