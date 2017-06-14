@@ -112,9 +112,7 @@ class ResultsController < ApplicationController
   		@type = t("general.view")
   	end
 	  @crop_results = []
-    @crop_stress1_ws = []
-    @crop_stress2_ws = []
-    @crop_stress3_ws = []
+    @stress_results = []
     if @type != nil then
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
@@ -146,6 +144,15 @@ class ResultsController < ApplicationController
 							crop_result[6] = 0
 							@crop_results.push(crop_result)
 						end
+            @crop_stress1_ws.each_with_index do |ws, index|
+              stress_result = []
+              stress_result[0] = @crop_stress1_ns[index].value
+              stress_result[1] = @crop_stress1_ps[index].value
+              stress_result[2] = @crop_stress1_ts[index].value
+              stress_result[3] = ws.value
+              stress_result[4] = ws.crop_id
+              @stress_results.push(stress_result)
+            end
 						if @results1.count > 0
 							@present1 = true
 						else
@@ -160,7 +167,6 @@ class ResultsController < ApplicationController
 						session[:scenario2] = @scenario2
 						if session[:simulation] == 'scenario'
 							@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id == 0 or crop_id is null")
-							#@crop_results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id > 0")
 							@crop_results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 81).order("crop_id asc")
               @crop_stress2_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
               @crop_stress2_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
@@ -192,6 +198,15 @@ class ResultsController < ApplicationController
 								@crop_results.push(crop_result)
 							end
 						end
+            @crop_stress2_ws.each_with_index do |ws, index|
+              stress_result = []
+              stress_result[0] = @crop_stress2_ns[index].value
+              stress_result[1] = @crop_stress2_ps[index].value
+              stress_result[2] = @crop_stress2_ts[index].value
+              stress_result[3] = ws.value
+              stress_result[4] = ws.crop_id
+              @stress_results.push(stress_result)
+            end
 						if @results2.count > 0
 							@present2 = true
 						else
@@ -238,6 +253,15 @@ class ResultsController < ApplicationController
 								@crop_results.push(crop_result)
 							end
 						end
+            @crop_stress3_ws.each_with_index do |ws, index|
+              stress_result = []
+              stress_result[0] = @crop_stress3_ns[index].value
+              stress_result[1] = @crop_stress3_ps[index].value
+              stress_result[2] = @crop_stress3_ts[index].value
+              stress_result[3] = ws.value
+              stress_result[4] = ws.crop_id
+              @stress_results.push(stress_result)
+            end
 						if @results3.count > 0
 							@present3 = true
 						else
