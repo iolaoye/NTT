@@ -279,16 +279,20 @@ class ResultsController < ApplicationController
 		  @chart_type = 0
           @x = "Year"
 		  @crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id == ? or scenario_id == ? or scenario_id == ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
+		  debugger
           if params[:result5] != nil && params[:result5][:description_id] != "" then
             @description = params[:result5][:description_id]
-			if params[:result5][:description_id] == "70" then 
-				@title = Crop.find(params[:result7][:crop_id]).name
+			if params[:result5][:description_id] == "70" then
+				crop = Crop.find(params[:result7][:crop_id])
+				@title = crop.name
 				@chart_type = params[:result7][:crop_id].to_i
+				@y = crop.yield_unit
+				@crop = crop.id
 			else
 				@title = Description.find(@description).description
 				@chart_type = 0
+				@y = Description.find(@description).unit
 			end
-            @y = Description.find(@description).unit
             if params[:result1] != nil
               if params[:result1][:scenario_id] != "" then
                 @scenario1 = params[:result1][:scenario_id]
@@ -296,7 +300,7 @@ class ResultsController < ApplicationController
                 if @charts1.count > 0
                   @present1 = true
                 else
-                  @errors.push(t('result.first_scenario_error') + " " + t('result.charts').pluralize.downcase)
+                  @errors.push(t('result.first_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then
@@ -305,7 +309,7 @@ class ResultsController < ApplicationController
                 if @charts2.count > 0
                   @present2 = true
                 else
-                  @errors.push(t('result.second_scenario_error') + " " + t('result.charts').pluralize.downcase)
+                  @errors.push(t('result.second_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result3][:scenario_id] != "" then
@@ -314,7 +318,7 @@ class ResultsController < ApplicationController
                 if @charts3.count > 0
                   @present3 = true
                 else
-                  @errors.push(t('result.third_scenario_error') + " " + t('result.charts').pluralize.downcase)
+                  @errors.push(t('result.third_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
             end
@@ -484,25 +488,40 @@ class ResultsController < ApplicationController
 
   def get_chart_serie(scenario_id, month_or_year)
     if month_or_year == 1 then #means chart is annual
-	  #if @description == "70" then @description = @crops.find_by_crop_id(params[:result7][:crop_id]).description_id.to_s end
-	  #debugger
-	  #result_temp = Result.where("scenario_id==? and soil_id==? and description_id>? and description_id<? and crop_id==?", scenario_id,0,70,80,params[:result7][:crop_id]).first
-	  #if @description == "70" then if result_temp != nil then @description = result_temp.description_id.to_s else @description = "0" end end
-	  if @chart_type > 0 then
-		chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND crop_id == ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type,Field.find(params[:field_id]).weather.simulation_final_year-11,80).order("month_year desc").limit(12).reverse
-	  else
-		chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND description_id == ? AND month_year > ?", params[:field_id], scenario_id, @soil, @description,Field.find(params[:field_id]).weather.simulation_final_year-11).order("month_year desc").limit(12).reverse
-	  end
+		first_year = Field.find(params[:field_id]).weather.simulation_final_year-12
+		if @chart_type > 0 then
+		chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND crop_id == ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").limit(12).reverse
+		else
+		chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND description_id == ? AND month_year > ?", params[:field_id], scenario_id, @soil, @description, first_year).order("month_year desc").limit(12).reverse
+		end
     else #means chart is monthly average
-      chart_values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")
+		chart_values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")
     end
     charts = Array.new
-    chart_values.each do |c|
-      chart = Array.new
-      chart.push(c.month_year)
-      chart.push(c.value)
-      charts.push(chart)
-    end
+	if month_or_year == 2 then
+		chart_values.each do |c|
+		  chart = Array.new
+		  chart.push(c.month_year)
+		  chart.push(c.value)
+		  charts.push(chart)
+		end
+	else
+		current_year = first_year + 1
+		chart_values.each do |c|
+			while current_year < c.month_year
+				chart = Array.new
+				chart.push(current_year)
+				chart.push(0)
+				charts.push(chart)
+				current_year +=1
+			end
+			chart = Array.new
+			chart.push(c.month_year)
+			chart.push(c.value)
+			charts.push(chart)
+			current_year +=1
+		end
+	end
     return charts
   end #end method get_chart_serie
 end
