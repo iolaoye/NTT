@@ -1093,8 +1093,8 @@ module SimulationsHelper
         j+=1
       end #end soil_operations.each do
       # add to the tillage file the new fertilizer operations - one for each depth
-      append_file("tillOrg.dat", true, "till.dat", "till")
-      append_file("ferts.dat", true, "fert.dat", "fert")
+      append_file("tillOrg.dat", "till.dat", "till")
+      append_file("ferts.dat", "fert.dat", "fert")
       msg = send_file_to_APEX(@opcs_file, "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc")
       @opcs_list_file.push((@soil_number+1).to_s.rjust(5, '0') + " " + "APEX" + (@soil_number+1).to_s.rjust(3, '0') + ".opc" + "\n")
     end #end if
@@ -1388,12 +1388,12 @@ module SimulationsHelper
     #End With
   end  # end add_operation method
 
-  def append_file(original_file, copy_file, target_file, file_type)
+  def append_file(original_file, target_file, file_type)
     path = File.join(APEX, "APEX" + session[:session_id])
-    if copy_file then
-      FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
+	if File.exists?(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase)) then
+		FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
     else
-      target_file = original_file
+		FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
     end
     case file_type
       when "till"
@@ -1668,26 +1668,26 @@ module SimulationsHelper
           pcp = 0
           total_subs = 0
           if initial_chart_year <= year then
-            add_value_to_chart_table(one_result.orgn, 21, 0, year)
-            add_value_to_chart_table(one_result.qn, 22, 0, year)
-            add_value_to_chart_table(one_result.no3, 23, 0, year)
-            add_value_to_chart_table(one_result.qdrn, 24, 0, year)
-            add_value_to_chart_table(one_result.qn+one_result.qdrn+one_result.no3+one_result.orgn, 20, 0, year)
-            add_value_to_chart_table(one_result.orgp, 31, 0, year)
-            add_value_to_chart_table(one_result.po4, 32, 0, year)
-            add_value_to_chart_table(one_result.qdrp, 33, 0, year)
-            add_value_to_chart_table(one_result.po4+one_result.qdrp+one_result.orgp, 30, 0, year)
-            add_value_to_chart_table(one_result.surface_flow, 41, 0, year)
-            add_value_to_chart_table(one_result.flow - one_result.surface_flow, 42, 0, year)
-            add_value_to_chart_table(one_result.qdr, 33, 0, year)
-            add_value_to_chart_table(one_result.flow + one_result.qdr, 40, 0, year)
-            add_value_to_chart_table(one_result.irri, 51, 0, year)
-            add_value_to_chart_table(one_result.dprk, 52, 0, year)
-            add_value_to_chart_table(one_result.irri + one_result.dprk, 50, 0, year)
-            add_value_to_chart_table(one_result.sed, 61, 0, year)
-            add_value_to_chart_table(one_result.ymnu, 62, 0, year)
-            add_value_to_chart_table(one_result.sed + one_result.ymnu, 60, 0, year)
-            add_value_to_chart_table(one_result.pcp, 100, 0, year)
+            add_value_to_chart_table(one_result.orgn, 21, 0, year,0)
+            add_value_to_chart_table(one_result.qn, 22, 0, year,0)
+            add_value_to_chart_table(one_result.no3, 23, 0, year,0)
+            add_value_to_chart_table(one_result.qdrn, 24, 0, year,0)
+            add_value_to_chart_table(one_result.qn+one_result.qdrn+one_result.no3+one_result.orgn, 20, 0, year,0)
+            add_value_to_chart_table(one_result.orgp, 31, 0, year,0)
+            add_value_to_chart_table(one_result.po4, 32, 0, year,0)
+            add_value_to_chart_table(one_result.qdrp, 33, 0, year,0)
+            add_value_to_chart_table(one_result.po4+one_result.qdrp+one_result.orgp, 30, 0, year,0)
+            add_value_to_chart_table(one_result.surface_flow, 41, 0, year,0)
+            add_value_to_chart_table(one_result.flow - one_result.surface_flow, 42, 0, year,0)
+            add_value_to_chart_table(one_result.qdr, 33, 0, year,0)
+            add_value_to_chart_table(one_result.flow + one_result.qdr, 40, 0, year,0)
+            add_value_to_chart_table(one_result.irri, 51, 0, year,0)
+            add_value_to_chart_table(one_result.dprk, 52, 0, year,0)
+            add_value_to_chart_table(one_result.irri + one_result.dprk, 50, 0, year,0)
+            add_value_to_chart_table(one_result.sed, 61, 0, year,0)
+            add_value_to_chart_table(one_result.ymnu, 62, 0, year,0)
+            add_value_to_chart_table(one_result.sed + one_result.ymnu, 60, 0, year,0)
+            add_value_to_chart_table(one_result.pcp, 100, 0, year,0)
           end   # end initial_chart
         else
           irri_sum += one_result.irri
@@ -1827,7 +1827,7 @@ module SimulationsHelper
     return climate_array
   end
 
-  def add_value_to_chart_table(value, description_id, soil_id, year)
+  def add_value_to_chart_table(value, description_id, soil_id, year,crop_id)
     field = 0
     soil = 0
     scenario = 0
@@ -1849,12 +1849,13 @@ module SimulationsHelper
       chart.scenario_id = scenario
       chart.watershed_id = watershed
       chart.description_id = description_id
+	  chart.crop_id = crop_id
     end
     chart.value = value
-    if description_id > 70 and description_id < 80 then
-    end
     if chart.save then
+	  a = 2
     else
+	  a = 1
     end
   end
 
@@ -2007,22 +2008,21 @@ module SimulationsHelper
       end #end if i>9
       i += 1
     end # end data.each file apex001.mws
-
     for i in 0..11
       annual_flow[i] /= last_year
-      add_value_to_chart_table(annual_flow[i], 41, 0, i+1)
+      add_value_to_chart_table(annual_flow[i], 41, 0, i+1, 0)
       annual_sediment[i] /= last_year
-      add_value_to_chart_table(annual_sediment[i], 61, 0, i+1)
+      add_value_to_chart_table(annual_sediment[i], 61, 0, i+1, 0)
       annual_orgn[i] /= last_year
-      add_value_to_chart_table(annual_orgn[i], 21, 0, i+1)
+      add_value_to_chart_table(annual_orgn[i], 21, 0, i+1, 0)
       annual_orgp[i] /= last_year
-      add_value_to_chart_table(annual_orgp[i], 31, 0, i+1)
+      add_value_to_chart_table(annual_orgp[i], 31, 0, i+1, 0)
       annual_no3[i] /= last_year
-      add_value_to_chart_table(annual_no3[i], 22, 0, i+1)
+      add_value_to_chart_table(annual_no3[i], 22, 0, i+1, 0)
       annual_po4[i] /= last_year
-      add_value_to_chart_table(annual_po4[i], 32, 0, i+1)
+      add_value_to_chart_table(annual_po4[i], 32, 0, i+1, 0)
       annual_precipitation[i] /= last_year
-      add_value_to_chart_table(annual_precipitation[i], 100, 0, i+1)
+      add_value_to_chart_table(annual_precipitation[i], 100, 0, i+1, 0)
     end # end for
     return "OK"
   end
@@ -2080,7 +2080,7 @@ module SimulationsHelper
           found = true
           array["yield"] += item[1]
           array["total"] += 1
-          add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1])
+          add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1],Crop.find_by_code(item[0][0]).id)
           break
         end # end if same crop
       end # end each name
