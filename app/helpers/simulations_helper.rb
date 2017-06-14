@@ -2080,6 +2080,10 @@ module SimulationsHelper
           found = true
           array["yield"] += item[1]
           array["total"] += 1
+          array["ws"] += item[5]
+          array["ns"] += item[2]
+          array["ts"] += item[3]
+          array["ps"] += item[4]
           add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1],Crop.find_by_code(item[0][0]).id)
           break
         end # end if same crop
@@ -2090,22 +2094,20 @@ module SimulationsHelper
       end # end if found
       #first = false
     end
-
     yield_by_name.each do |crop|
       if session[:simulation] == "scenario"
         crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
       else
         crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
       end
-      stresses = []
-      stresses[0] = crop["ws"]
-      stresses[1] = crop["ns"]
-      stresses[2] = crop["ts"]
-      stresses[3] = crop["ps"]
       ci = Array.new
       crop_ci.each do |c|
         ci.push c.value
       end
+      crop["ws"] = crop["ws"] / crop["total"]
+      crop["ns"] = crop["ns"] / crop["total"]
+      crop["ts"] = crop["ts"] / crop["total"]
+      crop["ps"] = crop["ps"] / crop["total"]
       crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
       #todo check why the ci is crashing with watershed simulations
       if session[:simulation].eql?('scenario')
