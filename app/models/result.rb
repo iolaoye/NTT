@@ -6,6 +6,7 @@ class Result < ActiveRecord::Base
 	  belongs_to :scenario
 	  belongs_to :soil
 	  belongs_to :description
+	  belongs_to :crop
   #scopes
 	default_scope :order => "description_id ASC"
 end

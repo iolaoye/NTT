@@ -62,9 +62,15 @@
           <% when t('result.annual')  + "-" + t('result.charts'), t("general.view") + " " + t('result.annual')  + "-" + t('result.charts')%>
             <% if I18n.locale.eql?(:en) %>
               <td><%= collection_select :result5, :description_id, @descriptions, :id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
+			  <td><%#= select :result5, :description_id, options_for_select(@des.map { |obj| [obj['description'], obj['id']] }) %>
             <% else %>
               <td><%= collection_select :result5, :description_id, @descriptions, :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
             <% end %>
+			<% if I18n.locale.eql?(:en) %>
+				<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
+			<% else %>
+				<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
+			<% end %>
             <td><%= submit_tag t("general.view") + " " + t("result.annual")  + "-" + t('result.charts'), name: "button", :class => "btn btn-primary" %></td>
 			</tr>
           <% when t('result.monthly') + "-" + t('result.charts'), t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') %>
@@ -82,7 +88,7 @@
 </form>
 
 <% if @type == t("general.view") + " " + t('result.annual') + "-" + t('result.charts') || @type == t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') then %>
-  <tr><td><%= @title %></td></tr>
+  <strong><h4><%= @title %></h4></strong>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
         <%= column_chart [
         { :name => "1st Scenario", :data => @charts1 },
@@ -93,13 +99,17 @@
     <br/>
     <div class="table-responsive">
       <table class='table table-bordered' style="white-space: nowrap;">
-        <% if (@present1 || @present2 || @present3) && @x == "Year" %>
-			<% values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12") %>
+        <% if (@present1 || @present2 || @present3)  %>
 			<thead>
 			  <tr class='gvHeaderStyle'>
 				<th class='gvCellStyle Title'><%= t('models.scenario') %></th>
-				<% for i in 0..values.count - 1 %>
-					<th class='gvCellStyle Title'><%= values[i].month_year %></th>
+				<% case true %>
+					<% when @present1 %>
+						<% for i in 0..@charts1.count - 1 %><th class='gvCellStyle Title'><%= @charts1[i][0] %></th><% end %>
+					<% when @present2 %>
+						<% for i in 0..@charts2.count - 1 %><th class='gvCellStyle Title'><%= @charts2[i][0] %></th><% end %>
+					<% when @present3 %>
+						<% for i in 0..@charts3.count - 1 %><th class='gvCellStyle Title'><%= @charts3[i][0] %></th><% end %>
 				<% end %>
 			  </tr>
 			</thead>
@@ -107,100 +117,28 @@
           <% if @present1 %>
             <tr class="gvRowStyleOdd">
               <td class="gvTotalText"><%= Scenario.find(@scenario1).name %></td>
-				<% for i in 0..values.count - 1 %>
-					<th class='gvCellStyle Title'><%= values[i].value.round(2) %></th>
+				<% for i in 0..@charts1.count - 1 %>
+					<td class='gvCellStyle Title'><%= @charts1[i][1].round(2) %></td>
 				<% end %>
             </tr>
           <% end %>
           <% if @present2 %>
-			<% values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12") %>
             <tr class="gvRowStyleEven">
               <td class="gvTotalText"><%= Scenario.find(@scenario2).name %></td>
-				<% for i in 0..values.count - 1 %>
-					<th class='gvCellStyle Title'><%= values[i].value.round(2) %></th>
+				<% for i in 0..@charts2.count - 1 %>
+					<td class='gvCellStyle Title'><%= @charts2[i][1].round(2) %></td>
 				<% end %>
             </tr>
           <% end %>
           <% if @present3 %>
-			<% values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12") %>
             <tr class="gvRowStyleOdd">
               <td class="gvTotalText"><%= Scenario.find(@scenario3).name %></td>
-				<% for i in 0..values.count - 1 %>
-					<th class='gvCellStyle Title'><%= values[i].value.round(2) %></th>
+				<% for i in 0..@charts3.count - 1 %>
+					<td class='gvCellStyle Title'><%= @charts3[i][1].round(2) %></td>
 				<% end %>
             </tr>
           <% end %>
         </tbody>
-        <% elsif (@present1 || @present2 || @present3) && @x == "Month" %>
-          <thead>
-            <tr class='gvHeaderStyle'>
-              <th class='gvCellStyle Title'><%= t('models.scenario') %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[0].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[1].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[2].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[3].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[4].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[5].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[6].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[7].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[8].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[9].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[10].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[11].month_year %></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if @present1 %>
-              <tr class="gvRowStyleOdd">
-                <td class="gvTotalText"><%= Scenario.find(@scenario1).name %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[0].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[1].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[2].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[3].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[4].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[5].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[6].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[7].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[8].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[9].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[10].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[11].value.round(3) %></td>
-              </tr>
-            <% end %>
-            <% if @present2 %>
-              <tr class="gvRowStyleEven">
-                <td class="gvTotalText"><%= Scenario.find(@scenario2).name %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[0].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[1].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[2].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[3].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[4].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[5].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[6].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[7].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[8].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[9].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[10].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[11].value.round(3) %></td>
-              </tr>
-            <% end %>
-            <% if @present3 %>
-              <tr class="gvRowStyleOdd">
-                <td class="gvTotalText"><%= Scenario.find(@scenario3).name %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[0].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[1].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[2].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[3].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[4].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[5].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[6].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[7].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[8].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[9].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[10].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[11].value.round(3) %></td>
-              </tr>
-            <% end %>
           </tbody>
         <% end %>
       </table>
@@ -351,49 +289,49 @@
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", result.value.round(2)).to_s %></td>
 								<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
 								<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
-								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value2.round(2)).to_s %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-								<% if difference1 <= 0 %>
-									<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-									<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-									<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>
-								<% else %>
-									<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-									<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-									<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>
-								<% end %>
+									<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value2.round(2)).to_s %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+									<% if difference1 <= 0 %>
+										<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
+										<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
+										<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>
+									<% else %>
+										<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
+										<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
+										<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>
+									<% end %>
 								<% end %>
 								<% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil  %>
-								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value3.round(2)).to_s %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-								<% if difference2 <= 0 %>
-									<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-									<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-									<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>
-								<% else %>
-									<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-									<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-									<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", total_area1.round(2)) %></td>
-								<% end %>
+									<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value3.round(2)).to_s %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+									<% if difference2 <= 0 %>
+										<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
+										<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
+										<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>
+									<% else %>
+										<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
+										<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
+										<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", total_area1.round(2)) %></td>
+									<% end %>
 								<% end %>
 								<% if @results2 == nil %>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 								<% end %>
 								<% if @results3 == nil %>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 								<% end %>
 							<% else %>
     							<% format = "%8.2f" %>
     							<% if result.description_id >= 60 && result.description_id <=69 %>
-    							<% format = "%8.4f" %>
+    								<% format = "%8.4f" %>
     							<% end %>
 								<% if I18n.locale.eql?(:en) %>
 									<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= description.description + "(" + description.unit + ")" %></td>
@@ -403,44 +341,44 @@
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, result.value).to_s %></td>
 								<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
 								<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
-								<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value2).to_s %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-								<% if difference1 >= 0 %>
-									<td class="nutrients_negative bottom_border"><%= sprintf(format, difference1) %></td>
-									<td class="nutrients_negative bottom_border"><%= sprintf(format, reduction1) %></td>
-									<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, total_area1) %></td>
-								<% else %>
-									<td class="nutrients_positive bottom_border"><%= sprintf(format, difference1) %></td>
-									<td class="nutrients_positive bottom_border"><%= sprintf(format, reduction1) %></td>
-									<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, total_area1) %></td>
-								<% end %>
+									<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value2).to_s %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+									<% if difference1 >= 0 %>
+										<td class="nutrients_negative bottom_border"><%= sprintf(format, difference1) %></td>
+										<td class="nutrients_negative bottom_border"><%= sprintf(format, reduction1) %></td>
+										<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, total_area1) %></td>
+									<% else %>
+										<td class="nutrients_positive bottom_border"><%= sprintf(format, difference1) %></td>
+										<td class="nutrients_positive bottom_border"><%= sprintf(format, reduction1) %></td>
+										<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, total_area1) %></td>
+									<% end %>
 								<% end %>
 								<% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil  %>
-								<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value3).to_s %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-								<% if difference2 >= 0 %>
-									<td class="nutrients_negative bottom_border"><%= sprintf(format, difference2) %></td>
-									<td class="nutrients_negative bottom_border"><%= sprintf(format, reduction2) %></td>
-									<td class="nutrients_negative bottom_border"><%= sprintf(format, total_area2) %></td>
-								<% else %>
-									<td class="nutrients_positive bottom_border"><%= sprintf(format, difference1) %></td>
-									<td class="nutrients_positive bottom_border"><%= sprintf(format, reduction1) %></td>
-									<td class="nutrients_positive bottom_border"><%= sprintf(format, total_area1) %></td>
-								<% end %>
+									<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value3).to_s %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+									<% if difference2 >= 0 %>
+										<td class="nutrients_negative bottom_border"><%= sprintf(format, difference2) %></td>
+										<td class="nutrients_negative bottom_border"><%= sprintf(format, reduction2) %></td>
+										<td class="nutrients_negative bottom_border"><%= sprintf(format, total_area2) %></td>
+									<% else %>
+										<td class="nutrients_positive bottom_border"><%= sprintf(format, difference2) %></td>
+										<td class="nutrients_positive bottom_border"><%= sprintf(format, reduction2) %></td>
+										<td class="nutrients_positive bottom_border"><%= sprintf(format, total_area2) %></td>
+									<% end %>
 								<% end %>
 								<% if @results2 == nil %>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
 								<% end %>
 								<% if @results3 == nil %>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-								<td class="gvCellStyleNumber bottom_border" ><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+									<td class="gvCellStyleNumber bottom_border" ><%= "" %></td>
 								<% end %>
 							<% end %>
 						  </tr>
@@ -452,7 +390,6 @@
 			<% @crop_results.each do |result| %>
 				<% id += 1%>
 				<% row_id = "row" + id.to_s %>
-				<% description = Crop.find(result[0]).name %>
 				<% value2 = 0 %>
 				<% reduction1 = 0 %>
 				<% if @scenario2 != "" then %>
@@ -521,27 +458,29 @@
 			</tbody>
 		  </table>
 	  </div>
-    <% if !@crop_stress1.empty? %>
+    <% if !@stress_results.empty? %>
     <div class="table-responsive" id="stress_table" style="display:none">
       <div class="panel panel-default">
         <table class='table table-bordered' style="white-space: nowrap;">
           <thead>
             <tr class='gvHeaderStyle'>
               <th class="gvCellStyle Title"><%= 'Crop Name' %></th>
-              <th class="gvCellStyle Title"><%= 'NS' %></th>
+              <th class="gvCellStyle Title"><%= 'N Stress' %></th>
               <th class="gvCellStyle Title"><%= 'Temperature Stress' %></th>
-              <th class="gvCellStyle Title"><%= 'PS' %></th>
+              <th class="gvCellStyle Title"><%= 'P Stress' %></th>
               <th class="gvCellStyle Title"><%= 'Water Stress' %></th>
             </tr>
           </thead>
           <tbody>
-            <tr class="gvRowStyleEven">
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][0][0] %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][2] %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][3] %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][4] %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= @crop_stress1[0][5] %></td>
-            </tr>
+            <% @stress_results.each do |stress| %>
+              <tr class="gvRowStyleOdd">
+                <td class="gvCellStyleNumber bottom_border"><%= Crop.find(stress[4]).name + ' (days)' %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= stress[0].round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= stress[2].round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= stress[1].round(2) %></td>
+                <td class="gvCellStyleNumber bottom_border"><%= stress[3].round(2) %></td>
+              </tr>
+            <% end %>
           </tbody>
         </table>
       </div>
