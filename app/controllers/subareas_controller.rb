@@ -11,8 +11,8 @@ class SubareasController < ApplicationController
 	@soils = Soil.where(:field_id => @field.id, :selected => true)
 	
 	
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Subareas'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.subarea_file')
 	if @soils != nil then
 		subarea = Subarea.where(:soil_id => @soils[0].id).first
 		if subarea != nil then
@@ -40,9 +40,8 @@ class SubareasController < ApplicationController
     @location = Location.where(:project_id => params[:project_id])
 	
 	
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Subareas', controller: "subareas", action: "index"
-	add_breadcrumb 'Viewing Subarea File'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @subarea }
@@ -67,9 +66,9 @@ class SubareasController < ApplicationController
     @project = Project.find(params[:project_id])
 	
 	
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Subareas', controller: "subareas", action: "index"
-	add_breadcrumb 'Editing Subarea File'
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
+	add_breadcrumb t('general.editing') + " " + t('menu.subarea_file')
   end
 
 ############################# LOAD SUBAREAS WHEN CLICK ON "Load Subarea" button #############################
