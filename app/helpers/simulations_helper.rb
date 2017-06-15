@@ -192,7 +192,7 @@ module SimulationsHelper
 	else
 		return "Error creating wp1 and wind files"
 	end
-	
+
     #msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wp1")
     #client = Savon.client(wsdl: URL_Weather)
 	######### create eind file and send to server ########
@@ -2061,10 +2061,10 @@ module SimulationsHelper
     end #end data.each
     crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean, v.map(&:ns).mean, v.map(&:ts).mean, v.map(&:ps).mean, v.map(&:ws).mean] }
     average_crops_result(crops_data_by_crop_year, 70) #crop results
-    average_crops_result(crops_data_by_crop_year, 200) #water stress results
-    average_crops_result(crops_data_by_crop_year, 210) #n stress results
-    average_crops_result(crops_data_by_crop_year, 220) #temperature stress results
-    average_crops_result(crops_data_by_crop_year, 230) #p stress results
+    average_crops_result(crops_data_by_crop_year, 200) #n stress results
+    average_crops_result(crops_data_by_crop_year, 210) #temperature stress results
+    average_crops_result(crops_data_by_crop_year, 220) #p stress results
+    average_crops_result(crops_data_by_crop_year, 230) #water stress results
     return "OK"
   end
 
@@ -2114,13 +2114,13 @@ module SimulationsHelper
         if (crop["description_id"] > 70 && crop["description_id"] < 81)
           add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
         elsif (crop["description_id"] > 200 && crop["description_id"] < 211)
-          add_summary(crop["ws"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
-        elsif (crop["description_id"] > 210 && crop["description_id"] < 221)
           add_summary(crop["ns"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+        elsif (crop["description_id"] > 210 && crop["description_id"] < 221)
+          add_summary(crop["ps"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
         elsif (crop["description_id"] > 220 && crop["description_id"] < 231)
           add_summary(crop["ts"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
         elsif (crop["description_id"] > 230 && crop["description_id"] < 241)
-          add_summary(crop["ps"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+          add_summary(crop["ws"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
         end
       else
         #0 used for ci.confidence_interval because it is crashing with watersheds.

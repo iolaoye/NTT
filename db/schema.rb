@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170508131319) do
+ActiveRecord::Schema.define(:version => 20170614132559) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20170508131319) do
     t.float    "value"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "crop_id"
   end
 
   create_table "climates", :force => true do |t|
