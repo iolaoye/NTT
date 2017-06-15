@@ -67,9 +67,9 @@
               <td><%= collection_select :result5, :description_id, @descriptions, :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
             <% end %>
 			<% if I18n.locale.eql?(:en) %>
-				<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name, {:prompt => t('result.select_crop'), :selected => @description} %></td>
+				<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
 			<% else %>
-				<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name, {:prompt => t('result.select_crop'), :selected => @description} %></td>
+				<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
 			<% end %>
             <td><%= submit_tag t("general.view") + " " + t("result.annual")  + "-" + t('result.charts'), name: "button", :class => "btn btn-primary" %></td>
 			</tr>
@@ -88,7 +88,7 @@
 </form>
 
 <% if @type == t("general.view") + " " + t('result.annual') + "-" + t('result.charts') || @type == t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') then %>
-  <tr><td><%= @title %></td></tr>
+  <strong><h4><%= @title %></h4></strong>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
         <%= column_chart [
         { :name => "1st Scenario", :data => @charts1 },
@@ -99,13 +99,17 @@
     <br/>
     <div class="table-responsive">
       <table class='table table-bordered' style="white-space: nowrap;">
-        <% if (@present1 || @present2 || @present3) && @x == "Year" %>
-			<% values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12").order("month_year desc").limit(12).reverse %>
+        <% if (@present1 || @present2 || @present3)  %>
 			<thead>
 			  <tr class='gvHeaderStyle'>
 				<th class='gvCellStyle Title'><%= t('models.scenario') %></th>
-				<% for i in 0..values.count - 1 %>
-					<th class='gvCellStyle Title'><%= values[i].month_year %></th>
+				<% case true %>
+					<% when @present1 %>
+						<% for i in 0..@charts1.count - 1 %><th class='gvCellStyle Title'><%= @charts1[i][0] %></th><% end %>
+					<% when @present2 %>
+						<% for i in 0..@charts2.count - 1 %><th class='gvCellStyle Title'><%= @charts2[i][0] %></th><% end %>
+					<% when @present3 %>
+						<% for i in 0..@charts3.count - 1 %><th class='gvCellStyle Title'><%= @charts3[i][0] %></th><% end %>
 				<% end %>
 			  </tr>
 			</thead>
@@ -113,100 +117,28 @@
           <% if @present1 %>
             <tr class="gvRowStyleOdd">
               <td class="gvTotalText"><%= Scenario.find(@scenario1).name %></td>
-				<% for i in 0..values.count - 1 %>
-					<th class='gvCellStyle Title'><%= values[i].value.round(2) %></th>
+				<% for i in 0..@charts1.count - 1 %>
+					<td class='gvCellStyle Title'><%= @charts1[i][1].round(2) %></td>
 				<% end %>
             </tr>
           <% end %>
           <% if @present2 %>
-			<% values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12").order("month_year desc").limit(12).reverse %>
             <tr class="gvRowStyleEven">
               <td class="gvTotalText"><%= Scenario.find(@scenario2).name %></td>
-				<% for i in 0..values.count - 1 %>
-					<th class='gvCellStyle Title'><%= values[i].value.round(2) %></th>
+				<% for i in 0..@charts2.count - 1 %>
+					<td class='gvCellStyle Title'><%= @charts2[i][1].round(2) %></td>
 				<% end %>
             </tr>
           <% end %>
           <% if @present3 %>
-			<% values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year > 12").order("month_year desc").limit(12).reverse %>
             <tr class="gvRowStyleOdd">
               <td class="gvTotalText"><%= Scenario.find(@scenario3).name %></td>
-				<% for i in 0..values.count - 1 %>
-					<th class='gvCellStyle Title'><%= values[i].value.round(2) %></th>
+				<% for i in 0..@charts3.count - 1 %>
+					<td class='gvCellStyle Title'><%= @charts3[i][1].round(2) %></td>
 				<% end %>
             </tr>
           <% end %>
         </tbody>
-        <% elsif (@present1 || @present2 || @present3) && @x == "Month" %>
-          <thead>
-            <tr class='gvHeaderStyle'>
-              <th class='gvCellStyle Title'><%= t('models.scenario') %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[0].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[1].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[2].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[3].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[4].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[5].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[6].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[7].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[8].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[9].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[10].month_year %></th>
-              <th class='gvCellStyle Title'><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[11].month_year %></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if @present1 %>
-              <tr class="gvRowStyleOdd">
-                <td class="gvTotalText"><%= Scenario.find(@scenario1).name %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[0].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[1].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[2].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[3].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[4].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[5].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[6].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[7].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[8].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[9].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[10].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result1][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[11].value.round(3) %></td>
-              </tr>
-            <% end %>
-            <% if @present2 %>
-              <tr class="gvRowStyleEven">
-                <td class="gvTotalText"><%= Scenario.find(@scenario2).name %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[0].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[1].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[2].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[3].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[4].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[5].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[6].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[7].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[8].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[9].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[10].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result2][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[11].value.round(3) %></td>
-              </tr>
-            <% end %>
-            <% if @present3 %>
-              <tr class="gvRowStyleOdd">
-                <td class="gvTotalText"><%= Scenario.find(@scenario3).name %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[0].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[1].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[2].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[3].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[4].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[5].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[6].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[7].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[8].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[9].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[10].value.round(3) %></td>
-                <td class="gvTotalText"><%= Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + params[:result3][:scenario_id] + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")[11].value.round(3) %></td>
-              </tr>
-            <% end %>
           </tbody>
         <% end %>
       </table>
