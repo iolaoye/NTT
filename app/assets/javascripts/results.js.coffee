@@ -120,8 +120,8 @@ $(document).ready ->
   $("#row200").click () ->
     turn_on_off(200)
   $("#row210").click () ->
-    turn_on_off(200)
+    turn_on_off(210)
   $("#row220").click () ->
-    turn_on_off(200)
+    turn_on_off(220)
   $("#row230").click () ->
-    turn_on_off(200)
+    turn_on_off(230)
