@@ -15,10 +15,6 @@ turn_on_off = (row) ->
             $("#row" + row1).toggle(true)
         else
             $("#row" + row1).toggle(false)
-        if ($("#stress_table").is(":hidden") && row == 70)
-            $("#stress_table").toggle(true)
-        else
-            $("#stress_table").toggle(false)
 
 show_crops = ->
    $("#td_crops").toggle(false)
@@ -121,3 +117,11 @@ $(document).ready ->
     turn_on_off(60)
   $("#row70").click () ->
     turn_on_off(70)
+  $("#row200").click () ->
+    turn_on_off(200)
+  $("#row210").click () ->
+    turn_on_off(200)
+  $("#row220").click () ->
+    turn_on_off(200)
+  $("#row230").click () ->
+    turn_on_off(200)
