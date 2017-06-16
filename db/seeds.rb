@@ -1,3 +1,3 @@
 # encoding: utf-8
 
-load("db/seeds/descriptions.rb")
+load("db/seeds/parameter_descriptions.rb")
