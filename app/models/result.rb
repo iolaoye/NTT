@@ -8,5 +8,5 @@ class Result < ActiveRecord::Base
 	  belongs_to :description
 	  belongs_to :crop
   #scopes
-	default_scope :order => "description_id ASC"
+	default_scope joins(:description).order("descriptions.order_id ASC")
 end

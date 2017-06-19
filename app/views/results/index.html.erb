@@ -279,13 +279,13 @@
 							<% end %>
 						  </tr>
 						<% else %>  <!-- end case when -->
-						  <tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<% if result.description_id > 70 && result.description_id < 90 %>
+						  <tr class="gvRowStyleEven" id = <%=row_id%>>
+							<% if result.description_id > 70 && result.description_id < 80 %>
 								<% if I18n.locale.eql?(:en) %>
-									<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-								<% else %>
+                  <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
+                <% else %>
 									<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-								<% end %>
+                <% end %>
 								<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", result.value.round(2)).to_s %></td>
 								<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
 								<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
