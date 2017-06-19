@@ -279,7 +279,7 @@
 							<% end %>
 						  </tr>
 						<% else %>  <!-- end case when -->
-						  <tr class="gvRowStyleEven" id = <%=row_id%>>
+						  <tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 							<% if result.description_id > 70 && result.description_id < 80 %>
 								<% if I18n.locale.eql?(:en) %>
                   <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
