@@ -18,7 +18,7 @@ class AddOrderIdToDescriptions < ActiveRecord::Migration
       	description.update_attributes!(:order_id => index)
       end
       if (description.id >= 80 && description.id <= 82)
-      	break
+      	next
       else
       	description.update_attributes!(:order_id => index)
       end 
