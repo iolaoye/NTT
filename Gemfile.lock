@@ -35,6 +35,7 @@ GEM
     autoprefixer-rails (5.2.1)
       execjs
       json
+    bcrypt-ruby (3.1.2)
     bootstrap-sass (3.3.3)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
@@ -166,6 +167,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  bcrypt-ruby
   bootstrap-sass
   breadcrumbs_on_rails
   cancan
@@ -189,4 +191,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.13.6
+   1.14.6
