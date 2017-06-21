@@ -1,0 +1,26 @@
+<br/>
+<div class="page-container">
+  <div class="container-form">
+    <h2><%= 'Forgot Password' %></h2>
+    <% if notice != nil %>
+        <div class="success_alert" style="width: auto">
+      	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      	  <%= notice %>
+    	  </div>
+    <% end %>
+    <% if flash[:error] != nil %>
+      <div id="error_explanation" style="width: auto">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          <%= flash[:error] %>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= form_for(:password_reset, url: password_resets_path) do |f| %>
+        <%= f.label :email, :style => "float: left" %>
+        <%= f.email_field :email, :class => "form_input" %>
+        <br/>
+        <%= f.submit t('result.submit'), :class => "btn btn-primary", :style => "width: 100%" %>
+      <% end %>
+    </div>
+  </div>
+</div>

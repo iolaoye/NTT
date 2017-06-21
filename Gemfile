@@ -39,7 +39,7 @@ gem 'jquery-turbolinks'
 # To use debugger
 gem 'debugger'
 
-# gem 'bcrypt-ruby'
+gem 'bcrypt-ruby', require: 'bcrypt'
 # rest API for NTT call
 gem "nokogiri"
 gem 'savon', '>= 2.0'
