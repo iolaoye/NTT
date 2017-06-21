@@ -41,7 +41,6 @@ NTTG3::Application.routes.draw do
   resources :welcomes
   resources :apex_soils
   resources :apex_layers
-  
   resources :users do
     resources :projects
   end
@@ -143,6 +142,8 @@ NTTG3::Application.routes.draw do
   resources :bmplists do
      resources :bmpsublists
   end
+
+  resources :password_resets, only: [:new, :create, :edit, :update]
 
   #define two name routes, login_path and logout_path
   get '/login' => "sessions#index", :as => "login"
