@@ -48,9 +48,10 @@ class SoilOperationsController < ApplicationController
     @soil_operation = SoilOperation.find(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
+	@scenario = Scenario.where(:field_id => params[:field_id]).first
 	add_breadcrumb t('menu.utility_file')
 	add_breadcrumb t('menu.operations'), controller: "soil_operations", action: "index"
-	add_breadcrumb t('general.editing') + " " + t('menu.oerations')
+	add_breadcrumb t('general.editing') + " " + t('menu.operations')
   end
 
   # POST /soil_operations
