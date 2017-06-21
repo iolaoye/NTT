@@ -15,14 +15,10 @@
       </div>
     <% end %>
     <div class="field">
-      <%= form_for(@user, url: password_resets_path(params[:id])) do |f| %>
+      <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
         <%= hidden_field_tag :email, @user.email %>
-        
-        <%= f.label :password, :style => "float: left" %>
-        <%= f.password_field :password, :class => "form_input" %>
-
-        <%= f.label :password_confirmation, t('users.confirmation') %>
-        <%= f.password_field :password_confirmation, :class => "form_input" %>
+        <%= f.password_field :password, placeholder: (t('sessions.index.password')), :class => "form_input" %>
+        <%= f.password_field :password_confirmation, placeholder: (t('users.confirmation')), :class => "form_input" %>
         <br/>
         <%= f.submit 'Update password', :class => "btn btn-primary", :style => "width: 100%" %>
       <% end %>
