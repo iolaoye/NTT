@@ -1,2 +1,27 @@
-<h1>PasswordResets#edit</h1>
-<p>Find me in app/views/password_resets/edit.html.erb</p>
+<br/>
+<div class="page-container">
+  <div class="container-form">
+    <h2><%= 'Reset Password' %></h2>
+    <% if notice != nil %>
+        <div class="success_alert" style="width: auto">
+      	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      	  <%= notice %>
+    	  </div>
+    <% end %>
+    <% if flash[:error] != nil %>
+      <div id="error_explanation" style="width: auto">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          <%= flash[:error] %>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
+        <%= hidden_field_tag :email, @user.email %>
+        <%= f.password_field :password, placeholder: (t('sessions.index.password')), :class => "form_input" %>
+        <%= f.password_field :password_confirmation, placeholder: (t('users.confirmation')), :class => "form_input" %>
+        <br/>
+        <%= f.submit 'Update password', :class => "btn btn-primary", :style => "width: 100%" %>
+      <% end %>
+    </div>
+  </div>
+</div>
