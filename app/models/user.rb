@@ -41,6 +41,11 @@ class User < ActiveRecord::Base
 		 BCrypt::Password.create(string, cost: cost)
 	 end
 
+	 # Returns true if password_reset sent more than 2 hours earlier
+	 def password_reset_expired?
+		 reset_sent_at < 2.hours.ago
+	 end
+
  #protected functions
    protected
      def encrypt_new_password
