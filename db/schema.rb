@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170614132559) do
+ActiveRecord::Schema.define(:version => 20170620151924) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -197,6 +197,11 @@ ActiveRecord::Schema.define(:version => 20170614132559) do
     t.integer  "number"
   end
 
+  create_table "controls_apex_controls", :id => false, :force => true do |t|
+    t.integer "control_id"
+    t.integer "apex_control_id"
+  end
+
   create_table "counties", :force => true do |t|
     t.string   "county_name"
     t.string   "county_code"
@@ -271,6 +276,7 @@ ActiveRecord::Schema.define(:version => 20170614132559) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "period"
+    t.integer  "order_id"
   end
 
   create_table "drainages", :force => true do |t|
@@ -298,6 +304,12 @@ ActiveRecord::Schema.define(:version => 20170614132559) do
     t.integer  "cropping_system_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "fertilizer_type", :force => true do |t|
+    t.string   "field_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "fertilizer_types", :force => true do |t|
@@ -339,6 +351,7 @@ ActiveRecord::Schema.define(:version => 20170614132559) do
   end
 
   create_table "grazing_parameters", :force => true do |t|
+    t.integer  "scenario_id"
     t.integer  "code"
     t.integer  "starting_julian_day"
     t.integer  "ending_julian_day"
@@ -758,6 +771,9 @@ ActiveRecord::Schema.define(:version => 20170614132559) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.boolean  "admin"
+    t.string   "reset_digest"
+    t.datetime "reset_sent_at"
+    t.string   "reset_token"
   end
 
   create_table "watershed_scenarios", :force => true do |t|
