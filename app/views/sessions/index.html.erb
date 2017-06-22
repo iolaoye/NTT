@@ -1,11 +1,10 @@
-﻿<!DOCTYPE html>
-<%= form_tag session_path do %>
-    <% if flash[:alert] %>
-        <div class="danger_alert">
-          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-          <%= flash[:alert] %>
-        </div>
-    <% end %>
+﻿<%= form_tag session_path do %>
+  <% if notice != nil %>
+    <div class="success_alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= notice %>
+    </div>
+  <% end %>
     <div class="page-container">
     <div class="container-form">
       <h2><%= t('submit.login') %></h2>
