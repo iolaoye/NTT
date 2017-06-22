@@ -1,6 +1,8 @@
 class AddOrderIdToDescriptions < ActiveRecord::Migration
   def change
     add_column :descriptions, :order_id, :integer
+<<<<<<< HEAD
+=======
     Description.all.each_with_index do |description, index|
       a = Description.where(id: 80).first #migration fails if desc_id 80+ DNE
       b = Description.where(id: 81).first
@@ -23,5 +25,6 @@ class AddOrderIdToDescriptions < ActiveRecord::Migration
       	description.update_attributes!(:order_id => index)
       end
     end # end description each
+>>>>>>> ca9959b3a81baf61ed83a141902501294f2866aa
   end
 end
