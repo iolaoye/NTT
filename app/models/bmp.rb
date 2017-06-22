@@ -15,7 +15,7 @@ class Bmp < ActiveRecord::Base
     validates :irrigation_efficiency, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2 || bmpsublist_id == 9"
     validates :irrigation_id, numericality: { greater_than: 0 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
     validates :maximum_single_application, numericality: { greater_than: 0,  less_than: 100000 }, if: "bmpsublist_id == 1 || bmpsublist_id == 2"
-    validates :safety_factor, numericality: { greater_than: 0,  less_than_or_equal_to: 100000 }, if: "irrigation_id == 7"
+    validates :safety_factor, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 100000 }, if: "irrigation_id == 7"
     validates :depth, numericality: { greater_than: 0 }, if: "bmpsublist_id == 3"
     validates :area, numericality: { greater_than: 0,  less_than_or_equal_to: 100000 }, if: "bmpsublist_id == 6 || bmpsublist_id == 7 || bmpsublist_id == 8 || bmpsublist_id == 12 || bmpsublist_id == 13 || bmpsublist_id == 23"
     validates :number_of_animals, numericality: { greater_than: 0 }, if: "bmpsublist_id == 10"
