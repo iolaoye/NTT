@@ -66,11 +66,9 @@ NTTG3::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5 
 # Configuration settings for ActionMailer (send reset password email)
   config.action_mailer.raise_delivery_errors = true
-  if ENV["APP_VERSION"] == "modified" then
-	config.action_mailer.default_url_options = { :host => 'ntt2.cbntt.org' }
-  else
-	config.action_mailer.default_url_options = { :host => 'ntt.cbntt.org' }
-  end
+  config.action_mailer.default_url_options = { :host => 'ntt2.cbntt.org' }
+  ####### TODO. THIS SHOULD BE CHANGE IN NTT PRODUCTION SERVER EVERYTIME IT IS PUSHED ######
+  #config.action_mailer.default_url_options = { :host => 'ntt.cbntt.org' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
