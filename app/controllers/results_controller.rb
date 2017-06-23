@@ -111,8 +111,8 @@ class ResultsController < ApplicationController
   	if @type == nil then
   		@type = t("general.view")
   	end
-	  @crop_results = []
-    @stress_ws_results = []
+	@crop_results = []
+	@stress_ws_results = []
     @stress_ns_results = []
     @stress_ps_results = []
     @stress_ts_results = []
@@ -128,10 +128,10 @@ class ResultsController < ApplicationController
 						if session[:simulation] == 'scenario'
 							@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id == 0 or crop_id is null")
 							@crop_results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
-              @crop_stress1_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
-              @crop_stress1_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
-              @crop_stress1_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
-              @crop_stress1_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
+							@crop_stress1_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
+							@crop_stress1_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
+							@crop_stress1_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
+							@crop_stress1_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
 						else
 							@results1 = Result.where(:watershed_id => @scenario1, :crop_id => 0)
 							@crop_results1 = Result.where(:watershed_id => @scenario1).where("crop_id > 0")
@@ -147,59 +147,50 @@ class ResultsController < ApplicationController
 							crop_result[6] = 0
 							@crop_results.push(crop_result)
 						end
-            # @crop_stress1_ws.each_with_index do |ws, index|
-            #   stress_result = []
-            #   stress_result[0] = @crop_stress1_ns[index].value
-            #   stress_result[1] = @crop_stress1_ps[index].value
-            #   stress_result[2] = @crop_stress1_ts[index].value
-            #   stress_result[3] = ws.value
-            #   stress_result[4] = ws.crop_id
-            #   @stress_results.push(stress_result)
-            # end
-            @crop_stress1_ws.each do |ws|
-              water_stress = []
-              water_stress[0] = ws.crop_id
-              water_stress[1] = ws.value
-              water_stress[2] = ws.ci_value
-              water_stress[3] = 0
-              water_stress[4] = 0
-              water_stress[5] = 0
-              water_stress[6] = 0
-              @stress_ws_results.push(water_stress)
-            end
-            @crop_stress1_ps.each do |ps|
-              p_stress = []
-              p_stress[0] = ps.crop_id
-              p_stress[1] = ps.value
-              p_stress[2] = ps.ci_value
-              p_stress[3] = 0
-              p_stress[4] = 0
-              p_stress[5] = 0
-              p_stress[6] = 0
-              @stress_ps_results.push(p_stress)
-            end
-            @crop_stress1_ns.each do |ns|
-              n_stress = []
-              n_stress[0] = ns.crop_id
-              n_stress[1] = ns.value
-              n_stress[2] = ns.ci_value
-              n_stress[3] = 0
-              n_stress[4] = 0
-              n_stress[5] = 0
-              n_stress[6] = 0
-              @stress_ns_results.push(n_stress)
-            end
-            @crop_stress1_ts.each do |ts|
-              temp_stress = []
-              temp_stress[0] = ts.crop_id
-              temp_stress[1] = ts.value
-              temp_stress[2] = ts.ci_value
-              temp_stress[3] = 0
-              temp_stress[4] = 0
-              temp_stress[5] = 0
-              temp_stress[6] = 0
-              @stress_ts_results.push(temp_stress)
-            end
+						@crop_stress1_ws.each do |ws|
+						  water_stress = []
+						  water_stress[0] = ws.crop_id
+						  water_stress[1] = ws.value
+						  water_stress[2] = ws.ci_value
+						  water_stress[3] = 0
+						  water_stress[4] = 0
+						  water_stress[5] = 0
+						  water_stress[6] = 0
+						  @stress_ws_results.push(water_stress)
+						end
+						@crop_stress1_ps.each do |ps|
+						  p_stress = []
+						  p_stress[0] = ps.crop_id
+						  p_stress[1] = ps.value
+						  p_stress[2] = ps.ci_value
+						  p_stress[3] = 0
+						  p_stress[4] = 0
+						  p_stress[5] = 0
+						  p_stress[6] = 0
+						  @stress_ps_results.push(p_stress)
+						end
+						@crop_stress1_ns.each do |ns|
+						  n_stress = []
+						  n_stress[0] = ns.crop_id
+						  n_stress[1] = ns.value
+						  n_stress[2] = ns.ci_value
+						  n_stress[3] = 0
+						  n_stress[4] = 0
+						  n_stress[5] = 0
+						  n_stress[6] = 0
+						  @stress_ns_results.push(n_stress)
+						end
+						@crop_stress1_ts.each do |ts|
+						  temp_stress = []
+						  temp_stress[0] = ts.crop_id
+						  temp_stress[1] = ts.value
+						  temp_stress[2] = ts.ci_value
+						  temp_stress[3] = 0
+						  temp_stress[4] = 0
+						  temp_stress[5] = 0
+						  temp_stress[6] = 0
+						  @stress_ts_results.push(temp_stress)
+						end
 						if @results1.count > 0
 							@present1 = true
 						else
@@ -215,10 +206,10 @@ class ResultsController < ApplicationController
 						if session[:simulation] == 'scenario'
 							@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id == 0 or crop_id is null")
 							@crop_results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
-              @crop_stress2_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
-              @crop_stress2_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
-              @crop_stress2_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
-              @crop_stress2_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
+							@crop_stress2_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
+							@crop_stress2_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
+							@crop_stress2_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
+							@crop_stress2_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
 						else
 							@results2 = Result.where(:watershed_id => @scenario2, :crop_id => 0)
 							@crop_results2 = Result.where(:watershed_id => @scenario2).where("crop_id > 0")
@@ -245,90 +236,90 @@ class ResultsController < ApplicationController
 								@crop_results.push(crop_result)
 							end
 						end
-            @crop_stress2_ws.each do |ws2|
-              @stress_ws_results.each do |ws|
-                if ws2.crop_id == ws[0]
-                  ws[3] = ws2.value
-                  ws[4] = ws2.ci_value
-                  found = true
-                  break
-                end
-              end
-              if found == false
-                water_stress = []
-                water_stress[0] = ws2.crop_id
-                water_stress[1] = 0
-                water_stress[2] = 0
-                water_stress[3] = ws2.value
-                water_stress[4] = ws2.ci_value
-                water_stress[5] = 0
-                water_stress[6] = 0
-                @stress_ws_results.push(water_stress)
-              end
-            end
-            @crop_stress2_ps.each do |ps2|
-              @stress_ps_results.each do |ps|
-                if ps2.crop_id == ps[0]
-                  ps[3] = ps2.value
-                  ps[4] = ps2.ci_value
-                  found = true
-                  break
-                end
-              end
-              if found == false
-                p_stress = []
-                p_stress[0] = ps2.crop_id
-                p_stress[1] = 0
-                p_stress[2] = 0
-                p_stress[3] = ps2.value
-                p_stress[4] = ps2.ci_value
-                p_stress[5] = 0
-                p_stress[6] = 0
-                @stress_ps_results.push(p_stress)
-              end
-            end
-            @crop_stress2_ns.each do |ns2|
-              @stress_ns_results.each do |ns|
-                if ns2.crop_id == ns[0]
-                  ns[3] = ns2.value
-                  ns[4] = ns2.ci_value
-                  found = true
-                  break
-                end
-              end
-              if found == false
-                n_stress = []
-                n_stress[0] = ns2.crop_id
-                n_stress[1] = 0
-                n_stress[2] = 0
-                n_stress[3] = ns2.value
-                n_stress[4] = ns2.ci_value
-                n_stress[5] = 0
-                n_stress[6] = 0
-                @stress_ns_results.push(n_stress)
-              end
-            end
-            @crop_stress2_ts.each do |ts2|
-              @stress_ts_results.each do |ts|
-                if ts2.crop_id == ts[0]
-                  ts[3] = ts2.value
-                  ts[4] = ts2.ci_value
-                  found = true
-                  break
-                end
-              end
-              if found == false
-                temp_stress = []
-                temp_stress[0] = ts2.crop_id
-                temp_stress[1] = 0
-                temp_stress[2] = 0
-                temp_stress[3] = ts2.value
-                temp_stress[4] = ts2.ci_value
-                temp_stress[5] = 0
-                temp_stress[6] = 0
-                @stress_ts_results.push(temp_stress)
-              end
-            end
+						@crop_stress2_ws.each do |ws2|
+						  @stress_ws_results.each do |ws|
+							if ws2.crop_id == ws[0]
+							  ws[3] = ws2.value
+							  ws[4] = ws2.ci_value
+							  found = true
+							  break
+							end
+						  end
+						  if found == false
+							water_stress = []
+							water_stress[0] = ws2.crop_id
+							water_stress[1] = 0
+							water_stress[2] = 0
+							water_stress[3] = ws2.value
+							water_stress[4] = ws2.ci_value
+							water_stress[5] = 0
+							water_stress[6] = 0
+							@stress_ws_results.push(water_stress)
+						  end
+						end
+						@crop_stress2_ps.each do |ps2|
+						  @stress_ps_results.each do |ps|
+							if ps2.crop_id == ps[0]
+							  ps[3] = ps2.value
+							  ps[4] = ps2.ci_value
+							  found = true
+							  break
+							end
+						  end
+						  if found == false
+							p_stress = []
+							p_stress[0] = ps2.crop_id
+							p_stress[1] = 0
+							p_stress[2] = 0
+							p_stress[3] = ps2.value
+							p_stress[4] = ps2.ci_value
+							p_stress[5] = 0
+							p_stress[6] = 0
+							@stress_ps_results.push(p_stress)
+						  end
+						end
+						@crop_stress2_ns.each do |ns2|
+						  @stress_ns_results.each do |ns|
+							if ns2.crop_id == ns[0]
+							  ns[3] = ns2.value
+							  ns[4] = ns2.ci_value
+							  found = true
+							  break
+							end
+						  end
+						  if found == false
+							n_stress = []
+							n_stress[0] = ns2.crop_id
+							n_stress[1] = 0
+							n_stress[2] = 0
+							n_stress[3] = ns2.value
+							n_stress[4] = ns2.ci_value
+							n_stress[5] = 0
+							n_stress[6] = 0
+							@stress_ns_results.push(n_stress)
+						  end
+						end
+						@crop_stress2_ts.each do |ts2|
+						  @stress_ts_results.each do |ts|
+							if ts2.crop_id == ts[0]
+							  ts[3] = ts2.value
+							  ts[4] = ts2.ci_value
+							  found = true
+							  break
+							end
+						  end
+						  if found == false
+							temp_stress = []
+							temp_stress[0] = ts2.crop_id
+							temp_stress[1] = 0
+							temp_stress[2] = 0
+							temp_stress[3] = ts2.value
+							temp_stress[4] = ts2.ci_value
+							temp_stress[5] = 0
+							temp_stress[6] = 0
+							@stress_ts_results.push(temp_stress)
+						  end
+						end
 						if @results2.count > 0
 							@present2 = true
 						else
@@ -344,10 +335,10 @@ class ResultsController < ApplicationController
 							@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id == 0 or crop_id is null")
 							#@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id > 0")
 							@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
-					    @crop_stress3_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
-					    @crop_stress3_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
-					    @crop_stress3_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
-					    @crop_stress3_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
+							@crop_stress3_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
+							@crop_stress3_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
+							@crop_stress3_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
+							@crop_stress3_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
 						else
 							@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0)
 							@crop_results3 = Result.where(:watershed_id => @scenario3).where("crop_id > 0")
@@ -375,90 +366,90 @@ class ResultsController < ApplicationController
 								@crop_results.push(crop_result)
 							end
 						end
-            @crop_stress3_ws.each do |ws3|
-              @stress_ws_results.each do |ws|
-                if ws3.crop_id == ws[0]
-                  ws[5] = ws3.value
-                  ws[6] = ws3.ci_value
-                  found = true
-                  break
-                end
-              end
-              if found == false
-                water_stress = []
-                water_stress[0] = ws3.crop_id
-                water_stress[1] = 0
-                water_stress[2] = 0
-                water_stress[3] = 0
-                water_stress[4] = 0
-                water_stress[5] = ws3.value
-                water_stress[6] = ws3.ci_value
-                @stress_ws_results.push(water_stress)
-              end
-            end
-            @crop_stress3_ps.each do |ps3|
-              @stress_ps_results.each do |ps|
-                if ps3.crop_id == ps[0]
-                  ps[5] = ps3.value
-                  ps[6] = ps3.ci_value
-                  found = true
-                  break
-                end
-              end
-              if found == false
-                p_stress = []
-                p_stress[0] = ps3.crop_id
-                p_stress[1] = 0
-                p_stress[2] = 0
-                p_stress[3] = 0
-                p_stress[4] = 0
-                p_stress[5] = ps3.value
-                p_stress[6] = ps3.ci_value
-                @stress_ps_results.push(p_stress)
-              end
-            end
-            @crop_stress3_ns.each do |ns3|
-              @stress_ns_results.each do |ns|
-                if ns3.crop_id == ns[0]
-                  ns[5] = ns3.value
-                  ns[6] = ns3.ci_value
-                  found = true
-                  break
-                end
-              end
-              if found == false
-                n_stress = []
-                n_stress[0] = ns3.crop_id
-                n_stress[1] = 0
-                n_stress[2] = 0
-                n_stress[3] = 0
-                n_stress[4] = 0
-                n_stress[5] = ns3.value
-                n_stress[6] = ns3.ci_value
-                @stress_ns_results.push(n_stress)
-              end
-            end
-            @crop_stress3_ts.each do |ts3|
-              @stress_ts_results.each do |ts|
-                if ts3.crop_id == ts[0]
-                  ts[5] = ts3.value
-                  ts[6] = ts3.ci_value
-                  found = true
-                  break
-                end
-              end
-              if found == false
-                temp_stress = []
-                temp_stress[0] = ts3.crop_id
-                temp_stress[1] = 0
-                temp_stress[2] = 0
-                temp_stress[3] = 0
-                temp_stress[4] = 0
-                temp_stress[5] = ts3.value
-                temp_stress[6] = ts3.ci_value
-                @stress_ts_results.push(temp_stress)
-              end
-            end
+						@crop_stress3_ws.each do |ws3|
+						  @stress_ws_results.each do |ws|
+							if ws3.crop_id == ws[0]
+							  ws[5] = ws3.value
+							  ws[6] = ws3.ci_value
+							  found = true
+							  break
+							end
+						  end
+						  if found == false
+							water_stress = []
+							water_stress[0] = ws3.crop_id
+							water_stress[1] = 0
+							water_stress[2] = 0
+							water_stress[3] = 0
+							water_stress[4] = 0
+							water_stress[5] = ws3.value
+							water_stress[6] = ws3.ci_value
+							@stress_ws_results.push(water_stress)
+						  end
+						end
+						@crop_stress3_ps.each do |ps3|
+						  @stress_ps_results.each do |ps|
+							if ps3.crop_id == ps[0]
+							  ps[5] = ps3.value
+							  ps[6] = ps3.ci_value
+							  found = true
+							  break
+							end
+						  end
+						  if found == false
+							p_stress = []
+							p_stress[0] = ps3.crop_id
+							p_stress[1] = 0
+							p_stress[2] = 0
+							p_stress[3] = 0
+							p_stress[4] = 0
+							p_stress[5] = ps3.value
+							p_stress[6] = ps3.ci_value
+							@stress_ps_results.push(p_stress)
+						  end
+						end
+						@crop_stress3_ns.each do |ns3|
+						  @stress_ns_results.each do |ns|
+							if ns3.crop_id == ns[0]
+							  ns[5] = ns3.value
+							  ns[6] = ns3.ci_value
+							  found = true
+							  break
+							end
+						  end
+						  if found == false
+							n_stress = []
+							n_stress[0] = ns3.crop_id
+							n_stress[1] = 0
+							n_stress[2] = 0
+							n_stress[3] = 0
+							n_stress[4] = 0
+							n_stress[5] = ns3.value
+							n_stress[6] = ns3.ci_value
+							@stress_ns_results.push(n_stress)
+						  end
+						end
+						@crop_stress3_ts.each do |ts3|
+						  @stress_ts_results.each do |ts|
+							if ts3.crop_id == ts[0]
+							  ts[5] = ts3.value
+							  ts[6] = ts3.ci_value
+							  found = true
+							  break
+							end
+						  end
+						  if found == false
+							temp_stress = []
+							temp_stress[0] = ts3.crop_id
+							temp_stress[1] = 0
+							temp_stress[2] = 0
+							temp_stress[3] = 0
+							temp_stress[4] = 0
+							temp_stress[5] = ts3.value
+							temp_stress[6] = ts3.ci_value
+							@stress_ts_results.push(temp_stress)
+						  end
+						end
 						if @results3.count > 0
 							@present3 = true
 						else

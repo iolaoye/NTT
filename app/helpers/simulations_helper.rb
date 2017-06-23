@@ -1760,7 +1760,8 @@ module SimulationsHelper
     add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
     prkn = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:prkn).mean] }
     prkn_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:prkn).confidence_interval] }
-    add_summary_to_results_table(prkn, 81, prkn_ci)
+    debugger
+	add_summary_to_results_table(prkn, 81, prkn_ci)
     n2o = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:n2o).mean] }
     n2o_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:n2o).confidence_interval] }
     add_summary_to_results_table(n2o, 82, n2o_ci)
@@ -1893,8 +1894,8 @@ module SimulationsHelper
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
 			  when 62 #calculate total sediment
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-        when 81, 82
-        add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 80"), 80, soil_id)
+			  when 82 # calculate total other N
+				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 80"), 80, soil_id)
 			end #end case when
 		  else
 			case description_id #Total area for summary report is beeing calculated
@@ -1910,9 +1911,9 @@ module SimulationsHelper
 				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
 			  when 62 #calculate total sediment
 				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-			  when 81, 82
-        add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 80"), 80, soil_id)
-      end #end case when
+			  when 82  # calculate total other N
+				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 80"), 80, soil_id)
+			end #end case when
 		  end # end if simulation == scenario
 	  end  # end if <= @soils
     end #end for i

@@ -25,6 +25,9 @@ CropSchedule.create!({:id => 7, :name =>'Field Peas', :state_id => 0, :class_id 
 CropSchedule.create!({:id => 8, :name =>'Fallow', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 9, :name =>'Winter Wheat', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 10, :name =>'Grain Sorghum', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 11, :name =>'High Tillage', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 12, :name =>'Middle Tillage', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 13, :name =>'Low Tillage', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
 
 Schedule.delete_all
 Schedule.create!({:id => 1, :event_order => 1, :month => 4, :day => 15, :year => 1, :activity_id => 2, :apex_operation => 580, :apex_crop => 2, :apex_fertilizer => 1, :apex_opv1 => 180, :apex_opv2 => 0, :crop_schedule_id => 1}, :without_protection => true)
