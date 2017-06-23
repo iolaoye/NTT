@@ -1,6 +1,6 @@
 ﻿CropSchedule.delete_all
-CropSchedule.create!({:id => 1, :name =>'Corn', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
-CropSchedule.create!({:id => 2, :name =>'Soybean', :state_id => 0, :class_id => 0, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 1, :name =>'Corn', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 2, :name =>'Soybean', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 3, :name =>'Barley Cover Crop', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 4, :name =>'Winter Wheat Cover Crop', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 5, :name =>'Argentine Canola', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
@@ -9,6 +9,6 @@ CropSchedule.create!({:id => 7, :name =>'Field Peas', :state_id => 0, :class_id 
 CropSchedule.create!({:id => 8, :name =>'Fallow', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 9, :name =>'Winter Wheat', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 10, :name =>'Grain Sorghum', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
-CropSchedule.create!({:id => 11, :name =>'High Tillage', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
-CropSchedule.create!({:id => 12, :name =>'Middle Tillage', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
-CropSchedule.create!({:id => 13, :name =>'Low Tillage', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 11, :name =>'Intensive (High)', :state_id => 0, :class_id => 3, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 12, :name =>'Tillage Middle', :state_id => 0, :class_id => 3, :status => 0}, :without_protection => true)
+CropSchedule.create!({:id => 13, :name =>'Reduced (Low)', :state_id => 0, :class_id => 3, :status => 1}, :without_protection => true)

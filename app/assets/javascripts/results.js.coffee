@@ -117,6 +117,8 @@ $(document).ready ->
     turn_on_off(60)
   $("#row70").click () ->
     turn_on_off(70)
+  $("#row90").click () ->
+    turn_on_off(90)
   $("#row200").click () ->
     turn_on_off(200)
   $("#row210").click () ->

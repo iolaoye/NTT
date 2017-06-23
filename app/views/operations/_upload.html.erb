@@ -1,19 +1,19 @@
 
 <form id="myForm">
     <h2><%= t('operation.upload') + " " + t('operation.crop') + " " + t('operation.schedule') %></h2>
-        <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('helpers.select.prompt'), :required => true, :selected => @cropping_system_id}, :required => true %>
-        <%= label :year, t('pdf.year'), :id => "year_label" %>
-        <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>
-        <% if @operations.first != nil %>&nbsp&nbsp&nbsp
-          <%= label "replace", t("operation.replace") %>
-          <%= check_box_tag :replace, 'replace', false %>
-        <% end %>
-        <%= hidden_field(:language, :language, :value => I18n.locale) %>
-        <div class="actions">
-          <span style="display: inline-block">
+    <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('operation.crop') + " " + t('operation.schedule')} %>
+    <%= collection_select :tillage, :id, @tillages, :id, :name, {:prompt => "No " + t('models.tillage'), :required => true} %>
+    <%= label :year, t('pdf.year'), :id => "year_label" %>
+    <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>
+    <% if @operations.first != nil %>&nbsp&nbsp&nbsp
+        <%= label "replace", t("operation.replace") %>
+        <%= check_box_tag :replace, 'replace', false %>
+    <% end %>
+    <%= hidden_field(:language, :language, :value => I18n.locale) %>
+    <div class="actions">
+        <span style="display: inline-block">
             <%= button_to t('operation.upload'), {:name => "add_more", :id => "operation_upload"}, :class => "btn btn-primary", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
-          </span>
-          <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
-
+        </span>
+        <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
     </div>
 </form>

@@ -611,7 +611,11 @@ module ScenariosHelper
         soil_operation.type_id = operation.type_id
     end
     soil_operation.tractor_id = 0
-    soil_operation.apex_crop = Crop.find(operation.crop_id).number
+	if operation.crop_id == 0 then
+		soil_operation.apex_crop = 0
+	else
+		soil_operation.apex_crop = Crop.find(operation.crop_id).number
+	end
     soil_operation.opv1 = set_opval1(operation)
     soil_operation.opv2 = set_opval2(soil_operation.soil_id, operation)
     soil_operation.opv3 = 0
