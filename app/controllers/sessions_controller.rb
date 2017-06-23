@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
 #destroy session on login out
   def destroy
     reset_session # reset all of the values for the current session
-    redirect_to login_path, :notice => "You successfully logged out" # redirect
+    redirect_to login_path, :notice => t('general.log_out') # redirect
     session[:user_id] = ""
     session[:status] = "" # store user id in session
   end
