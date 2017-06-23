@@ -1602,7 +1602,6 @@ module SimulationsHelper
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results(apex_start_year, msg)
-        debugger #this line is never reached
         msg = load_crop_results(apex_start_year)
       rescue => e
         msg = "Failed, Error: " + e.inspect
@@ -2073,7 +2072,6 @@ module SimulationsHelper
       j+=1
     end #end data.each
     crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean, v.map(&:ns).mean, v.map(&:ts).mean, v.map(&:ps).mean, v.map(&:ws).mean] }
-	debugger
     average_crops_result(crops_data_by_crop_year, 70) #crop results
     return "OK"
   end #end method
