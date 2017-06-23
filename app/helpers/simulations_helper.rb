@@ -1602,6 +1602,7 @@ module SimulationsHelper
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results(apex_start_year, msg)
+        debugger #this line is never reached
         msg = load_crop_results(apex_start_year)
       rescue => e
         msg = "Failed, Error: " + e.inspect
@@ -1704,6 +1705,7 @@ module SimulationsHelper
       end   # end if i > 3
     end   #end data.each_line
     msg = average_totals(results_data) # average totals
+    debugger #method ends with line above
     msg = load_monthly_values(apex_start_year)
     #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
     return update_results_table_with_fencing
@@ -1760,11 +1762,15 @@ module SimulationsHelper
     add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
     prkn = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:prkn).mean] }
     prkn_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:prkn).confidence_interval] }
+<<<<<<< HEAD
     debugger
 	add_summary_to_results_table(prkn, 81, prkn_ci)
+=======
+    add_summary_to_results_table(prkn, 81, prkn_ci) #error that causes code not to continue?
+>>>>>>> 093d9229f9b30437292823b815e3e2aeb79548af
     n2o = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:n2o).mean] }
     n2o_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:n2o).confidence_interval] }
-    add_summary_to_results_table(n2o, 82, n2o_ci)
+    add_summary_to_results_table(n2o, 82, n2o_ci) #error that causes code not to continue?
     return "OK"
   end
 
@@ -1875,6 +1881,7 @@ module SimulationsHelper
     #total Flow = 40, surface runoff = 41, subsurface runoff = 42, tile drain flow = 43
     #other water info = 50, irrigation = 51, deep percolation = 52
     #total sediment = 60, sediment = 61, manure erosion = 62
+    #total other N = 80, leaching = 81, n20 = 82
     for i in 0..values.count-1
 	# todo. this is not taken the buffer subareas such as FS, WL, etc.
 	  if values[i][0] <= @soils.count then
@@ -1917,6 +1924,10 @@ module SimulationsHelper
 		  end # end if simulation == scenario
 	  end  # end if <= @soils
     end #end for i
+    #Debug: Method successfully returns "ok" with 81, however 82 never reaches this line - instead ending simulation
+    if description_id == 81
+      debugger
+    end
     return "OK"
   end
 
