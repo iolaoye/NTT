@@ -1602,7 +1602,6 @@ module SimulationsHelper
         apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results(apex_start_year, msg)
-        debugger #this line is never reached
         msg = load_crop_results(apex_start_year)
       rescue => e
         msg = "Failed, Error: " + e.inspect
@@ -1688,8 +1687,8 @@ module SimulationsHelper
             add_value_to_chart_table(one_result.sed, 61, 0, year,0)
             add_value_to_chart_table(one_result.ymnu, 62, 0, year,0)
             add_value_to_chart_table(one_result.sed + one_result.ymnu, 60, 0, year,0)
-            add_value_to_chart_table(one_result.prkn, 81, 0, year,0)
-            add_value_to_chart_table(one_result.n2o, 82, 0, year,0)
+            add_value_to_chart_table(one_result.prkn, 91, 0, year,0)
+            add_value_to_chart_table(one_result.n2o, 92, 0, year,0)
             add_value_to_chart_table(one_result.pcp, 100, 0, year,0)
           end   # end initial_chart
         else
@@ -1705,7 +1704,6 @@ module SimulationsHelper
       end   # end if i > 3
     end   #end data.each_line
     msg = average_totals(results_data) # average totals
-    debugger #method ends with line above
     msg = load_monthly_values(apex_start_year)
     #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
     return update_results_table_with_fencing
@@ -1762,10 +1760,10 @@ module SimulationsHelper
     add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
     prkn = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:prkn).mean] }
     prkn_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:prkn).confidence_interval] }
-    add_summary_to_results_table(prkn, 81, prkn_ci) #error that causes code not to continue?
+    add_summary_to_results_table(prkn, 91, prkn_ci) #error that causes code not to continue?
     n2o = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:n2o).mean] }
     n2o_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:n2o).confidence_interval] }
-    add_summary_to_results_table(n2o, 82, n2o_ci) #error that causes code not to continue?
+    add_summary_to_results_table(n2o, 92, n2o_ci) #error that causes code not to continue?
     return "OK"
   end
 
@@ -1876,7 +1874,7 @@ module SimulationsHelper
     #total Flow = 40, surface runoff = 41, subsurface runoff = 42, tile drain flow = 43
     #other water info = 50, irrigation = 51, deep percolation = 52
     #total sediment = 60, sediment = 61, manure erosion = 62
-    #total other N = 80, leaching = 81, n20 = 82
+    #total other N = 90, leaching = 91, n20 = 92
     for i in 0..values.count-1
 	# todo. this is not taken the buffer subareas such as FS, WL, etc.
 	  if values[i][0] <= @soils.count then
@@ -1896,8 +1894,8 @@ module SimulationsHelper
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
 			  when 62 #calculate total sediment
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-        when 81, 82 #calculate total other N
-        add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 80"), 80, soil_id)
+			  when 92 # calculate total other N
+				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 90"), 90, soil_id)
 			end #end case when
 		  else
 			case description_id #Total area for summary report is beeing calculated
@@ -1913,16 +1911,12 @@ module SimulationsHelper
 				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
 			  when 62 #calculate total sediment
 				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-			  when 81, 82 #calculate total other N
-        add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 80"), 80, soil_id)
-      end #end case when
+			  when 91  # calculate total other N
+				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 90"), 90, soil_id)
+			end #end case when
 		  end # end if simulation == scenario
 	  end  # end if <= @soils
     end #end for i
-    #Debug: Method successfully returns "ok" with 81, however 82 never reaches this line - instead ending simulation
-    if description_id == 81
-      debugger
-    end
     return "OK"
   end
 
@@ -2073,21 +2067,14 @@ module SimulationsHelper
         one_crop.ps = tempa[83, 9].to_f
         one_crop.ts = tempa[93, 9].to_f
         one_crop.as1 = tempa[103, 9].to_f
-
         crops_data.push(one_crop)
       end # end if j>=10
       j+=1
     end #end data.each
     crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean, v.map(&:ns).mean, v.map(&:ts).mean, v.map(&:ps).mean, v.map(&:ws).mean] }
     average_crops_result(crops_data_by_crop_year, 70) #crop results
-    average_crops_result(crops_data_by_crop_year, 200) #n stress results
-    average_crops_result(crops_data_by_crop_year, 210) #temperature stress results
-    average_crops_result(crops_data_by_crop_year, 220) #p stress results
-    average_crops_result(crops_data_by_crop_year, 230) #water stress results
     return "OK"
-  end
-
-  #end method
+  end #end method
 
   def average_crops_result(items, desc_id)
     yield_by_name = Array.new
@@ -2130,16 +2117,12 @@ module SimulationsHelper
       crop["yield"] = (crop["yield"] * crop["conversion"]) / crop["total"]
       #todo check why the ci is crashing with watershed simulations
       if session[:simulation].eql?('scenario')
-        if (crop["description_id"] > 70 && crop["description_id"] < 81)
+        if (crop["description_id"] > 70 && crop["description_id"] < 80)
           add_summary(crop["yield"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
-        elsif (crop["description_id"] > 200 && crop["description_id"] < 211)
-          add_summary(crop["ns"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
-        elsif (crop["description_id"] > 210 && crop["description_id"] < 221)
-          add_summary(crop["ps"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
-        elsif (crop["description_id"] > 220 && crop["description_id"] < 231)
-          add_summary(crop["ts"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
-        elsif (crop["description_id"] > 230 && crop["description_id"] < 241)
-          add_summary(crop["ws"], crop["description_id"], 0, ci.confidence_interval, crop["crop_id"])
+          add_summary(crop["ns"], crop["description_id"]+130, 0, ci.confidence_interval, crop["crop_id"])
+          add_summary(crop["ps"], crop["description_id"]+140, 0, ci.confidence_interval, crop["crop_id"])
+          add_summary(crop["ts"], crop["description_id"]+150, 0, ci.confidence_interval, crop["crop_id"])
+          add_summary(crop["ws"], crop["description_id"]+160, 0, ci.confidence_interval, crop["crop_id"])
         end
       else
         #0 used for ci.confidence_interval because it is crashing with watersheds.
@@ -2147,6 +2130,10 @@ module SimulationsHelper
       end
     end
     add_summary(0, 70, 0, 0, 0) # add total for crops. Just in case is needed for some reason
+    add_summary(0, 200, 0, 0, 0) # add total for stress n.
+    add_summary(0, 210, 0, 0, 0) # add total for stress p.
+    add_summary(0, 220, 0, 0, 0) # add total for stress t.
+    add_summary(0, 230, 0, 0, 0) # add total for stress w.
   end
 
   def create_hash_by_name(item, crop_count)
