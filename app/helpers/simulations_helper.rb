@@ -1031,7 +1031,11 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.firg)
     @subarea_file.push(sLine + "\n")
     #/line 11
-    sLine = sprintf("%4d", _subarea_info.ny1)
+	if @grazingb == true and _subarea_info.xtp1 == 0 then
+		sLine = sprintf("%4d", 1)
+	else
+		sLine = sprintf("%4d", _subarea_info.ny1)
+	end
     sLine += sprintf("%4d", _subarea_info.ny2)
     sLine += sprintf("%4d", _subarea_info.ny3)
     sLine += sprintf("%4d", _subarea_info.ny4)
