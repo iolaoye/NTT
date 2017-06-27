@@ -3,7 +3,7 @@ CropSchedule.create!({:id => 1, :name =>'Corn', :state_id => 0, :class_id => 2, 
 CropSchedule.create!({:id => 2, :name =>'Soybean', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 3, :name =>'Barley Cover Crop', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 4, :name =>'Winter Wheat Cover Crop', :state_id => 0, :class_id => 2, :status => 1}, :without_protection => true)
-CropSchedule.create!({:id => 5, :name =>'Argentine Canola', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
+CropSchedule.create!({:id => 5, :name =>'Canola-Argentine', :state_id => 0, :class_id => 1, :status => 1}, :without_protection => true)
 CropSchedule.create!({:id => 6, :name =>'Canadian Barley', :state_id => 0, :class_id => 1, :status => 0}, :without_protection => true)
 CropSchedule.create!({:id => 7, :name =>'Field Peas', :state_id => 0, :class_id => 1, :status => 0}, :without_protection => true)
 CropSchedule.create!({:id => 8, :name =>'Fallow', :state_id => 0, :class_id => 1, :status => 0}, :without_protection => true)
