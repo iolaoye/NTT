@@ -1,0 +1,64 @@
+<% @results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id == 0 or crop_id is null") %>
+<% @results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id == 0 or crop_id is null") %>
+<% @results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id == 0 or crop_id is null") %>
+<% debugger %>
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Results">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String"><%= t('result.description') %></Data></Cell>
+        <% if session[:simulation] == 'scenario' %>
+  			  <% if session[:scenario1].empty? %>
+            <Cell><Data ss:Type="String"><%= t('result.scenario1') %></Data></Cell>
+          <% else %>
+            <Cell><Data ss:Type="String"><%= Scenario.find(@results1[0].scenario_id).name %></Data></Cell>
+          <% end %>
+				  <Cell><Data ss:Type="String"><%= "±" %></Data></Cell>
+				  <% if session[:scenario2].empty? %>
+            <Cell><Data ss:Type="String"><%= t('result.scenario2') %></Data></Cell>
+          <% else %>
+            <Cell><Data ss:Type="String"><%= Scenario.find(@results2[0].scenario_id).name %></Data></Cell>
+          <% end %>
+        <% else %>
+          <% if session[:scenario1].empty? %>
+            <Cell><Data ss:Type="String"><%= t('result.scenario1') %></Data></Cell>
+          <% else %>
+            <Cell><Data ss:Type="String"><%=Watershed.find(@results1[0].watershed_id).name%></Data></Cell>
+          <% end %>
+          <Cell><Data ss:Type="String"><%= "±" %></Data></Cell>
+          <% if session[:scenario2].empty? %>
+            <Cell><Data ss:Type="String"><%= t('result.scenario2') %></Data></Cell>
+          <% else %>
+            <Cell><Data ss:Type="String"><%=Watershed.find(@results2[0].watershed_id).name%></Data></Cell>
+          <% end %>
+        <% end %>
+        <Cell><Data ss:Type="String"><%= "±" %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t('result.difference') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t('result.reduction') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t('result.total_area') %></Data></Cell>
+        <% if session[:simulation] == 'scenario' %>
+          <% if session[:scenario3].empty? %>
+            <Cell><Data ss:Type="String"><%= t('result.scenario3') %></Data></Cell>
+          <% else %>
+            <Cell><Data ss:Type="String"><%=Scenario.find(@results3[0].scenario_id).name%></Data></Cell>
+          <% end %>
+        <% else %>
+          <% if session[:scenario3].empty? %>
+            <Cell><Data ss:Type="String"><%= t('result.scenario3') %></Data></Cell>
+          <% else %>
+            <Cell><Data ss:Type="String"><%=Watershed.find(@results3[0].watershed_id).name%></Data></Cell>
+          <% end %>
+        <% end %>
+        <Cell><Data ss:Type="String"><%= "±" %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t('result.difference') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t('result.reduction') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t('result.total_area') %></Data></Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>

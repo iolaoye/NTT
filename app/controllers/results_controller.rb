@@ -570,14 +570,11 @@ class ResultsController < ApplicationController
       #end # end respond to do
     end # if format is pdf
 
-    if params[:format] == "csv" then
-      #results to excel catch with debugger for now (testing WIP)
-      #respond_to do |format|
-      #  format.html
-      #  format.xls { send_data @products.to_csv(col_sep: "\t") }
-      #end
-    end # if format is excel
-
+    respond_to do |format|
+      format.html
+      format.xls { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xls\"" }
+      format.csv { send_data @crop_results.to_csv, filename: "report-#{Date.today}.csv"}
+    end
   end  # end Method Index
 
   ###############################  SHOW  ###################################

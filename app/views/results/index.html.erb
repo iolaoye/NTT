@@ -46,10 +46,8 @@
 				<% if @results1 != nil %>
 					<%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
 					<a href="javascript:AlertIt();" id="pdf_no_click" class="no_click" class="btn btn-primary"><div class="btn btn-primary"><% t('result.download_pdf') %></div></a>
-          <!-- Download CSV/Excel button
-          <%= link_to t('result.download_csv'), { :action => "index", :format => :csv }, :id => "csv_download", name: "button", :class => "btn btn-primary" %>
-          <a href="javascript:AlertIt();" id="csv_no_click" class="no_click" class="btn btn-primary"><div class="btn btn-primary"><% t('result.download_csv') %></div></a>
-          -->
+          <!-- Download CSV/Excel button -->
+          <!--<%= link_to t('result.download_excel'), { :action => "index", :format => :xls }, :id => "excel_download", name: "button", :class => "btn btn-primary" %>-->
 				<% end %>
 			</td>
 			</tr>
