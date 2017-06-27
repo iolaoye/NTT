@@ -540,6 +540,7 @@ en:
     select_scenario: Select Scenario
     load_scenario: Load Scenario
     last_simulation: Simulation date
+    simulation_success: scenarios simulated successfully in
   location:
     new_location: New Location
     edit: Editing Location
