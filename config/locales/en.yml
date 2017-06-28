@@ -233,7 +233,7 @@ en:
     people: Person
     project: Project
     result: Result
-    scenario: Scenario
+    scenario: scenario
     session: Session
     site: Site
     soil_operation: Soil operation
@@ -244,7 +244,7 @@ en:
     tillage: Tillage
     user: User
     watershed_scenario: Watershed scenario
-    watershed: Watershed
+    watershed: watershed
     way: Way
     weather: Weather
     welcome: Welcome
@@ -619,7 +619,7 @@ en:
     crop: Crop
     water_stress_factor: Water stress factor
     irrigation_efficiency: Irrigation efficiency
-    area_control: Fraction of area controled by pond
+    area_control: Percentage of field area controled by pond
     maximum_single_application: Maximum single application
     safety_factor: Safety factor
     depth: Depth
@@ -657,7 +657,7 @@ en:
     autofertigation: Autofertigation
     manure_control: Manure Control
     pad: Pad
-    additional_land: Click if this is an additional land
+    additional_land: Is the buffer area included in your AOI?
   months:
     january: January
     february: February
@@ -701,7 +701,7 @@ en:
     watershed_scenario_field: Watershed Field
     watershed_scenario: Watershed Scenario
     new_watershed: New Watershed Scenario
-    watershed_scenario_title: Listing Watershed Scenarios
+    watershed_scenario_title: List of fields in 
     add_to: Add to
   submit:
     create: Create
@@ -918,7 +918,7 @@ en:
     hours: Hours
     dry_manure: Dry manure
     streambank_stabilization: Streambank Stabilization
-    riparian_forest: Riparian Forest Buffer
+    riparian_forest: Riparian Buffer
     grass_field_portion: Grass field portion
     slope_ratio: Slope ratio
     filter_strip: Filter Strip
@@ -1082,6 +1082,7 @@ en:
     fields: To select a field, click on the field name
     watersheds: "Select management scenario from each field and add to %{watershed}. Repeat this proccess to complete each %{watershed} option"
     scenarios: To edit a scenario click on the scenario name, to simulate scenarios click on the check box
+    watershed_scenarios: Add fields in the order they are going to be routing from one to the next one and select the scenario that is going to be simulated with the field selected.
   sysreq:
     header: System Requirements
     minreq:
@@ -1457,10 +1458,10 @@ en:
             item1: 'Auto Irrigation and Auto Fertigation'
             item2: 'Auto Irrigation and any Pads and Pipes'
             item3: 'Only one Pads and Pipes is allowed at the same time'
-            item4: 'Filter Strip and Riparian Forest'
-            item5: 'Waterways and Riparian Forest'
+            item4: 'Filter Strip and Riparian Buffer'
+            item5: 'Waterways and Riparian Buffer'
             item6: 'Filter Strip and Waterways'
-            item7: 'Contour Buffer and Filter Strip/Riparian Forest'
+            item7: 'Contour Buffer and Filter Strip/Riparian Buffer'
             body2: 'Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.'
     bmpdesc:
         header: 'Best Management Practices (BMPs) Descriptions'
@@ -1532,12 +1533,12 @@ en:
                 body1: 'Stabilization of streambanks is done to prevent the loss of land or damage to land uses or facilities adjacent to the banks of streams or constructed channels properties. Streambank stabilization results in 1) maintaining the flow capacity of streams or channels; 2) Reducing the offsite or downstream effects of sediment resulting from bank erosion; and 3) improving or enhance the stream corridor for fish and wildlife habitat, aesthetics, recreation.'
                 body2: 'If you would like to use the Streambank Stabilization, click on the <strong><em>Select</em></strong> button.'
             forestbuffer:
-                header: 'Riparian Forest Buffer:'
-                body1: 'A riparian forest is a forested area of land adjacent to a body of water such as a river, stream, pond, lake, marshland, estuary, canal, playa or reservoir. Riparian forests are simulated in a manner similar to the filter strip practice with the additional assumption that there are trees along the length of the riparian zone in addition to selected crops that are growing in the simulated area. The forested area traps sediment and increases infiltration, thereby reducing sediment and nutrient losses. Plant uptake of nutrient in the forested area also reduces nutrient losses downstream.'
-                body2: 'The inputs for Riparian Forest are the following:'
+                header: 'Riparian Buffer:'
+                body1: 'A riparian buffer is a forested area of land adjacent to a body of water such as a river, stream, pond, lake, marshland, estuary, canal, playa or reservoir. Riparian forests are simulated in a manner similar to the filter strip practice with the additional assumption that there are trees along the length of the riparian zone in addition to selected crops that are growing in the simulated area. The forested area traps sediment and increases infiltration, thereby reducing sediment and nutrient losses. Plant uptake of nutrient in the forested area also reduces nutrient losses downstream.'
+                body2: 'The inputs for Riparian Buffer are the following:'
                 item1: '<strong>Efficiency:</strong> This is the efficiency of the forest buffer, and is any fraction between 0.1 and 1.0.'
-                item2: '<strong>Area (ac.):</strong> This is the total area of the Riparian Forest Buffer. It is subtracted from the crop area.'
-                item3: '<strong>Width (ft.):</strong> This is the width of the Riparian Forest Buffer in feet.'
+                item2: '<strong>Area (ac.):</strong> This is the total area of the Riparian Buffer. It is subtracted from the crop area.'
+                item3: '<strong>Width (ft.):</strong> This is the width of the Riparian Buffer in feet.'
                 item4: '<strong>Grass Field Portion:</strong> This is the percentage of the Forest Buffer that is composed of grass rather than of trees, and needs to be a number between 0.25 and 0.75.'
                 item5: '<strong>Buffer Slope Ration to Upland:</strong> This is the slope ratio (a number between 0.25 and 1.00) to the upland.'
             filterstrip:

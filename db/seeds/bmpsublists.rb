@@ -11,7 +11,7 @@ Bmpsublist.create!({:id => 9,:name => "Ponds",:status => true,:bmplist_id => 3,:
 Bmpsublist.create!({:id => 10,:name => "Stream Fencing (Livestock Access Control)",:status => true,:bmplist_id => 4,:spanish_name => "Cercado del rio (Control de Acceso del Ganado)"}, :without_protection => true)
 Bmpsublist.create!({:id => 11,:name => "Streambank Stabilization",:status => true,:bmplist_id => 4,:spanish_name => "Estabilizacion de la Orilla del rio"}, :without_protection => true)
 Bmpsublist.create!({:id => 12,:name => "Riparian Forest Buffer",:status => true,:bmplist_id => 4,:spanish_name => "Bosque Ribereno"}, :without_protection => true)
-Bmpsublist.create!({:id => 13,:name => "Filter Strip/Riparian Forest",:status => true,:bmplist_id => 4,:spanish_name => "Zona de Contencion Filtrante/Bosque Ribereno"}, :without_protection => true)
+Bmpsublist.create!({:id => 13,:name => "Filter Strip/Riparian Buffer",:status => true,:bmplist_id => 4,:spanish_name => "Zona de Contencion Filtrante/Bosque Ribereno"}, :without_protection => true)
 Bmpsublist.create!({:id => 14,:name => "Grass Waterway",:status => true,:bmplist_id => 4,:spanish_name => "Canal de Agua "}, :without_protection => true)
 Bmpsublist.create!({:id => 15,:name => "Contour Buffer",:status => true,:bmplist_id => 5,:spanish_name => "Buffer de Contorno"}, :without_protection => true)
 Bmpsublist.create!({:id => 16,:name => "Land Leveling",:status => true,:bmplist_id => 6,:spanish_name => "Nivelacion de la Tierra"}, :without_protection => true)
