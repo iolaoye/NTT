@@ -15,9 +15,9 @@
       <% end %>
     <% end %>
   </div>
-  <%= submit_tag t("submit.save"), name: "button", class: "btn btn-primary" %>
+  <%= submit_tag t("submit.savecontinue"), name: "button", class: "btn btn-primary" %>
   <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field), :class => "btn btn-primary" %>
-  <%= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br>
+  <%#= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br>
     <br>
       <table class="table table-striped">
         <thead>
@@ -42,6 +42,9 @@
             <% end %>
 
             <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
+            <% if bmp.bmpsublist_id == 10 && ENV["APP_VERSION"] == "modified" %>
+              <% next %>
+            <% end %>
               <tr>
                 <% if bmp.id != nil %>
                   <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
@@ -85,19 +88,7 @@
 					    </td>
 				      </tr>
               <tr>
-                <td class="field indent2" id = "frequency" colspan="2" >
-                  <%= label :days, t('bmp.irrigation_frequency') + " " + t('bmp.days_range') %>
-                  <%= number_field :bmp_ai, :days, :value => bmp.days, :class => "gvTitleStyleNumber" %>
-                </td>
-              </tr>
-              <tr>
-					    <td class="indent2" colspan="2">
-						    <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.percentage_range') %>
-						    <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :class => "gvTitleStyleNumber" %>
-                </td>
-				      </tr>
-				      <tr>
-				        <td class="field indent2" id = "irrigation_efficiency" colspan="2" >
+                <td class="field indent2" id = "irrigation_efficiency" colspan="2" >
                   <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.percentage_range') %>
                   <%= number_field :bmp_ai, :irrigation_efficiency, :value => (1 - bmp.irrigation_efficiency) * 100, :class => "gvTitleStyleNumber" %>
                   <% if bmp.irrigation_id == 1 %> <% range = "70-80%" %>
@@ -106,8 +97,22 @@
                     <% elsif bmp.irrigation_id == 7 %> <% range = "80-95%" %>
                     <% elsif bmp.irrigation_id == 8 %> <% range = "50-70%" %>
                   <% end %>
-                  <input type="text" readonly style="border:none;" id="bmp_ai_irrigation_efficiency_lable" value=<%=range%>>
+                  <input type="text" readonly="" style="border:none;" id="bmp_ai_irrigation_efficiency_lable" value=""<%=range%>>
                 </td>
+              </tr>
+              <tr>
+                <td class="field indent2" id = "frequency" colspan="2" >
+                  <%= label :days, t('bmp.irrigation_frequency') %>
+                  <%= number_field :bmp_ai, :days, :value => bmp.days, :class => "gvTitleStyleNumber" %>
+                  <%= t('bmp.days_range') %>
+                  </td>
+              </tr>
+              <tr>
+					    <td class="indent2" colspan="2">
+						    <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.percentage_range') %>
+						    <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :class => "gvTitleStyleNumber" %>
+                <strong><a href="#" id="trigger" style="color:blue;">(?)</a></strong>
+              </td>
 				      </tr>
 				      <tr>
 				        <td class="field indent2" id = "maximum_single_application" colspan="2" >
@@ -211,11 +216,11 @@
 						    <%= number_field :bmp_pnd, :irrigation_efficiency, :value => bmp.irrigation_efficiency, :class => "gvTitleStyleNumber", :step => 'any' %>
                 </td>
 				      </tr>
-				    <% when 10 %>
+				    <% when 10 %>              
 				      <tr>
-					    <td class="indent" colspan="2">
-						    <%= label :depth, t('operation.animals')  %>
-						    <%= number_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals, :class => "gvTitleStyleNumber" %>
+					      <td class="indent" colspan="2">
+						      <%= label :depth, t('operation.animals')  %>
+						      <%= number_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				      <tr>
@@ -524,6 +529,9 @@
     </table>
   </div>
 <% end %>
+    <div id="pop-up">
+      <h6>When the stress level is reached, the model will automatically starts irrgation</h6>
+    </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
@@ -818,3 +826,24 @@
     }
   });
 </script>
+
+  <script>
+    $(function() {
+    var moveLeft = 20;
+    var moveDown = 10;
+
+    $('a#trigger').hover(function(e) {
+    $('div#pop-up').show();
+    //.css('top', e.pageY + moveDown)
+    //.css('left', e.pageX + moveLeft)
+    //.appendTo('body');
+    }, function() {
+    $('div#pop-up').hide();
+    });
+
+    $('a#trigger').mousemove(function(e) {
+    $("div#pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+    });
+
+    });
+  </script>
