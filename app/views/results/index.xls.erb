@@ -1,7 +1,3 @@
-<% @results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id == 0 or crop_id is null") %>
-<% @results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id == 0 or crop_id is null") %>
-<% @results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id == 0 or crop_id is null") %>
-<% debugger %>
 <?xml version="1.0"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -13,25 +9,25 @@
       <Row>
         <Cell><Data ss:Type="String"><%= t('result.description') %></Data></Cell>
         <% if session[:simulation] == 'scenario' %>
-  			  <% if session[:scenario1].empty? %>
+  			  <% if @scenario1.to_i == 0 %>
             <Cell><Data ss:Type="String"><%= t('result.scenario1') %></Data></Cell>
           <% else %>
             <Cell><Data ss:Type="String"><%= Scenario.find(@results1[0].scenario_id).name %></Data></Cell>
           <% end %>
 				  <Cell><Data ss:Type="String"><%= "±" %></Data></Cell>
-				  <% if session[:scenario2].empty? %>
+				  <% if @scenario2.to_i == 0 %>
             <Cell><Data ss:Type="String"><%= t('result.scenario2') %></Data></Cell>
           <% else %>
             <Cell><Data ss:Type="String"><%= Scenario.find(@results2[0].scenario_id).name %></Data></Cell>
           <% end %>
         <% else %>
-          <% if session[:scenario1].empty? %>
+          <% if @scenario1.to_i == 0 %>
             <Cell><Data ss:Type="String"><%= t('result.scenario1') %></Data></Cell>
           <% else %>
             <Cell><Data ss:Type="String"><%=Watershed.find(@results1[0].watershed_id).name%></Data></Cell>
           <% end %>
           <Cell><Data ss:Type="String"><%= "±" %></Data></Cell>
-          <% if session[:scenario2].empty? %>
+          <% if @scenario2.to_i == 0 %>
             <Cell><Data ss:Type="String"><%= t('result.scenario2') %></Data></Cell>
           <% else %>
             <Cell><Data ss:Type="String"><%=Watershed.find(@results2[0].watershed_id).name%></Data></Cell>
@@ -42,16 +38,16 @@
         <Cell><Data ss:Type="String"><%= t('result.reduction') %></Data></Cell>
         <Cell><Data ss:Type="String"><%= t('result.total_area') %></Data></Cell>
         <% if session[:simulation] == 'scenario' %>
-          <% if session[:scenario3].empty? %>
+          <% if @scenario3.to_i == 0 %>
             <Cell><Data ss:Type="String"><%= t('result.scenario3') %></Data></Cell>
           <% else %>
-            <Cell><Data ss:Type="String"><%=Scenario.find(@results3[0].scenario_id).name%></Data></Cell>
+            <Cell><Data ss:Type="String"><%= Scenario.find(@results3[0].scenario_id).name %></Data></Cell>
           <% end %>
         <% else %>
-          <% if session[:scenario3].empty? %>
+          <% if @scenario3.to_i == 0 %>
             <Cell><Data ss:Type="String"><%= t('result.scenario3') %></Data></Cell>
           <% else %>
-            <Cell><Data ss:Type="String"><%=Watershed.find(@results3[0].watershed_id).name%></Data></Cell>
+            <Cell><Data ss:Type="String"><%= Watershed.find(@results3[0].watershed_id).name %></Data></Cell>
           <% end %>
         <% end %>
         <Cell><Data ss:Type="String"><%= "±" %></Data></Cell>
@@ -59,6 +55,254 @@
         <Cell><Data ss:Type="String"><%= t('result.reduction') %></Data></Cell>
         <Cell><Data ss:Type="String"><%= t('result.total_area') %></Data></Cell>
       </Row>
+      <% if !@results1.nil? %>
+        <% @results1.each do |result| %>
+          <% description = Description.find(result.description_id) %>
+          <% value2 = 0 %>
+          <% if !@results2.nil? && @results2.find_by_description_id(result.description_id) != nil then %>
+            <% value2 = @results2.find_by_description_id(result.description_id).value %>
+          <% end %>
+          <% difference1 = value2 - result.value %>
+          <% reduction1 = difference1 / result.value * 100 %>
+          <% total_area1 = difference1 * @total_area%>
+          <% value3 = 0 %>
+          <% if !@results3.nil? && @results3.find_by_description_id(result.description_id) != nil then %> <%value3 = @results3.find_by_description_id(result.description_id).value %> <% end %>
+          <% difference2 = value3 - result.value%>
+          <% reduction2 = difference2 / result.value * 100%>
+          <% total_area2 = difference2 * @total_area%>
+          <% case (result.description_id % 10) %>
+          <% when 0 %>
+            <Row>
+            </Row>
+            <Row>
+              <% if result.description_id == 70 %>
+                <% if I18n.locale.eql?(:en) %>
+                  <Cell><Data ss:Type="String"><%= description.description %></Data></Cell>
+                <% else %>
+                  <Cell><Data ss:Type="String"><%= description.spanish_description %></Data></Cell>
+                <% end %>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+              <% else %>
+                <% if I18n.locale.eql?(:en) %>
+                  <Cell><Data ss:Type="String"><%= description.description %></Data></Cell>
+                <% else %>
+                  <Cell><Data ss:Type="String"><%= description.spanish_description %></Data></Cell>
+                <% end %>
+                <Cell><Data ss:Type="Number"><%= result.value.round(2) %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= result.ci_value.round(2) %></Data></Cell>
+                <% if !@results2.nil? %>
+                  <Cell><Data ss:Type="Number"><%= value2.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= @results2.find_by_description_id(result.description_id).ci_value.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= difference1.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= reduction1.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= total_area1.round(2) %></Data></Cell>
+                <% end %>
+                <% if !@results3.nil? %>
+                  <Cell><Data ss:Type="Number"><%= value3.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= @results3.find_by_description_id(result.description_id).ci_value.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= difference2.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= reduction2.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= total_area2.round(2) %></Data></Cell>
+                <% end %>
+                <% if @results2.nil? %>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                <% end %>
+                <% if @results3.nil? %>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                <% end %>
+              <% end %> <!-- end if desc_id = 70 -->
+            </Row>
+          <% else %> <!-- case else -->
+            <Row>
+              <% if result.description_id > 70 && result.description_id < 80 %>
+                <% if I18n.locale.eql?(:en) %>
+                  <Cell><Data ss:Type="Number"><%= "" %><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></Data></Cell>
+                <% else %>
+                  <Cell><Data ss:Type="Number"><%= "" %><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></Data></Cell>
+                <% end %>
+                <Cell><Data ss:Type="Number"><%= result.value.round(2) %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= result.ci_value.round(2) %></Data></Cell>
+                <% if !@results2.nil? && @results2.find_by_description_id(result.description_id) != nil  %>
+                  <Cell><Data ss:Type="Number"><%= value2.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= @results2.find_by_description_id(result.description_id).ci_value.round(2) %></Data></Cell>
+                  <% if difference1 <= 0 %>
+                    <Cell><Data ss:Type="Number"><%= difference1.round(2) %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= reduction1.round(2) %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= total_area1.round(2) %></Data></Cell>
+                  <% else %>
+                    <Cell><Data ss:Type="Number"><%= difference1.round(2) %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= reduction1.round(2) %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= total_area1.round(2) %></Data></Cell>
+                  <% end %>
+                <% end %>
+                <% if !@results3.nil? && @results3.find_by_description_id(result.description_id) != nil  %>
+                  <Cell><Data ss:Type="Number"><%= value3.round(2) %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= @results3.find_by_description_id(result.description_id).ci_value.round(2) %></Data></Cell>
+                  <% if difference2 <= 0 %>
+                    <Cell><Data ss:Type="Number"><%= difference2.round(2) %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= reduction2.round(2) %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= total_area2.round(2) %></Data></Cell>
+                  <% else %>
+                    <Cell><Data ss:Type="Number"><%= difference2.round(2) %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= reduction2.round(2) %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= total_area2.round(2) %></Data></Cell>
+                  <% end %>
+                  <% if @results2.nil? %>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                  <% end %>
+                  <% if @results3.nil? %>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                    <Cell><Data ss:Type="String"></Data></Cell>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <% format = "%8.2f" %>
+                <% if result.description_id >= 60 && result.description_id <= 69 %>
+                  <% format = "%8.4f" %>
+                <% end %>
+                <% if I18n.locale.eql?(:en) %>
+                  <Cell><Data ss:Type="String"><%= description.description + "(" + description.unit + ")" %></Data></Cell>
+                <% else %>
+                  <Cell><Data ss:Type="String"><%= description.spanish_description + "(" + description.unit + ")" %></Data></Cell>
+                <% end %>
+                <Cell><Data ss:Type="Number"><%= result.value.round(2) %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= result.ci_value.round(2) %></Data></Cell>
+                <% if !@results2.nil? && @results2.find_by_description_id(result.description_id) != nil  %>
+                  <Cell><Data ss:Type="Number"><%= sprintf(format, value2).to_f %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= @results2.find_by_description_id(result.description_id).ci_value.round(2) %></Data></Cell>
+                  <% if difference1 >= 0 %>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, difference1).to_f %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, reduction1).to_f %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, total_area1).to_f %></Data></Cell>
+                  <% else %>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, difference1).to_f %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, reduction1).to_f %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, total_area1).to_f %></Data></Cell>
+                  <% end %>
+                <% end %>
+                <% if !@results3.nil? && @results3.find_by_description_id(result.description_id) != nil  %>
+                  <Cell><Data ss:Type="Number"><%= sprintf(format, value3).to_f %></Data></Cell>
+                  <Cell><Data ss:Type="Number"><%= @results3.find_by_description_id(result.description_id).ci_value.round(2) %></Data></Cell>
+                  <% if difference2 >= 0 %>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, difference2).to_f %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, reduction2).to_f %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, total_area2).to_f %></Data></Cell>
+                  <% else %>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, difference2).to_f %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, reduction2).to_f %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= sprintf(format, total_area2).to_f %></Data></Cell>
+                  <% end %>
+                <% end %>
+                <% if @results2.nil? %>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                <% end %>
+                <% if @results3.nil? %>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                <% end %>
+              <% end %> <!-- end if desc_id 70..80 loop -->
+            </Row>
+          <% end %> <!-- end case when -->
+        <% end %>  <!-- @results1.each -->
+      <% end %>   <!-- if !@results1.nil? -->
+      <% @crop_results.each do |result| %>
+				<% value2 = 0 %>
+				<% reduction1 = 0 %>
+				<% if @scenario2 != "" then %>
+					<%value2 = result[3] %>
+					<% difference1 = value2 - result[1] %>
+					<% reduction1 = difference1 / result[1] * 100 unless result[1] == 0%>
+					<% total_area1 = difference1 * @total_area%>
+				<% end %>
+				<% value3 = 0 %>
+				<% reduction2 = 0 %>
+				<% if @scenario3 != "" then %>
+					<%value3 = result[5] %>
+					<% difference2 = value3 - result[1] %>
+					<% reduction2 = difference2 / result[1] * 100 unless result[1] == 0 %>
+					<% total_area2 = difference2 * @total_area %>
+				<% end %>
+				<Row>
+					<% if I18n.locale.eql?(:en) %>
+						<Cell><Data ss:Type="String"><%= Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")" %></Data></Cell>
+					<% else %>
+						<Cell><Data ss:Type="String"><%= Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")" %></Data></Cell>
+					<% end %>
+					<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", result[1].round(2)).to_f %></Data></Cell>
+				  <Cell><Data ss:Type="Number"><%= sprintf("%8.2f", result[2]).to_f %></Data></Cell>
+					<% if @scenario2 != 0 %>
+						<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", result[3].round(2)).to_f %></Data></Cell>
+						<Cell><Data ss:Type="Number"><%= sprintf("%8.2f", result[4]).to_f %></Data></Cell>
+						<% if difference1 <= 0 %>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", difference1.round(2)).to_f %></Data></Cell>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", reduction1.round(2)).to_f %></Data></Cell>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", total_area1.round(2)).to_f %></Data></Cell>
+						<% else %>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", difference1.round(2)).to_f %></Data></Cell>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", reduction1.round(2)).to_f %></Data></Cell>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", total_area1.round(2)).to_f %></Data></Cell>
+						<% end %>
+					<% else %>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+					<%end%>
+					<% if @scenario3 != 0 %>
+						<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", result[5].round(2)).to_f %></Data></Cell>
+						<Cell><Data ss:Type="Number"><%= sprintf("%8.2f", result[6]).to_f %></Data></Cell>
+						<% if difference2 <= 0 %>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", difference2.round(2)).to_f %></Data></Cell>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", reduction2.round(2)).to_f %></Data></Cell>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", total_area2.round(2)).to_f %></Data></Cell>
+						<% else %>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", difference2.round(2)).to_f %></Data></Cell>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", reduction2.round(2)).to_f %></Data></Cell>
+							<Cell><Data ss:Type="Number"><%= sprintf("%8.0f", total_area2.round(2)).to_f %></Data></Cell>
+						<% end %>
+					<% else %>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+						<Cell><Data ss:Type="Number"></Data></Cell>
+					<%end%>
+				</Row>
+			<% end %>  <!-- @crop_results.each  -->
     </Table>
   </Worksheet>
 </Workbook>
