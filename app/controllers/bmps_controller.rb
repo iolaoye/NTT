@@ -93,7 +93,7 @@ class BmpsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
-	  if params[:button] == t('submit.save')
+	  if params[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
   		bmps = Bmp.where(:scenario_id => params[:scenario_id])
