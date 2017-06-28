@@ -436,7 +436,7 @@ class BmpsController < ApplicationController
       if subarea != nil then
         case type
           when "create", "update"
-  		      @bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
+  		    @bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
             case @bmp.irrigation_id
               when 1
                 subarea.nirr = 1.0
@@ -448,40 +448,40 @@ class BmpsController < ApplicationController
             subarea.vimx = 5000
             subarea.bir = 0.8
             subarea.iri = params[:bmp_ai][:days]
-			      @bmp.days = subarea.iri
+			@bmp.days = subarea.iri
             subarea.bir = params[:bmp_ai][:water_stress_factor]
-			      subarea.bir /= 100
-			      @bmp.water_stress_factor = subarea.bir
+			subarea.bir /= 100
+			@bmp.water_stress_factor = subarea.bir
             subarea.efi = 1.0 - (params[:bmp_ai][:irrigation_efficiency].to_f / 100)
-			      @bmp.irrigation_efficiency = subarea.efi
+			@bmp.irrigation_efficiency = subarea.efi
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
-  		      @bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
+  		    @bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
+      		subarea.fdsf = 0
+      		@bmp.depth = params[:bmp_cb1]
+      		if params[:bmp_ai][:safety_factor] == nil then
       			subarea.fdsf = 0
-      			@bmp.depth = params[:bmp_cb1]
-      			if params[:bmp_ai][:safety_factor] == nil then
-      				subarea.fdsf = 0
-      			else
-      				subarea.fdsf = params[:bmp_ai][:safety_factor]
-      			end
-      			@bmp.safety_factor = subarea.fdsf
-      			if @bmp.depth == 1 then
-      				subarea.idf4 = 0.0
-      				subarea.bft = 0.0
-      			else
-      				subarea.idf4 = 1.0
-      				subarea.bft = 0.8
-      			end
-            when "delete"
-              subarea.nirr = 0.0
-              subarea.vimx = 0.0
-              subarea.bir = 0.0
-              subarea.armx = 0.0
-              subarea.iri = 0.0
-              subarea.bir = 0.0
-              subarea.efi = 0.0
-              subarea.armx = 0.0
-              subarea.fdsf = 0.0
-          end   # end case type
+      		else
+      			subarea.fdsf = params[:bmp_ai][:safety_factor]
+      		end
+      		@bmp.safety_factor = subarea.fdsf
+      		if @bmp.depth == 1 then
+      			subarea.idf4 = 0.0
+      			subarea.bft = 0.0
+      		else
+      			subarea.idf4 = 1.0
+      			subarea.bft = 0.8
+      		end
+			when "delete"
+				subarea.nirr = 0.0
+				subarea.vimx = 0.0
+				subarea.bir = 0.0
+				subarea.armx = 0.0
+				subarea.iri = 0.0
+				subarea.bir = 0.0
+				subarea.efi = 0.0
+				subarea.armx = 0.0
+				subarea.fdsf = 0.0
+			end   # end case type
           if !subarea.save then
   			    return "Unable to save value in the subarea file"
   		    end
@@ -662,7 +662,11 @@ class BmpsController < ApplicationController
     case type
       when "create"
 		@bmp.area = params[:bmp_wl][:area]
-		@bmp.sides = params[:bmp_wl][:buffer_land]
+		if params[:bmp_wl][:buffer_land] == nil then 
+			@bmp.sides = 0
+		else
+			@bmp.sides = 1
+		end
 		if @bmp.save then
 			return create_new_subarea("WL", 8)
 		end
@@ -675,7 +679,7 @@ class BmpsController < ApplicationController
 
 ### ID: 9
   def pond(type)
-  	@bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency]
+  	@bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency].to_f / 100
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
       subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
@@ -734,7 +738,11 @@ class BmpsController < ApplicationController
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
     		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
     		@bmp.crop_id = 1 #record not found error
-			@bmp.sides = params[:bmp_fs][:buffer_land]
+			if params[:bmp_fs][:buffer_land] == nil then 
+				@bmp.sides = 0
+			else
+				@bmp.sides = 1
+			end
     		@bmp.depth = params[:bmp_cb3]
     		if @bmp.save then
   			  return create_new_subarea("RF", 12)
@@ -757,7 +765,11 @@ class BmpsController < ApplicationController
 		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
 		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
 		@bmp.crop_id = params[:bmp_fs][:crop_id]
-		@bmp.sides = params[:bmp_fs][:buffer_land]
+		if params[:bmp_fs][:buffer_land] == nil then 
+			@bmp.sides = 0
+		else
+			@bmp.sides = 1
+		end
 		@bmp.depth = params[:bmp_cb3]
 		if @bmp.area == 0 || @bmp.area == nil then 
 			length = Math.sqrt(@field.field_area)			# find the length of the field

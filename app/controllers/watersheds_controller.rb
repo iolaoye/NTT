@@ -100,23 +100,23 @@ class WatershedsController < ApplicationController
 	else
 		#run simulations
 		params[:select_watershed].each do |ws|
+			@watershed = Watershed.find(ws)
 			session[:simulation] = 'watershed'
 			@project = Project.find(params[:project_id])
-			@watershed_id = ws
+			watershed_id = ws
 			@dtNow1 = Time.now.to_s
 			dir_name = APEX + "/APEX" + session[:session_id]
 			if !File.exists?(dir_name)
 			  FileUtils.mkdir_p(dir_name)
 			end
-			watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed_id)
-			msg = create_control_file()
-			if msg.eql?("OK") then msg = create_parameter_file() else return msg end 
+			watershed_scenarios = WatershedScenario.where(:watershed_id => watershed_id)
+			msg = create_control_file()			#this prepares the apexcont.dat file
+			if msg.eql?("OK") then msg = create_parameter_file() else return msg end			#this prepares the parms.dat file
 			#todo weather is created just from the first field at this time. and @scenario too. It should be for each field/scenario
 			@scenario = Scenario.find(watershed_scenarios[0].scenario_id)
-			if msg.eql?("OK") then msg = create_weather_file(dir_name, watershed_scenarios[0].field_id) else return msg end
-			if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(@project.location.id)) else return msg end
-			if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) else return msg end #this operation will create APEX folder from APEX1 folder
-
+			if msg.eql?("OK") then msg = create_weather_file(dir_name, watershed_scenarios[0].field_id) else return msg end			#this prepares the apex.wth file
+			if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(@project.location.id)) else return msg end		#this prepares the apex.sit file
+			if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) else return msg end #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
 			@last_soil = 0
 			@last_soil_sub = 0
 			@last_subarea = 0
@@ -148,10 +148,8 @@ class WatershedsController < ApplicationController
 			if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
 			if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
 			msg = read_apex_results(msg)
-			if @scenario != nil
-			  @scenario.last_simulation = Time.now
-			  @scenario.save
-			end
+			  @watershed.last_simulation = Time.now
+			  @watershed.save
 			if msg == "OK"
 				@notice = "Simulation ran succesfully"
 			else

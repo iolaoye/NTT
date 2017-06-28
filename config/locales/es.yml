@@ -619,7 +619,7 @@ es:
     crop: Cultivo
     water_stress_factor: Factor de estrés hídrico
     irrigation_efficiency: Eficiencia del riego
-    area_control: Fracción de control de área por laguna
+    area_control: Porcentage de la parcela controlada por lagunas
     maximum_single_application: Máxima aplicación única
     safety_factor: Factor de seguridad
     depth: Profundidad
@@ -657,7 +657,7 @@ es:
     autofertigation: Fertirrigacion Automatica
     manure_control: Control de estiércol
     pad: Almohadilla
-    additional_land: Seleccione si este Bmp es un terreno adicional
+    additional_land: Esta el área del buffer incluida en el Area de Interes?
   months:
     january: Enero
     february: Febrero
@@ -698,7 +698,7 @@ es:
     create_watershed: Crear Cuenca
   watershed_scenario:
     watershed_scenario_name: Nombre de la cuenca
-    watershed_scenario_title: Lista de Escenario de Cuencas
+    watershed_scenario_title: Lista de parcelas en
     add_to: Adicionar a
   submit:
     create: Crear
@@ -1077,6 +1077,7 @@ es:
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
     watersheds: Para seleccionar un cuenca, haga clic en el nombre de la cuenca
     scenarios: Para editar un escenario haga clic en el nombre del escenario, para currer la simulación cheque el check box
+    watershed_scenarios: Adicione las parcelas en el orden en que se enrutan de una a otra y seleccione el escenario que va a ser simulado con la parcela seleccionada.
   sysreq:
     header: Requisitos del Sistema
     minreq:

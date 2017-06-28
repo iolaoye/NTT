@@ -51,7 +51,7 @@ $(document).ready ->
   $("#field5_id").change ->
     select_scenarios(5)
 
-  $("#field_id").change ->
+  $("#field6_id").change ->
     select6_scenarios(6)
 
   $("#field7_id").change ->
