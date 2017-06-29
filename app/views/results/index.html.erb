@@ -32,9 +32,9 @@
       </tr>
       <tr>
         <% if session[:simulation] == 'scenario' %>
-          <td><%= collection_select :result1, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
-          <td><%= collection_select :result2, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
-          <td><%= collection_select :result3, :scenario_id, Scenario.where(:field_id => @field.id), :id, :name, {:prompt => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
+          <td><%= collection_select :result1, :scenario_id, Scenario.where("field_id == ? and last_simulation > ?", @field.id, 0), :id, :name, {:prompt => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
+          <td><%= collection_select :result2, :scenario_id, Scenario.where("field_id == ? and last_simulation > ?", @field.id, 0), :id, :name, {:prompt => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
+          <td><%= collection_select :result3, :scenario_id, Scenario.where("field_id == ? and last_simulation > ?", @field.id, 0), :id, :name, {:prompt => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
         <% else %>
           <td><%= collection_select :result1, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed1'), :selected => @scenario1}, {:required => true, :style => "width:160px"} %></td>
           <td><%= collection_select :result2, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:prompt => t('result.select_watershed2'), :selected => @scenario2}, {:required => false, :style =>"width:160px"} %></td>
@@ -46,10 +46,8 @@
 				<% if @results1 != nil %>
 					<%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
 					<a href="javascript:AlertIt();" id="pdf_no_click" class="no_click" class="btn btn-primary"><div class="btn btn-primary"><% t('result.download_pdf') %></div></a>
-          <!-- Download CSV/Excel button
-          <%= link_to t('result.download_csv'), { :action => "index", :format => :csv }, :id => "csv_download", name: "button", :class => "btn btn-primary" %>
-          <a href="javascript:AlertIt();" id="csv_no_click" class="no_click" class="btn btn-primary"><div class="btn btn-primary"><% t('result.download_csv') %></div></a>
-          -->
+          <!-- Download CSV/Excel button -->
+          <%= link_to t('result.download_excel'), results_path(:format => :xls, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => @field.id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
 				<% end %>
 			</td>
 			</tr>

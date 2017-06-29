@@ -1,33 +1,28 @@
 <%#= form_for [@project, @watershed, @watershed_scenarios] do |f| %>
 <% case %>
-<% when notice %>
-	<div class="success_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= notice %>
-    </div>
-<% when flash[:info] %>
-	<div class="flash_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= flash[:info] %>
-    </div>
+	<% when notice %>
+		<div class="success_alert">
+		  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+		  <%= notice %>
+		</div>
+	<% when flash[:info] %>
+		<div class="flash_alert">
+		  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+		  <%= flash[:info] %>
+		</div>
 <% end %>
-<div class="page-header"><h1><%= t('watershed_scenario.watershed_scenario_title')%></h1></div>
+<div class="page-header"><h1><%= t('watershed_scenario.watershed_scenario_title') + " " + @watershed.name%></h1></div>
 
-<%= form_for @watersheds, method: :post do |f| %>
-<table>
-  <tr>
-    <td><%=  t('menu.fields') %></td>
-    <td><%= t('menu.scenarios') %></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><%= collection_select :field, :id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
-    <td><%= collection_select :scenario, :id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
-    <td class='action'><%= submit_tag t('watershed_scenario.add_to') + " " + @watershed.name, :class => "btn btn-primary" %></td>
-  </tr>
-</table>
+<%#= form_for @watersheds, method: :post do |f| %>
+<br>
+<% @watershed_scenario = WatershedScenario.new %>
+<% @watershed_scenario.watershed_id = @watershed.id %>
+<div><%= t('instructions.watershed_scenarios')%></div>
+<%= button_tag t('result.add') + " " + t('models.field') + ' / ' + t('models.scenario'), :class => 'btn btn-primary', :id => "new_watershed" %>
+<div id="div_new" style="display:none"><%= render 'form'%></div>
+
 <%= hidden_field_tag( :project_id, @project.id) %>
-<% end %>
+<%# end %>
 <br>
 
 <div class="table-responsive">
@@ -35,7 +30,6 @@
 		<table class='table table-striped'>
 			<thead>
 			  <tr>
-    			<th class="gvCellStyleTitle"><%= t('watershed.watershed_name')%></th>
     			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
     			<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
     			<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
@@ -49,11 +43,10 @@
     			<% else %>
       				<tr class="gvRowStyleOdd">
     			<% end %>
-        			<td class="gvCellStyleText"><%= Watershed.find_by_id(watershed_scenario.watershed_id).name %></td>
         			<td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
         			<td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
         			<td class="gvCellStyleCheckbox">
-          				<%= link_to image_tag("delete.png"), watershed_scenario, title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+          				<%= link_to image_tag("delete.png"), project_watershed_watershed_scenario_path(@project, @watershed, watershed_scenario), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
         			</td>
       			</tr>
   				<% i = i + 1 %>

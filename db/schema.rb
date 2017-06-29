@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170620151924) do
+ActiveRecord::Schema.define(:version => 20170628150806) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -786,9 +786,10 @@ ActiveRecord::Schema.define(:version => 20170620151924) do
 
   create_table "watersheds", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "location_id"
+    t.datetime "last_simulation"
   end
 
   create_table "ways", :force => true do |t|

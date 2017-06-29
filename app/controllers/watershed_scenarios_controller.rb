@@ -13,6 +13,7 @@ class WatershedScenariosController < ApplicationController
     end
   end
 
+################################ SHOW #################################
   # GET /watershed_scenarios/1
   # GET /watershed_scenarios/1.json
   def show
@@ -39,7 +40,6 @@ class WatershedScenariosController < ApplicationController
   # POST /watershed_scenarios
   # POST /watershed_scenarios.json
   def create
-  ooo
     @project = Project.find(params[:project_id])
     @scenarios = Scenario.where(:field_id => 0)
 	watershed = Watershed.find(params[:watershed_id])
@@ -57,11 +57,12 @@ class WatershedScenariosController < ApplicationController
           format.html { redirect_to project_watershed_watershed_scenarios_path(@project, watershed), notice: @new_watershed_scenario.errors }
         end
       else
-        format.html { redirect_to project_watershed_watershed_scenarios_path(@project, watershed), notice: 'That field/scenario combination has already been selected for this watershed. Please choose again.' }
+        format.html { redirect_to project_watershed_watershed_scenarios_path(@project, watershed), notice: 'That field has already been selected. Please choose again.' }
       end
     end
   end
 
+  #********************** Update ***********************
   # PATCH/PUT /watershed_scenarios/1
   # PATCH/PUT /watershed_scenarios/1.json
   def update
@@ -79,12 +80,13 @@ class WatershedScenariosController < ApplicationController
     end
   end
 
+  ################################# DELETE ################################ 
   # DELETE /watershed_scenarios/1
   # DELETE /watershed_scenarios/1.json
   def destroy
-    @watershed_scenarios = WatershedScenario.find(params[:id])
-    if @watershed_scenarios.destroy
-	  redirect_to watershed_scenario_path(session[:watershed_id])
+    @watershed_scenario = WatershedScenario.find(params[:id])
+    if @watershed_scenario.destroy
+	  redirect_to project_watershed_watershed_scenarios_path(params[:project_id], params[:watershed_id])
       flash[:info] = t('models.watershed_scenario') + t('notices.deleted')
     end
   end
