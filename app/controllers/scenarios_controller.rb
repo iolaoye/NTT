@@ -64,7 +64,7 @@ class ScenariosController < ApplicationController
     @scenarios = Scenario.where(:field_id => params[:field_id])
     if msg.eql?("OK") then
 	  @scenario = Scenario.find(params[:select_scenario])
-      flash[:notice] = @scenario.count.to_s + " scenarios simulated successfully in " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " seconds" if @scenarios.count > 0
+      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
 	  redirect_to project_field_scenarios_path(@project, @field)
     else
       render "index", error: msg
