@@ -32,7 +32,6 @@
       </tr>
       <tr>
         <% if session[:simulation] == 'scenario' %>
-		<% debugger %>
           <td><%= collection_select :result1, :scenario_id, Scenario.where("field_id == ? and last_simulation > ?", @field.id, 0), :id, :name, {:prompt => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
           <td><%= collection_select :result2, :scenario_id, Scenario.where("field_id == ? and last_simulation > ?", @field.id, 0), :id, :name, {:prompt => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
           <td><%= collection_select :result3, :scenario_id, Scenario.where("field_id == ? and last_simulation > ?", @field.id, 0), :id, :name, {:prompt => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
