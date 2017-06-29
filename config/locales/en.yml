@@ -587,7 +587,7 @@ en:
     start_grazing: Start Grazing
     stop_grazing: Stop Grazing
     seed: 'Seeding Amount (seeds/ft)'
-    amount_applied: 'Amount Applied (lbs/ac)'
+    amount_applied: 'Amount Applied'
     add_planting: 'Add Planting Operation'
     add_fertilizer: 'Add Fertilizer Operation'
     add_tillage: 'Add Tillage Operation'
