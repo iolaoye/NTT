@@ -1083,7 +1083,7 @@ en:
     projects: To select an existing project, click on the project name
     fields: To select a field, click on the field name
     watersheds: "Select management scenario from each field and add to %{watershed}. Repeat this proccess to complete each %{watershed} option"
-    scenarios: To edit a scenario click on the scenario name, to simulate scenarios click on the check box
+    scenarios: To select a scenario click on the scenario name, to simulate scenarios click on the check box
     watershed_scenarios: Add fields in the order they are going to be routing from one to the next one and select the scenario that is going to be simulated with the field selected.
   sysreq:
     header: System Requirements
