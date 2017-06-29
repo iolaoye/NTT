@@ -9,4 +9,13 @@ class Result < ActiveRecord::Base
 	  belongs_to :crop
   #scopes
 	default_scope joins(:description).order("descriptions.order_id ASC")
+
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |result|
+        csv << result.attributes.values_at(*column_names)
+      end
+    end
+  end
 end
