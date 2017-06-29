@@ -734,6 +734,7 @@ en:
     by_soil: By Soil
     download_pdf: Download PDF
     download_csv: Download CSV
+    download_excel: Download Excel
     charts: Charts
     monthly: Monthly
     annual: Annual

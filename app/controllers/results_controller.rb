@@ -70,8 +70,8 @@ class ResultsController < ApplicationController
 	    @field = 0
   	end
   	if session[:scenario1] == nil or session[:scenario1] == "" then @scenario1 = 0 else @scenario1 = session[:scenario1] end
-  	if session[:scenario2] != nil or session[:scenario2] == "" then @scenario2 = 0 else @scenario2 = session[:scenario2] end
-  	if session[:scenario3] != nil or session[:scenario3] == "" then @scenario3 = 0 else @scenario3 = session[:scenario3] end
+  	if session[:scenario2] == nil or session[:scenario2] == "" then @scenario2 = 0 else @scenario2 = session[:scenario2] end
+  	if session[:scenario3] == nil or session[:scenario3] == "" then @scenario3 = 0 else @scenario3 = session[:scenario3] end
     @soil = "0"
     #load crop for each scenario selected
     i = 70
@@ -111,8 +111,8 @@ class ResultsController < ApplicationController
   	if @type == nil then
   		@type = t("general.view")
   	end
-	@crop_results = []
-	@stress_ws_results = []
+	  @crop_results = []
+	  @stress_ws_results = []
     @stress_ns_results = []
     @stress_ps_results = []
     @stress_ts_results = []
@@ -570,14 +570,11 @@ class ResultsController < ApplicationController
       #end # end respond to do
     end # if format is pdf
 
-    if params[:format] == "csv" then
-      #results to excel catch with debugger for now (testing WIP)
-      #respond_to do |format|
-      #  format.html
-      #  format.xls { send_data @products.to_csv(col_sep: "\t") }
-      #end
-    end # if format is excel
-
+    respond_to do |format|
+      format.html
+      format.xls { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xls\"" }
+      format.csv { send_data @crop_results.to_csv, filename: "report-#{Date.today}.csv"}
+    end
   end  # end Method Index
 
   ###############################  SHOW  ###################################
