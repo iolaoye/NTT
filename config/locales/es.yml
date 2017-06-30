@@ -589,7 +589,7 @@ es:
     start_grazing: Iniciar Pasteo
     stop_grazing: Terminar Pasteo
     seed: 'Cantidad de Siembra (seeds/ft)'
-    amount_applied: 'Cantidad Aplicada (lbs/ac)'
+    amount_applied: 'Cantidad Aplicada'
     add_planting: 'Añadir la operación de Plantar'
     add_fertilizer: 'Añadir la operación de Fertilizante'
     add_tillage: 'Añadir la operación de Arar'
