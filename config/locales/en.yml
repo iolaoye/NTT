@@ -704,6 +704,7 @@ en:
     new_watershed: New Watershed Scenario
     watershed_scenario_title: List of fields in 
     add_to: Add to
+    already_selected: 'That field has already been selected. Please choose again.'
   submit:
     create: Create
     save: Save
