@@ -117,8 +117,12 @@ updateTypes = ->
 updateFerts = ->
   if ($("#operation_type_id").val() == "2")
     $("#div_moisture").show();
+    if ($("#div_amount")[0].children[0].innerText == "Amount(lbs/ac)")
+        $("#div_amount")[0].children[0].innerText = "Amount(T/ac)"
   else
     $("#div_moisture").hide();
+    if ($("#div_amount")[0].children[0].innerText == "Amount(T/ac)")
+        $("#div_amount")[0].children[0].innerText = "Amount(lbs/ac)"
   url = "/fertilizer_types/" + $("#operation_type_id").val() + "/fertilizers.json"
   $.getJSON url, (fertilizers) ->
     items = []

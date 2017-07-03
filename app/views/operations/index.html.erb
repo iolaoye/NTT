@@ -103,7 +103,16 @@
 							<% else %>
 							  <td><%= Fertilizer.find(op.type_id).spanish_name %></td>
 							<% end %>
-							<td class="gvCellStyleNumber"><%= op.amount %></td>
+							<% if op.type_id == 1 %>
+								<% amount_label = "(lbs/ac)" %>
+							<% else %>
+								<% if op.subtype_id == 57 %>
+									<% amount_label = "(x1000gal/ac)" %>
+								<% else %>
+									<% amount_label = "(T/ac)" %>
+								<% end %>								
+							<% end %>
+							<td class="gvCellStyleNumber"><%= op.amount %><%= amount_label %> </td>
 							<td class="gvCellStyleNumber"><%= op.depth %></td>
 							<td style="text-align:right">
 							  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
