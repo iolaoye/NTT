@@ -584,7 +584,7 @@ en:
     kill: Kill
     burn: Burn
     liming: Liming
-    start_grazing: Start Grazing
+    start_grazing: Grazing
     stop_grazing: Stop Grazing
     seed: 'Seeding Amount (seeds/ft)'
     amount_applied: 'Amount Applied'
@@ -596,7 +596,7 @@ en:
     add_irrigation: 'Add Irrigation Operation'
     add_burn: 'Add Burn operation'
     add_liming: 'Add Liming Operation'
-    add_start_grazing: 'Add Start Grazing'
+    add_start_grazing: 'Add Grazing'
     add_stop_grazing: 'Add Stop Grazing'
   bmp:
     bmp_group: BMP Group

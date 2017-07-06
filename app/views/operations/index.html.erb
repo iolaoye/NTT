@@ -191,11 +191,12 @@
 		  <% end %>
 		  
 
-		  <% if @operations.where(:activity_id => 7, :crop_id => crop).any?%>
+		  <% if @operations.where("(activity_id == ? or activity_id == ?) and crop_id == ?", 7,8,crop).any?%>
 			<div class="panel panel-primary">
 			  <h4><%= t('operation.start_grazing') %></h4>
 			    <table class="table">
 				  <tr>
+					<td class="optable"><b></b></td>
 					<td class="optable"><b><%= (t'pdf.year') %></b></td>
 					<td class="optable"><b><%= (t'pdf.month') %></b></td>
 					<td class="optable"><b><%= (t'pdf.day') %></b></td>
@@ -204,8 +205,13 @@
 					<td class="optable" style="text-align: right"><b><%= t('operation.hours') %></b></td>
 					<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
                   </tr>
-				  <% @operations.where(:activity_id => 7, :crop_id => crop).each do |op| %>
+				  <% @operations.where("(activity_id == ? or activity_id == ?) and crop_id == ?", 7,8,crop).each do |op| %>
 				  <tr>
+					<% if op.activity_id == 7 %>
+						<td>Start</td>
+					<% else %>
+						<td>Stop</td>
+					<% end  %>
 					<td><%= op.year %></td>
 					<td><%= listMonths.detect { |val, index| index == op.month_id}[0] %></td>
 					<td><%= op.day %></td>
@@ -226,9 +232,8 @@
 			    <%= link_to t('operation.add_start_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 7, :crop => crop.id), :class => 'btn btn-success'  %>
 			</div> 
 		  <% end %>
-
           
-		  <% if @operations.where(:activity_id => 8, :crop_id => crop).any?%>
+		  <!-- <% if @operations.where(:activity_id => 8, :crop_id => crop).any?%>
 			<div class="panel panel-primary">
 			  <h4><%= t('operation.stop_grazing') %></h4>
 			    <table class="table">
@@ -252,7 +257,7 @@
 			    </table><br>
 			    <%= link_to t('operation.add_stop_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 8, :crop => crop.id), :class => 'btn btn-success'  %>
 			</div> 
-		  <% end %>
+		  <% end %> -->
 
 
 		  <% if @scenario.liming_operations(crop).any? %>
