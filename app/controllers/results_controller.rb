@@ -69,9 +69,9 @@ class ResultsController < ApplicationController
 	  else
 	    @field = 0
   	end
-  	if session[:scenario1] == nil or session[:scenario1] == "" then @scenario1 = 0 else @scenario1 = session[:scenario1] end
-  	if session[:scenario2] == nil or session[:scenario2] == "" then @scenario2 = 0 else @scenario2 = session[:scenario2] end
-  	if session[:scenario3] == nil or session[:scenario3] == "" then @scenario3 = 0 else @scenario3 = session[:scenario3] end
+  	if params[:result1][:scenario_id] == nil or params[:result1][:scenario_id] == "" then @scenario1 = 0 else @scenario1 = params[:result1][:scenario_id] end
+  	if params[:result2][:scenario_id] == nil or params[:result2][:scenario_id] == "" then @scenario2 = 0 else @scenario2 = params[:result2][:scenario_id] end
+  	if params[:result3][:scenario_id] == nil or params[:result3][:scenario_id] == "" then @scenario3 = 0 else @scenario3 = params[:result3][:scenario_id] end
     @soil = "0"
     #load crop for each scenario selected
     i = 70

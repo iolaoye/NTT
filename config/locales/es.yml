@@ -586,20 +586,20 @@ es:
     kill: Terminar
     burn: Quema
     liming: Encalado
-    start_grazing: Iniciar Pasteo
+    start_grazing: Pasteo
     stop_grazing: Terminar Pasteo
     seed: 'Cantidad de Siembra (seeds/ft)'
     amount_applied: 'Cantidad Aplicada'
-    add_planting: 'Añadir la operación de Plantar'
-    add_fertilizer: 'Añadir la operación de Fertilizante'
-    add_tillage: 'Añadir la operación de Arar'
-    add_harvest: 'Añadir la operación de Cosechar'
-    add_kill: 'Añadir la operación de Terminar'
-    add_irrigation: 'Añadir la operación de Irrigación'
-    add_burn: 'Añadir la operación de Quema'
-    add_liming: 'Añadir la operación de Encalado'
-    add_start_grazing: 'Añadir la operación de Iniciar Pasteo'
-    add_stop_grazing: 'Añadir la operación de Terminar Pasteo'
+    add_planting: 'Añadir operación de Plantar'
+    add_fertilizer: 'Añadir operación de Fertilizante'
+    add_tillage: 'Añadir operación de Arar'
+    add_harvest: 'Añadir operación de Cosechar'
+    add_kill: 'Añadir operación de Terminar'
+    add_irrigation: 'Añadir operación de Irrigación'
+    add_burn: 'Añadir operación de Quema'
+    add_liming: 'Añadir operación de Encalado'
+    add_start_grazing: 'Añadir operación de Pasteo'
+    add_stop_grazing: 'Añadir operación de Terminar Pasteo'
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
@@ -703,6 +703,7 @@ es:
     watershed_scenario_name: Nombre de la cuenca
     watershed_scenario_title: Lista de parcelas en
     add_to: Adicionar a
+    already_selected: 'Ese parcela ya ha sido seleccionado. Por favor, elija otra vez.'
   submit:
     create: Crear
     save: Guardar
