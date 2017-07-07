@@ -690,6 +690,28 @@ label {
   -webkit-animation-iteration-count: infinite;
 }
 
+.overlay {
+  background-color: rgba(0,0,0,0.3);
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.5;
+  z-index: 1001;
+}
+
+.overlay img {
+  padding: 5px;
+  color: #000;
+  position: relative;
+  top: 50%;
+  left: 50%;
+}
+
 /* HOVER STYLES */
 div#pop-up {
   display: none;
