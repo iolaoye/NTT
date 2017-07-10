@@ -24,9 +24,9 @@
   <div class="field">
 		<%= label :activity_id, t('scenario.operation') %>
 		<% if I18n.locale.eql?(:en) %>
-			<%= collection_select :operation, :activity_id, Activity.all, :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
+			<%= collection_select :operation, :activity_id, Activity.where("id != 8"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
 		<% else %>
-			<%= collection_select :operation, :activity_id, Activity.all, :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => @operation.activity_id}, {:required => true} %>
+			<%= collection_select :operation, :activity_id, Activity.where("id != 8"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => @operation.activity_id}, {:required => true} %>
 		<% end %>
   </div>
   <div class="field">
@@ -227,7 +227,7 @@
 		<% when 7 # grazing %>
 			<% operation = Operation.find_by_type_id(@operation.id) %>
   		    <div id="div_date">
-				<%= f.label :date, t('general.stop'), :class => 'field' %>
+				<%= f.label :date, t('general.stop') + " " + t('general.date'), :class => 'field' %>
 				<%= select_tag "year1", options_for_select(listYears, :selected => operation.year), {:prompt => t('datetime.prompts.year')} %>
 				<%= select_tag "month_id1", options_for_select(listMonths, :selected => operation.month_id), {:prompt => t('datetime.prompts.month')} %>
 				<%= select_tag "day1", options_for_select(listDays, :selected => operation.day), {:prompt => t('datetime.prompts.day')} %>
