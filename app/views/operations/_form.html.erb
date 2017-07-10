@@ -101,7 +101,11 @@
 				<% end %>
 			</div>
 			<div class="field" id="div_amount">
-				<%= f.label :amount, t('operation.amount') %>
+				<% if @operation.type_id == 1 then %>
+					<%= f.label :amount, t('operation.amount') %>
+				<% else %>
+					<%= f.label :amount, t('operation.amount').gsub("lbs", "T") %>
+				<% end %>
 				<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
@@ -221,6 +225,13 @@
 			  </div>
 			</div>
 		<% when 7 # grazing %>
+			<% operation = Operation.find_by_type_id(@operation.id) %>
+  		    <div id="div_date">
+				<%= f.label :date, t('general.stop'), :class => 'field' %>
+				<%= select_tag "year1", options_for_select(listYears, :selected => operation.year), {:prompt => t('datetime.prompts.year')} %>
+				<%= select_tag "month_id1", options_for_select(listMonths, :selected => operation.month_id), {:prompt => t('datetime.prompts.month')} %>
+				<%= select_tag "day1", options_for_select(listDays, :selected => operation.day), {:prompt => t('datetime.prompts.day')} %>
+		    </div>
 			<div id="div_type" >
 				<%= label :type_id, :Animal_Type %>
 				<% if I18n.locale.eql?(:en) %> 
@@ -315,7 +326,13 @@
 			  </div>
 			</div>
 		<% else # harvest, kill, stop grazing, burn%>
-			<div id="div_type"  style="display:none" >
+  		    <div id="div_date" style="display:none">
+				<%= f.label :date, t('general.stop'), :class => 'field' %>
+				<%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
+				<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
+				<%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
+		    </div>
+			<div id="div_type" style="display:none" >
 				<%= label :type_id, t('general.select') + " " + t('general.one') %>
 				<% if I18n.locale.eql?(:en) %>
 					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one')} %>
