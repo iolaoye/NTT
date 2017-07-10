@@ -69,9 +69,7 @@ class ResultsController < ApplicationController
 	  else
 	    @field = 0
   	end
-  	if params[:result1][:scenario_id] == nil or params[:result1][:scenario_id] == "" then @scenario1 = 0 else @scenario1 = params[:result1][:scenario_id] end
-  	if params[:result2][:scenario_id] == nil or params[:result2][:scenario_id] == "" then @scenario2 = 0 else @scenario2 = params[:result2][:scenario_id] end
-  	if params[:result3][:scenario_id] == nil or params[:result3][:scenario_id] == "" then @scenario3 = 0 else @scenario3 = params[:result3][:scenario_id] end
+  	
     @soil = "0"
     #load crop for each scenario selected
     i = 70
@@ -80,6 +78,9 @@ class ResultsController < ApplicationController
       @before_button_clicked = false
       @errors = Array.new
       results = Result.new
+	  if params[:result1][:scenario_id] == nil or params[:result1][:scenario_id] == "" then @scenario1 = 0 else @scenario1 = params[:result1][:scenario_id] end
+  	  if params[:result2][:scenario_id] == nil or params[:result2][:scenario_id] == "" then @scenario2 = 0 else @scenario2 = params[:result2][:scenario_id] end
+  	  if params[:result3][:scenario_id] == nil or params[:result3][:scenario_id] == "" then @scenario3 = 0 else @scenario3 = params[:result3][:scenario_id] end
       if session[:simulation] == 'scenario' then
         case true
           when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
@@ -572,7 +573,7 @@ class ResultsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xlsx { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xlsx\"" }
+      format.xls { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xls\"" }
       format.csv { send_data @crop_results.to_csv, filename: "report-#{Date.today}.csv"}
     end
   end  # end Method Index
