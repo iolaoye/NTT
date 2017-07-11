@@ -57,7 +57,8 @@ class WatershedScenariosController < ApplicationController
           format.html { redirect_to project_watershed_watershed_scenarios_path(@project, watershed), notice: @new_watershed_scenario.errors }
         end
       else
-        format.html { redirect_to project_watershed_watershed_scenarios_path(@project, watershed), notice: 'That field has already been selected. Please choose again.' }
+        flash[:info] = t('watershed_scenario.already_selected')
+		format.html { redirect_to project_watershed_watershed_scenarios_path(@project, watershed)}
       end
     end
   end
@@ -86,8 +87,7 @@ class WatershedScenariosController < ApplicationController
   def destroy
     @watershed_scenario = WatershedScenario.find(params[:id])
     if @watershed_scenario.destroy
-	  redirect_to project_watershed_watershed_scenarios_path(params[:project_id], params[:watershed_id])
-      flash[:info] = t('models.watershed_scenario') + t('notices.deleted')
+	  redirect_to project_watershed_watershed_scenarios_path(params[:project_id], params[:watershed_id]), notice: t('models.watershed_scenario') + t('notices.deleted')
     end
   end
 

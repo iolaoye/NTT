@@ -27,6 +27,8 @@ gem 'breadcrumbs_on_rails'
 gem 'turbolinks', '~> 2.5', '>= 2.5.3'
 gem 'jquery-turbolinks'
 
+gem 'axlsx_rails'
+
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
@@ -53,7 +55,4 @@ gem 'wkhtmltopdf-binary'
 # gem 'prawn'
 # gem 'pdfkit'
 
-gem 'breadcrumbs_on_rails'
-
 gem 'cancan'
-gem 'breadcrumbs_on_rails'
