@@ -112,7 +112,7 @@
 									<% amount_label = "(T/ac)" %>
 								<% end %>								
 							<% end %>
-							<td class="gvCellStyleNumber"><%= op.amount %><%= amount_label %> </td>
+							<td class="gvCellStyleNumber"><%= op.amount / 2000 %><%= amount_label %> </td>
 							<td class="gvCellStyleNumber"><%= op.depth %></td>
 							<td style="text-align:right">
 							  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
@@ -208,24 +208,26 @@
 				  <% @operations.where("(activity_id == ? or activity_id == ?) and crop_id == ?", 7,8,crop).each do |op| %>
 				  <tr>
 					<% if op.activity_id == 7 %>
-						<td>Start</td>
+						<td><%= t('general.start') %></td>
 					<% else %>
-						<td>Stop</td>
+						<td><%= t('general.stop') %></td>
 					<% end  %>
 					<td><%= op.year %></td>
 					<td><%= listMonths.detect { |val, index| index == op.month_id}[0] %></td>
 					<td><%= op.day %></td>
-					<% if (I18n.locale.eql?(:en)) %>
-					  <td><%= op.type_name %></td>
-					<% else %>
-					  <td><%= Fertilizer.find(op.type_id).spanish_name %></td>
+					<% if op.activity_id == 7 %>
+						<% if (I18n.locale.eql?(:en)) %>
+						  <td><%= op.type_name %></td>
+						<% else %>
+						  <td><%= Fertilizer.find(op.type_id).spanish_name %></td>
+						<% end %>
+						<td class="gvTitleStyleNumber"><%= op.amount %></td>
+						<td class="gvTitleStyleNumber"><%= op.depth %></td>
+						<td style="text-align:right">
+						  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
+						  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+						</td>
 					<% end %>
-					<td class="gvTitleStyleNumber"><%= op.amount %></td>
-					<td class="gvTitleStyleNumber"><%= op.depth %></td>
-					<td style="text-align:right">
-					  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
-					  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
-					</td>
 			      </tr>
                   <% end %>
 			    </table><br>
@@ -464,7 +466,11 @@
 							<td class="gvCellStyleText"><%= :"" %></td>
 						<% end %>
 					<% end %>
-					<td class="gvCellStyleNumber"><%= operation.amount %></td>
+					<% if operation.activity_id == 2 and operation.type_id == 2 then %>
+						<td class="gvCellStyleNumber"><%= operation.amount / 2000 %></td>
+					<% else %>
+						<td class="gvCellStyleNumber"><%= operation.amount %></td>
+					<% end %>
 					<td class="gvCellStyleNumber"><%= operation.depth %></td>
 					<td class="gvCellStyleNumber"><%= operation.moisture %></td>
 					<td class="gvCellStyleNumber"><%= operation.no3_n %></td>
@@ -472,8 +478,8 @@
 					<td class="gvCellStyleNumber"><%= operation.org_n %></td>
 					<td class="gvCellStyleNumber"><%= operation.org_p %></td>
 					<td >
-						<%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.edit') %>
-						<%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+						<%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.edit') unless operation.activity_id == 8 %>
+						<%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } unless operation.activity_id == 8%>
 					</td>
 				</tr>
 			  <% end %>
