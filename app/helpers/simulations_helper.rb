@@ -1597,8 +1597,8 @@ module SimulationsHelper
 			Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
 		else
 			# clean results for watershed to avoid keeping some results from previous simulation
-			Result.where(:watershed_id => @watershed_id).delete_all
-			Chart.where(:watershed_id => @watershed_id).delete_all
+			Result.where(:watershed_id => @watershed.id).delete_all
+			Chart.where(:watershed_id => @watershed.id).delete_all
 		end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
@@ -1797,7 +1797,7 @@ module SimulationsHelper
 		if session[:simulation] == 'scenario'
 		  results = Result.where(:soil_id => 0, :field_id => @field.id, :scenario_id => @scenario.id)
 		else
-		  results = Result.where(:watershed_id => @watershed_id)
+		  results = Result.where(:watershed_id => @watershed.id)
 		end
 
 		results.each do |result|
@@ -1850,8 +1850,8 @@ module SimulationsHelper
       soil = soil_id
       scenario = @scenario.id
     else
-      chart = Chart.where(:watershed_id => @watershed_id, :description_id => description_id, :month_year => year).first
-      watershed = @watershed_id
+      chart = Chart.where(:watershed_id => @watershed.id, :description_id => description_id, :month_year => year).first
+      watershed = @watershed.id
     end
     if chart == nil then
       chart = Chart.new
@@ -1883,8 +1883,8 @@ module SimulationsHelper
 	# todo. this is not taken the buffer subareas such as FS, WL, etc.
 	  if values[i][0] <= @soils.count then
 		  values[i][0] == 0 ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
-		  add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
 		  if session[:simulation].eql?('scenario') then
+			add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
 			case description_id #Total area for summary report is beeing calculated
 			  when 4 #calculate total area
 				#todo
@@ -1902,21 +1902,23 @@ module SimulationsHelper
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 90"), 90, soil_id)
 			end #end case when
 		  else
+			if values[i][0] > 0 then next end
+			add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
 			case description_id #Total area for summary report is beeing calculated
 			  when 4 #calculate total area
 				#todo
 			  when 24 #calculate total N
-				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
+				add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
 			  when 33 #calculate total P
-				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
+				add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
 			  when 43 #calculate total flow
-				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
+				add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
 			  when 52 #calculate total other water info
-				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
+				add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
 			  when 62 #calculate total sediment
-				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
+				add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
 			  when 91  # calculate total other N
-				add_totals(Result.where("watershed_id = " + @watershed_id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 90"), 90, soil_id)
+				add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 90"), 90, soil_id)
 			end #end case when
 		  end # end if simulation == scenario
 	  end  # end if <= @soils
@@ -1939,8 +1941,8 @@ module SimulationsHelper
       soil = soil_id
       scenario = @scenario.id
     else
-      result = Result.where(:watershed_id => @watershed_id, :description_id => description_id).first
-      watershed = @watershed_id
+      result = Result.where(:watershed_id => @watershed.id, :description_id => description_id).first
+      watershed = @watershed.id
     end
     if result == nil then
       result = Result.new
@@ -2108,7 +2110,7 @@ module SimulationsHelper
       if session[:simulation] == "scenario"
         crop_ci = Chart.select("value, month_year").where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => 0, :description_id => crop["description_id"])
       else
-        crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed_id, :description_id => crop["description_id"])
+        crop_ci = Chart.select("value, month_year").where(:watershed_id => @watershed.id, :description_id => crop["description_id"])
       end
       ci = Array.new
       crop_ci.each do |c|

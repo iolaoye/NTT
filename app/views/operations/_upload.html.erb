@@ -1,7 +1,7 @@
 
 <form id="myForm">
     <h2><%= t('operation.upload') + " " + t('operation.crop') + " " + t('operation.schedule') %></h2>
-    <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('operation.crop') + " " + t('operation.schedule')} %>
+    <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('general.select') + " " + t('general.one')} %>
     <%= collection_select :tillage, :id, @tillages, :id, :name, {:prompt => "No " + t('models.tillage'), :required => true} %>
     <%= label :year, t('pdf.year'), :id => "year_label" %>
     <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>

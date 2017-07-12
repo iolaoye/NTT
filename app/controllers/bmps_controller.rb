@@ -176,7 +176,7 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_ll][:slope_reduction] == "") then
   			create(16)
   		end
-  		if params[:bmp_ts][:id] == "1" then
+  		if params[:select][:"17"] == "1" then
   			create(17)
   		end
 		if !(params[:bmp_mc] == nil) # when this is hidden because there is not manure application
