@@ -472,6 +472,7 @@ class ScenariosController < ApplicationController
     @change_till_depth = Array.new
     @last_soil_sub = 0
     @last_subarea = 0
+	@last_herd = 0
     if msg.eql?("OK") then msg = create_control_file() else return msg end									#this prepares the apexcont.dat file
     if msg.eql?("OK") then msg = create_parameter_file() else return msg  end								#this prepares the parms.dat file
     if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end					#this prepares the apex.sit file

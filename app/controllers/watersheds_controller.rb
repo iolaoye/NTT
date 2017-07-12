@@ -131,6 +131,9 @@ class WatershedsController < ApplicationController
 			@new_fert_line = Array.new
 			@subarea_file = Array.new
 			@soil_number = 0
+			@last_herd = 0
+			@herd_list = Array.new
+			@change_fert_for_grazing_line = Array.new
 			j=0
 			watershed_scenarios.each do |p|
 			  @scenario = Scenario.find(p.scenario_id)

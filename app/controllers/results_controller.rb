@@ -112,8 +112,8 @@ class ResultsController < ApplicationController
   	if @type == nil then
   		@type = t("general.view")
   	end
-	  @crop_results = []
-	  @stress_ws_results = []
+	@crop_results = []
+	@stress_ws_results = []
     @stress_ns_results = []
     @stress_ps_results = []
     @stress_ts_results = []

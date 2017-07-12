@@ -405,12 +405,13 @@
 				    <% when 17 %>
 				      <tr>
 					    <td class="indent" colspan="2">
-						    <%= t('general.yes') %>
-						    <% if bmp.id != nil %>
+						    <%= t('general.no_additional_needed') %>
+
+                  <!--<% if bmp.id != nil %>
 							    <%= check_box :bmp_ts, :id, checked: true %>
 						    <%else%>
 							    <%= check_box :bmp_ts, :id, checked: false %>
-						    <%end%>
+						    <%end%>-->
 					    </td>
 				      </tr>
 				    <% when 18 %>
