@@ -7,7 +7,7 @@
 
 <div class="page-header"><h1><%= t('menu.operations') %></h1></div>
 
-	<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
+	<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('general.to') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
 	<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
 	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views", :class => 'btn btn-primary', "onclick" => "saveView()" } %>
 	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
