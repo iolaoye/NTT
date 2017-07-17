@@ -573,7 +573,7 @@ class ResultsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xls { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xls\"" }
+      #format.xls { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xls\"" }
       format.csv { send_data @crop_results.to_csv, filename: "report-#{Date.today}.csv"}
     end
   end  # end Method Index
