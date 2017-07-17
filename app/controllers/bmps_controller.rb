@@ -146,7 +146,7 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_wl][:area] == "") then
   			create(8)
   		end
-  		if !(params[:bmp_pnd][:irrigation_efficiency] == "") then
+  		if !params[:select][:"9"].nil? then
   			create(9)
   		end
   		if !(params[:bmp_sf][:number_of_animals] == "") then
@@ -176,7 +176,7 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_ll][:slope_reduction] == "") then
   			create(16)
   		end
-  		if params[:bmp_ts][:id] == "1" then
+  		if !params[:select][:"17"].nil? then
   			create(17)
   		end
 		if !(params[:bmp_mc] == nil) # when this is hidden because there is not manure application

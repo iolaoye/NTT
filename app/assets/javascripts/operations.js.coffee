@@ -44,6 +44,7 @@ updateTypes = ->
   $("#div_moisture").hide()
   $("#div_type").hide()
   $("#div_tillage").hide()
+  $("#div_date").hide()
   switch $("#operation_activity_id").val()
     when "1" # planting
       updatePlantPopulation()
@@ -86,16 +87,17 @@ updateTypes = ->
       $("#div_tillage").show()
       $("#div_nutrients").show()
       $("#div_type").show()
+      $("#div_date").show()
       $("#operation_type_id").prop('required',true)
     when "10"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
-      $("#div_type").disable()
+      $("#div_type").hide()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
       $("#div_tillage").hide()
-      $("#div_type").disable()
+      $("#div_type").hide()
 
   $.getJSON url, (tillages) ->
     items = []

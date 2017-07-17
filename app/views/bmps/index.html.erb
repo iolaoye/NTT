@@ -216,11 +216,11 @@
 					      <td class="field indent" colspan="2" id = "fraction_control_by_pond" >
 						      <%= label :control, t('bmp.area_control') + " " + t('bmp.percentage_range')  %>
                   <% if bmp.irrigation_efficiency  != nil %>
-                    <% ie = bmp.irrigation_efficiency * 100 %>
-                  <% else %>
-                    <% ie = 0 %>
-                  <% end %>
-						      <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :class => "gvTitleStyleNumber", :step => 'any' %>
+-                    <% ie = bmp.irrigation_efficiency * 100 %>
+-                 <% else %>
+-                    <% ie = 0 %>
+-                 <% end %>
+-						      <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :class => "gvTitleStyleNumber", :step => 'any' %>
                 </td>
 				      </tr>
 				    <% when 10 %>              
@@ -405,12 +405,13 @@
 				    <% when 17 %>
 				      <tr>
 					    <td class="indent" colspan="2">
-						    <%= t('general.yes') %>
-						    <% if bmp.id != nil %>
+						    <%= t('general.no_additional_needed') %>
+
+                  <!--<% if bmp.id != nil %>
 							    <%= check_box :bmp_ts, :id, checked: true %>
 						    <%else%>
 							    <%= check_box :bmp_ts, :id, checked: false %>
-						    <%end%>
+						    <%end%>-->
 					    </td>
 				      </tr>
 				    <% when 18 %>
