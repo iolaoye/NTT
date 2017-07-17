@@ -476,7 +476,7 @@ en:
     project_name: 'Project Name'
     description: 'Project Description'
   footer:
-    instructions: Instructions
+    instructions: Page Instructions
     contact_us: 'Contact Us'
     about_ntt: 'About NTT'
     help: Help
