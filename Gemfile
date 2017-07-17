@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.21'
-gem 'strong_parameters'
+gem 'rails', '4.2.8'
+gem 'tzinfo-data'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -11,8 +11,8 @@ gem 'coffee-script-source', '1.8.0'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem 'bootstrap-sass'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -27,7 +27,10 @@ gem 'breadcrumbs_on_rails'
 gem 'turbolinks', '~> 2.5', '>= 2.5.3'
 gem 'jquery-turbolinks'
 
+# Gem used to download Excel
 gem 'axlsx_rails'
+
+gem 'protected_attributes'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
@@ -39,11 +42,11 @@ gem 'axlsx_rails'
 # gem 'capistrano'
 
 # To use debugger
-gem 'debugger'
+gem 'byebug', '~> 9.0', '>= 9.0.6'
 
 gem 'bcrypt-ruby', require: 'bcrypt'
 # rest API for NTT call
-gem "nokogiri"
+gem "nokogiri", '1.6.8'
 gem 'savon', '>= 2.0'
 
 gem 'chartkick', '~> 1.5', '>= 1.5.2'

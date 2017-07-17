@@ -3,5 +3,5 @@ class Event < ActiveRecord::Base
   #Associatons
      belongs_to :cropping_system
   #scopes
-     default_scope :order => "year, month, day, event_order  ASC"
+     default_scope {order("year, month, day, event_order  ASC")}
 end

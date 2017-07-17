@@ -79,6 +79,8 @@ NTTG3::Application.configure do
     :password             => '20150712_NTT',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
+
+  config.eager_load = true
 end
 
 

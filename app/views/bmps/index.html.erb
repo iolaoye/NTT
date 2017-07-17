@@ -17,7 +17,7 @@
     <% end %>
   </div>
   <%= submit_tag t("submit.savecontinue"), name: "button", class: "btn btn-primary" %>
-  <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field), :class => "btn btn-primary" %>
+  <%= link_to t('general.back'), project_field_scenario_operations_path(@project.id, @field.id, @scenario.id), :class => "btn btn-primary" %>
   <%#= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br>
     <br>
       <table class="table table-striped">

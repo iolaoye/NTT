@@ -3,7 +3,7 @@ class Layer < ActiveRecord::Base
   #associations
     belongs_to :soil
   #scopes
-    default_scope :order => "depth ASC"
+    default_scope {order("depth ASC")}
   #validation
 	validates_presence_of :sand
 	validates_presence_of :silt

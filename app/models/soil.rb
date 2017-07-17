@@ -12,5 +12,5 @@ class Soil < ActiveRecord::Base
      validates :albedo, numericality: { greater_than_or_equal_to: 0 }
      validates :slope, numericality: { greater_than: 0 }
   #scopes
-    default_scope :order => "percentage DESC"
+    default_scope { order("percentage DESC") }
 end

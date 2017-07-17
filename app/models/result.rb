@@ -8,7 +8,8 @@ class Result < ActiveRecord::Base
 	  belongs_to :description
 	  belongs_to :crop
   #scopes
-	default_scope joins(:description).order("descriptions.order_id ASC")
+  default_scope {joins(:description)} #issue with joining table with rails 4
+	default_scope {order("descriptions.order_id ASC")}
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

@@ -1,7 +1,7 @@
 class Crop < ActiveRecord::Base
   attr_accessible :bushel_weight, :code, :conversion_factor, :dd, :dndc, :dry_matter, :dyam, :harvest_code, :heat_units, :itil, :lu_number, :name, :number, :plant_population_ac, :plant_population_ft, :plant_population_mt, :planting_code, :soil_group_a, :soil_group_b, :soil_group_c, :soil_group_d, :spanish_name, :state_id, :tb, :to1, :type, :yield_unit
   #scopes
-	default_scope :order => "number, state_id ASC"
+	default_scope {order("number, state_id ASC")}
 
   def self.load_crops1(state_id)
 	cropping_systems = CroppingSystem.where(:state_id => state_id)
@@ -13,9 +13,9 @@ class Crop < ActiveRecord::Base
 		end # end each event
 	end # end croping system 
 	if I18n.locale.eql?(:en) then
-		return self.select("id, name, type1").find_all_by_number(crops).sort_by(&:name)
+		return self.select("id, name, type1").find_by(number: crops).sort_by(&:name).all
 	else
-		return self.select("id, spanish_name as name, type1").find_all_by_number(crops).sort_by(&:name)
+		return self.select("id, spanish_name as name, type1").find_by(number: crops).sort_by(&:name).all
 	end
   end #end load_crops method
 
@@ -32,9 +32,9 @@ class Crop < ActiveRecord::Base
 		end # end each event
 	end # end croping system 
 	if I18n.locale.eql?(:en) then
-		return self.select("id, name, type1").find_all_by_number(crops).sort_by(&:name)
+		return self.select("id, name, type1").find_by(number: crops).sort_by(&:name).all
 	else
-		return self.select("id, spanish_name as name, type1").find_all_by_number(crops).sort_by(&:name)
+		return self.select("id, spanish_name as name, type1").find_by(number: crops).sort_by(&:name).all
 	end
   end #end load_crops method
 end

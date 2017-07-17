@@ -6,6 +6,6 @@ class County < ActiveRecord::Base
 	 validates_uniqueness_of :county_code
 	 validates_presence_of :county_name, :county_code
   #scopes
-     default_scope :order => "county_name ASC"
+     default_scope {order("county_name ASC")}
 
 end

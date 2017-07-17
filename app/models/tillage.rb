@@ -3,6 +3,6 @@ class Tillage < ActiveRecord::Base
   #associations
      belongs_to :activity
   #scopes
-     default_scope :order => "name ASC"
+     default_scope {order("name ASC")}
 
 end

@@ -182,7 +182,7 @@ wb.styles do |s|
           value2 = ns[3]
           difference1 = value2 - ns[1]
           reduction1 = difference1 / ns[1] * 100 unless ns[1] == 0
-          total_area1 = difference1 * @total_are
+          total_area1 = difference1 * @total_area
         end
         value3 = 0
         reduction2 = 0
@@ -222,7 +222,7 @@ wb.styles do |s|
           value2 = ps[3]
           difference1 = value2 - ps[1]
           reduction1 = difference1 / ps[1] * 100 unless ps[1] == 0
-          total_area1 = difference1 * @total_are
+          total_area1 = difference1 * @total_area
         end
         value3 = 0
         reduction2 = 0
@@ -262,7 +262,7 @@ wb.styles do |s|
           value2 = ts[3]
           difference1 = value2 - ts[1]
           reduction1 = difference1 / ts[1] * 100 unless ts[1] == 0
-          total_area1 = difference1 * @total_are
+          total_area1 = difference1 * @total_area
         end
         value3 = 0
         reduction2 = 0
@@ -302,7 +302,7 @@ wb.styles do |s|
           value2 = ws[3]
           difference1 = value2 - ws[1]
           reduction1 = difference1 / ws[1] * 100 unless ws[1] == 0
-          total_area1 = difference1 * @total_are
+          total_area1 = difference1 * @total_area
         end
         value3 = 0
         reduction2 = 0

@@ -10,7 +10,7 @@ class Operation < ActiveRecord::Base
     # sometimes these values are not needed
     #validates_presence_of :amount, :depth, :moisture, :nh3, :no3_n, :org_n, :org_p, :po4_p
 	validate :sum
-     default_scope :order => "activity_id, year, month_id, day, id ASC"
+     default_scope {order("activity_id, year, month_id, day, id ASC")}
   #Functions
   def sum
     if self.activity_id == 2 || self.activity_id == 7

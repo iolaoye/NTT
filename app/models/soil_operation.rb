@@ -6,5 +6,5 @@ class SoilOperation < ActiveRecord::Base
 	  belongs_to :soil
 	  belongs_to :bmp
   #scopes
-    default_scope :order => "year, month, day, activity_id, id ASC"
+    default_scope {order("year, month, day, activity_id, id ASC")}
 end

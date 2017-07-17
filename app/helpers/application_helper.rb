@@ -12,27 +12,17 @@ module ApplicationHelper
 	end
 
 	def field_submenu
-		if current_page?(url_for(:controller => 'weathers', :action => 'edit'))
+		if current_page?(edit_project_field_weather_path(id: @field.weather.id))
 			true
 		elsif current_page?(url_for(controller: 'soils', :action => 'index'))
 			true
-		elsif current_page?(url_for(:controller => 'scenarios', :action => 'list'))
-			true
-		elsif current_page?(url_for(:controller => 'scenarios', :action => 'new'))
-			true
-		elsif current_page?(url_for(:controller => 'scenarios', :action => 'edit'))
-			true
 		elsif current_page?(url_for(:controller => 'apex_controls', :action => 'index'))
-			true
-		elsif current_page?(url_for(:controller => 'operations', :action => 'list'))
-			true
-		elsif current_page?(url_for(:controller => 'operations', :action => 'new'))
-			true
-		elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
 			true
 		elsif current_page?(url_for(:controller => 'apex_parameters', :action => 'index'))
 			true
 		elsif request.url.include?(url_for("/scenarios"))
+			true
+		elsif request.url.include?(url_for("/bmps"))
 			true
 		elsif request.url.include?(url_for("/results")) && session[:simulation] == 'scenario'
 			true
@@ -58,7 +48,7 @@ module ApplicationHelper
 	end
 
 	def scenario_submenu
-		if request.url.include?(url_for('operations'))
+		if request.url.include?(url_for('/operations'))
 			true
 		elsif current_page?(url_for(:controller => 'operations', :action => 'index'))
 			true
@@ -66,15 +56,17 @@ module ApplicationHelper
 			true
 		elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
 			true
-		elsif current_page?(url_for(:controller => 'aplcat_parameters', :action => 'edit'))
-			@scenario_name = Scenario.find(params[:scenario_id]).name
-			true
-		elsif request.url.include?(url_for("/aplcat_parameters"))
-			@scenario_name = Scenario.find(params[:scenario_id]).name
-			true
-		elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters"))
-			@scenario_name = Scenario.find(params[:scenario_id]).name
-			true
+		elsif params[:scenario_id] != nil
+			if current_page?(url_for(:controller => 'aplcat_parameters', :action => 'edit'))
+				@scenario_name = Scenario.find(params[:scenario_id]).name
+				true
+			elsif request.url.include?(url_for("/aplcat_parameters"))
+				@scenario_name = Scenario.find(params[:scenario_id]).name
+				true
+			elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters"))
+				@scenario_name = Scenario.find(params[:scenario_id]).name
+				true
+			end
 		else
 			false
 		end

@@ -6,5 +6,5 @@ class CroppingSystem < ActiveRecord::Base
 	 validates_uniqueness_of :var12, :scope => :name
 	 validates_presence_of :var12, :crop, :name
   #scopes
-     default_scope :order => "crop ASC"
+     default_scope {order("crop ASC")}
 end

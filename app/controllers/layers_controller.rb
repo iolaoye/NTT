@@ -97,7 +97,7 @@ class LayersController < ApplicationController
     @soil = Soil.find(params[:soil_id])
     @layer = Layer.find(params[:id])
 	add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
-	add_breadcrumb t('menu.layers'), project_field_soil_layers_path(@project, @field)
+	add_breadcrumb t('menu.layers'), project_field_soil_layers_path(@project, @field, @soil)
 	add_breadcrumb t('general.editing') + " " +  t('menu.layers')
   end
 

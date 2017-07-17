@@ -4,19 +4,19 @@ class ResultsController < ApplicationController
   def monthly_charts
   	@type = t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
   	index
-  	render "index"
+  	#render "index"
   end
   ###############################  ANNUAL CHART  ###################################
   def annual_charts
-  	@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
-  	index
-  	render "index"
+    @type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
+    index
+    #render "index"
   end
   ###############################  BY SOIL  ###################################
   def by_soils
   	@type = t("result.summary") + " " + t("result.by_soil")
-  	index
-  	render "index"
+   	index
+   	#render "index"
   end
 
   ###############################  SUMMARY ###################################
@@ -24,7 +24,7 @@ class ResultsController < ApplicationController
     @project = Project.find(params[:project_id])
   	@type = t("general.view")
   	index
-  	render "index"
+  	#render "index"
   end
 
   ###############################  INDEX  ###################################

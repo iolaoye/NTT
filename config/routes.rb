@@ -50,12 +50,12 @@ NTTG3::Application.routes.draw do
 
   resources :projects do
     resources :watersheds do
-		post :simulate, on: :collection
-		get :list, on: :member
-		get :new_scenario, on: :member
-		get :destroy_watershed_scenario, on: :member
-		resources :watershed_scenarios
-	end
+  		post :simulate, on: :collection
+  		get :list, on: :member
+  		get :new_scenario, on: :member
+  		get :destroy_watershed_scenario, on: :member
+  		resources :watershed_scenarios
+	  end
     resources :locations do
       get :send_to_mapping_site, on: :member
       post :receive_from_mapping_site, on: :member
@@ -65,12 +65,12 @@ NTTG3::Application.routes.draw do
     get :group, on: :member
     resources :fields do
       resources :scenarios do
-		get 'copy_scenario', on: :member
+		    get 'copy_scenario', on: :member
         resources :aplcat_parameters do
 	        get 'aplcat', on: :member
-		end
-		resources :grazing_parameters
-		resources :supplement_parameters
+		    end
+		    resources :grazing_parameters
+		    resources :supplement_parameters
         post :simulate, on: :collection
         resources :operations do
           get :list, on: :collection
@@ -79,7 +79,7 @@ NTTG3::Application.routes.draw do
           get 'download', on: :collection
           get :open, on: :collection
           get :delete_all, on: :member
-		  post :upload_system, on: :member
+		      post :upload_system, on: :member
         end
         resources :bmps do
           get :list, on: :collection
@@ -120,7 +120,9 @@ NTTG3::Application.routes.draw do
       resources :apex_soils
       resources :apex_layers
       resources :subareas
-      resources :soil_operations
+      resources :soil_operations do
+        get 'download', :on => :collection
+      end
       resources :sites
     end
 	  get 'copy_project', on: :member
@@ -152,13 +154,13 @@ NTTG3::Application.routes.draw do
   get 'sessions/destroy'
   get 'users/new'
   post 'weathers/upload_weather'
-  root to: 'welcomes#index'
+  root :to => 'welcomes#index'
 
   get '/about' => "about#index", :as => "about"
   get '/contact' => "contact#index", :as => "contact"
 
   get '/help/' => redirect('/help/index')
-  get '/help/:page' => "help#show", :as => "help"
+  #get '/help/:page' => "help#show", :as => "help"
 
   post 'apex_controls/download'
   post 'apex_parameters/reset'
