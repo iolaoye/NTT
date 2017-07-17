@@ -423,6 +423,9 @@ en:
     today: today
     log_in: You have successfully logged in
     log_out: You have successfully logged out
+    start: Start
+    stop: Stop
+    no_additional_needed: No additional information is needed
   welcome_note:
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -473,7 +476,7 @@ en:
     project_name: 'Project Name'
     description: 'Project Description'
   footer:
-    instructions: Instructions
+    instructions: Page Instructions
     contact_us: 'Contact Us'
     about_ntt: 'About NTT'
     help: Help
@@ -558,7 +561,7 @@ en:
     nutrients: 'Nutrients (0-1)'
     distribution: Distribution
     fertilizer: Fertilizer
-    amount: 'Amount (lbs/ac)'
+    amount: 'Amount(lbs/ac)'
     bmp: BMP
     irrigation: Irrigation
     plant_population: 'Plant Population (seeds/ac)'
@@ -584,7 +587,7 @@ en:
     kill: Kill
     burn: Burn
     liming: Liming
-    start_grazing: Start Grazing
+    start_grazing: Grazing
     stop_grazing: Stop Grazing
     seed: 'Seeding Amount (seeds/ft)'
     amount_applied: 'Amount Applied'
@@ -596,7 +599,7 @@ en:
     add_irrigation: 'Add Irrigation Operation'
     add_burn: 'Add Burn operation'
     add_liming: 'Add Liming Operation'
-    add_start_grazing: 'Add Start Grazing'
+    add_start_grazing: 'Add Grazing'
     add_stop_grazing: 'Add Stop Grazing'
   bmp:
     bmp_group: BMP Group
@@ -704,6 +707,7 @@ en:
     new_watershed: New Watershed Scenario
     watershed_scenario_title: List of fields in 
     add_to: Add to
+    already_selected: 'That field has already been selected. Please choose again.'
   submit:
     create: Create
     save: Save

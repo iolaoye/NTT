@@ -428,6 +428,9 @@ es:
     today: hoy
     log_in: Se ha registrado correctamente
     log_out: Se ha cerrado exitosamente
+    start: Iniciar
+    stop: Terminar
+    no_additional_needed: No información adicional es necesaria
   welcome_note:
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tiaer.tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.	Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
@@ -477,7 +480,7 @@ es:
     project_name: 'Nombre del Proyecto'
     description: 'Descripción del Proyecto'
   footer:
-    instructions: Instrucciones
+    instructions: Instrucciones para esta página
     contact_us: 'Contactarnos'
     about_ntt: 'Acerca de NTT'
     help: Ayuda
@@ -586,20 +589,20 @@ es:
     kill: Terminar
     burn: Quema
     liming: Encalado
-    start_grazing: Iniciar Pasteo
+    start_grazing: Pasteo
     stop_grazing: Terminar Pasteo
     seed: 'Cantidad de Siembra (seeds/ft)'
     amount_applied: 'Cantidad Aplicada'
-    add_planting: 'Añadir la operación de Plantar'
-    add_fertilizer: 'Añadir la operación de Fertilizante'
-    add_tillage: 'Añadir la operación de Arar'
-    add_harvest: 'Añadir la operación de Cosechar'
-    add_kill: 'Añadir la operación de Terminar'
-    add_irrigation: 'Añadir la operación de Irrigación'
-    add_burn: 'Añadir la operación de Quema'
-    add_liming: 'Añadir la operación de Encalado'
-    add_start_grazing: 'Añadir la operación de Iniciar Pasteo'
-    add_stop_grazing: 'Añadir la operación de Terminar Pasteo'
+    add_planting: 'Añadir operación de Plantar'
+    add_fertilizer: 'Añadir operación de Fertilizante'
+    add_tillage: 'Añadir operación de Arar'
+    add_harvest: 'Añadir operación de Cosechar'
+    add_kill: 'Añadir operación de Terminar'
+    add_irrigation: 'Añadir operación de Irrigación'
+    add_burn: 'Añadir operación de Quema'
+    add_liming: 'Añadir operación de Encalado'
+    add_start_grazing: 'Añadir operación de Pasteo'
+    add_stop_grazing: 'Añadir operación de Terminar Pasteo'
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
@@ -703,6 +706,7 @@ es:
     watershed_scenario_name: Nombre de la cuenca
     watershed_scenario_title: Lista de parcelas en
     add_to: Adicionar a
+    already_selected: 'Ese parcela ya ha sido seleccionado. Por favor, elija otra vez.'
   submit:
     create: Crear
     save: Guardar

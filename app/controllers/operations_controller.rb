@@ -89,11 +89,39 @@ class OperationsController < ApplicationController
     msg = "Unknown error"
     ActiveRecord::Base.transaction do
       @operation = Operation.new(operation_params)
+	  update_amount()   #CONVERT T/ac to lbs/ac
       @operation.scenario_id = params[:scenario_id]
       @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
       if @operation.save
         saved = true
         #operations should be created in soils too.
+        msg = add_soil_operation()
+        if msg.eql?("OK")
+          soil_op_saved = true
+        else
+          soil_op_saved = false
+          raise ActiveRecord::Rollback
+        end
+		if @operation.activity_id == 7 then
+			operation_id = @operation.id
+			@operation = Operation.new(operation_params)
+			@operation.activity_id = 8
+			@operation.year = params[:year1]
+			@operation.month_id = params[:month_id1]
+			@operation.day = params[:day1]
+			@operation.type_id = operation_id
+			@operation.scenario_id = params[:scenario_id]
+			@operation.amount = 0
+			@operation.depth = 0
+			@operation.no3_n = 0
+			@operation.po4_p = 0
+			@operation.org_n = 0
+			@operation.org_p = 0
+			@operation.nh3 = 0
+			@operation.moisture = 0
+			@operation.subtype_id = 0
+			@operation.save
+		end
         msg = add_soil_operation()
         if msg.eql?("OK")
           soil_op_saved = true
@@ -131,15 +159,25 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1.json
   def update
     @operation = Operation.find(params[:id])
-	  @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
       if @operation.update_attributes(operation_params)
+		update_amount()
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
+        end
+		@operation1 =  Operation.find_by_type_id(@operation.id)
+		@operation1.year = params[:year1]
+		@operation1.month_id = params[:month_id1]
+		@operation1.day = params[:day1]
+		@operation1.save
+        soil_operations = SoilOperation.where(:operation_id => @operation1.id)
+        soil_operations.each do |soil_operation|
+          update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
         end
         if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
@@ -164,6 +202,10 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
+	if @operation.activity_id == 7 then
+		#delete stop grazing linked to this grazing operation
+		Operation.find_by_type_id(@operation.id).destroy
+	end
     if @operation.destroy
       flash[:notice] = t('models.operation') + t('notices.deleted')
     end
@@ -467,20 +509,21 @@ class OperationsController < ApplicationController
 		@operation.subtype_id = 0
 		case @operation.activity_id
 			when 1 #planting operation. Take planting code from crop table and plant population as well
-			@operation.type_id = Crop.find(@operation.crop_id).planting_code
-			@operation.amount = plant_population
+				@operation.type_id = Crop.find(@operation.crop_id).planting_code
+				@operation.amount = plant_population
 			when 2, 7
-			fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
-			@operation.amount = event.apex_opv1
-			if fertilizer != nil then
-				@operation.type_id = fertilizer.fertilizer_type_id
-				@operation.no3_n = fertilizer.qn
-				@operation.po4_p = fertilizer.qp
-				@operation.org_n = fertilizer.yn
-				@operation.org_p = fertilizer.yp
-				@operation.nh3 = fertilizer.nh3
-				@operation.subtype_id = event.apex_fertilizer
-			end
+				fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
+				@operation.amount = event.apex_opv1
+				if fertilizer != nil then
+					@operation.type_id = fertilizer.fertilizer_type_id
+				if @operation.type_id == 2 then @operation.amount * 1000 end
+					@operation.no3_n = fertilizer.qn
+					@operation.po4_p = fertilizer.qp
+					@operation.org_n = fertilizer.yn
+					@operation.org_p = fertilizer.yp
+					@operation.nh3 = fertilizer.nh3
+					@operation.subtype_id = event.apex_fertilizer
+				end
 			when 3
 			@operation.type_id = event.apex_operation
 			else
@@ -649,6 +692,11 @@ class OperationsController < ApplicationController
     else
       return "Error saving operation"
     end
+  end
+
+  def update_amount()
+	  if @operation.activity_id == 2 and @operation.type_id == 2 then @operation.amount *= 2000 end
+	  @operation.save
   end
 
 end #end class

@@ -589,14 +589,14 @@ class ProjectsController < ApplicationController
 
   def save_result_information(xml, result)
     xml.result {
-      xml.description_id result.description_id
+	  xml.watershed_id result.watershed_id
+	  xml.field_id result.field_id
+	  xml.soil_id result.soil_id
+	  xml.scenario_id result.scenario_id
       xml.value result.value
       xml.ci_value result.ci_value
+      xml.description_id result.description_id
       xml.crop_id result.crop_id
-	    xml.soil_id result.soil_id
-	    xml.watershed_id result.watershed_id
-	    xml.scenario_id result.scenario_id
-	    xml.field_id result.field_id
     } # xml each result end
   end  # end method
 
@@ -802,12 +802,13 @@ class ProjectsController < ApplicationController
   def save_chart_information(xml, chart)
     xml.chart {
       xml.description_id chart.description_id
-      xml.month_year chart.month_year
-      xml.value chart.value
 	  xml.watershed_id chart.watershed_id
 	  xml.scenario_id chart.scenario_id
 	  xml.field_id chart.field_id
 	  xml.soil_id chart.soil_id
+      xml.month_year chart.month_year
+      xml.value chart.value
+	  xml.crop_id = chart.crop_id
     } # xml each chart_info end
   end
 
@@ -2656,6 +2657,8 @@ class ProjectsController < ApplicationController
   		  chart.soil_id = p.text
 	    when "watershed_id"
 	      chart.watershed_id = p.text
+	    when "crop_id"
+	      chart.crop_id = p.text
       end # end case
     end # end each
     if chart.save
