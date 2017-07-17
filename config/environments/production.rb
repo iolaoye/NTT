@@ -75,8 +75,8 @@ NTTG3::Application.configure do
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :domain               => 'mail.google.com',
-    :user_name            => 'NutrientTrackingTool', #example: cbnttmanager
-    :password             => '20150712_NTT',
+    :user_name            => ENV['MAILER_USER'],
+    :password             => ENV['MAILER_PASSWORD'],
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
 
