@@ -87,6 +87,6 @@ class CropSchedulesController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def crop_schedule_params
-      params.require(:crop_schedule).permit(:class, :id, :name, :state_id, :status)
+      params.require(:crop_schedule).permit(:class, :self_id, :name, :state_id, :status)
     end
 end

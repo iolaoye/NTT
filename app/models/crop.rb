@@ -26,7 +26,7 @@ class Crop < ActiveRecord::Base
     end
 	crops = Array.new
 	cropping_systems.each do |cs|
-		events = Schedule.where(:crop_schedule_id => cs.id)
+		events = Schedule.where(:crop_schedule_id => cs.self_id)
 		events.each do |e|
 			crops.push(e.apex_crop) unless crops.include?(e.apex_crop)
 		end # end each event

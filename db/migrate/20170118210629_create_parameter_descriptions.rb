@@ -1,7 +1,7 @@
 class CreateParameterDescriptions < ActiveRecord::Migration
   def change
     create_table :parameter_descriptions do |t|
-      t.integer :id
+      t.integer :parameter_desc_id
       t.integer :line
       t.integer :number
       t.string :name

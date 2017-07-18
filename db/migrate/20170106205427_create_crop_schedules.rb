@@ -1,7 +1,7 @@
 class CreateCropSchedules < ActiveRecord::Migration
   def change
     create_table :crop_schedules do |t|
-      t.integer :id
+      t.integer :self_id
       t.string :name
       t.integer :state_id
       t.integer :class

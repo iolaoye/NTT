@@ -53,8 +53,8 @@ class LayersController < ApplicationController
     @field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     @layers = Layer.where(:soil_id => params[:soil_id])
-	add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
-	add_breadcrumb t('menu.layers') 
+	  add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
+	  add_breadcrumb t('menu.layers') 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @layers }
@@ -64,7 +64,6 @@ class LayersController < ApplicationController
 # GET /layers/1
 # GET /layers/1.json
   def show
-
     @layer = Layer.where(:soil_id => params[:id])
     @layer = Layer.find(params[:id])
 

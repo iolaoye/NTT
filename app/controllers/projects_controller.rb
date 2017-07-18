@@ -3244,7 +3244,7 @@ class ProjectsController < ApplicationController
       node.elements.each do |p|
         case p.name
           when "Code"
-            control.control_description_id = ControlDescription.find_by_code(p.text.strip).id
+            control.control_description_id = ControlDescription.find_by_code(p.text.strip).control_desc_id
             case control.control_description_id
               when 1 # get number of years of simulation from weather
                 weather = Weather.find_by_field_id(session[:field_id])

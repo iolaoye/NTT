@@ -1,7 +1,7 @@
 class CreateSchedules < ActiveRecord::Migration
   def change
     create_table :schedules do |t|
-      t.integer :id
+      t.integer :schedule_id
       t.integer :event_order
       t.integer :month
       t.integer :day
