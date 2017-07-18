@@ -1,7 +1,7 @@
 class CreateDrainages < ActiveRecord::Migration
   def change
     create_table :drainages do |t|
-      t.integer :id
+      t.integer :drainage_id
       t.string :name
       t.integer :wtmx
       t.integer :wtmn

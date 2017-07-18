@@ -1,7 +1,7 @@
 class CreateManureControls < ActiveRecord::Migration
   def change
-    create_table :manure_controls do |t|
-      t.integer :id
+    create_table :manure_controls  do |t|
+      t.integer :manure_control_id
       t.string :name
       t.string :spanish_name
       t.float :no3n

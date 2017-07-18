@@ -1,7 +1,7 @@
 class CreateTableAplcatParameters < ActiveRecord::Migration
   def change
     create_table :aplcat_parameters do |t|
-      t.integer :id
+      t.integer :aplcat_param_id
 	  t.integer :scenario_id
       t.integer :noc
       t.integer :nomb
