@@ -6,4 +6,7 @@ class Location < ActiveRecord::Base
 	has_many :fields, :dependent => :destroy
 	has_many :watersheds, :dependent => :destroy
 	belongs_to :project
+  #amoeba do
+  #   enable
+  #end
 end
