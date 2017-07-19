@@ -2100,7 +2100,7 @@ module SimulationsHelper
           array["ns"] += item[2]
           array["ts"] += item[3]
           array["ps"] += item[4]
-          add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1],Crop.find_by_code(item[0][0]).id)
+          add_value_to_chart_table(item[1] * array["conversion"], array["description_id"], 0, item[0][1],Crop.find_by_code(item[0][0].strip).id)
           break
         end # end if same crop
       end # end each name
@@ -2156,7 +2156,7 @@ module SimulationsHelper
     conversion_factor = 1 * AC_TO_HA
     dry_matter = 100
     #find the crop to take conversion_factor and dry_matter
-    crop = Crop.find_by_code(item[0][0])
+    crop = Crop.find_by_code(item[0][0].strip)
     if crop != nil then
       conversion_factor = crop.conversion_factor * AC_TO_HA
       dry_matter = crop.dry_matter
