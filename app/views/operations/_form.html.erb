@@ -37,6 +37,12 @@
   </div>
   <% case @operation.activity_id %>
 		<% when 1  # planting %>
+			<div id="div_date" style="display:none" >
+				<%= f.label :date, t('general.stop') + " " + t('general.date'), :class => 'field' %>
+				<%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
+				<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
+				<%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
+		    </div>
 			<div id="div_type" class="field spacer_bottom" >
 				<%= label :type_id, t('general.select') + " " + t('general.one') %>
 				<% if I18n.locale.eql?(:en) %>
@@ -84,6 +90,12 @@
 			  </div>
 			</div>
 		<% when 2 # fertilizer %>
+			<div id="div_date" style="display:none" >
+				<%= f.label :date, t('general.stop') + " " + t('general.date'), :class => 'field' %>
+				<%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
+				<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
+				<%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
+		    </div>
 			<div class="field" id="div_type"  >
 				<%= label :type_id, t('general.type') %>
 				<% if I18n.locale.eql?(:en) %>
@@ -135,6 +147,12 @@
 				</div>
 			</div>
 		<% when 3 # tillage %>
+			<div id="div_date" style="display:none" >
+				<%= f.label :date, t('general.stop') + " " + t('general.date'), :class => 'field' %>
+				<%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
+				<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
+				<%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
+		    </div>
 			<div id="div_type" >
 				<%= label :type_id, t('general.select') + " " + t('general.one') %>
 				<% if I18n.locale.eql?(:en) %>
@@ -178,6 +196,12 @@
 			  </div>
 			</div>
 		<% when 6 # irrigation%>
+			<div id="div_date" style="display:none" >
+				<%= f.label :date, t('general.stop') + " " + t('general.date'), :class => 'field' %>
+				<%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
+				<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
+				<%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
+		    </div>
 			<div id="div_type" >
 				<%= label :irrigation, t('general.select') + " " + t('general.one') %>
 				<% if I18n.locale.eql?(:en) %>
@@ -279,6 +303,12 @@
 			  </div>
 			</div>
 		<% when 10 # liming %>
+			<div id="div_date" style="display:none" >
+				<%= f.label :date, t('general.stop') + " " + t('general.date'), :class => 'field' %>
+				<%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
+				<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
+				<%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
+		    </div>
 			<div id="div_type"  style="display:none" >
 				<%= label :type_id, t('general.select') + " " + t('general.one') %>
 				<% if I18n.locale.eql?(:en) %>
