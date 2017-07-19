@@ -170,15 +170,17 @@ class OperationsController < ApplicationController
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
-		@operation1 =  Operation.find_by_type_id(@operation.id)
-		@operation1.year = params[:year1]
-		@operation1.month_id = params[:month_id1]
-		@operation1.day = params[:day1]
-		@operation1.save
-        soil_operations = SoilOperation.where(:operation_id => @operation1.id)
-        soil_operations.each do |soil_operation|
-          update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
-        end
+		if @operation.activity_id == 7 then
+			@operation1 =  Operation.find_by_type_id(@operation.id)
+			@operation1.year = params[:year1]
+			@operation1.month_id = params[:month_id1]
+			@operation1.day = params[:day1]
+			@operation1.save
+			soil_operations = SoilOperation.where(:operation_id => @operation1.id)
+			soil_operations.each do |soil_operation|
+			  update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
+			end
+		end 
         if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
