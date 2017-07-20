@@ -171,7 +171,24 @@ class OperationsController < ApplicationController
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
 		if @operation.activity_id == 7 then
-			@operation1 =  Operation.find_by_type_id(@operation.id)
+			if (Operation.find_by_type_id(@operation.id) != nil) then
+				@operation1 = Operation.find_by_type_id(@operation.id)
+			else
+				operation_id = @operation.id
+				@operation1 = Operation.new(operation_params)
+				@operation1.activity_id = 8
+				@operation1.type_id = operation_id
+				@operation1.scenario_id = params[:scenario_id]
+				@operation1.amount = 0
+				@operation1.depth = 0
+				@operation1.no3_n = 0
+				@operation1.po4_p = 0
+				@operation1.org_n = 0
+				@operation1.org_p = 0
+				@operation1.nh3 = 0
+				@operation1.moisture = 0
+				@operation1.subtype_id = 0
+			end
 			@operation1.year = params[:year1]
 			@operation1.month_id = params[:month_id1]
 			@operation1.day = params[:day1]
