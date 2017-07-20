@@ -149,7 +149,9 @@ class BmpsController < ApplicationController
   		if !params[:select][:"9"].nil? then
   			create(9)
   		end
-  		if !(params[:bmp_sf][:number_of_animals] == "") then
+
+		if !params[:select][:"10"].nil? then
+  		#if !(params[:bmp_sf][:number_of_animals] == "") then
   			create(10)
   		end
   		if !(params[:bmp_sbs] == nil)
