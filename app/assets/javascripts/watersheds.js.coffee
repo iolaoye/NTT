@@ -28,6 +28,8 @@ change_selection = ->
     for i in [1..tbl_watersheds[0].rows.length]
         tbl_watersheds[0].rows[i].cells[0].children[0].checked = tbl_watersheds[0].rows[0].cells[0].children[0].checked
 
+loading_screen = ->
+    $(".overlay").toggle(true)
 
 $(document).ready ->
   $("#select_todo").click ->
@@ -95,3 +97,6 @@ $(document).ready ->
 
   $("#field20_id").change ->
     select_scenarios(20)
+
+  $("#simulate_watershed").click ->
+    loading_screen()

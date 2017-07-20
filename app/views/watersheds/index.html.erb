@@ -19,7 +19,9 @@
 		</div>
 	<% end %>
 <% end %>
-
+<div class="overlay">
+	<%= image_tag "loading.gif" %>
+</div>
 <% case %>
   <% when flash[:error] != nil %>
     <div class="danger_alert">
@@ -42,7 +44,7 @@
 
 <%= form_tag simulate_project_watersheds_path(@project), method: :post do |f| %>
     <% if @watersheds.count > 0 %>
-		<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('watershed.watershed'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary' %>
+		<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('watershed.watershed'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_watershed" %>
 		<% if @watersheds.count > 0 %>
 			<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, 0), :class => 'btn btn-success' %></td>
  		<% end %>
