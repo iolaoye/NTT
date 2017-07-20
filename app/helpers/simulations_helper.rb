@@ -2133,6 +2133,10 @@ module SimulationsHelper
       else
         #0 used for ci.confidence_interval because it is crashing with watersheds.
         add_summary(crop["yield"], crop["description_id"], 0, 0, crop["crop_id"])
+        add_summary(crop["ns"], crop["description_id"]+130, 0, 0, crop["crop_id"])
+        add_summary(crop["ps"], crop["description_id"]+140, 0, 0, crop["crop_id"])
+        add_summary(crop["ts"], crop["description_id"]+150, 0, 0, crop["crop_id"])
+        add_summary(crop["ws"], crop["description_id"]+160, 0, 0, crop["crop_id"])
       end
     end
     add_summary(0, 70, 0, 0, 0) # add total for crops. Just in case is needed for some reason

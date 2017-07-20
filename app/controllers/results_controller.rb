@@ -136,6 +136,10 @@ class ResultsController < ApplicationController
 						else
 							@results1 = Result.where(:watershed_id => @scenario1, :crop_id => 0)
 							@crop_results1 = Result.where(:watershed_id => @scenario1).where("crop_id > 0")
+							@crop_stress1_ns = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 200, 211)
+							@crop_stress1_ps = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 210, 221)
+							@crop_stress1_ts = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 220, 231)
+							@crop_stress1_ws = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 230, 241)
 						end
 						@crop_results1.each do |cr|
 							crop_result = []
@@ -214,6 +218,10 @@ class ResultsController < ApplicationController
 						else
 							@results2 = Result.where(:watershed_id => @scenario2, :crop_id => 0)
 							@crop_results2 = Result.where(:watershed_id => @scenario2).where("crop_id > 0")
+							@crop_stress2_ns = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 200, 211)
+							@crop_stress2_ps = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 210, 221)
+							@crop_stress2_ts = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 220, 231)
+							@crop_stress2_ws = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 230, 241)
 						end
 						found = false
 						@crop_results2.each do |crop2|
@@ -343,6 +351,10 @@ class ResultsController < ApplicationController
 						else
 							@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0)
 							@crop_results3 = Result.where(:watershed_id => @scenario3).where("crop_id > 0")
+							@crop_stress3_ns = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 200, 211)
+							@crop_stress3_ps = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 210, 221)
+							@crop_stress3_ts = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 220, 231)
+							@crop_stress3_ws = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 230, 241)
 						end
 						found = false
 						found = false
