@@ -87,6 +87,6 @@ class DrainagesController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def drainage_params
-      params.require(:drainage).permit(:self_id, :name, :wtbl, :wtmn, :wtmx, :zqt, :ztk)
+      params.require(:drainage).permit(:drainage_id, :name, :wtbl, :wtmn, :wtmx, :zqt, :ztk)
     end
 end

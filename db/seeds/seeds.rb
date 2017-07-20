@@ -8012,8 +8012,8 @@ ControlDescription.create!({:control_desc_id => 72, :line => 6, :column => 4, :c
 ControlDescription.create!({:control_desc_id => 73, :line => 6, :column => 5, :code =>'BUS(1)', :name => 'MUSI input according to equation above(Range: 0-10)', :range_low =>0, :range_high => 10}, :without_protection => true)
 ControlDescription.create!({:control_desc_id => 74, :line => 6, :column => 6, :code =>'BUS(2)', :name => 'MUSI input according to equation above(Range: 0-0.9)', :range_low =>0, :range_high => 0.9}, :without_protection => true)
 ControlDescription.create!({:control_desc_id => 75, :line => 6, :column => 7, :code =>'BUS(3)', :name => 'MUSI input according to equation above(Range: 0-0.9)', :range_low =>0, :range_high => 0.9}, :without_protection => true)
-ControlDescription.create!({:control_desc_id => 76, :line => 6, :column => 8, :code =>'BUS(4)', :name => 'MUSI input according to equation above(Range: 0-1.2)', :range_low =>0, :range_high => 1self_.2}, :without_protection => true)
-ControlDescription.create!({:control_desc_id => 77, :line => 6, :column => 9, :code =>'TDR', :name => 'Tile Drain Equiation (0,1)', :range_low =>0, :range_high => 1}, :without_protection => true)self_
+ControlDescription.create!({:control_desc_id => 76, :line => 6, :column => 8, :code =>'BUS(4)', :name => 'MUSI input according to equation above(Range: 0-1.2)', :range_low =>0, :range_high => 1.2}, :without_protection => true)
+ControlDescription.create!({:control_desc_id => 77, :line => 6, :column => 9, :code =>'TDR', :name => 'Tile Drain Equiation (0,1)', :range_low =>0, :range_high => 1}, :without_protection => true)
 ControlDescription.create!({:control_desc_id => 78, :line => 6, :column => 10, :code =>'N2OF', :name => 'N2O Factor. Used in NDNITAK function. For NTT (0,1)', :range_low =>0, :range_high => 1}, :without_protection => true)
 
 #populate Parameters table.
