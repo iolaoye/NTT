@@ -112,7 +112,11 @@
 									<% amount_label = "(T/ac)" %>
 								<% end %>								
 							<% end %>
-							<td class="gvCellStyleNumber"><%= op.amount / 2000 %><%= amount_label %> </td>
+							<% if op.activity_id == 2 and op.type_id == 2 then %>
+								<td class="gvCellStyleNumber"><%= op.amount / 2000 %><%= amount_label %> </td>
+							<% else %>
+								<td class="gvCellStyleNumber"><%= op.amount%><%= amount_label %> </td>
+							<% end %>
 							<td class="gvCellStyleNumber"><%= op.depth %></td>
 							<td style="text-align:right">
 							  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
