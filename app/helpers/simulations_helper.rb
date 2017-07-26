@@ -599,8 +599,8 @@ module SimulationsHelper
 		  records = records + sprintf("%8.2f", 0)
 		  records = records + sprintf("%8.2f", 0)
 		  records = records + sprintf("%8.2f", 0)
-		  soil.zqt = 0
-		  soil.ztk = 0
+		  #soil.zqt = 0
+		  #soil.ztk = 0
 	  else
 		  records = records + sprintf("%8.2f", soil.wtmn)
 		  records = records + sprintf("%8.2f", soil.wtmx)
