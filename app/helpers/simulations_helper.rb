@@ -1623,8 +1623,8 @@ module SimulationsHelper
     sub_ant = 99
     irri_sum = 0
     dprk_sum = 0
-	  prkn_sum = 0
-	  n2o_sum = 0
+	prkn_sum = 0
+	n2o_sum = 0
     pcp = 0
     total_subs = 0
     i=1
@@ -1659,8 +1659,8 @@ module SimulationsHelper
         one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
         one_result.irri = tempa[237, 8].to_f * MM_TO_IN
         one_result.pcp = tempa[229, 8].to_f * MM_TO_IN
-        one_result.prkn = tempa[13, 9].to_f * MM_TO_IN
-        one_result.n2o = tempa[153, 9].to_f * MM_TO_IN
+        one_result.prkn = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result.n2o = tempa[153, 9].to_f
         if subs == 0 then
           one_result.dprk = dprk_sum / total_subs
           one_result.irri = irri_sum / total_subs
@@ -1669,6 +1669,8 @@ module SimulationsHelper
           one_result.pcp = pcp / total_subs
           irri_sum = 0
           dprk_sum = 0
+		  prkn_sum = 0
+		  n2o_sum = 0
           pcp = 0
           total_subs = 0
           if initial_chart_year <= year then
@@ -2091,7 +2093,7 @@ module SimulationsHelper
         if array["name"] == item[0][0] then
           found = true
           array["yield"] += item[1]
-          array["total"] += 1
+          array["total"] += 1 unless item[1] == 0
           array["ws"] += item[5]
           array["ns"] += item[2]
           array["ts"] += item[3]
@@ -2100,10 +2102,12 @@ module SimulationsHelper
           break
         end # end if same crop
       end # end each name
-      if found == false then
-        description_id += 1
-        yield_by_name.push(create_hash_by_name(item, description_id))
-      end # end if found
+	  if item[1] != 0 then
+		  if found == false then
+			description_id += 1
+			yield_by_name.push(create_hash_by_name(item, description_id))
+		  end # end if found
+	  end
       #first = false
     end
     yield_by_name.each do |crop|
