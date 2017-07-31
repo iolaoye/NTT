@@ -7,7 +7,7 @@ class Crop < ActiveRecord::Base
 	cropping_systems = CroppingSystem.where(:state_id => state_id)
 	crops = Array.new
 	cropping_systems.each do |cs|
-		events = Event.where(:cropping_system_id => cs.id)
+		events = Event.where(:cropping_system_id => cs.crop_schedule_id)
 		events.each do |e|
 			crops.push(e.apex_crop) unless crops.include?(e.apex_crop)
 		end # end each event
@@ -26,11 +26,11 @@ class Crop < ActiveRecord::Base
     end
 	crops = Array.new
 	cropping_systems.each do |cs|
-		events = Schedule.where(:crop_schedule_id => cs.id)
+		events = Schedule.where(:crop_schedule_id => cs.crop_schedule_id)
 		events.each do |e|
 			crops.push(e.apex_crop) unless crops.include?(e.apex_crop)
 		end # end each event
-	end # end croping system 
+	end # end croping system
 	if I18n.locale.eql?(:en) then
 		return self.select("id, name, type1").where(number: crops).sort_by(&:name)
 	else

@@ -225,7 +225,7 @@
 			  </div>
 			</div>
 		<% when 7 # grazing %>
-			<% operation = Operation.find_by_type_id(@operation.id) %>
+			<% operation = Operation.find_by_type_id(@operation.type_id) %>
   		    <div id="div_date">
 				<%= f.label :date, t('general.stop') + " " + t('general.date'), :class => 'field' %>
 				<%= select_tag "year1", options_for_select(listYears, :selected => operation.year), {:prompt => t('datetime.prompts.year')} %>

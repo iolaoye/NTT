@@ -189,9 +189,9 @@ class OperationsController < ApplicationController
 				@operation1.moisture = 0
 				@operation1.subtype_id = 0
 			end
-			@operation1.year = params[:year1]
-			@operation1.month_id = params[:month_id1]
-			@operation1.day = params[:day1]
+			@operation1.year = params[:operation][:year].to_i
+			@operation1.month_id = params[:operation][:month_id].to_i
+			@operation1.day = params[:operation][:day].to_i
 			@operation1.save
 			soil_operations = SoilOperation.where(:operation_id => @operation1.id)
 			soil_operations.each do |soil_operation|
@@ -386,7 +386,7 @@ class OperationsController < ApplicationController
     if params[:cropping_system] != nil
       if params[:cropping_system][:id] != "" then
         ActiveRecord::Base.transaction do
-          @cropping_system_id = params[:cropping_system][:id]
+          @cropping_system_id = params[:cropping_system][:crop_schedule_id]
 		  #create operations for crop rotation selected and take the crop to add to the tillage selected.
 		  create_crop_rotation()
         end   #end transaction do
@@ -480,7 +480,7 @@ class OperationsController < ApplicationController
 		end
 		#take the event for the cropping_system and tillage selected and add to the operation and soilOperaition files for the scenario selected.
 		crop_schedule_class_id = @cropping_systems.find(params[:cropping_system][:id]).class_id
-		events = Schedule.where(:crop_schedule_id => params[:cropping_system][:id])				
+		events = Schedule.where(:crop_schedule_id => params[:cropping_system][:crop_schedule_id])				
 		events.each do |event|
 		@operation = Operation.new
 		@operation.scenario_id = params[:scenario_id]
