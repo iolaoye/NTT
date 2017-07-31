@@ -171,8 +171,8 @@ class OperationsController < ApplicationController
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
 		if @operation.activity_id == 7 then
-			if (Operation.find_by_type_id(@operation.id) != nil) then
-				@operation1 = Operation.find_by_type_id(@operation.id)
+			if (Operation.find_by_type_id(@operation.type_id) != nil) then
+				@operation1 = Operation.find_by_type_id(@operation.type_id)
 			else
 				operation_id = @operation.id
 				@operation1 = Operation.new(operation_params)
