@@ -367,7 +367,6 @@ class OperationsController < ApplicationController
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     @operations = Operation.where(:scenario_id => params[:scenario_id])
-
     @count = @operations.count
     @highest_year = 0
     @operations.each do |operation|
@@ -386,7 +385,7 @@ class OperationsController < ApplicationController
     if params[:cropping_system] != nil
       if params[:cropping_system][:id] != "" then
         ActiveRecord::Base.transaction do
-          @cropping_system_id = params[:cropping_system][:crop_schedule_id]
+          @cropping_system_id = params[:cropping_system][:id]
 		  #create operations for crop rotation selected and take the crop to add to the tillage selected.
 		  create_crop_rotation()
         end   #end transaction do
@@ -478,9 +477,10 @@ class OperationsController < ApplicationController
 			#Delete operations for the scenario selected
 			Operation.where(:scenario_id => params[:scenario_id]).destroy_all
 		end
+		byebug
 		#take the event for the cropping_system and tillage selected and add to the operation and soilOperaition files for the scenario selected.
 		crop_schedule_class_id = @cropping_systems.find(params[:cropping_system][:id]).class_id
-		events = Schedule.where(:crop_schedule_id => params[:cropping_system][:crop_schedule_id])				
+		events = Schedule.where(:crop_schedule_id => params[:cropping_system][:id])				
 		events.each do |event|
 		@operation = Operation.new
 		@operation.scenario_id = params[:scenario_id]

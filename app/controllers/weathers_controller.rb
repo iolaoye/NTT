@@ -52,7 +52,7 @@ include ScenariosHelper
 
     respond_to do |format|
       if @weather.save
-        format.html { redirect_to edit_project_field_weather_path(@project, @field), notice: t('models.weather') + " " + t('general.updated') }
+        format.html { redirect_to edit_project_field_weather_path(@project.id, @field.id, @weather.id), notice: t('models.weather') + " " + t('general.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
