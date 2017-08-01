@@ -641,7 +641,7 @@ en:
     width: Width
     buffer_width: Grass Buffer Width
     waterways_info: Including both sides of channel
-    grass_field_portion: Grass field portion
+    grass_field_portion: Portion of buffer area that is grass
     slope_ratio: Slope ratio
     slope_ratio_label: Buffer Slope Ratio to Upland
     crop_width: Crop buffer width
@@ -651,7 +651,7 @@ en:
     month: Month
     max_temp: Max. Temp. ±(°C)
     min_temp: Min. Temp. ±(°C)
-    precipitation: Precipitation (%)
+    precipitation: Precipitation ±(%)
     fill: Fill
     select_vege: Select Vegetation
     select_animal: Select Animal Type
@@ -662,6 +662,7 @@ en:
     manure_control: Manure Control
     pad: Pad
     additional_land: Is the buffer area included in your AOI?
+    weather_change: use ±(°C)/±(%) to increase or decrease future temperature and/or precipitation to define the climate changes
   months:
     january: January
     february: February

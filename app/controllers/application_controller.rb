@@ -47,11 +47,14 @@ class ApplicationController < ActionController::Base
 				i+=1
 				next
 			end
-			create_seed(table)			
-			files_string += "file = " + "\"" + File.join(Rails.root, 'db', 'seeds', table + '.rb') +"\"" + "\n" + "load file" + "\n" + "\n"
+			temp = table.classify.constantize rescue nil
+			if !temp.nil?
+				create_seed(table)			
+				files_string += "file = " + "\"" + File.join('db', 'seeds', table + '.rb') +"\"" + "\n" + "load file" + "\n" + "\n"
+			end
 		end
 	end
-	print_string(files_string, File.join(Rails.root, 'db', 'seeds', 'seeds.rb'))
+	print_string(files_string, File.join('db', 'seeds', 'seeds.rb'))
   end
 
   def create_seed(table)

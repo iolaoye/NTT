@@ -23,12 +23,8 @@
       <table class="table table-striped">
         <thead>
           <tr class='gvHeaderStyle'>
-            <th>
-              <%= t('general.select')%>
-            </th>
-            <th>
-              <%= t('general.name')%>
-            </th>
+            <th><%= t('general.select')%></th>
+            <th><%= t('general.name')%></th>
           </tr>
         </thead>
         <% manure_operations = @scenario.operations.where(:activity_id => 2, :type_id => 2).count %>
@@ -129,9 +125,9 @@
 				      </tr>
 				    <% when 3 %>
 				      <tr>
-					    <td class="field indent" id = "depth" colspan="2" >
-						    <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
-						    <%= number_field :bmp_td, :depth, :value => bmp.depth, :class => "gvTitleStyleNumber" %>
+					      <td class="field indent" id = "depth" colspan="2" >
+						      <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
+						      <%= number_field :bmp_td, :depth, :value => bmp.depth, :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
 				    <% when 4 %>
@@ -334,7 +330,7 @@
 				      </tr>
               <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
                 <td class="indent2" colspan="2">
-                  <%= t('general.area') + " " + t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
+                  <%= t('bmp.grass_field_portion') + " " + t('bmp.quarter_to_three_fourths') %>
                   <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :step => '0.01', :min => 0.25, :max => 0.75, :class => "gvTitleStyleNumber" %>
                   </td>
               </tr>
@@ -452,38 +448,29 @@
 				      </tr>
               <% end %>
             <% when 19 %>
-              <tr>
-                <th class="gvCellStyleTitle">
-                  <%= t('bmp.month')%>
-                </th>
-                <th class="gvCellStyleTitle">
-                  <%= t('bmp.max_temp')%>
-                </th>
-                <th class="gvCellStyleTitle">
-                  <%= t('bmp.min_temp')%>
-                </th>
-                  <th class="gvCellStyleTitle">
-                    <%= t('bmp.precipitation')%>
-                  </th>
-              </tr>
+            <tr>
+              <td class="indent" colspan="2">
+              <div>
+                <table>
+                  <tr><td colspan="4" class="gvTotalText"><%= label :weather_change, t('bmp.weather_change')%></tr></td>
+                  <tr><th><%= t('bmp.month')%></th>
+                      <th><%= t('bmp.max_temp')%></th>
+                      <th><%= t('bmp.min_temp')%></th>
+                      <th><%= t('bmp.precipitation')%></th>
+                  </tr>
 
-              <% @climates.each do |climate| %>
-                <tr class="indent" colspan="4">
-                  <td style="text-align: center">
-                    <%= climate.month %>
-                  </td>
-                  <td class="gvTitleStyleNumber">
-                    <%= number_field "bmp_cc", "max_temp" + climate.month.to_s, :value  => climate.max_temp %>
-                  </td>
-                  <td class="gvTitleStyleNumber">
-                    <%= number_field "bmp_cc", "min_temp" + climate.month.to_s, :value => climate.min_temp  %>
-                  </td>
-                  <td class="gvTitleStyleNumber">
-                    <%= number_field "bmp_cc", "precipitation" + climate.month.to_s, :value  => climate.precipitation %>
-                  </td>
-                </tr>
-              <% end %>
-
+                  <% @climates.each do |climate| %>
+                    <tr class="indent" colspan="4">
+                      <td><%= listMonths.detect { |val, index| index == climate.month}[0] %></td>
+                      <td><%= number_field "bmp_cc", "max_temp" + climate.month.to_s, :value  => climate.max_temp, :class => "numbers" %></td>
+                      <td><%= number_field "bmp_cc", "min_temp" + climate.month.to_s, :value => climate.min_temp, :class => "numbers"  %></td>
+                      <td><%= number_field "bmp_cc", "precipitation" + climate.month.to_s, :value  => climate.precipitation, :class => "numbers" %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </div>
+              </td>
+            </tr>
             <% when 20 %>
 				      <tr>
 					    <td class="indent" colspan="2">
@@ -541,7 +528,11 @@
   </div>
 <% end %>
     <div id="pop-up">
-      <h6>When the stress level is reached, the model will automatically starts irrgation</h6>
+      <h6>
+        This factor is used to trigger the automatic irrigation and means what plant water stress is allowed.
+        At zero (0) means not autoirrigation at all, at one hundred (100) means not plant water stress allowed.
+        When the stress level is reached, the model will automatically starts irrgation.
+      </h6>
     </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>

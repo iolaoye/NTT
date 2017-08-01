@@ -643,7 +643,7 @@ es:
     width: Ancho
     buffer_width: Ancho del Buffer de pasto
     waterways_info: Incluyendo ambos lados del canal
-    grass_field_portion: Porción de pasto del campo
+    grass_field_portion: Porción del buffer que es pasto
     slope_ratio: Proporción de inclinación
     slope_ratio_label: Proporción de inclinación del Buffer al Upland
     crop_width: Ancho del buffer del cultivo
@@ -653,7 +653,7 @@ es:
     month: Mes
     max_temp: Temp. Max. ±(°C)
     min_temp: Temp. Min. ±(°C)
-    precipitation: Precipitación (%)
+    precipitation: Precipitación ±(%)
     fill: Duplicar
     select_vege: Seleccione la Vegetación
     select_animal: Seleccione el tipo de Animal
@@ -664,6 +664,7 @@ es:
     manure_control: Control de estiércol
     pad: Almohadilla
     additional_land: Esta el área del buffer incluida en el Area de Interes?
+    weather_change: Use ±(°C)/±(%) para incrementar or reducir a futuro la temperatura y/o precipitación para definir los cambios climáticos
   months:
     january: Enero
     february: Febrero
