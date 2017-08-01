@@ -1,14 +1,17 @@
 # encoding: utf-8
 
-#load("db/seeds/crop_schedule.rb")
-#load("db/seeds/schedule.rb")
-#load("db/seeds/crops.rb")
-#load("db/seeds/bmpsublists.rb")
-#load("db/seeds/descriptions.rb")
-#load("db/seeds/controls.rb")
-#load("db/seeds/parameters.rb")
+file = "db/seeds/descriptions.rb"
+load file
 
+file = "db/seeds/controls.rb"
+load file
 
+file = "db/seeds/control_descriptions.rb"
+load file
+
+cont = true
+
+if cont then
 file = "db/seeds/activities.rb"
 load file
 
@@ -39,12 +42,6 @@ load file
 file = "db/seeds/climates.rb"
 load file
 
-file = "db/seeds/controls.rb"
-load file
-
-file = "db/seeds/control_descriptions.rb"
-load file
-
 file = "db/seeds/counties.rb"
 load file
 
@@ -57,9 +54,6 @@ load file
 file = "db/seeds/cropping_systems.rb"
 load file
 
-file = "db/seeds/descriptions.rb"
-load file
-
 file = "db/seeds/drainages.rb"
 load file
 
@@ -67,9 +61,6 @@ file = "db/seeds/events.rb"
 load file
 
 file = "db/seeds/fertilizers.rb"
-load file
-
-file = "db/seeds/fertilizer_type.rb"
 load file
 
 file = "db/seeds/fertilizer_types.rb"
@@ -156,3 +147,4 @@ load file
 file = "db/seeds/weathers.rb"
 load file
 
+end

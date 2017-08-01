@@ -1,0 +1,1 @@
+Climate.delete_all

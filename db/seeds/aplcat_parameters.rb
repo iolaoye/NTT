@@ -1,0 +1,1 @@
+AplcatParameter.delete_all

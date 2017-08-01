@@ -1,0 +1,5 @@
+ManureControl.delete_all
+ManureControl.create!({:manure_control_id => 1, :name => 'Digeste', :spanish_name => 'Digeste', :no3n => 1.286, :orgn => 0.74, :po4p => 0.06, :orgp => 1.53, :om => 0.33}, :without_protection => true)
+ManureControl.create!({:manure_control_id => 2, :name => 'Primary Screen', :spanish_name => 'Pantalla Primaria', :no3n => 1.12, :orgn => 0.67, :po4p => 0.23, :orgp => 1.76, :om => 0.59}, :without_protection => true)
+ManureControl.create!({:manure_control_id => 3, :name => 'DAF', :spanish_name => 'DAF', :no3n => 1.02, :orgn => 0.21, :po4p => 0.23, :orgp => 0.08, :om => 0.835}, :without_protection => true)
+ManureControl.create!({:manure_control_id => 4, :name => 'NH3 Stipper', :spanish_name => 'Estibador NH3', :no3n => 0.3, :orgn => 0.21, :po4p => 0.23, :orgp => 0.08, :om => 0.851}, :without_protection => true)
