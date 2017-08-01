@@ -6,7 +6,6 @@ class SubareasController < ApplicationController
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
 	@soils = Soil.where(:field_id => @field.id, :selected => true)
-		debugger
 	add_breadcrumb t('menu.utility_file')
 	add_breadcrumb t('menu.subarea_file')
 	if @soils != nil and session[:scenario_id] == nil then
