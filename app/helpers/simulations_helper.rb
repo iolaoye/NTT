@@ -1834,8 +1834,8 @@ module SimulationsHelper
 
   def update_hash(climate, climate_array)
     hash = Hash.new
-    hash["max"] = climate.max_temp
-    hash["min"] = climate.min_temp
+    hash["max"] = climate.max_temp * 9/5 + 32  #convert from F to C because in climate temp is in F but in APEX weather file it is C
+    hash["min"] = climate.min_temp * 9/5 + 32  #convert from F to C because in climate temp is in F but in APEX weather file it is C
     hash["pcp"] = climate.precipitation
     climate_array.push(hash)
     return climate_array
