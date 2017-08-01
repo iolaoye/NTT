@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
 					@record_string += ":" + column + " => \"" + value.to_s + "\""
 				when (value.class.to_s.include? "NilClass")
 					@record_string += ":" + column + " => " + "nil"
-				when (value.class.to_s.include? "TimeWithZone")
+				when (value.class.to_s.include? "TimeWithZone") || (value.class.to_s.include? "Date")
 					@record_string += ":" + column + " => \"" + value.to_s + "\""
 				else
 					@record_string += ":" + column + " => " + value.to_s

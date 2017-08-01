@@ -49,9 +49,18 @@ include ScenariosHelper
     @field = Field.find(params[:field_id])
     @weather.simulation_initial_year = params[:weather][:simulation_initial_year]
     @weather.simulation_final_year = params[:weather][:simulation_final_year]
-
+	apex_control1 = @project.apex_controls.find_by_control_description_id(1)
+	apex_control2 = @project.apex_controls.find_by_control_description_id(2)
     respond_to do |format|
       if @weather.save
+		if @weather.simulation_initial_year - 5 >= @weather.weather_initial_year then
+			apex_control2.value = @weather.simulation_initial_year - 5
+		else
+			apex_control2.value = @weather.weather_initial_year
+		end
+		apex_control2.save
+		apex_control1.value = @weather.simulation_final_year - apex_control2.value + 1
+		apex_control1.save
         format.html { redirect_to edit_project_field_weather_path(@project.id, @field.id, @weather.id), notice: t('models.weather') + " " + t('general.updated') }
         format.json { head :no_content }
       else
