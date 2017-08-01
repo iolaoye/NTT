@@ -36,28 +36,27 @@
         </tr>
       </thead>
       <tbody>
-
-<% i=1 %>
-<% @apex_controls.each do |apex_control| %>
-	  <% if i % 2 == 0 %>
-        <tr class="gvRowStyleEven">
-	  <% else %>
-	    <tr class="gvRowStyleOdd">
-	  <% end %>
-      <td><%= apex_control.control_description_id %></td>
-      <td><%= apex_control.control_description.code %></td>
-      <td><%= apex_control.control_description.line %></td>
-      <td><%= apex_control.control_description.column %></td>
-      <td><%= apex_control.value %></td>
-      <td><%= apex_control.control_description.range_low %></td>
-      <td><%= apex_control.control_description.range_high %></td>
-      <td><%= link_to image_tag("edit.png"), edit_project_field_apex_control_path(@project, @field, apex_control), title: t('general.edit') %></td>
-      <% i+=1 %>
-<% end %>
-</tr>
-    </tbody>
-  </table>
-</div>
+        <% i=1 %>
+        <% @apex_controls.each do |apex_control| %>
+	      <% if i % 2 == 0 %>
+          <tr class="gvRowStyleEven">
+	      <% else %>
+	        <tr class="gvRowStyleOdd">
+	      <% end %>
+            <td><%= apex_control.control_description_id %></td>
+            <td><%= apex_control.control_description.code %></td>
+            <td><%= apex_control.control_description.line %></td>
+            <td><%= apex_control.control_description.column %></td>
+            <td><%= apex_control.value %></td>
+            <td><%= apex_control.control_description.range_low %></td>
+            <td><%= apex_control.control_description.range_high %></td>
+            <td><%= link_to image_tag("edit.png"), edit_project_field_apex_control_path(@project, @field, apex_control), title: t('general.edit') %></td>
+            <% i+=1 %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 

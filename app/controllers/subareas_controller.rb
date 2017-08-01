@@ -2,27 +2,23 @@ class SubareasController < ApplicationController
   # GET /subareas
   # GET /subareas.json
 
-  
-  
-  
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
 	@soils = Soil.where(:field_id => @field.id, :selected => true)
-	
-	
+		debugger
 	add_breadcrumb t('menu.utility_file')
 	add_breadcrumb t('menu.subarea_file')
-	if @soils != nil then
+	if @soils != nil and session[:scenario_id] == nil then
 		subarea = Subarea.where(:soil_id => @soils[0].id).first
 		if subarea != nil then
-			session[:scenario_id] = subarea.scenario_id
-		else
-			session[:scenario_id] = 0
-		end
-	else
-		  session[:scenario_id] = 0
-	end
+ 			session[:scenario_id] = subarea.scenario_id
+ 		else
+ 			session[:scenario_id] = 0
+ 		end
+ 	else
+ 		session[:scenario_id] = 0 unless session[:scenario_id] != nil
+ 	end
 	get_subareas()
 
 	respond_to do |format|
@@ -38,8 +34,7 @@ class SubareasController < ApplicationController
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @location = Location.where(:project_id => params[:project_id])
-	
-	
+		
 	add_breadcrumb t('menu.utility_file')
 	add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
     respond_to do |format|
@@ -64,8 +59,7 @@ class SubareasController < ApplicationController
     @subarea = Subarea.find(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-	
-	
+		
 	add_breadcrumb t('menu.utility_file')
 	add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
 	add_breadcrumb t('general.editing') + " " + t('menu.subarea_file')
@@ -75,7 +69,7 @@ class SubareasController < ApplicationController
   # POST /subareas
   # POST /subareas.json
   def create
-    session[:scenario_id] = params[:subarea][:scenario_id]
+    session[:scenario_id] = params[:subarea][:scenario_id].to_i
     @field = Field.find(params[:field_id])
     @soils = @field.soils.where(:selected => true)
 	@project = Project.find(params[:project_id])
@@ -87,7 +81,7 @@ class SubareasController < ApplicationController
   # PATCH/PUT /subareas/1.json
   def update
     @subarea = Subarea.find(params[:id])
-
+	session[:scenario_id] = @subarea.scenario_id
     respond_to do |format|
       if @subarea.update_attributes(subarea_params)
         format.html { redirect_to project_field_subareas_path, notice: t('models.subarea') + " " + t('notices.updated')  }
