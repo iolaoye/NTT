@@ -477,7 +477,6 @@ class OperationsController < ApplicationController
 			#Delete operations for the scenario selected
 			Operation.where(:scenario_id => params[:scenario_id]).destroy_all
 		end
-		byebug
 		#take the event for the cropping_system and tillage selected and add to the operation and soilOperaition files for the scenario selected.
 		crop_schedule_class_id = @cropping_systems.find(params[:cropping_system][:id]).class_id
 		events = Schedule.where(:crop_schedule_id => params[:cropping_system][:id])				
