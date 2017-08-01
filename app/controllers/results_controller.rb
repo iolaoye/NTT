@@ -687,9 +687,9 @@ class ResultsController < ApplicationController
     if month_or_year == 1 then #means chart is annual
 		first_year = Field.find(params[:field_id]).weather.simulation_final_year-12
 		if @chart_type > 0 then
-		chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND crop_id == ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").limit(12).reverse
+			chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND crop_id == ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").limit(12).reverse
 		else
-		chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND description_id == ? AND month_year > ?", params[:field_id], scenario_id, @soil, @description, first_year).order("month_year desc").limit(12).reverse
+			chart_values = Chart.select("month_year, value").where("field_id == ? AND scenario_id == ? AND soil_id == ? AND description_id == ? AND month_year > ?", params[:field_id], scenario_id, @soil, @description, first_year).order("month_year desc").limit(12).reverse
 		end
     else #means chart is monthly average
 		chart_values = Chart.select("month_year, value").where("field_id == " + params[:field_id] + " AND scenario_id == " + scenario_id + " AND soil_id == " + @soil + " AND description_id == " + @description + " AND month_year <= 12")

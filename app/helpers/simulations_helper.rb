@@ -1685,6 +1685,7 @@ module SimulationsHelper
             add_value_to_chart_table(one_result.po4+one_result.qdrp+one_result.orgp, 30, 0, year,0)
             add_value_to_chart_table(one_result.surface_flow, 41, 0, year,0)
             add_value_to_chart_table(one_result.flow - one_result.surface_flow, 42, 0, year,0)
+            add_value_to_chart_table(one_result.qdr, 43, 0, year,0)
             add_value_to_chart_table(one_result.qdr, 33, 0, year,0)
             add_value_to_chart_table(one_result.flow + one_result.qdr, 40, 0, year,0)
             add_value_to_chart_table(one_result.irri, 51, 0, year,0)
@@ -1695,6 +1696,7 @@ module SimulationsHelper
             add_value_to_chart_table(one_result.sed + one_result.ymnu, 60, 0, year,0)
             add_value_to_chart_table(one_result.prkn, 91, 0, year,0)
             add_value_to_chart_table(one_result.n2o, 92, 0, year,0)
+            add_value_to_chart_table(one_result.n2o + one_result.prkn, 90, 0, year,0)
             add_value_to_chart_table(one_result.pcp, 100, 0, year,0)
           end   # end initial_chart
         else
@@ -1878,7 +1880,7 @@ module SimulationsHelper
     #total N = 20, orgn=21, runoffn=22, subsurface n=23, tile drain n = 24
     #total p = 30, orgp=31, po4_p=32, tile drain p = 33
     #total Flow = 40, surface runoff = 41, subsurface runoff = 42, tile drain flow = 43
-    #other water info = 50, irrigation = 51, deep percolation = 52
+    #total other water info = 50, irrigation = 51, deep percolation = 52
     #total sediment = 60, sediment = 61, manure erosion = 62
     #total other N = 90, leaching = 91, n20 = 92
     for i in 0..values.count-1

@@ -75,9 +75,9 @@
 			</tr>
           <% when t('result.monthly') + "-" + t('result.charts'), t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') %>
             <% if I18n.locale.eql?(:en) %>
-              <td><%= collection_select :result6, :description_id, Description.where("period == 2 OR period == 1"), :id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
+              <td><%= collection_select :result6, :description_id, Description.where("period == 1"), :id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
             <% else %>
-              <td><%= collection_select :result6, :description_id, Description.where("period == 2 OR period == 1"), :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
+              <td><%= collection_select :result6, :description_id, Description.where("period == 1"), :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
             <% end %>
             <td><%= submit_tag t("general.view") + " " + t("result.monthly")  + "-" + t('result.charts'), name: "button", :class => "btn btn-primary" %></td>
 			</tr>
