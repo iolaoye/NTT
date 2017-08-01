@@ -1,14 +1,29 @@
 
 <form id="myForm">
-    <h2><%= t('operation.upload') + " " + t('operation.crop') + " " + t('operation.schedule') %></h2>
-    <%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('general.select') + " " + t('general.one')} %>
-    <%= collection_select :tillage, :id, @tillages, :id, :name, {:prompt => "No " + t('models.tillage'), :required => true} %>
-    <%= label :year, t('pdf.year'), :id => "year_label" %>
-    <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>
-    <% if @operations.first != nil %>&nbsp&nbsp&nbsp
-        <%= label "replace", t("operation.replace") %>
-        <%= check_box_tag :replace, 'replace', false %>
-    <% end %>
+    <h2><%= t('operation.upload') + " " + t('operation.crop') + " " + t('general.to') + " "  + t('operation.schedule') %></h2>
+  <table>
+    <tr>
+      <th>Crop</th>
+      <th>Tilllage</th>
+      <th><%=t('operation.planting')  + " " + t('pdf.year')%></th>
+      <% if @operations.first != nil %>
+          <th><%=t("operation.replace")%></th>
+      <% end %>
+    </tr>
+    <tr>
+      <td><%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('general.select') + " " + t('general.one')} %></td>
+      <td><%= collection_select :tillage, :id, @tillages, :id, :name, {:prompt => "No " + t('models.tillage'), :required => true} %></td>
+      <td>
+        <%= label :year, "", :id => "year_label" %>
+        <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>
+      </td>
+      <td style='text-align:center'>
+        <% if @operations.first != nil %>
+            <%= check_box_tag :replace, 'replace', false %>
+        <% end %>
+      </td>
+    </tr>
+  </table>            
     <%= hidden_field(:language, :language, :value => I18n.locale) %>
     <div class="actions">
         <span style="display: inline-block">
