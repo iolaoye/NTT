@@ -37,10 +37,14 @@ module SimulationsHelper
           @apex_control += sprintf("%8.2f", c.value)
         when 68
           @apex_control += sprintf("%8.2f", c.value) + "\n"
-        when 69..75 #line 6
+        when 69..77 #line 6
           @apex_control += sprintf("%8.2f", c.value)
-        when 76
+        when 78
           @apex_control += sprintf("%8.2f", c.value) + "\n"
+		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BNO3  Line 7 col 1
+		  @apex_control += sprintf("%8.2f", 60)  #todo. this is temporary adding BAP(1)  Line 7 col 2
+		  @apex_control += sprintf("%8.2f", 120)  #todo. this is temporary adding BAP(2)  Line 7 col 3
+		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BAP(3)  Line 7 col 4
       end
     end
     #msg = send_file_to_APEX(apex_string, "Apexcont.dat")
