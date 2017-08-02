@@ -15,6 +15,18 @@ module SimulationsHelper
     @apex_control = ""
     @apex_controls = ApexControl.where(:project_id => params[:project_id])
     require 'net/http'
+	if @apex_controls.count == 76 then
+		ap = ApexControl.new
+		ap.project_id = @project_id
+		ap.control_description_id = 77
+		ap.value = 0
+		ap.save
+		ap = ApexControl.new
+		ap.project_id = @project_id
+		ap.control_description_id = 78
+		ap.value = 1
+		ap.save
+	end
     @apex_controls.each do |c|
       case c.control_description_id
         when 1..19 #line 1
