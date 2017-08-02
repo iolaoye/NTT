@@ -17,12 +17,12 @@ module SimulationsHelper
     require 'net/http'
 	if @apex_controls.count == 76 then
 		ap = ApexControl.new
-		ap.project_id = @project_id
+		ap.project_id = @project.id
 		ap.control_description_id = 77
 		ap.value = 0
 		ap.save
 		ap = ApexControl.new
-		ap.project_id = @project_id
+		ap.project_id = @project.id
 		ap.control_description_id = 78
 		ap.value = 1
 		ap.save
@@ -54,6 +54,7 @@ module SimulationsHelper
           @apex_control += sprintf("%8.2f", c.value)
         when 78
           @apex_control += sprintf("%8.2f", c.value) + "\n"
+		  #line 7
 		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BNO3  Line 7 col 1
 		  @apex_control += sprintf("%8.2f", 60)  #todo. this is temporary adding BAP(1)  Line 7 col 2
 		  @apex_control += sprintf("%8.2f", 120)  #todo. this is temporary adding BAP(2)  Line 7 col 3
