@@ -27,6 +27,7 @@ module SimulationsHelper
 		ap.value = 1
 		ap.save
 	end
+	@apex_controls = ApexControl.where(:project_id => params[:project_id])
     @apex_controls.each do |c|
       case c.control_description_id
         when 1..19 #line 1
