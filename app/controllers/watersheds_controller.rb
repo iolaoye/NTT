@@ -10,7 +10,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /1/watersheds.json
   def list
-    @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
+    @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
     @project = Project.find(params[:project_id])
     respond_to do |format|
@@ -23,10 +23,15 @@ class WatershedsController < ApplicationController
   # GET /watersheds
   # GET /watersheds.json
   def index
-    @scenarios = Scenario.where(:field_id => 0) # make @scnearions empty to start the list page in watershed
+    @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @project = Project.find(params[:project_id])
     @watersheds = Watershed.where(:location_id => @project.location.id)
-    session[:simulation] = 'watershed'
+    @watershed_scenarios_count = 0
+    @watershed_results_count = 0
+    @watersheds.each do |watershed|
+    	@watershed_scenarios_count += watershed.watershed_scenarios.count
+    	@watershed_results_count += watershed.results.count
+    end
 
 	add_breadcrumb t('watershed.watershed')
     respond_to do |format|
@@ -101,6 +106,11 @@ class WatershedsController < ApplicationController
 		#run simulations
 		params[:select_watershed].each do |ws|
 			@watershed = Watershed.find(ws)
+			if @watershed.watershed_scenarios.count == 0
+				@errors = Array.new
+				@errors.push("Unable to simulate Watershed " + @watershed.name + ". Please add a field to "  + @watershed.name + " to successfully run the simulation.")
+			end
+			break if @errors != nil
 			session[:simulation] = 'watershed'
 			@project = Project.find(params[:project_id])
 			watershed_id = ws
@@ -162,7 +172,11 @@ class WatershedsController < ApplicationController
 	end
 	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
 	@watersheds = Watershed.where(:location_id => @project.location.id)
-
+	@watershed_results_count = 0
+	@watershed_scenarios_count = 1
+	@watersheds.each do |watershed|
+		@watershed_results_count += watershed.results.count
+	end
     render "index"
   end
 
