@@ -505,6 +505,9 @@ class ProjectsController < ApplicationController
     xml.scenario {
       xml.id scenario.id
       xml.name scenario.name
+	  if scenario.last_simulation != nil then
+		xml.last_simulation scenario.last_simulation
+	  end
       operations = Operation.where(:scenario_id => scenario.id)
       xml.operations {
         operations.each do |operation|
@@ -1597,6 +1600,11 @@ class ProjectsController < ApplicationController
         when "name"
           scenario.name = p.text
   		  if !scenario.save then
+		    return "scenario could not be saved"
+		  end
+		when "last_simulation"
+		  scenario.last_simulation = p.text
+		  if !scenario.save then
 		    return "scenario could not be saved"
 		  end
         when "operations"
