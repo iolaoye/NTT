@@ -44,9 +44,11 @@
 
 <%= form_tag simulate_project_watersheds_path(@project), method: :post do |f| %>
     <% if @watersheds.count > 0 %>
-		<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('watershed.watershed'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_watershed" %>
-		<% if @watersheds.count > 0 %>
-			<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, 0), :class => 'btn btn-success' %></td>
+    	<% if @watershed_scenarios_count > 0 %>
+			<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('watershed.watershed'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_watershed" %>
+			<% if @watershed_results_count > 0 %>
+				<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, 0), :class => 'btn btn-success' %></td>
+ 			<% end %>
  		<% end %>
 	    <br>
         <br>

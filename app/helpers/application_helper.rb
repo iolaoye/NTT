@@ -118,6 +118,8 @@ module ApplicationHelper
 		if (request.url.include?(url_for('results')) && request.url.include?(url_for('simulation=Watershed')) || request.url.include?(url_for('watersheds')))
 			session[:simulation] = 'watershed'
 			true
+		elsif (request.url.include?(url_for('results')) && session[:simulation] == 'watershed')
+			true
 		else
 			false
 		end
