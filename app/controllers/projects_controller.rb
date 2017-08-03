@@ -824,12 +824,29 @@ class ProjectsController < ApplicationController
   def save_watershed_information(xml, watershed)
     xml.watershed {
       xml.name watershed.name
+	  if watershed.last_simulation != nil then
+	    xml.last_simulation watershed.last_simulation
+	  end
       watershed_scenarios = WatershedScenario.where(:watershed_id => watershed.id)
       xml.watershed_scenarios {
         watershed_scenarios.each do |wss|
           save_watershed_scenario_information(xml, wss)
         end # end scenarios each
       } # end scenarios
+	  
+	  results = Result.where(:watershed_id => watershed.id)
+      xml.results {
+        results.each do |result|
+          save_result_information(xml, result)
+        end # end results.each
+      } # end xml.results
+
+      charts = Chart.where(:watershed_id => watershed.id)
+      xml.charts {
+        charts.each do |chart|
+          save_chart_information(xml, chart)
+        end # end charts.each
+      } # end xml.charts
     } # xml each watershed end
   end
 
@@ -1598,14 +1615,14 @@ class ProjectsController < ApplicationController
           end
         when "results"
           p.elements.each do |r|
-            msg = upload_result_new_version(scenario.id, field_id, r)
+            msg = upload_result_new_version(scenario.id, 0, field_id, r)
             if msg != "OK"
               return msg
             end
           end
         when "charts"
           p.elements.each do |r|
-            msg = upload_chart_new_version(scenario.id, field_id, r)
+            msg = upload_chart_new_version(scenario.id, 0, field_id, r)
             if msg != "OK"
               return msg
             end
@@ -2322,10 +2339,11 @@ class ProjectsController < ApplicationController
   end
   # end method
 
-  def upload_result_new_version(scenario_id, field_id, new_result)
+  def upload_result_new_version(scenario_id, watershed_id, field_id, new_result)
     result = Result.new
     result.scenario_id = scenario_id
-    result.field_id = field_id
+    result.watershed_id = watershed_id
+	result.field_id = field_id
     new_result.elements.each do |p|
       case p.name
         when "value"
@@ -2641,9 +2659,10 @@ class ProjectsController < ApplicationController
     end # end node each
   end
 
-  def upload_chart_new_version(scenario_id, field_id, new_chart)
+  def upload_chart_new_version(scenario_id, watershed_id, field_id, new_chart)
     chart = Chart.new
     chart.scenario_id = scenario_id
+	chart.watershed_id = watershed_id
     chart.field_id = field_id
     new_chart.elements.each do |p|
       case p.name
@@ -2655,8 +2674,6 @@ class ProjectsController < ApplicationController
           chart.description_id = p.text
 		when "soil_id"
   		  chart.soil_id = p.text
-	    when "watershed_id"
-	      chart.watershed_id = p.text
 	    when "crop_id"
 	      chart.crop_id = p.text
       end # end case
@@ -3365,17 +3382,40 @@ class ProjectsController < ApplicationController
       case p.name
         when "name"
           watershed.name = p.text
+		  if !watershed.save then
+		    return "Watershed could not be saved"
+          end
+	    when "last_simulation"
+		  watershed.last_simulation = p.text
+		  if !watershed.save then
+		    return "Watershed could not be saved"
+          end
         when "watershed_scenarios"
-          if watershed.save
-            session[:watershed_id] = watershed.id
             p.elements.each do |node|
               msg = upload_watershed_scenario_information_new_version(node, watershed.id)
             end
-          else
-            return "Watershed could not be saved"
+		when "results"
+          p.elements.each do |r|
+            msg = upload_result_new_version(0, watershed.id, 0, r)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "charts"
+          p.elements.each do |r|
+            msg = upload_chart_new_version(0, watershed.id, 0, r)
+            if msg != "OK"
+              return msg
+            end
           end
       end # end case
     end # end each
+	if watershed.save
+      session[:watershed_id] = watershed.id
+	  return "OK"
+	else
+	  return "Watershed could not be saved"
+	end
   end
 
   def upload_watershed_scenario_information_new_version(node, watershed_id)
