@@ -69,9 +69,7 @@ display_button = ->
 
 set_buttons = (view) ->
   $("#pdf_download").toggle(view)
-  $("#csv_download").toggle(view)
-  $("#pdf_no_click").toggle(!view)
-  $("#csv_no_click").toggle(!view)
+  $("#excel_download").toggle(view)
 
 check_for_errors = ->
   errors = $("#errors").val() + ""

@@ -55,7 +55,7 @@ class ResultsController < ApplicationController
     if session[:simulation].eql?('scenario') then
       @total_area = Field.find(params[:field_id]).field_area
       @field_name = Field.find(params[:field_id]).field_name
-	  else
+	else
 	    @total_area = 0
 	    if params[:result1] != nil then
     		watershed_scenarios = WatershedScenario.where(:watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
