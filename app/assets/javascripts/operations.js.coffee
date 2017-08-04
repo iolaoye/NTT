@@ -95,6 +95,7 @@ updateTypes = ->
       $("#div_type").hide()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
+      $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements
       $("#div_fertilizer").hide()
       $("#div_tillage").hide()
       $("#div_type").hide()
@@ -113,8 +114,8 @@ updateTypes = ->
 
   url1 = "/activities/" + $("#operation_activity_id").val() + ".json"
   $.getJSON url1, (labels) ->
-	  $("#div_amount")[0].children[0].innerText = labels.amount_label.split(",")[0] + labels.amount_units.split(",")[0]
-	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units.split(",")[0]
+	  $("#div_amount")[0].children[0].innerText = labels.amount_label.split(",")[0] + labels.amount_units
+	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units
 
 updateFerts = ->
   if ($("#operation_type_id").val() == "2")
