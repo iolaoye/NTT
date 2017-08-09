@@ -59,7 +59,7 @@ class LocationsController < ApplicationController
               end
             end
             if (!isFound) then
-              field.destroy_all
+              field.destroy
             end # end if isFound
           end # end Location do
           # step 2: update or create remaining fields
