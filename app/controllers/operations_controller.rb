@@ -10,7 +10,6 @@ class OperationsController < ApplicationController
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-
   	@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
   	crop_schedule()
@@ -56,7 +55,7 @@ class OperationsController < ApplicationController
     @scenario = Scenario.find(params[:scenario_id])
 	@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     add_breadcrumb t('menu.operations'), project_field_scenario_operations_path(@project, @field, @scenario)
-	  add_breadcrumb t('operation.new_operation')
+	add_breadcrumb t('operation.new_operation')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -74,7 +73,7 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
-	  add_breadcrumb t('operation.edit')
+	add_breadcrumb t('operation.edit')
   end
 
 ################################  CREATE  #################################
@@ -189,9 +188,9 @@ class OperationsController < ApplicationController
 				@operation1.moisture = 0
 				@operation1.subtype_id = 0
 			end
-			@operation1.year = params[:operation][:year].to_i
-			@operation1.month_id = params[:operation][:month_id].to_i
-			@operation1.day = params[:operation][:day].to_i
+			@operation1.year = params[:year1]
+			@operation1.month_id = params[:month_id1]
+			@operation1.day = params[:day1]
 			@operation1.save
 			soil_operations = SoilOperation.where(:operation_id => @operation1.id)
 			soil_operations.each do |soil_operation|

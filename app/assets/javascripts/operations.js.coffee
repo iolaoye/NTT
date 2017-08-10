@@ -88,7 +88,12 @@ updateTypes = ->
       $("#div_nutrients").show()
       $("#div_type").show()
       $("#div_date").show()
+      $("#year1").prop('required',true)
+      $("#month_id1").prop('required',true)
+      $("#day1").prop('required',true)
       $("#operation_type_id").prop('required',true)
+      $("#operation_moisture").removeAttr('required')
+      $('div[style*="display: none"] *').removeAttr('required')
     when "10"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
