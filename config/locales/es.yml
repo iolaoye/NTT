@@ -766,7 +766,7 @@ es:
     select_chart: Seleccione tipo de Gráfico
     description: Descripción
     difference: Diferencia
-    reduction: Reducción (%)
+    reduction: Reducción
     total_area: Área total
     first_scenario_error: El primer escenario no tiene
     second_scenario_error: El segundo escenario no tiene

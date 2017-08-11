@@ -767,7 +767,7 @@ en:
     select_chart: Select kind of Chart
     description: Description
     difference: Difference
-    reduction: Reduction (%)
+    reduction: Reduction
     total_area: Total Area
     first_scenario_error: First scenario has no
     second_scenario_error: Second scenario has no

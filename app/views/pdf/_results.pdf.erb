@@ -1,7 +1,7 @@
 <% @descriptions = Description.all %>
-<% @results1 = Result.where(:field_id => session[:field_id], :scenario_id => @result_scenario1, :soil_id => @soil) unless @result_scenario1 == "" %>
-<% @results2 = Result.where(:field_id => session[:field_id], :scenario_id => @result_scenario2, :soil_id => @soil) unless @result_scenario2 == "" %>
-<% @results3 = Result.where(:field_id => session[:field_id], :scenario_id => @result_scenario3, :soil_id => @soil) unless @result_scenario3 == "" %>
+<% @results1 = Result.where(:field_id => @field.id, :scenario_id => @result_scenario1, :soil_id => @soil) unless @result_scenario1 == "" %>
+<% @results2 = Result.where(:field_id => @field.id, :scenario_id => @result_scenario2, :soil_id => @soil) unless @result_scenario2 == "" %>
+<% @results3 = Result.where(:field_id => @field.id, :scenario_id => @result_scenario3, :soil_id => @soil) unless @result_scenario3 == "" %>
 
 <div class="group_header first_group"><%=t('pdf.annual_results')%></div>
 <table class="table_fill">
@@ -232,38 +232,39 @@
                             </tr>
                         <% else %>
                             <tr class="table_row_odd">
-                            <% if result.description_id > 70 && result.description_id < 90 %>
-                                <td class="row number"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-                                <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %> 
-                                    <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                <% end %>
-                            <% else %>
-                                <td class="row number"><%= Description.find(result.description_id).spanish_description %></td>
-                                <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %>
-                                    <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                <% end %>
-                            <% end %>
+								<% if result.description_id > 70 && result.description_id < 90 %>
+									<td class="row number"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
+									<td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+									<% if @results2 != nil %> 
+										<td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+										<td class="row number"><%= sprintf("%8.2f", difference1) %></td>
+										<td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
+										<td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
+									<% else %>
+										<td class="row number"><%= %></td>
+										<td class="row number"><%= %></td>
+										<td class="row number"><%= %></td>
+										<td class="row number"><%= %></td>
+									<% end %>
+								<% else %>
+									<td class="row number"><%= Description.find(result.description_id).spanish_description %></td>
+									<td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
+									<% if @results2 != nil %>
+										<td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+										<td class="row number"><%= sprintf("%8.2f", difference1) %></td>
+										<td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
+										<td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
+									<% else %>
+										<td class="row number"><%= %></td>
+										<td class="row number"><%= %></td>
+										<td class="row number"><%= %></td>
+										<td class="row number"><%= %></td>
+									<% end %>
+								<% end %>
                             </tr>
-                        <% end %>
-                    <% end %>
+                        <% end %>  #totals
+                    <% end %> # end language
+					</br>
                 <% end %>
                 <% i = i + 1 %>
             <% end %>

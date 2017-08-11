@@ -13,9 +13,10 @@
   <div>
 	  <table>
 		<tr>
-		  <td><h4><%= label :bmp_id, t('result.select_scenario1') %></h4></td>
+		  <td><h4><%= label :bmp_id, t('general.select') %></h4></td>
 		  <td><%= select_tag "id", options_for_select(@aplcat), :onchange => "show_div()" %></td>
-		  <td><%#= button_to t('subarea.load_subarea'),  class: 'btn btn-primary' %></td>
+		  <td><%= link_to t('aplcat.grazing') + " " + t('menu.parameters_file'), project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td>
+		  <td><%= link_to t('aplcat.supplement_parameters'), project_field_scenario_supplement_parameters_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td>
 		</tr>
 	  </table>
   </div>

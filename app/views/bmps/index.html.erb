@@ -16,10 +16,6 @@
       <% end %>
     <% end %>
   </div>
-  <%= submit_tag t("submit.savecontinue"), name: "button", class: "btn btn-primary" %>
-  <%= link_to t('general.back'), project_field_scenario_operations_path(@project.id, @field.id, @scenario.id), :class => "btn btn-primary" %>
-  <%#= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %><br>
-    <br>
       <table class="table table-striped">
         <thead>
           <tr class='gvHeaderStyle'>
@@ -136,29 +132,29 @@
                   <td>
                     <% case bmp.depth%>
                       <% when 4 %>
-                        <%= radio_button_tag :bmp_cb2, "4", true  %> <%= t('pdf.ppdi') %></br>
-                        <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
-                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "4", true  %> <%= t('pdf.ppdi') %>
+                        <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %>
+                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %>
                         <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
                       <% when 5 %>
-                        <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
-                        <%= radio_button_tag :bmp_cb2, "5", true %> <%= t('pdf.ppds') %></br>
-                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %>
+                        <%= radio_button_tag :bmp_cb2, "5", true %> <%= t('pdf.ppds') %>
+                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %>
                         <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppds') %>
                       <% when 6 %>
-                        <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
-                        <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
-                        <%= radio_button_tag :bmp_cb2, "6", true %> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %>
+                        <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %>
+                        <%= radio_button_tag :bmp_cb2, "6", true %> <%= t('pdf.ppde') %>
                         <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
                       <% when 7 %>
-                        <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
-                        <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
-                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %>
+                        <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %>
+                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %>
                         <%= radio_button_tag :bmp_cb2, "7", true %> <%= t('pdf.ppti') %>
                       <% else %>
-                        <%= radio_button_tag :bmp_cb2, "4"%> <%= t('pdf.ppdi') %></br>
-                        <%= radio_button_tag :bmp_cb2, "5" %> <%= t('pdf.ppds') %></br>
-                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                        <%= radio_button_tag :bmp_cb2, "4"%> <%= t('pdf.ppdi') %>
+                        <%= radio_button_tag :bmp_cb2, "5" %> <%= t('pdf.ppds') %>
+                        <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %>
                         <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
                       <%end%>
                   </td>
@@ -278,17 +274,6 @@
 						    <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
-            <!--<% when 11 %>
-				      <tr>
-					    <td class="indent">
-						    <%= t('general.select') %>
-						    <% if bmp.id != nil %>
-							    <%= check_box :bmp_sbs, :id, checked: true %>
-						    <%else%>
-							    <%= check_box :bmp_sbs, :id, checked: false %>
-						    <%end%>
-					    </td>
-            </tr> -->
             <% when 13 %>
               <tr>
                 <td class="indent" colspan="2">
@@ -402,12 +387,6 @@
 				      <tr>
 					    <td class="indent" colspan="2">
 						    <%= t('general.no_additional_needed') %>
-
-                  <!--<% if bmp.id != nil %>
-							    <%= check_box :bmp_ts, :id, checked: true %>
-						    <%else%>
-							    <%= check_box :bmp_ts, :id, checked: false %>
-						    <%end%>-->
 					    </td>
 				      </tr>
 				    <% when 18 %>
@@ -442,35 +421,34 @@
 				      </tr>
 				      <tr>
 				        <td class="indent" colspan="2">
-						    <%= label :org_p, t('bmp.org_p') + " " + t('bmp.percentage_range') %>
-						    <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
+						      <%= label :org_p, t('bmp.org_p') + " " + t('bmp.percentage_range') %>
+						      <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
                 </td>
 				      </tr>
               <% end %>
             <% when 19 %>
-            <tr>
-              <td class="indent" colspan="2">
-              <div>
-                <table>
-                  <tr><td colspan="4" class="gvTotalText"><%= label :weather_change, t('bmp.weather_change')%></tr></td>
-                  <tr><th><%= t('bmp.month')%></th>
-                      <th><%= t('bmp.max_temp')%></th>
-                      <th><%= t('bmp.min_temp')%></th>
-                      <th><%= t('bmp.precipitation')%></th>
-                  </tr>
-
-                  <% @climates.each do |climate| %>
-                    <tr class="indent" colspan="4">
-                      <td><%= listMonths.detect { |val, index| index == climate.month}[0] %></td>
-                      <td><%= number_field "bmp_cc", "max_temp" + climate.month.to_s, :value  => climate.max_temp, :class => "numbers" %></td>
-                      <td><%= number_field "bmp_cc", "min_temp" + climate.month.to_s, :value => climate.min_temp, :class => "numbers"  %></td>
-                      <td><%= number_field "bmp_cc", "precipitation" + climate.month.to_s, :value  => climate.precipitation, :class => "numbers" %></td>
-                    </tr>
-                  <% end %>
-                </table>
-              </div>
-              </td>
-            </tr>
+              <tr>
+                <td class="indent" colspan="2">
+                  <div>
+                    <table>
+                      <tr><td colspan="4" class="gvTotalText"><%= t('bmp.weather_change')%></tr>
+                      <tr><th><%= t('bmp.month')%></th>
+                          <th><%= t('bmp.max_temp')%></th>
+                          <th><%= t('bmp.min_temp')%></th>
+                          <th><%= t('bmp.precipitation')%></th>
+                      </tr>
+                      <% @climates.each do |climate| %>
+                        <tr class="indent" colspan="4">
+                          <td><%= listMonths.detect { |val, index| index == climate.month}[0] %></td>
+                          <td><%= number_field "bmp_cc", "max_temp" + climate.month.to_s, :value  => climate.max_temp, :class => "numbers" %></td>
+                          <td><%= number_field "bmp_cc", "min_temp" + climate.month.to_s, :value => climate.min_temp, :class => "numbers"  %></td>
+                          <td><%= number_field "bmp_cc", "precipitation" + climate.month.to_s, :value  => climate.precipitation, :class => "numbers" %></td>
+                        </tr>
+                      <% end %>
+                  </table>
+                  </div>
+                </td>
+              </tr>
             <% when 20 %>
 				      <tr>
 					    <td class="indent" colspan="2">
@@ -525,8 +503,9 @@
 		    </tbody>
 	  <% end %>
     </table>
-  </div>
-<% end %>
+  <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field), :class => "btn btn-primary" %>
+  <%= submit_tag t("submit.savecontinue"), name: "button", class: "btn btn-primary" %>
+  <% end %>
     <div id="pop-up">
       <h6>
         This factor is used to trigger the automatic irrigation and means what plant water stress is allowed.

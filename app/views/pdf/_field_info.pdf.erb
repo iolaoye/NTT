@@ -1,12 +1,8 @@
 <% @field = Field.find(params[:field_id]) %>
 <div class="group_header"><%=t('pdf.field_info')%></div>
     <div class="data_titles">
-        <%=t('pdf.name')%>:</br>
-        <%=t('pdf.area')%>:</br>
-        <%=t('pdf.average_slope')%>:</br>
+        <strong><%=t('pdf.name')%>:  </strong><%= @field.field_name %></br>
+        <strong><%=t('pdf.area')%>:  </strong><%= @field.field_area %></br>
+        <strong><%=t('pdf.average_slope')%>:  </strong><%= @field.field_average_slope %></br>
     </div>
-    <div class="data">
-        <%= @field.field_name %></br>
-        <%= @field.field_area %></br>
-        <%= @field.field_average_slope %></br>
-    </div>
+</br>

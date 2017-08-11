@@ -146,10 +146,11 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_wl][:area] == "") then
   			create(8)
   		end
+		#pond
   		if !params[:select][:"9"].nil? then
   			create(9)
   		end
-
+		#stream fencing
 		if !params[:select][:"10"].nil? then
   		#if !(params[:bmp_sf][:number_of_animals] == "") then
   			create(10)
@@ -159,7 +160,8 @@ class BmpsController < ApplicationController
   				create(11)
   			end
   		end
-  		if !(params[:bmp_ai][:width] == "") then
+		#filter strip and riparian forest
+  		if !(params[:bmp_fs][:width] == "") then
   			if !(params[:bmp_cb3] == nil)
   				if params[:bmp_cb3] == "12" then
   					create(13)   #riparian forest
@@ -1157,12 +1159,12 @@ class BmpsController < ApplicationController
           is_filled = true;
         end
       when 12
-	    @bmp.buffer_slope_upland			# buffer_slope_upland is not used anymore; therefor it is set to 1
+	    @bmp.buffer_slope_upland = 1			# buffer_slope_upland is not used anymore; therefor it is set to 1
         if @bmp.area != nil && @bmp.width != nil && @bmp.grass_field_portion != nil && @bmp.buffer_slope_upland != nil
           is_filled = true;
         end
       when 13
-	    @bmp.buffer_slope_upland			# buffer_slope_upland is not used anymore; therefor it is set to 1
+	    @bmp.buffer_slope_upland = 1			# buffer_slope_upland is not used anymore; therefor it is set to 1
         if @bmp.area != nil && @bmp.width != nil && @bmp.buffer_slope_upland != nil
           is_filled = true;
         end

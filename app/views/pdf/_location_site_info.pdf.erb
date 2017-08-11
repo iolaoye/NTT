@@ -2,11 +2,8 @@
 <% @county = County.find(@location.county_id) %>
 
 <div class="group_header"><%=t('pdf.location_info')%></div>
-    <div class="data_titles">
-        <%=t('pdf.state')%>:</br>
-        <%=t('pdf.county')%>:</br>
-    </div>
-    <div class="data">
-        <%= @state.state_name %></br>
-        <%= @county.county_name %></br>
-    </div>
+<div class="data_titles">
+    <strong><%=t('pdf.state')%>:  </strong><%= @state.state_name %></br>
+    <strong><%=t('pdf.county')%>  </strong>:<%= @county.county_name %></br>
+</div>
+</br>
