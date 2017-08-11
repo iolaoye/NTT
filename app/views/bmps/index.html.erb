@@ -627,9 +627,9 @@
                 validationsBmpLl();
             } else if (elementIDNum == 17) {
                 validationsBmpTs();
-            } else if (elementIDNum == 19) {
+            } /*else if (elementIDNum == 19) {
                 validationsBmpCc();
-            }
+            }*/
           } if (elementIDNum > 12 && elementIDNum < 16) {
               if (elementIDNum == 13 && ($('#select_12').is(':checked') || $('#select_14').is(':checked') || $('#select_15').is(':checked'))) {
                 if (prompt_user()) {
@@ -812,7 +812,7 @@
     validateBmpTs.addValidation(ts_inputs[0].name, "selone", '<%= t("managepage.bmpdesc.landgrading.terrace.header")%>' + ": " + '<%= t("validate.checkbox") %>');
   }
   function validationsBmpCc() {
-  var cc_inputs = $('[name^=bmp_cc]').valueOf();
+    var cc_inputs = $('[name^=bmp_cc]').valueOf();
     for (n = 0; n < cc_inputs.length; n++) {
       validateBmpCc.addValidation(cc_inputs[n].name, "gt=0", '<%= t("pdf.climate") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
       validateBmpCc.addValidation(cc_inputs[n].name, "lte=100", '<%= t("pdf.climate") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
