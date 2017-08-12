@@ -528,7 +528,7 @@
           <% if @scenario3 > "0" %>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ns[5].round(2)).to_s %></td>
             <td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", ns[6]).to_s %></td>
-            <% if difference2 <= 0 %>
+            <% if difference2 > 0 %>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>
