@@ -53,7 +53,7 @@ class ResultsController < ApplicationController
     @project = Project.find(params[:project_id])
     add_breadcrumb t('menu.results')
 	
-	@scenario1 = 0
+	@scenario1 = "0"
 	if params[:result1] != nil then
 		if params[:result1][:scenario_id] == nil then
 			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == ""
@@ -63,6 +63,7 @@ class ResultsController < ApplicationController
 	else
 		@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == ""
 	end
+	@scenario2 ="0"
 	if params[:result2] != nil then
 		if params[:result2][:scenario_id] == nil then
 			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == ""
@@ -72,6 +73,7 @@ class ResultsController < ApplicationController
 	else
 		@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == ""
 	end
+	@scenario3="0"
 	if params[:result3] != nil then
 		if params[:result3][:scenario_id] == nil then
 			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == ""
