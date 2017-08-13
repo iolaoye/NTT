@@ -55,31 +55,31 @@ class ResultsController < ApplicationController
 	
 	@scenario1 = 0
 	if params[:result1] != nil then
-		if params[:result1][:scenario_id] == nil or params[:result1][:scenario_id] == "" then
-			@scenario1 = session[:scenario1] unless session[:scenario1] == nil
+		if params[:result1][:scenario_id] == nil then
+			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == ""
 		else
 			@scenario1 = params[:result1][:scenario_id]
 		end
 	else
-		@scenario1 = session[:scenario1] unless session[:scenario1] == nil
+		@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == ""
 	end
 	if params[:result2] != nil then
-		if params[:result2][:scenario_id] == nil or params[:result2][:scenario_id] == "" then
-			@scenario2 = session[:scenario2] unless session[:scenario2] == nil
+		if params[:result2][:scenario_id] == nil then
+			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == ""
 		else
 			@scenario2 = params[:result2][:scenario_id]
 		end
 	else
-		@scenario2 = session[:scenario2] unless session[:scenario2] == nil
+		@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == ""
 	end
 	if params[:result3] != nil then
-		if params[:result3][:scenario_id] == nil or params[:result3][:scenario_id] == "" then
-			@scenario3 = session[:scenario3] unless session[:scenario3] == nil
+		if params[:result3][:scenario_id] == nil then
+			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == ""
 		else
 			@scenario3 = params[:result3][:scenario_id]
 		end
 	else
-		@scenario3 = session[:scenario3] unless session[:scenario3] == nil
+		@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == ""
 	end
     if session[:simulation].eql?('scenario') then
         @total_area = Field.find(params[:field_id]).field_area
@@ -619,14 +619,6 @@ class ResultsController < ApplicationController
       send_data(pdf, :filename => "report.pdf")
 	  return
     end # if format is pdf
-<<<<<<< HEAD
-
-    respond_to do |format|
-      format.html
-      format.xlsx { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xlsx\"" }
-      format.csv { send_data @crop_results.to_csv, filename: "report-#{Date.today}.csv"}
-    end
-=======
 	if params[:action] == "index" then   # just run the format for Tabular => General menu option.
       respond_to do |format|
         format.html
@@ -634,7 +626,6 @@ class ResultsController < ApplicationController
         format.csv { send_data @crop_results.to_csv, filename: "report-#{Date.today}.csv"}
       end
 	end
->>>>>>> 0080670... pdf refport fixed and suggestion from Sara
   end  # end Method Index
 
   ###############################  SHOW  ###################################

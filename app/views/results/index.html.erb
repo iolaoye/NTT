@@ -395,7 +395,7 @@
 				<% row_id = "row" + id.to_s %>
 				<% value2 = 0 %>
 				<% reduction1 = 0 %>
-				<% if @scenario2 != "" then %>
+				<% if @scenario2 > "0" then %>
 					<%value2 = result[3] %>
 					<% difference1 = value2 - result[1] %>
 					<% reduction1 = difference1 / result[1] * 100 unless result[1] == 0%>
@@ -484,7 +484,7 @@
           <% row_id = "row" + id.to_s %>
           <% value2 = 0 %>
           <% reduction1 = 0 %>
-          <% if @scenario2 != "" then %>
+          <% if @scenario2 > "0" then %>
             <%value2 = ns[3] %>
             <% difference1 = value2 - ns[1] %>
             <% reduction1 = difference1 / ns[1] * 100 unless ns[1] == 0 %>
@@ -492,7 +492,7 @@
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
-          <% if @scenario3 != "" then %>
+          <% if @scenario3 > "0" then %>
             <%value3 = ns[5] %>
             <% difference2 = value3 - ns[1] %>
             <% reduction2 = difference2 / ns[1] * 100 unless ns[1] == 0 %>
@@ -506,7 +506,7 @@
           <% end %>
           <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ns[1].round(2)).to_s %></td>
           <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", ns[2]).to_s %></td>
-          <% if @scenario2 != "0" %>
+          <% if @scenario2 > "0" %>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ns[3].round(2)).to_s %></td>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", ns[4]).to_s %></td>
             <% if difference1 <= 0 %>
@@ -525,7 +525,7 @@
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
           <%end%>
-          <% if @scenario3 != "0" %>
+          <% if @scenario3 > "0" %>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ns[5].round(2)).to_s %></td>
             <td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", ns[6]).to_s %></td>
             <% if difference2 <= 0 %>
@@ -571,7 +571,7 @@
           <% row_id = "row" + id.to_s %>
           <% value2 = 0 %>
           <% reduction1 = 0 %>
-          <% if @scenario2 != "" then %>
+          <% if @scenario2 > "0" then %>
             <% value2 = ps[3] %>
             <% difference1 = value2 - ps[1] %>
             <% reduction1 = difference1 / ps[1] * 100 unless ps[1] == 0 %>
@@ -579,7 +579,7 @@
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
-          <% if @scenario3 != "" then %>
+          <% if @scenario3 > "0" then %>
             <%value3 = ps[5] %>
             <% difference2 = value3 - ps[1] %>
             <% reduction2 = difference2 / ps[1] * 100 unless ps[1] == 0 %>
@@ -593,7 +593,7 @@
           <% end %>
           <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ps[1].round(2)).to_s %></td>
           <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", ps[2]).to_s %></td>
-          <% if @scenario2 != "0" %>
+          <% if @scenario2 > "0" %>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ps[3].round(2)).to_s %></td>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", ps[4]).to_s %></td>
             <% if difference1 <= 0 %>
@@ -612,7 +612,7 @@
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
           <%end%>
-          <% if @scenario3 != "0" %>
+          <% if @scenario3 > "0" %>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ps[5].round(2)).to_s %></td>
             <td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", ps[6]).to_s %></td>
             <% if difference2 <= 0 %>
@@ -658,7 +658,7 @@
           <% row_id = "row" + id.to_s %>
           <% value2 = 0 %>
           <% reduction1 = 0 %>
-          <% if @scenario2 != "" then %>
+          <% if @scenario2 > "0" then %>
             <%value2 = ts[3] %>
             <% difference1 = value2 - ts[1] %>
             <% reduction1 = difference1 / ts[1] * 100 unless ts[1] == 0 %>
@@ -666,7 +666,7 @@
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
-          <% if @scenario3 != "" then %>
+          <% if @scenario3 > "0" then %>
             <% value3 = ts[5] %>
             <% difference2 = value3 - ts[1] %>
             <% reduction2 = difference2 / ts[1] * 100 unless ts[1] == 0 %>
@@ -680,7 +680,7 @@
             <% end %>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ts[1].round(2)).to_s %></td>
             <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", ts[2]).to_s %></td>
-            <% if @scenario2 != "0" %>
+            <% if @scenario2 > "0" %>
               <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ts[3].round(2)).to_s %></td>
               <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", ts[4]).to_s %></td>
               <% if difference1 <= 0 %>
@@ -699,7 +699,7 @@
               <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
               <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
             <%end%>
-            <% if @scenario3 != "0" %>
+            <% if @scenario3 > "0" %>
               <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ts[5].round(2)).to_s %></td>
               <td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", ts[6]).to_s %></td>
               <% if difference2 <= 0 %>
@@ -745,7 +745,7 @@
           <% row_id = "row" + id.to_s %>
           <% value2 = 0 %>
           <% reduction1 = 0 %>
-          <% if @scenario2 != "" then %>
+          <% if @scenario2 > "0" then %>
             <%value2 = ws[3] %>
             <% difference1 = value2 - ws[1] %>
             <% reduction1 = difference1 / ws[1] * 100 unless ws[1] == 0 %>
@@ -753,7 +753,7 @@
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
-          <% if @scenario3 != "" then %>
+          <% if @scenario3 > "0" then %>
             <%value3 = ws[5] %>
             <% difference2 = value3 - ws[1] %>
             <% reduction2 = difference2 / ws[1] * 100 unless ws[1] == 0 %>
@@ -767,7 +767,7 @@
           <% end %>
           <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ws[1].round(2)).to_s %></td>
           <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", ws[2]).to_s %></td>
-          <% if @scenario2 != "0" %>
+          <% if @scenario2 > "0" %>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ws[3].round(2)).to_s %></td>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", ws[4]).to_s %></td>
             <% if difference1 <= 0 %>
@@ -786,7 +786,7 @@
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
           <%end%>
-          <% if @scenario3 != "0" %>
+          <% if @scenario3 > "0" %>
             <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ws[5].round(2)).to_s %></td>
             <td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", ws[6]).to_s %></td>
             <% if difference2 <= 0 %>
