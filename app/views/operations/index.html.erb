@@ -195,7 +195,7 @@
 		  <% end %>
 		  
 
-		  <% if @operations.where("(activity_id == ? or activity_id == ?) and crop_id == ?", 7,8,crop).any?%>
+		  <% if @operations.where("(activity_id = ? or activity_id = ?) and crop_id = ?", 7,8,crop).any?%>
 			<div class="panel panel-primary">
 			  <h4><%= t('operation.start_grazing') %></h4>
 			    <table class="table">
@@ -209,7 +209,7 @@
 					<td class="optable" style="text-align: right"><b><%= t('operation.hours') %></b></td>
 					<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
                   </tr>
-				  <% @operations.where("(activity_id == ? or activity_id == ?) and crop_id == ?", 7,8,crop).each do |op| %>
+				  <% @operations.where("(activity_id = ? or activity_id = ?) and crop_id = ?", 7,8,crop).each do |op| %>
 				  <tr>
 					<% if op.activity_id == 7 %>
 						<td><%= t('general.start') %></td>
