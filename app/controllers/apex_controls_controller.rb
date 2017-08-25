@@ -102,7 +102,7 @@ class ApexControlsController < ApplicationController
     if controls.blank? || controls == nil then
 		controls = Control.where(:state_id => 99)
 	end
-    ApexControl.where("project_id == " + params[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2").delete_all()
+    ApexControl.where("project_id = " + params[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2").delete_all()
 
     controls.each do |control|
 		if control.id != 1 && control.id != 2
