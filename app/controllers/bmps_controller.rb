@@ -147,11 +147,11 @@ class BmpsController < ApplicationController
   			create(8)
   		end
 		#pond
-  		if !params[:select][:"9"].nil? then
+  		if params.has_key?(:select) && !params[:select][:"9"].nil? then
   			create(9)
   		end
 		#stream fencing
-		if !params[:select][:"10"].nil? then
+		if params.has_key?(:select) && !params[:select][:"10"].nil? then
   		#if !(params[:bmp_sf][:number_of_animals] == "") then
   			create(10)
   		end
@@ -180,7 +180,7 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_ll][:slope_reduction] == "") then
   			create(16)
   		end
-  		if !params[:select][:"17"].nil? then
+  		if params.has_key?(:select) && !params[:select][:"17"].nil? then
   			create(17)
   		end
 		if !(params[:bmp_mc] == nil) # when this is hidden because there is not manure application
