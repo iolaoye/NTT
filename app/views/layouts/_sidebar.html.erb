@@ -143,7 +143,7 @@
 
   <% if (!(session[:location_id] == nil) && Project.find(params[:project_id]).fields.count > 0) %>
   	<ul class="nav nav-pills nav-stacked nav-sidebar">
-  		<li class="<%= (controller_name == "watersheds" || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(params[:project_id], :locale=>I18n.locale) %></li>
+  		<li class="<%= (controller_name == "watersheds" || controller_name == "watershed_scenarios" || (controller_name == "results" && !request.url.include?(url_for("simulation=scenario"))) || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(params[:project_id], :locale=>I18n.locale) %></li>
   	</ul>
   	<% if watershed_submenu %>
   		<% results = 0 %>
