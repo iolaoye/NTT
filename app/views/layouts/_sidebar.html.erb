@@ -62,8 +62,8 @@
             <% end %>
             <%= link_to t('menu.bmps') + " (" + Bmp.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_bmps_path(@project, @field, @scenario) %>
           </li>
-					<li class="<%= controller_name == "aplcat_parameters" ? "active" : "" %>">
-            <% if controller_name == "aplcat_parameters" %>
+					<li class="<%= controller_name == "aplcat_parameters" ? "active" : controller_name == "grazing_parameters" ? "active" : controller_name == "supplement_parameters" ? "active" : "" %>">
+            <% if controller_name == "aplcat_parameters" or controller_name == "grazing_parameters" or controller_name == "supplement_parameters" %>
               <div class="sub-header-icon">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
