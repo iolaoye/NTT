@@ -2,7 +2,6 @@
 <% @user_id = session[:user_id] %>
 <% @user = User.find(@user_id) %>
 <% @project = Project.find(@project) %>
-<% @scenarios = Scenario.where(:field_id => session[:field_id]) %>
 <% @location = Location.find(session[:location_id]) %>
 <% t = Time.now %>
 <% @result_scenario1 = session[:scenario1] %>
@@ -12,12 +11,12 @@
 </br>
 </br>
 <body>
-    <%= render '/pdf/input_info' %>
-    <%= render '/pdf/location_site_info' %>
-    <%= render '/pdf/weather_info' %>
-    <%= render '/pdf/field_info' %>
-    <%= render '/pdf/soil_info' %>
-    <%= render '/pdf/layers_info' %>
-    <%= render '/pdf/management_info' %>
+    <%= render '/pdf/input_info' %><div><hr class="line_break_first" color="dodgerblue"></div>
+    <%= render '/pdf/location_site_info' %><div><hr class="line_break_first" color="dodgerblue"></div>
+    <%= render '/pdf/weather_info' %><div><hr class="line_break_first" color="dodgerblue"></div>
+    <%= render '/pdf/field_info' %><div><hr class="line_break_first" color="dodgerblue"></div>
+    <%= render '/pdf/soil_info' %><div><hr class="line_break_first" color="dodgerblue"></div>
+    <%= render '/pdf/layers_info' %><div><hr class="line_break_first" color="dodgerblue"></div>
+    <%= render '/pdf/management_info' %><div><hr class="line_break_first" color="dodgerblue"></div>
     <%= render '/pdf/results' %>
 </body>

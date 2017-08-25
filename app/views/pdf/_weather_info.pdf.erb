@@ -1,20 +1,16 @@
 <% @weather = Weather.find_by_field_id(params[:field_id]) %>
 <div class="group_header"><%=t('pdf.weather_info')%></div>
-    <div class="data_titles">
-        <%=t('pdf.weather_option')%>:</br>
-        <%=t('pdf.weather_period')%>:</br>
-        <%=t('pdf.simulation_period')%>:</br>
-    </div>
     <% if (I18n.locale.eql?(:en)) %>
         <div class="data">
-            <%= Way.find(@weather.way_id).way_name %></br>
-            <%= @weather.weather_initial_year %> to <%= @weather.weather_final_year %></br>
-            <%= @weather.simulation_initial_year %> to <%= @weather.simulation_final_year %></br>
+            <strong><%=t('pdf.weather_option')%>:  </strong><%= Way.find(@weather.way_id).way_name %></br>
+            <strong><%=t('pdf.weather_period')%>:  </strong><%= @weather.weather_initial_year %> to <%= @weather.weather_final_year %></br>
+            <strong><%=t('pdf.simulation_period')%>:  </strong><%= @weather.simulation_initial_year %> to <%= @weather.simulation_final_year %></br>
         </div>
     <% else %>
         <div class="data">
-            <%= Way.find(@weather.way_id).spanish_name %></br>
-            <%= @weather.weather_initial_year %> a <%= @weather.weather_final_year %></br>
-            <%= @weather.simulation_initial_year %> a <%= @weather.simulation_final_year %></br>
+            <strong><%=t('pdf.weather_option')%>:  </strong><%= Way.find(@weather.way_id).spanish_name %></br>
+            <strong><%=t('pdf.weather_period')%>:  </strong><%= @weather.weather_initial_year %> a <%= @weather.weather_final_year %></br>
+            <strong><%=t('pdf.simulation_period')%>:  </strong><%= @weather.simulation_initial_year %> a <%= @weather.simulation_final_year %></br>
         </div>
     <% end %>
+</br>

@@ -52,9 +52,40 @@ class ResultsController < ApplicationController
     @descriptions = Description.select("id, description, spanish_description").where("id < 71 or (id > 80 and id < 200)")
     @project = Project.find(params[:project_id])
     add_breadcrumb t('menu.results')
+	
+	@scenario1 = "0"
+	if params[:result1] != nil then
+		if params[:result1][:scenario_id] == nil then
+			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == ""
+		else
+			@scenario1 = params[:result1][:scenario_id]
+		end
+	else
+		@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == ""
+	end
+	@scenario2 ="0"
+	if params[:result2] != nil then
+		if params[:result2][:scenario_id] == nil then
+			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == ""
+		else
+			@scenario2 = params[:result2][:scenario_id]
+		end
+	else
+		@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == ""
+	end
+	@scenario3="0"
+	if params[:result3] != nil then
+		if params[:result3][:scenario_id] == nil then
+			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == ""
+		else
+			@scenario3 = params[:result3][:scenario_id]
+		end
+	else
+		@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == ""
+	end
     if session[:simulation].eql?('scenario') then
-      @total_area = Field.find(params[:field_id]).field_area
-      @field_name = Field.find(params[:field_id]).field_name
+        @total_area = Field.find(params[:field_id]).field_area
+        @field_name = Field.find(params[:field_id]).field_name
 	else
 	    @total_area = 0
 	    if params[:result1] != nil then
@@ -73,22 +104,30 @@ class ResultsController < ApplicationController
     @soil = "0"
     #load crop for each scenario selected
     i = 70
-    if params[:result1] != nil then
+    #if params[:result1] != nil then
+    if @scenario1 > "0" then
       @present = true
       @before_button_clicked = false
       @errors = Array.new
       results = Result.new
-	  if params[:result1][:scenario_id] == nil or params[:result1][:scenario_id] == "" then @scenario1 = 0 else @scenario1 = params[:result1][:scenario_id] end
-  	  if params[:result2][:scenario_id] == nil or params[:result2][:scenario_id] == "" then @scenario2 = 0 else @scenario2 = params[:result2][:scenario_id] end
-  	  if params[:result3][:scenario_id] == nil or params[:result3][:scenario_id] == "" then @scenario3 = 0 else @scenario3 = params[:result3][:scenario_id] end
+	  #if params[:result1][:scenario_id] == nil or params[:result1][:scenario_id] == "" then @scenario1 = 0 else @scenario1 = params[:result1][:scenario_id] end
+  	  #if params[:result2][:scenario_id] == nil or params[:result2][:scenario_id] == "" then @scenario2 = 0 else @scenario2 = params[:result2][:scenario_id] end
+  	  #if params[:result3][:scenario_id] == nil or params[:result3][:scenario_id] == "" then @scenario3 = 0 else @scenario3 = params[:result3][:scenario_id] end
       if session[:simulation] == 'scenario' then
         case true
-          when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
-            results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id], :scenario_id => params[:result2][:scenario_id], :scenario_id => params[:result3][:scenario_id], :soil_id => 0).where("crop_id > 0")
-          when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != ""
-            results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id], :scenario_id => params[:result2][:scenario_id]).where("crop_id > 0")
-          when params[:result1][:scenario_id] != ""
-            results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id]).where("crop_id > 0")
+          #when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
+            #results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id], :scenario_id => params[:result2][:scenario_id], :scenario_id => params[:result3][:scenario_id], :soil_id => 0).where("crop_id > 0")
+          #when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != ""
+            #results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id], :scenario_id => params[:result2][:scenario_id]).where("crop_id > 0")
+          #when params[:result1][:scenario_id] != ""
+            #results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id]).where("crop_id > 0")
+
+          when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
+            results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :scenario_id => @scenario2, :scenario_id => @scenario3, :soil_id => 0).where("crop_id > 0")
+          when @scenario1 > "0" && @scenario2 > "0"
+            results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :scenario_id => @scenario2).where("crop_id > 0")
+          when @scenario1 > "0"
+            results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1).where("crop_id > 0")
         end # end case true
       else
         case true
@@ -122,9 +161,10 @@ class ResultsController < ApplicationController
       case @type
         when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil")
 			if @type.include? t('general.view') then
-				if params[:result1] != nil
-					if !params[:result1][:scenario_id].eql?("") then
-						@scenario1 = params[:result1][:scenario_id]
+				#if params[:result1] != nil
+					#if !params[:result1][:scenario_id].eql?("") then
+					if @scenario1 > "0" then
+						#@scenario1 = params[:result1][:scenario_id]
 						session[:scenario1] = @scenario1
 						if session[:simulation] == 'scenario'
 							@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id = 0 or crop_id is null")
@@ -205,8 +245,9 @@ class ResultsController < ApplicationController
 						session[:scenario2] = ""
 						session[:scenario3] = ""
 					end
-					if params[:result2][:scenario_id] != "" then
-						@scenario2 = params[:result2][:scenario_id]
+					#if params[:result2][:scenario_id] != "" then
+					if @scenario2 > "0" then
+						#@scenario2 = params[:result2][:scenario_id]
 						session[:scenario2] = @scenario2
 						if session[:simulation] == 'scenario'
 							@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id = 0 or crop_id is null")
@@ -337,8 +378,9 @@ class ResultsController < ApplicationController
 						end
 						session[:scenario3] = ""
 					end
-					if params[:result3][:scenario_id] != "" then
-						@scenario3 = params[:result3][:scenario_id]
+					#if params[:result3][:scenario_id] != "" then
+					if @scenario3 > "0" then
+						#@scenario3 = params[:result3][:scenario_id]
 						session[:scenario3] = @scenario3
 						if session[:simulation] == 'scenario'
 							@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id = 0 or crop_id is null")
@@ -470,7 +512,7 @@ class ResultsController < ApplicationController
 							@errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase)
 						end
 					end   # end result 3
-				end # end if params[:result1] != nill
+				#end # end if params[:result1] != nill
 			end #end if params button summary
 
         when t('result.download_pdf')
@@ -577,17 +619,15 @@ class ResultsController < ApplicationController
   	  header: {spacing: -6, html: {template: '/layouts/_report_header.html'}},
   	  margin: {top: 16}
       send_data(pdf, :filename => "report.pdf")
-      #end  # end format pdf
-      #format.html { render action: "index" }
-      #format.json { render json: "index"}
-      #end # end respond to do
+	  return
     end # if format is pdf
-
-    respond_to do |format|
-      format.html
-      format.xlsx { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xlsx\"" }
-      format.csv { send_data @crop_results.to_csv, filename: "report-#{Date.today}.csv"}
-    end
+	if params[:action] == "index" then   # just run the format for Tabular => General menu option.
+      respond_to do |format|
+        format.html
+        format.xlsx { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xlsx\"" }
+        format.csv { send_data @crop_results.to_csv, filename: "report-#{Date.today}.csv"}
+      end
+	end
   end  # end Method Index
 
   ###############################  SHOW  ###################################

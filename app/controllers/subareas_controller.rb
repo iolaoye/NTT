@@ -108,10 +108,13 @@ class SubareasController < ApplicationController
       @subareas = []
 	  i=1
 	  if session[:scenario_id] != 0 then
-		  @soils.each do |soil|
-			  subarea = soil.subareas.find_by_scenario_id(session[:scenario_id])   
-			  @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
-			  i+=1
+		  scenario_id = Scenario.find(session[:scenario_id]) rescue nil
+		  if scenario_id != nil then
+			  @soils.each do |soil|
+				  subarea = soil.subareas.find_by_scenario_id(session[:scenario_id])   
+				  @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+				  i+=1
+			  end
 		  end
 	  end
 	  subareas = Subarea.where("scenario_id = " + session[:scenario_id].to_s + " AND bmp_id > 0 AND soil_id = 0")

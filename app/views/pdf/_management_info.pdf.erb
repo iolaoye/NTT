@@ -1,15 +1,11 @@
 <% j=1 %>
-<% @scenarios.each do |scenario| %>
+<% @field.scenarios.each do |scenario| %>
     <% @bmps = Bmp.where(:scenario_id => scenario.id) %>
     <% @operations = Operation.where(:scenario_id => scenario.id) %>
     <div class="group_header first_group"><%=t('pdf.management_info')%></div>
     <div class="data_titles">
-            <%=t('pdf.scenario')%> <%=j%>:</br>
+            <strong><%=t('scenario.scenario_name')%>: </strong><%= scenario.name %></br>
         </div>
-        <div class="data">
-            <%= scenario.name %></br>
-        </div>
-        </br>
     <table class='table_fill'>
         <thead>
             <tr>
@@ -148,6 +144,7 @@
             <% end %>
         </tbody>
     </table>
+	</br>
     <%= render '/pdf/bmp_info' %>
     <div class="page-break"></div>
     <% j = j + 1 %>
