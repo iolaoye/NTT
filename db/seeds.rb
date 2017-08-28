@@ -64,6 +64,9 @@ load file
 file = "db/seeds/manure_controls.rb"
 load file
 
+file = "db/seeds/parameters.rb"
+load file
+
 end
 
 cont = false
@@ -109,9 +112,6 @@ file = "db/seeds/modifications.rb"
 load file
 
 file = "db/seeds/operations.rb"
-load file
-
-file = "db/seeds/parameters.rb"
 load file
 
 file = "db/seeds/projects.rb"

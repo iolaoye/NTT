@@ -8,15 +8,15 @@ class ResultsController < ApplicationController
   end
   ###############################  ANNUAL CHART  ###################################
   def annual_charts
-    @type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
-    index
-    #render "index"
+  	@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
+  	index
+  	#render "index"
   end
   ###############################  BY SOIL  ###################################
   def by_soils
   	@type = t("result.summary") + " " + t("result.by_soil")
-   	index
-   	#render "index"
+  	index
+  	#render "index"
   end
 
   ###############################  SUMMARY ###################################
@@ -725,6 +725,12 @@ class ResultsController < ApplicationController
 
   def get_chart_serie(scenario_id, month_or_year)
     if month_or_year == 1 then #means chart is annual
+		if session[:simulation] != 'scenario' then
+			watershed_scenarios = WatershedScenario.where(:watershed_id => scenario_id)
+			watershed_scenarios.each do |ws|
+    			params[:field_id] = ws.field_id
+    		end
+		end
 		first_year = Field.find(params[:field_id]).weather.simulation_final_year-12
 		if @chart_type > 0 then
 			chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").limit(12).reverse
