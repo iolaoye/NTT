@@ -1,4 +1,4 @@
-<%= form_for ([@project, @field, @apex_layer]), url: project_field_apex_layer_path do |f| %>
+<%= form_for [@project, @field, @scenario, @apex_layer], url: project_field_apex_layer_path do |f| %>
   <% if @apex_layer.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @apex_layer.errors.count, :model => t('models.apex_layer')) %></h2>
