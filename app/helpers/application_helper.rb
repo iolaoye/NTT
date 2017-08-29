@@ -12,7 +12,7 @@ module ApplicationHelper
 	end
 
 	def field_submenu
-		if current_page?(edit_project_field_weather_path(id: @field.weather.id))
+		if request.url.include?(url_for("/weathers"))
 			true
 		elsif current_page?(url_for(controller: 'soils', :action => 'index'))
 			true

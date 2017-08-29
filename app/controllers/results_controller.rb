@@ -131,12 +131,12 @@ class ResultsController < ApplicationController
         end # end case true
       else
         case true
-          when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
-            results = Result.where(:watershed_id => params[:result1][:scenario_id], :watershed_id => params[:result2][:scenario_id], :watershed_id => params[:result3][:scenario_id]).where("crop_id > 0")
-          when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != ""
-            results = Result.where(:watershed_id => params[:result1][:scenario_id], :watershed_id => params[:result2][:scenario_id]).where("crop_id > 0")
-          when params[:result1][:scenario_id] != ""
-            results = Result.where(:watershed_id => params[:result1][:scenario_id]).where("crop_id > 0")
+          when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
+            results = Result.where(:watershed_id => @scenario1, :watershed_id => @scenario2, :watershed_id => @scenario3).where("crop_id > 0")
+          when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
+            results = Result.where(:watershed_id => @scenario1, :watershed_id => params[:result2][:scenario_id]).where("crop_id > 0")
+          when @scenario1 > "0"
+            results = Result.where(:watershed_id => @scenario1).where("crop_id > 0")
         end # end case true
       end
       results.each do |result|
