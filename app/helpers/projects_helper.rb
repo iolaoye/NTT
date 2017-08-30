@@ -257,7 +257,7 @@ module ProjectsHelper
 
   ######################### Duplicate a Subareas by scenario/soil #################################################
   def duplicate_subareas_by_scenario(scenario_id)
-	subareas = Subarea.where("scenario_id == " + scenario_id.to_s + " and soil_id > 0")
+	subareas = Subarea.where("scenario_id = " + scenario_id.to_s + " and soil_id > 0")
 	subareas.each do |subarea|
   		new = subarea.dup
 		new.scenario_id = @new_scenario_id
