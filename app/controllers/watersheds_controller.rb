@@ -12,6 +12,7 @@ class WatershedsController < ApplicationController
   def list
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
+    watershed_scenarios_count(@watersheds)
     @project = Project.find(params[:project_id])
     respond_to do |format|
       format.html notice: t('watershed.watershed') + " " + t('general.created') # list.html.erb
@@ -26,12 +27,7 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @project = Project.find(params[:project_id])
     @watersheds = Watershed.where(:location_id => @project.location.id)
-    @watershed_scenarios_count = 0
-    @watershed_results_count = 0
-    @watersheds.each do |watershed|
-    	@watershed_scenarios_count += watershed.watershed_scenarios.count
-    	@watershed_results_count += watershed.results.count
-    end
+    watershed_scenarios_count(@watersheds)
 
 	add_breadcrumb t('watershed.watershed')
     respond_to do |format|
@@ -172,11 +168,7 @@ class WatershedsController < ApplicationController
 	end
 	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
 	@watersheds = Watershed.where(:location_id => @project.location.id)
-	@watershed_results_count = 0
-	@watershed_scenarios_count = 1
-	@watersheds.each do |watershed|
-		@watershed_results_count += watershed.results.count
-	end
+	watershed_scenarios_count(@watersheds)
     render "index"
   end
 
@@ -246,6 +238,7 @@ class WatershedsController < ApplicationController
 	@project = Project.find(Location.find(Watershed.find(params[:id]).location_id).project_id)
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => @project.location.id)
+    watershed_scenarios_count(@watersheds)
 	params[:project_id] = @project.id
     render "index"
   end
@@ -265,6 +258,7 @@ class WatershedsController < ApplicationController
 
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
+    watershed_scenarios_count(@watersheds)
 	params[:project_id] = @project.id
     render "index"
   end
@@ -284,6 +278,17 @@ class WatershedsController < ApplicationController
 	else
 		@error = "Error deleting Field/scenario"
     end
+  end
+
+  ################### Watershed Scenarios Count ##################
+  #Returns number of watershed scenarios for UI buttons
+  def watershed_scenarios_count(watersheds)
+  	@watershed_results_count = 0
+	@watershed_scenarios_count = 0
+  	watersheds.each do |watershed|
+  		@watershed_scenarios_count += watershed.watershed_scenarios.count
+  		@watershed_results_count += watershed.results.count
+  	end
   end
 
   private

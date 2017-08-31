@@ -94,7 +94,7 @@ class SitesController < ApplicationController
     @site.destroy
 
     respond_to do |format|
-      format.html { redirect_to sites_url, notice: t('models.site') + "" + t('notices.deleted') }
+      format.html { redirect_to project_field_sites_url, notice: t('models.site') + "" + t('notices.deleted') }
       format.json { head :no_content }
     end
   end
