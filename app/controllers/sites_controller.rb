@@ -23,7 +23,7 @@ class SitesController < ApplicationController
   # GET /sites/1
   # GET /sites/1.json
   def show
-    @site = Site.find_by_field_id(params[:id])
+    @site = Site.find(params[:id])
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
 	add_breadcrumb t('menu.utility_file')
