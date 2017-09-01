@@ -46,7 +46,9 @@
           <% when t('general.view'), t('result.summary') %>
             <td><%= submit_tag t("general.view"), :id => "summary", name: "button", :class => "btn btn-primary" %>
 				<% if @results1 != nil %>
-					<%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
+					<% if !request.url.include?(url_for("/fields/0/results?")) %>
+						<%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
+					<% end %>
 				    <!-- Download CSV/Excel button -->
 				    <%= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
 				<% end %>
