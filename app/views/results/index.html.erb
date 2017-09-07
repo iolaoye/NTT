@@ -460,7 +460,7 @@
 				</tr>
 			<% end %>  <!-- @crop_results.each  -->
 
-      <% if @results1 != nil && @present and ENV["APP_VERSION"] == "standard" %>
+      <% if !@crop_results.empty? && @present and ENV["APP_VERSION"] == "standard" %>
         <% id = 200%>
         <% row_id = "row" + id.to_s %>
         <tr class="gvRowStyleOdd" id=<%=row_id%>>
