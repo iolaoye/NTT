@@ -154,22 +154,22 @@ wb.styles do |s|
       if I18n.locale.eql?(:en)
         if @scenario2 != "0"
           if @scenario3 != "0"
-            sheet.add_row [Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.0f", result[1].round(2)), sprintf("%8.2f", result[2]), sprintf("%8.0f", result[3].round(2)), sprintf("%8.2f", result[4]), sprintf("%8.0f", difference1.round(2)), sprintf("%8.0f", reduction1.round(2)), sprintf("%8.0f", total_area1.round(2)), sprintf("%8.0f", result[5].round(2)), sprintf("%8.2f", result[6]), sprintf("%8.0f", difference2.round(2)), sprintf("%8.0f", reduction2.round(2)), sprintf("%8.0f", total_area2.round(2))], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
+            sheet.add_row [Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2]), sprintf("%8.2f", result[3]), sprintf("%8.2f", result[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", result[5]), sprintf("%8.2f", result[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
           else
-            sheet.add_row [Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.0f", result[1].round(2)), sprintf("%8.2f", result[2]), sprintf("%8.0f", result[3].round(2)), sprintf("%8.2f", result[4]), sprintf("%8.0f", difference1.round(2)), sprintf("%8.0f", reduction1.round(2)), sprintf("%8.0f", total_area1.round(2))], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
+            sheet.add_row [Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2]), sprintf("%8.2f", result[3]), sprintf("%8.2f", result[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
           end
         else
-          sheet.add_row [Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.0f", result[1].round(2)), sprintf("%8.2f", result[2])], :types => [:string, :float, :float]
+          sheet.add_row [Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2])], :types => [:string, :float, :float]
         end
       else
         if @scenario2 != "0"
           if @scenario3 != "0"
-            sheet.add_row [Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.0f", result[1].round(2)), sprintf("%8.2f", result[2]), sprintf("%8.0f", result[3].round(2)), sprintf("%8.2f", result[4]), sprintf("%8.0f", difference1.round(2)), sprintf("%8.0f", reduction1.round(2)), sprintf("%8.0f", total_area1.round(2)), sprintf("%8.0f", result[5].round(2)), sprintf("%8.2f", result[6]), sprintf("%8.0f", difference2.round(2)), sprintf("%8.0f", reduction2.round(2)), sprintf("%8.0f", total_area2.round(2))], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
+            sheet.add_row [Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2]), sprintf("%8.2f", result[3]), sprintf("%8.2f", result[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", result[5]), sprintf("%8.2f", result[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
           else
-            sheet.add_row [Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.0f", result[1].round(2)), sprintf("%8.2f", result[2]), sprintf("%8.0f", result[3].round(2)), sprintf("%8.2f", result[4]), sprintf("%8.0f", difference1.round(2)), sprintf("%8.0f", reduction1.round(2)), sprintf("%8.0f", total_area1.round(2))], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
+            sheet.add_row [Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2]), sprintf("%8.2f", result[3]), sprintf("%8.2f", result[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
           end
         else
-          sheet.add_row [Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.0f", result[1].round(2)), sprintf("%8.2f", result[2])], :types => [:string, :float, :float]
+          sheet.add_row [Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2])], :types => [:string, :float, :float]
         end
       end
     end
@@ -210,7 +210,7 @@ wb.styles do |s|
               sheet.add_row [Crop.find(ns[0]).spanish_name + "(days)", sprintf("%8.2f", ns[1]), sprintf("%8.2f", ns[2]), sprintf("%8.2f", ns[3]), sprintf("%8.2f", ns[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
             end
           else
-            sheet.add_row [Crop.find(ns[0]).spanish_name + "(days)", sprintf("%8.2f", ns[1].round(2)), sprintf("%8.2f", ns[2])], :types => [:string, :float, :float]
+            sheet.add_row [Crop.find(ns[0]).spanish_name + "(days)", sprintf("%8.2f", ns[1]), sprintf("%8.2f", ns[2])], :types => [:string, :float, :float]
           end
         end
       end
@@ -250,7 +250,7 @@ wb.styles do |s|
               sheet.add_row [Crop.find(ps[0]).spanish_name + "(days)", sprintf("%8.2f", ps[1]), sprintf("%8.2f", ps[2]), sprintf("%8.2f", ps[3]), sprintf("%8.2f", ps[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
             end
           else
-            sheet.add_row [Crop.find(ps[0]).spanish_name + "(days)", sprintf("%8.2f", ps[1].round(2)), sprintf("%8.2f", ps[2])], :types => [:string, :float, :float]
+            sheet.add_row [Crop.find(ps[0]).spanish_name + "(days)", sprintf("%8.2f", ps[1]), sprintf("%8.2f", ps[2])], :types => [:string, :float, :float]
           end
         end
       end
@@ -290,7 +290,7 @@ wb.styles do |s|
               sheet.add_row [Crop.find(ts[0]).spanish_name + "(days)", sprintf("%8.2f", ts[1]), sprintf("%8.2f", ts[2]), sprintf("%8.2f", ts[3]), sprintf("%8.2f", ts[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
             end
           else
-            sheet.add_row [Crop.find(ts[0]).spanish_name + "(days)", sprintf("%8.2f", ts[1].round(2)), sprintf("%8.2f", ts[2])], :types => [:string, :float, :float]
+            sheet.add_row [Crop.find(ts[0]).spanish_name + "(days)", sprintf("%8.2f", ts[1]), sprintf("%8.2f", ts[2])], :types => [:string, :float, :float]
           end
         end
       end
@@ -330,7 +330,7 @@ wb.styles do |s|
               sheet.add_row [Crop.find(ws[0]).spanish_name + "(days)", sprintf("%8.2f", ws[1]), sprintf("%8.2f", ws[2]), sprintf("%8.2f", ws[3]), sprintf("%8.2f", ws[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
             end
           else
-            sheet.add_row [Crop.find(ws[0]).spanish_name + "(days)", sprintf("%8.2f", ws[1].round(2)), sprintf("%8.2f", ns[2])], :types => [:string, :float, :float]
+            sheet.add_row [Crop.find(ws[0]).spanish_name + "(days)", sprintf("%8.2f", ws[1]), sprintf("%8.2f", ns[2])], :types => [:string, :float, :float]
           end
         end
       end
