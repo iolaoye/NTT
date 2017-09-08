@@ -123,18 +123,18 @@ class ResultsController < ApplicationController
             #results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id]).where("crop_id > 0")
 
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
-            results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :scenario_id => @scenario2, :scenario_id => @scenario3, :soil_id => 0).where("crop_id > 0")
+            results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2, @scenario3], :soil_id => 0).where("crop_id > 0")
           when @scenario1 > "0" && @scenario2 > "0"
-            results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :scenario_id => @scenario2).where("crop_id > 0")
+            results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2]).where("crop_id > 0")
           when @scenario1 > "0"
             results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1).where("crop_id > 0")
         end # end case true
       else
         case true
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
-            results = Result.where(:watershed_id => @scenario1, :watershed_id => @scenario2, :watershed_id => @scenario3).where("crop_id > 0")
+            results = Result.where(:watershed_id => [@scenario1, @scenario2, @scenario3]).where("crop_id > 0")
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
-            results = Result.where(:watershed_id => @scenario1, :watershed_id => params[:result2][:scenario_id]).where("crop_id > 0")
+            results = Result.where(:watershed_id => [@scenario1, @scenario2]).where("crop_id > 0")
           when @scenario1 > "0"
             results = Result.where(:watershed_id => @scenario1).where("crop_id > 0")
         end # end case true
@@ -706,7 +706,7 @@ class ResultsController < ApplicationController
   end
 
   def sel
-    @result = Result.where(:field_id => params[:id], :scenario_id => params[:scenario1], :scenario_id => params[:scenario2], :scenario_id => params[:scenario3], :soil_id => 0).where("crop_id > 0")
+    @result = Result.where(:field_id => params[:id], :scenario_id => [params[:scenario1], params[:scenario2], params[:scenario3]], :soil_id => 0).where("crop_id > 0")
 
     respond_to do |format|
       format.html # sel.html.erb
