@@ -1775,9 +1775,12 @@ module SimulationsHelper
     irrigation = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:irri).mean] }
     irrigation_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:irri).confidence_interval] }
     add_summary_to_results_table(irrigation, 51, irrigation_ci)
+    # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
+=begin
     deep_percolation_flow = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:dprk).mean] }
     deep_percolation_flow_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:dprk).confidence_interval] }
     add_summary_to_results_table(deep_percolation_flow, 52, deep_percolation_flow_ci)
+=end
     sediment = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:sed).mean] }
     sediment_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:sed).confidence_interval] }
     add_summary_to_results_table(sediment, 61, sediment_ci)
@@ -1916,7 +1919,7 @@ module SimulationsHelper
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
 			  when 43 #calculate total flow
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
-			  when 52 #calculate total other water info
+        when 52 #calculate total other water info
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
 			  when 62 #calculate total sediment
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
