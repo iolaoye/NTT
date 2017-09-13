@@ -1674,7 +1674,9 @@ module SimulationsHelper
         one_result.qdrn = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result.qdrp = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result.qn = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
+        # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
+        # one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
+        one_result.dprk = 0 # Deep percolation hidden in results table
         one_result.irri = tempa[237, 8].to_f * MM_TO_IN
         one_result.pcp = tempa[229, 8].to_f * MM_TO_IN
         one_result.prkn = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
@@ -1916,7 +1918,7 @@ module SimulationsHelper
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
 			  when 43 #calculate total flow
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
-			  when 52 #calculate total other water info
+        when 52 #calculate total other water info
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
 			  when 62 #calculate total sediment
 				add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
