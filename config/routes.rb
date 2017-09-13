@@ -159,8 +159,8 @@ NTTG3::Application.routes.draw do
   get '/about' => "about#index", :as => "about"
   get '/contact' => "contact#index", :as => "contact"
 
-  get '/help/' => redirect('/help/index')
-  #get '/help/:page' => "help#show", :as => "help"
+  #get '/help/' => redirect('/help/index')
+  get '/help/:page' => "help#show", :as => "help"
 
   post 'apex_controls/download'
   post 'apex_parameters/reset'
