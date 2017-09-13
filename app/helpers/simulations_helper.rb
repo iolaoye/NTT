@@ -1674,7 +1674,9 @@ module SimulationsHelper
         one_result.qdrn = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result.qdrp = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result.qn = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
+        # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
+        # one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
+        one_result.dprk = 0 # Deep percolation hidden in results table
         one_result.irri = tempa[237, 8].to_f * MM_TO_IN
         one_result.pcp = tempa[229, 8].to_f * MM_TO_IN
         one_result.prkn = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
@@ -1775,12 +1777,9 @@ module SimulationsHelper
     irrigation = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:irri).mean] }
     irrigation_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:irri).confidence_interval] }
     add_summary_to_results_table(irrigation, 51, irrigation_ci)
-    # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
-=begin
     deep_percolation_flow = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:dprk).mean] }
     deep_percolation_flow_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:dprk).confidence_interval] }
     add_summary_to_results_table(deep_percolation_flow, 52, deep_percolation_flow_ci)
-=end
     sediment = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:sed).mean] }
     sediment_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:sed).confidence_interval] }
     add_summary_to_results_table(sediment, 61, sediment_ci)
