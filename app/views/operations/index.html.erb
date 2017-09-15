@@ -113,7 +113,7 @@
 								<% end %>								
 							<% end %>
 							<% if op.activity_id == 2 and op.type_id == 2 then %>
-								<td class="gvCellStyleNumber"><%= op.amount / 2000 %><%= amount_label %> </td>
+								<td class="gvCellStyleNumber"><%= op.amount %><%= amount_label %> </td>
 							<% else %>
 								<td class="gvCellStyleNumber"><%= op.amount%><%= amount_label %> </td>
 							<% end %>
@@ -471,7 +471,7 @@
 						<% end %>
 					<% end %>
 					<% if operation.activity_id == 2 and operation.type_id == 2 then %>
-						<td class="gvCellStyleNumber"><%= operation.amount / 2000 %></td>
+						<td class="gvCellStyleNumber"><%= operation.amount  %></td>
 					<% else %>
 						<td class="gvCellStyleNumber"><%= operation.amount %></td>
 					<% end %>
