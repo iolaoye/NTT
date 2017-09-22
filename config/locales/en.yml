@@ -391,6 +391,7 @@ en:
     value: Value
     fraction: fraction
     date: Date
+    year: Year
     select: Select
     one: One
     please: Please
@@ -1201,7 +1202,7 @@ en:
         body: Once you have created a project you can use the <strong>Download</strong> button which is the arrow pointing downwards, to save the current project that you are working on.
         note: <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.
   projpage_html:
-    <strong>Start of a Project</strong> <br><br>
+    <strong>Start of a Project</strong><br><br>
     Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
     to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
     <strong>To Start a Project</strong><br>
@@ -1211,20 +1212,29 @@ en:
     Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br><br>
     <strong>New Project Option</strong><br>
     Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.
-    After you have entered the information, click the <strong>Create Project</strong> button to save the information and continue.<br>
-    After you have opened the save project, click the <strong>Save Changes</strong> button to save the information and continue.<br><br>
+    After you have entered the information, click the <strong>Save</strong> button to save the information and continue.<br><br>
     <strong>Upload Project Option</strong><br>
-    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.<br><br>
-    <strong>Open an Example Project Option</strong><br>
-    You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.
-    After you have entered the information, click the <b>Save and Continue</b> button to save the information and continue.<br><br>
-    <strong>Save Active Project</strong><br>
-    You can also use the <strong>Save Active Project...</strong> button to save the current project that you are working on.
+    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
+    After you have opened the save project, click the <strong>Upload Project</strong> button to save the information and continue.<br>
     <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.<br><br>
-    <strong>Close Active Project</strong><br>
-    You can also use the <strong>Close Active Project</strong> button to close the current project that you are working on.
-    When you attempt to close, a warning message will come up.
-    Closing an active project will erase all of that projects information. Because of this, if you would like to project for later use, it is extremely important that you save the project before closing it. By clicking the <strong>OK</strong> button on the warning message, the information will be cleared (and lost if not previously saved). If you have not yet saved and would like to, click cancel and follow the instructions for <strong>Save Active Project</strong> above.
+    <strong>Open an Example Project Option</strong><br>
+    You can also use the <b>Upload Example</b> button, and then select from the options of sample projects to load.
+    After you have made a selection, click the <b>Upload Example</b> button to save the information and continue.
+  projpage_modified_html:
+    <strong>Start of a Project</strong><br><br>
+    Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
+    to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
+    <strong>To Start a Project</strong><br>
+    There are <b>two initial choices</b> to start a new project:<br>
+    Select the <b>New Project</b> option to start a project from scratch<br>
+    Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br><br>
+    <strong>New Project Option</strong><br>
+    Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.
+    After you have entered the information, click the <strong>Save</strong> button to save the information and continue.<br><br>
+    <strong>Upload Project Option</strong><br>
+    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
+    After you have opened the saved project, click the <strong>Upload Project</strong> button to save the information and continue.<br>
+    <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.
   locpage:
     header: Location Information
     mapsystem:
