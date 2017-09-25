@@ -712,7 +712,7 @@ class OperationsController < ApplicationController
   end
 
   def update_amount()
-	  if @operation.activity_id == 2 and @operation.type_id == 2 then @operation.amount *= 2000 end
+	  #if @operation.activity_id == 2 and @operation.type_id == 2 then @operation.amount *= 2000 end
 	  @operation.save
   end
 
