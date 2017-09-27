@@ -577,10 +577,10 @@ es:
     animals: 'Número de animales'
     hours: 'Horas en parcela (0-24)'
     depth: 'Profundidad (pulg.)'
-    no3_n: 'No3 n (0-1)'
-    po4_p: 'Po4 p (0-1)'
-    org_n: 'Org n (0-1)'
-    org_p: 'Org p (0-1)'
+    no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
+    po4_p_html: 'PO<sub>4</sub> p (0-100%)'
+    org_n_html: 'Org N (0-100%)'
+    org_p_html: 'Org P (0-100%)'
     add_list: Agregar a la lista
     select_crop: Seleccionar el cultivo
     planting: Plantar
@@ -603,6 +603,7 @@ es:
     add_liming: 'Añadir operación de Encalado'
     add_start_grazing: 'Añadir operación de Pasteo'
     add_stop_grazing: 'Añadir operación de Terminar Pasteo'
+    po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG

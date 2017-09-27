@@ -66,11 +66,11 @@ class OperationsController < ApplicationController
 ################################  Edit  #################################
 # GET /operations/1/edit
   def edit
-    @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
-    @operation = Operation.find(params[:id])
-	@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
-    @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
+    @crops = Crop.load_crops(Location.find_by_project_id(@project.id).state_id)
+    @operation = Operation.find(params[:id])
+	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
+    @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
 	add_breadcrumb t('operation.edit')
