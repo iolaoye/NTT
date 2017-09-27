@@ -576,7 +576,7 @@ en:
     hours: 'Hours in field (0-24)'
     depth: 'Application depth (in)'
     no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
-    po4_p_html: 'PO<sub>4</sub> p (0-100%)'
+    po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
     org_n_html: 'Org N (0-100%)'
     org_p_html: 'Org P (0-100%)'
     add_list: Add to list
