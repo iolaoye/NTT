@@ -140,7 +140,11 @@
         <table>
         <% case controller_name %>
         <% when "projects" %>
-              <tr><td><%= t('projpage_html')%></td></tr>
+              <% if ENV["APP_VERSION"] == "modified" %>
+                <tr><td><%= t('projpage_modified_html')%></td></tr>
+              <% else %>
+                <tr><td><%= t('projpage_html')%></td></tr>
+              <% end %>
         <% when "locations" %>
               <tr><td><%= t('locpage_html')%></td></tr>
         <% when "weathers" %>
