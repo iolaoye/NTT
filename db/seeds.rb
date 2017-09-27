@@ -6,6 +6,12 @@ load file
 file = "db/seeds/crop_schedules.rb"
 load file
 
+file = "db/seeds/activities.rb"
+load file
+
+file = "db/seeds/fertilizers.rb"
+load file
+
 cont = false
 
 if cont then
@@ -50,6 +56,9 @@ file = "db/seeds/counties.rb"
 load file
 
 file = "db/seeds/crops.rb"
+load file
+
+file = "db/seeds/crop_schedules.rb"
 load file
 
 file = "db/seeds/cropping_systems.rb"
@@ -110,6 +119,9 @@ file = "db/seeds/results.rb"
 load file
 
 file = "db/seeds/scenarios.rb"
+load file
+
+file = "db/seeds/schedules.rb"
 load file
 
 file = "db/seeds/sites.rb"
