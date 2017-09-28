@@ -25,10 +25,15 @@ updatePlantPopulation = ->
         $("#operation_amount").val(crop.plant_population_ft)
 
 updateNutrients = (animal) ->
-  if ($("#operation_subtype_id").val() == "57")
-    $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
-  else
+  if ($("#operation_type_id").val() == "2")
     $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+    if ($("#operation_subtype_id").val() == "57")
+      $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
+    else
+      $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+  else
+    $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+
   if (animal == 0)
      url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
   else
