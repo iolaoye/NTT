@@ -707,7 +707,7 @@ en:
     watershed_scenario_field: Watershed Field
     watershed_scenario: Watershed Scenario
     new_watershed: New Watershed Scenario
-    watershed_scenario_title: List of fields in 
+    watershed_scenario_title: List of fields in
     add_to: Add to
     already_selected: 'That field has already been selected. Please choose again.'
   submit:
@@ -1331,7 +1331,7 @@ en:
                 body3: 'The information above, for example, would show weather information for January 1, 1981 (where the solar radiation was 0, the max temperature was 10.1 degrees Celsius, the min temperature was -0.9 degrees Celsius, and precipitation was 0.00 millimeters), and the weather information for January 2, 1981 (where the solar radiation was 0, the max temperature was 5.7 degrees Celsius, the min temperature was -5.9 degrees Celsius, and precipitation was 0.00 millimeters). Ideally, you would have a file that contains detailed information for the weather for an extended period. This would look as shown below:'
                 body4: 'Even though the file is significantly larger, all of the days for which we have data follow the same format.'
             item2:
-                body1: '<strong>Upload the Weather File:</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select the <b>Choose File</b> button to select a file to be uploaded. This will bring up an “Open” window where the user can search their computer for the weather file. When you have selected the file click “Open”. This will show a progress bar as the system uploads the information.'
+                body1: '<strong>Upload the Weather File:</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select <strong>Load your Own Weather File</strong> from the options. Next, the user needs to click the ''Choose File'' button under the new window that appears after selection. This will bring up an “Open” folder where the user can search their computer for the weather file. When you have selected the file click “Open”. The selected file will then appear along side the ''Choose File'' button.'
                 body2: 'The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Update Weather</strong> to save the information and the <strong>Continue</strong> button to advance to the next page.'
             item3: '<strong>NOTE:</strong> It is important to note that when you click <strong>Update Weather</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate, run the simulations again.'
         method3:
@@ -1357,7 +1357,7 @@ en:
     The information above, for example, would show weather information for January 1, 1981 (where the solar radiation was 0, the max temperature was 10.1 degrees Celsius, the min temperature was -0.9 degrees Celsius, and precipitation was 0.00 millimeters), and the weather information for January 2, 1981 (where the solar radiation was 0, the max temperature was 5.7 degrees Celsius, the min temperature was -5.9 degrees Celsius, and precipitation was 0.00 millimeters). Ideally, you would have a file that contains detailed information for the weather for an extended period. This would look as shown below
     Even though the file is significantly larger, all of the days for which we have data follow the same format.<br>
     <strong>Upload the Weather File</strong><br> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select <strong>Load your Own Weather File</strong> from the options. Next, the user needs to click the 'Choose File' button under the new window that appears after selection. This will bring up an “Open” folder where the user can search their computer for the weather file. When you have selected the file click “Open”. The selected file will then appear along side the 'Choose File' button.
-    The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Save and Continue</strong> to save the information and advance to the next page
+    The records will have been uploaded when the <strong>Update Weather</strong> button is pressed, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Save and Continue</strong> to save the information and advance to the next page
     <strong>NOTE</strong> It is important to note that when you click <strong>Save and Continue</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate run the any simulations again.<br><br>
     <strong>Load Using Specific Coordinates (U.S.A only)</strong><br>
     This method of weather selection will always appear as available regardless of the location method that was selected in the <a href=/help/page_4>Location</a> page (this method will work for the User Input method). However, the coordinates selected must be coordinates within the United States. This means that while the option will appear as available if the user selected “User Input” in the <a href=/help/page_4>Location</a> page, if they are looking at an area of interest that is outside the mainland United States an error message will come up.
@@ -1402,7 +1402,7 @@ en:
     header: Soils Page
     overview:
         header: Overview
-        body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
+        body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> that would like to be used for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however, there are 4 general rules that apply to all methods. They are as follows:'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
         item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics, as shown circled in red below. To find the total soil percentage of the selected soils, add the percentages of the soils which are selected. Selected soils will have a check mark next to them (as shown below circled in yellow).'
         item3: ' However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will give the user the following error message:'
@@ -1412,7 +1412,7 @@ en:
         body: 'Users have different options of modifying their soil information. The list below shows all the possible ways that are available in NTT for modifying the soil information.'
         select:
             header: Adding/Deleting a Soil
-            body1: 'Users can add a new soil by clicking on the <strong>New</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
+            body1: 'Users can add a new soil by clicking on the <strong>New</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message then it means that there are inaccurate values that need to be fixed before advancing.'
             body2: 'After the soil has been added the user needs to enter at least one layer. The user needs to go to the layers page by clicking on the <b>Soil Layers</b> icon in the <b>Actions</b> column. The rest of the steps are described below in the "Adding/Deleting Layers" description.'
             body3: 'To delete a soil simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
         info:
@@ -1420,20 +1420,20 @@ en:
             body: 'Some of the soil and all of the layer information can be edited when the Mapping System was used. The user can change the soil/layer information by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. It will open a new page that lets the user edit and change the different informations available for the soil. This option is also available for the layers. Once they have done this, they can save the changed inforamtion by clicking on the <b>Save</b> button.'
         addremove:
             header: Adding/Deleting Layers
-            body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
+            body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message then it means that there are inaccurate values that need to be fixed before advancing.'
             body2: 'To delete a layer simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
     advance:
         header: Advancing
-        body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
+        body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once all of the information has been entered, verified, or manipulated the user can click <strong>Save and Continue</strong> to advance to the next page.'
   managepage:
     header: Management Page Help
     overview:
         header: Overview
-        body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
+        body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (e.g. Auto Irrigation) could have based on the location of the user’s fields.'
     create:
         header: Creating a Scenario
         add:
-            body1: 'The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
+            body1: 'The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario (e.g. “Baseline”, “Alternative”, “Auto-Irrigation”). After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button, which will create the scenario and advances the user to the operation page.'
             body2: 'To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
     manipulate:
         header:  Manipulating a Scenario’s Characteristics
@@ -1450,28 +1450,19 @@ en:
             body1: 'The user can also create a new Cropping System from scratch. To do this, the user needs to  click on the <strong><em>New Operation</em></strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
             body2: 'If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b><em>Edit</em></b> icon in the <b><em>Actions</em></b> column. This will take the user to a new page where they can make the required changes to the operation.'
             body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column.'
-        item3:
-            header: <b>Save Cropping System:</b>
-            body1: 'Using this option saves the cropping system directly to the users computer. A file “#########.opr” is saved in the user’s computer, usually in the “Downloads” folder, which they can upload in the future by selecting the <b><em>Open Saved Cropping System</em></b>.'
-        item4:
-            header: <b>Open saved Cropping System:</b>
-            body1: 'This option allows the user to upload a previously saved crop rotation, however this file must have previously been saved on your computer, and be in *.opr format. To save a crop rotation, first create one and then click on <strong><em>Save Cropping System</em></strong>.'
-        item5:
-            header: <b>Delete All</b>
-            body1: 'Users can delete individual operations by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column, but if they want to delete all the operations present currently in the scenario, they can select the <b><em>Delete All</em></b> option, to delete all available operations.'
     bmpnav:
         header: Best Management Practices (BMPs) Navigation
         body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
         add:
             header: 'Adding a BMP:'
-            body1: 'To add a BMP, the user needs to select a BMP by clicking on the check box under the <b><em>Select</em></b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then select the specific BMP (for example Auto Irrigation), as shown below:'
-            body2: 'Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.'
-            body3: 'Where there is a drop-down menu with the title “Select One” allows the user to select from a range of options.'
-            body4: 'Where there is a checkbox,<b><em>Select</em></b> , the user can simply click on it to select the BMP.'
-            body5: 'Finally, the <strong><em>Clear</em></strong> button allows the user to clear the information that was entered. While simply erasing the information should clear the info, clicking the <strong><em>Clear</em></strong> should ensure that it does. Remember that if a BMP is expanded when you first get to the page, it means that this BMP has been selected.'
+            body1: 'To add a BMP, the user needs to select a BMP by clicking on the check box under the <b><em>Select</em></b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which BMPs they are interested in adding. To add the BMP, expand the particular group (e.g. Auto Irrigation and Fertigation) and then select the specific BMP (e.g. Auto Irrigation), as shown below:'
+            body2: 'Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can find a range of acceptable values to the left of the textbox if necessary.'
+            body3: 'Where there is a drop-down menu with the title “Select One”, this means the user is allowed to select from a range of options.'
+            body4: 'Where there is a checkbox,<b><em>Select</em></b>, the user can simply click on it to select the BMP.'
+            body5: 'Finally, the <strong><em>Clear</em></strong> button allows the user to clear the information that was entered. While simply erasing the information should clear the info, clicking the <strong><em>Clear</em></strong> should ensure that it does so. Remember that if a BMP appears as selected with a checkmark when you first get to the page, it means that this BMP has been selected and is currently saved.'
         mutualbmp:
             header: 'Mutually Exclusive BMPs'
-            body1: 'Some BMPs can co-exist with other BMPs. For the most part, most BMPs can co-exist with other BMPs. However there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have:'
+            body1: 'In most cases, BMPs can co-exist with other BMPs. However, there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have:'
             item1: 'Auto Irrigation and Auto Fertigation'
             item2: 'Auto Irrigation and any Pads and Pipes'
             item3: 'Only one Pads and Pipes is allowed at the same time'
@@ -1628,15 +1619,15 @@ en:
         header: Creating a Field Routing Scenario
         name:
             header: Naming Your Watershed
-            body1: 'To begin creating a field routing scenario, click <strong><em>New</em></strong>. Once you do this, a text box will pop up where you can type in the name of the scneario:'
+            body1: 'To begin creating a field routing scenario, click on the <strong><em>Add New Field Routing (Watershed)</em></strong> button. Once you do this, a text box will pop up where you can type in the name of the scneario:'
             body2: 'Once you enter the name, click <strong><em>Save</em></strong>.'
         select:
             header: Selecting Fields/Scenarios to Simulate
-            body1: 'Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the Field/scenario combinations, and click <strong><em>Select Scenario</em></strong>.'
-            body2: 'Once you have finished, click on <strong><em>Add to ......</em></strong>. The dots represent the name you gave to the field routing scenario.'
+            body1: 'Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, first click on the field route then select the Field/scenario combinations.'
+            body2: 'Once you have finished, click on <strong><em>Add</em></strong>.'
         simulate:
             header: Simulating/Viewing Results for Field Routing
-            body1: 'To simulate or to view results for field routings, go to <b><em>Results</em><b> Page and select the watersheds and click on <strong><em>Summary</em></strong> to get the results.'
+            body1: 'To simulate the field route, simply select the field route via the checkbox and click <strong><em>Simulate Selected Field Routing (Watershed)</em></strong> button. To view the results for field routings, go to <b><em>Results</em></b> Page, select the watersheds to display results for and click on <strong><em>View</em></strong> to get the results.'
   simpage:
     header: Simulation Page Help
     body1: 'In this page the user is able to run the simulations for the fields/scenarios or subprojects that were created.'
@@ -1695,7 +1686,7 @@ en:
             header: Understanding Nutrient Results in Graphical Form
             body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong><em>Graphs</em></strong>.'
             item1:
-                body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart, as shown below.'
+                body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (e.g. flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart, as shown below.'
                 body2: 'Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
             item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong> An example graph for the monthly average is shown below:'
         economic:
@@ -1824,7 +1815,7 @@ en:
     operations: >
                 You have a couple of different options here.
                 <ol>
-                    <li>Select <strong>New Operation</strong> to create a new operation from scratch</li>
+                    <li>Select <strong>Add New Operation</strong> to create a new operation from scratch</li>
                     <li>Select <strong>Upload Operation</strong> to create a new operation from a cropping system</li>
                 </ol>
                 To <strong>Edit</strong> a operation, click the pencil icon under <strong>Actions</strong>.<br>
