@@ -33,12 +33,10 @@ updateNutrients = (animal) ->
       $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
   else
     $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
-
   if (animal == 0)
-     url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
+    url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
   else
-     url = "/fertilizers/" + $("#operation_type_id").val() + ".json"
-
+    url = "/fertilizers/" + $("#operation_type_id").val() + ".json"
   $.getJSON url, (fertilizer) ->
     $("#operation_moisture").val(100.0-fertilizer.dry_matter)
     $("#operation_no3_n").val(fertilizer.qn)
