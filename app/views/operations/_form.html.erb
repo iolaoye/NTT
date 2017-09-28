@@ -116,11 +116,7 @@
 				<% if @operation.type_id == 1 then %>
 					<%= f.label :amount, t('operation.amount') %>
 				<% else %>
-					<% if @operation.subtype_id == 57 then %>
-						<%= f.label :amount, t('operation.amount').gsub("lbs", "x1000gal") %>
-					<% else %>
-						<%= f.label :amount, t('operation.amount').gsub("lbs", "T") %>
-					<% end %>
+					<%= f.label :amount, t('operation.amount').gsub("lbs", "T") %>
 				<% end %>
 				<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
