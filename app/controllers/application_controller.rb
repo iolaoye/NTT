@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 		
 		if Rails.env == "production" then
 			case true
-				when current_url.include?("ntt.cbntt.org")status
+				when current_url.include?("ntt.cbntt.org")
 					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_ntt'])
 				when current_url.include?("ntt2.cbntt.org")
 					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_ntt2'])
