@@ -34,9 +34,11 @@ class ApplicationController < ActionController::Base
 					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_dev'])
 				when current_url.include?("ntt.bk.cbntt.org")
 					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_dev'])
-				when else
+				else
 					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production'])					
-			end 
+			end
+		else
+			ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['development:']) 
 		end
     end
 
