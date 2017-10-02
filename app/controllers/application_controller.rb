@@ -3,6 +3,40 @@ class ApplicationController < ActionController::Base
   	include SessionsHelper
 	before_filter :set_locale
 	before_filter :set_breadcrumbs
+    before_filter :set_env
+
+    def set_env
+		current_url = request.url 
+		case true
+			when current_url.include?("localhost:3001")
+				ENV["APP_VERSION"] = "standard"
+			when current_url.include?("localhost:3002")
+				ENV["APP_VERSION"] = "modified"
+		 	when current_url.include?("ntt.cbntt.org")
+				ENV["APP_VERSION"] = "standard"
+			when current_url.include?("ntt2.cbntt.org") 
+				ENV["APP_VERSION"] = "modified" 
+			when current_url.include?("ntt.bk.cbntt.org") 
+				ENV["APP_VERSION"] = "standard" 
+			when current_url.include?("ntt2.bk.cbntt.org") 
+				ENV["APP_VERSION"] = "modified" 
+			else 
+				ENV["APP_VERSION"] = "standard" 
+		end
+		
+		if Rails.env == "production" then
+			case true
+				when current_url.include?("ntt.cbntt.org")status
+					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_ntt'])
+				when current_url.include?("ntt2.cbntt.org")
+					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_ntt2'])
+				when current_url.include?("ntt2.bk.cbntt.org")
+					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_dev'])
+				when current_url.include?("ntt.bk.cbntt.org")
+					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_dev'])
+			end 
+		end
+    end
 
 	def set_locale
 	  I18n.locale = params[:locale] || I18n.default_locale
