@@ -58,7 +58,7 @@ wb.styles do |s|
               else
                 sheet.add_row [description.spanish_description, "", "", "", "", "", "", "", "", "", "", "", ""], :types => :string, :style => main_row
               end
-            elsif result.description_id == 90 && session[:simulation] != 'scenario'
+            elsif result.description_id == 90 && ENV["APP_VERSION"] == "modified"
             else
               if I18n.locale.eql?(:en)
                 if @results2 != nil
@@ -105,7 +105,7 @@ wb.styles do |s|
                   sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value)], :types => [:string, :float, :float]
                 end
               end
-            elsif result.description_id > 90 && result.description_id < 93 && session[:simulation] != 'scenario'
+            elsif result.description_id > 90 && result.description_id < 93 && ENV["APP_VERSION"] == "modified"
             else
               format = "%8.2f"
               if result.description_id >= 60 && result.description_id <= 69
