@@ -562,7 +562,7 @@ en:
     nutrients: 'Nutrients (0-1)'
     distribution: Distribution
     fertilizer: Fertilizer
-    amount: 'Amount(lbs/ac)'
+    amount: 'Application rate(lbs/ac)'
     bmp: BMP
     irrigation: Irrigation
     plant_population: 'Plant Population (seeds/ac)'
@@ -575,17 +575,17 @@ en:
     efficiency: 'Efficiency (0-1)'
     animals: 'Number of animals'
     hours: 'Hours in field (0-24)'
-    depth: 'Depth (in)'
-    no3_n: 'No3 n (0-1)'
-    po4_p: 'Po4 p (0-1)'
-    org_n: 'Org n (0-1)'
-    org_p: 'Org p (0-1)'
+    depth: 'Application depth (in)'
+    no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
+    po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
+    org_n_html: 'Org N (0-100%)'
+    org_p_html: 'Org P (0-100%)'
     add_list: Add to list
     select_crop: Select crop
     planting: Planting
     tillage: Tillage
     harvest: Harvest
-    kill: Kill
+    kill: End crop season
     burn: Burn
     liming: Liming
     start_grazing: Grazing
@@ -596,12 +596,13 @@ en:
     add_fertilizer: 'Add Fertilizer Operation'
     add_tillage: 'Add Tillage Operation'
     add_harvest: 'Add Harvest Operation'
-    add_kill: 'Add Kill Operation'
+    add_kill: 'Add end crop season Operation'
     add_irrigation: 'Add Irrigation Operation'
     add_burn: 'Add Burn operation'
     add_liming: 'Add Liming Operation'
     add_start_grazing: 'Add Grazing'
     add_stop_grazing: 'Add Stop Grazing'
+    po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
@@ -926,10 +927,10 @@ en:
     hours: Hours
     dry_manure: Dry manure
     streambank_stabilization: Streambank Stabilization
-    riparian_forest: Riparian Buffer
+    riparian_forest: Forest Buffer
     grass_field_portion: Grass field portion
     slope_ratio: Slope ratio
-    filter_strip: Filter Strip
+    filter_strip: Grass Buffer
     waterway: Waterway (Grassed Buffer)
     contour_buffer: Contour Buffer
     land_leveling: Land Leveling
