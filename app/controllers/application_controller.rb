@@ -23,6 +23,21 @@ class ApplicationController < ActionController::Base
 			else 
 				ENV["APP_VERSION"] = "standard" 
 		end
+		
+		if Rails.env == "production" then
+			case true
+				when current_url.include?("ntt.cbntt.org")
+					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_ntt'])
+				when current_url.include?("ntt2.cbntt.org")
+					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_ntt2'])
+				when current_url.include?("ntt2.bk.cbntt.org")
+					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_dev'])
+				when current_url.include?("ntt.bk.cbntt.org")
+					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production_dev'])
+				when else
+					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production'])					
+			end 
+		end
     end
 
 	def set_locale
