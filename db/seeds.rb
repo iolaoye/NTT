@@ -15,6 +15,9 @@ load file
 file = "db/seeds/manure_controls.rb"
 load file
 
+file = "db/seeds/bmpsublists.rb"
+load file
+
 cont = false
 
 if cont then

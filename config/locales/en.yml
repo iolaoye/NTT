@@ -926,10 +926,10 @@ en:
     hours: Hours
     dry_manure: Dry manure
     streambank_stabilization: Streambank Stabilization
-    riparian_forest: Riparian Buffer
+    riparian_forest: Forest Buffer
     grass_field_portion: Grass field portion
     slope_ratio: Slope ratio
-    filter_strip: Filter Strip
+    filter_strip: Grass Buffer
     waterway: Waterway (Grassed Buffer)
     contour_buffer: Contour Buffer
     land_leveling: Land Leveling
