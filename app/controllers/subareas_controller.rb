@@ -18,7 +18,9 @@ class SubareasController < ApplicationController
  	else
  		session[:scenario_id] = 0 unless session[:scenario_id] != nil
  	end
-	get_subareas()
+  if session[:scenario_id] > 0 then
+	   get_subareas()
+  end 
 
 	respond_to do |format|
       format.html # index.html.erb

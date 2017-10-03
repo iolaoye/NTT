@@ -1,5 +1,5 @@
 class ResultsController < ApplicationController
-
+  include OperationsHelper
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
   	@type = t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
@@ -756,7 +756,8 @@ class ResultsController < ApplicationController
 	if month_or_year == 2 then
 		chart_values.each do |c|
 		  chart = Array.new
-		  chart.push(c.month_year)
+		  #chart.push(c.month_year)
+		  chart.push(listMonths[c.month_year-1][0])
 		  chart.push(c.value)
 		  charts.push(chart)
 		end
