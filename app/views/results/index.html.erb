@@ -33,7 +33,7 @@
       <tr>
 	    <% field_id = 0 %>
         <% if session[:simulation] == 'scenario' %>
-		  <% field_id = @field.id %>
+		      <% field_id = @field.id %>
           <td><%= collection_select :result1, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
           <td><%= collection_select :result2, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
           <td><%= collection_select :result3, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
@@ -117,7 +117,13 @@
         <tbody>
           <% if @present1 %>
             <tr class="gvRowStyleOdd">
-              <td class="gvTotalText"><%= Scenario.find(@scenario1).name %></td>
+              <td class="gvTotalText">
+                <% if session[:simulation] != 'scenario' %>
+                  <%= Watershed.find(@scenario1).name %>
+                <% else %>
+                  <%= Scenario.find(@scenario1).name %>
+                <% end %>
+                </td>
 				<% for i in 0..@charts1.count - 1 %>
 					<td class='gvCellStyle Title'><%= @charts1[i][1].round(2) %></td>
 				<% end %>

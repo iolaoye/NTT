@@ -396,6 +396,7 @@ es:
     value: Valor
     fraction: fracción
     date: Fecha
+    year: Año
     select: Seleccione
     one: Uno
     please: Por favor
