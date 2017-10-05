@@ -1,5 +1,23 @@
 # encoding: utf-8
-file = "db/seeds/bmpsublists.rb"
+file = "db/seeds/activities.rb"
+load file
+
+file = "db/seeds/bmplists.rb"
+load file
+
+file = "db/seeds/crop_schedules.rb"
+load file
+
+file = "db/seeds/descriptions.rb"
+load file
+
+file = "db/seeds/fertilizers.rb"
+load file
+
+file = "db/seeds/manure_controls.rb"
+load file
+
+file = "db/seeds/schedules.rb"
 load file
 
 cont = true
