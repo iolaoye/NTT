@@ -20,7 +20,7 @@ load file
 file = "db/seeds/schedules.rb"
 load file
 
-cont = true
+cont = false
 
 if cont then
 
