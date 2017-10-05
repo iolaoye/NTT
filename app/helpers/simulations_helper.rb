@@ -1142,7 +1142,7 @@ module SimulationsHelper
           @soil_operations[j].year = "1"
           #drOuts.Add(drOut)
         end
-		@soil_operations.sort_by! { |date| [date.year, date.month, date.day, date.activity_id, date.id] }
+		@soil_operations.sort_by { |date| [date.year, date.month, date.day, date.activity_id, date.id] }
         #if i > 0 then
         #for j = 0 To i - 1
         #drOut = drIn(j)
@@ -1283,7 +1283,7 @@ module SimulationsHelper
         nirr = 1
         apex_string += sprintf("%8.2f", 0) #opval2
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
-        apex_string += sprintf("%8.2f", 0) & sprintf("%8.2f", operation.opv2) #Opv4 Irrigation Efficiency
+        apex_string += sprintf("%8.2f", 0) and sprintf("%8.2f", operation.opv2) #Opv4 Irrigation Efficiency
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
