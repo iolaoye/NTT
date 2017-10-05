@@ -1,6 +1,6 @@
 ﻿CropSchedule.delete_all
-CropSchedule.create!({:id => 1,:name => "Corn",:state_id => 0,:class_id => 2,:status => true}, :without_protection => true)
-CropSchedule.create!({:id => 2,:name => "Soybean",:state_id => 0,:class_id => 2,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 1,:name => "Corn",:state_id => 0,:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 2,:name => "Soybean",:state_id => 0,:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 3,:name => "Barley Cover Crop",:state_id => 0,:class_id => 2,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 4,:name => "Winter Wheat Cover Crop",:state_id => 0,:class_id => 2,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 5,:name => "Canola-Argentine",:state_id => 0,:class_id => 1,:status => true}, :without_protection => true)
