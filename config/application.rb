@@ -64,5 +64,6 @@ module NTTG3
 	#define the lenguage varible
 	config.language = "en"
 	#config.middleware.use "PDFKit::Middleware", :print_media_type => true
+    Rack::Utils.key_space_limit = 262144
   end
 end

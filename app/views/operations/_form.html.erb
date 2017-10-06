@@ -30,13 +30,13 @@
 		<% end %>
   </div>
   <div class="field">
+  	<%= f.label :year, t('general.year'), :class => 'field' %>
+  	<%= f.select :year, options_for_select(listYears, :selected => @operation.year), {:prompt => t('datetime.prompts.year')}, {:required => true, :style => 'width:70px'} %>
+  </div>
+  <div class="field">
 		<%= f.label :date, t('general.date'), :class => 'field' %>
 		<%= f.select :month_id, options_for_select(listMonths, :selected => @operation.month_id), {:prompt => t('datetime.prompts.month')}, {:required => true, :style => 'width:100px'} %>
 		<%= f.select :day, options_for_select(listDays, :selected => @operation.day), {:prompt => t('datetime.prompts.day')}, {:required => true, :style => 'width:50px'} %>
-  </div>
-  <div class="field">
-  	<%= f.label :year, t('general.year'), :class => 'field' %>
-  	<%= f.select :year, options_for_select(listYears, :selected => @operation.year), {:prompt => t('datetime.prompts.year')}, {:required => true, :style => 'width:70px'} %>
   </div>
   <% case @operation.activity_id %>
 		<% when 1  # planting %>

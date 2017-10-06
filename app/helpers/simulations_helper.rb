@@ -902,9 +902,14 @@ module SimulationsHelper
 		#sLine = sprintf("%4d", @soil_number + 1)  #soil
 		#sLine += sprintf("%4d", @soil_number + 1)   #operation
 		#sLine += sprintf("%4d", last_owner1) #owner id. Should change for each field
-		sLine = sprintf("%4d", _subarea_info.inps)  #soil
-		sLine += sprintf("%4d", _subarea_info.iops)   #operation
-		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
+    if session[:simulation] == "scenario" then
+      sLine = sprintf("%4d", _subarea_info.inps)  #soil
+      sLine += sprintf("%4d", _subarea_info.iops)   #operation
+    else
+      sLine = sprintf("%4d", @soil_number+1)  #soil
+      sLine += sprintf("%4d", @soil_number+1)   #operation
+    end
+    sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
 	end
     if _subarea_info.iow == 0 then
       _subarea_info.iow = 1

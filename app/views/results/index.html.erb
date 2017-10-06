@@ -62,10 +62,10 @@
 			<tr ><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
           <% when t('result.annual')  + "-" + t('result.charts'), t("general.view") + " " + t('result.annual')  + "-" + t('result.charts')%>
             <% if I18n.locale.eql?(:en) %>
-              <td><%= collection_select :result5, :description_id, @descriptions, :id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
+              <td><%= collection_select :result5, :description_id, @descriptions.where("id != 52"), :id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
 			  <td><%#= select :result5, :description_id, options_for_select(@des.map { |obj| [obj['description'], obj['id']] }) %>
             <% else %>
-              <td><%= collection_select :result5, :description_id, @descriptions, :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
+              <td><%= collection_select :result5, :description_id, @descriptions.where("id != 52"), :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
             <% end %>
 			<% if I18n.locale.eql?(:en) %>
 				<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>

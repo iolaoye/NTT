@@ -1,6 +1,6 @@
 ﻿CropSchedule.delete_all
-CropSchedule.create!({:id => 1,:name => "Corn",:state_id => 0,:class_id => 2,:status => true}, :without_protection => true)
-CropSchedule.create!({:id => 2,:name => "Soybean",:state_id => 0,:class_id => 2,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 1,:name => "Corn",:state_id => 0,:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 2,:name => "Soybean",:state_id => 0,:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 3,:name => "Barley Cover Crop",:state_id => 0,:class_id => 2,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 4,:name => "Winter Wheat Cover Crop",:state_id => 0,:class_id => 2,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 5,:name => "Canola-Argentine",:state_id => 0,:class_id => 1,:status => true}, :without_protection => true)
@@ -20,3 +20,4 @@ CropSchedule.create!({:id => 18,:name => "Corn, silage",:state_id => 48,:class_i
 CropSchedule.create!({:id => 19,:name => "Corn",:state_id => 48,:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 20,:name => "Winter wheat",:state_id => 48,:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 21,:name => "Triticale",:state_id => 48,:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 22,:name => "Forest",:state_id => 0,:class_id => 1,:status => true}, :without_protection => true)

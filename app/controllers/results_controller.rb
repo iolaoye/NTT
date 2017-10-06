@@ -1,5 +1,5 @@
 class ResultsController < ApplicationController
-
+  include OperationsHelper
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
   	@type = t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
@@ -239,8 +239,8 @@ class ResultsController < ApplicationController
 						if @results1.count > 0
 							@present1 = true
 						else
+							if params[:result1] != nil then @errors.push(t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase) end
 						    @results1 = nil
-							@errors.push(t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase)
 						end
 						session[:scenario2] = ""
 						session[:scenario3] = ""
@@ -373,8 +373,8 @@ class ResultsController < ApplicationController
 						if @results2.count > 0
 							@present2 = true
 						else
+							if params[:result2] != nil then @errors.push(t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase) end
 						    @results2 = nil
-							@errors.push(t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase)
 						end
 						session[:scenario3] = ""
 					end
@@ -508,8 +508,8 @@ class ResultsController < ApplicationController
 						if @results3.count > 0
 							@present3 = true
 						else
+							if params[:result3] != nil then @errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase) end
 						    @results3 = nil
-							@errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase)
 						end
 					end   # end result 3
 				#end # end if params[:result1] != nill
@@ -756,7 +756,8 @@ class ResultsController < ApplicationController
 	if month_or_year == 2 then
 		chart_values.each do |c|
 		  chart = Array.new
-		  chart.push(c.month_year)
+		  #chart.push(c.month_year)
+		  chart.push(listMonths[c.month_year-1][0])
 		  chart.push(c.value)
 		  charts.push(chart)
 		end
