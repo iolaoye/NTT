@@ -805,13 +805,13 @@ class ProjectsController < ApplicationController
   def save_chart_information(xml, chart)
     xml.chart {
       xml.description_id chart.description_id
-	  xml.watershed_id chart.watershed_id
-	  xml.scenario_id chart.scenario_id
-	  xml.field_id chart.field_id
-	  xml.soil_id chart.soil_id
+	    xml.watershed_id chart.watershed_id
+	    xml.scenario_id chart.scenario_id
+	    xml.field_id chart.field_id
+	    xml.soil_id chart.soil_id
       xml.month_year chart.month_year
       xml.value chart.value
-	  xml.crop_id = chart.crop_id
+	    xml.crop_id chart.crop_id
     } # xml each chart_info end
   end
 
@@ -995,7 +995,7 @@ class ProjectsController < ApplicationController
             if location.save
               session[:location_id] = location.id
               p.elements.each do |f|
-                msg = upload_field_new_version(f)
+                msg = upload_field_new_version(f) #error falls the way this for loop works.. somehow..
               end
             else
               return "location could not be saved " + msg
