@@ -806,13 +806,13 @@ class ProjectsController < ApplicationController
   def save_chart_information(xml, chart)
     xml.chart {
       xml.description_id chart.description_id
-	  xml.watershed_id chart.watershed_id
-	  xml.scenario_id chart.scenario_id
-	  xml.field_id chart.field_id
-	  xml.soil_id chart.soil_id
+	    xml.watershed_id chart.watershed_id
+	    xml.scenario_id chart.scenario_id
+	    xml.field_id chart.field_id
+	    xml.soil_id chart.soil_id
       xml.month_year chart.month_year
       xml.value chart.value
-	  xml.crop_id = chart.crop_id
+	    xml.crop_id chart.crop_id
     } # xml each chart_info end
   end
 
