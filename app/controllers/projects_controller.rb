@@ -995,7 +995,7 @@ class ProjectsController < ApplicationController
             if location.save
               session[:location_id] = location.id
               p.elements.each do |f|
-                msg = upload_field_new_version(f) #error falls the way this for loop works.. somehow..
+                msg = upload_field_new_version(f)
               end
             else
               return "location could not be saved " + msg
