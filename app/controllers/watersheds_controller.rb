@@ -156,7 +156,7 @@ class WatershedsController < ApplicationController
 			print_array_to_file(@opcs_list_file, "OPCS.dat")
 			if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
 			if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
-			if msg.eql?("OK") then msg = read_apex_results(msg) else return msg end
+			msg = read_apex_results(msg)
 			@watershed.last_simulation = Time.now
 			@watershed.save
 			if msg == "OK"
