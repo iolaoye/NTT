@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 					ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['production'])					
 			end
 		else
-			ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['development:']) 
+			ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['development']) 
 		end
     end
 
