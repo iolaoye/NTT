@@ -691,7 +691,7 @@ label {
 }
 
 .overlay {
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(3,3,3,3.3);
   display: none;
   position: fixed;
   width: 100%;
@@ -700,7 +700,7 @@ label {
   left: 0;
   right: 0;
   bottom: 0;
-  opacity: 0.5;
+  opacity: 0.7;
   z-index: 1001;
 }
 
@@ -713,7 +713,7 @@ label {
 }
 
 .overlay h2 {
-  color: #000;
+  color: Yellow;
   position: absolute;
   top: 54%;
   width: 100%;

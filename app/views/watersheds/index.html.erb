@@ -11,9 +11,7 @@
 			<h2>Simulation failed to run</h2>
 			<ul>
 				<% @errors.each do |error| %>
-				<li>
-				  <%= error %>
-				</li>
+					<li> <%= error %></li>
 				<% end %>
 			</ul>
 		</div>
@@ -21,20 +19,20 @@
 <% end %>
 <div class="overlay">
 	<%= image_tag "loading.gif" %>
-	<h2>Simulation in progress. Please wait..</h2>
+  	<h2>We are simulating your results, this may take a while. Please do not close your browser window</h2>
 </div>
 <% case %>
-  <% when flash[:error] != nil %>
-    <div class="danger_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <!--<h2>Simulation failed to run</h2>-->
-      <%= flash[:error] %>
-	</div>
-  <% when flash[:info] %>
-	<div class="flash_alert">
-	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-	  <%= flash[:info] %>
-   </div>
+  	<% when flash[:error] != nil %>
+	    <div class="danger_alert">
+	      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+	      <!--<h2>Simulation failed to run</h2>-->
+	      <%= flash[:error] %>
+		</div>
+	<% when flash[:info] %>
+			<div class="flash_alert">
+			  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			  <%= flash[:info] %>
+		    </div>
 <% end %>
 
 <div class="page-header"><h1><%= t('watershed.watershed') %></h1></div>
@@ -56,44 +54,44 @@
 		<%= t('instructions.scenarios').gsub(t('models.scenario'), t('watershed.watershed')) %>
 
 		<div class="table-responsive">
-		  <div class="panel panel-default">
-			<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
-			  <thead>
-				<tr>
-				  <th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
-				  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
-				  <th class="gvCellStyleTitle"><%= t('scenario.last_simulation') %></th>
-				  <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
-				</tr>
-			  </thead>
-			  <tbody>
-				<% i=1 %>
-				<% @watersheds.each do |w| %>
-					<% if (i % 2 == 0) %>
-						<tr class="gvRowStyleEven">
-					<% else %>
-					  <tr class="gvRowStyleOdd">
-					<% end %>
-						<td class="gvCellStyleText">
-						  <%= check_box_tag "select_watershed[]", w.id %>
-						</td>
-						<td class="table-link">
-						  <%= link_to w.name, project_watershed_watershed_scenarios_path(@project, w) %>
-						</td>
-						<td class="gvCellStyleText">
-						  <%= w.last_simulation %>
-						</td>
-						<td class="gvCellStyleActions">
-							<%= link_to image_tag("edit.png"), edit_project_watershed_path(@project, w), title: t('general.edit') %>
-							<%#= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
-							<%= link_to image_tag("delete.png"), w, method: :delete, data: { confirm: t('general.confirm') } %>
-						</td>
-					  </tr>
-					  <% i = i + 1 %>
-				<% end %>
-			  </tbody>
-			</table>
-		  </div>
+		  	<div class="panel panel-default">
+				<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
+				  	<thead>
+						<tr>
+						  <th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
+						  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
+						  <th class="gvCellStyleTitle"><%= t('scenario.last_simulation') %></th>
+						  <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+						</tr>
+				  	</thead>
+				  	<tbody>
+						<% i=1 %>
+						<% @watersheds.each do |w| %>
+							<% if (i % 2 == 0) %>
+								<tr class="gvRowStyleEven">
+							<% else %>
+							  	<tr class="gvRowStyleOdd">
+							<% end %>
+									<td class="gvCellStyleText">
+									  <%= check_box_tag "select_watershed[]", w.id %>
+									</td>
+									<td class="table-link">
+									  <%= link_to w.name, project_watershed_watershed_scenarios_path(@project, w) %>
+									</td>
+									<td class="gvCellStyleText">
+									  <%= w.last_simulation %>
+									</td>
+									<td class="gvCellStyleActions">
+										<%= link_to image_tag("edit.png"), edit_project_watershed_path(@project, w), title: t('general.edit') %>
+										<%#= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
+										<%= link_to image_tag("delete.png"), w, method: :delete, data: { confirm: t('general.confirm') } %>
+									</td>
+							  	</tr>
+							  	<% i = i + 1 %>
+						<% end %>
+				  	</tbody>
+				</table>
+		  	</div>
 		</div>
     <% end %>
 <% end %>
