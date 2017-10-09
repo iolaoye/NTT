@@ -70,7 +70,7 @@ module ScenariosHelper
 		if forestry && field_name == SMZ then
 			subarea.chn = 0.1
 			subarea.upn = 0.24
-			subarea.ffpq = 0.9
+			subarea.ffpq = FSEFF
 		end
 		#line 5
 		subarea.rchl = subarea.chl

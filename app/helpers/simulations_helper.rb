@@ -77,9 +77,14 @@ module SimulationsHelper
   end
 
   def send_files1_to_APEX(file)
-    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    url = URI.parse("http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx")
+    http = Net::HTTP.new(url.host,url.port)
+    http.read_timeout = 120
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file)
+    req = Net::HTTP::Post.new(url.path)
+    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file})
+    res = http.request(req)
     if res.body.include?("Created") then
       return "OK"
     else
@@ -902,9 +907,14 @@ module SimulationsHelper
 		#sLine = sprintf("%4d", @soil_number + 1)  #soil
 		#sLine += sprintf("%4d", @soil_number + 1)   #operation
 		#sLine += sprintf("%4d", last_owner1) #owner id. Should change for each field
-		sLine = sprintf("%4d", _subarea_info.inps)  #soil
-		sLine += sprintf("%4d", _subarea_info.iops)   #operation
-		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
+    if session[:simulation] == "scenario" then
+      sLine = sprintf("%4d", _subarea_info.inps)  #soil
+      sLine += sprintf("%4d", _subarea_info.iops)   #operation
+    else
+      sLine = sprintf("%4d", @soil_number+1)  #soil
+      sLine += sprintf("%4d", @soil_number+1)   #operation
+    end
+    sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
 	end
     if _subarea_info.iow == 0 then
       _subarea_info.iow = 1
@@ -1142,7 +1152,7 @@ module SimulationsHelper
           @soil_operations[j].year = "1"
           #drOuts.Add(drOut)
         end
-		@soil_operations.sort_by! { |date| [date.year, date.month, date.day, date.activity_id, date.id] }
+		@soil_operations.sort_by { |date| [date.year, date.month, date.day, date.activity_id, date.id] }
         #if i > 0 then
         #for j = 0 To i - 1
         #drOut = drIn(j)
@@ -1283,16 +1293,17 @@ module SimulationsHelper
         nirr = 1
         apex_string += sprintf("%8.2f", 0) #opval2
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
-        apex_string += sprintf("%8.2f", 0) & sprintf("%8.2f", operation.opv2) #Opv4 Irrigation Efficiency
+        apex_string += sprintf("%8.2f", 0) and sprintf("%8.2f", operation.opv2) #Opv4 Irrigation Efficiency
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
         oper = Operation.where(:id => operation.operation_id).first
 		    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
+        #divide by 100 to convert percentage to fraction
 		    if oper.activity_id == 2 && oper.type_id == 2 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-			     add_fert(oper.no3_n * bmp.no3_n, oper.po4_p * bmp.po4_p, oper.org_n * bmp.org_n, oper.org_p * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
 		    else
-			     add_fert(oper.no3_n, oper.po4_p, oper.org_n, oper.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
 		    end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code

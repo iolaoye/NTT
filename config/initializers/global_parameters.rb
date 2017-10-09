@@ -81,7 +81,7 @@
 	KM2_TO_HA = 247.10538147
 	HA_TO_M2 = 10000
 	KM_TO_M = 1000
-	FSEFF = 0.9
+	FSEFF = 1.0
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'

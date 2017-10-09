@@ -180,6 +180,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+ ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_prj
   	@inps1 = 0
     saved = false
@@ -251,7 +252,7 @@ class ProjectsController < ApplicationController
         saved = true
       else
         saved = false
-		flash[:notice] = t('activerecord.errors.messages.projects.exist')
+		    flash[:notice] = msg
         raise ActiveRecord::Rollback
       end
       #rescue NoMethodError => e
@@ -805,13 +806,13 @@ class ProjectsController < ApplicationController
   def save_chart_information(xml, chart)
     xml.chart {
       xml.description_id chart.description_id
-	  xml.watershed_id chart.watershed_id
-	  xml.scenario_id chart.scenario_id
-	  xml.field_id chart.field_id
-	  xml.soil_id chart.soil_id
+	    xml.watershed_id chart.watershed_id
+	    xml.scenario_id chart.scenario_id
+	    xml.field_id chart.field_id
+	    xml.soil_id chart.soil_id
       xml.month_year chart.month_year
       xml.value chart.value
-	  xml.crop_id = chart.crop_id
+	    xml.crop_id chart.crop_id
     } # xml each chart_info end
   end
 
@@ -1059,7 +1060,12 @@ class ProjectsController < ApplicationController
       weather.longitude = @weather["longitude"]
       weather.weather_file = @weather["weather_file"]
       weather.way_id = @weather["way_id"]
-      weather.save
+      if weather.save then
+        field.weather_id = weather_id
+        field.save
+      else
+        return "Weather could not be saved"
+      end
     rescue
       return "Weather could not be saved"
     end
@@ -1137,7 +1143,11 @@ class ProjectsController < ApplicationController
           file_name = p.text.split(/\N/)
           @weather["weather_file"] = "N" + file_name[1]
         when "StationWay"
-          way_id = Way.find_by_way_value(p.text).id
+          if p.text == "googleMap" then
+            way_id = Way.find_by_way_value("Prism").id
+          else
+            way_id = Way.find_by_way_value(p.text).id
+          end
           @weather["way_id"] = way_id
       end
     end
@@ -1201,12 +1211,12 @@ class ProjectsController < ApplicationController
               site.upr = p.text
             when "Longitude"
               site.xlog = p.text
-              if site.xlog = 0 then
+              if site.xlog == 0 then
                 site.xlog = Weather.find_by_field_id(field.id).longitude
               end
             when "Latitude"
               site.ylat = p.text
-              if site.ylat = 0 then
+              if site.ylat == 0 then
                 site.ylat = Weather.find_by_field_id(field.id).latitude
               end
           end # end case p.name
@@ -2141,7 +2151,7 @@ class ProjectsController < ApplicationController
         when "OpVal7"
           soil_operation.opv7 = p.text
         when "ApexOpAbbreviation"
-          soil_operation.activity_id = Activity.find_by_abbreviation(p.text).id
+          soil_operation.activity_id = Activity.find_by_abbreviation(p.text.strip).id
         when "ApexTillCode"
           soil_operation.apex_operation = p.text
           if soil_operation.activity_id == 4 then
@@ -2172,7 +2182,7 @@ class ProjectsController < ApplicationController
           #look for the same opeerations in in the SoilOperation table to add the operation id
           event_id = p.text
         when "ApexOpAbbreviation"
-          operation.activity_id = Activity.find_by_abbreviation(p.text).id
+          operation.activity_id = Activity.find_by_abbreviation(p.text.strip).id
         when "Year"
           operation.year = p.text
         when "Month"
@@ -3273,13 +3283,13 @@ class ProjectsController < ApplicationController
             case control.control_description_id
               when 1 # get number of years of simulation from weather
                 weather = Weather.find_by_field_id(session[:field_id])
-                control.value = weather.simulation_final_year - weather.simulation_initial_year + 1 + 5
+                control.value = @weather['simulation_final_year'].to_i - @weather['simulation_initial_year'].to_i + 1 + 5
                 control.save
                 # get the first year of simulation from weather
                 control = ApexControl.new
                 control.project_id = @project.id
                 control.control_description_id = Control.find_by_id(2).id
-                control.value = weather.simulation_initial_year - 5
+                control.value = @weather['simulation_initial_year'].to_i - 5
                 control.save
                 return "OK"
               when 2 # do nothing because the second value should be already be taken

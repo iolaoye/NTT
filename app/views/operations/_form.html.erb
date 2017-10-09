@@ -30,8 +30,11 @@
 		<% end %>
   </div>
   <div class="field">
+  	<%= f.label :year, t('general.year'), :class => 'field' %>
+  	<%= f.select :year, options_for_select(listYears, :selected => @operation.year), {:prompt => t('datetime.prompts.year')}, {:required => true, :style => 'width:70px'} %>
+  </div>
+  <div class="field">
 		<%= f.label :date, t('general.date'), :class => 'field' %>
-		<%= f.select :year, options_for_select(listYears, :selected => @operation.year), {:prompt => t('datetime.prompts.year')}, {:required => true, :style => 'width:70px'} %>
 		<%= f.select :month_id, options_for_select(listMonths, :selected => @operation.month_id), {:prompt => t('datetime.prompts.month')}, {:required => true, :style => 'width:100px'} %>
 		<%= f.select :day, options_for_select(listDays, :selected => @operation.day), {:prompt => t('datetime.prompts.day')}, {:required => true, :style => 'width:50px'} %>
   </div>
@@ -130,20 +133,21 @@
 			</div> -->
 			<div class="field" id="div_nutrients" >
 				<div class="field" >
-					<%= f.label :no3_n, t('operation.no3_n') %>
-					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
+					<%= f.label :no3_n, t('operation.no3_n_html') %>
+					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
 				</div>
 				<div class="field" >
-					<%= f.label :po4_p, t('operation.po4_p') %>
-					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
+					<%= f.label :po4_p, t('operation.po4_p_html') %>
+					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.label :note, t('operation.po4_note') %>
 				</div>
 				<div class="field" >
-					<%= f.label :org_n, t('operation.org_n') %>
-					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
+					<%= f.label :org_n, t('operation.org_n_html') %>
+					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
 				</div>
 				<div class="field" >
-					<%= f.label :org_p, t('operation.org_p') %>
-					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
+					<%= f.label :org_p, t('operation.org_p_html') %>
+					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
 				</div>
 			</div>
 		<% when 3 # tillage %>

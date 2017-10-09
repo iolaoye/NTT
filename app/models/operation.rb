@@ -14,7 +14,7 @@ class Operation < ActiveRecord::Base
   #Functions
   def sum
     if self.activity_id == 2 || self.activity_id == 7
-	  if !((self.no3_n.to_f + self.po4_p.to_f + self.org_n.to_f + self.org_p.to_f) <= 1)
+	  if !((self.no3_n.to_f + self.po4_p.to_f + self.org_n.to_f + self.org_p.to_f) <= 100)
 		self.errors.add(:error, I18n.t('operation.sum'))
       end
     end

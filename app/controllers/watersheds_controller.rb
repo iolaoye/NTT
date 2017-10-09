@@ -157,8 +157,8 @@ class WatershedsController < ApplicationController
 			if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
 			if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
 			msg = read_apex_results(msg)
-			  @watershed.last_simulation = Time.now
-			  @watershed.save
+			@watershed.last_simulation = Time.now
+			@watershed.save
 			if msg == "OK"
 				@notice = "Simulation ran succesfully"
 			else

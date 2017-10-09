@@ -5,22 +5,25 @@ class SubareasController < ApplicationController
   def index
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
-	@soils = Soil.where(:field_id => @field.id, :selected => true)
-	add_breadcrumb t('menu.utility_file')
-	add_breadcrumb t('menu.subarea_file')
-	if @soils != nil and session[:scenario_id] == nil then
-		subarea = Subarea.where(:soil_id => @soils[0].id).first
-		if subarea != nil then
- 			session[:scenario_id] = subarea.scenario_id
- 		else
- 			session[:scenario_id] = 0
- 		end
- 	else
- 		session[:scenario_id] = 0 unless session[:scenario_id] != nil
- 	end
-	get_subareas()
+	  @soils = Soil.where(:field_id => @field.id, :selected => true)
+	  add_breadcrumb t('menu.utility_file')
+	  add_breadcrumb t('menu.subarea_file')
+  	if @soils != nil and session[:scenario_id] == nil then
+      debugger
+  		subarea = Subarea.where(:soil_id => @soils[0].id).first
+  		if subarea != nil then
+   			session[:scenario_id] = subarea.scenario_id
+   		else
+   			session[:scenario_id] = 0
+   		end
+   	else
+   		session[:scenario_id] = 0 unless session[:scenario_id] != nil
+   	end
+    if session[:scenario_id] > 0 then
+  	   get_subareas()
+    end
 
-	respond_to do |format|
+  	respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @subareas }
     end
@@ -34,8 +37,8 @@ class SubareasController < ApplicationController
     @project = Project.find(params[:project_id])
     @location = Location.where(:project_id => params[:project_id])
 		
-	add_breadcrumb t('menu.utility_file')
-	add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
+	  add_breadcrumb t('menu.utility_file')
+	  add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @subarea }
@@ -59,9 +62,9 @@ class SubareasController < ApplicationController
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
 		
-	add_breadcrumb t('menu.utility_file')
-	add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
-	add_breadcrumb t('general.editing') + " " + t('menu.subarea_file')
+  	add_breadcrumb t('menu.utility_file')
+    add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
+    add_breadcrumb t('general.editing') + " " + t('menu.subarea_file')
   end
 
 ############################# LOAD SUBAREAS WHEN CLICK ON "Load Subarea" button #############################
@@ -71,16 +74,16 @@ class SubareasController < ApplicationController
     session[:scenario_id] = params[:subarea][:scenario_id].to_i
     @field = Field.find(params[:field_id])
     @soils = @field.soils.where(:selected => true)
-	@project = Project.find(params[:project_id])
-	get_subareas()
-	render "index"
+  	@project = Project.find(params[:project_id])
+  	get_subareas()
+  	render "index"
   end
 
   # PATCH/PUT /subareas/1
   # PATCH/PUT /subareas/1.json
   def update
     @subarea = Subarea.find(params[:id])
-	session[:scenario_id] = @subarea.scenario_id
+  	session[:scenario_id] = @subarea.scenario_id
     respond_to do |format|
       if @subarea.update_attributes(subarea_params)
         format.html { redirect_to project_field_subareas_path, notice: t('models.subarea') + " " + t('notices.updated')  }
@@ -105,15 +108,17 @@ class SubareasController < ApplicationController
   end
 
   def get_subareas()
-      @subareas = []
+    @subareas = []
 	  i=1
 	  if session[:scenario_id] != 0 then
 		  scenario_id = Scenario.find(session[:scenario_id]) rescue nil
 		  if scenario_id != nil then
 			  @soils.each do |soil|
-				  subarea = soil.subareas.find_by_scenario_id(session[:scenario_id])   
-				  @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
-				  i+=1
+				  subarea = soil.subareas.find_by_scenario_id(session[:scenario_id])
+          if subarea != nil then
+				    @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+				    i+=1
+          end
 			  end
 		  end
 	  end
@@ -125,7 +130,7 @@ class SubareasController < ApplicationController
   end
 
   def download
-	download_apex_files()
+  	download_apex_files()
   end
 
   private
