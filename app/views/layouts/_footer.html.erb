@@ -55,19 +55,6 @@
     </ul>
 </div>-->
 
-<% current_url = request.url %>
-<% case true %>
-<% when current_url.include?("localhost:3001") %>
-<% ENV["APP_VERSION"] = "standard" %>
-<% when current_url.include?("localhost:3002") %>
-<% ENV["APP_VERSION"] = "modified" %>
-<% when current_url.include?("ntt.cbntt.org") %>
-<% ENV["APP_VERSION"] = "standard" %>
-<% when current_url.include?("ntt2.cbntt.org") %>
-<% ENV["APP_VERSION"] = "modified" %>
-<% else %>
-<% ENV["APP_VERSION"] = "standard" %>
-<% end %>
 <% request.url %>
 <footer class="footer">
     <nav class="navbar navbar-default navbar-custom">
@@ -140,7 +127,11 @@
         <table>
         <% case controller_name %>
         <% when "projects" %>
-              <tr><td><%= t('projpage_html')%></td></tr>
+              <% if ENV["APP_VERSION"] == "modified" %>
+                <tr><td><%= t('projpage_modified_html')%></td></tr>
+              <% else %>
+                <tr><td><%= t('projpage_html')%></td></tr>
+              <% end %>
         <% when "locations" %>
               <tr><td><%= t('locpage_html')%></td></tr>
         <% when "weathers" %>

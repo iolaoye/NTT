@@ -391,6 +391,7 @@ en:
     value: Value
     fraction: fraction
     date: Date
+    year: Year
     select: Select
     one: One
     please: Please
@@ -561,7 +562,7 @@ en:
     nutrients: 'Nutrients (0-1)'
     distribution: Distribution
     fertilizer: Fertilizer
-    amount: 'Amount(lbs/ac)'
+    amount: 'Application rate(lbs/ac)'
     bmp: BMP
     irrigation: Irrigation
     plant_population: 'Plant Population (seeds/ac)'
@@ -574,17 +575,17 @@ en:
     efficiency: 'Efficiency (0-1)'
     animals: 'Number of animals'
     hours: 'Hours in field (0-24)'
-    depth: 'Depth (in)'
-    no3_n: 'No3 n (0-1)'
-    po4_p: 'Po4 p (0-1)'
-    org_n: 'Org n (0-1)'
-    org_p: 'Org p (0-1)'
+    depth: 'Application depth (in)'
+    no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
+    po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
+    org_n_html: 'Org N (0-100%)'
+    org_p_html: 'Org P (0-100%)'
     add_list: Add to list
     select_crop: Select crop
     planting: Planting
     tillage: Tillage
     harvest: Harvest
-    kill: Kill
+    kill: End crop season
     burn: Burn
     liming: Liming
     start_grazing: Grazing
@@ -595,12 +596,13 @@ en:
     add_fertilizer: 'Add Fertilizer Operation'
     add_tillage: 'Add Tillage Operation'
     add_harvest: 'Add Harvest Operation'
-    add_kill: 'Add Kill Operation'
+    add_kill: 'Add end crop season Operation'
     add_irrigation: 'Add Irrigation Operation'
     add_burn: 'Add Burn operation'
     add_liming: 'Add Liming Operation'
     add_start_grazing: 'Add Grazing'
     add_stop_grazing: 'Add Stop Grazing'
+    po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
@@ -925,10 +927,10 @@ en:
     hours: Hours
     dry_manure: Dry manure
     streambank_stabilization: Streambank Stabilization
-    riparian_forest: Riparian Buffer
+    riparian_forest: Forest Buffer
     grass_field_portion: Grass field portion
     slope_ratio: Slope ratio
-    filter_strip: Filter Strip
+    filter_strip: Grass Buffer
     waterway: Waterway (Grassed Buffer)
     contour_buffer: Contour Buffer
     land_leveling: Land Leveling
@@ -1201,7 +1203,7 @@ en:
         body: Once you have created a project you can use the <strong>Download</strong> button which is the arrow pointing downwards, to save the current project that you are working on.
         note: <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.
   projpage_html:
-    <strong>Start of a Project</strong> <br><br>
+    <strong>Start of a Project</strong><br><br>
     Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
     to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
     <strong>To Start a Project</strong><br>
@@ -1211,20 +1213,29 @@ en:
     Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br><br>
     <strong>New Project Option</strong><br>
     Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.
-    After you have entered the information, click the <strong>Create Project</strong> button to save the information and continue.<br>
-    After you have opened the save project, click the <strong>Save Changes</strong> button to save the information and continue.<br><br>
+    After you have entered the information, click the <strong>Save</strong> button to save the information and continue.<br><br>
     <strong>Upload Project Option</strong><br>
-    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.<br><br>
-    <strong>Open an Example Project Option</strong><br>
-    You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.
-    After you have entered the information, click the <b>Save and Continue</b> button to save the information and continue.<br><br>
-    <strong>Save Active Project</strong><br>
-    You can also use the <strong>Save Active Project...</strong> button to save the current project that you are working on.
+    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
+    After you have opened the save project, click the <strong>Upload Project</strong> button to save the information and continue.<br>
     <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.<br><br>
-    <strong>Close Active Project</strong><br>
-    You can also use the <strong>Close Active Project</strong> button to close the current project that you are working on.
-    When you attempt to close, a warning message will come up.
-    Closing an active project will erase all of that projects information. Because of this, if you would like to project for later use, it is extremely important that you save the project before closing it. By clicking the <strong>OK</strong> button on the warning message, the information will be cleared (and lost if not previously saved). If you have not yet saved and would like to, click cancel and follow the instructions for <strong>Save Active Project</strong> above.
+    <strong>Open an Example Project Option</strong><br>
+    You can also use the <b>Upload Example</b> button, and then select from the options of sample projects to load.
+    After you have made a selection, click the <b>Upload Example</b> button to save the information and continue.
+  projpage_modified_html:
+    <strong>Start of a Project</strong><br><br>
+    Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
+    to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
+    <strong>To Start a Project</strong><br>
+    There are <b>two initial choices</b> to start a new project:<br>
+    Select the <b>New Project</b> option to start a project from scratch<br>
+    Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br><br>
+    <strong>New Project Option</strong><br>
+    Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.
+    After you have entered the information, click the <strong>Save</strong> button to save the information and continue.<br><br>
+    <strong>Upload Project Option</strong><br>
+    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
+    After you have opened the saved project, click the <strong>Upload Project</strong> button to save the information and continue.<br>
+    <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.
   locpage:
     header: Location Information
     mapsystem:
@@ -1269,29 +1280,29 @@ en:
     The map allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.
     When using this system, the weather and soil information can be uploaded from weather stations and databases, so minimal or no user input is required in later pages.<br>
     There are <strong>4 options</strong> within the mapping system.
-    Choose an AOI type to begin drawing<br>
+    Choose an AOI type to begin drawing<br><br>
     <strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure, as shown circled in the figure below. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm as shown circled below. Enter the name of the farm and advance.
     As the user enters the name, it will replace the default name in the text box for the farm as shown in the following figure. From this point the farm name entered will refer to the selected location (encircled in the figure).
-    Once the user clicks <strong>OK</strong>, the farm location will be highlighted as shown below.<br>
-    <strong>Drawing Fields:</strong> Next, you will need to draw fields within than farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.
+    Once the user clicks <strong>OK</strong>, the farm location will be highlighted as shown below.<br><br>
+    <strong>Drawing Fields:</strong> Next, you will need to draw fields within than farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.<br><br>
     <strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT. If you do not click submit before advancing, the following message will come up.
     If this occurs, click the <strong>Submit</strong> button to submit the changes. Once the submission is successful, the following message from NTT will pop up.
-    Once this message appears, click <strong>OK</strong> and then the <strong>Save and Continue</strong> button.<br>
-    <strong>Deleting Farms and Fields:</strong><br> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.<br>
+    Once this message appears, click <strong>OK</strong> and then the <strong>Save and Continue</strong> button.<br><br>
+    <strong>Deleting Farms and Fields:</strong><br> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove AOI</strong> button.<br><br>
 
     <strong>Choose a farm and a field(s) shapefile to upload</strong><br>
     <strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder.
     <strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button for the farm and for the field. The farm and field shapefile can be the same parameters, since, as mentioned above, the farm is simply a reference tool, and the data is drawn from the field shapefile that is uploaded. Nevertheless, you need to choose <strong>BOTH</strong> a <strong>farm shapefile</strong> and a <strong>field shapefile</strong> before uploading.
     <strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile for both a field and a farm.
-    <strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.<br>
+    <strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.<br><br>
 
-    <strong>Choose area of interest by address</strong>
+    <strong>Choose area of interest by address</strong><br>
     <strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.
-    <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br>
+    <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br><br>
 
     <strong>Choose an area of interest by latitude/longitude</strong><br>
     <strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).
-    <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br>
+    <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br><br>
 
     <strong>Choose State and County</strong><br>To zoom to a particular state/county in the United States the user can select the State and County from the corresponding drop down list boxes.
 
@@ -1313,7 +1324,7 @@ en:
                 body3: 'The information above, for example, would show weather information for January 1, 1981 (where the solar radiation was 0, the max temperature was 10.1 degrees Celsius, the min temperature was -0.9 degrees Celsius, and precipitation was 0.00 millimeters), and the weather information for January 2, 1981 (where the solar radiation was 0, the max temperature was 5.7 degrees Celsius, the min temperature was -5.9 degrees Celsius, and precipitation was 0.00 millimeters). Ideally, you would have a file that contains detailed information for the weather for an extended period. This would look as shown below:'
                 body4: 'Even though the file is significantly larger, all of the days for which we have data follow the same format.'
             item2:
-                body1: '<strong>Upload the Weather File:</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select the <b>Choose File</b> button to select a file to be uploaded. This will bring up an “Open” window where the user can search their computer for the weather file. When you have selected the file click “Open”. This will show a progress bar as the system uploads the information.'
+                body1: '<strong>Upload the Weather File:</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select <strong>Load your Own Weather File</strong> from the options. Next, the user needs to click the ''Choose File'' button under the new window that appears after selection. This will bring up an “Open” folder where the user can search their computer for the weather file. When you have selected the file click “Open”. The selected file will then appear along side the ''Choose File'' button.'
                 body2: 'The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Update Weather</strong> to save the information and the <strong>Continue</strong> button to advance to the next page.'
             item3: '<strong>NOTE:</strong> It is important to note that when you click <strong>Update Weather</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate, run the simulations again.'
         method3:
@@ -1325,25 +1336,25 @@ en:
         body: 'The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. The <strong>“Simulation Period”</strong> information is required for all weather options.'
 
   weathpage_html:
-    <strong>Weather Page</strong>
-    The user has different options available when choosing the weather. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.
+    <strong>Weather Page</strong><br>
+    The user has different options available when choosing the weather. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.<br>
     <br><strong>Selecting Weather Information</strong>
-    There are three different methods to select the weather information.<br>
+    There are three different methods to select the weather information.<br><br>
     <strong>Weather Station Using PRISM Data</strong><br>
-    his method is available only when the <a href=/help/page_4>State/County</a> method was chosen to select the area of interest in the preceding page. This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <strong>Weather Station Using PRISM Data</strong> and then select the preferred weather station.
-    Finally, once the station has been selected, click <strong>Save and Continue</strong> to save the information and continue to the next page.<br>
+    This method is available only when the <a href=/help/page_4>State/County</a> method was chosen to select the area of interest in the preceding page. This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <strong>Weather Station Using PRISM Data</strong> and then select the preferred weather station.
+    Finally, once the station has been selected, click <strong>Save and Continue</strong> to save the information and continue to the next page.<br><br>
     <strong>Load Your Own Weather File</strong><br>
-    This method of weather selection is always available regardless of the method used for selecting an area of interest. This option is also the only option that is available when using the NTT tool for locations outside of the mainland United States. To use this method the following are the instructions
-    <strong>Create a Weather File</strong> In order to upload a weather file, the user must first create one. The weather file needs to be in a text file, and it should have the following format, blanks (columns 1-2), year (columns 3-6), month (columns 7-10), day (columns 11-14), solar radiation (columns 15-20; could be blank or zero), maximum temperature in Celsius (columns 21-26), minimum temperature in Celsius (columns 27-32), precipitation in millimeters (columns 33-38). This is for the first year/month/day as shown below.
+    This method of weather selection is always available regardless of the method used for selecting an area of interest. This option is also the only option that is available when using the NTT tool for locations outside of the mainland United States. To use this method the following are the instructions:<br>
+    <strong>Create a Weather File</strong><br> In order to upload a weather file, the user must first create one. The weather file needs to be in a text file, and it should have the following format, blanks (columns 1-2), year (columns 3-6), month (columns 7-10), day (columns 11-14), solar radiation (columns 15-20; could be blank or zero), maximum temperature in Celsius (columns 21-26), minimum temperature in Celsius (columns 27-32), precipitation in millimeters (columns 33-38). This is for the first year/month/day as shown below.
     The same pattern is used for the rest of the days that you want to add to the simulation. Specific weather information for each day can simply be added by adding new records. Each record should contain the weather information for a specific day.
     The information above, for example, would show weather information for January 1, 1981 (where the solar radiation was 0, the max temperature was 10.1 degrees Celsius, the min temperature was -0.9 degrees Celsius, and precipitation was 0.00 millimeters), and the weather information for January 2, 1981 (where the solar radiation was 0, the max temperature was 5.7 degrees Celsius, the min temperature was -5.9 degrees Celsius, and precipitation was 0.00 millimeters). Ideally, you would have a file that contains detailed information for the weather for an extended period. This would look as shown below
-    Even though the file is significantly larger, all of the days for which we have data follow the same format.
-    <strong>Upload the Weather File</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select from the options. Next, the user needs to click. This will bring up an “Open” folder where the user can search their computer for the weather file. When you have selected the file click “Open”. This will show a progress bar as the system uploads the information.
-    The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Save and Continue</strong> to save the information and advance to the next page
-    <strong>NOTE</strong> It is important to note that when you click <strong>Save and Continue</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate run the any simulations again.<br>
+    Even though the file is significantly larger, all of the days for which we have data follow the same format.<br>
+    <strong>Upload the Weather File</strong><br> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select <strong>Load your Own Weather File</strong> from the options. Next, the user needs to click the 'Choose File' button under the new window that appears after selection. This will bring up an “Open” folder where the user can search their computer for the weather file. When you have selected the file click “Open”. The selected file will then appear along side the 'Choose File' button.
+    The records will have been uploaded when the <strong>Update Weather</strong> button is pressed, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Save and Continue</strong> to save the information and advance to the next page
+    <strong>NOTE</strong> It is important to note that when you click <strong>Save and Continue</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate run the any simulations again.<br><br>
     <strong>Load Using Specific Coordinates (U.S.A only)</strong><br>
     This method of weather selection will always appear as available regardless of the location method that was selected in the <a href=/help/page_4>Location</a> page (this method will work for the User Input method). However, the coordinates selected must be coordinates within the United States. This means that while the option will appear as available if the user selected “User Input” in the <a href=/help/page_4>Location</a> page, if they are looking at an area of interest that is outside the mainland United States an error message will come up.
-    To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates and click the <strong>Save Coordinates</strong> button. You will (like in all the other methods) need to select a period to simulate (which is discussed below) but after this has been done, you can click <strong>Save and Continue</strong> to save the information and continue.<br>
+    To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates and click the <strong>Save Coordinates</strong> button. You will (like in all the other methods) need to select a period to simulate (which is discussed below) but after this has been done, you can click <strong>Save and Continue</strong> to save the information and continue.<br><br>
     <strong>Period to Simulate</strong><br>
     The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>
   fieldpage:
@@ -1373,19 +1384,19 @@ en:
   fieldpage_html:
     <strong>Fields Page</strong><br>
     The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.
-    If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.<br>
+    If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.<br><br>
     <strong>Changing Field Characteristics</strong><br>
-    In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.<br>
+    In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.<br><br>
     <strong>Changing the Field Name</strong><br>
-    In order to change field’s name, simply click on the current name of the field (in this case Field 1) and type in the name of the field.<br>
+    In order to change field’s name, simply click on the current name of the field and type in the desired name for the field.<br><br>
     <strong>Changing the Field Area</strong><br>
-    The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 0.00) and type in the correct area, as shown below<br>
+    The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area and type in the correct area.<br>
     Click <strong>Save</strong> to save the information and continue to the Soils page or back to go back to the fields page.
   soilpage:
     header: Soils Page
     overview:
         header: Overview
-        body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
+        body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> that would like to be used for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however, there are 4 general rules that apply to all methods. They are as follows:'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
         item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.'
         item3: ' However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.'
@@ -1395,7 +1406,7 @@ en:
         body: 'Users have different options of modifying their soil information. The list below shows all the possible ways that are available in NTT for modifying the soil information.'
         select:
             header: Adding/Deleting a Soil
-            body1: 'Users can add a new soil by clicking on the <strong>New</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
+            body1: 'Users can add a new soil by clicking on the <strong>New</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message then it means that there are inaccurate values that need to be fixed before advancing.'
             body2: 'After the soil has been added the user needs to enter at least one layer. The user needs to go to the layers page by clicking on the <b>Soil Layers</b> icon in the <b>Actions</b> column. The rest of the steps are described below in the "Adding/Deleting Layers" description.'
             body3: 'To delete a soil simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
         info:
@@ -1403,20 +1414,20 @@ en:
             body: 'Some of the soil and all of the layer information can be edited when the Mapping System was used. The user can change the soil/layer information by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. It will open a new page that lets the user edit and change the different informations available for the soil. This option is also available for the layers. Once they have done this, they can save the changed inforamtion by clicking on the <b>Save</b> button.'
         addremove:
             header: Adding/Deleting Layers
-            body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
+            body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message then it means that there are inaccurate values that need to be fixed before advancing.'
             body2: 'To delete a layer simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
     advance:
         header: Advancing
-        body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
+        body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once all of the information has been entered, verified, or manipulated the user can click <strong>Save and Continue</strong> to advance to the next page.'
   managepage:
     header: Management Page Help
     overview:
         header: Overview
-        body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
+        body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (e.g. Auto Irrigation) could have based on the location of the user’s fields.'
     create:
         header: Creating a Scenario
         add:
-            body1: 'The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
+            body1: 'The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario (e.g. “Baseline”, “Alternative”, “Auto-Irrigation”). After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button, which will create the scenario and advances the user to the operation page.'
             body2: 'To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
     manipulate:
         header:  Manipulating a Scenario’s Characteristics
@@ -1445,7 +1456,7 @@ en:
             body5: 'Remember that, if a BMP is expanded when you first get to the page, it means that this BMP has been selected.'
         mutualbmp:
             header: 'Mutually Exclusive BMPs'
-            body1: 'Some BMPs can co-exist with other BMPs. For the most part, most BMPs can co-exist with other BMPs. However there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have:'
+            body1: 'In most cases, BMPs can co-exist with other BMPs. However, there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have:'
             item1: 'Auto Irrigation and Auto Fertigation'
             item2: 'Auto Irrigation and any Pads and Pipes'
             item3: 'Only one Pads and Pipes is allowed at the same time'
@@ -1602,7 +1613,7 @@ en:
         header: Creating a Field Routing Scenario
         name:
             header: Naming Your Watershed
-            body1: 'To begin creating a field routing scenario, click <strong><em>New</em></strong>. Once you do this, a text box will pop up where you can type in the name of the scneario:'
+            body1: 'To begin creating a field routing scenario, click on the <strong><em>Add New Field Routing (Watershed)</em></strong> button. Once you do this, a text box will pop up where you can type in the name of the scneario:'
             body2: 'Once you enter the name, click <strong><em>Save</em></strong>.'
         select:
             header: Selecting Fields/Scenarios to Simulate
@@ -1610,7 +1621,7 @@ en:
             body2: 'Once you have finished selecting, click <strong><em>Back</em></strong>to go back to the watershed page.'
         simulate:
             header: Simulating/Viewing Results for Field Routing
-            body1: 'To simulate or to view results for field routings, go to <b><em>Results</em><b> Page and select the watersheds and click on <strong><em>Summary</em></strong> to get the results.'
+            body1: 'To simulate the field route, simply select the field route via the checkbox and click <strong><em>Simulate Selected Field Routing (Watershed)</em></strong> button. To view the results for field routings, go to <b><em>Results</em></b> Page, select the watersheds to display results for and click on <strong><em>View</em></strong> to get the results.'
   simpage:
     header: Simulation Page Help
     body1: 'In this page the user is able to run the simulations for the fields/scenarios or subprojects that were created.'
@@ -1669,7 +1680,7 @@ en:
             header: Understanding Nutrient Results in Graphical Form
             body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong><em>Graphs</em></strong>.'
             item1:
-                body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart, as shown below.'
+                body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (e.g. flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart, as shown below.'
                 body2: 'Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
             item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong> An example graph for the monthly average is shown below:'
         economic:
@@ -1798,7 +1809,7 @@ en:
     operations: >
                 You have a couple of different options here.
                 <ol>
-                    <li>Select <strong>New Operation</strong> to create a new operation from scratch</li>
+                    <li>Select <strong>Add New Operation</strong> to create a new operation from scratch</li>
                     <li>Select <strong>Upload Operation</strong> to create a new operation from a cropping system</li>
                 </ol>
                 To <strong>Edit</strong> a operation, click the pencil icon under <strong>Actions</strong>.<br>

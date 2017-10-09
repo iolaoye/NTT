@@ -19,7 +19,37 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: mysql2
+  database: ntt
+  host: 104.238.117.250
+  username: ntt
+  password: TIAER05
+  pool: 5
+  timeout: 5000
+
+production_ntt:
+  adapter: mysql2
+  database: ntt
+  host: 104.238.117.250
+  username: ntt
+  password: TIAER05
+  pool: 5
+  timeout: 5000
+
+production_ntt2:
+  adapter: mysql2
+  database: ntt_nrcs
+  host: 104.238.117.250
+  username: ntt
+  password: TIAER05
+  pool: 5
+  timeout: 5000
+
+production_dev:
+  adapter: mysql2
+  database: dev_ntt
+  host: 104.238.117.250
+  username: ntt
+  password: TIAER05
   pool: 5
   timeout: 5000
