@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-ile = "db/seeds/crop_schedules.rb"
+file = "db/seeds/crop_schedules.rb"
 load file
 
 cont = false
