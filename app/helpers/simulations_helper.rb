@@ -1085,7 +1085,6 @@ module SimulationsHelper
   def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
     #This suroutine create operation files using information entered by user.
     nirr = 0
-    @fert_code = 79
     @grazingb = false
     @opcs_file = Array.new
     irrigation_type = 0
@@ -1654,10 +1653,13 @@ module SimulationsHelper
     results_data = Array.new
     oneResult = Struct.new(:sub1, :year, :flow, :qdr, :surface_flow, :sed, :ymnu, :orgp, :po4, :orgn, :no3, :qdrn, :qdrp, :qn, :dprk, :irri, :pcp, :prkn, :n2o)
     sub_ant = 99
+    qdr_sum = 0
+    qdrn_sum = 0
+    qdrp_sum = 0
     irri_sum = 0
     dprk_sum = 0
-	prkn_sum = 0
-	n2o_sum = 0
+	  prkn_sum = 0
+	  n2o_sum = 0
     pcp = 0
     total_subs = 0
     i=1
@@ -1678,7 +1680,6 @@ module SimulationsHelper
         one_result.sub1 = subs
         one_result.year = year
         one_result.flow = tempa[31, 9].to_f * MM_TO_IN
-        one_result.qdr = tempa[126, 9].to_f * MM_TO_IN
         one_result.surface_flow = tempa[254, 9].to_f * MM_TO_IN
         one_result.sed = tempa[40, 9].to_f * THA_TO_TAC
         one_result.ymnu = tempa[180, 9].to_f * THA_TO_TAC
@@ -1686,9 +1687,11 @@ module SimulationsHelper
         one_result.po4 = tempa[76, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result.orgn = tempa[49, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result.no3 = tempa[67, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result.qn = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
+        one_result.qdr = tempa[126, 9].to_f * MM_TO_IN
         one_result.qdrn = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result.qdrp = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result.qn = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
         # one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
         one_result.dprk = 0 # Deep percolation hidden in results table
@@ -1697,15 +1700,21 @@ module SimulationsHelper
         one_result.prkn = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result.n2o = tempa[153, 9].to_f
         if subs == 0 then
+          one_result.qdr = qdr_sum / total_subs
+          one_result.qdrn = qdrn_sum / total_subs
+          one_result.qdrp = qdrp_sum / total_subs
           one_result.dprk = dprk_sum / total_subs
           one_result.irri = irri_sum / total_subs
           one_result.prkn = prkn_sum / total_subs
           one_result.n2o = n2o_sum / total_subs
           one_result.pcp = pcp / total_subs
+          qdr_sum = 0
+          qdrn_sum = 0
+          qdrp_sum = 0
           irri_sum = 0
           dprk_sum = 0
-		  prkn_sum = 0
-		  n2o_sum = 0
+		      prkn_sum = 0
+		      n2o_sum = 0
           pcp = 0
           total_subs = 0
           if initial_chart_year <= year then
@@ -1735,6 +1744,9 @@ module SimulationsHelper
             add_value_to_chart_table(one_result.pcp, 100, 0, year,0)
           end   # end initial_chart
         else
+          qdr_sum += one_result.qdr
+          qdrn_sum += one_result.qdrn
+          qdrp_sum += one_result.qdrp
           irri_sum += one_result.irri
           dprk_sum += one_result.dprk
           prkn_sum += one_result.prkn
