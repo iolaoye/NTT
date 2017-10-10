@@ -1299,7 +1299,6 @@ module SimulationsHelper
         oper = Operation.where(:id => operation.operation_id).first
 		    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
         #divide by 100 to convert percentage to fraction
-        debugger
 		    if oper.activity_id == 2 && oper.type_id == 2 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
 			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
 		    else
@@ -1456,7 +1455,6 @@ module SimulationsHelper
     count = 0
 
     @current_nutrients.each do |current_nutrient|
-      debugger
       if current_nutrient.no3 == no3n && current_nutrient.po4 == po4p && current_nutrient.orgn == orgN && current_nutrient.orgp == orgP then
         exist = true
         @fert_code = current_nutrient.code
