@@ -140,6 +140,7 @@ class WatershedsController < ApplicationController
 			@last_herd = 0
 			@herd_list = Array.new
 			@change_fert_for_grazing_line = Array.new
+	    	@fert_code = 79
 			j=0
 			watershed_scenarios.each do |p|
 			  @scenario = Scenario.find(p.scenario_id)

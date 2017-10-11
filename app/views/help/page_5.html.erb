@@ -2,7 +2,7 @@
 	<div class="container">
 		<h1><%= t('fieldpage.header') %></h1><br>
 			<p><%= raw t('fieldpage.body1') %></p>
-      <%= image_tag("help/page_6/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>
+      <%= image_tag("help/page_6/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:640px;width: 100%;") %>
       <p><%= raw t('fieldpage.body2') %></p>
       <br>
     <h2><%= t('fieldpage.createdel.header') %></h2>
@@ -13,7 +13,7 @@
         <br></br>
 		<h2><%= t('fieldpage.characteristics.header') %></h2>
       <p><%= raw t('fieldpage.characteristics.body') %></p>
-    <%= image_tag("help/page_6/image002.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>
+    <%= image_tag("help/page_6/image002.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:245px;width: 100%;") %>
 			<p></p>
       <b><%= t('fieldpage.characteristics.name.header') %><br></b>
 				<p><%= raw t('fieldpage.characteristics.name.body') %></p>
@@ -21,8 +21,8 @@
       <b><%= t('fieldpage.characteristics.area.header') %><br></b>
 				<p><%= raw t('fieldpage.characteristics.area.body') %></p>
         <!-- <%= image_tag("help/page_6/image004.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>-->
-      <b><%= t('fieldpage.advance') %><br></b>
-				<p><%= raw t('fieldpage.advance_body') %></p>
+      <h2><%= t('fieldpage.advance.header') %></h2>
+				<p><%= raw t('fieldpage.advance.body') %></p>
 	</div>
 </div>
 <br><%= link_to "< Prev", help_path("page_4", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_6", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
