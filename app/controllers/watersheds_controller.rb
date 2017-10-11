@@ -291,6 +291,11 @@ class WatershedsController < ApplicationController
   	end
   end
 
+  def download
+  	@project = Project.find(params[:project_id])
+    download_apex_files()
+  end
+  
   private
 
   # Use this method to whitelist the permissible parameters. Example:

@@ -51,6 +51,7 @@
         <% unless ENV["APP_VERSION"] == "modified" %><%#= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + 'Aplcat', data: {disable_with: 'Please wait. Aplcat simulation in progress . . .'}, :class => 'btn btn-primary' %><% end %>
 	    <% if @field.results.count > 0 %>
 		    <%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
+		    <%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
         <% end %>
 	    <br>
         <br>

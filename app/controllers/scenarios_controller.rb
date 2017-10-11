@@ -445,7 +445,13 @@ class ScenariosController < ApplicationController
     
     add_breadcrumb 'Scenarios'
 	render "index"
-  end	
+  end
+
+  def download
+  	@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    download_apex_files()
+  end
   
   private
   ################################  run_scenario - run simulation called from show or index  #################################
