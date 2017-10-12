@@ -100,72 +100,77 @@ class WatershedsController < ApplicationController
 		end
 	else
 		#run simulations
-		params[:select_watershed].each do |ws|
-			@watershed = Watershed.find(ws)
-			if @watershed.watershed_scenarios.count == 0
-				@errors = Array.new
-				@errors.push("Unable to simulate Watershed " + @watershed.name + ". Please add a field to "  + @watershed.name + " to successfully run the simulation.")
-			end
-			break if @errors != nil
-			session[:simulation] = 'watershed'
-			@project = Project.find(params[:project_id])
-			watershed_id = ws
-			@dtNow1 = Time.now.to_s
-			dir_name = APEX + "/APEX" + session[:session_id]
-			if !File.exists?(dir_name)
-			  FileUtils.mkdir_p(dir_name)
-			end
-			watershed_scenarios = WatershedScenario.where(:watershed_id => watershed_id)
-			msg = create_control_file()			#this prepares the apexcont.dat file
-			if msg.eql?("OK") then msg = create_parameter_file() else return msg end			#this prepares the parms.dat file
-			#todo weather is created just from the first field at this time. and @scenario too. It should be for each field/scenario
-			@scenario = Scenario.find(watershed_scenarios[0].scenario_id)
-			if msg.eql?("OK") then msg = create_weather_file(dir_name, watershed_scenarios[0].field_id) else return msg end			#this prepares the apex.wth file
-			if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(@project.location.id)) else return msg end		#this prepares the apex.sit file
-			if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) else return msg end #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
-			@last_soil = 0
-			@last_soil_sub = 0
-			@last_subarea = 0
-			@soil_list = Array.new
-			@opcs_list_file = Array.new
-			@opers = Array.new
-			@depth_ant = Array.new
-			@change_till_depth = Array.new
-			@fem_list = Array.new
-			@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
-			@current_nutrients = Array.new
-			@new_fert_line = Array.new
-			@subarea_file = Array.new
-			@soil_number = 0
-			@last_herd = 0
-			@herd_list = Array.new
-			@change_fert_for_grazing_line = Array.new
-	    	@fert_code = 79
-			j=0
-			watershed_scenarios.each do |p|
-			  @scenario = Scenario.find(p.scenario_id)
-			  @field = Field.find(p.field_id)
-			  #params[:field_id] = p.field_id
-			  @soils = Soil.where(:field_id => p.field_id).where(:selected => true)
-			  if msg.eql?("OK") then msg = create_soils() else return msg end
-			  #if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg end
-			  if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-			  #if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg end
-			  j+=1
-			end # end watershed_scenarios.each
-			print_array_to_file(@soil_list, "soil.dat")
-			print_array_to_file(@opcs_list_file, "OPCS.dat")
-			if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
-			if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
-			msg = read_apex_results(msg)
-			@watershed.last_simulation = Time.now
-			@watershed.save
-			if msg == "OK"
-				@notice = "Simulation ran succesfully"
-			else
-				@error = "Error running simulation"
-			end
-		end   # end params[:select_watershed].each
+		if params[:select_watershed]
+			params[:select_watershed].each do |ws|
+				@watershed = Watershed.find(ws)
+				if @watershed.watershed_scenarios.count == 0
+					@errors = Array.new
+					@errors.push("Unable to simulate Watershed " + @watershed.name + ". Please add a field to "  + @watershed.name + " to successfully run the simulation.")
+				end
+				break if @errors != nil
+				session[:simulation] = 'watershed'
+				@project = Project.find(params[:project_id])
+				watershed_id = ws
+				@dtNow1 = Time.now.to_s
+				dir_name = APEX + "/APEX" + session[:session_id]
+				if !File.exists?(dir_name)
+				  FileUtils.mkdir_p(dir_name)
+				end
+				watershed_scenarios = WatershedScenario.where(:watershed_id => watershed_id)
+				msg = create_control_file()			#this prepares the apexcont.dat file
+				if msg.eql?("OK") then msg = create_parameter_file() else return msg end			#this prepares the parms.dat file
+				#todo weather is created just from the first field at this time. and @scenario too. It should be for each field/scenario
+				@scenario = Scenario.find(watershed_scenarios[0].scenario_id)
+				if msg.eql?("OK") then msg = create_weather_file(dir_name, watershed_scenarios[0].field_id) else return msg end			#this prepares the apex.wth file
+				if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(@project.location.id)) else return msg end		#this prepares the apex.sit file
+				if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) else return msg end #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
+				@last_soil = 0
+				@last_soil_sub = 0
+				@last_subarea = 0
+				@soil_list = Array.new
+				@opcs_list_file = Array.new
+				@opers = Array.new
+				@depth_ant = Array.new
+				@change_till_depth = Array.new
+				@fem_list = Array.new
+				@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
+				@current_nutrients = Array.new
+				@new_fert_line = Array.new
+				@subarea_file = Array.new
+				@soil_number = 0
+				@last_herd = 0
+				@herd_list = Array.new
+				@change_fert_for_grazing_line = Array.new
+		    	@fert_code = 79
+				j=0
+				watershed_scenarios.each do |p|
+				  @scenario = Scenario.find(p.scenario_id)
+				  @field = Field.find(p.field_id)
+				  #params[:field_id] = p.field_id
+				  @soils = Soil.where(:field_id => p.field_id).where(:selected => true)
+				  if msg.eql?("OK") then msg = create_soils() else return msg end
+				  #if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg end
+				  if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+				  #if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg end
+				  j+=1
+				end # end watershed_scenarios.each
+				print_array_to_file(@soil_list, "soil.dat")
+				print_array_to_file(@opcs_list_file, "OPCS.dat")
+				if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
+				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
+				msg = read_apex_results(msg)
+				@watershed.last_simulation = Time.now
+				@watershed.save
+				if msg == "OK"
+					@notice = "Simulation ran succesfully"
+				else
+					@error = "Error running simulation"
+				end
+			end   # end params[:select_watershed].each
+		else
+			@errors = Array.new
+			@errors.push("Please select a watershed for simulation.")
+		end	# end watershed present?
 	end
 	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
 	@watersheds = Watershed.where(:location_id => @project.location.id)
