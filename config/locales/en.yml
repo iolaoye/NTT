@@ -1729,6 +1729,56 @@ en:
         header: Saving the Results to a PDF file
         body1: 'The results presented in the NTT screens can be saved to a PDF file. To access this utility, select the <strong>Create PDF</strong> button from the Results page. The NTT program writes a report file in PDF format that contains summary features of the scenarios, as well as the results produced from the simulations. The default name of the project report file can be changed by the user. The default location can also be change by the user depending on the browser options available. The first page of the results report file will look like the following.'
         body2: 'In addition to the results of the simulations, the report file also contains detailed information about the soils and management information used as input for the NTT simulations.'
+  resultspage_html:
+    <strong>Results</strong><br>
+    The results page allows you to view the results for the field/scenario combinations and subprojects that you simulated.<br></br>
+    <strong>Viewing the Desired Results</strong><br>
+    To view the desired results, the user must first select whether they want to view the results for the subprojects that they ran or for the field/scenarios that they ran. They can make this selection by choosing the appropriate selection under <strong>Select Type</strong>.
+    If the user selects the Field/Scenario option, the appropriate field will also have to be selected.
+    It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario.
+    It is very likely that, when the user first arrives at the Results page, that the first scenario that was simulated will be selected for both the first scenario and second scenario, so be sure to select the correct scenarios before continuing.
+    The results of the scenarios are presented in a tabular format, in the order in which they were selected.<br></br>
+    <strong>Understanding Nutrient Results in Tabular Form</strong><br>
+    When you first reach the NTT Results page, you will be viewing the nutrient results in tabular form. These tabular results represent AVERAGES in all of the years that were simulated. To view year by year results, the user needs to go to Graphical results, and view them there. Scenario 1 represents the column to the right of the Description, and Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that you made when selecting the first and second scenario. NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result. The <strong>Difference</strong> is the amount decreased <strong>(First Scenario –
+    Second Scenario)</strong> for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result. The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that
+    for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from First Scenario to Second Scenario. For these, you can calculate <strong>Total Area</strong> by using the following formula <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from First Scenario to Second Scenario. For Crops, you can calculate the <strong>Total Area</strong> by using the following formula; <strong>(alternative value * total area) – (baseline value * total area)</strong>.<br></br>
+    <strong>Understanding Nutrient Results in Graphical Form</strong><br>
+    While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select Graphs.<br>
+    <strong>Annual (Last 12 Years) Method:</strong>This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select Annual (Last 12 Years) under the first drop down box above the chart.
+    Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.<br>
+    <strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting Annual (Last 12 Years) under the first drop down box, you need to select Monthly Average (The entire period).<br>
+  apexcontrols_html:
+    <strong>Controls</strong><br>
+    Here you will see all the controls listed.<br><br>
+    To <strong>Edit</strong> a control, click the pencil icon under <strong>Actions</strong>.
+  apexparameters_html:
+    <strong>Parameters</strong><br>
+    Here you will see all the parameters listed.<br><br>
+    To <strong>Edit</strong> a paramter, click the pencil icon under <strong>Actions</strong>.
+  subareas_html:
+    <strong>Subareas</strong><br></br>
+    Here you will see all the subareas of the scenario that is currently loaded.
+    <p>You can load a different subarea by changing the selected <strong>Subarea</strong> in the <strong><em>Scenario</em></strong> drop down list and then clicking <strong><em>Load Subarea</em></strong>.</p>
+    To <strong>View</strong> a subarea, click the magnifying glass icon under <strong>Actions</strong>.<br>
+    To <strong>Edit</strong> a subarea, click the pencil icon under <strong>Actions</strong>.
+    <p><strong>Note:</strong> By default, the first scenario is automatically loaded</p>
+  soils_html:
+    <strong>Soils</strong><br>
+    The Soils page allows user to enter the soils for each field.<br><br>
+    To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
+    To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
+    To <strong>View</strong> a soil, click the magnifying glass icon under <strong>Actions</strong>.<br>
+    To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.<br>
+  soiloperations_html:
+    <strong>Operations</strong><br>
+    Here you will see all the operations of the soil/scenario combination that is currently loaded.
+    <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the Scenario drop down list, and then clicking <strong>Load Operation</strong>.</p>
+    To <strong>Edit</strong> an operation, click the pencil icon under <strong>Actions</strong>.
+    <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
+  sites_html:
+    <strong>Sites</strong><br>
+    This is all the information about the APEX site.<br><br>
+    To <strong>Edit</strong> this site, click <strong>Edit</strong>
   modpage:
     header: Modifications Page Help
     body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'
@@ -1878,33 +1928,15 @@ en:
                 <p>To create a new watershed scenario, use must select a <strong>Field</strong> from the <strong><em>Fields</em></strong> dropdown, a <strong>Scenario</strong> from the <strong><em>Scenarios</em></strong> drop down and then click <strong><em>Add to watershed</em></strong>.</p>
                 To <strong>Delete</strong> a watershed scenario, click the red "x" icon under <strong>Actions</strong>.
                 <p><strong>Note:</strong> No field/scenario combination can be used twice.</p>
-    apex_controls: >
-                Here you will see all the constrols listed.<br><br>
-                To <strong>Edit</strong> a control, click the pencil icon under <strong>Actions</strong>.
-    apex_parameters: >
-                Here you will see all the parameters listed.<br><br>
-                To <strong>Edit</strong> a paramter, click the pencil icon under <strong>Actions</strong>.
-    subareas: >
-                Here you will see all the subareas of the scenario that is currently loaded.
-                <p>You can load a different subarea by changing the selected <strong>Subarea</strong> in the <strong><em>Scenario</em></strong> drop down list and then clicking <strong><em>Load Subarea</em></strong>.</p>
-                To <strong>View</strong> a subarea, click the magnifying glass icon under <strong>Actions</strong>.<br>
-                To <strong>Edit</strong> a subarea, click the pencil icon under <strong>Actions</strong>.
-                <p><strong>Note:</strong> By default, the first scenario is automatically loaded</p>
-    apex_soils: >
-                The Soils page allows user to enter the soils for each field.<br><br>
-                To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
-                To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
-                To <strong>View</strong> a soil, click the magnifying glass icon under <strong>Actions</strong>.<br>
-                To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.<br>
     apex_layers: >
                 In this page, you can see all the layers of the selected soil.<br><br>
                 To <strong>View</strong> a layer, click the magnifying glass icon under <strong>Actions</strong>.<br>
                 To <strong>Edit</strong> a layer, click the pencil icon under <strong>Actions</strong>.
     soil_operations: >
-                Here you will see all the operations of the soil/scenario combination that is currently loaded.
-                <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the <strong><em>Scenario</em></strong> drop down list, and then clicking <strong><em>Load Operation</em></strong>.</p>
-                To <strong>Edit</strong> an operation, click the pencil icon under <strong>Actions</strong>.
-                <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
+              Here you will see all the operations of the soil/scenario combination that is currently loaded.
+              <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the <strong><em>Scenario</em></strong> drop down list, and then clicking <strong><em>Load Operation</em></strong>.</p>
+              To <strong>Edit</strong> an operation, click the pencil icon under <strong>Actions</strong>.
+              <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
     sites: >
-                This is all the information about the APEX site.<br><br>
-                To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong>
+              This is all the information about the APEX site.<br><br>
+              To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong>
