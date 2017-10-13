@@ -872,7 +872,7 @@ class ProjectsController < ApplicationController
   end
 
   def sortable_columns
-    ["Name", "updated_at"]
+    [["Project Name"], "updated_at"]
   end
 
   def sort_column
