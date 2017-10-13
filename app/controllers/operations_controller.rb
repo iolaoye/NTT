@@ -374,10 +374,10 @@ class OperationsController < ApplicationController
       end
     end
     state_id = Location.find_by_project_id(@project.id).state_id
-    @cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 3")
+    @cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 2")
     @tillages = CropSchedule.where(:state_id => state_id, :status => true).where("class_id = 3")
     if @cropping_systems == nil or @cropping_systems.blank? then
-      @cropping_systems = CropSchedule.where(:state_id => 0, :status => true).where("class_id < 3")
+      @cropping_systems = CropSchedule.where(:state_id => 0, :status => true).where("class_id < 2")
     end
     if @tillages == nil or @tillages.blank? then
       @tillages = CropSchedule.where(:state_id => 0, :status => true).where("class_id = 3")
