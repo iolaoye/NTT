@@ -1149,9 +1149,9 @@ en:
         soils: 'On the <a href=/help/page_7?locale=en>Weather</a> screen, the users select the source of  weather information, as well as the length of simulation.'
         weather: 'On the <a href=/help/page_6?locale=en>Soils</a> screen, the users verify/add/delete soils and layers to the project, or they can enter the complete soil information if the project is based on complete user input.'
         management: 'On the <a href=/help/page_8?locale=en>Management</a> screen, the users enter the management scenario information.'
-        subproject: 'On the <a href=/help/page_9?locale=en>Subproject</a>screen, the users are able to select other field/scenario combinations not selected on the Management page (subprojects)'
-        simulation: 'On the <a href=/help/page_10?locale=en>Simulation</a> screen, the list of scenarios selected is displayed and check boxes are also displayed to indicate whether the scenarios are complete and ready for simulation. Users can click Run Selected button after adding the fields/scenarios or subprojects to the list. The selected scenarios are then simulated by NTT.'
-        results: 'On the <a href=/help/page_11?locale=en>Results</a> screen, the users can view the results in tabular or graphical organization as well as view the economic results for the simulation. To view detailed results, click on the Detail checkbox.'
+        subproject: 'On the <a href=/help/page_9?locale=en>Subproject</a> screen, the users are able to select other field/scenario combinations not selected on the Management page (subprojects)'
+        simulation: 'On the <a href=/help/page_10?locale=en>Simulation</a> screen, the list of scenarios selected is displayed and check boxes are also displayed to indicate whether the scenarios are complete and ready for simulation. Users can click <strong>Simulate</strong> button after adding the fields/scenarios or subprojects to the list. The selected scenarios are then simulated by NTT.'
+        results: 'On the <a href=/help/page_11?locale=en>Results</a> screen, the users can view the results in tabular or graphical organization as well as view the economic results for the simulation. To view detailed results, click on the <strong>View</strong> button.'
         modifications: 'On the <a href=/help/page_12?locale=en>Modifications</a> screen, the users are able to manually change the APEX file to make specific changes to the simulation. <strong>These changes are not reflected on the previous screens.</strong>'
         advance: 'To advance to the next page, simply click <strong>Save and Continue.</strong>'
     dataentrybasics:
@@ -1178,8 +1178,7 @@ en:
     checkbox: Checkbox must be checked
   projpage:
     header: Start of a Project
-    statement: "Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>"
-    navadir: ''
+    statement: "Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool to get a basic understanding of how to navigate the <strong>NTT</strong> application. To activate all the features available by the user and define your project, click on this tab to activate the Project module. <br><br>"
     initial:
         header: To Start a Project
         statement: There are <b>three initial choices</b> to start a new project:<br>
@@ -1269,32 +1268,27 @@ en:
   locpage_html:
     <strong>Location Information</strong><br>
     The map allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.
-    When using this system, the weather and soil information can be uploaded from weather stations and databases, so minimal or no user input is required in later pages.<br>
+    When using this system, the weather and soil information can be uploaded from weather stations and databases, so minimal or no user input is required in later pages.
     There are <strong>4 options</strong> within the mapping system.
-    Choose an AOI type to begin drawing<br>
-    <strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure, as shown circled in the figure below. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm as shown circled below. Enter the name of the farm and advance.
-    As the user enters the name, it will replace the default name in the text box for the farm as shown in the following figure. From this point the farm name entered will refer to the selected location (encircled in the figure).
-    Once the user clicks <strong>OK</strong>, the farm location will be highlighted as shown below.<br>
-    <strong>Drawing Fields:</strong> Next, you will need to draw fields within than farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.
-    <strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT. If you do not click submit before advancing, the following message will come up.
-    If this occurs, click the <strong>Submit</strong> button to submit the changes. Once the submission is successful, the following message from NTT will pop up.
-    Once this message appears, click <strong>OK</strong> and then the <strong>Save and Continue</strong> button.<br>
-    <strong>Deleting Farms and Fields:</strong><br> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.<br>
+    Choose an AOI type to begin drawing<br></br>
+    <strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm. Enter the name of the farm and advance. As the user enters the name, it will replace the default name in the text box for the farm. From this point the farm name entered will refer to the selected location.
+    Once the user clicks <strong>OK</strong>, the farm location will be highlighted.<br></br>
+    <strong>Drawing Fields:</strong> Next, you will need to draw fields within than farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.<br></br>
+    <strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you need to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.<br></br>
+    <strong>Deleting Farms and Fields:</strong> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.<br></br>
 
     <strong>Choose a farm and a field(s) shapefile to upload</strong><br>
-    <strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder.
-    <strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button for the farm and for the field. The farm and field shapefile can be the same parameters, since, as mentioned above, the farm is simply a reference tool, and the data is drawn from the field shapefile that is uploaded. Nevertheless, you need to choose <strong>BOTH</strong> a <strong>farm shapefile</strong> and a <strong>field shapefile</strong> before uploading.
-    <strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile for both a field and a farm.
-    <strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.<br>
+    <strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder.<br></br>
+    <strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button for the farm and for the field. The farm and field shapefile can be the same parameters, since, as mentioned above, the farm is simply a reference tool, and the data is drawn from the field shapefile that is uploaded. Nevertheless, you need to choose <strong>BOTH</strong> a <strong>farm shapefile</strong> and a <strong>field shapefile</strong> before uploading.<br></br>
+    <strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile for both a field and a farm.<br></br>
+    <strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.<br></br>
 
-    <strong>Choose area of interest by address</strong>
-    <strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.
-    <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br>
+    <strong>Choose area of interest by address</strong></br>
+    <strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.<br></br>
+    <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br></br>
 
     <strong>Choose an area of interest by latitude/longitude</strong><br>
-    <strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).
-    <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br>
-
+    <strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).<br></br>
     <strong>Choose State and County</strong><br>To zoom to a particular state/county in the United States the user can select the State and County from the corresponding drop down list boxes.
 
   weathpage:
@@ -1329,25 +1323,24 @@ en:
   weathpage_html:
     <strong>Weather Page</strong>
     The user has different options available when choosing the weather. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.
-    <br><strong>Selecting Weather Information</strong>
-    There are three different methods to select the weather information.<br>
+    <br></br>
+    <strong>Selecting Weather Information</strong><br>
+    There are three different methods to select the weather information.<br></br>
     <strong>Weather Station Using PRISM Data</strong><br>
-    his method is available only when the <a href=/help/page_4>State/County</a> method was chosen to select the area of interest in the preceding page. This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <strong>Weather Station Using PRISM Data</strong> and then select the preferred weather station.
-    Finally, once the station has been selected, click <strong>Save and Continue</strong> to save the information and continue to the next page.<br>
+    This method is available only when the State/County method was chosen to select the area of interest. This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <strong>Weather Station Using PRISM Data</strong> and then select the preferred weather station.
+    Finally, once the station has been selected, click <strong>Save and Continue</strong> to save the information and continue to the next page.<br></br>
     <strong>Load Your Own Weather File</strong><br>
-    This method of weather selection is always available regardless of the method used for selecting an area of interest. This option is also the only option that is available when using the NTT tool for locations outside of the mainland United States. To use this method the following are the instructions
-    <strong>Create a Weather File</strong> In order to upload a weather file, the user must first create one. The weather file needs to be in a text file, and it should have the following format, blanks (columns 1-2), year (columns 3-6), month (columns 7-10), day (columns 11-14), solar radiation (columns 15-20; could be blank or zero), maximum temperature in Celsius (columns 21-26), minimum temperature in Celsius (columns 27-32), precipitation in millimeters (columns 33-38). This is for the first year/month/day as shown below.
-    The same pattern is used for the rest of the days that you want to add to the simulation. Specific weather information for each day can simply be added by adding new records. Each record should contain the weather information for a specific day.
-    The information above, for example, would show weather information for January 1, 1981 (where the solar radiation was 0, the max temperature was 10.1 degrees Celsius, the min temperature was -0.9 degrees Celsius, and precipitation was 0.00 millimeters), and the weather information for January 2, 1981 (where the solar radiation was 0, the max temperature was 5.7 degrees Celsius, the min temperature was -5.9 degrees Celsius, and precipitation was 0.00 millimeters). Ideally, you would have a file that contains detailed information for the weather for an extended period. This would look as shown below
-    Even though the file is significantly larger, all of the days for which we have data follow the same format.
-    <strong>Upload the Weather File</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select from the options. Next, the user needs to click. This will bring up an “Open” folder where the user can search their computer for the weather file. When you have selected the file click “Open”. This will show a progress bar as the system uploads the information.
-    The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Save and Continue</strong> to save the information and advance to the next page
-    <strong>NOTE</strong> It is important to note that when you click <strong>Save and Continue</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate run the any simulations again.<br>
+    This method of weather selection is always available regardless of the method used for selecting an area of interest. This option is also the only option that is available when using the NTT tool for locations outside of the mainland United States. To use this method the following are the instructions to
+    <strong>Create a Weather File</strong>. In order to upload a weather file, the user must first create one. The weather file needs to be in a text file, and it should have the following format, blanks (columns 1-2), year (columns 3-6), month (columns 7-10), day (columns 11-14), solar radiation (columns 15-20; could be blank or zero), maximum temperature in Celsius (columns 21-26), minimum temperature in Celsius (columns 27-32), precipitation in millimeters (columns 33-38). This is for the first year/month/day. The same pattern is used for the rest of the days that you want to add to the simulation. Specific weather information for each day can simply be added by adding new records. Each record should contain the weather information for a specific day.
+    The information above, for example, would show weather information for January 1, 1981 (where the solar radiation was 0, the max temperature was 10.1 degrees Celsius, the min temperature was -0.9 degrees Celsius, and precipitation was 0.00 millimeters), and the weather information for January 2, 1981 (where the solar radiation was 0, the max temperature was 5.7 degrees Celsius, the min temperature was -5.9 degrees Celsius, and precipitation was 0.00 millimeters). Ideally, you would have a file that contains detailed information for the weather for an extended period. Even though the file is significantly larger, all of the days for which we have data follow the same format.<br></br>
+    <strong>Upload the Weather File</strong><br> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select from the options. Next, the user needs to click. This will bring up an “Open” folder where the user can search their computer for the weather file. When you have selected the file click “Open”. This will show a progress bar as the system uploads the information.
+    The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Save and Continue</strong> to save the information and advance to the next page.<br>
+    <strong>NOTE</strong> It is important to note that when you click <strong>Save and Continue</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate run the any simulations again.<br></br>
     <strong>Load Using Specific Coordinates (U.S.A only)</strong><br>
-    This method of weather selection will always appear as available regardless of the location method that was selected in the <a href=/help/page_4>Location</a> page (this method will work for the User Input method). However, the coordinates selected must be coordinates within the United States. This means that while the option will appear as available if the user selected “User Input” in the <a href=/help/page_4>Location</a> page, if they are looking at an area of interest that is outside the mainland United States an error message will come up.
-    To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates and click the <strong>Save Coordinates</strong> button. You will (like in all the other methods) need to select a period to simulate (which is discussed below) but after this has been done, you can click <strong>Save and Continue</strong> to save the information and continue.<br>
+    This method of weather selection will always appear as available regardless of the location method that was selected in the Location page (this method will work for the User Input method). However, the coordinates selected must be coordinates within the United States. This means that while the option will appear as available if the user selected “User Input” in the Location page, if they are looking at an area of interest that is outside the mainland United States an error message will come up.
+    To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates and click the <strong>Save Coordinates</strong> button. You will (like in all the other methods) need to select a period to simulate (which is discussed below) but after this has been done, you can click <strong>Save and Continue</strong> to save the information and continue.<br></br>
     <strong>Period to Simulate</strong><br>
-    The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>
+    The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>
   fieldpage:
     header: Fields Page
     body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
@@ -1375,13 +1368,13 @@ en:
   fieldpage_html:
     <strong>Fields Page</strong><br>
     The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.
-    If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.<br>
+    If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.<br></br>
     <strong>Changing Field Characteristics</strong><br>
-    In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.<br>
+    In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.<br></br>
     <strong>Changing the Field Name</strong><br>
-    In order to change field’s name, simply click on the current name of the field (in this case Field 1) and type in the name of the field.<br>
+    In order to change field’s name, simply click on the current name of the field and type in the name of the field.<br></br>
     <strong>Changing the Field Area</strong><br>
-    The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 0.00) and type in the correct area, as shown below<br>
+    The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area and type in the correct area.<br></br>
     Click <strong>Save</strong> to save the information and continue to the Soils page or back to go back to the fields page.
   soilpage:
     header: Soils Page
@@ -1390,7 +1383,7 @@ en:
         body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
         item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.'
-        item3: ' However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.'
+        item3: 'However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.'
         item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <b>Soil Layers</b> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
     mapsystem:
         header: Soil Information
@@ -1410,6 +1403,14 @@ en:
     advance:
         header: Advancing
         body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
+  soilpage_html:
+    <strong>Soils Page</strong><br>
+    The Soils page allows the user to verify, select, or create the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
+    general rules that apply to all methods. They are as follows<br></br>
+    The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.<br></br>
+    If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.<br></br>
+    However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
+    Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <b>Soil Layers</b> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.
   managepage:
     header: Management Page Help
     overview:
@@ -1421,7 +1422,7 @@ en:
             body1: 'The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
             body2: 'To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
     manipulate:
-        header:  Manipulating a Scenario’s Characteristics
+        header: Manipulating a Scenario’s Characteristics
         body1: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices '
         body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
     operation:
@@ -1597,6 +1598,43 @@ en:
     reference:
         header: Reference
         body1: '* See USDA website: <a href="http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849">http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849</a> for more detailed term descriptions.'
+  managepage_html:
+      <strong>Scenarios</strong><br>
+      The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.
+      To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.<br></br>
+      <strong>Manipulating a Scenario’s Characteristics</strong>
+      Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices.
+  operation_html:
+      <strong>Operations</strong><br>
+      The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices.
+      The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions.
+      A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below.<br></br>
+      <strong>Add Crop to Rotation</strong><br>
+      Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.<br></br>
+      <strong>Add New Operation</strong><br>
+      The user can also create a new Cropping System from scratch. To do this, the user needs to click on the <strong>Add New Operation</strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.
+      If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. This will take the user to a new page where they can make the required changes to the operation.
+      If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <b>Delete</b> icon in the <b>Actions</b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.
+  bmpnav_html:
+      <strong>Best Management Practices (BMPs)</strong><br>
+      Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.<br></br>
+      <strong>Adding a BMP</strong><br>
+      To add a BMP, the user needs to select a BMP by clicking on the check box under the <b>Select</b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then select the specific BMP (for example Auto Irrigation).
+      Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.
+      Where there is a drop-down menu with the title <b>Select One</b> allows the user to select from a range of options.
+      Where there is a checkbox <b>Select</b> the user can simply click on it to select the BMP.
+      Remember that, if a BMP is expanded when you first get to the page, it means that this BMP has been selected.<br></br>
+      <strong>Mutually Exclusive BMPs</strong><br>
+      Some BMPs can co-exist with other BMPs. For the most part, most BMPs can co-exist with other BMPs. However there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have;<br>
+      Auto Irrigation and Auto Fertigation.<br>
+      Auto Irrigation and any Pads and Pipes.<br>
+      Only one Pads and Pipes is allowed at the same time.<br>
+      Filter Strip and Riparian Buffer.<br>
+      Waterways and Riparian Buffer.<br>
+      Filter Strip and Waterways.<br>
+      Contour Buffer and Filter Strip/Riparian Buffer.<br></br>
+      Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.
+
   watershedpage:
     header: Watershed Page Help
     body1: 'The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.'
@@ -1604,15 +1642,26 @@ en:
         header: Creating a Field Routing Scenario
         name:
             header: Naming Your Watershed
-            body1: 'To begin creating a field routing scenario, click <strong><em>New</em></strong>. Once you do this, a text box will pop up where you can type in the name of the scneario:'
-            body2: 'Once you enter the name, click <strong><em>Save</em></strong>.'
+            body1: 'To begin creating a field routing scenario, click <strong>New</strong>. Once you do this, a text box will pop up where you can type in the name of the scneario:'
+            body2: 'Once you enter the name, click <strong>Save</strong>.'
         select:
             header: Selecting Fields/Scenarios to Simulate
-            body1: 'Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the Field/scenario combinations, and click <strong><em>Add Fields / Scenario</em></strong>.'
-            body2: 'Once you have finished selecting, click <strong><em>Back</em></strong>to go back to the watershed page.'
+            body1: 'Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the Field/scenario combinations, and click <strong>Add Fields / Scenario</strong>.'
+            body2: 'Once you have finished selecting, click <strong>Back</strong> to go back to the watershed page.'
         simulate:
             header: Simulating/Viewing Results for Field Routing
-            body1: 'Select the name(s) of the watershed to stimulate and click <b><em>Stimulate selected Field Routing (Watershed)</em></b> To simulate or to view results for field routings, go to <b><em>Results</em><b> Page and select the watersheds and click on <strong><em>Summary</em></strong> to get the results.'
+            body1: 'Select the name(s) of the watershed to stimulate and click <b>Stimulate selected Field Routing (Watershed)</b>. To view results for field routings, select the field(s) and click <b>View Results</b>.'
+  watershedpage_html:
+    <strong>Field Routing (Watershed)</strong><br>
+    The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.<br></br>
+    <strong>Creating a Field Routing Scenario</strong><br>
+    <strong>Naming Your Watershed</strong><br>
+    To begin creating a field routing scenario, click <strong>New</strong>. Once you do this, a text box will pop up where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
+    <strong>Selecting Fields/Scenarios to Simulate</strong><br>
+    Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the Field/scenario combinations, and click <strong>Add Fields / Scenario</strong>.
+    Once you have finished selecting, click <strong>Back</strong> to go back to the watershed page.<br></br>
+    <strong>Simulating/Viewing Results for Field Routing</strong><br>
+    Select the name(s) of the watershed to stimulate and click <b>Stimulate selected Field Routing (Watershed)</b>. To view results for field routings, select the field(s) and click <b>View Results</b>.
   simpage:
     header: Simulation Page Help
     body1: 'In this page the user is able to run the simulations for the fields/scenarios or subprojects that were created.'
@@ -1624,10 +1673,10 @@ en:
             body2: 'Once the user has done this, the user needs to select either the Field/Scenario combination OR select the previously selected subproject by selecting from the corresponding drop down boxes.'
         adding:
             header: Adding a Field/Scenario or Subproject to Run
-            body1: 'To add a field/scenario or subproject to run, select either <strong><em>Add Subproject to Run</em></strong> or <strong><em>Add Field/Scenario to Run</em></strong>. The particular button that will be available will depend on the selection that you made under the heading <strong>Select Type</strong>. Once you have added all of the fields/scenarios or subprojects, it is time to simulate. The fields/scenarios or subprojects that you added will be seen on the page, as shown below:'
+            body1: 'To add a field/scenario or subproject to run, select either <strong>Add Subproject to Run</strong> or <strong>Add Field/Scenario to Run</strong>. The particular button that will be available will depend on the selection that you made under the heading <strong>Select Type</strong>. Once you have added all of the fields/scenarios or subprojects, it is time to simulate. The fields/scenarios or subprojects that you added will be seen on the page, as shown below:'
         removing:
             header: Removing a Field/Scenario or Subproject to Run
-            body1: 'To remove a field/scenario or subproject from the list to be simulated, click the <strong><em>Delete</em></strong> button to the left of the name of the desired scenario to delete.'
+            body1: 'To remove a field/scenario or subproject from the list to be simulated, click the <strong>Delete</strong> button to the left of the name of the desired scenario to delete.'
     simulating:
         header: Simulating
         check:
@@ -1637,9 +1686,9 @@ en:
             body3: 'In order to fix the problem, the user needs to return to the page that caused the error (in the example above, the <a href=/help/page_8?locale=en>Management</a> page) and look for missing input information, and then that all of the information they entered was valid and within the valid ranges. A common mistake in the Management page is not having added a cropping system. Ensure that you have added a cropping system if you get a red X under management.'
         run:
             header: Running the Simulation
-            body1: 'To run the simulation, the user needs to click the <strong><em>Run Selected</em></strong> button. This will begin the simulation. You will see the progress of the simulation in yellow on the top left of the screen, as shown below:'
+            body1: 'To run the simulation, the user needs to click the <strong>Run Selected</strong> button. This will begin the simulation. You will see the progress of the simulation in yellow on the top left of the screen, as shown below:'
             body2: 'Once you have had a successful simulation, check on the date and time of the simulation by looking at the heading “Last Simulation” to ensure that all of the fields/scenarios and subprojects were simulated as shown below:'
-            body3: 'If this simulation is indeed correct, then you can click on Continue to view the <a href=/help/page_9?locale=en>results</a> of the simulations.'
+            body3: 'If this simulation is indeed correct, then you can click on <strong>Continue</strong> to view the <a href=/help/page_9?locale=en>results</a> of the simulations.'
   resultspage:
     header: Results Page Help
     body1: 'The results page allows you to view the results for the field/scenario combinations and subprojects that you simulated. This page is separated into two different sections: Navigation help, and Understanding the Results help.'
@@ -1654,7 +1703,7 @@ en:
             body5: 'The results of the scenarios are presented in a tabular format, in the order in which they were selected. In this case, the scenario results are presented for “grape”, “grape_irr”, and then “grape_grass”. The Difference and Reduction values are relative to the first scenario, “grape” in this case.'
         manner:
             header: 'Viewing the Results in the Desired Manner'
-            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong><em>Tabular Results</em></strong>. To view the nutrient results in graphical form click on <strong><em>Graph Results</em></strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure. To view the economic results, click on <strong><em>Economics</em></strong>.'
+            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong>Tabular Results</strong>. To view the nutrient results in graphical form click on <strong>Graph Results</strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure. To view the economic results, click on <strong>Economics</strong>.'
         expand:
             header: Expanding Results
             body1: 'A box under the <strong>Detail</strong> column indicates that you can expand the <strong>Description</strong> to view more results. An expanded Results page for nutrient tabular results is shown below:'
@@ -1669,7 +1718,7 @@ en:
             body5: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area</strong>).'
         graphical:
             header: Understanding Nutrient Results in Graphical Form
-            body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong><em>Graphs</em></strong>.'
+            body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong>Graphs</strong>.'
             item1:
                 body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart, as shown below.'
                 body2: 'Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
@@ -1682,6 +1731,56 @@ en:
         header: Saving the Results to a PDF file
         body1: 'The results presented in the NTT screens can be saved to a PDF file. To access this utility, select the <strong>Create PDF</strong> button from the Results page. The NTT program writes a report file in PDF format that contains summary features of the scenarios, as well as the results produced from the simulations. The default name of the project report file can be changed by the user. The default location can also be change by the user depending on the browser options available. The first page of the results report file will look like the following.'
         body2: 'In addition to the results of the simulations, the report file also contains detailed information about the soils and management information used as input for the NTT simulations.'
+  resultspage_html:
+    <strong>Results</strong><br>
+    The results page allows you to view the results for the field/scenario combinations and subprojects that you simulated.<br></br>
+    <strong>Viewing the Desired Results</strong><br>
+    To view the desired results, the user must first select whether they want to view the results for the subprojects that they ran or for the field/scenarios that they ran. They can make this selection by choosing the appropriate selection under <strong>Select Type</strong>.
+    If the user selects the Field/Scenario option, the appropriate field will also have to be selected.
+    It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario.
+    It is very likely that, when the user first arrives at the Results page, that the first scenario that was simulated will be selected for both the first scenario and second scenario, so be sure to select the correct scenarios before continuing.
+    The results of the scenarios are presented in a tabular format, in the order in which they were selected.<br></br>
+    <strong>Understanding Nutrient Results in Tabular Form</strong><br>
+    When you first reach the NTT Results page, you will be viewing the nutrient results in tabular form. These tabular results represent AVERAGES in all of the years that were simulated. To view year by year results, the user needs to go to Graphical results, and view them there. Scenario 1 represents the column to the right of the Description, and Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that you made when selecting the first and second scenario. NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result. The <strong>Difference</strong> is the amount decreased <strong>(First Scenario –
+    Second Scenario)</strong> for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result. The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that
+    for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from First Scenario to Second Scenario. For these, you can calculate <strong>Total Area</strong> by using the following formula <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from First Scenario to Second Scenario. For Crops, you can calculate the <strong>Total Area</strong> by using the following formula; <strong>(alternative value * total area) – (baseline value * total area)</strong>.<br></br>
+    <strong>Understanding Nutrient Results in Graphical Form</strong><br>
+    While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select Graphs.<br>
+    <strong>Annual (Last 12 Years) Method:</strong>This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select Annual (Last 12 Years) under the first drop down box above the chart.
+    Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.<br>
+    <strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting Annual (Last 12 Years) under the first drop down box, you need to select Monthly Average (The entire period).<br>
+  apexcontrols_html:
+    <strong>Controls</strong><br>
+    Here you will see all the controls listed.<br><br>
+    To <strong>Edit</strong> a control, click the pencil icon under <strong>Actions</strong>.
+  apexparameters_html:
+    <strong>Parameters</strong><br>
+    Here you will see all the parameters listed.<br><br>
+    To <strong>Edit</strong> a paramter, click the pencil icon under <strong>Actions</strong>.
+  subareas_html:
+    <strong>Subareas</strong><br></br>
+    Here you will see all the subareas of the scenario that is currently loaded.
+    <p>You can load a different subarea by changing the selected <strong>Subarea</strong> in the <strong><em>Scenario</em></strong> drop down list and then clicking <strong><em>Load Subarea</em></strong>.</p>
+    To <strong>View</strong> a subarea, click the magnifying glass icon under <strong>Actions</strong>.<br>
+    To <strong>Edit</strong> a subarea, click the pencil icon under <strong>Actions</strong>.
+    <p><strong>Note:</strong> By default, the first scenario is automatically loaded</p>
+  soils_html:
+    <strong>Soils</strong><br>
+    The Soils page allows user to enter the soils for each field.<br><br>
+    To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
+    To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
+    To <strong>View</strong> a soil, click the magnifying glass icon under <strong>Actions</strong>.<br>
+    To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.<br>
+  soiloperations_html:
+    <strong>Operations</strong><br>
+    Here you will see all the operations of the soil/scenario combination that is currently loaded.
+    <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the Scenario drop down list, and then clicking <strong>Load Operation</strong>.</p>
+    To <strong>Edit</strong> an operation, click the pencil icon under <strong>Actions</strong>.
+    <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
+  sites_html:
+    <strong>Sites</strong><br>
+    This is all the information about the APEX site.<br><br>
+    To <strong>Edit</strong> this site, click <strong>Edit</strong>
   modpage:
     header: Modifications Page Help
     body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'
@@ -1831,33 +1930,15 @@ en:
                 <p>To create a new watershed scenario, use must select a <strong>Field</strong> from the <strong><em>Fields</em></strong> dropdown, a <strong>Scenario</strong> from the <strong><em>Scenarios</em></strong> drop down and then click <strong><em>Add to watershed</em></strong>.</p>
                 To <strong>Delete</strong> a watershed scenario, click the red "x" icon under <strong>Actions</strong>.
                 <p><strong>Note:</strong> No field/scenario combination can be used twice.</p>
-    apex_controls: >
-                Here you will see all the constrols listed.<br><br>
-                To <strong>Edit</strong> a control, click the pencil icon under <strong>Actions</strong>.
-    apex_parameters: >
-                Here you will see all the parameters listed.<br><br>
-                To <strong>Edit</strong> a paramter, click the pencil icon under <strong>Actions</strong>.
-    subareas: >
-                Here you will see all the subareas of the scenario that is currently loaded.
-                <p>You can load a different subarea by changing the selected <strong>Subarea</strong> in the <strong><em>Scenario</em></strong> drop down list and then clicking <strong><em>Load Subarea</em></strong>.</p>
-                To <strong>View</strong> a subarea, click the magnifying glass icon under <strong>Actions</strong>.<br>
-                To <strong>Edit</strong> a subarea, click the pencil icon under <strong>Actions</strong>.
-                <p><strong>Note:</strong> By default, the first scenario is automatically loaded</p>
-    apex_soils: >
-                The Soils page allows user to enter the soils for each field.<br><br>
-                To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
-                To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
-                To <strong>View</strong> a soil, click the magnifying glass icon under <strong>Actions</strong>.<br>
-                To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.<br>
     apex_layers: >
                 In this page, you can see all the layers of the selected soil.<br><br>
                 To <strong>View</strong> a layer, click the magnifying glass icon under <strong>Actions</strong>.<br>
                 To <strong>Edit</strong> a layer, click the pencil icon under <strong>Actions</strong>.
     soil_operations: >
-                Here you will see all the operations of the soil/scenario combination that is currently loaded.
-                <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the <strong><em>Scenario</em></strong> drop down list, and then clicking <strong><em>Load Operation</em></strong>.</p>
-                To <strong>Edit</strong> an operation, click the pencil icon under <strong>Actions</strong>.
-                <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
+              Here you will see all the operations of the soil/scenario combination that is currently loaded.
+              <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong><em>Soil</em></strong> drop down list, changing the selected <strong>Scenario</strong> in the <strong><em>Scenario</em></strong> drop down list, and then clicking <strong><em>Load Operation</em></strong>.</p>
+              To <strong>Edit</strong> an operation, click the pencil icon under <strong>Actions</strong>.
+              <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
     sites: >
-                This is all the information about the APEX site.<br><br>
-                To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong>
+              This is all the information about the APEX site.<br><br>
+              To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong>
