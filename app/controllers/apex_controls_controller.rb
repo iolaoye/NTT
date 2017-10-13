@@ -123,10 +123,6 @@ class ApexControlsController < ApplicationController
     redirect_to project_field_apex_controls_path(@project, @field), notice: t("models.apex_control") + " " + t("general.reset")
   end
 
-  def download
-	  download_apex_files()
-  end
-
   private
     # Use this method to whitelist the permissible parameters. Example:
     # params.require(:person).permit(:name, :age)
