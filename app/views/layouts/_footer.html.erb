@@ -139,7 +139,11 @@
         <% when "fields" %>
               <tr><td><%= t('fieldpage_html')%></td></tr>
         <% when "soils" %>
-              <tr><td><%= t('soilpage_html')%></td></tr>
+              <% if ENV["APP_VERSION"] == "modified" %>
+                <tr><td><%= t('soilpage_modified_html')%></td></tr>
+              <% else %>
+                <tr><td><%= t('soilpage_html')%></td></tr>
+              <% end %>
         <% when "scenarios" %>
               <tr><td><%= t('managepage_html')%></td></tr>
         <% when "operations" %>

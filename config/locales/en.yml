@@ -1141,7 +1141,9 @@ en:
     overview:
         header: Overview
         statement: 'The Nutrient Tracking Tool was designed to be user friendly, with ten main screens:'
+        statement_modified: 'The Nutrient Tracking Tool was designed to be user friendly, with nine main screens:'
         project: 'On the <a href=/help/page_3?locale=en>Project</a> screen, the users enter the name and description of the project, or they can open saved/example projects, or close/save the active project.'
+        project_modified: 'On the <a href=/help/page_3?locale=en>Project</a> screen, the users enter the name and description of the project by creating a new project, or they can open saved projects, or close/save the active project.'
         location: 'On the <a href=/help/page_4?locale=en>Location</a> screen, the users enter the location of the project based on GIS data, State/County input, or complete user input.'
         fields: 'On the <a href=/help/page_5?locale=en>Fields</a> screen, the users either create new fields or verify the fields drawn on the Location page.'
         soils: 'On the <a href=/help/page_7?locale=en>Weather</a> screen, the users select the source of  weather information, as well as the length of simulation.'
@@ -1224,6 +1226,20 @@ en:
     You can also use the <strong>Close Active Project</strong> button to close the current project that you are working on.
     When you attempt to close, a warning message will come up.
     Closing an active project will erase all of that projects information. Because of this, if you would like to project for later use, it is extremely important that you save the project before closing it. By clicking the <strong>OK</strong> button on the warning message, the information will be cleared (and lost if not previously saved). If you have not yet saved and would like to, click cancel and follow the instructions for <strong>Save Active Project</strong> above.
+  projpage_modified_html:
+    <strong>Start of a Project</strong> <br><br>
+    Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
+    to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
+    <strong>To Start a Project</strong><br>
+    There are <b>two initial choices</b> to start a new project:<br></br>
+    Select the <b>Create New Project</b> option to start a project from scratch<br>
+    Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br></br>
+    <strong>Create New Project Option</strong><br>
+    Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.
+    After you have entered the information, click the <strong>Create Project</strong> button to save the information and continue.<br>
+    After you have opened the save project, click the <strong>Save Changes</strong> button to save the information and continue.<br><br>
+    <strong>Upload Project Option</strong><br>
+    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.<br><br>
   locpage:
     header: Location Information
     mapsystem:
@@ -1363,6 +1379,7 @@ en:
     advance:
         header: Advancing
         body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, weathers, results, and apex page.'
+        body_modified: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, results, and apex page.'
   fieldpage_html:
     <strong>Fields Page</strong><br>
     The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.
@@ -1379,8 +1396,10 @@ en:
     overview:
         header: Overview
         body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
+        body_modified: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 3 general rules that apply to all methods. They are as follows:'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
         item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.'
+        item2_modified: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics.'
         item3: 'However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.'
         item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <b>Soil Layers</b> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
     mapsystem:
@@ -1401,6 +1420,7 @@ en:
     advance:
         header: Advancing
         body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
+        body_modified: 'The user can click <strong>Continue</strong> to advance to the next page.'
   soilpage_html:
     <strong>Soils Page</strong><br>
     The Soils page allows the user to verify, select, or create the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
@@ -1409,6 +1429,13 @@ en:
     If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.<br></br>
     However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
     Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <b>Soil Layers</b> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.
+  soilpage_modified_html:
+    <strong>Soils Page</strong><br>
+    The Soils page allows the user to verify, select, or create the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
+    general rules that apply to all methods. They are as follows<br></br>
+    The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.<br></br>
+    If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics.<br></br>
+    However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
   managepage:
     header: Management Page Help
     overview:
@@ -1695,13 +1722,13 @@ en:
         view:
             header: Viewing the Desired Results
             body1: 'To view the desired results, the user must first select whether they want to view the results for the subprojects that they ran or for the field/scenarios that they ran. They can make this selection by choosing the appropriate selection under <strong>Select Type</strong>, as shown below:'
-            body2: 'If the user selects the Field/Scenario option, the appropriate field will also have to be selected, as shown below:'
-            body3: 'It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario, as shown below:'
+            body2: 'If the user selects the Field/Scenario option, the appropriate field will also have to be selected.'
+            body3: 'It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario.'
             body4: 'It is very likely that, when the user first arrives at the Results page, that the first scenario that was simulated will be selected for both the first scenario and second scenario, so be sure to select the correct scenarios before continuing.'
             body5: 'The results of the scenarios are presented in a tabular format, in the order in which they were selected. In this case, the scenario results are presented for “grape”, “grape_irr”, and then “grape_grass”. The Difference and Reduction values are relative to the first scenario, “grape” in this case.'
         manner:
             header: 'Viewing the Results in the Desired Manner'
-            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong>Tabular Results</strong>. To view the nutrient results in graphical form click on <strong>Graph Results</strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure. To view the economic results, click on <strong>Economics</strong>.'
+            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong>Tabular Results</strong>. To view the nutrient results in graphical form click on <strong>Graph Results</strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure.'
         expand:
             header: Expanding Results
             body1: 'A box under the <strong>Detail</strong> column indicates that you can expand the <strong>Description</strong> to view more results. An expanded Results page for nutrient tabular results is shown below:'
@@ -1718,12 +1745,12 @@ en:
             header: Understanding Nutrient Results in Graphical Form
             body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong>Graphs</strong>.'
             item1:
-                body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart, as shown below.'
+                body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart.'
                 body2: 'Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
-            item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong> An example graph for the monthly average is shown below:'
+            item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong>'
         economic:
             header: Understanding Economics Results
-            body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results</strong>. This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow, as shown below.'
+            body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results</strong>. This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow.'
             body2: 'The economic results shown in the Baseline, Alternative, and Difference columns are all expressed on a per acre basis. The total economic impact for the entire simulated area of interest is shown in the Total Area column.'
     saving:
         header: Saving the Results to a PDF file

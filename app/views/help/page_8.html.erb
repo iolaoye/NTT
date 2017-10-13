@@ -212,5 +212,9 @@
 			<p><%= raw t('managepage.reference.body1') %></p>
 	</div>
 </div>
+<% if ENV["APP_VERSION"] == "standard" %>
 <br><%= link_to "< Prev", help_path("page_7", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_9", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
+<% else %>
+<br><%= link_to "< Prev", help_path("page_6", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_9", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
+<% end %>
 <br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
