@@ -601,6 +601,8 @@ en:
     add_liming: 'Add Liming Operation'
     add_start_grazing: 'Add Grazing'
     add_stop_grazing: 'Add Stop Grazing'
+    po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
+    planting_method: Planting Method
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
@@ -925,10 +927,10 @@ en:
     hours: Hours
     dry_manure: Dry manure
     streambank_stabilization: Streambank Stabilization
-    riparian_forest: Riparian Buffer
+    riparian_forest: Forest Buffer
     grass_field_portion: Grass field portion
     slope_ratio: Slope ratio
-    filter_strip: Filter Strip
+    filter_strip: Grass Buffer
     waterway: Waterway (Grassed Buffer)
     contour_buffer: Contour Buffer
     land_leveling: Land Leveling
