@@ -283,9 +283,9 @@ class OperationsController < ApplicationController
             #get crop_id from croppingsystem and state_id
             state_id = Location.find(session[:location_id]).state_id
             crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
-			if crop == nil then
-				crop = Crop.find_by_number_and_state_id(event.apex_crop, '**')
-			end
+      			if crop == nil then
+      				crop = Crop.find_by_number_and_state_id(event.apex_crop, '**')
+      			end
             plant_population = crop.plant_population_ft
             @operation.crop_id = crop.id
             @operation.activity_id = event.activity_id
@@ -373,8 +373,9 @@ class OperationsController < ApplicationController
         @highest_year = operation.year
       end
     end
-    @cropping_systems = CropSchedule.where(:state_id => Location.find(session[:location_id]).state_id, :status => true).where("class_id < 3")
-    @tillages = CropSchedule.where(:state_id => Location.find(session[:location_id]).state_id, :status => true).where("class_id = 3")
+    state_id = Location.find_by_project_id(@project.id).state_id
+    @cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 3")
+    @tillages = CropSchedule.where(:state_id => state_id, :status => true).where("class_id = 3")
     if @cropping_systems == nil or @cropping_systems.blank? then
       @cropping_systems = CropSchedule.where(:state_id => 0, :status => true).where("class_id < 3")
     end

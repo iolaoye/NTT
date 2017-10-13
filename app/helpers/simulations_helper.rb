@@ -1089,18 +1089,62 @@ module SimulationsHelper
     @opcs_file = Array.new
     irrigation_type = 0
     bmp = Bmp.where("scenario_id = " + @scenario.id.to_s + " and irrigation_id > 0").first
-    irrigation_type = Irrigation.find(bmp.irrigation_id).code unless bmp == nil
+    irrigation_type = Irrigation.find(bmp.irrigation_id).code unless bmp == nil or bmp.bmpsublist_id == 19  #irrigation_id is used as planting method for cover crop BMP.
     #check and fix the operation list
-	if buffer_type == 0 then   #when subarea from soils
-		@soil_operations = SoilOperation.where(:soil_id => soil_id.to_s, :scenario_id => @scenario.id.to_s)
-	else   # when subarea from BMP. soil_id is the bmp_id.
-		@soil_operations = SoilOperation.where(:bmp_id => soil_id.to_s, :scenario_id => @scenario.id.to_s, :opv6 => buffer_type.to_s)
-	end  # end if type
+  	if buffer_type == 0 then   #when subarea from soils
+  		@soil_operations = SoilOperation.where(:soil_id => soil_id.to_s, :scenario_id => @scenario.id.to_s)
+  	else   # when subarea from BMP. soil_id is the bmp_id.
+  		@soil_operations = SoilOperation.where(:bmp_id => soil_id.to_s, :scenario_id => to_s, :opv6 => buffer_type.to_s)
+  	end  # end if type
     if @soil_operations.count > 0 then
       fix_operation_file()
       #line 1
       @opcs_file.push(" .Opc file created directly by the user. Date: " + @dtNow1 + "\n")
       j = 0
+      bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 19)
+      last_year = @soil_operations.last.year
+      c_c_p = false
+      c_c_k = false
+      if bmp != nil then
+        s_o_new = SoilOperation.new
+        s_o_new.year = bmp.number_of_animals
+        s_o_new.month = bmp.hours
+        s_o_new.day = bmp.days
+        s_o_new.apex_operation = bmp.irrigation_id
+        s_o_new.apex_crop = bmp.crop_id
+        s_o_new.activity_id = 1
+        s_o_new.opv1 = 0
+        s_o_new.opv2 = 0
+        s_o_new.opv3 = 0
+        s_o_new.opv4 = 0
+        s_o_new.opv5 = 0
+        s_o_new.opv6 = 0
+        s_o_new.opv7 = 0
+        cc_plt_date = Date.parse(sprintf("%2d", s_o_new.year) + "/" + sprintf("%2d", s_o_new.month) + "/" + sprintf("%2d", s_o_new.day))
+        s_o_new_kill = SoilOperation.new
+        if last_year > bmp.number_of_animals then  # validate if last_year is greater than cover crop planting year
+          soil_oper = @soil_operations.where(:year => bmp.number_of_animals + 1).first
+          cc_kill_date = Date.parse(sprintf("%2d", soil_oper.year) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))
+          #cc_kill_date += 1.year
+        else
+          soil_oper = @soil_operations.first
+          cc_kill_date = Date.parse(sprintf("%2d", 1) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))          
+        end
+        cc_kill_date -= 2.days
+        s_o_new_kill.year = cc_kill_date.year - 2000
+        s_o_new_kill.month = cc_kill_date.month
+        s_o_new_kill.day = cc_kill_date.day
+        s_o_new_kill.apex_operation = 451
+        s_o_new_kill.apex_crop = bmp.crop_id
+        s_o_new_kill.activity_id = 5 
+        s_o_new_kill.opv1 = 0
+        s_o_new_kill.opv2 = 0
+        s_o_new_kill.opv3 = 0
+        s_o_new_kill.opv4 = 0
+        s_o_new_kill.opv5 = 0
+        s_o_new_kill.opv6 = 0
+        s_o_new_kill.opv7 = 0
+      end
       @soil_operations.each do |soil_operation|
         # ask for 1=planting, 5=kill, 3=tillage
         if soil_operation.apex_crop == CropMixedGrass && (soil_operation.activity_id == 1 || soil_operation.activity_id == 5 || soil_operation.activity_id == 3) then
@@ -1119,10 +1163,27 @@ module SimulationsHelper
           #    AddOperation(newOper, irrigation_type, nirr, soil.Percentage, j)
           #end
         else
+          if bmp != nil then
+            date_oper = Date.parse(sprintf("%2d", soil_operation.year) + "/" + sprintf("%2d", soil_operation.month) + "/" + sprintf("%2d", soil_operation.day))
+            if c_c_p == false and date_oper > cc_plt_date then 
+              add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
+              j+=1
+              c_c_p = true
+            end
+            if c_c_k == false and date_oper > cc_kill_date then 
+              add_operation(s_o_new_kill, irrigation_type, nirr, soil_percentage, j)
+              j+=1
+              c_c_k = true
+            end
+          end
           add_operation(soil_operation, irrigation_type, nirr, soil_percentage, j)
         end # end if
         j+=1
       end #end soil_operations.each do
+      #just in case the planting operation was after the last operation in the soil_operations file.
+      if c_c_p == false and bmp != nil then
+        add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
+      end
       # add to the tillage file the new fertilizer operations - one for each depth
       append_file("tillOrg.dat", "till.dat", "till")
       append_file("ferts.dat", "fert.dat", "fert")
@@ -1151,7 +1212,7 @@ module SimulationsHelper
           @soil_operations[j].year = "1"
           #drOuts.Add(drOut)
         end
-		@soil_operations.sort_by { |date| [date.year, date.month, date.day, date.activity_id, date.id] }
+		    @soil_operations.sort_by { |date| [date.year, date.month, date.day, date.activity_id, date.id] }
         #if i > 0 then
         #for j = 0 To i - 1
         #drOut = drIn(j)
