@@ -455,7 +455,7 @@
                   <% if I18n.locale.eql?(:en) %>
                     <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id}%>
                   <% else %>
-                    <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1), :code, :spanish_name, {:prompt => 'Seleccione Unoa', :selected => bmp.irrigation_id}
+                    <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1), :code, :spanish_name, {:prompt => 'Seleccione Unoa', :selected => bmp.irrigation_id} %>
                   <% end %>
                 </div>
               </td>
