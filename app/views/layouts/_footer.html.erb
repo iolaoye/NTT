@@ -166,6 +166,18 @@
               <tr><td><%= t('sites_html')%></td></tr>
         <% when "watersheds" %>
               <tr><td><%= t('watershedpage_html')%></td></tr>
+        <% when "watershed_scenarios" %>
+              <tr><td><%= t('watershed_scenarios_html')%></td></tr>
+        <% when "about" %>
+              <tr><td><%= t('about_ntt_html')%></td></tr>
+        <% when "contact" %>
+              <tr><td><%= t('contact_html')%></td></tr>
+        <% when "help" %>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= t('help_html')%></td></tr>
+        <% else %>
+              <tr><td><%= t('help_modified_html')%></td></tr>
+              <% end %>
         <% end %>
         </table>
       </div>
