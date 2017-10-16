@@ -184,8 +184,8 @@
 		  <tbody>
 			  <% if @results1 != nil && @present %>
 				  <% @results1.each do |result| %>
-						<!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
-					  <% if (result.description_id > 89 and ENV["APP_VERSION"] == "modified") or result.description.id == 52 %>
+						<!--deep percolation hidden according to Dr. Saleh on 7/31/2017 - show again requested by Mindy 10/13/2017-->
+					  <% if (result.description_id > 89 and ENV["APP_VERSION"] == "modified") %>
 						<% next %>
 					  <% end %>
 					  <% description = Description.find(result.description_id) %>

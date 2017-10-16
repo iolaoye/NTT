@@ -74,7 +74,7 @@
 	MM_TO_IN = 0.03937007874
 	KG_TO_LBS = 2.204622621849
 	HA_TO_AC = 2.4710538147
-	T_STATISTIC_EVALUATED = 1.645
+	T_STATISTIC_EVALUATED = 1.96   # 1.96 (5% significance two-tails, 1.645 10% siginificance two-tails according to Edward 1.96 is better)
 	FT2_TO_M2 = 0.092903
 	FT_TO_MM = 304.8
 	AC_TO_KM2 = 0.00404685643
