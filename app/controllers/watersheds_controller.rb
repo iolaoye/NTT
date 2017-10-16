@@ -83,6 +83,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1.json
   def simulate
     @project = Project.find(params[:project_id])
+    @errors = Array.new
 	if !(params[:commit].include?("Simulate")) then
 		#update watershed_scenarios
 		@watershed_name = params[:commit]
@@ -94,9 +95,9 @@ class WatershedsController < ApplicationController
 			when "saved"
 				@notice = t('field.field') + "/" + t('scenario.scenario') + " " + t('general.created')
 			when "exist"
-				@error = t('field.field') + "/" + t('scenario.scenario') + " " + t('errors.messages.exist')
+				@errors.push(t('field.field') + "/" + t('scenario.scenario') + " " + t('errors.messages.exist'))
 			when "error"
-				@error = "Error " + t('general.adding') + " " + t('field.field') + "/" + t('scenario.scenario')
+				@errors.push("Error " + t('general.adding') + " " + t('field.field') + "/" + t('scenario.scenario'))
 		end
 	else
 		#run simulations
@@ -104,10 +105,9 @@ class WatershedsController < ApplicationController
 			params[:select_watershed].each do |ws|
 				@watershed = Watershed.find(ws)
 				if @watershed.watershed_scenarios.count == 0
-					@errors = Array.new
 					@errors.push("Unable to simulate Watershed " + @watershed.name + ". Please add a field to "  + @watershed.name + " to successfully run the simulation.")
 				end
-				break if @errors != nil
+				break if @errors.present?
 				session[:simulation] = 'watershed'
 				@project = Project.find(params[:project_id])
 				watershed_id = ws
@@ -158,17 +158,16 @@ class WatershedsController < ApplicationController
 				print_array_to_file(@opcs_list_file, "OPCS.dat")
 				if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
 				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
-				msg = read_apex_results(msg)
+				if !msg.include?("Error") then msg = read_apex_results(msg) end
 				@watershed.last_simulation = Time.now
 				@watershed.save
 				if msg == "OK"
 					@notice = "Simulation ran succesfully"
 				else
-					@error = "Error running simulation"
+					@errors.push("Error running simulation for " + @watershed.name)
 				end
 			end   # end params[:select_watershed].each
 		else
-			@errors = Array.new
 			@errors.push("Please select a watershed for simulation.")
 		end	# end watershed present?
 	end
