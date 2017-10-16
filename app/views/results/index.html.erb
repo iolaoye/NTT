@@ -131,7 +131,13 @@
           <% end %>
           <% if @present2 %>
             <tr class="gvRowStyleEven">
-              <td class="gvTotalText"><%= Scenario.find(@scenario2).name %></td>
+              <td class="gvTotalText">
+              	<% if session[:simulation] != 'scenario' %>
+                  <%= Watershed.find(@scenario2).name %>
+                <% else %>
+                  <%= Scenario.find(@scenario2).name %>
+                <% end %>
+              </td>
 				<% for i in 0..@charts2.count - 1 %>
 					<td class='gvCellStyle Title'><%= @charts2[i][1].round(2) %></td>
 				<% end %>
@@ -139,7 +145,13 @@
           <% end %>
           <% if @present3 %>
             <tr class="gvRowStyleOdd">
-              <td class="gvTotalText"><%= Scenario.find(@scenario3).name %></td>
+              <td class="gvTotalText">
+              <% if session[:simulation] != 'scenario' %>
+                  <%= Watershed.find(@scenario3).name %>
+                <% else %>
+                  <%= Scenario.find(@scenario3).name %>
+                <% end %>
+              </td>
 				<% for i in 0..@charts3.count - 1 %>
 					<td class='gvCellStyle Title'><%= @charts3[i][1].round(2) %></td>
 				<% end %>
