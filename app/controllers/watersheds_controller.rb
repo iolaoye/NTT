@@ -265,7 +265,10 @@ class WatershedsController < ApplicationController
     @watersheds = Watershed.where(:location_id => session[:location_id])
     watershed_scenarios_count(@watersheds)
 	params[:project_id] = @project.id
-    render "index"
+    respond_to do |format|
+      format.html { redirect_to project_watersheds_path(@project) }
+      format.json { head :no_content }
+    end
   end
 
   ################################ destroy #################################
