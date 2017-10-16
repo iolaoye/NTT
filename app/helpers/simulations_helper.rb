@@ -1754,8 +1754,8 @@ module SimulationsHelper
         one_result.qdrn = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result.qdrp = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
-        # one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
-        one_result.dprk = 0 # Deep percolation hidden in results table
+        one_result.dprk = tempa[135, 9].to_f * MM_TO_IN
+        #one_result.dprk = 0 # Deep percolation hidden in results table. deep percolation shows again per Mindy's request. 10/13/2017
         one_result.irri = tempa[237, 8].to_f * MM_TO_IN
         one_result.pcp = tempa[229, 8].to_f * MM_TO_IN
         one_result.prkn = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)

@@ -1,6 +1,7 @@
 ﻿module Enumerable
 	def confidence_interval
-		self.standard_deviation / Math.sqrt(self.length - 1) * T_STATISTIC_EVALUATED
+    #self.standard_deviation / Math.sqrt(self.length - 1) * T_STATISTIC_EVALUATED
+    self.standard_deviation / Math.sqrt(self.length) * T_STATISTIC_EVALUATED    # according to Edward dive by average no average-1
 	end
 
 	def standard_deviation
