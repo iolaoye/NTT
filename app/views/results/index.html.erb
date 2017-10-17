@@ -1029,7 +1029,6 @@
 									<% end %>
 									<% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil  %>
 										<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value3).to_s %></td>
-										<td class="gvCellStyleNumber bottom_border" style="display: none"><%= sprintf(format, total_area_bl3).to_s %></td>
 										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
 										<% if difference2 >= 0 %>
 											<td class="nutrients_negative bottom_border"><%= sprintf(format, difference2) %></td>
