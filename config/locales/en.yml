@@ -426,6 +426,7 @@ en:
     start: Start
     stop: Stop
     no_additional_needed: No additional information is needed
+    unit_acre: "unit / ac"
   welcome_note:
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
     note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
@@ -572,7 +573,7 @@ en:
     saved: 'saved Cropping System'
     volume: 'Volume (in)'
     efficiency: 'Efficiency (0-1)'
-    animals: 'Number of animals'
+    animals: 'Total animal units'
     hours: 'Hours in field (0-24)'
     depth: 'Depth (in)'
     no3_n: 'No3 n (0-1)'
@@ -603,6 +604,7 @@ en:
     add_stop_grazing: 'Add Stop Grazing'
     po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
     planting_method: Planting Method
+    manure_composition: Manure Composition
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
@@ -635,18 +637,18 @@ en:
     irrigation_frequency: Irrigate a maximum of every
     stream_fencing_frequency: Days in Stream
     hours: Hours per day
-    dry_manure: Dry defecated manure
+    dry_manure: Dry defecated
     no3_n: No3 n
     po4_p: Po4 p
     org_n: Org n
     org_p: Org p
     width: Width
-    buffer_width: Grass Buffer Width
+    buffer_width: Grass buffer width
     waterways_info: Including both sides of channel
     grass_field_portion: Portion of buffer area that is grass
     slope_ratio: Slope ratio
     slope_ratio_label: Buffer Slope Ratio to Upland
-    crop_width: Crop buffer width
+    crop_width: Crop strip width
     slope_reduction: Slope reduction
     sides: Sides
     no_input: This BMP does not require any input
@@ -661,7 +663,6 @@ en:
     pp: Pads and Pipes
     autoirrigation: Autoirrigation
     autofertigation: Autofertigation
-    manure_control: Manure Control
     pad: Pad
     additional_land: Is the buffer area included in your AOI?
     weather_change: use ±(°C)/±(%) to increase or decrease future temperature and/or precipitation to define the climate changes
