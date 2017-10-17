@@ -1,5 +1,8 @@
 # encoding: utf-8
 
+file = "db/seeds/activities.rb"
+load file
+
 file = "db/seeds/crop_schedules.rb"
 load file
 

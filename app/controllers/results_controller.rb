@@ -519,7 +519,7 @@ class ResultsController < ApplicationController
           #@result_selected = t('result.summary')
 
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
-		      @chart_type = 0
+		  @chart_type = 0
           @x = "Year"
           if session[:simulation] == "scenario"
 		        @crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ? or scenario_id = ? or scenario_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
