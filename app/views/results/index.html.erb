@@ -372,11 +372,11 @@
 										<% if difference2 >= 0 %>
 											<td class="nutrients_negative bottom_border"><%= sprintf(format, difference2) %></td>
 											<td class="nutrients_negative bottom_border"><%= sprintf(format, reduction2) %></td>
-											<!--<td class="nutrients_negative bottom_border"><%= sprintf(format, total_area2) %></td>-->
+											<!--<td class="nutrients_negative bottom_border"><%#= sprintf(format, total_area2) %></td>-->
 										<% else %>
 											<td class="nutrients_positive bottom_border"><%= sprintf(format, difference2) %></td>
 											<td class="nutrients_positive bottom_border"><%= sprintf(format, reduction2) %></td>
-											<!--<td class="nutrients_positive bottom_border"><%= sprintf(format, total_area2) %></td>-->
+											<!--<td class="nutrients_positive bottom_border"><%#= sprintf(format, total_area2) %></td>-->
 										<% end %>
 									<% end %>
 									<% if @results2 == nil %>
