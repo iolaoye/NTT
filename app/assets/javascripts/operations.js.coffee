@@ -61,6 +61,7 @@ updateTypes = ->
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
+      $("#div_type")[0].children[0].innerText = "Planting Method"
     when "2"  # fertilizer
       url = "/fertilizer_types.json"
       $("#div_fertilizer").show()
@@ -72,12 +73,14 @@ updateTypes = ->
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
       $("#operation_subtype_id").prop('disabled',true)
+      $("#div_type")[0].children[0].innerText = "Fertilizer Type"
     when "3"   # tillage
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
+      $("#div_type")[0].children[0].innerText = "Tillage Method"
     when "6"   # irrigation
       url = "/irrigations.json"
       $("#div_fertilizer").hide()
@@ -86,6 +89,7 @@ updateTypes = ->
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
+      $("#div_type")[0].children[0].innerText = "Irrigation Method"
     when "7"   # grazing
       url = "/fertilizers.json?id=animal"
       $("#div_fertilizer").hide()
@@ -101,6 +105,9 @@ updateTypes = ->
       $("#operation_type_id").prop('required',true)
       $("#operation_moisture").removeAttr('required')
       $('div[style*="display: none"] *').removeAttr('required')
+      #change year for start year
+      $("#div_start_date")[0].children[0].innerText = "Start Year"
+      $("#div_type")[0].children[0].innerText = "Animal Type"
     when "10"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()

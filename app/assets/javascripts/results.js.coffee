@@ -6,15 +6,32 @@
 #		@descriptions.push(description)
 #	end
 
-turn_on_off = (row) ->
+turn_on_off_s = (row) ->
+    if row == 1 || row == 0
+       if row == 1
+          $("#tbl_total").toggle(true)
+          $("#tbl_detailed").toggle(false)
+       else
+          $("#tbl_total").toggle(false)
+          $("#tbl_detailed").toggle(true)
     i=1
     while i<=9
         row1 = row + i
         i+=1
-        if ($("#row" + row1).is(":hidden"))
-            $("#row" + row1).toggle(true)
+        if ($("#srow" + row1).is(":hidden"))
+            $("#srow" + row1).toggle(true)
         else
-            $("#row" + row1).toggle(false)
+            $("#srow" + row1).toggle(false)
+
+turn_on_off_t = (row) ->
+    i=1
+    while i<=9
+        row1 = row + i
+        i+=1
+        if ($("#trow" + row1).is(":hidden"))
+            $("#trow" + row1).toggle(true)
+        else
+            $("#trow" + row1).toggle(false)
 
 show_crops = ->
    $("#td_crops").toggle(false)
@@ -101,27 +118,57 @@ $(document).ready ->
   $("#summary").click (event) ->
     set_buttons(true)
 
-  $("#row10").click () ->
-    turn_on_off(10)
-  $("#row20").click () ->
-    turn_on_off(20)
-  $("#row30").click () ->
-    turn_on_off(30)
-  $("#row40").click () ->
-    turn_on_off(40)
-  $("#row50").click () ->
-    turn_on_off(50)
-  $("#row60").click () ->
-    turn_on_off(60)
-  $("#row70").click () ->
-    turn_on_off(70)
-  $("#row90").click () ->
-    turn_on_off(90)
-  $("#row200").click () ->
-    turn_on_off(200)
-  $("#row210").click () ->
-    turn_on_off(210)
-  $("#row220").click () ->
-    turn_on_off(220)
-  $("#row230").click () ->
-    turn_on_off(230)
+  $("#srow10").click () ->
+    turn_on_off_s(10)
+  $("#srow20").click () ->
+    turn_on_off_s(20)
+  $("#srow30").click () ->
+    turn_on_off_s(30)
+  $("#srow40").click () ->
+    turn_on_off_s(40)
+  $("#srow50").click () ->
+    turn_on_off_s(50)
+  $("#srow60").click () ->
+    turn_on_off_s(60)
+  $("#srow70").click () ->
+    turn_on_off_s(70)
+  $("#srow90").click () ->
+    turn_on_off_s(90)
+  $("#srow200").click () ->
+    turn_on_off_s(200)
+  $("#srow210").click () ->
+    turn_on_off_s(210)
+  $("#srow220").click () ->
+    turn_on_off_s(220)
+  $("#srow230").click () ->
+    turn_on_off_s(230)
+
+  $("#trow10").click () ->
+    turn_on_off_t(10)
+  $("#trow20").click () ->
+    turn_on_off_t(20)
+  $("#trow30").click () ->
+    turn_on_off_t(30)
+  $("#trow40").click () ->
+    turn_on_off_t(40)
+  $("#trow50").click () ->
+    turn_on_off_t(50)
+  $("#trow60").click () ->
+    turn_on_off_t(60)
+  $("#trow70").click () ->
+    turn_on_off_t(70)
+  $("#trow90").click () ->
+    turn_on_off_t(90)
+  $("#trow200").click () ->
+    turn_on_off_t(200)
+  $("#trow210").click () ->
+    turn_on_off_t(210)
+  $("#trow220").click () ->
+    turn_on_off_t(220)
+  $("#trow230").click () ->
+    turn_on_off_t(230)
+
+  $("#result_type_acre").click ->
+    turn_on_off_s(0)
+  $("#result_type_total").click ->
+    turn_on_off_s(1)
