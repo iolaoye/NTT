@@ -261,7 +261,7 @@
 								  <td class="gvTotalNumber"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
 								  <td class="gvTotalNumber"><%= sprintf("%8.2f", difference2) %></td>
 								  <td class="gvTotalNumber"><%= sprintf("%8.2f", reduction2) %></td>
-								  <!--<td class="gvTotalNumber"><%= sprintf("%8.2f", total_area2) %></td>-->
+								  <!--<td class="gvTotalNumber"><%#= sprintf("%8.2f", total_area2) %></td>-->
 								<% end %>
 								<% if @results2 == nil %>
 								  <!--<td class="gvTotalNumber"><%= "" %></td>-->
