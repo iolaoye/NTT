@@ -308,11 +308,11 @@
 										<% if difference2 <= 0 %>
 											<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
 											<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-											<!--<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+											<!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
 										<% else %>
 											<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
 											<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-											<!--<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+											<!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
 										<% end %>
 									<% end %>
 									<% if @results2 == nil %>
@@ -397,7 +397,7 @@
 					<%value2 = result[3] %>
 					<% difference1 = value2 - result[1] %>
 					<% reduction1 = difference1 / result[1] * 100 unless result[1] == 0%>
-					<% total_area1 = difference1 * @total_area%>
+					<%# total_area1 = difference1 * @total_area%>
 				<% end %>
 				<% value3 = 0 %>
 				<% reduction2 = 0 %>
@@ -405,7 +405,7 @@
 					<%value3 = result[5] %>
 					<% difference2 = value3 - result[1] %>
 					<% reduction2 = difference2 / result[1] * 100 unless result[1] == 0 %>
-					<% total_area2 = difference2 * @total_area %>
+					<%# total_area2 = difference2 * @total_area %>
 				<% end %>
 				<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 					<% if I18n.locale.eql?(:en) %>
@@ -421,11 +421,11 @@
 						<% if difference1 <= 0 %>
 							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
 							<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-							<!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+							<!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
 						<% else %>
 							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
 							<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-							<!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+							<!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
 						<% end %>
 					<% else %>
 						<!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -440,11 +440,11 @@
 						<% if difference2 <= 0 %>
 							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
 							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-							<!--<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+							<!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
 						<% else %>
 							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
 							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-							<!--<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+							<!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
 						<% end %>
 					<% else %>
 						<!--td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -484,7 +484,7 @@
             <%value2 = ns[3] %>
             <% difference1 = value2 - ns[1] %>
             <% reduction1 = difference1 / ns[1] * 100 unless ns[1] == 0 %>
-            <% total_area1 = difference1 * @total_area%>
+            <%# total_area1 = difference1 * @total_area%>
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
@@ -492,7 +492,7 @@
             <%value3 = ns[5] %>
             <% difference2 = value3 - ns[1] %>
             <% reduction2 = difference2 / ns[1] * 100 unless ns[1] == 0 %>
-            <% total_area2 = difference2 * @total_area %>
+            <%# total_area2 = difference2 * @total_area %>
           <% end %>
           <tr class="gvRowStyleEven" id = <%=row_id%> style="display: none">
           <% if I18n.locale.eql?(:en) %>
@@ -508,11 +508,11 @@
             <% if difference1 <= 0 %>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
               <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
             <% else %>
               <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
               <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
             <% end %>
           <% else %>
             <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -527,11 +527,11 @@
             <% if difference2 > 0 %>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
             <% else %>
               <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
               <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
             <% end %>
           <% else %>
             <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -569,7 +569,7 @@
             <% value2 = ps[3] %>
             <% difference1 = value2 - ps[1] %>
             <% reduction1 = difference1 / ps[1] * 100 unless ps[1] == 0 %>
-            <% total_area1 = difference1 * @total_area%>
+            <%# total_area1 = difference1 * @total_area%>
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
@@ -577,7 +577,7 @@
             <%value3 = ps[5] %>
             <% difference2 = value3 - ps[1] %>
             <% reduction2 = difference2 / ps[1] * 100 unless ps[1] == 0 %>
-            <% total_area2 = difference2 * @total_area %>
+            <%# total_area2 = difference2 * @total_area %>
           <% end %>
           <tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
           <% if I18n.locale.eql?(:en) %>
@@ -593,11 +593,11 @@
             <% if difference1 <= 0 %>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
               <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
             <% else %>
               <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
               <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
             <% end %>
           <% else %>
             <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -612,11 +612,11 @@
             <% if difference2 <= 0 %>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
             <% else %>
               <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
               <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-             <!--<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+             <!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
             <% end %>
           <% else %>
             <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -654,7 +654,7 @@
             <%value2 = ts[3] %>
             <% difference1 = value2 - ts[1] %>
             <% reduction1 = difference1 / ts[1] * 100 unless ts[1] == 0 %>
-            <% total_area1 = difference1 * @total_area%>
+            <%# total_area1 = difference1 * @total_area%>
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
@@ -662,7 +662,7 @@
             <% value3 = ts[5] %>
             <% difference2 = value3 - ts[1] %>
             <% reduction2 = difference2 / ts[1] * 100 unless ts[1] == 0 %>
-            <% total_area2 = difference2 * @total_area %>
+            <%# total_area2 = difference2 * @total_area %>
           <% end %>
           <tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
             <% if I18n.locale.eql?(:en) %>
@@ -678,11 +678,11 @@
               <% if difference1 <= 0 %>
                 <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
                 <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-                <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+                <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
               <% else %>
                 <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
                 <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-                <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+                <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
               <% end %>
             <% else %>
               <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -697,11 +697,11 @@
               <% if difference2 <= 0 %>
                 <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
                 <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-                <!--<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+                <!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
               <% else %>
                 <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
                 <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-                <!--<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+                <!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
               <% end %>
             <% else %>
               <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -739,7 +739,7 @@
             <%value2 = ws[3] %>
             <% difference1 = value2 - ws[1] %>
             <% reduction1 = difference1 / ws[1] * 100 unless ws[1] == 0 %>
-            <% total_area1 = difference1 * @total_area%>
+            <%# total_area1 = difference1 * @total_area%>
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
@@ -747,7 +747,7 @@
             <%value3 = ws[5] %>
             <% difference2 = value3 - ws[1] %>
             <% reduction2 = difference2 / ws[1] * 100 unless ws[1] == 0 %>
-            <% total_area2 = difference2 * @total_area %>
+            <%# total_area2 = difference2 * @total_area %>
           <% end %>
           <tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
           <% if I18n.locale.eql?(:en) %>
@@ -763,11 +763,11 @@
             <% if difference1 <= 0 %>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
               <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
             <% else %>
               <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
               <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
             <% end %>
           <% else %>
             <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -782,11 +782,11 @@
             <% if difference2 <= 0 %>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
               <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
             <% else %>
               <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
               <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
             <% end %>
           <% else %>
             <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
@@ -1059,7 +1059,7 @@
 					<%value2 = result[3] * @total_area %>
 					<% difference1 = value2 - (result[1] * @total_area) %>
 					<% reduction1 = difference1 / (result[1]*@total_area) * 100 unless result[1] == 0%>
-					<% total_area1 = difference1 * @total_area%>
+					<%# total_area1 = difference1 * @total_area%>
 				<% end %>
 				<% value3 = 0 %>
 				<% reduction2 = 0 %>
@@ -1067,7 +1067,7 @@
 					<%value3 = result[5] * @total_area %>
 					<% difference2 = value3 - result[1]*@total_area %>
 					<% reduction2 = difference2 / (result[1]*@total_area) * 100 unless result[1] == 0 %>
-					<% total_area2 = difference2 * @total_area %>
+					<%# total_area2 = difference2 * @total_area %>
 				<% end %>
 				<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 					<% if I18n.locale.eql?(:en) %>
