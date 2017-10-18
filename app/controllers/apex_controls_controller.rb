@@ -100,26 +100,35 @@ class ApexControlsController < ApplicationController
   def reset
     controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
     if controls.blank? || controls == nil then
-		controls = Control.where(:state_id => 99)
-	end
-    ApexControl.where("project_id = " + params[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2").delete_all()
+		  controls = Control.where(:state_id => 99)
+    end
+    #ApexControl.where("project_id = " + params[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2").delete_all()
+    ApexControl.where("project_id = " + params[:project_id].to_s).delete_all()
 
     controls.each do |control|
-		if control.id != 1 && control.id != 2
-		  apex_control = ApexControl.new
-		  apex_control.control_description_id = control.number
-		  apex_control.value = control.default_value
-		  apex_control.project_id = params[:project_id]
-		  apex_control.save
-		end
+  		apex_control = ApexControl.new
+  		apex_control.control_description_id = control.number
+      apex_control.project_id = params[:project_id]
+      if control.id != 1 && control.id != 2
+  		  apex_control.value = control.default_value
+      else
+        weather = Weather.find(Field.find_by_location_id(Location.find_by_project_id(params[:project_id]).id).weather_id)
+        if control.id == 1 then
+          apex_control.value = weather.simulation_final_year - weather.simulation_initial_year + 5 + 1
+        end
+        if control.id == 2
+          apex_control.value = weather.simulation_initial_year - 5
+        end
+  		end
+      apex_control.save
     end
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
   	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])	
 	
-	add_breadcrumb 'Utility Files'
-	add_breadcrumb 'Controls'
-	#render "index"
+    add_breadcrumb 'Utility Files'
+    add_breadcrumb 'Controls'
+    # render "index"
     redirect_to project_field_apex_controls_path(@project, @field), notice: t("models.apex_control") + " " + t("general.reset")
   end
 
