@@ -791,6 +791,7 @@ class BmpsController < ApplicationController
     		@bmp.width = params[:bmp_fs][:width]
     		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
+        @bmp.slope_reduction = params[:bmp_fs][:floodplain_flow]
     		@bmp.crop_id = params[:bmp_fs][:crop_id]
     		if params[:bmp_fs][:buffer_land] == nil then 
     			@bmp.sides = 0
@@ -836,16 +837,17 @@ class BmpsController < ApplicationController
   def waterway(type)
     case type
       when "create"
-		@bmp.width = params[:bmp_ww][:width]
-		@bmp.crop_id = params[:bmp_ww][:crop_id]
+		    @bmp.width = params[:bmp_ww][:width]
+		    @bmp.crop_id = params[:bmp_ww][:crop_id]
+        @bmp.slope_reduction = params[:bmp_ww][:floodplain_flow]
         @bmp.area = 0
-  		if @bmp.save then
+  		  if @bmp.save then
 	        return create_new_subarea("WW", 14)
-		end
+		    end
       when "update"
         update_existing_subarea("WW", 14)
       when "delete"
-	    return delete_existing_subarea("WW")
+	      return delete_existing_subarea("WW")
     end
   end    # end method waterway
 
