@@ -760,7 +760,6 @@ class BmpsController < ApplicationController
   def riparian_forest(type)
     case type
       when "create"
-        debugger
     		@bmp.area = params[:bmp_fs][:area]
     		@bmp.width = params[:bmp_fs][:width]
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]

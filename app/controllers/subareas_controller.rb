@@ -9,7 +9,6 @@ class SubareasController < ApplicationController
 	  add_breadcrumb t('menu.utility_file')
 	  add_breadcrumb t('menu.subarea_file')
   	if @soils != nil and session[:scenario_id] == nil then
-      debugger
   		subarea = Subarea.where(:soil_id => @soils[0].id).first
   		if subarea != nil then
    			session[:scenario_id] = subarea.scenario_id
