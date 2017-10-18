@@ -378,8 +378,6 @@ es:
     pm: pm
   general:
     view: Vista
-    units/ac: Unidades/Ac
-    total_units: Unidades Totales
     note: 'NOTA:'
     name: Nombre
     description: Descripción
@@ -764,6 +762,11 @@ es:
     select_scenario1: Seleccione 1ra escenario
     select_scenario2: Seleccione 2da escenario
     select_scenario3: Seleccione 3ra escenario
+    units/ac: Unidades/ac
+    total_units: Unidades Totales
+    1st_scenario: 1ra Escenario
+    2nd_scenario: 2da Escenario
+    3rd_scenario: 3ra Escenario
     select_watershed1: Seleccione 1ra cuenca
     select_watershed2: Seleccione 2da cuenca
     select_watershed3: Seleccione 3ra cuenca

@@ -754,6 +754,9 @@ en:
     scenario1: first scenario
     scenario2: second scenario
     scenario3: third scenario
+    1st_scenario: 1st Scenario
+    2nd_scenario: 2nd Scenario
+    3rd_scenario: 3rd Scenario
     watershed1: first watershed
     watershed2: second watershed
     watershed3: third watershed
