@@ -314,7 +314,7 @@
             <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
               <td class="indent2" colspan="2">
                 <%= t('pdf.riparian_forest').sub('Buffer', 'Strip') + " " + t('bmp.width') + " (" + t('bmp.ft') + ")" %>
-                <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :step => '0.01', :min => 0.25, :max => 0.75, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr style='display:none'>
@@ -460,7 +460,7 @@
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr> 
               <td class="indent" colspan="2">
                 <div id="div_type" class="field spacer_bottom" >
                   <%= label :type_id, t('operation.planting_method') %>
@@ -779,8 +779,8 @@
             validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
           }
         }
-        validateBmpFs.addValidation(fs_inputs[3].name, "lte=0.75", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_lessequal") %>' + " 0.75");
-        validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
+        //validateBmpFs.addValidation(fs_inputs[3].name, "lte=0.75", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_lessequal") %>' + " 0.75");
+        //validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
       }
       else if (this.value == '13') {
         for(n = 0; n < fs_inputs.length-3; n++){

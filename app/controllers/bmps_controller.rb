@@ -760,6 +760,7 @@ class BmpsController < ApplicationController
   def riparian_forest(type)
     case type
       when "create"
+        debugger
     		@bmp.area = params[:bmp_fs][:area]
     		@bmp.width = params[:bmp_fs][:width]
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
@@ -799,15 +800,15 @@ class BmpsController < ApplicationController
     			@bmp.sides = 1
     		end
     		@bmp.depth = params[:bmp_cb3]
+        if @bmp.depth == 12 then
+          @bmp.crop_id = 1
+        else
+          @bmp.grass_field_portion = 0.00
+        end
     		if @bmp.area == 0 || @bmp.area == nil then 
     			length = Math.sqrt(@field.field_area)			# find the length of the field
-    			width = @bmp.width * FT_TO_KM			# convert width from ft to km
+    			width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_KM			# convert width from ft to km
     			@bmp.area = (length * width / AC_TO_KM2).round(2)	# calculate area in km and convert to ac
-    		end
-    		if @bmp.depth == 12 then
-    			@bmp.crop_id = 1
-    		else
-    			@bmp.grass_field_portion = 0.00
     		end
       	if @bmp.save then
     			if @bmp.depth == 13 then

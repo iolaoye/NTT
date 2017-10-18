@@ -268,11 +268,11 @@ module ScenariosHelper
 					#subarea.iow = 1
 					#line 5					
 					#subarea.rchl = (@bmp.width * FT_TO_KM * (1 - @bmp.grass_field_portion)).round(4)
-					subarea.rchl = (@bmp.width * FT_TO_KM * (1 - grass_field_portion)).round(4)
+					subarea.rchl = @bmp.width * FT_TO_KM * (grass_field_portion).round(4)
 					#line 4
 					if soil_area != nil
 						#s_area = soil_area * AC_TO_HA * (1-@bmp.grass_field_portion)
-						fs_area = soil_area * AC_TO_HA * (1 - grass_field_portion)
+						fs_area = soil_area * AC_TO_HA * (grass_field_portion)
 						subarea.wsa = fs_area       #soil_area here is the reservior area
 					else
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
@@ -322,10 +322,10 @@ module ScenariosHelper
 					subarea.iops = soil_id
 					#subarea.iow = 1
 					#line 5
-					subarea.rchl = (@bmp.width * FT_TO_KM * grass_field_portion).round(4)    #soil_area here is the reservior area
+					subarea.rchl = (@bmp.width * FT_TO_KM * (1-grass_field_portion)).round(4)    #soil_area here is the reservior area
 					#line 4
 					if soil_area != nil
-						subarea.wsa = soil_area * AC_TO_HA * grass_field_portion      #soil_area here is the reservior area
+						subarea.wsa = soil_area * AC_TO_HA * (1-grass_field_portion)     #soil_area here is the reservior area
 					else
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 					end
