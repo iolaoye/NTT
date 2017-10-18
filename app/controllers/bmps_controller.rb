@@ -79,6 +79,23 @@ class BmpsController < ApplicationController
   			end
   		end
   		bmp_list = 19
+      if bmp.bmpsublist_id == 19 then   # cover crop
+        if bmp.id == nil then
+          operation = @scenario.operations.where(:activity_id => 5).last
+          @year = operation.year
+          @month = operation.month_id
+          @day = operation.day
+          cc_plt_date = Date.parse(sprintf("%2d", @year) + "/" + sprintf("%2d", @month) + "/" + sprintf("%2d", @day))
+          cc_plt_date += 2.days
+          @year = cc_plt_date.year - 2000
+          @month = cc_plt_date.month
+          @day = cc_plt_date.day
+        else
+          @year = bmp.number_of_animals
+          @month = bmp.hours
+          @day = bmp.days
+        end
+      end
   		if @field_type != false then
   			bmp_list = 19
   		end
