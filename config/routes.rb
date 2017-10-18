@@ -54,6 +54,7 @@ NTTG3::Application.routes.draw do
   		get :list, on: :member
   		get :new_scenario, on: :member
   		get :destroy_watershed_scenario, on: :member
+      post :download, on: :collection
   		resources :watershed_scenarios
 	  end
     resources :locations do
@@ -66,6 +67,7 @@ NTTG3::Application.routes.draw do
     resources :fields do
       resources :scenarios do
 		    get 'copy_scenario', on: :member
+        post :download, on: :collection
         resources :aplcat_parameters do
 	        get 'aplcat', on: :member
 		    end

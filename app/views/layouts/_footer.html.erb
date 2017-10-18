@@ -69,12 +69,12 @@
                     <li><%= image_tag('copy.jpg') %> <%= t('general.copy') %></li>
                     <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
-                  <%if request.url.include?(url_for=("/fields?")) || request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/layers?")) || request.url.include?(url_for=("/list?")) || request.url.include?(url_for=("/operations?"))%>  
+                  <%if request.url.include?(url_for=("/fields?")) || request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/layers?")) || request.url.include?(url_for=("/list?")) || request.url.include?(url_for=("/operations?"))%>
                       <%if !(ENV["APP_VERSION"] == "modified") %>
                         <%if request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/apex_soils?"))%>
                           <li><%= image_tag('layers.png') %> <%= t('soil.layer') %></li>
                         <% end %>
-                        <%if !(request.url.include?(url_for=("/fields?"))) %>  
+                        <%if !(request.url.include?(url_for=("/fields?"))) %>
                           <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                         <% end %>
                       <% end %>
@@ -85,17 +85,17 @@
                     <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                     <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
-                  <%if request.url.include?(url_for=("/apex_controls?")) || request.url.include?(url_for=("/apex_parameters?")) || request.url.include?(url_for=("/subareas?")) || request.url.include?(url_for=("/apex_soils?")) || request.url.include?(url_for=("/apex_layers?")) || request.url.include?(url_for=("/soil_operations?"))%>  
+                  <%if request.url.include?(url_for=("/apex_controls?")) || request.url.include?(url_for=("/apex_parameters?")) || request.url.include?(url_for=("/subareas?")) || request.url.include?(url_for=("/apex_soils?")) || request.url.include?(url_for=("/apex_layers?")) || request.url.include?(url_for=("/soil_operations?"))%>
                       <%if request.url.include?(url_for=("/subareas?"))%>
                           <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
                       <% end %>
-                      <%if request.url.include?(url_for=("/apex_soils"))%>            
-                          <li><%= image_tag('layers.png') %> <%= t('soil.layer') %></li>   
+                      <%if request.url.include?(url_for=("/apex_soils"))%>
+                          <li><%= image_tag('layers.png') %> <%= t('soil.layer') %></li>
                           <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
                       <% end %>
                       <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                   <% end %>
-                  <%if request.url.include?(url_for=("/sites?"))%>   
+                  <%if request.url.include?(url_for=("/sites?"))%>
                       <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
                       <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                       <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
@@ -138,7 +138,47 @@
               <tr><td><%= t('weathpage_html')%></td></tr>
         <% when "fields" %>
               <tr><td><%= t('fieldpage_html')%></td></tr>
-        <% end %>  
+        <% when "soils" %>
+              <% if ENV["APP_VERSION"] == "modified" %>
+                <tr><td><%= t('soilpage_modified_html')%></td></tr>
+              <% else %>
+                <tr><td><%= t('soilpage_html')%></td></tr>
+              <% end %>
+        <% when "scenarios" %>
+              <tr><td><%= t('managepage_html')%></td></tr>
+        <% when "operations" %>
+              <tr><td><%= t('operation_html')%></td></tr>
+        <% when "bmps" %>
+              <tr><td><%= t('bmpnav_html')%></td></tr>
+        <% when "results" %>
+              <tr><td><%= t('resultspage_html')%></td></tr>
+        <% when "apex_controls" %>
+              <tr><td><%= t('apexcontrols_html')%></td></tr>
+        <% when "apex_parameters" %>
+              <tr><td><%= t('apexparameters_html')%></td></tr>
+        <% when "subareas" %>
+              <tr><td><%= t('subareas_html')%></td></tr>
+        <% when "apex_soils" %>
+              <tr><td><%= t('soils_html')%></td></tr>
+        <% when "soil_operations" %>
+              <tr><td><%= t('soiloperations_html')%></td></tr>
+        <% when "sites" %>
+              <tr><td><%= t('sites_html')%></td></tr>
+        <% when "watersheds" %>
+              <tr><td><%= t('watershedpage_html')%></td></tr>
+        <% when "watershed_scenarios" %>
+              <tr><td><%= t('watershed_scenarios_html')%></td></tr>
+        <% when "about" %>
+              <tr><td><%= t('about_ntt_html')%></td></tr>
+        <% when "contact" %>
+              <tr><td><%= t('contact_html')%></td></tr>
+        <% when "help" %>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= t('help_html')%></td></tr>
+        <% else %>
+              <tr><td><%= t('help_modified_html')%></td></tr>
+              <% end %>
+        <% end %>
         </table>
       </div>
       <div class="modal-footer">
@@ -167,7 +207,7 @@ Stephenville, TX 76402<br>
 (254)968-9790 (Fax)<br>
 saleh@tarleton.edu</li></ul>
 <br>
-  
+
 <%= raw t('contact2.statement') %><br><br>
 
 <ul><li><b>Oscar Gallego</b></li>

@@ -2,12 +2,19 @@
 	<div class="container">
 		<h1><%= t('nav.header') %></h1>
 		<h2><%= t('nav.overview.header') %></h2>
+		<% if ENV["APP_VERSION"] == "standard" %>
 		<p><%= t('nav.overview.statement') %></p>
 		<p><%= raw t('nav.overview.project') %></p>
+		<% else %>
+		<p><%= t('nav.overview.statement_modified') %></p>
+		<p><%= raw t('nav.overview.project_modified') %></p>
+		<% end %>
 		<p><%= raw t('nav.overview.location') %></p>
 		<p><%= raw t('nav.overview.fields') %></p>
 		<p><%= raw t('nav.overview.weather') %></p>
+		  <% if ENV["APP_VERSION"] == "standard" %>
 		<p><%= raw t('nav.overview.soils') %></p>
+			<% end %>
 		<p><%= raw t('nav.overview.management') %></p>
 		<p><%= raw t('nav.overview.subproject') %></p>
 		<p><%= raw t('nav.overview.simulation') %></p>

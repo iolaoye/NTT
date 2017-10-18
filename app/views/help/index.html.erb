@@ -16,7 +16,9 @@
 			<li><%= link_to t('help.getstarted4'), help_path("page_4", :project_id => params[:project_id]) %></li>
 			<li><%= link_to t('help.getstarted6'), help_path("page_5", :project_id => params[:project_id]) %></li>
  			<li><%= link_to t('help.getstarted5'), help_path("page_6", :project_id => params[:project_id]) %></li>
+			<% if ENV["APP_VERSION"] == "standard" %>
 			<li><%= link_to t('help.getstarted7'), help_path("page_7", :project_id => params[:project_id]) %></li>
+			<% end %>
 			<li><%= link_to t('help.getstarted8'), help_path("page_8", :project_id => params[:project_id]) %></li>
 			<li><%= link_to t('help.getstarted9'), help_path("page_9", :project_id => params[:project_id]) %></li>
 			<li><%= link_to t('help.getstarted10'), help_path("page_10", :project_id => params[:project_id])  %></li>

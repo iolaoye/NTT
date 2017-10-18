@@ -6,18 +6,24 @@
 		<h3><%= t('resultspage.nav.header') %></h3>
 			<h2><%= t('resultspage.nav.view.header') %></h2>
 				<p><%= raw t('resultspage.nav.view.body1') %></p>
+				<%= image_tag("help/page_9/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:300px;width: 100%;") %>
 				<p><%= raw t('resultspage.nav.view.body2') %></p>
 				<p><%= raw t('resultspage.nav.view.body3') %></p>
 				<p><%= raw t('resultspage.nav.view.body4') %></p>
 				<p><%= raw t('resultspage.nav.view.body5') %></p>
 			<h2><%= t('resultspage.nav.manner.header') %></h2>
 				<p><%= raw t('resultspage.nav.manner.body1') %></p>
-				<p><%= raw t('resultspage.nav.manner.body2') %></p>
+				<% if ENV["APP_VERSION"] == "standard" %>
+				<%= image_tag("help/page_9/image002.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:480px;width: 100%;") %>
+				<% else %>
+				<%= image_tag("help/page_9/image002_modified.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:480px;width: 100%;") %>
+				<% end %>
 			<h2><%= t('resultspage.nav.expand.header') %></h2>
 				<p><%= raw t('resultspage.nav.expand.body1') %></p><br>
 		<h3><%= t('resultspage.understand.header') %></h3>
 			<h2><%= t('resultspage.understand.tabular.header') %></h2>
 				<p><%= raw t('resultspage.understand.tabular.body1') %></p>
+				<%= image_tag("help/page_9/image003.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:1180px;width: 100%;") %>
 				<p><%= raw t('resultspage.understand.tabular.body2') %></p>
 				<p><%= raw t('resultspage.understand.tabular.body3') %></p>
 				<p><%= raw t('resultspage.understand.tabular.body4') %></p>
@@ -28,6 +34,7 @@
 					<li>
 					<p><%= raw t('resultspage.understand.graphical.item1.body1') %></p>
 					<p><%= raw t('resultspage.understand.graphical.item1.body2') %></p>
+					<%= image_tag("help/page_9/image004.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:200px;width: 100%;") %>
 					</li>
 					<li><p><%= raw t('resultspage.understand.graphical.item2') %></p></li>
 				</ol>
