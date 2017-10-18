@@ -4,10 +4,10 @@ class BmpsController < ApplicationController
 
   def take_names
     @project_name = Project.find(params[:project_id]).name
-	@field = Field.find(params[:field_id])
+	  @field = Field.find(params[:field_id])
     @field_name = @field.field_name
     @scenario_name = Scenario.find(params[:scenario_id]).name
-	@field_type = @field.field_type
+	  @field_type = @field.field_type
   end
 
 ################################  BMPs list   #################################
@@ -35,7 +35,7 @@ class BmpsController < ApplicationController
     add_breadcrumb t('menu.bmps')
 
     get_bmps()
-	take_names()
+	  take_names()
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @bmps }
@@ -47,44 +47,62 @@ class BmpsController < ApplicationController
     bmpsublists = Bmpsublist.where(:status => true)
     @bmps = Bmp.where(:bmpsublist_id => 0)
     @bmps[0] = Bmp.new
-	@climates = Climate.where(:id => 0)
+	  @climates = Climate.where(:id => 0)
 
-	bmpsublists.each do |bmpsublist|
-		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(params[:scenario_id], bmpsublist.id)
-		if bmp.blank? || bmp == nil then
-			bmp = Bmp.new
-			bmp.bmpsublist_id = bmpsublist.id
-			case bmp.bmpsublist_id
-			  when 1  #autoirrigation/autofertigation - defaults
-				bmp.water_stress_factor = 0.80
-				bmp.days = 14
-				bmp.irrigation_efficiency = 0
-			end
-		end
-		@bmps[bmp.bmpsublist_id-1] = bmp
-		if bmp.bmpsublist_id == 19 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
-			climates = Climate.where(:bmp_id => bmp.id)
-			i=0
-			for i in 0..11
-				if climates.blank? || climates == nil then
-					@climates[i] = Climate.new
-					@climates[i].month = i + 1
-					@climates[i].max_temp = 0
-					@climates[i].min_temp = 0
-					@climates[i].precipitation = 0
-				else
-					@climates[i] = climates[i]
-				end
-			end
-		end
-		bmp_list = 19
-		if @field_type != false then
-			bmp_list = 19
-		end
-		if bmp.bmpsublist_id == bmp_list then
-			break
-		end
-	end
+  	bmpsublists.each do |bmpsublist|
+  		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(params[:scenario_id], bmpsublist.id)
+  		if bmp.blank? || bmp == nil then
+  			bmp = Bmp.new
+  			bmp.bmpsublist_id = bmpsublist.id
+  			case bmp.bmpsublist_id
+  			  when 1  #autoirrigation/autofertigation - defaults
+    				bmp.water_stress_factor = 0.80
+    				bmp.days = 14
+    				bmp.irrigation_efficiency = 0
+            bmp.maximum_single_application = 3
+  			end
+  		end
+  		@bmps[bmp.bmpsublist_id-1] = bmp
+  		if bmp.bmpsublist_id == 19 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
+  			climates = Climate.where(:bmp_id => bmp.id)
+  			i=0
+  			for i in 0..11
+  				if climates.blank? || climates == nil then
+  					@climates[i] = Climate.new
+  					@climates[i].month = i + 1
+  					@climates[i].max_temp = 0
+  					@climates[i].min_temp = 0
+  					@climates[i].precipitation = 0
+  				else
+  					@climates[i] = climates[i]
+  				end
+  			end
+  		end
+  		bmp_list = 19
+      if bmp.bmpsublist_id == 19 then   # cover crop
+        if bmp.id == nil then
+          operation = @scenario.operations.where(:activity_id => 5).last
+          @year = operation.year
+          @month = operation.month_id
+          @day = operation.day
+          cc_plt_date = Date.parse(sprintf("%2d", @year) + "/" + sprintf("%2d", @month) + "/" + sprintf("%2d", @day))
+          cc_plt_date += 2.days
+          @year = cc_plt_date.year - 2000
+          @month = cc_plt_date.month
+          @day = cc_plt_date.day
+        else
+          @year = bmp.number_of_animals
+          @month = bmp.hours
+          @day = bmp.days
+        end
+      end
+  		if @field_type != false then
+  			bmp_list = 19
+  		end
+  		if bmp.bmpsublist_id == bmp_list then
+  			break
+  		end
+  	end
   end
 
 ################################  save BMPS  #################################
@@ -445,7 +463,7 @@ class BmpsController < ApplicationController
       if subarea != nil then
         case type
           when "create", "update"
-  		    @bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
+  		      @bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
             case @bmp.irrigation_id
               when 1
                 subarea.nirr = 1.0
@@ -457,43 +475,43 @@ class BmpsController < ApplicationController
             subarea.vimx = 5000
             subarea.bir = 0.8
             subarea.iri = params[:bmp_ai][:days]
-			@bmp.days = subarea.iri
+			      @bmp.days = subarea.iri
             subarea.bir = params[:bmp_ai][:water_stress_factor]
-			subarea.bir /= 100
-			@bmp.water_stress_factor = subarea.bir
+			      subarea.bir /= 100
+			      @bmp.water_stress_factor = subarea.bir
             subarea.efi = 1.0 - (params[:bmp_ai][:irrigation_efficiency].to_f / 100)
-			@bmp.irrigation_efficiency = subarea.efi
+			      @bmp.irrigation_efficiency = subarea.efi
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
-  		    @bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
-      		subarea.fdsf = 0
-      		@bmp.depth = params[:bmp_cb1]
-      		if params[:bmp_ai][:safety_factor] == nil then
-      			subarea.fdsf = 0
-      		else
-      			subarea.fdsf = params[:bmp_ai][:safety_factor]
-      		end
-      		@bmp.safety_factor = subarea.fdsf
-      		if @bmp.depth == 1 then
-      			subarea.idf4 = 0.0
-      			subarea.bft = 0.0
-      		else
-      			subarea.idf4 = 1.0
-      			subarea.bft = 0.8
-      		end
-			when "delete"
-				subarea.nirr = 0.0
-				subarea.vimx = 0.0
-				subarea.bir = 0.0
-				subarea.armx = 0.0
-				subarea.iri = 0.0
-				subarea.bir = 0.0
-				subarea.efi = 0.0
-				subarea.armx = 0.0
-				subarea.fdsf = 0.0
-			end   # end case type
-          if !subarea.save then
-  			    return "Unable to save value in the subarea file"
-  		    end
+  		      @bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
+      		  subarea.fdsf = 0
+      		  @bmp.depth = params[:bmp_cb1]
+        		if params[:bmp_ai][:safety_factor] == nil then
+        			subarea.fdsf = 0
+        		else
+        			subarea.fdsf = params[:bmp_ai][:safety_factor]
+        		end
+        		@bmp.safety_factor = subarea.fdsf
+        		if @bmp.depth == 1 then
+        			subarea.idf4 = 0.0
+        			subarea.bft = 0.0
+        		else
+        			subarea.idf4 = 1.0
+        			subarea.bft = 0.8
+        		end
+  			  when "delete"
+    				subarea.nirr = 0.0
+    				subarea.vimx = 0.0
+    				subarea.bir = 0.0
+    				subarea.armx = 0.0
+    				subarea.iri = 0.0
+    				subarea.bir = 0.0
+    				subarea.efi = 0.0
+    				subarea.armx = 0.0
+    				subarea.fdsf = 0.0
+			  end   # end case type
+        if !subarea.save then
+  			   return "Unable to save value in the subarea file"
+  		  end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
@@ -708,16 +726,16 @@ class BmpsController < ApplicationController
 
   ### ID: 10
   def stream_fencing(type)
-	@bmp.number_of_animals = params[:bmp_sf][:number_of_animals]
-	@bmp.days = params[:bmp_sf][:days]
-	@bmp.hours = params[:bmp_sf][:hours]
-	@bmp.animal_id = params[:bmp_sf][:animal_id]
-	@bmp.dry_manure = params[:bmp_sf][:dry_manure]
-	@bmp.no3_n = params[:bmp_sf][:no3_n]
-	@bmp.po4_p = params[:bmp_sf][:po4_p]
-	@bmp.org_n = params[:bmp_sf][:org_n]
-	@bmp.org_p = params[:bmp_sf][:org_p]
-	return "OK"
+  	@bmp.number_of_animals = params[:bmp_sf][:number_of_animals]
+  	@bmp.days = params[:bmp_sf][:days]
+  	@bmp.hours = params[:bmp_sf][:hours]
+  	@bmp.animal_id = params[:bmp_sf][:animal_id]
+  	@bmp.dry_manure = params[:bmp_sf][:dry_manure]
+  	@bmp.no3_n = params[:bmp_sf][:no3_n]
+  	@bmp.po4_p = params[:bmp_sf][:po4_p]
+  	@bmp.org_n = params[:bmp_sf][:org_n]
+  	@bmp.org_p = params[:bmp_sf][:org_p]
+  	return "OK"
   end
 
 ### ID: 11
@@ -769,48 +787,48 @@ class BmpsController < ApplicationController
   def filter_strip(type)
     case type
       when "create"
-		@bmp.area = params[:bmp_fs][:area]
-		@bmp.width = params[:bmp_fs][:width]
-		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
-		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
-		@bmp.crop_id = params[:bmp_fs][:crop_id]
-		if params[:bmp_fs][:buffer_land] == nil then 
-			@bmp.sides = 0
-		else
-			@bmp.sides = 1
-		end
-		@bmp.depth = params[:bmp_cb3]
-		if @bmp.area == 0 || @bmp.area == nil then 
-			length = Math.sqrt(@field.field_area)			# find the length of the field
-			width = @bmp.width * FT_TO_KM			# convert width from ft to km
-			@bmp.area = (length * width / AC_TO_KM2).round(2)	# calculate area in km and convert to ac
-		end
-		if @bmp.depth == 12 then
-			@bmp.crop_id = 1
-		else
-			@bmp.grass_field_portion = 0.25
-		end
-  		if @bmp.save then
-			if @bmp.depth == 13 then
-				return create_new_subarea("FS", 13)
-			else
-				return create_new_subarea("RF", 12)
-			end
-		end
+    		@bmp.area = params[:bmp_fs][:area]
+    		@bmp.width = params[:bmp_fs][:width]
+    		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
+    		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
+    		@bmp.crop_id = params[:bmp_fs][:crop_id]
+    		if params[:bmp_fs][:buffer_land] == nil then 
+    			@bmp.sides = 0
+    		else
+    			@bmp.sides = 1
+    		end
+    		@bmp.depth = params[:bmp_cb3]
+    		if @bmp.area == 0 || @bmp.area == nil then 
+    			length = Math.sqrt(@field.field_area)			# find the length of the field
+    			width = @bmp.width * FT_TO_KM			# convert width from ft to km
+    			@bmp.area = (length * width / AC_TO_KM2).round(2)	# calculate area in km and convert to ac
+    		end
+    		if @bmp.depth == 12 then
+    			@bmp.crop_id = 1
+    		else
+    			@bmp.grass_field_portion = 0.00
+    		end
+      	if @bmp.save then
+    			if @bmp.depth == 13 then
+    				return create_new_subarea("FS", 13)
+    			else
+    				return create_new_subarea("RF", 12)
+    			end
+    		end
       when "update"
-		if params[:bmp_cb1] == "13" then
-		    update_existing_subarea("FS", 13)
-		else
-			update_existing_subarea("RFFS", 12)
-		end
+    		if params[:bmp_cb1] == "13" then
+    		    update_existing_subarea("FS", 13)
+    		else
+    			update_existing_subarea("RFFS", 12)
+    		end
       when "delete"
-		if @bmp.depth == 13 then
-			return delete_existing_subarea("FS")
-		else
-			delete_existing_subarea("RF")
-			return delete_existing_subarea("RFFS")
-		end
-	end   # end case
+    		if @bmp.depth == 13 then
+    			return delete_existing_subarea("FS")
+    		else
+    			delete_existing_subarea("RF")
+    			return delete_existing_subarea("RFFS")
+    		end
+    end   # end case
   end   # end method
 
 
@@ -863,21 +881,21 @@ class BmpsController < ApplicationController
 
 ### ID: 18
   def manure_control(type)
-	@bmp.animal_id = params[:bmp_mc][:animal_id]
-	@bmp.no3_n =params[:bmp_mc][:no3_n]
-	@bmp.po4_p =params[:bmp_mc][:po4_p]
-	@bmp.org_n =params[:bmp_mc][:org_n]
-	@bmp.org_p =params[:bmp_mc][:org_p]
+  	@bmp.animal_id = params[:bmp_mc][:animal_id]
+  	@bmp.no3_n =params[:bmp_mc][:no3_n]
+  	@bmp.po4_p =params[:bmp_mc][:po4_p]
+  	@bmp.org_n =params[:bmp_mc][:org_n]
+  	@bmp.org_p =params[:bmp_mc][:org_p]
     return "OK"
   end   # end method
 
 ### ID: 19
   def cover_crop(type)
-  @bmp.crop_id = params[:bmp_ccr][:crop_id]
-  @bmp.number_of_animals =params[:bmp_ccr][:year]
-  @bmp.hours =params[:bmp_ccr][:month]
-  @bmp.days =params[:bmp_ccr][:day]
-  @bmp.irrigation_id =params[:bmp_ccr][:type_id]
+    @bmp.crop_id = params[:bmp_ccr][:crop_id]
+    @bmp.number_of_animals =params[:bmp_ccr][:year]
+    @bmp.hours =params[:bmp_ccr][:month]
+    @bmp.days =params[:bmp_ccr][:day]
+    @bmp.irrigation_id =params[:bmp_ccr][:type_id]
     return "OK"
   end   # end method
 
@@ -890,15 +908,15 @@ class BmpsController < ApplicationController
 ### ID: 19
   def create_climate(type)
     bmp_id = Bmp.find_by_bmpsublist_id(19).id
-	for i in 1..12
-		climate = Climate.new
-		climate.bmp_id = bmp_id
-		climate.month = i
-		climate.max_temp = params[:bmp_cc]["max_temp" + i.to_s]
-		climate.min_temp = params[:bmp_cc]["min_temp" + i.to_s]
-		climate.precipitation = params[:bmp_cc]["precipitation" + i.to_s]
-		climate.save
-	end
+  	for i in 1..12
+  		climate = Climate.new
+  		climate.bmp_id = bmp_id
+  		climate.month = i
+  		climate.max_temp = params[:bmp_cc]["max_temp" + i.to_s]
+  		climate.min_temp = params[:bmp_cc]["min_temp" + i.to_s]
+  		climate.precipitation = params[:bmp_cc]["precipitation" + i.to_s]
+  		climate.save
+  	end
     return "OK"
   end
 
@@ -1174,12 +1192,12 @@ class BmpsController < ApplicationController
           is_filled = true;
         end
       when 12
-	    @bmp.buffer_slope_upland = 1			# buffer_slope_upland is not used anymore; therefor it is set to 1
+	      @bmp.buffer_slope_upland = 1			# buffer_slope_upland is not used anymore; therefor it is set to 1
         if @bmp.area != nil && @bmp.width != nil && @bmp.grass_field_portion != nil && @bmp.buffer_slope_upland != nil
           is_filled = true;
         end
       when 13
-	    @bmp.buffer_slope_upland = 1			# buffer_slope_upland is not used anymore; therefor it is set to 1
+	      @bmp.buffer_slope_upland = 1			# buffer_slope_upland is not used anymore; therefor it is set to 1
         if @bmp.area != nil && @bmp.width != nil && @bmp.buffer_slope_upland != nil
           is_filled = true;
         end
