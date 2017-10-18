@@ -307,13 +307,13 @@
 			      </tr>
 			      <tr>
   				    <td class="indent2" colspan="2">
-  					    <%= t('pdf.riparian_forest').sub('Buffer', 'Strip') + t('bmp.width') + " (" + t('bmp.ft') + ")" %>
+                <%= t('pdf.filter_strip').sub('Buffer', 'Strip') + " " + t('bmp.width') + " (" + t('bmp.ft') + ")" %>
                 <%= number_field :bmp_fs, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
   				    </td>
 			      </tr>
             <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
               <td class="indent2" colspan="2">
-                <%= t('pdf.filter_strip').sub('Buffer', 'Strip') + " " + t('bmp.width') + " (" + t('bmp.ft') + ")" %>
+                <%= t('pdf.riparian_forest').sub('Buffer', 'Strip') + " " + t('bmp.width') + " (" + t('bmp.ft') + ")" %>
                 <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :step => '0.01', :min => 0.25, :max => 0.75, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
@@ -439,23 +439,23 @@
               <td class="indent" colspan="2">
                 <div class="field">
                   <%= label :year, t('datetime.prompts.year'), :class => 'field' %>
-                  <%= select :bmp_ccr, :year, listYears.map { |e| [e[0], e[1]]}, {:selected => bmp.number_of_animals}, {:prompt => t('datetime.prompts.year')}%>
+                  <%= select :bmp_ccr, :year, listYears.map { |e| [e[0], e[1]]}, {:selected => @year}, {:prompt => t('datetime.prompts.year')}%>
                 </div>
                 <div class="field">
                   <%= label :date, t('general.date'), :class => 'field' %>
-                  <%= select :bmp_ccr, :month, listMonths.map { |e| [e[0], e[1]] }, {:selected => bmp.hours}, {:prompt => t('datetime.prompts.month')}%>
-                  <%= select :bmp_ccr, :day, listDays.map { |e| [e[0], e[1]] }, {:selected => bmp.days}, {:prompt => t('datetime.prompts.day')}%>
+                  <%= select :bmp_ccr, :month, listMonths.map { |e| [e[0], e[1]] }, {:selected => @month}, {:prompt => t('datetime.prompts.month')}%>
+                  <%= select :bmp_ccr, :day, listDays.map { |e| [e[0], e[1]] }, {:selected => @day}, {:prompt => t('datetime.prompts.day')}%>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="indent" colspan="2">
                 <div id="div_type" class="field spacer_bottom" >
-                  <%= label :type_id, t('general.select') + " " + t('general.one') %>
+                  <%= label :type_id, t('operation.planting_method') %>
                   <% if I18n.locale.eql?(:en) %>
-                    <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one'), :selected => bmp.irrigation_id}%>
+                    <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :eqp, {:prompt => t('operation.planting_method'), :selected => bmp.irrigation_id}%>
                   <% else %>
-                    <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1), :code, :spanish_name, {:prompt => 'Seleccione Unoa', :selected => bmp.irrigation_id} %>
+                    <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :spanish_name, {:prompt => t('operation.planting_method'), :selected => bmp.irrigation_id} %>
                   <% end %>
                 </div>
               </td>
