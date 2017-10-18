@@ -378,6 +378,8 @@ es:
     pm: pm
   general:
     view: Vista
+    units/ac: Unidades/ac
+    total_units: Unidades Totales
     note: 'NOTA:'
     name: Nombre
     description: Descripción
