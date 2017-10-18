@@ -378,7 +378,7 @@ es:
     pm: pm
   general:
     view: Vista
-    units/ac: Unidades/ac
+    units/ac: Unidades/Ac
     total_units: Unidades Totales
     note: 'NOTA:'
     name: Nombre
