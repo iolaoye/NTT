@@ -264,15 +264,23 @@ module ScenariosHelper
 				if !checker
 					#line 2
 					subarea.number = 102
-					subarea.iops = soil_id + 1
+					if @bmp.width > 0 then
+						subarea.iops = soil_id + 1
+					else
+						subarea.iops = soil_id
+					end
 					#subarea.iow = 1
 					#line 5					
 					#subarea.rchl = (@bmp.width * FT_TO_KM * (1 - @bmp.grass_field_portion)).round(4)
-					subarea.rchl = (@bmp.width * FT_TO_KM * (1 - grass_field_portion)).round(4)
+					if @bmp.width > 0 then
+						subarea.rchl = (@bmp.width * FT_TO_KM * grass_field_portion).round(4)
+					else
+						subarea.rchl = (FT_TO_KM * grass_field_portion).round(4)
+					end
 					#line 4
 					if soil_area != nil
 						#s_area = soil_area * AC_TO_HA * (1-@bmp.grass_field_portion)
-						fs_area = soil_area * AC_TO_HA * (1 - grass_field_portion)
+						fs_area = soil_area * AC_TO_HA * (grass_field_portion)
 						subarea.wsa = fs_area       #soil_area here is the reservior area
 					else
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
@@ -287,7 +295,7 @@ module ScenariosHelper
 					## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 					subarea.chn = 0.2
 					subarea.upn = 0.30
-					subarea.ffpq = FSEFF
+					subarea.ffpq = params[:bmp_fs][:floodplain_flow]
 					#line 5
 					rchc_buff = 0.01
 					rchk_buff = 0.2
@@ -308,11 +316,13 @@ module ScenariosHelper
 					subarea.rfpl = subarea.rchl
 					#line 10
 					subarea.pec = 1.0
-					if type == "create"
-						create_subarea("RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "create")
-					else
-						update_wsa("-", subarea.wsa)
-						update_subarea(subarea, "RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
+					if @bmp.width > 0 then
+						if type == "create"
+							create_subarea("RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "create")
+						else
+							update_wsa("-", subarea.wsa)
+							update_subarea(subarea, "RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
+						end
 					end
 					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, 1, scenario_id)
 					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 1, scenario_id)
@@ -322,10 +332,10 @@ module ScenariosHelper
 					subarea.iops = soil_id
 					#subarea.iow = 1
 					#line 5
-					subarea.rchl = (@bmp.width * FT_TO_KM * grass_field_portion).round(4)    #soil_area here is the reservior area
+					subarea.rchl = (@bmp.width * FT_TO_KM * (1-grass_field_portion)).round(4)    #soil_area here is the reservior area
 					#line 4
 					if soil_area != nil
-						subarea.wsa = soil_area * AC_TO_HA * grass_field_portion      #soil_area here is the reservior area
+						subarea.wsa = soil_area * AC_TO_HA * (1-grass_field_portion)     #soil_area here is the reservior area
 					else
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 					end
@@ -339,7 +349,7 @@ module ScenariosHelper
 					## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 					subarea.chn = 0.1
 					subarea.upn = 0.24
-					subarea.ffpq = FSEFF
+					subarea.ffpq = params[:bmp_fs][:floodplain_flow]
 					#line 5
 					rchc_buff = 0.01
 					rchk_buff = 0.2
@@ -387,7 +397,7 @@ module ScenariosHelper
 				subarea.chs = 0   #was subarea.slp before. Public of NTT is 0.
 				subarea.chn = 0.1
 				subarea.upn = 0.24
-				subarea.ffpq = FSEFF
+				subarea.ffpq = params[:bmp_fs][:floodplain_flow]
 				#line 5
 				subarea.rchn = 0.1
 				subarea.rchc = 0.2 #TODO
@@ -421,7 +431,7 @@ module ScenariosHelper
 				subarea.chs = subarea.slp
 				subarea.chn = 0.1
 				subarea.upn = 0.24
-				subarea.ffpq = FSEFF
+				subarea.ffpq = params[:bmp_ww][:floodplain_flow]
 				#line 5
 				subarea.rchn = 0.1
 				subarea.rchc = 0.2 #TODO

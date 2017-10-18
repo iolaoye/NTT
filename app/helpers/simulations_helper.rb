@@ -1094,7 +1094,7 @@ module SimulationsHelper
   	if buffer_type == 0 then   #when subarea from soils
   		@soil_operations = SoilOperation.where(:soil_id => soil_id.to_s, :scenario_id => @scenario.id.to_s)
   	else   # when subarea from BMP. soil_id is the bmp_id.
-  		@soil_operations = SoilOperation.where(:bmp_id => soil_id.to_s, :scenario_id => to_s, :opv6 => buffer_type.to_s)
+  		@soil_operations = SoilOperation.where(:bmp_id => soil_id.to_s, :scenario_id => @scenario.id.to_s, :opv6 => buffer_type.to_s)
   	end  # end if type
     if @soil_operations.count > 0 then
       fix_operation_file()

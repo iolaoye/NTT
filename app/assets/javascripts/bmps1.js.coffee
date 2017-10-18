@@ -287,9 +287,9 @@ buffers = (opt) ->
     $("#tr_fs_vegetation").toggle(false)
     $("#tr_grass_field_portion").toggle(false)
     switch opt
-        when 12 #Ditch Enlargement and Reservoir System
+        when 12 #Filter Strip
             $("#tr_grass_field_portion").toggle(true)
-        when 13 #Tailwater Irrigation
+        when 13 #Forest buffer
             $("#tr_fs_vegetation").toggle(true)
 
 #bmpsublist_irrigation_selector = ->

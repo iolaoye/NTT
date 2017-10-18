@@ -79,6 +79,23 @@ class BmpsController < ApplicationController
   			end
   		end
   		bmp_list = 19
+      if bmp.bmpsublist_id == 19 then   # cover crop
+        if bmp.id == nil then
+          operation = @scenario.operations.where(:activity_id => 5).last
+          @year = operation.year
+          @month = operation.month_id
+          @day = operation.day
+          cc_plt_date = Date.parse(sprintf("%2d", @year) + "/" + sprintf("%2d", @month) + "/" + sprintf("%2d", @day))
+          cc_plt_date += 2.days
+          @year = cc_plt_date.year - 2000
+          @month = cc_plt_date.month
+          @day = cc_plt_date.day
+        else
+          @year = bmp.number_of_animals
+          @month = bmp.hours
+          @day = bmp.days
+        end
+      end
   		if @field_type != false then
   			bmp_list = 19
   		end
@@ -774,6 +791,7 @@ class BmpsController < ApplicationController
     		@bmp.width = params[:bmp_fs][:width]
     		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
+        @bmp.slope_reduction = params[:bmp_fs][:floodplain_flow]
     		@bmp.crop_id = params[:bmp_fs][:crop_id]
     		if params[:bmp_fs][:buffer_land] == nil then 
     			@bmp.sides = 0
@@ -781,15 +799,15 @@ class BmpsController < ApplicationController
     			@bmp.sides = 1
     		end
     		@bmp.depth = params[:bmp_cb3]
+        if @bmp.depth == 12 then
+          @bmp.crop_id = 1
+        else
+          @bmp.grass_field_portion = 0.00
+        end
     		if @bmp.area == 0 || @bmp.area == nil then 
     			length = Math.sqrt(@field.field_area)			# find the length of the field
-    			width = @bmp.width * FT_TO_KM			# convert width from ft to km
+    			width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_KM			# convert width from ft to km
     			@bmp.area = (length * width / AC_TO_KM2).round(2)	# calculate area in km and convert to ac
-    		end
-    		if @bmp.depth == 12 then
-    			@bmp.crop_id = 1
-    		else
-    			@bmp.grass_field_portion = 0.00
     		end
       	if @bmp.save then
     			if @bmp.depth == 13 then
@@ -819,16 +837,17 @@ class BmpsController < ApplicationController
   def waterway(type)
     case type
       when "create"
-		@bmp.width = params[:bmp_ww][:width]
-		@bmp.crop_id = params[:bmp_ww][:crop_id]
+		    @bmp.width = params[:bmp_ww][:width]
+		    @bmp.crop_id = params[:bmp_ww][:crop_id]
+        @bmp.slope_reduction = params[:bmp_ww][:floodplain_flow]
         @bmp.area = 0
-  		if @bmp.save then
+  		  if @bmp.save then
 	        return create_new_subarea("WW", 14)
-		end
+		    end
       when "update"
         update_existing_subarea("WW", 14)
       when "delete"
-	    return delete_existing_subarea("WW")
+	      return delete_existing_subarea("WW")
     end
   end    # end method waterway
 
