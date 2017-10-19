@@ -295,7 +295,7 @@ module ScenariosHelper
 					## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 					subarea.chn = 0.2
 					subarea.upn = 0.30
-					subarea.ffpq = FSEFF
+					subarea.ffpq = params[:bmp_fs][:floodplain_flow]
 					#line 5
 					rchc_buff = 0.01
 					rchk_buff = 0.2
@@ -349,7 +349,7 @@ module ScenariosHelper
 					## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 					subarea.chn = 0.1
 					subarea.upn = 0.24
-					subarea.ffpq = FSEFF
+					subarea.ffpq = params[:bmp_fs][:floodplain_flow]
 					#line 5
 					rchc_buff = 0.01
 					rchk_buff = 0.2
@@ -397,7 +397,7 @@ module ScenariosHelper
 				subarea.chs = 0   #was subarea.slp before. Public of NTT is 0.
 				subarea.chn = 0.1
 				subarea.upn = 0.24
-				subarea.ffpq = FSEFF
+				subarea.ffpq = params[:bmp_fs][:floodplain_flow]
 				#line 5
 				subarea.rchn = 0.1
 				subarea.rchc = 0.2 #TODO
@@ -431,7 +431,7 @@ module ScenariosHelper
 				subarea.chs = subarea.slp
 				subarea.chn = 0.1
 				subarea.upn = 0.24
-				subarea.ffpq = FSEFF
+				subarea.ffpq = params[:bmp_ww][:floodplain_flow]
 				#line 5
 				subarea.rchn = 0.1
 				subarea.rchc = 0.2 #TODO

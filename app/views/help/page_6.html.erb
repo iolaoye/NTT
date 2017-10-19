@@ -2,34 +2,55 @@
 	<div class="container">
 		<h1><%= t('soilpage.header') %></h1>
 		<h2><%= t('soilpage.overview.header') %></h2>
+		<% if ENV["APP_VERSION"] == "standard" %>
 			<p><%= raw t('soilpage.overview.body') %></p>
+		<% else %>
+			<p><%= raw t('soilpage.overview.body_modified') %></p>
+		<% end %>
 			<ol>
 				<li><%= raw t('soilpage.overview.item1') %></li>
-        <%= image_tag("help/page_7/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:1080px;width: 100%;") %>
+				<% if ENV["APP_VERSION"] == "standard" %>
+				<%= image_tag("help/page_7/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:1290px;width: 100%;") %>
 				<li><%= raw t('soilpage.overview.item2') %></li>
+				<% else %>
+				<%= image_tag("help/page_7/image001_modified.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:1200px;width: 100%;") %>
+				<li><%= raw t('soilpage.overview.item2_modified') %></li>
+				<% end %>
 				<li><%= raw t('soilpage.overview.item3') %></li>
-        <li><%= raw t('soilpage.overview.item4') %></li>
-        <%= image_tag("help/page_7/image002.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:980px;width: 100%;") %>
-      </ol>
+				<% if ENV["APP_VERSION"] == "standard" %>
+				<li><%= raw t('soilpage.overview.item4') %></li>
+        <%= image_tag("help/page_7/image002.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:1080px;width: 100%;") %>
+				<% end %>
+			</ol>
     <br></br>
 
+		<% if ENV["APP_VERSION"] == "standard" %>
 		<h2><%= t('soilpage.mapsystem.header') %></h2>
 			<p><%= raw t('soilpage.mapsystem.body') %></p><br>
       <b><%= t('soilpage.mapsystem.select.header') %></b>
 				<p><%= raw t('soilpage.mapsystem.select.body1') %></p>
         <p><%= raw t('soilpage.mapsystem.select.body2') %></p>
-        <p><%= raw t('soilpage.mapsystem.select.body3') %></p><br>
-      <b><%= t('soilpage.mapsystem.info.header') %></b>
+		<% end %>
+				<p><%= raw t('soilpage.mapsystem.select.body3') %></p><br>
+		<% if ENV["APP_VERSION"] == "standard" %>
+					<b><%= t('soilpage.mapsystem.info.header') %></b>
 				<p><%= raw t('soilpage.mapsystem.info.body') %></p><br>
 			<b><%= t('soilpage.mapsystem.addremove.header') %></b>
 				<p><%= raw t('soilpage.mapsystem.addremove.body1') %></p>
         <p><%= raw t('soilpage.mapsystem.addremove.body2') %></p>
         <br></br>
-
+		<% end %>
 		<h2><%= t('soilpage.advance.header') %></h2>
+		<% if ENV["APP_VERSION"] == "standard" %>
 			<p><%= raw t('soilpage.advance.body') %></p>
-
+		<% else %>
+		<p><%= raw t('soilpage.advance.body_modified') %></p>
+		<% end %>
 	</div>
 </div>
+<% if ENV["APP_VERSION"] == "standard" %>
 <br><%= link_to "< Prev", help_path("page_5", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_7", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
+<% else %>
+<br><%= link_to "< Prev", help_path("page_5", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_8", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
+<% end %>
 <br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>

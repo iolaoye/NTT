@@ -19,14 +19,14 @@
 					<li>
             <%= raw t('managepage.operation.item1.header') %>
             <p><%= raw t('managepage.operation.item1.body1') %></p>
-            <%= image_tag("help/page_8/image003.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:540px;width: 100%;") %>
+            <%= image_tag("help/page_8/image003.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:640px;width: 100%;") %>
           </li><br>
 					<li>
             <%= raw t('managepage.operation.item2.header') %>
             <p><%= raw t('managepage.operation.item2.body1') %></p>
-            <%= image_tag("help/page_8/image004.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:340px;width: 100%;") %><br>
+            <%= image_tag("help/page_8/image004.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:390px;width: 100%;") %><br>
             <p><%= raw t('managepage.operation.item2.body2') %></p>
-            <%= image_tag("help/page_8/image005.png", :alt => "Image 005", :style =>"border:1px solid gray;max-width:340px;width: 100%;") %><br>
+            <%= image_tag("help/page_8/image005.png", :alt => "Image 005", :style =>"border:1px solid gray;max-width:390px;width: 100%;") %><br>
             <p><%= raw t('managepage.operation.item2.body3') %></p>
 					</li><br>
 				</ol>
@@ -212,5 +212,9 @@
 			<p><%= raw t('managepage.reference.body1') %></p>
 	</div>
 </div>
+<% if ENV["APP_VERSION"] == "standard" %>
 <br><%= link_to "< Prev", help_path("page_7", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_9", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
+<% else %>
+<br><%= link_to "< Prev", help_path("page_6", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_9", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
+<% end %>
 <br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>

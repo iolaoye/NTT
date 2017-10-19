@@ -1876,10 +1876,10 @@ module SimulationsHelper
     add_summary_to_results_table(manure_erosion, 62, manure_erosion_ci)
     prkn = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:prkn).mean] }
     prkn_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:prkn).confidence_interval] }
-    add_summary_to_results_table(prkn, 91, prkn_ci) #error that causes code not to continue?
+    add_summary_to_results_table(prkn, 91, prkn_ci)
     n2o = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:n2o).mean] }
     n2o_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:n2o).confidence_interval] }
-    add_summary_to_results_table(n2o, 92, n2o_ci) #error that causes code not to continue?
+    add_summary_to_results_table(n2o, 92, n2o_ci)
     return "OK"
   end
 
