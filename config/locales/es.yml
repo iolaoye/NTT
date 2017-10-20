@@ -757,6 +757,8 @@ es:
     watershed1: 1ra cuenca
     watershed2: 2da cuenca
     watershed3: 3ra cuenca
+    units_ac: Unidades/ac
+    total_units: Unidades Totales
     last: (últimos 12 años)
     avg: Promedio Mensual (Todo el Periodo)
     select_scenario1: Seleccione 1ra escenario
