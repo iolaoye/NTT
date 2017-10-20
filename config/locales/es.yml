@@ -588,7 +588,7 @@ es:
     planting: Plantar
     tillage: Arar
     harvest: Cosechar
-    kill: Terminar
+    kill: Terminar Crop
     burn: Quema
     liming: Encalado
     start_grazing: Pasteo
@@ -599,7 +599,7 @@ es:
     add_fertilizer: 'Añadir operación de Fertilizante'
     add_tillage: 'Añadir operación de Arar'
     add_harvest: 'Añadir operación de Cosechar'
-    add_kill: 'Añadir operación de Terminar'
+    add_kill: 'Añadir Terminar crop'
     add_irrigation: 'Añadir operación de Irrigación'
     add_burn: 'Añadir operación de Quema'
     add_liming: 'Añadir operación de Encalado'
