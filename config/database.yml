@@ -4,11 +4,13 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: mysql2
+  database: ntt
+  host: 104.238.117.250
+  username: ntt
+  password: TIAER05
   pool: 5
   timeout: 5000
-
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
@@ -30,24 +32,6 @@ production:
 production_ntt:
   adapter: mysql2
   database: ntt
-  host: 104.238.117.250
-  username: ntt
-  password: TIAER05
-  pool: 5
-  timeout: 5000
-
-production_ntt2:
-  adapter: mysql2
-  database: ntt_nrcs
-  host: 104.238.117.250
-  username: ntt
-  password: TIAER05
-  pool: 5
-  timeout: 5000
-
-production_dev:
-  adapter: mysql2
-  database: dev_ntt
   host: 104.238.117.250
   username: ntt
   password: TIAER05
