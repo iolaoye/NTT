@@ -754,6 +754,9 @@ en:
     scenario1: first scenario
     scenario2: second scenario
     scenario3: third scenario
+    1st_scenario: 1st Scenario
+    2nd_scenario: 2nd Scenario
+    3rd_scenario: 3rd Scenario
     watershed1: first watershed
     watershed2: second watershed
     watershed3: third watershed
@@ -1997,7 +2000,7 @@ en:
                 To <strong>View</strong> a Bmp, click the magnifying glass icon under <strong>Actions</strong>.<br>
                 To <strong>Edit</strong> a Bmp, click the pencil icon under <strong>Actions</strong>.<br>
                 To <strong>Delete</strong> a Bmp, click the red "x" icon under <strong>Actions</strong>.
-    watersheds: >
+    watersheds: > 
                 Here you will see all the watersheds listed if you have created any or if you have not, you have the option to create new watershed.
                 <ol>
                     <li>Select <strong>New Operation</strong> to create a new operation from scratch</li>
