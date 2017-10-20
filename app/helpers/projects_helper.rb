@@ -5,11 +5,9 @@ module ProjectsHelper
 	case true
 		when column.include?("Last Modified")
 			column = "updated_at"
-		when column.include?("ltima Modificaci")
+		when ("ltima Modificaci")
 			column = "updated_at"
-		when column.include?("Nombre")
-			column = "name"
-		when column.include?("Project Name")
+		when ("Nombre")
 			column = "name"
 	end  #end case
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
