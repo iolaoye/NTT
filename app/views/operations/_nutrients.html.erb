@@ -1,4 +1,4 @@
-<%= form_for @operation do |f| %>
+<%= form_for [@project, @field, @scenario, @operation] do |f| %>
 	<% if locals[:disp] == 'yes' then %>
 		<div class="field" id="div_nutrients" >
 	<% else %>
