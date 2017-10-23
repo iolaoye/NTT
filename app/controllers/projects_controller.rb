@@ -44,6 +44,7 @@ class ProjectsController < ApplicationController
     end # end case true
   end
 
+##esto es una prueba
   ########################################### SHOWS - WHEN CLICK ON PROJECT NAME ##################
   # GET /projects/1
   # GET /projects/1.json
