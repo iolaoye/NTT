@@ -754,6 +754,9 @@ es:
     scenario1: primer Escenario
     scenario2: Segundo Escenario
     scenario3: Tercero Escenario
+    1st_scenario: 1ra Escenario
+    2nd_scenario: 2da Escenario
+    3rd_scenario: 3ra Escenario
     watershed1: 1ra cuenca
     watershed2: 2da cuenca
     watershed3: 3ra cuenca
