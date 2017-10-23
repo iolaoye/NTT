@@ -9,49 +9,50 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170628150806) do
+ActiveRecord::Schema.define(version: 20171003010625) do
 
-  create_table "activities", :force => true do |t|
+  create_table "activities", force: :cascade do |t|
     t.string   "name"
     t.integer  "code"
     t.string   "abbreviation"
     t.string   "spanish_name"
     t.integer  "apex_code"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "amount_label"
     t.string   "amount_units"
     t.string   "depth_label"
     t.string   "depth_units"
   end
 
-  create_table "animals", :force => true do |t|
+  create_table "animals", force: :cascade do |t|
     t.string   "name"
     t.boolean  "status"
     t.integer  "apex_code"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "apex_controls", :force => true do |t|
+  create_table "apex_controls", force: :cascade do |t|
     t.integer  "control_description_id"
     t.float    "value"
     t.integer  "project_id"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "apex_parameters", :force => true do |t|
+  create_table "apex_parameters", force: :cascade do |t|
     t.integer  "parameter_description_id"
     t.float    "value"
     t.integer  "project_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "aplcat_parameters", :force => true do |t|
+  create_table "aplcat_parameters", force: :cascade do |t|
+    t.integer  "aplcat_param_id"
     t.integer  "scenario_id"
     t.integer  "noc"
     t.integer  "nomb"
@@ -99,19 +100,19 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.integer  "tnggbc"
     t.integer  "mm_type"
     t.float    "fmbmm"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "bmplists", :force => true do |t|
+  create_table "bmplists", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "status"
     t.string   "spanish_name"
   end
 
-  create_table "bmps", :force => true do |t|
+  create_table "bmps", force: :cascade do |t|
     t.integer  "bmp_id"
     t.integer  "scenario_id"
     t.integer  "crop_id"
@@ -137,8 +138,8 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "crop_width"
     t.float    "slope_reduction"
     t.integer  "sides"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "name"
     t.integer  "bmpsublist_id"
     t.float    "difference_max_temperature"
@@ -146,16 +147,16 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "difference_precipitation"
   end
 
-  create_table "bmpsublists", :force => true do |t|
+  create_table "bmpsublists", force: :cascade do |t|
     t.string   "name"
     t.boolean  "status"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "bmplist_id"
     t.string   "spanish_name"
   end
 
-  create_table "charts", :force => true do |t|
+  create_table "charts", force: :cascade do |t|
     t.integer  "description_id"
     t.integer  "watershed_id"
     t.integer  "scenario_id"
@@ -163,67 +164,64 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.integer  "soil_id"
     t.integer  "month_year"
     t.float    "value"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "crop_id"
   end
 
-  create_table "climates", :force => true do |t|
+  create_table "climates", force: :cascade do |t|
     t.integer  "bmp_id"
     t.float    "max_temp"
     t.float    "min_temp"
     t.float    "precipitation"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "month"
   end
 
-  create_table "control_descriptions", :force => true do |t|
+  create_table "control_descriptions", force: :cascade do |t|
+    t.integer  "control_desc_id"
     t.integer  "line"
     t.integer  "column"
     t.string   "code"
     t.string   "name"
     t.float    "range_low"
     t.float    "range_high"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "controls", :force => true do |t|
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+  create_table "controls", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.float    "default_value"
     t.integer  "state_id"
     t.integer  "number"
   end
 
-  create_table "controls_apex_controls", :id => false, :force => true do |t|
-    t.integer "control_id"
-    t.integer "apex_control_id"
-  end
-
-  create_table "counties", :force => true do |t|
+  create_table "counties", force: :cascade do |t|
     t.string   "county_name"
     t.string   "county_code"
     t.integer  "status"
     t.integer  "state_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "county_state_code"
     t.integer  "wind_wp1_code"
     t.string   "wind_wp1_name"
   end
 
-  create_table "crop_schedules", :force => true do |t|
+  create_table "crop_schedules", force: :cascade do |t|
+    t.integer  "crop_schedule_id"
     t.string   "name"
     t.integer  "state_id"
     t.integer  "class_id"
     t.boolean  "status"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "cropping_systems", :force => true do |t|
+  create_table "cropping_systems", force: :cascade do |t|
     t.string   "name"
     t.string   "crop"
     t.string   "tillage"
@@ -231,11 +229,11 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.string   "state_id"
     t.boolean  "grazing"
     t.boolean  "status"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "crops", :force => true do |t|
+  create_table "crops", force: :cascade do |t|
     t.integer  "number"
     t.integer  "dndc"
     t.string   "code"
@@ -263,34 +261,35 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.integer  "dd"
     t.integer  "dyam"
     t.string   "spanish_name"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "descriptions", :force => true do |t|
+  create_table "descriptions", force: :cascade do |t|
     t.boolean  "detail"
     t.string   "description"
     t.string   "spanish_description"
     t.string   "unit"
     t.integer  "position"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "period"
     t.integer  "order_id"
   end
 
-  create_table "drainages", :force => true do |t|
+  create_table "drainages", force: :cascade do |t|
+    t.integer  "drainage_id"
     t.string   "name"
     t.integer  "wtmx"
     t.integer  "wtmn"
     t.integer  "wtbl"
     t.integer  "zqt"
     t.integer  "ztk"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "events", :force => true do |t|
+  create_table "events", force: :cascade do |t|
     t.integer  "event_order"
     t.integer  "month"
     t.integer  "day"
@@ -302,24 +301,18 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "apex_opv1"
     t.float    "apex_opv2"
     t.integer  "cropping_system_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "fertilizer_type", :force => true do |t|
-    t.string   "field_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "fertilizer_types", :force => true do |t|
+  create_table "fertilizer_types", force: :cascade do |t|
     t.string   "name"
     t.string   "spanish_name"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "fertilizers", :force => true do |t|
+  create_table "fertilizers", force: :cascade do |t|
     t.integer  "code"
     t.string   "name"
     t.float    "qn"
@@ -333,24 +326,24 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.boolean  "status"
     t.boolean  "animal"
     t.string   "spanish_name"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "fields", :force => true do |t|
+  create_table "fields", force: :cascade do |t|
     t.integer  "location_id"
     t.string   "field_name"
     t.float    "field_area"
     t.float    "field_average_slope"
     t.boolean  "field_type"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-    t.string   "coordinates"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "coordinates"
     t.integer  "weather_id"
     t.float    "soilp"
   end
 
-  create_table "grazing_parameters", :force => true do |t|
+  create_table "grazing_parameters", force: :cascade do |t|
     t.integer  "scenario_id"
     t.integer  "code"
     t.integer  "starting_julian_day"
@@ -361,20 +354,20 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "dmi_heifers"
     t.float    "dmi_calves"
     t.float    "green_water_footprint"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "irrigations", :force => true do |t|
+  create_table "irrigations", force: :cascade do |t|
     t.string   "name"
     t.boolean  "status"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "spanish_name"
     t.integer  "code"
   end
 
-  create_table "layers", :force => true do |t|
+  create_table "layers", force: :cascade do |t|
     t.float    "depth"
     t.float    "soil_p"
     t.float    "bulk_density"
@@ -384,8 +377,8 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "organic_matter"
     t.float    "ph"
     t.integer  "soil_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.float    "uw"
     t.float    "fc"
     t.float    "wn"
@@ -401,17 +394,18 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "satc"
   end
 
-  create_table "locations", :force => true do |t|
+  create_table "locations", force: :cascade do |t|
     t.integer  "state_id"
     t.integer  "county_id"
     t.string   "status"
     t.integer  "project_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.string   "coordinates"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "coordinates"
   end
 
-  create_table "manure_controls", :force => true do |t|
+  create_table "manure_controls", force: :cascade do |t|
+    t.integer  "manure_control_id"
     t.string   "name"
     t.string   "spanish_name"
     t.float    "no3n"
@@ -419,16 +413,16 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "orgn"
     t.float    "orgp"
     t.float    "om"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "modifications", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "modifications", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "operations", :force => true do |t|
+  create_table "operations", force: :cascade do |t|
     t.integer  "crop_id"
     t.integer  "activity_id"
     t.integer  "day"
@@ -442,70 +436,72 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "org_n"
     t.float    "org_p"
     t.float    "nh3"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "scenario_id"
     t.integer  "subtype_id"
     t.float    "moisture"
   end
 
-  create_table "parameter_descriptions", :force => true do |t|
+  create_table "parameter_descriptions", force: :cascade do |t|
+    t.integer  "parameter_desc_id"
     t.integer  "line"
     t.integer  "number"
     t.string   "name"
     t.float    "range_low"
     t.float    "range_high"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "parameters", :force => true do |t|
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+  create_table "parameters", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.float    "default_value"
     t.integer  "state_id"
     t.integer  "number"
   end
 
-  create_table "people", :force => true do |t|
+  create_table "people", force: :cascade do |t|
     t.string   "name"
     t.integer  "age"
     t.string   "last_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "projects", :force => true do |t|
+  create_table "projects", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.string   "version"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "user_id"
   end
 
-  create_table "results", :force => true do |t|
+  create_table "results", force: :cascade do |t|
     t.integer  "watershed_id"
     t.integer  "field_id"
     t.integer  "soil_id"
     t.integer  "scenario_id"
     t.float    "value"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.float    "ci_value"
     t.integer  "description_id"
     t.integer  "crop_id"
   end
 
-  create_table "scenarios", :force => true do |t|
+  create_table "scenarios", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "field_id"
     t.datetime "last_simulation"
   end
 
-  create_table "schedules", :force => true do |t|
+  create_table "schedules", force: :cascade do |t|
+    t.integer  "schedule_id"
     t.integer  "event_order"
     t.integer  "month"
     t.integer  "day"
@@ -517,11 +513,11 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "apex_opv1"
     t.float    "apex_opv2"
     t.integer  "crop_schedule_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "sites", :force => true do |t|
+  create_table "sites", force: :cascade do |t|
     t.float    "ylat"
     t.float    "xlog"
     t.float    "elev"
@@ -533,13 +529,13 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "unr"
     t.float    "fir0"
     t.integer  "field_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "soil_operations", :force => true do |t|
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+  create_table "soil_operations", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "year"
     t.integer  "month"
     t.integer  "day"
@@ -561,7 +557,7 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.integer  "bmp_id"
   end
 
-  create_table "soils", :force => true do |t|
+  create_table "soils", force: :cascade do |t|
     t.boolean  "selected"
     t.string   "key"
     t.string   "symbol"
@@ -571,9 +567,9 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "slope"
     t.float    "percentage"
     t.integer  "field_id"
-    t.integer  "drainage_id", :limit => 255
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.integer  "drainage_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.float    "ffc"
     t.float    "wtmn"
     t.float    "wtmx"
@@ -594,16 +590,16 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.integer  "soil_id_old"
   end
 
-  create_table "states", :force => true do |t|
+  create_table "states", force: :cascade do |t|
     t.string   "state_name"
     t.string   "state_code"
     t.integer  "status"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state_abbreviation"
   end
 
-  create_table "stations", :force => true do |t|
+  create_table "stations", force: :cascade do |t|
     t.integer  "county_id"
     t.string   "station_name"
     t.string   "station_code"
@@ -615,13 +611,13 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.string   "wp1_name"
     t.integer  "initial_year"
     t.integer  "final_year"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "subareas", :force => true do |t|
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+  create_table "subareas", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "soil_id"
     t.integer  "bmp_id"
     t.integer  "scenario_id"
@@ -736,7 +732,7 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.integer  "xtp10"
   end
 
-  create_table "supplement_parameters", :force => true do |t|
+  create_table "supplement_parameters", force: :cascade do |t|
     t.integer  "scenario_id"
     t.integer  "code"
     t.integer  "dmi_code"
@@ -745,11 +741,11 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.float    "dmi_heifers"
     t.float    "dmi_calves"
     t.integer  "green_water_footprint"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "tillages", :force => true do |t|
+  create_table "tillages", force: :cascade do |t|
     t.string   "name"
     t.integer  "code"
     t.string   "abbreviation"
@@ -758,49 +754,49 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.integer  "dndc"
     t.string   "eqp"
     t.boolean  "status"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "activity_id"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "hashed_password"
     t.string   "name"
     t.string   "company"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "admin"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
     t.string   "reset_token"
   end
 
-  create_table "watershed_scenarios", :force => true do |t|
+  create_table "watershed_scenarios", force: :cascade do |t|
     t.integer  "watershed_id"
     t.integer  "field_id"
     t.integer  "scenario_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "watersheds", :force => true do |t|
+  create_table "watersheds", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "location_id"
     t.datetime "last_simulation"
   end
 
-  create_table "ways", :force => true do |t|
+  create_table "ways", force: :cascade do |t|
     t.string   "way_name"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "spanish_name"
     t.string   "way_value"
   end
 
-  create_table "weathers", :force => true do |t|
+  create_table "weathers", force: :cascade do |t|
     t.integer  "field_id"
     t.integer  "station_id"
     t.string   "station_way"
@@ -808,8 +804,8 @@ ActiveRecord::Schema.define(:version => 20170628150806) do
     t.integer  "simulation_final_year"
     t.float    "longitude"
     t.float    "latitude"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "weather_file"
     t.integer  "way_id"
     t.integer  "weather_initial_year"
