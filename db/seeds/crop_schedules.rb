@@ -23,4 +23,5 @@ CropSchedule.create!({:id => 21,:name => "Triticale",:state_id => 48,:class_id =
 CropSchedule.create!({:id => 22,:name => "Forest",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true) 
 CropSchedule.create!({:id => 23,:name => "Corn silage",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 24,:name => "Bermuda Grass",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
-CropSchedule.create!({:id => 25,:name => "Cotton",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 25,:name => "Cotton",:state_id => "1,3,4,5,10,11,19,25,26,32,34,37,41,43,44,47",:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 26,:name => "Rice",:state_id => "4,5,19,21,25,26,44",:class_id => 1,:status => true}, :without_protection => true)

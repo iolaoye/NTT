@@ -375,7 +375,6 @@ class OperationsController < ApplicationController
     end
     state_id = Location.find_by_project_id(@project.id).state_id
     #@cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 2")
-    debugger
     @cropping_systems = CropSchedule.where(:status => true, :class_id => 1).where("state_id LIKE ? OR state_id LIKE ?", "%#{state_id}%","*")
     @tillages = CropSchedule.where(:state_id => state_id, :status => true).where("class_id = 3")
     if @cropping_systems.blank? then
