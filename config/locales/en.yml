@@ -585,7 +585,7 @@ en:
     planting: Planting
     tillage: Tillage
     harvest: Harvest
-    kill: Kill
+    kill: End Crop Season
     burn: Burn
     liming: Liming
     start_grazing: Grazing
@@ -596,7 +596,7 @@ en:
     add_fertilizer: 'Add Fertilizer Operation'
     add_tillage: 'Add Tillage Operation'
     add_harvest: 'Add Harvest Operation'
-    add_kill: 'Add Kill Operation'
+    add_kill: 'Add End Crop Season'
     add_irrigation: 'Add Irrigation Operation'
     add_burn: 'Add Burn operation'
     add_liming: 'Add Liming Operation'
