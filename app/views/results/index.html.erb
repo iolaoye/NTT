@@ -95,9 +95,9 @@
   <strong><h4><%= @title %></h4></strong>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
         <%= column_chart [
-        { :name => "1st Scenario", :data => @charts1 },
-        { :name => "2nd Scenario", :data => @charts2 },
-        { :name => "3rd Scenario", :data => @charts3 }
+        { :name => t('result.1st_scenario'), :data => @charts1 },
+        { :name => t('result.2nd_scenario'), :data => @charts2 },
+        { :name => t('result.3rd_scenario'), :data => @charts3 }
         ], { library: {hAxis: {title: @x}, vAxis: {title: @y}}}
         %>
     <br/>
