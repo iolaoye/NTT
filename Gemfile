@@ -60,3 +60,4 @@ gem 'wkhtmltopdf-binary'
 
 gem 'cancan'
 gem 'rack-timeout'
+gem 'mysql2'
