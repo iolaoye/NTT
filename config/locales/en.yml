@@ -1849,10 +1849,10 @@ en:
   soils_html:
     <strong>Soils</strong><br></br>
     The Soils page allows user to enter the soils for each field.<br><br>
-    To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
+    To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively.<br>
     To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
     To <strong>View</strong> a soil, click the magnifying glass icon under <strong>Actions</strong>.<br>
-    To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.<br>
+    To <strong>edit</strong> a soil, click the pencil icon under <strong>Actions</strong>.<br>
   soiloperations_html:
     <strong>Operations</strong><br></br>
     Here you will see all the operations of the soil/scenario combination that is currently loaded.
@@ -1862,7 +1862,9 @@ en:
   sites_html:
     <strong>Sites</strong><br></br>
     This is all the information about the APEX site.<br><br>
-    To <strong>Edit</strong> this site, click <strong>Edit</strong>
+    To <strong>View</strong> this site, click the magnifying glass icon.<br>
+    To <strong>Edit</strong> this site, click pencil icon.<br>
+    To <strong>Delete</strong> this site, click red 'x' under action column.<br>
   modpage:
     header: Modifications Page Help
     body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'
