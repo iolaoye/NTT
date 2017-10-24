@@ -1771,7 +1771,7 @@ en:
             body3: 'In order to fix the problem, the user needs to return to the page that caused the error (in the example above, the <a href=/help/page_8?locale=en>Management</a> page) and look for missing input information, and then that all of the information they entered was valid and within the valid ranges. A common mistake in the Management page is not having added a cropping system. Ensure that you have added a cropping system if you get a red X under management.'
         run:
             header: Running the Simulation
-            body1: 'To run the simulation, the user needs to click the <strong>Run Selected</strong> button. This will begin the simulation. You will see the progress of the simulation in yellow on the top left of the screen, as shown below:'
+            body1: 'To run the simulation, the user needs to click the <strong>Run Selected</strong> button. This will begin the simulation.'
             body2: 'Once you have had a successful simulation, check on the date and time of the simulation by looking at the heading “Last Simulation” to ensure that all of the fields/scenarios and subprojects were simulated as shown below:'
             body3: 'If this simulation is indeed correct, then you can click on <strong>Continue</strong> to view the <a href=/help/page_9?locale=en>results</a> of the simulations.'
   resultspage:
@@ -1852,10 +1852,10 @@ en:
   soils_html:
     <strong>Soils</strong><br></br>
     The Soils page allows user to enter the soils for each field.<br><br>
-    To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
+    To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively.<br>
     To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
     To <strong>View</strong> a soil, click the magnifying glass icon under <strong>Actions</strong>.<br>
-    To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.<br>
+    To <strong>edit</strong> a soil, click the pencil icon under <strong>Actions</strong>.<br>
   soiloperations_html:
     <strong>Operations</strong><br></br>
     Here you will see all the operations of the soil/scenario combination that is currently loaded.
@@ -1865,7 +1865,9 @@ en:
   sites_html:
     <strong>Sites</strong><br></br>
     This is all the information about the APEX site.<br><br>
-    To <strong>Edit</strong> this site, click <strong>Edit</strong>
+    To <strong>View</strong> this site, click the magnifying glass icon.<br>
+    To <strong>Edit</strong> this site, click pencil icon.<br>
+    To <strong>Delete</strong> this site, click red 'x' under action column.<br>
   modpage:
     header: Modifications Page Help
     body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'

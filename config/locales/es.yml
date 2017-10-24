@@ -377,7 +377,7 @@ es:
       short: "%d de %b %H:%M"
     pm: pm
   general:
-    view: Vista
+    view: Ver
     note: 'NOTA:'
     name: Nombre
     description: Descripción
@@ -1225,14 +1225,12 @@ es:
         option1:
             header: 'Option 1: Choose an AOI type to begin drawing'
             item1:
-                body1: '<strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure, as shown circled in the figure below. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm as shown circled below. Enter the name of the farm and advance.'
+                body1: '<strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> at the top center, in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure, as shown in the figure below. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm as shown below. Enter the name of the farm and advance. As the user enters the name, it will replace the default name in the text box for the farm as shown in the following figure. From this point the farm name entered will refer to the selected location.'
                 body2: 'As the user enters the name, it will replace the default name in the text box for the farm as shown in the following figure. From this point the farm name entered will refer to the selected location (encircled in the figure).'
                 body3: 'Once the user clicks <strong>OK</strong>, the farm location will be highlighted as shown below.'
-            item2: '<strong>Drawing Fields:</strong> Next, you will need to draw fields within than farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.'
+            item2: '<strong>Drawing Fields:</strong> Next, you will need to draw fields within the farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.'
             item3:
-                body1: '<strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT. If you do not click submit before advancing, the following message will come up:'
-                body2: 'If this occurs, click the <strong>Submit</strong> button to submit the changes. Once the submission is successful, the following message from NTT will pop up:'
-                body3: 'Once this message appears, click <strong>OK</strong> and then the <strong>Save and Continue</strong> button.'
+                body3: '<strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.'
             item4: '<strong>Deleting Farms and Fields:</strong> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.'
         option2:
             header: 'Option 2: Choose a farm and a field(s) shapefile to upload'
@@ -1265,15 +1263,11 @@ es:
     body: 'Depending on the particular method that was chosen in the previous (Location) page, the user has different options available when choosing the weather. Only the options that are actually available to the user (depending on the method selected) will show up as selections. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.'
     selectinfo:
         header: Selecting Weather Information
-        body: 'There are four different methods to select the weather information. However, the options available depend on the selection made for the Location method in the previous page.'
+        body: 'There are three different methods to select the weather information.'
         method1:
-            header: Use Weather Information Close to your Location
-            body: 'This method of weather selection is only available when the user used the <a href=/help/page_4>Mapping System</a> to select the area of interest in the Location page. Using this method allows the user to simply confirm the weather that was already chosen by the model. After selecting the period to simulate (which is explained below under Period to Simulate) the user can simply click <strong>Save and Continue</strong> to verify the information, save it, and advance to the next page.'
-        method2:
             header: Weather Station Using PRISM Data
-            body1: 'This method is available only when the <a href=/help/page_4>State/County</a> method was chosen to select the area of interest in the preceding page. This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <strong>Weather Station Using PRISM Data</strong> and then select the preferred weather station:'
-            body2: 'Finally, once the station has been selected, click <strong>Save and Continue</strong> to save the information and continue to the next page.'
-        method3:
+            body1: 'This method takes weather data from a weather station inside or near the State/County that was selected in that page and uses that data to do the simulation. First the user must select <strong>Weather Station Using PRISM Data</strong> and then select <strong> Update Weather </strong> and continue to the next page:'
+        method2:
             header: Load Your Own Weather File
             body: 'This method of weather selection is always available regardless of the method used for selecting an area of interest. This option is also the only option that is available when using the NTT tool for locations outside of the mainland United States. To use this method the following are the instructions:'
             item1:
@@ -1282,16 +1276,16 @@ es:
                 body3: 'The information above, for example, would show weather information for January 1, 1981 (where the solar radiation was 0, the max temperature was 10.1 degrees Celsius, the min temperature was -0.9 degrees Celsius, and precipitation was 0.00 millimeters), and the weather information for January 2, 1981 (where the solar radiation was 0, the max temperature was 5.7 degrees Celsius, the min temperature was -5.9 degrees Celsius, and precipitation was 0.00 millimeters). Ideally, you would have a file that contains detailed information for the weather for an extended period. This would look as shown below:'
                 body4: 'Even though the file is significantly larger, all of the days for which we have data follow the same format.'
             item2:
-                body1: '<strong>Upload the Weather File:</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select from the options. Next, the user needs to click. This will bring up an “Open” folder where the user can search their computer for the weather file. When you have selected the file click “Open”. This will show a progress bar as the system uploads the information.'
-                body2: 'The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Save and Continue</strong> to save the information and advance to the next page'
-            item3: '<strong>NOTE:</strong> It is important to note that when you click <strong>Save and Continue</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate run the any simulations again.'
-        method4:
+                body1: '<strong>Upload the Weather File:</strong> Once the weather file has been created, the user needs to upload the file to the NTT program. First the user needs to select the <b>Choose File</b> button to select a file to be uploaded. This will bring up an “Open” window where the user can search their computer for the weather file. When you have selected the file click “Open”. This will show a progress bar as the system uploads the information.'
+                body2: 'The records will have been uploaded when 100% of the records have been uploaded, and a green message will come up on the top of the screen . Once this has happened the user needs to select the Period to Simulate (which is explained below under Period to Simulate) and then click <strong>Update Weather</strong> to save the information and the <strong>Continue</strong> button to advance to the next page.'
+            item3: '<strong>NOTE:</strong> It is important to note that when you click <strong>Update Weather</strong> after uploading a weather file, the weather information is saved temporarily for the current session. This means that the weather information from uploaded weather files <strong>IS NOT SAVED</strong> when you save the project. Because of this, after opening a saved project where the user previously uploaded the weather file, the user needs to upload the weather file again, and to ensure that the simulation results are accurate, run the simulations again.'
+        method3:
             header: Load Using Specific Coordinates (U.S.A only)
             body1: 'This method of weather selection will always appear as available regardless of the location method that was selected in the <a href=/help/page_4>Location</a> page (this method will work for the User Input method). However, the coordinates selected must be coordinates within the United States. This means that while the option will appear as available if the user selected “User Input” in the <a href=/help/page_4>Location</a> page, if they are looking at an area of interest that is outside the mainland United States an error message will come up.'
-            body2: 'To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates and click the <strong>Save Coordinates</strong> button. You will (like in all the other methods) need to select a period to simulate (which is discussed below) but after this has been done, you can click <strong>Save and Continue</strong> to save the information and continue.'
+            body2: 'To use this method, first select <strong>Load Using Specific Coordinates (U.S.A only)</strong> and then enter the desired coordinates. You will (like in all the other methods) need to select a period to simulate (which is discussed below) and after this has been done, you can click <strong>Update Weather</strong> to save the information and the <strong>Continue</strong> button to advance to the next page.'
     simulate:
         header: Period to Simulate
-        body: 'The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>'
+        body: 'The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. The <strong>“Simulation Period”</strong> information is required for all weather options.'
   fieldpage:
     header: Fields Page
     body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
@@ -1299,140 +1293,107 @@ es:
     createdel:
         header: Creating/Deleting a Field
         create:
-            header: 'Creating a field (only for State/County and User Input <a href=/help/page_4>Location</a> Methods)'
-            body: 'In order to create a field, click the <strong>Add New Field</strong> button on the top left part of the screen. This will bring up a field with the NTT standard field characteristics. Users can then edit the field information. Instructions to do this are also on the <a href=/help/page_4>Location</a> page.'
+            header: '<strong>Creating a field</strong>'
+            body: 'To create field(s), Instructions are on the <a href=/help/page_4><b>Location</b></a> page.'
         delete:
-            header: Deleting a Field
-            body: 'To delete a field, simply click the <strong>Delete</strong> button on the left most part of the field characteristics.'
+            header: <strong>Deleting a Field</strong>
+            body: 'To delete field(s), simply click the "Red Cross" icon on the actions column.'
     characteristics:
         header: Changing Field Characteristics
         body: 'In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.'
         name:
             header: Changing the Field Name
-            body: 'In order to change field’s name, simply click on the current name of the field (in this case Field 1) and type in the name of the field.'
+            body: 'In order to change field’s name, simply click on the current name of the field (in this case field1) to change. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
         area:
             header: Changing the Field Area
-            body: 'The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 0.00) and type in the correct area, as shown below:'
-    advance: Advancing
-    advance_body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. Once all of the fields and corresponding information has been entered, the user can click on the "Field Name" of a field from the list by which they can gain access to the weather, soils, scenarios, results, and apex page.'
+            body: 'The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 38.33) and type in the correct area, as shown in the picture above. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
+    advance:
+        header: Advancing
+        body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, weathers, results, and apex page.'
+        body_modified: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, results, and apex page.'
   soilpage:
     header: Soils Page
     overview:
         header: Overview
-        body: 'The Soils page allows the user to verify, select, or create the soils that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
+        body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
+        body_modified: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 3 general rules that apply to all methods. They are as follows:'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
-        item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics, as shown circled in red below. To find the total soil percentage of the selected soils, add the percentages of the soils which are selected. Selected soils will have a check mark next to them (as shown below circled in yellow).'
-        item3: ' However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will give the user the following error message:'
-        item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the particular soil of interest. This will show the layers information for this particular soil in Layers information. The heading Soil in the Layers Information will tell you what soil’s layers you are looking at. This is shown in below as circled in red. If the Soil does not have layers, the user needs to manually enter them.'
+        item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.'
+        item2_modified: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics.'
+        item3: 'However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.'
+        item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <b>Soil Layers</b> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
     mapsystem:
-        header: Soil Information When Using Mapping System
-        body: 'If the user selected Mapping System in the <a href=/help/page_4>Location</a> page, the user simply has to select or verify the soils that they would like to use for the simulation. The user can also change the Albedo, Slope, and Percentage of each soil. Finally, the user is able to add layers to soils. Using the Mapping System basically ensures that all the soils will have corresponding layers; but the user can add layers to any soil if they decide to do so.'
+        header: Soil Information
+        body: 'Users have different options of modifying their soil information. The list below shows all the possible ways that are available in NTT for modifying the soil information.'
         select:
-            header: Selecting the Field
-            body1: 'The first step in verifying or selecting the correct soils is to be able to view all the soils for all the fields. In order to be able to change between fields, the user needs to click on the <strong>Select Field</strong> drop down menu. This will present all the available fields, as shown below:'
-            body2: 'The user needs to select the field that they want to verify or change as this will allow them to view the soils and layers for the selected field. To delete a soil simply click on the <strong>Delete</strong> button.'
+            header: Adding/Deleting a Soil
+            body1: 'Users can add a new soil by clicking on the <strong>New</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
+            body2: 'After the soil has been added the user needs to enter at least one layer. The user needs to go to the layers page by clicking on the <b>Soil Layers</b> icon in the <b>Actions</b> column. The rest of the steps are described below in the "Adding/Deleting Layers" description.'
+            body3: 'To delete a soil simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
         info:
-            header: Manipulating Soil/Layer Information
-            body: 'Some of the soil and all of the layer information can be manipulated when the Mapping System was used. The user can change the soil information for Albedo, Slope, and Percentage by clicking on the value that they would like to manipulate. Once they have done this they can type in the new value.'
+            header: Editing Soil/Layer Information
+            body: 'Some of the soil and all of the layer information can be edited when the Mapping System was used. The user can change the soil/layer information by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. It will open a new page that lets the user edit and change the different informations available for the soil. This option is also available for the layers. Once they have done this, they can save the changed inforamtion by clicking on the <b>Save</b> button.'
         addremove:
             header: Adding/Deleting Layers
-            body1: 'While using this method users should complete edits to layers for the selected soil before attempting to add additional soils to the project.. Users can add a new layer by clicking on the <strong>Add Empty Layer</strong> button. This will create a new layer for which the user will enter valid information. Values in red mean that they are inaccurate and need to be fixed before advancing.'
-            body2: 'To delete a layer simply click on the <strong>Delete</strong> button.'
-    statecounty:
-        header: Soil Information When Using State/County Method
-        body: 'If the user selected State/County Method, he or she will have the option to select specific soils that are particular to the field that the user selected. Doing this will automatically upload the layers for the corresponding soils but, like with Mapping System, the user can add, delete, or manipulate any of them.'
-        select:
-            header: Adding a Soil
-            body1: 'To add a soil the user needs to:'
-            body2: 'Select the correct field to add the soil to by clicking on the drop down menu. This will come up with all the available fields, as shown below:'
-            body3: 'Select the Soil Survey Area. Most of the time, there will only be one option, as this the county and state that you selected. However, there may be instances in which more than one option is available.'
-            body4: 'Once this is selected, the user can select the particular soil that they would like to add. They can do this by clicking on the <strong>Soils</strong> drop down menu. This will come up with a vast array of soils as shown below. The user can then select the specific soil they want to add.'
-            body5: 'Finally, once the soil is selected, the user can click on <strong>Add Soil Selected</strong> to add the soil. This will give the user the majority of the soil and layer information that they need, as shown below:'
-            body6: 'The user needs to set the percentage of the added soil to the desired value.'
-        info:
-            header: Manipulating Soil/Layer Information
-            body: 'Some of the soil and all of the layer information can be manipulated when the State/County Method was used. The user can change the soil information for Albedo, Slope, and Percentage by clicking on the value that they would like to manipulate. Once they have done this they can type in the new value.'
-        addremove:
-            header: Adding/Deleting Layers
-            body1: 'While using this method does not permit the user to add soils, it does allow the user to add layers to the particular soils. The user can do this by clicking on the <strong>Add Empty Layer</strong> button. This will create a new layer for which the user will enter valid information. Values in red mean that they are inaccurate and need to be fixed before advancing.'
-            body2: 'To delete a layer simply click on the <strong>Delete</strong> button.'
-    userinput:
-        header: Soil Information When Using "User Input" Method
-        body: 'If the user selected User Input Method, he or she will have to manually enter all of the information for the soils. If NTT is being used outside of mainland United States, this will be the method that will have to be used.'
-        create:
-            header: Creating a Soil
-            body1: 'To create a soil the user needs to use the following steps:'
-            body2: 'Select the correct field to add the soil to by clicking on the drop down menu. This will come up with all the available fields, as shown below:'
-            body3: 'Click on <strong>Add Empty Soil</strong>. This will bring up a new soil information page that allows you to enter the information as shown below:'
-            body4: 'Enter the Information by clicking on the particular value you want to change and typing in the correct value. By hovering over the text box you can see what acceptable values to enter are. Any value in red means that it is incorrect. An example of a completed soil information page would look like below:'
-            body5: 'After the soil has been added the user needs to enter at least one layer. This is done by clicking the <strong>Add Empty Layer</strong> button. Again, the same method of adding values (and hovering over the text box to see acceptable values) is done (as with adding soils). <strong>You need to be certain to add at least one layer, or NTT will not allow you to advance.</strong>'
+            body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
+            body2: 'To delete a layer simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
     advance:
         header: Advancing
-        body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click to <strong>Save and Continue</strong> save the information and advance to the next page.'
+        body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
+        body_modified: 'The user can click <strong>Continue</strong> to advance to the next page.'
   managepage:
     header: Management Page Help
     overview:
         header: Overview
-        body: 'The Management page is where you actually enter the operations and scenarios for your fields. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
+        body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
     create:
         header: Creating a Scenario
-        select:
-            header: Selecting Desired Field
-            body: 'Before beginning, the user needs to select the particular field they want to add the scenarios to. To do this, the user needs to click on the <strong><em>Select Field</em></strong> button and select the desired field, as shown below:'
         add:
-            header: Adding a Scenario
-            body1: 'Once the field has been selected, the user can add a scenario by entering the  name of scenario , for example “Baseline” or “Alternative” or “Auto-Irrigation”, and then clicking the <strong><em>Add New Scenario</em></strong> button.  This will create a page that looks like the one below.'
-            body2: 'To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results. You can add as many scenarios as necessary.'
-        nav:
-            header: Navigation
-            body1: 'To open a particular BMP, the BMP title, or the Cropping System, the user can double click on the title. This will expand the folder. If a BMP is selected, or a cropping system has been selected, this particular BMP or title will be expanded. If there is nothing expanded, this means nothing has been selected.'
-            body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to expand the corresponding title and follow the instructions below '
-        edit:
-            header: Manipulating a Scenario’s Characteristics
-            body: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. There are two main characteristics the user needs to manipulate.'
-            add:
-                header: Adding a Cropping System
-                body1: 'A cropping system is REQUIRED for the user to be able to advance and simulate. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. Regardless of the particular option that the user will use for the cropping system, the user needs to expand the Cropping System title by clicking on the arrow or double clicking on the title. This will bring up the options for adding a cropping system, as shown below:'
-                body2: 'Now the user has several options to select a cropping system.'
-                item1: '<b.Select Cropping System:</strong> Using this option allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
-                item2: '<strong>Upload Saved Crop Rotation:</strong> This option allows the user to upload a previously saved crop rotation, however this file must have previously been saved on your computer, and be in *.prj format. To save a crop rotation, first create one and then click on <strong><em>Save Current Crop Rotation</em></strong>.'
-                item3:
-                    body1: '<strong>Copying Crop Rotation:</strong> In order to do this option, the user needs to click this option in the Tree View Menu as shown below:'
-                    body2: 'This will bring up a drop down menu to select the field and the scenario that the user would like to upload.'
-                    body3: 'Select the Field and the Scenario you want to copy the operations from and click the <strong><em>Copy</em></strong> button. This will add the operations to this particular field/scenario.'
-                item4:
-                    body1: '<strong>Creating Operations from Scratch:</strong> The user can also create a new Cropping System from scratch. To do this, the user needs to expand the Management operations, as explained under Option 3 above, and then click on the <strong><em>Add New Operation</em></strong> button. Then, the user needs to select the crop and operation, type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
-                    body2: 'The things that need to be changed when a new operation is created are the values that, when the user double clicks, turn into a drop down box or a text box. If this does not happen, this particular option is not necessary for the selected operation. A successful entry of one operation in the Cropping System would look as it does below:'
-                    body3: 'If you decide that an operation you selected was not necessary, the user can select the operation by clicking the check box under “Select”'
-                    body4: 'And then clicking on <strong><em>Delete Operations Selected</em></strong>.'
+            body1: 'The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
+            body2: 'To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
+    manipulate:
+        header: Manipulating a Scenario’s Characteristics
+        body1: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices '
+        body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
+    operation:
+        header: Operation Page
+        body: 'A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below: '
+        item1:
+            header: <b>Add Crop to Rotation:</b>
+            body1: 'Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
+        item2:
+            header: <b>Add New Operation (Creating Operations from Scratch):</b>
+            body1: 'The user can also create a new Cropping System from scratch. To do this, the user needs to  click on the <strong><em>Add New Operation</em></strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
+            body2: 'If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b><em>Edit</em></b> icon in the <b><em>Actions</em></b> column. This will take the user to a new page where they can make the required changes to the operation.'
+            body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
     bmpnav:
         header: Best Management Practices (BMPs) Navigation
-        body: 'Once a cropping system has been added, the user can simply save and continue to the Subproject or Simulation pages. However, if the user would like to apply a best management practice, he or she can do so.'
+        body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
         add:
-            header: Adding a BMP
-            body1: 'To add a BMP, the user first needs to expand the Best Management Practices (BMPs) title if it is not already done so. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then expand the specific BMP (for example Auto Irrigation), as shown below:'
+            header: 'Adding a BMP:'
+            body1: 'To add a BMP, the user needs to select a BMP by clicking on the check box under the <b><em>Select</em></b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then select the specific BMP (for example Auto Irrigation), as shown below:'
             body2: 'Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.'
-            body3: 'Where there is a drop-down menu with the title “Select One” allows the user to select from a range of options.'
-            body4: 'Where there is a checkbox, the user can simply click on it to select the BMP.'
-            body5: 'Finally, the <strong><em>Clear</em></strong> button allows the user to clear the information that was entered. While simply erasing the information should clear the info, clicking the <strong><em>Clear</em></strong> should ensure that it does. Remember that if a BMP is expanded when you first get to the page, it means that this BMP has been selected.'
+            body3: 'Where there is a drop-down menu with the title <b><em>Select One</b></em> allows the user to select from a range of options.'
+            body4: 'Where there is a checkbox <b><em>Select</em></b> the user can simply click on it to select the BMP.'
+            body5: 'Remember that, if a BMP is expanded when you first get to the page, it means that this BMP has been selected.'
         mutualbmp:
             header: 'Mutually Exclusive BMPs'
             body1: 'Some BMPs can co-exist with other BMPs. For the most part, most BMPs can co-exist with other BMPs. However there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have:'
             item1: 'Auto Irrigation and Auto Fertigation'
             item2: 'Auto Irrigation and any Pads and Pipes'
             item3: 'Only one Pads and Pipes is allowed at the same time'
-            item4: 'Filter Strip and Riparian Forest'
-            item5: 'Waterways and Riparian Forest'
+            item4: 'Filter Strip and Riparian Buffer'
+            item5: 'Waterways and Riparian Buffer'
             item6: 'Filter Strip and Waterways'
-            item7: 'Contour Buffer and Filter Strip/Riparian Forest'
+            item7: 'Contour Buffer and Filter Strip/Riparian Buffer'
             body2: 'Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.'
     bmpdesc:
         header: 'Best Management Practices (BMPs) Descriptions'
-        body: 'Below are the descriptions of the different BMPs that are available under NTT. The heading is the group under which you can find the BMPs and the text in bold is the actual BMP.'
+        body: 'Below are the descriptions of the different BMPs that are available under NTT.'
         auto:
             header: 'Auto Irrigation and Fertigation'
             irrigation:
-                header: 'Auto Irrigation'
+                header: 'Auto Irrigation:'
                 body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
                 item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
                 item2: '<strong>Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
@@ -1441,45 +1402,45 @@ es:
                 item5: '<strong>Maximum Single Application:</strong> This value signifies the amount of water than can be applied in a single day. It is in inches, and it can be any number greater than 0. However, it is set to a default value of 3.'
                 item6: '<strong>Furrow Dike Safety Factor:</strong> This is the fraction of furrow dike volume that is available for water storage. If the user is uncertain of the volume of the furrow dike then a lower value should be input. This value is a value greater than or equal to 0 but less than 1. The closer the value is to 1 the more volume is available for water storage. A higher value will lower runoff and erosion.'
             fertigation:
-                header: 'Auto Fertigation'
+                header: 'Auto Fertigation:'
                 body: 'Fertigation is the application of fertilizers, soil amendments, or other water-soluble products through an irrigation system. Auto Fertigation is an automatic fertilization process in which fertilizer is dissolved and distributed along with water in your drip or spray irrigation system*. This makes Auto Fertigation very similar to Auto Irrigation. In fact, all of the inputs into Auto Irrigation are in Auto Fertigation. To see these inputs, see Auto Irrigation. However, there is one additional input in Auto Fertigation:'
                 item1: '<strong>Nitrogen Concentration:</strong> The amount of nitrogen in the Automatic Fertigation in parts per million.'
         drainsystem:
             header: Drainage Water Management System
             tile:
-                header: Tile Drain
+                header: 'Tile Drain:'
                 body1: 'Tile drainage is a practice for removing excess water from the subsurface of soil intended for agriculture. Drainage brings excessive soil moisture levels down for optimal crop growth. Tile drainage is often the best recourse for reducing high subsurface water levels to improve crop yields. Too much subsurface water can be counterproductive to agriculture by preventing root development, and inhibiting the growth of crops. Excessive water also can limit access to the land, particularly by farm machinery.'
                 body2: 'For NTT applications, underground drainage systems are simulated in APEX. The depth of the drainage system to reduce plant stress is a key parameter used in simulating tile drainage systems in NTT. Tile drainage simulation in NTT increases subsurface flow, which may provide an avenue for increased nutrient losses in subsurface flow. The input for Tile Drain is:'
                 item1: '<strong>Depth:</strong> this is the depth in feet at which the drainage system is installed. It is any number greater than 0.'
             ppnoditch:
-                header: 'Pads and Pipes - No Ditch Improvement'
+                header: 'Pads and Pipes - No Ditch Improvement:'
                 body1: 'Pads and Pipes are an above ground water drainage system that is used to both drain excess water and slow down flow of the water. In this type of drainage system the farmer raises the land on a certain number of sides of the field. Pipes are then applied through which the water can flow out of. In this particular method of pads and pipes, there is no improvement to the ditch into where the excess water flows.'
                 item1: '<strong>Pads and Pipes Width:</strong> This is the raised area of the field in feet. This area is not able to be used for planting crops. This can be any number greater than 0 on NTT.'
                 item2: '<strong># of Sides Covered by Pipes:</strong> The farmer can apply pads and pipes to one or more sides of the field. This is the number of sides where the farmer applied the pads and pipes. This is mostly an economic issue, since applying more pipes reduces the amount of area that is available for planting.'
             pp2stage:
-                header: 'Pads and Pipes - Two Stage Ditch System'
+                header: 'Pads and Pipes - Two Stage Ditch System:'
                 body1: 'This particular method of Pads and Pipes is very similar to the Pads and Pipes – No Ditch Improvement (see above for more information). The main difference is that using this method improves the ditch, creating a collection of water inside the ditch before the water is drained. The inputs for this method are the same as Pads and Pipes – No Ditch Improvement (see above).'
             ppreservoir:
-                header: 'Pads and Pipes – Ditch Enlargement and Reservoir System'
+                header: 'Pads and Pipes – Ditch Enlargement and Reservoir System:'
                 body1: 'This particular method of pads and pipes is very similar to the Pads and Pipes – Two Stage Ditch System. This method also has an improved ditch system. However, in this method, the water in the ditch is drained into a reservoir system. The inputs are the same as Pads and Pipes – No Ditch Improvement, with one additional input:'
                 item1: '<strong>Reservoir Area (ac.):</strong> This is the reservoir area in acres. Since this area is being used a reservoir, crops cannot be grown in this area.'
             pptailwater:
-                header: 'Pads and Pipes – Tailwater Irrigation'
+                header: 'Pads and Pipes – Tailwater Irrigation:'
                 body1: 'This particular method of pads and pipes is very similar to Pads and Pipes – Ditch Enlargement and Reservoir System (see above). The only difference is that once the water has gone to the reservoir system, the water is then pumped back to the crop field, where irrigation is then applied to the crops.'
                 body2: 'This system requires the inputs for Pads and Pipes –Ditch Enlargement and Reservoir System, as well as the inputs for Auto Irrigation (see Auto Irrigation). A message will come up on NTT to input the Auto Irrigation information.'
         wetponds:
             header: Wetlands and Ponds
             wetlands:
-                header: Wetlands
+                header: 'Wetlands:'
                 body1: 'Wetlands are those areas that are inundated or saturated by surface or groundwater at a frequency and duration sufficient to support, and that under normal circumstances do support, a prevalence of vegetation typically adapted for life in saturated soil conditions. Wetlands generally include swamps, marshes, bogs and similar areas.'
                 body2: 'The wetland area is simulated as a shallow reservoir (1 ft. depth) with growing wetland vegetation – it is essentially simulated as an artificial wetland and not a natural wetland. The slope of wetland area is set as one percent. Simulated wetlands trap sediment, reduce runoff, increase infiltration, and also increase uptake of water and nutrients by the vegetation in the area covered by the wetland. The only input required for wetlands is:'
                 item1: '<strong>Area:</strong> The area of the wetland is input in acres. Since this area is no longer able to be used for crop production, there may be a lower total crop yield (although there may be a greater crop yield/acre).'
             ponds:
-                header: Ponds
+                header: 'Ponds:'
                 body1: 'Ponds are used to provide water for livestock, fish and wildlife, recreation, fire control, develop renewable energy systems, and other related uses, and to maintain or improve water quality by retaining the runoff from upland field. Only one input is required for ponds:'
                 item1: '<strong>Fraction of Area Controlled by Ponds:</strong> This is the fraction (a value between 0 and 1) and is simply the fraction of the subareas which flows through (is controlled by) ponds. This only affects only the hydrology that originates in this subarea. Inflow from other subareas is not routed through the ponds in this subarea. The exact location of the ponds, however, is unknown. A greater value could help improve water quality by retaining the runoff from the upland fields.'
         stream:
-            header: Stream and Riparian Management
+            header: 'Stream and Riparian Management:'
             fencing:
                 header: Stream Fencing (Livestock Access Control)
                 body1: 'Access control means the temporary or permanent exclusion of animals from an area to achieve and maintain the desired resource conditions. * If it is only a temporary exclusion, the user can enter the information regarding how much time the animals actually spend within the fenced area. Because excluding the animals from the stream allows a grassed area to grow, the user must also add the information for a filter strip.'
@@ -1492,20 +1453,20 @@ es:
                 item6: '<strong>Nutrient Fractions:</strong> NO3, PO4, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
                 item7: '<strong>Filter Strip Inputs:</strong> (See Filter Strip)'
             stabilization:
-                header: Streambank Stabilization
+                header: 'Streambank Stabilization:'
                 body1: 'Stabilization of streambanks is done to prevent the loss of land or damage to land uses or facilities adjacent to the banks of streams or constructed channels properties. Streambank stabilization results in 1) maintaining the flow capacity of streams or channels; 2) Reducing the offsite or downstream effects of sediment resulting from bank erosion; and 3) improving or enhance the stream corridor for fish and wildlife habitat, aesthetics, recreation.'
                 body2: 'If you would like to use the Streambank Stabilization, click on the <strong><em>Select</em></strong> button.'
             forestbuffer:
-                header: Riparian Forest Buffer
-                body1: 'A riparian forest is a forested area of land adjacent to a body of water such as a river, stream, pond, lake, marshland, estuary, canal, playa or reservoir. Riparian forests are simulated in a manner similar to the filter strip practice with the additional assumption that there are trees along the length of the riparian zone in addition to selected crops that are growing in the simulated area. The forested area traps sediment and increases infiltration, thereby reducing sediment and nutrient losses. Plant uptake of nutrient in the forested area also reduces nutrient losses downstream.'
-                body2: 'The inputs for Riparian Forest are the following:'
+                header: 'Riparian Buffer:'
+                body1: 'A riparian buffer is a forested area of land adjacent to a body of water such as a river, stream, pond, lake, marshland, estuary, canal, playa or reservoir. Riparian forests are simulated in a manner similar to the filter strip practice with the additional assumption that there are trees along the length of the riparian zone in addition to selected crops that are growing in the simulated area. The forested area traps sediment and increases infiltration, thereby reducing sediment and nutrient losses. Plant uptake of nutrient in the forested area also reduces nutrient losses downstream.'
+                body2: 'The inputs for Riparian buffer are the following:'
                 item1: '<strong>Efficiency:</strong> This is the efficiency of the forest buffer, and is any fraction between 0.1 and 1.0.'
-                item2: '<strong>Area (ac.):</strong> This is the total area of the Riparian Forest Buffer. It is subtracted from the crop area.'
-                item3: '<strong>Width (ft.):</strong> This is the width of the Riparian Forest Buffer in feet.'
+                item2: '<strong>Area (ac.):</strong> This is the total area of the Riparian Buffer. It is subtracted from the crop area.'
+                item3: '<strong>Width (ft.):</strong> This is the width of the Riparian Buffer in feet.'
                 item4: '<strong>Grass Field Portion:</strong> This is the percentage of the Forest Buffer that is composed of grass rather than of trees, and needs to be a number between 0.25 and 0.75.'
                 item5: '<strong>Buffer Slope Ration to Upland:</strong> This is the slope ratio (a number between 0.25 and 1.00) to the upland.'
             filterstrip:
-                header: Filter Strip
+                header: 'Filter Strip:'
                 body1: 'A filter strip is a type of buffer strip that is an area of vegetation, generally narrow in width and long across the downslope edge of a field, that slows the rate of runoff, allowing sediments, organic matter, and other pollutants that are being conveyed by the water to be removed by settling out. Filter strips reduce erosion and the accompanying sediment-bound pollution.'
                 body2: 'A filter strip is specified in NTT by indicating its width and the type of crop planted.  The width of filter strip is used to calculate its area. The area of filter strip is subtracted from the main farmland and is simulated as a separate field. Flow, sediment, and nutrients are routed from the farmland to this filter strip before leaving the edge of the farmland.'
                 body3: 'In NTT, filter strips function by providing for better infiltration of soluble nutrients, trapping of sediment, and uptake of water and nutrients by the filter strip vegetation. The saturated conductivity value is also modified for filter strip simulation in NTT.'
@@ -1516,31 +1477,54 @@ es:
                 item4: '<strong>Width:</strong> This is the width in feet of the filter strip. Filter Strips are typically narrow in width. This can be any value greater than 0.'
                 item5: '<strong>Strip Slope to Upland:</strong> This value is a fraction between 0.25 and 0.75 and indicates the slope towards the farmland (which is upland).'
             waterway:
-                header: Waterway
+                header: 'Grass Waterway:'
                 body1: 'Waterways are vegetated channels that conduct and dispose of overland flow from upstream areas. Waterways typically work by increasing the surface roughness (with the vegetation) which reduces the velocity of flow.'
                 body2: 'The inputs for Waterways are the following:'
-                item1: '<strong>Vegetation:</strong> This is the type of grass or vegetation that is used in the channel.'
+                item1: '<strong>Crop:</strong> This is the type of grass or vegetation that is used in the channel.'
                 item2: '<strong>Width:</strong> This is the width, in feet, including both sides of the vegetated channel. This can be any number greater than 0.'
         contour:
-            header: Contour Buffer (Strip Farming)
+            header: 'Contour Buffer (Strip Farming):'
             body1: 'A contour buffer strip is an area of land maintained in permanent vegetation that helps to control air, soil, and water quality and other environmental problems primarily on land that is used for agriculture. Buffer strips trap sediment and enhance filtration of nutrients and pesticides by slowing down runoff that could enter the local surface waters.'
             body2: 'The buffer strip is simulated based on the width of the buffer and main crop, and the vegetation planted in the buffer.  The number of strips and area are calculated according to the total field area and the widths of buffer and main field, which are inputs to the model.'
             body3: 'The inputs for Contour Buffer are:'
-            item1: '<strong>Vegetation:</strong> This is the type of grass or vegetation that will be present in the buffer sections of the contour buffer. Select one from the drop down list of options.'
-            item2: '<strong>Buffer Width:</strong> This is the width, in feet, of the buffer strips. It can be any number greater than 0. Buffer width, along with crop width, determine the number of buffer and crop strips in the field.'
-            item3: '<strong>Crop Width:</strong> This is the width, in feet, of the strips of the main crop that was planted. It can be any number greater than 0. Crop width, along with buffer width, determine the number of buffer and crop strips in the field.'
+            item1: '<strong>Crop:</strong> This is the type of grass or vegetation that will be present in the buffer sections of the contour buffer. Select one from the drop down list of options.'
+            item2: '<strong>Grass Buffer Width:</strong> This is the width, in feet, of the buffer strips. It can be any number greater than 0. Buffer width, along with crop width, determine the number of buffer and crop strips in the field.'
+            item3: '<strong>Crop Buffer Width:</strong> This is the width, in feet, of the strips of the main crop that was planted. It can be any number greater than 0. Crop width, along with buffer width, determine the number of buffer and crop strips in the field.'
         landgrading:
             header: Land Grading
             leveling:
-                header: Land Leveling
+                header: 'Land Leveling:'
                 body1: 'Land leveling is used to reduce the slope on very high soil slopes. By reducing the slope, the surface land is better able to retain irrigation and soil water. The input for land leveling is:'
                 item1: '<strong>Slope Reduction:</strong> This is the percent reduction in the slope of the soil. The number can be any percentage between 0% and 100%. The closer the slope is to 100, the more the slope is reduced.'
             terrace:
-                header: Terrace System
+                header: 'Terrace System:'
                 body1: 'A terrace system is a leveled section of a hill cultivated area, designed as a method of soil conservation to slow or prevent the rapid surface runoff of water. Terraces decrease hill slope-length, reduce formation of gullies, and intercept and conduct runoff to a safe outlet thereby reducing sediment content in runoff water. Often, in application the landscape is formed into multiple terraces, giving a stepped appearance. Terraces are simulated by reducing the practice factor (PEC). If you would like to apply a terrace system, click on the <strong><em>Select</em></strong> button.'
             liming:
-                header: Liming
+                header: 'Liming:'
                 body1: 'In agriculture, the application of agricultural limestone is used to prevent the acidification of the soil. This most often occurs when nitrogen fertilizers are applied over long periods of time. For many soils, the simulation of liming is needed to simulate the application of agricultural limestone (which increases soil pH/reduces aluminum saturation). However, since this is not needed for all soils, the user has the ability to turn it off. When the user first reaches the Management page, liming is turned on by default. To turn it off, the user can uncheck the <strong><em>Select</em></strong> button.'
+            manure:
+                header: 'Manure Control:'
+                body1: 'Users need to enter manure operation in their cropping system before applying the manure control.'
+            tmp:
+                header: 'Temperature and Precipitation Changes:'
+                body1: ''
+            asphalt:
+                header: 'Asphalt or Concrete:'
+                body1: 'Users can select if the cropping system is Asfalt or Concrete.'
+            grass:
+                header: 'Grass Cover:'
+                body1: 'Users can select if the cropping system is Grass Cover.'
+            slope:
+                header: 'Slope Adjustment:'
+                body1: 'Users can select if the cropping system had slope adjustment.'
+            shade:
+                header: 'Shading:'
+                body1: 'Shading is similar to Filter Strip. For more information on shading, see Filter Strip. '
+                body2: 'The inputs for Shading are the following:'
+                item1: '<strong>Vegetation:</strong> This is the type of grass or vegetation that is planted in the shading. To select one, click on the drop down box and make your selection.'
+                item2: '<strong>Area:</strong> This is the area of the shading in acres, which is subtracted from the total area of the field in the results page and is simulated as a separate field. It must be a number greater than 0.'
+                item3: '<strong>Width:</strong> This is the width in feet of the shading. Shadings are typically narrow in width. This can be any value greater than 0.'
+                item4: '<strong>Buffer Slope Ration to Upland:</strong> This value is a fraction between 0.25 and 1.00 and indicates the slope towards the farmland (which is upland).'
     reference:
         header: Reference
         body1: '* See USDA website: http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849 for more detailed term descriptions.'
@@ -1571,10 +1555,10 @@ es:
             body2: 'Once the user has done this, the user needs to select either the Field/Scenario combination OR select the previously selected subproject by selecting from the corresponding drop down boxes.'
         adding:
             header: Adding a Field/Scenario or Subproject to Run
-            body1: 'To add a field/scenario or subproject to run, select either <strong><em>Add Subproject to Run</em></strong> or <strong><em>Add Field/Scenario to Run</em></strong>. The particular button that will be available will depend on the selection that you made under the heading <strong>Select Type</strong>. Once you have added all of the fields/scenarios or subprojects, it is time to simulate. The fields/scenarios or subprojects that you added will be seen on the page, as shown below:'
+            body1: 'To add a field/scenario or subproject to run, select either <strong>Add Subproject to Run</strong> or <strong>Add Field/Scenario to Run</strong>. The particular button that will be available will depend on the selection that you made under the heading <strong>Select Type</strong>. Once you have added all of the fields/scenarios or subprojects, it is time to simulate. The fields/scenarios or subprojects that you added will be seen on the page, as shown below:'
         removing:
             header: Removing a Field/Scenario or Subproject to Run
-            body1: 'To remove a field/scenario or subproject from the list to be simulated, click the <strong><em>Delete</em></strong> button to the left of the name of the desired scenario to delete.'
+            body1: 'To remove a field/scenario or subproject from the list to be simulated, click the <strong>Delete</strong> button to the left of the name of the desired scenario to delete.'
     simulating:
         header: Simulating
         check:
@@ -1584,7 +1568,7 @@ es:
             body3: 'In order to fix the problem, the user needs to return to the page that caused the error (in the example above, the <a href=/help/page_8?locale=en>Management</a> page) and look for missing input information, and then that all of the information they entered was valid and within the valid ranges. A common mistake in the Management page is not having added a cropping system. Ensure that you have added a cropping system if you get a red X under management.'
         run:
             header: Running the Simulation
-            body1: 'To run the simulation, the user needs to click the <strong><em>Run Selected</em></strong> button. This will begin the simulation. You will see the progress of the simulation in yellow on the top left of the screen, as shown below:'
+            body1: 'To run the simulation, the user needs to click the <strong>Run Selected</strong> button. This will begin the simulation.'
             body2: 'Once you have had a successful simulation, check on the date and time of the simulation by looking at the heading “Last Simulation” to ensure that all of the fields/scenarios and subprojects were simulated as shown below:'
             body3: 'If this simulation is indeed correct, then you can click on Continue to view the <a href=/help/page_9?locale=en>results</a> of the simulations.'
   resultspage:
@@ -1595,13 +1579,13 @@ es:
         view:
             header: Viewing the Desired Results
             body1: 'To view the desired results, the user must first select whether they want to view the results for the subprojects that they ran or for the field/scenarios that they ran. They can make this selection by choosing the appropriate selection under <strong>Select Type</strong>, as shown below:'
-            body2: 'If the user selects the Field/Scenario option, the appropriate field will also have to be selected, as shown below:'
-            body3: 'It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario, as shown below:'
+            body2: 'If the user selects the Field/Scenario option, the appropriate field will also have to be selected.'
+            body3: 'It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario.'
             body4: 'It is very likely that, when the user first arrives at the Results page, that the first scenario that was simulated will be selected for both the first scenario and second scenario, so be sure to select the correct scenarios before continuing.'
             body5: 'The results of the scenarios are presented in a tabular format, in the order in which they were selected. In this case, the scenario results are presented for “grape”, “grape_irr”, and then “grape_grass”. The Difference and Reduction values are relative to the first scenario, “grape” in this case.'
         manner:
             header: 'Viewing the Results in the Desired Manner'
-            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong><em>Tabular Results</em></strong>. To view the nutrient results in graphical form click on <strong><em>Graph Results</em></strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure. To view the economic results, click on <strong><em>Economics</em></strong>.'
+            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong>Tabular Results</strong>. To view the nutrient results in graphical form click on <strong>Graph Results</strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure.'
         expand:
             header: Expanding Results
             body1: 'A box under the <strong>Detail</strong> column indicates that you can expand the <strong>Description</strong> to view more results. An expanded Results page for nutrient tabular results is shown below:'
@@ -1616,14 +1600,14 @@ es:
             body5: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area</strong>).'
         graphical:
             header: Understanding Nutrient Results in Graphical Form
-            body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong><em>Graphs</em></strong>.'
+            body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong>Graphs</strong>.'
             item1:
-                body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart, as shown below.'
+                body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart.'
                 body2: 'Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
-            item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong> An example graph for the monthly average is shown below:'
+            item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong>'
         economic:
             header: Understanding Economics Results
-            body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results</strong>. This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow, as shown below.'
+            body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results</strong>. This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow.'
             body2: 'The economic results shown in the Baseline, Alternative, and Difference columns are all expressed on a per acre basis. The total economic impact for the entire simulated area of interest is shown in the Total Area column.'
     saving:
         header: Saving the Results to a PDF file
