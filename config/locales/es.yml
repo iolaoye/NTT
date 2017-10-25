@@ -1213,22 +1213,22 @@ es:
         body3: 'El cerrar un Proyecto activo borrará toda la información de ese Proyecto. Debido a esto, si usted necesitara usar el pryecto mas tarde, eis extremadamente importante que salve le Proyecto antes de cerrarlo. Presionando el botón <b>Cerrar Proyecto Activo</b> , la información será borrada (y perdida si no se salvo previamente). Si usted no ha salvado el Proyecto y lo quiere hacer, presione cancelar y siga las instrucciones para “Salvar Proyecto Activo” antes mencionadas.'
 
   locpage:
-    header: Location Information
+    header: Información de Ubicación
     overview:
-        header: Overview
+        header: Visión General
     mapsystem:
-        header: Mapping System
-        body1: 'Mapping System allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.'
-        body2: 'When using this system, the weather and soil information can be uploaded from weather stations and databases, so minimal or no user input is required in later pages.'
-        body3: 'To zoom to a particular state/county in the United States the user can select the State and County using the zoom tool:'
-        body4: 'There are <strong>4 options</strong> within the mapping system:'
+        header: 
+        body1: 'El Sitema de Mapa le permite al usuario seleccionar las parcelas usando diferentes formas in el mapa. Los datos disponibles son <strong>UNICAMENTE para el área principal de los Estados Unidos.</strong>. Si usted quiere simular un área fuera de los Estados Unidos, se requiere que entre los datos de suelos y clima.'
+        body2: 'Despues de entrar los datos de suelos y clima mínimo o ninguna entrada adicional es equerida en las páginas mas adelante.'
+        body3: 'Para enfocarse en un área particular en los Estados Unidos el usuario puede hacerlo usando las erramientas de enfoque:'
+        body4: 'Hay <strong>4 opciones</strong> dentro de el Sitema de Mapa:'
         option1:
-            header: 'Option 1: Choose an AOI type to begin drawing'
+            header: 'Opción 1: Elija un Area de Interes a ser dibujada'
             item1:
                 body1: '<strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> at the top center, in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure, as shown in the figure below. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm as shown below. Enter the name of the farm and advance. As the user enters the name, it will replace the default name in the text box for the farm as shown in the following figure. From this point the farm name entered will refer to the selected location.'
                 body2: 'As the user enters the name, it will replace the default name in the text box for the farm as shown in the following figure. From this point the farm name entered will refer to the selected location (encircled in the figure).'
                 body3: 'Once the user clicks <strong>OK</strong>, the farm location will be highlighted as shown below.'
-            item2: '<strong>Drawing Fields:</strong> Next, you will need to draw fields within the farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.'
+            item2: '<strong>Dibujar Parcelas:</strong> Para dibujar una parcela, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.'
             item3:
                 body3: '<strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.'
             item4: '<strong>Deleting Farms and Fields:</strong> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.'
@@ -1249,7 +1249,7 @@ es:
     statecounty:
         header: State/County Method
         body1: 'The State/County Method allows you to select a particular area of interest based on the state and county. When using this method, the weather and soil information can be uploaded from weather stations and databases for that region, so minimal or no user input is required in later pages.'
-        body2: 'Note that this method only works for mainland United States. Furthermore, the current version only includes states where specific verification has been completed. Users needing to run this version of NTT for states not yet included are encouraged to contact the developers. Like the Mapping System, this method is <strong>ONLY</strong> for <strong>mainland United States.</strong>'
+        body2: 'Note that this method only works for mainland United States. Furthermore, the current version only includes states where specific verification has been completed. Users needing to run this version of NTT for states not yet included are encouraged to contact the developers. Like the el Sitema de Mapa, this method is <strong>ONLY</strong> for <strong>mainland United States.</strong>'
         body3: 'There are <strong>two steps</strong> in selecting an area of interest using the State/County Method:'
         item1: '<strong>Select a State:</strong> Select a state from the drop down menu labeled <strong>States</strong> as shown below. Note that while you Hawaii and Alaska are on the menu, you cannot use this method for these two states, as this only works in mainland United States.'
         item2: '<strong>Select a County:</strong> Once you have selected a state, the corresponding counties will come up on the drop down box as shown below. To select a county, simply select the county of interest. If you selected Alaska or Hawaii, you will not see any counties. This is because this method is only for <strong>mainland United States</strong> and does not work with Alaska or Hawaii.'
@@ -1258,6 +1258,33 @@ es:
         header: User Input Method
         body1: 'The User Input Method allows the user to select regions <strong>outside of mainland United States.</strong> However, to do this, the user must have significantly more information, including the user’s own weather files and soil information. In this page, the user will simply enter the General Location and Specific Location as shown below. This can be any sequence of letters, numbers, or characters. It is simply used as name. The information will be entered in the following pages.'
         body2: 'After you have entered the location, the State and County you selected (or the General and Specific location) will show up on the top of the screen (along with the project name) for the remainder of the program. An example is shown below:'
+
+  locpage_html:
+    <strong>Location Information</strong><br></br>
+    The map allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.
+    When using this system, the weather and soil information can be uploaded from weather stations and databases, so minimal or no user input is required in later pages.
+    There are <strong>4 options</strong> within the mapping system.
+    Choose an AOI type to begin drawing<br></br>
+    <strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm. Enter the name of the farm and advance. As the user enters the name, it will replace the default name in the text box for the farm. From this point the farm name entered will refer to the selected location.
+    Once the user clicks <strong>OK</strong>, the farm location will be highlighted.<br></br>
+    <strong>Dibujar las parcelas:</strong> Primero el usuario necesita seleccionar el botón <strong><img src="/serve_image/drawing_tool.png"></strong> para dibujar una parcela en el mapa GIS. Las parcelas son dibujadas connectando puntos usando el ratón, creando una figura. Luego el programa le pedira el nombre de la parcela dandola un nombre por defecto. Usted puede cambiar el nombre de la parcela dado por NTT.<br></br>
+    <strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you need to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.<br></br>
+    <strong>Deleting Farms and Fields:</strong> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.<br></br>
+
+    <strong>Choose a farm and a field(s) shapefile to upload</strong><br>
+    <strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder.<br></br>
+    <strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button for the farm and for the field. The farm and field shapefile can be the same parameters, since, as mentioned above, the farm is simply a reference tool, and the data is drawn from the field shapefile that is uploaded. Nevertheless, you need to choose <strong>BOTH</strong> a <strong>farm shapefile</strong> and a <strong>field shapefile</strong> before uploading.<br></br>
+    <strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile for both a field and a farm.<br></br>
+    <strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.<br></br>
+
+    <strong>Choose area of interest by address</strong></br>
+    <strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.<br></br>
+    <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br></br>
+
+    <strong>Choose an area of interest by latitude/longitude</strong><br>
+    <strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).<br></br>
+    <strong>Choose State and County</strong><br>To zoom to a particular state/county in the United States the user can select the State and County from the corresponding drop down list boxes.
+
   weathpage:
     header: Weather Page
     body: 'Depending on the particular method that was chosen in the previous (Location) page, the user has different options available when choosing the weather. Only the options that are actually available to the user (depending on the method selected) will show up as selections. Once the user has selected a method for weather information selection, the user will need to select the period to simulate, or the time period for which the user would like to do the simulation.'
@@ -1288,8 +1315,8 @@ es:
         body: 'The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012 as is on the example below, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. The <strong>“Simulation Period”</strong> information is required for all weather options.'
   fieldpage:
     header: Fields Page
-    body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
-    body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
+    body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected el Sitema de Mapa in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the el Sitema de Mapa), always you can go back to the Map and add more soils.'
+    body2: 'If you selected el Sitema de Mapa, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
     createdel:
         header: Creating/Deleting a Field
         create:
@@ -1332,7 +1359,7 @@ es:
             body3: 'To delete a soil simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
         info:
             header: Editing Soil/Layer Information
-            body: 'Some of the soil and all of the layer information can be edited when the Mapping System was used. The user can change the soil/layer information by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. It will open a new page that lets the user edit and change the different informations available for the soil. This option is also available for the layers. Once they have done this, they can save the changed inforamtion by clicking on the <b>Save</b> button.'
+            body: 'Some of the soil and all of the layer information can be edited when the el Sitema de Mapa was used. The user can change the soil/layer information by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. It will open a new page that lets the user edit and change the different informations available for the soil. This option is also available for the layers. Once they have done this, they can save the changed inforamtion by clicking on the <b>Save</b> button.'
         addremove:
             header: Adding/Deleting Layers
             body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
