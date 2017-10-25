@@ -45,6 +45,8 @@ NTTG3::Application.routes.draw do
     resources :projects
   end
 
+  get '/serve_image/:filename' => 'application#serve'
+
   get 'projects/upload'
   post 'projects/upload_project'
 

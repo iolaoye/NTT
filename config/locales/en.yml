@@ -1232,7 +1232,7 @@ en:
     Click <strong>Return to Table of Contents</strong> to go to the NTT Table of Contents.<br>
   projpage:
     header: Start of a Project
-    statement: "Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool to get a basic understanding of how to navigate the <strong>NTT</strong> application. To activate all the features available by the user and define your project, click on this tab to activate the Project module. <br><br>"
+    statement: "Welcome1 to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool to get a basic understanding of how to navigate the <strong>NTT</strong> application. To activate all the features available by the user and define your project, click on this tab to activate the Project module. <br><br>"
     initial:
         header: To Start a Project
         statement: There are <b>three initial choices</b> to start a new project:<br>
@@ -1345,7 +1345,7 @@ en:
     Choose an AOI type to begin drawing<br></br>
     <strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm. Enter the name of the farm and advance. As the user enters the name, it will replace the default name in the text box for the farm. From this point the farm name entered will refer to the selected location.
     Once the user clicks <strong>OK</strong>, the farm location will be highlighted.<br></br>
-    <strong>Drawing Fields:</strong> Next, you will need to draw fields within than farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.<br></br>
+    <strong>Drawing Fields:</strong> The user first needs to select the button <strong><img src="/serve_image/drawing_tool.png"></strong> in order to draw a field in the GIS map. Fields are drawn by connecting dots with the mouse, creating a figure. Then the program will ask you to name the field giving you a default name. You can change the name of the field given by NTT.<br></br>
     <strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you need to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.<br></br>
     <strong>Deleting Farms and Fields:</strong> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.<br></br>
 
