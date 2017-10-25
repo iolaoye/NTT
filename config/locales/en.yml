@@ -406,7 +406,7 @@ en:
     confirm: Are you sure?
     begin: Begin
     to: to
-    copy: copy
+    copy: Copy
     last_modified: Last Modified
     download: Download
     change: Change
@@ -545,6 +545,7 @@ en:
     load_scenario: Load Scenario
     last_simulation: Simulation date
     simulation_success: scenarios simulated successfully in
+    other_scenario: Copy Scenario from other field
   location:
     new_location: New Location
     edit: Editing Location

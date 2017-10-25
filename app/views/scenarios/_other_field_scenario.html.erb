@@ -1,11 +1,10 @@
 <form id="myForm">
   <%= form_tag copy_other_scenario_project_field_scenarios_path(@project, @field, @scenario), method: :get do |f| %>
-    <td><%= collection_select :field, :id, Field.all.where("id != ?", params[:field_id]), :id, :field_name, {:include_blank => t('helpers.select.field')}, {:required => true} %></td>
-    <td><%= collection_select :scenario, :id, Scenario.where(:field_id => 0), :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
-    
-    <div class="actions">
-      <%= submit_tag 'Copy', data: {disable_with: 'Please wait....'}, method: :get %>
-      <%= link_to t('general.back'), project_field_scenarios_path(@project, @field), :class => "btn btn-primary" %>
-    </div>
+	  <div class="actions">
+	    <td><%= collection_select :field, :id, @fields, :id, :field_name, {:include_blank => t('helpers.select.field')}, {:required => true} %></td>
+	    <td><%= collection_select :scenario, :id, Scenario.where(:field_id => 0), :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
+		<%= submit_tag t('general.copy'), data: {disable_with: 'Please wait....'}, method: :get, :class => "btn btn-primary" %>
+		<%= link_to t('general.back'), project_field_scenarios_path(@project, @field), :class => "btn btn-primary" %>
+	  </div>
   <% end %>
 </form>

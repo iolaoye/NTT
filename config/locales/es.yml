@@ -549,6 +549,7 @@ es:
     load_scenario: Cargar Escenario
     last_simulation: Fecha de Simulación
     simulation_success: escenarios simulados con éxito en
+    other_scenario: Copiar Escenario de otra parcela
   location:
     new_location: Localización Nuevo
     edit: Revisión de Localización
