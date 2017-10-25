@@ -44,7 +44,10 @@
 <div id="div_new" style="display:none" >
 	<%= render 'form' %>
 </div>
-
+<%= button_tag 'Copy Scenario..', :class => "btn btn-primary", :id => "other_field_scenario" %>
+<div id="div_copy_other" style="display:none">
+	<%= render 'other_field_scenario' %>
+</div>
 <%= form_tag simulate_project_field_scenarios_path(@project, @field), method: :post do |f| %>
     <% if @scenarios.count > 0 %>
 		<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('scenario.scenario'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %>
