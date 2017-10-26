@@ -412,7 +412,7 @@ module SimulationsHelper
           else
             uw[layer_number] = layer.uw
           end
-        else
+         else
           uw[layer_number] = 0
         end
         if !(layer.fc == nil)
@@ -421,36 +421,36 @@ module SimulationsHelper
           else
             fc[layer_number] = layer.fc
           end
-        else
+         else
           fc[layer_number] = 0
         end
         #These lines were changed to take sand from xml file in case user had changed it
         if layer.sand <= 0 && layer_number > 1
           sand[layer_number] = sand[layer_number - 1]
-        else
+         else
           sand[layer_number] = layer.sand
         end
         if layer.silt <= 0 && layer_number > 1
           silt[layer_number] = silt[layer_number - 1]
-        else
+         else
           silt[layer_number] = layer.silt
         end
         if !(layer.wn == nil)
           if layer.wn <= 0 && layer_number > 1
             wn[layer_number] = wn[layer_number - 1]
-          else
+           else
             wn[layer_number] = layer.wn
           end
-        else
+         else
           wn[layer_number] = 0
         end
         if (layer.ph != nil)
           if layer.ph <= 0 && layer_number > 1
             ph[layer_number] = ph[layer_number - 1]
-          else
+           else
             ph[layer_number] = layer.ph
           end
-        else
+         else
           ph[layer_number] = PHMIN
         end
         ph[layer_number] = PHMIN if ph[layer_number] < PHMIN
@@ -459,21 +459,21 @@ module SimulationsHelper
         cec[layer_number] = 0
         if layer.cec == 0 && layer_number > 1
           cec[layer_number] = cec[layer_number - 1]
-        else
+         else
           cec[layer_number] = layer.cec unless layer.cec == nil
         end
 
         smb[layer_number] = 0
         if layer.smb == 0 && layer_number > 1
           smb[layer_number] = smb[layer_number - 1]
-        else
+         else
           smb[layer_number] = layer.smb unless layer.smb == nil
         end
 
         woc[layer_number] = 0
         if layer.organic_matter == 0 && layer_number > 1
           woc[layer_number] = woc[layer_number - 1]
-        else
+         else
           woc[layer_number] = layer.organic_matter unless layer.organic_matter == nil
         end
         woc[layer_number] = (woc[layer_number] / OM_TO_OC)
@@ -487,38 +487,38 @@ module SimulationsHelper
         cac[layer_number] = 0
         if layer.cac == 0 && layer_number > 1
           cac[layer_number] = cac[layer_number - 1]
-        else
+         else
           cac[layer_number] = layer.cac unless layer.cac == nil
         end
         rok[layer_number] = 0
         if layer.rok == 0 && layer_number > 1
           rok[layer_number] = rok[layer_number - 1]
-        else
+         else
           rok[layer_number] = layer.rok unless layer.rok == nil
         end
         cnds[layer_number] = 0
         if layer.cnds == 0 && layer_number > 1
           cnds[layer_number] = cnds[layer_number - 1]
-        else
+         else
           cnds[layer_number] = layer.cnds unless layer.cnds == nil
         end
         ssf[layer_number] = 0
         if layer.soil_p == 0 && layer_number == 1
           ssf[layer_number] = ssf[layer_number-1]
-        else
+         else
           ssf[layer_number] = layer.soil_p unless layer.soil_p == nil
         end
         rsd[layer_number] = 0
         if layer.rsd == 0 && layer_number > 1
           rsd[layer_number] = rsd[layer_number - 1]
-        else
+         else
           rsd[layer_number] = layer.rsd unless layer.rsd == nil
         end
         #These lines were changed to take silt from xml file in case user had changed it
         bulk_density[layer_number] = 0
         if layer.bulk_density == 0
           bulk_density[layer_number] = bulk_density[layer_number - 1]
-        else
+         else
           bulk_density[layer_number] = layer.bulk_density unless layer.bulk_density == nil
         end
         if bulk_density[layer_number] < BDMIN
@@ -532,7 +532,7 @@ module SimulationsHelper
         psp[layer_number] = 0
         if layer.psp == 0 && layer_number > 1
           psp[layer_number] = psp[layer_number - 1]
-        else
+         else
           psp[layer_number] = layer.psp unless layer.psp == nil
         end
         sand_silt = sand[layer_number] + silt[layer_number]
@@ -553,7 +553,7 @@ module SimulationsHelper
 
         if soil.slope <= 0
           soilSlope = 0.01
-        else
+         else
           soilSlope = (soil.slope / 100)
         end
         if hsg == "" || hsg == nil
@@ -616,19 +616,19 @@ module SimulationsHelper
       soil.ztk = 0 unless !(soil.ztk==nil)
   	  ##if tile drain was set up wtmx, wtmn, and wtbl should be zero. Otherwise keep the numbers. 11 06 2016.
       ##Goin back to the values for drainage type as before. Keep this here just in case Ali wants to have it latter 11 08 2016. Oscar Gallego
-	  bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 3)
-	  if !(bmp == nil) and bmp.depth > 0 then
-		  records = records + sprintf("%8.2f", 0)
-		  records = records + sprintf("%8.2f", 0)
-		  records = records + sprintf("%8.2f", 0)
-		  records = records + sprintf("%8.2f", 0)
-		  #soil.zqt = 0
-		  #soil.ztk = 0
-	  else
-		  records = records + sprintf("%8.2f", soil.wtmn)
-		  records = records + sprintf("%8.2f", soil.wtmx)
-		  records = records + sprintf("%8.2f", soil.wtbl)
-	  end
+      bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 3)
+  	  if !(bmp == nil) and bmp.depth > 0 then
+  		  records = records + sprintf("%8.2f", 0)
+  		  records = records + sprintf("%8.2f", 0)
+  		  records = records + sprintf("%8.2f", 0)
+  		  records = records + sprintf("%8.2f", 0)
+  		  #soil.zqt = 0
+  		  #soil.ztk = 0
+  	  else
+  		  records = records + sprintf("%8.2f", soil.wtmn)
+  		  records = records + sprintf("%8.2f", soil.wtmx)
+  		  records = records + sprintf("%8.2f", soil.wtbl)
+  	  end
       soil.gwst = 0 unless !(soil.gwst==nil)
       records = records + sprintf("%8.2f", soil.gwst)
       soil.gwmx = 0 unless !(soil.gwmx==nil)
@@ -648,10 +648,10 @@ module SimulationsHelper
       records = records + sprintf("%8.2f", soil.rtn1)
       soil.xidk = 0 unless !(soil.xidk==nil)
       records = records + sprintf("%8.2f", soil.xidk)
-	  records = records + sprintf("%8.2f", soil.zqt)
+      records = records + sprintf("%8.2f", soil.zqt)
       soil.zf = 0 unless !(soil.zf==nil)
       records = records + sprintf("%8.2f", soil.zf)
-	  records = records + sprintf("%8.2f", soil.ztk)
+      records = records + sprintf("%8.2f", soil.ztk)
       soil_info.push(records + "\n")
       #line 4 to 24 Layers information
       records = ""
@@ -731,15 +731,15 @@ module SimulationsHelper
       records = ""
       for layers in initial_layer..layer_number - 1
 	    if ssf[layers] == nil then
-			ssf[layers] = 0
-		end
-        if ssf[layers] > SoilPMaxForSoilDepth
-          ssf[layers] = SoilPDefault
-        end
-        if ssf[layers] == 0 || ssf[layers] == nil
-          ssf[layers] = SoilPDefault
-        end
-        records = records + sprintf("%8.2f", ssf[layers])
+			 ssf[layers] = 0
+		  end
+      if ssf[layers] > SoilPMaxForSoilDepth
+        ssf[layers] = SoilPDefault
+      end
+      if ssf[layers] == 0 || ssf[layers] == nil
+        ssf[layers] = SoilPDefault
+      end
+      records = records + sprintf("%8.2f", ssf[layers])
       end
       soil_info.push(records + "\n")
       records = ""
@@ -1689,16 +1689,16 @@ module SimulationsHelper
   def read_apex_results(msg)
     ActiveRecord::Base.transaction do
       begin
-	    #clean all of the results exiting for this scenario.
-		if session[:simulation] == "scenario" then
-			# clean results for scenario to avoid keeping some results from previous simulation
-			Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
-			Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
-		else
-			# clean results for watershed to avoid keeping some results from previous simulation
-			Result.where(:watershed_id => @watershed.id).delete_all
-			Chart.where(:watershed_id => @watershed.id).delete_all
-		end
+  	    #clean all of the results exiting for this scenario.
+  		  if session[:simulation] == "scenario" then
+          # clean results for scenario to avoid keeping some results from previous simulation
+          Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
+          Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
+  		  else
+          # clean results for watershed to avoid keeping some results from previous simulation
+          Result.where(:watershed_id => @watershed.id).delete_all
+          Chart.where(:watershed_id => @watershed.id).delete_all
+  		  end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
         start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
@@ -1963,7 +1963,6 @@ module SimulationsHelper
     scenario = 0
     watershed = 0
     if session[:simulation] == "scenario" then
-      chart = Chart.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id, :month_year => year).first
       field = @scenario.field_id
       soil = soil_id
       scenario = @scenario.id
@@ -1979,13 +1978,13 @@ module SimulationsHelper
       chart.scenario_id = scenario
       chart.watershed_id = watershed
       chart.description_id = description_id
-	  chart.crop_id = crop_id
+      chart.crop_id = crop_id
     end
     chart.value = value
     if chart.save then
-	  a = 2
+	   a = 2
     else
-	  a = 1
+	   a = 1
     end
   end
 
