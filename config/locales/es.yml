@@ -1276,8 +1276,8 @@ es:
     mapsystem:
         header:
         body1: 'El Sitema de Mapa le permite al usuario seleccionar las parcelas usando diferentes formas in el mapa. Los datos disponibles son <strong>UNICAMENTE para el área principal de los Estados Unidos.</strong>. Si usted quiere simular un área fuera de los Estados Unidos, se requiere que entre los datos de suelos y clima.'
-        body2: 'Despues de entrar los datos de suelos y clima mínimo o ninguna entrada adicional es equerida en las páginas mas adelante.'
-        body3: 'Para enfocarse en un área particular en los Estados Unidos el usuario puede hacerlo usando las erramientas de enfoque:'
+        body2: 'Despues de entrar los datos de suelos y clima mínimo o ninguna entrada adicional es requerida en las páginas mas adelante.'
+        body3: 'Para enfocarse en un área particular en los Estados Unidos el usuario puede hacerlo usando las herramientas de enfoque:'
         body4: 'Hay <strong>4 opciones</strong> dentro de el Sitema de Mapa:'
         option1:
             header: 'Opción 1: Elija un Area de Interes a ser dibujada'
@@ -1315,16 +1315,18 @@ es:
         body1: 'The User Input Method allows the user to select regions <strong>outside of mainland United States.</strong> However, to do this, the user must have significantly more information, including the user’s own weather files and soil information. In this page, the user will simply enter the General Location and Specific Location as shown below. This can be any sequence of letters, numbers, or characters. It is simply used as name. The information will be entered in the following pages.'
         body2: 'After you have entered the location, the State and County you selected (or the General and Specific location) will show up on the top of the screen (along with the project name) for the remainder of the program. An example is shown below:'
   locpage_html:
-    <strong>Location Information</strong><br></br>
-    The map allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.
-    When using this system, the weather and soil information can be uploaded from weather stations and databases, so minimal or no user input is required in later pages.
-    There are <strong>4 options</strong> within the mapping system.<br></br>
-    <strong>1. Choose an AOI type to begin drawing</strong><br>
-    <strong>Drawing an Area of Interest Selection (AOIs):</strong> The user first needs to select the button <img src="/serve_image/drawing_tool.png"> at the top center, in order to draw an AOI in the GIS map. It is drawn by connecting dots with the mouse, creating a figure. A field is considered an area of interest in NTT. After drawing the field, a message will pop up telling the user to enter the name of the farm. Enter the name of the field and advance. As the user enters the name, it will replace the default name in the text box for the field. From this point the field name entered will refer to the selected location.
-    Once the user clicks <strong>OK</strong>, the field location will be highlighted.<br></br>
-    <strong>Submitting:</strong> Finally, once you have drawn the AOI, you need to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.<br></br>
-    <strong>Deleting AOIs:</strong> To remove an AOI, first select the field that you would like to delete, and then click the <strong>Remove</strong> button.<br></br>
-    <strong>2. Choose AOIs shapefile to upload</strong><br>
+    <strong>Información de Ubicación</strong><br></br>
+        El Sitema de Mapa le permite al usuario seleccionar las parcelas usando diferentes formas en el mapa. Los datos disponibles son <strong>UNICAMENTE para el área principal de los Estados Unidos.</strong>. Si usted quiere simular un área fuera de los Estados Unidos, se requiere que entre los datos de suelos y clima.
+        Despues de entrar los datos de suelos y clima mínimo o ninguna entrada adicional es requerida en las páginas mas adelante.
+        Para enfocarse en un área particular en los Estados Unidos el usuario puede hacerlo usando las herramientas de enfoque.
+        Hay <strong>4 opciones</strong> dentro de el Sitema de Mapa. Elija el tipo de AOI para empezar a dibujar las parcelas<br></br>
+    <strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm. Enter the name of the farm and advance. As the user enters the name, it will replace the default name in the text box for the farm. From this point the farm name entered will refer to the selected location.
+    Once the user clicks <strong>OK</strong>, the farm location will be highlighted.<br></br>
+    <strong>Dibujar las parcelas:</strong> Primero el usuario necesita seleccionar el botón <strong><img src="/serve_image/drawing_tool.png"></strong> para dibujar una parcela en el mapa GIS. Las parcelas son dibujadas connectando puntos usando el ratón, creando una figura. Luego el programa le pedira el nombre de la parcela dandola un nombre por defecto. Usted puede cambiar el nombre de la parcela dado por NTT.<br></br>
+    <strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you need to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.<br></br>
+    <strong>Deleting Farms and Fields:</strong> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.<br></br>
+
+    <strong>Choose a farm and a field(s) shapefile to upload</strong><br>
     <strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder.<br></br>
     <strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button <strong>Choose file</strong> under the Upload Shapefile.<br></br>
     <strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile.<br></br>
