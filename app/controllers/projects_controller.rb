@@ -13,7 +13,8 @@ class ProjectsController < ApplicationController
   def index
     @user = User.find(session[:user_id])
     if @user.admin?
-      @projects = Project.order("#{sort_column} #{sort_direction}")
+      #@projects = Project.order("#{sort_column} #{sort_direction}")
+      @projects = Project.includes(:user).order("#{sort_column} #{sort_direction}")
     else
       @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
     end
@@ -877,7 +878,14 @@ class ProjectsController < ApplicationController
   end
 
   def sort_column
-    sortable_columns.include?(params[:column]) ? params[:column] : "Name"
+    case params[:column]
+      when "Project Name" 
+        return "Name"
+      when "Last Modified"
+        return "updated_at"
+    end
+    return "Name"
+    #sortable_columns.include?(params[:column]) ? params[:column] : "Name"
   end
 
   def sort_direction
