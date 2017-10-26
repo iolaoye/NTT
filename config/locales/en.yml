@@ -406,7 +406,7 @@ en:
     confirm: Are you sure?
     begin: Begin
     to: to
-    copy: copy
+    copy: Copy
     last_modified: Last Modified
     download: Download
     change: Change
@@ -545,6 +545,7 @@ en:
     load_scenario: Load Scenario
     last_simulation: Simulation date
     simulation_success: scenarios simulated successfully in
+    other_scenario: Copy Scenario from other field
   location:
     new_location: New Location
     edit: Editing Location
@@ -1231,17 +1232,17 @@ en:
     Click <strong>Return to Table of Contents</strong> to go to the NTT Table of Contents.<br>
   projpage:
     header: Start of a Project
-    statement: "Welcome1 to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool to get a basic understanding of how to navigate the <strong>NTT</strong> application. To activate all the features available by the user and define your project, click on this tab to activate the Project module. <br><br>"
+    statement: "Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool to get a basic understanding of how to navigate the <strong>NTT</strong> application. To activate all the features available by the user and define your project, click on this tab to activate the Project module. <br><br>"
     initial:
         header: To Start a Project
         statement: There are <b>three initial choices</b> to start a new project:<br>
-        item1: Select the <b>New Project</b> option to start a project from scratch<br>
+        item1: Select the <b>Create New Project</b> option to start a project from scratch<br>
         item2: Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br>
         item3: Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br>
     create:
         header: New Project Option
-        body1: Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.
-        body2: After you have entered the information, click the <strong>Save and Continue</strong> button to save the information and continue.
+        body1: Selecting the <strong>Create New Project</strong> button asks the user for the project name, and description information.
+        body2: After you have entered the information, click the <strong>Save</strong> button to save the information and continue.
     open:
         header: Upload Project Option
         body1: You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
@@ -1260,25 +1261,27 @@ en:
     to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
     <strong>To Start a Project</strong><br>
     There are <b>three initial choices</b> to start a new project:<br>
-    Select the <b>New Project</b> option to start a project from scratch<br>
+    Select the <b>Create New Project</b> option to start a project from scratch<br>
     Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br>
     Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br><br>
-    <strong>New Project Option</strong><br>
-    Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.
+    <strong>Create New Project Option</strong><br>
+    Selecting the <strong>Create New Project</strong> button asks the user for the project name, and description information.
     After you have entered the information, click the <strong>Create Project</strong> button to save the information and continue.<br>
     After you have opened the save project, click the <strong>Save Changes</strong> button to save the information and continue.<br><br>
     <strong>Upload Project Option</strong><br>
     You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.<br><br>
     <strong>Open an Example Project Option</strong><br>
     You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.
-    After you have entered the information, click the <b>Save and Continue</b> button to save the information and continue.<br><br>
-    <strong>Save Active Project</strong><br>
-    You can also use the <strong>Save Active Project...</strong> button to save the current project that you are working on.
-    <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.<br><br>
-    <strong>Close Active Project</strong><br>
-    You can also use the <strong>Close Active Project</strong> button to close the current project that you are working on.
-    When you attempt to close, a warning message will come up.
-    Closing an active project will erase all of that projects information. Because of this, if you would like to project for later use, it is extremely important that you save the project before closing it. By clicking the <strong>OK</strong> button on the warning message, the information will be cleared (and lost if not previously saved). If you have not yet saved and would like to, click cancel and follow the instructions for <strong>Save Active Project</strong> above.
+    After you have entered the information, click the <b>Save</b> button to save the information and continue.<br></br>
+    <strong>Download Project</strong><br>
+    You can click the <img src="/serve_image/download.gif"> button to save the current project that you are working on.
+    <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.<br></br>
+    <strong>Edit Project</strong><br>
+    To edit the name or the discription of the project then click <img src="/serve_image/edit.png">.<br><br>
+    <strong>Copy Project</strong><br>
+    To copy and create another same project then click <img src="/serve_image/copy.jpg">.<br><br>
+    <strong>Delete Project</strong><br>
+    To delete any project, click <img src="/serve_image/delete.png">.
   projpage_modified_html:
     <strong>Start of a Project</strong> <br></br>
     Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
@@ -1288,11 +1291,20 @@ en:
     Select the <b>Create New Project</b> option to start a project from scratch<br>
     Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br></br>
     <strong>Create New Project Option</strong><br>
-    Selecting the <strong>New Project</strong> button asks the user for the project name, and description information.
+    Selecting the <strong>Create New Project</strong> button asks the user for the project name, and description information.
     After you have entered the information, click the <strong>Create Project</strong> button to save the information and continue.<br>
     After you have opened the save project, click the <strong>Save Changes</strong> button to save the information and continue.<br><br>
     <strong>Upload Project Option</strong><br>
     You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.<br><br>
+    <strong>Download Project</strong><br>
+    You can click the <img src="/serve_image/download.gif"> button to save the current project that you are working on.
+    <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.<br></br>
+    <strong>Edit Project</strong><br>
+    To edit the name or the discription of the project then click <img src="/serve_image/edit.png">.<br><br>
+    <strong>Copy Project</strong><br>
+    To copy and create another same project then click <img src="/serve_image/copy.jpg">.<br><br>
+    <strong>Delete Project</strong><br>
+    To delete any project, click <img src="/serve_image/delete.png">.
   about_ntt_html:
     <strong>About Page</strong><br></br>
     This page is about Nutrient Tracking Tool (NTT).<br></br>
@@ -1306,28 +1318,28 @@ en:
         body3: 'To zoom to a particular state/county in the United States the user can select the State and County using the zoom tool:'
         body4: 'There are <strong>4 options</strong> within the mapping system:'
         option1:
-            header: 'Option 1: Choose an AOI type to begin drawing'
+            header: 'Option 1: Choose an AOI to begin drawing'
             item1:
-                body1: '<strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> at the top center, in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure, as shown in the figure below. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm as shown below. Enter the name of the farm and advance. As the user enters the name, it will replace the default name in the text box for the farm as shown in the following figure. From this point the farm name entered will refer to the selected location.'
-                body3: 'Once the user clicks <strong>OK</strong>, the farm location will be highlighted as shown below.'
+                body1: '<strong>Drawing an Area of Interest Selection (AOIs):</strong> The user first needs to select the button <img src="/serve_image/drawing_tool.png"> at the top center, in order to draw an AOI in the GIS map. It is drawn by connecting dots with the mouse, creating a figure, as shown in the figure below. A field is considered an area of interest in NTT. After drawing the field, a message will pop up telling the user to enter the name of the farm as shown below. Enter the name of the field and advance. As the user enters the name, it will replace the default name in the text box for the field as shown in the following figure. From this point the field name entered will refer to the selected location.'
+                body3: 'Once the user clicks <strong>OK</strong>, the field location will be highlighted as shown below.'
             item2: '<strong>Drawing Fields:</strong> Next, you will need to draw fields within the farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.'
             item3:
-                body3: '<strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.'
-            item4: '<strong>Deleting Farms and Fields:</strong> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.'
+                body3: '<strong>Submitting AOIs:</strong> Finally, once you have drawn the field, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.'
+            item4: '<strong>Deleting AOIs:</strong> To remove an AOI, first select the field that you would like to delete, and then click the <strong>Remove</strong> button.'
         option2:
-            header: 'Option 2: Choose a farm and a field(s) shapefile to upload'
+            header: 'Option 2: Choose AOIs shapefile to upload'
             item1: '<strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder. '
-            item2: '<strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button for the farm and for the field. The farm and field shapefile can be the same parameters, since, as mentioned above, the farm is simply a reference tool, and the data is drawn from the field shapefile that is uploaded. Nevertheless, you need to choose <strong>BOTH</strong> a <strong>farm shapefile</strong> and a <strong>field shapefile</strong> before uploading.'
-            item3: '<strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile for both a field and a farm.'
+            item2: '<strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button <strong>Choose file</strong> under the Upload Shapefile as shown in the figure:'
+            item3: '<strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile.'
             item4: '<strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.'
         option3:
             header: 'Option 3: Choose area of interest by address'
             item1: '<strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.'
-            item2: '<strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.'
+            item2: '<strong>Drawing AOIs:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.'
         option4:
             header: 'Option 4: Choose an area of interest by latitude/longitude'
             item1: '<strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).'
-            item2: '<strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.'
+            item2: '<strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing AOIs.'
     statecounty:
         header: State/County Method
         body1: 'The State/County Method allows you to select a particular area of interest based on the state and county. When using this method, the weather and soil information can be uploaded from weather stations and databases for that region, so minimal or no user input is required in later pages.'
@@ -1340,25 +1352,21 @@ en:
     <strong>Location Information</strong><br></br>
     The map allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.
     When using this system, the weather and soil information can be uploaded from weather stations and databases, so minimal or no user input is required in later pages.
-    There are <strong>4 options</strong> within the mapping system.
-    Choose an AOI type to begin drawing<br></br>
-    <strong>Drawing Farms:</strong> The user first needs to select the button <strong>Farm</strong> in order to draw a farm in the GIS map. Both farms and fields are drawn by connecting dots with the mouse, creating a figure. A farm is considered an area of interest in NTT, and data from the farm as a whole is not what is used. A farm is basically a reference point for the user. After drawing the farm, a message will pop up telling the user to enter the name of the farm. Enter the name of the farm and advance. As the user enters the name, it will replace the default name in the text box for the farm. From this point the farm name entered will refer to the selected location.
-    Once the user clicks <strong>OK</strong>, the farm location will be highlighted.<br></br>
-    <strong>Drawing Fields:</strong> The user first needs to select the button <strong><img src="/serve_image/drawing_tool.png"></strong> in order to draw a field in the GIS map. Fields are drawn by connecting dots with the mouse, creating a figure. Then the program will ask you to name the field giving you a default name. You can change the name of the field given by NTT.<br></br>
-    <strong>Submitting Farms and Fields:</strong> Finally, once you have drawn the farms and the fields, you need to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.<br></br>
-    <strong>Deleting Farms and Fields:</strong> To remove a farm or field, first select the field/farm that you would like to delete, and then click the <strong>Remove</strong> button.<br></br>
-
-    <strong>Choose a farm and a field(s) shapefile to upload</strong><br>
+    There are <strong>4 options</strong> within the mapping system.<br></br>
+    <strong>1. Choose an AOI type to begin drawing</strong><br>
+    <strong>Drawing an Area of Interest Selection (AOIs):</strong> The user first needs to select the button <img src="/serve_image/drawing_tool.png"> at the top center, in order to draw an AOI in the GIS map. It is drawn by connecting dots with the mouse, creating a figure. A field is considered an area of interest in NTT. After drawing the field, a message will pop up telling the user to enter the name of the farm. Enter the name of the field and advance. As the user enters the name, it will replace the default name in the text box for the field. From this point the field name entered will refer to the selected location.
+    Once the user clicks <strong>OK</strong>, the field location will be highlighted.<br></br>
+    <strong>Submitting:</strong> Finally, once you have drawn the AOI, you need to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.<br></br>
+    <strong>Deleting AOIs:</strong> To remove an AOI, first select the field that you would like to delete, and then click the <strong>Remove</strong> button.<br></br>
+    <strong>2. Choose AOIs shapefile to upload</strong><br>
     <strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder.<br></br>
-    <strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button for the farm and for the field. The farm and field shapefile can be the same parameters, since, as mentioned above, the farm is simply a reference tool, and the data is drawn from the field shapefile that is uploaded. Nevertheless, you need to choose <strong>BOTH</strong> a <strong>farm shapefile</strong> and a <strong>field shapefile</strong> before uploading.<br></br>
-    <strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile for both a field and a farm.<br></br>
+    <strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button <strong>Choose file</strong> under the Upload Shapefile.<br></br>
+    <strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile.<br></br>
     <strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.<br></br>
-
-    <strong>Choose area of interest by address</strong></br>
+    <strong>3. Choose area of interest by address</strong></br>
     <strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.<br></br>
-    <strong>Drawing Farm and Field:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the farms and fields once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing farms or fields.<br></br>
-
-    <strong>Choose an area of interest by latitude/longitude</strong><br>
+    <strong>Drawing AOIs:</strong> This option only allows you to zoom in to the particular area of interest. You need to draw the AOI, once you have done this in the same way that you would if you had used <strong>Option 1</strong>. View the instructions for <strong>Option 1</strong> above if you have any questions or problems with drawing AOIs.<br></br>
+    <strong>4. Choose an area of interest by latitude/longitude</strong><br>
     <strong>Type in the Coordinates:</strong> While typing in the coordinates make sure that you are using the correct format (Latitude comes before longitude, North latitude is positive, East longitude is positive).<br></br>
     <strong>Choose State and County</strong><br>To zoom to a particular state/county in the United States the user can select the State and County from the corresponding drop down list boxes.
 
@@ -1423,10 +1431,10 @@ en:
             body: 'To create field(s), Instructions are on the <a href=/help/page_4><b>Location</b></a> page.'
         delete:
             header: <b>Deleting a Field</b>
-            body: 'To delete field(s), simply click the "Red Cross" icon on the actions column.'
+            body: 'To delete field(s), simply click the <img src="/serve_image/delete.png"> icon on the actions column.'
     characteristics:
         header: Changing Field Characteristics
-        body: 'In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.'
+        body: 'In order to edit the characteristics of a field, click on the <img src="/serve_image/edit.png"> icon to navigate to an edit page.'
         name:
             header: Changing the Field Name
             body: 'In order to change field’s name, simply click on the current name of the field (in this case field1) to change. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
@@ -1439,10 +1447,10 @@ en:
         body_modified: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, results, and apex page.'
   fieldpage_html:
     <strong>Fields Page</strong><br></br>
-    The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.
+    The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields by clicking <img src="/serve_image/delete.png"> (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.
     If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.<br></br>
     <strong>Changing Field Characteristics</strong><br>
-    In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.<br></br>
+    In order to edit the characteristics of a field, click on the <img src="/serve_image/edit.png"> icon to navigate to an edit page.<br></br>
     <strong>Changing the Field Name</strong><br>
     In order to change field’s name, simply click on the current name of the field and type in the name of the field.<br></br>
     <strong>Changing the Field Area</strong><br>
@@ -1455,25 +1463,25 @@ en:
         body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
         body_modified: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 3 general rules that apply to all methods. They are as follows:'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
-        item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.'
+        item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <img src="/serve_image/edit.png"> icon in the <strong>Actions</strong> column.'
         item2_modified: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics.'
         item3: 'However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.'
-        item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <b>Soil Layers</b> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
+        item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
     mapsystem:
         header: Soil Information
         body: 'Users have different options of modifying their soil information. The list below shows all the possible ways that are available in NTT for modifying the soil information.'
         select:
-            header: Adding/Deleting a Soil
-            body1: 'Users can add a new soil by clicking on the <strong>New</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
+            header: Modifying a Soil
+            body1: 'Users can add a new soil by clicking on the <strong>Add New Soil Layers</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
             body2: 'After the soil has been added the user needs to enter at least one layer. The user needs to go to the layers page by clicking on the <b>Soil Layers</b> icon in the <b>Actions</b> column. The rest of the steps are described below in the "Adding/Deleting Layers" description.'
-            body3: 'To delete a soil simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
+            body3: 'To delete a soil simply click on the <img src="/serve_image/delete.png"> icon in the <b>Actions</b> column.'
         info:
             header: Editing Soil/Layer Information
             body: 'Some of the soil and all of the layer information can be edited when the Mapping System was used. The user can change the soil/layer information by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. It will open a new page that lets the user edit and change the different informations available for the soil. This option is also available for the layers. Once they have done this, they can save the changed inforamtion by clicking on the <b>Save</b> button.'
         addremove:
             header: Adding/Deleting Layers
             body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
-            body2: 'To delete a layer simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
+            body2: 'To delete a layer simply click on the <img src="/serve_image/edit.png"> icon in the <b>Actions</b> column.'
     advance:
         header: Advancing
         body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
@@ -1483,9 +1491,9 @@ en:
     The Soils page allows the user to verify, select, or create the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
     general rules that apply to all methods. They are as follows<br></br>
     The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.<br></br>
-    If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.<br></br>
+    If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <img src="/serve_image/edit.png"> icon in the <strong>Action</strong> column.<br></br>
     However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
-    Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <b>Soil Layers</b> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.
+    Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.
   soilpage_modified_html:
     <strong>Soils Page</strong><br></br>
     The Soils page allows the user to verify, select, or create the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
@@ -1501,8 +1509,8 @@ en:
     create:
         header: Creating a Scenario
         add:
-            body1: 'The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
-            body2: 'To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
+            body1: 'The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
+            body2: 'The user can copy scenarios from other projects and use it in the existing project. to copy scenarios click <strong>Copy Scenario..</strong> which will create a copy of the selected scenario. To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
     manipulate:
         header: Manipulating a Scenario’s Characteristics
         body1: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices '
@@ -1517,7 +1525,7 @@ en:
             header: <b>Add New Operation (Creating Operations from Scratch):</b>
             body1: 'The user can also create a new Cropping System from scratch. To do this, the user needs to  click on the <strong><em>Add New Operation</em></strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
             body2: 'If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b><em>Edit</em></b> icon in the <b><em>Actions</em></b> column. This will take the user to a new page where they can make the required changes to the operation.'
-            body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
+            body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <img src="/serve_image/edit.png"> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
     bmpnav:
         header: Best Management Practices (BMPs) Navigation
         body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
@@ -1682,10 +1690,12 @@ en:
         body1: '* See USDA website: <a href="http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849">http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849</a> for more detailed term descriptions.'
   managepage_html:
       <strong>Scenarios</strong><br></br>
-      The user can create a scenario by clicking on the <b>New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.
-      To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.<br></br>
-      <strong>Manipulating a Scenario’s Characteristics</strong>
-      Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices.
+      The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save</strong> button which will create the scenario and advances the user to the operation page.<br><br>
+      The user can copy scenarios from other projects and use it in the existing project. to copy scenarios click <strong>Copy Scenario..</strong> which will create a copy of the selected scenario.<br><br>
+      You can add as many scenarios as necessary. To simulate scenario(s), user needs to select which scenario to simulate and click <strong>Simulate Selected Scenario</strong>.<br><br>
+      To view results of the simulated scenario(s), click on <strong>View Results</strong>.<br><br>
+      <strong>Actions</strong><br>
+      Once a scenario has been created, user can edit by clicking <img src="/serve_image/edit.png">. User can copy the scenario and create a same new scenario by clicking <img src="/serve_image/copy.jpg">. User can remove any scenario by clicking <img src="/serve_image/delete.png">.
   operation_html:
       <strong>Operations</strong><br></br>
       The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices.
@@ -1695,8 +1705,8 @@ en:
       Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.<br></br>
       <strong>Add New Operation</strong><br>
       The user can also create a new Cropping System from scratch. To do this, the user needs to click on the <strong>Add New Operation</strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.
-      If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. This will take the user to a new page where they can make the required changes to the operation.
-      If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <b>Delete</b> icon in the <b>Actions</b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.
+      If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <img src="/serve_image/edit.png"> icon in the <b>Actions</b> column. This will take the user to a new page where they can make the required changes to the operation.
+      If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <img src="/serve_image/delete.png"> icon in the <b>Actions</b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.
   bmpnav_html:
       <strong>Best Management Practices (BMPs)</strong><br></br>
       Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.<br></br>
@@ -1738,15 +1748,17 @@ en:
     The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.<br></br>
     <strong>Creating a Field Routing Scenario</strong><br>
     <strong>Naming Your Watershed</strong><br>
-    To begin creating a field routing scenario, click <strong>New</strong>. Once you do this, a text box will pop up where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
+    To begin creating a field routing scenario, click <strong>Add New Field Routing</strong>. Once you do this, a text box will pop up where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
     <strong>Selecting Fields/Scenarios to Simulate</strong><br>
     Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the Field/scenario combinations, and click <strong>Add Fields / Scenario</strong>.
     Once you have finished selecting, click <strong>Back</strong> to go back to the watershed page.<br></br>
     <strong>Simulating/Viewing Results for Field Routing</strong><br>
-    Select the name(s) of the watershed to stimulate and click <b>Stimulate selected Field Routing (Watershed)</b>. To view results for field routings, select the field(s) and click <b>View Results</b>.
+    Select the name(s) of the watershed to stimulate and click <b>Stimulate selected Field Routing (Watershed)</b>. To view results for field routings, select the field(s) and click <b>View Results</b>.<br><br>
+    <strong>Actions</strong><br>
+    Once a field routing has been created, user can edit by clicking <img src="/serve_image/edit.png">. User can remove any scenario by clicking <img src="/serve_image/delete.png">.
   watershed_scenarios_html:
     <strong>Adding Scenarios</strong><br></br>
-    In this page, the user can add scenarios by clicking <strong>Add Field/scenario</strong> button. After clicking the button, user can select the field from <strong>Select Field</strong> dropdown menu and choose corresponding scenario by clicking <strong>Select Scenario</strong> dropdown menu. User can add or delete the selected scenarios by clicking "x" in the <strong>Action</strong> column. After adding scenarios, user can then go back to begin simulation. The selected fields and scenarios are routed from one to the next one.
+    In this page, the user can add scenarios by clicking <strong>Add Field/scenario</strong> button. After clicking the button, user can select the field from <strong>Select Field</strong> dropdown menu and choose corresponding scenario by clicking <strong>Select Scenario</strong> dropdown menu. User can add or delete the selected scenarios by clicking <img src="/serve_image/delete.png"> in the <strong>Action</strong> column. After adding scenarios, user can then go back to begin simulation. The selected fields and scenarios are routed from one to the next one.
   simpage:
     header: Simulation Page Help
     body1: 'In this page the user is able to run the simulations for the fields/scenarios or subprojects that were created.'
@@ -1761,7 +1773,7 @@ en:
             body1: 'To add a field/scenario or subproject to run, select either <strong>Add Subproject to Run</strong> or <strong>Add Field/Scenario to Run</strong>. The particular button that will be available will depend on the selection that you made under the heading <strong>Select Type</strong>. Once you have added all of the fields/scenarios or subprojects, it is time to simulate. The fields/scenarios or subprojects that you added will be seen on the page, as shown below:'
         removing:
             header: Removing a Field/Scenario or Subproject to Run
-            body1: 'To remove a field/scenario or subproject from the list to be simulated, click the <strong>Delete</strong> button to the left of the name of the desired scenario to delete.'
+            body1: 'To remove a field/scenario or subproject from the list to be simulated, click the <img src="/serve_image/edit.png"> button to the left of the name of the desired scenario to delete.'
     simulating:
         header: Simulating
         check:
@@ -1837,35 +1849,37 @@ en:
   apexcontrols_html:
     <strong>Controls</strong><br></br>
     Here you will see all the controls listed.<br><br>
-    To <strong>Edit</strong> a control, click the pencil icon under <strong>Actions</strong>.
+    To <strong>Edit</strong> a control, click the <img src="/serve_image/edit.png"> icon under <strong>Actions</strong>.
   apexparameters_html:
     <strong>Parameters</strong><br></br>
     Here you will see all the parameters listed.<br><br>
-    To <strong>Edit</strong> a paramter, click the pencil icon under <strong>Actions</strong>.
+    To <strong>Edit</strong> a paramter, click the <img src="/serve_image/edit.png"> icon under <strong>Actions</strong>.
   subareas_html:
     <strong>Subareas</strong><br></br>
     Here you will see all the subareas of the scenario that is currently loaded.
     <p>You can load a different subarea by changing the selected <strong>Subarea</strong> in the <strong>Scenario</strong> drop down list and then clicking <strong>Load Subarea</strong>.</p>
-    To <strong>View</strong> a subarea, click the magnifying glass icon under <strong>Actions</strong>.<br>
-    To <strong>Edit</strong> a subarea, click the pencil icon under <strong>Actions</strong>.
+    To <strong>View</strong> a subarea, click the <img src="/serve_image/view.png"> icon under <strong>Actions</strong>.<br>
+    To <strong>Edit</strong> a subarea, click the <img src="/serve_image/edit.png"> icon under <strong>Actions</strong>.
     <p><strong>Note:</strong> By default, the first scenario is automatically loaded</p>
   soils_html:
     <strong>Soils</strong><br></br>
     The Soils page allows user to enter the soils for each field.<br><br>
-    To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively
-    To view the <strong>Layers</strong> of a soil, click the soil block icon under <strong>Actions</strong>.<br>
-    To <strong>View</strong> a soil, click the magnifying glass icon under <strong>Actions</strong>.<br>
-    To <strong>Delete</strong> a soil, click the red "x" icon under <strong>Actions</strong>.<br>
+    To <strong>Select</strong> or <strong>Unselect</strong> a soil, check or uncheck the corresponsing box under <strong>Selected</strong> respectively.<br>
+    To view the <strong>Layers</strong> of a soil, click the <img src="/serve_image/layers.png"> icon under <strong>Actions</strong>.<br>
+    To <strong>View</strong> a soil, click the <img src="/serve_image/view.png"> icon under <strong>Actions</strong>.<br>
+    To <strong>edit</strong> a soil, click the <img src="/serve_image/edit.png"> icon under <strong>Actions</strong>.<br>
   soiloperations_html:
     <strong>Operations</strong><br></br>
     Here you will see all the operations of the soil/scenario combination that is currently loaded.
     <p>You can load a different soil/scenario combination by changing the selected <strong>Soil</strong> in the <strong>Soil</strong> drop down list, changing the selected <strong>Scenario</strong> in the Scenario drop down list, and then clicking <strong>Load Operation</strong>.</p>
-    To <strong>Edit</strong> an operation, click the pencil icon under <strong>Actions</strong>.
+    To <strong>Edit</strong> an operation, click the <img src="/serve_image/edit.png"> icon under <strong>Actions</strong>.
     <p><strong>Note:</strong> By default, the first soil and first scenario are automatically loaded</p>
   sites_html:
     <strong>Sites</strong><br></br>
     This is all the information about the APEX site.<br><br>
-    To <strong>Edit</strong> this site, click <strong>Edit</strong>
+    To <strong>View</strong> this site, click the <img src="/serve_image/view.png"> icon.<br>
+    To <strong>Edit</strong> this site, click <img src="/serve_image/edit.png"> icon.<br>
+    To <strong>Delete</strong> this site, click <img src="/serve_image/delete.png"> under action column.<br>
   modpage:
     header: Modifications Page Help
     body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'

@@ -39,7 +39,10 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => @field.id)
-    
+    @fields = Field.where(:location_id => @field.location_id).where("id != ?", @field.id)
+    if (params[:scenario] != nil)
+		copy_other_scenario
+	end
     add_breadcrumb t('menu.scenarios')
 
     respond_to do |format|
@@ -445,6 +448,16 @@ class ScenariosController < ApplicationController
     
     add_breadcrumb 'Scenarios'
 	render "index"
+  end
+
+  def copy_other_scenario
+  	@use_old_soil = false
+  	duplicate_scenario(params[:scenario][:id], " copy", params[:field_id])
+  	@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenarios = Scenario.where(:field_id => @field.id)
+    
+    add_breadcrumb 'Scenarios'
   end
 
   def download
