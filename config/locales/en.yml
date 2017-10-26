@@ -1288,7 +1288,7 @@ en:
     to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
     <strong>To Start a Project</strong><br>
     There are <b>two initial choices</b> to start a new project:<br></br>
-    Select the <b>Create Create New Project</b> option to start a project from scratch<br>
+    Select the <b>Create New Project</b> option to start a project from scratch<br>
     Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br></br>
     <strong>Create New Project Option</strong><br>
     Selecting the <strong>Create New Project</strong> button asks the user for the project name, and description information.
@@ -1471,7 +1471,7 @@ en:
         header: Soil Information
         body: 'Users have different options of modifying their soil information. The list below shows all the possible ways that are available in NTT for modifying the soil information.'
         select:
-            header: Adding/Deleting a Soil
+            header: Modifying a Soil
             body1: 'Users can add a new soil by clicking on the <strong>Add New Soil Layers</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
             body2: 'After the soil has been added the user needs to enter at least one layer. The user needs to go to the layers page by clicking on the <b>Soil Layers</b> icon in the <b>Actions</b> column. The rest of the steps are described below in the "Adding/Deleting Layers" description.'
             body3: 'To delete a soil simply click on the <img src="/serve_image/delete.png"> icon in the <b>Actions</b> column.'
