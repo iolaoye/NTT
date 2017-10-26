@@ -39,7 +39,10 @@ class ScenariosController < ApplicationController
     @field = Field.find(params[:field_id])
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => @field.id)
-    
+    @fields = Field.where(:location_id => @field.location_id).where("id != ?", @field.id)
+    if (params[:scenario] != nil)
+		copy_other_scenario
+	end
     add_breadcrumb t('menu.scenarios')
 
     respond_to do |format|
@@ -447,6 +450,16 @@ class ScenariosController < ApplicationController
 	render "index"
   end
 
+  def copy_other_scenario
+  	@use_old_soil = false
+  	duplicate_scenario(params[:scenario][:id], " copy", params[:field_id])
+  	@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenarios = Scenario.where(:field_id => @field.id)
+    
+    add_breadcrumb 'Scenarios'
+  end
+
   def download
   	@project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
@@ -484,7 +497,6 @@ class ScenariosController < ApplicationController
 	    if msg.eql?("OK") then msg = create_parameter_file() else return msg  end								#this prepares the parms.dat file
 	    if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end					#this prepares the apex.sit file
 	    if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end		#this prepares the apex.wth file
-	    	debugger
 	    if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
 	    if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg  end
 	    @last_soil = 0

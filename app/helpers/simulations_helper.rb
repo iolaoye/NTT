@@ -1487,26 +1487,26 @@ module SimulationsHelper
 
   def append_file(original_file, target_file, file_type)
     path = File.join(APEX, "APEX" + session[:session_id])
-	if File.exists?(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase)) then
-		FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
-    else
-		FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
-    end
-    case file_type
-      when "till"
-        File.open(File.join(path, target_file), "a+") do |f|
-          @change_till_depth.each do |row|
-            f << row
+      if File.exists?(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase)) then
+  		  FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
+      else
+  		  FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
+      end
+      case file_type
+        when "till"
+          File.open(File.join(path, target_file), "a+") do |f|
+            @change_till_depth.each do |row|
+              f << row
+            end
           end
-        end
-      when "fert"
-        File.open(File.join(path, target_file), "a+") do |f|
-          @new_fert_line.each do |row|
-            f << row
+        when "fert"
+          File.open(File.join(path, target_file), "a+") do |f|
+            @new_fert_line.each do |row|
+              f << row
+            end
           end
-        end
-    end #end case file_type
-    msg = send_file_to_APEX(read_file(target_file, false), target_file)
+      end #end case file_type
+      msg = send_file_to_APEX(read_file(target_file, false), target_file)
     #todo chcek how this will work with fert changing for grazing and fert appliction at the same time. Suggestion. firs get the changes for both and then change the fert file.
   end
 
