@@ -450,10 +450,10 @@
             <tr>
               <td class="indent" colspan="2">
                 <div class="field">
+                  <%= label :date, t('operation.planting_date'), :style => "font-weight:bold" %> <br>             
                   <%= label :year, t('datetime.prompts.year'), :class => 'field' %>
                   <%= select :bmp_ccr, :year, listYears.map { |e| [e[0], e[1]]}, {:selected => @year}, {:prompt => t('datetime.prompts.year')}%>
-                </div>
-                <div class="field">
+ 
                   <%= label :date, t('general.date'), :class => 'field' %>
                   <%= select :bmp_ccr, :month, listMonths.map { |e| [e[0], e[1]] }, {:selected => @month}, {:prompt => t('datetime.prompts.month')}%>
                   <%= select :bmp_ccr, :day, listDays.map { |e| [e[0], e[1]] }, {:selected => @day}, {:prompt => t('datetime.prompts.day')}%>

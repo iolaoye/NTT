@@ -606,6 +606,7 @@ en:
     po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
     planting_method: Planting Method
     manure_composition: Manure Composition
+    planting_date: Planting Date
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group

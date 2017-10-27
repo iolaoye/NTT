@@ -609,6 +609,7 @@ es:
     po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
     planting_method: Metodo de sembrado
     manure_composition: Composición del estiércol
+    planting_date: Fecha de Cultivo
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
