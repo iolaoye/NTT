@@ -668,6 +668,7 @@ en:
     pad: Pad
     additional_land: Is the buffer area included in your AOI?
     weather_change: use ±(°C)/±(%) to increase or decrease future temperature and/or precipitation to define the climate changes
+    ffpq: Fraction of field treated by
   months:
     january: January
     february: February
@@ -937,7 +938,7 @@ en:
     grass_field_portion: Grass field portion
     slope_ratio: Slope ratio
     filter_strip: Grass Buffer
-    waterway: Waterway (Grassed Buffer)
+    waterway: Grass Waterway
     contour_buffer: Contour Buffer
     land_leveling: Land Leveling
     crop_width: Crop width

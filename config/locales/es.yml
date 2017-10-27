@@ -671,6 +671,7 @@ es:
     pad: Almohadilla
     additional_land: Esta el área del buffer incluida en el Area de Interes?
     weather_change: Use ±(°C)/±(%) para incrementar or reducir a futuro la temperatura y/o precipitación para definir los cambios climáticos
+    ffpq: Fraccción de la paarcela tratada por
   months:
     january: Enero
     february: Febrero
