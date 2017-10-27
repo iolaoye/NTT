@@ -144,6 +144,8 @@
               <% else %>
                 <tr><td><%= t('soilpage_html')%></td></tr>
               <% end %>
+        <% when "layers" %>
+              <tr><td><%= t('layers_html')%></td></tr>
         <% when "scenarios" %>
               <tr><td><%= t('managepage_html')%></td></tr>
         <% when "operations" %>
@@ -173,11 +175,7 @@
         <% when "contact" %>
               <tr><td><%= t('contact_html')%></td></tr>
         <% when "help" %>
-              <% if ENV["APP_VERSION"] == "standard" %>
               <tr><td><%= t('help_html')%></td></tr>
-        <% else %>
-              <tr><td><%= t('help_modified_html')%></td></tr>
-              <% end %>
         <% end %>
         </table>
       </div>
