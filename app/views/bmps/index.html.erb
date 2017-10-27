@@ -325,7 +325,7 @@
             </tr>
             <tr>
               <td class="indent2" colspan="2">
-                <%= "Floodplain Flow" + " " + t('bmp.zero_to_one')%>
+                <%= t('bmp.ffpq') + " buffer" + t('bmp.zero_to_one')%>
                 <%= number_field :bmp_fs, :floodplain_flow, :value => bmp.slope_reduction, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
@@ -359,7 +359,7 @@
             </tr>
             <tr>
               <td class="indent" colspan="2">
-                <%= "Floodplain Flow" + " " + t('bmp.zero_to_one') %>
+                <%= t('bmp.ffpq') + " " + t('pdf.waterway') + t('bmp.zero_to_one') %>
                 <%= number_field :bmp_ww, :floodplain_flow, :value => bmp.slope_reduction, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
