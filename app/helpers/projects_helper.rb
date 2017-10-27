@@ -343,8 +343,9 @@ end
 	scenario = Scenario.find(scenario_id)   #1. find scenario to copy
 	#2. copy scenario to new scenario
   	new_scenario = scenario.dup
-	new_scenario.name = scenario.name + name 
+	new_scenario.name = scenario.name + name
 	new_scenario.field_id = new_field_id
+	new_scenario.last_simulation = ""
 	if new_scenario.save
 		@new_scenario_id = new_scenario.id
 		#3. Copy subareas info by scenario
@@ -358,6 +359,6 @@ end
 	else
 		return "Error Saving scenario"
 	end   # end if scenario saved
+  	return "OK"
   end
-
 end
