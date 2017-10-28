@@ -25,14 +25,15 @@ updatePlantPopulation = ->
         $("#operation_amount").val(crop.plant_population_ft)
 
 updateNutrients = (animal) ->
-  if ($("#operation_type_id").val() == "2")
-    $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-    if ($("#operation_subtype_id").val() == "57")
-      $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
-    else
+  if ($("#operation_activity_id").val() == "2")
+    if ($("#operation_type_id").val() == "2")
       $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-  else
-    $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+      if ($("#operation_subtype_id").val() == "57")
+        $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
+      else
+        $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+    else
+      $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
   if (animal == 0)
     url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
   else
@@ -137,12 +138,13 @@ updateTypes = ->
 	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units
 
 updateFerts = ->
-  if ($("#operation_type_id").val() == "2")
-    $("#div_moisture").show();
-    $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-  else
-    $("#div_moisture").hide();
-    $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+  if ($("#operation._activity_id").val() == "2")
+    if ($("#operation_type_id").val() == "2")
+      $("#div_moisture").show();
+      $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+    else
+      $("#div_moisture").hide();
+      $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
   url = "/fertilizer_types/" + $("#operation_type_id").val() + "/fertilizers.json"
   $.getJSON url, (fertilizers) ->
     items = []
