@@ -3,7 +3,7 @@ class BmpsController < ApplicationController
   before_filter :take_names
 
   def take_names
-    @project_name = @project.name
+    @project_name = Project.find(params[:project_id]).name
 	  @field = Field.find(params[:field_id])
     @field_name = @field.field_name
     @scenario_name = Scenario.find(params[:scenario_id]).name
@@ -909,6 +909,7 @@ class BmpsController < ApplicationController
 
 ### ID: 20 
   def rotational_grazing(type)
+    debugger
     @bmp.animal_id = params[:bmp_rg][:animal_id]
     @bmp.number_of_animals = params[:bmp_rg][:number_of_animals]
     @bmp.sides = params[:bmp_rg][:year]
