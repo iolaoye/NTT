@@ -25,18 +25,17 @@ class BmpsController < ApplicationController
 # GET /bmps
 # GET /bmps.json
   def index
-    debugger
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-	if @project.location.state_id == 25 || @project.location.state_id == 26 then
-		@irrigations = Irrigation.all
-	else
-		@irrigations = Irrigation.where("id < 8")
-	end
+  	if @project.location.state_id == 25 || @project.location.state_id == 26 then
+  		@irrigations = Irrigation.all
+  	else
+  		@irrigations = Irrigation.where("id < 8")
+  	end
     add_breadcrumb t('menu.bmps')
 
     get_bmps()
-	  take_names()
+	  #take_names()
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @bmps }
