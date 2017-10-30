@@ -494,12 +494,12 @@
                 <div class="field">
                   <%= label :date, t('bmp.grazing_date') %>              
                   <%= select :bmp_rg, :year, listYears.map { |e| [e[0], e[1]]}, {:prompt => t('datetime.prompts.year'), :selected => bmp.sides}%>
-                  <%= select :bmp_rg, :month, listMonths.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.month'), :selected => bmp.org_n}%>
-                  <%= select :bmp_rg, :day, listDays.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.day'), :selected => bmp.no3_n}%>
+                  <%= select :bmp_rg, :month, listMonths.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.month'), :selected => bmp.org_n.to_i}%>
+                  <%= select :bmp_rg, :day, listDays.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.day'), :selected => bmp.no3_n.to_i}%>
                   <%= label :to, t('general.to') %>
                   <%= select :bmp_rg, :year_to, listYears.map { |e| [e[0], e[1]]}, {:prompt => t('datetime.prompts.year'), :selected => bmp.irrigation_id}%>
-                  <%= select :bmp_rg, :month_to, listMonths.map { |e| [e[0], e[1]]}, {:prompt => t('datetime.prompts.month'), :selected => bmp.org_p}%>
-                  <%= select :bmp_rg, :day_to, listDays.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.day'), :selected => bmp.po4_p}%>
+                  <%= select :bmp_rg, :month_to, listMonths.map { |e| [e[0], e[1]]}, {:prompt => t('datetime.prompts.month'), :selected => bmp.org_p.to_i}%>
+                  <%= select :bmp_rg, :day_to, listDays.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.day'), :selected => bmp.po4_p.to_i}%>
                 </div>
               </td>
             </tr>

@@ -3,7 +3,7 @@ class BmpsController < ApplicationController
   before_filter :take_names
 
   def take_names
-    @project_name = Project.find(params[:project_id]).name
+    @project_name = @project.name
 	  @field = Field.find(params[:field_id])
     @field_name = @field.field_name
     @scenario_name = Scenario.find(params[:scenario_id]).name
@@ -25,18 +25,17 @@ class BmpsController < ApplicationController
 # GET /bmps
 # GET /bmps.json
   def index
-    debugger
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-	if @project.location.state_id == 25 || @project.location.state_id == 26 then
-		@irrigations = Irrigation.all
-	else
-		@irrigations = Irrigation.where("id < 8")
-	end
+  	if @project.location.state_id == 25 || @project.location.state_id == 26 then
+  		@irrigations = Irrigation.all
+  	else
+  		@irrigations = Irrigation.where("id < 8")
+  	end
     add_breadcrumb t('menu.bmps')
 
     get_bmps()
-	  take_names()
+	  #take_names()
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @bmps }
@@ -910,7 +909,6 @@ class BmpsController < ApplicationController
 
 ### ID: 20 
   def rotational_grazing(type)
-    debugger
     @bmp.animal_id = params[:bmp_rg][:animal_id]
     @bmp.number_of_animals = params[:bmp_rg][:number_of_animals]
     @bmp.sides = params[:bmp_rg][:year]
