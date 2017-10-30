@@ -669,6 +669,10 @@ en:
     additional_land: Is the buffer area included in your AOI?
     weather_change: use ±(°C)/±(%) to increase or decrease future temperature and/or precipitation to define the climate changes
     ffpq: Fraction of field treated by
+    grazing_date: Grazing dates
+    hours_grazed: '# of consecutive hours per day grazed'
+    days_grazed: '# of consecutive days grazed at a time (in each paddock)'
+    rest_time: 'Pasture rest time (days) between grazings'
   months:
     january: January
     february: February

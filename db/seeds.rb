@@ -2,6 +2,9 @@
 file = "db/seeds/tillages.rb"
 load file
 
+file = "db/seeds/bmpsublists.rb"
+load file
+
 cont = false
 
 if cont then
@@ -16,13 +19,11 @@ load file
 file = "db/seeds/aplcat_parameters.rb"
 load file
 
-
 file = "db/seeds/bmplists.rb"
 load file
 
 file = "db/seeds/bmpsublists.rb"
 load file
-
 
 file = "db/seeds/controls.rb"
 load file

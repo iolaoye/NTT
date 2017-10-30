@@ -672,6 +672,10 @@ es:
     additional_land: Esta el área del buffer incluida en el Area de Interes?
     weather_change: Use ±(°C)/±(%) para incrementar or reducir a futuro la temperatura y/o precipitación para definir los cambios climáticos
     ffpq: Fraccción de la paarcela tratada por
+    grazing_date: Fechas Pastoreo
+    hours_grazed: '# de horas consecutivas por day en pastoreo'
+    days_grazed: '# días consecutivos en pastoreo a la vez (en cada subparcela)'
+    rest_time: 'Tiempo de descanso de los pastos (días) entre pastoreos'
   months:
     january: Enero
     february: Febrero
