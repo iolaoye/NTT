@@ -3,10 +3,10 @@ class FertilizersController < ApplicationController
   # GET /fertilizers.json
   def index
     if (params[:id] == "animal") then
-		@fertilizers = Fertilizer.where(:fertilizer_type_id => "2", :status => true, :animal => true)
-	else
-		@fertilizers = Fertilizer.where(:fertilizer_type_id => params[:fertilizer_type_id], :status => true)
-	end 
+		  @fertilizers = Fertilizer.where(:fertilizer_type_id => "2", :status => true, :animal => true).order("name")
+    else
+		  @fertilizers = Fertilizer.where(:fertilizer_type_id => params[:fertilizer_type_id], :status => true).order("name")
+    end 
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +17,6 @@ class FertilizersController < ApplicationController
   # GET /fertilizers/1
   # GET /fertilizers/1.json
   def show
-  
     @fertilizer = Fertilizer.find(params[:id])
 
     respond_to do |format|
