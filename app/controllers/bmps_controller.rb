@@ -78,7 +78,7 @@ class BmpsController < ApplicationController
   				end
   			end
   		end
-  		bmp_list = 20
+  		bmp_list = 19
       if bmp.bmpsublist_id == 19 then   # cover crop
         if bmp.id == nil then
           operation = @scenario.operations.where(:activity_id => 5).last
@@ -99,7 +99,7 @@ class BmpsController < ApplicationController
         end
       end
   		if @field_type != false then
-  			bmp_list = 20
+  			bmp_list = 19
   		end
   		if bmp.bmpsublist_id == bmp_list then
   			break
