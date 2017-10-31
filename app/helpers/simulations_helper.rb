@@ -66,9 +66,9 @@ module SimulationsHelper
   end
 
   def send_files_to_APEX(file)
-    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    uri = URI(URL_NTT1)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth)
+    res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth, "bmp" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -77,13 +77,18 @@ module SimulationsHelper
   end
 
   def send_files1_to_APEX(file)
+    bmp = @scenario.bmps.find_by_bmpsublist_id(20)
+    bmp_string = ""
+    if bmp != nil then
+      bmp_string = bmp.animal_id + "|" + bmp.number_of_animals + "|" + bmp.sides + "|" + bmp.org_n + "|" + bmp.no3_n + "|" + bmp.irrigation_id + "|" + bmp.org_p + "|" + bmp.po4_p + "|" + bmp.hours + "|" + bmp.days + "|" + bmp.area
+    end
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    url = URI.parse("http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx")
+    url = URI.parse(URL_NTT1)
     http = Net::HTTP.new(url.host,url.port)
     http.read_timeout = 120
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     req = Net::HTTP::Post.new(url.path)
-    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file})
+    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "bmp" => bmp_string, "bmp" => ""})
     res = http.request(req)
     if res.body.include?("Created") then
       return "OK"
@@ -93,9 +98,9 @@ module SimulationsHelper
   end
 
   def send_file_to_APEX(apex_string, file)
-    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    uri = URI(URL_NTT1)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
+    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "bmp" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -104,8 +109,8 @@ module SimulationsHelper
   end
 
   def send_file1_to_APEX(apex_string, file)
-    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
+    uri = URI(URL_NTT)
+    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "bmp" => "")
     if res.body.include?("Created") then
       return "OK"
     else

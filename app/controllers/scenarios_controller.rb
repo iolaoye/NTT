@@ -40,7 +40,7 @@ class ScenariosController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
-    @fields = Field.where(:location_id => @field.location_id).where("id != ?", @field.id)
+    
     if (params[:scenario] != nil)
 		msg = copy_other_scenario
 		if msg != "OK" then
