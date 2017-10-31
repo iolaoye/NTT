@@ -3,7 +3,7 @@ class FertilizersController < ApplicationController
   # GET /fertilizers.json
   def index
     if (params[:id] == "animal") then
-		  @fertilizers = Fertilizer.where(:fertilizer_type_id => "2", :status => true, :animal => true).order("name")
+		  @fertilizers = Fertilizer.where(:fertilizer_type_id => "2", :status => true, :animal => true).where("not name like '%Poultry%'").order("name")
     else
 		  @fertilizers = Fertilizer.where(:fertilizer_type_id => params[:fertilizer_type_id], :status => true).order("name")
     end 

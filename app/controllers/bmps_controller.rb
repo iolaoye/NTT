@@ -1248,6 +1248,7 @@ class BmpsController < ApplicationController
           end
         end
         subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
+        @inps = 0
         if subarea != nil then
           #if i == 0 then
             @inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
