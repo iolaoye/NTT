@@ -202,7 +202,7 @@ class BmpsController < ApplicationController
   			create(17)
   		end
 		  if !(params[:bmp_mc] == nil) # when this is hidden because there is not manure application
-  			if !(params[:bmp_mc][:animal_id] == "") && !(params[:bmp_mc][:animal_id] == nil) then 
+  			if !(params[:bmp_mc][:animal_id] == "") && !(params[:bmp_mc][:animal_id] == nil) then
   				create(18)
   			end
 		  end
@@ -689,7 +689,7 @@ class BmpsController < ApplicationController
     case type
       when "create"
 		@bmp.area = params[:bmp_wl][:area]
-		if params[:bmp_wl][:buffer_land] == nil then 
+		if params[:bmp_wl][:buffer_land] == nil then
 			@bmp.sides = 0
 		else
 			@bmp.sides = 1
@@ -765,7 +765,7 @@ class BmpsController < ApplicationController
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
     		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
     		@bmp.crop_id = 1 #record not found error
-			if params[:bmp_fs][:buffer_land] == nil then 
+			if params[:bmp_fs][:buffer_land] == nil then
 				@bmp.sides = 0
 			else
 				@bmp.sides = 1
@@ -793,7 +793,7 @@ class BmpsController < ApplicationController
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
         @bmp.slope_reduction = params[:bmp_fs][:floodplain_flow]
     		@bmp.crop_id = params[:bmp_fs][:crop_id]
-    		if params[:bmp_fs][:buffer_land] == nil then 
+    		if params[:bmp_fs][:buffer_land] == nil then
     			@bmp.sides = 0
     		else
     			@bmp.sides = 1
@@ -804,7 +804,7 @@ class BmpsController < ApplicationController
         else
           @bmp.grass_field_portion = 0.00
         end
-    		if @bmp.area == 0 || @bmp.area == nil then 
+    		if @bmp.area == 0 || @bmp.area == nil then
     			length = Math.sqrt(@field.field_area)			# find the length of the field
     			width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_KM			# convert width from ft to km
     			@bmp.area = (length * width / AC_TO_KM2).round(2)	# calculate area in km and convert to ac

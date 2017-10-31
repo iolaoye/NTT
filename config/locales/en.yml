@@ -618,13 +618,25 @@ en:
     days_range_number: "(0-365)"
     hours_range: "(0-24)"
     percentage_range: "(0 - 100%)"
+    millimeters_range: " (7600 - 30000)"
+    millimeters_drange: " (10 - 51)"
+    ksat_range: " (0.01 - 4.00)"
     lbs_per_day: lbs per day
     ft: ft
     acres: acres
     inches: inches
     lbs: lbs
+    millimeters: (mm)
+    millimeters_day: (mm/day)
+    millimeters_hour: (mm/h)
     climate_warning: This BMP may take longer to save
     irrigation: Irrigation
+    option_1: Option 1
+    option_2: Option 2
+    s_drain: Distance between two drain tubes or tiles
+    drain_co: Daily drainage coeffcient
+    p_c: Pump Capacity
+    latksatf: Multiplication factor to determine lateral ksat
     crop: Crop
     water_stress_factor: Water stress factor
     irrigation_efficiency: Irrigation efficiency
