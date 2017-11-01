@@ -65,8 +65,7 @@ module SimulationsHelper
 	msg = "OK"
   end
 
-  def send_files_to_APEX(file)
-    uri = URI(URL_NTT1)
+  def send_files_to_APE)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth)
     if res.body.include?("Created") then
@@ -83,7 +82,7 @@ module SimulationsHelper
       #bmp_string = bmp.animal_id + "|" + bmp.number_of_animals + "|" + bmp.sides + "|" + bmp.org_n + "|" + bmp.no3_n + "|" + bmp.irrigation_id + "|" + bmp.org_p + "|" + bmp.po4_p + "|" + bmp.hours + "|" + bmp.days + "|" + bmp.area
     #end
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    url = URI.parse(URL_NTT1)
+    url = URI.parse(URL_NTT)
     http = Net::HTTP.new(url.host,url.port)
     http.read_timeout = 120
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
@@ -98,7 +97,7 @@ module SimulationsHelper
   end
 
   def send_file_to_APEX(apex_string, file)
-    uri = URI(URL_NTT1)
+    uri = URI(URL_NTT)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
     if res.body.include?("Created") then
@@ -247,6 +246,7 @@ module SimulationsHelper
       #response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
       #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
       #print_array_to_file(PATH, "APEX.wth")
+      debugger
       @apex_wth = send_file1_to_APEX("WTH", path)
     end
     #todo after file is copied if climate bmp is in place modified the weather file.
@@ -2294,137 +2294,137 @@ module SimulationsHelper
   end
 
   def create_herd_file(animals, hours, animal_code, soil_percentage)
-        #Dim manureProduced, bioConsumed, urineProduced As Single
-        #Dim manureId
-        #Dim animalField As Integer
-        #calculate number of animals.
-        case animal_code
-            when 43		#"Dairy"    '1
-                manureProduced = 3.9
-                bioConsumed = 9.1
-                urineProduced = 11.8
-                manureId = 43
-            #when "Dairy-dry cow"    '2
-            #    manureProduced = 5.5
-            #    bioConsumed = 9.1
-            #    urineProduced = 11.8
-            #    manureId = 43
-            #when "Dairy-calf and heifer"     '3
-            #    manureProduced = 5.5
-            #    bioConsumed = 9.1
-            #    urineProduced = 11.8
-            #    manureId = 43
-            #when "Dairy bull"     '4
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 43
-            when 44   #"Beef"    '5
-                manureProduced = 3.9
-                bioConsumed = 9.1
-                urineProduced = 8.2
-                manureId = 44
-            #when "Beef-bull"     '6
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 44
-            #when "Beef-feeder yearling"    '7
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 44
-            #when "Beef-calf"    '8
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 44
-            when 47   #"Sheep"    '9
-                manureProduced = 5
-                bioConsumed = 9.0
-                urineProduced = 6.8
-                manureId = 47
-            when 49   #"Horse"   '10
-                manureProduced = 6.8
-                bioConsumed = 9.1
-                urineProduced = 4.5
-                manureId = 49
-            #when "Llama"    '11
-            #    manureProduced = 5
-            #    bioConsumed = 9.1
-            #    urineProduced = 6.8
-            #    manureId = 52
-            #when "Alpaca"   '12
-            #    manureProduced = 5.1
-            #    bioConsumed = 9.1
-            #    urineProduced = 6.8
-            #    manureId = 52
-            #when "Buffalo"   '13
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 52
-            #when "Emu (breeding stock)"   '14
-            #    manureProduced = 10
-            #    bioConsumed = 9.1
-            #    urineProduced = 6.8
-            #    manureId = 52
-            #when "Emu (young birds)"    '15
-            #    manureProduced = 9.8
-            #    bioConsumed = 9.0
-            #    urineProduced = 6.8
-            #    manureId = 52
-            when 46   #"Swine"    '16
-                manureProduced = 5
-                bioConsumed = 9.1
-                urineProduced = 17.7
-                manureId = 46
-            when 52   #"Broiler"    '17
-                manureProduced = 10.4
-                bioConsumed = 10
-                urineProduced = 6.8
-                manureId = 52
-            else
-                manureProduced = 12
-                bioConsumed = 9.08
-                urineProduced = 0
-                manureId = 56
-        end   # end case
+    #Dim manureProduced, bioConsumed, urineProduced As Single
+    #Dim manureId
+    #Dim animalField As Integer
+    #calculate number of animals.
+    case animal_code
+        when 43		#"Dairy"    '1
+            manureProduced = 3.9
+            bioConsumed = 9.1
+            urineProduced = 11.8
+            manureId = 43
+        #when "Dairy-dry cow"    '2
+        #    manureProduced = 5.5
+        #    bioConsumed = 9.1
+        #    urineProduced = 11.8
+        #    manureId = 43
+        #when "Dairy-calf and heifer"     '3
+        #    manureProduced = 5.5
+        #    bioConsumed = 9.1
+        #    urineProduced = 11.8
+        #    manureId = 43
+        #when "Dairy bull"     '4
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 43
+        when 44   #"Beef"    '5
+            manureProduced = 3.9
+            bioConsumed = 9.1
+            urineProduced = 8.2
+            manureId = 44
+        #when "Beef-bull"     '6
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 44
+        #when "Beef-feeder yearling"    '7
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 44
+        #when "Beef-calf"    '8
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 44
+        when 47   #"Sheep"    '9
+            manureProduced = 5
+            bioConsumed = 9.0
+            urineProduced = 6.8
+            manureId = 47
+        when 49   #"Horse"   '10
+            manureProduced = 6.8
+            bioConsumed = 9.1
+            urineProduced = 4.5
+            manureId = 49
+        #when "Llama"    '11
+        #    manureProduced = 5
+        #    bioConsumed = 9.1
+        #    urineProduced = 6.8
+        #    manureId = 52
+        #when "Alpaca"   '12
+        #    manureProduced = 5.1
+        #    bioConsumed = 9.1
+        #    urineProduced = 6.8
+        #    manureId = 52
+        #when "Buffalo"   '13
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 52
+        #when "Emu (breeding stock)"   '14
+        #    manureProduced = 10
+        #    bioConsumed = 9.1
+        #    urineProduced = 6.8
+        #    manureId = 52
+        #when "Emu (young birds)"    '15
+        #    manureProduced = 9.8
+        #    bioConsumed = 9.0
+        #    urineProduced = 6.8
+        #    manureId = 52
+        when 46   #"Swine"    '16
+            manureProduced = 5
+            bioConsumed = 9.1
+            urineProduced = 17.7
+            manureId = 46
+        when 52   #"Broiler"    '17
+            manureProduced = 10.4
+            bioConsumed = 10
+            urineProduced = 6.8
+            manureId = 52
+        else
+            manureProduced = 12
+            bioConsumed = 9.08
+            urineProduced = 0
+            manureId = 56
+      end   # end case
 
-        if animals < 1 then
-            animals = 1
-        end
-        #If _animals.Count = 0 Then LoadAnimalUnits()
-        #For Each animal In _animals
-        #    If animal.Number.Split("|")(0) = manureId Then
-        #        conversionUnit = animal.ConversionUnit
-        #    End If
-        #Next
+      if animals < 1 then
+          animals = 1
+      end
+      #If _animals.Count = 0 Then LoadAnimalUnits()
+      #For Each animal In _animals
+      #    If animal.Number.Split("|")(0) = manureId Then
+      #        conversionUnit = animal.ConversionUnit
+      #    End If
+      #Next
 
-		conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
-        @last_herd += 1
-        animalField = animals * soil_percentage / 100
-        herdFile = sprintf("%4d", @last_herd) #For different owners
-        #comentarized because there is not field divided anymore
-        #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
-        #    herdFile &= Format(CInt((animalField(0) / 2) * conversionUnit), "#####0.0").PadLeft(8)
-        #Else
-        #    herdFile &= Format(CInt(animalField(i) * conversionUnit), "#####0.0").PadLeft(8)
-        #End If
-        herdFile += sprintf("%8.1f", (animalField * conversion_unit).round(0))
-        herdFile += sprintf("%8.1f", animal_code)
-        herdFile += sprintf("%8.2f",(24 - hours) / 24)
-        herdFile += sprintf("%8.2f",bioConsumed)
-        herdFile += sprintf("%8.2f",manureProduced)
-        herdFile += sprintf("%8.2f",urineProduced)
-        @herd_list.push(herdFile + "\n")
-        #duplicate in case it is just one soil because the area is divided in two equal fields.
-        #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
-        #    herdList.Add(herdFile)
-        #End If
+	    conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
+      @last_herd += 1
+      animalField = animals * soil_percentage / 100
+      herdFile = sprintf("%4d", @last_herd) #For different owners
+      #comentarized because there is not field divided anymore
+      #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
+      #    herdFile &= Format(CInt((animalField(0) / 2) * conversionUnit), "#####0.0").PadLeft(8)
+      #Else
+      #    herdFile &= Format(CInt(animalField(i) * conversionUnit), "#####0.0").PadLeft(8)
+      #End If
+      herdFile += sprintf("%8.1f", (animalField * conversion_unit).round(0))
+      herdFile += sprintf("%8.1f", animal_code)
+      herdFile += sprintf("%8.2f",(24 - hours) / 24)
+      herdFile += sprintf("%8.2f",bioConsumed)
+      herdFile += sprintf("%8.2f",manureProduced)
+      herdFile += sprintf("%8.2f",urineProduced)
+      @herd_list.push(herdFile + "\n")
+      #duplicate in case it is just one soil because the area is divided in two equal fields.
+      #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
+      #    herdList.Add(herdFile)
+      #End If
 
-        herdFile += ""
-		msg = send_file_to_APEX(@herd_list, "HERD.dat")
-        return bioConsumed
+      herdFile += ""
+	    msg = send_file_to_APEX(@herd_list, "HERD.dat")
+      return bioConsumed
     end #end create_herd_file
 end
