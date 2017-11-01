@@ -171,6 +171,11 @@
               <tr><td><%= t('bmpnav_html')%></td></tr>
         <% when "results" %>
               <tr><td><%= t('resultspage_html')%></td></tr>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= raw t('result_body1')%></td></tr>
+              <tr><td><%= raw t('result_body2')%></td></tr>
+              <% end %>
+              <tr><td><%= raw t('result_body3')%></td></tr>
         <% when "apex_controls" %>
               <tr><td><%= t('apexcontrols_html')%></td></tr>
         <% when "apex_parameters" %>
