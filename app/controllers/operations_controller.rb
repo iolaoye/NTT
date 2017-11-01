@@ -158,45 +158,45 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1.json
   def update
     @operation = Operation.find(params[:id])
-	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+    @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
       if @operation.update_attributes(operation_params)
-		update_amount()
+		    update_amount()
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
-		if @operation.activity_id == 7 then
-			if (Operation.find_by_type_id(@operation.type_id) != nil) then
-				@operation1 = Operation.find_by_type_id(@operation.type_id)
-			else
-				operation_id = @operation.id
-				@operation1 = Operation.new(operation_params)
-				@operation1.activity_id = 8
-				@operation1.type_id = operation_id
-				@operation1.scenario_id = params[:scenario_id]
-				@operation1.amount = 0
-				@operation1.depth = 0
-				@operation1.no3_n = 0
-				@operation1.po4_p = 0
-				@operation1.org_n = 0
-				@operation1.org_p = 0
-				@operation1.nh3 = 0
-				@operation1.moisture = 0
-				@operation1.subtype_id = 0
-			end
-			@operation1.year = params[:year1]
-			@operation1.month_id = params[:month_id1]
-			@operation1.day = params[:day1]
-			@operation1.save
-			soil_operations = SoilOperation.where(:operation_id => @operation1.id)
-			soil_operations.each do |soil_operation|
-			  update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
-			end
-		end 
+    		if @operation.activity_id == 7 then
+    			if (Operation.find_by_type_id(@operation.type_id) != nil) then
+    				@operation1 = Operation.find_by_type_id(@operation.type_id)
+    			else
+    				operation_id = @operation.id
+    				@operation1 = Operation.new(operation_params)
+    				@operation1.activity_id = 8
+    				@operation1.type_id = operation_id
+    				@operation1.scenario_id = params[:scenario_id]
+    				@operation1.amount = 0
+    				@operation1.depth = 0
+    				@operation1.no3_n = 0
+    				@operation1.po4_p = 0
+    				@operation1.org_n = 0
+    				@operation1.org_p = 0
+    				@operation1.nh3 = 0
+    				@operation1.moisture = 0
+    				@operation1.subtype_id = 0
+    			end
+    			@operation1.year = params[:year1]
+    			@operation1.month_id = params[:month_id1]
+    			@operation1.day = params[:day1]
+    			@operation1.save
+    			soil_operations = SoilOperation.where(:operation_id => @operation1.id)
+    			soil_operations.each do |soil_operation|
+    			  update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
+    			end
+    		end 
         if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
@@ -705,7 +705,7 @@ class OperationsController < ApplicationController
     if @operation.save then
       soils = Soil.where(:field_id => field_id)
       soils.each do |soil|
-		update_soil_operation(SoilOperation.new, soil.id, @operation)
+		    update_soil_operation(SoilOperation.new, soil.id, @operation)
       end # end soils.each
       return "OK"
     else
