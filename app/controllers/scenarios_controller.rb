@@ -35,13 +35,19 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def index
+    @errors = Array.new
+  	msg = "OK"
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-    @errors = Array.new
     @scenarios = Scenario.where(:field_id => @field.id)
-    @fields = Field.where(:location_id => @field.location_id).where("id != ?", @field.id)
+    
     if (params[:scenario] != nil)
-		copy_other_scenario
+		msg = copy_other_scenario
+		if msg != "OK" then
+			@errors.push msg
+		else
+			flash[:notice] = "Scenario copied successfuly"
+		end
 	end
     add_breadcrumb t('menu.scenarios')
 
@@ -441,23 +447,22 @@ class ScenariosController < ApplicationController
   ################################  copy scenario selected  #################################
   def copy_scenario
 	@use_old_soil = false
-	duplicate_scenario(params[:id], " copy", params[:field_id])
+	msg = duplicate_scenario(params[:id], " copy", params[:field_id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
-    
     add_breadcrumb 'Scenarios'
 	render "index"
   end
 
   def copy_other_scenario
   	@use_old_soil = false
-  	duplicate_scenario(params[:scenario][:id], " copy", params[:field_id])
+  	msg = duplicate_scenario(params[:scenario][:id], " copy", params[:field_id])
   	@project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
-    
     add_breadcrumb 'Scenarios'
+    return msg
   end
 
   def download

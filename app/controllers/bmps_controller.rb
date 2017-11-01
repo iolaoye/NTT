@@ -27,15 +27,15 @@ class BmpsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-	if @project.location.state_id == 25 || @project.location.state_id == 26 then
-		@irrigations = Irrigation.all
-	else
-		@irrigations = Irrigation.where("id < 8")
-	end
+  	if @project.location.state_id == 25 || @project.location.state_id == 26 then
+  		@irrigations = Irrigation.all
+  	else
+  		@irrigations = Irrigation.where("id < 8")
+  	end
     add_breadcrumb t('menu.bmps')
 
     get_bmps()
-	  take_names()
+	  #take_names()
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @bmps }
@@ -63,7 +63,7 @@ class BmpsController < ApplicationController
   			end
   		end
   		@bmps[bmp.bmpsublist_id-1] = bmp
-  		if bmp.bmpsublist_id == 19 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
+  		if bmp.bmpsublist_id == 21 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
   			climates = Climate.where(:bmp_id => bmp.id)
   			i=0
   			for i in 0..11
@@ -82,14 +82,16 @@ class BmpsController < ApplicationController
       if bmp.bmpsublist_id == 19 then   # cover crop
         if bmp.id == nil then
           operation = @scenario.operations.where(:activity_id => 5).last
-          @year = operation.year
-          @month = operation.month_id
-          @day = operation.day
-          cc_plt_date = Date.parse(sprintf("%2d", @year) + "/" + sprintf("%2d", @month) + "/" + sprintf("%2d", @day))
-          cc_plt_date += 2.days
-          @year = cc_plt_date.year - 2000
-          @month = cc_plt_date.month
-          @day = cc_plt_date.day
+          if operation != nil then
+            @year = operation.year
+            @month = operation.month_id
+            @day = operation.day
+            cc_plt_date = Date.parse(sprintf("%2d", @year) + "/" + sprintf("%2d", @month) + "/" + sprintf("%2d", @day))
+            cc_plt_date += 2.days
+            @year = cc_plt_date.year - 2000
+            @month = cc_plt_date.month
+            @day = cc_plt_date.day
+          end
         else
           @year = bmp.number_of_animals
           @month = bmp.hours
@@ -210,8 +212,12 @@ class BmpsController < ApplicationController
       #cover crop (bmp_ccr)
         create(19)
       end
-  		if !(params[:select] == nil) and params[:select][:"20"] == "1" then
-  			create(20)
+      if params.has_key?(:select) && !params[:select][:"20"].nil? then
+      #rotational grazing (bmp_rg)
+        create(20)
+      end
+  		if !(params[:select] == nil) and params[:select][:"21"] == "1" then
+  			create(21)
   		end
       #flash[:error] = @bmp.errors.to_a
   		redirect_to project_field_scenarios_path(@project, @field)
@@ -266,7 +272,7 @@ class BmpsController < ApplicationController
     #@irrigation = Irrigation.arel_table
     @climates = Climate.where(:bmp_id => @bmp.id)
     @climate_array = create_hash()
-    if @bmp.bmpsublist_id == 19
+    if @bmp.bmpsublist_id == 21
       @climate_array = populate_array(@climates, @climate_array)
     end
     @bmp_group = Bmplist.where(:id => @bmp.bmp_id).first.name.to_s
@@ -295,7 +301,7 @@ class BmpsController < ApplicationController
     	 #nsnsns
       end
     end
-    if !(params[:select] == nil) && params[:select][:"20"] == "1" && bmpsublist == 20 then
+    if !(params[:select] == nil) && params[:select][:"21"] == "1" && bmpsublist == 21 then
     	create_climate("create")
     end
     if msg == "OK" then
@@ -313,7 +319,7 @@ class BmpsController < ApplicationController
     @climates = Climate.where(:bmp_id => @bmp.id)
     #@irrigation = Irrigation.arel_table
     @climate_array = create_hash()
-    if @bmp.bmpsublist_id == 19
+    if @bmp.bmpsublist_id == 21
       @climate_array = populate_array(@climates, @climate_array)
     end
 
@@ -397,14 +403,16 @@ class BmpsController < ApplicationController
       when 19
         return cover_crop(type)
       when 20
-        return climate_change(type)
+        return rotational_grazing(type)
       when 21
-        return asphalt_concrete(type)
+        return climate_change(type)
       when 22
-        return grass_cover(type)
+        return asphalt_concrete(type)
       when 23
-        return slope_adjustment(type)
+        return grass_cover(type)
       when 24
+        return slope_adjustment(type)
+      when 25
         return shading(type)
       else
         return "OK"
@@ -901,13 +909,28 @@ class BmpsController < ApplicationController
     return "OK"
   end   # end method
 
-### ID: 19
+### ID: 20 
+  def rotational_grazing(type)
+    @bmp.animal_id = params[:bmp_rg][:animal_id]
+    @bmp.number_of_animals = params[:bmp_rg][:number_of_animals]
+    @bmp.sides = params[:bmp_rg][:year]
+    @bmp.irrigation_id = params[:bmp_rg][:year_to]
+    @bmp.org_n = params[:bmp_rg][:month]
+    @bmp.org_p = params[:bmp_rg][:month_to]
+    @bmp.no3_n = params[:bmp_rg][:day]
+    @bmp.po4_p = params[:bmp_rg][:day_to]
+    @bmp.hours = params[:bmp_rg][:hours_grazed]
+    @bmp.days = params[:bmp_rg][:days_grazed]
+    @bmp.area = params[:bmp_rg][:rest_time]
+    return "OK"
+  end
+### ID: 21
   def climate_change(type)
 	return "OK"
 	#@bmp.bmp = params[:bmp_mc][:animal_id]
   end
 
-### ID: 19
+### ID: 22
   def create_climate(type)
     bmp_id = Bmp.find_by_bmpsublist_id(19).id
   	for i in 1..12
@@ -923,7 +946,7 @@ class BmpsController < ApplicationController
   end
 
 
-### ID: 20
+### ID: 23
   def asphalt_concrete(type)
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
@@ -952,7 +975,7 @@ class BmpsController < ApplicationController
 
   # end method
 
-### ID: 21
+### ID: 24
   def grass_cover(type)
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
@@ -1224,6 +1247,7 @@ class BmpsController < ApplicationController
           end
         end
         subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
+        @inps = 0
         if subarea != nil then
           #if i == 0 then
             @inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.

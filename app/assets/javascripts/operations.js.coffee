@@ -25,14 +25,15 @@ updatePlantPopulation = ->
         $("#operation_amount").val(crop.plant_population_ft)
 
 updateNutrients = (animal) ->
-  if ($("#operation_type_id").val() == "2")
-    $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-    if ($("#operation_subtype_id").val() == "57")
-      $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
-    else
+  if ($("#operation_activity_id").val() == "2")
+    if ($("#operation_type_id").val() == "2")
       $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-  else
-    $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+      if ($("#operation_subtype_id").val() == "57")
+        $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
+      else
+        $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+    else
+      $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
   if (animal == 0)
     url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
   else
@@ -43,6 +44,25 @@ updateNutrients = (animal) ->
     $("#operation_po4_p").val(fertilizer.qp)
     $("#operation_org_n").val(fertilizer.yn)
     $("#operation_org_p").val(fertilizer.yp)
+
+getGrazingFields = ->
+    url = "/fertilizers.json?id=animal"
+    $("#div_fertilizer").hide()
+    $("#div_amount").show()
+    $("#div_depth").show()
+    $("#div_tillage").show()
+    $("#div_nutrients").show()
+    $("#div_type").show()
+    $("#div_date").show()
+    $("#year1").prop('required',true)
+    $("#month_id1").prop('required',true)
+    $("#day1").prop('required',true)
+    $("#operation_type_id").prop('required',true)
+    $("#operation_moisture").removeAttr('required')
+    $('div[style*="display: none"] *').removeAttr('required')
+    #change year for start year
+    $("#div_start_date")[0].children[0].innerText = "Start Year"
+    $("#div_type")[0].children[0].innerText = "Animal Type"
 
 updateTypes = ->
   $("#div_amount").hide()
@@ -90,28 +110,16 @@ updateTypes = ->
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
       $("#div_type")[0].children[0].innerText = "Irrigation Method"
-    when "7"   # grazing
-      url = "/fertilizers.json?id=animal"
-      $("#div_fertilizer").hide()
-      $("#div_amount").show()
-      $("#div_depth").show()
-      $("#div_tillage").show()
-      $("#div_nutrients").show()
-      $("#div_type").show()
-      $("#div_date").show()
-      $("#year1").prop('required',true)
-      $("#month_id1").prop('required',true)
-      $("#day1").prop('required',true)
-      $("#operation_type_id").prop('required',true)
-      $("#operation_moisture").removeAttr('required')
-      $('div[style*="display: none"] *').removeAttr('required')
-      #change year for start year
-      $("#div_start_date")[0].children[0].innerText = "Start Year"
-      $("#div_type")[0].children[0].innerText = "Animal Type"
+    when "7"   # continuous grazing
+      getGrazingFields()
+      $("#rotational_grazing").show()
     when "10"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
       $("#div_type").hide()
+    when "70"   # rotational grazing
+      getGrazingFields()
+      $("#rotational_grazing").show()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements
@@ -137,12 +145,13 @@ updateTypes = ->
 	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units
 
 updateFerts = ->
-  if ($("#operation_type_id").val() == "2")
-    $("#div_moisture").show();
-    $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-  else
-    $("#div_moisture").hide();
-    $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+  if ($("#operation._activity_id").val() == "2")
+    if ($("#operation_type_id").val() == "2")
+      $("#div_moisture").show();
+      $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+    else
+      $("#div_moisture").hide();
+      $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
   url = "/fertilizer_types/" + $("#operation_type_id").val() + "/fertilizers.json"
   $.getJSON url, (fertilizers) ->
     items = []

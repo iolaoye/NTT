@@ -1,5 +1,6 @@
 ﻿create_scenario = ->
     $("#div_new").toggle(true)
+    $("#div_copy_other").toggle(false)
 
 change_select = ->
     tbl_scenarios = $("#tbl_scenarios")
@@ -8,6 +9,7 @@ change_select = ->
 
 copy_from_other_field = -> 
     $("#div_copy_other").toggle(true)
+    $("#div_new").toggle(false)
 
 loading_screen = ->
     $(".overlay").toggle(true)

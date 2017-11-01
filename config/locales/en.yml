@@ -606,6 +606,7 @@ en:
     po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
     planting_method: Planting Method
     manure_composition: Manure Composition
+    planting_date: Planting Date
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
@@ -679,6 +680,11 @@ en:
     pad: Pad
     additional_land: Is the buffer area included in your AOI?
     weather_change: use ±(°C)/±(%) to increase or decrease future temperature and/or precipitation to define the climate changes
+    ffpq: Fraction of field treated by
+    grazing_date: Grazing dates
+    hours_grazed: '# of consecutive hours per day grazed'
+    days_grazed: '# of consecutive days grazed at a time (in each paddock)'
+    rest_time: 'Pasture rest time (days) between grazings'
   months:
     january: January
     february: February
@@ -948,7 +954,7 @@ en:
     grass_field_portion: Grass field portion
     slope_ratio: Slope ratio
     filter_strip: Grass Buffer
-    waterway: Waterway (Grassed Buffer)
+    waterway: Grass Waterway
     contour_buffer: Contour Buffer
     land_leveling: Land Leveling
     crop_width: Crop width

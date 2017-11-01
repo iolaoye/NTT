@@ -4348,11 +4348,13 @@ Activity.create!({:id => 3, :name => "Tillage", :code => 3, :abbreviation => "TI
 Activity.create!({:id => 4, :name => "Harvest", :code => 4, :abbreviation => "HARV", :apex_code => 623, :spanish_name => "Cosechar"}, :without_protection => true)
 Activity.create!({:id => 5, :name => "Kill", :code => 5, :abbreviation => "KILL", :apex_code => 451, :spanish_name => "Terminar"}, :without_protection => true)
 Activity.create!({:id => 6, :name => "Irrigation (Manual)", :code => 6, :abbreviation => "IRRI", :apex_code => 500, :spanish_name => "Irrigacion (Manual)"}, :without_protection => true)
-Activity.create!({:id => 7, :name => "Start Grazing", :code => 7, :abbreviation => "GRAZ", :apex_code => 426, :spanish_name => "Iniciar Pasteo"}, :without_protection => true)
-Activity.create!({:id => 8, :name => "Stop Grazing", :code => 8, :abbreviation => "STOP", :apex_code => 427, :spanish_name => "Terminar Pasteo"}, :without_protection => true)
+Activity.create!({:id => 7, :name => "Continuous Grazing", :code => 7, :abbreviation => "CONT_GRAZ", :apex_code => 426, :spanish_name => "Pastoreo Continou"}, :without_protection => true)
+Activity.create!({:id => 8, :name => "Stop Continuous Grazing", :code => 8, :abbreviation => "CONT_STOP", :apex_code => 427, :spanish_name => "Terminar Pastoreo Continou"}, :without_protection => true)
 Activity.create!({:id => 9, :name => "Burn", :code => 9, :abbreviation => "BURN", :apex_code => 397, :spanish_name => "Quema"}, :without_protection => true)
 Activity.create!({:id => 10, :name => "Liming", :code => 10, :abbreviation => "LIME", :apex_code => 734, :spanish_name => "Encalado"}, :without_protection => true)
 Activity.create!({:id => 11, :name => "Pesticide", :code => 11, :abbreviation => "PEST", :apex_code => 1, :spanish_name => "Pesticida"}, :without_protection => true)
+Activity.create!({:id => 70,:name => "Rotational Grazing",:code => 70,:abbreviation => "ROTA_GRAZ", :apex_code => "", :spanish_name => "Pastoreo Rotacional"}, :without_protection => true)
+Activity.create!({:id => 80,:name => "Stop Rotational Grazing",:code => 80,:abbreviation => "ROTA_STOP", :apex_code => "", :spanish_name => "Terminar Pastoreo Rotacional"}, :without_protection => true)
 
 Tillage.delete_all
 Tillage.create!({:id => 1,:code => 1,:dndc => 0,:name => 'TR2W40LP', :operation => 4,:eqp => 'TRACTOR 2WD 40 HP LP',:status => true,:abbreviation => 'TILL',:spanish_name => 'TRACTOR 2WD 40 HPLP',:activity_id => 3}, :without_protection => true)

@@ -18,12 +18,12 @@ class OperationsController < ApplicationController
     array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
     @operations.sort_by { |date| [date.year, date.month_id, date.day] }
-	if @operations.last != nil
-	  @highest_year = @operations.last.year
-    else
-	  @highest_year = 0
-	end
-	respond_to do |format|
+  	if @operations.last != nil
+  	  @highest_year = @operations.last.year
+      else
+  	  @highest_year = 0
+  	end
+  	respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @operations }
     end
@@ -53,9 +53,9 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
-	@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
+	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     add_breadcrumb t('menu.operations'), project_field_scenario_operations_path(@project, @field, @scenario)
-	add_breadcrumb t('operation.new_operation')
+    add_breadcrumb t('operation.new_operation')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -69,11 +69,11 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @crops = Crop.load_crops(Location.find_by_project_id(@project.id).state_id)
     @operation = Operation.find(params[:id])
-	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
+	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
-	add_breadcrumb t('operation.edit')
+	  add_breadcrumb t('operation.edit')
   end
 
 ################################  CREATE  #################################
@@ -88,7 +88,7 @@ class OperationsController < ApplicationController
     msg = "Unknown error"
     ActiveRecord::Base.transaction do
       @operation = Operation.new(operation_params)
-	  update_amount()   #CONVERT T/ac to lbs/ac
+	    update_amount()   #CONVERT T/ac to lbs/ac
       @operation.scenario_id = params[:scenario_id]
       @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
       if @operation.save
@@ -101,26 +101,26 @@ class OperationsController < ApplicationController
           soil_op_saved = false
           raise ActiveRecord::Rollback
         end
-		if @operation.activity_id == 7 then
-			operation_id = @operation.id
-			@operation = Operation.new(operation_params)
-			@operation.activity_id = 8
-			@operation.year = params[:year1]
-			@operation.month_id = params[:month_id1]
-			@operation.day = params[:day1]
-			@operation.type_id = operation_id
-			@operation.scenario_id = params[:scenario_id]
-			@operation.amount = 0
-			@operation.depth = 0
-			@operation.no3_n = 0
-			@operation.po4_p = 0
-			@operation.org_n = 0
-			@operation.org_p = 0
-			@operation.nh3 = 0
-			@operation.moisture = 0
-			@operation.subtype_id = 0
-			@operation.save
-		end
+    		if @operation.activity_id == 7 then
+    			operation_id = @operation.id
+    			@operation = Operation.new(operation_params)
+    			@operation.activity_id = 8
+    			@operation.year = params[:year1]
+    			@operation.month_id = params[:month_id1]
+    			@operation.day = params[:day1]
+    			@operation.type_id = operation_id
+    			@operation.scenario_id = params[:scenario_id]
+    			@operation.amount = 0
+    			@operation.depth = 0
+    			@operation.no3_n = 0
+    			@operation.po4_p = 0
+    			@operation.org_n = 0
+    			@operation.org_p = 0
+    			@operation.nh3 = 0
+    			@operation.moisture = 0
+    			@operation.subtype_id = 0
+    			@operation.save
+    		end
         msg = add_soil_operation()
         if msg.eql?("OK")
           soil_op_saved = true
@@ -158,45 +158,45 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1.json
   def update
     @operation = Operation.find(params[:id])
-	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+    @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
       if @operation.update_attributes(operation_params)
-		update_amount()
+		    #update_amount()
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
-		if @operation.activity_id == 7 then
-			if (Operation.find_by_type_id(@operation.type_id) != nil) then
-				@operation1 = Operation.find_by_type_id(@operation.type_id)
-			else
-				operation_id = @operation.id
-				@operation1 = Operation.new(operation_params)
-				@operation1.activity_id = 8
-				@operation1.type_id = operation_id
-				@operation1.scenario_id = params[:scenario_id]
-				@operation1.amount = 0
-				@operation1.depth = 0
-				@operation1.no3_n = 0
-				@operation1.po4_p = 0
-				@operation1.org_n = 0
-				@operation1.org_p = 0
-				@operation1.nh3 = 0
-				@operation1.moisture = 0
-				@operation1.subtype_id = 0
-			end
-			@operation1.year = params[:year1]
-			@operation1.month_id = params[:month_id1]
-			@operation1.day = params[:day1]
-			@operation1.save
-			soil_operations = SoilOperation.where(:operation_id => @operation1.id)
-			soil_operations.each do |soil_operation|
-			  update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
-			end
-		end 
+    		if @operation.activity_id == 7 then
+    			if (Operation.find_by_type_id(@operation.type_id) != nil) then
+    				@operation1 = Operation.find_by_type_id(@operation.type_id)
+    			else
+    				operation_id = @operation.id
+    				@operation1 = Operation.new(operation_params)
+    				@operation1.activity_id = 8
+    				@operation1.type_id = operation_id
+    				@operation1.scenario_id = params[:scenario_id]
+    				@operation1.amount = 0
+    				@operation1.depth = 0
+    				@operation1.no3_n = 0
+    				@operation1.po4_p = 0
+    				@operation1.org_n = 0
+    				@operation1.org_p = 0
+    				@operation1.nh3 = 0
+    				@operation1.moisture = 0
+    				@operation1.subtype_id = 0
+    			end
+    			@operation1.year = params[:year1]
+    			@operation1.month_id = params[:month_id1]
+    			@operation1.day = params[:day1]
+    			@operation1.save
+    			soil_operations = SoilOperation.where(:operation_id => @operation1.id)
+    			soil_operations.each do |soil_operation|
+    			  update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
+    			end
+    		end 
         if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
@@ -705,7 +705,7 @@ class OperationsController < ApplicationController
     if @operation.save then
       soils = Soil.where(:field_id => field_id)
       soils.each do |soil|
-		update_soil_operation(SoilOperation.new, soil.id, @operation)
+		    update_soil_operation(SoilOperation.new, soil.id, @operation)
       end # end soils.each
       return "OK"
     else

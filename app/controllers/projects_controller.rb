@@ -13,7 +13,8 @@ class ProjectsController < ApplicationController
   def index
     @user = User.find(session[:user_id])
     if @user.admin?
-      @projects = Project.order("#{sort_column} #{sort_direction}")
+      #@projects = Project.order("#{sort_column} #{sort_direction}")
+      @projects = Project.includes(:user).order("#{sort_column} #{sort_direction}")
     else
       @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
     end
@@ -44,6 +45,7 @@ class ProjectsController < ApplicationController
     end # end case true
   end
 
+##esto es una prueba
   ########################################### SHOWS - WHEN CLICK ON PROJECT NAME ##################
   # GET /projects/1
   # GET /projects/1.json
@@ -872,26 +874,21 @@ class ProjectsController < ApplicationController
   end
 
   def sortable_columns
-    ["name", "updated_at"]
+    [["Project Name"], "updated_at"]
   end
 
   def sort_column
     case params[:column]
+      when "Project Name" 
+        return "Name"
       when "Last Modified"
-        params[:column] = "updated_at"
-      when "ltima Modificaci"
-        params[:column] = "updated_at"
-      when "Nombre Del Proyecto"
-        params[:column] = "name"
-      when "Project Name"
-        params[:column] = "name"
-    end  #end case
-    #sort by date modified by default
-    sortable_columns.include?(params[:column]) ? params[:column] : "updated_at"
+        return "updated_at"
+    end
+    return "Name"
+    #sortable_columns.include?(params[:column]) ? params[:column] : "Name"
   end
 
   def sort_direction
-    #sort asc by default
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
