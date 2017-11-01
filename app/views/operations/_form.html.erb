@@ -8,7 +8,7 @@
 					<% end %>
 			</ul>
 	    </div>
-  	<% end %> 
+  	<% end %>
 	<% if notice %>
 	  <div class="success_alert">
 	 	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -23,9 +23,9 @@
 	<div class="field">
 		<%= label :activity_id, t('scenario.operation') %>
 		<% if I18n.locale.eql?(:en) %>
-			<%= collection_select :operation, :activity_id, Activity.where("id != 8"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
+			<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 80"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
 		<% else %>
-			<%= collection_select :operation, :activity_id, Activity.where("id != 8"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => @operation.activity_id}, {:required => true} %>
+			<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 80"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => @operation.activity_id}, {:required => true} %>
 		<% end %>
 	</div>
   	<div class="field">
@@ -278,10 +278,10 @@
 		    </div>
 			<div id="div_type" >
 				<%= label :type_id, :Animal_Type %>
-				<% if I18n.locale.eql?(:en) %> 
+				<% if I18n.locale.eql?(:en) %>
 				    <%= collection_select :operation, :type_id, Fertilizer.where(:fertilizer_type_id => 2, :animal => true).where("not name like '%Poultry%'"), :id, :name, {:prompt => t('bmp.select_animal')}, {:required => true} %>
 				<% else %>
-					<%= collection_select :operation, :type_id, Fertilizer.where(:fertilizer_type_id => 2, :animal => true), :id, :spanish_name, {:prompt => t('bmp.select_animal')}, {:required => true} %> 
+					<%= collection_select :operation, :type_id, Fertilizer.where(:fertilizer_type_id => 2, :animal => true), :id, :spanish_name, {:prompt => t('bmp.select_animal')}, {:required => true} %>
 				<% end %>
 			</div>
 			<div id="div_fertilizer" style="display:none">
@@ -379,6 +379,17 @@
 					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
 			  </div>
 			</div>
+    <% when 70 %>
+      <div class="field" id="rotational_grazing">
+        <div class="field">
+            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
+            <%= f.number_field :days_grazed, :step => 'any', :class => "gvTitleStyleNumber" %>
+        </div>
+        <div class="field">
+            <%= f.label :hours, t('bmp.rest_time')  %>
+            <%= f.number_field :hours_rest, :step => 'any', :class => "gvTitleStyleNumber" %>
+        </div>
+      </div>
 		<% else # harvest, kill, stop grazing, burn%>
 			    <div id="div_date" style="display:none">
 				<%= f.label :stop, t('general.stop'), :class => 'field' %>
@@ -402,7 +413,7 @@
 					<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 				<% else %>
 					<%= collection_select :operation, :subtype_id, @fertilizers, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante', :selected => @operation.subtype_id} %>
-				<% end %> 
+				<% end %>
 			</div>
 			<div class="field" id="div_amount" style="display:none">
 			  <%= f.label :amount, t('operation.amount') %>
