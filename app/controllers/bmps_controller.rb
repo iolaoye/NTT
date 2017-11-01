@@ -911,7 +911,6 @@ class BmpsController < ApplicationController
 
 ### ID: 20 
   def rotational_grazing(type)
-    debugger
     @bmp.animal_id = params[:bmp_rg][:animal_id]
     @bmp.number_of_animals = params[:bmp_rg][:number_of_animals]
     @bmp.sides = params[:bmp_rg][:year]
