@@ -65,7 +65,8 @@ module SimulationsHelper
 	msg = "OK"
   end
 
-  def send_files_to_APE)
+  def send_files_to_APEX(file)
+    uri = URI(URL_NTT)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth)
     if res.body.include?("Created") then
@@ -246,7 +247,6 @@ module SimulationsHelper
       #response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
       #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
       #print_array_to_file(PATH, "APEX.wth")
-      debugger
       @apex_wth = send_file1_to_APEX("WTH", path)
     end
     #todo after file is copied if climate bmp is in place modified the weather file.
