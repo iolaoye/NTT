@@ -45,6 +45,25 @@ updateNutrients = (animal) ->
     $("#operation_org_n").val(fertilizer.yn)
     $("#operation_org_p").val(fertilizer.yp)
 
+getGrazingFields = ->
+    url = "/fertilizers.json?id=animal"
+    $("#div_fertilizer").hide()
+    $("#div_amount").show()
+    $("#div_depth").show()
+    $("#div_tillage").show()
+    $("#div_nutrients").show()
+    $("#div_type").show()
+    $("#div_date").show()
+    $("#year1").prop('required',true)
+    $("#month_id1").prop('required',true)
+    $("#day1").prop('required',true)
+    $("#operation_type_id").prop('required',true)
+    $("#operation_moisture").removeAttr('required')
+    $('div[style*="display: none"] *').removeAttr('required')
+    #change year for start year
+    $("#div_start_date")[0].children[0].innerText = "Start Year"
+    $("#div_type")[0].children[0].innerText = "Animal Type"
+
 updateTypes = ->
   $("#div_amount").hide()
   $("#div_depth").hide()
@@ -91,28 +110,16 @@ updateTypes = ->
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
       $("#div_type")[0].children[0].innerText = "Irrigation Method"
-    when "7"   # grazing
-      url = "/fertilizers.json?id=animal"
-      $("#div_fertilizer").hide()
-      $("#div_amount").show()
-      $("#div_depth").show()
-      $("#div_tillage").show()
-      $("#div_nutrients").show()
-      $("#div_type").show()
-      $("#div_date").show()
-      $("#year1").prop('required',true)
-      $("#month_id1").prop('required',true)
-      $("#day1").prop('required',true)
-      $("#operation_type_id").prop('required',true)
-      $("#operation_moisture").removeAttr('required')
-      $('div[style*="display: none"] *').removeAttr('required')
-      #change year for start year
-      $("#div_start_date")[0].children[0].innerText = "Start Year"
-      $("#div_type")[0].children[0].innerText = "Animal Type"
+    when "7"   # continuous grazing
+      getGrazingFields()
+      $("#rotational_grazing").show()
     when "10"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
       $("#div_type").hide()
+    when "70"   # rotational grazing
+      getGrazingFields()
+      $("#rotational_grazing").show()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements
