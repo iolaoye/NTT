@@ -164,7 +164,7 @@ class OperationsController < ApplicationController
     @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
       if @operation.update_attributes(operation_params)
-		    update_amount()
+		    #update_amount()
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)

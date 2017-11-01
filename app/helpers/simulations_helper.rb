@@ -1372,11 +1372,11 @@ module SimulationsHelper
 		    end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
-        if oper.activity_id == 2 && oper.type_id == 2
-          apex_string += sprintf("%8.2f", operation.opv1 * 2000) #kg/ha of fertilizer applied
-        else
-          apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
-        end
+        #if oper.activity_id == 2 && oper.type_id == 2
+          #apex_string += sprintf("%8.2f", operation.opv1 * 2000) #kg/ha of fertilizer applied
+        #else
+        apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
+        #end
         values[0] = operation.opv1
         apex_string += sprintf("%8.2f", operation.opv2)
         items[1] = "Depth"
