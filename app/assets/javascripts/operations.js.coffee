@@ -112,14 +112,14 @@ updateTypes = ->
       $("#div_type")[0].children[0].innerText = "Irrigation Method"
     when "7"   # continuous grazing
       getGrazingFields()
-      $("#rotational_grazing").show()
     when "10"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
       $("#div_type").hide()
     when "70"   # rotational grazing
       getGrazingFields()
-      $("#rotational_grazing").show()
+      $("#div_grazed").show()
+      $("#div_resttime").show()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements
