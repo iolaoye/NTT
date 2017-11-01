@@ -619,13 +619,25 @@ en:
     days_range_number: "(0-365)"
     hours_range: "(0-24)"
     percentage_range: "(0 - 100%)"
+    millimeters_range: " (7600 - 30000)"
+    millimeters_drange: " (10 - 51)"
+    ksat_range: " (0.01 - 4.00)"
     lbs_per_day: lbs per day
     ft: ft
     acres: acres
     inches: inches
     lbs: lbs
+    millimeters: (mm)
+    millimeters_day: (mm/day)
+    millimeters_hour: (mm/h)
     climate_warning: This BMP may take longer to save
     irrigation: Irrigation
+    option_1: Option 1
+    option_2: Option 2
+    s_drain: Distance between two drain tubes or tiles
+    drain_co: Daily drainage coeffcient
+    p_c: Pump Capacity
+    latksatf: Multiplication factor to determine lateral ksat
     crop: Crop
     water_stress_factor: Water stress factor
     irrigation_efficiency: Irrigation efficiency
@@ -1193,9 +1205,9 @@ en:
     <strong>Contact Us Page</strong><br></br>
     This page provides Contact informations.<br>
     Click <strong>Return to Table of Contents</strong> to go to the help page.
-  help_html:
-    <strong>Help Page</strong><br></br>
-    This page helps user to navigate various tools in this website. User can learn about NTT and its fuctions, which are built in the website, by clicking various topics listed in the page.<br></br>
+
+  help_html: <strong>Help Page</strong><br><br>
+  help_body1: This page helps user to navigate various tools in this website. User can learn about NTT and its fuctions, which are built in the website, by clicking various topics listed in the page.<br></br>
     <strong>About NTT:</strong> This Page provides basic concept about NTT.<br>
     <strong>Contact Information:</strong> This page provides contact informations if any question or support.<br>
     <strong>System Requirements:</strong> This page provides information on what requirements user should have inorder to run NTT.<br>
@@ -1204,8 +1216,8 @@ en:
     <strong>Location Page:</strong> This page provides information on the Location screen.<br>
     <strong>Fields Page:</strong> This page provides information on the Fields screen.<br>
     <strong>Soils Page:</strong> This page provides information on the Soils screen.<br>
-    <strong>Weather Page:</strong> This page provides information on the Weather screen.<br>
-    <strong>Management Page:</strong> This page provides information on the Management screen.<br>
+  help_weather: <strong>Weather Page:</strong> This page provides information on the Weather screen.<br>
+  help_body2: <strong>Management Page:</strong> This page provides information on the Management screen.<br>
     <strong>Watershed Page:</strong> This page provides information on the Watershed screen.<br>
     <strong>Simulation Page:</strong> This page provides information on the Simulation screen.<br>
     <strong>Results Page:</strong> This page provides information on the Results screen.<br>
@@ -1240,47 +1252,25 @@ en:
         header: Download
         body: Once you have created a project you can use the <strong>Download</strong> button which is the arrow pointing downwards, to save the current project that you are working on.
         note: <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.
-  projpage_html:
-    <strong>Start of a Project</strong> <br></br>
+
+  projpage_html: <strong>Start of a Project</strong> <br></br>
     Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
     to get a basic understanding of how to navigate the <strong>NTT</strong> application.<br><br>
     <strong>To Start a Project</strong><br>
-    There are <b>three initial choices</b> to start a new project:<br>
-    Select the <b>Create New Project</b> option to start a project from scratch<br>
+  proj_body1: There are <b>three initial choices</b> to start a new project:<br>
+  proj_body1_modified: There are <b>two initial choices</b> to start a new project:<br>
+  proj_body2: Select the <b>Create New Project</b> option to start a project from scratch<br>
     Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br>
-    Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br><br>
-    <strong>Create New Project Option</strong><br>
+  proj_body3: Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br><br>
+  proj_body4: <strong>1. Create New Project Option</strong><br>
     Selecting the <strong>Create New Project</strong> button asks the user for the project name, and description information.
     After you have entered the information, click the <strong>Save</strong> button to save the information and continue. If not, click <strong>Cancel</strong>.<br><br>
-    <strong>Upload Project Option</strong><br>
+    <strong>2. Upload Project Option</strong><br>
     You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information. Click <strong>Choose File</strong> to select a project to upload.<br><br>
-    <strong>Open an Example Project Option</strong><br>
+  proj_body5: <strong>3. Open an Example Project Option</strong><br>
     You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.
     After you have loaded the file, click the <b>Upload Example</b> button to save the information and continue.<br></br>
-    <strong>Download Project</strong><br>
-    You can click the <img src="/serve_image/download.gif"> button to save the current project that you are working on.
-    <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.<br></br>
-    <strong>Edit Project</strong><br>
-    To edit the name or the discription of the project then click <img src="/serve_image/edit.png">.<br><br>
-    <strong>Copy Project</strong><br>
-    To copy and create another same project then click <img src="/serve_image/copy.jpg">.<br><br>
-    <strong>Delete Project</strong><br>
-    To delete any project, click <img src="/serve_image/delete.png">.
-  projpage_modified_html:
-    <strong>Start of a Project</strong> <br></br>
-    Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
-    to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
-    <strong>To Start a Project</strong><br>
-    There are <b>two initial choices</b> to start a new project:<br></br>
-    Select the <b>Create New Project</b> option to start a project from scratch<br>
-    Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br></br>
-    <strong>Create New Project Option</strong><br>
-    Selecting the <strong>Create New Project</strong> button asks the user for the project name, and description information.
-    After you have entered the information, click the <strong>Create Project</strong> button to save the information and continue.<br>
-    After you have opened the save project, click the <strong>Save Changes</strong> button to save the information and continue.<br><br>
-    <strong>Upload Project Option</strong><br>
-    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.<br><br>
-    <strong>Download Project</strong><br>
+  proj_body6: <strong>Download Project</strong><br>
     You can click the <img src="/serve_image/download.gif"> button to save the current project that you are working on.
     <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.<br></br>
     <strong>Edit Project</strong><br>
@@ -1466,12 +1456,16 @@ en:
         body_modified: 'The user can click <strong>Continue</strong> to advance to the next page.'
   soilpage_html:
     <strong>Soils Page</strong><br></br>
-    The Soils page allows the user to add Layers, edit, and delete the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
+  soil_body1: The Soils page allows the user to add Layers, edit, and delete the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
     general rules that apply to all methods. They are as follows.<br></br>
-    1. Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.<br><br>
+  soil_body1_modified: The Soils page allows the user to delete the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 2 general rules that apply to all methods. They are as follows.<br></br>
+  soil_body2: 1. Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.<br><br>
     2. If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <img src="/serve_image/edit.png"> icon in the <strong>Action</strong> column.<br></br>
     3. However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
-    4. User can delete soil(s) by clicking <img src="/serve_image/delete.png"> icon under Action column.
+    4. User can delete soil(s) by clicking <img src="/serve_image/delete.png"> icon under Action column.<br><br>
+  soil_body2_modified: 1. The total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
+    2. User can delete soil(s) by clicking <img src="/serve_image/delete.png"> icon under Action column.<br><br>
+  soil_body3: Click <strong>Save And Continue</Strong> to go to the scenarios page.
   layers_html:
     <strong>Layers</strong><br><br>
     This page allows user to add, edit, and delete the soil layers which are as follows.<br><br>
@@ -1482,13 +1476,6 @@ en:
     3. <strong>Deleting Layers</strong><br>
     To delete existing layer(s), click <img src="/serve_image/delete.png"> under the action column.<br><br>
     User can add, edit, or delete as many times. However, soil should have atleast one layer. Click <strong>Back to Soils</strong> to go back to Soils Page or click <strong>Continue</strong> to go to Management Scenarios Page.
-  soilpage_modified_html:
-    <strong>Soils Page</strong><br></br>
-    The Soils page allows the user to verify, select, or create the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
-    general rules that apply to all methods. They are as follows<br></br>
-    The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.<br></br>
-    If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics.<br></br>
-    However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
   managepage:
     header: Management Page Help
     overview:
@@ -1824,9 +1811,10 @@ en:
     To view the desired results, user should click the desired scenarios from the dropdown menu, for instance, by clicking <strong>Select 1st scenario</strong> to view the results.
     It is possible that there is only one field to select. That is okay. It is very likely that, when the user first arrives at the Results page, that the first scenario that was simulated will be selected for both the first scenario and second scenario, so be sure to select the correct scenarios before continuing. Click <strong>View</strong> to view the results. The results of the scenarios are presented in a tabular format, in the order in which they were selected. User can navigate trhough <strong>Tabular or Graphic</strong> by clicking them in the left sidebar.<br></br>
     <strong>1. Tabular Form</strong><br>
-    <strong>General:</strong> Users will be viewing the nutrient results in tabular form. These tabular results represent AVERAGES in all of the years that were simulated. To view year by year results, the user needs to go to Graphical results, and view them there. Scenario 1 represents the column to the right of the Description, and Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that user made when selecting the first and second scenario. User can select <strong>Units Ac</strong> to see the results per acre, and <strong>Total Units</strong> to see the total results. To download the results in Excel then click <strong>Download Excel</strong> and if in PDF then click <strong>Download PDF</strong>.<br></br>
-    <strong>By Soil:</strong> To view the results by soil, user need to select the scenarios just as mentioned in the <strong>Tabular Form</strong>. There is also a dropdown menu to let user select different soil to view result by soil. After that, click <strong>View By Soil</strong> to see the results.<br><br>
-    <strong>2. Graphical Form</strong><br>
+    <strong>General:</strong> Users will be viewing the nutrient results in tabular form. These tabular results represent AVERAGES in all of the years that were simulated. To view year by year results, the user needs to go to Graphical results, and view them there. Scenario 1 represents the column to the right of the Description, and Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that user made when selecting the first and second scenario. User can select <strong>Units Ac</strong> to see the results per acre, and <strong>Total Units</strong> to see the total results.<br><br>
+  result_body1: To download the results in Excel then click <strong>Download Excel</strong> and if in PDF then click <strong>Download PDF</strong>.<br></br>
+  result_body2: <strong>By Soil:</strong> To view the results by soil, user need to select the scenarios just as mentioned in the <strong>Tabular Form</strong>. There is also a dropdown menu to let user select different soil to view result by soil. After that, click <strong>View By Soil</strong> to see the results.<br><br>
+  result_body3: <strong>2. Graphical Form</strong><br>
     <strong>Annual:</strong> Graphical results allow user to view results slightly different. This method allows user to view averages for a specific results for example, flow or sediment by viewing the yearly averages for these results. User first needs to select scenario from the dropdown menu. To view the results in different kinds of chart, click on the <strong>Select kind of chart</strong> to select from various options. Then, click <strong>View Annual-Chart</strong> which will bring up the selected results on the graph.<br><br>
     <strong>Monthly:</strong> This method allows you to view averages through the entire period of a particular month. User cannot view the average for the entire time here. Rather user will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above). Click <strong>View Monthly-Chart</strong> to view monthly chart.<br>
   apexcontrols_html:
