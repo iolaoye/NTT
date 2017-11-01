@@ -120,46 +120,42 @@
           <% when 3 %>
             <tr>
               <td class="field indent" id = "rb_td" colspan="2" >
-                <% case bmp.depth%>
-                  <% when 3 %>
+                <% if bmp.depth != nil %>
                     <%= radio_button_tag :bmp_cb1, "3", true  %> <%= t('bmp.option_1') %>
                     <%= radio_button_tag :bmp_cb1, "4"%> <%= t('bmp.option_2') %>
-                  <% when 3 %>
-                    <%= radio_button_tag :bmp_cb1, "3"%> <%= t('bmp.option_1') %>
-                    <%= radio_button_tag :bmp_cb1, "4", true%> <%= t('bmp.option_2') %>
                   <% else %>
                     <%= radio_button_tag :bmp_cb1, "3"%> <%= t('bmp.option_1') %>
-                    <%= radio_button_tag :bmp_cb1, "4" %> <%= t('bmp.option_2') %>
+                    <%= radio_button_tag :bmp_cb1, "4", true%> <%= t('bmp.option_2') %>
                   <% end %>
               </td>
             </tr>
-              <tr id = "div_td_opt1" <%= "style=display:none" if bmp.depth == 3%>>
+              <tr id = "div_td_opt1" <%= "style=display:none" if bmp.depth != nil %>>
                     <td class="indent2" colspan="2">
                       <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
                       <%= number_field :bmp_td, :depth, :value => bmp.depth, :class => "gvTitleStyleNumber" %>
                     </td>
               </tr>
-                <tr id = "div_td_opt2" <%= "style=display:none" if bmp.depth == 4%>>
+                <tr id = "div_td_opt2" <%= "style=display:none" if bmp.depth == nil%>>
                     <td class="indent2" colspan="2">
                       <%= t('bmp.s_drain') + t('bmp.millimeters_range')%>
                       <%= number_field :bmp_fs, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                       <%= t('bmp.millimeters') %>
                     </td>
-                  <tr id = "div_td_opt3" <%= "style=display:none" if bmp.depth == 4%>>
+                  <tr id = "div_td_opt3" <%= "style=display:none" if bmp.depth == nil%>>
                     <td class="indent2" colspan="2">
                       <%= t('bmp.drain_co') + t('bmp.millimeters_drange')%>
                       <%= number_field :bmp_fs, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                       <%= t('bmp.millimeters_day') %>
                     </td>
                 </tr>
-                  <tr id = "div_td_opt4" <%= "style=display:none" if bmp.depth == 4%>>
+                  <tr id = "div_td_opt4" <%= "style=display:none" if bmp.depth == nil%>>
                     <td class="indent2" colspan="2">
                       <%= t('bmp.p_c')%>
                       <%= number_field :bmp_fs, :hours, :value => bmp.hours, :class => "gvTitleStyleNumber" %>
                       <%= t('bmp.millimeters_hour') %>
                     </td>
                   </tr>
-                <tr id = "div_td_opt5" <%= "style=display:none" if bmp.depth == 4%>>
+                <tr id = "div_td_opt5" <%= "style=display:none" if bmp.depth == nil%>>
                     <td class="indent2" colspan="2">
                       <%= t('bmp.latksatf') + t('bmp.ksat_range')%>
                       <%= number_field :bmp_fs, :hours, :value => bmp.hours, :class => "gvTitleStyleNumber" %>
