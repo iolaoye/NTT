@@ -119,49 +119,11 @@
             </tr>
           <% when 3 %>
             <tr>
-              <td class="field indent" id = "rb_td" colspan="2" >
-                <% if bmp.depth != nil %>
-                    <%= radio_button_tag :bmp_td, "3"%> <%= t('bmp.option_1') %>
-                    <%= radio_button_tag :bmp_td, "4", true%> <%= t('bmp.option_2') %>
-                  <% else %>
-                    <%= radio_button_tag :bmp_td, "3", true%> <%= t('bmp.option_1') %>
-                    <%= radio_button_tag :bmp_td, "4"%> <%= t('bmp.option_2') %>
-                  <% end %>
+              <td class="field indent" id = "depth" colspan="2" >
+                <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
+                <%= number_field :bmp_td, :depth, :value => bmp.depth, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
-              <tr id = "div_td_opt1" <%= "style=display:none" if bmp.depth != nil %>>
-                    <td class="indent2" colspan="2">
-                      <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
-                      <%= number_field :bmp_td, :depth, :value => bmp.depth, :class => "gvTitleStyleNumber" %>
-                    </td>
-              </tr>
-                <tr id = "div_td_opt2" <%= "style=display:none" if bmp.depth == nil%>>
-                    <td class="indent2" colspan="2">
-                      <%= t('bmp.s_drain') + t('bmp.millimeters_range')%>
-                      <%= number_field :bmp_td, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
-                      <%= t('bmp.millimeters') %>
-                    </td>
-                </tr>
-                  <tr id = "div_td_opt3" <%= "style=display:none" if bmp.depth == nil%>>
-                    <td class="indent2" colspan="2">
-                      <%= t('bmp.drain_co') + t('bmp.millimeters_drange')%>
-                      <%= number_field :bmp_td, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
-                      <%= t('bmp.millimeters_day') %>
-                    </td>
-                </tr>
-                  <tr id = "div_td_opt4" <%= "style=display:none" if bmp.depth == nil%>>
-                    <td class="indent2" colspan="2">
-                      <%= t('bmp.p_c')%>
-                      <%= number_field :bmp_td, :hours, :value => bmp.hours, :class => "gvTitleStyleNumber" %>
-                      <%= t('bmp.millimeters_hour') %>
-                    </td>
-                  </tr>
-                <tr id = "div_td_opt5" <%= "style=display:none" if bmp.depth == nil%>>
-                    <td class="indent2" colspan="2">
-                      <%= t('bmp.latksatf') + t('bmp.ksat_range')%>
-                      <%= number_field :bmp_td, :hours, :value => bmp.hours, :class => "gvTitleStyleNumber" %>
-                    </td>
-                </tr>
           <% when 4 %>
             <% if @project.location.state_id == 25 || @project.location.state_id == 26 %>
               <tr>
@@ -251,7 +213,7 @@
                 <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :class => "gvTitleStyleNumber", :step => 'any' %>
               </td>
             </tr>
-          <% when 10 %>
+          <% when 10 %>              
             <tr>
               <td class="indent" colspan="2">
                 <%= label :depth, t('operation.animals')  %>
@@ -441,7 +403,7 @@
             <% if manure_operations > 0%>
             <tr>
               <td class="indent" colspan="2">
-               <%= label :manure_control_id, t('bmp.manure_control') + " (" + t('pdf.percentage') + " " + t('general.change') + ")"%>
+               <%= label :manure_control_id, t('bmp.manure_control') %>
                <% if I18n.locale.equal?(:en) %>
                 <%= collection_select :bmp_mc, :animal_id, ManureControl.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
                <% else %>
@@ -451,26 +413,25 @@
             </tr>
             <tr>
               <td class="indent" colspan="2">
-               <%#= label t('operation.no3_n_html') %>
-               <label for="no3_n"><%=t('operation.no3_n_html')%></label>
+               <%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.percentage_range') %>
                <%= number_field :bmp_mc, :no3_n, :value => bmp.no3_n, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent" colspan="2">
-               <label for="po4_p"><%=t('operation.po4_p_html')%></label>
+               <%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.percentage_range') %>
                <%= number_field :bmp_mc, :po4_p, :value => bmp.po4_p, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent" colspan="2">
-               <label for="org_n"><%=t('operation.org_n_html')%></label>
+               <%= label :org_n, t('bmp.org_n') + " " + t('bmp.percentage_range') %>
                <%= number_field :bmp_mc, :org_n, :value => bmp.org_n, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent" colspan="2">
-               <label for="org_p"><%=t('operation.org_p_html')%></label>
+                <%= label :org_p, t('bmp.org_p') + " " + t('bmp.percentage_range') %>
                 <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
@@ -489,17 +450,17 @@
             <tr>
               <td class="indent" colspan="2">
                 <div class="field">
-                  <%= label :date, t('operation.planting_date'), :style => "font-weight:bold" %> <br>
+                  <%= label :date, t('operation.planting_date'), :style => "font-weight:bold" %> <br>             
                   <%= label :year, t('datetime.prompts.year'), :class => 'field' %>
                   <%= select :bmp_ccr, :year, listYears.map { |e| [e[0], e[1]]}, {:selected => @year}, {:prompt => t('datetime.prompts.year')}%>
-
+ 
                   <%= label :date, t('general.date'), :class => 'field' %>
                   <%= select :bmp_ccr, :month, listMonths.map { |e| [e[0], e[1]] }, {:selected => @month}, {:prompt => t('datetime.prompts.month')}%>
                   <%= select :bmp_ccr, :day, listDays.map { |e| [e[0], e[1]] }, {:selected => @day}, {:prompt => t('datetime.prompts.day')}%>
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr> 
               <td class="indent" colspan="2">
                 <div id="div_type" class="field spacer_bottom" >
                   <%= label :type_id, t('operation.planting_method') %>
@@ -531,7 +492,7 @@
             <tr>
               <td class="indent" colspan="2">
                 <div class="field">
-                  <%= label :date, t('bmp.grazing_date') %>
+                  <%= label :date, t('bmp.grazing_date') %>              
                   <%= select :bmp_rg, :year, listYears.map { |e| [e[0], e[1]]}, {:prompt => t('datetime.prompts.year'), :selected => bmp.sides}%>
                   <%= select :bmp_rg, :month, listMonths.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.month'), :selected => bmp.org_n.to_i}%>
                   <%= select :bmp_rg, :day, listDays.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.day'), :selected => bmp.no3_n.to_i}%>
@@ -550,13 +511,13 @@
             </tr>
             <tr>
               <td class="indent" colspan="2">
-                <%= label :days_grazed, t('bmp.days_grazed')  %>
+                <%= label :rest_time, t('bmp.days_grazed')  %>
                 <%= number_field :bmp_rg, :days_grazed, :value => bmp.days, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent" colspan="2">
-                <%= label :rest_time, t('bmp.rest_time')  %>
+                <%= label :hours, t('bmp.rest_time')  %>
                 <%= number_field :bmp_rg, :rest_time, :value => bmp.area, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
