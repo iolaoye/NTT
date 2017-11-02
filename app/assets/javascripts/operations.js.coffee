@@ -47,7 +47,7 @@ updateNutrients = (animal) ->
     $("#operation_po4_p").val(fertilizer.qp)
     $("#operation_org_n").val(fertilizer.yn)
     $("#operation_org_p").val(fertilizer.yp)
-    $("#operation_nh3").val(fertilizer.nh3)
+    $("#operation_nh3").val(fertilizer.nh3) 
 
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
