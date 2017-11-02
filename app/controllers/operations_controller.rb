@@ -49,8 +49,8 @@ class OperationsController < ApplicationController
   	@operation.activity_id = params[:operation]
   	@operation.crop_id = params[:crop]
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
-    @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
-    @project = Project.find(params[:project_id])
+    @crops = Crop.load_crops(@project.location.state_id)
+    #@project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
@@ -80,7 +80,7 @@ class OperationsController < ApplicationController
 # POST /operations
 # POST /operations.json
   def create
-    @project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
     saved = false
@@ -90,7 +90,7 @@ class OperationsController < ApplicationController
       @operation = Operation.new(operation_params)
 	    update_amount()   #CONVERT T/ac to lbs/ac
       @operation.scenario_id = params[:scenario_id]
-      @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+      @crops = Crop.load_crops(@project.location.state_id)
       if @operation.save
         saved = true
         #operations should be created in soils too.
