@@ -348,9 +348,9 @@ $(document).ready ->
         update_fertigation_options()
     $("#bmp_mc_animal_id").change ->
 	    update_manure_control_options()
-    $("#bmp_cb1_3").click ->
+    $("#bmp_td_3").click ->
         rb_td(3)
-    $("#bmp_cb1_4").click ->
+    $("#bmp_td_4").click ->
         rb_td(4)
     $("#fill_max").click ->
         update_max_row()
