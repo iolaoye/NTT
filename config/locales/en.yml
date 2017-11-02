@@ -772,15 +772,15 @@ en:
     result: Result
     add: Add
     submit: Submit
-    scenario1: first scenario
-    scenario2: second scenario
-    scenario3: third scenario
+    scenario1: Scenario Name
+    scenario2: Scenario Name
+    scenario3: Scenario Name
     1st_scenario: 1st Scenario
     2nd_scenario: 2nd Scenario
     3rd_scenario: 3rd Scenario
-    watershed1: first watershed
-    watershed2: second watershed
-    watershed3: third watershed
+    watershed1: Watershed Name
+    watershed2: Watershed Name
+    watershed3: Watershed Name
     last: (last 12 years)
     avg: Monthly average (whole period)
     select_scenario1: Select 1st scenario
