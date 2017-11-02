@@ -25,10 +25,10 @@ class SoilsController < ApplicationController
 # GET /soils
 # GET /soils.json
   def index
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soils = Soil.where(:field_id => params[:field_id])
-    @weather = @field.weather
+    #@weather = @field.weather
 	
     add_breadcrumb t('menu.soils')
 
@@ -144,7 +144,7 @@ class SoilsController < ApplicationController
   def save_soils
 	@project = Project.find(params[:project_id])
 	@field = Field.find(params[:field_id])
-	@weather = @field.weather
+	#@weather = @field.weather
 
 	add_breadcrumb 'Soils'
 

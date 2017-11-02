@@ -158,9 +158,9 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1.json
   def update
     @operation = Operation.find(params[:id])
-    @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
-    @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
+    @crops = Crop.load_crops(@project.location.state_id)
+    #@project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
       if @operation.update_attributes(operation_params)
@@ -220,10 +220,10 @@ class OperationsController < ApplicationController
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
-	if @operation.activity_id == 7 then
-		#delete stop grazing linked to this grazing operation
-		Operation.find_by_type_id(@operation.id).destroy
-	end
+  	if @operation.activity_id == 7 then
+  		#delete stop grazing linked to this grazing operation
+  		Operation.find_by_type_id(@operation.id).destroy
+  	end
     if @operation.destroy
       flash[:notice] = t('models.operation') + t('notices.deleted')
     end
@@ -628,7 +628,7 @@ class OperationsController < ApplicationController
 			end
 		end
     end
-	redirect_to project_field_scenario_operations_path(params[:project_id], params[:field_id], params[:scenario_id])
+	 redirect_to project_field_scenario_operations_path(params[:project_id], params[:field_id], params[:scenario_id])
   end
 
   def open
@@ -645,7 +645,7 @@ class OperationsController < ApplicationController
 # params.require(:person).permit(:name, :age)
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def operation_params
-    params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id, :moisture)
+    params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id, :moisture, :org_c, :nh4_n)
   end
 
   def add_soil_operation()
