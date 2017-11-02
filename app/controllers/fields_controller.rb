@@ -162,12 +162,14 @@ class FieldsController < ApplicationController
   	field.field_name = params[:field][:field_name]
   	field.field_area = params[:field][:field_area]
   	field.soilp = params[:field][:soilp]
+    debugger
   	if field.save
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
   			#save soils and layers information for modified version only.
-  			for i in 0..(@field.soils.count - 1)
-  				layer = @field.soils[i].layers[0]
+  			for i in 0..(field.soils.count - 1)
+          debugger
+  				layer = field.soils[i].layers[0]
   				layer.organic_matter = params[:om][i]
   				layer.soil_p = params[:field][:soilp]
   				if layer.save then 
@@ -182,7 +184,7 @@ class FieldsController < ApplicationController
     respond_to do |format|
       if msg.eql?("OK") then
   	    #get_field_list(@field.location_id)
-  	    format.html { redirect_to project_field_scenarios_path(@project, @field), notice: 'Field was successfully updated.' }
+  	    format.html { redirect_to project_field_scenarios_path(@project, field), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit", notice: msg }
