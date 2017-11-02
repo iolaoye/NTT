@@ -1339,7 +1339,7 @@ module SimulationsHelper
         values[0] = operation.opv1
         items[1] = "Curve Number"
         values[1] = operation.opv2
-		#find if there are Pads & Pipes Bmps set up.
+		    #find if there are Pads & Pipes Bmps set up.
         bmps_count = Bmp.where("(bmpsublist_id = 4 OR bmpsublist_id = 5 OR bmpsublist_id = 6 OR bmpsublist_id = 7) AND scenario_id = " + @scenario.id.to_s).count
         if bmps_count > 0 then
           apex_string += sprintf("%8.1f", (operation.opv2 * 0.9)) #curve number
@@ -1365,10 +1365,23 @@ module SimulationsHelper
         oper = Operation.where(:id => operation.operation_id).first
 		    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
         #divide by 100 to convert percentage to fraction
+        org_c = 0
+        if oper.org_c == nil then
+          case oper.type_id
+            when 2 #Manure
+              if Operation.find(operation.operation_id).type_id == 57 then
+                org_c = 0.10 #liquide
+              else
+                org_c = 0.25 #solid
+              end
+          end
+        else
+          org_c = oper.org_c / 100
+        end
 		    if oper.activity_id == 2 && oper.type_id == 2 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)
 		    else
-			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)
 		    end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
@@ -1390,7 +1403,7 @@ module SimulationsHelper
         if @grazingb == false then
           items[3] = "DryMatterIntake"
           #create_herd file and send to APEX
-		  current_oper = Operation.find(operation.operation_id)
+		      current_oper = Operation.find(operation.operation_id)
           values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
           #animalB = operation.ApexTillCode
           @grazingb = true
@@ -1478,44 +1491,43 @@ module SimulationsHelper
       else
         operation_name = Activity.find(operation.activity_id).name
     end
-	state_id = Location.find(session[:location_id]).state_id
-	if state_id == 0 or state_id == nil then
-		state_abbreviation = "**"
-	else
-		state_abbreviation = State.find(state_id).state_abbreviation
-	end
-    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+  	state_id = @project.location.state_id
+  	if state_id == 0 or state_id == nil then
+  		state_abbreviation = "**"
+  	else
+  		state_abbreviation = State.find(state_id).state_abbreviation
+  	end
+      @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
                    COMA + Crop.find_by_number(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
-    #End With
   end  # end add_operation method
 
   def append_file(original_file, target_file, file_type)
     path = File.join(APEX, "APEX" + session[:session_id])
-      if File.exists?(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase)) then
-  		  FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
-      else
-  		  FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
-      end
-      case file_type
-        when "till"
-          File.open(File.join(path, target_file), "a+") do |f|
-            @change_till_depth.each do |row|
-              f << row
-            end
+    if File.exists?(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase)) then
+		  FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
+    else
+		  FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
+    end
+    case file_type
+      when "till"
+        File.open(File.join(path, target_file), "a+") do |f|
+          @change_till_depth.each do |row|
+            f << row
           end
-        when "fert"
-          File.open(File.join(path, target_file), "a+") do |f|
-            @new_fert_line.each do |row|
-              f << row
-            end
+        end
+      when "fert"
+        File.open(File.join(path, target_file), "a+") do |f|
+          @new_fert_line.each do |row|
+            f << row
           end
-      end #end case file_type
-      msg = send_file_to_APEX(read_file(target_file, false), target_file)
+        end
+    end #end case file_type
+    msg = send_file_to_APEX(read_file(target_file, false), target_file)
     #todo chcek how this will work with fert changing for grazing and fert appliction at the same time. Suggestion. firs get the changes for both and then change the fert file.
   end
 
-  def add_fert(no3n, po4p, orgN, orgP, type, nh3, subtype)
+  def add_fert(no3n, po4p, orgN, orgP, type, nh3, subtype, orgC)
     k = 0
     exist = false
     count = 0
@@ -1558,17 +1570,7 @@ module SimulationsHelper
       else
         newLine += sprintf("%8.4f", orgP)
       end
-      orgC = 0
-      case type
-        when 1 #commercial
-          nh3 = 0
-        when 2 #Manure
-          if subtype == 57 then
-            orgC = 0.15 #liquide
-          else
-            orgC = 0.35 #solid
-          end
-      end
+  
       if nh3 == nil then
         newLine = newLine + " " + sprintf("%7.4f", 0)
       else

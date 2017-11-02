@@ -577,10 +577,12 @@ en:
     animals: 'Total animal units'
     hours: 'Hours in field (0-24)'
     depth: 'Depth (in)'
-    no3_n: 'No3 n (0-1)'
-    po4_p: 'Po4 p (0-1)'
-    org_n: 'Org n (0-1)'
-    org_p: 'Org p (0-1)'
+    no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
+    po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
+    org_n_html: 'Organic N (0-100%)'
+    org_p_html: 'Organic P (0-100%)'
+    org_c_html: 'Organic Carbon'
+    nh4_n_html: 'Fraction of N as Ammonia (NH<sub>4</sub>-N)'
     add_list: Add to list
     select_crop: Select crop
     planting: Planting
@@ -905,7 +907,7 @@ en:
     group: Group
     albedo: Albedo
     slope: Slope
-    percentage: Percentage
+    percentage: 'Percentage'
     layers_info: Layers Information
     soil_name: Soil Name
     depth: Depth

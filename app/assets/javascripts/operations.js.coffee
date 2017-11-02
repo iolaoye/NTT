@@ -30,10 +30,13 @@ updateNutrients = (animal) ->
       $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
       if ($("#operation_subtype_id").val() == "57")
         $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
+        $("#operation_org_c").val(10)
       else
         $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+        $("#operation_org_c").val(25)
     else
       $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+      $("#operation_org_c").val(0)
   if (animal == 0)
     url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
   else
@@ -44,6 +47,7 @@ updateNutrients = (animal) ->
     $("#operation_po4_p").val(fertilizer.qp)
     $("#operation_org_n").val(fertilizer.yn)
     $("#operation_org_p").val(fertilizer.yp)
+    $("#operation_nh3").val(fertilizer.nh3)
 
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
@@ -112,14 +116,14 @@ updateTypes = ->
       $("#div_type")[0].children[0].innerText = "Irrigation Method"
     when "7"   # continuous grazing
       getGrazingFields()
-    when "10"   # liming
-      $("#div_fertilizer").hide()
-      $("#div_amount").show()
-      $("#div_type").hide()
-    when "70"   # rotational grazing
+    when "9"   # rotational grazing
       getGrazingFields()
       $("#div_grazed").show()
       $("#div_resttime").show()
+    when "12"   # liming
+      $("#div_fertilizer").hide()
+      $("#div_amount").show()
+      $("#div_type").hide()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements

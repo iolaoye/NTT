@@ -1,13 +1,13 @@
 class FieldsController < ApplicationController
-  load_and_authorize_resource :project
-  load_and_authorize_resource :field, :through => :project
+  #load_and_authorize_resource :project
+  #load_and_authorize_resource :field, :through => :project
 
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
   def create_soils
 	  counties = Location.find(session[:location_id]).coordinates.split(",")
-      client = Savon.client(wsdl: URL_SoilsInfo)
+    client = Savon.client(wsdl: URL_SoilsInfo)
 	  counties.each do |county|
 		response = client.call(:get_soils, message: {"county" => County.find(county).county_state_code})
 	  end
@@ -15,19 +15,19 @@ class FieldsController < ApplicationController
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
-  def field_scenarios
-	params[:id] = params[:format]
-	update_field()
+#def field_scenarios
+	#params[:id] = params[:format]
+	#update_field()
 
-	@location = @project.location
-	session[:location_id] = @location.id
-	get_field_list(@location.id)
-	if ENV["APP_VERSION"] == "modified"
-		redirect_to project_field_scenarios_path(@project, @field)
-	else
-		redirect_to edit_project_field_weather_path(@project, @field, @field.weather)
-	end
-  end
+	#@location = @project.location
+	#session[:location_id] = @location.id
+	#get_field_list(@location.id)
+	#if ENV["APP_VERSION"] == "modified"
+		#redirect_to project_field_scenarios_path(@project, @field)
+	#else
+		#redirect_to edit_project_field_weather_path(@project, @field, @field.weather)
+	#end
+#end
 
 ################################  soils list   #################################
 # GET /locations
@@ -37,9 +37,10 @@ class FieldsController < ApplicationController
     redirect_to list_soil_path(params[:id])
   end
 ################################  get list of fields   #################################
-  def get_field_list(location_id)
-    @fields = Field.where(:location_id => location_id)
-    @project_name = Project.find(params[:project_id]).name
+  def get_field_list()
+    #@fields = Field.where(:location_id => @project.location.id)
+    @fields = @project.fields
+    @project_name = @project.name
 
     @fields.each do |field|
       field_average_slope = 0
@@ -62,11 +63,11 @@ class FieldsController < ApplicationController
 # GET /fields/1
 # GET /1/fields.json
   def index
-	session[:simulation] = "scenario"
-    @project = Project.find(params[:project_id])
-		@location = @project.location
-		session[:location_id] = @location.id
-		get_field_list(@location.id)
+    session[:simulation] = "scenario"
+    #@project = Project.find(params[:project_id])
+		#@location = @project.location
+		#session[:location_id] = @location.id
+		get_field_list()
 		respond_to do |format|
 		  format.html # index.html.erb
 		  format.json { render json: @fields }
@@ -156,32 +157,32 @@ class FieldsController < ApplicationController
 # PATCH/PUT /fields/1
 # PATCH/PUT /fields/1.json
   def update
-	msg = ""
-	field = Field.find(params[:id])
-	field.field_name = params[:field][:field_name]
-	field.field_area = params[:field][:field_area]
-	field.soilp = params[:field][:soilp]
-	if field.save
-		msg = "OK"
-		if ENV["APP_VERSION"] == "modified" then
-			#save soils and layers information for modified version only.
-			for i in 0..(@field.soils.count - 1)
-				layer = @field.soils[i].layers[0]
-				layer.organic_matter = params[:om][i]
-				layer.soil_p = params[:field][:soilp]
-				if layer.save then 
-					msg = "OK" 
-				else
-					msg = "Error saving soil information"
-				end
-			end		# end soils.each
-		end  # end if modified version
-	end
+  	msg = ""
+  	field = Field.find(params[:id])
+  	field.field_name = params[:field][:field_name]
+  	field.field_area = params[:field][:field_area]
+  	field.soilp = params[:field][:soilp]
+  	if field.save
+  		msg = "OK"
+  		if ENV["APP_VERSION"] == "modified" then
+  			#save soils and layers information for modified version only.
+  			for i in 0..(@field.soils.count - 1)
+  				layer = @field.soils[i].layers[0]
+  				layer.organic_matter = params[:om][i]
+  				layer.soil_p = params[:field][:soilp]
+  				if layer.save then 
+  					msg = "OK" 
+  				else
+  					msg = "Error saving soil information"
+  				end
+  			end		# end soils.each
+  		end  # end if modified version
+  	end
 
     respond_to do |format|
       if msg.eql?("OK") then
-		#get_field_list(@field.location_id)
-		format.html { redirect_to project_field_scenarios_path(@project, @field), notice: 'Field was successfully updated.' }
+  	    #get_field_list(@field.location_id)
+  	    format.html { redirect_to project_field_scenarios_path(@project, @field), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit", notice: msg }

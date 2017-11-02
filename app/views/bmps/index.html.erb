@@ -440,7 +440,7 @@
             <% if manure_operations > 0%>
             <tr>
               <td class="indent" colspan="2">
-               <%= label :manure_control_id, t('bmp.manure_control') %>
+               <%= label :manure_control_id, t('bmp.manure_control') + " (" + t('pdf.percentage') + " " + t('general.change') + ")"%>
                <% if I18n.locale.equal?(:en) %>
                 <%= collection_select :bmp_mc, :animal_id, ManureControl.all, :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
                <% else %>
@@ -450,25 +450,26 @@
             </tr>
             <tr>
               <td class="indent" colspan="2">
-               <%= label :no3_n, t('bmp.no3_n') + " " + t('bmp.percentage_range') %>
+               <%#= label t('operation.no3_n_html') %>
+               <label for="no3_n"><%=t('operation.no3_n_html')%></label>
                <%= number_field :bmp_mc, :no3_n, :value => bmp.no3_n, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent" colspan="2">
-               <%= label :po4_p, t('bmp.po4_p') + " " + t('bmp.percentage_range') %>
+               <label for="po4_p"><%=t('operation.po4_p_html')%></label>
                <%= number_field :bmp_mc, :po4_p, :value => bmp.po4_p, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent" colspan="2">
-               <%= label :org_n, t('bmp.org_n') + " " + t('bmp.percentage_range') %>
+               <label for="org_n"><%=t('operation.org_n_html')%></label>
                <%= number_field :bmp_mc, :org_n, :value => bmp.org_n, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent" colspan="2">
-                <%= label :org_p, t('bmp.org_p') + " " + t('bmp.percentage_range') %>
+               <label for="org_p"><%=t('operation.org_p_html')%></label>
                 <%= number_field :bmp_mc, :org_p, :value => bmp.org_p, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
