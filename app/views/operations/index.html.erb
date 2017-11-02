@@ -527,7 +527,7 @@ function saveView() {
 }
 
 function show_crop(ele) {
-  var crop_id = ele
+  var crop_id = ele;
 	localStorage.setItem('bmp'+ele, 'true');
 
   var crop_show_div = document.getElementById("expand_crop_" + crop_id);
@@ -540,7 +540,7 @@ function show_crop(ele) {
   }
 
 function hide_crop(ele) {
-  var crop_id = ele
+  var crop_id = ele;
 	localStorage.setItem('bmp'+ele, 'false');
 
   var crop_show_div = document.getElementById("expand_crop_" + crop_id);
