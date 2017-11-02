@@ -162,13 +162,11 @@ class FieldsController < ApplicationController
   	field.field_name = params[:field][:field_name]
   	field.field_area = params[:field][:field_area]
   	field.soilp = params[:field][:soilp]
-    debugger
   	if field.save
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
   			#save soils and layers information for modified version only.
   			for i in 0..(field.soils.count - 1)
-          debugger
   				layer = field.soils[i].layers[0]
   				layer.organic_matter = params[:om][i]
   				layer.soil_p = params[:field][:soilp]
