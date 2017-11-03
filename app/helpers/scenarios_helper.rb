@@ -691,7 +691,7 @@ module ScenariosHelper
         end
       when 6 #irrigation
         opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
-      when 10 #liming
+      when 12 #liming
         opv1 = operation.amount / THA_TO_TAC #converts input t/ac to APEX t/ha
     end
     return opv1
