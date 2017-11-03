@@ -178,7 +178,7 @@ updateFerts = ->
     $("#operation_po4_p").val("")
     $("#operation_org_n").val("")
     $("#operation_org_p").val("")
-    if ($("#operation_activity_id").val() == "7")
+    if ($("#operation_activity_id").val() == "7" || $("#operation_activity_id").val() == "9")
         updateNutrients(1)
 
 updateAnimals = ->

@@ -1,5 +1,5 @@
 # encoding: utf-8
-file = "db/seeds/bmpsublists.rb"
+file = "db/seeds/activities.rb"
 load file
 
 file = "db/seeds/activities.rb"

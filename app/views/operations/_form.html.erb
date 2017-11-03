@@ -77,7 +77,7 @@
 			</div>
 	        <div class="field" id="div_grazed" style="display:none">
 	            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-	            <%= f.number_field :moisture, :step => 'any', :class => "gvTitleStyleNumber" %>
+	            <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
 	        </div>
 	        <div class="field" id="div_resttime" style="display:none">
 	            <%= f.label :hours, t('bmp.rest_time')  %>
@@ -145,7 +145,7 @@
 			</div>
 	        <div class="field" id="div_grazed" style="display:none">
 	            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-	            <%= f.number_field :moisture, :step => 'any', :class => "gvTitleStyleNumber" %>
+	            <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
 	        </div>
 	        <div class="field" id="div_resttime" style="display:none">
 	            <%= f.label :hours, t('bmp.rest_time')  %>
@@ -213,7 +213,7 @@
 			</div>
 	        <div class="field" id="div_grazed" style="display:none">
 	            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-	            <%= f.number_field :moisture, :step => 'any', :class => "gvTitleStyleNumber" %>
+	            <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
 	        </div>
 	        <div class="field" id="div_resttime" style="display:none">
 	            <%= f.label :hours, t('bmp.rest_time')  %>
@@ -277,7 +277,7 @@
 			</div>
 	        <div class="field" id="div_grazed" style="display:none">
 	            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-	            <%= f.number_field :moisture, :step => 'any', :class => "gvTitleStyleNumber" %>
+	            <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
 	        </div>
 	        <div class="field" id="div_resttime" style="display:none">
 	            <%= f.label :hours, t('bmp.rest_time')  %>
@@ -342,7 +342,7 @@
 		    </div>
 	        <div class="field" id="div_grazed" style="display:none">
 	            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-	            <%= f.number_field :moisture, :step => 'any', :class => "gvTitleStyleNumber" %>
+	            <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
 	        </div>
 	        <div class="field" id="div_resttime" style="display:none">
 	            <%= f.label :hours, t('bmp.rest_time')  %>
@@ -373,9 +373,9 @@
 			</div>
 		<% when 9 # rotational grazing%>
 			<% operation = Operation.find_by_type_id(@operation.type_id) %>
-			    <div id="div_date">
-					<%= f.label :year, t('general.year'), :class => 'field' %>
-					<%= select "year1", options_for_select(listYears, :selected => operation.year), {:prompt => t('datetime.prompts.year')} %>
+			<div id="div_date">
+				<%= f.label :year, t('general.year'), :class => 'field' %>
+				<%= select "year1", options_for_select(listYears, :selected => operation.year), {:prompt => t('datetime.prompts.year')} %>
 				<%= f.label :stop, t('general.stop') + " " + t('general.date'), :class => 'field' %>
 				<%= f.label :date, t('general.date'), :class => 'field' %>
 				<%= select "month_id1", options_for_select(listMonths, :selected => operation.month_id), {:prompt => t('datetime.prompts.month')} %>
@@ -405,11 +405,11 @@
 			  <%= f.label :hours_in_field, t('operation.hours') %>
 			  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		    </div>
-	        <div class="field" id="div_grazed" style="display:none">
+	        <div class="field" id="div_grazed" >
 	            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-	            <%= f.number_field :moisture, :step => 'any', :class => "gvTitleStyleNumber" %>
+	            <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
 	        </div>
-	        <div class="field" id="div_resttime" style="display:none">
+	        <div class="field" id="div_resttime" >
 	            <%= f.label :hours, t('bmp.rest_time')  %>
 	            <%= f.number_field :nh4_n, :step => 'any', :class => "gvTitleStyleNumber" %>
 	        </div>
@@ -470,8 +470,7 @@
 			  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 			</div>
 	        <div class="field" id="div_grazed" style="display:none">
-	            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-	            <%= f.number_field :moisture, :step => 'any', :class => "gvTitleStyleNumber" %>
+	            <%= f.label :days_grazed, t('bmp.days_grazed')  %>      <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
 	        </div>
 	        <div class="field" id="div_resttime" style="display:none">
 	            <%= f.label :hours, t('bmp.rest_time')  %>

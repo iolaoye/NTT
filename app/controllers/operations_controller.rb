@@ -81,20 +81,21 @@ class OperationsController < ApplicationController
 # POST /operations.json
   def create
     #@project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @scenario = Scenario.find(params[:scenario_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
+    msg = "OK"
     saved = false
     soil_op_saved = false
-    msg = "Unknown error"
+    #msg = "Unknown error"
     ActiveRecord::Base.transaction do
       @operation = Operation.new(operation_params)
-	    update_amount()   #CONVERT T/ac to lbs/ac
+	    #update_amount()   #CONVERT T/ac to lbs/ac
       @operation.scenario_id = params[:scenario_id]
       @crops = Crop.load_crops(@project.location.state_id)
       if @operation.save
         saved = true
-        #operations should be created in soils too.
-        msg = add_soil_operation()
+        #operations should be created in soils too. but not for rotational grazing
+        msg = add_soil_operation() unless @operation.activity_id == 9
         if msg.eql?("OK")
           soil_op_saved = true
         else
@@ -103,15 +104,11 @@ class OperationsController < ApplicationController
         end
     		if @operation.activity_id == 7 || @operation.activity_id == 9 then
     			operation_id = @operation.id
-          if @operation.activity_id == 7
-      			@operation = Operation.new(operation_params)
-      			@operation.activity_id = 8
-            @operation.moisture = 0
-          else #activity_id == 9
-            @operation = Operation.new(operation_params)
+    			@operation = Operation.new(operation_params)
+          if @operation.activity_id == 7 then 
+    		    @operation.activity_id = 8
+          else
             @operation.activity_id = 10
-            @operation.moisture = params[:operation][:moisture] #days_grazed
-            @operation.nh4_n = params[:operation][:nh4_n] #rest_time
           end
     			@operation.year = params[:year1]
     			@operation.month_id = params[:month_id1]
@@ -128,12 +125,14 @@ class OperationsController < ApplicationController
     			@operation.subtype_id = 0
     			@operation.save
     		end
-        msg = add_soil_operation()
-        if msg.eql?("OK")
-          soil_op_saved = true
-        else
-          soil_op_saved = false
-          raise ActiveRecord::Rollback
+        if @operation.activity_id != 9 then 
+          msg = add_soil_operation()
+          if msg.eql?("OK")
+            soil_op_saved = true
+          else
+            soil_op_saved = false
+            raise ActiveRecord::Rollback
+          end
         end
       else
         saved = false
@@ -176,13 +175,17 @@ class OperationsController < ApplicationController
         soil_operations.each do |soil_operation|
           update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         end
-    		if @operation.activity_id == 7 then
+        if @operation.activity_id == 7 || @operation.activity_id == 9 then
     			if (Operation.find_by_type_id(@operation.type_id) != nil) then
     				@operation1 = Operation.find_by_type_id(@operation.type_id)
     			else
     				operation_id = @operation.id
     				@operation1 = Operation.new(operation_params)
-    				@operation1.activity_id = 8
+            if @operation.activity_id == 7 then 
+              @operation.activity_id = 8
+            else
+              @operation.activity_id = 10
+            end
     				@operation1.type_id = operation_id
     				@operation1.scenario_id = params[:scenario_id]
     				@operation1.amount = 0
@@ -224,10 +227,10 @@ class OperationsController < ApplicationController
   def destroy
     @operation = Operation.find(params[:id])
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @scenario = Scenario.find(params[:scenario_id])
-  	if @operation.activity_id == 7 then
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
+  	if @operation.activity_id == 7 || @operation.activity_id == 9 then
   		#delete stop grazing linked to this grazing operation
   		Operation.find_by_type_id(@operation.id).destroy
   	end
@@ -369,10 +372,10 @@ class OperationsController < ApplicationController
 
 ################################  CALL WHEN CLICK IN UPLOAD CROP SCHEDULE  #################################
   def crop_schedule
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @scenario = Scenario.find(params[:scenario_id])
-    @operations = Operation.where(:scenario_id => params[:scenario_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
+    #@operations = Operation.where(:scenario_id => params[:scenario_id])
     @count = @operations.count
     @highest_year = 0
     @operations.each do |operation|
@@ -394,8 +397,8 @@ class OperationsController < ApplicationController
       if params[:cropping_system][:id] != "" then
         ActiveRecord::Base.transaction do
           @cropping_system_id = params[:cropping_system][:id]
-		  #create operations for crop rotation selected and take the crop to add to the tillage selected.
-		  create_crop_rotation()
+		      #create operations for crop rotation selected and take the crop to add to the tillage selected.
+		      create_crop_rotation()
         end   #end transaction do
       end #end if cropping_system_id != ""
     end # end if cropping_system != nil
@@ -410,7 +413,7 @@ class OperationsController < ApplicationController
       end #end if tillage_id != ""
     end # end if tillage != nil
 
-    @operations = Operation.where(:scenario_id => params[:scenario_id])
+    #@operations = Operation.where(:scenario_id => params[:scenario_id])
     if params[:language] != nil then
     if params[:language][:language].eql?("es")
         I18n.locale = :es
@@ -492,7 +495,7 @@ class OperationsController < ApplicationController
 		@operation = Operation.new
 		@operation.scenario_id = params[:scenario_id]
 		#get crop_id from croppingsystem and state_id
-		state_id = Location.find(session[:location_id]).state_id
+		state_id = @project.location.state_id
 		@crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
 		if @crop == nil then
 			@crop = Crop.find_by_number_and_state_id(event.apex_crop, '**')
@@ -720,9 +723,9 @@ class OperationsController < ApplicationController
     end
   end
 
-  def update_amount()
+  #def update_amount()
 	  #if @operation.activity_id == 2 and @operation.type_id == 2 then @operation.amount *= 2000 end
-	  @operation.save
-  end
+	  #@operation.save
+  #end
 
 end #end class
