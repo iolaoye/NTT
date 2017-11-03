@@ -62,7 +62,8 @@ class Scenario < ActiveRecord::Base
 
    #Unused code. Remove method reference in /operations/index.html.erb?
 	 def pesticide_operations(crop)
-	 	self.operations.where(:activity_id => 11, :crop_id => crop.id)
+    #Burn operations currently uses ID 11
+	 	self.operations.where(:activity_id => 100, :crop_id => crop.id)
 	 end
 
 end

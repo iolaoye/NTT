@@ -512,9 +512,9 @@
       <div id="div_type" class="field spacer_bottom" >
         <%= label :type_id, t('operation.planting_method')%>
         <% if I18n.locale.eql?(:en) %>
-          <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id, :status => true), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one'), :selected => @operation.type_id}, {:required => true} %>
+          <%= collection_select :operation, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one'), :selected => @operation.type_id}, {:required => true} %>
         <% else %>
-          <%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id, :status => true), :code, :spanish_name, {:prompt => t('general.select'), :selected => @operation.type_id}, {:required => true} %>
+          <%= collection_select :operation, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :spanish_name, {:prompt => t('general.select'), :selected => @operation.type_id}, {:required => true} %>
         <% end %>
       </div>
       <div id="div_fertilizer" class="field" style="display:none" >
