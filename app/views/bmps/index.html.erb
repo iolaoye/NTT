@@ -37,15 +37,17 @@
           <% next %>
         <% end %>
           <tr>
-            <% if bmp.id != nil %>
-              <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
-            <% else %>
-              <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
-            <% end %>
-            <% if I18n.locale.equal?(:en) %>
-              <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %> class="bmp"><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
-            <% else %>
-              <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %> class="bmp"><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
+            <% if bmp.bmpsublist_id <= 19 || bmp.bmpsublist_id > 20 %>
+              <% if bmp.id != nil %>
+                <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
+              <% else %>
+                <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]" %></td>
+              <% end %>
+              <% if I18n.locale.equal?(:en) %>
+                <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %> class="bmp"><h4><%= Bmpsublist.find(bmp.bmpsublist_id).name %></h4></td>
+              <% else %>
+                <td style="cursor: pointer" id=<%= "bmp#{bmp.bmpsublist_id}" %> class="bmp"><h4><%= Bmpsublist.find(bmp.bmpsublist_id).spanish_name %></h4></td>
+              <% end %>
             <% end %>
           </tr>
         <%end %>
@@ -213,7 +215,7 @@
                 <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :class => "gvTitleStyleNumber", :step => 'any' %>
               </td>
             </tr>
-          <% when 10 %>              
+          <% when 10 %>
             <tr>
               <td class="indent" colspan="2">
                 <%= label :depth, t('operation.animals')  %>
@@ -438,42 +440,12 @@
             </tr>
             <% end %>
           <% when 19 %>
-            <tr>
-              <td class="indent" colspan="2">
-                <%= label :crop_id, t('operation.crop') %>
-                <% if I18n.locale.equal?(:en) %>
-                    <%= collection_select :bmp_ccr, :crop_id, Crop.where("type1 like '%CC%'"), :number, :name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id}%>
-                <% else %>
-                    <%= collection_select :bmp_ccr, :crop_id, Crop.where("type1 like '%CC%'"), :number, :spanish_name, {:prompt => t('bmp.select_vege'), :selected => bmp.crop_id} %>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <td class="indent" colspan="2">
-                <div class="field">
-                  <%= label :date, t('operation.planting_date'), :style => "font-weight:bold" %> <br>             
-                  <%= label :year, t('datetime.prompts.year'), :class => 'field' %>
-                  <%= select :bmp_ccr, :year, listYears.map { |e| [e[0], e[1]]}, {:selected => @year}, {:prompt => t('datetime.prompts.year')}%>
- 
-                  <%= label :date, t('general.date'), :class => 'field' %>
-                  <%= select :bmp_ccr, :month, listMonths.map { |e| [e[0], e[1]] }, {:selected => @month}, {:prompt => t('datetime.prompts.month')}%>
-                  <%= select :bmp_ccr, :day, listDays.map { |e| [e[0], e[1]] }, {:selected => @day}, {:prompt => t('datetime.prompts.day')}%>
-                </div>
-              </td>
-            </tr>
-            <tr> 
-              <td class="indent" colspan="2">
-                <div id="div_type" class="field spacer_bottom" >
-                  <%= label :type_id, t('operation.planting_method') %>
-                  <% if I18n.locale.eql?(:en) %>
-                    <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :eqp, {:prompt => t('operation.planting_method'), :selected => bmp.irrigation_id}%>
-                  <% else %>
-                    <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :spanish_name, {:prompt => t('operation.planting_method'), :selected => bmp.irrigation_id} %>
-                  <% end %>
-                </div>
-              </td>
-            </tr>
+            <% @bmp = bmp %>
+            <tr><td><%= render 'cover_crop1' %></td></tr>
           <% when 20 %>
+            <% @bmp = bmp %>
+             <tr><td><%= render 'cover_crop2' %></td></tr>
+          <% when 21 %>
             <tr>
               <td class="indent" colspan="2">
                 <%= label :animal_id, t('bmp.animals') %>
@@ -522,7 +494,7 @@
                 <%= number_field :bmp_rg, :rest_time, :value => bmp.area, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
-          <% when 21 %>
+          <% when 22 %>
             <tr>
               <td class="indent" colspan="2">
                 <div>
@@ -545,28 +517,28 @@
                 </div>
               </td>
             </tr>
-          <% when 22 %>
+          <% when 23 %>
             <tr>
             <td class="indent" colspan="2">
               <%= t('general.select') %>
               <%= check_box :bmp_ac, :id, :value => bmp.id %>
             </td>
             </tr>
-          <% when 23 %>
+          <% when 24 %>
             <tr>
               <td class="indent" colspan="2">
                 <%= t('general.select') %>
                 <%= check_box :bmp_gc, :id, :value => bmp.id %>
               </td>
             </tr>
-          <% when 24 %>
+          <% when 25 %>
             <tr>
               <td class="indent" colspan="2">
                 <%= t('general.select') %>
                 <%= check_box :bmp_sa, :id, :value => bmp.id %>
               </td>
             </tr>
-          <% when 25 %>
+          <% when 26 %>
             <tr>
               <td class="indent" colspan="2">
                 <%= label :crop_id, t('operation.crop') %>
