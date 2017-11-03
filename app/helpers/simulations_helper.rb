@@ -77,11 +77,15 @@ module SimulationsHelper
   end
 
   def send_files1_to_APEX(file)
-    #bmp = @scenario.bmps.find_by_bmpsublist_id(20)
-    #bmp_string = ""
-    #if bmp != nil then
-      #bmp_string = bmp.animal_id + "|" + bmp.number_of_animals + "|" + bmp.sides + "|" + bmp.org_n + "|" + bmp.no3_n + "|" + bmp.irrigation_id + "|" + bmp.org_p + "|" + bmp.po4_p + "|" + bmp.hours + "|" + bmp.days + "|" + bmp.area
-    #end
+    start = @scenario.operations.find_by_activity_id(9)
+    bmp_string = ""
+    if start != nil then
+      bmp_string = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + start.amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.org_c.to_s + "|" + start.nh4_n.to_s
+    end
+    stop = @scenario.operations.find_by_activity_id(10)
+    if stop != nil
+      bmp_string += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
+    end
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
     url = URI.parse(URL_NTT)
     http = Net::HTTP.new(url.host,url.port)

@@ -45,15 +45,15 @@ class Scenario < ActiveRecord::Base
 	 end
 
 	 def burn_operations(crop)
-	 	self.operations.where(:activity_id => 9, :crop_id => crop.id)
+	 	self.operations.where(:activity_id => 11, :crop_id => crop.id)
 	 end
 
 	 def liming_operations(crop)
-	 	self.operations.where(:activity_id => 10, :crop_id => crop.id)
+	 	self.operations.where(:activity_id => 12, :crop_id => crop.id)
 	 end
 
 	 def pesticide_operations(crop)
-	 	self.operations.where(:activity_id => 11, :crop_id => crop.id)
+	 	self.operations.where(:activity_id => 13, :crop_id => crop.id)
 	 end
 	 
 end
