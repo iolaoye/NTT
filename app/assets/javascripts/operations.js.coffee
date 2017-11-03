@@ -47,7 +47,7 @@ updateNutrients = (animal) ->
     $("#operation_po4_p").val(fertilizer.qp)
     $("#operation_org_n").val(fertilizer.yn)
     $("#operation_org_p").val(fertilizer.yp)
-    $("#operation_nh3").val(fertilizer.nh3) 
+    $("#operation_nh3").val(fertilizer.nh3)
 
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
@@ -79,11 +79,15 @@ updateTypes = ->
   $("#div_grazed").hide()
   $("#div_resttime").hide()
   switch $("#operation_activity_id").val()
-    when "1" # planting
+    when "1","13" # planting and cover crop
       updatePlantPopulation()
-      url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
+      #url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
+      url = "/activities/1/tillages.json" #hardcoded path for cover crop compatibility
       $("#div_fertilizer").hide()
-      $("#div_amount").show()
+      if $("#operation_activity_id").val() == "13" #hide amount label if cover crop
+        $("#div_amount").hide()
+      else
+        $("#div_amount").show()
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)

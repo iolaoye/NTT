@@ -2,6 +2,9 @@
 file = "db/seeds/bmpsublists.rb"
 load file
 
+file = "db/seeds/activities.rb"
+load file
+
 cont = false
 
 if cont then
