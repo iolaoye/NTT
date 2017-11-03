@@ -1,9 +1,5 @@
 # encoding: utf-8
-
-file = "db/seeds/activities.rb"
-load file
-
-file = "db/seeds/fertilizers.rb"
+file = "db/seeds/bmpsublists.rb"
 load file
 
 cont = false

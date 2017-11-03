@@ -631,6 +631,8 @@ es:
     lbs: libras
     climate_warning: Este BPG puede tomar más tiempo para salvar
     irrigation: Irrigación
+    option_1: Option 1
+    option_2: Option 2
     crop: Cultivo
     water_stress_factor: Factor de estrés hídrico
     irrigation_efficiency: Eficiencia del riego

@@ -76,6 +76,8 @@ updateTypes = ->
   $("#div_type").hide()
   $("#div_tillage").hide()
   $("#div_date").hide()
+  $("#div_grazed").hide()
+  $("#div_resttime").hide()
   switch $("#operation_activity_id").val()
     when "1" # planting
       updatePlantPopulation()
@@ -115,8 +117,10 @@ updateTypes = ->
       $("#operation_type_id").prop('required',true)
       $("#div_type")[0].children[0].innerText = "Irrigation Method"
     when "7"   # continuous grazing
+      url = "/fertilizers.json?id=animal"
       getGrazingFields()
     when "9"   # rotational grazing
+      url = "/fertilizers.json?id=animal"
       getGrazingFields()
       $("#div_grazed").show()
       $("#div_resttime").show()
@@ -136,7 +140,7 @@ updateTypes = ->
     items.push "<option value>Select One</option>"
     $.each tillages, (key, tillage) ->
       switch $("#operation_activity_id").val()
-        when "2", "6", "7"
+        when "2", "6", "7", "9"
           items.push "<option value=\"" + tillage.id + "\">" + tillage.name + "</option>"
         else
           items.push "<option value=\"" + tillage.code + "\">" + tillage.eqp + "</option>"
