@@ -588,6 +588,7 @@ en:
     add_list: Add to list
     select_crop: Select crop
     planting: Planting
+    cover_crop: Cover Crop
     tillage: Tillage
     harvest: Harvest
     kill: End Crop Season
@@ -607,6 +608,7 @@ en:
     add_liming: 'Add Liming Operation'
     add_start_grazing: 'Add Grazing'
     add_stop_grazing: 'Add Stop Grazing'
+    add_cover_crop: Add Cover Crop
     po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
     planting_method: Planting Method
     manure_composition: Manure Composition
