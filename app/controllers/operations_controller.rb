@@ -101,10 +101,18 @@ class OperationsController < ApplicationController
           soil_op_saved = false
           raise ActiveRecord::Rollback
         end
-    		if @operation.activity_id == 7 then
+    		if @operation.activity_id == 7 || @operation.activity_id == 9 then
     			operation_id = @operation.id
-    			@operation = Operation.new(operation_params)
-    			@operation.activity_id = 8
+          if @operation.activity_id == 7
+      			@operation = Operation.new(operation_params)
+      			@operation.activity_id = 8
+            @operation.moisture = 0
+          else #activity_id == 9
+            @operation = Operation.new(operation_params)
+            @operation.activity_id = 10
+            @operation.moisture = params[:operation][:moisture] #days_grazed
+            @operation.nh4_n = params[:operation][:nh4_n] #rest_time
+          end
     			@operation.year = params[:year1]
     			@operation.month_id = params[:month_id1]
     			@operation.day = params[:day1]
@@ -117,7 +125,6 @@ class OperationsController < ApplicationController
     			@operation.org_n = 0
     			@operation.org_p = 0
     			@operation.nh3 = 0
-    			@operation.moisture = 0
     			@operation.subtype_id = 0
     			@operation.save
     		end
@@ -196,7 +203,7 @@ class OperationsController < ApplicationController
     			soil_operations.each do |soil_operation|
     			  update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
     			end
-    		end 
+    		end
         if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
           format.json { render json: @operation, status: :created, location: @operation }
@@ -416,7 +423,7 @@ class OperationsController < ApplicationController
 ########################################### Create_crop_rotation ##################
   def create_tillage
 		#take the event for the tillage selected and add to the operation and soilOperaition files for the scenario selected.
-		events = Schedule.where(:crop_schedule_id => params[:tillage][:id])				
+		events = Schedule.where(:crop_schedule_id => params[:tillage][:id])
 		events.each do |event|
 			@operation = Operation.new
 			@operation.scenario_id = params[:scenario_id]
@@ -480,7 +487,7 @@ class OperationsController < ApplicationController
 		end
 		#take the event for the cropping_system and tillage selected and add to the operation and soilOperaition files for the scenario selected.
 		crop_schedule_class_id = @cropping_systems.find(params[:cropping_system][:id]).class_id
-		events = Schedule.where(:crop_schedule_id => params[:cropping_system][:id])				
+		events = Schedule.where(:crop_schedule_id => params[:cropping_system][:id])
 		events.each do |event|
 		@operation = Operation.new
 		@operation.scenario_id = params[:scenario_id]
