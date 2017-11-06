@@ -50,10 +50,7 @@ class OperationsController < ApplicationController
   	@operation.crop_id = params[:crop]
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(@project.location.state_id)
-    @cover_crops = []
-    @crops.each do |crop|
-      @cover_crops << crop if crop.type1 == "CC"
-    end
+    @cover_crops = Crop.where("type1 like '%CC%'")
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
@@ -71,6 +68,7 @@ class OperationsController < ApplicationController
   def edit
     @project = Project.find(params[:project_id])
     @crops = Crop.load_crops(Location.find_by_project_id(@project.id).state_id)
+    @cover_crops = Crop.where("type1 like '%CC%'")
     @operation = Operation.find(params[:id])
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     @field = Field.find(params[:field_id])

@@ -105,6 +105,8 @@ updateTypes = ->
       $("#div_nutrients").show()
       $("#div_tillage").show()
       $("#div_type").show()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
       $("#operation_type_id").prop('required',true)
       $("#operation_subtype_id").prop('disabled',true)
       $("#div_type")[0].children[0].innerText = "Fertilizer Type"
@@ -113,6 +115,8 @@ updateTypes = ->
       $("#div_fertilizer").hide()
       $("#div_tillage").show()
       $("#div_type").show()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
       $("#operation_type_id").prop('required',true)
       $("#div_type")[0].children[0].innerText = "Tillage Method"
     when "6"   # irrigation
@@ -124,24 +128,34 @@ updateTypes = ->
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
       $("#div_type")[0].children[0].innerText = "Irrigation Method"
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
     when "7"   # continuous grazing
       url = "/fertilizers.json?id=animal"
       getGrazingFields()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
     when "9"   # rotational grazing
       url = "/fertilizers.json?id=animal"
       getGrazingFields()
       $("#div_grazed").show()
       $("#div_resttime").show()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
     when "12"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
       $("#div_type").hide()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements
       $("#div_fertilizer").hide()
       $("#div_tillage").hide()
       $("#div_type").hide()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
 
   $.getJSON url, (tillages) ->
     items = []
