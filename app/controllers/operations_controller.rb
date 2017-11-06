@@ -56,8 +56,10 @@ class OperationsController < ApplicationController
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
 
     cc_operation = @scenario.operations.where(:activity_id => 5).last
-    @cc_plt_date = Date.parse(sprintf("%2d", cc_operation.year) + "/" + sprintf("%2d", cc_operation.month_id) + "/" + sprintf("%2d", cc_operation.day))
-    @cc_plt_date += 2.days
+    if cc_operation != nil
+      @cc_plt_date = Date.parse(sprintf("%2d", cc_operation.year) + "/" + sprintf("%2d", cc_operation.month_id) + "/" + sprintf("%2d", cc_operation.day))
+      @cc_plt_date += 2.days
+    end
 
     add_breadcrumb t('menu.operations'), project_field_scenario_operations_path(@project, @field, @scenario)
     add_breadcrumb t('operation.new_operation')
