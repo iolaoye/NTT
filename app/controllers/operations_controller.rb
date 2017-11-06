@@ -54,6 +54,11 @@ class OperationsController < ApplicationController
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
+
+    cc_operation = @scenario.operations.where(:activity_id => 5).last
+    @cc_plt_date = Date.parse(sprintf("%2d", cc_operation.year) + "/" + sprintf("%2d", cc_operation.month_id) + "/" + sprintf("%2d", cc_operation.day))
+    @cc_plt_date += 2.days
+
     add_breadcrumb t('menu.operations'), project_field_scenario_operations_path(@project, @field, @scenario)
     add_breadcrumb t('operation.new_operation')
 
@@ -89,6 +94,9 @@ class OperationsController < ApplicationController
     soil_op_saved = false
     #msg = "Unknown error"
     ActiveRecord::Base.transaction do
+      if params[:operation][:crop_id].empty?
+        params[:operation][:crop_id] = params[:operation][:cover_crop_id]
+      end
       @operation = Operation.new(operation_params)
 	    #update_amount()   #CONVERT T/ac to lbs/ac
       @operation.scenario_id = params[:scenario_id]
