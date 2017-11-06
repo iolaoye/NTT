@@ -17,10 +17,6 @@
 	<% end %>
 
 	<div class="field">
-		<%= label :crop_id, t('operation.crop') %>
-		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id}, {:required => true} %>
-	</div>
-	<div class="field">
 		<%= label :activity_id, t('scenario.operation') %>
 		<% if I18n.locale.eql?(:en) %>
 			<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
@@ -28,9 +24,14 @@
 			<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => @operation.activity_id}, {:required => true} %>
 		<% end %>
 	</div>
-  	<div class="field">
-
-  	</div>
+	<div class="field" id="div_crops">
+		<%= label :crop_id, t('operation.crop') %>
+		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id}, {:required => true} %>
+	</div>
+	<div class="field" id="div_cover_crops" style="display:none">
+		<%= label :crop_id, t('operation.crop') %>
+		<%= collection_select :operation, :crop_id, @cover_crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id}, {:required => true} %>
+	</div>
 	<div id="div_start_date" class="field">
 		<% if @operation.activity_id == 7 %>
 			<%= f.label :start, t('general.start') + " " %>
