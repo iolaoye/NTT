@@ -95,9 +95,10 @@ updateTypes = ->
         $("#div_amount").hide()
         $("#div_crops").hide()
         $("#div_cover_crops").show()
-        $("#operation_year").val($("#cc_year").val()-2000)
-        $("#operation_month_id").val($("#cc_month").val())
-        $("#operation_day").val($("#cc_day").val())
+        if ($("#cc_year").val() != undefined)
+          $("#operation_year").val($("#cc_year").val()-2000)
+          $("#operation_month_id").val($("#cc_month").val())
+          $("#operation_day").val($("#cc_day").val())
         $("#div_crops").children[0]
         $("#operation_cover_crop_id").prop('required',true)
         $("#operation_crop_id").prop('required',false)

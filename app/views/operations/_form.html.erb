@@ -15,9 +15,11 @@
 		  <%= notice %>
 	  </div>
 	<% end %>
-	<%= hidden_field_tag "cc_year", @cc_plt_date.year, { :id => "cc_year" } %>
-	<%= hidden_field_tag "cc_month", @cc_plt_date.month, { :id => "cc_month" } %>
-	<%= hidden_field_tag "cc_day", @cc_plt_date.day, { :id => "cc_day" } %>
+	<% if @cc_plt_date %>
+		<%= hidden_field_tag "cc_year", @cc_plt_date.year, { :id => "cc_year" } %>
+		<%= hidden_field_tag "cc_month", @cc_plt_date.month, { :id => "cc_month" } %>
+		<%= hidden_field_tag "cc_day", @cc_plt_date.day, { :id => "cc_day" } %>
+	<% end %>
 	<div class="field">
 		<%= label :activity_id, t('scenario.operation') %>
 		<% if I18n.locale.eql?(:en) %>

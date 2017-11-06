@@ -56,8 +56,10 @@ class OperationsController < ApplicationController
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
 
     cc_operation = @scenario.operations.where(:activity_id => 5).last
-    @cc_plt_date = Date.parse(sprintf("%2d", cc_operation.year) + "/" + sprintf("%2d", cc_operation.month_id) + "/" + sprintf("%2d", cc_operation.day))
-    @cc_plt_date += 2.days
+    if cc_operation != nil
+      @cc_plt_date = Date.parse(sprintf("%2d", cc_operation.year) + "/" + sprintf("%2d", cc_operation.month_id) + "/" + sprintf("%2d", cc_operation.day))
+      @cc_plt_date += 2.days
+    end
 
     add_breadcrumb t('menu.operations'), project_field_scenario_operations_path(@project, @field, @scenario)
     add_breadcrumb t('operation.new_operation')
@@ -175,11 +177,13 @@ class OperationsController < ApplicationController
     @operation = Operation.find(params[:id])
     @field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)
-    @cover_crops = Crop.where("type1 like '%CC%'")
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     #@project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
+      if !params[:operation][:cover_crop_id].empty?
+        params[:operation][:crop_id] = params[:operation][:cover_crop_id]
+      end
       if @operation.update_attributes(operation_params)
 		    #update_amount()
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
