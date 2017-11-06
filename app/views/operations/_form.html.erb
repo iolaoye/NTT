@@ -129,7 +129,7 @@
 				<% else %>
 					<%= f.label :amount, t('operation.amount').gsub("lbs", "T") %>
 				<% end %>
-				<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
+				<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 1, :step => 'any' %>
 			</div>
 			<div class="field" id="div_depth">
 				<%= f.label :depth, t('operation.depth') %>
