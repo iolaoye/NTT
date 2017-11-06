@@ -50,7 +50,10 @@ class OperationsController < ApplicationController
   	@operation.crop_id = params[:crop]
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(@project.location.state_id)
-    #@project = Project.find(params[:project_id])
+    @cover_crops = []
+    @crops.each do |crop|
+      @cover_crops << crop if crop.type1 == "CC"
+    end
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")

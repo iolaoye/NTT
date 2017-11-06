@@ -86,7 +86,11 @@ updateTypes = ->
       $("#div_fertilizer").hide()
       if $("#operation_activity_id").val() == "13" #hide amount label if cover crop
         $("#div_amount").hide()
+        $("#div_crops").hide()
+        $("#div_cover_crops").show()
       else
+        $("#div_cover_crops").hide()
+        $("#div_crops").show()
         $("#div_amount").show()
       $("#div_tillage").show()
       $("#div_type").show()
@@ -208,6 +212,10 @@ $(document).ready ->
 
 	#updateTypes()
     #updateFerts()
+
+    if $("#operation_activity_id").val() == "13"
+      $("#div_crops").hide()
+      $("#div_cover_crops").show()
 
     $("#operation_activity_id").change ->
       updateTypes()
