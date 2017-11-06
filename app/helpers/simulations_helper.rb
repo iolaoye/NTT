@@ -68,7 +68,7 @@ module SimulationsHelper
   def send_files_to_APEX(file)
     uri = URI(URL_NTT)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth)
+    res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth, "rg" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -92,7 +92,7 @@ module SimulationsHelper
     http.read_timeout = 120
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     req = Net::HTTP::Post.new(url.path)
-    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file})
+    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => bmp_string})
     res = http.request(req)
     if res.body.include?("Created") then
       return "OK"
@@ -104,7 +104,7 @@ module SimulationsHelper
   def send_file_to_APEX(apex_string, file)
     uri = URI(URL_NTT)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
+    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -114,7 +114,7 @@ module SimulationsHelper
 
   def send_file1_to_APEX(apex_string, file)
     uri = URI(URL_NTT)
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
+    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -373,7 +373,7 @@ module SimulationsHelper
       if soil.selected == false
         next
       end
-      layers = Layer.where(:soil_id => soil.id)
+      layers = soil.layers
       last_soil1 = @last_soil + i + 1
       soil_file_name = "APEX" + "00" + last_soil1.to_s + ".sol"
       #total_area = total_area + soil.percentage
@@ -801,9 +801,14 @@ module SimulationsHelper
     last_owner1 = 0
     i=0
 	nirr = 0
-	subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id > 0")
+  if @grazing == nil then
+    subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id > 0")
+  else
+    subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id = " + @soils[0].id.to_s)
+  end
 	subareas.each do |subarea|
-		soil = Soil.find(subarea.soil_id)
+		#soil = Soil.find(subarea.soil_id)
+    soil = subarea.soil
 		if soil.selected then
 			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
 			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
