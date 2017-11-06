@@ -42,13 +42,13 @@
 	          <td><%= collection_select :result2, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed2'), :selected => @scenario2}, {:required => false, :style =>"width:160px"} %></td>
 	          <td><%= collection_select :result3, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed3'), :selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
 	        <% end %>
-	        <td>
-		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
-		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
-	        </td>
 	        <% case @type %>
 	          	<% when t('general.view'), t('result.summary') %>
-		            <td><%= submit_tag t("general.view"), :id => "summary", name: "button", :class => "btn btn-primary" %>
+              <td>
+    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
+    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
+    	        </td>
+                <td><%= submit_tag t("general.view"), :id => "summary", name: "button", :class => "btn btn-primary" %>
 						<% if @results1 != nil %>
 							<% if !request.url.include?(url_for("/fields/0/results?")) %>
 								<%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
@@ -59,7 +59,11 @@
 					</td>
 					<tr><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
 	          	<% when t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil")  %>
-		            <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => @field.id, :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil }, { :required => true }%></td>
+              <td>
+    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
+    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
+    	        </td>
+                <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => @field.id, :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil }, { :required => true }%></td>
 		            <td><%= submit_tag t("general.view") + " " + t("result.by_soil"), name: "button", :class => "btn btn-primary" %>
 					</tr>
 					<tr ><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
