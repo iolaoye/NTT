@@ -48,7 +48,7 @@ class OperationsController < ApplicationController
     @operation = Operation.new
   	@operation.activity_id = params[:operation]
   	@operation.crop_id = params[:crop]
-    @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
+    #@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(@project.location.state_id)
     @cover_crops = Crop.where("type1 like '%CC%'")
     @field = Field.find(params[:field_id])
@@ -167,6 +167,8 @@ class OperationsController < ApplicationController
     @operation = Operation.find(params[:id])
     @field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)
+    @cover_crops = Crop.where("type1 like '%CC%'")
+    @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     #@project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
