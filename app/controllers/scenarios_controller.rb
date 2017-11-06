@@ -68,9 +68,9 @@ class ScenariosController < ApplicationController
 		when "Simulate Selected Aplcat", "Simular Aplcat"
 			msg = simulate_aplcat
 	end
-	@project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @scenarios = Scenario.where(:field_id => params[:field_id])
+	#@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@scenarios = Scenario.where(:field_id => params[:field_id])
     if msg.eql?("OK") then
 	  @scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0

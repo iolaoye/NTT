@@ -581,12 +581,15 @@ es:
     hours: 'Horas en parcela (0-24)'
     depth: 'Profundidad (pulg.)'
     no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
-    po4_p_html: 'PO<sub>4</sub> p (0-100%)'
+    po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
     org_n_html: 'Org N (0-100%)'
     org_p_html: 'Org P (0-100%)'
+    org_c_html: 'Organic Carbon'
+    nh4_n_html: 'Fraction of N as Ammonia (NH<sub>4</sub>-N)'
     add_list: Agregar a la lista
     select_crop: Seleccionar el cultivo
     planting: Plantar
+    cover_crop: Cultivo de Proteccion
     tillage: Arar
     harvest: Cosechar
     kill: Terminar Crop
@@ -606,10 +609,13 @@ es:
     add_liming: 'Añadir operación de Encalado'
     add_start_grazing: 'Añadir operación de Pasteo'
     add_stop_grazing: 'Añadir operación de Terminar Pasteo'
+    add_cover_crop: "Añadir Cultivo de Proteccion"
     po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
     planting_method: Metodo de sembrado
     manure_composition: Composición del estiércol
     planting_date: Fecha de Cultivo
+    continues_grazing: Pastoreo Continuo
+    rotational_grazing: Pastoreo Rotacional
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
@@ -629,6 +635,8 @@ es:
     lbs: libras
     climate_warning: Este BPG puede tomar más tiempo para salvar
     irrigation: Irrigación
+    option_1: Option 1
+    option_2: Option 2
     crop: Cultivo
     water_stress_factor: Factor de estrés hídrico
     irrigation_efficiency: Eficiencia del riego

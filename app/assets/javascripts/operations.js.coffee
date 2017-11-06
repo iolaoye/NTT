@@ -30,10 +30,13 @@ updateNutrients = (animal) ->
       $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
       if ($("#operation_subtype_id").val() == "57")
         $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
+        $("#operation_org_c").val(10)
       else
         $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+        $("#operation_org_c").val(25)
     else
       $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+      $("#operation_org_c").val(0)
   if (animal == 0)
     url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
   else
@@ -44,6 +47,7 @@ updateNutrients = (animal) ->
     $("#operation_po4_p").val(fertilizer.qp)
     $("#operation_org_n").val(fertilizer.yn)
     $("#operation_org_p").val(fertilizer.yp)
+    $("#operation_nh3").val(fertilizer.nh3)
 
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
@@ -72,12 +76,22 @@ updateTypes = ->
   $("#div_type").hide()
   $("#div_tillage").hide()
   $("#div_date").hide()
+  $("#div_grazed").hide()
+  $("#div_resttime").hide()
   switch $("#operation_activity_id").val()
-    when "1" # planting
+    when "1","13" # planting and cover crop
       updatePlantPopulation()
-      url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
+      #url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
+      url = "/activities/1/tillages.json" #hardcoded path for cover crop compatibility
       $("#div_fertilizer").hide()
-      $("#div_amount").show()
+      if $("#operation_activity_id").val() == "13" #hide amount label if cover crop
+        $("#div_amount").hide()
+        $("#div_crops").hide()
+        $("#div_cover_crops").show()
+      else
+        $("#div_cover_crops").hide()
+        $("#div_crops").show()
+        $("#div_amount").show()
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
@@ -91,6 +105,8 @@ updateTypes = ->
       $("#div_nutrients").show()
       $("#div_tillage").show()
       $("#div_type").show()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
       $("#operation_type_id").prop('required',true)
       $("#operation_subtype_id").prop('disabled',true)
       $("#div_type")[0].children[0].innerText = "Fertilizer Type"
@@ -99,6 +115,8 @@ updateTypes = ->
       $("#div_fertilizer").hide()
       $("#div_tillage").show()
       $("#div_type").show()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
       $("#operation_type_id").prop('required',true)
       $("#div_type")[0].children[0].innerText = "Tillage Method"
     when "6"   # irrigation
@@ -110,29 +128,41 @@ updateTypes = ->
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
       $("#div_type")[0].children[0].innerText = "Irrigation Method"
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
     when "7"   # continuous grazing
+      url = "/fertilizers.json?id=animal"
       getGrazingFields()
-      $("#rotational_grazing").show()
-    when "10"   # liming
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
+    when "9"   # rotational grazing
+      url = "/fertilizers.json?id=animal"
+      getGrazingFields()
+      $("#div_grazed").show()
+      $("#div_resttime").show()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
+    when "12"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
       $("#div_type").hide()
-    when "70"   # rotational grazing
-      getGrazingFields()
-      $("#rotational_grazing").show()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements
       $("#div_fertilizer").hide()
       $("#div_tillage").hide()
       $("#div_type").hide()
+      $("#div_cover_crops").hide()
+      $("#div_crops").show()
 
   $.getJSON url, (tillages) ->
     items = []
     items.push "<option value>Select One</option>"
     $.each tillages, (key, tillage) ->
       switch $("#operation_activity_id").val()
-        when "2", "6", "7"
+        when "2", "6", "7", "9"
           items.push "<option value=\"" + tillage.id + "\">" + tillage.name + "</option>"
         else
           items.push "<option value=\"" + tillage.code + "\">" + tillage.eqp + "</option>"
@@ -166,7 +196,7 @@ updateFerts = ->
     $("#operation_po4_p").val("")
     $("#operation_org_n").val("")
     $("#operation_org_p").val("")
-    if ($("#operation_activity_id").val() == "7")
+    if ($("#operation_activity_id").val() == "7" || $("#operation_activity_id").val() == "9")
         updateNutrients(1)
 
 updateAnimals = ->
@@ -196,6 +226,10 @@ $(document).ready ->
 
 	#updateTypes()
     #updateFerts()
+
+    if $("#operation_activity_id").val() == "13"
+      $("#div_crops").hide()
+      $("#div_cover_crops").show()
 
     $("#operation_activity_id").change ->
       updateTypes()

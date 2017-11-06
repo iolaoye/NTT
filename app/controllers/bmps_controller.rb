@@ -78,7 +78,7 @@ class BmpsController < ApplicationController
   				end
   			end
   		end
-  		bmp_list = 19
+  		bmp_list = 20
       if bmp.bmpsublist_id == 19 then   # cover crop
         if bmp.id == nil then
           operation = @scenario.operations.where(:activity_id => 5).last
@@ -98,9 +98,9 @@ class BmpsController < ApplicationController
           @day = bmp.days
         end
       end
-  		if @field_type != false then
-  			bmp_list = 19
-  		end
+  		#if @field_type != false then
+  			#bmp_list = 20
+  		#end
   		if bmp.bmpsublist_id == bmp_list then
   			break
   		end
@@ -110,9 +110,9 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @scenario = Scenario.find(params[:scenario_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
 	  if params[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
@@ -901,11 +901,12 @@ class BmpsController < ApplicationController
 
 ### ID: 19
   def cover_crop(type)
+    if type == "delete" then return "OK" end
     @bmp.crop_id = params[:bmp_ccr][:crop_id]
-    @bmp.number_of_animals =params[:bmp_ccr][:year]
-    @bmp.hours =params[:bmp_ccr][:month]
-    @bmp.days =params[:bmp_ccr][:day]
-    @bmp.irrigation_id =params[:bmp_ccr][:type_id]
+    @bmp.number_of_animals = params[:bmp_ccr][:year]
+    @bmp.hours = params[:bmp_ccr][:month]
+    @bmp.days = params[:bmp_ccr][:day]
+    @bmp.irrigation_id = params[:bmp_ccr][:type_id]
     return "OK"
   end   # end method
 

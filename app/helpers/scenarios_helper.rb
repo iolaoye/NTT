@@ -685,13 +685,13 @@ module ScenariosHelper
       	if operation.type_id == 1 then
 			opv1 = (operation.amount * LBS_TO_KG / AC_TO_HA).round(2) #kg/ha of fertilizer applied converted from lbs/ac
         elsif operation.subtype_id == 57
-          	opv1 = (operation.amount * 8.25 * 0.005 * 1121.8).round(2) #kg/ha of fertilizer applied converted from liquid manure
+          	opv1 = (operation.amount * 8.25 * 0.005 * 1121.8 * 2.47).round(2) #'8.25=lbs/gal, 0.5% dry matter, and 1121.8 kg/ha. on nov.1/2017 add * 2.47 according to Dr. Ali Saleh
         else
         	opv1 = (operation.amount * LBS_TO_KG / AC_TO_HA * 2000).round(2) #kg/ha of fertilizer applied converted from lbs/ac
         end
       when 6 #irrigation
         opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
-      when 10 #liming
+      when 12 #liming
         opv1 = operation.amount / THA_TO_TAC #converts input t/ac to APEX t/ha
     end
     return opv1

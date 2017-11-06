@@ -40,20 +40,29 @@ class Scenario < ActiveRecord::Base
 	 	self.operations.where(:activity_id => 6, :crop_id => crop.id)
 	 end
 
-	 def grazing_operations(crop)
-	 	self.operations.where(:activity_id => 7, :crop_id => crop.id) + self.operations.where(:activity_id => 8, :crop_id => crop.id)
-	 end
+   def continuous_grazing_operations(crop)
+    self.operations.where(:activity_id => 7, :crop_id => crop.id) + self.operations.where(:activity_id => 8, :crop_id => crop.id)
+   end
 
 	 def burn_operations(crop)
-	 	self.operations.where(:activity_id => 9, :crop_id => crop.id)
+	 	self.operations.where(:activity_id => 11, :crop_id => crop.id)
 	 end
 
 	 def liming_operations(crop)
-	 	self.operations.where(:activity_id => 10, :crop_id => crop.id)
+	 	self.operations.where(:activity_id => 12, :crop_id => crop.id)
 	 end
 
+   def liming_operations(crop)
+    self.operations.where(:activity_id => 12, :crop_id => crop.id)
+   end
+
+   def cover_crop_operations(crop)
+     self.operations.where(:activity_id => 13, :crop_id => crop.id)
+   end
+
+   #Unused code. Remove method reference in /operations/index.html.erb?
 	 def pesticide_operations(crop)
-	 	self.operations.where(:activity_id => 11, :crop_id => crop.id)
+ 	  self.operations.where(:activity_id => 100, :crop_id => crop.id)
 	 end
-	 
+
 end
