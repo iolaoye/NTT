@@ -16,6 +16,12 @@ switch_view = ->
 
 upload_crop = (show) ->
   $("#div_new").toggle(show)
+  $("#div_ccr").toggle(false)
+  $("#year").val($("#year").val() +"1")
+
+upload_crop1 = (show) ->
+  $("#div_ccr").toggle(show)
+  $("#div_new").toggle(false)
   $("#year").val($("#year").val() +"1")
 
 updatePlantPopulation = ->
@@ -220,6 +226,9 @@ $(document).ready ->
 
     $("#new_crop").click ->
         upload_crop(true)
+
+    $("#new_ccr").click ->
+        upload_crop1(true)
 
     $("#btn_views").click ->
         switch_view()
