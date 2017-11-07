@@ -80,7 +80,7 @@ module SimulationsHelper
     start = @scenario.operations.find_by_activity_id(9)
     bmp_string = ""
     if start != nil then
-      bmp_string = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + start.amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.org_c.to_s + "|" + start.nh4_n.to_s
+      bmp_string = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + start.amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
     end
     stop = @scenario.operations.find_by_activity_id(10)
     if stop != nil
