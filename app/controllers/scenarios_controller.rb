@@ -505,7 +505,12 @@ class ScenariosController < ApplicationController
 	    if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
 	    if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg  end
 	    @last_soil = 0
-	    @soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
+	    @grazing = @scenario.operations.find_by_activity_id([7, 9])
+	    if @grazing == nil then
+	    	@soils = @field.soils.where(:selected => true)
+	    else
+	    	@soils = @field.soils.where(:selected => true).limit(1)
+		end	    	
 	    @soil_list = Array.new
 	    if msg.eql?("OK") then msg = create_soils() else return msg  end
 	    #if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg  end

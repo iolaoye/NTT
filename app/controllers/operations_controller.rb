@@ -48,12 +48,19 @@ class OperationsController < ApplicationController
     @operation = Operation.new
   	@operation.activity_id = params[:operation]
   	@operation.crop_id = params[:crop]
-    @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
+    #@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(@project.location.state_id)
     @cover_crops = Crop.where("type1 like '%CC%'")
     @field = Field.find(params[:field_id])
     @scenario = Scenario.find(params[:scenario_id])
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
+
+    cc_operation = @scenario.operations.where(:activity_id => 5).last
+    if cc_operation != nil
+      @cc_plt_date = Date.parse(sprintf("%2d", cc_operation.year) + "/" + sprintf("%2d", cc_operation.month_id) + "/" + sprintf("%2d", cc_operation.day))
+      @cc_plt_date += 2.days
+    end
+
     add_breadcrumb t('menu.operations'), project_field_scenario_operations_path(@project, @field, @scenario)
     add_breadcrumb t('operation.new_operation')
 
@@ -89,6 +96,9 @@ class OperationsController < ApplicationController
     soil_op_saved = false
     #msg = "Unknown error"
     ActiveRecord::Base.transaction do
+      if params[:operation][:crop_id].empty?
+        params[:operation][:crop_id] = params[:operation][:cover_crop_id]
+      end
       @operation = Operation.new(operation_params)
 	    #update_amount()   #CONVERT T/ac to lbs/ac
       @operation.scenario_id = params[:scenario_id]
@@ -167,9 +177,13 @@ class OperationsController < ApplicationController
     @operation = Operation.find(params[:id])
     @field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)
+    @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     #@project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
+      if !params[:operation][:cover_crop_id].empty?
+        params[:operation][:crop_id] = params[:operation][:cover_crop_id]
+      end
       if @operation.update_attributes(operation_params)
 		    #update_amount()
         soil_operations = SoilOperation.where(:operation_id => @operation.id)
