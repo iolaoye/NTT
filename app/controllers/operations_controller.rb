@@ -51,8 +51,8 @@ class OperationsController < ApplicationController
     #@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(@project.location.state_id)
     @cover_crops = Crop.where("type1 like '%CC%'")
-    @field = Field.find(params[:field_id])
-    @scenario = Scenario.find(params[:scenario_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
 
     cc_operation = @scenario.operations.where(:activity_id => 5).last
@@ -136,7 +136,7 @@ class OperationsController < ApplicationController
     			@operation.subtype_id = 0
     			@operation.save
     		end
-        if @operation.activity_id != 9 then 
+        if @operation.activity_id != 9 && @operation.activity_id != 10 then 
           msg = add_soil_operation()
           if msg.eql?("OK")
             soil_op_saved = true
@@ -240,6 +240,7 @@ class OperationsController < ApplicationController
 # DELETE /operations/1
 # DELETE /operations/1.json
   def destroy
+    debugger
     @operation = Operation.find(params[:id])
     soil_operations = SoilOperation.where(:operation_id => @operation.id)
     #@project = Project.find(params[:project_id])
