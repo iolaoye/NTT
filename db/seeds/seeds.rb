@@ -3808,7 +3808,7 @@ Description.create!({:id => 32, :description => "PO4_P", :spanish_description =>
 Description.create!({:id => 33, :description => "Tile Drain P", :spanish_description => "P en Sistema de Drenaje", :unit => "lbs/ac", :detail => true, :period => 2, :order_id => 11}, :without_protection => true)
 Description.create!({:id => 40, :description => "Total Flow", :spanish_description => "Flujo Total", :unit => "in", :detail => false, :period => 2, :order_id => 12}, :without_protection => true)
 Description.create!({:id => 41, :description => "Surface Flow", :spanish_description => "Flujo en la Superficie", :unit => "in", :detail => true, :period => 1, :order_id => 13}, :without_protection => true)
-Description.create!({:id => 42, :description => "Susurface Flow", :spanish_description => "Flujo en Subsuelo", :unit => "in", :detail => true, :period => 2, :order_id => 14}, :without_protection => true)
+Description.create!({:id => 42, :description => "Subsurface Flow", :spanish_description => "Flujo en Subsuelo", :unit => "in", :detail => true, :period => 2, :order_id => 14}, :without_protection => true)
 Description.create!({:id => 43, :description => "Tile Drain Flow", :spanish_description => "Flujo en Sistema de Drenaje", :unit => "in", :detail => true, :period => 2, :order_id => 15}, :without_protection => true)
 Description.create!({:id => 50, :description => "Other Water Information", :spanish_description => "Flujo Total", :unit => "in", :detail => false, :period => 2, :order_id => 16}, :without_protection => true)
 Description.create!({:id => 51, :description => "Irrigation", :spanish_description => "Irrigacion", :unit => "in", :detail => true, :period => 2, :order_id => 17}, :without_protection => true)

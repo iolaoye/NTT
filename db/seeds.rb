@@ -8,6 +8,9 @@ load file
 file = "db/seeds/activities.rb"
 load file
 
+file = "db/seeds/descriptions.rb"
+load file
+
 cont = false
 
 if cont then
