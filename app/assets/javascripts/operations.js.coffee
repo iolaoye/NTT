@@ -179,12 +179,12 @@ updateTypes = ->
 	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units
 
 updateFerts = ->
-  if ($("#operation._activity_id").val() == "2")
-    if ($("#operation_type_id").val() == "2")
-      $("#div_moisture").show();
+  if ($("#operation_activity_id").val() == "2")
+    if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
+      #$("#div_moisture").show();
       $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
     else
-      $("#div_moisture").hide();
+      #$("#div_moisture").hide();
       $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
   url = "/fertilizer_types/" + $("#operation_type_id").val() + "/fertilizers.json"
   $.getJSON url, (fertilizers) ->
