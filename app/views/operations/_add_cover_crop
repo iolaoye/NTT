@@ -4,9 +4,9 @@
       <td class="indent" colspan="2">
         <%= label :crop_id, t('operation.crop') %>
         <% if I18n.locale.equal?(:en) %>
-            <%= collection_select :bmp_ccr, :crop_id, Crop.where("type1 like '%CC%'"), :number, :name, {:prompt => t('bmp.select_vege')}%>
+            <%= collection_select :bmp_ccr, :crop_id, Crop.where("type1 like '%CC%'"), :id, :name, {:prompt => t('bmp.select_vege')}%>
         <% else %>
-            <%= collection_select :bmp_ccr, :crop_id, Crop.where("type1 like '%CC%'"), :number, :spanish_name, {:prompt => t('bmp.select_vege')} %>
+            <%= collection_select :bmp_ccr, :crop_id, Crop.where("type1 like '%CC%'"), :id, :spanish_name, {:prompt => t('bmp.select_vege')} %>
         <% end %>
       </td>
     </tr>
@@ -34,5 +34,12 @@
         </div>
       </td>
     </tr>
+    <div class="actions">
+        <span style="display: inline-block">
+            <%= button_to t('operation.add_cover_crop'), {:name => "add_cover_crop", :id => "operation_upload"}, :class => "btn btn-primary", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
+        </span>
+        <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
+    </div>
+
   </div>
 </form>

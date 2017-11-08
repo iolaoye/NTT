@@ -25,10 +25,14 @@
 				<table>
 					<tr>
 						<td onclick="show_crop(<%= crop.id %>)" width="100%">
+							<% cover_crop = "" %>
+							<% if @operations.find_by_crop_id_and_subtype_id_and_activity_id(crop.id,1,1) %>
+								<% cover_crop = " - Cover Crop" %>
+							<% end %>
 							<% if (I18n.locale.eql?(:en)) %>
-							  <h4 style="cursor:pointer" ><%= crop.name %> [+]</h4>
+							  <h4 style="cursor:pointer" ><%= crop.name + cover_crop %> [+]</h4>
 							<% else %>
-							  <h4 style="cursor:pointer" ><%= crop.spanish_name %> [+]</h4>
+							  <h4 style="cursor:pointer" ><%= crop.spanish_name + cover_crop %> [+]</h4>
 							<% end %>
 						</td>
 						<td class="col-md-1 text-rigth" style="text-align: right" width="20%">

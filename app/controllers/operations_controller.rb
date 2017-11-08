@@ -3,17 +3,19 @@ include ScenariosHelper
 class OperationsController < ApplicationController
   include ScenariosHelper
   require "open-uri"
-
 ################################  INDEX  #################################
 # GET /operations
 # GET /operations.json
   def index
-    @field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
-  	@scenario = Scenario.find(params[:scenario_id])
+    #@field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+  	#@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
-  	crop_schedule()
-
+    if params[:bmp_ccr] != nil then
+      add_cover_crop
+    else
+      crop_schedule()
+    end
     add_breadcrumb t('menu.operations')
     array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
@@ -29,6 +31,21 @@ class OperationsController < ApplicationController
     end
   end
 
+########################################################################
+## add a new cover crop. this is adding as a planting operation with
+## subtype_id at 1 to identify it as cover crop
+  def add_cover_crop
+    operation = Operation.new
+    operation.crop_id = params[:bmp_ccr][:crop_id]
+    operation.year = params[:bmp_ccr][:year]
+    operation.month_id = params[:bmp_ccr][:month]
+    operation.day = params[:bmp_ccr][:day]
+    operation.activity_id = 1
+    operation.type_id = params[:bmp_ccr][:type_id]
+    operation.subtype_id = 1
+    operation.scenario_id = @scenario.id
+    operation.save
+  end
 ################################  SHOW  #################################
 # GET /operations/1
 # GET /operations/1.json
@@ -50,7 +67,7 @@ class OperationsController < ApplicationController
   	@operation.crop_id = params[:crop]
     #@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(@project.location.state_id)
-    @cover_crops = Crop.where("type1 like '%CC%'")
+    #@cover_crops = Crop.where("type1 like '%CC%'")
     #@field = Field.find(params[:field_id])
     #@scenario = Scenario.find(params[:scenario_id])
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
@@ -73,13 +90,17 @@ class OperationsController < ApplicationController
 ################################  Edit  #################################
 # GET /operations/1/edit
   def edit
-    @project = Project.find(params[:project_id])
-    @crops = Crop.load_crops(Location.find_by_project_id(@project.id).state_id)
-    @cover_crops = Crop.where("type1 like '%CC%'")
+    #@project = Project.find(params[:project_id])
+    #@cover_crops = Crop.where("type1 like '%CC%'")
     @operation = Operation.find(params[:id])
+    if @operation.activity_id == 1 && @operation.subtype_id == 1 then
+      @crops = Crop.where("type1 like '%CC%'")
+    else
+      @crops = Crop.load_crops(Location.find_by_project_id(@project.id).state_id)
+    end
 	  @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
-    @field = Field.find(params[:field_id])
-    @scenario = Scenario.find(params[:scenario_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
     add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
 	  add_breadcrumb t('operation.edit')
   end
@@ -175,11 +196,12 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1.json
   def update
     @operation = Operation.find(params[:id])
-    @field = Field.find(params[:field_id])
+    #@field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)
+    #@cover_crops = Crop.where("type1 like '%CC%'")
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     #@project = Project.find(params[:project_id])
-    @scenario = Scenario.find(params[:scenario_id])
+    #@scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
       if !params[:operation][:cover_crop_id].empty?
         params[:operation][:crop_id] = params[:operation][:cover_crop_id]
@@ -276,9 +298,9 @@ class OperationsController < ApplicationController
 
 ################################  CALL WHEN CLICK IN UPLOAD CROPPING SYSTEM  #################################
   def cropping_system
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @scenario = Scenario.find(params[:scenario_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
     @operations = Operation.where(:scenario_id => session[:scenario_id])
     @count = @operations.count
     @highest_year = 0

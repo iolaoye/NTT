@@ -32,10 +32,8 @@
 		<%= label :crop_id, t('operation.crop') %>
 		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id} %>
 	</div>
-	<div class="field" id="div_cover_crops" style="display:none">
-		<%= label :crop_id, t('operation.crop') %>
-		<%= collection_select :operation, :cover_crop_id, @cover_crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id} %>
-	</div>
+		<%#= label :crop_id, t('operation.crop') %>
+		<%#= collection_select :operation, :cover_crop_id, @cover_crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id} %>
 	<div id="div_start_date" class="field">
 		<% if @operation.activity_id == 7 %>
 			<%= f.label :start, t('general.start') + " " %>
