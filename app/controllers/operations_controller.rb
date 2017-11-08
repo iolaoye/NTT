@@ -13,9 +13,8 @@ class OperationsController < ApplicationController
     @operations = @scenario.operations
     if params[:bmp_ccr] != nil then
       add_cover_crop
-    else
-      crop_schedule()
-    end
+    end 
+    crop_schedule()
     add_breadcrumb t('menu.operations')
     array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
     @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
