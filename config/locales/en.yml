@@ -585,6 +585,9 @@ en:
     org_p_html: 'Organic P (0-100%)'
     org_c_html: 'Organic Carbon'
     nh4_n_html: 'Fraction of N as Ammonia (NH<sub>4</sub>-N)'
+    total_n_con: 'Total P concentration (lb/1000 gallons)'
+    total_p_con: 'Total P concentration (lb/1000 gallons)'
+    moisture_con: 'Moisture content (0-100%)'
     add_list: Add to list
     select_crop: Select crop
     planting: Planting
