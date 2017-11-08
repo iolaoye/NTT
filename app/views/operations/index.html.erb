@@ -87,7 +87,9 @@
 						</tr>
 					<% end %>
 				  </table><br>
-				  <%= link_to t('operation.add_planting'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => crop.id), :class => 'btn btn-success'  %>
+				  <% if cover_crop == "" %>
+				  	<%= link_to t('operation.add_planting'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => crop.id), :class => 'btn btn-success'%>
+				  <% end %>
 			   </div>
 		  <% end %>
 

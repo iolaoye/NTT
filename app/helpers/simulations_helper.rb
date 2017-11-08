@@ -1116,11 +1116,18 @@ module SimulationsHelper
       @opcs_file.push(" .Opc file created directly by the user. Date: " + @dtNow1 + "\n")
       j = 0
       #bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 19)
-      ccs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)
-      ccs.each do |bmp|
-        last_year = @soil_operations.last.year
-        c_c_p = false
-        c_c_k = false
+      last_year = @soil_operations.last.year
+      c_c_p = false
+      c_c_k = false
+      cc_hash = {}
+      #convert soil_operations active record to hash
+      @soil_operations.each do |so|
+        cc_hash[so.id] = so
+      end
+      #ccc_hash.sort_by { |k,v| [v[:year], v[:month_id], v[:day], v[:id]]}
+      c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)
+      cc_number = @scenario.operations.last.id
+      c_cs.each do |bmp|
         if bmp != nil then
           s_o_new = SoilOperation.new
           s_o_new.year = bmp.year
@@ -1160,11 +1167,16 @@ module SimulationsHelper
           s_o_new_kill.opv5 = 0
           s_o_new_kill.opv6 = 0
           s_o_new_kill.opv7 = 0
+          cc_number += 1
+          cc_hash[cc_number] = s_o_new
+          cc_number += 1
+          cc_hash[cc_number] = s_o_new_kill
         end
       end
-      @soil_operations.each do |soil_operation|
+      cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day], v[:id]]}
+      cc_hash_sorted.each do |soil_operation|
         # ask for 1=planting, 5=kill, 3=tillage
-        if soil_operation.apex_crop == CropMixedGrass && (soil_operation.activity_id == 1 || soil_operation.activity_id == 5 || soil_operation.activity_id == 3) then
+        if soil_operation[1].apex_crop == CropMixedGrass && (soil_operation[1].activity_id == 1 || soil_operation[1].activity_id == 5 || soil_operation[1].activity_id == 3) then
           #todo check this one
           #mixed_crops = operation.MixedCropData.Split(",")
           #mixedCropsInfo(2) As String
@@ -1181,25 +1193,25 @@ module SimulationsHelper
           #end
         else
           if bmp != nil then
-            date_oper = Date.parse(sprintf("%2d", soil_operation.year) + "/" + sprintf("%2d", soil_operation.month) + "/" + sprintf("%2d", soil_operation.day))
+            date_oper = Date.parse(sprintf("%2d", soil_operation[1].year) + "/" + sprintf("%2d", soil_operation[1].month) + "/" + sprintf("%2d", soil_operation[1].day))
             if c_c_p == false and date_oper > cc_plt_date then 
-              add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
+              #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
               j+=1
               c_c_p = true
             end
             if c_c_k == false and date_oper > cc_kill_date then 
-              add_operation(s_o_new_kill, irrigation_type, nirr, soil_percentage, j)
+              #add_operation(s_o_new_kill, irrigation_type, nirr, soil_percentage, j)
               j+=1
               c_c_k = true
             end
           end
-          add_operation(soil_operation, irrigation_type, nirr, soil_percentage, j)
+          add_operation(soil_operation[1], irrigation_type, nirr, soil_percentage, j)
         end # end if
         j+=1
       end #end soil_operations.each do
       #just in case the planting operation was after the last operation in the soil_operations file.
       if c_c_p == false and bmp != nil then
-        add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
+        #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
       end
       # add to the tillage file the new fertilizer operations - one for each depth
       append_file("tillOrg.dat", "till.dat", "till")
@@ -1509,7 +1521,7 @@ module SimulationsHelper
   	else
   		state_abbreviation = State.find(state_id).state_abbreviation
   	end
-      @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
                    COMA + Crop.find_by_number(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
   end  # end add_operation method
