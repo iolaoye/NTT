@@ -202,9 +202,6 @@ class OperationsController < ApplicationController
     #@project = Project.find(params[:project_id])
     #@scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
-      if !params[:operation][:cover_crop_id].empty?
-        params[:operation][:crop_id] = params[:operation][:cover_crop_id]
-      end
       if @operation.update_attributes(operation_params)
 		    #update_amount()
         soil_operations = SoilOperation.where(:operation_id => @operation.id)

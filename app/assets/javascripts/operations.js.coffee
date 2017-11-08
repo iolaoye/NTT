@@ -90,7 +90,8 @@ updateTypes = ->
   $("#operation_month_id").val('')
   $("#operation_day").val('')
   $("#operation_crop_id").prop('required',true)
-  $("#operation_cover_crop_id").prop('required',false)
+  $('div[id="div_other_nutrients"] *').prop('required',false)
+  $("#div_other_nutrients").hide()
   switch $("#operation_activity_id").val()
     when "1","13" # planting and cover crop
       updatePlantPopulation()
@@ -119,8 +120,6 @@ updateTypes = ->
       $("#div_fertilizer").show()
       $("#div_amount").show()
       $("#div_depth").show()
-      $("#div_moisture").hide()
-      $("#div_nutrients").show()
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
@@ -179,12 +178,16 @@ updateTypes = ->
 	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units
 
 updateFerts = ->
+  $("#div_nutrients").hide()
+  $("#div_other_nutrients").hide()
+  $('div[id="div_other_nutrients"] *').prop('required',false)
   if ($("#operation_activity_id").val() == "2")
     if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
-      #$("#div_moisture").show();
       $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+      $("#div_other_nutrients").show()
+      $('div[id="div_other_nutrients"] *').prop('required',true)
     else
-      #$("#div_moisture").hide();
+      $("#div_nutrients").show()
       $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
   url = "/fertilizer_types/" + $("#operation_type_id").val() + "/fertilizers.json"
   $.getJSON url, (fertilizers) ->
