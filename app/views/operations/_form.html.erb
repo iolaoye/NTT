@@ -108,15 +108,15 @@
 			<div class="field" id="div_other_nutrients" style="display:none">
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= f.number_field :org_c, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
 			</div>
 		<% when 2 # fertilizer %>
@@ -194,15 +194,15 @@
 			<div class="field" id="div_other_nutrients" style="display:none">
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= f.number_field :org_c, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
 			</div>
 		<% when 3 # tillage %>
@@ -264,15 +264,15 @@
 			<div class="field" id="div_other_nutrients" style="display:none">
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= f.number_field :org_c, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
 			</div>
 		<% when 6 # irrigation%>
@@ -338,15 +338,15 @@
 			<div class="field" id="div_other_nutrients" style="display:none">
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= f.number_field :org_c, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
 			</div>
 		<% when 7 # grazing %>
@@ -413,15 +413,15 @@
 			<div class="field" id="div_other_nutrients" style="display:none">
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= f.number_field :org_c, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
 			</div>
 		<% when 9 # rotational grazing%>
@@ -488,15 +488,15 @@
 			<div class="field" id="div_other_nutrients" style="display:none">
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= f.number_field :org_c, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
 			</div>
 		<% when 12 # liming %>
@@ -561,15 +561,15 @@
 			<div class="field" id="div_other_nutrients" style="display:none">
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= f.number_field :org_c, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
 			</div>
 	    <% when 13 %>
@@ -635,17 +635,17 @@
 	      <div class="field" id="div_other_nutrients" style="display:none">
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= f.number_field :org_c, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
-		   </div>
+			</div>
 		<% else # harvest, kill, stop grazing, burn%>
 			<div id="div_date" style="display:none">
 				<%= f.label :stop, t('general.stop'), :class => 'field' %>
@@ -709,15 +709,15 @@
 			<div class="field" id="div_other_nutrients" style="display:none">
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= f.number_field :org_c, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= f.number_field :moisture, :class => "gvTitleStyleNumber" %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
 			</div>
 	<% end %>
