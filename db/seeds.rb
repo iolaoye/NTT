@@ -1,4 +1,9 @@
 # encoding: utf-8
+file = "db/seeds/fertilizer_types.rb"
+load file
+
+file = "db/seeds/fertilizers.rb"
+load file
 
 cont = false
 
