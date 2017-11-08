@@ -48,7 +48,7 @@
 					<tr>
 						<td onclick="hide_crop(<%= crop.id %>)" width="100%">
 							<% if (I18n.locale.eql?(:en)) %>
-							  <h4 style="cursor:pointer"><%= crop.name %> [-]</h4>
+							  <h4 style="cursor:pointer"><%= crop.name + cover_crop%> [-]</h4>
 						    <% else %>
 							  <h4 style="cursor:pointer"><%= crop.spanish_name %> [-]</h4>
 							<% end %>
