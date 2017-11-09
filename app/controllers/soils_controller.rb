@@ -267,7 +267,6 @@ class SoilsController < ApplicationController
       if !l[0].include?("layer") then
         next
       end
-      debugger
       layer = @soil.layers.new
       layer.sand = l[1]["sand"]
       layer.silt = l[1]["silt"]
