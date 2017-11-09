@@ -1,7 +1,8 @@
 class SoilsController < ApplicationController
+  include ScenariosHelper
+
   # GET /locations
   # GET /locations.json
-
   def soil_layers
     session[:soil_id] = params[:id]
     redirect_to list_layer_path(params[:id])
