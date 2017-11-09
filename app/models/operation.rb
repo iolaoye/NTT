@@ -6,7 +6,8 @@ class Operation < ActiveRecord::Base
   has_many :soil_operations, :dependent => :destroy
   belongs_to :scenario
   #validations
-  validates_uniqueness_of :scenario_id, :scope => [:crop_id, :activity_id, :year, :month_id, :day, :type_id, :subtype_id, :amount, :depth, :org_n, :org_p, :po4_p, :no3_n, :org_c, :nh4_n] 
+  validates :amount, numericality: { greater_than: 0 }, if: "activity_id == 2"
+  validates_uniqueness_of :scenario_id, :scope => [:crop_id, :activity_id, :year, :month_id, :day, :type_id, :subtype_id, :amount, :depth, :org_n, :org_p, :po4_p, :no3_n]
   # sometimes these values are not needed
   #validates_presence_of :amount, :depth, :moisture, :nh3, :no3_n, :org_n, :org_p, :po4_p
 	validate :sum
@@ -37,5 +38,5 @@ class Operation < ActiveRecord::Base
         ""
     end
   end
-  
+
 end

@@ -653,6 +653,9 @@ module ScenariosHelper
               return 0
             end
           else
+          	if operation.amount == nil then
+          		operation.amount = 0
+          	end
             if operation.amount / FT2_TO_M2 < 1 then
               return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
             else

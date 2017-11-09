@@ -5,6 +5,18 @@ load file
 file = "db/seeds/fertilizers.rb"
 load file
 
+file = "db/seeds/activities.rb"
+load file
+
+file = "db/seeds/crop_schedules.rb"
+load file
+
+file = "db/seeds/schedules.rb"
+load file
+
+file = "db/seeds/descriptions.rb"
+load file
+
 cont = false
 
 if cont then
@@ -14,7 +26,6 @@ load file
 
 file = "db/seeds/animals.rb"
 load file
-
 
 file = "db/seeds/aplcat_parameters.rb"
 load file
