@@ -116,8 +116,19 @@ class OperationsController < ApplicationController
     soil_op_saved = false
     #msg = "Unknown error"
     ActiveRecord::Base.transaction do
-      if params[:operation][:crop_id].empty?
-        params[:operation][:crop_id] = params[:operation][:cover_crop_id]
+      if params[:operation][:activity_id] == "2"
+        if params[:operation][:type_id] == "2" #solid manure
+          total_n = (params[:operation][:org_c].to_f/2000)/((100-params[:operation][:moisture].to_f)/100)
+          total_p = ((params[:operation][:nh4_n].to_f*0.44)/2000)/((100-params[:operation][:moisture].to_f)/100)
+        elsif params[:operation][:type_id] == "3" #liquid manure 
+          total_n = (params[:operation][:org_c].to_f*0.11982)/(100-params[:operation][:moisture].to_f)
+          total_p = (params[:operation][:nh4_n].to_f*0.44*0.11982)/(100-params[:operation][:moisture].to_f)
+        end
+        fert_type = Fertilizer.find(params[:operation][:subtype_id])
+        params[:operation][:no3_n] = total_n * fert_type.qn
+        params[:operation][:org_n] = total_n * fert_type.qp
+        params[:operation][:po4_p] = total_p * fert_type.yn
+        params[:operation][:org_p] = total_p * fert_type.yp
       end
       @operation = Operation.new(operation_params)
 	    #update_amount()   #CONVERT T/ac to lbs/ac
