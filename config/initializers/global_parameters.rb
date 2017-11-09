@@ -4,14 +4,15 @@
 
 
 # URL to the mapping application
-	URL_MAP = 'http://nn.tarleton.edu/GoogleMapNRCS/Default.aspx'
+	URL_MAP = 'http://nn.tarleton.edu/GoogleMapNRCS_Test/Default.aspx'
 	#URL_MAP = 'http://nn.tarleton.edu/NTTRails/Default.aspx'
 
 #NTT verision
 	VERSION = "NTTG3"
 
 # URL to send information to NTT, which return the results
-	#URL_NTT = 'http://nn.tarleton.edu/NttApex/NNRestService.ashx'  No being used
+	URL_NTT = 'http://nn.tarleton.edu/NTTRails/NNRestService.ashx' 
+	URL_NTT1 = 'http://45.40.132.224/NNMultipleStates/NNRestService.ashx' 
 
 # URL to get heat units
 	URL_HU = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'

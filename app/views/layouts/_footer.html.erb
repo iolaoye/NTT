@@ -127,11 +127,21 @@
         <table>
         <% case controller_name %>
         <% when "projects" %>
-              <% if ENV["APP_VERSION"] == "modified" %>
-                <tr><td><%= t('projpage_modified_html')%></td></tr>
+              <tr><td><%= t('projpage_html')%></td></tr>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= raw t('proj_body1')%></td></tr>
               <% else %>
-                <tr><td><%= t('projpage_html')%></td></tr>
+              <tr><td><%= raw t('proj_body1_modified')%></td></tr>
               <% end %>
+              <tr><td><%= raw t('proj_body2')%></td></tr>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= raw t('proj_body3')%></td></tr>
+              <% end %>
+              <tr><td><%= raw t('proj_body4')%></td></tr>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= raw t('proj_body5')%></td></tr>
+              <% end %>
+              <tr><td><%= raw t('proj_body6')%></td></tr>
         <% when "locations" %>
               <tr><td><%= t('locpage_html')%></td></tr>
         <% when "weathers" %>
@@ -139,11 +149,20 @@
         <% when "fields" %>
               <tr><td><%= t('fieldpage_html')%></td></tr>
         <% when "soils" %>
-              <% if ENV["APP_VERSION"] == "modified" %>
-                <tr><td><%= t('soilpage_modified_html')%></td></tr>
+              <tr><td><%= t('soilpage_html')%></td></tr>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= raw t('soil_body1')%></td></tr>
               <% else %>
-                <tr><td><%= t('soilpage_html')%></td></tr>
+              <tr><td><%= raw t('soil_body1_modified')%></td></tr>
               <% end %>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= raw t('soil_body2')%></td></tr>
+              <% else %>
+              <tr><td><%= raw t('soil_body2_modified')%></td></tr>
+              <% end %>
+              <tr><td><%= raw t('soil_body3')%></td></tr>
+        <% when "layers" %>
+              <tr><td><%= t('layers_html')%></td></tr>
         <% when "scenarios" %>
               <tr><td><%= t('managepage_html')%></td></tr>
         <% when "operations" %>
@@ -152,6 +171,11 @@
               <tr><td><%= t('bmpnav_html')%></td></tr>
         <% when "results" %>
               <tr><td><%= t('resultspage_html')%></td></tr>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= raw t('result_body1')%></td></tr>
+              <tr><td><%= raw t('result_body2')%></td></tr>
+              <% end %>
+              <tr><td><%= raw t('result_body3')%></td></tr>
         <% when "apex_controls" %>
               <tr><td><%= t('apexcontrols_html')%></td></tr>
         <% when "apex_parameters" %>
@@ -173,11 +197,12 @@
         <% when "contact" %>
               <tr><td><%= t('contact_html')%></td></tr>
         <% when "help" %>
-              <% if ENV["APP_VERSION"] == "standard" %>
               <tr><td><%= t('help_html')%></td></tr>
-        <% else %>
-              <tr><td><%= t('help_modified_html')%></td></tr>
+              <tr><td><%= raw t('help_body1')%></td></tr>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= raw t('help_weather')%></td></tr>
               <% end %>
+              <tr><td><%= raw t('help_body2')%></td></tr>
         <% end %>
         </table>
       </div>

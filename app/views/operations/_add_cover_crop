@@ -1,0 +1,45 @@
+<form id="myForm">
+  <div>
+    <tr>
+      <td class="indent" colspan="2">
+        <%= label :crop_id, t('operation.crop') %>
+        <% if I18n.locale.equal?(:en) %>
+            <%= collection_select :bmp_ccr, :crop_id, Crop.where("type1 like '%CC%'"), :id, :name, {:prompt => t('bmp.select_vege')}%>
+        <% else %>
+            <%= collection_select :bmp_ccr, :crop_id, Crop.where("type1 like '%CC%'"), :id, :spanish_name, {:prompt => t('bmp.select_vege')} %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class="indent" colspan="2">
+        <div class="field">
+          <%= label :date, t('operation.planting_date'), :style => "font-weight:bold" %> <br>             
+          <%= label :year, t('datetime.prompts.year'), :class => 'field' %>
+          <%= select :bmp_ccr, :year, listYears.map { |e| [e[0], e[1]]}, {:selected => @year}, {:prompt => t('datetime.prompts.year')}%>
+          <%= label :date, t('general.date'), :class => 'field' %>
+          <%= select :bmp_ccr, :month, listMonths.map { |e| [e[0], e[1]] }, {:selected => @month}, {:prompt => t('datetime.prompts.month')}%>
+          <%= select :bmp_ccr, :day, listDays.map { |e| [e[0], e[1]] }, {:selected => @day}, {:prompt => t('datetime.prompts.day')}%>
+        </div>
+      </td>
+    </tr>
+    <tr> 
+      <td class="indent" colspan="2">
+        <div id="div_type" class="field spacer_bottom" >
+          <%= label :type_id, t('operation.planting_method') %>
+          <% if I18n.locale.eql?(:en) %>
+            <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :eqp, {:prompt => t('operation.planting_method')}%>
+          <% else %>
+            <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :spanish_name, {:prompt => t('operation.planting_method')} %>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+    <div class="actions">
+        <span style="display: inline-block">
+            <%= button_to t('operation.add_cover_crop'), {:name => "add_cover_crop", :id => "operation_upload"}, :class => "btn btn-primary", :method => :get, data: {disable_with: t('general.please') + " " + t('general.wait') + ". " + t('general.loading') + " " + t('operation.cropping_system') + " . . ."} %>
+        </span>
+        <%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
+    </div>
+
+  </div>
+</form>

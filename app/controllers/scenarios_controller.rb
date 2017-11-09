@@ -35,11 +35,20 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def index
+    @errors = Array.new
+  	msg = "OK"
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
-    @errors = Array.new
     @scenarios = Scenario.where(:field_id => @field.id)
     
+    if (params[:scenario] != nil)
+		msg = copy_other_scenario
+		if msg != "OK" then
+			@errors.push msg
+		else
+			flash[:notice] = "Scenario copied successfuly"
+		end
+	end
     add_breadcrumb t('menu.scenarios')
 
     respond_to do |format|
@@ -59,9 +68,9 @@ class ScenariosController < ApplicationController
 		when "Simulate Selected Aplcat", "Simular Aplcat"
 			msg = simulate_aplcat
 	end
-	@project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @scenarios = Scenario.where(:field_id => params[:field_id])
+	#@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@scenarios = Scenario.where(:field_id => params[:field_id])
     if msg.eql?("OK") then
 	  @scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
@@ -438,13 +447,22 @@ class ScenariosController < ApplicationController
   ################################  copy scenario selected  #################################
   def copy_scenario
 	@use_old_soil = false
-	duplicate_scenario(params[:id], " copy", params[:field_id])
+	msg = duplicate_scenario(params[:id], " copy", params[:field_id])
     @project = Project.find(params[:project_id])
     @field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
-    
     add_breadcrumb 'Scenarios'
 	render "index"
+  end
+
+  def copy_other_scenario
+  	@use_old_soil = false
+  	msg = duplicate_scenario(params[:scenario][:id], " copy", params[:field_id])
+  	@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @scenarios = Scenario.where(:field_id => @field.id)
+    add_breadcrumb 'Scenarios'
+    return msg
   end
 
   def download
@@ -487,7 +505,12 @@ class ScenariosController < ApplicationController
 	    if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
 	    if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg  end
 	    @last_soil = 0
-	    @soils = Soil.where(:field_id => @scenario.field_id).where(:selected => true)
+	    @grazing = @scenario.operations.find_by_activity_id([7, 9])
+	    if @grazing == nil then
+	    	@soils = @field.soils.where(:selected => true)
+	    else
+	    	@soils = @field.soils.where(:selected => true).limit(1)
+		end	    	
 	    @soil_list = Array.new
 	    if msg.eql?("OK") then msg = create_soils() else return msg  end
 	    #if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg  end
