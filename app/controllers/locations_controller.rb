@@ -78,10 +78,16 @@ class LocationsController < ApplicationController
               #	end
               #end
               if @field.save
-				create_soils(i, @field.id, @field.field_type)
-			  else
-				msg = "Error saving soils"
-			  end 
+				        create_soils(i, @field.id, @field.field_type)
+                debugger
+                total = @field.soils.sum(:percentage)
+                @field.soils.each do |s|
+                  s.percentage = s.percentage / total * 100
+                  s.save
+                end
+			        else
+				        msg = "Error saving soils"
+			        end 
             end
             #step 3 find or create site
             site = Site.find_by_field_id(@field.id)
