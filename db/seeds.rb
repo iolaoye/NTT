@@ -11,6 +11,9 @@ load file
 file = "db/seeds/descriptions.rb"
 load file
 
+file = "db/seeds/soil_tests.rb"
+load file
+
 cont = false
 
 if cont then
@@ -98,6 +101,9 @@ file = "db/seeds/tillages.rb"
 load file
 
 file = "db/seeds/ways.rb"
+load file
+
+file = "db/seeds/soil_tests.rb"
 load file
 
 end

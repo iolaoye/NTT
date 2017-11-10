@@ -29,7 +29,7 @@ class SoilsController < ApplicationController
     #@field = Field.find(params[:field_id])
     @soils = Soil.where(:field_id => params[:field_id])
     #@weather = @field.weather
-	
+
     add_breadcrumb t('menu.soils')
 
     respond_to do |format|
