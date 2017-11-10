@@ -24,8 +24,8 @@ class ScenariosController < ApplicationController
   def list
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => params[:field_id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @scenarios }
@@ -37,8 +37,8 @@ class ScenariosController < ApplicationController
   def index
     @errors = Array.new
   	msg = "OK"
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
     
     if (params[:scenario] != nil)
@@ -82,8 +82,8 @@ class ScenariosController < ApplicationController
 
 ################################  Simulate NTT for selected scenarios  #################################
   def simulate_ntt
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @errors = Array.new
     msg = "OK"
 	if params[:select_scenario] == nil then
@@ -108,8 +108,8 @@ class ScenariosController < ApplicationController
   def new
     @errors = Array.new
     @scenario = Scenario.new
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
 
     add_breadcrumb t('general.scenarios')
     add_breadcrumb 'Add New Scenario'
@@ -124,9 +124,9 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1/edit
   def edit
     #@errors = Array.new
-    @scenario = Scenario.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
 	
     
     add_breadcrumb t('menu.scenarios'), project_field_scenarios_path(@project, @field)
@@ -139,8 +139,8 @@ class ScenariosController < ApplicationController
   def create
     @errors = Array.new
     @scenario = Scenario.new(scenario_params)
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @scenario.field_id = @field.id
     @watershed = Watershed.new(scenario_params)
     @watershed.save
@@ -165,8 +165,8 @@ class ScenariosController < ApplicationController
   def update
     @errors = Array.new
     @scenario = Scenario.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
 
     respond_to do |format|
       if @scenario.update_attributes(scenario_params)
@@ -185,8 +185,8 @@ class ScenariosController < ApplicationController
   def destroy
     @errors = Array.new
     @scenario = Scenario.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     Subarea.where(:scenario_id => @scenario.id).delete_all
     if @scenario.destroy
       flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.deleted')
@@ -202,8 +202,8 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /scenarios/1.json
   def show()
-  	@project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+  	#@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @errors = Array.new
     ActiveRecord::Base.transaction do
 		msg = run_scenario
@@ -448,8 +448,8 @@ class ScenariosController < ApplicationController
   def copy_scenario
 	@use_old_soil = false
 	msg = duplicate_scenario(params[:id], " copy", params[:field_id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
     add_breadcrumb 'Scenarios'
 	render "index"
@@ -458,16 +458,16 @@ class ScenariosController < ApplicationController
   def copy_other_scenario
   	@use_old_soil = false
   	msg = duplicate_scenario(params[:scenario][:id], " copy", params[:field_id])
-  	@project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+  	#@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
     add_breadcrumb 'Scenarios'
     return msg
   end
 
   def download
-  	@project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+  	#@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     download_apex_files()
   end
   

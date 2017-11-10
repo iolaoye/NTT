@@ -119,8 +119,8 @@ class FieldsController < ApplicationController
 ################################  EDIT   #################################
 # GET /fields/1/edit
   def edit
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:id])
   end
 
 ################################  CREATE #################################

@@ -3,8 +3,8 @@ class SoilOperationsController < ApplicationController
   # GET /soil_operations.json
 
    def index
-	add_breadcrumb t('menu.utility_file'), controller: "soil_operations", action: "index"
-	add_breadcrumb t('menu.operations')
+    add_breadcrumb t('menu.utility_file'), controller: "soil_operations", action: "index"
+    add_breadcrumb t('menu.operations')
   	#@soil = 0
   	#@scenario = 0
     @soil = Soil.where(:field_id => params[:field_id]).first
@@ -46,22 +46,22 @@ class SoilOperationsController < ApplicationController
   # GET /soil_operations/1/edit
   def edit
     @soil_operation = SoilOperation.find(params[:id])
-    @field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
-	@scenario = Scenario.where(:field_id => params[:field_id]).first
-	add_breadcrumb t('menu.utility_file')
-	add_breadcrumb t('menu.operations'), controller: "soil_operations", action: "index"
-	add_breadcrumb t('general.editing') + " " + t('menu.operations')
+    #@field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    @scenario = Scenario.where(:field_id => params[:field_id]).first
+    add_breadcrumb t('menu.utility_file')
+    add_breadcrumb t('menu.operations'), controller: "soil_operations", action: "index"
+    add_breadcrumb t('general.editing') + " " + t('menu.operations')
   end
 
   # POST /soil_operations
   # POST /soil_operations.json
   def create
   	@soil = Soil.find(params[:soil_operation][:soil_id])
-    @field = Field.find(params[:field_id])
+    #@field = Field.find(params[:field_id])
   	@scenario = Scenario.find(params[:soil_operation][:scenario_id])
     @soil_operations = SoilOperation.where(:soil_id => @soil.id, :scenario_id => @scenario.id)
-	@project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
     render "index"
   end
 

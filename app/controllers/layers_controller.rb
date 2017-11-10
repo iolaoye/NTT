@@ -33,11 +33,11 @@ class LayersController < ApplicationController
 		#end
 	#end
     @layers = Layer.where(:soil_id => params[:id])
-    @soil = Soil.find(session[:soil_id])
+    #@soil = Soil.find(session[:soil_id])
     @soil_name = Soil.find(session[:soil_id]).name[0..20]
     @soil_name += ". . ." unless @soil_name.length < 20
-    @project_name = Project.find(params[:project_id]).name
-    @field_name = Field.find(params[:field_id]).field_name
+    #@project_name = Project.find(params[:project_id]).name
+    #@field_name = Field.find(params[:field_id]).field_name
 
     respond_to do |format|
       format.html # index.html.erb
@@ -49,8 +49,8 @@ class LayersController < ApplicationController
 # GET /layers
 # GET /layers.json
   def index
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     @layers = Layer.where(:soil_id => params[:soil_id])
 	  add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
@@ -77,9 +77,9 @@ class LayersController < ApplicationController
 # GET /layers/new.json
   def new
     @layer = Layer.new
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @soil = Soil.find(params[:soil_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@soil = Soil.find(params[:soil_id])
 	  add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
 	  add_breadcrumb t('menu.layers'), project_field_soil_layers_path(@project.id, @field.id, @soil.id)
 	  add_breadcrumb t('layer.new_layer')
@@ -91,13 +91,13 @@ class LayersController < ApplicationController
 
 # GET /layers/1/edit
   def edit
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     @layer = Layer.find(params[:id])
-	add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
-	add_breadcrumb t('menu.layers'), project_field_soil_layers_path(@project, @field, @soil)
-	add_breadcrumb t('general.editing') + " " +  t('menu.layers')
+    add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
+    add_breadcrumb t('menu.layers'), project_field_soil_layers_path(@project, @field, @soil)
+    add_breadcrumb t('general.editing') + " " +  t('menu.layers')
   end
 
 # POST /layers
@@ -105,8 +105,8 @@ class LayersController < ApplicationController
   def create
     @layer = Layer.new(layer_params)
     @layer.soil_id = params[:soil_id]
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     respond_to do |format|
       if @layer.save
@@ -124,8 +124,8 @@ class LayersController < ApplicationController
 # PATCH/PUT /layers/1.json
   def update
     @layer = Layer.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
 
     respond_to do |format|
@@ -148,8 +148,8 @@ class LayersController < ApplicationController
 # DELETE /layers/1.json
   def destroy
     @layer = Layer.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
     if @layer.destroy
       respond_to do |format|

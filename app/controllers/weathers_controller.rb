@@ -45,22 +45,22 @@ include ScenariosHelper
 # GET /weathers/1.json
   def save_simulation
     @weather = Weather.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @weather.simulation_initial_year = params[:weather][:simulation_initial_year]
     @weather.simulation_final_year = params[:weather][:simulation_final_year]
-	apex_control1 = @project.apex_controls.find_by_control_description_id(1)
-	apex_control2 = @project.apex_controls.find_by_control_description_id(2)
+    apex_control1 = @project.apex_controls.find_by_control_description_id(1)
+    apex_control2 = @project.apex_controls.find_by_control_description_id(2)
     respond_to do |format|
       if @weather.save
-		if @weather.simulation_initial_year - 5 >= @weather.weather_initial_year then
-			apex_control2.value = @weather.simulation_initial_year - 5
-		else
-			apex_control2.value = @weather.weather_initial_year
-		end
-		apex_control2.save
-		apex_control1.value = @weather.simulation_final_year - apex_control2.value + 1
-		apex_control1.save
+    		if @weather.simulation_initial_year - 5 >= @weather.weather_initial_year then
+    			apex_control2.value = @weather.simulation_initial_year - 5
+    		else
+    			apex_control2.value = @weather.weather_initial_year
+    		end
+    		apex_control2.save
+    		apex_control1.value = @weather.simulation_final_year - apex_control2.value + 1
+    		apex_control1.save
         format.html { redirect_to edit_project_field_weather_path(@project.id, @field.id, @weather.id), notice: t('models.weather') + " " + t('general.updated') }
         format.json { head :no_content }
       else
@@ -87,8 +87,8 @@ include ScenariosHelper
 # GET /weathers/1.json
   def show
     @weather = Weather.find_by_field_id(params[:field_id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     if !(@weather == :nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
@@ -117,11 +117,10 @@ include ScenariosHelper
 # GET /weathers/1/edit
   def edit
     @weather = Weather.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
 	
-	add_breadcrumb t('menu.weather')
+    add_breadcrumb t('menu.weather')
     if !(@weather == nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
@@ -165,8 +164,8 @@ include ScenariosHelper
 # PATCH/PUT /weathers/1.json
   def update
     @weather = Weather.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     if (params[:weather][:way_id] == "2")
       if params[:weather][:weather_file] == nil
 		if @weather.weather_file == nil || @weather.weather_file == ""
@@ -175,7 +174,7 @@ include ScenariosHelper
 		end
       else
         @weather.way_id = 2
-		upload_weather
+		    upload_weather
       end
     end
 
@@ -197,9 +196,9 @@ include ScenariosHelper
       end
     end
 
-	apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
-    apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
-	apex_control.save
+    apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 1)
+    apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5  
+    apex_control.save
     apex_control = ApexControl.find_by_project_id_and_control_description_id(params[:project_id], 2)
     apex_control.value = @weather.simulation_initial_year - 5
     apex_control.save
@@ -224,13 +223,13 @@ include ScenariosHelper
     # create the file path
     path = File.join(OWN, name)
     # open the weather file for writing.
-	weather_file = open(path, "w")
+    weather_file = open(path, "w")
     #File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) }
-	input_file = params[:weather][:weather_file].read.split(/\r\n/)
+    input_file = params[:weather][:weather_file].read.split(/\r\n/)
     i=0
     data = ""
     #File.open(path, "r").each_line do |line|
-	input_file.each do |line|
+    input_file.each do |line|
       #data = line.split(/\r\n/)
       data = line.split(" ")
       break if data[0].blank?
@@ -242,46 +241,46 @@ include ScenariosHelper
         @weather.weather_initial_year = year
         i = i + 1
       end
-	  # print the new wehater file in the correct format
-	  sr = ""
-	  tmax = ""
-	  tmin = ""
-	  pcp = ""
-	  rh = ""
-	  ws = ""
-	  if data.length < 7 then 
-		return "There are missing empty values in this file in " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + ". Please fix the problem and try again."
+      # print the new wehater file in the correct format
+      sr = ""
+      tmax = ""
+      tmin = ""
+      pcp = ""
+      rh = ""
+      ws = ""
+      if data.length < 7 then 
+        return "There are missing empty values in this file in " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + ". Please fix the problem and try again."
       end 
-	  if data[3].to_f < -900 then sr = sprintf("%6.1f",data[3]) else sr = sprintf("%6.2f",data[3]) end
-	  if data[4].to_f < -900 then tmax = sprintf("%6.1f",data[4]) else tmax = sprintf("%6.2f",data[4]) end
-	  if data[5].to_f < -900 then tmin = sprintf("%6.1f",data[5]) else tmin = sprintf("%6.2f",data[5]) end 
-	  if data[6].to_f < -900 then pcp = sprintf("%6.1f",data[6]) else pcp = sprintf("%6.2f",data[6]) end
-	  rh = sprintf("%6.2f",0)
-	  ws = sprintf("%6.2f",0)
-	  case data.length
-		when 8
-			if data[7].to_f < -900 then rh = sprintf("%6.1f",data[7]) else rh = sprintf("%6.2f",data[7]) end
-		when 9
-			if data[8].to_f < -900 then ws = sprintf("%6.1f",data[8]) else ws = sprintf("%6.2f",data[8]) end
-	  end   # end case data.len
-	  weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sr + tmax + tmin + pcp + rh + ws + "\n")
+      if data[3].to_f < -900 then sr = sprintf("%6.1f",data[3]) else sr = sprintf("%6.2f",data[3]) end
+      if data[4].to_f < -900 then tmax = sprintf("%6.1f",data[4]) else tmax = sprintf("%6.2f",data[4]) end
+      if data[5].to_f < -900 then tmin = sprintf("%6.1f",data[5]) else tmin = sprintf("%6.2f",data[5]) end 
+      if data[6].to_f < -900 then pcp = sprintf("%6.1f",data[6]) else pcp = sprintf("%6.2f",data[6]) end
+      rh = sprintf("%6.2f",0)
+      ws = sprintf("%6.2f",0)
+      case data.length
+      when 8
+      	if data[7].to_f < -900 then rh = sprintf("%6.1f",data[7]) else rh = sprintf("%6.2f",data[7]) end
+      when 9
+      	if data[8].to_f < -900 then ws = sprintf("%6.1f",data[8]) else ws = sprintf("%6.2f",data[8]) end
+      end   # end case data.len
+      weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sr + tmax + tmin + pcp + rh + ws + "\n")
     end  # end file.open
-	weather_file.close
-	#verify that there are more than 5 years of weather period.
-	if @weather.simulation_initial_year >= @weather.weather_final_year then
-		@weather.simulation_initial_year = @weather.weather_initial_year
-		@weather.weather_initial_year -= 5 
-	end
-    @weather.weather_file = name
-    @weather.way_id = 2
-    @weather.save
-    if @weather.save then
-      return "OK"
-    else
-      return msg
+  	weather_file.close
+  	#verify that there are more than 5 years of weather period.
+  	if @weather.simulation_initial_year >= @weather.weather_final_year then
+  		@weather.simulation_initial_year = @weather.weather_initial_year
+  		@weather.weather_initial_year -= 5 
+  	end
+      @weather.weather_file = name
+      @weather.way_id = 2
+      @weather.save
+      if @weather.save then
+        return "OK"
+      else
+        return msg
+      end
+      return
     end
-    return
-  end
 
   private
 
