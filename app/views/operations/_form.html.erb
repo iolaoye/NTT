@@ -164,7 +164,7 @@
 	            <%= f.label :hours, t('bmp.rest_time')  %>
 	            <%= f.number_field :nh4_n, :step => 'any', :class => "gvTitleStyleNumber" %>
 	        </div>
-			<div class="field" id="div_nutrients">
+			<div class="field" id="div_nutrients" <% if @operation.type_id == 2 || @operation.type_id == 3 %> style="display:none;" <% end %>>
 			  <h2><%= f.label :no3_n, t('operation.manure_composition') %></h2>
 			  <div class="field" >
 					<%= f.label :no3_n, t('operation.no3_n_html') %>
@@ -191,7 +191,7 @@
 					<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 1, :step => 'any' %>
 			  </div>
 			</div>
-			<div class="field" id="div_other_nutrients" style="display:none">
+			<div class="field" id="div_other_nutrients" <% if @operation.type_id == 1 %> style='display:none;' <% end %>>
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
 					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
