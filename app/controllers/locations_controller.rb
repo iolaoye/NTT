@@ -49,142 +49,137 @@ class LocationsController < ApplicationController
     @location = Location.find_by_project_id(params[:id])
     @project = Project.find(params[:project_id])
     if (params[:error] == "") then
-        if (session[:session_id] == params[:source_id]) then
-          # step 1: delete fields not found
-          @location.fields.each do |field|
-            isFound = false
-            for i in 1..params[:fieldnum].to_i
-              if (field.field_name == params["field#{i}id"]) then
-                isFound = true
-              end
-            end
-            if (!isFound) then
-              field.destroy
-            end # end if isFound
-          end # end Location do
-          # step 2: update or create remaining fields
+      if (session[:session_id] == params[:source_id]) then
+        # step 1: delete fields not found
+        @location.fields.each do |field|
+          isFound = false
           for i in 1..params[:fieldnum].to_i
-            # find or create field
-            @field = @location.fields.where(:field_name => params["field#{i}id"]).first || @location.fields.build(:field_name => params["field#{i}id"])
-            @field.coordinates = params["field#{i}coords"]
-            @field.field_area = params["field#{i}acres"]
-            #verify if this field aready has its soils. If not the soils coming from the map are added
-            if !(params["field#{i}error"] == 1) then
-              #if @field.id == nil then
-              #	if Field.all.length == 0
-              #		@field.id = 1
-              #	else
-              #		@field.id = Field.last.id += 1
-              #	end
-              #end
-              if @field.save
-				        create_soils(i, @field.id, @field.field_type)
-                debugger
-                total = @field.soils.sum(:percentage)
-                @field.soils.each do |s|
-                  s.percentage = s.percentage / total * 100
-                  s.save
-                end
-			        else
-				        msg = "Error saving soils"
-			        end 
+            if (field.field_name == params["field#{i}id"]) then
+              isFound = true
             end
-            #step 3 find or create site
-            site = Site.find_by_field_id(@field.id)
-            if (site == nil) then
-              #create the site for this field
-              site = Site.new
-            end #end weather validation
-            centroid = calculate_centroid()
-            site.ylat = centroid.cy
-            site.xlog = centroid.cx
-            site.elev = 0
-            site.apm = 1
-            site.co2x = 0
-            site.cqnx = 0
-            site.rfnx = 0
-            site.upr = 0
-            site.unr = 0
-            site.fir0 = 0
-            site.field_id = @field.id
-            site.save
-            #step 4 find or create weather
-            if (@field.weather_id == nil) then
-              #create the weather for this field
-              @weather = Weather.new
-            else
-              #update the weather for this field
-              @weather = Weather.find(@field.weather_id)
-            end #end weather validation
-            @weather.weather_file = params["field#{i}parcelweather"]
-            if (params["field#{i}initialYear"] == nil) then
-				@weather.simulation_initial_year = 0
-			else
-	            @weather.simulation_initial_year = params["field#{i}initialYear"]
-			end
-			@weather.simulation_initial_year += 5
-            if params["field#{i}finalYear"] == nil then
-				@weather.simulation_final_year = @weather.simulation_initial_year + 5
-			else
-				@weather.simulation_final_year = params["field#{i}finalYear"]
-			end
-            if params["field#{i}initialYear"] == nil then
-				@weather.weather_initial_year = @weather.simulation_initial_year - 5
-			else
-				@weather.weather_initial_year = params["field#{i}initialYear"]
-			end
-            if params["field#{i}finalYear"] == nil then
-				@weather.weather_final_year = @weather.simulation_final_year
-			else
-				@weather.weather_final_year = params["field#{i}finalYear"]
-			end
-            @weather.latitude = site.ylat
-            @weather.longitude = site.xlog
-            @weather.way_id = 1 #assign PRISM weather station to the weather way as default from map
-            @weather.station_way = "map"
-            if @weather.save then
-              @field.weather_id = @weather.id
-            end
-            if @field.save then
-				@weather.field_id = @field.id
-				session[:field_id] = @field.id
-            end
-            @weather.save
-          end # end for fields
+          end
+          if (!isFound) then
+            field.destroy
+          end # end if isFound
+        end # end Location do
+        # step 2: update or create remaining fields
+        for i in 1..params[:fieldnum].to_i
+          # find or create field
+          @field = @location.fields.where(:field_name => params["field#{i}id"]).first || @location.fields.build(:field_name => params["field#{i}id"])
+          @field.coordinates = params["field#{i}coords"]
+          @field.field_area = params["field#{i}acres"]
+          @field.updated = true
+          #verify if this field aready has its soils. If not the soils coming from the map are added
+          if !(params["field#{i}error"] == 1) then
+            #if @field.id == nil then
+            #	if Field.all.length == 0
+            #		@field.id = 1
+            #	else
+            #		@field.id = Field.last.id += 1
+            #	end
+            #end
+            if @field.save
+			         #create_soils(i, @field.id, @field.field_type).  #commented because the solils will be gotten in fields page
+		        else
+			         msg = "Error saving soils"
+		        end 
+          end
+          #step 3 find or create site
+          site = Site.find_by_field_id(@field.id)
+          if (site == nil) then
+            #create the site for this field
+            site = Site.new
+          end #end weather validation
+          centroid = calculate_centroid()
+          site.ylat = centroid.cy
+          site.xlog = centroid.cx
+          site.elev = 0
+          site.apm = 1
+          site.co2x = 0
+          site.cqnx = 0
+          site.rfnx = 0
+          site.upr = 0
+          site.unr = 0
+          site.fir0 = 0
+          site.field_id = @field.id
+          site.save
+          #step 4 find or create weather
+          if (@field.weather_id == nil) then
+            #create the weather for this field
+            @weather = Weather.new
+          else
+            #update the weather for this field
+            @weather = Weather.find(@field.weather_id)
+          end #end weather validation
+          @weather.weather_file = params["field#{i}parcelweather"]
+          if (params["field#{i}initialYear"] == nil) then
+    				@weather.simulation_initial_year = 0
+    			else
+            @weather.simulation_initial_year = params["field#{i}initialYear"]
+    			end
+    			@weather.simulation_initial_year += 5
+           if params["field#{i}finalYear"] == nil then
+    				@weather.simulation_final_year = @weather.simulation_initial_year + 5
+    			else
+    				@weather.simulation_final_year = params["field#{i}finalYear"]
+    			end
+           if params["field#{i}initialYear"] == nil then
+    				@weather.weather_initial_year = @weather.simulation_initial_year - 5
+    			else
+    				@weather.weather_initial_year = params["field#{i}initialYear"]
+    			end
+          if params["field#{i}finalYear"] == nil then
+    				@weather.weather_final_year = @weather.simulation_final_year
+    			else
+    				@weather.weather_final_year = params["field#{i}finalYear"]
+    			end
+          @weather.latitude = site.ylat
+          @weather.longitude = site.xlog
+          @weather.way_id = 1 #assign PRISM weather station to the weather way as default from map
+          @weather.station_way = "map"
+          if @weather.save then
+            @field.weather_id = @weather.id
+          end
+          if @field.save then
+    	      @weather.field_id = @field.id
+    	      session[:field_id] = @field.id
+          end
+          @weather.save
+        end # end for fields
 
-          # step 5: update location
-          state_abbreviation = params[:state]
-		  if state_abbreviation.length > 2 then  #if state_abbreviation.length > 2 means it is state name
-			state = State.find_by_state_name(state_abbreviation.strip)		  
-		  else
-			state = State.find_by_state_abbreviation(state_abbreviation)
-		  end
-		  if state == nil then
-			@location.state_id = 0
-		  else
-			@location.state_id = state.id
-		  end
-		  county_name = params[:county]
-          if county_name == nil then
-			  @location.county_id = 0
-		  else
-			  county_name.slice! " County"
-			  county = County.find_by_county_name(county_name)
-			  if county == nil then 
-				@location.county_id = 0
-			  else
-				@location.county_id = county.id
-			  end 
-		  end
-          @location.coordinates = params[:parcelcoords]
-          @location.save
-          # step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
-          load_controls()
-          load_parameters(0)
-        end # end if of session_id check
-      end # end if error
-  	  respond_to do |format|
-		format.html # Runs receive_from_mapping_site.html.erb view in location folder
+        # step 5: update location
+        state_abbreviation = params[:state]
+  		  if state_abbreviation.length > 2 then  #if state_abbreviation.length > 2 means it is state name
+  			 state = State.find_by_state_name(state_abbreviation.strip)		  
+  		  else
+  			 state = State.find_by_state_abbreviation(state_abbreviation)
+  		  end
+  		  if state == nil then
+  			 @location.state_id = 0
+  		  else
+  			 @location.state_id = state.id
+  		  end
+  		  county_name = params[:county]
+        if county_name == nil then
+  			  @location.county_id = 0
+  		  else
+  			  county_name.slice! " County"
+  			  county = County.find_by_county_name(county_name)
+  			  if county == nil then 
+  				  @location.county_id = 0
+  			  else
+  				  @location.county_id = county.id
+  			  end 
+  		  end
+        @location.coordinates = params[:parcelcoords]
+        @location.save
+        # step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
+        load_controls()
+        load_parameters(0)
+      end # end if of session_id check
+    end # end if error
+  	respond_to do |format|
+      format.html # Runs receive_from_mapping_site.html.erb view in location folder
 	  end
   end
 
