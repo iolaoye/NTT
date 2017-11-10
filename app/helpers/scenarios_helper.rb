@@ -674,7 +674,6 @@ module ScenariosHelper
   #end set_val5
 
   def set_opval1(operation)
-  	debugger
     opv1 = 1.0
     case operation.activity_id
       when 1 #planting take heat units
