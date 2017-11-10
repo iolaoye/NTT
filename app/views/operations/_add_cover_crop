@@ -29,7 +29,7 @@
           <% if I18n.locale.eql?(:en) %>
             <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :eqp, {:prompt => t('operation.planting_method')}%>
           <% else %>
-            <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :spanish_name, {:prompt => t('operation.planting_method')} %>
+            <%= collection_select :bmp_ccr, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :spanish_name, {:prompt => t('operation.planting_method')}, {:required => true}  %>
           <% end %>
         </div>
       </td>
