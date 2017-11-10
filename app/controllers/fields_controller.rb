@@ -42,22 +42,22 @@ class FieldsController < ApplicationController
     @fields = @project.fields
     @project_name = @project.name
 
-    @fields.each do |field|
-      field_average_slope = 0
-      i = 0
-      field.soils.each do |soil|
-        if (soil.selected?) then
-          field_average_slope = field_average_slope + soil.slope
-          i=i+1
-        end
-      end
-      if (field_average_slope > 0) then
-        field.field_average_slope = (field_average_slope / i).round(2)
-      else
-        field.field_average_slope = 0
-      end
-      field.save
-    end
+    #@fields.each do |field|
+      #field_average_slope = 0
+      #i = 0
+      #field.soils.each do |soil|
+        #if (soil.selected?) then
+          #field_average_slope = field_average_slope + soil.slope
+          #i=i+1
+        #end
+      #end
+      #if (field_average_slope > 0) then
+        #field.field_average_slope = (field_average_slope / i).round(2)
+      #else
+        #field.field_average_slope = 0
+      #end
+      #field.save
+    #end
   end
 ################################  soils list   #################################
 # GET /fields/1
