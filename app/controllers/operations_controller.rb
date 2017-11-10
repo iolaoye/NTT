@@ -125,10 +125,10 @@ class OperationsController < ApplicationController
           total_p = (params[:operation][:nh4_n].to_f*0.44*0.11982)/(100-params[:operation][:moisture].to_f)
         end
         fert_type = Fertilizer.find(params[:operation][:subtype_id])
-        params[:operation][:no3_n] = total_n * fert_type.qn
-        params[:operation][:org_n] = total_n * fert_type.qp
-        params[:operation][:po4_p] = total_p * fert_type.yn
-        params[:operation][:org_p] = total_p * fert_type.yp
+        params[:operation][:no3_n] = total_n * fert_type.qn * 100
+        params[:operation][:org_n] = total_n * fert_type.qp * 100
+        params[:operation][:po4_p] = total_p * fert_type.yn * 100
+        params[:operation][:org_p] = total_p * fert_type.yp * 100
       end
       @operation = Operation.new(operation_params)
 	    #update_amount()   #CONVERT T/ac to lbs/ac
@@ -137,7 +137,7 @@ class OperationsController < ApplicationController
       if @operation.save
         saved = true
         #operations should be created in soils too. but not for rotational grazing
-        msg = add_soil_operation() unless @operation.activity_id == 9
+        #msg = add_soil_operation() unless @operation.activity_id == 9
         if msg.eql?("OK")
           soil_op_saved = true
         else
@@ -205,6 +205,20 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
+    if params[:operation][:activity_id] == "2" && params[:operation][:type_id] != "1"
+      if params[:operation][:type_id] == "2" #solid manure
+        total_n = (params[:operation][:org_c].to_f/2000)/((100-params[:operation][:moisture].to_f)/100)
+        total_p = ((params[:operation][:nh4_n].to_f*0.44)/2000)/((100-params[:operation][:moisture].to_f)/100)
+      elsif params[:operation][:type_id] == "3" #liquid manure 
+        total_n = (params[:operation][:org_c].to_f*0.11982)/(100-params[:operation][:moisture].to_f)
+        total_p = (params[:operation][:nh4_n].to_f*0.44*0.11982)/(100-params[:operation][:moisture].to_f)
+      end
+      fert_type = Fertilizer.find(params[:operation][:subtype_id])
+      params[:operation][:no3_n] = total_n * fert_type.qn * 100
+      params[:operation][:org_n] = total_n * fert_type.qp * 100
+      params[:operation][:po4_p] = total_p * fert_type.yn * 100
+      params[:operation][:org_p] = total_p * fert_type.yp * 100
+    end
     @operation = Operation.find(params[:id])
     #@field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)
