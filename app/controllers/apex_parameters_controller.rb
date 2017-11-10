@@ -3,12 +3,12 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters.json
 
   def index
-    #@field = Field.find(params[:field_id])
-    #@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
     @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id])
 		
-    add_breadcrumb t('menu.utility_file')
-    add_breadcrumb t('menu.parameters_file')
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.parameters_file')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_parameters }
@@ -39,16 +39,16 @@ class ApexParametersController < ApplicationController
 
   # GET /apex_parameters/1/edit
   def edit
-    #@field = Field.find(params[:field_id])
-    #@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
     @apex_parameter = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id]).find(params[:id])
     @parameter_name = @apex_parameter.parameter_description.name
     @low_range = @apex_parameter.parameter_description.range_low
     @high_range = @apex_parameter.parameter_description.range_high
 	
-    add_breadcrumb t('menu.utility_file')
-    add_breadcrumb t('menu.parameters_file'), controller: "apex_parameters", action: "index"
-    add_breadcrumb t('general.editing') + " " + t('menu.parameters_file')
+	add_breadcrumb t('menu.utility_file')
+	add_breadcrumb t('menu.parameters_file'), controller: "apex_parameters", action: "index"
+	add_breadcrumb t('general.editing') + " " + t('menu.parameters_file')
   end
 
   # POST /apex_parameters
@@ -97,9 +97,9 @@ class ApexParametersController < ApplicationController
 
   def reset
     parameters = Parameter.where(:state_id => Location.find(session[:location_id]).state_id)
-  	if parameters == nil or parameters.blank? then
-  		parameters = Parameter.where(:state_id => 99)
-  	end
+	if parameters == nil or parameters.blank? then
+		parameters = Parameter.where(:state_id => 99)
+	end
 
     @apex_parameters = ApexParameter.where(:project_id => params[:project_id])
     @apex_parameters.delete_all()
@@ -115,9 +115,9 @@ class ApexParametersController < ApplicationController
     @project = Project.find(params[:project_id])
     @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id])
 		
-    add_breadcrumb 'Utility Files'
-    add_breadcrumb 'Parameters'
-    #render "index"
+	add_breadcrumb 'Utility Files'
+	add_breadcrumb 'Parameters'
+	#render "index"
     redirect_to project_field_apex_parameters_path(@project, @field), notice: t('models.apex_parameter') + " " + t('general.reset')
   end
 

@@ -3,8 +3,8 @@ class SubareasController < ApplicationController
   # GET /subareas.json
 
   def index
-    #@field = Field.find(params[:field_id])
-    #@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
 	  @soils = Soil.where(:field_id => @field.id, :selected => true)
 	  add_breadcrumb t('menu.utility_file')
 	  add_breadcrumb t('menu.subarea_file')
@@ -32,8 +32,8 @@ class SubareasController < ApplicationController
   # GET /subareas/1.json
   def show
     @subarea = Subarea.find(params[:id])
-    #@field = Field.find(params[:field_id])
-    #@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
     @location = Location.where(:project_id => params[:project_id])
 		
 	  add_breadcrumb t('menu.utility_file')
@@ -58,8 +58,8 @@ class SubareasController < ApplicationController
   # GET /subareas/1/edit
   def edit
     @subarea = Subarea.find(params[:id])
-    #@field = Field.find(params[:field_id])
-    #@project = Project.find(params[:project_id])
+    @field = Field.find(params[:field_id])
+    @project = Project.find(params[:project_id])
 		
   	add_breadcrumb t('menu.utility_file')
     add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
@@ -71,9 +71,9 @@ class SubareasController < ApplicationController
   # POST /subareas.json
   def create
     session[:scenario_id] = params[:subarea][:scenario_id].to_i
-    #@field = Field.find(params[:field_id])
+    @field = Field.find(params[:field_id])
     @soils = @field.soils.where(:selected => true)
-  	#@project = Project.find(params[:project_id])
+  	@project = Project.find(params[:project_id])
   	get_subareas()
   	render "index"
   end
