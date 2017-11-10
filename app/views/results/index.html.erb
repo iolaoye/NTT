@@ -208,7 +208,7 @@
 					  <% if (result.description_id > 89 and ENV["APP_VERSION"] == "modified") %>
 						<% next %>
 					  <% end %>
-					  <% description = Description.find(result.description_id) %>
+					  <%# description = Description.find(result.description_id) %>
 					  <% value2 = 0 %>
 					  <% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
 					  <% difference1 = value2 - result.value %>
@@ -226,13 +226,13 @@
 							<% if result.description_id == 70 %>
 								<% if I18n.locale.eql?(:en) %>
 								  <td class="gvTotalText" style="border-right: thick double #ff0000; ">
-									<%= description.description + "(" + description.unit + ")"  %>
-									<%= check_box_tag description.description%>
+									<%= result.description.description + "(" + result.description.unit + ")"  %>
+									<%= check_box_tag result.description.description%>
 								  </td>
 								<% else %>
 								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-								    <%= description.spanish_description %>
-									<%= check_box_tag description.description %>
+								    <%= result.description.spanish_description %>
+									<%= check_box_tag result.description.description %>
 								  </td>
 								<% end %>
 								<td class="gvTotalNumber"><%= "" %></td>
@@ -254,13 +254,13 @@
 							<% else %>
 								<% if I18n.locale.eql?(:en) %>
 								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.description + "(" + description.unit + ")" %>
-									<%= check_box_tag description.description %>
+									<%= result.description.description + "(" + result.description.unit + ")" %>
+									<%= check_box_tag result.description.description %>
 								  </td>
 								<% else %>
 								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.spanish_description + "(" + description.unit + ")" %>
-									<%= check_box_tag description.description %>
+									<%= result.description.spanish_description + "(" + result.description.unit + ")" %>
+									<%= check_box_tag result.description.description %>
 								  </td>
 								<% end %>
 								<td class="gvTotalText"><%= sprintf("%8.2f", result.value).to_s %></td>
@@ -351,9 +351,9 @@
     									<% format = "%8.4f" %>
     								<% end %>
 									<% if I18n.locale.eql?(:en) %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= description.description + "(" + description.unit + ")" %></td>
+										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= result.description.description + "(" + result.description.unit + ")" %></td>
 									<% else %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= description.spanish_description + "(" + description.unit + ")" %></td>
+										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= result.description.spanish_description + "(" + result.description.unit + ")" %></td>
 									<% end %>
 									<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, result.value).to_s %></td>
 									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
@@ -858,7 +858,7 @@
 					  <% if (result.description_id > 89 and ENV["APP_VERSION"] == "modified") %>
 						<% next %>
 					  <% end %>
-					  <% description = Description.find(result.description_id) %>
+					  <%# description = Description.find(result.description_id) %>
 					  <% value2 = 0 %>
 					  <% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil then %> <%value2 =@total_area * @results2.find_by_description_id(result.description_id).value %> <% end %>
 					  <% difference1 = value2 - result.value*@total_area %>
@@ -876,13 +876,13 @@
 							<% if result.description_id == 70 %>
 								<% if I18n.locale.eql?(:en) %>
 								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.description %>
-									<%= check_box_tag description.description%>
+									<%= result.description.description %>
+									<%= check_box_tag result.description.description%>
 								  </td>
 								<% else %>
 								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-								    <%= description.spanish_description %>
-									<%= check_box_tag description.description %>
+								    <%= result.description.spanish_description %>
+									<%= check_box_tag result.description.description %>
 								  </td>
 								<% end %>
 								<td class="gvTotalNumber"><%= "" %></td>
@@ -905,17 +905,17 @@
 							    <% if result.description_id >= 40 && result.description_id <= 59 %>
     								<% description_unit = "ac in" %>
     							<% else %>
-    								<% description_unit = description.unit.chomp("/ac") %>
+    								<% description_unit = result.description.unit.chomp("/ac") %>
     							<% end %>
 								<% if I18n.locale.eql?(:en) %>
 								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.description + "(" + description_unit + ")" %>
-									<%= check_box_tag description.description %>
+									<%= result.description.description + "(" + description_unit + ")" %>
+									<%= check_box_tag result.description.description %>
 								  </td>
 								<% else %>
 								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.spanish_description + "(" + description_unit + ")" %>
-									<%= check_box_tag description.description %>
+									<%= result.description.spanish_description + "(" + description_unit + ")" %>
+									<%= check_box_tag result.description.description %>
 								  </td>
 								<% end %>
 								<td class="gvTotalText"><%= sprintf("%8.2f", result.value*@total_area).to_s %></td>
@@ -1009,12 +1009,12 @@
     								<% if result.description_id >= 40 && result.description_id <= 59 %>
     									<% description_unit = "ac in" %>
     								<% else %>
-    									<% description_unit = description.unit.chomp("/ac") %>
+    									<% description_unit = result.description.unit.chomp("/ac") %>
     								<% end %>
 									<% if I18n.locale.eql?(:en) %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= description.description + "(" + description_unit + ")" %></td>
+										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= result.description.description + "(" + description_unit + ")" %></td>
 									<% else %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= description.spanish_description + "(" + description_unit + ")" %></td>
+										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= result.description.spanish_description + "(" + description_unit + ")" %></td>
 									<% end %>
 									<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, result.value*@total_area).to_s %></td>
 									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
