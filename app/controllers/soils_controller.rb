@@ -256,7 +256,6 @@ class SoilsController < ApplicationController
         end # end soils each
       end # end operations.each
     end #end Scenario each do
-    debugger
     @field.field_average_slope = @field.soils.average(:slope)
     @field.updated = false
     @field.save

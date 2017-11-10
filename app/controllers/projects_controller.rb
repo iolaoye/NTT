@@ -100,7 +100,6 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    debugger
   @user = User.find(session[:user_id])
     #@project = Project.new(project_params)
     #params[:project_id] = @project.id
