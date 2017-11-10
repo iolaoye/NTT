@@ -14,9 +14,9 @@ class ProjectsController < ApplicationController
     @user = User.find(session[:user_id])
     if @user.admin?
       #@projects = Project.order("#{sort_column} #{sort_direction}")
-      @projects = Project.includes(:user).order("#{sort_column} #{sort_direction}")
+      @projects = Project.includes(:user, :location).order("#{sort_column} #{sort_direction}")
     else
-      @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
+      @projects = Project.where(:user_id => params[:user_id]).includes(:location).order("#{sort_column} #{sort_direction}")
     end
     session[:simulation] = "watershed"
     respond_to do |format|
@@ -100,8 +100,9 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+    debugger
   @user = User.find(session[:user_id])
-    @project = Project.new(project_params)
+    #@project = Project.new(project_params)
     #params[:project_id] = @project.id
     @project.user_id = session[:user_id]
   @project.version = "NTTG3"
