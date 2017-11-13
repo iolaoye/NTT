@@ -135,6 +135,8 @@ class OperationsController < ApplicationController
       @operation.scenario_id = params[:scenario_id]
       @crops = Crop.load_crops(@project.location.state_id)
       if @operation.save
+        #saves start grazing operation in SoilOperation table
+        msg = add_soil_operation
         saved = true
         #operations should be created in soils too. but not for rotational grazing
         #msg = add_soil_operation() unless @operation.activity_id == 9
