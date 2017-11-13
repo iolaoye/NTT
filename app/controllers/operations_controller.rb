@@ -129,6 +129,79 @@ class OperationsController < ApplicationController
         params[:operation][:org_n] = total_n * fert_type.qp
         params[:operation][:po4_p] = total_p * fert_type.yn
         params[:operation][:org_p] = total_p * fert_type.yp
+      if params[:operation][:activity_id] == "2"
+        if params[:operation][:type_id] == "2" #solid manure
+          case params[:operation][:subtype_id]
+            when "43" #dairy
+              params[:operation][:no3_n] = 0.54
+              params[:operation][:po4_p] = 0.77
+              params[:operation][:org_n] = 0.46
+              params[:operation][:org_p] = 0.23
+            when "44" #beef
+              params[:operation][:no3_n] = 0.25
+              params[:operation][:po4_p] = 0.364
+              params[:operation][:org_n] = 0.75
+              params[:operation][:org_p] = 0.636
+            when "46" #swine
+              params[:operation][:no3_n] = 0.553
+              params[:operation][:po4_p] = 0.688
+              params[:operation][:org_n] = 0.447
+              params[:operation][:org_p] = 0.312
+            when "47" #sheep
+              params[:operation][:no3_n] = 0.368
+              params[:operation][:po4_p] = 0.375
+              params[:operation][:org_n] = 0.632
+              params[:operation][:org_p] = 0.625
+            when "48" #goat
+              params[:operation][:no3_n] = 0.371
+              params[:operation][:po4_p] = 0.375
+              params[:operation][:org_n] = 0.629
+              params[:operation][:org_p] = 0.625
+            when "49" #horse
+              params[:operation][:no3_n] = 0.3
+              params[:operation][:po4_p] = 0.25
+              params[:operation][:org_n] = 0.7
+              params[:operation][:org_p] = 0.75
+            when "51" #layer
+              params[:operation][:no3_n] = 0.245
+              params[:operation][:po4_p] = 0.316
+              params[:operation][:org_n] = 0.755
+              params[:operation][:org_p] = 0.684
+            when "52" #broiler
+              params[:operation][:no3_n] = 0.843
+              params[:operation][:po4_p] = 0.311
+              params[:operation][:org_n] = 0.157
+              params[:operation][:org_p] = 0.689
+          end
+        elsif params[:operation][:type_id] == "3" #liquid manure
+          case params[:operation][:subtype_id]
+            when "83" #dairy
+              params[:operation][:no3_n] = 0.184
+              params[:operation][:po4_p] = 0.625
+              params[:operation][:org_n] = 0.816
+              params[:operation][:org_p] = 0.375
+            when "84" #beef
+              params[:operation][:no3_n] = 0.55
+              params[:operation][:po4_p] = 0.75
+              params[:operation][:org_n] = 0.45
+              params[:operation][:org_p] = 0.22
+            when "85" #swine
+              params[:operation][:no3_n] = 0.72
+              params[:operation][:po4_p] = 0.72
+              params[:operation][:org_n] = 0.28
+              params[:operation][:org_p] = 0.28
+            when "86" #layer
+              params[:operation][:no3_n] = 0.74
+              params[:operation][:po4_p] = 0.69
+              params[:operation][:org_n] = 0.26
+              params[:operation][:org_p] = 0.31
+            when "87" #broiler
+              params[:operation][:no3_n] = 0.65
+              params[:operation][:po4_p] = 0.74
+              params[:operation][:org_n] = 0.35
+              params[:operation][:org_p] = 0.26
+          end
+        end
       end
       @operation = Operation.new(operation_params)
 	    #update_amount()   #CONVERT T/ac to lbs/ac
