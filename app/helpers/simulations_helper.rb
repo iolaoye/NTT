@@ -1402,7 +1402,7 @@ module SimulationsHelper
         else
           org_c = oper.org_c / 100
         end
-		    if oper.activity_id == 2 && !oper.type_id == 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
+		    if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
 			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)
 		    else
 			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)

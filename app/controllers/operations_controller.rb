@@ -214,7 +214,9 @@ class OperationsController < ApplicationController
       @crops = Crop.load_crops(@project.location.state_id)
       if @operation.save
         #saves start grazing operation in SoilOperation table
-        msg = add_soil_operation
+        if @operation.activity_id != 9 && @operation.activity_id != 10 then 
+          msg = add_soil_operation
+        end
         saved = true
         #operations should be created in soils too. but not for rotational grazing
         #msg = add_soil_operation() unless @operation.activity_id == 9
@@ -246,16 +248,16 @@ class OperationsController < ApplicationController
     			@operation.nh3 = 0
     			@operation.subtype_id = 0
     			@operation.save
-    		end
-        if @operation.activity_id != 9 && @operation.activity_id != 10 then 
-          msg = add_soil_operation()
-          if msg.eql?("OK")
-            soil_op_saved = true
-          else
-            soil_op_saved = false
-            raise ActiveRecord::Rollback
+          if @operation.activity_id != 9 && @operation.activity_id != 10 then 
+            msg = add_soil_operation()
+            if msg.eql?("OK")
+              soil_op_saved = true
+            else
+              soil_op_saved = false
+              raise ActiveRecord::Rollback
+            end
           end
-        end
+    		end
       else
         saved = false
       end
