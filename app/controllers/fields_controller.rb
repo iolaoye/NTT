@@ -72,7 +72,7 @@ class FieldsController < ApplicationController
 		  format.html # index.html.erb
 		  format.json { render json: @fields }
 		end
-    
+
   end
 
 ################################  soils   #################################
@@ -161,6 +161,7 @@ class FieldsController < ApplicationController
   	field = Field.find(params[:id])
   	field.field_name = params[:field][:field_name]
   	field.field_area = params[:field][:field_area]
+    field.soil_test = params[:field][:soil_test]
   	field.soilp = params[:field][:soilp]
   	if field.save
   		msg = "OK"
@@ -170,8 +171,8 @@ class FieldsController < ApplicationController
   				layer = field.soils[i].layers[0]
   				layer.organic_matter = params[:om][i]
   				layer.soil_p = params[:field][:soilp]
-  				if layer.save then 
-  					msg = "OK" 
+  				if layer.save then
+  					msg = "OK"
   				else
   					msg = "Error saving soil information"
   				end
@@ -221,7 +222,7 @@ class FieldsController < ApplicationController
       field_type = true
     end
     #@field = Field.find(params[:id])
-    #@project = Project.find(params[:project_id])	
+    #@project = Project.find(params[:project_id])
     msg = "OK"
     if @field.field_type != field_type then
       if field_type == true then
