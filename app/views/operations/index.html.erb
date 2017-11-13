@@ -204,7 +204,7 @@
 		  <% end %>
 		  <% if @operations.where("(activity_id = ? or activity_id = ?) and crop_id = ?", 7,8,crop).any?%>
 			<div class="panel panel-primary">
-			  <h4><%= t('operation.continues_grazing') %></h4>
+			  <h4><%= t('general.continues_grazing') %></h4>
 			    <table class="table">
 				  <tr>
 					<td class="optable"><b></b></td>
@@ -242,7 +242,7 @@
 				      </tr>
                   <% end %>
 			    </table><br>
-			    <%= link_to t('result.add') + " " + t('operation.continues_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 7, :crop => crop.id), :class => 'btn btn-success'  %>
+			    <%= link_to t('result.add') + " " + t('general.continues_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 7, :crop => crop.id), :class => 'btn btn-success'  %>
 			</div> 
 		  <% end %>
           
