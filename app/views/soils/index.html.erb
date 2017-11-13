@@ -48,9 +48,7 @@
 						<th class="gvCellStyleTitle"><%= t('soil.drainage') %></th>
 					<%end%>
 					<th class="gvTitleStyleNumber"><%= t('soil.percentage') %></th>
-					<% if ENV["APP_VERSION"] == "standard" %>
 					<th class="gvCellStyleTitle"><%= t('general.actions') %></th>
-					<% end %>
 				</tr>
 				</thead>
 				<tbody>
@@ -70,13 +68,13 @@
 							<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
 						<% end %>
 						<td class="gvCellStyleNumber"><%= soil.percentage %></td>
-						<% if ENV["APP_VERSION"] == "standard" %>
-						<td>
+						<td class="gvCellStyleActions">
+							<% if ENV["APP_VERSION"] != "modified" %>
 								<%= link_to image_tag("layers.png"), project_field_soil_layers_path(@project, @field, soil), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
 								<%= link_to image_tag("edit.png"), edit_project_field_soil_path(@project, @field, soil), title: t('general.edit')%>
-								<%#= link_to image_tag("delete.png"), project_field_soil_path(@project, @field, soil), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
+							<% end %>
+							<%= link_to image_tag("delete.png"), project_field_soil_path(@project, @field, soil), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
 						</td>
-						<% end %>
 					</tr>
   					<% i = i + 1 %>
 					<% end %>
