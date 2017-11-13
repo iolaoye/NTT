@@ -43,9 +43,6 @@ class OperationsController < ApplicationController
     operation.type_id = params[:bmp_ccr][:type_id]
     operation.subtype_id = 1
     operation.scenario_id = @scenario.id
-    state_id = Location.find(session[:location_id]).state_id
-    crop = Crop.find(operation.crop_id)
-    operation.amount = crop.plant_population_ft
     operation.save
   end
 ################################  SHOW  #################################
