@@ -78,7 +78,7 @@
                           <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                         <% end %>
                       <% end %>
-                      <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
+                      <%#= image_tag('delete.png') %> <%#= t('general.delete') %>
                   <% end %>
                   <%if request.url.include?(url_for=("/grazing_parameters?")) %>
                     <li><%= image_tag('view.png') %> <%= t('general.view') %></li>

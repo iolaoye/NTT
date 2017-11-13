@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @soil_test.name %>
+</p>
+
+<p>
+  <strong>Factor1:</strong>
+  <%= @soil_test.factor1 %>
+</p>
+
+<p>
+  <strong>Factor2:</strong>
+  <%= @soil_test.factor2 %>
+</p>
+
+<%= link_to 'Edit', edit_soil_test_path(@soil_test) %> |
+<%= link_to 'Back', soil_tests_path %>
