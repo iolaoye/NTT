@@ -261,12 +261,12 @@ module ProjectsHelper
   def duplicate_subareas_by_scenario(scenario_id)
 	subareas = Subarea.where("scenario_id = " + scenario_id.to_s + " and soil_id > 0")
 	subareas.each do |subarea|
-  		new = subarea.dup
-		new.scenario_id = @new_scenario_id
+  		new_subarea = subarea.dup
+		new_subarea.scenario_id = @new_scenario_id
 		if @use_old_soil == true then
-			new.soil_id = Soil.find_by_soil_id_old(subarea.soil_id).id
+			new_subarea.soil_id = Soil.find_by_soil_id_old(subarea.soil_id).id
 		end
-		if !new.save
+		if !new_subarea.save
 			return "Error Saving subarea"
 		end
 	end   # end subareas.each
