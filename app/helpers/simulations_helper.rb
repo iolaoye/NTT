@@ -1136,11 +1136,11 @@ module SimulationsHelper
           s_o_new.apex_operation = bmp.type_id
           s_o_new.apex_crop = bmp.crop_id
           s_o_new.activity_id = bmp.activity_id
-          s_o_new.opv1 = 0
-          s_o_new.opv2 = 0
+          s_o_new.opv1 = set_opval1(bmp)
+          s_o_new.opv2 = set_opval2(soil_id, bmp)
           s_o_new.opv3 = 0
           s_o_new.opv4 = 0
-          s_o_new.opv5 = 0
+          s_o_new.opv5 = set_opval5(bmp)
           s_o_new.opv6 = 0
           s_o_new.opv7 = 0
           cc_plt_date = Date.parse(sprintf("%2d", s_o_new.year) + "/" + sprintf("%2d", s_o_new.month) + "/" + sprintf("%2d", s_o_new.day))
