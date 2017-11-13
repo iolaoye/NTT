@@ -14,9 +14,9 @@ class ProjectsController < ApplicationController
     @user = User.find(session[:user_id])
     if @user.admin?
       #@projects = Project.order("#{sort_column} #{sort_direction}")
-      @projects = Project.includes(:user).order("#{sort_column} #{sort_direction}")
+      @projects = Project.includes(:user, :location).order("#{sort_column} #{sort_direction}")
     else
-      @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
+      @projects = Project.where(:user_id => params[:user_id]).includes(:location).order("#{sort_column} #{sort_direction}")
     end
     session[:simulation] = "watershed"
     respond_to do |format|
@@ -79,33 +79,33 @@ class ProjectsController < ApplicationController
   ################  copy the selected project  ###################
   def copy_project
     @use_old_soil = true
-  msg = duplicate_project()
-  if !msg == "OK" then
-    flash[:info] = msg
-  else
-    notice = msg
-  end # end if msg
-  #download_project(params[:id], "copy")
-  @user = User.find(session[:user_id])
-  if @user.admin?
-    @projects = Project.order("#{sort_column} #{sort_direction}")
-  else
-    @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
-  end
-  #render "index"
-  redirect_to(request.env['HTTP_REFERER']) #return to previous page
+    msg = duplicate_project()
+    if !msg == "OK" then
+      flash[:info] = msg
+    else
+      notice = msg
+    end # end if msg
+    #download_project(params[:id], "copy")
+    @user = User.find(session[:user_id])
+    if @user.admin?
+      @projects = Project.order("#{sort_column} #{sort_direction}")
+    else
+      @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
+    end
+    #render "index"
+    redirect_to(request.env['HTTP_REFERER']) #return to previous page
   end
 
   ########################################### CREATE NEW PROJECT##################
   # POST /projects
   # POST /projects.json
   def create
-  @user = User.find(session[:user_id])
-    @project = Project.new(project_params)
+    @user = User.find(session[:user_id])
+    #@project = Project.new(project_params)
     #params[:project_id] = @project.id
     @project.user_id = session[:user_id]
-  @project.version = "NTTG3"
-  respond_to do |format|
+    @project.version = "NTTG3"
+    respond_to do |format|
       if @project.save
         params[:project_id] = @project.id
         location = Location.new
@@ -464,7 +464,7 @@ class ProjectsController < ApplicationController
       xml.ztk soil.ztk
       xml.fbm soil.fbm
       xml.fhp soil.fhp
-    xml.soil_id_old soil.id
+      xml.soil_id_old soil.id
       layers = Layer.where(:soil_id => soil.id)
       xml.layers {
         layers.each do |layer|
@@ -508,9 +508,9 @@ class ProjectsController < ApplicationController
     xml.scenario {
       xml.id scenario.id
       xml.name scenario.name
-    if scenario.last_simulation != nil then
-    xml.last_simulation scenario.last_simulation
-    end
+      if scenario.last_simulation != nil then
+        xml.last_simulation scenario.last_simulation
+      end
       operations = Operation.where(:scenario_id => scenario.id)
       xml.operations {
         operations.each do |operation|

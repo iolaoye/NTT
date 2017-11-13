@@ -13,8 +13,8 @@ class SoilsController < ApplicationController
 # GET /1/soils.json
   def list
     @soils = Soil.where(:field_id => params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -58,8 +58,8 @@ class SoilsController < ApplicationController
 # GET /soils/new.json
   def new
     @soil = Soil.new
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
 
     add_breadcrumb t('menu.soils')
 
@@ -72,8 +72,8 @@ class SoilsController < ApplicationController
 ################################  EDIT   #################################
 # GET /soils/1/edit
   def edit
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:id])
 
     add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
@@ -85,8 +85,8 @@ class SoilsController < ApplicationController
 # POST /soils.json
   def create
     @soil = Soil.new(soil_params)
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soil.field_id = @field.id
 
     respond_to do |format|
@@ -106,8 +106,8 @@ class SoilsController < ApplicationController
 # PATCH/PUT /soils/1.json
   def update
     @soil = Soil.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     #the wsa in subareas should be updated if % was updated as well as chl and rchl
     wsa_conversion = Field.find(@soil.field_id).field_area / 100 * AC_TO_HA
     soil_id = Soil.where(:selected => true).last.id
@@ -132,8 +132,8 @@ class SoilsController < ApplicationController
 # DELETE /soils/1
 # DELETE /soils/1.json
   def destroy
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:id])
     if @soil.destroy
 		respond_to do |format|
@@ -147,19 +147,19 @@ class SoilsController < ApplicationController
 # DELETE /soils/1
 # DELETE /soils/1.json
   def save_soils
-	@project = Project.find(params[:project_id])
-	@field = Field.find(params[:field_id])
-	#@weather = @field.weather
+  	#@project = Project.find(params[:project_id])
+  	#@field = Field.find(params[:field_id])
+  	#@weather = @field.weather
 
-	add_breadcrumb 'Soils'
+  	add_breadcrumb 'Soils'
 
-	for i in 0..(@field.soils.count - 1)
-		layer = @field.soils[i].layers[0]
-		layer.organic_matter = params[:om][i]
-		layer.save
-	end		# end soils.each
-	@soils = Soil.where(:field_id => params[:field_id])
-	render "index"
+  	for i in 0..(@field.soils.count - 1)
+  		layer = @field.soils[i].layers[0]
+  		layer.organic_matter = params[:om][i]
+  		layer.save
+  	end		# end soils.each
+  	@soils = Soil.where(:field_id => params[:field_id])
+  	render "index"
   end		# end method
 
   private
@@ -256,6 +256,7 @@ class SoilsController < ApplicationController
         end # end soils each
       end # end operations.each
     end #end Scenario each do
+    @field.field_average_slope = @field.soils.average(:slope)
     @field.updated = false
     @field.save
   end

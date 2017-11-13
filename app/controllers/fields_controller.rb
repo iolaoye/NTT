@@ -42,22 +42,22 @@ class FieldsController < ApplicationController
     @fields = @project.fields
     @project_name = @project.name
 
-    @fields.each do |field|
-      field_average_slope = 0
-      i = 0
-      field.soils.each do |soil|
-        if (soil.selected?) then
-          field_average_slope = field_average_slope + soil.slope
-          i=i+1
-        end
-      end
-      if (field_average_slope > 0) then
-        field.field_average_slope = (field_average_slope / i).round(2)
-      else
-        field.field_average_slope = 0
-      end
-      field.save
-    end
+    #@fields.each do |field|
+      #field_average_slope = 0
+      #i = 0
+      #field.soils.each do |soil|
+        #if (soil.selected?) then
+          #field_average_slope = field_average_slope + soil.slope
+          #i=i+1
+        #end
+      #end
+      #if (field_average_slope > 0) then
+        #field.field_average_slope = (field_average_slope / i).round(2)
+      #else
+        #field.field_average_slope = 0
+      #end
+      #field.save
+    #end
   end
 ################################  soils list   #################################
 # GET /fields/1
@@ -92,8 +92,8 @@ class FieldsController < ApplicationController
   def show
     session[:simulation] = "scenario"
     #session[:field_id] = params[:id]
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:id])
 
     respond_to do |format|
       if ENV["APP_VERSION"] == "modified"
@@ -195,8 +195,8 @@ class FieldsController < ApplicationController
 # DELETE /fields/1
 # DELETE /fields/1.json
   def destroy
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:id])
     if @field.destroy
       flash[:notice] = t('models.field') + " " + @field.field_name + t('notices.deleted')
     end
@@ -220,8 +220,8 @@ class FieldsController < ApplicationController
     if params[:field][:field_type].eql?("1") then
       field_type = true
     end
-    @field = Field.find(params[:id])
-    @project = Project.find(params[:project_id])	
+    #@field = Field.find(params[:id])
+    #@project = Project.find(params[:project_id])	
     msg = "OK"
     if @field.field_type != field_type then
       if field_type == true then
