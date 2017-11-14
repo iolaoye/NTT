@@ -1,4 +1,8 @@
 NTTG3::Application.routes.draw do
+  resources :soil_tests
+  resources :soil_tests
+  resources :soil_tests
+  resources :soil_tests
   resources :supplement_parameters
   resources :manure_controls
   resources :grazing_parameters
