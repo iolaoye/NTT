@@ -122,7 +122,7 @@
 	<% when 2 # fertilizer %>
 		<div id="div_date" style="display:none" >
 			<%= f.label :stop, t('general.stop'), :class => 'field' %>
-				<%= f.label :year, t('general.year'), :class => 'field' %>
+			<%= f.label :year, t('general.year'), :class => 'field' %>
 			<%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
 			<%= f.label :date, t('general.date'), :class => 'field' %>
 			<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
@@ -156,14 +156,7 @@
 			<%= f.label :depth, t('operation.depth') %>
 			<%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
-        <div class="field" id="div_grazed" style="display:none">
-            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-            <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
-        </div>
-        <div class="field" id="div_resttime" style="display:none">
-            <%= f.label :hours, t('bmp.rest_time')  %>
-            <%= f.number_field :nh4_n, :step => 'any', :class => "gvTitleStyleNumber" %>
-        </div>
+
 		<div class="field" id="div_nutrients" <% if @operation.type_id == 2 || @operation.type_id == 3 %> style="display:none;" <% end %>>
 		  <h2><%= f.label :no3_n, t('operation.manure_composition') %></h2>
 		  <div class="field" >
@@ -709,16 +702,16 @@
 		<div class="field" id="div_other_nutrients" style="display:none">
 			<div class="field">
 				<%= f.label :org_c, t('operation.total_n_con') %>
-				<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
+				<%= number_field :op, :total_n_con, :class => "gvTitleStyleNumber" %>
 			</div>
-			<!-- <div class="field">
+			<div class="field">
 				<%= f.label :nh4_n, t('operation.total_p_con') %>
-				<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
+				<%= number_field :op, :total_p_con, :class => "gvTitleStyleNumber" %>
 			</div>
 			<div class="field">
 				<%= f.label :moisture, t('operation.moisture_con') %>
-				<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
-			</div> -->
+				<%= number_field :op, :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
+			</div> 
 		</div>
 	<% end %>
 
