@@ -53,7 +53,11 @@ updateNutrients = (animal) ->
           $("#operation_org_p").val("")
           $("#operation_nh3").val("")
           $("#operation_org_c").val(fertilizer.total_n)
-          #$("#operation_org_c").val(fertilizer.total_p)
+          $("#operation_nh4_n").val(fertilizer.total_p)
+          $("#operation_moisture").val(100-fertilizer.dry_matter)
+          $("#op_total_n_con").val(fertilizer.total_n)
+          $("#op_total_p_con").val(fertilizer.total_p)
+          $("#op_moisture").val(100-fertilizer.dry_matter)
       else
         $.getJSON url, (fertilizer) ->
           $("#operation_no3_n").val(fertilizer.qn)
@@ -62,7 +66,10 @@ updateNutrients = (animal) ->
           $("#operation_org_p").val(fertilizer.yp)
           $("#operation_nh3").val("")
           $("#operation_org_c").val("")
-          #$("#operation_org_c").val("")
+          $("#operation_nh4_n").val("")
+          $("#op_total_n_con").val("")
+          $("#op_total_p_con").val("")
+          $("#operation_moisture").val("")
 
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
@@ -192,7 +199,10 @@ updateFerts = ->
     $("#div_other_nutrients").hide()
     $('div[id="div_other_nutrients"] *').prop('required',false)
     if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
-      $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+      if $("#operation_type_id").val() == "2"
+          $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+      else
+          $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
       $("#div_other_nutrients").show()
       $('div[id="div_other_nutrients"] *').prop('required',true)
     else
