@@ -183,6 +183,7 @@ module ProjectsHelper
 	#2. copy project to new project
   	new_project = @project.dup  
 	new_project.name = @project.name + " copy" 
+	new_project.user_id = session[:user_id]
 	if new_project.save
 		msg = duplicate_apex_control(new_project.id)
 		if msg == "OK" then duplicate_apex_parameter(new_project.id) else return msg end
