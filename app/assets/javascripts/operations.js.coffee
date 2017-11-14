@@ -31,29 +31,45 @@ updatePlantPopulation = ->
         $("#operation_amount").val(crop.plant_population_ft)
 
 updateNutrients = (animal) ->
-  if ($("#operation_activity_id").val() == "2")
-    if ($("#operation_type_id").val() == "2")
-      $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-      if ($("#operation_subtype_id").val() == "57")
-        $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
-        $("#operation_org_c").val(10)
-      else
-        $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-        $("#operation_org_c").val(25)
-    else
-      $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
-      $("#operation_org_c").val(0)
-  if (animal == 0)
-    url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
-  else
+  if (animal == 1)
     url = "/fertilizers/" + $("#operation_type_id").val() + ".json"
-  $.getJSON url, (fertilizer) ->
-    $("#operation_moisture").val(100.0-fertilizer.dry_matter)
-    $("#operation_no3_n").val(fertilizer.qn)
-    $("#operation_po4_p").val(fertilizer.qp)
-    $("#operation_org_n").val(fertilizer.yn)
-    $("#operation_org_p").val(fertilizer.yp)
-    $("#operation_nh3").val(fertilizer.nh3)
+    $.getJSON url, (fertilizer) ->
+      $("#operation_no3_n").val(fertilizer.qn)
+      $("#operation_po4_p").val(fertilizer.qp)
+      $("#operation_org_n").val(fertilizer.yn)
+      $("#operation_org_p").val(fertilizer.yp)
+      $("#operation_nh3").val(fertilizer.nh3)
+      $("#operation_nh3").val("")
+      $("#operation_org_c").val("")
+      #$("#operation_org_c").val("")
+  else
+    url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
+    if ($("#operation_activity_id").val() == "2")
+      if ($("#operation_type_id").val() != "1")
+        $.getJSON url, (fertilizer) ->
+          $("#operation_no3_n").val("")
+          $("#operation_po4_p").val("")
+          $("#operation_org_n").val("")
+          $("#operation_org_p").val("")
+          $("#operation_nh3").val("")
+          $("#operation_org_c").val(fertilizer.total_n)
+          $("#operation_nh4_n").val(fertilizer.total_p)
+          $("#operation_moisture").val(100-fertilizer.dry_matter)
+          $("#op_total_n_con").val(fertilizer.total_n)
+          $("#op_total_p_con").val(fertilizer.total_p)
+          $("#op_moisture").val(100-fertilizer.dry_matter)
+      else
+        $.getJSON url, (fertilizer) ->
+          $("#operation_no3_n").val(fertilizer.qn)
+          $("#operation_po4_p").val(fertilizer.qp)
+          $("#operation_org_n").val(fertilizer.yn)
+          $("#operation_org_p").val(fertilizer.yp)
+          $("#operation_nh3").val("")
+          $("#operation_org_c").val("")
+          $("#operation_nh4_n").val("")
+          $("#op_total_n_con").val("")
+          $("#op_total_p_con").val("")
+          $("#operation_moisture").val("")
 
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
@@ -178,12 +194,15 @@ updateTypes = ->
 	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units
 
 updateFerts = ->
-  $("#div_nutrients").hide()
-  $("#div_other_nutrients").hide()
-  $('div[id="div_other_nutrients"] *').prop('required',false)
   if ($("#operation_activity_id").val() == "2")
+    $("#div_nutrients").hide()
+    $("#div_other_nutrients").hide()
+    $('div[id="div_other_nutrients"] *').prop('required',false)
     if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
-      $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+      if $("#operation_type_id").val() == "2"
+          $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+      else
+          $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
       $("#div_other_nutrients").show()
       $('div[id="div_other_nutrients"] *').prop('required',true)
     else
@@ -233,9 +252,6 @@ $(document).ready ->
 
     $("#btn_views").click ->
         switch_view()
-
-	#updateTypes()
-    #updateFerts()
 
     if $("#operation_activity_id").val() == "13"
       $("#div_crops").hide()
