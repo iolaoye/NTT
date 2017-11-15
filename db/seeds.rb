@@ -20,6 +20,9 @@ load file
 file = "db/seeds/soil_tests.rb"
 load file
 
+file = "db/seeds/counties.rb"
+load file
+
 cont = false
 
 if cont then
@@ -99,6 +102,9 @@ load file
 file = "db/seeds/stations.rb"
 load file
 
+file = "db/seeds/soil_tests.rb"
+load file
+
 file = "db/seeds/supplement_parameters.rb"
 load file
 
@@ -106,9 +112,6 @@ file = "db/seeds/tillages.rb"
 load file
 
 file = "db/seeds/ways.rb"
-load file
-
-file = "db/seeds/soil_tests.rb"
 load file
 
 end
