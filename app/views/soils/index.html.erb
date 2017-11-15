@@ -26,8 +26,8 @@
 	    </div>
 		<% if ENV["APP_VERSION"] == "modified" %>
 		<div class="field">
-			<%#= label :soil_test_laboratory, t('soil.test') %>
-			<td><%#= collection_select :field, :soil_test, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @field.soil_test}, {:required => true} %></td>
+			<%= label :soil_test_laboratory, t('soil.test') %>
+			<td><%= collection_select :field, :soil_test, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @field.soil_test}, {:required => true} %></td>
 		</div>
 			<div class="field" title="">
 				<%= t('soil.soilp') %>
@@ -48,7 +48,9 @@
 						<th class="gvCellStyleTitle"><%= t('soil.drainage') %></th>
 					<%end%>
 					<th class="gvTitleStyleNumber"><%= t('soil.percentage') %></th>
-					<th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+					<!-- <% if ENV["APP_VERSION"] == "standard" %>
+					<th class="gvCellStyleTitle"><%= t('general.actions') %></th> 
+					<% end %> -->
 				</tr>
 				</thead>
 				<tbody>
@@ -68,13 +70,13 @@
 							<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
 						<% end %>
 						<td class="gvCellStyleNumber"><%= soil.percentage %></td>
-						<td class="gvCellStyleActions">
-							<% if ENV["APP_VERSION"] != "modified" %>
+						<% if ENV["APP_VERSION"] == "standard" %>
+						<td>
 								<%= link_to image_tag("layers.png"), project_field_soil_layers_path(@project, @field, soil), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
 								<%= link_to image_tag("edit.png"), edit_project_field_soil_path(@project, @field, soil), title: t('general.edit')%>
-							<% end %>
-							<%= link_to image_tag("delete.png"), project_field_soil_path(@project, @field, soil), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
+								<%#= link_to image_tag("delete.png"), project_field_soil_path(@project, @field, soil), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') }%>
 						</td>
+						<% end %>
 					</tr>
   					<% i = i + 1 %>
 					<% end %>
