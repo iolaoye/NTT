@@ -3,7 +3,7 @@ CropSchedule.create!({:id => 1,:name => "Corn",:state_id => "*",:class_id => 1,:
 CropSchedule.create!({:id => 2,:name => "Soybean",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 3,:name => "Barley Cover Crop",:state_id => "*",:class_id => 2,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 4,:name => "Winter Wheat Cover Crop",:state_id => "*",:class_id => 2,:status => true}, :without_protection => true)
-CropSchedule.create!({:id => 5,:name => "Canola-Argentine",:state_id => "35,21",:class_id => 1,:status => false}, :without_protection => true)
+CropSchedule.create!({:id => 5,:name => "Canola-Argentine",:state_id => "35,21",:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 6,:name => "Canadian Barley",:state_id => "*",:class_id => 1,:status => false}, :without_protection => true)
 CropSchedule.create!({:id => 7,:name => "Field Peas",:state_id => "*",:class_id => 1,:status => false}, :without_protection => true)
 CropSchedule.create!({:id => 8,:name => "Fallow",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
@@ -47,3 +47,4 @@ CropSchedule.create!({:id => 42,:name => "Tobacco",:state_id => "34",:class_id =
 #CropSchedule.create!({:id => 46,:name => "Pistachios",:state_id => "5",:class_id => 1,:status => true}, :without_protection => true)
 #CropSchedule.create!({:id => 47,:name => "Millet",:state_id => "6",:class_id => 1,:status => true}, :without_protection => true)
 #CropSchedule.create!({:id => 48,:name => "Almonds",:state_id => "5",:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 49,:name => "Barley",:state_id => "2,3,9,13,21,27,35,45,48,51",:class_id => 1,:status => true}, :without_protection => true)
