@@ -439,14 +439,14 @@
               </td>
             </tr>
             <% end %>
-          <% when 19 %>
+          <!-- <% when 19 %>
             <% @bmp = bmp %>
-            <tr><td><%= render 'cover_crop1' %></td></tr>
+            <tr><td><%#= render 'cover_crop1' %></td></tr>
           <% when 20 %>
             <% @bmp = bmp %>
-             <tr><td><%= render 'cover_crop2' %></td></tr>
+             <tr><td><%#= render 'cover_crop2' %></td></tr> -->
           <% when 21 %>
-            <tr>
+            <!-- <tr>
               <td class="indent" colspan="2">
                 <%= label :animal_id, t('bmp.animals') %>
                 <% if I18n.locale.equal?(:en) %>
@@ -493,7 +493,7 @@
                 <%= label :rest_time, t('bmp.rest_time')  %>
                 <%= number_field :bmp_rg, :rest_time, :value => bmp.area, :step => 'any', :class => "gvTitleStyleNumber" %>
               </td>
-            </tr>
+            </tr> -->
           <% when 22 %>
             <tr>
               <td class="indent" colspan="2">
