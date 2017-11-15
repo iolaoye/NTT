@@ -40,8 +40,7 @@ module ProjectsHelper
 		new_result.field_id = new_field_id
 		new_result.scenario_id = @new_scenario_id
 		if result.soil_id > 0 then
-			soil = Soil.find(result.soil_id)
-			new_result.soil_id = soil.soil_id_old
+			new_result.soil_id = Soil.find_by_soil_id_old(result.soil_id).id
 		end 
 		if new_result.save
 			"OK"
@@ -96,46 +95,47 @@ module ProjectsHelper
   ######################### Duplicate Fields #################################################
   def duplicate_field(field_id, new_location_id)
 	#1. copy field to new field
-		field = Field.find(field_id)   #1. find field to copy
-		new_field = field.dup
-		new_field.location_id = new_location_id
-		if new_field.save
-			#duplicate site
-			new_site = field.site.dup
-			new_site.field_id = new_field.id
-			if !new_site.save then
-				return "Error saving Site"
-			end
-			field.soils.each do |s|
-				duplicate_soil(s.id, new_field.id)
-			end
-			duplicate_weather(field.id, new_field.id)
-			# duplicate results when soli_id => 0. totals
-			results = field.results.where(:field_id => field.id, :soil_id => 0)
+	field = Field.find(field_id)   #1. find field to copy
+	new_field = field.dup
+	new_field.location_id = new_location_id
+	if new_field.save
+		#duplicate site
+		new_site = field.site.dup
+		new_site.field_id = new_field.id
+		if !new_site.save then
+			return "Error saving Site"
+		end
+		field.soils.each do |s|
+			duplicate_soil(s.id, new_field.id)
+		end
+		duplicate_weather(field.id, new_field.id)
+		# duplicate results when soli_id => 0. totals
+		#results = field.results.where(:field_id => field.id, :soil_id => 0)
+		#results.each do |r|
+			#duplicate_result(r.id, new_field.id)
+		#end
+		# duplicate charts when soli_id => 0. totals
+		#charts = field.charts.where(:field_id => field.id, :soil_id => 0)
+		#charts.each do |c|
+			#duplicate_chart(c.id, new_field.id)
+		#end
+		field.scenarios.each do |s|
+			duplicate_scenario(s.id, "", new_field.id)
+			# DUPLIATE results when soil_id > 0.
+			results = field.results.where(:field_id => field.id, :scenario_id => s.id)
 			results.each do |r|
 				duplicate_result(r.id, new_field.id)
 			end
-			# duplicate charts when soli_id => 0. totals
-			charts = field.charts.where(:field_id => field.id, :soil_id => 0)
+			charts = field.charts.where(:field_id => field.id, :scenario_id => s.id)
 			charts.each do |c|
 				duplicate_chart(c.id, new_field.id)
 			end
-			field.scenarios.each do |s|
-				duplicate_scenario(s.id, "", new_field.id)
-				# DUPLIATE results when soil_id > 0.
-				results = field.results.where(:field_id => field.id, :scenario_id => s.id)
-				results.each do |r|
-					duplicate_result(r.id, new_field.id)
-				end
-				charts = field.charts.where(:field_id => field.id, :scenario_id => s.id)
-				charts.each do |c|
-					duplicate_chart(c.id, new_field.id)
-				end
-			end   # end scnearios.each
-			"OK"
-		else
-			"Error Saving fields"
-		end # end if field saved
+		end   # end scnearios.each
+		"OK"
+	else
+		"Error Saving fields"
+	end # end if field saved
+	field.soils.update_all soil_id_old: nil
   end   # end duplicate location
 
   ######################### Duplicate a location #################################################
@@ -271,7 +271,7 @@ module ProjectsHelper
 			return "Error Saving subarea"
 		end
 	end   # end subareas.each
-end 
+  end 
 
   ######################### Duplicate a Subareas by scenario/bmp #################################################
   def duplicate_subareas_by_bmp(bmp_id, new_bmp_id)
@@ -337,7 +337,7 @@ end
 		duplicate_soil_operation_by_bmp(bmp.id, new.id)
 		duplicate_subareas_by_bmp(bmp.id, new.id)
 	end
-end 
+  end 
 
   ######################### Duplicate a Scenario  #################################################
   def duplicate_scenario(scenario_id, name, new_field_id)
@@ -346,7 +346,7 @@ end
   	new_scenario = scenario.dup
 	new_scenario.name = scenario.name + name
 	new_scenario.field_id = new_field_id
-	new_scenario.last_simulation = ""
+	#new_scenario.last_simulation = ""
 	if new_scenario.save
 		@new_scenario_id = new_scenario.id
 		#3. Copy subareas info by scenario
