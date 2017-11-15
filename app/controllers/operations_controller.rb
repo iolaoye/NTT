@@ -196,10 +196,12 @@ class OperationsController < ApplicationController
             format.json { render json: @operation, status: :created, location: @operation }
           end
         else
+          @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
           format.html { render action: "new" }
           format.json { render json: msg, status: :unprocessable_entity }
         end
       else
+        @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
         format.html { render action: "new" }
         format.json { render json: @operation.errors, status: :unprocessable_entity }
       end
