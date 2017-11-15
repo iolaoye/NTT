@@ -20,10 +20,11 @@ class Crop < ActiveRecord::Base
   end #end load_crops method
 
   def self.load_crops(state_id)
-    cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 3")
-    if cropping_systems == nil or cropping_systems.blank? then
-      cropping_systems = CropSchedule.where(:state_id => 0, :status => true)
-    end
+	cropping_systems = CropSchedule.where(:status => true, :class_id => 1).where("state_id LIKE ? OR state_id LIKE ?", "%#{state_id}%","*")
+    #cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 3")
+    #if cropping_systems == nil or cropping_systems.blank? then
+      #cropping_systems = CropSchedule.where(:state_id => *, :status => true)
+    #end
 	crops = Array.new
 	cropping_systems.each do |cs|
 		events = Schedule.where(:crop_schedule_id => cs.id)

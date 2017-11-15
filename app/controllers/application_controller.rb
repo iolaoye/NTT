@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 	before_filter :set_breadcrumbs
     before_filter :set_env
 
+    def serve
+    	path = "app/assets/images/#{params[:filename]}" + "." + "#{params[:format]}"
+	    send_file(path, :disposition => 'inline', :type => 'image/png', :x_sendfile => true)
+  	end
+
     def set_env
 		current_url = request.url 
 		case true

@@ -2,7 +2,7 @@ class TillagesController < ApplicationController
   # GET /tillages/1
   # GET /1/tillages.json
   def list
-    @tillages = Tillage.where(:activity_id => params[:activity_id]).where(:status => true)
+    @tillages = Tillage.where(:activity_id => params[:activity_id], :status => true)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class TillagesController < ApplicationController
   # GET /tillages
   # GET /tillages.json
   def index
-    @tillages = Tillage.where(:activity_id => params[:activity_id])
+    @tillages = Tillage.where(:activity_id => params[:activity_id], :status => true)
     #@tillages = Tillage.all
 
     respond_to do |format|

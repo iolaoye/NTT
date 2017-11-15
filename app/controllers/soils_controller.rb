@@ -1,7 +1,8 @@
 class SoilsController < ApplicationController
+  include ScenariosHelper
+
   # GET /locations
   # GET /locations.json
-
   def soil_layers
     session[:soil_id] = params[:id]
     redirect_to list_layer_path(params[:id])
@@ -25,10 +26,14 @@ class SoilsController < ApplicationController
 # GET /soils
 # GET /soils.json
   def index
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
+    if @field.updated == true then
+      #send request for soil
+      request_soils()
+    end
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
     @soils = Soil.where(:field_id => params[:field_id])
-    @weather = @field.weather
+    #@weather = @field.weather
 	
     add_breadcrumb t('menu.soils')
 
@@ -144,7 +149,7 @@ class SoilsController < ApplicationController
   def save_soils
 	@project = Project.find(params[:project_id])
 	@field = Field.find(params[:field_id])
-	@weather = @field.weather
+	#@weather = @field.weather
 
 	add_breadcrumb 'Soils'
 
@@ -166,4 +171,121 @@ class SoilsController < ApplicationController
     params.require(:soil).permit(:albedo, :drainage_id, :field_id, :group, :key, :name, :percentage, :selected, :slope, :symbol, :ffc, :wtmn, :wtmx, :wtbl, :gwst, :gwmx,
                                  :rft, :rfpk, :tsla, :xids, :rtn1, :xidk, :zqt, :zf, :ztk, :fbm, :fhp)
   end
+
+  def request_soils()
+    uri = URI(URL_NTT)
+    res = Net::HTTP.post_form(uri, "data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates, "rg" => "yes")
+    if !res.body.include?("error") then
+      create_soils(YAML.load(res.body))
+      return "OK"
+    else
+      return res.body
+    end
+  end
+
+  ###################################### create_soil ######################################
+  ## Create soils receiving from map for each field.
+  def create_soils(data)
+    #delete all of the soils for this field
+    soils1 = Soil.where(:field_id => @field.id)
+    soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
+    total_percentage = 0
+
+    data.each do |soil|
+      #todo check for erros to soils level as well as layers level.
+    #for j in 1..params["field#{i}soils"].to_i
+      if soil[0] == "soils" then
+        next
+      end #
+      @soil = @field.soils.new
+      @soil.key =  soil[1]["mukey"]
+      @soil.symbol = soil[1]["musym"]
+      @soil.group = soil[1]["hydgrpdcd"]
+      @soil.name = soil[1]["muname"]
+      @soil.albedo = soil[1]["albedo"]
+      @soil.slope = soil[1]["slope"]
+      @soil.percentage = soil[1]["pct"]
+      @soil.percentage = @soil.percentage.round(2)
+      @soil.drainage_id = soil[1]["drain"]
+      @soil.tsla = 10
+      @soil.xids = 1
+      @soil.wtmn = 0
+      @soil.wtbl = 0
+      @soil.ztk = 1
+      @soil.zqt = 2
+      if @soil.drainage_id != nil then
+        case true
+          when 1 
+            @soil.wtmx = 0
+          when 2
+            @soil.wtmx = 4
+            @soil.wtmn = 1
+            @soil.wtbl = 2
+          when 3
+            @soil.wtmx = 4
+            @soil.wtmn = 1
+            @soil.wtbl = 2
+          else
+            @soil.wtmx = 0
+        end
+      end
+
+      if @soil.save then
+        if !soil[0] != "error" then
+          create_layers(soil[1])
+        end
+      end
+    end #end for create_soils
+    soils = Soil.where(:field_id => @field.id).order(percentage: :desc)
+
+    i=1
+    soils.each do |soil|
+      if (i <= 3) then
+        soil.selected = true
+        soil.save
+      end
+      i+=1
+    end
+    scenarios = Scenario.where(:field_id => @field.id)
+    scenarios.each do |scenario|
+      add_scenario_to_soils(scenario)
+      operations = Operation.where(:scenario_id => scenario.id)
+      operations.each do |operation|
+        soils.each do |soil|
+          update_soil_operation(SoilOperation.new, soil.id, operation)
+        end # end soils each
+      end # end operations.each
+    end #end Scenario each do
+    @field.updated = false
+    @field.save
+  end
+
+  ###################################### create_soil layers ######################################
+  ## Create layers receiving from map for each soil.
+  def create_layers(layers)
+    #for l in 1..params["field#{i}soil#{j}layers"].to_i
+    layers.each do |l|
+      if !l[0].include?("layer") then
+        next
+      end
+      layer = @soil.layers.new
+      layer.sand = l[1]["sand"]
+      layer.silt = l[1]["silt"]
+      layer.clay = l[1]["clay"]
+      layer.bulk_density = l[1]["bd"]
+      layer.organic_matter = l[1]["om"]
+      layer.ph = l[1]["ph"]
+      layer.depth = l[1]["depth"]
+      layer.depth /= IN_TO_CM
+      layer.depth = layer.depth.round(2)
+      layer.cec = l[1]["cec"]
+      layer.soil_p = 0
+      if layer.save then
+        saved = 1
+      else
+        saved = 0
+      end
+    end #end for create_layers
+  end
+
 end

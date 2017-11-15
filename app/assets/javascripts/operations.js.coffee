@@ -16,6 +16,12 @@ switch_view = ->
 
 upload_crop = (show) ->
   $("#div_new").toggle(show)
+  $("#div_ccr").toggle(false)
+  $("#year").val($("#year").val() +"1")
+
+upload_crop1 = (show) ->
+  $("#div_ccr").toggle(show)
+  $("#div_new").toggle(false)
   $("#year").val($("#year").val() +"1")
 
 updatePlantPopulation = ->
@@ -25,14 +31,18 @@ updatePlantPopulation = ->
         $("#operation_amount").val(crop.plant_population_ft)
 
 updateNutrients = (animal) ->
-  if ($("#operation_type_id").val() == "2")
-    $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-    if ($("#operation_subtype_id").val() == "57")
-      $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
-    else
+  if ($("#operation_activity_id").val() == "2")
+    if ($("#operation_type_id").val() == "2")
       $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-  else
-    $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+      if ($("#operation_subtype_id").val() == "57")
+        $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
+        $("#operation_org_c").val(10)
+      else
+        $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+        $("#operation_org_c").val(25)
+    else
+      $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+      $("#operation_org_c").val(0)
   if (animal == 0)
     url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
   else
@@ -43,6 +53,26 @@ updateNutrients = (animal) ->
     $("#operation_po4_p").val(fertilizer.qp)
     $("#operation_org_n").val(fertilizer.yn)
     $("#operation_org_p").val(fertilizer.yp)
+    $("#operation_nh3").val(fertilizer.nh3)
+
+getGrazingFields = ->
+    url = "/fertilizers.json?id=animal"
+    $("#div_fertilizer").hide()
+    $("#div_amount").show()
+    $("#div_depth").show()
+    $("#div_tillage").show()
+    $("#div_nutrients").show()
+    $("#div_type").show()
+    $("#div_date").show()
+    $("#year1").prop('required',true)
+    $("#month_id1").prop('required',true)
+    $("#day1").prop('required',true)
+    $("#operation_type_id").prop('required',true)
+    $("#operation_moisture").removeAttr('required')
+    $('div[style*="display: none"] *').removeAttr('required')
+    #change year for start year
+    $("#div_start_date")[0].children[0].innerText = "Start Year"
+    $("#div_type")[0].children[0].innerText = "Animal Type"
 
 updateTypes = ->
   $("#div_amount").hide()
@@ -52,12 +82,35 @@ updateTypes = ->
   $("#div_type").hide()
   $("#div_tillage").hide()
   $("#div_date").hide()
+  $("#div_grazed").hide()
+  $("#div_resttime").hide()
+  $("#div_cover_crops").hide()
+  $("#div_crops").show()
+  $("#operation_year").val('')
+  $("#operation_month_id").val('')
+  $("#operation_day").val('')
+  $("#operation_crop_id").prop('required',true)
+  $('div[id="div_other_nutrients"] *').prop('required',false)
+  $("#div_other_nutrients").hide()
   switch $("#operation_activity_id").val()
-    when "1" # planting
+    when "1","13" # planting and cover crop
       updatePlantPopulation()
-      url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
+      #url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
+      url = "/activities/1/tillages.json" #hardcoded path for cover crop compatibility
       $("#div_fertilizer").hide()
-      $("#div_amount").show()
+      if $("#operation_activity_id").val() == "13" #if cover crop
+        $("#div_amount").hide()
+        $("#div_crops").hide()
+        $("#div_cover_crops").show()
+        if ($("#cc_year").val() != undefined)
+          $("#operation_year").val($("#cc_year").val()-2000)
+          $("#operation_month_id").val($("#cc_month").val())
+          $("#operation_day").val($("#cc_day").val())
+        $("#div_crops").children[0]
+        $("#operation_cover_crop_id").prop('required',true)
+        $("#operation_crop_id").prop('required',false)
+      else
+        $("#div_amount").show()
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
@@ -67,8 +120,6 @@ updateTypes = ->
       $("#div_fertilizer").show()
       $("#div_amount").show()
       $("#div_depth").show()
-      $("#div_moisture").hide()
-      $("#div_nutrients").show()
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
@@ -90,25 +141,15 @@ updateTypes = ->
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
       $("#div_type")[0].children[0].innerText = "Irrigation Method"
-    when "7"   # grazing
+    when "7"   # continuous grazing
       url = "/fertilizers.json?id=animal"
-      $("#div_fertilizer").hide()
-      $("#div_amount").show()
-      $("#div_depth").show()
-      $("#div_tillage").show()
-      $("#div_nutrients").show()
-      $("#div_type").show()
-      $("#div_date").show()
-      $("#year1").prop('required',true)
-      $("#month_id1").prop('required',true)
-      $("#day1").prop('required',true)
-      $("#operation_type_id").prop('required',true)
-      $("#operation_moisture").removeAttr('required')
-      $('div[style*="display: none"] *').removeAttr('required')
-      #change year for start year
-      $("#div_start_date")[0].children[0].innerText = "Start Year"
-      $("#div_type")[0].children[0].innerText = "Animal Type"
-    when "10"   # liming
+      getGrazingFields()
+    when "9"   # rotational grazing
+      url = "/fertilizers.json?id=animal"
+      getGrazingFields()
+      $("#div_grazed").show()
+      $("#div_resttime").show()
+    when "12"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
       $("#div_type").hide()
@@ -124,7 +165,7 @@ updateTypes = ->
     items.push "<option value>Select One</option>"
     $.each tillages, (key, tillage) ->
       switch $("#operation_activity_id").val()
-        when "2", "6", "7"
+        when "2", "6", "7", "9"
           items.push "<option value=\"" + tillage.id + "\">" + tillage.name + "</option>"
         else
           items.push "<option value=\"" + tillage.code + "\">" + tillage.eqp + "</option>"
@@ -137,12 +178,17 @@ updateTypes = ->
 	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units
 
 updateFerts = ->
-  if ($("#operation_type_id").val() == "2")
-    $("#div_moisture").show();
-    $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
-  else
-    $("#div_moisture").hide();
-    $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
+  $("#div_nutrients").hide()
+  $("#div_other_nutrients").hide()
+  $('div[id="div_other_nutrients"] *').prop('required',false)
+  if ($("#operation_activity_id").val() == "2")
+    if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
+      $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+      $("#div_other_nutrients").show()
+      $('div[id="div_other_nutrients"] *').prop('required',true)
+    else
+      $("#div_nutrients").show()
+      $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ac)"
   url = "/fertilizer_types/" + $("#operation_type_id").val() + "/fertilizers.json"
   $.getJSON url, (fertilizers) ->
     items = []
@@ -157,7 +203,7 @@ updateFerts = ->
     $("#operation_po4_p").val("")
     $("#operation_org_n").val("")
     $("#operation_org_p").val("")
-    if ($("#operation_activity_id").val() == "7")
+    if ($("#operation_activity_id").val() == "7" || $("#operation_activity_id").val() == "9")
         updateNutrients(1)
 
 updateAnimals = ->
@@ -182,11 +228,18 @@ $(document).ready ->
     $("#new_crop").click ->
         upload_crop(true)
 
+    $("#new_ccr").click ->
+        upload_crop1(true)
+
     $("#btn_views").click ->
         switch_view()
 
 	#updateTypes()
     #updateFerts()
+
+    if $("#operation_activity_id").val() == "13"
+      $("#div_crops").hide()
+      $("#div_cover_crops").show()
 
     $("#operation_activity_id").change ->
       updateTypes()

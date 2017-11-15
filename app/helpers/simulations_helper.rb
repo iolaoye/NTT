@@ -66,9 +66,9 @@ module SimulationsHelper
   end
 
   def send_files_to_APEX(file)
-    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    uri = URI(URL_NTT)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth)
+    res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth, "rg" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -77,13 +77,22 @@ module SimulationsHelper
   end
 
   def send_files1_to_APEX(file)
+    start = @scenario.operations.find_by_activity_id(9)
+    bmp_string = ""
+    if start != nil then
+      bmp_string = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + start.amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
+    end
+    stop = @scenario.operations.find_by_activity_id(10)
+    if stop != nil
+      bmp_string += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
+    end
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    url = URI.parse("http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx")
+    url = URI.parse(URL_NTT)
     http = Net::HTTP.new(url.host,url.port)
     http.read_timeout = 120
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     req = Net::HTTP::Post.new(url.path)
-    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file})
+    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => bmp_string})
     res = http.request(req)
     if res.body.include?("Created") then
       return "OK"
@@ -93,9 +102,9 @@ module SimulationsHelper
   end
 
   def send_file_to_APEX(apex_string, file)
-    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
+    uri = URI(URL_NTT)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
+    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -104,8 +113,8 @@ module SimulationsHelper
   end
 
   def send_file1_to_APEX(apex_string, file)
-    uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "")
+    uri = URI(URL_NTT)
+    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
       return "OK"
     else
@@ -364,7 +373,7 @@ module SimulationsHelper
       if soil.selected == false
         next
       end
-      layers = Layer.where(:soil_id => soil.id)
+      layers = soil.layers
       last_soil1 = @last_soil + i + 1
       soil_file_name = "APEX" + "00" + last_soil1.to_s + ".sol"
       #total_area = total_area + soil.percentage
@@ -412,7 +421,7 @@ module SimulationsHelper
           else
             uw[layer_number] = layer.uw
           end
-        else
+         else
           uw[layer_number] = 0
         end
         if !(layer.fc == nil)
@@ -421,36 +430,36 @@ module SimulationsHelper
           else
             fc[layer_number] = layer.fc
           end
-        else
+         else
           fc[layer_number] = 0
         end
         #These lines were changed to take sand from xml file in case user had changed it
         if layer.sand <= 0 && layer_number > 1
           sand[layer_number] = sand[layer_number - 1]
-        else
+         else
           sand[layer_number] = layer.sand
         end
         if layer.silt <= 0 && layer_number > 1
           silt[layer_number] = silt[layer_number - 1]
-        else
+         else
           silt[layer_number] = layer.silt
         end
         if !(layer.wn == nil)
           if layer.wn <= 0 && layer_number > 1
             wn[layer_number] = wn[layer_number - 1]
-          else
+           else
             wn[layer_number] = layer.wn
           end
-        else
+         else
           wn[layer_number] = 0
         end
         if (layer.ph != nil)
           if layer.ph <= 0 && layer_number > 1
             ph[layer_number] = ph[layer_number - 1]
-          else
+           else
             ph[layer_number] = layer.ph
           end
-        else
+         else
           ph[layer_number] = PHMIN
         end
         ph[layer_number] = PHMIN if ph[layer_number] < PHMIN
@@ -459,21 +468,21 @@ module SimulationsHelper
         cec[layer_number] = 0
         if layer.cec == 0 && layer_number > 1
           cec[layer_number] = cec[layer_number - 1]
-        else
+         else
           cec[layer_number] = layer.cec unless layer.cec == nil
         end
 
         smb[layer_number] = 0
         if layer.smb == 0 && layer_number > 1
           smb[layer_number] = smb[layer_number - 1]
-        else
+         else
           smb[layer_number] = layer.smb unless layer.smb == nil
         end
 
         woc[layer_number] = 0
         if layer.organic_matter == 0 && layer_number > 1
           woc[layer_number] = woc[layer_number - 1]
-        else
+         else
           woc[layer_number] = layer.organic_matter unless layer.organic_matter == nil
         end
         woc[layer_number] = (woc[layer_number] / OM_TO_OC)
@@ -487,38 +496,38 @@ module SimulationsHelper
         cac[layer_number] = 0
         if layer.cac == 0 && layer_number > 1
           cac[layer_number] = cac[layer_number - 1]
-        else
+         else
           cac[layer_number] = layer.cac unless layer.cac == nil
         end
         rok[layer_number] = 0
         if layer.rok == 0 && layer_number > 1
           rok[layer_number] = rok[layer_number - 1]
-        else
+         else
           rok[layer_number] = layer.rok unless layer.rok == nil
         end
         cnds[layer_number] = 0
         if layer.cnds == 0 && layer_number > 1
           cnds[layer_number] = cnds[layer_number - 1]
-        else
+         else
           cnds[layer_number] = layer.cnds unless layer.cnds == nil
         end
         ssf[layer_number] = 0
         if layer.soil_p == 0 && layer_number == 1
           ssf[layer_number] = ssf[layer_number-1]
-        else
+         else
           ssf[layer_number] = layer.soil_p unless layer.soil_p == nil
         end
         rsd[layer_number] = 0
         if layer.rsd == 0 && layer_number > 1
           rsd[layer_number] = rsd[layer_number - 1]
-        else
+         else
           rsd[layer_number] = layer.rsd unless layer.rsd == nil
         end
         #These lines were changed to take silt from xml file in case user had changed it
         bulk_density[layer_number] = 0
         if layer.bulk_density == 0
           bulk_density[layer_number] = bulk_density[layer_number - 1]
-        else
+         else
           bulk_density[layer_number] = layer.bulk_density unless layer.bulk_density == nil
         end
         if bulk_density[layer_number] < BDMIN
@@ -532,7 +541,7 @@ module SimulationsHelper
         psp[layer_number] = 0
         if layer.psp == 0 && layer_number > 1
           psp[layer_number] = psp[layer_number - 1]
-        else
+         else
           psp[layer_number] = layer.psp unless layer.psp == nil
         end
         sand_silt = sand[layer_number] + silt[layer_number]
@@ -553,7 +562,7 @@ module SimulationsHelper
 
         if soil.slope <= 0
           soilSlope = 0.01
-        else
+         else
           soilSlope = (soil.slope / 100)
         end
         if hsg == "" || hsg == nil
@@ -616,19 +625,19 @@ module SimulationsHelper
       soil.ztk = 0 unless !(soil.ztk==nil)
   	  ##if tile drain was set up wtmx, wtmn, and wtbl should be zero. Otherwise keep the numbers. 11 06 2016.
       ##Goin back to the values for drainage type as before. Keep this here just in case Ali wants to have it latter 11 08 2016. Oscar Gallego
-	  bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 3)
-	  if !(bmp == nil) and bmp.depth > 0 then
-		  records = records + sprintf("%8.2f", 0)
-		  records = records + sprintf("%8.2f", 0)
-		  records = records + sprintf("%8.2f", 0)
-		  records = records + sprintf("%8.2f", 0)
-		  #soil.zqt = 0
-		  #soil.ztk = 0
-	  else
-		  records = records + sprintf("%8.2f", soil.wtmn)
-		  records = records + sprintf("%8.2f", soil.wtmx)
-		  records = records + sprintf("%8.2f", soil.wtbl)
-	  end
+      bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 3)
+  	  if !(bmp == nil) and bmp.depth > 0 then
+  		  records = records + sprintf("%8.2f", 0)
+  		  records = records + sprintf("%8.2f", 0)
+  		  records = records + sprintf("%8.2f", 0)
+  		  records = records + sprintf("%8.2f", 0)
+  		  #soil.zqt = 0
+  		  #soil.ztk = 0
+  	  else
+  		  records = records + sprintf("%8.2f", soil.wtmn)
+  		  records = records + sprintf("%8.2f", soil.wtmx)
+  		  records = records + sprintf("%8.2f", soil.wtbl)
+  	  end
       soil.gwst = 0 unless !(soil.gwst==nil)
       records = records + sprintf("%8.2f", soil.gwst)
       soil.gwmx = 0 unless !(soil.gwmx==nil)
@@ -648,10 +657,10 @@ module SimulationsHelper
       records = records + sprintf("%8.2f", soil.rtn1)
       soil.xidk = 0 unless !(soil.xidk==nil)
       records = records + sprintf("%8.2f", soil.xidk)
-	  records = records + sprintf("%8.2f", soil.zqt)
+      records = records + sprintf("%8.2f", soil.zqt)
       soil.zf = 0 unless !(soil.zf==nil)
       records = records + sprintf("%8.2f", soil.zf)
-	  records = records + sprintf("%8.2f", soil.ztk)
+      records = records + sprintf("%8.2f", soil.ztk)
       soil_info.push(records + "\n")
       #line 4 to 24 Layers information
       records = ""
@@ -731,15 +740,15 @@ module SimulationsHelper
       records = ""
       for layers in initial_layer..layer_number - 1
 	    if ssf[layers] == nil then
-			ssf[layers] = 0
-		end
-        if ssf[layers] > SoilPMaxForSoilDepth
-          ssf[layers] = SoilPDefault
-        end
-        if ssf[layers] == 0 || ssf[layers] == nil
-          ssf[layers] = SoilPDefault
-        end
-        records = records + sprintf("%8.2f", ssf[layers])
+			 ssf[layers] = 0
+		  end
+      if ssf[layers] > SoilPMaxForSoilDepth
+        ssf[layers] = SoilPDefault
+      end
+      if ssf[layers] == 0 || ssf[layers] == nil
+        ssf[layers] = SoilPDefault
+      end
+      records = records + sprintf("%8.2f", ssf[layers])
       end
       soil_info.push(records + "\n")
       records = ""
@@ -792,9 +801,14 @@ module SimulationsHelper
     last_owner1 = 0
     i=0
 	nirr = 0
-	subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id > 0")
+  if @grazing == nil then
+    subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id > 0")
+  else
+    subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id = " + @soils[0].id.to_s)
+  end
 	subareas.each do |subarea|
-		soil = Soil.find(subarea.soil_id)
+		#soil = Soil.find(subarea.soil_id)
+    soil = subarea.soil
 		if soil.selected then
 			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
 			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
@@ -1101,53 +1115,68 @@ module SimulationsHelper
       #line 1
       @opcs_file.push(" .Opc file created directly by the user. Date: " + @dtNow1 + "\n")
       j = 0
-      bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 19)
+      #bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 19)
       last_year = @soil_operations.last.year
       c_c_p = false
       c_c_k = false
-      if bmp != nil then
-        s_o_new = SoilOperation.new
-        s_o_new.year = bmp.number_of_animals
-        s_o_new.month = bmp.hours
-        s_o_new.day = bmp.days
-        s_o_new.apex_operation = bmp.irrigation_id
-        s_o_new.apex_crop = bmp.crop_id
-        s_o_new.activity_id = 1
-        s_o_new.opv1 = 0
-        s_o_new.opv2 = 0
-        s_o_new.opv3 = 0
-        s_o_new.opv4 = 0
-        s_o_new.opv5 = 0
-        s_o_new.opv6 = 0
-        s_o_new.opv7 = 0
-        cc_plt_date = Date.parse(sprintf("%2d", s_o_new.year) + "/" + sprintf("%2d", s_o_new.month) + "/" + sprintf("%2d", s_o_new.day))
-        s_o_new_kill = SoilOperation.new
-        if last_year > bmp.number_of_animals then  # validate if last_year is greater than cover crop planting year
-          soil_oper = @soil_operations.where(:year => bmp.number_of_animals + 1).first
-          cc_kill_date = Date.parse(sprintf("%2d", soil_oper.year) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))
-          #cc_kill_date += 1.year
-        else
-          soil_oper = @soil_operations.first
-          cc_kill_date = Date.parse(sprintf("%2d", 1) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))          
-        end
-        cc_kill_date -= 2.days
-        s_o_new_kill.year = cc_kill_date.year - 2000
-        s_o_new_kill.month = cc_kill_date.month
-        s_o_new_kill.day = cc_kill_date.day
-        s_o_new_kill.apex_operation = 451
-        s_o_new_kill.apex_crop = bmp.crop_id
-        s_o_new_kill.activity_id = 5 
-        s_o_new_kill.opv1 = 0
-        s_o_new_kill.opv2 = 0
-        s_o_new_kill.opv3 = 0
-        s_o_new_kill.opv4 = 0
-        s_o_new_kill.opv5 = 0
-        s_o_new_kill.opv6 = 0
-        s_o_new_kill.opv7 = 0
+      cc_hash = {}
+      #convert soil_operations active record to hash
+      @soil_operations.each do |so|
+        cc_hash[so.id] = so
       end
-      @soil_operations.each do |soil_operation|
+      #ccc_hash.sort_by { |k,v| [v[:year], v[:month_id], v[:day], v[:id]]}
+      c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)
+      cc_number = @scenario.operations.last.id
+      c_cs.each do |bmp|
+        if bmp != nil then
+          s_o_new = SoilOperation.new
+          s_o_new.year = bmp.year
+          s_o_new.month = bmp.month_id
+          s_o_new.day = bmp.day
+          s_o_new.apex_operation = bmp.type_id
+          s_o_new.apex_crop = bmp.crop_id
+          s_o_new.activity_id = bmp.activity_id
+          s_o_new.opv1 = 0
+          s_o_new.opv2 = 0
+          s_o_new.opv3 = 0
+          s_o_new.opv4 = 0
+          s_o_new.opv5 = 0
+          s_o_new.opv6 = 0
+          s_o_new.opv7 = 0
+          cc_plt_date = Date.parse(sprintf("%2d", s_o_new.year) + "/" + sprintf("%2d", s_o_new.month) + "/" + sprintf("%2d", s_o_new.day))
+          s_o_new_kill = SoilOperation.new
+          if last_year > bmp.year then  # validate if last_year is greater than cover crop planting year
+            soil_oper = @soil_operations.where(:year => bmp.year + 1).first
+            cc_kill_date = Date.parse(sprintf("%2d", soil_oper.year) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))
+            #cc_kill_date += 1.year
+          else
+            soil_oper = @soil_operations.first
+            cc_kill_date = Date.parse(sprintf("%2d", 1) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))          
+          end
+          cc_kill_date -= 2.days
+          s_o_new_kill.year = cc_kill_date.year - 2000
+          s_o_new_kill.month = cc_kill_date.month
+          s_o_new_kill.day = cc_kill_date.day
+          s_o_new_kill.apex_operation = 451
+          s_o_new_kill.apex_crop = bmp.crop_id
+          s_o_new_kill.activity_id = 5 
+          s_o_new_kill.opv1 = 0
+          s_o_new_kill.opv2 = 0
+          s_o_new_kill.opv3 = 0
+          s_o_new_kill.opv4 = 0
+          s_o_new_kill.opv5 = 0
+          s_o_new_kill.opv6 = 0
+          s_o_new_kill.opv7 = 0
+          cc_number += 1
+          cc_hash[cc_number] = s_o_new
+          cc_number += 1
+          cc_hash[cc_number] = s_o_new_kill
+        end
+      end
+      cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day], v[:id]]}
+      cc_hash_sorted.each do |soil_operation|
         # ask for 1=planting, 5=kill, 3=tillage
-        if soil_operation.apex_crop == CropMixedGrass && (soil_operation.activity_id == 1 || soil_operation.activity_id == 5 || soil_operation.activity_id == 3) then
+        if soil_operation[1].apex_crop == CropMixedGrass && (soil_operation[1].activity_id == 1 || soil_operation[1].activity_id == 5 || soil_operation[1].activity_id == 3) then
           #todo check this one
           #mixed_crops = operation.MixedCropData.Split(",")
           #mixedCropsInfo(2) As String
@@ -1164,25 +1193,25 @@ module SimulationsHelper
           #end
         else
           if bmp != nil then
-            date_oper = Date.parse(sprintf("%2d", soil_operation.year) + "/" + sprintf("%2d", soil_operation.month) + "/" + sprintf("%2d", soil_operation.day))
+            date_oper = Date.parse(sprintf("%2d", soil_operation[1].year) + "/" + sprintf("%2d", soil_operation[1].month) + "/" + sprintf("%2d", soil_operation[1].day))
             if c_c_p == false and date_oper > cc_plt_date then 
-              add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
+              #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
               j+=1
               c_c_p = true
             end
             if c_c_k == false and date_oper > cc_kill_date then 
-              add_operation(s_o_new_kill, irrigation_type, nirr, soil_percentage, j)
+              #add_operation(s_o_new_kill, irrigation_type, nirr, soil_percentage, j)
               j+=1
               c_c_k = true
             end
           end
-          add_operation(soil_operation, irrigation_type, nirr, soil_percentage, j)
+          add_operation(soil_operation[1], irrigation_type, nirr, soil_percentage, j)
         end # end if
         j+=1
       end #end soil_operations.each do
       #just in case the planting operation was after the last operation in the soil_operations file.
       if c_c_p == false and bmp != nil then
-        add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
+        #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
       end
       # add to the tillage file the new fertilizer operations - one for each depth
       append_file("tillOrg.dat", "till.dat", "till")
@@ -1334,7 +1363,7 @@ module SimulationsHelper
         values[0] = operation.opv1
         items[1] = "Curve Number"
         values[1] = operation.opv2
-		#find if there are Pads & Pipes Bmps set up.
+		    #find if there are Pads & Pipes Bmps set up.
         bmps_count = Bmp.where("(bmpsublist_id = 4 OR bmpsublist_id = 5 OR bmpsublist_id = 6 OR bmpsublist_id = 7) AND scenario_id = " + @scenario.id.to_s).count
         if bmps_count > 0 then
           apex_string += sprintf("%8.1f", (operation.opv2 * 0.9)) #curve number
@@ -1360,18 +1389,31 @@ module SimulationsHelper
         oper = Operation.where(:id => operation.operation_id).first
 		    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
         #divide by 100 to convert percentage to fraction
-		    if oper.activity_id == 2 && oper.type_id == 2 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+        org_c = 0
+        if oper.org_c == nil then
+          case oper.type_id
+            when 2 #Manure
+              if Operation.find(operation.operation_id).type_id == 57 then
+                org_c = 0.10 #liquide
+              else
+                org_c = 0.25 #solid
+              end
+          end
+        else
+          org_c = oper.org_c / 100
+        end
+		    if oper.activity_id == 2 && !oper.type_id == 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
+			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)
 		    else
-			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id)
+			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)
 		    end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
-        if oper.activity_id == 2 && oper.type_id == 2
-          apex_string += sprintf("%8.2f", operation.opv1 * 2000) #kg/ha of fertilizer applied
-        else
-          apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
-        end
+        #if oper.activity_id == 2 && oper.type_id == 2
+          #apex_string += sprintf("%8.2f", operation.opv1 * 2000) #kg/ha of fertilizer applied
+        #else
+        apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
+        #end
         values[0] = operation.opv1
         apex_string += sprintf("%8.2f", operation.opv2)
         items[1] = "Depth"
@@ -1385,7 +1427,7 @@ module SimulationsHelper
         if @grazingb == false then
           items[3] = "DryMatterIntake"
           #create_herd file and send to APEX
-		  current_oper = Operation.find(operation.operation_id)
+		      current_oper = Operation.find(operation.operation_id)
           values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
           #animalB = operation.ApexTillCode
           @grazingb = true
@@ -1473,24 +1515,23 @@ module SimulationsHelper
       else
         operation_name = Activity.find(operation.activity_id).name
     end
-	state_id = Location.find(session[:location_id]).state_id
-	if state_id == 0 or state_id == nil then
-		state_abbreviation = "**"
-	else
-		state_abbreviation = State.find(state_id).state_abbreviation
-	end
+  	state_id = @project.location.state_id
+  	if state_id == 0 or state_id == nil then
+  		state_abbreviation = "**"
+  	else
+  		state_abbreviation = State.find(state_id).state_abbreviation
+  	end
     @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
                    COMA + Crop.find_by_number(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
-    #End With
   end  # end add_operation method
 
   def append_file(original_file, target_file, file_type)
     path = File.join(APEX, "APEX" + session[:session_id])
-	if File.exists?(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase)) then
-		FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
+    if File.exists?(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase)) then
+		  FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
     else
-		FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
+		  FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
     end
     case file_type
       when "till"
@@ -1510,7 +1551,7 @@ module SimulationsHelper
     #todo chcek how this will work with fert changing for grazing and fert appliction at the same time. Suggestion. firs get the changes for both and then change the fert file.
   end
 
-  def add_fert(no3n, po4p, orgN, orgP, type, nh3, subtype)
+  def add_fert(no3n, po4p, orgN, orgP, type, nh3, subtype, orgC)
     k = 0
     exist = false
     count = 0
@@ -1553,17 +1594,7 @@ module SimulationsHelper
       else
         newLine += sprintf("%8.4f", orgP)
       end
-      orgC = 0
-      case type
-        when 1 #commercial
-          nh3 = 0
-        when 2 #Manure
-          if subtype == 57 then
-            orgC = 0.15 #liquide
-          else
-            orgC = 0.35 #solid
-          end
-      end
+  
       if nh3 == nil then
         newLine = newLine + " " + sprintf("%7.4f", 0)
       else
@@ -1689,16 +1720,16 @@ module SimulationsHelper
   def read_apex_results(msg)
     ActiveRecord::Base.transaction do
       begin
-	    #clean all of the results exiting for this scenario.
-		if session[:simulation] == "scenario" then
-			# clean results for scenario to avoid keeping some results from previous simulation
-			Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
-			Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
-		else
-			# clean results for watershed to avoid keeping some results from previous simulation
-			Result.where(:watershed_id => @watershed.id).delete_all
-			Chart.where(:watershed_id => @watershed.id).delete_all
-		end
+  	    #clean all of the results exiting for this scenario.
+  		  if session[:simulation] == "scenario" then
+          # clean results for scenario to avoid keeping some results from previous simulation
+          Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
+          Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
+  		  else
+          # clean results for watershed to avoid keeping some results from previous simulation
+          Result.where(:watershed_id => @watershed.id).delete_all
+          Chart.where(:watershed_id => @watershed.id).delete_all
+  		  end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
         start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
@@ -1963,7 +1994,6 @@ module SimulationsHelper
     scenario = 0
     watershed = 0
     if session[:simulation] == "scenario" then
-      chart = Chart.where(:field_id => @scenario.field_id, :scenario_id => @scenario.id, :soil_id => soil_id, :description_id => description_id, :month_year => year).first
       field = @scenario.field_id
       soil = soil_id
       scenario = @scenario.id
@@ -1979,13 +2009,13 @@ module SimulationsHelper
       chart.scenario_id = scenario
       chart.watershed_id = watershed
       chart.description_id = description_id
-	  chart.crop_id = crop_id
+      chart.crop_id = crop_id
     end
     chart.value = value
     if chart.save then
-	  a = 2
+	   a = 2
     else
-	  a = 1
+	   a = 1
     end
   end
 
@@ -2290,137 +2320,137 @@ module SimulationsHelper
   end
 
   def create_herd_file(animals, hours, animal_code, soil_percentage)
-        #Dim manureProduced, bioConsumed, urineProduced As Single
-        #Dim manureId
-        #Dim animalField As Integer
-        #calculate number of animals.
-        case animal_code
-            when 43		#"Dairy"    '1
-                manureProduced = 3.9
-                bioConsumed = 9.1
-                urineProduced = 11.8
-                manureId = 43
-            #when "Dairy-dry cow"    '2
-            #    manureProduced = 5.5
-            #    bioConsumed = 9.1
-            #    urineProduced = 11.8
-            #    manureId = 43
-            #when "Dairy-calf and heifer"     '3
-            #    manureProduced = 5.5
-            #    bioConsumed = 9.1
-            #    urineProduced = 11.8
-            #    manureId = 43
-            #when "Dairy bull"     '4
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 43
-            when 44   #"Beef"    '5
-                manureProduced = 3.9
-                bioConsumed = 9.1
-                urineProduced = 8.2
-                manureId = 44
-            #when "Beef-bull"     '6
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 44
-            #when "Beef-feeder yearling"    '7
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 44
-            #when "Beef-calf"    '8
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 44
-            when 47   #"Sheep"    '9
-                manureProduced = 5
-                bioConsumed = 9.0
-                urineProduced = 6.8
-                manureId = 47
-            when 49   #"Horse"   '10
-                manureProduced = 6.8
-                bioConsumed = 9.1
-                urineProduced = 4.5
-                manureId = 49
-            #when "Llama"    '11
-            #    manureProduced = 5
-            #    bioConsumed = 9.1
-            #    urineProduced = 6.8
-            #    manureId = 52
-            #when "Alpaca"   '12
-            #    manureProduced = 5.1
-            #    bioConsumed = 9.1
-            #    urineProduced = 6.8
-            #    manureId = 52
-            #when "Buffalo"   '13
-            #    manureProduced = 3.9
-            #    bioConsumed = 9.1
-            #    urineProduced = 8.2
-            #    manureId = 52
-            #when "Emu (breeding stock)"   '14
-            #    manureProduced = 10
-            #    bioConsumed = 9.1
-            #    urineProduced = 6.8
-            #    manureId = 52
-            #when "Emu (young birds)"    '15
-            #    manureProduced = 9.8
-            #    bioConsumed = 9.0
-            #    urineProduced = 6.8
-            #    manureId = 52
-            when 46   #"Swine"    '16
-                manureProduced = 5
-                bioConsumed = 9.1
-                urineProduced = 17.7
-                manureId = 46
-            when 52   #"Broiler"    '17
-                manureProduced = 10.4
-                bioConsumed = 10
-                urineProduced = 6.8
-                manureId = 52
-            else
-                manureProduced = 12
-                bioConsumed = 9.08
-                urineProduced = 0
-                manureId = 56
-        end   # end case
+    #Dim manureProduced, bioConsumed, urineProduced As Single
+    #Dim manureId
+    #Dim animalField As Integer
+    #calculate number of animals.
+    case animal_code
+        when 43		#"Dairy"    '1
+            manureProduced = 3.9
+            bioConsumed = 9.1
+            urineProduced = 11.8
+            manureId = 43
+        #when "Dairy-dry cow"    '2
+        #    manureProduced = 5.5
+        #    bioConsumed = 9.1
+        #    urineProduced = 11.8
+        #    manureId = 43
+        #when "Dairy-calf and heifer"     '3
+        #    manureProduced = 5.5
+        #    bioConsumed = 9.1
+        #    urineProduced = 11.8
+        #    manureId = 43
+        #when "Dairy bull"     '4
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 43
+        when 44   #"Beef"    '5
+            manureProduced = 3.9
+            bioConsumed = 9.1
+            urineProduced = 8.2
+            manureId = 44
+        #when "Beef-bull"     '6
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 44
+        #when "Beef-feeder yearling"    '7
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 44
+        #when "Beef-calf"    '8
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 44
+        when 47   #"Sheep"    '9
+            manureProduced = 5
+            bioConsumed = 9.0
+            urineProduced = 6.8
+            manureId = 47
+        when 49   #"Horse"   '10
+            manureProduced = 6.8
+            bioConsumed = 9.1
+            urineProduced = 4.5
+            manureId = 49
+        #when "Llama"    '11
+        #    manureProduced = 5
+        #    bioConsumed = 9.1
+        #    urineProduced = 6.8
+        #    manureId = 52
+        #when "Alpaca"   '12
+        #    manureProduced = 5.1
+        #    bioConsumed = 9.1
+        #    urineProduced = 6.8
+        #    manureId = 52
+        #when "Buffalo"   '13
+        #    manureProduced = 3.9
+        #    bioConsumed = 9.1
+        #    urineProduced = 8.2
+        #    manureId = 52
+        #when "Emu (breeding stock)"   '14
+        #    manureProduced = 10
+        #    bioConsumed = 9.1
+        #    urineProduced = 6.8
+        #    manureId = 52
+        #when "Emu (young birds)"    '15
+        #    manureProduced = 9.8
+        #    bioConsumed = 9.0
+        #    urineProduced = 6.8
+        #    manureId = 52
+        when 46   #"Swine"    '16
+            manureProduced = 5
+            bioConsumed = 9.1
+            urineProduced = 17.7
+            manureId = 46
+        when 52   #"Broiler"    '17
+            manureProduced = 10.4
+            bioConsumed = 10
+            urineProduced = 6.8
+            manureId = 52
+        else
+            manureProduced = 12
+            bioConsumed = 9.08
+            urineProduced = 0
+            manureId = 56
+      end   # end case
 
-        if animals < 1 then
-            animals = 1
-        end
-        #If _animals.Count = 0 Then LoadAnimalUnits()
-        #For Each animal In _animals
-        #    If animal.Number.Split("|")(0) = manureId Then
-        #        conversionUnit = animal.ConversionUnit
-        #    End If
-        #Next
+      if animals < 1 then
+          animals = 1
+      end
+      #If _animals.Count = 0 Then LoadAnimalUnits()
+      #For Each animal In _animals
+      #    If animal.Number.Split("|")(0) = manureId Then
+      #        conversionUnit = animal.ConversionUnit
+      #    End If
+      #Next
 
-		conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
-        @last_herd += 1
-        animalField = animals * soil_percentage / 100
-        herdFile = sprintf("%4d", @last_herd) #For different owners
-        #comentarized because there is not field divided anymore
-        #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
-        #    herdFile &= Format(CInt((animalField(0) / 2) * conversionUnit), "#####0.0").PadLeft(8)
-        #Else
-        #    herdFile &= Format(CInt(animalField(i) * conversionUnit), "#####0.0").PadLeft(8)
-        #End If
-        herdFile += sprintf("%8.1f", (animalField * conversion_unit).round(0))
-        herdFile += sprintf("%8.1f", animal_code)
-        herdFile += sprintf("%8.2f",(24 - hours) / 24)
-        herdFile += sprintf("%8.2f",bioConsumed)
-        herdFile += sprintf("%8.2f",manureProduced)
-        herdFile += sprintf("%8.2f",urineProduced)
-        @herd_list.push(herdFile + "\n")
-        #duplicate in case it is just one soil because the area is divided in two equal fields.
-        #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
-        #    herdList.Add(herdFile)
-        #End If
+	    conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
+      @last_herd += 1
+      animalField = animals * soil_percentage / 100
+      herdFile = sprintf("%4d", @last_herd) #For different owners
+      #comentarized because there is not field divided anymore
+      #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
+      #    herdFile &= Format(CInt((animalField(0) / 2) * conversionUnit), "#####0.0").PadLeft(8)
+      #Else
+      #    herdFile &= Format(CInt(animalField(i) * conversionUnit), "#####0.0").PadLeft(8)
+      #End If
+      herdFile += sprintf("%8.1f", (animalField * conversion_unit).round(0))
+      herdFile += sprintf("%8.1f", animal_code)
+      herdFile += sprintf("%8.2f",(24 - hours) / 24)
+      herdFile += sprintf("%8.2f",bioConsumed)
+      herdFile += sprintf("%8.2f",manureProduced)
+      herdFile += sprintf("%8.2f",urineProduced)
+      @herd_list.push(herdFile + "\n")
+      #duplicate in case it is just one soil because the area is divided in two equal fields.
+      #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
+      #    herdList.Add(herdFile)
+      #End If
 
-        herdFile += ""
-		msg = send_file_to_APEX(@herd_list, "HERD.dat")
-        return bioConsumed
+      herdFile += ""
+	    msg = send_file_to_APEX(@herd_list, "HERD.dat")
+      return bioConsumed
     end #end create_herd_file
 end

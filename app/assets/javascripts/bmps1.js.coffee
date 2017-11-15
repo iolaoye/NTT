@@ -275,6 +275,21 @@ update_fertigation_options = ->
             $("#days").toggle(true)
             $("#irrigation_frequency_label").toggle(true)
 
+rb_td = (opt) ->
+    $("#div_td_opt1").toggle(false)
+    $("#div_td_opt2").toggle(false)
+    $("#div_td_opt3").toggle(false)
+    $("#div_td_opt4").toggle(false)
+    $("#div_td_opt5").toggle(false)
+    switch opt
+      when 3 #option 1
+            $("#div_td_opt1").toggle(true)
+      when 4 #option 2
+            $("#div_td_opt2").toggle(true)
+            $("#div_td_opt3").toggle(true)
+            $("#div_td_opt4").toggle(true)
+            $("#div_td_opt5").toggle(true)
+
 pads_and_pipes = (opt) ->
     $("#tr_bmp_pp_area").toggle(false)
     switch opt
@@ -333,6 +348,10 @@ $(document).ready ->
         update_fertigation_options()
     $("#bmp_mc_animal_id").change ->
 	    update_manure_control_options()
+    $("#bmp_td_3").click ->
+        rb_td(3)
+    $("#bmp_td_4").click ->
+        rb_td(4)
     $("#fill_max").click ->
         update_max_row()
     $("#fill_pcp").click ->
