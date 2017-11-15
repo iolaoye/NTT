@@ -37,7 +37,7 @@
           <% next %>
         <% end %>
           <tr>
-            <% if bmp.bmpsublist_id <= 19 || bmp.bmpsublist_id > 20 %>
+            <% if bmp.bmpsublist_id <= 18 || bmp.bmpsublist_id > 20 %>
               <% if bmp.id != nil %>
                 <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
               <% else %>
@@ -439,61 +439,7 @@
               </td>
             </tr>
             <% end %>
-          <!-- <% when 19 %>
-            <% @bmp = bmp %>
-            <tr><td><%#= render 'cover_crop1' %></td></tr>
-          <% when 20 %>
-            <% @bmp = bmp %>
-             <tr><td><%#= render 'cover_crop2' %></td></tr> -->
-          <% when 21 %>
-            <!-- <tr>
-              <td class="indent" colspan="2">
-                <%= label :animal_id, t('bmp.animals') %>
-                <% if I18n.locale.equal?(:en) %>
-                  <%= collection_select :bmp_rg, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
-                <% else %>
-                  <%= collection_select :bmp_rg, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :spanish_name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <td class="indent" colspan="2">
-                <%= label :hours_grazed, t('bmp.number_of_animals')  %>
-                <%= number_field :bmp_rg, :number_of_animals, :value => bmp.number_of_animals, :step => 'any', :class => "gvTitleStyleNumber" %>
-              </td>
-            </tr>
-            <tr>
-              <td class="indent" colspan="2">
-                <div class="field">
-                  <%= label :date, t('bmp.grazing_date') %>              
-                  <%= select :bmp_rg, :year, listYears.map { |e| [e[0], e[1]]}, {:prompt => t('datetime.prompts.year'), :selected => bmp.sides}%>
-                  <%= select :bmp_rg, :month, listMonths.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.month'), :selected => bmp.org_n.to_i}%>
-                  <%= select :bmp_rg, :day, listDays.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.day'), :selected => bmp.no3_n.to_i}%>
-                  <%= label :to, t('general.to') %>
-                  <%= select :bmp_rg, :year_to, listYears.map { |e| [e[0], e[1]]}, {:prompt => t('datetime.prompts.year'), :selected => bmp.irrigation_id}%>
-                  <%= select :bmp_rg, :month_to, listMonths.map { |e| [e[0], e[1]]}, {:prompt => t('datetime.prompts.month'), :selected => bmp.org_p.to_i}%>
-                  <%= select :bmp_rg, :day_to, listDays.map { |e| [e[0], e[1]] }, {:prompt => t('datetime.prompts.day'), :selected => bmp.po4_p.to_i}%>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="indent" colspan="2">
-                <%= label :hours_grazed, t('bmp.hours_grazed')  %>
-                <%= number_field :bmp_rg, :hours_grazed, :value => bmp.hours, :step => 'any', :class => "gvTitleStyleNumber" %>
-              </td>
-            </tr>
-            <tr>
-              <td class="indent" colspan="2">
-                <%= label :days_grazed, t('bmp.days_grazed')  %>
-                <%= number_field :bmp_rg, :days_grazed, :value => bmp.days, :step => 'any', :class => "gvTitleStyleNumber" %>
-              </td>
-            </tr>
-            <tr>
-              <td class="indent" colspan="2">
-                <%= label :rest_time, t('bmp.rest_time')  %>
-                <%= number_field :bmp_rg, :rest_time, :value => bmp.area, :step => 'any', :class => "gvTitleStyleNumber" %>
-              </td>
-            </tr> -->
+
           <% when 22 %>
             <tr>
               <td class="indent" colspan="2">
