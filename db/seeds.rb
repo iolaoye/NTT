@@ -9,7 +9,7 @@ load file
 file = "db/seeds/crop_schedules.rb"
 load file
 
-ile = "db/seeds/schedules.rb"
+file = "db/seeds/schedules.rb"
 load file
 
 cont = false
