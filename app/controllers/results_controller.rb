@@ -8,7 +8,7 @@ class ResultsController < ApplicationController
   end
   ###############################  ANNUAL CHART  ###################################
   def annual_charts
-  	@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
+  	@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts') 
   	index
   	#render "index"
   end
@@ -149,6 +149,11 @@ class ResultsController < ApplicationController
     end # end if params[:result1] != nil
   	if params[:button] != nil
   		@type = params[:button]
+  	else
+  		if params[:button_annual] != nil
+  			@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
+  			@title = t('result.upto12')
+  		end
   	end
   	if @type == nil then
   		@type = t("general.view")

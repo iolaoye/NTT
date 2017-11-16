@@ -790,7 +790,7 @@ es:
     select_watershed3: Seleccione 3ra cuenca
     select_prompt_scenario: Seleccione hasta 3 escenarios para ver
     select_prompt_watershed: Seleccione hasta 3 cuencas para ver
-    select_chart: Seleccione tipo de Gráfico
+    select_chart: Seleccione una Categoría
     description: Descripción
     difference: Diferencia
     reduction: Reducción
@@ -800,6 +800,9 @@ es:
     third_scenario_error: El tercero escenario no tiene
     pdf_download_error: You must run a summary before you can download a pdf
     confidence: Intervalo de Confidencia
+    total_units: Area Total
+    units_ac: Area Unidad
+    upto12: (hasta los ùltimos 12 years)
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa
