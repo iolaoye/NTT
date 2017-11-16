@@ -170,8 +170,9 @@ class FieldsController < ApplicationController
   			for i in 0..(field.soils.count - 1)
   				layer = field.soils[i].layers[0]
   				layer.organic_matter = params[:om][i]
-  				layer.soil_p = params[:field][:soilp]
-  				if layer.save then
+          soil_test = SoilTest.find(params[:field][:soil_test])
+          layer.soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
+          if layer.save then
   					msg = "OK"
   				else
   					msg = "Error saving soil information"
