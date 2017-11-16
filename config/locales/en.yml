@@ -569,7 +569,7 @@ en:
     amount: 'Amount(lbs/ac)'
     bmp: BMP
     irrigation: Irrigation
-    plant_population: 'Plant Population (seeds/ac)'
+    plant_population: 'Plant Population (seeds/ac)(*optional)'
     load_operation: Load Operation
     sum: 'total nutrients should be less or equal to 1'
     save: Save
@@ -600,7 +600,7 @@ en:
     liming: Liming
     start_grazing: Grazing
     stop_grazing: Stop Grazing
-    seed: 'Seeding Amount (seeds/ft)'
+    seed: 'Seeding Amount (seeds/ft)(optional)'
     amount_applied: 'Amount Applied'
     add_planting: 'Add Planting Operation'
     add_fertilizer: 'Add Fertilizer Operation'
