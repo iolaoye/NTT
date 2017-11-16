@@ -6,6 +6,11 @@ load file
 file = "db/seeds/activities.rb"
 load file
 
+file = "db/seeds/crop_schedules.rb"
+load file
+
+ile = "db/seeds/schedules.rb"
+load file
 
 cont = false
 
