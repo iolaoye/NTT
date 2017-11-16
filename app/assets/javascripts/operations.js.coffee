@@ -65,7 +65,10 @@ updateNutrients = (animal) ->
           $("#operation_org_n").val(fertilizer.yn)
           $("#operation_org_p").val(fertilizer.yp)
           $("#operation_nh3").val("")
-          $("#operation_org_c").val("")
+          if ($("#operation_type_id").val() == "2")
+            $("#operation_org_c").val("10")
+          else
+            $("#operation_org_c").val("25")
           $("#operation_nh4_n").val("")
           $("#op_total_n_con").val("")
           $("#op_total_p_con").val("")

@@ -115,6 +115,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, info: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
+        notice=""
         flash[:info] = t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
         format.html { redirect_to user_projects_path(session[:user_id]) }
         #format.json { render json: @project.errors, status: :unprocessable_entity }
