@@ -465,6 +465,7 @@ class BmpsController < ApplicationController
 ####################### INDIVIDUAL SUBLIST ACTIONS #######################
 ### ID: 1
   def autoirrigation(type)
+    ooo
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
       subarea = soil.subareas.find_by_scenario_id(params[:scenario_id])
@@ -527,6 +528,7 @@ class BmpsController < ApplicationController
 
 ### ID: 2
   def fertigation(type)
+    fff
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
       subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
@@ -894,8 +896,8 @@ class BmpsController < ApplicationController
   	@bmp.animal_id = params[:bmp_mc][:animal_id]
   	@bmp.no3_n =params[:bmp_mc][:no3_n]
   	@bmp.po4_p =params[:bmp_mc][:po4_p]
-  	@bmp.org_n =params[:bmp_mc][:org_n]
-  	@bmp.org_p =params[:bmp_mc][:org_p]
+  	@bmp.org_n =params[:bmp_mc][:no3_n]
+  	@bmp.org_p =params[:bmp_mc][:po4_p]
     return "OK"
   end   # end method
 
