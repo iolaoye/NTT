@@ -803,6 +803,7 @@ es:
     total_units: Area Total
     units_ac: Area Unidad
     upto12: (hasta los ùltimos 12 years)
+    stress: Estrés
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa

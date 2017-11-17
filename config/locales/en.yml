@@ -812,6 +812,7 @@ en:
     total_units: Total Area
     units_ac: Unit Area
     upto12: (up to the last 12 years)
+    stress: Stress
   users:
     confirmation: Password confirmation
     company: Company
