@@ -154,6 +154,9 @@ class ResultsController < ApplicationController
   			@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
   			@title = t('result.upto12')
   		end
+   		if params[:button_monthly] != nil
+  			@type = t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
+  		end 
   	end
   	if @type == nil then
   		@type = t("general.view")
