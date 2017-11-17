@@ -617,6 +617,10 @@ en:
     planting_method: Planting Method
     manure_composition: Manure Composition
     planting_date: Planting Date
+    continues_grazing: Pastoreo Continuo
+    rotational_grazing: Pastoreo Rotacional
+    total_n: Total N (0-100%)
+    total_p: Total P (0-100%)
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
