@@ -121,7 +121,7 @@ module ScenariosHelper
         subarea.armn = 0
 		subarea.armx = 0
 		subarea.bft = 0
-        subarea.fnp4 =
+        subarea.fnp4 = 0
         subarea.fmx = 0
         subarea.drt = 0
         subarea.fdsf = 0

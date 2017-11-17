@@ -178,20 +178,37 @@
 				<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
 		  </div>
 		</div>
-		<div class="field" id="div_other_nutrients" <% if @operation.type_id == 1 %> style='display:none;' <% end %>>
-			<div class="field">
-				<%= f.label :org_c, t('operation.total_n_con') %>
-				<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
+		<%if @operation.type_id == 1 || @operation == 2 || @operation == 3 %>
+			<div class="field" id="div_other_nutrients" <% if @operation.type_id == 1 %> style='display:none;' <% end %>>
+				<div class="field">
+					<%= f.label :org_c, t('operation.total_n_con') %>
+					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
+				</div>
+				<div class="field">
+					<%= f.label :nh4_n, t('operation.total_p_con') %>
+					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
+				</div>
+				<div class="field">
+					<%= f.label :moisture, t('operation.moisture_con') %>
+					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
+				</div>
 			</div>
-			<div class="field">
-				<%= f.label :nh4_n, t('operation.total_p_con') %>
-				<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
+		<% else %>
+			<div class="field" id="div_other_nutrients" style="display:none">
+				<div class="field">
+					<%= f.label :org_c, t('operation.total_n_con') %>
+					<%= number_field :op, :total_n_con, :class => "gvTitleStyleNumber" %>
+				</div>
+				<div class="field">
+					<%= f.label :nh4_n, t('operation.total_p_con') %>
+					<%= number_field :op, :total_p_con, :class => "gvTitleStyleNumber" %>
+				</div>
+				<div class="field">
+					<%= f.label :moisture, t('operation.moisture_con') %>
+					<%= number_field :op, :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
+				</div> 
 			</div>
-			<div class="field">
-				<%= f.label :moisture, t('operation.moisture_con') %>
-				<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
-			</div>
-		</div>
+		<% end %>
 	<% when 3 # tillage %>
 		<div id="div_date" style="display:none" >
 			<%= f.label :stop, t('general.stop'), :class => 'field' %>
