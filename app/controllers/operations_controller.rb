@@ -448,9 +448,14 @@ class OperationsController < ApplicationController
         @highest_year = operation.year
       end
     end
-    state_id = Location.find_by_project_id(@project.id).state_id
+    state_id = @project.location.state_id
+    if state_id < 10 then
+      state_id_text = "0" + state_id.to_s
+    else
+      state_id_text = "'" + state_id.to_s + "'"
+    end
     #@cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 2")
-    @cropping_systems = CropSchedule.where(:status => true, :class_id => 1).where("state_id LIKE ? OR state_id LIKE ?", "%#{state_id}%","*")
+    @cropping_systems = CropSchedule.where(:status => true, :class_id => 1).where("state_id LIKE ? OR state_id LIKE ?", "%#{state_id_text}%","*")
     @tillages = CropSchedule.where(:state_id => state_id, :status => true).where("class_id = 3")
     if @cropping_systems.blank? then
       @cropping_systems = CropSchedule.where(:state_id => "*", :status => true).where("class_id < 2")
