@@ -1,10 +1,15 @@
 <% case %>
-	<% when notice %>
+	<% when notice  = "Successfully created..." %>
 		<div class="success_alert">
 		  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-		  <%= notice %>
+		  <%= flash[:notice] %>
 		</div>
 	<% when flash[:info] %>
+		<div class="success_alert">
+		  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+		  <%= flash[:info] %>
+		</div>
+	<% when flash[:info].include?("can't") %>
 		<div class="flash_alert">
 		  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 		  <%= flash[:info] %>
@@ -46,7 +51,7 @@
 							<tbody>
 								<% @projects.each do |project| %>
 						  			<tr>
-							  			<% if project.location == nil || project.fields.count == 0 %> <td class="table-link"><%= link_to project.name, project_path(project) %></td>
+							  			<% if project.location.id == nil %> <td class="table-link"><%= link_to project.name, project_path(project) %></td>
 							  			<% else %> <td class="table-link"><%= link_to project.name, project_fields_path(project) %></td>
 							  			<% end %>
 							  			<td><%= project.description %></td>

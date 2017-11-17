@@ -14,9 +14,9 @@ class ProjectsController < ApplicationController
     @user = User.find(session[:user_id])
     if @user.admin?
       #@projects = Project.order("#{sort_column} #{sort_direction}")
-      @projects = Project.includes(:user).order("#{sort_column} #{sort_direction}")
+      @projects = Project.includes(:user, :location).order("#{sort_column} #{sort_direction}")
     else
-      @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
+      @projects = Project.where(:user_id => params[:user_id]).includes(:location).order("#{sort_column} #{sort_direction}")
     end
     session[:simulation] = "watershed"
     respond_to do |format|
@@ -79,42 +79,43 @@ class ProjectsController < ApplicationController
   ################  copy the selected project  ###################
   def copy_project
     @use_old_soil = true
-  msg = duplicate_project()
-  if !msg == "OK" then
-    flash[:info] = msg
-  else
-    notice = msg
-  end # end if msg
-  #download_project(params[:id], "copy")
-  @user = User.find(session[:user_id])
-  if @user.admin?
-    @projects = Project.order("#{sort_column} #{sort_direction}")
-  else
-    @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
-  end
-  #render "index"
-  redirect_to(request.env['HTTP_REFERER']) #return to previous page
+    msg = duplicate_project()
+    if !msg == "OK" then
+      flash[:info] = msg
+    else
+      flash[:notice] = msg
+    end # end if msg
+    #download_project(params[:id], "copy")
+    @user = User.find(session[:user_id])
+    if @user.admin?
+      @projects = Project.order("#{sort_column} #{sort_direction}")
+    else
+      @projects = Project.where(:user_id => params[:user_id]).order("#{sort_column} #{sort_direction}")
+    end
+    #render "index"
+    redirect_to(request.env['HTTP_REFERER']) #return to previous page
   end
 
   ########################################### CREATE NEW PROJECT##################
   # POST /projects
   # POST /projects.json
   def create
-  @user = User.find(session[:user_id])
-    @project = Project.new(project_params)
+    @user = User.find(session[:user_id])
+    #@project = Project.new(project_params)
     #params[:project_id] = @project.id
     @project.user_id = session[:user_id]
-  @project.version = "NTTG3"
-  respond_to do |format|
+    @project.version = "NTTG3"
+    respond_to do |format|
       if @project.save
         params[:project_id] = @project.id
         location = Location.new
         location.project_id = @project.id
         location.save
         session[:location_id] = location.id
-        format.html { redirect_to @project, notice: t('models.project') + "" + t('notices.created') }
+        format.html { redirect_to @project, info: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
+        notice=""
         flash[:info] = t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
         format.html { redirect_to user_projects_path(session[:user_id]) }
         #format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -131,7 +132,7 @@ class ProjectsController < ApplicationController
   @project.version = "NTTG3"
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to user_projects_path(params[:user_id]), notice: t('models.project') + "" + t('notices.updated') }
+        format.html { redirect_to user_projects_path(params[:user_id]), info: t('models.project') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -149,7 +150,7 @@ class ProjectsController < ApplicationController
     location.destroy_all unless location == []
     respond_to do |format|
     if @project.destroy
-      format.html { redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.deleted') }
+      format.html { redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.deleted') }
     format.json { head :no_content }
       end
   end
@@ -175,8 +176,8 @@ class ProjectsController < ApplicationController
   def upload_project
   saved = upload_prj()
     if saved
-      flash[:notice] = t('models.project') + " " + t('general.success')
-      redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.uploaded')
+      flash[:info] = t('models.project') + " " + t('general.success')
+      redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
       redirect_to projects_upload_path(@upload_id)
     end
@@ -464,7 +465,7 @@ class ProjectsController < ApplicationController
       xml.ztk soil.ztk
       xml.fbm soil.fbm
       xml.fhp soil.fhp
-    xml.soil_id_old soil.id
+      xml.soil_id_old soil.id
       layers = Layer.where(:soil_id => soil.id)
       xml.layers {
         layers.each do |layer|
@@ -508,9 +509,9 @@ class ProjectsController < ApplicationController
     xml.scenario {
       xml.id scenario.id
       xml.name scenario.name
-    if scenario.last_simulation != nil then
-    xml.last_simulation scenario.last_simulation
-    end
+      if scenario.last_simulation != nil then
+        xml.last_simulation scenario.last_simulation
+      end
       operations = Operation.where(:scenario_id => scenario.id)
       xml.operations {
         operations.each do |operation|

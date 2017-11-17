@@ -427,7 +427,7 @@ en:
     stop: Stop
     no_additional_needed: No additional information is needed
     unit_acre: "unit / ac"
-    continues_grazing: Continue Grazing
+    continues_grazing: Continues Grazing
     rotational_grazing: Rotational Grazing
   welcome_note:
     thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
@@ -504,6 +504,7 @@ en:
     final_simulation_error: must not be greater than the final year of weather information. Maximum value is
     update_simulation: Update Simulation Period
   soil:
+    test: Soil Test Laboratory
     layers: Layers
     soil: Soil
     layer: Layer
@@ -568,7 +569,7 @@ en:
     amount: 'Amount(lbs/ac)'
     bmp: BMP
     irrigation: Irrigation
-    plant_population: 'Plant Population (seeds/ac)'
+    plant_population: 'Plant Population (seeds/ac)(*optional)'
     load_operation: Load Operation
     sum: 'total nutrients should be less or equal to 1'
     save: Save
@@ -599,7 +600,7 @@ en:
     liming: Liming
     start_grazing: Grazing
     stop_grazing: Stop Grazing
-    seed: 'Seeding Amount (seeds/ft)'
+    seed: 'Seeding Amount (seeds/ft)(optional)'
     amount_applied: 'Amount Applied'
     add_planting: 'Add Planting Operation'
     add_fertilizer: 'Add Fertilizer Operation'
@@ -798,7 +799,7 @@ en:
     select_watershed3: Select 3rd watershed
     select_prompt_scenario: Select up to 3 scenarios for view
     select_prompt_watershed: Select up to 3 watersheds for view
-    select_chart: Select kind of Chart
+    select_chart: Select a Category
     description: Description
     difference: Difference
     reduction: Reduction
@@ -808,6 +809,9 @@ en:
     third_scenario_error: Third scenario has no
     pdf_download_error: You must run a summary before you can download a pdf
     confidence: Confindence Interval
+    total_units: Total Area
+    units_ac: Unit Area
+    upto12: (up to the last 12 years)
   users:
     confirmation: Password confirmation
     company: Company

@@ -8,7 +8,7 @@
 <div class="page-header"><h1><%= t('menu.operations') %></h1></div>
 
 	<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('general.to') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
-	<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary' %>
+	<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary', :id => 'new_oper' %>
 	<%= button_tag t('operation.add_cover_crop'), :class => 'btn btn-primary', :id => 'new_ccr' %>
 	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views", :class => 'btn btn-primary', "onclick" => "saveView()" } %>
 	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
@@ -103,7 +103,8 @@
 						<td class="optable"><b><%= t('general.type') %></b></td>
 						<td class="optable" style="text-align: right"><b><%= t('operation.amount_applied') %></b></td>
 						<td class="optable" style="text-align: right"><b><%= t('bmp.depth') %></b></td>
-						<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td></tr>
+						<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
+					</tr>
 					<% @scenario.fertilizer_operations(crop).each do |op| %>
 						<tr>
 							<td><%= (t'pdf.year') + " " %><%= op.year %>, <%= listMonths.detect { |val, index| index == op.month_id}[0] %> <%= op.day %></td>
@@ -114,12 +115,10 @@
 							<% end %>
 							<% if op.type_id == 1 %>
 								<% amount_label = "(lbs/ac)" %>
+							<% elsif op.type_id == 2 %>
+								<% amount_label = "(T/ac)" %>
 							<% else %>
-								<% if op.subtype_id == 57 %>
-									<% amount_label = "(x1000gal/ac)" %>
-								<% else %>
-									<% amount_label = "(T/ac)" %>
-								<% end %>
+								<% amount_label = "(x1000gal/ac)" %>
 							<% end %>
 							<% if op.activity_id == 2 and op.type_id == 2 then %>
 								<td class="gvCellStyleNumber"><%= op.amount %><%= amount_label %> </td>
@@ -204,7 +203,7 @@
 		  <% end %>
 		  <% if @operations.where("(activity_id = ? or activity_id = ?) and crop_id = ?", 7,8,crop).any?%>
 			<div class="panel panel-primary">
-			  <h4><%= t('operation.continues_grazing') %></h4>
+			  <h4><%= t('general.continues_grazing') %></h4>
 			    <table class="table">
 				  <tr>
 					<td class="optable"><b></b></td>
@@ -242,7 +241,7 @@
 				      </tr>
                   <% end %>
 			    </table><br>
-			    <%= link_to t('result.add') + " " + t('operation.continues_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 7, :crop => crop.id), :class => 'btn btn-success'  %>
+			    <%= link_to t('result.add') + " " + t('general.continues_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 7, :crop => crop.id), :class => 'btn btn-success'  %>
 			</div> 
 		  <% end %>
           

@@ -78,8 +78,8 @@ class BmpsController < ApplicationController
   				end
   			end
   		end
-  		bmp_list = 20
-      if bmp.bmpsublist_id == 19 then   # cover crop
+  		bmp_list = 18
+      if bmp.bmpsublist_id == 19 then   # cover crop. This BMP is not active any more. In case we need bmp.bmpsublist_id greater than 19 changes to bmpsublist table need to be done or to the @bmps active record.
         if bmp.id == nil then
           operation = @scenario.operations.where(:activity_id => 5).last
           if operation != nil then
