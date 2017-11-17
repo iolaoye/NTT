@@ -799,7 +799,7 @@ en:
     select_watershed3: Select 3rd watershed
     select_prompt_scenario: Select up to 3 scenarios for view
     select_prompt_watershed: Select up to 3 watersheds for view
-    select_chart: Select kind of Chart
+    select_chart: Select a Category
     description: Description
     difference: Difference
     reduction: Reduction
@@ -809,6 +809,10 @@ en:
     third_scenario_error: Third scenario has no
     pdf_download_error: You must run a summary before you can download a pdf
     confidence: Confindence Interval
+    total_units: Total Area
+    units_ac: Unit Area
+    upto12: (up to the last 12 years)
+    stress: Stress
   users:
     confirmation: Password confirmation
     company: Company

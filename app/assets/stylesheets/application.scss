@@ -110,7 +110,7 @@ table {
 .gvTotalNumber {
   height: 20px;
   padding: 8px;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
   font-weight: 300;
   font-size: 15px;
@@ -123,10 +123,10 @@ table {
 .gvTotalText {
   height: 20px;
   padding: 8px;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
   font-weight: 300;
-  font-size: 15px;
+  font-size: 20px;
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
@@ -156,7 +156,7 @@ table {
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
   margin: 0px 0px 0px 0px;
-  text-align: right;
+  text-align: center;
 }
 
 .gvCellStyleCheckbox {
@@ -216,11 +216,11 @@ table {
 }
 
 .gvCellStyleTitle {
-  height: 25px;
+  height: 40px;
   padding: 8px;
   vertical-align: middle;
   font-weight: 100;
-  font-size: 16px;
+  font-size: 20px;
   text-align: left;
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   font-family: Roboto, helvetica, arial, sans-serif;
