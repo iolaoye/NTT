@@ -685,12 +685,13 @@ module ScenariosHelper
 		opv1 = Crop.find(operation.crop_id).heat_units
       #opv1 = 2.2
       when 2 #fertilizer - converte amount applied
-      	if operation.type_id == 1 then
+      	case operation.type_id
+      	when 1
 			opv1 = (operation.amount * LBS_TO_KG / AC_TO_HA).round(2) #kg/ha of fertilizer applied converted from lbs/ac
-        elsif operation.subtype_id == 57
-          	opv1 = (operation.amount * 8.25 * 0.005 * 1121.8 * 2.47).round(2) #'8.25=lbs/gal, 0.5% dry matter, and 1121.8 kg/ha. on nov.1/2017 add * 2.47 according to Dr. Ali Saleh
-        else
-        	opv1 = (operation.amount * LBS_TO_KG / AC_TO_HA * 2000).round(2) #kg/ha of fertilizer applied converted from lbs/ac
+        when 3
+          	opv1 = (operation.amount * 9350 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
+        when 2
+        	opv1 = (operation.amount * 2471 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
         end
       when 6 #irrigation
         opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.

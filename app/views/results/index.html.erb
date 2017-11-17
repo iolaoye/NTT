@@ -17,38 +17,37 @@
     <%= flash[:info] %>
   </div>
 <% end %>
-
-<div class="page-header"><h1><%=@type %> <% @title%></h1></div>
+<div class="page-header"><h1><%=@type + " " %><%= t('result.upto12') unless @type != t("general.view") + " " + t('result.annual') + "-" + t('result.charts') %></h1></div>
 
 <form id="myForm">
-  <div class="field">
-    <table>
-      	<tr>
-        	<% if session[:simulation] == 'scenario' %>
-        		<h4><%= t('result.select_prompt_scenario') %></h4>
-        	<% else %>
-        		<h4><%= t('result.select_prompt_watershed') %></h4>
-        	<% end %>
-      	</tr>
-      	<tr>
-		    <% field_id = 0 %>
-	        <% if session[:simulation] == 'scenario' %>
-			  <% field_id = @field.id %>
-	          <td><%= collection_select :result1, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
-	          <td><%= collection_select :result2, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
-	          <td><%= collection_select :result3, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
-	        <% else %>
-	          <td><%= collection_select :result1, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed1'), :selected => @scenario1}, {:required => true, :style => "width:160px"} %></td>
-	          <td><%= collection_select :result2, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed2'), :selected => @scenario2}, {:required => false, :style =>"width:160px"} %></td>
-	          <td><%= collection_select :result3, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed3'), :selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
-	        <% end %>
-	        <% case @type %>
-	          	<% when t('general.view'), t('result.summary') %>
-              <td>
-    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
-    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
-    	        </td>
-                <td><%= submit_tag t("general.view"), :id => "summary", name: "button", :class => "btn btn-primary" %>
+	<div class="field">
+	    <table>
+	      	<tr>
+	        	<% if session[:simulation] == 'scenario' %>
+	        		<h4><%= t('result.select_prompt_scenario') %></h4>
+	        	<% else %>
+	        		<h4><%= t('result.select_prompt_watershed') %></h4>
+	        	<% end %>
+	      	</tr>
+	      	<tr>
+			    <% field_id = 0 %>
+		        <% if session[:simulation] == 'scenario' %>
+				  <% field_id = @field.id %>
+		          <td><%= collection_select :result1, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
+		          <td><%= collection_select :result2, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
+		          <td><%= collection_select :result3, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
+		        <% else %>
+		          <td><%= collection_select :result1, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed1'), :selected => @scenario1}, {:required => true, :style => "width:160px"} %></td>
+		          <td><%= collection_select :result2, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed2'), :selected => @scenario2}, {:required => false, :style =>"width:160px"} %></td>
+		          <td><%= collection_select :result3, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed3'), :selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
+		        <% end %>
+		        <% case @type %>
+		        <% when t('general.view'), t('result.summary') %>
+	              	<td>
+	    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
+	    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
+	    	        </td>
+	            	<td><%= submit_tag t("general.view"), :id => "summary", name: "button", :class => "btn btn-primary" %>
 						<% if @results1 != nil %>
 							<% if !request.url.include?(url_for("/fields/0/results?")) %>
 								<%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
@@ -57,16 +56,16 @@
 						    <%= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
 						<% end %>
 					</td>
-					<tr><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
-	          	<% when t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil")  %>
-              <td>
-    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
-    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
-    	        </td>
-                <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => @field.id, :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil }, { :required => true }%></td>
-		            <td><%= submit_tag t("general.view") + " " + t("result.by_soil"), name: "button", :class => "btn btn-primary" %>
-					</tr>
-					<tr ><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
+						<tr><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
+		        <% when t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil")  %>
+	              	<td>
+	    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
+	    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
+	    	        </td>
+	                <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => @field.id, :selected => true), :id, :name, {:prompt => t('soil.select_soil'), :selected => @soil }, { :required => true }%></td>
+			            <td><%= submit_tag t("general.view") + " " + t("result.by_soil"), name: "button", :class => "btn btn-primary" %>
+						</tr>
+						<tr ><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
 	          	<% when t('result.annual')  + "-" + t('result.charts'), t("general.view") + " " + t('result.annual')  + "-" + t('result.charts')%>
 		            <% if I18n.locale.eql?(:en) %>
 		              <td><%= collection_select :result5, :description_id, @descriptions.where("id != 52"), :id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
@@ -79,7 +78,7 @@
 					<% else %>
 						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
 					<% end %>
-		            <td><%= submit_tag t("general.view") + " " + t("result.annual")  + "-" + t('result.charts'), name: "button", :class => "btn btn-primary" %></td>
+		            <td><%= submit_tag t("general.view"), name: "button_annual", :class => "btn btn-primary" %></td>
 					</tr>
 	        	<% when t('result.monthly') + "-" + t('result.charts'), t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') %>
 		            <% if I18n.locale.eql?(:en) %>
@@ -88,11 +87,11 @@
 		              <td><%= collection_select :result6, :description_id, Description.where("period = 1"), :id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
 		            <% end %>
 		            <td><%= submit_tag t("general.view") + " " + t("result.monthly")  + "-" + t('result.charts'), name: "button", :class => "btn btn-primary" %></td>
-        	<% end %>
-		</tr>
-        <%= hidden_field(:language, :language, :value => I18n.locale) %>
-    </table>
-  </div>
+	        	<% end %>
+			</tr>
+	        <%= hidden_field(:language, :language, :value => I18n.locale) %>
+	    </table>
+	</div>
 </form>
 
 <% if @type == t("general.view") + " " + t('result.annual') + "-" + t('result.charts') || @type == t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') then %>
@@ -106,244 +105,206 @@
         %>
     <br/>
     <div class="table-responsive">
-      <table class='table table-bordered' style="white-space: nowrap;">
-        <% if (@present1 || @present2 || @present3)  %>
-			<thead>
-			  <tr class='gvHeaderStyle'>
-				<th class='gvCellStyle Title'><%= t('models.scenario') %></th>
-				<% case true %>
-					<% when @present1 %>
-						<% for i in 0..@charts1.count - 1 %><th class='gvCellStyle Title'><%= @charts1[i][0] %></th><% end %>
-					<% when @present2 %>
-						<% for i in 0..@charts2.count - 1 %><th class='gvCellStyle Title'><%= @charts2[i][0] %></th><% end %>
-					<% when @present3 %>
-						<% for i in 0..@charts3.count - 1 %><th class='gvCellStyle Title'><%= @charts3[i][0] %></th><% end %>
-				<% end %>
-			  </tr>
-			</thead>
-        <tbody>
-          <% if @present1 %>
-            <tr class="gvRowStyleOdd">
-              <td class="gvTotalText">
-                <% if session[:simulation] != 'scenario' %>
-                  <%= Watershed.find(@scenario1).name %>
-                <% else %>
-                  <%= Scenario.find(@scenario1).name %>
-                <% end %>
-                </td>
-				<% for i in 0..@charts1.count - 1 %>
-					<td class='gvCellStyle Title'><%= @charts1[i][1].round(2) %></td>
-				<% end %>
-            </tr>
-          <% end %>
-          <% if @present2 %>
-            <tr class="gvRowStyleEven">
-              <td class="gvTotalText">
-              	<% if session[:simulation] != 'scenario' %>
-                  <%= Watershed.find(@scenario2).name %>
-                <% else %>
-                  <%= Scenario.find(@scenario2).name %>
-                <% end %>
-              </td>
-				<% for i in 0..@charts2.count - 1 %>
-					<td class='gvCellStyle Title'><%= @charts2[i][1].round(2) %></td>
-				<% end %>
-            </tr>
-          <% end %>
-          <% if @present3 %>
-            <tr class="gvRowStyleOdd">
-              <td class="gvTotalText">
-              <% if session[:simulation] != 'scenario' %>
-                  <%= Watershed.find(@scenario3).name %>
-                <% else %>
-                  <%= Scenario.find(@scenario3).name %>
-                <% end %>
-              </td>
-				<% for i in 0..@charts3.count - 1 %>
-					<td class='gvCellStyle Title'><%= @charts3[i][1].round(2) %></td>
-				<% end %>
-            </tr>
-          <% end %>
-        </tbody>
-          </tbody>
-        <% end %>
-      </table>
+    	<table class='table table-bordered' style="white-space: nowrap;">
+	        <% if (@present1 || @present2 || @present3)  %>
+				<thead>
+				  <tr class='gvHeaderStyle'>
+					<th class='gvCellStyle Title'><%= t('models.scenario') %></th>
+					<% case true %>
+						<% when @present1 %>
+							<% for i in 0..@charts1.count - 1 %><th class='gvCellStyle Title'><%= @charts1[i][0] %></th><% end %>
+						<% when @present2 %>
+							<% for i in 0..@charts2.count - 1 %><th class='gvCellStyle Title'><%= @charts2[i][0] %></th><% end %>
+						<% when @present3 %>
+							<% for i in 0..@charts3.count - 1 %><th class='gvCellStyle Title'><%= @charts3[i][0] %></th><% end %>
+					<% end %>
+				  </tr>
+				</thead>
+		        <tbody>
+		          <% if @present1 %>
+		            <tr class="gvRowStyleOdd">
+		              <td class="gvTotalText">
+		                <% if session[:simulation] != 'scenario' %>
+		                  <%= Watershed.find(@scenario1).name %>
+		                <% else %>
+		                  <%= Scenario.find(@scenario1).name %>
+		                <% end %>
+		                </td>
+						<% for i in 0..@charts1.count - 1 %>
+							<td class='gvCellStyle Title'><%= @charts1[i][1].round(1) %></td>
+						<% end %>
+		            </tr>
+		          <% end %>
+		          <% if @present2 %>
+		            <tr class="gvRowStyleEven">
+		              <td class="gvTotalText">
+		              	<% if session[:simulation] != 'scenario' %>
+		                  <%= Watershed.find(@scenario2).name %>
+		                <% else %>
+		                  <%= Scenario.find(@scenario2).name %>
+		                <% end %>
+		              </td>
+						<% for i in 0..@charts2.count - 1 %>
+							<td class='gvCellStyle Title'><%= @charts2[i][1].round(1) %></td>
+						<% end %>
+		            </tr>
+		          <% end %>
+		          <% if @present3 %>
+		            <tr class="gvRowStyleOdd">
+		              	<td class="gvTotalText">
+			              	<% if session[:simulation] != 'scenario' %>
+			                  <%= Watershed.find(@scenario3).name %>
+			                <% else %>
+			                  <%= Scenario.find(@scenario3).name %>
+			                <% end %>
+		              	</td>
+						<% for i in 0..@charts3.count - 1 %>
+							<td class='gvCellStyle Title'><%= @charts3[i][1].round(1) %></td>
+						<% end %>
+		            </tr>
+		          <% end %>
+		        </tbody>
+	        <% end %>
+    	</table>
     </div>
 <% else %>
 	<div id="tbl_detailed" class="table-responsive">
 	  <div class="panel panel-default">
 		<table class='table table-bordered', style="white-space: nowrap;">
-		  <thead>
-			<tr class='gvHeaderStyle'>
-				<th class="gvCellStyleTitle" style="border-right: thick double #ff0000" ><%= t('result.description') %></th>
-				<% if session[:simulation] == 'scenario' %>
-				  <% if !@present1 %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results1[0].scenario_id).name%><br><span style="color:red">(<%= t('pdf.baseline') %>)</span></br></th> <% end %>
-				  <th class="gvCellStyleActions" style="border-right: thick double #ff0000"><%= "±" %></th>
-				  <% if !@present2 %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results2[0].scenario_id).name%></th> <% end %>
-				<% else %>
-				  <% if !@present1 %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results1[0].watershed_id).name%></th> <% end %>
-				  <th class="gvCellStyleActions" style="border-right: thick double #ff0000"><%= "±" %></th>
-				  <% if !@present2 %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results2[0].watershed_id).name%></th> <% end %>
-				<% end %>
-				<th class="gvCellStyleActions"><%= "±" %></th>
-				<th class="gvCellStyleTitle"><%= t('result.difference') %></th>
-				<th class="gvCellStyleTitle"><%= t('result.reduction') %><br><span style="color:red">(<%= t('pdf.percentage') %>)</span></br></th>
-				<!--<th class="gvCellStyleTitle" style="border-right: thick double #ff0000"><%= t('result.total_area') %><br><span style="color:red">(<%= t('bmp.lbs') %>)</span></br></th>-->
-				<% if session[:simulation] == 'scenario' %>
-				  <% if !@present3 %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results3[0].scenario_id).name%></th> <% end %>
-				<% else %>
-				  <% if !@present3 %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results3[0].watershed_id).name%></th> <% end %>
-				<% end %>
-				  <th class="gvCellStyleActions"><%= "±" %></th>
-				<th class="gvCellStyleTitle"><%= t('result.difference') %></th>
-				<th class="gvCellStyleTitle"><%= t('result.reduction') %><br><span style="color:red">(<%= t('pdf.percentage') %>)</span></br></th>
-				<!--<th class="gvCellStyleTitle"><%= t('result.total_area') %><br><span style="color:red">(<%= t('bmp.lbs') %>)</span></br></th>-->
-			</tr>
-		  </thead>
-		  <tbody>
+		  	<thead> <!-- titles -->
+			  	<tr class='gvHeaderStyle' >
+			  		<th></th>
+			  		<% if session[:simulation] == 'scenario' %>
+						<% if !@present1 %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Scenario.find(@results1[0].scenario_id).name%></th><%end%>
+						<% if !@present2 %> <th colspan="2" style="text-align:center"><%= t('result.scenario2') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@results2[0].scenario_id).name%></th><%end%>
+						<% if !@present3 %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@results3[0].scenario_id).name%></th><%end%>
+					<% else %>
+						<% if !@present1 %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Watershed.find(@results1[0].watershed_id).name%></th><%end%>
+						<% if !@present1 %> <th colspan="2" style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@results1[0].watershed_id).name%></th><%end%>
+						<% if !@present3 %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@results3[0].watershed_id).name%></th><%end%>
+					<% end %>
+			  	</tr>
+				<tr class='gvHeaderStyle'>
+					<th style="border-right: thick double #ff0000" ><%= t('result.description') %></th>
+					<th ><%= "Losses(±)" %></th>
+					<th ><%= "Losses(±)" %></th>
+					<th style="border-right: thick double #ff0000"><%= t('general.change') + "(%)"%></th>
+					<th ><%= "Losses(±)" %></th>
+					<th ><%= t('general.change') + "(%)"%></th>
+				</tr>
+		  	</thead>
+		  	<tbody>
 		  		<% t = "s" %>
 			    <% if @results1 != nil && @present %>
-				  <% @results1.each do |result| %>
+				  	<% @results1.each do |result| %>
 						<!--deep percolation hidden according to Dr. Saleh on 7/31/2017 - show again requested by Mindy 10/13/2017-->
-					  <% if (result.description_id > 89 and ENV["APP_VERSION"] == "modified") %>
-						<% next %>
-					  <% end %>
-					  <% description = Description.find(result.description_id) %>
-					  <% value2 = 0 %>
-					  <% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
-					  <% difference1 = value2 - result.value %>
-					  <% reduction1 = difference1 / result.value * 100 %>
-					  <%# total_area1 = difference1 * @total_area%>
-					  <% value3 = 0 %>
-					  <% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil then %> <%value3 = @results3.find_by_description_id(result.description_id).value %> <% end %>
-					  <% difference2 = value3 - result.value%>
-					  <% reduction2 = difference2 / result.value * 100%>
-					  <%# total_area2 = difference2 * @total_area%>
-					  <% row_id = t + "row" + result.description_id.to_s %>
-					  <% case (result.description_id % 10) %>
+						<% if (result.description_id > 89 and ENV["APP_VERSION"] == "modified") %>
+							<% next %>
+						<% end %>
+						<%# description = Description.find(result.description_id) %>
+						<% value2 = 0 %>
+						<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> 
+						<% end %>
+						<% difference1 = value2 - result.value %>
+						<% reduction1 = difference1 / result.value * 100 %>
+						<%# total_area1 = difference1 * @total_area%>
+						<% value3 = 0 %>
+						<% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil then %> <%value3 = @results3.find_by_description_id(result.description_id).value %> 
+						<% end %>
+						<% difference2 = value3 - result.value%>
+						<% reduction2 = difference2 / result.value * 100%>
+						<%# total_area2 = difference2 * @total_area%>
+						<% row_id = t + "row" + result.description_id.to_s %>
+						<% case (result.description_id % 10) %> 
 						<% when 0 %>
-						  <tr class="gvRowStyleOdd", id = <%=row_id%>>
-							<% if result.description_id == 70 %>
-								<% if I18n.locale.eql?(:en) %>
-								  <td class="gvTotalText" style="border-right: thick double #ff0000; ">
-									<%= description.description + "(" + description.unit + ")"  %>
-									<%= check_box_tag description.description%>
-								  </td>
-								<% else %>
-								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-								    <%= description.spanish_description %>
-									<%= check_box_tag description.description %>
-								  </td>
+							<tr class="gvRowStyleOdd", id = <%=row_id%>>
+								<% if result.description_id == 70 %>  
+									<% if I18n.locale.eql?(:en) %>  
+									  <td class="gvTotalText" style="border-right: thick double #ff0000; ">
+										<%= result.description.description + " (" + result.description.unit + ")"  %>
+										<%= check_box_tag result.description.description%>
+									  </td>
+									<% else %>
+									  <td class="gvTotalText" style="border-right: thick double #ff0000">
+									    <%= result.description.spanish_description %>
+										<%= check_box_tag result.description.description %>
+									  </td>
+									<% end %>
+									<td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
+									<%# if @results2 != nil %>
+									  <!--<td class="gvTotalNumber"><%= "" %></td>-->
+									  <td class="gvTotalNumber"><%= "" %></td>
+									  <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
+									<%# end %>
+									<%# if @results3 != nil %>
+									  <!--<td class="gvTotalNumber"><%= "" %></td>-->
+									  <td class="gvTotalNumber"><%= "" %></td>
+									  <td class="gvTotalNumber"><%= "" %></td>
+									<%# end %>
+								<% else %>  <!--if different than crops -->
+									<% if I18n.locale.eql?(:en) %>
+									  <th class="gvTotalText" style="border-right: thick double #ff0000">
+										<%= result.description.description + " (" + result.description.unit + ")" %>
+										<%= check_box_tag result.description.description %>
+									  </th>
+									<% else %>
+									  <th class="gvTotalText" style="border-right: thick double #ff0000">
+										<%= result.description.spanish_description + " (" + result.description.unit + ")" %>
+										<%= check_box_tag result.description.description %>
+									  </th>
+									<% end %>
+									<td class="gvTotalText" style="border-right: thick double #ff0000"><%= sprintf("%8.1f", result.value).to_s + " (" + result.ci_value.to_s + ")" %></td>
+									<% if @results2 != nil %>
+									  <td class="gvTotalText"><%= sprintf("%8.1f", value2).to_s + " (" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value).to_s + ")" %></td>
+									  <td class="gvTotalText" style="border-right: thick double #ff0000"><%= sprintf("%8.1f", difference1) + " (" %> <%= "+" unless reduction1 < 0 %> <%= sprintf("%8.1f", reduction1) + ")" %></td>
+									<% end %>
+									<% if @results3 != nil %>
+									  <td class="gvTotalText"><%= sprintf("%8.1f", value3).to_s + " (" + sprintf("%8.1f", @results3.find_by_description_id(result.description_id).ci_value).to_s + ")" %></td>
+									  <td class="gvTotalText"><%= sprintf("%8.1f", difference2) + " (" %> <%= "+" unless reduction2 < 0 %> <%=sprintf("%8.1f", reduction2) + ")"%></td>
+									<% end %>
+									<% if @results2 == nil %>
+									  <td class="gvTotalNumber"><%= "" %></td>
+									  <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
+									<% end %>
+									<% if @results3 == nil %>
+									  <td class="gvTotalNumber"><%= "" %></td>
+									  <td class="gvTotalNumber"><%= "" %></td>
+									<% end %>
 								<% end %>
-								<td class="gvTotalNumber"><%= "" %></td>
-								<td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
-								<%# if @results2 != nil %>
-								  <!--<td class="gvTotalNumber"><%= "" %></td>-->
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
-								<%# end %>
-								<%# if @results3 != nil %>
-								  <!--<td class="gvTotalNumber"><%= "" %></td>-->
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								<%# end %>
-							<% else %>
-								<% if I18n.locale.eql?(:en) %>
-								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.description + "(" + description.unit + ")" %>
-									<%= check_box_tag description.description %>
-								  </td>
-								<% else %>
-								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.spanish_description + "(" + description.unit + ")" %>
-									<%= check_box_tag description.description %>
-								  </td>
-								<% end %>
-								<td class="gvTotalText"><%= sprintf("%8.2f", result.value).to_s %></td>
-								<td class="gvTotalText" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
-								<% if @results2 != nil %>
-								  <td class="gvTotalText"><%= sprintf("%8.2f", value2).to_s %></td>
-								  <td class="gvTotalText"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", difference1) %></td>
-								  <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", reduction1) %></td>
-								  <!-- <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%#= sprintf('%8.2f', total_area1) %></td> -->
-								<% end %>
-								<% if @results3 != nil %>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", value3).to_s %></td>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", difference2) %></td>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", reduction2) %></td>
-								  <!--<td class="gvTotalNumber"><%#= sprintf("%8.2f", total_area2) %></td>-->
-								<% end %>
-								<% if @results2 == nil %>
-								  <!--<td class="gvTotalNumber"><%= "" %></td>-->
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
-								<% end %>
-								<% if @results3 == nil %>
-								  <!--<td class="gvTotalNumber"><%= "" %></td>-->
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								<% end %>
-							<% end %>
-						  </tr>
-						<% else %>  <!-- else in case when. Crops-->
+						  	</tr>
+						<% else %>  <!-- else in case when detailed-->
 							<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 								<% if result.description_id > 70 && result.description_id < 80 %>
 									<% if I18n.locale.eql?(:en) %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + "/ac)" %></td>
+										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).name + " (" + Crop.find(result.crop_id).yield_unit + "/ac)" %></td>
 									<% else %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + "/ac)" %></td>
+										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).spanish_name + " (" + Crop.find(result.crop_id).yield_unit + "/ac)" %></td>
 									<% end %>
-									<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", result.value.round(2)).to_s %></td>
-									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
+									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", result.value.round(1)) + " (" + sprintf("%8.1f", result.ci_value) + ")"%></td>
 									<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value2.round(2)).to_s %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value2.round(1)) + " (" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value) + ")"%></td>
 										<% if difference1 <= 0 %>
-											<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-											<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-											<!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+											<td class="nutrients_negative bottom_border style="border-right: thick double #ff0000">"><%= sprintf("%8.0f", difference1.round(1)) + " (+" + sprintf("%8.0f", reduction1.round(1)) + ")" %></td>
 										<% else %>
-											<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-											<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-											<!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+											<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000">><%= sprintf("%8.0f", difference1.round(1)) + " (" + sprintf("%8.0f", reduction1.round(1)) + ")"%></td>
 										<% end %>
 									<% end %>
 									<% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil  %>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value3.round(2)).to_s %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value3.round(1)).to_s %></td>
+										<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.1f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
 										<% if difference2 <= 0 %>
-											<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-											<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-											<!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+											<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference2.round(1)) + " (+" + sprintf("%8.0f", reduction2.round(1)) + ")" %></td>
 										<% else %>
-											<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-											<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-											<!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+											<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference2.round(1)) + " (" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
 										<% end %>
 									<% end %>
 									<% if @results2 == nil %>
-										<!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
 										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+										<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
 									<% end %>
 									<% if @results3 == nil %>
-										<!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
 										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+										<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
 									<% end %>
 								<% else %>
     								<% format = "%8.2f" %>
@@ -351,49 +312,32 @@
     									<% format = "%8.4f" %>
     								<% end %>
 									<% if I18n.locale.eql?(:en) %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= description.description + "(" + description.unit + ")" %></td>
+										<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= result.description.description + " (" + result.description.unit + ")" %></th>
 									<% else %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= description.spanish_description + "(" + description.unit + ")" %></td>
+										<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= result.description.spanish_description + " (" + result.description.unit + ")" %></th>
 									<% end %>
-									<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, result.value).to_s %></td>
-									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
+									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, result.value).to_s + " (" + sprintf("%8.1f", result.ci_value).to_s + ")" %></td>
 									<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value2).to_s %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-										<% if difference1 >= 0 %>
-											<td class="nutrients_negative bottom_border"><%= sprintf(format, difference1) %></td>
-											<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, reduction1) %></td>
-											<!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf(format, total_area1) %></td>-->
+										<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value2) + " (" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value) + ")"%></td>
+										<% if reduction1 >= 0 %>
+											<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, difference1) + " (+" + sprintf(format, reduction1) + ")"%></td>
 										<% else %>
-											<td class="nutrients_positive bottom_border"><%= sprintf(format, difference1) %></td>
-											<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, reduction1) %></td>
-											<!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf(format, total_area1) %></td>-->
+											<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, difference1) + " (" + sprintf(format, reduction1) + ")"%></td>
 										<% end %>
 									<% end %>
 									<% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil  %>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value3).to_s %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+										<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value3) + " (" + sprintf("%8.1f", @results3.find_by_description_id(result.description_id).ci_value) + ")"%></td>
 										<% if difference2 >= 0 %>
-											<td class="nutrients_negative bottom_border"><%= sprintf(format, difference2) %></td>
-											<td class="nutrients_negative bottom_border"><%= sprintf(format, reduction2) %></td>
-											<!--<td class="nutrients_negative bottom_border"><%#= sprintf(format, total_area2) %></td>-->
+											<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, difference2) + " (+" + sprintf(format, reduction2) + ")"%></td>
 										<% else %>
-											<td class="nutrients_positive bottom_border"><%= sprintf(format, difference2) %></td>
-											<td class="nutrients_positive bottom_border"><%= sprintf(format, reduction2) %></td>
-											<!--<td class="nutrients_positive bottom_border"><%#= sprintf(format, total_area2) %></td>-->
+											<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, difference2) + " (" + sprintf(format, reduction2) + ")"%></td>
 										<% end %>
 									<% end %>
 									<% if @results2 == nil %>
-										<!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
 									<% end %>
 									<% if @results3 == nil %>
-										<!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border" ><%= "" %></td>
 									<% end %>
@@ -401,76 +345,59 @@
 							</tr>
 						<% end %><!-- end case when -->
 				    <% end %>  <!-- @results1.each -->
-			  <% end %>   <!-- if @results1 != nil && @present -->
-			<!--Crop result here -->
-			<% id = 70%>
-			<% @crop_results.each do |result| %>
-				<% id += 1%>
-				<% row_id = t + "row" + id.to_s %>
-				<% value2 = 0 %>
-				<% reduction1 = 0 %>
-				<% if @scenario2 > "0" then %>
-					<%value2 = result[3] %>
-					<% difference1 = value2 - result[1] %>
-					<% reduction1 = difference1 / result[1] * 100 unless result[1] == 0%>
-					<%# total_area1 = difference1 * @total_area%>
-				<% end %>
-				<% value3 = 0 %>
-				<% reduction2 = 0 %>
-				<% if @scenario3 > "0" then %>
-					<%value3 = result[5] %>
-					<% difference2 = value3 - result[1] %>
-					<% reduction2 = difference2 / result[1] * 100 unless result[1] == 0 %>
-					<%# total_area2 = difference2 * @total_area %>
-				<% end %>
-				<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-					<% if I18n.locale.eql?(:en) %>
-						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + "/ac)" %></td>
-					<% else %>
-						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + "/ac)" %></td>
+				<% end %>   <!-- if @results1 != nil && @present -->
+				<!--Crop result here -->
+				<% id = 70%>
+				<% @crop_results.each do |result| %>
+					<% id += 1%>
+					<% row_id = t + "row" + id.to_s %>
+					<% value2 = 0 %>
+					<% reduction1 = 0 %>
+					<% if @scenario2 > "0" then %>
+						<%value2 = result[3] %>
+						<% difference1 = value2 - result[1] %>
+						<% reduction1 = difference1 / result[1] * 100 unless result[1] == 0%>
+						<%# total_area1 = difference1 * @total_area%>
 					<% end %>
-					<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", result[1].round(2)).to_s %></td>
-					<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result[2]).to_s %></td>
-					<% if @scenario2 > "0" && @results2 %>
-						<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", result[3].round(2)).to_s %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", result[4]).to_s %></td>
-						<% if difference1 <= 0 %>
-							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-							<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-							<!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+					<% value3 = 0 %>
+					<% reduction2 = 0 %>
+					<% if @scenario3 > "0" then %>
+						<%value3 = result[5] %>
+						<% difference2 = value3 - result[1] %>
+						<% reduction2 = difference2 / result[1] * 100 unless result[1] == 0 %>
+						<%# total_area2 = difference2 * @total_area %>
+					<% end %>
+					<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
+						<% if I18n.locale.eql?(:en) %>
+							<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).name + " (" + Crop.find(result[0]).yield_unit + "/ac)" %></td>
 						<% else %>
-							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-							<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-							<!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+							<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).spanish_name + " (" + Crop.find(result[0]).yield_unit + "/ac)" %></td>
 						<% end %>
-					<% else %>
-						<!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
-					<%end%>
-					<% if @scenario3 > "0" && @results3 %>
-						<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", result[5].round(2)).to_s %></td>
-						<td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", result[6]).to_s %></td>
-						<% if difference2 <= 0 %>
-							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-							<!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", result[1].round(1)) + " (" + sprintf("%8.1f", result[2]) + ")" %></td>
+						<% if @scenario2 > "0" && @results2 %>
+							<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", result[3].round(1)) + " (" + sprintf("%8.1f", result[4]) + ")"%></td>
+							<% if difference1 <= 0 %>
+								<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (+" + sprintf("%8.0f", reduction1.round(1)) + ")"%></td>
+							<% else %>
+								<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (" + sprintf("%8.0f", reduction1.round(1)) + ")"%></td>
+							<% end %>
 						<% else %>
-							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-							<!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
-						<% end %>
-					<% else %>
-						<!--td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-					<%end%>
-				</tr>
-			<% end %>  <!-- @crop_results.each  -->
+							<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
+						<%end%>
+						<% if @scenario3 > "0" && @results3 %>
+							<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", result[5].round(1)) + " (" + sprintf("%8.1f", result[6]) + ")" %></td>
+							<% if difference2 <= 0 %>
+								<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (+" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
+							<% else %>
+								<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
+							<% end %>
+						<% else %>
+							<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+							<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+						<%end%>
+					</tr>
+				<% end %>  <!-- @crop_results.each  -->
 
       <% if !@crop_results.empty? && @present and ENV["APP_VERSION"] == "standard" %>
         <% id = 200%>
@@ -480,14 +407,9 @@
             <%= 'N Stress' %>
             <%= check_box_tag 'n_stress' %>
           </td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
         </tr>
@@ -508,51 +430,33 @@
             <%value3 = ns[5] %>
             <% difference2 = value3 - ns[1] %>
             <% reduction2 = difference2 / ns[1] * 100 unless ns[1] == 0 %>
-            <%# total_area2 = difference2 * @total_area %>
           <% end %>
           <tr class="gvRowStyleEven" id = <%=row_id%> style="display: none">
           <% if I18n.locale.eql?(:en) %>
-            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ns[0]).name + "(" + t('pdf.days') + ")" %></td>
+            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ns[0]).name + " (" + t('pdf.days') + ")" %></td>
           <% else %>
-            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ns[0]).spanish_name + "(" + t('pdf.days') + ")" %></td>
+            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ns[0]).spanish_name + " (" + t('pdf.days') + ")" %></td>
           <% end %>
-          <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ns[1].round(2)).to_s %></td>
-          <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", ns[2]).to_s %></td>
+          <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", ns[1].round(1)) + " (" + sprintf("%8.1f", ns[2]) + ")"%></td>
           <% if @scenario2 > "0" && @results2 %>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ns[3].round(2)).to_s %></td>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", ns[4]).to_s %></td>
+            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ns[3].round(1)).to_s + " (" + sprintf("%8.1f", ns[4]) + ")" %></td>
             <% if difference1 <= 0 %>
-              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-              <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (+" + sprintf("%8.0f", reduction1.round(1)) + ")" %></td>
             <% else %>
-              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-              <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (" + sprintf("%8.0f", reduction1.round(1)) + ")" %></td>
             <% end %>
           <% else %>
-            <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
           <%end%>
           <% if @scenario3 > "0" && @results3 %>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ns[5].round(2)).to_s %></td>
-            <td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", ns[6]).to_s %></td>
+            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ns[5].round(1)).to_s + " (" + sprintf("%8.1f", ns[6]) + ")"%></td>
             <% if difference2 > 0 %>
-              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (+" + sprintf("%8.0f", reduction2.round(1)) + ")" %></td>
             <% else %>
-              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
             <% end %>
           <% else %>
-            <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
           <%end%>
@@ -565,14 +469,9 @@
             <%= 'P Stress'  %>
             <%= check_box_tag 'p_stress' %>
           </td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
         </tr>
@@ -597,47 +496,31 @@
           <% end %>
           <tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
           <% if I18n.locale.eql?(:en) %>
-            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ps[0]).name + "(" + t('pdf.days') + ")" %></td>
+            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ps[0]).name + " (" + t('pdf.days') + ")" %></td>
           <% else %>
-            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ps[0]).spanish_name + "(" + t('pdf.days') + ")" %></td>
+            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ps[0]).spanish_name + " (" + t('pdf.days') + ")" %></td>
           <% end %>
-          <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ps[1].round(2)).to_s %></td>
-          <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", ps[2]).to_s %></td>
+          <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", ps[1].round(1)) + " (" + sprintf("%8.1f", ps[2]) + ")" %></td>
           <% if @scenario2 > "0" && @results2 %>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ps[3].round(2)).to_s %></td>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", ps[4]).to_s %></td>
+            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ps[3].round(1)). + " (" + sprintf("%8.1f", ps[4]) + ")" %></td>
             <% if difference1 <= 0 %>
-              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-              <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (+" + sprintf("%8.0f", reduction1.round(1)) + ")" %></td>
             <% else %>
-              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-              <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (" + sprintf("%8.0f", reduction1.round(1)) + ")" %></td>
             <% end %>
           <% else %>
-            <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
           <%end%>
           <% if @scenario3 > "0" && @results3 %>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ps[5].round(2)).to_s %></td>
-            <td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", ps[6]).to_s %></td>
+            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ps[5].round(1)) + " (" + sprintf("%8.1f", ps[6]) + ")"%></td>
             <% if difference2 <= 0 %>
-              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (+" + sprintf("%8.0f", reduction2.round(1)) + ")" %></td>
+
             <% else %>
-              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-             <!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (" + sprintf("%8.0f", reduction2.round(1)) + ")" %></td>
             <% end %>
           <% else %>
-            <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
           <%end%>
@@ -650,14 +533,9 @@
             <%= 'Temperature Stress'  %>
             <%= check_box_tag 'temp_stress' %>
           </td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
         </tr>
@@ -670,7 +548,6 @@
             <%value2 = ts[3] %>
             <% difference1 = value2 - ts[1] %>
             <% reduction1 = difference1 / ts[1] * 100 unless ts[1] == 0 %>
-            <%# total_area1 = difference1 * @total_area%>
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
@@ -678,51 +555,33 @@
             <% value3 = ts[5] %>
             <% difference2 = value3 - ts[1] %>
             <% reduction2 = difference2 / ts[1] * 100 unless ts[1] == 0 %>
-            <%# total_area2 = difference2 * @total_area %>
           <% end %>
           <tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
             <% if I18n.locale.eql?(:en) %>
-              <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ts[0]).name + "(" + t('pdf.days') + ")" %></td>
+              <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ts[0]).name + " (" + t('pdf.days') + ")" %></td>
             <% else %>
-              <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ts[0]).spanish_name + "(" + t('pdf.days') + ")" %></td>
+              <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ts[0]).spanish_name + " (" + t('pdf.days') + ")" %></td>
             <% end %>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ts[1].round(2)).to_s %></td>
-            <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", ts[2]).to_s %></td>
+            <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", ts[1].round(1)) + " (" + sprintf("%8.1f", ts[2]) + ")" %></td>
             <% if @scenario2 > "0" && @results2 %>
-              <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ts[3].round(2)).to_s %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", ts[4]).to_s %></td>
+              <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ts[3].round(1)) + " (" + sprintf("%8.1f", ts[4]) + ")" %></td>
               <% if difference1 <= 0 %>
-                <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-                <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-                <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+                <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (+" + sprintf("%8.0f", reduction1.round(1)) + ")"%></td>
               <% else %>
-                <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-                <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-                <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+                <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (" + sprintf("%8.0f", reduction1.round(1)) + ")" %></td>
               <% end %>
             <% else %>
-              <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-              <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
               <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
               <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
             <%end%>
             <% if @scenario3 > "0" && @results3 %>
-              <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ts[5].round(2)).to_s %></td>
-              <td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", ts[6]).to_s %></td>
+              <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ts[5].round(1)).to_s + " (" + sprintf("%8.1f", ts[6]) + ")" %></td>
               <% if difference2 <= 0 %>
-                <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-                <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-                <!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+                <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (+" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
               <% else %>
-                <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-                <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-                <!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+                <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (" + sprintf("%8.0f", reduction2.round(1)) + ")" %></td>
               <% end %>
             <% else %>
-              <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-              <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-              <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
               <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
               <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <%end%>
@@ -735,14 +594,9 @@
             <%= 'Water Stress'  %>
             <%= check_box_tag 'water_stress' %>
           </td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
-          <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
           <td class="gvTotalNumber"><%= "" %></td>
         </tr>
@@ -755,7 +609,6 @@
             <%value2 = ws[3] %>
             <% difference1 = value2 - ws[1] %>
             <% reduction1 = difference1 / ws[1] * 100 unless ws[1] == 0 %>
-            <%# total_area1 = difference1 * @total_area%>
           <% end %>
           <% value3 = 0 %>
           <% reduction2 = 0 %>
@@ -763,51 +616,33 @@
             <%value3 = ws[5] %>
             <% difference2 = value3 - ws[1] %>
             <% reduction2 = difference2 / ws[1] * 100 unless ws[1] == 0 %>
-            <%# total_area2 = difference2 * @total_area %>
           <% end %>
           <tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
           <% if I18n.locale.eql?(:en) %>
-            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ws[0]).name + "(" + t('pdf.days') + ")" %></td>
+            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ws[0]).name + " (" + t('pdf.days') + ")" %></td>
           <% else %>
-            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ws[0]).spanish_name + "(" + t('pdf.days') + ")" %></td>
+            <td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(ws[0]).spanish_name + " (" + t('pdf.days') + ")" %></td>
           <% end %>
-          <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ws[1].round(2)).to_s %></td>
-          <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", ws[2]).to_s %></td>
+          <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", ws[1].round(1)) + " (" + sprintf("%8.1f", ws[2]) + ")" %></td>
           <% if @scenario2 > "0" && @results2 %>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ws[3].round(2)).to_s %></td>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", ws[4]).to_s %></td>
+            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ws[3].round(1)) + " (" + sprintf("%8.1f", ws[4]) + ")"%></td>
             <% if difference1 <= 0 %>
-              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-              <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (+" + sprintf("%8.0f", reduction1.round(1)) + ")"%></td>
             <% else %>
-              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-              <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+              <td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1))+ " (" + sprintf("%8.0f", reduction1.round(1)) + ")" %></td>
             <% end %>
           <% else %>
-            <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
           <%end%>
           <% if @scenario3 > "0" && @results3 %>
-            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ws[5].round(2)).to_s %></td>
-            <td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", ws[6]).to_s %></td>
+            <td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", ws[5].round(1)) + " (" + sprintf("%8.1f", ws[6]) + ")" %></td>
             <% if difference2 <= 0 %>
-              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (+" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
             <% else %>
-              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-              <!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+              <td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (" + sprintf("%8.0f", reduction2.round(1)) + ")" %></td>
             <% end %>
           <% else %>
-            <!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-            <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
             <td class="gvCellStyleNumber bottom_border"><%= "" %></td>
           <%end%>
@@ -819,37 +654,31 @@
 	  </div>
 	</div>
 
-
 	<div id="tbl_total" class="table-responsive" style="display:none">
 	  <div class="panel panel-default">
 		<table class='table table-bordered', style="white-space: nowrap;">
-		  <thead>
-			<tr class='gvHeaderStyle'>
-				<th class="gvCellStyleTitle" style="border-right: thick double #ff0000" ><%= t('result.description') %></th>
-				<% if session[:simulation] == 'scenario' %>
-				  <% if !@present1 %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results1[0].scenario_id).name%><br><span style="color:red">(<%= t('pdf.baseline') %>)</span></br></th> <% end %>
-				  <th class="gvCellStyleActions" style="border-right: thick double #ff0000"><%= "±" %></th>
-				  <% if !@present2 %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results2[0].scenario_id).name%></th> <% end %>
-				<% else %>
-				  <% if !@present1 %> <th class="gvCellStyleTitle"><%= t('result.scenario1') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results1[0].watershed_id).name%></th> <% end %>
-				  <th class="gvCellStyleActions" style="border-right: thick double #ff0000"><%= "±" %></th>
-				  <% if !@present2 %> <th class="gvCellStyleTitle"><%= t('result.scenario2') %></th><% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results2[0].watershed_id).name%></th> <% end %>
-				<% end %>
-				<th class="gvCellStyleActions"><%= "±" %></th>
-				<th class="gvCellStyleTitle"><%= t('result.difference') %></th>
-				<th class="gvCellStyleTitle"><%= t('result.reduction') %><br><span style="color:red">(<%= t('pdf.percentage') %>)</span></br></th>
-				<!--<th class="gvCellStyleTitle" style="border-right: thick double #ff0000"><%= t('result.total_area') %><br><span style="color:red">(<%= t('bmp.lbs') %>)</span></br></th>-->
-				<% if session[:simulation] == 'scenario' %>
-				  <% if !@present3 %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Scenario.find(@results3[0].scenario_id).name%></th> <% end %>
-				<% else %>
-				  <% if !@present3 %> <th class="gvCellStyleTitle"><%= t('result.scenario3') %></th> <% else %> <th class="gvCellStyleTitle"><%=Watershed.find(@results3[0].watershed_id).name%></th> <% end %>
-				<% end %>
-				  <th class="gvCellStyleActions"><%= "±" %></th>
-				<th class="gvCellStyleTitle"><%= t('result.difference') %></th>
-				<th class="gvCellStyleTitle"><%= t('result.reduction') %><br><span style="color:red">(<%= t('pdf.percentage') %>)</span></br></th>
-				<!--<th class="gvCellStyleTitle"><%= t('result.total_area') %><br><span style="color:red">(<%= t('bmp.lbs') %>)</span></br></th>-->
-			</tr>
-		  </thead>
+		  	<thead> <!-- titles -->
+			  	<tr class='gvHeaderStyle' >
+			  		<th></th>
+			  		<% if session[:simulation] == 'scenario' %>
+						<% if !@present1 %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Scenario.find(@results1[0].scenario_id).name%></th><%end%>
+						<% if !@present2 %> <th colspan="2" style="text-align:center"><%= t('result.scenario2') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@results2[0].scenario_id).name%></th><%end%>
+						<% if !@present3 %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@results3[0].scenario_id).name%></th><%end%>
+					<% else %>
+						<% if !@present1 %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Watershed.find(@results1[0].watershed_id).name%></th><%end%>
+						<% if !@present1 %> <th colspan="2" style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@results1[0].watershed_id).name%></th><%end%>
+						<% if !@present3 %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@results3[0].watershed_id).name%></th><%end%>
+					<% end %>
+			  	</tr>
+				<tr class='gvHeaderStyle'>
+					<th style="border-right: thick double #ff0000" ><%= t('result.description') %></th>
+					<th ><%= "Losses(±)" %></th>
+					<th ><%= "Losses(±)" %></th>
+					<th style="border-right: thick double #ff0000"><%= t('general.change') + "(%)"%></th>
+					<th ><%= "Losses(±)" %></th>
+					<th ><%= t('general.change') + "(%)"%></th>
+				</tr>
+		  	</thead>
 		  <tbody>
 		  		<% t = "t" %>
 			    <% if @results1 != nil && @present %>
@@ -858,7 +687,7 @@
 					  <% if (result.description_id > 89 and ENV["APP_VERSION"] == "modified") %>
 						<% next %>
 					  <% end %>
-					  <% description = Description.find(result.description_id) %>
+					  <%# description = Description.find(result.description_id) %>
 					  <% value2 = 0 %>
 					  <% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil then %> <%value2 =@total_area * @results2.find_by_description_id(result.description_id).value %> <% end %>
 					  <% difference1 = value2 - result.value*@total_area %>
@@ -875,78 +704,54 @@
 						  <tr class="gvRowStyleOdd", id = <%=row_id%>>
 							<% if result.description_id == 70 %>
 								<% if I18n.locale.eql?(:en) %>
-								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.description %>
-									<%= check_box_tag description.description%>
-								  </td>
+								  <th class="gvTotalText" style="border-right: thick double #ff0000">
+									<%= result.description.description %>
+									<%= check_box_tag result.description.description%>
+								  </th>
 								<% else %>
-								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-								    <%= description.spanish_description %>
-									<%= check_box_tag description.description %>
-								  </td>
+								  <th class="gvTotalText" style="border-right: thick double #ff0000">
+								    <%= result.description.spanish_description %>
+									<%= check_box_tag result.description.description %>
+								  </th>
 								<% end %>
+								<td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
 								<td class="gvTotalNumber"><%= "" %></td>
 								<td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
-								<%# if @results2 != nil %>
-								  <!--<td class="gvTotalNumber"><%= "" %></td>-->
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
-								<%# end %>
-								<%# if @results3 != nil %>
-								  <!--<td class="gvTotalNumber"><%= "" %></td>-->
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								<%# end %>
+								<td class="gvTotalNumber"><%= "" %></td>
+								<td class="gvTotalNumber"><%= "" %></td>
 							<% else %>
 							    <% if result.description_id >= 40 && result.description_id <= 59 %>
     								<% description_unit = "ac in" %>
     							<% else %>
-    								<% description_unit = description.unit.chomp("/ac") %>
+    								<% description_unit = result.description.unit.chomp("/ac") %>
     							<% end %>
 								<% if I18n.locale.eql?(:en) %>
-								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.description + "(" + description_unit + ")" %>
-									<%= check_box_tag description.description %>
-								  </td>
+								  <th class="gvTotalText" style="border-right: thick double #ff0000">
+									<%= result.description.description + " (" + description_unit + ")" %>
+									<%= check_box_tag result.description.description %>
+								  </th>
 								<% else %>
-								  <td class="gvTotalText" style="border-right: thick double #ff0000">
-									<%= description.spanish_description + "(" + description_unit + ")" %>
-									<%= check_box_tag description.description %>
-								  </td>
+								  <th class="gvTotalText" style="border-right: thick double #ff0000">
+									<%= result.description.spanish_description + " (" + description_unit + ")" %>
+									<%= check_box_tag result.description.description %>
+								  </th>
 								<% end %>
-								<td class="gvTotalText"><%= sprintf("%8.2f", result.value*@total_area).to_s %></td>
-								<td class="gvTotalText" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
+								<td class="gvTotalText" style="border-right: thick double #ff0000"><%= sprintf("%8.1f", result.value*@total_area) + "(" + sprintf("%8.1f", result.ci_value) + ")"%></td>
 								<% if @results2 != nil %>
-								  <td class="gvTotalText"><%= sprintf("%8.2f", value2).to_s %></td>
-								  <td class="gvTotalText"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", difference1) %></td>
-								  <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", reduction1) %></td>
-								  <!--td class="gvTotalNumber" style="border-right: thick double #ff0000"><%#= sprintf("%8.2f", total_area1) %></td>-->
+								  <td class="gvTotalText"><%= sprintf("%8.1f", value2) + "(" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value) + ")"%></td>
+								  <td class="gvTotalText" style="border-right: thick double #ff0000"><%= sprintf("%8.1f", difference1) + "(" + sprintf("%8.1f", reduction1) + ")"%></td>
 								<% end %>
 								<% if @results3 != nil %>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", value3).to_s %></td>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", difference2) %></td>
-								  <td class="gvTotalNumber"><%= sprintf("%8.2f", reduction2) %></td>
-								  <!--<td class="gvTotalNumber"><%#= sprintf("%8.2f", total_area2) %></td>-->
+								  <td class="gvTotalText"><%= sprintf("%8.1f", value3).to_s + "(" + sprintf("%8.1f", @results3.find_by_description_id(result.description_id).ci_value) + ")"%></td>
+								  <td class="gvTotalText"><%= sprintf("%8.1f", difference2) + "(" + sprintf("%8.1f", reduction2) + ")"%></td>
 								<% end %>
 								<% if @results2 == nil %>
-								  <!--<td class="gvTotalNumber"><%#= "" %></td>-->
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber" style="border-right: thick double #ff0000"><%= "" %></td>
+								  <td class="gvTotalText"><%= "" %></td>
+								  <td class="gvTotalText" style="border-right: thick double #ff0000"><%= "" %></td>
 								<% end %>
 								<% if @results3 == nil %>
-								  <!--<td class="gvTotalNumber"><%#= "" %></td>-->
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
-								  <td class="gvTotalNumber"><%= "" %></td>
+								  <td class="gvTotalText"><%= "" %></td>
+								  <td class="gvTotalText"><%= "" %></td>
 								<% end %>
 							<% end %>
 						  </tr>
@@ -954,50 +759,33 @@
 							<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 								<% if result.description_id > 70 && result.description_id < 80 %>
 									<% if I18n.locale.eql?(:en) %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
+										<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).name + " (" + Crop.find(result.crop_id).yield_unit + ")" %></th>
 									<% else %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
+										<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).spanish_name + " (" + Crop.find(result.crop_id).yield_unit + ")" %></th>
 									<% end %>
-									<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", (result.value*@total_area).round(2)).to_s %></td>
-									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
+									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000">><%= sprintf("%8.0f", (result.value*@total_area).round(1)) + "(" + sprintf("%8.1f", result.ci_value) + ")"%></td>
 									<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
-
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value2.round(2)).to_s %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value2.round(1)) + " (" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value) + ")"%></td>
 										<% if difference1 <= 0 %>
-											<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-											<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-											<!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+											<td class="nutrients_negative bottom_border"  style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (+" + sprintf("%8.0f", reduction1.round(1)) + ")"%></td>
+											<!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(1)) %></td>-->
 										<% else %>
-											<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-											<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-											<!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+											<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (" + sprintf("%8.0f", reduction1.round(1)) + ")"%></td>
 										<% end %>
 									<% end %>
 									<% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil  %>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value3.round(2)).to_s %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value3.round(1)) + " (" + sprintf("%8.1f", @results3.find_by_description_id(result.description_id).ci_value) + ")"%></td>
 										<% if difference2 <= 0 %>
-											<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-											<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-											<!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+											<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (+" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
 										<% else %>
-											<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-											<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-											<!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+											<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
 										<% end %>
 									<% end %>
 									<% if @results2 == nil %>
-										<!--<td class="gvCellStyleNumber bottom_border"><%#= "" %></td>-->
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
+								<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 									<% end %>
 									<% if @results3 == nil %>
-										<!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 									<% end %>
@@ -1009,52 +797,35 @@
     								<% if result.description_id >= 40 && result.description_id <= 59 %>
     									<% description_unit = "ac in" %>
     								<% else %>
-    									<% description_unit = description.unit.chomp("/ac") %>
+    									<% description_unit = result.description.unit.chomp("/ac") %>
     								<% end %>
 									<% if I18n.locale.eql?(:en) %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= description.description + "(" + description_unit + ")" %></td>
+										<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= result.description.description + " (" + description_unit + ")" %></th>
 									<% else %>
-										<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= description.spanish_description + "(" + description_unit + ")" %></td>
+										<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= result.description.spanish_description + " (" + description_unit + ")" %></th>
 									<% end %>
-									<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, result.value*@total_area).to_s %></td>
-									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result.ci_value).to_s %></td>
+									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, result.value*@total_area) + " (" + sprintf("%8.1f", result.ci_value) + ")"%></td>
 									<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value2).to_s %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
+										<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value2) + "(" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value) + ")"%></td>
 										<% if difference1 >= 0 %>
-											<td class="nutrients_negative bottom_border"><%= sprintf(format, difference1) %></td>
-											<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, reduction1) %></td>
-											<!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf(format, total_area1) %></td>-->
+											<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, difference1) + " (+" + sprintf(format, reduction1) + ")"%></td>
 										<% else %>
-											<td class="nutrients_positive bottom_border"><%= sprintf(format, difference1) %></td>
-											<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf(format, reduction1) %></td>
-											<!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf(format, total_area1) %></td>-->
+											<td class="nutrients_positive bottom_border"  style="border-right: thick double #ff0000"><%= sprintf(format, difference1) + " (" + sprintf(format, reduction1) + ")"%></td>
 										<% end %>
 									<% end %>
 									<% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil  %>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value3).to_s %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
+										<td class="gvCellStyleNumber bottom_border"><%= sprintf(format, value3) + "(" + sprintf("%8.1f", @results3.find_by_description_id(result.description_id).ci_value) + ")"%></td>
 										<% if difference2 >= 0 %>
-											<td class="nutrients_negative bottom_border"><%= sprintf(format, difference2) %></td>
-											<td class="nutrients_negative bottom_border"><%= sprintf(format, reduction2) %></td>
-											<!--<td class="nutrients_negative bottom_border"><%#= sprintf(format, total_area2) %></td>-->
+											<td class="nutrients_negative bottom_border"><%= sprintf(format, difference2) + " (+" + sprintf(format, reduction2) + ")"%></td>
 										<% else %>
-											<td class="nutrients_positive bottom_border"><%= sprintf(format, difference2) %></td>
-											<td class="nutrients_positive bottom_border"><%= sprintf(format, reduction2) %></td>
-											<!--<td class="nutrients_positive bottom_border"><%#= sprintf(format, total_area2) %></td>-->
+											<td class="nutrients_positive bottom_border"><%= sprintf(format, difference2) + " (" + sprintf(format, reduction2) + ")"%></td>
 										<% end %>
 									<% end %>
 									<% if @results2 == nil %>
-										<!--<td class="gvCellStyleNumber bottom_border"><%#= "" %></td>-->
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
 									<% end %>
 									<% if @results3 == nil %>
-										<!--<td class="gvCellStyleNumber bottom_border"><%#= "" %></td>-->
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 										<td class="gvCellStyleNumber bottom_border" ><%= "" %></td>
 									<% end %>
@@ -1086,47 +857,27 @@
 				<% end %>
 				<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 					<% if I18n.locale.eql?(:en) %>
-						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")" %></td>
+						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).name + " (" + Crop.find(result[0]).yield_unit + ")" %></td>
 					<% else %>
-						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")" %></td>
+						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).spanish_name + " (" + Crop.find(result[0]).yield_unit + ")" %></td>
 					<% end %>
-					<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", (result[1]*@total_area).round(2)).to_s %></td>
-					<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.2f", result[2]).to_s %></td>
+					<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", (result[1]*@total_area).round(1)) + " (" + sprintf("%8.1f", result[2]) + ")"%></td>
 					<% if @scenario2 > "0" %>
-						<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value2.round(2)).to_s %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.2f", result[4]).to_s %></td>
+						<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value2.round(1)) + "(" + sprintf("%8.1f", result[4]) + ")"%></td>
 						<% if difference1 <= 0 %>
-							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-							<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-							<!--<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+							<td class="nutrients_negative bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (+" + sprintf("%8.0f", reduction1.round(1)) + ")"%></td>
 						<% else %>
-							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference1.round(2)) %></td>
-							<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", reduction1.round(2)) %></td>
-							<!--<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%#= sprintf("%8.0f", total_area1.round(2)) %></td>-->
+							<td class="nutrients_positive bottom_border" style="border-right: thick double #ff0000"><%= sprintf("%8.0f", difference1.round(1)) + " (" + sprintf("%8.0f", reduction1.round(1)) + ")"%></td>
 						<% end %>
-					<% else %>
-						<!--<td class="gvCellStyleNumber bottom_border"><%= "" %></td>-->
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000"><%= "" %></td>
 					<%end%>
 					<% if @scenario3 > "0" %>
-						<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value3.round(2)).to_s %></td>
-						<td class="gvCellStyleNumber bottom_border" ><%= sprintf("%8.2f", result[6]).to_s %></td>
+						<td class="gvCellStyleNumber bottom_border"><%= sprintf("%8.0f", value3.round(1)) + "(" + sprintf("%8.1f", result[6]) + ")"%></td>
 						<% if difference2 <= 0 %>
-							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-							<!--<td class="nutrients_negative bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+							<td class="nutrients_negative bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (+" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
 						<% else %>
-							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(2)) %></td>
-							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", reduction2.round(2)) %></td>
-							<!--<td class="nutrients_positive bottom_border"><%#= sprintf("%8.0f", total_area2.round(2)) %></td>-->
+							<td class="nutrients_positive bottom_border"><%= sprintf("%8.0f", difference2.round(1)) + " (" + sprintf("%8.0f", reduction2.round(1)) + ")"%></td>
 						<% end %>
 					<% else %>
-						<!--<td class="gvCellStyleNumber bottom_border"><%#= "" %></td>-->
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
-						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 						<td class="gvCellStyleNumber bottom_border"><%= "" %></td>
 					<%end%>

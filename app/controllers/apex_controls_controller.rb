@@ -5,12 +5,12 @@ class ApexControlsController < ApplicationController
   # GET /apex_controls.json
   
   def index
-    @field = Field.find(params[:field_id])
+    #@field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
   	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])	
 	
-	add_breadcrumb t('menu.utility_file')
-	add_breadcrumb t('menu.control_file')
+    add_breadcrumb t('menu.utility_file')
+    add_breadcrumb t('menu.control_file')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @apex_controls }
@@ -41,16 +41,16 @@ class ApexControlsController < ApplicationController
 
   # GET /apex_controls/1/edit
   def edit
-    @field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
   	@apex_control = ApexControl.includes(:control_description).where(:project_id => params[:project_id]).find(params[:id])
   	@control_code = @apex_control.control_description.code
   	@low_range = @apex_control.control_description.range_low
   	@high_range = @apex_control.control_description.range_high
 		
-	add_breadcrumb t('menu.utility_file')
-	add_breadcrumb t('menu.control_file'), controller: "apex_controls", action: "index"
-	add_breadcrumb t('general.editing') + " " +  t('menu.control_file')
+    add_breadcrumb t('menu.utility_file')
+    add_breadcrumb t('menu.control_file'), controller: "apex_controls", action: "index"
+    add_breadcrumb t('general.editing') + " " +  t('menu.control_file')
   end
 
   # POST /apex_controls
@@ -122,8 +122,8 @@ class ApexControlsController < ApplicationController
   		end
       apex_control.save
     end
-    @field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
   	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])	
 	
     add_breadcrumb 'Utility Files'

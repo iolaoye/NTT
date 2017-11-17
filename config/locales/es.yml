@@ -569,7 +569,7 @@ es:
     amount: Cantidad (lbs/ac)
     bmp: BPG
     irrigation: Irrigación
-    plant_population: 'Población de Planta (seeds/ac)'
+    plant_population: 'Población de Planta (seeds/ac)(*opcional)'
     load_operation: Cargar Operación
     sum: 'El total de los nutrientes deben ser menor o igual a 1'
     save: Guardar
@@ -600,7 +600,7 @@ es:
     liming: Encalado
     start_grazing: Pasteo
     stop_grazing: Terminar Pasteo
-    seed: 'Cantidad de Siembra (seeds/ft)'
+    seed: 'Cantidad de Siembra (seeds/ft)(opcional)'
     amount_applied: 'Cantidad Aplicada'
     add_planting: 'Añadir operación de Plantar'
     add_fertilizer: 'Añadir operación de Fertilizante'
@@ -790,7 +790,7 @@ es:
     select_watershed3: Seleccione 3ra cuenca
     select_prompt_scenario: Seleccione hasta 3 escenarios para ver
     select_prompt_watershed: Seleccione hasta 3 cuencas para ver
-    select_chart: Seleccione tipo de Gráfico
+    select_chart: Seleccione una Categoría
     description: Descripción
     difference: Diferencia
     reduction: Reducción
@@ -800,6 +800,9 @@ es:
     third_scenario_error: El tercero escenario no tiene
     pdf_download_error: You must run a summary before you can download a pdf
     confidence: Intervalo de Confidencia
+    total_units: Area Total
+    units_ac: Area Unidad
+    upto12: (hasta los ùltimos 12 years)
   users:
     confirmation: Confirmación de la contraseña
     company: Empresa

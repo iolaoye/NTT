@@ -1,12 +1,6 @@
 # encoding: utf-8
-file = "db/seeds/fertilizer_types.rb"
-load file
 
-file = "db/seeds/fertilizers.rb"
-load file
 
-file = "db/seeds/activities.rb"
-load file
 
 file = "db/seeds/descriptions.rb"
 load file
@@ -26,7 +20,6 @@ load file
 
 file = "db/seeds/animals.rb"
 load file
-
 
 file = "db/seeds/aplcat_parameters.rb"
 load file
@@ -95,6 +88,9 @@ file = "db/seeds/states.rb"
 load file
 
 file = "db/seeds/stations.rb"
+load file
+
+file = "db/seeds/soil_tests.rb"
 load file
 
 file = "db/seeds/supplement_parameters.rb"

@@ -3,24 +3,29 @@ class SubareasController < ApplicationController
   # GET /subareas.json
 
   def index
-    @field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
-	  @soils = Soil.where(:field_id => @field.id, :selected => true)
+    #@field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+	  #@soils = Soil.where(:field_id => @field.id, :selected => true)
 	  add_breadcrumb t('menu.utility_file')
 	  add_breadcrumb t('menu.subarea_file')
-  	if @soils != nil and session[:scenario_id] == nil then
-  		subarea = Subarea.where(:soil_id => @soils[0].id).first
-  		if subarea != nil then
-   			session[:scenario_id] = subarea.scenario_id
-   		else
-   			session[:scenario_id] = 0
-   		end
-   	else
-   		session[:scenario_id] = 0 unless session[:scenario_id] != nil
-   	end
-    if session[:scenario_id] > 0 then
-  	   get_subareas()
+    @scenario_id = 0
+    if params[:subarea] != nil then
+      @scenario_id = params[:subarea][:scenario_id]
+      get_subareas()
     end
+  	#if @soils != nil and session[:scenario_id] == nil then
+  		#subarea = Subarea.where(:soil_id => @soils[0].id).first
+  		#if subarea != nil then
+   			#session[:scenario_id] = subarea.scenario_id
+   		#else
+   			#session[:scenario_id] = 0
+   		#end
+   	#else
+   		#session[:scenario_id] = 0 unless session[:scenario_id] != nil
+   	#end
+    #if session[:scenario_id] > 0 then
+  	   #get_subareas()
+    #end
 
   	respond_to do |format|
       format.html # index.html.erb
@@ -32,8 +37,8 @@ class SubareasController < ApplicationController
   # GET /subareas/1.json
   def show
     @subarea = Subarea.find(params[:id])
-    @field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
     @location = Location.where(:project_id => params[:project_id])
 		
 	  add_breadcrumb t('menu.utility_file')
@@ -58,8 +63,8 @@ class SubareasController < ApplicationController
   # GET /subareas/1/edit
   def edit
     @subarea = Subarea.find(params[:id])
-    @field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
 		
   	add_breadcrumb t('menu.utility_file')
     add_breadcrumb t('menu.subarea_file'), controller: "subareas", action: "index"
@@ -70,11 +75,16 @@ class SubareasController < ApplicationController
   # POST /subareas
   # POST /subareas.json
   def create
-    session[:scenario_id] = params[:subarea][:scenario_id].to_i
-    @field = Field.find(params[:field_id])
-    @soils = @field.soils.where(:selected => true)
-  	@project = Project.find(params[:project_id])
-  	get_subareas()
+    #session[:scenario_id] = params[:subarea][:scenario_id].to_i
+    @scenario_id = 0
+    if params[:subarea] != nil then
+      @scenario_id = params[:subarea][:scenario_id]
+      get_subareas()
+    end
+    #@field = Field.find(params[:field_id])
+    #@soils = @field.soils.where(:selected => true)
+  	#@project = Project.find(params[:project_id])
+  	#get_subareas()
   	render "index"
   end
 
@@ -109,18 +119,28 @@ class SubareasController < ApplicationController
   def get_subareas()
     @subareas = []
 	  i=1
-	  if session[:scenario_id] != 0 then
-		  scenario_id = Scenario.find(session[:scenario_id]) rescue nil
-		  if scenario_id != nil then
-			  @soils.each do |soil|
-				  subarea = soil.subareas.find_by_scenario_id(session[:scenario_id])
-          if subarea != nil then
-				    @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
-				    i+=1
-          end
-			  end
-		  end
-	  end
+
+    if @scenario_id != 0 then
+      subareas = @field.scenarios.find(@scenario_id).subareas
+      if subareas != nil then
+        subareas.each do |subarea|
+          @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+          i+=1
+        end
+      end
+    end
+	  #if session[:scenario_id] != 0 then
+		  #scenario_id = Scenario.find(session[:scenario_id]) rescue nil
+		  #if scenario_id != nil then
+			  #@soils.each do |soil|
+				  #subarea = soil.subareas.find_by_scenario_id(session[:scenario_id])
+          #if subarea != nil then
+				    #@subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+				    #i+=1
+          #end
+			  #end
+		  #end
+	  #end
 	  subareas = Subarea.where("scenario_id = " + session[:scenario_id].to_s + " AND bmp_id > 0 AND soil_id = 0")
 	  subareas.each do |subarea|
 		  @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
