@@ -83,7 +83,7 @@ class ProjectsController < ApplicationController
     if !msg == "OK" then
       flash[:info] = msg
     else
-      notice = msg
+      flash[:notice] = msg
     end # end if msg
     #download_project(params[:id], "copy")
     @user = User.find(session[:user_id])
@@ -112,9 +112,10 @@ class ProjectsController < ApplicationController
         location.project_id = @project.id
         location.save
         session[:location_id] = location.id
-        format.html { redirect_to @project, notice: t('models.project') + "" + t('notices.created') }
+        format.html { redirect_to @project, info: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
+        notice=""
         flash[:info] = t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
         format.html { redirect_to user_projects_path(session[:user_id]) }
         #format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -131,7 +132,7 @@ class ProjectsController < ApplicationController
   @project.version = "NTTG3"
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to user_projects_path(params[:user_id]), notice: t('models.project') + "" + t('notices.updated') }
+        format.html { redirect_to user_projects_path(params[:user_id]), info: t('models.project') + "" + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -149,7 +150,7 @@ class ProjectsController < ApplicationController
     location.destroy_all unless location == []
     respond_to do |format|
     if @project.destroy
-      format.html { redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.deleted') }
+      format.html { redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.deleted') }
     format.json { head :no_content }
       end
   end
@@ -175,8 +176,8 @@ class ProjectsController < ApplicationController
   def upload_project
   saved = upload_prj()
     if saved
-      flash[:notice] = t('models.project') + " " + t('general.success')
-      redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.uploaded')
+      flash[:info] = t('models.project') + " " + t('general.success')
+      redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
       redirect_to projects_upload_path(@upload_id)
     end

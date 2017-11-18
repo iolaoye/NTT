@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Soil Tests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Factor1</th>
+      <th>Factor2</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @soil_tests.each do |soil_test| %>
+      <tr>
+        <td><%= soil_test.name %></td>
+        <td><%= soil_test.factor1 %></td>
+        <td><%= soil_test.factor2 %></td>
+        <td><%= link_to 'Show', soil_test %></td>
+        <td><%= link_to 'Edit', edit_soil_test_path(soil_test) %></td>
+        <td><%= link_to 'Destroy', soil_test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Soil test', new_soil_test_path %>

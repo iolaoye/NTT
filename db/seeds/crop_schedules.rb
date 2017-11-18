@@ -47,3 +47,4 @@ CropSchedule.create!({:id => 42,:name => "Tobacco",:state_id => "34",:class_id =
 #CropSchedule.create!({:id => 46,:name => "Pistachios",:state_id => "5",:class_id => 1,:status => true}, :without_protection => true)
 #CropSchedule.create!({:id => 47,:name => "Millet",:state_id => "6",:class_id => 1,:status => true}, :without_protection => true)
 #CropSchedule.create!({:id => 48,:name => "Almonds",:state_id => "5",:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 49,:name => "Barley",:state_id => "2,3,9,13,21,27,35,45,48,51",:class_id => 1,:status => true}, :without_protection => true)
