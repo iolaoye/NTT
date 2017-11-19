@@ -465,7 +465,6 @@ class BmpsController < ApplicationController
 ####################### INDIVIDUAL SUBLIST ACTIONS #######################
 ### ID: 1
   def autoirrigation(type)
-    ooo
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
       subarea = soil.subareas.find_by_scenario_id(params[:scenario_id])
