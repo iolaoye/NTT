@@ -504,7 +504,7 @@ en:
     final_simulation_error: must not be greater than the final year of weather information. Maximum value is
     update_simulation: Update Simulation Period
   soil:
-    test: Soil Test Laboratory
+    test: Soil Test
     layers: Layers
     soil: Soil
     layer: Layer
@@ -578,7 +578,7 @@ en:
     volume: 'Volume (in)'
     efficiency: 'Efficiency (0-1)'
     animals: 'Total animal units'
-    hours: 'Hours in field (0-24)'
+    hours: 'Hours grazed per day (0-24)'
     depth: 'Depth (in)'
     no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
     po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
@@ -697,8 +697,8 @@ en:
     ffpq: Fraction of field treated by
     grazing_date: Grazing dates
     hours_grazed: '# of consecutive hours per day grazed'
-    days_grazed: '# of consecutive days grazed at a time (in each paddock)'
-    rest_time: 'Pasture rest time (days) between grazings'
+    days_grazed: '# of consecutive days grazed in each paddock'
+    rest_time: 'paddock rest time between grazing (days)'
   months:
     january: January
     february: February
