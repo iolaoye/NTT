@@ -134,8 +134,8 @@ class OperationsController < ApplicationController
       #update_amount()   #CONVERT T/ac to lbs/ac
       @operation.scenario_id = params[:scenario_id]
       @operation.moisture = params[:op][:moisture]
-      @operation.org_c = params[:op][:moisture]
-      @operation.nh4_n = params[:op][:moisture]
+      @operation.org_c = params[:op][:total_n_con]
+      @operation.nh4_n = params[:op][:total_p_con]
       @crops = Crop.load_crops(@project.location.state_id)
       if @operation.save
         #saves start grazing operation in SoilOperation table
@@ -228,6 +228,7 @@ class OperationsController < ApplicationController
       params[:operation][:po4_p] = total_p * fert_type.yn * 100
       params[:operation][:org_p] = total_p * fert_type.yp * 100
     end
+
     @operation = Operation.find(params[:id])
     #@field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)
