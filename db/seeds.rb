@@ -11,6 +11,9 @@ load file
 file = "db/seeds/bmpsublists.rb"
 load file
 
+file = "db/seeds/soil_tests.rb"
+load file
+
 cont = false
 
 if cont then
