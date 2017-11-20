@@ -120,11 +120,7 @@
 							<% else %>
 								<% amount_label = "(x1000gal/ac)" %>
 							<% end %>
-							<% if op.activity_id == 2 and op.type_id == 2 then %>
-								<td class="gvCellStyleNumber"><%= op.amount %><%= amount_label %> </td>
-							<% else %>
-								<td class="gvCellStyleNumber"><%= op.amount%><%= amount_label %> </td>
-							<% end %>
+							<td class="gvCellStyleNumber"><%= op.amount %><%= amount_label %> </td>
 							<td class="gvCellStyleNumber"><%= op.depth %></td>
 							<td style="text-align:right">
 							  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
@@ -206,16 +202,16 @@
 			  <h4><%= t('general.continues_grazing') %></h4>
 			    <table class="table">
 				  <tr>
-					<td class="optable"><b></b></td>
-					<td class="optable"><b><%= (t'pdf.year') %></b></td>
-					<td class="optable"><b><%= (t'pdf.month') %></b></td>
-					<td class="optable"><b><%= (t'pdf.day') %></b></td>
-					<td class="optable"><b><%= t('general.type') %></b></td>
-					<td class="optable" style="text-align: right"><b><%= t('operation.animals') %></b></td>
-					<td class="optable" style="text-align: right"><b><%= t('operation.hours') %></b></td>
-					<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
-          </tr>
-				  <% @operations.where("(activity_id = ? or activity_id = ?) and crop_id = ?", 7,8,crop).each do |op| %>
+						<td class="optable"><b></b></td>
+						<td class="optable"><b><%= (t'pdf.year') %></b></td>
+						<td class="optable"><b><%= (t'pdf.month') %></b></td>
+						<td class="optable"><b><%= (t'pdf.day') %></b></td>
+						<td class="optable"><b><%= t('general.type') %></b></td>
+						<td class="optable" style="text-align: right"><b><%= t('operation.animals') %></b></td>
+						<td class="optable" style="text-align: right"><b><%= t('operation.hours') %></b></td>
+						<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
+          			</tr>
+				  	<% @operations.where("(activity_id = ? or activity_id = ?) and crop_id = ?", 7,8,crop).each do |op| %>
 					  <tr>
 						<% if op.activity_id == 7 %>
 							<td><%= t('general.start') %></td>
