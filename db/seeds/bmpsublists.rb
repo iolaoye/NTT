@@ -16,7 +16,7 @@ Bmpsublist.create!({:id => 14,:name => "Grass Waterway",:status => true,:bmplist
 Bmpsublist.create!({:id => 15,:name => "Contour Buffer",:status => true,:bmplist_id => 5,:spanish_name => "Buffer de Contorno"}, :without_protection => true)
 Bmpsublist.create!({:id => 16,:name => "Land Leveling",:status => true,:bmplist_id => 6,:spanish_name => "Nivelacion de la Tierra"}, :without_protection => true)
 Bmpsublist.create!({:id => 17,:name => "Terrace System",:status => true,:bmplist_id => 6,:spanish_name => "Sistema de Terraza"}, :without_protection => true)
-Bmpsublist.create!({:id => 18,:name => "Manure Control",:status => true,:bmplist_id => 6,:spanish_name => "Control de Estiercol"}, :without_protection => true)
+Bmpsublist.create!({:id => 18,:name => "Manure Nutrient Change (Anaerobic Digester System)",:status => true,:bmplist_id => 6,:spanish_name => "Control de Estiercol"}, :without_protection => true)
 Bmpsublist.create!({:id => 19,:name => "Cover Crop 1",:status => true,:bmplist_id => 9,:spanish_name => "Cultivo de Proteccion"}, :without_protection => true)
 Bmpsublist.create!({:id => 20,:name => "Cover Crop 2",:status => true,:bmplist_id => 9,:spanish_name => "Cultivo de Proteccion"}, :without_protection => true)
 Bmpsublist.create!({:id => 21,:name => "Rotational Grazing",:status => true,:bmplist_id => 9,:spanish_name => "Pastoreo Rotacional"}, :without_protection => true)

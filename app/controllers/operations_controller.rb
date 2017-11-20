@@ -134,12 +134,14 @@ class OperationsController < ApplicationController
       #update_amount()   #CONVERT T/ac to lbs/ac
       @operation.scenario_id = params[:scenario_id]
       @operation.moisture = params[:op][:moisture]
-      @operation.org_c = params[:op][:moisture]
-      @operation.nh4_n = params[:op][:moisture]
+      @operation.org_c = params[:op][:total_n_con]
+      @operation.nh4_n = params[:op][:total_p_con]
       @crops = Crop.load_crops(@project.location.state_id)
       if @operation.save
         #saves start grazing operation in SoilOperation table
-        msg = add_soil_operation
+        if @operation.activity_id != 9 then
+          msg = add_soil_operation
+        end
         saved = true
         #operations should be created in soils too. but not for rotational grazing
         #msg = add_soil_operation() unless @operation.activity_id == 9
@@ -171,14 +173,14 @@ class OperationsController < ApplicationController
           @operation.nh3 = 0
           @operation.subtype_id = 0
           @operation.save
-        end
-        if @operation.activity_id != 9 && @operation.activity_id != 10 then 
-          msg = add_soil_operation()
-          if msg.eql?("OK")
-            soil_op_saved = true
-          else
-            soil_op_saved = false
-            raise ActiveRecord::Rollback
+          if @operation.activity_id = 8 then 
+            msg = add_soil_operation()
+            if msg.eql?("OK")
+              soil_op_saved = true
+            else
+              soil_op_saved = false
+              raise ActiveRecord::Rollback
+            end
           end
         end
       else
@@ -226,6 +228,7 @@ class OperationsController < ApplicationController
       params[:operation][:po4_p] = total_p * fert_type.yn * 100
       params[:operation][:org_p] = total_p * fert_type.yp * 100
     end
+
     @operation = Operation.find(params[:id])
     #@field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)
@@ -448,9 +451,14 @@ class OperationsController < ApplicationController
         @highest_year = operation.year
       end
     end
-    state_id = Location.find_by_project_id(@project.id).state_id
+    state_id = @project.location.state_id
+    if state_id < 10 then
+      state_id_text = "0" + state_id.to_s
+    else
+      state_id_text = "'" + state_id.to_s + "'"
+    end
     #@cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 2")
-    @cropping_systems = CropSchedule.where(:status => true, :class_id => 1).where("state_id LIKE ? OR state_id LIKE ?", "%#{state_id}%","*")
+    @cropping_systems = CropSchedule.where(:status => true, :class_id => 1).where("state_id LIKE ? OR state_id LIKE ?", "%#{state_id_text}%","*")
     @tillages = CropSchedule.where(:state_id => state_id, :status => true).where("class_id = 3")
     if @cropping_systems.blank? then
       @cropping_systems = CropSchedule.where(:state_id => "*", :status => true).where("class_id < 2")
