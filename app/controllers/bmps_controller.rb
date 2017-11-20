@@ -465,9 +465,10 @@ class BmpsController < ApplicationController
 ####################### INDIVIDUAL SUBLIST ACTIONS #######################
 ### ID: 1
   def autoirrigation(type)
-    @soils = Soil.where(:field_id => params[:field_id])
-    @soils.each do |soil|
-      subarea = soil.subareas.find_by_scenario_id(params[:scenario_id])
+    #@soils = Soil.where(:field_id => params[:field_id])
+    #@soils.each do |soil|
+    @scenario.subareas.each do |subarea|
+      #subarea = soil.subareas.find_by_scenario_id(params[:scenario_id])
       if subarea != nil then
         case type
           when "create", "update"
@@ -521,7 +522,7 @@ class BmpsController < ApplicationController
   			   return "Unable to save value in the subarea file"
   		  end
       end #end if subarea !nil
-    end # end soils.each
+    end # end subareas.each
     return "OK"
   end  # end method
 
