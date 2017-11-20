@@ -339,7 +339,7 @@ module ScenariosHelper
 					else
 						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
 					end
-					subarea.wsa = subarea.wsa
+					#subarea.wsa = subarea.wsa
 					if @bmp.sides == 0 then
 						update_wsa("-", subarea.wsa)
 					end
