@@ -6,8 +6,8 @@ class ApexControlsController < ApplicationController
   
   def index
     #@field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
-  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])	
+    #@project = Project.find(params[:project_id])
+  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => @project.id)	
 	
     add_breadcrumb t('menu.utility_file')
     add_breadcrumb t('menu.control_file')
@@ -98,7 +98,7 @@ class ApexControlsController < ApplicationController
   end
 
   def reset
-    controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
+    controls = Control.where(:state_id => @project.location.state_id)
     if controls.blank? || controls == nil then
 		  controls = Control.where(:state_id => 99)
     end
