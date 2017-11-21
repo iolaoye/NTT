@@ -253,14 +253,14 @@
 										<%= check_box_tag result.description.description %>
 									  </th>
 									<% end %>
-									<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", result.value).to_s + " (" + result.ci_value.to_s + ")" %></td>
+									<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", result.value).to_s + " (" + result.ci_value.round(1).to_s + ")" %></td>
 									<% if @results2 != nil %>
-									  <td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", value2).to_s + " (" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value).to_s + ")" %></td>
-									  <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" %> <%= "+" unless reduction1 < 0 %> <%= sprintf("%8.1f", reduction1) + ")" %></td>
+									  <td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", value2).to_s + " (" + @results2.find_by_description_id(result.description_id).ci_value.round(1).to_s + ")" %></td>
+									  <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= difference1.round(1).to_s + " (" %> <%= "+" unless reduction1 < 0 %> <%= reduction1.round(1).to_s + ")" %></td>
 									<% end %>
 									<% if @results3 != nil %>
 									  <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", value3).to_s + " (" + sprintf("%8.1f", @results3.find_by_description_id(result.description_id).ci_value).to_s + ")" %></td>
-									  <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference2) + " (" %> <%= "+" unless reduction2 < 0 %> <%=sprintf("%8.1f", reduction2) + ")"%></td>
+									  <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference2) + " (" %> <%= "+" unless reduction2 < 0 %> <%=reduction2.round(1) + ")"%></td>
 									<% end %>
 									<% if @results2 == nil %>
 									  <td class="gvTotalNumber" style="background-color:#DEFFFD"><%= "" %></td>

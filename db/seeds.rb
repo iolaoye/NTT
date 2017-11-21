@@ -14,6 +14,12 @@ load file
 file = "db/seeds/soil_tests.rb"
 load file
 
+file = "db/seeds/controls.rb"
+load file
+
+file = "db/seeds/parameters.rb"
+load file
+
 cont = false
 
 if cont then

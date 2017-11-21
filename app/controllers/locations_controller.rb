@@ -14,8 +14,8 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find(params[:id])
-    @project = Project.find(params[:project_id])
-    @project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
     add_breadcrumb t('menu.location')
     @project_name = Project.find(params[:project_id]).name
     session[:location_id] = params[:id]
@@ -47,7 +47,7 @@ class LocationsController < ApplicationController
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site
     @location = Location.find_by_project_id(params[:id])
-    @project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
     if (params[:error] == "") then
       if (session[:session_id] == params[:source_id]) then
         # step 1: delete fields not found
@@ -238,7 +238,6 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   # DELETE /locations/1.json
   def destroy
-    uuuu
     @location = Location.find(params[:id])
     @location.destroy
 
@@ -266,7 +265,7 @@ class LocationsController < ApplicationController
     total_percentage = 0
     for j in 1..params["field#{i}soils"].to_i
 	  if params["field#{i}soil#{j}error"] then
-		next
+		  next
 	  end # end if soil.error
       @soil = @field.soils.new
       @soil.key = params["field#{i}soil#{j}mukey"]
@@ -317,13 +316,13 @@ class LocationsController < ApplicationController
       end
       i+=1
     end
-	scenarios = Scenario.where(:field_id => @field.id)
+	  scenarios = Scenario.where(:field_id => @field.id)
     scenarios.each do |scenario|
       add_scenario_to_soils(scenario)
-	  operations = Operation.where(:scenario_id => scenario.id)
-	  operations.each do |operation|
+	    operations = Operation.where(:scenario_id => scenario.id)
+	    operations.each do |operation|
 		  soils.each do |soil|
-			update_soil_operation(SoilOperation.new, soil.id, operation)
+			   update_soil_operation(SoilOperation.new, soil.id, operation)
 		  end # end soils each
 	  end # end operations.each
     end #end Scenario each do
@@ -354,17 +353,17 @@ class LocationsController < ApplicationController
 
   #todo Update years of simulation + initialyear in weather.
   def load_controls()
-    apex_controls = ApexControl.where(:project_id => params[:project_id])
+    apex_controls = ApexControl.where(:project_id => @project.id)
     if apex_controls == [] then
-      controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
-	  if controls.blank? || controls == nil then
-		controls = Control.where(:state_id => 99)		
-	  end
+      controls = Control.where(:state_id => @project.location.state_id)
+      if controls.blank? || controls == nil then
+        controls = Control.where(:state_id => 99)		
+      end
       controls.each do |c|
         apex_control = ApexControl.new
         apex_control.control_description_id = c.number
         apex_control.value = c.default_value
-        apex_control.project_id = params[:project_id]
+        apex_control.project_id = @project.id
         if apex_control.control_description_id == 1 then
           apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
         end
