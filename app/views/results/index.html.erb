@@ -260,7 +260,7 @@
 									<% end %>
 									<% if @results3 != nil %>
 									  <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", value3).to_s + " (" + sprintf("%8.1f", @results3.find_by_description_id(result.description_id).ci_value).to_s + ")" %></td>
-									  <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference2) + " (" %> <%= "+" unless reduction2 < 0 %> <%=reduction2.round(1) + ")"%></td>
+									  <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference2) + " (" %> <%= "+" unless reduction2 < 0 %> <%= reduction2.round(1).to_s + ")"%></td>
 									<% end %>
 									<% if @results2 == nil %>
 									  <td class="gvTotalNumber" style="background-color:#DEFFFD"><%= "" %></td>
