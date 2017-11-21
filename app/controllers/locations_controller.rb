@@ -17,7 +17,7 @@ class LocationsController < ApplicationController
     #@project = Project.find(params[:project_id])
     #@project = Project.find(params[:project_id])
     add_breadcrumb t('menu.location')
-    @project_name = Project.find(params[:project_id]).name
+    @project_name = @project.name
     session[:location_id] = params[:id]
     respond_to do |format|
       format.html # show.html.erb
