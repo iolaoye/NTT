@@ -440,7 +440,6 @@ class OperationsController < ApplicationController
 
 ################################  CALL WHEN CLICK IN UPLOAD CROP SCHEDULE  #################################
   def crop_schedule
-    debugger
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     #@scenario = Scenario.find(params[:scenario_id])
