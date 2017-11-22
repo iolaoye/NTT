@@ -508,7 +508,7 @@ class OperationsController < ApplicationController
       #@crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
       #if crop is nil the model will look at the table for the year and scenario operarions to find the crop. If not nothins will be added.
       if @crop == nil then
-        @crop_temp = Operation.where("year == ? and scenario_id == ? and activity_id > ?", event.year, params[:scenario_id], 0).last
+        @crop_temp = Operation.where("year = ? and scenario_id = ? and activity_id > ?", event.year, params[:scenario_id], 0).last
         if @crop_temp == nil or @crop_temp.blank? then  #if @crop still nil finish
           break
         else
