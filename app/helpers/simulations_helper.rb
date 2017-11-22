@@ -739,16 +739,16 @@ module SimulationsHelper
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
-	    if ssf[layers] == nil then
-			 ssf[layers] = 0
-		  end
-      if ssf[layers] > SoilPMaxForSoilDepth
-        ssf[layers] = SoilPDefault
-      end
-      if ssf[layers] == 0 || ssf[layers] == nil
-        ssf[layers] = SoilPDefault
-      end
-      records = records + sprintf("%8.2f", ssf[layers])
+  	    if ssf[layers] == nil then
+  			 ssf[layers] = 0
+  		  end
+        if ssf[layers] > SoilPMaxForSoilDepth
+          ssf[layers] = SoilPDefault
+        end
+        if ssf[layers] == 0 || ssf[layers] == nil
+          ssf[layers] = SoilPDefault
+        end
+        records = records + sprintf("%8.2f", ssf[layers])
       end
       soil_info.push(records + "\n")
       records = ""
