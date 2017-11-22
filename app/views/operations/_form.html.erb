@@ -146,11 +146,11 @@
 		</div>
 		<div class="field" id="div_amount">
 			<% if @operation.type_id == 1 then %>
-				<%= f.label :amount, t('operation.amount') %>
+				<%= f.label :amount, t('operation.application_rate') %>
 			<% elsif @operation.type_id == 2 %>
-				<%= f.label :amount, t('operation.amount').gsub("lbs", "T") %>
+				<%= f.label :amount, t('operation.application_rate').gsub("ac", "ton") %>
 			<% else %>
-				<%= f.label :amount, t('operation.amount').gsub("lbs", "x1000gal") %>
+				<%= f.label :amount, t('operation.application_rate').gsub("lbs", "x1000gal") %>
 			<% end %>
 			<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>

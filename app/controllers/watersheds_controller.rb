@@ -38,6 +38,7 @@ class WatershedsController < ApplicationController
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
   def new_scenario()
+  	nsnsns
     #find the name for the collection
 	watersheds = Watershed.where(:location_id => Project.find(params[:project_id]).location)
 	i = 1
@@ -196,7 +197,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1/edit
   def edit
     @watershed = Watershed.find(params[:id])
-    @project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
   end
 
   ################################ CREATE #################################
@@ -205,9 +206,9 @@ class WatershedsController < ApplicationController
   def create
 	if params[:commit] != nil then
 		@watershed = Watershed.new(watershed_params)
-		@watershed.location_id = session[:location_id]
+		@watershed.location_id = @project.location.id
     end
-	@project = Project.find(params[:project_id])
+	#@project = Project.find(params[:project_id])
 	add_breadcrumb t('watershed.watershed'), project_watersheds_path(@project)
     respond_to do |format|
       if @watershed.save

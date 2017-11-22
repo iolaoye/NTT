@@ -6,7 +6,7 @@ class WatershedScenariosController < ApplicationController
     @watershed = Watershed.find(params[:watershed_id])
     @watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed.id)
     @scenarios = Scenario.where(:field_id => 0)
-	@project = Project.find(params[:project_id])
+	#@project = Project.find(params[:project_id])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @watershed_scenarios }
@@ -27,7 +27,7 @@ class WatershedScenariosController < ApplicationController
   # GET /watershed_scenarios/new
   # GET /watershed_scenarios/new.json
   def new
-	@project = Project.find(params[:watershed][:project_id])
+	#@project = Project.find(params[:watershed][:project_id])
 	new_scenario()
   end
 
@@ -40,9 +40,9 @@ class WatershedScenariosController < ApplicationController
   # POST /watershed_scenarios
   # POST /watershed_scenarios.json
   def create
-    @project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
     @scenarios = Scenario.where(:field_id => 0)
-	watershed = Watershed.find(params[:watershed_id])
+    watershed = Watershed.find(params[:watershed_id])
     @watershed_name = watershed.name
     item = WatershedScenario.where(:field_id => params[:field][:id], :scenario_id => params[:scenario][:id], :watershed_id => params[:watershed_id]).first
     respond_to do |format|

@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <td><%= collection_select :field, :id, Field.where(:location_id => session[:location_id]), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
+  <td><%= collection_select :field, :id, Field.where(:location_id => @project.location.id), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
   <td><%= collection_select :scenario, :id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
   <div class="actions">
 	<%= f.submit t('result.add') %>
