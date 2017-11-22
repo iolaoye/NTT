@@ -203,7 +203,7 @@ updateFerts = ->
     $('div[id="div_other_nutrients"] *').prop('required',false)
     if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
       if $("#operation_type_id").val() == "2"
-          $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+          $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ton)"
       else
           $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
       $("#div_other_nutrients").show()

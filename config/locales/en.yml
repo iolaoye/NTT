@@ -621,6 +621,7 @@ en:
     rotational_grazing: Pastoreo Rotacional
     total_n: Total N (0-100%)
     total_p: Total P (0-100%)
+    application_rate: Application Rate
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
