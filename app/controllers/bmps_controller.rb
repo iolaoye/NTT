@@ -60,6 +60,7 @@ class BmpsController < ApplicationController
     				bmp.days = 14
     				bmp.irrigation_efficiency = 0
             bmp.maximum_single_application = 3
+            bmp.dry_manure = 0
   			end
   		end
   		@bmps[bmp.bmpsublist_id-1] = bmp
@@ -499,7 +500,14 @@ class BmpsController < ApplicationController
         		else
         			subarea.fdsf = params[:bmp_ai][:safety_factor]
         		end
-        		@bmp.safety_factor = subarea.fdsf
+            @bmp.safety_factor = subarea.fdsf
+            if params[:bmp_ai][:n_rate] == nil then
+              subarea.fnp4 = 0
+              @bmp.dry_manure = 0
+            else
+              subarea.fnp4 = params[:bmp_ai][:n_rate].to_f * LBS_TO_KG
+              @bmp.dry_manure = params[:bmp_ai][:n_rate]
+            end
         		if @bmp.depth == 1 then
         			subarea.idf4 = 0.0
         			subarea.bft = 0.0
@@ -516,7 +524,8 @@ class BmpsController < ApplicationController
     				subarea.bir = 0.0
     				subarea.efi = 0.0
     				subarea.armx = 0.0
-    				subarea.fdsf = 0.0
+    		    subarea.fdsf = 0.0
+            subarea.fnp4 = 0.0
 			  end   # end case type
         if !subarea.save then
   			   return "Unable to save value in the subarea file"
@@ -528,14 +537,13 @@ class BmpsController < ApplicationController
 
 ### ID: 2
   def fertigation(type)
-    fff
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
       subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
       if subarea != nil then
         case type
           when "create", "update"
-			@bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
+            @bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
             case @bmp.irrigation_id
               when 1
                 subarea.nirr = 1.0
@@ -547,21 +555,26 @@ class BmpsController < ApplicationController
             subarea.vimx = 5000
             subarea.bir = 0.8
             subarea.iri = params[:bmp_ai][:days]
-			@bmp.days = subarea.iri
+            @bmp.days = subarea.iri
             subarea.bir = params[:bmp_ai][:water_stress_factor]
-			@bmp.water_stress_factor = subarea.bir
+            @bmp.water_stress_factor = subarea.bir
             subarea.efi = 1.0 - params[:bmp_ai][:irrigation_efficiency].to_f
-			@bmp.irrigation_efficiency = params[:bmp_ai][:irrigation_efficiency].to_f
+            @bmp.irrigation_efficiency = params[:bmp_ai][:irrigation_efficiency].to_f
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
-			@bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
-			subarea.fdsf = 0
-			@bmp.depth = params[:bmp_cb1]
-			if params[:bmp_ai][:safety_factor] == nil then
-				subarea.fdsf = 0
-			else
-				subarea.fdsf = params[:bmp_ai][:safety_factor]
-			end
-			@bmp.safety_factor = subarea.fdsf
+            @bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
+            subarea.fdsf = 0
+            @bmp.depth = params[:bmp_cb1]
+            if params[:bmp_ai][:safety_factor] == nil then
+            	subarea.fdsf = 0
+            else
+            	subarea.fdsf = params[:bmp_ai][:safety_factor]
+            end
+            if params[:bmp_ai][:dry_manure] == nil then
+              subarea.fnp4 = 0
+            else
+              subarea.fnp4 = params[:bmp_ai][:dry_manure].to_f * LBS_TO_KG
+            end
+            @bmp.safety_factor = subarea.fdsf
             subarea.idf4 = 1.0
             subarea.bft = 0.8
           when "delete"
@@ -574,6 +587,7 @@ class BmpsController < ApplicationController
             subarea.efi = 0.0
             subarea.armx = 0.0
             subarea.fdsf = 0.0
+            subarea.fnp4 = 0.0
             if @bmp.bmpsublist_id == 2
               subarea.idf4 = 0.0
               subarea.bft = 0.0

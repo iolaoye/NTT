@@ -254,7 +254,6 @@ update_irrigation_options = ->
             $("#days").toggle(true)
             $("#irrigation_frequency_label").toggle(true)
 
-
 update_fertigation_options = ->
     switch $("#autofertigation").val()
         when "7" #furrow diking
@@ -370,3 +369,7 @@ $(document).ready ->
         buffers(12)
     $("#bmp_cb3_13").click ->
         buffers(13)
+    $("#bmp_cb1_1").click ->
+        $("#td_n_rate").toggle(false)
+    $("#bmp_cb1_2").click ->
+        $("#td_n_rate").toggle(true)

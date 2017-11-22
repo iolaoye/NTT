@@ -110,14 +110,21 @@
             </tr>
             <tr>
               <td class="field indent2" id = "maximum_single_application" colspan="2" >
-               <%= label :days, t('bmp.maximum_single_application') + " (" + t('bmp.inches')  + "1-15 in.)"%>
+               <%= label :days, t('bmp.maximum_single_application') + " (" + " 1-15 in.)"%>
                <%= number_field :bmp_ai, :maximum_single_application, :value => bmp.maximum_single_application, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="field indent2" id = "reservoir_area" style="display: none;" colspan="2">
-               <%= label :days, t('bmp.reservoir_area') + " (" + t('bmp.acres')  + ")"%>
+               <%= label :days, t('bmp.reservoir_area') + " (" + t('bmp.acres') + ")"%>
                <%= number_field :bmp_ai, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+              </td>
+            </tr>
+            <tr>
+              <td class="field indent2" id = "td_n_rate" colspan="2"><%= style="display: none;" unless bmp.depth == 2%>
+               <%= label :days, t('operation.application_rate') + " (" + t('bmp.lbs') + "/" + t("bmp.acres") + ")"%>
+               <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :class => "gvTitleStyleNumber" %>
+                <!-- <strong><a href="#" id="n_rate_trigger" style="color:blue;">(?)</a></strong> -->
               </td>
             </tr>
           <% when 3 %>
@@ -525,8 +532,12 @@
   <h6>
     This factor is used to trigger the automatic irrigation and means what plant water stress is allowed.
     At zero (0) means not autoirrigation at all, at one hundred (100) means not plant water stress allowed.
-    When the stress level is reached, the model will automatically starts irrgation.
+    When the stress level is reached, the model will automatically starts irrigation.
   </h6>
+</div>
+
+<div id="pop-up1">
+  <h6>Amount fertilizer applied to lower N stress. At zero (0) means apply N as much as needed.</h6>
 </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -679,6 +690,7 @@
     validateBmpAi.addValidation(ai_inputs[3].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
     validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
     validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+    validateBmpAi.addValidation(ai_inputs[6].name, "gte=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("operation.application_rate") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
   }
   function validationsBmpTd() {
     var td_inputs = $('[name^=bmp_td]').valueOf();
@@ -825,21 +837,32 @@
 
 <script>
   $(function() {
-  var moveLeft = 20;
-  var moveDown = 10;
+  var moveLeft = 300;
+  var moveDown = -150;
 
   $('a#trigger').hover(function(e) {
   $('div#pop-up').show();
-  //.css('top', e.pageY + moveDown)
-  //.css('left', e.pageX + moveLeft)
-  //.appendTo('body');
   }, function() {
   $('div#pop-up').hide();
   });
 
   $('a#trigger').mousemove(function(e) {
-  $("div#pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+  $("div#pop-up").css('top', e.pageY + moveDown).css('left', moveLeft);
+  });
   });
 
+  $(function() {
+  var moveLeft = 300;
+  var moveDown = -150;
+  $('a#n_rate_trigger').hover(function(e) {
+  $('div#pop-up1').show();
+  }, function() {
+  $('div#pop-up1').hide();
   });
+
+  $('a#n_rate_trigger').mousemove(function(e) {
+  $("div#pop-up1").css('top', moveDown).css('left', moveLeft);
+  });
+  });
+
 </script>
