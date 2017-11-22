@@ -201,7 +201,7 @@ class FieldsController < ApplicationController
 # DELETE /fields/1.json
   def destroy
     #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:id])
+    @field = Field.find(params[:id])
     if @field.destroy
       flash[:notice] = t('models.field') + " " + @field.field_name + t('notices.deleted')
     end
