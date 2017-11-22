@@ -20,6 +20,11 @@ upload_crop = (show) ->
   $("#year").val($("#year").val() +"1")
 
 upload_crop1 = (show) ->
+  $("#bmp_ccr_crop_id").prop('required',true)
+  $("#bmp_ccr_year").prop('required',true)
+  $("#bmp_ccr_month").prop('required',true)
+  $("#bmp_ccr_day").prop('required',true)
+  $("#bmp_ccr_type_id").prop('required',true)
   $("#div_ccr").toggle(show)
   $("#div_new").toggle(false)
   $("#year").val($("#year").val() +"1")
