@@ -1120,9 +1120,13 @@ module SimulationsHelper
       c_c_p = false
       c_c_k = false
       cc_hash = {}
+      last_op_id = 0
+      cc_plt_date = 0
+      cc_kill_date = 0
       #convert soil_operations active record to hash
       @soil_operations.each do |so|
         cc_hash[so.id] = so
+        last_op_id = so.id
       end
       c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop
       cc_number = @scenario.operations.last.id
@@ -1142,6 +1146,8 @@ module SimulationsHelper
           s_o_new.opv5 = set_opval5(bmp)
           s_o_new.opv6 = 0
           s_o_new.opv7 = 0
+          last_op_id += 1
+          s_o_new.id = last_op_id
           cc_plt_date = Date.parse(sprintf("%2d", s_o_new.year) + "/" + sprintf("%2d", s_o_new.month) + "/" + sprintf("%2d", s_o_new.day))
           s_o_new_kill = SoilOperation.new
           if last_year > bmp.year then  # validate if last_year is greater than cover crop planting year
@@ -1168,6 +1174,8 @@ module SimulationsHelper
           s_o_new_kill.opv7 = 0
           cc_number += 1
           cc_hash[cc_number] = s_o_new
+          last_op_id += 1
+          s_o_new_kill.id = last_op_id
           cc_number += 1
           cc_hash[cc_number] = s_o_new_kill
         end #if bmp  != nill
