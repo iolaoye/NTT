@@ -440,6 +440,7 @@ class OperationsController < ApplicationController
 
 ################################  CALL WHEN CLICK IN UPLOAD CROP SCHEDULE  #################################
   def crop_schedule
+    debugger
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     #@scenario = Scenario.find(params[:scenario_id])
@@ -480,19 +481,19 @@ class OperationsController < ApplicationController
       if params[:tillage][:id] != "" then
         ActiveRecord::Base.transaction do
           @tillage_id = params[:tillage][:id]
-      #create operations for tillage selected and take the crop from last operation added.
-      create_tillage()
+          #create operations for tillage selected and take the crop from last operation added.
+          create_tillage()
         end   #end transaction do
       end #end if tillage_id != ""
     end # end if tillage != nil
 
     #@operations = Operation.where(:scenario_id => params[:scenario_id])
     if params[:language] != nil then
-    if params[:language][:language].eql?("es")
-        I18n.locale = :es
-    else
-        I18n.locale = :en
-    end
+      if params[:language][:language].eql?("es")
+          I18n.locale = :es
+      else
+          I18n.locale = :en
+      end
     end
   end # end method
 
