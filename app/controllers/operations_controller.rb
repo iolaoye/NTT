@@ -7,17 +7,15 @@ class OperationsController < ApplicationController
 # GET /operations
 # GET /operations.json
   def index
-    #@field = Field.find(params[:field_id])
-    #@project = Project.find(params[:project_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
     if params[:bmp_ccr] != nil then
       add_cover_crop
     end 
     crop_schedule()
     add_breadcrumb t('menu.operations')
-    array_of_ids = @scenario.operations.order(:activity_id, :year).map(&:crop_id)
-    @crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
+    @rotations = @scenario.operations.select("rotation, crop_id").distinct
+    #array_of_ids = @scenario.operations.order(:rotation, :activity_id, :year).map(&:rotation&:crop_id)
+    #@crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
     @operations.sort_by { |date| [date.year, date.month_id, date.day] }
     if @operations.last != nil
       @highest_year = @operations.last.year
@@ -43,6 +41,7 @@ class OperationsController < ApplicationController
     operation.type_id = params[:bmp_ccr][:type_id]
     operation.subtype_id = 1
     operation.scenario_id = @scenario.id
+    operation.rotation = params[:bmp_ccr][:year]
     operation.save
   end
 ################################  SHOW  #################################
@@ -316,10 +315,10 @@ class OperationsController < ApplicationController
 
 ##############################  DESTROY ALL  ###############################
   def delete_all
-    @project = Project.find(params[:project_id])
-    @field = Field.find(params[:field_id])
-    @scenario = Scenario.find(params[:scenario_id])
-    @operations = @scenario.operations.where(:crop_id => params[:id])
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
+    @operations = @scenario.operations.where(:crop_id => params[:id], :rotation => params[:rotation])
     @operations.destroy_all
     respond_to do |format|
       format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('notices.all') }
@@ -543,6 +542,7 @@ class OperationsController < ApplicationController
       @operation.type_id = event.apex_operation
       @operation.depth = event.apex_opv2
       @operation.scenario_id = @scenario.id
+      @operation.rotation = @operation.year 
       if @operation.save
         msg = add_soil_operation()
         notice = t('scenario.operation') + " " + t('general.created')
@@ -565,83 +565,84 @@ class OperationsController < ApplicationController
     crop_schedule_class_id = @cropping_systems.find(params[:cropping_system][:id]).class_id
     events = Schedule.where(:crop_schedule_id => params[:cropping_system][:id])
     events.each do |event|
-    @operation = Operation.new
-    @operation.scenario_id = params[:scenario_id]
-    #get crop_id from croppingsystem and state_id
-    state_id = @project.location.state_id
-    @crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
-    if @crop == nil then
-      @crop = Crop.find_by_number_and_state_id(event.apex_crop, '**')
-    end
-    @operation.crop_id = @crop.id
-    plant_population = @crop.plant_population_ft
-    @operation.activity_id = event.activity_id
-    @operation.day = event.day
-    @operation.month_id = event.month
-    if params[:replace] != nil
-      #replace
-      @operation.year = event.year
-    else
-      #don't replace
-      if @count > 0
-        @operation.year = event.year + params[:year].to_i - 1
-      else
+      @operation = Operation.new
+      @operation.scenario_id = params[:scenario_id]
+      #get crop_id from croppingsystem and state_id
+      state_id = @project.location.state_id
+      @crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
+      if @crop == nil then
+        @crop = Crop.find_by_number_and_state_id(event.apex_crop, '**')
+      end
+      @operation.crop_id = @crop.id
+      plant_population = @crop.plant_population_ft
+      @operation.activity_id = event.activity_id
+      @operation.day = event.day
+      @operation.month_id = event.month
+      @operation.rotation = params[:year]
+      if params[:replace] != nil
+        #replace
         @operation.year = event.year
-      end
-    end
-    if crop_schedule_class_id == 2 then
-      case true
-        when @highest_year > 1 && params[:year].to_i >= @highest_year
-          if event.activity_id == 5 then @operation.year = 1 else @operation.year = @highest_year end
-        when @highest_year > 1 && params[:year].to_i < @highest_year
-          if event.activity_id == 5 then @operation.year = params[:year].to_i + 1 else @operation.year = params[:year].to_i end
-      end
-    end
-    if event.crop_schedule_id == 4 && @highest_year > @operation.year && @operation.activity_id == 5 # ask if corp rotation is winter wheat and the highest year is > than the kill operation. Since the kill is first in the table we need to be sure where to put it.
-      @operation.year += 1
-    end
-    #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
-    #note fertilizer id and code are the same so far. Try to keep them that way
-    @operation.type_id = 0
-    @operation.no3_n = 0
-    @operation.po4_p = 0
-    @operation.org_n = 0
-    @operation.org_p = 0
-    @operation.nh3 = 0
-    @operation.subtype_id = 0
-    case @operation.activity_id
-      when 1 #planting operation. Take planting code from crop table and plant population as well
-        @operation.type_id = Crop.find(@operation.crop_id).planting_code
-        @operation.amount = plant_population
-      when 2, 7
-        fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
-        @operation.amount = event.apex_opv1
-        if fertilizer != nil then
-          @operation.type_id = fertilizer.fertilizer_type_id
-        if @operation.type_id == 2 then @operation.amount * 1000 end
-          @operation.no3_n = fertilizer.qn
-          @operation.po4_p = fertilizer.qp
-          @operation.org_n = fertilizer.yn
-          @operation.org_p = fertilizer.yp
-          @operation.nh3 = fertilizer.nh3
-          @operation.subtype_id = event.apex_fertilizer
-        end
-      when 3
-      @operation.type_id = event.apex_operation
       else
-      @operation.amount = event.apex_opv1
-    end #end case
-    @operation.depth = event.apex_opv2
-    @operation.scenario_id = @scenario.id
-    if @operation.save
-      msg = add_soil_operation()
-      notice = t('scenario.operation') + " " + t('general.created')
-      unless msg.eql?("OK")
-      raise ActiveRecord::Rollback
+        #don't replace
+        if @count > 0
+          @operation.year = event.year + params[:year].to_i - 1
+        else
+          @operation.year = event.year
+        end
       end
-    else
-      raise ActiveRecord::Rollback
-    end
+      if crop_schedule_class_id == 2 then
+        case true
+          when @highest_year > 1 && params[:year].to_i >= @highest_year
+            if event.activity_id == 5 then @operation.year = 1 else @operation.year = @highest_year end
+          when @highest_year > 1 && params[:year].to_i < @highest_year
+            if event.activity_id == 5 then @operation.year = params[:year].to_i + 1 else @operation.year = params[:year].to_i end
+        end
+      end
+      if event.crop_schedule_id == 4 && @highest_year > @operation.year && @operation.activity_id == 5 # ask if corp rotation is winter wheat and the highest year is > than the kill operation. Since the kill is first in the table we need to be sure where to put it.
+        @operation.year += 1
+      end
+      #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
+      #note fertilizer id and code are the same so far. Try to keep them that way
+      @operation.type_id = 0
+      @operation.no3_n = 0
+      @operation.po4_p = 0
+      @operation.org_n = 0
+      @operation.org_p = 0
+      @operation.nh3 = 0
+      @operation.subtype_id = 0
+      case @operation.activity_id
+        when 1 #planting operation. Take planting code from crop table and plant population as well
+          @operation.type_id = Crop.find(@operation.crop_id).planting_code
+          @operation.amount = plant_population
+        when 2, 7
+          fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
+          @operation.amount = event.apex_opv1
+          if fertilizer != nil then
+            @operation.type_id = fertilizer.fertilizer_type_id
+          if @operation.type_id == 2 then @operation.amount * 1000 end
+            @operation.no3_n = fertilizer.qn
+            @operation.po4_p = fertilizer.qp
+            @operation.org_n = fertilizer.yn
+            @operation.org_p = fertilizer.yp
+            @operation.nh3 = fertilizer.nh3
+            @operation.subtype_id = event.apex_fertilizer
+          end
+        when 3
+        @operation.type_id = event.apex_operation
+        else
+        @operation.amount = event.apex_opv1
+      end #end case
+      @operation.depth = event.apex_opv2
+      @operation.scenario_id = @scenario.id
+      if @operation.save
+        msg = add_soil_operation()
+        notice = t('scenario.operation') + " " + t('general.created')
+        unless msg.eql?("OK")
+        raise ActiveRecord::Rollback
+        end
+      else
+        raise ActiveRecord::Rollback
+      end
     end # end events.each
   end  # end method
 
@@ -728,7 +729,7 @@ class OperationsController < ApplicationController
 # params.require(:person).permit(:name, :age)
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def operation_params
-    params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id, :moisture, :org_c, :nh4_n)
+    params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id, :moisture, :org_c, :nh4_n, :rotation)
   end
 
   def add_soil_operation()
