@@ -94,12 +94,11 @@
 					  <%= link_to scenario.name, project_field_scenario_operations_path(@project, @field, scenario) %>
 					</td>
 					<td class="gvCellStyleImage">
-					  <% if Weather.find_by_field_id(scenario.field_id) == nil %>
-								  <%= "bad" %>
-					  <% link_to(image_tag("warning_icon.png", size: "13x13", :class => 'gvCellStyleImage', :title => t('menu.weather') + " No"), edit_project_field_weather_path(@project, @field, @field.weather)) %>
-								  <% warning = true %>
-							  <% else %>
-								  <%= image_tag("go_icon.png", size: "13x13", :title => t('menu.weather') + " OK") %>
+					  	<% if @field.weather == nil %>
+					  		<% link_to(image_tag("warning_icon.png", size: "13x13", :class => 'gvCellStyleImage', :title => t('menu.weather') + " No"), edit_project_field_weather_path(@project, @field, @field.weather)) %>
+							<% warning = true %>
+						<% else %>
+							<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.weather') + " OK") %>
 					  <% end %>
 					</td>
 					<td class="gvCellStyleImage">
