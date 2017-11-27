@@ -26,6 +26,9 @@ load file
 file = "db/seeds/soil_tests.rb"
 load file
 
+file = "db/seeds/groups.rb"
+load file
+
 cont = false
 
 if cont then

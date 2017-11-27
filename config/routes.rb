@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :groups
   resources :soil_tests
   resources :soil_tests
   resources :soil_tests
