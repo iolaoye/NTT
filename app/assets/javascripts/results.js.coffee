@@ -68,6 +68,30 @@ update_crops = ->
   else
     $("#result5_description_id").html items.join("")
 
+update_categories = ->
+  $("#result5_description_id").val(null)
+  items = []
+  items.push "<option value>Select Kind of Chart</option>"
+  group_id = $("#result5_category_group_id").val()
+  if (group_id != "")
+    switch group_id
+      when "1","6"
+        $("#result5_description_id").hide()
+      else
+        $("#result5_description_id").show()
+    url = "/descriptions.json"
+    $.getJSON url, (group_list) ->
+      $.each group_list, (key, description) ->
+        if (description.group_id == parseInt(group_id,10))
+          items.push "<option value=\"" + description.id + "\">" + description.description + "</option>"
+      $("#result5_description_id").html items.join("")
+      $("#result5_description_id").removeAttr("disabled")
+      if (group_id == "1")
+        $("#result5_description_id").val(100) #auto-select hidden value
+      else if (group_id == "6")
+        $("#result5_description_id").val(70) #auto-select hidden value
+      show_crops()
+
 generate_pdf = ->
   $("#pdf_download").click (event) ->
     $("#myForm").submit()
@@ -100,6 +124,7 @@ $(document).ready ->
   display_button()
   generate_pdf()
   check_for_errors()
+  $("#result5_description_id").hide()
   $("#result1_scenario_id").change ->
     #update_crops()
     set_buttons(false)
@@ -110,6 +135,9 @@ $(document).ready ->
 
   $("#result5_description_id").change ->
     show_crops()
+
+  $("#result5_category_group_id").change ->
+    update_categories()
 
   $("#result3_scenario_id").change ->
     #update_crops()

@@ -805,6 +805,7 @@ en:
     select_prompt_scenario: Select up to 3 scenarios for view
     select_prompt_watershed: Select up to 3 watersheds for view
     select_chart: Select a Category
+    select_group: Select Group
     description: Description
     difference: Difference
     reduction: Reduction
