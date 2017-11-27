@@ -110,14 +110,21 @@
             </tr>
             <tr>
               <td class="field indent2" id = "maximum_single_application" colspan="2" >
-               <%= label :days, t('bmp.maximum_single_application') + " (" + t('bmp.inches')  + "1-15 in.)"%>
+               <%= label :days, t('bmp.maximum_single_application') + " (" + " 1-15 in.)"%>
                <%= number_field :bmp_ai, :maximum_single_application, :value => bmp.maximum_single_application, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="field indent2" id = "reservoir_area" style="display: none;" colspan="2">
-               <%= label :days, t('bmp.reservoir_area') + " (" + t('bmp.acres')  + ")"%>
+               <%= label :days, t('bmp.reservoir_area') + " (" + t('bmp.acres') + ")"%>
                <%= number_field :bmp_ai, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+              </td>
+            </tr>
+            <tr>
+              <td class="field indent2" id = "td_n_rate" colspan="2"><%= style="display: none;" unless bmp.depth == 2%>
+               <%= label :days, t('operation.application_rate') + " (" + t('bmp.lbs') + "/" + t("bmp.acres") + ")"%>
+               <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :class => "gvTitleStyleNumber" %>
+                <!-- <strong><a href="#" id="n_rate_trigger" style="color:blue;">(?)</a></strong> -->
               </td>
             </tr>
           <% when 3 %>
@@ -130,33 +137,33 @@
           <% when 4 %>
             <% if @project.location.state_id == 25 || @project.location.state_id == 26 %>
               <tr>
-                <td>
+                <td class="indent" colspan="2">
                   <% case bmp.depth%>
                     <% when 4 %>
-                      <%= radio_button_tag :bmp_cb2, "4", true  %> <%= t('pdf.ppdi') %>
-                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %>
-                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %>
-                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
+                      <%= radio_button_tag :bmp_cb2, "4", true %> <%= t('pdf.ppdi')%> </br>
+                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %></br>
                     <% when 5 %>
-                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %>
-                      <%= radio_button_tag :bmp_cb2, "5", true %> <%= t('pdf.ppds') %>
-                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %>
-                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppds') %>
+                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5", true %> <%= t('pdf.ppds')%></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppds') %></br>
                     <% when 6 %>
-                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %>
-                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %>
-                      <%= radio_button_tag :bmp_cb2, "6", true %> <%= t('pdf.ppde') %>
-                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
+                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6", true %> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %></br>
                     <% when 7 %>
-                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %>
-                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %>
-                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %>
-                      <%= radio_button_tag :bmp_cb2, "7", true %> <%= t('pdf.ppti') %>
+                      <%= radio_button_tag :bmp_cb2, "4" %> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5"%> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7", true %> <%= t('pdf.ppti') %></br>
                     <% else %>
-                      <%= radio_button_tag :bmp_cb2, "4"%> <%= t('pdf.ppdi') %>
-                      <%= radio_button_tag :bmp_cb2, "5" %> <%= t('pdf.ppds') %>
-                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %>
-                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %>
+                      <%= radio_button_tag :bmp_cb2, "4"%> <%= t('pdf.ppdi') %></br>
+                      <%= radio_button_tag :bmp_cb2, "5" %> <%= t('pdf.ppds') %></br>
+                      <%= radio_button_tag :bmp_cb2, "6"%> <%= t('pdf.ppde') %></br>
+                      <%= radio_button_tag :bmp_cb2, "7"%> <%= t('pdf.ppti') %></br>
                     <%end%>
                 </td>
             </tr>
@@ -164,24 +171,24 @@
               <td class="indent" colspan="2">
                 <%= t('bmp.pad') + " " + t('bmp.width') + " (" + t('bmp.ft')  + ")"%>
                 <%= number_field :bmp_ppnd, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
-                </td>
-              </tr>
-              <tr>
-                <td class="indent" colspan="2">
+              </td>
+            </tr>
+            <tr>
+              <td class="indent" colspan="2">
                   <%= t('bmp.sides')  %>
                   <%= number_field :bmp_ppnd, :sides, :value => bmp.sides, :class => "gvTitleStyleNumber" %>
-                </td>
+              </td>
             </tr>
             <% if bmp.depth == 6 || bmp.depth == 7 %>
               <tr id = "tr_bmp_pp_area" >
-                  <td class="indent">
+                  <td class="indent" colspan="2">
                     <%= label :area, t('bmp.reservoir_area') + " (" + t('bmp.acres')  + ")"%>
                     <%= number_field :bmp_ppnd, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                     </td>
               </tr>
             <% else %>
               <tr id = "tr_bmp_pp_area" style="display:none" >
-                    <td class="indent">
+                    <td class="indent" colspan="2">
                       <%= label :area, t('bmp.reservoir_area') + " (" + t('bmp.acres')  + ")"%>
                       <%= text_field :bmp_ppnd, :area, :value => bmp.area %>
                     </td>
@@ -303,7 +310,7 @@
             </tr>
             <tr>
               <td class="indent2" colspan="2">
-                <%= t('general.area') + " (" + t('bmp.acres') + ")"%>
+                <%= t('pdf.area') + " (" + t('bmp.acres') + ")"%>
                 <%= number_field :bmp_fs, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
                 <%= label :area, " (" + t('general.optional') + ")", :style => "color:blue" %>
                 </td>
@@ -498,7 +505,7 @@
             </tr>
             <tr>
               <td class="indent" colspan="2">
-                <%= t('general.area') + " " + t('bmp.acres') %>
+                <%= t('pdf.area') + " " + t('bmp.acres') %>
                 <%= number_field :bmp_sdg, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
@@ -525,8 +532,12 @@
   <h6>
     This factor is used to trigger the automatic irrigation and means what plant water stress is allowed.
     At zero (0) means not autoirrigation at all, at one hundred (100) means not plant water stress allowed.
-    When the stress level is reached, the model will automatically starts irrgation.
+    When the stress level is reached, the model will automatically starts irrigation.
   </h6>
+</div>
+
+<div id="pop-up1">
+  <h6>Amount fertilizer applied to lower N stress. At zero (0) means apply N as much as needed.</h6>
 </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -679,6 +690,7 @@
     validateBmpAi.addValidation(ai_inputs[3].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
     validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
     validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
+    validateBmpAi.addValidation(ai_inputs[6].name, "gte=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("operation.application_rate") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
   }
   function validationsBmpTd() {
     var td_inputs = $('[name^=bmp_td]').valueOf();
@@ -825,21 +837,32 @@
 
 <script>
   $(function() {
-  var moveLeft = 20;
-  var moveDown = 10;
+  var moveLeft = 300;
+  var moveDown = -150;
 
   $('a#trigger').hover(function(e) {
   $('div#pop-up').show();
-  //.css('top', e.pageY + moveDown)
-  //.css('left', e.pageX + moveLeft)
-  //.appendTo('body');
   }, function() {
   $('div#pop-up').hide();
   });
 
   $('a#trigger').mousemove(function(e) {
-  $("div#pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+  $("div#pop-up").css('top', e.pageY + moveDown).css('left', moveLeft);
+  });
   });
 
+  $(function() {
+  var moveLeft = 300;
+  var moveDown = -150;
+  $('a#n_rate_trigger').hover(function(e) {
+  $('div#pop-up1').show();
+  }, function() {
+  $('div#pop-up1').hide();
   });
+
+  $('a#n_rate_trigger').mousemove(function(e) {
+  $("div#pop-up1").css('top', moveDown).css('left', moveLeft);
+  });
+  });
+
 </script>

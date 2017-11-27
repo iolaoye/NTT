@@ -1,9 +1,3 @@
-<% if notice != nil %>
-  <div class="success_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= notice %>
-  </div>
-<% end %>
 
 <iframe width='140%' height='650' src='<%= url_for :controller => 'locations', :action => 'send_to_mapping_site', :id => @location.project_id %>'>
 </iframe>

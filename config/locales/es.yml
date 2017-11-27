@@ -621,6 +621,7 @@ es:
     planting_date: Fecha de Cultivo
     total_n: N Total (0-100%)
     total_p: P Total (0-100%)
+    application_rate: Cantifad Aplicada 
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG

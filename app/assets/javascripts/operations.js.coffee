@@ -20,6 +20,11 @@ upload_crop = (show) ->
   $("#year").val($("#year").val() +"1")
 
 upload_crop1 = (show) ->
+  $("#bmp_ccr_crop_id").prop('required',true)
+  $("#bmp_ccr_year").prop('required',true)
+  $("#bmp_ccr_month").prop('required',true)
+  $("#bmp_ccr_day").prop('required',true)
+  $("#bmp_ccr_type_id").prop('required',true)
   $("#div_ccr").toggle(show)
   $("#div_new").toggle(false)
   $("#year").val($("#year").val() +"1")
@@ -203,7 +208,7 @@ updateFerts = ->
     $('div[id="div_other_nutrients"] *').prop('required',false)
     if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
       if $("#operation_type_id").val() == "2"
-          $("#div_amount")[0].children[0].innerText = "Application rate(T/ac)"
+          $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ton)"
       else
           $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
       $("#div_other_nutrients").show()

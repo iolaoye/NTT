@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 development:
   adapter: mysql2
-  database: ntt
+  database: ntt_nrcs
   host: 104.238.117.250		
   username: ntt		
   password: TIAER05

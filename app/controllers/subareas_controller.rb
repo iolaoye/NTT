@@ -141,11 +141,11 @@ class SubareasController < ApplicationController
 			  #end
 		  #end
 	  #end
-	  subareas = Subarea.where("scenario_id = " + session[:scenario_id].to_s + " AND bmp_id > 0 AND soil_id = 0")
-	  subareas.each do |subarea|
-		  @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
-		  i+=1
-	  end
+	  #subareas = Subarea.where("scenario_id = " + @scenario_id.to_s + " AND bmp_id > 0 AND soil_id = 0")
+	  #subareas.each do |subarea|
+		  #@subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
+		  #i+=1
+	  #end
   end
 
   private

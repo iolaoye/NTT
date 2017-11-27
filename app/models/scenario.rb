@@ -16,53 +16,53 @@ class Scenario < ActiveRecord::Base
      validates_uniqueness_of :name, :scope => :field_id
 	 validates_presence_of :name, :message => "Scenario Name needed"
 
-	 def planting_operations(crop)
-	 	self.operations.where(:activity_id => 1, :crop_id => crop.id)
+	 def planting_operations(rotation)
+	 	self.operations.where(:activity_id => 1, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	 end
 
-	 def fertilizer_operations(crop)
-	 	self.operations.where(:activity_id => 2, :crop_id => crop.id)
+	 def fertilizer_operations(rotation)
+	 	self.operations.where(:activity_id => 2, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	 end
 
-	 def tillage_operations(crop)
-	 	self.operations.where(:activity_id => 3, :crop_id => crop.id)
+	 def tillage_operations(rotation)
+	 	self.operations.where(:activity_id => 3, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	 end
 
-	 def harvest_operations(crop)
-	 	self.operations.where(:activity_id => 4, :crop_id => crop.id)
+	 def harvest_operations(rotation)
+	 	self.operations.where(:activity_id => 4, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	 end
 
-	 def kill_operations(crop)
-	 	self.operations.where(:activity_id => 5, :crop_id => crop.id)
+	 def kill_operations(rotation)
+	 	self.operations.where(:activity_id => 5, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	 end
 
-	 def irrigation_operations(crop)
-	 	self.operations.where(:activity_id => 6, :crop_id => crop.id)
+	 def irrigation_operations(rotation)
+	 	self.operations.where(:activity_id => 6, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	 end
 
-   def continuous_grazing_operations(crop)
-    self.operations.where(:activity_id => 7, :crop_id => crop.id) + self.operations.where(:activity_id => 8, :crop_id => crop.id)
+	def continuous_grazing_operations(rotation)
+	self.operations.where(:activity_id => 7, :crop_id => rotation.crop_id, :rotation => rotation.rotation) + self.operations.where(:activity_id => 8, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
+	end
+
+	 def burn_operations(rotation)
+	 	self.operations.where(:activity_id => 11, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
+	 end
+
+	 def liming_operations(rotation)
+	 	self.operations.where(:activity_id => 12, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
+	 end
+
+   def liming_operations(rotation)
+    self.operations.where(:activity_id => 12, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
    end
 
-	 def burn_operations(crop)
-	 	self.operations.where(:activity_id => 11, :crop_id => crop.id)
-	 end
-
-	 def liming_operations(crop)
-	 	self.operations.where(:activity_id => 12, :crop_id => crop.id)
-	 end
-
-   def liming_operations(crop)
-    self.operations.where(:activity_id => 12, :crop_id => crop.id)
-   end
-
-   def cover_crop_operations(crop)
-     self.operations.where(:activity_id => 13, :crop_id => crop.id)
+   def cover_crop_id_operations(rotation)
+     self.operations.where(:activity_id => 13, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
    end
 
    #Unused code. Remove method reference in /operations/index.html.erb?
-	 def pesticide_operations(crop)
- 	  self.operations.where(:activity_id => 100, :crop_id => crop.id)
+	 def pesticide_operations(rotation)
+ 	  self.operations.where(:activity_id => 100, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	 end
 
 end

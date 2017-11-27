@@ -739,16 +739,16 @@ module SimulationsHelper
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
-	    if ssf[layers] == nil then
-			 ssf[layers] = 0
-		  end
-      if ssf[layers] > SoilPMaxForSoilDepth
-        ssf[layers] = SoilPDefault
-      end
-      if ssf[layers] == 0 || ssf[layers] == nil
-        ssf[layers] = SoilPDefault
-      end
-      records = records + sprintf("%8.2f", ssf[layers])
+  	    if ssf[layers] == nil then
+  			 ssf[layers] = 0
+  		  end
+        if ssf[layers] > SoilPMaxForSoilDepth
+          ssf[layers] = SoilPDefault
+        end
+        if ssf[layers] == 0 || ssf[layers] == nil
+          ssf[layers] = SoilPDefault
+        end
+        records = records + sprintf("%8.2f", ssf[layers])
       end
       soil_info.push(records + "\n")
       records = ""
@@ -1102,8 +1102,8 @@ module SimulationsHelper
     @grazingb = false
     @opcs_file = Array.new
     irrigation_type = 0
-    bmp = Bmp.where("scenario_id = " + @scenario.id.to_s + " and irrigation_id > 0").first
-    irrigation_type = Irrigation.find(bmp.irrigation_id).code unless bmp == nil or bmp.bmpsublist_id == 19  #irrigation_id is used as planting method for cover crop BMP.
+    bmp1 = Bmp.where("scenario_id = " + @scenario.id.to_s + " and irrigation_id > 0").first
+    irrigation_type = Irrigation.find(bmp1.irrigation_id).code unless bmp1 == nil or bmp1.bmpsublist_id == 19  #irrigation_id is used as planting method for cover crop BMP.
     #check and fix the operation list
   	if buffer_type == 0 then   #when subarea from soils
   		@soil_operations = SoilOperation.where(:soil_id => soil_id.to_s, :scenario_id => @scenario.id.to_s)
@@ -1120,12 +1120,15 @@ module SimulationsHelper
       c_c_p = false
       c_c_k = false
       cc_hash = {}
+      last_op_id = 0
+      cc_plt_date = 0
+      cc_kill_date = 0
       #convert soil_operations active record to hash
       @soil_operations.each do |so|
         cc_hash[so.id] = so
+        last_op_id = so.id
       end
-      #ccc_hash.sort_by { |k,v| [v[:year], v[:month_id], v[:day], v[:id]]}
-      c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)
+      c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop
       cc_number = @scenario.operations.last.id
       c_cs.each do |bmp|
         if bmp != nil then
@@ -1143,6 +1146,8 @@ module SimulationsHelper
           s_o_new.opv5 = set_opval5(bmp)
           s_o_new.opv6 = 0
           s_o_new.opv7 = 0
+          last_op_id += 1
+          s_o_new.id = last_op_id
           cc_plt_date = Date.parse(sprintf("%2d", s_o_new.year) + "/" + sprintf("%2d", s_o_new.month) + "/" + sprintf("%2d", s_o_new.day))
           s_o_new_kill = SoilOperation.new
           if last_year > bmp.year then  # validate if last_year is greater than cover crop planting year
@@ -1169,30 +1174,18 @@ module SimulationsHelper
           s_o_new_kill.opv7 = 0
           cc_number += 1
           cc_hash[cc_number] = s_o_new
+          last_op_id += 1
+          s_o_new_kill.id = last_op_id
           cc_number += 1
           cc_hash[cc_number] = s_o_new_kill
-        end
-      end
+        end #if bmp  != nill
+      end #end c_cs each
       cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day], v[:id]]}
       cc_hash_sorted.each do |soil_operation|
         # ask for 1=planting, 5=kill, 3=tillage
         if soil_operation[1].apex_crop == CropMixedGrass && (soil_operation[1].activity_id == 1 || soil_operation[1].activity_id == 5 || soil_operation[1].activity_id == 3) then
-          #todo check this one
-          #mixed_crops = operation.MixedCropData.Split(",")
-          #mixedCropsInfo(2) As String
-          #newOper As OperationsData
-
-          #for Each value In mixedCrops
-          #    newOper = New OperationsData
-          #    newOper = AddMixedOperations(operation)
-          #    mixedCropsInfo = value.Split("|")
-          #    newOper.ApexCrop = mixedCropsInfo(0)
-          #    newOper.OpVal5 = mixedCropsInfo(2) / ac_to_m2
-          #    newOper.setCN(newOper.ApexCrop, "", _fieldsInfo1.Count, soil.Group, currentFieldNumber, _startInfo, Session("UserGuide"))
-          #    AddOperation(newOper, irrigation_type, nirr, soil.Percentage, j)
-          #end
         else
-          if bmp != nil then
+          if c_cs.count > 0  then
             date_oper = Date.parse(sprintf("%2d", soil_operation[1].year) + "/" + sprintf("%2d", soil_operation[1].month) + "/" + sprintf("%2d", soil_operation[1].day))
             if c_c_p == false and date_oper > cc_plt_date then 
               #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
@@ -1204,13 +1197,13 @@ module SimulationsHelper
               j+=1
               c_c_k = true
             end
-          end
+          end # end bmp != nil
           add_operation(soil_operation[1], irrigation_type, nirr, soil_percentage, j)
-        end # end if
+        end # end if soil_operation[1]
         j+=1
       end #end soil_operations.each do
       #just in case the planting operation was after the last operation in the soil_operations file.
-      if c_c_p == false and bmp != nil then
+      if c_c_p == false and c_cs.count > 0 then
         #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
       end
       # add to the tillage file the new fertilizer operations - one for each depth
