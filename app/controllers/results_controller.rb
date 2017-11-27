@@ -52,6 +52,7 @@ class ResultsController < ApplicationController
     @total_area3 = 0
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 71 or (id > 80 and id < 200)")
+    @groups = Group.all
     add_breadcrumb t('menu.results')
 	
 	@scenario1 = "0"
