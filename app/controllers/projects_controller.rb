@@ -177,7 +177,7 @@ class ProjectsController < ApplicationController
   def upload_project
   saved = upload_prj()
     if saved
-      flash[:info] = t('models.project') + " " + t('general.success')
+      flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
       redirect_to projects_upload_path(@upload_id)
