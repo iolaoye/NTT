@@ -439,9 +439,6 @@ class OperationsController < ApplicationController
 
 ################################  CALL WHEN CLICK IN UPLOAD CROP SCHEDULE  #################################
   def crop_schedule
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     #@operations = Operation.where(:scenario_id => params[:scenario_id])
     @count = @operations.count
     @highest_year = 0
@@ -454,7 +451,7 @@ class OperationsController < ApplicationController
     if state_id < 10 then
       state_id_text = "0" + state_id.to_s
     else
-      state_id_text = "'" + state_id.to_s + "'"
+      state_id_text = state_id.to_s
     end
     #@cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 2")
     @cropping_systems = CropSchedule.where(:status => true, :class_id => 1).where("state_id LIKE ? OR state_id LIKE ?", "%#{state_id_text}%","*")
