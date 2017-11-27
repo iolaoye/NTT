@@ -690,15 +690,15 @@
 					  <% end %>
 					  <%# description = Description.find(result.description_id) %>
 					  <% value2 = 0 %>
-					  <% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil then %> <%value2 =@total_area * @results2.find_by_description_id(result.description_id).value %> <% end %>
-					  <% difference1 = value2 - result.value*@total_area %>
-					  <% reduction1 = difference1 / (result.value*@total_area) * 100 %>
-					  <%# total_area1 = difference1 * @total_area%>
+					  <% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil then %> <%value2 =@total_area2 * @results2.find_by_description_id(result.description_id).value.round(1) %> <% end %>
+					  <% difference1 = value2 - result.value.round(1)*@total_area1 %>
+					  <% reduction1 = difference1 / (result.value.round(1)*@total_area1) * 100 %>
+					  <%# total_area1 = difference1 * @total_area1%>
 					  <% value3 = 0 %>
-					  <% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil then %> <%value3 = @total_area * @results3.find_by_description_id(result.description_id).value %> <% end %>
-					  <% difference2 = value3  - result.value*@total_area%>
-					  <% reduction2 = difference2 / (result.value*@total_area) * 100%>
-					  <!-- % total_area2 = difference2 * @total_area%> -->
+					  <% if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil then %> <%value3 = @total_area3 * @results3.find_by_description_id(result.description_id).value.round(1) %> <% end %>
+					  <% difference2 = value3  - result.value.round(1)*@total_area1%>
+					  <% reduction2 = difference2 / (result.value.round(1)*@total_area1) * 100%>
+
 					  <% row_id = t + "row" + result.description_id.to_s %>
 					  <% case (result.description_id % 10) %>
 						<% when 0 %>
@@ -737,7 +737,7 @@
 									<%= check_box_tag result.description.description %>
 								  </th>
 								<% end %>
-								<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", result.value*@total_area) + "(" + sprintf("%8.1f", result.ci_value) + ")"%></td>
+								<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", result.value.round(1)*@total_area1) + "(" + sprintf("%8.1f", result.ci_value) + ")"%></td>
 								<% if @results2 != nil %>
 								  <td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", value2) + "(" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value) + ")"%></td>
 								  <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + "(" + sprintf("%8.1f", reduction1) + ")"%></td>
@@ -764,7 +764,7 @@
 									<% else %>
 										<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result.crop_id).spanish_name + " (" + Crop.find(result.crop_id).yield_unit + ")" %></th>
 									<% end %>
-									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9">><%= sprintf("%8.0f", (result.value*@total_area).round(1)) + "(" + sprintf("%8.1f", result.ci_value) + ")"%></td>
+									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9">><%= sprintf("%8.0f", (result.value.round(1)*@total_area1).round(1)) + "(" + sprintf("%8.1f", result.ci_value) + ")"%></td>
 									<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
 										<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.0f", value2.round(1)) + " (" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value) + ")"%></td>
 										<% if difference1 <= 0 %>
@@ -805,7 +805,7 @@
 									<% else %>
 										<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= result.description.spanish_description + " (" + description_unit + ")" %></th>
 									<% end %>
-									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf(format, result.value*@total_area) + " (" + sprintf("%8.1f", result.ci_value) + ")"%></td>
+									<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf(format, result.value.round(1)*@total_area1) + " (" + sprintf("%8.1f", result.ci_value) + ")"%></td>
 									<% if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil  %>
 										<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf(format, value2) + "(" + sprintf("%8.1f", @results2.find_by_description_id(result.description_id).ci_value) + ")"%></td>
 										<% if difference1 >= 0 %>
@@ -843,17 +843,17 @@
 				<% value2 = 0 %>
 				<% reduction1 = 0 %>
 				<% if @scenario2 > "0" then %>
-					<%value2 = result[3] * @total_area %>
-					<% difference1 = value2 - (result[1] * @total_area) %>
-					<% reduction1 = difference1 / (result[1]*@total_area) * 100 unless result[1] == 0%>
+					<%value2 = result[3].round(1) * @total_area2 %>
+					<% difference1 = value2 - (result[1].round(1) * @total_area1) %>
+					<% reduction1 = difference1 / (result[1].round(1)*@total_area1) * 100 unless result[1] == 0%>
 					<%# total_area1 = difference1 * @total_area%>
 				<% end %>
 				<% value3 = 0 %>
 				<% reduction2 = 0 %>
 				<% if @scenario3 > "0" then %>
-					<%value3 = result[5] * @total_area %>
-					<% difference2 = value3 - result[1]*@total_area %>
-					<% reduction2 = difference2 / (result[1]*@total_area) * 100 unless result[1] == 0 %>
+					<%value3 = result[5].round(1) * @total_area3 %>
+					<% difference2 = value3 - result[1].round(1)*@total_area1 %>
+					<% reduction2 = difference2 / (result[1].round(1)*@total_area1) * 100 unless result[1] == 0 %>
 					<%# total_area2 = difference2 * @total_area %>
 				<% end %>
 				<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
@@ -862,7 +862,7 @@
 					<% else %>
 						<td class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= Crop.find(result[0]).spanish_name + " (" + Crop.find(result[0]).yield_unit + ")" %></td>
 					<% end %>
-					<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.0f", (result[1]*@total_area).round(1)) + " (" + sprintf("%8.1f", result[2]) + ")"%></td>
+					<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.0f", (result[1].round(1)*@total_area1).round(1)) + " (" + sprintf("%8.1f", result[2]) + ")"%></td>
 					<% if @scenario2 > "0" %>
 						<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.0f", value2.round(1)) + "(" + sprintf("%8.1f", result[4]) + ")"%></td>
 						<% if difference1 <= 0 %>
