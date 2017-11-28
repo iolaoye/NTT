@@ -534,6 +534,7 @@ es:
     create_soil: Crear Suelo
     new: Nuevo
     layer: Capa de Suelo
+    aluminum: Aluminio (ppm)
   layer:
     new_layer: Nueva Capa
     create_layer: Crear Capa

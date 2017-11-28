@@ -529,6 +529,7 @@ en:
     create_soil: Create Soil
     new : New
     layer: Soil Layer
+    aluminum: Aluminum (ppm)
   layer:
     new_layer: New layer
     create_layer: Create Layer
