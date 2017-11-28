@@ -742,9 +742,10 @@ module SimulationsHelper
   	    if ssf[layers] == nil then
   			 ssf[layers] = 0
   		  end
-        if ssf[layers] > SoilPMaxForSoilDepth
-          ssf[layers] = SoilPDefault
-        end
+        #commented according to Ali. No max value for soilp P to allow sooil p caculation using soil test and override by user input.
+        #if ssf[layers] > SoilPMaxForSoilDepth
+          #ssf[layers] = SoilPDefault
+        #end
         if ssf[layers] == 0 || ssf[layers] == nil
           ssf[layers] = SoilPDefault
         end
