@@ -29,7 +29,7 @@
         <% if !(@project.location.state_id == 25 || @project.location.state_id == 26) && bmp.bmpsublist_id == 4 %>
           <% next %>
         <% end %>
-        <% if manure_operations == 0 && bmp.bmpsublist_id == 18 && county_id != 2939 %>
+        <% if (manure_operations == 0 && bmp.bmpsublist_id == 18) || (bmp.bmpsublist_id == 18 && county_id != 2939) %>
           <% next %>
         <% end %>
 
@@ -121,7 +121,7 @@
               </td>
             </tr>
             <tr>
-              <td class="field indent2" id = "td_n_rate" colspan="2"><%= style="display: none;" unless bmp.depth == 2%>
+              <td class="field indent2" id = "td_n_rate" colspan="2"<%= " style='display: none'; " unless bmp.depth == 2%>
                <%= label :days, t('operation.application_rate') + " (" + t('bmp.lbs') + "/" + t("bmp.acres") + ")"%>
                <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :class => "gvTitleStyleNumber" %>
                 <!-- <strong><a href="#" id="n_rate_trigger" style="color:blue;">(?)</a></strong> -->
@@ -536,7 +536,7 @@
   </h6>
 </div>
 
-<div id="pop-up1">
+<div id="pop-up1" style="display: none">
   <h6>Amount fertilizer applied to lower N stress. At zero (0) means apply N as much as needed.</h6>
 </div>
 
