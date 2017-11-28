@@ -620,6 +620,8 @@ es:
     planting_method: Metodo de sembrado
     manure_composition: Composición del estiércol
     planting_date: Fecha de Cultivo
+    continues_grazing: Pastoreo Continuo
+    rotational_grazing: Pastoreo Rotacional
     total_n: N Total (0-100%)
     total_p: P Total (0-100%)
     application_rate: Cantifad Aplicada 
