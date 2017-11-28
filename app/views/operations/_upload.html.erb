@@ -15,7 +15,7 @@
       <td><%= collection_select :tillage, :id, @tillages, :id, :name, {:prompt => "No " + t('models.tillage'), :required => true} %></td>
       <td>
         <%= label :year, "", :id => "year_label" %>
-        <%= number_field_tag :year, @highest_year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>
+        <%= number_field_tag :year, @operations.last.year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>
       </td>
       <td style='text-align:center'>
         <% if @operations.first != nil %>

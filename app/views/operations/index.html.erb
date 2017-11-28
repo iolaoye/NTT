@@ -7,13 +7,14 @@
 
 <div class="page-header"><h1><%= t('menu.operations') %></h1></div>
 	<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('general.to') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
-	<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary', :id => 'new_oper' %>
+	<%#= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary', :id => 'new_oper' %>
 	<%= button_tag t('operation.add_cover_crop'), :class => 'btn btn-primary', :id => 'new_ccr' %>
 	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views", :class => 'btn btn-primary', "onclick" => "saveView()" } %>
 	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
 	<div id="div_new" style="display:none">
 		<%= render "upload" %>
 	</div>
+	<% @highest_year = @operations.last.year %>
 	<div id="div_ccr" style="display:none">
 		<%= render "add_cover_crop" %>
 	</div>
@@ -28,11 +29,16 @@
 								<% if @operations.find_by_crop_id_and_subtype_id_and_activity_id(rotation.crop_id,1,1) %>
 									<% cover_crop = " - Cover Crop" %>
 								<% end %>
-								<% if (I18n.locale.eql?(:en)) %>
-								  <h4 style="cursor:pointer" ><%= Crop.find(rotation.crop_id).name + cover_crop %> [+]</h4>
-								<% else %>
-								  <h4 style="cursor:pointer" ><%= Crop.find(rotation.crop_id).spanish_name + cover_crop %> [+]</h4>
-								<% end %>
+								<h4 style="cursor:pointer" >
+									<% if (I18n.locale.eql?(:en)) %>
+									  <%= Crop.find(rotation.crop_id).name + cover_crop %> [+]
+									<% else %>
+									  <%= Crop.find(rotation.crop_id).spanish_name + cover_crop %> [+]
+									<% end %>
+								</h4>
+							</td>
+							<td>
+								<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario, :rotation => rotation.rotation, :crop => rotation.crop_id), :class => 'btn btn-primary', :id => 'new_oper' %>
 							</td>
 							<td class="col-md-1 text-rigth" style="text-align: right" width="20%">
 								<%= link_to image_tag("delete.png"), delete_all_project_field_scenario_operation_path(@project, @field, @scenario, rotation.crop_id, :rotation => rotation.rotation), data: { confirm: t('general.confirm') } %>
@@ -51,6 +57,9 @@
 							    <% else %>
 								  <h4 style="cursor:pointer"><%= Crop.find(rotation.crop_id).spanish_name %> [-]</h4>
 								<% end %>
+							</td>
+							<td>
+								<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario, :rotation => rotation.rotation, :crop => rotation.crop_id), :class => 'btn btn-primary', :id => 'new_oper' %>
 							</td>
 							<td class="col-md-1 text-rigth" width="20%">
 								<%= link_to image_tag("delete.png"), delete_all_project_field_scenario_operation_path(@project, @field, @scenario, rotation.crop_id, :rotation => rotation.rotation), data: { confirm: t('general.confirm') } %>
@@ -474,28 +483,28 @@
 	<%#= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %>
 	<div class="panel panel-default" id="div_operations" style="display:none">
 		<table class="table table-striped">
-		  <thead>
-			<tr>
-				<th class="gvCellStyleTitle upper_border"><%= t('operation.crop') %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('scenario.operation') %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.year') %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.month') %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.day') %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('general.type') %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('general.value') + '1' %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('general.value') + '2' %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('operation.moisture') + "(%)" %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('bmp.no3_n_html') + "(%)" %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('bmp.po4_p_html') + "(%)" %></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('bmp.org_n_html') + "(%)"%></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('bmp.org_p_html') + "(%)"%></th>
-				<th class="gvCellStyleTitle upper_border"><%= t('general.actions') %></th>
-			</tr>
-		  </thead>
-		  <tbody>
-			  <% i=1 %>
-			  <% @operations = @operations.sort_by { |t| [t.year, t.month_id, t.day] } %>
-			  <% @operations.each do |operation| %>
+		  	<thead>
+				<tr>
+					<th class="gvCellStyleTitle upper_border"><%= t('operation.crop') %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('scenario.operation') %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.year') %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.month') %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('datetime.prompts.day') %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('general.type') %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('general.value') + '1' %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('general.value') + '2' %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('operation.moisture') + "(%)" %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('bmp.no3_n_html') + "(%)" %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('bmp.po4_p_html') + "(%)" %></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('bmp.org_n_html') + "(%)"%></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('bmp.org_p_html') + "(%)"%></th>
+					<th class="gvCellStyleTitle upper_border"><%= t('general.actions') %></th>
+				</tr>
+		  	</thead>
+		  	<tbody>
+			 	<% i=1 %>
+				<% @operations = @operations.sort_by { |t| [t.year, t.month_id, t.day, t.rotation] } %>
+				<% @operations.each do |operation| %>
 				<% if (i % 2  == 0) %>
 				  <tr id="rowIdEven" class="gvRowStyleEven">
 				<% else %>
@@ -560,7 +569,7 @@
 					</td>
 				</tr>
 			  <% end %>
-		  </tbody>
+		  	</tbody>
 		</table>
 	  </div>
 	</div>
