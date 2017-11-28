@@ -311,7 +311,7 @@
             <tr>
               <td class="indent2" colspan="2">
                 <%= t('pdf.area') + " (" + t('bmp.acres') + ")"%>
-                <%= number_field :bmp_fs, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_fs, :area, :value => bmp.area, :class => "gvTitleStyleNumber", :min => "0", :step => "any" %>
                 <%= label :area, " (" + t('general.optional') + ")", :style => "color:blue" %>
                 </td>
             </tr>
@@ -750,7 +750,7 @@
       $("tbody#14 input, tbody#15 input").val("");
       $("tbody#14 select, tbody#15 select").val([]);
     }
-    validateBmpFs.addValidation("bmp_cb3", "selone", "A selection is required. Filter strip or Riparian Forest Buffer?");
+    validateBmpFs.addValidation("bmp_cb3", "selone", "A selection is required. Grass Buffer or Forest Buffer?");
     $('input[type=radio][name=bmp_cb3]').change(function() {
       validateBmpFs.clearAllValidations();
       if (this.value == '12') {
@@ -764,8 +764,8 @@
         //validateBmpFs.addValidation(fs_inputs[3].name, "gte=0.25", '<%= t("managepage.bmpdesc.stream.filterstrip.header") %>' + ' <%= t("bmp.grass_field_portion") %>: ' + '<%= t("validate.input_greaterequal") %>' + " 0.25");
       }
       else if (this.value == '13') {
-        for(n = 0; n < fs_inputs.length-3; n++){
-          if (n != 1 && n != 3) {
+        for(n = 0; n < fs_inputs.length-1; n++){
+          if (n != 1 && n != 3 && n != 4) {
             console.log("validates: " + n + ": " + fs_inputs[n].name);
             validateBmpFs.addValidation(fs_inputs[n].name, "req", '<%= t("validate.required") %> ' + '<%= t("managepage.bmpnav.mutualbmp.item4") %>');
           }
