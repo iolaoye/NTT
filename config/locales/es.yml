@@ -621,6 +621,7 @@ es:
     planting_date: Fecha de Cultivo
     total_n: N Total (0-100%)
     total_p: P Total (0-100%)
+    application_rate: Cantifad Aplicada 
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
@@ -656,10 +657,10 @@ es:
     stream_fencing_frequency: Días en la corriente
     hours: Horas por día
     dry_manure: Estiércol seco
-    no3_n: No3 n
-    po4_p: Po4 p
-    org_n: Org n
-    org_p: Org a
+    no3_n_html: 'NO<sub>3</sub>-N'
+    po4_p_html: 'PO<sub>4</sub>-P'
+    org_n_html: 'Org N'
+    org_p_html: 'Org P'
     width: Ancho
     buffer_width: Ancho del Buffer de pasto
     waterways_info: Incluyendo ambos lados del canal
@@ -793,6 +794,7 @@ es:
     select_prompt_scenario: Seleccione hasta 3 escenarios para ver
     select_prompt_watershed: Seleccione hasta 3 cuencas para ver
     select_chart: Seleccione una Categoría
+    select_group: Selecciona grupo
     description: Descripción
     difference: Diferencia
     reduction: Reducción

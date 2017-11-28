@@ -47,61 +47,53 @@ class ResultsController < ApplicationController
     @present3 = false
     @description = 0
     @title = ""
-    @total_area = 0
+    @total_area1 = 0
+    @total_area2 = 0
+    @total_area3 = 0
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 71 or (id > 80 and id < 200)")
-    #@project = Project.find(params[:project_id])
+    @groups = Group.all
     add_breadcrumb t('menu.results')
 	
 	@scenario1 = "0"
 	if params[:result1] != nil then
 		if params[:result1][:scenario_id] == nil then
-			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == ""
+			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or Scenario.find_by_id(session[:scenario1]) == nil
+
 		else
 			@scenario1 = params[:result1][:scenario_id]
 		end
-	else
-		@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == ""
+   	else
+		@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or Scenario.find_by_id(session[:scenario1]) == nil
 	end
 	@scenario2 ="0"
 	if params[:result2] != nil then
 		if params[:result2][:scenario_id] == nil then
-			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == ""
+			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or Scenario.find_by_id(session[:scenario2]) == nil
 		else
 			@scenario2 = params[:result2][:scenario_id]
 		end
 	else
-		@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == ""
+		@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or Scenario.find_by_id(session[:scenario2]) == nil
 	end
 	@scenario3="0"
 	if params[:result3] != nil then
 		if params[:result3][:scenario_id] == nil then
-			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == ""
+			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or Scenario.find_by_id(session[:scenario3]) == nil
 		else
 			@scenario3 = params[:result3][:scenario_id]
 		end
 	else
-		@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == ""
+		@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or Scenario.find_by_id(session[:scenario3]) == nil
 	end
     if session[:simulation].eql?('scenario') then
-        @total_area = Field.find(params[:field_id]).field_area
-        @field_name = Field.find(params[:field_id]).field_name
-	else
-	    @total_area = 0
-	    if params[:result1] != nil 
-		    if !params[:result1][:scenario_id].empty? then
-	    		watershed_scenarios = WatershedScenario.where(:watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
-	    		watershed_scenarios.each do |ws|
-	    			@total_area += Field.find(ws.field_id).field_area
-	    		end
-		    end
-		end
+		@field_name = @field.field_name
     end
-  	if !(params[:field_id] == "0")
-  		@field = Field.find(params[:field_id])
-	  else
-	    @field = 0
-  	end
+  	#if !(params[:field_id] == "0")
+  		#@field = Field.find(params[:field_id])
+	  #else
+	    #@field = 0
+  	#end
   	
     @soil = "0"
     #load crop for each scenario selected
@@ -177,6 +169,18 @@ class ResultsController < ApplicationController
 						#@scenario1 = params[:result1][:scenario_id]
 						session[:scenario1] = @scenario1
 						if session[:simulation] == 'scenario'
+							@total_area1 = @field.field_area
+							bmps = Scenario.find(@scenario1).bmps
+							bmps.each do |b|
+								case b.bmpsublist_id
+								when 13, 8
+									if b.sides == 1 then
+										@total_area1 -= b.area 
+									end
+								when 14, 15
+									@total_area1 -= b.area
+								end
+							end
 							@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
 							@crop_results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
 							@crop_stress1_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
@@ -184,6 +188,14 @@ class ResultsController < ApplicationController
 							@crop_stress1_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
 							@crop_stress1_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
 						else
+							if params[:result1] != nil 
+								if !params[:result1][:scenario_id].empty? then
+									watershed_scenarios = WatershedScenario.where(:watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
+									watershed_scenarios.each do |ws|
+										@total_area1 += Field.find(ws.field_id).field_area
+									end
+								end
+							end
 							@results1 = Result.where(:watershed_id => @scenario1, :crop_id => 0).includes(:description).includes(:description)
 							@crop_results1 = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 70, 80)
 							@crop_stress1_ns = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 200, 211)
@@ -260,6 +272,18 @@ class ResultsController < ApplicationController
 						#@scenario2 = params[:result2][:scenario_id]
 						session[:scenario2] = @scenario2
 						if session[:simulation] == 'scenario'
+							@total_area2 = @field.field_area
+							bmps = Scenario.find(@scenario2).bmps
+							bmps.each do |b|
+								case b.bmpsublist_id
+								when 13, 8
+									if b.sides == 1 then
+										@total_area2 -= b.area 
+									end
+								when 14, 15
+									@total_area2 -= b.area
+								end
+							end
 							@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
 							@crop_results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
 							@crop_stress2_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
@@ -267,6 +291,14 @@ class ResultsController < ApplicationController
 							@crop_stress2_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
 							@crop_stress2_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
 						else
+							if params[:result1] != nil 
+								if !params[:result1][:scenario_id].empty? then
+									watershed_scenarios = WatershedScenario.where(:watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
+									watershed_scenarios.each do |ws|
+										@total_area2 += Field.find(ws.field_id).field_area
+									end
+								end
+							end
 							@results2 = Result.where(:watershed_id => @scenario2, :crop_id => 0).includes(:description).includes(:description)
 							@crop_results2 = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 70, 80)
 							@crop_stress2_ns = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 200, 211)
@@ -393,6 +425,18 @@ class ResultsController < ApplicationController
 						#@scenario3 = params[:result3][:scenario_id]
 						session[:scenario3] = @scenario3
 						if session[:simulation] == 'scenario'
+							@total_area3 = @field.field_area
+							bmps = Scenario.find(@scenario3).bmps
+							bmps.each do |b|
+								case b.bmpsublist_id
+								when 13, 8
+									if b.sides == 1 then
+										@total_area3 -= b.area 
+									end
+								when 14, 15
+									@total_area3 -= b.area
+								end
+							end
 							@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
 							#@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id > 0")
 							@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
@@ -401,6 +445,14 @@ class ResultsController < ApplicationController
 							@crop_stress3_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
 							@crop_stress3_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
 						else
+							if params[:result1] != nil 
+								if !params[:result1][:scenario_id].empty? then
+									watershed_scenarios = WatershedScenario.where(:watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
+									watershed_scenarios.each do |ws|
+										@total_area3 += Field.find(ws.field_id).field_area
+									end
+								end
+							end							
 							@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0).includes(:description).includes(:description)
 							@crop_results3 = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 70, 80)
 							@crop_stress3_ns = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 200, 211)

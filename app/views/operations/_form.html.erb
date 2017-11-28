@@ -129,7 +129,7 @@
 			<%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
 	    </div>
 		<div class="field" id="div_type"  >
-			<%= label :type_id, t('operation.fertilizer') + " " + t('general.type') %>
+			<%= label :type_id, t('operation.fertilizer_category') %>
 			<% if I18n.locale.eql?(:en) %>
 			 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => 'Select Fertilizer Type', :selected => @operation.type_id}, {:required => true} %>
 			<% else %>
@@ -137,7 +137,7 @@
 			<% end %>
 		</div>
 		<div class="field" id="div_fertilizer" >
-			<%= f.label :type_id, t('operation.fertilizer') %>
+			<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -146,11 +146,11 @@
 		</div>
 		<div class="field" id="div_amount">
 			<% if @operation.type_id == 1 then %>
-				<%= f.label :amount, t('operation.amount') %>
+				<%= f.label :amount, t('operation.application_rate') %>
 			<% elsif @operation.type_id == 2 %>
-				<%= f.label :amount, t('operation.amount').gsub("lbs", "T") %>
+				<%= f.label :amount, t('operation.application_rate').gsub("ac", "ton") %>
 			<% else %>
-				<%= f.label :amount, t('operation.amount').gsub("lbs", "x1000gal") %>
+				<%= f.label :amount, t('operation.application_rate').gsub("lbs", "x1000gal") %>
 			<% end %>
 			<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
@@ -178,7 +178,7 @@
 				<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
 		  </div>
 		</div>
-		<%if @operation.type_id == 1 || @operation == 2 || @operation == 3 %>
+		<%if @operation.type_id == 1 || @operation.type_id == 2 || @operation.type_id == 3 %>
 			<div class="field" id="div_other_nutrients" <% if @operation.type_id == 1 %> style='display:none;' <% end %>>
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
@@ -309,7 +309,7 @@
 		  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
 		<div class="field" id="div_depth">
-		  <%= f.label :efficiency, t('operation.efficiency') %>
+		  <%= f.label :efficiency, t('operation.irrigation') + " " + t('operation.efficiency') %>
 		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
         <div class="field" id="div_grazed" style="display:none">

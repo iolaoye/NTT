@@ -107,6 +107,7 @@ class ProjectsController < ApplicationController
     @project.version = "NTTG3"
     respond_to do |format|
       if @project.save
+        flash[:notice] = ""
         params[:project_id] = @project.id
         location = Location.new
         location.project_id = @project.id
@@ -115,8 +116,8 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, info: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
-        notice=""
-        flash[:info] = t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+        flash[:info]=""
+        flash[:notice] = t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
         format.html { redirect_to user_projects_path(session[:user_id]) }
         #format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -176,7 +177,7 @@ class ProjectsController < ApplicationController
   def upload_project
   saved = upload_prj()
     if saved
-      flash[:info] = t('models.project') + " " + t('general.success')
+      flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
       redirect_to projects_upload_path(@upload_id)

@@ -6,8 +6,8 @@ class ApexControlsController < ApplicationController
   
   def index
     #@field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
-  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])	
+    #@project = Project.find(params[:project_id])
+  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => @project.id)	
 	
     add_breadcrumb t('menu.utility_file')
     add_breadcrumb t('menu.control_file')
@@ -98,7 +98,7 @@ class ApexControlsController < ApplicationController
   end
 
   def reset
-    controls = Control.where(:state_id => Location.find(session[:location_id]).state_id)
+    controls = Control.where(:state_id => @project.location.state_id)
     if controls.blank? || controls == nil then
 		  controls = Control.where(:state_id => 99)
     end
@@ -109,14 +109,14 @@ class ApexControlsController < ApplicationController
   		apex_control = ApexControl.new
   		apex_control.control_description_id = control.number
       apex_control.project_id = params[:project_id]
-      if control.id != 1 && control.id != 2
+      if control.number != 1 && control.number != 2
   		  apex_control.value = control.default_value
       else
         weather = Weather.find(Field.find_by_location_id(Location.find_by_project_id(params[:project_id]).id).weather_id)
-        if control.id == 1 then
+        if control.number == 1 then
           apex_control.value = weather.simulation_final_year - weather.simulation_initial_year + 5 + 1
         end
-        if control.id == 2
+        if control.number == 2
           apex_control.value = weather.simulation_initial_year - 5
         end
   		end

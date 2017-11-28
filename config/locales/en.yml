@@ -218,7 +218,7 @@ en:
     crop: Crop
     description: Description
     event: Event
-    fertilizer_type: Fertilizer type
+    fertilizer_type: Fertilizer Category
     fertilizer: Fertilizer
     field: Field
     help: Help
@@ -504,7 +504,7 @@ en:
     final_simulation_error: must not be greater than the final year of weather information. Maximum value is
     update_simulation: Update Simulation Period
   soil:
-    test: Soil Test Laboratory
+    test: Soil Test
     layers: Layers
     soil: Soil
     layer: Layer
@@ -559,7 +559,7 @@ en:
     upload: 'Upload'
     replace: Replace current operations
     cropping_system: 'Cropping System'
-    fertilizer: Fertilizer Type
+    fertilizer_category: Fertilizer Category
     crop: Crop
     schedule: "Rotation"
     moisture: Moisture
@@ -569,7 +569,7 @@ en:
     amount: 'Amount(lbs/ac)'
     bmp: BMP
     irrigation: Irrigation
-    plant_population: 'Plant Population (seeds/ac)(*optional)'
+    plant_population: 'Plant Population (seeds sq/ft)(*optional)'
     load_operation: Load Operation
     sum: 'total nutrients should be less or equal to 1'
     save: Save
@@ -578,7 +578,7 @@ en:
     volume: 'Volume (in)'
     efficiency: 'Efficiency (0-1)'
     animals: 'Total animal units'
-    hours: 'Hours in field (0-24)'
+    hours: 'Hours grazed per day (0-24)'
     depth: 'Depth (in)'
     no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
     po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
@@ -600,7 +600,7 @@ en:
     liming: Liming
     start_grazing: Grazing
     stop_grazing: Stop Grazing
-    seed: 'Seeding Amount (seeds/ft)(optional)'
+    seed: 'Seeding Amount (seeds/sq ft)(optional)'
     amount_applied: 'Amount Applied'
     add_planting: 'Add Planting Operation'
     add_fertilizer: 'Add Fertilizer Operation'
@@ -621,6 +621,7 @@ en:
     rotational_grazing: Pastoreo Rotacional
     total_n: Total N (0-100%)
     total_p: Total P (0-100%)
+    application_rate: Application Rate
   bmp:
     bmp_group: BMP Group
     select_bmp: Select BMP Group
@@ -666,10 +667,10 @@ en:
     stream_fencing_frequency: Days in Stream
     hours: Hours per day
     dry_manure: Dry defecated
-    no3_n: No3 n
-    po4_p: Po4 p
-    org_n: Org n
-    org_p: Org p
+    no3_n_html: 'NO<sub>3</sub>-N'
+    po4_p_html: 'PO<sub>4</sub>-P'
+    org_n_html: 'Org N'
+    org_p_html: 'Org P'
     width: Width
     buffer_width: Grass buffer width
     waterways_info: Including both sides of channel
@@ -697,8 +698,8 @@ en:
     ffpq: Fraction of field treated by
     grazing_date: Grazing dates
     hours_grazed: '# of consecutive hours per day grazed'
-    days_grazed: '# of consecutive days grazed at a time (in each paddock)'
-    rest_time: 'Pasture rest time (days) between grazings'
+    days_grazed: '# of consecutive days grazed in each paddock'
+    rest_time: 'paddock rest time between grazing (days)'
   months:
     january: January
     february: February
@@ -804,6 +805,7 @@ en:
     select_prompt_scenario: Select up to 3 scenarios for view
     select_prompt_watershed: Select up to 3 watersheds for view
     select_chart: Select a Category
+    select_group: Select Group
     description: Description
     difference: Difference
     reduction: Reduction
