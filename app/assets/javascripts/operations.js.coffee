@@ -148,7 +148,7 @@ updateTypes = ->
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
       $("#operation_subtype_id").prop('disabled',true)
-      $("#div_type")[0].children[0].innerText = "Fertilizer Type"
+      $("#div_type")[0].children[0].innerText = "Fertilizer Category"
     when "3"   # tillage
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
