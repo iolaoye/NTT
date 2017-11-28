@@ -13,7 +13,7 @@ class OperationsController < ApplicationController
     end 
     crop_schedule()
     add_breadcrumb t('menu.operations')
-    @rotations = @scenario.operations.select("rotation, crop_id").distinct
+    @rotations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
     #array_of_ids = @scenario.operations.order(:rotation, :activity_id, :year).map(&:rotation&:crop_id)
     #@crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
     @operations.sort_by { |date| [date.year, date.month_id, date.day] }
@@ -27,7 +27,6 @@ class OperationsController < ApplicationController
       format.json { render json: @operations }
     end
   end
-
 ########################################################################
 ## add a new cover crop. this is adding as a planting operation with
 ## subtype_id at 1 to identify it as cover crop
@@ -55,7 +54,6 @@ class OperationsController < ApplicationController
       format.json { render json: @operation }
     end
   end
-
 ################################  NEW  #################################
 # GET /operations/new
 # GET /operations/new.json
