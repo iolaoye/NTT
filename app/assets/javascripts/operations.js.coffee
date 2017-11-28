@@ -85,7 +85,7 @@ getGrazingFields = ->
     $("#div_amount").show()
     $("#div_depth").show()
     $("#div_tillage").show()
-    $("#div_nutrients").show()
+    $("#div_nutrients").hide()
     $("#div_type").show()
     $("#div_date").show()
     $("#year1").prop('required',true)
