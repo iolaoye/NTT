@@ -61,6 +61,7 @@ class OperationsController < ApplicationController
 # GET /operations/new.json
   def new
     @operation = Operation.new
+    @operation.rotation = params[:rotation]
     @operation.activity_id = params[:operation]
     @operation.crop_id = params[:crop]
     #@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
@@ -107,9 +108,6 @@ class OperationsController < ApplicationController
 # POST /operations
 # POST /operations.json
   def create
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     msg = "OK"
     saved = false
     soil_op_saved = false
@@ -135,6 +133,7 @@ class OperationsController < ApplicationController
       @operation.moisture = params[:op][:moisture]
       @operation.org_c = params[:op][:total_n_con]
       @operation.nh4_n = params[:op][:total_p_con]
+      @operation.rotation = params[:operation][:rotation]
       @crops = Crop.load_crops(@project.location.state_id)
       if @operation.save
         #saves start grazing operation in SoilOperation table
@@ -171,6 +170,7 @@ class OperationsController < ApplicationController
           @operation.org_p = 0
           @operation.nh3 = 0
           @operation.subtype_id = 0
+          @operation.rotation = params[:operation][:rotation] 
           @operation.save
           if @operation.activity_id = 8 then 
             msg = add_soil_operation()
@@ -598,6 +598,7 @@ class OperationsController < ApplicationController
       if event.crop_schedule_id == 4 && @highest_year > @operation.year && @operation.activity_id == 5 # ask if corp rotation is winter wheat and the highest year is > than the kill operation. Since the kill is first in the table we need to be sure where to put it.
         @operation.year += 1
       end
+      @highest_year = @operation.year
       #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
       #note fertilizer id and code are the same so far. Try to keep them that way
       @operation.type_id = 0
@@ -611,7 +612,7 @@ class OperationsController < ApplicationController
         when 1 #planting operation. Take planting code from crop table and plant population as well
           @operation.type_id = Crop.find(@operation.crop_id).planting_code
           @operation.amount = plant_population
-        when 2, 7
+        when 2, 7  #fertilizer and grazing
           fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
           @operation.amount = event.apex_opv1
           if fertilizer != nil then
@@ -625,7 +626,7 @@ class OperationsController < ApplicationController
             @operation.subtype_id = event.apex_fertilizer
           end
         when 3
-        @operation.type_id = event.apex_operation
+          @operation.type_id = event.apex_operation
         else
         @operation.amount = event.apex_opv1
       end #end case
@@ -635,7 +636,7 @@ class OperationsController < ApplicationController
         msg = add_soil_operation()
         notice = t('scenario.operation') + " " + t('general.created')
         unless msg.eql?("OK")
-        raise ActiveRecord::Rollback
+          raise ActiveRecord::Rollback
         end
       else
         raise ActiveRecord::Rollback

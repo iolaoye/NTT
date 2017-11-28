@@ -724,6 +724,7 @@
 				<%= number_field :op, :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 			</div> 
 		</div>
+		<%= f.hidden_field :rotation, :value => @operation.rotation %>
 	<% end %>
 
 	<div class="actions">
