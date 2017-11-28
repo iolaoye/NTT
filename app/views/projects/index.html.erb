@@ -1,11 +1,11 @@
 <% case %>
 	<% when flash[:notice] %>
-		<div class="flash_alert">
+		<div class="success_alert">
 		  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 		  <%= flash[:notice] %>
 		</div>
 	<% when flash[:info] %>
-		<div class="success_alert">
+		<div class="flash_alert">
 		  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 		  <%= flash[:info] %>
 		</div>
