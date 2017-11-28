@@ -174,7 +174,12 @@ class FieldsController < ApplicationController
           if params[:field][:soilp].blank?
           field.soilp = 0
           end
-          layer.soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
+          debugger
+          if field.soil_test == 7 then
+            layer.soil_p = soil_test.factor2 * soil_p - soil_test.factor1 X layer.ph - 32.757 * (field.soil_psoil_al) + 90.73
+          else
+            layer.soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
+          end
           if layer.save then
   					msg = "OK"
   				else
