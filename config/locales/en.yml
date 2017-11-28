@@ -667,10 +667,10 @@ en:
     stream_fencing_frequency: Days in Stream
     hours: Hours per day
     dry_manure: Dry defecated
-    no3_n: No3 n
-    po4_p: Po4 p
-    org_n: Org n
-    org_p: Org p
+    no3_n_html: 'NO<sub>3</sub>-N'
+    po4_p_html: 'PO<sub>4</sub>-P'
+    org_n_html: 'Org N'
+    org_p_html: 'Org P'
     width: Width
     buffer_width: Grass buffer width
     waterways_info: Including both sides of channel
