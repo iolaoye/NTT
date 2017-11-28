@@ -5,7 +5,7 @@ check_soil_test = ->
    else
       $("#field_soilp").attr("disabled", false)
    if $("#field_soil_test").val() == "7"
-      $("#div_soil_al").attr("display", "")
+      $("#div_soil_al").toggle(true)
 
 $(document).ready ->
   $("#field_soil_test").change ->
