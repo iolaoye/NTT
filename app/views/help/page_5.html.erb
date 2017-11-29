@@ -2,35 +2,34 @@
 	<div class="container">
 		<h1><%= t('fieldpage.header') %></h1><br>
 			<p><%= raw t('fieldpage.body1') %></p>
-      <%= image_tag("help/page_6/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:800px;width: 100%;") %>
+      <%#= image_tag("help/page_6/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:800px;width: 100%;") %>
       <p><%= raw t('fieldpage.body2') %></p>
       <br>
     <h2><%= t('fieldpage.createdel.header') %></h2>
-			<%= raw t('fieldpage.createdel.create.header') %><br>
-				<p><%= raw t('fieldpage.createdel.create.body') %></p>
-				<%= raw t('fieldpage.createdel.delete.header') %><br>
+			<%#= raw t('fieldpage.createdel.create.header') %>
+				<%#= raw t('fieldpage.createdel.create.body') %>
+				<%#= raw t('fieldpage.createdel.delete.header') %>
 				<%= raw t('fieldpage.createdel.delete.body') %>
         <br></br>
 		<h2><%= t('fieldpage.characteristics.header') %></h2>
       <p><%= raw t('fieldpage.characteristics.body') %></p>
-			<% if ENV["APP_VERSION"] == "standard" %>
-	  <%= image_tag("help/page_6/image002.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:345px;width: 100%;") %>
-			<% else %>
-		<%= image_tag("help/page_6/image002_modified.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:345px;width: 100%;") %>
-			<% end %>
-			<p></p>
-      <b><%= t('fieldpage.characteristics.name.header') %><br></b>
-				<p><%= raw t('fieldpage.characteristics.name.body') %></p>
+			<%# if ENV["APP_VERSION"] == "standard" %>
+	  <%#= image_tag("help/page_6/image002.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:345px;width: 100%;") %>
+			<%# else %>
+		<%#= image_tag("help/page_6/image002_modified.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:345px;width: 100%;") %>
+			<%# end %>
+	   <h2><%= t('fieldpage.characteristics.name.header') %></h2>
+		 	<p><%= raw t('fieldpage.characteristics.name.body') %></p>
         <!-- <%= image_tag("help/page_6/image003.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>-->
-      <b><%= t('fieldpage.characteristics.area.header') %><br></b>
-				<p><%= raw t('fieldpage.characteristics.area.body') %></p>
+     <h2><%= t('fieldpage.characteristics.area.header') %></h2>
+			<p><%= raw t('fieldpage.characteristics.area.body') %></p>
         <!-- <%= image_tag("help/page_6/image004.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:750px;width: 100%;") %>-->
-      <h2><%= t('fieldpage.advance.header') %></h2>
+     <!--<h2><%= t('fieldpage.advance.header') %></h2>
 			<% if ENV["APP_VERSION"] == "standard" %>
 				<p><%= raw t('fieldpage.advance.body') %></p>
 			<% else %>
 				<p><%= raw t('fieldpage.advance.body_modified') %></p>
-			<% end %>
+			<% end %>!-->
 	</div>
 </div>
 <br><%= link_to "< Prev", help_path("page_4", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_6", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>

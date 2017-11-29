@@ -1,26 +1,25 @@
 <div class="main">
 	<div class="container">
 		<h1><%= t('projpage.header') %></h1>
+		<% if ENV["APP_VERSION"] == "modified" %>
+		<h1><%= t('projpage.header_modified') %></h1>
+		<% end %>
 		<br></br>
 		<p><%= raw t('projpage.statement') %></p>
-		<table>
-			<th>See <%= link_to 'Navigation Basics', help_path("nav") %></th>
-		</table>
-		<h2><%= t('projpage.initial.header') %></h2>
-		<p><%= raw t('projpage.initial.statement') %></p>
-		<ol>
-			<li><%= raw t('projpage.initial.item1') %></li>
-			<li><%= raw t('projpage.initial.item2') %></li>
-			<% if ENV["APP_VERSION"] == "standard" %>
-			<li><%= raw t('projpage.initial.item3') %></li>
-			<% end %>
-		</ol>
-		<br>
-		<% if ENV["APP_VERSION"] == "standard" %>
-		<%= image_tag("help/page_3/image000.PNG", :alt => "Choices", :style =>"border:1px solid gray;max-width:640px;width: 100%;") %>
-		<% else %>
+		<% if ENV["APP_VERSION"] == "modified" %>
+		<p><%= raw t('projpage.statement_modified') %></p>
 		<%= image_tag("help/page_3/image000_modified.png", :alt => "Choices", :style =>"border:1px solid gray;max-width:1180px;width: 100%;") %>
+		<% else %>
+		<%= image_tag("help/page_3/image000.PNG", :alt => "Choices", :style =>"border:1px solid gray;max-width:640px;width: 100%;") %>
 		<% end %>
+		<%#= t('projpage.initial.header') %>
+		<%#= raw t('projpage.initial.statement') %>
+			<%#= raw t('projpage.initial.item1') %>
+			<%#= raw t('projpage.initial.item2') %>
+			<%# if ENV["APP_VERSION"] == "standard" %>
+			<%#= raw t('projpage.initial.item3') %>
+			<%# end %>
+		<br>
 		<h2><%= t('projpage.create.header') %></h2>
 		<p><%= raw t('projpage.create.body1') %></p>
 		<p><%= raw t('projpage.create.body2') %></p>
@@ -42,9 +41,9 @@
 
     <%= image_tag("help/page_3/image003.png", :alt => "Open Example Project", :style =>"border:1px solid gray;max-width:260px;width: 100%;") %>
 		<% end %>
-		<!--<h2><%= t('projpage.save.header') %></h2>
+		<h2><%= t('projpage.save.header') %></h2>
 		<p><%= raw t('projpage.save.body') %></p>
-		<p><%= raw t('projpage.save.note') %></p>
+		<!--<p><%= raw t('projpage.save.note') %></p>
 		<br>
 
 		<h2><%= t('projpage.close.header') %></h2>

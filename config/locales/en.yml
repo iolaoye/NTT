@@ -839,37 +839,60 @@ en:
     low_range: Low Range
     high_range: High Range
   about:
-    overview0: 'Overview'
-    overview1: 'The Nutrient Tracking Tool (NTT) was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from the USDA-NRCS Conservation Innovation Grants program and various state agencies.'
-    overview2: 'The web-based <strong>NTT</strong> application compares agricultural management systems to calculate a change in expected nutrient loss.'
-    overview3: 'Agricultural producers and land managers can define a number of scenarios and produce a report showing the expected nutrient loss differences between any selected scenarios. For more information regarding NTT, please refer to Saleh et al. (2011).'
+    overview0: 'Nutrient Tracking Tool'
+    overview1: 'The <strong>Nutrient Tracking Tool (NTT)</strong> was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, and various state agencies.'
+    overview2: 'NTT is a web-based, site-specific application that estimates nutrient and sediment losses at the field scale or at the small watershed scale.'
+    overview3: 'Agricultural producers and land managers can define a number of management scenarios and generate a report showing the expected nutrient loss differences between any selected scenarios for a given field or small watershed.'
+    overview4: 'NTT compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield. Estimates are made using the <strong>APEX</strong> model (Williams et al. 2000). Results represent average losses from the field based on 35 years of simulated weather.'
+    overview5: 'NTT requires regional soils, climate and site-specific crop management information. NTT currently provides selections for <strong>every U.S. county</strong>, but it has only been validated for a limited number of states and counties. As validation becomes possible in other parts of the country, parameter files may be updated for additional counties in future versions.'
+    overview6: 'For more information regarding NTT, please refer to Saleh et al. (2011 and 2014).'
     process0: 'Process'
     process: 'User supplied information is processed using a biophysical simulation model, the Agricultural Policy Environmental eXtender (APEX; Williams et al., 2000).'
-    disclaimer0: 'Disclaimer'
-    disclaimer1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the validity of the results and functioning of the program and related program material, nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of the results generated from the tool.'
-    disclaimer2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
     selections0: 'Available Selections'
     selections1: 'The <strong>Nutrient Tracking Tool (NTT)</strong> compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield.'
     selections2: '<strong>NTT</strong> requires regional soils, climate and crop parameters. As a new application, <strong>NTT</strong> currently provides selections for <strong>every U.S. county</strong>, but it has only been validated for a limited number of states and counties.'
     note1: '* A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading.  Soil and Water Conservation Society.  November/December 2011 vol. 66 no. 6 400-410.'
     note2: '** Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+    apex0: 'About APEX'
+    apex1: 'NTT uses a biophysical simulation model, the Agricultural Policy Environmental eXtender model (APEX), version 0806, to process user supplied information (APEX; Williams et al., 2000). Below are characteristics of the APEX model.'
+    item1: 'The  <a href="https://epicapex.tamu.edu/"><u>APEX (Agricultural Policy/Environmental eXtender)</u></a> model was developed to extend the <strong>EPIC</strong> model capabilities to whole farms and small watersheds (Williams et al., 2000).'
+    item2: 'The individual field simulation components of EPIC were used for APEX development.'
+    item3: 'In addition to the EPIC functions, APEX has components for <strong>routing water, sediment, nutrients,</strong> and <strong>pesticides</strong> across complex landscapes and channel systems to the watershed outlet.'
+    item4: 'Recently, the <strong>carbon fate</strong> and <strong>transport</strong> function of <strong>CENTURY</strong> model was incorporated in the latest version of APEX (version 2110). This allows APEX to simulate carbon dynamics in soil-plant system.'
+    item5: 'APEX also has <strong>groundwater</strong> and <strong>reservoir</strong> components. A field or watershed can be subdivided as much as necessary to assure that each subarea is relatively homogeneous in terms of soil, land use, management, etc.'
+    item6: 'The <strong>routing mechanisms</strong> provide for evaluation of interactions between subareas involving <strong>surface runoff, return flow, sediment deposition</strong> and <strong>degradation, nutrient transport,</strong> and <strong>groundwater flow.</strong>'
+    item7: 'Water quality in terms of <strong>nitrogen</strong> (ammonium, nitrate, and organic), <strong>phosphorus</strong> (soluble and adsorbed/mineral and organic), and <strong>pesticides concentrations</strong> may be estimated for each subarea and at the watershed outlet.'
+    item8: 'Commercial or manure may be applied at any rate and depth on specified dates or automatically.'
+    disclaimer0: 'Disclaimer'
+    disclaimer1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the validity of the results and functioning of the program and related program material, nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of the results generated from the tool.'
+    disclaimer2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
+    references0: 'References'
+    references1: 'A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading. Soil and Water Conservation Society. November/December 2011 vol. 66 no. 6 400-410.'
+    references2: 'Williams J.R., Arnold J.G., Srinivasan R. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
   contact1:
     header: 'Contact Information'
     statement: 'For questions or comments regarding the Nutrient Tracking Tool <strong>(NTT)</strong>, please contact:'
-    name: 'Ali Saleh'
+    name: 'Dr. Ali Saleh'
     position: 'Associate Director'
-    dept: 'Texas Institute for Applied Environmental Research (TIAER)'
-    uni: 'Tarleton State University'
+    dept: 'Texas Institute for Applied Environmental Research'
     box: 'P.O. Box T410'
+    uni: 'Tarleton State University'
     city: 'Stephenville, TX 76402'
     phone: '(254)968-9079 (Phone)'
     fax: '(254)968-9790 (Fax)'
     email: 'saleh@tarleton.edu'
   contact2:
+    name: 'Mindy Selman'
+    position: 'Senior Markets Analyst'
+    dept: 'USDA Office of Environmental Markets'
+    city: 'Washington, DC'
+    phone: '(202)304-5154'
+    email: 'mselman@oce.usda.gov'
+  contact3:
     statement: 'For <strong>technical</strong> questions or comments regarding the Nutrient Tracking Tool <strong>(NTT)</strong>, please contact:'
     name: 'Oscar Gallego'
     position: 'Senior Research Associate'
-    dept: 'Texas Institute for Applied Environmental Research (TIAER)'
+    dept: 'Texas Institute for Applied Environmental Research'
     uni: 'Tarleton State University'
     box: 'P.O. Box T410'
     city: 'Stephenville, TX 76402'
@@ -891,10 +914,10 @@ en:
     getstarted6: Fields Page
     getstarted7: Weather Page
     getstarted8: Management Page
-    getstarted9: Watershed Page
-    getstarted10: Simulation Page
+    getstarted9: Operation Page
+    getstarted10: Conservation Practices Page
     getstarted11: Results Page
-    getstarted12: APEX Files Page
+    getstarted12: Field Routing Page
     understanding: Understanding NTT
     understanding1: APEX
     understanding2: NTT Disclaimer
@@ -1186,19 +1209,19 @@ en:
     header: Navigation Basics
     overview:
         header: Overview
-        statement: 'The Nutrient Tracking Tool was designed to be user friendly, with ten main screens:'
-        statement_modified: 'The Nutrient Tracking Tool was designed to be user friendly, with nine main screens:'
-        project: 'On the <a href=/help/page_3?locale=en>Project</a> screen, the users enter the name and description of the project, or they can open saved/example projects, or close/save the active project.'
-        project_modified: 'On the <a href=/help/page_3?locale=en>Project</a> screen, the users enter the name and description of the project by creating a new project, or they can open saved projects, or close/save the active project.'
-        location: 'On the <a href=/help/page_4?locale=en>Location</a> screen, the users enter the location of the project based on GIS data, State/County input, or complete user input.'
-        fields: 'On the <a href=/help/page_5?locale=en>Fields</a> screen, the users either create new fields or verify the fields drawn on the Location page.'
-        soils: 'On the <a href=/help/page_7?locale=en>Weather</a> screen, the users select the source of  weather information, as well as the length of simulation.'
-        weather: 'On the <a href=/help/page_6?locale=en>Soils</a> screen, the users verify/add/delete soils and layers to the project, or they can enter the complete soil information if the project is based on complete user input.'
-        management: 'On the <a href=/help/page_8?locale=en>Management</a> screen, the users enter the management scenario information.'
-        subproject: 'On the <a href=/help/page_9?locale=en>Subproject</a> screen, the users are able to select other field/scenario combinations not selected on the Management page (subprojects)'
-        simulation: 'On the <a href=/help/page_10?locale=en>Simulation</a> screen, the list of scenarios selected is displayed and check boxes are also displayed to indicate whether the scenarios are complete and ready for simulation. Users can click <strong>Simulate</strong> button after adding the fields/scenarios or subprojects to the list. The selected scenarios are then simulated by NTT.'
-        results: 'On the <a href=/help/page_11?locale=en>Results</a> screen, the users can view the results in tabular or graphical organization as well as view the economic results for the simulation. To view detailed results, click on the <strong>View</strong> button.'
-        modifications: 'On the <a href=/help/page_12?locale=en>Modifications</a> screen, the users are able to manually change the APEX file to make specific changes to the simulation. <strong>These changes are not reflected on the previous screens.</strong>'
+        statement: 'The Nutrient Tracking Tool was designed to be user friendly, with ten main pages:'
+        statement_modified: 'The Nutrient Tracking Tool was designed to be user friendly, with nine main pages:'
+        project: 'On the <a href=/help/page_3?locale=en><u>Projects</u></a> page, users can create a project by enter the name and description of the project, open saved/example projects, or upload projects from local source.'
+        project_modified: 'On the <a href=/help/page_3?locale=en><u>Projects</u></a> page, users can create a project by enter the name and description of the project, open saved projects, or upload projects from local source.'
+        location: 'On the <a href=/help/page_4?locale=en><u>Location</u></a> page, the users delineate the field or fields in their project using the interactive map. Alternately, users may upload their own shape files.'
+        fields: 'On the <a href=/help/page_5?locale=en><u>Fields</u></a> page, the users either create new fields or verify the fields drawn on the Location page. Clicking on the fields allows the user to further define the field characteristics in the soils and management pages.'
+        soils: 'On the <a href=/help/page_6?locale=en><u>Soils</u></a> page, the users may verify or delete the soils returned by the SSURGO database for their field. Users are also asked to indicate the soil P content for the field.'
+        weather: 'On the <a href=/help/page_7?locale=en><u>Weather</u></a> page, the users select the source of  weather information, as well as the length of simulation.'
+        management: 'On the <a href=/help/page_8?locale=en><u>Management</u></a> page, users create and name one or more management scenarios for the field. Each management scenario must be further defined on the Operations and Conservation Practices sub-project pages. Once the management scenario(s) has been defined, users may also simulate the scenarios by selecting the box next to the scenario name and clicking “simulate selected scenario”.'
+        subproject: 'On the <a href=/help/page_9?locale=en><u>Operation</u></a> page, users create the crop schedule and define management for the given field management scenario.'
+        simulation: 'On the <a href=/help/page_10?locale=en><u>Conservation Practices</u></a> page, users indicate the conservation practices that are in place on the field for the given field management scenario.'
+        results: 'On the <a href=/help/page_11?locale=en><u>Results</u></a> page, users can view and compare results of up to three management scenarios for a given field in tabular or graphical presentations.'
+        modifications: 'On the <a href=/help/page_12?locale=en><u>Field Routing</u></a> page, users are able to create and name field routing scenarios. A routing scenario will route runoff from one field to the next in the specified order. For each routing scenarios users will need to list the field-scenario order.'
         advance: 'To advance to the next page, simply click <strong>Save and Continue.</strong>'
     dataentrybasics:
         header: Data Entry Basics
@@ -1249,8 +1272,10 @@ en:
     Click <strong>Next ></strong> to go to the next page.<br>
     Click <strong>Return to Table of Contents</strong> to go to the NTT Table of Contents.<br>
   projpage:
-    header: Start of a Project
-    statement: "Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool to get a basic understanding of how to navigate the <strong>NTT</strong> application. To activate all the features available by the user and define your project, click on this tab to activate the Project module. <br><br>"
+    header: Projects
+    header_modified: My Projects
+    statement: After logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project, upload an example project, or open a saved project.
+    statement_modified: After logging in, you will be directed to the My Projects page. My Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project, or open a saved project.
     initial:
         header: To Start a Project
         statement: There are <b>three initial choices</b> to start a new project:<br>
@@ -1258,20 +1283,20 @@ en:
         item2: Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br>
         item3: Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br>
     create:
-        header: New Project Option
-        body1: Selecting the <strong>Create New Project</strong> button asks the user for the project name, and description information.
-        body2: After you have entered the information, click the <strong>Save</strong> button to save the information and continue.
+        header: Create a New Project
+        body1: Click the <strong>Create New Project</strong> button to create a new project. You will be asked for the project name and a project description (optional).
+        body2: After you have entered the information, click the Save button to save the information and continue.
     open:
-        header: Upload Project Option
-        body1: You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
-        body2: First select <b>Choose File</b> to select the saved project. After you have selected the project, click the <strong>Upload Project</strong> button to upload the project and continue.
+        header: Upload Project
+        body1: Users may use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
+        body2: Click <strong>Upload Project</strong>, then select <strong>Choose File</strong> and navigate to the saved file on your computer. After you have selected the project, click the <strong>Upload Project</strong> button to upload the project and continue.
     example:
-        header: Upload Example Project Option
-        body1: You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.
+        header: Upload Example
+        body1: Users may choose to use an example project, click the <strong>Upload Example</strong> button, and then select from the options to load a sample project file.
         body2: First select an example from the <b>Please select</b> drop down menu. After you have selected an example, click the <strong>Upload Example</strong> button to upload the example and continue.
     save:
-        header: Download
-        body: Once you have created a project you can use the <strong>Download</strong> button which is the arrow pointing downwards, to save the current project that you are working on.
+        header: Open Saved Project
+        body: To open a saved project, simply click on the project name to open the project and begin editing.
         note: <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.
 
   projpage_html: <strong>Start of a Project</strong> <br></br>
@@ -1305,28 +1330,32 @@ en:
     This page is about Nutrient Tracking Tool (NTT).<br></br>
     Click <strong>Return to Table of Contents</strong> to go to the help page.
   locpage:
-    header: Location Information
+    header: Location
     mapsystem:
+        body1: 'Once creating a project, users will be asked to define the location of the project using the interactive Google map. The interactive map allows the user to define one or more areas of interest (AOI). The area of interest should correlate to fields within the project area. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for User Input.'
+        body2: 'When defining the AOI, the underlying weather, soils, and slope information is retrieved from the underlying spatial data.'
         header: Mapping System
-        body1: 'Mapping System allows the user to select an area of interest and fields by using several different systems in the GIS-based map. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for <strong>User Input</strong>.'
-        body2: 'When using this system, the weather and soil information can be uploaded from weather stations and databases, so minimal or no user input is required in later pages.'
-        body3: 'To zoom to a particular state/county in the United States the user can select the State and County using the zoom tool:'
+        body3: 'There are two ways to define your areas of interest: you may manually draw your areas of interest using the zoom features and drawing tools on the interactive map, or you may upload your own shapefle.'
         body4: 'There are <strong>4 options</strong> within the mapping system:'
         option1:
-            header: 'Option 1: Choose an AOI to begin drawing'
+            header: 'Option 1: Upload shapefile'
+            body4: 'If you already have a shapefile that you would like to use as your project area you may upload the shapefile. You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder.'
             item1:
-                body1: '<strong>Drawing an Area of Interest Selection (AOIs):</strong> The user first needs to select the button <img src="/serve_image/drawing_tool.png"> at the top center, in order to draw an AOI in the GIS map. It is drawn by connecting dots with the mouse, creating a figure, as shown in the figure below. A field is considered an area of interest in NTT. After drawing the field, a message will pop up telling the user to enter the name of the farm as shown below. Enter the name of the field and advance. As the user enters the name, it will replace the default name in the text box for the field as shown in the following figure. From this point the field name entered will refer to the selected location.'
-                body3: 'Once the user clicks <strong>OK</strong>, the field location will be highlighted as shown below.'
+                body1: '<strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button Choose file under the Upload Shapefile as shown in the figure:'
+                body3: '<strong>Uploading a Shapefile:</strong> Once you have located the shapefiles you wish to use, upload the files by clicking the Upload Shapefile button.'
             item2: '<strong>Drawing Fields:</strong> Next, you will need to draw fields within the farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.'
             item3:
-                body3: '<strong>Submitting AOIs:</strong> Finally, once you have drawn the field, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.'
-            item4: '<strong>Deleting AOIs:</strong> To remove an AOI, first select the field that you would like to delete, and then click the <strong>Remove</strong> button.'
+                body3: '<strong>Uploading a Shapefile:</strong> Once you have located the shapefiles you wish to use, upload the files by clicking the Upload Shapefile button.'
+            item4: '<strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the Submit button.'
         option2:
             header: 'Option 2: Choose AOIs shapefile to upload'
-            item1: '<strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder. '
-            item2: '<strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button <strong>Choose file</strong> under the Upload Shapefile as shown in the figure:'
-            item3: '<strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile.'
-            item4: '<strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.'
+            body1: 'If you do not already have a shapefule you may draw your AOI using the zoom features and drawing tools on the interactive map. Users may draw multiple AOIs. AOIs should represent fields within the project area.'
+            item1: '<strong>Zoom to your area of interest:</strong> There are several ways to zoom in to your area of interest. You may enter an address, enter the lat/long (using the correct format where latitude comes before longitude, north latitude is positive, east longitude is positive), select the state and county from the available pick lists, or manually zoom on the map using the zoom tool.'
+            item2: '<strong>Draw your Area of Interest (AOI):</strong> Once you are zoomed in on your area of interest, click the polygon button <img src="/serve_image/drawing_tool.png"> at the top center of the map. Next, use your mouse to click the corners of your polygon as shown in the figure below. A field is considered an area of interest in NTT. After drawing the field, a message will pop up telling the user to enter the name of the AOI as shown below. Enter the name of the field and click OK. As the user enters the name, it will replace the default name in the text box for the field as shown in the following figure. From this point the field name entered will refer to the selected location.
+            You may create multiple AOIs/fields for your project. Simply click on the polygon button <img src="/serve_image/drawing_tool.png"> again and create additional AOIs.'
+            body2: 'Once the user clicks <strong>OK</strong>, the field location will be highlighted as shown below.'
+            item3: '<strong>Submitting AOIs:</strong> Once you have one or more AOIs, you MUST to click the Submit button. The actual map is a different program that is being run within NTT. By clicking Submit, the drawings are actually submitted to NTT.'
+            item4: '<strong>Deleting AOIs:</strong> To remove an AOI, first select the field that you would like to delete, and then click the Remove AOI button.'
         option3:
             header: 'Option 3: Choose area of interest by address'
             item1: '<strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.'
@@ -1414,11 +1443,11 @@ en:
     <strong>Period to Simulate</strong><br>
     The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>
   fieldpage:
-    header: Fields Page
-    body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.'
-    body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
+    header: Fields
+    body1: 'The Fields page displays the AOIs/fields that you have defied for your project. From the Fields page, you can begin entering scenario and management information for each field. You may also delete fields/AOIs from your project on this page.'
+    body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will simply allow users to verify the field(s) and advance.'
     createdel:
-        header: Creating/Deleting a Field
+        header: Deleting a Field
         create:
             header: '<b>Creating a field</b>'
             body: 'To create field(s), Instructions are on the <a href=/help/page_4><b>Location</b></a> page.'
@@ -1426,14 +1455,14 @@ en:
             header: <b>Deleting a Field</b>
             body: 'To delete field(s), simply click the <img src="/serve_image/delete.png"> icon on the actions column.'
     characteristics:
-        header: Changing Field Characteristics
-        body: 'In order to edit the characteristics of a field, click on the <img src="/serve_image/edit.png"> icon to navigate to an edit page.'
+        header: Define Field Management
+        body: 'To begin defining management scenarios for your field, click on the hyperlinked field name. You will advance to the field-level <strong>Soils</strong> page for your field where you will begin defining field characteristics and management scenarios. The Soils page is also where you will be able to change the field/AOI name as well as revise the field/AOI area. <a href=/help/page_6?locale=en><u>(See Soils page for more information.)</u></a>'
         name:
-            header: Changing the Field Name
-            body: 'In order to change field’s name, simply click on the current name of the field (in this case field1) to change. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
+            header: Add Fields/AOIs
+            body: 'To add more fields or AOIs to your project you must navigate back to the Location page using the left-hand menu. From the location page you can draw and submit additional AOIs that will then appear on the Fields page.'
         area:
-            header: Changing the Field Area
-            body: 'The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 38.33) and type in the correct area, as shown in the picture above. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
+            header: Changing Field Name and Area
+            body: 'The field name and area can be changed on the Soils page. Simply click on the hyperlinked field name which will take you to the field-level Soils page. At the top of the page you may change the field name and modify the field area if you desire. <a href=/help/page_6?locale=en><u>(See Soils page for more information.)</u></a>'
     advance:
         header: Advancing
         body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, weathers, results, and apex page.'

@@ -11,9 +11,9 @@
 		<% end %>
 		<p><%= raw t('nav.overview.location') %></p>
 		<p><%= raw t('nav.overview.fields') %></p>
-		<p><%= raw t('nav.overview.weather') %></p>
-		  <% if ENV["APP_VERSION"] == "standard" %>
 		<p><%= raw t('nav.overview.soils') %></p>
+			<% if ENV["APP_VERSION"] == "standard" %>
+			<p><%= raw t('nav.overview.weather') %></p>
 			<% end %>
 		<p><%= raw t('nav.overview.management') %></p>
 		<p><%= raw t('nav.overview.subproject') %></p>
@@ -22,31 +22,25 @@
 		<p><%= raw t('nav.overview.modifications') %></p><br>
 		<p><%= raw t('nav.overview.advance') %></p>
 		<br>
+		<%#= t('nav.dataentrybasics.header') %>
+		<%#= raw t('nav.dataentrybasics.body') %>
 
-		<h2><%= t('nav.dataentrybasics.header') %></h2>
-		<p><%= raw t('nav.dataentrybasics.body') %></p>
-		<br>
 
-		<h2><%= t('nav.dataentryfield.header') %></h2>
-		<p><%= t('nav.dataentryfield.body') %></p>
-		<%= image_tag("help/navpage/image001.png", :alt => "Data Entry") %>
-		<br><br>
+		<%#= t('nav.dataentryfield.header') %>
+	 	<%#= t('nav.dataentryfield.body') %>
+		<%#= image_tag("help/navpage/image001.png", :alt => "Data Entry") %>
 
-		<h2><%= t('nav.dropdownlist.header') %></h2>
-		<p><%= t('nav.dropdownlist.body') %></p>
-		<%= image_tag("help/navpage/image002.png", :alt => "Drop Down List") %>
-		<br><br>
+		<%#= t('nav.dropdownlist.header') %>
+		<%#= t('nav.dropdownlist.body') %>
+		<%#= image_tag("help/navpage/image002.png", :alt => "Drop Down List") %>
 
-		<h2><%= t('nav.textbox.header') %></h2>
-		<p><%= t('nav.textbox.body') %></p>
-		<%= image_tag("help/navpage/image003.png", :alt => "Text Box") %>
-		<br><br>
+		<%#= t('nav.textbox.header') %>
+		<%#= t('nav.textbox.body') %>
+		<%#= image_tag("help/navpage/image003.png", :alt => "Text Box") %>
 
-		<h2><%= t('nav.textarea.header') %></h2>
-		<p><%= t('nav.textarea.body') %></p>
-		<%= image_tag("help/navpage/image004.png", :alt => "Text Area") %>
-		<br><br>
-
+		<%#= t('nav.textarea.header') %>
+		<%#= t('nav.textarea.body') %>
+		<%#= image_tag("help/navpage/image004.png", :alt => "Text Area") %>
 	</div>
 </div>
 <br><%= link_to "< Prev", help_path("sysreq", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_3", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
