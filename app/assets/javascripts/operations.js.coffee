@@ -92,8 +92,15 @@ getGrazingFields = ->
     $("#month_id1").prop('required',true)
     $("#day1").prop('required',true)
     $("#operation_type_id").prop('required',true)
-    $("#operation_moisture").removeAttr('required')
     $('div[style*="display: none"] *').removeAttr('required')
+    $("#operation_amount").prop('required',true)
+    $("#operation_depth").prop('required',true)
+    $("#operation_amount").prop('min',1)
+    if $("#operation_activity_id").val() == "9"
+      $("#operation_moisture").prop('required',true)
+      $("#operation_nh4_n").prop('required',true)
+    else
+      $("#operation_moisture").removeAttr('required')
     #change year for start year
     $("#div_start_date")[0].children[0].innerText = "Start Year"
     $("#div_type")[0].children[0].innerText = "Animal Type"
