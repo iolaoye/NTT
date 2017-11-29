@@ -467,7 +467,7 @@
 		  	</thead>
 		  	<tbody>
 			 	<% i=1 %>
-				<% @operations = @operations.sort_by { |t| [t.year, t.month_id, t.day, t.rotation] } %>
+				<%# @operations1 = @operations.sort_by { |t| [t.year, t.month_id, t.day, t.rotation] } %>
 				<% @operations.each do |operation| %>
 				<% if (i % 2  == 0) %>
 				  <tr id="rowIdEven" class="gvRowStyleEven">
