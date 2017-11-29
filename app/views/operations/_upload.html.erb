@@ -14,7 +14,7 @@
       <td><%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('general.select') + " " + t('general.one')} %></td>
       <td><%= collection_select :tillage, :id, @tillages, :id, :name, {:prompt => "No " + t('models.tillage'), :required => true} %></td>
       <td>
-        <% if operations == nil %>
+        <% if @operations == nil %>
           <% last_year = 1 %>
         <% else %>
           <% last_year = @operations.last.year + 1 %>
