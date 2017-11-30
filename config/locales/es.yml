@@ -796,8 +796,8 @@ es:
     select_watershed3: Seleccione 3ra cuenca
     select_prompt_scenario: Seleccione hasta 3 escenarios para ver
     select_prompt_watershed: Seleccione hasta 3 cuencas para ver
-    select_chart: Seleccione una Categoría
-    select_group: Selecciona grupo
+    select_category: Selecciona Categoría
+    select_chart: Selecciona grupo
     description: Descripción
     difference: Diferencia
     reduction: Reducción
