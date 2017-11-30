@@ -96,9 +96,12 @@ getGrazingFields = ->
     $("#operation_amount").prop('required',true)
     $("#operation_depth").prop('required',true)
     $("#operation_amount").prop('min',1)
+    $("#operation_depth").prop('min',1)
     if $("#operation_activity_id").val() == "9"
       $("#operation_moisture").prop('required',true)
       $("#operation_nh4_n").prop('required',true)
+      $("#operation_moisture").prop('min',1)
+      $("#operation_nh4_n").prop('min',1)
     else
       $("#operation_moisture").removeAttr('required')
     #change year for start year
