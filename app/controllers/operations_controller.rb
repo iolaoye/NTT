@@ -62,9 +62,9 @@ class OperationsController < ApplicationController
     @operation.rotation = params[:rotation]
     #@operation.activity_id = params[:operation]
     @operation.crop_id = params[:crop]
-    if @scenario.operations != nil then
-      @operation.year = @scenario.operations.where(:rotation => @operation.rotation, :crop_id => @operation.crop_id).last.year
-    end
+    #if @scenario.operations != nil then
+      #@operation.year = @scenario.operations.where(:rotation => @operation.rotation, :crop_id => @operation.crop_id).last.year
+    #end
     #@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(@project.location.state_id)
     #@cover_crops = Crop.where("type1 like '%CC%'")
