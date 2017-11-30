@@ -46,13 +46,13 @@ class ResultsController < ApplicationController
     @present2 = false
     @present3 = false
     @description = 0
+    @group = 0
     @title = ""
     @total_area1 = 0
     @total_area2 = 0
     @total_area3 = 0
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 71 or (id > 80 and id < 200)")
-    @groups = Group.all
     add_breadcrumb t('menu.results')
 	
 	@scenario1 = "0"
@@ -590,6 +590,7 @@ class ResultsController < ApplicationController
           end
           if params[:result5] != nil && params[:result5][:description_id] != "" then
             @description = params[:result5][:description_id]
+            @group = params[:result5_category][:group_id]
 			if params[:result5][:description_id] == "70" then
 				crop = Crop.find(params[:result7][:crop_id])
 				@title = crop.name

@@ -44,6 +44,7 @@ show_crops = ->
          $.each crops_list, (key, crop) ->
             items.push "<option value=\"" + crop.crop_id + "\">" + crop.name + "</option>"
          $("#result7_crop_id").html items.join("")
+         $("#result7_crop_id").prop('required',true)
 
 
 update_crops = ->
@@ -70,8 +71,9 @@ update_crops = ->
 
 update_categories = ->
   $("#result5_description_id").val(null)
+  $("#result7_crop_id").prop('required',false)
   items = []
-  items.push "<option value>Select Kind of Chart</option>"
+  items.push "<option value>Select Type of Chart</option>"
   group_id = $("#result5_category_group_id").val()
   if (group_id != "")
     switch group_id
@@ -124,7 +126,10 @@ $(document).ready ->
   display_button()
   generate_pdf()
   check_for_errors()
-  $("#result5_description_id").hide()
+  switch $("#result5_category_group_id").val()
+    when "1","6"
+      $("#result5_description_id").hide()
+
   $("#result1_scenario_id").change ->
     #update_crops()
     set_buttons(false)
@@ -132,9 +137,6 @@ $(document).ready ->
   $("#result2_scenario_id").change ->
     #update_crops()
     set_buttons(false)
-
-  $("#result5_description_id").change ->
-    show_crops()
 
   $("#result5_category_group_id").change ->
     update_categories()
