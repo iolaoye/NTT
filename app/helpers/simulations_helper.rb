@@ -1129,7 +1129,7 @@ module SimulationsHelper
         cc_hash[so.id] = so
         last_op_id = so.id
       end
-      c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop
+      c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop operation
       cc_number = @scenario.operations.last.id
       c_cs.each do |bmp|
         if bmp != nil then
@@ -1141,7 +1141,7 @@ module SimulationsHelper
           s_o_new.apex_crop = bmp.crop_id
           s_o_new.activity_id = bmp.activity_id
           s_o_new.opv1 = set_opval1(bmp)
-          s_o_new.opv2 = set_opval2(soil_id, bmp)
+          #s_o_new.opv2 = set_opval2(SoilOperation.find(last_op_id).soil_id, bmp)
           s_o_new.opv3 = 0
           s_o_new.opv4 = 0
           s_o_new.opv5 = set_opval5(bmp)
@@ -1164,7 +1164,7 @@ module SimulationsHelper
           s_o_new_kill.month = cc_kill_date.month
           s_o_new_kill.day = cc_kill_date.day
           s_o_new_kill.apex_operation = 451
-          s_o_new_kill.apex_crop = bmp.crop_id
+          s_o_new_kill.apex_crop = Crop.find(bmp.crop_id).number
           s_o_new_kill.activity_id = 5 
           s_o_new_kill.opv1 = 0
           s_o_new_kill.opv2 = 0
@@ -1173,8 +1173,8 @@ module SimulationsHelper
           s_o_new_kill.opv5 = 0
           s_o_new_kill.opv6 = 0
           s_o_new_kill.opv7 = 0
-          cc_number += 1
-          cc_hash[cc_number] = s_o_new
+          #cc_number += 1
+          #cc_hash[cc_number] = s_o_new
           last_op_id += 1
           s_o_new_kill.id = last_op_id
           cc_number += 1
