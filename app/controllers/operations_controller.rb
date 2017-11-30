@@ -131,7 +131,6 @@ class OperationsController < ApplicationController
       operation = Operation.new(operation_params)
       #update_amount()   #CONVERT T/ac to lbs/ac
       operation.scenario_id = params[:scenario_id]
- debugger
       if operation.activity_id == 9 then
         operation.moisture = params[:operation][:moisture]
         operation.nh4_n = params[:operation][:nh4_n]
