@@ -589,8 +589,8 @@ es:
     org_p_html: 'Org P (0-100%)'
     org_c_html: 'Organic Carbon'
     nh4_n_html: 'Fraction of N as Ammonia (NH<sub>4</sub>-N)'
-    total_n_con: 'Total N concentración (lb/1000 gallons)'
-    total_p_con: 'Total P concentración (lb/1000 gallons)'
+    total_n_con: 'Total N concentración'
+    total_p_con: 'Total P concentración'
     moisture_con: 'Contenido de humedad (0-100%)'
     add_list: Agregar a la lista
     select_crop: Seleccionar el cultivo
@@ -624,7 +624,7 @@ es:
     rotational_grazing: Pastoreo Rotacional
     total_n: N Total (0-100%)
     total_p: P Total (0-100%)
-    application_rate: Cantifad Aplicada 
+    application_rate: Cantidad Aplicada 
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG

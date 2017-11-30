@@ -146,11 +146,11 @@
 		</div>
 		<div class="field" id="div_amount">
 			<% if @operation.type_id == 1 then %>
-				<%= f.label :amount, t('operation.application_rate') %>
+				<%= f.label :amount, t('operation.application_rate') + " (lbs/ac)" %>
 			<% elsif @operation.type_id == 2 %>
-				<%= f.label :amount, t('operation.application_rate').gsub("ac", "ton") %>
+				<%= f.label :amount, t('operation.application_rate') + " (t/ac)" %>
 			<% else %>
-				<%= f.label :amount, t('operation.application_rate').gsub("lbs", "x1000gal") %>
+				<%= f.label :amount, t('operation.application_rate') + " (x1000gal/ac)" %>
 			<% end %>
 			<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
@@ -179,6 +179,8 @@
 		  </div>
 		</div>
 		<%if @operation.type_id == 1 || @operation.type_id == 2 || @operation.type_id == 3 %>
+			<% units = " (lbs/t)" %>
+		    <% if @operation.type_id == 3 %> <% units = " (lbs/1000 gallons)" %> <% end %>
 			<div class="field" id="div_other_nutrients" <% if @operation.type_id == 1 %> style='display:none;' <% end %>>
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
