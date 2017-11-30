@@ -4,7 +4,7 @@
   <table>
     <tr>
       <th>Crop</th>
-      <th>Tilllage</th>
+      <th id="till_title" style="display:none">Tilllage</th>
       <th><%=t('operation.planting')  + " " + t('pdf.year')%></th>
       <% if @operations.first != nil %>
           <th><%=t("operation.replace")%></th>
@@ -12,7 +12,7 @@
     </tr>
     <tr>
       <td><%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('general.select') + " " + t('general.one')} %></td>
-      <td><%= collection_select :tillage, :id, @tillages, :id, :name, {:prompt => "No " + t('models.tillage'), :required => true} %></td>
+      <td id="till_list" style="display:none"><%= collection_select :tillage, :id, @tillages, :id, :name, {:prompt => "No " + t('models.tillage'), :required => true} %></td>
       <td>
         <% last_year = 1 %>
         <% if @operations.last == nil %>
