@@ -7,7 +7,6 @@ class OperationsController < ApplicationController
 # GET /operations
 # GET /operations.json
   def index
-    debugger 
     @operations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id")
     if params[:bmp_ccr] != nil then
       add_cover_crop
