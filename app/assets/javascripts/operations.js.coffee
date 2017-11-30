@@ -262,6 +262,13 @@ updateTitles = ->
   title = t 'operations.fertilizer'
   $("#typeTitle").text(title)
 
+update_tillages = ->
+  $("#till_title").hide()
+  $("#till_list").hide()
+  if ($("#cropping_system_id").val() > 0)
+     $("#till_title").show()
+     $("#till_list").show()
+
 $(document).ready ->
     $("#btnBack").click ->
         upload_crop(false)
@@ -297,6 +304,9 @@ $(document).ready ->
 
     $("#rowIdEven").click ->
       updateTitles()
+
+    $("#cropping_system_id").change ->
+      update_tillages()
 
     $("#add").click ->
        crop_schedule = document.getElementById('cropping_system_id');
