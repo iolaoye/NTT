@@ -219,8 +219,12 @@ updateFerts = ->
     if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
       if $("#operation_type_id").val() == "2"
           $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ton)"
-      else
+          $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/ton)"
+          $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/ton)"
+      else 
           $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
+          $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lb/1000 gallons)"
+          $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lb/1000 gallons)"
       $("#div_other_nutrients").show()
       $('div[id="div_other_nutrients"] *').prop('required',true)
     else
@@ -280,6 +284,7 @@ $(document).ready ->
 
     $("#operation_type_id").change ->
       updateFerts()
+      updatePlantPopulation()
 
     $("#operation_subtype_id").change ->
       updateNutrients(0)
