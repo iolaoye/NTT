@@ -85,15 +85,25 @@ getGrazingFields = ->
     $("#div_amount").show()
     $("#div_depth").show()
     $("#div_tillage").show()
-    $("#div_nutrients").show()
+    $("#div_nutrients").hide()
     $("#div_type").show()
     $("#div_date").show()
     $("#year1").prop('required',true)
     $("#month_id1").prop('required',true)
     $("#day1").prop('required',true)
     $("#operation_type_id").prop('required',true)
-    $("#operation_moisture").removeAttr('required')
     $('div[style*="display: none"] *').removeAttr('required')
+    $("#operation_amount").prop('required',true)
+    $("#operation_depth").prop('required',true)
+    $("#operation_amount").prop('min',1)
+    $("#operation_depth").prop('min',1)
+    if $("#operation_activity_id").val() == "9"
+      $("#operation_moisture").prop('required',true)
+      $("#operation_nh4_n").prop('required',true)
+      $("#operation_moisture").prop('min',1)
+      $("#operation_nh4_n").prop('min',1)
+    else
+      $("#operation_moisture").removeAttr('required')
     #change year for start year
     $("#div_start_date")[0].children[0].innerText = "Start Year"
     $("#div_type")[0].children[0].innerText = "Animal Type"
@@ -110,7 +120,7 @@ updateTypes = ->
   $("#div_resttime").hide()
   $("#div_cover_crops").hide()
   $("#div_crops").show()
-  $("#operation_year").val('')
+  #S$("#operation_year").val('')
   $("#operation_month_id").val('')
   $("#operation_day").val('')
   $("#operation_crop_id").prop('required',true)
@@ -148,7 +158,7 @@ updateTypes = ->
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
       $("#operation_subtype_id").prop('disabled',true)
-      $("#div_type")[0].children[0].innerText = "Fertilizer Type"
+      $("#div_type")[0].children[0].innerText = "Fertilizer Category"
     when "3"   # tillage
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
@@ -208,9 +218,13 @@ updateFerts = ->
     $('div[id="div_other_nutrients"] *').prop('required',false)
     if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
       if $("#operation_type_id").val() == "2"
-          $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ton)"
-      else
+          $("#div_amount")[0].children[0].innerText = "Application rate(t/ac)"
+          $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/t)"
+          $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/t)"
+      else 
           $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
+          $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/1000 gallons)"
+          $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/1000 gallons)"
       $("#div_other_nutrients").show()
       $('div[id="div_other_nutrients"] *').prop('required',true)
     else
@@ -270,6 +284,7 @@ $(document).ready ->
 
     $("#operation_type_id").change ->
       updateFerts()
+      updatePlantPopulation()
 
     $("#operation_subtype_id").change ->
       updateNutrients(0)

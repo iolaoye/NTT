@@ -717,7 +717,7 @@ module ScenariosHelper
     opv2 = 0.0
     case operation.activity_id
       when 1 #planting. Take curve number
-        case Soil.find(soil_id).group[0, 1]
+        case Soil.find(soil_id).group[0, 1]  #group could be like C/D. [0, 1] will take just C.
           when "A"
             opv2 = Crop.find(operation.crop_id).soil_group_a
           when "B"

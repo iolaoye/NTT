@@ -131,9 +131,9 @@
 		<div class="field" id="div_type"  >
 			<%= label :type_id, t('operation.fertilizer_category') %>
 			<% if I18n.locale.eql?(:en) %>
-			 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => 'Select Fertilizer Type', :selected => @operation.type_id}, {:required => true} %>
+			 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :name, {:prompt => t('general.select') + " " + t("general.one"), :selected => @operation.type_id}, {:required => true} %>
 			<% else %>
-			 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :spanish_name, {:prompt => 'Seleccione Tipo de Fertilizante', :selected => @operation.type_id}, {:required => true} %>
+			 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t("general.one"), :selected => @operation.type_id}, {:required => true} %>
 			<% end %>
 		</div>
 		<div class="field" id="div_fertilizer" >
@@ -146,11 +146,11 @@
 		</div>
 		<div class="field" id="div_amount">
 			<% if @operation.type_id == 1 then %>
-				<%= f.label :amount, t('operation.application_rate') %>
+				<%= f.label :amount, t('operation.application_rate') + " (lbs/ac)" %>
 			<% elsif @operation.type_id == 2 %>
-				<%= f.label :amount, t('operation.application_rate').gsub("ac", "ton") %>
+				<%= f.label :amount, t('operation.application_rate') + " (t/ac)" %>
 			<% else %>
-				<%= f.label :amount, t('operation.application_rate').gsub("lbs", "x1000gal") %>
+				<%= f.label :amount, t('operation.application_rate') + " (x1000gal/ac)" %>
 			<% end %>
 			<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
@@ -179,6 +179,8 @@
 		  </div>
 		</div>
 		<%if @operation.type_id == 1 || @operation.type_id == 2 || @operation.type_id == 3 %>
+			<% units = " (lbs/t)" %>
+		    <% if @operation.type_id == 3 %> <% units = " (lbs/1000 gallons)" %> <% end %>
 			<div class="field" id="div_other_nutrients" <% if @operation.type_id == 1 %> style='display:none;' <% end %>>
 				<div class="field">
 					<%= f.label :org_c, t('operation.total_n_con') %>
@@ -353,7 +355,7 @@
 				<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 			</div>
 		</div>
-	<% when 7 # grazing %>
+	<% when 7 # continues grazing %>
 		<% operation = Operation.find_by_type_id(@operation.id) %>
 		<div id="div_date" >
 			<%= f.label :stop, t('general.stop'), :class => 'field' %>
@@ -395,7 +397,7 @@
             <%= f.label :hours, t('bmp.rest_time')  %>
             <%= f.number_field :nh4_n, :step => 'any', :class => "gvTitleStyleNumber" %>
         </div>
-		<div class="field" id="div_nutrients" >
+		<div class="field" id="div_nutrients" style="display:none" >
 		  <h2><%= f.label :no3_n, t('operation.manure_composition') %></h2>
 		  <div class="field" >
 				<%= f.label :no3_n, t('operation.no3_n_html') %>
@@ -456,21 +458,21 @@
 		</div>
 		<div class="field" id="div_amount">
 		  <%= f.label :animals, t('operation.animals') %>
-		  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
+		  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 1, :step => 'any', :required => true %>
 		</div>
 		<div class="field" id="div_depth">
 		  <%= f.label :hours_in_field, t('operation.hours') %>
-		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
+		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 1, :step => 'any', :required => true %>
 	    </div>
         <div class="field" id="div_grazed" >
             <%= f.label :days_grazed, t('bmp.days_grazed') %>
-            <%= f.number_field :moisture, :class => "gvTitleStyleNumber", min:0, :step => 'any' %>
+            <%= f.number_field :moisture, :class => "gvTitleStyleNumber", min:1, :step => 'any', :required => true %>
         </div>
         <div class="field" id="div_resttime" >
             <%= f.label :hours, t('bmp.rest_time')  %>
-            <%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min:0, :step => 'any'%>
+            <%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min:1, :step => 'any', :required => true%>
         </div>
-		<div class="field" id="div_nutrients" >
+		<div class="field" id="div_nutrients" style="display:none">
 		  <h2><%= f.label :no3_n, t('operation.manure_composition') %></h2>
 		  <div class="field" >
 				<%= f.label :no3_n, t('operation.no3_n_html') %>
@@ -489,7 +491,7 @@
 				<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
 		  </div>
 		</div>
-		<<div class="field" id="div_other_nutrients" style="display:none">
+		<div class="field" id="div_other_nutrients" style="display:none">
 			<div class="field">
 				<%= f.label :org_c, t('operation.total_n_con') %>
 				<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
@@ -668,11 +670,11 @@
 			<% end %>
 		</div>
 		<div id="div_fertilizer" style="display:none" >
-			<%= f.label :type_id, t('general.type') %>
+			<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type') %>
 			<% if I18n.locale.eql?(:en) %>
-				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => t('general.select') + " " + t("general.one"), :selected => @operation.subtype_id} %>
 			<% else %>
-				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante', :selected => @operation.subtype_id} %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :spanish_name, {:prompt => ('general.select') + " " + t("general.one"), :selected => @operation.subtype_id} %>
 			<% end %>
 		</div>
 		<div class="field" id="div_amount" style="display:none">
@@ -724,6 +726,7 @@
 				<%= number_field :op, :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 			</div> 
 		</div>
+		<%= f.hidden_field :rotation, :value => @operation.rotation %>
 	<% end %>
 
 	<div class="actions">
