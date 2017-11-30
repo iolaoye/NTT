@@ -14,8 +14,14 @@
       <td><%= collection_select :cropping_system, :id, @cropping_systems, :id, :name, {:prompt => t('general.select') + " " + t('general.one')} %></td>
       <td><%= collection_select :tillage, :id, @tillages, :id, :name, {:prompt => "No " + t('models.tillage'), :required => true} %></td>
       <td>
+        <% last_year = 1 %>
+        <% if @operations.last == nil %>
+          <% last_year = 1 %>
+        <% else %>
+          <% last_year = @operations.last.year + 1 %>
+        <% end %>
         <%= label :year, "", :id => "year_label" %>
-        <%= number_field_tag :year, @operations.last.year + 1, step: 'any', :required => true, class: "numbers", min: '1'  %>
+        <%= number_field_tag :year, last_year, step: 'any', :required => true, class: "numbers", min: '1'  %>
       </td>
       <td style='text-align:center'>
         <% if @operations.first != nil %>

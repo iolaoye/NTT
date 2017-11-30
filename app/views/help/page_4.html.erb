@@ -1,22 +1,17 @@
 <div class="main">
 	<div class="container">
-		<h1><%= t('locpage.header') %></h1>
-		<h2><%= t('locpage.mapsystem.header') %></h2>
+		<h1><%= t('locpage.header') %></h1><br>
 			<p><%= raw t('locpage.mapsystem.body1') %></p>
 			<p><%= raw t('locpage.mapsystem.body2') %></p>
+			<h2><%= t('locpage.mapsystem.header') %></h2>
 			<p><%= raw t('locpage.mapsystem.body3') %></p>
-      <%= image_tag("help/page_4/image001.png", :alt => "Zoom", :style =>"border:1px solid gray;max-width:400px;width: 100%;") %>
-			<p><%= raw t('locpage.mapsystem.body4') %></p>
-
-			<h2><%= t('locpage.mapsystem.option1.header') %></h2>
+			<%#= raw t('locpage.mapsystem.body4') %>
+			<h4><%= t('locpage.mapsystem.option1.header') %></h4>
+			<p><%= raw t('locpage.mapsystem.option1.body4') %></p>
 			<ol>
 				<li>
 					<p><%= raw t('locpage.mapsystem.option1.item1.body1') %></p>
-          <%= image_tag("help/page_4/image002.png", :alt => "Draw Farms 01", :style =>"border:1px solid gray;max-width:850px;width: 100%;") %>
-
-					<p><%= raw t('locpage.mapsystem.option1.item1.body3') %></p>
-          <%= image_tag("help/page_4/image003.png", :alt => "Draw Farms 02", :style =>"border:1px solid gray;max-width:850px;width: 100%;") %>
-
+					<%= image_tag("help/page_4/image005.png", :alt => "Draw Farms 03", :style =>"border:1px solid gray;max-width:400px;width: 100%;") %>
 				</li>
 				<li>
 					<p><%= raw t('locpage.mapsystem.option1.item3.body3') %></p>
@@ -25,17 +20,21 @@
 			</ol>
 			<br>
 
-			<h2><%= t('locpage.mapsystem.option2.header') %></h2>
+			<h4><%= t('locpage.mapsystem.option2.header') %></h4>
+			<p><%= raw t('locpage.mapsystem.option2.body1') %></p>
 			<ol>
 				<li><p><%= raw t('locpage.mapsystem.option2.item1') %></p></li>
+				<%= image_tag("help/page_4/image001.png", :alt => "Zoom", :style =>"border:1px solid gray;max-width:400px;width: 100%;") %>
 				<li><p><%= raw t('locpage.mapsystem.option2.item2') %></p></li>
-				<%= image_tag("help/page_4/image005.png", :alt => "Draw Farms 03", :style =>"border:1px solid gray;max-width:400px;width: 100%;") %>
+				<%= image_tag("help/page_4/image002.png", :alt => "Draw Farms 01", :style =>"border:1px solid gray;max-width:850px;width: 100%;") %>
+				<p><%= raw t('locpage.mapsystem.option2.body2') %></p>
+				<%= image_tag("help/page_4/image003.png", :alt => "Draw Farms 02", :style =>"border:1px solid gray;max-width:850px;width: 100%;") %>
 				<li><p><%= raw t('locpage.mapsystem.option2.item3') %></p></li>
 				<li><p><%= raw t('locpage.mapsystem.option2.item4') %></p></li>
 			</ol>
 			<br>
 
-			<h2><%= t('locpage.mapsystem.option3.header') %></h2>
+			<!--<h2><%= t('locpage.mapsystem.option3.header') %></h2>
 			<ol>
 				<li><p><%= raw t('locpage.mapsystem.option3.item1') %></p></li>
 				<li><p><%= raw t('locpage.mapsystem.option3.item2') %></p></li>
@@ -60,7 +59,7 @@
         <%= image_tag("help/page_4/image004.png", :alt => "Select County") %>
 			</ol>
 
-			<p><%= raw t('locpage.statecounty.body4') %></p>
+			<p><%= raw t('locpage.statecounty.body4') %></p>!-->
 
 	</div>
 </div>

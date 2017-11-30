@@ -6,25 +6,44 @@
 		<ul>
 			<li><b><%= t('contact1.name') %></b><br>
 			<%= t('contact1.position') %><br>
-      <U><%= t('users.company') %><br></U>
+      <U><%= t('contact1.dept') %><br></U>
 			<%= t('contact1.box') %><br>
 			<%= t('contact1.uni') %><br>
 			<%= t('contact1.city') %><br>
 			<%= t('contact1.phone') %><br>
-			<%= t('contact1.fax') %><br>
+			<%#= t('contact1.fax') %>
 			<%= t('contact1.email') %></li>
-		</ul>
-		<p><%= raw t('contact2.statement') %></p>
-		<ul>
+			<br>
+			<% if ENV["APP_VERSION"] == "modified" %>
 			<li><b><%= t('contact2.name') %></b><br>
 			<%= t('contact2.position') %><br>
-      <U><%= t('users.company') %><br></U>
-			<%= t('contact2.box') %><br>
-			<%= t('contact2.uni') %><br>
+			<U><%= t('contact2.dept') %><br></U>
 			<%= t('contact2.city') %><br>
 			<%= t('contact2.phone') %><br>
-			<%= t('contact2.fax') %><br>
 			<%= t('contact2.email') %></li>
+			<% end %>
+		</ul>
+		<p><%= raw t('contact3.statement') %></p>
+		<ul>
+			<li><b><%= t('contact1.name') %></b><br>
+			<%= t('contact1.position') %><br>
+			<U><%= t('contact1.dept') %><br></U>
+			<%= t('contact1.box') %><br>
+			<%= t('contact1.uni') %><br>
+			<%= t('contact1.city') %><br>
+			<%= t('contact1.phone') %><br>
+			<%#= t('contact1.fax') %>
+			<%= t('contact1.email') %></li>
+			<br>
+			<li><b><%= t('contact3.name') %></b><br>
+			<%= t('contact3.position') %><br>
+      <U><%= t('contact3.dept') %><br></U>
+			<%= t('contact3.box') %><br>
+			<%= t('contact3.uni') %><br>
+			<%= t('contact3.city') %><br>
+			<%= t('contact3.phone') %><br>
+			<%#= t('contact3.fax') %>
+			<%= t('contact3.email') %></li>
 		</ul>
 		<br>
 
