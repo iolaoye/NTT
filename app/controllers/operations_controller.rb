@@ -525,7 +525,7 @@ class OperationsController < ApplicationController
       operation.month_id = event.month
       if params[:replace] != nil
         #replace
-        @operation.year = event.year
+        operation.year = event.year
       else
         #don't replace
         if @count > 0
@@ -546,7 +546,7 @@ class OperationsController < ApplicationController
       operation.type_id = event.apex_operation
       operation.depth = event.apex_opv2
       operation.scenario_id = @scenario.id
-      operation.rotation = @operation.year 
+      operation.rotation = operation.year 
       if operation.save
         msg = add_soil_operation(operation)
         notice = t('scenario.operation') + " " + t('general.created')

@@ -218,13 +218,13 @@ updateFerts = ->
     $('div[id="div_other_nutrients"] *').prop('required',false)
     if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
       if $("#operation_type_id").val() == "2"
-          $("#div_amount")[0].children[0].innerText = "Application rate(lbs/ton)"
-          $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/ton)"
-          $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/ton)"
+          $("#div_amount")[0].children[0].innerText = "Application rate(t/ac)"
+          $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/t)"
+          $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/t)"
       else 
           $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
-          $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lb/1000 gallons)"
-          $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lb/1000 gallons)"
+          $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/1000 gallons)"
+          $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/1000 gallons)"
       $("#div_other_nutrients").show()
       $('div[id="div_other_nutrients"] *').prop('required',true)
     else
