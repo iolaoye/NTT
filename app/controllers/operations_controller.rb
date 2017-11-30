@@ -7,7 +7,7 @@ class OperationsController < ApplicationController
 # GET /operations
 # GET /operations.json
   def index
-    @operations = @scenario.operations
+    @operations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id")
     if params[:bmp_ccr] != nil then
       add_cover_crop
     end 
@@ -16,7 +16,7 @@ class OperationsController < ApplicationController
     @rotations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
     #array_of_ids = @scenario.operations.order(:rotation, :activity_id, :year).map(&:rotation&:crop_id)
     #@crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
-    @operations.sort_by { |date| [date.year, date.month_id, date.day] }
+    #@operations.sort_by { |date| [date.year, date.month_id, date.day] }
     if @operations.last != nil
       @highest_year = @operations.last.year
       else
