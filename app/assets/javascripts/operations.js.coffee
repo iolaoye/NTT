@@ -120,7 +120,7 @@ updateTypes = ->
   $("#div_resttime").hide()
   $("#div_cover_crops").hide()
   $("#div_crops").show()
-  $("#operation_year").val('')
+  #S$("#operation_year").val('')
   $("#operation_month_id").val('')
   $("#operation_day").val('')
   $("#operation_crop_id").prop('required',true)
