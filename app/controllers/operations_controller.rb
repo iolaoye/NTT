@@ -96,6 +96,7 @@ class OperationsController < ApplicationController
     if @operation.activity_id == 1 && @operation.subtype_id == 1 then
       @crops = Crop.where("type1 like '%CC%'")
     else
+      @crops 
       @crops = Crop.load_crops(Location.find_by_project_id(@project.id).state_id)
     end
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
@@ -498,7 +499,7 @@ class OperationsController < ApplicationController
     end
   end # end method
 
-########################################### Create_crop_rotation ##################
+########################################### Create_tillage_rotation ##################
   def create_tillage
     #take the event for the tillage selected and add to the operation and soilOperaition files for the scenario selected.
     events = Schedule.where(:crop_schedule_id => params[:tillage][:id])
@@ -602,7 +603,7 @@ class OperationsController < ApplicationController
         end
       end
       if event.crop_schedule_id == 4 && @highest_year > operation.year && operation.activity_id == 5 # ask if corp rotation is winter wheat and the highest year is > than the kill operation. Since the kill is first in the table we need to be sure where to put it.
-        @operation.year += 1
+        operation.year += 1
       end
       @highest_year = operation.year
       #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
@@ -616,14 +617,18 @@ class OperationsController < ApplicationController
       operation.subtype_id = 0
       case operation.activity_id
         when 1 #planting operation. Take planting code from crop table and plant population as well
-          operation.type_id = Crop.find(operation.crop_id).planting_code
+          if operation.activity_id == 1 && (params[:tillage][:id]=="") then  #if no-till is selected the planting code change to 139.
+            operation.type_id = 139
+          else
+            operation.type_id = Crop.find(operation.crop_id).planting_code            
+          end
           operation.amount = plant_population
         when 2, 7  #fertilizer and grazing
           fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
           operation.amount = event.apex_opv1
           if fertilizer != nil then
             operation.type_id = fertilizer.fertilizer_type_id
-          if operation.type_id == 2 then @operation.amount * 1000 end
+          if operation.type_id == 2 then operation.amount * 1000 end
             operation.no3_n = fertilizer.qn
             operation.po4_p = fertilizer.qp
             operation.org_n = fertilizer.yn
