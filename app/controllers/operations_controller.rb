@@ -60,7 +60,7 @@ class OperationsController < ApplicationController
   def new
     @operation = Operation.new
     @operation.rotation = params[:rotation]
-    #@operation.activity_id = params[:operation]
+    @operation.activity_id = params[:operation]  #this is used only in Add specific operation i.e "Add Planting Operation" in crop view. Otherwise is nil.
     @operation.crop_id = params[:crop]
     #if @scenario.operations != nil then
       #@operation.year = @scenario.operations.where(:rotation => @operation.rotation, :crop_id => @operation.crop_id).last.year
@@ -131,14 +131,15 @@ class OperationsController < ApplicationController
       operation = Operation.new(operation_params)
       #update_amount()   #CONVERT T/ac to lbs/ac
       operation.scenario_id = params[:scenario_id]
-      operation.org_c = params[:op][:total_n_con]
+ debugger
       if operation.activity_id == 9 then
         operation.moisture = params[:operation][:moisture]
         operation.nh4_n = params[:operation][:nh4_n]
       else
-        operation.moisture = params[:op][:moisture]
-        operation.nh4_n = params[:op][:total_p_con]
+        operation.moisture = params[:op][:moisture] unless params[:op]  == nil
+        operation.nh4_n = params[:op][:total_p_con] unless params[:op]  == nil
       end
+      operation.org_c = params[:op][:total_n_con] unless params[:op]  == nil
       operation.rotation = params[:operation][:rotation]
       @crops = Crop.load_crops(@project.location.state_id)
       if operation.save
