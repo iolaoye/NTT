@@ -21,7 +21,7 @@
 	    </div>
 	    <div class="field" title="Field Area (Ac.). Must be greater than 0.">
 			<%= f.label t('field.field_area') %>
-			<%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any", :required => true %>
+			<%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any", :required => true, :min => 0 %>
 			<%= '(ac.)' %>
 	    </div>
 		<% if ENV["APP_VERSION"] == "modified" %>
