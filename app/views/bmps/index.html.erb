@@ -32,6 +32,9 @@
         <% if (manure_operations == 0 && bmp.bmpsublist_id == 18) || (bmp.bmpsublist_id == 18 && county_id != 2939) %>
           <% next %>
         <% end %>
+        <% if bmp.bmpsublist_id == 15 %>
+          <% next %>
+        <% end %>
 
         <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
         <% if bmp.bmpsublist_id == 10 && ENV["APP_VERSION"] == "modified" %>
