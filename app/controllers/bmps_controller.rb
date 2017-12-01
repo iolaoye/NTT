@@ -875,24 +875,31 @@ class BmpsController < ApplicationController
     end
   end    # end method waterway
 
+## ID: 15
+  def countor_buffer(type)
+    case type
+    when "create"
+    when "delete"
+    end
+  end
 
 ### ID: 16
   def land_leveling(type)
-	@bmp.slope_reduction = params[:bmp_ll][:slope_reduction]
-    @soils = Soil.where(:field_id => params[:field_id])
-    @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+    @bmp.slope_reduction = params[:bmp_ll][:slope_reduction].to_f
+    subareas = @scenario.subareas
+    subareas.each do |subarea|
+      #subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
       if subarea != nil then
         case type
           when "create"
-            subarea.slp = subarea.slp - (subarea.slp * (@bmp.slope_reduction / 100))
-            session[:old_percentage] = params[:bmp_ll][:slope_reduction].to_f / 100
+            subarea.slp = subarea.slp * (100 - @bmp.slope_reduction) / 100
+            #session[:old_percentage] = params[:bmp_ll][:slope_reduction].to_f / 100
           when "update"
-            subarea.slp = (subarea.slp / (1 - @old_percentage)) - (subarea.slp * (@bmp.slope_reduction / 100))
-            session[:old_percentage] = @bmp.slope_reduction / 100
+            #subarea.slp = (subarea.slp / (1 - @old_percentage)) - (subarea.slp * (@bmp.slope_reduction / 100))
+            #session[:old_percentage] = @bmp.slope_reduction / 100
           when "delete"
-            subarea.slp = subarea.slp / (1 - session[:old_percentage])
-          else
+            subarea.slp = @field.soils.find(subarea.soil_id).slope
+            #subarea.slp = subarea.slp * 100 / (100 - @bmp.slope_reduction)
         end
         if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil

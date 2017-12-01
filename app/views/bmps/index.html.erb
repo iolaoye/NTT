@@ -32,6 +32,9 @@
         <% if (manure_operations == 0 && bmp.bmpsublist_id == 18) || (bmp.bmpsublist_id == 18 && county_id != 2939) %>
           <% next %>
         <% end %>
+        <% if bmp.bmpsublist_id == 15 %>
+          <% next %>
+        <% end %>
 
         <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
         <% if bmp.bmpsublist_id == 10 && ENV["APP_VERSION"] == "modified" %>
@@ -528,16 +531,17 @@
   <%= link_to t('general.back'), project_field_scenario_operations_path(@project.id, @field.id, @scenario.id), :class => "btn btn-primary" %>
   <%= submit_tag t("submit.savecontinue"), name: "button", class: "btn btn-primary" %>
 <% end %>
+<div id="pop-up1" style="display:none">
+  <h6>
+    Amount fertilizer applied to lower N stress. At zero (0) means apply N as much as needed.
+  </h6>
+</div>
 <div id="pop-up">
   <h6>
     This factor is used to trigger the automatic irrigation and means what plant water stress is allowed.
     At zero (0) means not autoirrigation at all, at one hundred (100) means not plant water stress allowed.
     When the stress level is reached, the model will automatically starts irrigation.
   </h6>
-</div>
-
-<div id="pop-up1" style="display: none">
-  <h6>Amount fertilizer applied to lower N stress. At zero (0) means apply N as much as needed.</h6>
 </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -837,32 +841,31 @@
 
 <script>
   $(function() {
-  var moveLeft = 300;
-  var moveDown = -150;
+    var moveLeft = 300;
+    var moveDown = -150;
 
-  $('a#trigger').hover(function(e) {
-  $('div#pop-up').show();
-  }, function() {
-  $('div#pop-up').hide();
-  });
+    $('a#trigger').hover(function(e) {
+      $('div#pop-up').show();
+      }, function() {
+      $('div#pop-up').hide();
+    });
 
-  $('a#trigger').mousemove(function(e) {
-  $("div#pop-up").css('top', e.pageY + moveDown).css('left', moveLeft);
-  });
+    $('a#trigger').mousemove(function(e) {
+      $("div#pop-up").css('top', e.pageY + moveDown).css('left', moveLeft);
+    });
   });
 
   $(function() {
-  var moveLeft = 300;
-  var moveDown = -150;
-  $('a#n_rate_trigger').hover(function(e) {
-  $('div#pop-up1').show();
-  }, function() {
-  $('div#pop-up1').hide();
-  });
+    var moveLeft = 300;
+    var moveDown = -150;
+    $('a#n_rate_trigger').hover(function(e) {
+      $('div#pop-up1').show();
+      }, function() {
+      $('div#pop-up1').hide();
+    });
 
-  $('a#n_rate_trigger').mousemove(function(e) {
-  $("div#pop-up1").css('top', moveDown).css('left', moveLeft);
-  });
-  });
-
+    $('a#n_rate_trigger').mousemove(function(e) {
+      $("div#pop-up1").css('top', moveDown).css('left', moveLeft);
+    })
+  })
 </script>

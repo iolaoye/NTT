@@ -7,7 +7,7 @@ class OperationsController < ApplicationController
 # GET /operations
 # GET /operations.json
   def index
-    @operations = @scenario.operations
+    @operations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id")
     if params[:bmp_ccr] != nil then
       add_cover_crop
     end 
@@ -16,7 +16,7 @@ class OperationsController < ApplicationController
     @rotations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
     #array_of_ids = @scenario.operations.order(:rotation, :activity_id, :year).map(&:rotation&:crop_id)
     #@crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
-    @operations.sort_by { |date| [date.year, date.month_id, date.day] }
+    #@operations.sort_by { |date| [date.year, date.month_id, date.day] }
     if @operations.last != nil
       @highest_year = @operations.last.year
       else
@@ -96,6 +96,7 @@ class OperationsController < ApplicationController
     if @operation.activity_id == 1 && @operation.subtype_id == 1 then
       @crops = Crop.where("type1 like '%CC%'")
     else
+      @crops 
       @crops = Crop.load_crops(Location.find_by_project_id(@project.id).state_id)
     end
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
@@ -119,8 +120,8 @@ class OperationsController < ApplicationController
           total_n = (params[:op][:total_n_con].to_f/2000)/((100-params[:op][:moisture].to_f)/100)
           total_p = ((params[:op][:total_p_con].to_f*0.44)/2000)/((100-params[:op][:moisture].to_f)/100)
         elsif params[:operation][:type_id] == "3" #liquid manure 
-          total_n = (params[:op][:total_n_con].to_f*0.11982)/(100-params[:op][:moisture].to_f)
-          total_p = (params[:op][:total_p_con].to_f*0.44*0.11982)/(100-params[:op][:moisture].to_f)
+          total_n = (params[:op][:total_n_con].to_f*0.011982)/(100-params[:op][:moisture].to_f)
+          total_p = (params[:op][:total_p_con].to_f*0.44*0.011982)/(100-params[:op][:moisture].to_f)
         end
         fert_type = Fertilizer.find(params[:operation][:subtype_id])
         params[:operation][:no3_n] = total_n * fert_type.qn * 100
@@ -498,7 +499,7 @@ class OperationsController < ApplicationController
     end
   end # end method
 
-########################################### Create_crop_rotation ##################
+########################################### Create_tillage_rotation ##################
   def create_tillage
     #take the event for the tillage selected and add to the operation and soilOperaition files for the scenario selected.
     events = Schedule.where(:crop_schedule_id => params[:tillage][:id])
@@ -602,7 +603,7 @@ class OperationsController < ApplicationController
         end
       end
       if event.crop_schedule_id == 4 && @highest_year > operation.year && operation.activity_id == 5 # ask if corp rotation is winter wheat and the highest year is > than the kill operation. Since the kill is first in the table we need to be sure where to put it.
-        @operation.year += 1
+        operation.year += 1
       end
       @highest_year = operation.year
       #type_id is used for fertilizer and todo (others. identify). FertilizerTypes 1=commercial 2=manure
@@ -616,14 +617,18 @@ class OperationsController < ApplicationController
       operation.subtype_id = 0
       case operation.activity_id
         when 1 #planting operation. Take planting code from crop table and plant population as well
-          operation.type_id = Crop.find(operation.crop_id).planting_code
+          if operation.activity_id == 1 && (params[:tillage][:id]=="") then  #if no-till is selected the planting code change to 139.
+            operation.type_id = 139
+          else
+            operation.type_id = Crop.find(operation.crop_id).planting_code            
+          end
           operation.amount = plant_population
         when 2, 7  #fertilizer and grazing
           fertilizer = Fertilizer.find(event.apex_fertilizer) unless event.apex_fertilizer == 0
           operation.amount = event.apex_opv1
           if fertilizer != nil then
             operation.type_id = fertilizer.fertilizer_type_id
-          if operation.type_id == 2 then @operation.amount * 1000 end
+          if operation.type_id == 2 then operation.amount * 1000 end
             operation.no3_n = fertilizer.qn
             operation.po4_p = fertilizer.qp
             operation.org_n = fertilizer.yn

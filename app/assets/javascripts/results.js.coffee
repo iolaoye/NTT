@@ -73,7 +73,7 @@ update_categories = ->
   $("#result5_description_id").val(null)
   $("#result7_crop_id").prop('required',false)
   items = []
-  items.push "<option value>Select Type of Chart</option>"
+  items.push "<option value>Select Type</option>"
   group_id = $("#result5_category_group_id").val()
   if (group_id != "")
     switch group_id
