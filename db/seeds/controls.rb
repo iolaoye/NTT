@@ -128,7 +128,7 @@ Control.create!({:id => 126,:default_value => 20.0,:state_id => 36,:number => 50
 Control.create!({:id => 127,:default_value => 0.01,:state_id => 36,:number => 51}, :without_protection => true)
 Control.create!({:id => 128,:default_value => 50.0,:state_id => 36,:number => 52}, :without_protection => true)
 Control.create!({:id => 129,:default_value => 5.0,:state_id => 36,:number => 53}, :without_protection => true)
-Control.create!({:id => 130,:default_value => 0.95,:state_id => 36,:number => 54}, :without_protection => true)
+Control.create!({:id => 130,:default_value => 0.7,:state_id => 36,:number => 54}, :without_protection => true)
 Control.create!({:id => 131,:default_value => 1.0,:state_id => 36,:number => 55}, :without_protection => true)
 Control.create!({:id => 132,:default_value => 2.0,:state_id => 36,:number => 56}, :without_protection => true)
 Control.create!({:id => 133,:default_value => 2.0,:state_id => 36,:number => 57}, :without_protection => true)
