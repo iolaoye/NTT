@@ -6,16 +6,18 @@
 
 		<h2><%= t('managepage.create.header') %></h2>
 				<p><%= raw t('managepage.create.add.body1') %></p>
-				<p><%= raw t('managepage.create.add.body2') %></p>
+				<%#= raw t('managepage.create.add.body2') %>
 
     <h2><%= t('managepage.manipulate.header') %></h2>
 				<p><%= raw t('managepage.manipulate.body1') %></p>
-				<p><%= raw t('managepage.manipulate.body2') %></p>
+				<%#= raw t('managepage.manipulate.body2') %>
 
 		<h2><%= t('managepage.operation.header') %></h2>
 				<p><%= raw t('managepage.operation.body') %></p><br>
-
-        <ol>
+				<p><%= raw t('managepage.operation.body1') %></p><br>
+				<p><%= raw t('managepage.operation.body2') %></p><br>
+				<p><%= raw t('managepage.operation.body3') %></p>
+        <!--<ol>
 					<li>
             <%= raw t('managepage.operation.item1.header') %>
             <p><%= raw t('managepage.operation.item1.body1') %></p>
@@ -29,20 +31,24 @@
             <%= image_tag("help/page_8/image005.png", :alt => "Image 005", :style =>"border:1px solid gray;max-width:390px;width: 100%;") %><br>
             <p><%= raw t('managepage.operation.item2.body3') %></p>
 					</li><br>
-				</ol>
-		<h2><%= t('managepage.bmpnav.header') %></h2>
-			<p><%= raw t('managepage.bmpnav.body') %></p>
-        <p><b><%= t('managepage.bmpnav.add.header') %></b></p>
-				<p><%= raw t('managepage.bmpnav.add.body1') %></p>
-        <%= image_tag("help/page_8/image012.png", :alt => "Image 012", :style =>"border:1px solid gray;max-width:540px;width: 100%;")  %>
-				<p><%= raw t('managepage.bmpnav.add.body2') %></p>
-				<p><%= raw t('managepage.bmpnav.add.body3') %></p>
-        <%= image_tag("help/page_8/image014.png", :alt => "Image 014", :style =>"border:1px solid gray;max-width:240px;width: 100%;") %>
-				<p><%= raw t('managepage.bmpnav.add.body4') %></p>
-				<p><%= raw t('managepage.bmpnav.add.body5') %></p>
-			<h2><%= t('managepage.bmpnav.mutualbmp.header') %></h2>
-				<p><%= raw t('managepage.bmpnav.mutualbmp.body1') %></p>
-				<ol>
+				</ol>-->
+		<h2><%= t('managepage.simulation.header') %></h2>
+			<p><%= raw t('managepage.simulation.body') %></p>
+			<p><%= raw t('managepage.simulation.body1') %></p>
+			<p><%= raw t('managepage.simulation.body2') %></p>
+			<p><%= raw t('managepage.simulation.body3') %></p>
+			<%= image_tag("help/page_8/image012.png", :alt => "Image 012", :style =>"border:1px solid gray;max-width:990px;width: 100%;")  %>
+        <h2><%= t('managepage.simulation.result.header') %></h2>
+				<p><%= raw t('managepage.simulation.result.body1') %></p>
+        <%#= image_tag("help/page_8/image012.png", :alt => "Image 012", :style =>"border:1px solid gray;max-width:540px;width: 100%;")  %>
+				<%#= raw t('managepage.bmpnav.add.body2') %>
+				<%#= raw t('managepage.bmpnav.add.body3') %>
+        <%#= image_tag("help/page_8/image014.png", :alt => "Image 014", :style =>"border:1px solid gray;max-width:240px;width: 100%;") %>
+				<%#= raw t('managepage.bmpnav.add.body4') %>
+				<%#= raw t('managepage.bmpnav.add.body5') %>
+			<h2><%= t('managepage.simulation.apex.header') %></h2>
+				<p><%= raw t('managepage.simulation.apex.body1') %></p>
+				<!--<ol>
 					<li><p><%= raw t('managepage.bmpnav.mutualbmp.item1') %></p></li>
 					<li><p><%= raw t('managepage.bmpnav.mutualbmp.item2') %></p></li>
 					<li><p><%= raw t('managepage.bmpnav.mutualbmp.item3') %></p></li>
@@ -209,7 +215,7 @@
 					</ol>
     </ol>
 		<h2><%= t('managepage.reference.header') %></h2>
-			<p><%= raw t('managepage.reference.body1') %></p>
+			<p><%= raw t('managepage.reference.body1') %></p>-->
 	</div>
 </div>
 <% if ENV["APP_VERSION"] == "standard" %>
