@@ -120,12 +120,13 @@ updateTypes = ->
   $("#div_resttime").hide()
   $("#div_cover_crops").hide()
   $("#div_crops").show()
-  #S$("#operation_year").val('')
   $("#operation_month_id").val('')
   $("#operation_day").val('')
   $("#operation_crop_id").prop('required',true)
+  $("#operation_subtype_id").prop('required', false)
   $('div[id="div_other_nutrients"] *').prop('required',false)
   $("#div_other_nutrients").hide()
+  $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements
   switch $("#operation_activity_id").val()
     when "1","13" # planting and cover crop
       updatePlantPopulation()
@@ -189,7 +190,6 @@ updateTypes = ->
       $("#div_type").hide()
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
-      $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements
       $("#div_fertilizer").hide()
       $("#div_tillage").hide()
       $("#div_type").hide()
@@ -216,6 +216,9 @@ updateFerts = ->
     $("#div_nutrients").hide()
     $("#div_other_nutrients").hide()
     $('div[id="div_other_nutrients"] *').prop('required',false)
+    $("#operation_subtype_id").prop('required', true)
+    $("#operation_amount").prop('required', true)
+    $("#operation_depth").prop('required', true)
     if ($("#operation_type_id").val() == "2" || $("#operation_type_id").val() == "3")
       if $("#operation_type_id").val() == "2"
           $("#div_amount")[0].children[0].innerText = "Application rate(t/ac)"
