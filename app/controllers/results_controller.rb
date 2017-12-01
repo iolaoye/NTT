@@ -701,9 +701,18 @@ class ResultsController < ApplicationController
   # GET /results/1
   # GET /results/1.json
   def show
-    #@result = Result.find(params[:id])
-	@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id == ? or scenario_id == ? or scenario_id == ?)", 100, params[:id], params[:id2], params[:id3]).uniq
+  	case true
+  	when params[:id2] == "" && params[:id3] == ""
+		@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ?)", 100, params[:id]).uniq
+	when params[:id2] != "" && params[:id3] == ""
+		@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ? or scenario_id = ?)", 100, params[:id], params[:id2]).uniq
+	when params[:id2] != "" && params[:id3] != ""
+		@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ? or scenario_id = ? or scenario_id = ?)", 100, params[:id], params[:id2], params[:id3]).uniq
+	when params[:id2] == "" && params[:id3] != ""
+		@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ? or scenario_id = ?)", 100, params[:id], params[:id3]).uniq
+	end
 
+	#@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id == ? or scenario_id == ? or scenario_id == ?)", 100, params[:id], params[:id2], params[:id3]).uniq
     respond_to do |format|
 		format.html # show.html.erb
 		format.json { render json: @crops }
