@@ -195,9 +195,11 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_ww][:width] == "") then
   			create(14)
   		end
-  		if !(params[:bmp_cb][:width] == "") then
-  			create(15)
-  		end
+      if !(params[:bmp_cb] == nil)
+        if params[:bmp_cb][:width] == "1" then
+          create(15)
+        end
+      end
   		if !(params[:bmp_ll][:slope_reduction] == "") then
   			create(16)
   		end
@@ -395,6 +397,8 @@ class BmpsController < ApplicationController
         return filter_strip(type)
       when 14
         return waterway(type)
+      when 15
+        return contour_buffer(type)
       when 16
         return land_leveling(type)
       when 17
@@ -876,11 +880,21 @@ class BmpsController < ApplicationController
   end    # end method waterway
 
 ## ID: 15
-  def countor_buffer(type)
+  def contour_buffer(type)
     case type
     when "create"
+      @bmp.crop_id = params[:bmp_cb][:crop_id]
+      @bmp.crop_width = params[:bmp_cb][:crop_width]
+      @bmp.width = params[:bmp_cb][:width]
+      if @bmp.save then
+        return create_new_subarea("CB",15)
+      end
     when "delete"
+      @bmp.crop_width = 0
+      @bmp.width = 0
+      @bmp.crop_id = 0
     end
+    return "OK"
   end
 
 ### ID: 16
@@ -1175,7 +1189,6 @@ class BmpsController < ApplicationController
     return "OK"
   end # end method
 
-
 ## USED FOR PADS AND PIPES FIELDS (ID: 4 to ID: 7)
   def pads_pipes(type)
     @soils = Soil.where(:field_id => params[:field_id])
@@ -1254,14 +1267,17 @@ class BmpsController < ApplicationController
         if @bmp.width != nil
           is_filled = true;
         end
+      when 15  # contour buffer
+        if @bmp.width != nil and @bmp.crop_width != nil
+          is_filled = true;
+        end
       when 23
         if @bmp.area != nil && @bmp.width != nil && @bmp.buffer_slope_upland != nil
           is_filled = true;
         end
     end
-
     if is_filled
-      @soils = Soil.where(:field_id => params[:field_id])
+      @soils = @field.soils
       #i = 0
       #@inps = i
       @soils.each do |soil|
@@ -1270,7 +1286,7 @@ class BmpsController < ApplicationController
             @slope = soil.slope
           end
         end
-        subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
+        subarea = @scenario.subareas.find_by_soil_id(soil.id)
         @inps = 0
         if subarea != nil then
           #if i == 0 then
@@ -1282,7 +1298,11 @@ class BmpsController < ApplicationController
           end
         end
       end
-      create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, id, false, "create")
+      if id == 15 then   #contour buffer
+        total_strips = (@field.field_area * AC_TO_HA * 10000) / @bmp.width * (FT_TO_MM + @bmp.crop_width * FT_TO_MM)
+      else  # others 
+        create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, @field.field_area, @bmp.id, id, false, "create")
+      end
       return "OK"
     else
       return "OK"
