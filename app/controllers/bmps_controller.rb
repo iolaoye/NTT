@@ -886,6 +886,7 @@ class BmpsController < ApplicationController
       @bmp.crop_id = params[:bmp_cb][:crop_id]
       @bmp.crop_width = params[:bmp_cb][:crop_width]
       @bmp.width = params[:bmp_cb][:width]
+      @bmp.area = @field.field_area * (@bmp.width / (@bmp.width+@bmp.crop_width))
       if @bmp.save then
         return create_new_subarea("CB",15)
       end
@@ -1317,6 +1318,7 @@ class BmpsController < ApplicationController
         inps = subareas[subareas.count-1].inps + 1
         iow = subareas[subareas.count-1].iow + 1
         areas = Array.new
+        iops = 0
         (total_strips*2).times do |i|
           j=0
           subareas.each do |s|
@@ -1325,6 +1327,7 @@ class BmpsController < ApplicationController
               j += 1
               s.wsa = s.wsa / total_strips * crop_area
               s.save
+              iops = s.iops
             else
               s_new = s.dup
               s_new.number = number
@@ -1333,12 +1336,20 @@ class BmpsController < ApplicationController
               #s_new.inps = inps
               #s_new.iow = iow
               s_new.subarea_type = "CB"
+              if i == 1 then   # create the operation file for the grass buffer fields
+                crop = Crop.find(@bmp.crop_id)
+                add_buffer_operation(139, crop.number, 0, crop.heat_units, 0, 33, 2, @scenario.id)
+              end
+              if s_new.chl == s_new.rchl then
+                s_new.rchl *= 0.90
+              end
               if i.even? then
                 s_new.wsa = areas[j] / total_strips * crop_area
-                s_new.description = "Contour Main Crop Strip"                
+                s_new.description = "Contour Main Crop Strip" 
               else
                 s_new.wsa = areas[j] / total_strips * buffer_area
                 s_new.description = "Contour Buffer Grass Strip"
+                s_new.iops = iops + 1     
               end
               j += 1
               s_new.save
