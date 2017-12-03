@@ -258,7 +258,7 @@ module ScenariosHelper
 				subarea.rsbd = 0.8
 				#line 10
 				subarea.pec = 1
-				add_buffer_operation(subarea, 139, 129, 0, 2000, 0, 33, 2, scenario_id)
+				add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
 			when 12    #Riperian Forest
 				grass_field_portion = @bmp.grass_field_portion / (@bmp.width + @bmp.grass_field_portion)
 				if !checker
@@ -324,8 +324,8 @@ module ScenariosHelper
 							update_subarea(subarea, "RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
 						end
 					end
-					add_buffer_operation(subarea, 139, 79, 350, 1900, -64, 22, 1, scenario_id)
-					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 1, scenario_id)
+					add_buffer_operation(139, 79, 350, 1900, -64, 22, 1, scenario_id)
+					add_buffer_operation(139, 49, 0, 1400, 0, 22, 1, scenario_id)
 				else  # filter strip
 					#line 2
 					subarea.number = 103
@@ -370,7 +370,7 @@ module ScenariosHelper
 					subarea.rfpl = 0
 					#line 10
 					subarea.pec = 1.0
-					add_buffer_operation(subarea, 139, 49, 0, 1400, 0, 22, 2, scenario_id)
+					add_buffer_operation(139, 49, 0, 1400, 0, 22, 2, scenario_id)
 				end
 			when 13    #Filter Strip
 				#line 2
@@ -413,7 +413,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
+				add_buffer_operation(136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
 			when 14    #Waterway
 				#line 2
 				subarea.number = 104
@@ -449,7 +449,7 @@ module ScenariosHelper
                 subarea.rfpl = subarea.rchl
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
+				add_buffer_operation(136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
 			when 23    #Shading
 				#line 2
 				subarea.number = 101
@@ -488,7 +488,7 @@ module ScenariosHelper
 				end
 				#line 10
 				subarea.pec = 1.0
-				add_buffer_operation(subarea, 136, @bmp.crop_id, 0, 1400, 0, 22, 2, scenario_id)
+				add_buffer_operation(136, @bmp.crop_id, 0, 1400, 0, 22, 2, scenario_id)
 		end # end bmpsublist_id
 
 		#this is when the subarea is added from a scenario
@@ -572,7 +572,7 @@ module ScenariosHelper
 		return "OK"
 	end
 
-	def add_buffer_operation(subarea, oper, crop, years_cult, opv1, opv2, lunum, add_buffer, scenario_id)
+	def add_buffer_operation(oper, crop, years_cult, opv1, opv2, lunum, add_buffer, scenario_id)
 		operation = SoilOperation.new
 		operation.day = 15
 		operation.month = 1
