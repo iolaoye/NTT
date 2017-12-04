@@ -919,6 +919,7 @@ en:
     getstarted10: Conservation Practices Page
     getstarted11: Results Page
     getstarted12: Field Routing Page
+    getstarted13: Modification Help Page
     understanding: Understanding NTT
     understanding1: APEX
     understanding2: NTT Disclaimer
@@ -1222,7 +1223,7 @@ en:
         subproject: 'On the <a href=/help/page_9?locale=en><u>Operation</u></a> page, users create the crop schedule and define management for the given field management scenario.'
         simulation: 'On the <a href=/help/page_10?locale=en><u>Conservation Practices</u></a> page, users indicate the conservation practices that are in place on the field for the given field management scenario.'
         results: 'On the <a href=/help/page_11?locale=en><u>Results</u></a> page, users can view and compare results of up to three management scenarios for a given field in tabular or graphical presentations.'
-        modifications: 'On the <a href=/help/page_12?locale=en><u>Field Routing</u></a> page, users are able to create and name field routing scenarios. A routing scenario will route runoff from one field to the next in the specified order. For each routing scenarios users will need to list the field-scenario order.'
+        modifications: 'On the <a href=/help/page_13?locale=en><u>Field Routing</u></a> page, users are able to create and name field routing scenarios. A routing scenario will route runoff from one field to the next in the specified order. For each routing scenarios users will need to list the field-scenario order.'
         advance: 'To advance to the next page, simply click <strong>Save and Continue.</strong>'
     dataentrybasics:
         header: Data Entry Basics
@@ -1476,31 +1477,38 @@ en:
     In order to edit the characteristics of a field, click on the field to navigate to the soil page where user can change the name of the field and the field area. The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area and type in the correct area.<br></br>
     Click on the field and continue to the Soils page.
   soilpage:
-    header: Soils Page
+    header: Soils
     overview:
         header: Overview
-        body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
-        body_modified: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 3 general rules that apply to all methods. They are as follows:'
+        body: 'After clicking on a field to begin editing on the <strong>Fields</strong> page, the user will be directed to the <strong>Soils</strong> page. The Soils page is a field-level page. The Soils page allows the user to rename the field and adjust the acres; and verify, modify or delete soils returned from the SSURGO soils database and add/edit layers for the particular field selected in the Fields page. NTT returns a maximum of 3 soils for every field. These soils represent the most predominant soils in the AOI. NTT is limited to 3 soils in order to minimize model processing time.'
+        body_modified: 'After clicking on a field to begin editing on the <strong>Fields</strong> page, the user will be directed to the <strong>Soils</strong> page. The Soils page is a field-level page. The Soils page allows the user to rename the field and adjust the acres; input soil P values; and verify soils returned from the SSURGO soils database for the particular field selected in the Fields page. NTT returns a maximum of 3 soils for every field. These soils represent the most predominant soils in the AOI. NTT is limited to 3 soils in order to minimize model processing time.'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
         item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <img src="/serve_image/edit.png"> icon in the <strong>Actions</strong> column.'
         item2_modified: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics.'
         item3: 'However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.'
         item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
     mapsystem:
-        header: Soil Information
+        header: Field Name/Area
         body: 'Users have different options of modifying their soil information. The list below shows all the possible ways that are available in NTT for modifying the soil information.'
         select:
             header: Modifying a Soil
-            body1: 'Users can add a new soil by clicking on the <strong>Add New Soil Layers</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
-            body2: 'After the soil has been added the user needs to enter at least one layer. The user needs to go to the layers page by clicking on the <b>Soil Layers</b> icon in the <b>Actions</b> column. The rest of the steps are described below in the "Adding/Deleting Layers" description.'
+            body1: '<strong>Field Name:</strong> The name that the user has given to the AOI is pre-filled here. The user may modify the name if they wish. The new name will be updated on the Fields page as well.'
+            body2: '<strong>Field Area:</strong> Field area displays the calculated area of the field in acres. The user may refine this value if needed.'
             body3: 'To delete a soil simply click on the <img src="/serve_image/delete.png"> icon in the <b>Actions</b> column.'
         info:
-            header: Editing Soil/Layer Information
-            body: 'Some of the soil and all of the layer information can be edited when the Mapping System was used. The user can change the soil/layer information by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. It will open a new page that lets the user edit and change the different informations available for the soil. This option is also available for the layers. Once they have done this, they can save the changed inforamtion by clicking on the <b>Save</b> button.'
+            header: Soil Phosphorus
+            body: 'Soil P test values provide NTT with a starting point for phosphorus in the soil. If you do not have a soil P test for your soil, leave these fields blank and NTT will use default soil P values.'
+            body1: '<strong>Soil Test:</strong> The user should select a soil test, if applicable, that was used to determine the soil phosphorus. Currently NTT includes conversions for the Fe-strip test, Olsen, Bray-1, and Mehlich-3 tests. If you have used a different test, please select Other. If you do not have a soil test for phosphorus, please select None. As we modify NTT for other parts of the country we will include additional tests and P conversions.'
+            body2: '<strong>Soil P:</strong> Users should enter the soil phosphorus test value for their field, if available. If None was selected for the P test then this field will be disabled and a minimum phosphorus concentration in the soil will be used. Similarly, if a soil test is selected, but the field Soil P value is left blank, the tool will assume a minimum phosphorus concentration in the soil.'
         addremove:
-            header: Adding/Deleting Layers
-            body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
-            body2: 'To delete a layer simply click on the <img src="/serve_image/edit.png"> icon in the <b>Actions</b> column.'
+            header: Manage/Modify Soils
+            body1: 'Between 1 and 3 soils will appear in the list of soils returned for your field. These represent the most predominant soils in your field as returned by the SSURGO Soils database.'
+            body2: 'NTT will return the <strong>soil name</strong> and the <strong>soil group</strong> for each soil. These data are derived from the SSURGO soils database.'
+            body3: 'The soil <strong>slope</strong> for each soil is calculated dynamically by NTT using the 30 meter Digital Elevation Model (DEM) layers associated with your field.'
+            body4: 'The default <strong>soil organic matter (%)</strong> value returned by the SSURGO soils database is displayed for each soil in the soils list. However, if the user has more precise data they may enter it here.'
+            body5: '<strong>Percentage</strong> represents the adjusted coverage area of the soil for your field. Because NTT selects only the 3 most predominant soils, the coverage area of each is proportionally expanded to equal 100% coverage of the field.'
+            body6: 'Users may <strong>add/delete layer</strong> from their soils list if they do not wish for it to be used in the model run. Simply click the <img src="/serve_image/layers.png"> icon in the Actions column of the soil you wish to add/delete layer.'
+            body7: 'Users may <strong>edit soil</strong> from their soils list if they wish to change some values. Simply click the <img src="/serve_image/edit.png"> icon in the Actions column of the soil you wish edit.'
     advance:
         header: Advancing
         body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
@@ -1528,22 +1536,25 @@ en:
     To delete existing layer(s), click <img src="/serve_image/delete.png"> under the action column.<br><br>
     User can add, edit, or delete as many times. However, soil should have atleast one layer. Click <strong>Back to Soils</strong> to go back to Soils Page or click <strong>Continue</strong> to go to Management Scenarios Page.
   managepage:
-    header: Management Page Help
+    header: Management Scenarios
     overview:
         header: Overview
-        body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
+        body: 'Once clicking Save and Continue on the Soils page, users will be advanced to the <strong>Management Scenarios</strong> page. The Management Scenarios page is a field-level page where the user creates, manages and simulates management scenarios for each field. Users may create multiple scenarios for each field in order to compare how different crop management and conservation practices will impact nutrient losses and yields.'
     create:
-        header: Creating a Scenario
+        header: Creating a Field Scenario
         add:
-            body1: 'The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
+            body1: 'The user can create a scenario by clicking on the <strong>Add New Scenario</strong> button. Users will be asked to name the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario, click the <strong>Save</strong> button which will create the scenario and advances the user to the <strong>Operations</strong> page where the user will begin to define the crop schedule and conservation practices. <a href=/help/page_9?locale=en><u>(see Operations Page)</u></a>'
             body2: 'The user can copy scenarios from other projects and use it in the existing project. to copy scenarios click <strong>Copy Scenario..</strong> which will create a copy of the selected scenario. To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
     manipulate:
-        header: Manipulating a Scenario’s Characteristics
-        body1: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices '
+        header: Copy Scenario from other Field
+        body1: 'The user can copy scenarios from other fields and use it in the existing field. To copy scenarios click <strong>Copy Scenario from other Field</strong> at the top of the page, then select the field and scenario that you wish to copy. Click the <strong>Copy</strong> button when done. The scenario will be copied and will appear in the list of management scenarios for that field.'
         body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
     operation:
-        header: Operation Page
-        body: 'A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below: '
+        header: Manage Field Scenarios
+        body: 'The Management Scenarios page includes a list of the scenarios created for the field. The list includes the scenario name, fields for weather, soils, layers and operations, simulation date, and an actions column.'
+        body1: 'A green check will appear in the weather, soils, layers and operations columns where these are present for the scenario. In order to successfully simulate a scenario, all four of these elements must contain a green check. The <strong>weather, soils</strong> and <storng>layers</strong> should be checked when a management scenario is first created, as these elements are derived from the map and are automatically associated with each field. However, the operations column will be blank until the user enters management information for the scenario. A green check will appear in the <strong>operations</strong> column once management information is present for the field.'
+        body2: 'The <strong>simulation date</strong> field indicates the date on which the scenario was last simulated by the model. If the simulation date field is blank it means that the field has not been simulated. (See Simulating Scenarios to learn more about how to simulate a scenario.)'
+        body3: 'The <strong>Actions</strong> column contains three different icons, representing different actions. The edit <img src="/serve_image/edit.png"> icon allows you to modify the name of the scenario. The copy <img src="/serve_image/copy.jpg"> icon creates a copy of your management scenario. And the delete <img src="/serve_image/delete.png"> icon will delete the management scenario.'
         item1:
             header: <b>Add Crop to Rotation:</b>
             body1: 'Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
@@ -1552,19 +1563,22 @@ en:
             body1: 'The user can also create a new Cropping System from scratch. To do this, the user needs to  click on the <strong><em>Add New Operation</em></strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
             body2: 'If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b><em>Edit</em></b> icon in the <b><em>Actions</em></b> column. This will take the user to a new page where they can make the required changes to the operation.'
             body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <img src="/serve_image/edit.png"> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
-    bmpnav:
-        header: Best Management Practices (BMPs) Navigation
-        body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
-        add:
-            header: 'Adding a BMP:'
-            body1: 'To add a BMP, the user needs to select a BMP by clicking on the check box under the <b><em>Select</em></b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then select the specific BMP (for example Auto Irrigation), as shown below:'
+    simulation:
+        header: Simulating Field Scenarios
+        body: 'Once you have completed one or more scenarios for your field you must simulate the scenarios to obtain results. By simulating the scenarios you are running the project through the APEX model which will return results for estimated nutrient and sediment losses as well as crop yields. To simulate a scenario, check the box next to the scenario or scenarios you wish to run and then click the <strong>Simulate Selected Scenario</strong> button.'
+        body1: 'Before attempting to simulate a scenario, please make sure that there are green check marks in the weather, soils, layers and operations columns are present. Each of these elements must be present in the scenario before it can be successfully simulated by the APEX model. Simulation of the scenarios may take one or more minutes.'
+        body2: 'Once a scenario has been successfully simulated the <strong>simulation date</strong> field will show the date and time of the most recent simulation.'
+        body3: 'Note: If you modify a management scenario you will need to re-run the scenario in order to view results of the updated scenario.'
+        result:
+            header: 'Viewing Results'
+            body1: 'Click the <strong>View Results</strong> button to view results of the simulated scenarios. You will be advanced to the results page where you may select up to three scenarios to compare at a time. <a href=/help/page_11?locale=en><u>(See Viewing Results for more details.)</u></a>'
             body2: 'Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.'
             body3: 'Where there is a drop-down menu with the title <b><em>Select One</b></em> allows the user to select from a range of options.'
             body4: 'Where there is a checkbox <b><em>Select</em></b> the user can simply click on it to select the BMP.'
             body5: 'Remember that, if a BMP is expanded when you first get to the page, it means that this BMP has been selected.'
-        mutualbmp:
-            header: 'Mutually Exclusive BMPs'
-            body1: 'Some BMPs can co-exist with other BMPs. For the most part, most BMPs can co-exist with other BMPs. However there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have:'
+        apex:
+            header: 'Downloading APEX files'
+            body1: 'After you have simulated a management scenario you can download the APEX files if you wish. This feature is generally for advanced users who may wish to save these files to run in another version of APEX. Alternately, this feature can be used for those who wish to store project files locally rather than on the server. APEX files can be uploaded and viewed on the Project Management page. To download the APEX files, select a management scenario and then click <strong>Download APEX Files.</strong>'
             item1: 'Auto Irrigation and Auto Fertigation'
             item2: 'Auto Irrigation and any Pads and Pipes'
             item3: 'Only one Pads and Pipes is allowed at the same time'
@@ -1711,9 +1725,6 @@ en:
                 item2: '<strong>Area:</strong> This is the area of the shading in acres, which is subtracted from the total area of the field in the results page and is simulated as a separate field. It must be a number greater than 0.'
                 item3: '<strong>Width:</strong> This is the width in feet of the shading. Shadings are typically narrow in width. This can be any value greater than 0.'
                 item4: '<strong>Buffer Slope Ration to Upland:</strong> This value is a fraction between 0.25 and 1.00 and indicates the slope towards the farmland (which is upland).'
-    reference:
-        header: Reference
-        body1: '* See USDA website: <a href="http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849">http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849</a> for more detailed term descriptions.'
   managepage_html:
       <strong>Scenarios</strong><br></br>
       The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario. After giving a name to the scenario the user needs to click the <strong>Save</strong> button which will create the scenario and advances the user to the operation page.<br><br>
@@ -1754,22 +1765,89 @@ en:
       7. Contour Buffer and Filter Strip/Riparian Buffer.<br></br>
       Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.<br><br>
       Click <strong>Back</strong> to go back to the Operation Page, click <strong>Continue</strong> to go to the Management scenarios page to simulate for results.
-  watershedpage:
-    header: Watershed Page Help
-    body1: 'The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.'
-    create:
-        header: Creating a Field Routing Scenario
+  operation_page:
+    header: Operation Page
+    body1: 'Once a scenario has been created on the <strong>Management</strong> page, the user is advanced to the <strong>Operations</strong> page to begin inputting the management characteristics such as the crop schedule, tillage, fertilizer, harvest, and grazing operations.'
+    body2: 'A cropping system is <strong>REQUIRED</strong> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. A field may have multiple crops, or a single crop. There are different options available in <strong>Operation Page</strong> for manipulating a cropping system. All of them are described below:'
+    rotation:
+        header: Add Crop to Rotation
         name:
             header: Naming Your Watershed
-            body1: 'To begin creating a field routing scenario, click <strong>New</strong>. Once you do this, a text box will pop up where you can type in the name of the scneario:'
-            body2: 'Once you enter the name, click <strong>Save</strong>.'
+            body1: 'To add a crop to the rotation, click <strong>Add Crop to Rotation.</strong> The user is then asked to select a crop from the pick list, a tillage type (No-till, reduced till, or intensive till), and rotation year. The crop list is customized according to the region in which the project is located. The rotation year indicates the sequence of the crop within the crop schedule, it does not represent the calendar year. Once the user has selected a crop type, tillage type and rotation year, clicking <strong>Upload</strong> will add the crop to the crop schedule.'
+            body2: 'Once a crop is added to the crop schedule you will note that it includes several default management characteristics including a planting date, fertilizer applications, tillage schedule, and harvest. These operations can be modified or deleted as needed and new operations can be added.'
+            body3: 'The operations list for each crop can be rolled up or expanded by clicking the [-] or [+] buttons next to the crop name respectively.'
         select:
-            header: Selecting Fields/Scenarios to Simulate
-            body1: 'Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the Field/scenario combinations, and click <strong>Add Fields / Scenario</strong>.'
-            body2: 'Once you have finished selecting, click <strong>Back</strong> to go back to the watershed page.'
-        simulate:
-            header: Simulating/Viewing Results for Field Routing
-            body1: 'Select the name(s) of the watershed to stimulate and click <b>Stimulate selected Field Routing (Watershed)</b>. To view results for field routings, select the field(s) and click <b>View Results</b>.'
+            header: Add New Operation
+            body1: 'Users can add operations to their rotations or build a cropping system from scratch using the <strong>Add New Operation</strong> button at the top of the page. You will be asked to select the crop, operation type, year, and date. The year indicates the position of the crop in the crop schedule, for example, CORN year 1 and SOYBEAN year 2.'
+            body2: 'Depending on the operation type there will be additional fields to enter. Below are descriptions of the different operation types and the additional required fields for each.'
+        item1:
+            header: Planting
+            body1: 'Plant method: User must indicate the planting method using the pick-list of planting equipment provided.'
+            body2: 'Seeding Amount (seeds/sq. ft.): This field is pre-filled with standard seeding rates for each crop type. If the user has more specific information on seeding rate they may enter it here.'
+        item2:
+            header: Fertilizer
+            body1: 'Fertilizer category: User must indicate the fertilizer category (commercial, liquid manure, or solid manure).'
+            body2: 'Fertilizer Type: The fertilizer type pick list will vary depending on the fertilizer category selected. For manure fertilizer, pick list will contain types of animal manure.'
+            body3: 'Amount: User needs to indicate the amount of fertilizer applied. Units will vary depending on the type of fertilizer selected (lbs/ac, tons/ac, 1000 gals/ac).'
+            body4: 'Depth: If the fertilizer is incorporated, user should indicate the depth of incorporation here. If fertilizer is not incorporated, this field can be left blank.'
+            body5: 'Fertilizer Composition (commercial fertilizer only): For commercial fertilizer, these fields indicate the N and P composition. These fields are pre-filled based on the fertilizer type selected, but can be modified if needed.'
+            body6: 'Total N concentration (solid/liquid manure only): For manure fertilizer, the user should indicate the total N content per ton of solid manure or per 1000 gallons of liquid manure. Typical values are pre-filled for the user, but can be modified.'
+            body7: 'Total P concentration (solid/liquid manure only): For manure fertilizer, the user should indicate the total P content per ton of solid manure or per 1000 gallons of liquid manure. Typical values are pre-filled for the user, but can be modified.'
+            body8: 'Moisture content (solid/liquid manure only): For manure fertilizer, this is the percentage, by weight, of moisture content in the manure. Typical values for each manure type are provided, but can be modified by the user.'
+        item3:
+            header: Tillage
+            body1: 'Tillage Method: User must indicate the tillage method using the drop down selection.'
+        item4:
+            header: Harvest
+            body1: 'No additional data needed beyond the crop, year and date.'
+        item5:
+            header: End of Season
+            body1: 'End of Season requires only the crop, year and date information from the user.'
+            body2: 'Note: End of season indicates to the model that the crop is removed from the field. If an End of Season operation is not present, then the model assumes that the crop is left growing. End of season should be used for all annual crops. For certain perennial crops like hay and pasture, End of Season operations may be absent from the crop schedule.'
+        item6:
+            header: Manual Irrigation
+            body1: 'Irrigation method: The user indicates the type of sprinkler system that is being used.'
+            body2: 'Amount: User indicates the volume of water applied in this irrigation event in inches.'
+            body3: 'Irrigation efficiency: This field defaults to a typical irrigation efficiency value (as a fraction) based on the irrigation method that is selected. This value can be modified.'
+            body4: 'Note: On the Conservation Practices pages there is an option for <strong>autoirrigation</strong> and <strong>autofertigation</strong> which automates irrigation on your field based on user parameters. Please see <a href=/help/page_10?locale=en><u>autoirrigation/autofertigation</u></a> for more information.'
+        item7:
+            header: Continuous Grazing
+            body1: 'Start/End Grazing dates: User indicates the start and end dates of grazing on the field.'
+            body2: 'Animal Type: User indicates the type of animals being grazed on the field.'
+            body3: 'Animal Units: User indicates the total animal units being grazed on the field. Animal units represent 1,000 lbs of live animal weight.'
+            body4: 'Hours in Field: User indicates the total hours per day that animals are grazed in the field.'
+            body5: 'Manure Composition: These fields are pre-filled with typical manure compositions for the animal type selected. These fields can be modified by the user if needed.'
+        item8:
+            header: Rotational Grazing
+            body1: 'The rotational grazing operation, unlike continuous grazing, assumes that the pasture is divided into paddocks and that livestock are moved through the paddocks as needed. Thus, each paddock is given a recovery period between grazing events, improving vegetative cover.'
+            body2: 'Start/End Grazing dates: User indicates the start and end dates of grazing on the field.'
+            body3: 'Animal Type: User indicates the type of animals being grazed on the field'
+            body4: 'Animal Units: User indicates the total animal units being grazed on the field. Animal units represent 1,000 lbs of live weight.'
+            body5: 'Hours in Field: User indicates the total hours per day that animals are grazed in the field.'
+            body6: 'Number of consecutive days grazed at a time (in each paddock): User indicates the number of days livestock will spend in each paddock before being rotated to a new paddock.'
+            body7: 'Pasture rest time (days) between grazing: User indicates the number of days that the pasture is rested between rotational grazing cycles.'
+            body8: 'Total N concentration: The user should indicate the total N content per ton of fresh manure. Typical values are pre-filled for the user, but can be modified if known.'
+            body9: 'Total P concentration: The user should indicate the total P content per ton of fresh manure. Typical values are pre-filled for the user, but can be modified if known.'
+        item9:
+            header: Burn
+            body1: 'No additional data required by users beyond crop, year and date'
+        item10:
+            header: Liming
+            body1: 'Amount: User must indicate amount of lime applied (lbs/ac).'
+        cover:
+            header: Add a Cover Crop
+            body1: 'To add a cover crop, click <strong>Add Cover Crop</strong> button at the top of the page. Users will indicate the type of cover crop, cover crop year, planting date, and planting method. The cover crop year should indicate the year within the rotation that the cover crop is planted. NTT will automatically add the harvest date for the cover crop based on the next crop in the rotation. Cover crops are not fertilized and are not harvested, rather they are chopped prior to planting of the next crop in the rotation.'
+            body2: 'Note: If you wish to add a commercial cover crop, please do so as you would add another crop to your crop schedule. For example, add “Winter Wheat” to your crop schedule by clicking <strong>Add Crop to Rotation</strong> and selecting from the crop pick-list (NOT using the Add Cover Crop button). Adding a crop this way will allow users to apply fertilizer, tillage and harvest operations (etc.).'
+        edit:
+            header: Edit Operation
+            body1: Users may change the values or any other information in an operation by clicking on the <strong>Edit</strong> <img src="/serve_image/edit.png"> icon in the <strong>Actions</strong> column next to the operation. Once the operation has been edited, click <strong>Finish</strong> to save and return to the Operations page. Clicking <strong>Back</strong> will return the user to the Operations page without saving changes to the operation. Clicking <strong>Add More</strong> will save change to the current operation and allow the user to continue adding additional operations without returning to the Operations page.
+        delete:
+            header: Delete an Operation
+            body1: To delete an operation, click the Delete <img src="/serve_image/delete.png"> icon in the Actions column of the operation you wish to delete.
+        switch:
+            header: Switch View
+            body1: 'By clicking Switch View at the top of the page, you can switch your view from one that is organized by crop and operation type to one that is organized by date.'
+            body2: 'Once you are satisfied with your crop schedule, click Continue at the top of the page. You will be advanced to the Conservation Practices page where you can indicate any conservation practices that are present on the field.'
   watershedpage_html:
     <strong>Field Routing (Watershed)</strong><br></br>
     The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.<br></br>
@@ -1786,72 +1864,151 @@ en:
     <strong>Adding Scenarios</strong><br></br>
     In this page, the user can add scenarios by clicking <strong>Add Field/scenario</strong> button. After clicking the button, user can select the field from <strong>Select Field</strong> dropdown menu and choose corresponding scenario by clicking <strong>Select Scenario</strong> dropdown menu.<br><br>
     User can add or delete the selected scenarios by clicking <img src="/serve_image/delete.png"> in the <strong>Action</strong> column. After adding scenarios, user can then go back by clicking <strong>Back</strong> to begin simulation. The selected fields and scenarios are routed from one to the next one.
-  simpage:
-    header: Simulation Page Help
-    body1: 'In this page the user is able to run the simulations for the fields/scenarios or subprojects that were created.'
+  conservation:
+    header: Conservation Practices
+    body1: 'Once the crop schedule and operations have been added, click the <strong>Continue</strong> button at the top of the Operations page. This will advance to the <strong>Conservation Practices</strong> page. On this page users will indicate the structural conservation practices that are in place on the field. If no conservation practices are in place on the field, simply click <strong>Save and Continue</strong> at the bottom of the Conservation Practices page which will return the user to the Management Scenario page. Alternately, users may navigate directly to the Management Scenario page using the left hand navigation links.'
     add:
-        header: Adding Simulations
-        select:
-            header: Selecting Type of Simulation
-            body1: 'The user is able to select the type of scenario that they would like to simulate (a field/scenario or subproject). To do this, user must select the type under the heading <strong>Select Type</strong> and select the type as shown below:'
-            body2: 'Once the user has done this, the user needs to select either the Field/Scenario combination OR select the previously selected subproject by selecting from the corresponding drop down boxes.'
-        adding:
-            header: Adding a Field/Scenario or Subproject to Run
-            body1: 'To add a field/scenario or subproject to run, select either <strong>Add Subproject to Run</strong> or <strong>Add Field/Scenario to Run</strong>. The particular button that will be available will depend on the selection that you made under the heading <strong>Select Type</strong>. Once you have added all of the fields/scenarios or subprojects, it is time to simulate. The fields/scenarios or subprojects that you added will be seen on the page, as shown below:'
-        removing:
-            header: Removing a Field/Scenario or Subproject to Run
-            body1: 'To remove a field/scenario or subproject from the list to be simulated, click the <img src="/serve_image/edit.png"> button to the left of the name of the desired scenario to delete.'
-    simulating:
-        header: Simulating
-        check:
-            header: Checking You’ve Entered All Applicable Information
-            body1: 'Once you are ready to simulate NTT allows you to do a quick verification that you have entered all of the applicable information. A check mark under a heading signifies that all of the applicable information was entered. NTT does not catch all errors, so if an error message comes up after attempting to simulate, the first step is to verify that all of the information that you entered is correct and valid.'
-            body2: 'If, instead of a check mark, you see a red X, as shown below, this means that not all of the information that was needed was entered, or that there was some sort of error in the numbers that were entered.'
-            body3: 'In order to fix the problem, the user needs to return to the page that caused the error (in the example above, the <a href=/help/page_8?locale=en>Management</a> page) and look for missing input information, and then that all of the information they entered was valid and within the valid ranges. A common mistake in the Management page is not having added a cropping system. Ensure that you have added a cropping system if you get a red X under management.'
-        run:
-            header: Running the Simulation
-            body1: 'To run the simulation, the user needs to click the <strong>Run Selected</strong> button. This will begin the simulation.'
-            body2: 'Once you have had a successful simulation, check on the date and time of the simulation by looking at the heading “Last Simulation” to ensure that all of the fields/scenarios and subprojects were simulated as shown below:'
-            body3: 'If this simulation is indeed correct, then you can click on <strong>Continue</strong> to view the <a href=/help/page_9?locale=en>results</a> of the simulations.'
+        header: Add a Conservation Practice
+        body1: 'To add a conservation practice, click the check box in the Select column of the conservation practice you wish to add. Users may add more than one conservation practice to a field, though some conservation practices are mutually exclusive. (See Mutually Exclusive Conservation Practices for more details.) The conservation practices are organized by groups, and the user may select the specific practice they are interested in adding. To add the conservation practice, expand the particular group by clicking the check box in the select column. Once the conservation practice group is selected, select the specific option within the group that you wish to add and fill in any required fields.'
+        body2: 'Once the user has done this, the user needs to select either the Field/Scenario combination OR select the previously selected subproject by selecting from the corresponding drop down boxes.'
+    exclusive:
+        header: Mutually Exclusive Conservation Practices
+        body1: 'To add a field/scenario or subproject to run, select either <strong>Add Subproject to Run</strong> or <strong>Add Field/Scenario to Run</strong>. The particular button that will be available will depend on the selection that you made under the heading <strong>Select Type</strong>. Once you have added all of the fields/scenarios or subprojects, it is time to simulate. The fields/scenarios or subprojects that you added will be seen on the page, as shown below:'
+        item1: 'Autoirrigation and Autofertigation'
+        item2: 'Grass Buffer and Forest Buffer'
+        item3: 'Grassed Waterways and Grass/Forest Buffers'
+        item4: 'Contour Buffer and Grass/Forest Buffers'
+    description:
+        header: Conservation Practice Descriptions
+        body1: 'Below are the descriptions of the conservation practices that are available in NTT.'
+    auto:
+        header: Autoirrigation and Autofertigation
+        body: Autoirrigation
+        body1: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. Autoirrigation overall can greatly increase crop yield. Within NTT, the autoirrigation feature will irrigate the field when certain user-supplied criteria for water stress and frequency are met, and will limit water application to the user supplied maximum application amount. User inputs required for auto irrigation include:'
+        item1: '<strong>Irrigation Type:</strong> Irrigation types include sprinkler, furrow/flood, drip, and furrow diking.'
+        item2: '<strong>Irrigation Efficiency:</strong> This value is the fraction of irrigation application that is not lost to runoff. This must be a value that is greater than 0 and less than or equal to 1. The closer the value is to 0, the greater the percentage of water lost to runoff and does not reach the crop. A value of 1 means that no water was lost to runoff. Different irrigation systems have different irrigation efficiencies. NTT supplies typical irrigation efficiency values for the irrigation type selected, but these values can be modified by the user.'
+        item3: '<strong>Irrigate a Maximum of every (0-365) days:</strong> This field is asking for the maximum frequency (in days) that irrigation can take place. If the frequency is set to 1, then irrigation can occur every day. If frequency is set to 7 then irrigation can occur, at most, once a week. The value can be any whole number greater than or equal to zero and less than or equal to 365.'
+        item4: '<strong>Water Stress Factor:</strong> The water stress factor indicates the water stress level of the crop. This is the value that is used to trigger the start of auto irrigation. For example, if water stress is set to 0.8 then NTT will trigger an irrigation event when the crop is 80% water-stressed, as long as conditions for maximum frequency are also met. The water stress factor can be any value greater than 0 and less than or equal to 1. The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on.'
+        item5: '<strong>Maximum Single Application:</strong> This value signifies the maximum amount of water than can be applied in a single irrigation event. It is in inches, and it can be any number greater than 0. If there are no constraints on the maximum single application, this value should be set to a high number.'
+        body2: Autofertigation
+        body3: 'Autofertigation is the application of fertilizers, soil amendments, or other water-soluble products through an autoirrigation system. Autofertigation is an automatic fertilization process in which fertilizer is dissolved and distributed through the irrigation system. This makes autofertigation very similar to autoirrigation with the only additional user input required being nitrogen concentration.'
+        item6: '<strong>Nitrogen Concentration:</strong> The amount of nitrogen in irrigation water in parts per million. Total N applied through autofertigation will be dependent upon the overall irrigation frequency which in turn is dependent upon water stress, frequency and maximum application factors set by the user.'
+        body4: '<strong>Note:</strong> Nutrients applied through autofertigation are in addition to the nutrients from commercial and manure fertilizers that are applied to the crop (as part of the fertilizer operations). If you spray-irrigate manure on your field periodically it is best to represent this as a manure application and not through the autofertigation feature.'
+    drain:
+       header: Tile Drain
+       body1: 'Tile drainage is a practice for removing excess subsurface water from agricultural soils using perforated pipes. Drainage brings excessive soil moisture levels down for optimal crop growth. Tile drainage is often the best recourse for reducing high subsurface water levels to improve crop yields. Too much subsurface water can be counterproductive to agriculture by preventing root development, and inhibiting the growth of crops. Excessive water also can limit access to the land, particularly by farm machinery.'
+       body2: 'For NTT applications, underground drainage systems are simulated in APEX. The depth of the drainage system to reduce plant stress is a key parameter used in simulating tile drainage systems in NTT. Tile drainage simulation in NTT increases subsurface flow, which may provide an avenue for increased nutrient losses in subsurface flow. The only input for tile drains is depth.'
+       item1: '<strong>Depth:</strong> This is the depth in feet at which the drainage system is installed. It is any number greater than 0.'
+    wetlands:
+       header: Wetlands
+       body1: 'Wetlands are those areas that are inundated or saturated by surface or groundwater at a frequency and duration sufficient to support, and that under normal circumstances do support, a prevalence of vegetation typically adapted for life in saturated soil conditions. Wetlands generally include swamps, marshes, bogs and similar areas.'
+       body2: 'The wetland area is simulated as a shallow reservoir (1 ft. depth) with growing wetland vegetation – it is essentially simulated as an artificial wetland and not a natural wetland. The slope of wetland area is set as 1%. Simulated wetlands trap sediment, reduce runoff, increase infiltration, and also increase uptake of water and nutrients by the vegetation in the area covered by the wetland. Inputs required for wetlands include:'
+       item1: '<strong>Area:</strong> The area of the wetland is input in acres. Since this area is no longer able to be used for crop production, there may be a lower total crop yield (although there may be a greater crop yield/acre).'
+       item2: '<strong>Is wetland area included in your AOI?:</strong> Users indicate here whether the AOI representing the field includes the wetland feature within the drawn polygon or if the wetland feature lies outside of the AOI. If the wetland feature is included in the AOI, then the wetland acres will be subtracted from the field area.'
+    ponds:
+       header: Ponds/Water and Sediment Control Basins
+       body1: 'Water and sediment control basins (WASCOBs), or ponds, consist of an embankment across the slope of a field or minor waterway to temporarily detain and release water through a piped outlet or through infiltration. They are constructed perpendicular to the flow direction and parallel to each other. WASCOBs are usually installed in areas where the land is relatively steep and undulating. They detain water from contributing areas, inducing sedimentation and controlling the release of water, thereby reducing the erosive power of the water downstream. Additional benefits are settling of sediment-bound pollutants and some infiltration. Only one input is required for ponds: fraction of area controlled by ponds.'
+       body2: '<strong>Fraction of Area Controlled by Ponds:</strong> This is the fraction (a value between 0 and 1) of the field runoff that flows through (is controlled by) the pond/WASCOB. As modeled, ponds only treat runoff that originates in this field. Inflow from other fields is not routed through the ponds. Ponds/WASCOBs are assumed to be within field.'
+    buffer:
+       header: Grass Buffer/Forest Buffer
+       body: Forest Buffer
+       body1: 'Forest buffers are linear wooded areas with well-developed root systems, an organic surface layer, and understory vegetation. When they are adjacent to open water they are referred to as riparian forest buffers. Non-riparian buffers are linear wooded areas along down-slope field edges. Forest buffers trap sediment and increase infiltration, thereby reducing sediment and nutrient losses. Forest buffers often include a grass buffer between the field and the forested buffer. If present, please also include the width and vegetation type of the grass buffer.'
+       body2: 'The inputs for Forest Buffer are the following:'
+       item1: '<strong>Area (ac.):</strong> This is the total area of the Riparian Buffer. This field is optional. If left blank, the area will automatically be calculated using the width of the buffer and the length of the field edge (where the field edge is calculated as the square root of the area of the field).'
+       item2: '<strong>Grass Strip Width (ft.):</strong> This is the width of the grass strip between the crop and the forested buffer, if present.'
+       item3: '<strong>Forest Strip Width (ft.):</strong> This is the width of the forest buffer (not including the grass strip).'
+       item4: '<strong>Fraction of field treated by buffer:</strong> This is the estimated fraction (0.00-1.00) of the runoff from the field that is routed through the buffer.'
+       item5: '<strong>Is buffer included in AOI?:</strong> If buffer has been drawn as part of the AOI, then the area will be subtracted from the crop area. If it has not been drawn as part of the AOI, it will be assumed to be adjacent to one edge of the field.'
+       body3: Grass Buffer
+       body4: 'Grass buffers, also known as a filter strips, are an area of vegetation, generally narrow in width and long across the downslope edge of a field, that slows the rate of runoff, allowing sediments, organic matter, and other pollutants that are being conveyed by the water to be removed by settling out. Filter strips reduce erosion and the accompanying sediment-bound pollution.'
+       body5: 'In NTT, filter strips function by providing for better infiltration of soluble nutrients, trapping of sediment, and increased uptake of water and nutrients by the filter strip vegetation. The saturated conductivity value is also modified for filter strip simulation in NTT.'
+       body6: 'The inputs for grass buffers are the same as for forest buffers (see Forest Buffer), with the additional requirement that the user specify type of vegetation.'
+       item6: '<strong>Vegetation:</strong> This is the type of grass or vegetation that is planted in the Filter Strip.'
+    waterway:
+       header: Grass Waterway
+       body1: 'A grassed waterway is a natural or constructed swale, shaped or graded and established in suitable vegetation for the safe conveyance of runoff. Grassed waterways are designed to prevent soil erosion while draining runoff water from adjacent cropland. As water travels down the waterway, the grass vegetation prevents erosion that would otherwise result from concentrated flows and uptakes nutrients. Grassed waterways also help prevent gully erosion in areas of concentrated flow. For example, they may be used to drain runoff from terraces and runoff water diversions. By intercepting runoff, grassed waterways slow erosion and minimize nutrient losses. The inputs for Waterways include:'
+       item1: '<strong>Crop:</strong> This is the type of grass or vegetation that is used in the channel.'
+       item2: '<strong>Width:</strong> This is the width of the grassed waterway, in feet, including both sides of the vegetated channel. This can be any number greater than 0.'
+       item3: '<strong>Fraction of field treated by grass waterway:</strong> The fraction of the field that drains to the grass waterway. A number between 0.00 and 1.00.'
+    contour:
+       header: Contour Buffer (Strip Farming)
+       body1: 'Contour buffer strips are permanent, narrow bands of grasses/legumes planted on the contour (across or perpendicular to a slope) between wider strips of crops. Contour buffers trap sediment and enhance filtration of nutrients and pesticides by slowing down runoff that could enter the local surface waters. User input fields for contour buffers include:'
+       item1: '<strong>Crop:</strong> This is the type of grass or vegetation that will be present in the buffer sections of the contour buffer.'
+       item2: '<strong>Grass Buffer Width:</strong> This is the width, in feet, of the buffer strips. It can be any number greater than 0. Buffer width, along with crop width, determine the number of buffer and crop strips in the field.'
+       item3: '<strong>Crop Buffer Width:</strong> This is the width, in feet, of the strips of the main crop that was planted. It can be any number greater than 0. Crop width, along with buffer width, determine the number of buffer and crop strips in the field.'
+    leveling:
+       header: Land Leveling
+       body1: 'Land leveling is used to reduce the slope on high soil slopes. By reducing the slope, the surface land is better able to retain water and soil, reducing erosion and increasing infiltration. The input for land leveling is slope reduction percentage.'
+       item1: '<strong>Slope Reduction:</strong> This is the percent reduction in the slope of the soil. The number can be any percentage between 0% and 100%. The closer the slope is to 100, the more the slope is reduced.'
+    terrace:
+       header: Terrace System
+       body1: 'A terrace system is a leveled section of a hill cultivated area, designed as a method of soil conservation to slow or prevent the rapid surface runoff of water. Terraces decrease hill slope-length, reduce formation of gullies, and intercept and conduct runoff to a safe outlet thereby reducing sediment content in runoff water. Often, in application the landscape is formed into multiple terraces, giving a stepped appearance. Terraces are simulated by reducing the practice factor (PEC). If you would like to apply a terrace system, click on the <strong>Select</strong> button.'
+    manure:
+       header: Manure Control
+       body1: 'The Manure Control practice group appears only if manure is applied in the management scenario. There are three manure technologies currently included in NTT: Primary Screen, DAF and NH3 stripper. Primary screen involves the removal of solids from liquid manure. Dissolved air flotation (DAF) is an advanced manure separation process to remove solids and phosphorus from manure. NH3 stripper is a process of stripping ammonia from digested manures. Each process impacts the nutrient composition of the liquid manure that is then applied to fields. When selecting a manure technology, the manure composition fields will pre-populate with default values showing the expected change in manure composition. Users may modify these values if desired.'
+    ref:
+       header: Reference
+       body1: '* See USDA website: <a href="http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849"><u>http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849</u></a> for more detailed term descriptions.'
+
   resultspage:
-    header: Results Page Help
-    body1: 'The results page allows you to view the results for the field/scenario combinations and subprojects that you simulated. This page is separated into two different sections: Navigation help, and Understanding the Results help.'
+    header: Field Results Page
+    body1: 'The results page allows you to view the results for the field/scenario combinations that you simulated. You cannot review the results unless the field/scenario has been simulated. Please see simulating scenarios for more information.'
     nav:
-        header: Navigation
         view:
             header: Viewing the Desired Results
-            body1: 'To view the desired results, the user must first select whether they want to view the results for the subprojects that they ran or for the field/scenarios that they ran. They can make this selection by choosing the appropriate selection under <strong>Select Type</strong>, as shown below:'
-            body2: 'If the user selects the Field/Scenario option, the appropriate field will also have to be selected.'
+            body1: 'To view the results on one or more field scenarios, the user may click the <strong>View Results</strong> button at the top of the Scenario Management page. Alternately, the user may click on <strong>Results</strong> in the left navigation menu.'
+            body2: 'After clicking on View Results, the user will be directed to the Tabluar View page as a default. Users may also choose to view data in graphical view (see Graphical View).'
             body3: 'It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario.'
             body4: 'It is very likely that, when the user first arrives at the Results page, that the first scenario that was simulated will be selected for both the first scenario and second scenario, so be sure to select the correct scenarios before continuing.'
             body5: 'The results of the scenarios are presented in a tabular format, in the order in which they were selected. In this case, the scenario results are presented for “grape”, “grape_irr”, and then “grape_grass”. The Difference and Reduction values are relative to the first scenario, “grape” in this case.'
         manner:
-            header: 'Viewing the Results in the Desired Manner'
-            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong>Tabular Results</strong>. To view the nutrient results in graphical form click on <strong>Graph Results</strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure.'
+            header: 'Tabular View'
+            body1: 'The user may choose to compare up to three field scenarios in the tabular view. Use the drop down to select each field scenario. Click View when you are finished.'
+            body2: 'HINT: if you only have one or two scenarios you wish to compare, select the same scenario multiple times so that there is a scenario selected for each column of the tabular display.'
+            body3: 'The user may toggle between two different units in the tabular view. The user may view results in units/acre (e.g., lbs/acre) or as total units summed across the area of the field (e.g., lbs).'
+            body4: 'After clicking View, the table will populate with the results of each scenario. Users have the option of downloading the results as a CSV file, or as a PDF file.'
+
         expand:
             header: Expanding Results
             body1: 'A box under the <strong>Detail</strong> column indicates that you can expand the <strong>Description</strong> to view more results. An expanded Results page for nutrient tabular results is shown below:'
     understand:
         header: Understanding the Results
         tabular:
-            header: Understanding Nutrient Results in Tabular Form
-            body1: 'When you first reach the NTT Results page, you will be viewing the nutrient results in tabular form. The page will look as it does below.'
-            body2: 'These tabular results represent AVERAGES in all of the years that were simulated. To view year by year results, the user needs to go to Graphical results, and view them there. Scenario 1 represents the column to the right of the Description, and Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that you made when selecting the first and second scenario (see: Viewing the Desired Results above).'
-            body3: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
-            body4: 'The <strong>Difference</strong> is the amount decreased (First Scenario – Second Scenario) for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
-            body5: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area</strong>).'
+            header: Interpreting Tabular Results
+            body1: 'The scenario results presented in your table represent AVERAGE annual edge of field losses across the period of simulation. NTT simulates over a period of 35 years. To view year by year results, the user can view use the Graphical results feature (See View Graphical Results.). The name of Scenario 1 will appear at the top of the first Losses column. This column displays the nutrient, sediment and flow losses at the edge of the field for Scenario 1 in addition to the estimated yields. Scenario 1 is the first column of data, Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that you made when selecting the first and second scenario (see: Viewing the Desired Results above).'
+            body2: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
+            body3: 'The Difference is the amount decreased (First Scenario – Second Scenario) for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
+            body4: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area).</strong>'
+            body5: 'Scenario to Second Scenario. For these, you can calculate Total Area by using the following formula: (baseline value * total area) – (alternative value * total area). Conversely for Crops, a negative value on Total Area indicates a decrease from First Scenario to Second Scenario. For Crops, you can calculate the Total Area by using the following formula: (alternative value * total area) – (baseline value * total area).'
         graphical:
-            header: Understanding Nutrient Results in Graphical Form
-            body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong>Graphs</strong>.'
+            header: Viewing the Results in the Desired Manner
+            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong>Tabular Results</strong>. To view the nutrient results in graphical form click on <strong>Graph Results</strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure.'
             item1:
                 body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart.'
                 body2: 'Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
             item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong>'
         economic:
-            header: Understanding Economics Results
-            body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results</strong>. This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow.'
+            header: Expanding Results
+            body1: 'A box under the Detail column indicates that you can expand the Description to view more results. An expanded Results page for nutrient tabular results is shown below:'
             body2: 'The economic results shown in the Baseline, Alternative, and Difference columns are all expressed on a per acre basis. The total economic impact for the entire simulated area of interest is shown in the Total Area column.'
     saving:
+        header: Understanding the Results
+        body: Understanding Nutrient Results in Tabular Form
+        body1: 'When you first reach the NTT Results page, you will be viewing the nutrient results in tabular form. The page will look as it does below.'
+        body2: 'These tabular results represent AVERAGES in all of the years that were simulated. To view year by year results, the user needs to go to Graphical results, and view them there.'
+        body3: 'Scenario 1 represents the column to the right of the Description, and Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that you made when selecting the first and second scenario (see: Viewing the Desired Results above).'
+        body4: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
+        body5: 'The Difference is the amount decreased (First Scenario – Second Scenario) for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
+        body6: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario.</strong> For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area).</strong>'
+        body7: Understanding Nutrient Results in Graphical Form
+        body8: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong>Graphs.</strong>'
+        item1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart. Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
+        item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong>'
+    eco:
+        header: Understanding Economics Results
+        body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results.</strong> This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow.'
+        body2: 'The economic results shown in the Baseline, Alternative, and Difference columns are all expressed on a per acre basis. The total economic impact for the entire simulated area of interest is shown in the Total Area column.'
+    pdf:
         header: Saving the Results to a PDF file
         body1: 'The results presented in the NTT screens can be saved to a PDF file. To access this utility, select the <strong>Create PDF</strong> button from the Results page. The NTT program writes a report file in PDF format that contains summary features of the scenarios, as well as the results produced from the simulations. The default name of the project report file can be changed by the user. The default location can also be change by the user depending on the browser options available. The first page of the results report file will look like the following.'
         body2: 'In addition to the results of the simulations, the report file also contains detailed information about the soils and management information used as input for the NTT simulations.'
@@ -1906,6 +2063,29 @@ en:
     To <strong>View</strong> this site, click the <img src="/serve_image/view.png"> icon.<br>
     To <strong>Edit</strong> this site, click <img src="/serve_image/edit.png"> icon. After editing, click <strong>Update Site</strong> to save the values or click <strong>Back</strong> to go back.<br>
     To <strong>Delete</strong> this site, click <img src="/serve_image/delete.png"> under action column.<br>
+  routing:
+    header: Field Routing (Watershed) Page
+    body1: 'The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field. NTT will route flows from field to field, essentially creating a small watershed simulation. You may note that the load at the outlet of the watershed is less than the sum of the edge of field loads for each individually simulated field. This is because NTT simulates attenuation effects of water and nutrients as they flow over the landscape.'
+    create:
+        header: Create/Name Your Watershed
+        body1: 'To begin creating a field routing scenario, click Add New Field Routing (Watershed). Once you do this, a text box will pop up where you can type in the name of the scenario:'
+        body2: 'Once you enter the name, click <strong>Save</strong>.'
+    build:
+        header: Build Watershed Scenario
+        body1: 'Once you have created and named your watershed scenario, it will appear in the list of watershed scenarios. Click the watershed scenario <strong>name</strong> to begin defining your watershed scenario.'
+        body2: 'When building your watershed scenario, you will begin adding fields/scenarios in the order that you wish to route. You may not add a field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the field and scenario from the drop down lists and click <strong>Add Fields / Scenario</strong>. Continue to add fields/scenarios until your watershed scenario is complete.'
+        body3: 'Once you have finished selecting, click <strong>Back</strong> to go back to the watershed page.'
+    manage:
+        header: Manage Watershed Scenarios
+        body1: 'The list of watershed scenarios that you have created will appear on the Field Routing (Watershed) page.'
+        body2: 'To begin defining your watershed scenario, or to edit a watershed scenario that you have already defined, click on the scenario <strong>name</strong> to begin defining/editing the scenario.'
+        body3: 'To delete your watershed scenario, click the delete <img src="/serve_image/delete.png"> icon.'
+        body4: 'To rename your watershed scenario, click the edit <img src="/serve_image/edit.png"> icon.'
+    results:
+        header: Simulating/Viewing Results for Field Routing
+        body1: 'To simulate a watershed scenario, select the name(s) of the watershed to stimulate and click <strong>Stimulate Selected Field Routing (Watershed)</strong>. Your watershed may take a few minutes to simulate. Once simulation is complete, a simulation date/time will appear in the Simulation Date field next to the watershed scenario name.'
+        body2: 'To view results for field routings, select the scenario(s) you wish to view and click View <strong>Results</strong>.'
+
   modpage:
     header: Modifications Page Help
     body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'
@@ -1919,17 +2099,19 @@ en:
         body1: 'The user can download the files corresponding to the LAST SIMULATION by clicking <strong>Downloading APEX Folder</strong>. However, for changes to be visible here, the user does need to run a simulation. Also, if you are running multiple scenarios or fields, the APEX folder will contain the files that were run in the last simulation that was fun. Since a different simulation is needed for different scenarios and fields, you can view which simulation was run last by viewing the <a href=/help/page_10?locale=en>Simulation</a> page, which will give you the time of simulation for all the scenarios/fields/subprojects. To change the order of simulation, you can do this in the <a href=/help/page_10?locale=en>Simulation</a> page also. The last scenario/field/subproject added to the simulation page will be the last to simulate and also the files that the APEX folder will contain.'
   apexpage:
     header: APEX
-    item1: 'The <a href="http://apex.tamu.edu/documentation/">APEX (Agricultural Policy/Environmental eXtender)</a> model was developed to extend the <strong>EPIC</strong> model capabilities to whole farms and small watersheds (Williams et al., 2000).'
+    apex1: 'NTT uses a biophysical simulation model, the Agricultural Policy Environmental eXtender model (APEX), version 0806, to process user supplied information (APEX; Williams et al., 2000). Below are characteristics of the APEX model.'
+    item1: 'The  <a href="https://epicapex.tamu.edu/"><u>APEX (Agricultural Policy/Environmental eXtender)</u></a> model was developed to extend the <strong>EPIC</strong> model capabilities to whole farms and small watersheds (Williams et al., 2000).'
     item2: 'The individual field simulation components of EPIC were used for APEX development.'
-    item3: 'In addition to the EPIC functions, APEX has components for <strong>routing water</strong>, <strong>sediment</strong>, <strong>nutrients</strong>, and <strong>pesticides</strong> across complex landscapes and channel systems to the watershed outlet.'
+    item3: 'In addition to the EPIC functions, APEX has components for <strong>routing water, sediment, nutrients,</strong> and <strong>pesticides</strong> across complex landscapes and channel systems to the watershed outlet.'
     item4: 'Recently, the <strong>carbon fate</strong> and <strong>transport</strong> function of <strong>CENTURY</strong> model was incorporated in the latest version of APEX (version 2110). This allows APEX to simulate carbon dynamics in soil-plant system.'
     item5: 'APEX also has <strong>groundwater</strong> and <strong>reservoir</strong> components. A field or watershed can be subdivided as much as necessary to assure that each subarea is relatively homogeneous in terms of soil, land use, management, etc.'
-    item6: 'The <strong>routing mechanisms</strong> provide for evaluation of interactions between subareas involving <strong>surface runoff</strong>, <strong>return flow</strong>, <strong>sediment deposition</strong> and <strong>degradation</strong>, <strong>nutrient transport</strong>, and <strong>groundwater flow</strong>.'
+    item6: 'The <strong>routing mechanisms</strong> provide for evaluation of interactions between subareas involving <strong>surface runoff, return flow, sediment deposition</strong> and <strong>degradation, nutrient transport,</strong> and <strong>groundwater flow.</strong>'
     item7: 'Water quality in terms of <strong>nitrogen</strong> (ammonium, nitrate, and organic), <strong>phosphorus</strong> (soluble and adsorbed/mineral and organic), and <strong>pesticides concentrations</strong> may be estimated for each subarea and at the watershed outlet.'
     item8: 'Commercial or manure may be applied at any rate and depth on specified dates or automatically.'
-    reference:
-        header: Reference
-        body1: 'Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+    references0: 'References'
+    references1: 'A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading. Soil and Water Conservation Society. November/December 2011 vol. 66 no. 6 400-410.'
+    references2: 'Williams J.R., Arnold J.G., Srinivasan R. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+
   disclaimerpage:
     header: NTT Disclaimer
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'

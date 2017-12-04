@@ -1,16 +1,17 @@
 <div class="main">
 	<div class="container">
+		<% if ENV["APP_VERSION"] == "standard" %>
 		<h1><%= t('projpage.header') %></h1>
-		<% if ENV["APP_VERSION"] == "modified" %>
+		<% else %>
 		<h1><%= t('projpage.header_modified') %></h1>
 		<% end %>
 		<br></br>
+		<% if ENV["APP_VERSION"] == "standard" %>
 		<p><%= raw t('projpage.statement') %></p>
-		<% if ENV["APP_VERSION"] == "modified" %>
+		<%= image_tag("help/page_3/image000.PNG", :alt => "Choices", :style =>"border:1px solid gray;max-width:640px;width: 100%;") %>
+		<% else %>
 		<p><%= raw t('projpage.statement_modified') %></p>
 		<%= image_tag("help/page_3/image000_modified.png", :alt => "Choices", :style =>"border:1px solid gray;max-width:1180px;width: 100%;") %>
-		<% else %>
-		<%= image_tag("help/page_3/image000.PNG", :alt => "Choices", :style =>"border:1px solid gray;max-width:640px;width: 100%;") %>
 		<% end %>
 		<%#= t('projpage.initial.header') %>
 		<%#= raw t('projpage.initial.statement') %>

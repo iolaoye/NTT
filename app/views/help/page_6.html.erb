@@ -1,14 +1,14 @@
 <div class="main">
 	<div class="container">
-		<h1><%= t('soilpage.header') %></h1>
-		<h2><%= t('soilpage.overview.header') %></h2>
+		<h1><%= t('soilpage.header') %></h1><br>
+		<%#= t('soilpage.overview.header') %>
 		<% if ENV["APP_VERSION"] == "standard" %>
 			<p><%= raw t('soilpage.overview.body') %></p>
 		<% else %>
 			<p><%= raw t('soilpage.overview.body_modified') %></p>
 		<% end %>
 			<ol>
-				<li><%= raw t('soilpage.overview.item1') %></li>
+				<!--<li><%= raw t('soilpage.overview.item1') %></li>
 				<% if ENV["APP_VERSION"] == "standard" %>
 				<%= image_tag("help/page_7/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:1290px;width: 100%;") %>
 				<li><%= raw t('soilpage.overview.item2') %></li>
@@ -21,31 +21,42 @@
 				<li><%= raw t('soilpage.overview.item4') %></li>
         <%= image_tag("help/page_7/image002.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:1080px;width: 100%;") %>
 				<% end %>
-			</ol>
+			</ol>-->
     <br></br>
-
-		<% if ENV["APP_VERSION"] == "standard" %>
 		<h2><%= t('soilpage.mapsystem.header') %></h2>
-			<p><%= raw t('soilpage.mapsystem.body') %></p><br>
-      <b><%= t('soilpage.mapsystem.select.header') %></b>
+			<%#= raw t('soilpage.mapsystem.body') %>
+      <%#= t('soilpage.mapsystem.select.header') %>
 				<p><%= raw t('soilpage.mapsystem.select.body1') %></p>
         <p><%= raw t('soilpage.mapsystem.select.body2') %></p>
-		<% end %>
-				<p><%= raw t('soilpage.mapsystem.select.body3') %></p><br>
-		<% if ENV["APP_VERSION"] == "standard" %>
-					<b><%= t('soilpage.mapsystem.info.header') %></b>
+				<%#= raw t('soilpage.mapsystem.select.body3') %>
+				<% if ENV["APP_VERSION"] == "modified" %>
+					<h2><%= t('soilpage.mapsystem.info.header') %></h2>
 				<p><%= raw t('soilpage.mapsystem.info.body') %></p><br>
-			<b><%= t('soilpage.mapsystem.addremove.header') %></b>
+				<p><%= raw t('soilpage.mapsystem.info.body1') %></p><br>
+				<p><%= raw t('soilpage.mapsystem.info.body2') %></p><br>
+				<% end %>
+			<h2><%= t('soilpage.mapsystem.addremove.header') %></h2>
 				<p><%= raw t('soilpage.mapsystem.addremove.body1') %></p>
         <p><%= raw t('soilpage.mapsystem.addremove.body2') %></p>
-        <br></br>
-		<% end %>
-		<h2><%= t('soilpage.advance.header') %></h2>
+				<p><%= raw t('soilpage.mapsystem.addremove.body3') %></p>
+				<p><%= raw t('soilpage.mapsystem.addremove.body4') %></p>
+				<p><%= raw t('soilpage.mapsystem.addremove.body5') %></p>
+				<% if ENV["APP_VERSION"] == "standard" %>
+				<p><%= raw t('soilpage.mapsystem.addremove.body6') %></p><br>
+				<%= image_tag("help/page_7/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:600px;width: 100%;") %><br></br>
+				<p><%= raw t('soilpage.mapsystem.addremove.body7') %></p><br>
+				<%= image_tag("help/page_7/image002.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:250px;width: 100%;") %>
+				<% end %>
+				<% if ENV["APP_VERSION"] == "modified" %>
+				<%= image_tag("help/page_7/image001_modified.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:600px;width: 100%;") %>
+				<% end %>
+				<br></br>
+		<!--<h2><%= t('soilpage.advance.header') %></h2>
 		<% if ENV["APP_VERSION"] == "standard" %>
 			<p><%= raw t('soilpage.advance.body') %></p>
 		<% else %>
 		<p><%= raw t('soilpage.advance.body_modified') %></p>
-		<% end %>
+		<% end %>-->
 	</div>
 </div>
 <% if ENV["APP_VERSION"] == "standard" %>
