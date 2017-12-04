@@ -1,7 +1,7 @@
 module ScenariosHelper
 	def add_scenario_to_soils(scenario)
 		field = Field.find(scenario.field_id)
-		soils = Soil.where(:field_id => scenario.field_id)
+		soils = field.soils
 		i = 0
 		total_percentage = soils.where(:selected => true).sum(:percentage)
 		total_selected = soils.where(:selected => true).count
@@ -555,9 +555,10 @@ module ScenariosHelper
     end
 
 	def update_wsa(operation, wsa)
-		soils = Soil.where(:field_id => params[:field_id], :selected => true)
+		soils = @field.soils.where(:selected => true)
+		#soils = Soil.where(:field_id => params[:field_id], :selected => true)
 		soils.each do |soil|
-			subarea = Subarea.find_by_scenario_id_and_soil_id(params[:scenario_id], soil.id)
+			subarea = @scenario.subareas.find_by_soil_id(soil.id)
 			if operation == "+"
 				subarea.wsa += wsa * soil.percentage / 100
 			else
@@ -751,6 +752,23 @@ module ScenariosHelper
     centroid.cx = centroid.cx / (i)
     centroid.cy = centroid.cy / (i)
     return centroid
+  end
+
+  def add_soil_operation(operation)
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
+    soils = @field.soils
+    #soils = Soil.where(:field_id => Scenario.find(@operation.scenario_id).field_id)
+    msg = "OK"
+    soils.each do |soil|
+      if msg.eql?("OK")
+        msg = update_soil_operation(SoilOperation.new, soil.id, operation)
+      else
+        break
+      end
+    end
+    return msg
   end
 
 end

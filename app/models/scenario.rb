@@ -59,4 +59,22 @@ class Scenario < ActiveRecord::Base
 	def pesticide_operations(rotation)
  	  self.operations.where(:activity_id => 100, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	end
+
+	def delete_records
+		self.results.delete_all
+		self.charts.delete_all
+		self.subareas.delete_all
+		self.aplcat_parameters.delete_all
+		self.grazing_parameters.delete_all
+		self.supplement_parameters.delete_all
+		self.watershed_scenarios.delete_all
+		#navigate all of the operations to delete all of the soil_operations records and bmps
+		self.operations.each do |op|
+			op.delete_records
+		end
+		self.bmps.each do |bmp|
+			bmp.delete_records
+		end
+		self.delete
+	end
 end
