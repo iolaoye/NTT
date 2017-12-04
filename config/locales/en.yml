@@ -1765,7 +1765,7 @@ en:
       7. Contour Buffer and Filter Strip/Riparian Buffer.<br></br>
       Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.<br><br>
       Click <strong>Back</strong> to go back to the Operation Page, click <strong>Continue</strong> to go to the Management scenarios page to simulate for results.
-  operation:
+  operation_page:
     header: Operation Page
     body1: 'Once a scenario has been created on the <strong>Management</strong> page, the user is advanced to the <strong>Operations</strong> page to begin inputting the management characteristics such as the crop schedule, tillage, fertilizer, harvest, and grazing operations.'
     body2: 'A cropping system is <strong>REQUIRED</strong> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. A field may have multiple crops, or a single crop. There are different options available in <strong>Operation Page</strong> for manipulating a cropping system. All of them are described below:'
