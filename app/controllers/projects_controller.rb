@@ -83,7 +83,7 @@ class ProjectsController < ApplicationController
     if !msg == "OK" then
       flash[:info] = msg
     else
-      flash[:notice] = msg
+      flash[:notice] = @project.name + " " + t('notices.copied')
     end # end if msg
     #download_project(params[:id], "copy")
     @user = User.find(session[:user_id])
@@ -177,7 +177,7 @@ class ProjectsController < ApplicationController
   def upload_project
   saved = upload_prj()
     if saved
-      flash[:info] = t('models.project') + " " + t('general.success')
+      flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
       redirect_to projects_upload_path(@upload_id)

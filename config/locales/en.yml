@@ -294,6 +294,7 @@ en:
     deleted: " has been deleted."
     updated: " was successfully updated."
     created: " was sucessfully created."
+    copied: was successfully copied.
     uploaded: " has been uploaded."
     downloaded: " has been downloaded."
     simulation: "Simulation was Successfull."
@@ -529,6 +530,7 @@ en:
     create_soil: Create Soil
     new : New
     layer: Soil Layer
+    aluminum: Aluminum (ppm)
   layer:
     new_layer: New layer
     create_layer: Create Layer
@@ -586,8 +588,8 @@ en:
     org_p_html: 'Organic P (0-100%)'
     org_c_html: 'Organic Carbon'
     nh4_n_html: 'Fraction of N as Ammonia (NH<sub>4</sub>-N)'
-    total_n_con: 'Total N concentration (lb/1000 gallons)'
-    total_p_con: 'Total P concentration (lb/1000 gallons)'
+    total_n_con: 'Total N concentration'
+    total_p_con: 'Total P concentration'
     moisture_con: 'Moisture content (0-100%)'
     add_list: Add to list
     select_crop: Select crop
@@ -617,8 +619,8 @@ en:
     planting_method: Planting Method
     manure_composition: Manure Composition
     planting_date: Planting Date
-    continues_grazing: Pastoreo Continuo
-    rotational_grazing: Pastoreo Rotacional
+    continues_grazing: Continues Grazing
+    rotational_grazing: Rotational Grazing
     total_n: Total N (0-100%)
     total_p: Total P (0-100%)
     application_rate: Application Rate
@@ -667,10 +669,10 @@ en:
     stream_fencing_frequency: Days in Stream
     hours: Hours per day
     dry_manure: Dry defecated
-    no3_n: No3 n
-    po4_p: Po4 p
-    org_n: Org n
-    org_p: Org p
+    no3_n_html: 'NO<sub>3</sub>-N'
+    po4_p_html: 'PO<sub>4</sub>-P'
+    org_n_html: 'Org N'
+    org_p_html: 'Org P'
     width: Width
     buffer_width: Grass buffer width
     waterways_info: Including both sides of channel
@@ -804,7 +806,8 @@ en:
     select_watershed3: Select 3rd watershed
     select_prompt_scenario: Select up to 3 scenarios for view
     select_prompt_watershed: Select up to 3 watersheds for view
-    select_chart: Select a Category
+    select_category: Select Category
+    select_chart: Select Type of Chart
     description: Description
     difference: Difference
     reduction: Reduction

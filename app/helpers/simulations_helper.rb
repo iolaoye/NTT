@@ -742,9 +742,10 @@ module SimulationsHelper
   	    if ssf[layers] == nil then
   			 ssf[layers] = 0
   		  end
-        if ssf[layers] > SoilPMaxForSoilDepth
-          ssf[layers] = SoilPDefault
-        end
+        #commented according to Ali. No max value for soilp P to allow sooil p caculation using soil test and override by user input.
+        #if ssf[layers] > SoilPMaxForSoilDepth
+          #ssf[layers] = SoilPDefault
+        #end
         if ssf[layers] == 0 || ssf[layers] == nil
           ssf[layers] = SoilPDefault
         end
@@ -800,38 +801,39 @@ module SimulationsHelper
   def create_subareas(operation_number)  # operation_number is used for subprojects. for simple scenarios is 1
     last_owner1 = 0
     i=0
-	nirr = 0
-  if @grazing == nil then
-    subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id > 0")
-  else
-    subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id = " + @soils[0].id.to_s)
-  end
-	subareas.each do |subarea|
-		#soil = Soil.find(subarea.soil_id)
-    soil = subarea.soil
-		if soil.selected then
-			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
-			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
-			i+=1
-			@soil_number += 1
-		end  # end if soil.selected
-	end  # end subareas.each for soil_id > 0
-	#add subareas and operations for buffer BMPs.
-	subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id = 0 AND bmp_id > 0")
-	buffer_type = 2
-	subareas.each do |subarea|
-		add_subarea_file(subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
-		if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
-			if subarea.subarea_type == "RF" then
-				buffer_type = 1
-			end
-			create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
-			i+=1
-			@soil_number += 1
-		end # end if bmp types PPDE and PPTW
-	end  # end subareas.each for buffers
-	msg = send_file_to_APEX(@subarea_file, "APEX.sub")
-	return msg
+  	nirr = 0
+    if @grazing == nil then
+      subareas = @scenario.subareas.where("soil_id > 0 AND (bmp_id = 0 OR bmp_id is NULL)")
+    else
+      #subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
+      subareas = @scenario.subareas.where("soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
+    end
+  	subareas.each do |subarea|
+  		#soil = Soil.find(subarea.soil_id)
+      soil = subarea.soil
+  		if soil.selected then
+  			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
+  			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
+  			i+=1
+  			@soil_number += 1
+  		end  # end if soil.selected
+  	end  # end subareas.each for soil_id > 0
+  	#add subareas and operations for buffer BMPs.
+  	subareas = @scenario.subareas.where("bmp_id > 0")
+  	buffer_type = 2
+  	subareas.each do |subarea|
+  		add_subarea_file(subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
+  		if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
+  			if subarea.subarea_type == "RF" then
+  				buffer_type = 1
+  			end
+  			create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
+  			i+=1
+  			@soil_number += 1
+  		end # end if bmp types PPDE and PPTW
+  	end  # end subareas.each for buffers
+  	msg = send_file_to_APEX(@subarea_file, "APEX.sub")
+  	return msg
   end   # end create_subareas
 
   def create_subareas1(operation_number) # operation_number is used for subprojects as for now it is just 1 - todo
@@ -1128,7 +1130,7 @@ module SimulationsHelper
         cc_hash[so.id] = so
         last_op_id = so.id
       end
-      c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop
+      c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop operation
       cc_number = @scenario.operations.last.id
       c_cs.each do |bmp|
         if bmp != nil then
@@ -1140,7 +1142,7 @@ module SimulationsHelper
           s_o_new.apex_crop = bmp.crop_id
           s_o_new.activity_id = bmp.activity_id
           s_o_new.opv1 = set_opval1(bmp)
-          s_o_new.opv2 = set_opval2(soil_id, bmp)
+          #s_o_new.opv2 = set_opval2(SoilOperation.find(last_op_id).soil_id, bmp)
           s_o_new.opv3 = 0
           s_o_new.opv4 = 0
           s_o_new.opv5 = set_opval5(bmp)
@@ -1163,7 +1165,7 @@ module SimulationsHelper
           s_o_new_kill.month = cc_kill_date.month
           s_o_new_kill.day = cc_kill_date.day
           s_o_new_kill.apex_operation = 451
-          s_o_new_kill.apex_crop = bmp.crop_id
+          s_o_new_kill.apex_crop = Crop.find(bmp.crop_id).number
           s_o_new_kill.activity_id = 5 
           s_o_new_kill.opv1 = 0
           s_o_new_kill.opv2 = 0
@@ -1172,8 +1174,8 @@ module SimulationsHelper
           s_o_new_kill.opv5 = 0
           s_o_new_kill.opv6 = 0
           s_o_new_kill.opv7 = 0
-          cc_number += 1
-          cc_hash[cc_number] = s_o_new
+          #cc_number += 1
+          #cc_hash[cc_number] = s_o_new
           last_op_id += 1
           s_o_new_kill.id = last_op_id
           cc_number += 1
@@ -1234,7 +1236,7 @@ module SimulationsHelper
           @soil_operations[j].year = "1"
           #drOuts.Add(drOut)
         end
-		    @soil_operations.sort_by { |date| [date.year, date.month, date.day, date.activity_id, date.id] }
+		    return @soil_operations.reorder("year, month, day, activity_id, id")
         #if i > 0 then
         #for j = 0 To i - 1
         #drOut = drIn(j)
@@ -1508,21 +1510,15 @@ module SimulationsHelper
       else
         operation_name = Activity.find(operation.activity_id).name
     end
-  	state_id = @project.location.state_id
-  	if state_id == 0 or state_id == nil then
-  		state_abbreviation = "**"
-  	else
-  		state_abbreviation = State.find(state_id).state_abbreviation
-  	end
-    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + @state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
                    COMA + Crop.find_by_number(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
   end  # end add_operation method
 
   def append_file(original_file, target_file, file_type)
     path = File.join(APEX, "APEX" + session[:session_id])
-    if File.exists?(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase)) then
-		  FileUtils.cp(File.join(APEX_ORIGINAL + "_" + State.find(@project.location.state_id).state_abbreviation.downcase, original_file), File.join(path, target_file))
+    if File.exists?(File.join(APEX_ORIGINAL + "_" + @state_abbreviation.downcase)) then
+		  FileUtils.cp(File.join(APEX_ORIGINAL + "_" + @state_abbreviation.downcase, original_file), File.join(path, target_file))
     else
 		  FileUtils.cp(File.join(APEX_ORIGINAL, original_file), File.join(path, target_file))
     end

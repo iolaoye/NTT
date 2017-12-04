@@ -41,7 +41,11 @@ class Scenario < ActiveRecord::Base
 	 end
 
 	def continuous_grazing_operations(rotation)
-	self.operations.where(:activity_id => 7, :crop_id => rotation.crop_id, :rotation => rotation.rotation) + self.operations.where(:activity_id => 8, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
+		self.operations.where(:activity_id => 7, :crop_id => rotation.crop_id, :rotation => rotation.rotation) + self.operations.where(:activity_id => 8, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
+	end
+
+	def rotational_grazing_operations(rotation)
+		self.operations.where(:activity_id => 9, :crop_id => rotation.crop_id, :rotation => rotation.rotation) + self.operations.where(:activity_id => 10, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	end
 
 	 def burn_operations(rotation)
@@ -52,13 +56,9 @@ class Scenario < ActiveRecord::Base
 	 	self.operations.where(:activity_id => 12, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
 	 end
 
-   def liming_operations(rotation)
-    self.operations.where(:activity_id => 12, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
-   end
-
-   def cover_crop_id_operations(rotation)
-     self.operations.where(:activity_id => 13, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
-   end
+   #def cover_crop_id_operations(rotation)
+     #self.operations.where(:activity_id => 13, :crop_id => rotation.crop_id, :rotation => rotation.rotation)
+   #end
 
    #Unused code. Remove method reference in /operations/index.html.erb?
 	 def pesticide_operations(rotation)

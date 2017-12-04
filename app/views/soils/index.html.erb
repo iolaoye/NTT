@@ -21,14 +21,18 @@
 	    </div>
 	    <div class="field" title="Field Area (Ac.). Must be greater than 0.">
 			<%= f.label t('field.field_area') %>
-			<%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any", :required => true %>
+			<%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any", :required => true, :min => 0 %>
 			<%= '(ac.)' %>
 	    </div>
 		<% if ENV["APP_VERSION"] == "modified" %>
-		<div class="field">
-			<%= label :soil_test_laboratory, t('soil.test') %>
-			<td><%= collection_select :field, :soil_test, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @field.soil_test}, {:required => true} %></td>
-		</div>
+			<div class="field">
+				<%= label :soil_test_laboratory, t('soil.test') %>
+				<td><%= collection_select :field, :soil_test, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @field.soil_test}, {:required => true} %></td>
+			</div>
+			<div class="field" title="" id="div_soil_al"<%= "style=display:none;" unless :soil_aliminum == 7 %>>
+				<%= t('soil.aluminum') %>
+				<%= f.number_field :soil_aliminum, :class => 'gvTitleStyleNumber', :step => "any" %>
+			</div>
 			<div class="field" title="">
 				<%= t('soil.soilp') %>
 				<%= f.number_field :soilp, :class => 'gvTitleStyleNumber', :step => "any" %>

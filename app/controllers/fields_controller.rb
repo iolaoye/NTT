@@ -163,6 +163,7 @@ class FieldsController < ApplicationController
   	field.field_area = params[:field][:field_area]
     field.soil_test = params[:field][:soil_test]
   	field.soilp = params[:field][:soilp]
+    field.soil_aliminum = params[:field][:soil_aliminum]
   	if field.save
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
@@ -174,7 +175,11 @@ class FieldsController < ApplicationController
           if params[:field][:soilp].blank?
           field.soilp = 0
           end
-          layer.soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
+          if field.soil_test == 7 then
+            layer.soil_p = soil_test.factor2 * field.soilp - soil_test.factor1 * layer.ph - 32.757 * (field.soil_aliminum) + 90.73
+          else
+            layer.soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
+          end
           if layer.save then
   					msg = "OK"
   				else

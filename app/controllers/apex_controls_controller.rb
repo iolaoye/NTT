@@ -109,14 +109,14 @@ class ApexControlsController < ApplicationController
   		apex_control = ApexControl.new
   		apex_control.control_description_id = control.number
       apex_control.project_id = params[:project_id]
-      if control.id != 1 && control.id != 2
+      if control.number != 1 && control.number != 2
   		  apex_control.value = control.default_value
       else
         weather = Weather.find(Field.find_by_location_id(Location.find_by_project_id(params[:project_id]).id).weather_id)
-        if control.id == 1 then
+        if control.number == 1 then
           apex_control.value = weather.simulation_final_year - weather.simulation_initial_year + 5 + 1
         end
-        if control.id == 2
+        if control.number == 2
           apex_control.value = weather.simulation_initial_year - 5
         end
   		end
