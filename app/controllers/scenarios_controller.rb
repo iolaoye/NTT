@@ -187,7 +187,8 @@ class ScenariosController < ApplicationController
     @scenario = Scenario.find(params[:id])
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
-    Subarea.where(:scenario_id => @scenario.id).delete_all
+    @scenario.subareas.delete_all
+    #Subarea.where(:scenario_id => @scenario.id).delete_all
     if @scenario.destroy
       flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.deleted')
     end

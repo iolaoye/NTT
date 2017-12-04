@@ -1340,17 +1340,19 @@ class BmpsController < ApplicationController
               #s_new.inps = inps
               #s_new.iow = iow
               s_new.subarea_type = "CB"
-              if s_new.chl == s_new.rchl then
-                s_new.rchl *= 0.90
-              end
+              #if s_new.chl == s_new.rchl then
+                #s_new.rchl *= 0.90
+              #end
               s_new.bmp_id = @bmp.id
               if i.even? then
                 s_new.wsa = areas[j] / total_strips * crop_area
-                s_new.description = "Contour Main Crop Strip" 
+                s_new.description = "0000000000000000  .sub Contour Main Crop Strip"
+                s_new.wsa *= -1
               else
                 s_new.wsa = areas[j] / total_strips * buffer_area
-                s_new.description = "Contour Buffer Grass Strip"
-                s_new.iops = iops + 1     
+                s_new.description = "0000000000000000  .sub Contour Buffer Grass Strip"
+                s_new.iops = iops + 1
+                if j > 0 then s_new.wsa *= -1 end
               end
               j += 1
               s_new.save

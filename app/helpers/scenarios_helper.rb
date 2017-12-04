@@ -601,47 +601,47 @@ module ScenariosHelper
 		#TODO oper.LuNumber = lunum <- visual basic code
 	end
 
-  def update_soil_operation(soil_operation, soil_id, operation)
-    soil_operation.activity_id = operation.activity_id
-    soil_operation.scenario_id = operation.scenario_id
-    soil_operation.operation_id = operation.id
-    soil_operation.soil_id = soil_id
-    soil_operation.year = operation.year
-    soil_operation.month = operation.month_id
-    soil_operation.day = operation.day
-    case operation.activity_id
-      when 1, 3 #planting, tillage
-        soil_operation.apex_operation = operation.type_id
-        soil_operation.type_id = operation.type_id
-      when 2, 7 #fertilizer, grazing
-        soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
-        soil_operation.type_id = operation.subtype_id
-      when 4 #Harvest. Take harvest operation from crop table
-        soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
-        soil_operation.type_id = operation.subtype_id
-      else
-        soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
-        soil_operation.type_id = operation.type_id
-    end
-    soil_operation.tractor_id = 0
+	def update_soil_operation(soil_operation, soil_id, operation)
+	soil_operation.activity_id = operation.activity_id
+	soil_operation.scenario_id = operation.scenario_id
+	soil_operation.operation_id = operation.id
+	soil_operation.soil_id = soil_id
+	soil_operation.year = operation.year
+	soil_operation.month = operation.month_id
+	soil_operation.day = operation.day
+	case operation.activity_id
+	  when 1, 3 #planting, tillage
+	    soil_operation.apex_operation = operation.type_id
+	    soil_operation.type_id = operation.type_id
+	  when 2, 7 #fertilizer, grazing
+	    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
+	    soil_operation.type_id = operation.subtype_id
+	  when 4 #Harvest. Take harvest operation from crop table
+	    soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
+	    soil_operation.type_id = operation.subtype_id
+	  else
+	    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
+	    soil_operation.type_id = operation.type_id
+	end
+	soil_operation.tractor_id = 0
 	if operation.crop_id == 0 then
 		soil_operation.apex_crop = 0
 	else
 		soil_operation.apex_crop = Crop.find(operation.crop_id).number
 	end
-    soil_operation.opv1 = set_opval1(operation)
-    soil_operation.opv2 = set_opval2(soil_operation.soil_id, operation)
-    soil_operation.opv3 = 0
-    soil_operation.opv4 = set_opval4(operation)
-    soil_operation.opv5 = set_opval5(operation)
-    soil_operation.opv6 = 0
-    soil_operation.opv7 = 0
-    if soil_operation.save
-      return "OK"
-    else
-      return soil_operation.errors
-    end
-  end
+	soil_operation.opv1 = set_opval1(operation)
+	soil_operation.opv2 = set_opval2(soil_operation.soil_id, operation)
+	soil_operation.opv3 = 0
+	soil_operation.opv4 = set_opval4(operation)
+	soil_operation.opv5 = set_opval5(operation)
+	soil_operation.opv6 = 0
+	soil_operation.opv7 = 0
+	if soil_operation.save
+	  return "OK"
+	else
+	  return soil_operation.errors
+	end
+	end
 
   def set_opval5(operation)
     case operation.activity_id

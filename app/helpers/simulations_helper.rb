@@ -1723,9 +1723,9 @@ module SimulationsHelper
   		  end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
-        @field.weather.simulation_initial_year - 5
+        apex_start_year = @field.weather.simulation_initial_year - 5 + 1
         #start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
-        apex_start_year = start_year + 1
+        #apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results(apex_start_year, msg)
         msg = load_crop_results(apex_start_year)
