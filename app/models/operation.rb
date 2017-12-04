@@ -39,4 +39,8 @@ class Operation < ActiveRecord::Base
     end
   end
 
+  def delete_records
+    self.soil_operations.delete_all
+    self.delete
+  end
 end

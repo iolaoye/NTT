@@ -277,8 +277,10 @@ module ProjectsHelper
   def duplicate_subareas_by_bmp(bmp_id, new_bmp_id)
 	subareas = Subarea.where(:bmp_id => bmp_id, :scenario_id => @new_scenario_id)
 	subareas.each do |subarea|
-		subarea.bmp_id = new_bmp_id
-		if !subarea.save
+		new = subarea.dup
+		new.bmp_id = new_bmp_id
+		new.scenario_id = @new_scenario_id
+		if !new.save
 			return "Error Saving subarea by bmp"
 		end
 	end   # end subareas.each
@@ -316,8 +318,8 @@ module ProjectsHelper
 
   ######################### Duplicate a SoilOperation by bmp #################################################
   def duplicate_soil_operation_by_bmp(bmp_id, new_bmp_id)
-	soil_operation = SoilOperation.find_by_bmp_id(bmp_id)
-	if soil_operation != nil 
+	soil_operations = SoilOperation.where(:bmp_id => bmp_id)
+	soil_operations.each do |soil_operation| 
   		new = soil_operation.dup
 		new.scenario_id = @new_scenario_id
 		new.bmp_id = new_bmp_id
