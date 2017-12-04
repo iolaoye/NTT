@@ -1709,7 +1709,6 @@ module SimulationsHelper
   def read_apex_results(msg)
     ActiveRecord::Base.transaction do
       begin
-        debugger
   	    #clean all of the results exiting for this scenario.
   		  if session[:simulation] == "scenario" then
           # clean results for scenario to avoid keeping some results from previous simulation
