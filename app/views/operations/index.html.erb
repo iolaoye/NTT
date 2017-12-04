@@ -526,13 +526,14 @@ window.onload = function() {
 		summary.style.display = "none";
 		crops.style.display = "block";
 	}
-
-	for(ele = 0; ele < 223; ele++) {
-		var bmp = localStorage.getItem('bmp'+ele);
-		if (bmp != null && bmp === 'true') {
-			show_crop(ele);
+	$("div[id^='crop_detail_']").each(function (i, el) { //all operations on page
+		var str = el.id; 					//get div element id
+		var bmp_id = str.match(/\d{1,}/);	//extract bmp_id from element id
+		var visible = localStorage.getItem('bmp'+bmp_id);
+		if (visible != null && visible === 'true') {
+			show_crop(bmp_id);
 		}
-	}
+    });
 }
 
 function saveView() {
@@ -552,22 +553,22 @@ function show_crop(ele) {
   	var crop_hide_div = document.getElementById("crop_" + crop_id);
   	var crop_detail_div = document.getElementById("crop_detail_" + crop_id);
 
-  	crop_show_div.style.display = "none"
-  	crop_hide_div.style.display = "block"
-  	crop_detail_div.style.display = "block"
-  }
+  	crop_show_div.style.display = "none";
+  	crop_hide_div.style.display = "block";
+  	crop_detail_div.style.display = "block";
+}
 
 function hide_crop(ele) {
-  var crop_id = ele;
+	var crop_id = ele;
 	localStorage.setItem('bmp'+ele, 'false');
 
-  var crop_show_div = document.getElementById("expand_crop_" + crop_id);
-  var crop_hide_div = document.getElementById("crop_" + crop_id);
-  var crop_detail_div = document.getElementById("crop_detail_" + crop_id);
+	var crop_show_div = document.getElementById("expand_crop_" + crop_id);
+	var crop_hide_div = document.getElementById("crop_" + crop_id);
+	var crop_detail_div = document.getElementById("crop_detail_" + crop_id);
 
-  crop_show_div.style.display = "block"
-  crop_hide_div.style.display = "none"
-  crop_detail_div.style.display = "none"
-  }
+	crop_show_div.style.display = "block";
+	crop_hide_div.style.display = "none";
+	crop_detail_div.style.display = "none";
+}
 
   </script>
