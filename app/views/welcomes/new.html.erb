@@ -123,15 +123,15 @@
       <div class="row featurette">
         <div class="col-md-12">
           <h2 class="featurette-heading"><%= t('models.welcome') %> <%= t('general.to')%> NTT. </h2>
-          <p><%= t('welcome_note.thanks') %></p>
-
-<p><%= t('general.note') %><br>
-  <%= t('welcome_note.note1') %></p>
-
-<p><%= t('welcome_note.note2') %></p>
-
-<p><%= t('welcome_note.final') %></p><br>
-
+          <p><%= raw t('welcome_note.body1') %></p>
+          <p><%= raw t('welcome_note.body2') %></p>
+          <p><%= raw t('welcome_note.body3') %></p>
+          <p><%= raw t('welcome_note.body4') %></p>
+          <p><%= raw t('welcome_note.body5') %></p>
+          <p><%= raw t('welcome_note.body6') %></p>
+          <% if ENV["APP_VERSION"] == "standard" %>
+          <p><%= raw t('welcome_note.body7') %></p>
+          <% end %>
 <p>Dr. Ali Saleh</p>
         </div>
       </div>
