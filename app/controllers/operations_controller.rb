@@ -13,7 +13,7 @@ class OperationsController < ApplicationController
     end 
     crop_schedule()
     add_breadcrumb t('menu.operations')
-    @rotations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
+    @rotations = @scenario.operations.where(:activity_id => 1).reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
     #array_of_ids = @scenario.operations.order(:rotation, :activity_id, :year).map(&:rotation&:crop_id)
     #@crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
     #@operations.sort_by { |date| [date.year, date.month_id, date.day] }

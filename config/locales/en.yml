@@ -294,6 +294,7 @@ en:
     deleted: " has been deleted."
     updated: " was successfully updated."
     created: " was sucessfully created."
+    copied: was successfully copied.
     uploaded: " has been uploaded."
     downloaded: " has been downloaded."
     simulation: "Simulation was Successfull."
