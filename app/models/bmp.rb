@@ -54,4 +54,10 @@ class Bmp < ActiveRecord::Base
 	  end #end first if
 	  return pads_exists
   end #end function
+
+  def delete_records
+    self.soil_operations.delete_all
+    self.climates.delete_all
+    self.delete
+  end
 end
