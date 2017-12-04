@@ -573,27 +573,27 @@ module ScenariosHelper
 	end
 
 	def add_buffer_operation(oper, crop, years_cult, opv1, opv2, lunum, add_buffer, scenario_id)
-		operation = SoilOperation.new
-		operation.day = 15
-		operation.month = 1
-		operation.year = 1
-		operation.operation_id = 0
-		operation.tractor_id = 0
-		operation.apex_crop = crop
-		operation.type_id = 0
-		operation.opv1 = opv1
-		operation.opv2 = opv2
-		operation.opv3 = 0
-		operation.opv4 = 0
-		operation.opv5 = 0
-		operation.opv6 = add_buffer   # this is going to control the operation number. used when the bmp has more than one operation. As now just RF. 
-		operation.opv7 = 0
-		operation.scenario_id = scenario_id
-		operation.soil_id = 0
-		operation.apex_operation = oper
-		operation.bmp_id = @bmp.id
-		operation.activity_id = 1
-		if operation.save then
+		soil_operation = SoilOperation.new
+		soil_operation.day = 15
+		soil_operation.month = 1
+		soil_operation.year = 1
+		soil_operation.operation_id = 0
+		soil_operation.tractor_id = 0
+		soil_operation.apex_crop = crop
+		soil_operation.type_id = 0
+		soil_operation.opv1 = opv1
+		soil_operation.opv2 = opv2
+		soil_operation.opv3 = 0
+		soil_operation.opv4 = 0
+		soil_operation.opv5 = 0
+		soil_operation.opv6 = add_buffer   # this is going to control the operation number. used when the bmp has more than one soil_operation. As now just RF. 
+		soil_operation.opv7 = 0
+		soil_operation.scenario_id = scenario_id
+		soil_operation.soil_id = 0
+		soil_operation.apex_operation = oper
+		soil_operation.bmp_id = @bmp.id
+		soil_operation.activity_id = 1
+		if soil_operation.save then
 			temp = 1
 		else
 			temp = 0

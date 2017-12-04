@@ -896,6 +896,8 @@ class BmpsController < ApplicationController
       @bmp.crop_id = 0
       #delete all of CB subarea_type 
       @scenario.subareas.where(:subarea_type => "CB").destroy_all
+      #delete all of the SoilOperations ofor CB
+      @bmp.soil_operations.delete_all
       # now restore the area of the subareas with "Soil" as subarea_type
       @scenario.subareas.each do |subarea|
         subarea.wsa = @field.field_area * AC_TO_HA * @field.soils.find(subarea.soil_id).percentage / 100
@@ -1319,6 +1321,8 @@ class BmpsController < ApplicationController
         iow = subareas[subareas.count-1].iow + 1
         areas = Array.new
         iops = 0
+        crop = Crop.find(@bmp.crop_id)
+        add_buffer_operation(139, crop.number, 0, crop.heat_units, 0, 33, 2, @scenario.id)
         (total_strips*2).times do |i|
           j=0
           subareas.each do |s|
@@ -1336,13 +1340,10 @@ class BmpsController < ApplicationController
               #s_new.inps = inps
               #s_new.iow = iow
               s_new.subarea_type = "CB"
-              if i == 1 then   # create the operation file for the grass buffer fields
-                crop = Crop.find(@bmp.crop_id)
-                add_buffer_operation(139, crop.number, 0, crop.heat_units, 0, 33, 2, @scenario.id)
-              end
               if s_new.chl == s_new.rchl then
                 s_new.rchl *= 0.90
               end
+              s_new.bmp_id = @bmp.id
               if i.even? then
                 s_new.wsa = areas[j] / total_strips * crop_area
                 s_new.description = "Contour Main Crop Strip" 
