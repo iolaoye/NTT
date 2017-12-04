@@ -2099,17 +2099,19 @@ en:
         body1: 'The user can download the files corresponding to the LAST SIMULATION by clicking <strong>Downloading APEX Folder</strong>. However, for changes to be visible here, the user does need to run a simulation. Also, if you are running multiple scenarios or fields, the APEX folder will contain the files that were run in the last simulation that was fun. Since a different simulation is needed for different scenarios and fields, you can view which simulation was run last by viewing the <a href=/help/page_10?locale=en>Simulation</a> page, which will give you the time of simulation for all the scenarios/fields/subprojects. To change the order of simulation, you can do this in the <a href=/help/page_10?locale=en>Simulation</a> page also. The last scenario/field/subproject added to the simulation page will be the last to simulate and also the files that the APEX folder will contain.'
   apexpage:
     header: APEX
-    item1: 'The <a href="http://apex.tamu.edu/documentation/">APEX (Agricultural Policy/Environmental eXtender)</a> model was developed to extend the <strong>EPIC</strong> model capabilities to whole farms and small watersheds (Williams et al., 2000).'
+    apex1: 'NTT uses a biophysical simulation model, the Agricultural Policy Environmental eXtender model (APEX), version 0806, to process user supplied information (APEX; Williams et al., 2000). Below are characteristics of the APEX model.'
+    item1: 'The  <a href="https://epicapex.tamu.edu/"><u>APEX (Agricultural Policy/Environmental eXtender)</u></a> model was developed to extend the <strong>EPIC</strong> model capabilities to whole farms and small watersheds (Williams et al., 2000).'
     item2: 'The individual field simulation components of EPIC were used for APEX development.'
-    item3: 'In addition to the EPIC functions, APEX has components for <strong>routing water</strong>, <strong>sediment</strong>, <strong>nutrients</strong>, and <strong>pesticides</strong> across complex landscapes and channel systems to the watershed outlet.'
+    item3: 'In addition to the EPIC functions, APEX has components for <strong>routing water, sediment, nutrients,</strong> and <strong>pesticides</strong> across complex landscapes and channel systems to the watershed outlet.'
     item4: 'Recently, the <strong>carbon fate</strong> and <strong>transport</strong> function of <strong>CENTURY</strong> model was incorporated in the latest version of APEX (version 2110). This allows APEX to simulate carbon dynamics in soil-plant system.'
     item5: 'APEX also has <strong>groundwater</strong> and <strong>reservoir</strong> components. A field or watershed can be subdivided as much as necessary to assure that each subarea is relatively homogeneous in terms of soil, land use, management, etc.'
-    item6: 'The <strong>routing mechanisms</strong> provide for evaluation of interactions between subareas involving <strong>surface runoff</strong>, <strong>return flow</strong>, <strong>sediment deposition</strong> and <strong>degradation</strong>, <strong>nutrient transport</strong>, and <strong>groundwater flow</strong>.'
+    item6: 'The <strong>routing mechanisms</strong> provide for evaluation of interactions between subareas involving <strong>surface runoff, return flow, sediment deposition</strong> and <strong>degradation, nutrient transport,</strong> and <strong>groundwater flow.</strong>'
     item7: 'Water quality in terms of <strong>nitrogen</strong> (ammonium, nitrate, and organic), <strong>phosphorus</strong> (soluble and adsorbed/mineral and organic), and <strong>pesticides concentrations</strong> may be estimated for each subarea and at the watershed outlet.'
     item8: 'Commercial or manure may be applied at any rate and depth on specified dates or automatically.'
-    reference:
-        header: Reference
-        body1: 'Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+    references0: 'References'
+    references1: 'A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading. Soil and Water Conservation Society. November/December 2011 vol. 66 no. 6 400-410.'
+    references2: 'Williams J.R., Arnold J.G., Srinivasan R. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+
   disclaimerpage:
     header: NTT Disclaimer
     body1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the results and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of results.'
