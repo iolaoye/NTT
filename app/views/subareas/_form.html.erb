@@ -304,7 +304,7 @@
   <tr class='gvRowStyleOdd'>
     <td><div class="field">
         <b><%= f.label :bir %></b><br>
-        <%= f.number_field :bir, :class => "fieldNumbers" %>
+        <%= f.number_field :bir, :class => "fieldNumbers", min: 0, :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :efi %></b><br>
