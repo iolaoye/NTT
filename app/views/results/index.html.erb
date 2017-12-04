@@ -17,7 +17,7 @@
     <%= flash[:info] %>
   </div>
 <% end %>
-<div class="page-header"><h1><%=@type + " " %><%= t('result.upto12') unless @type != t("general.view") + " " + t('result.annual') + "-" + t('result.charts') %></h1></div>
+<div class="page-header"><h1><%=@type + " " %><%= t('result.upto12') unless @type != t('menu.results') + ': ' + t('result.annual') + "-" + t('result.charts')  %></h1></div>
 
 <form id="myForm">
 	<div class="field">
