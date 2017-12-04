@@ -45,7 +45,7 @@
   </div>
   <div class="field">
     <%= f.label :ph, t('soil.ph') %>
-    <%= f.number_field :ph, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
+    <%= f.number_field :ph, :class => 'gvTitleStyleNumber', min: 0, :step => 'any', :max => 14 %>
   </div>
   <div class="actions">
     <%#= f.submit "Finish", :name => "finish", :class => "btn btn-primary" %>

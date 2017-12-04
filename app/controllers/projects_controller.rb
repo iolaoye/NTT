@@ -83,7 +83,7 @@ class ProjectsController < ApplicationController
     if !msg == "OK" then
       flash[:info] = msg
     else
-      flash[:notice] = msg
+      flash[:notice] = @project.name + " " + t('notices.copied')
     end # end if msg
     #download_project(params[:id], "copy")
     @user = User.find(session[:user_id])
