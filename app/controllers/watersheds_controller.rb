@@ -144,6 +144,11 @@ class WatershedsController < ApplicationController
 				@change_fert_for_grazing_line = Array.new
 		    	@fert_code = 79
 				j=0
+			    state_id = @project.location.state_id
+			  	@state_abbreviation = "**"
+			  	if state_id != 0 and state_id != nil then
+			  		@state_abbreviation = State.find(state_id).state_abbreviation
+			  	end
 				watershed_scenarios.each do |p|
 				  @scenario = Scenario.find(p.scenario_id)
 				  @field = Field.find(p.field_id)
