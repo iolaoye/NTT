@@ -196,7 +196,7 @@ class BmpsController < ApplicationController
   			create(14)
   		end
       if !(params[:bmp_cb] == nil)
-        if params[:bmp_cb][:width] == "1" then
+        if params[:bmp_cb][:width] > "1" then
           create(15)
         end
       end
@@ -886,6 +886,7 @@ class BmpsController < ApplicationController
       @bmp.crop_id = params[:bmp_cb][:crop_id]
       @bmp.crop_width = params[:bmp_cb][:crop_width]
       @bmp.width = params[:bmp_cb][:width]
+      @bmp.area = @field.field_area * (@bmp.width / (@bmp.width+@bmp.crop_width))
       if @bmp.save then
         return create_new_subarea("CB",15)
       end
@@ -893,6 +894,15 @@ class BmpsController < ApplicationController
       @bmp.crop_width = 0
       @bmp.width = 0
       @bmp.crop_id = 0
+      #delete all of CB subarea_type 
+      @scenario.subareas.where(:subarea_type => "CB").destroy_all
+      #delete all of the SoilOperations ofor CB
+      @bmp.soil_operations.delete_all
+      # now restore the area of the subareas with "Soil" as subarea_type
+      @scenario.subareas.each do |subarea|
+        subarea.wsa = @field.field_area * AC_TO_HA * @field.soils.find(subarea.soil_id).percentage / 100
+        subarea.save
+      end
     end
     return "OK"
   end
@@ -1299,7 +1309,54 @@ class BmpsController < ApplicationController
         end
       end
       if id == 15 then   #contour buffer
-        total_strips = (@field.field_area * AC_TO_HA * 10000) / @bmp.width * (FT_TO_MM + @bmp.crop_width * FT_TO_MM)
+        total_width = @bmp.width + @bmp.crop_width
+        total_strips = (@field.field_area * AC_TO_HA * 10000) / (total_width * FT_TO_MM)
+        buffer_area = @bmp.width / total_width 
+        crop_area = @bmp.crop_width / total_width 
+        if total_strips > MAX_STRIPS then total_strips = MAX_STRIPS end
+        subareas = @scenario.subareas
+        number = subareas.count + 1
+        iops = subareas[subareas.count-1].iops + 1
+        inps = subareas[subareas.count-1].inps + 1
+        iow = subareas[subareas.count-1].iow + 1
+        areas = Array.new
+        iops = 0
+        crop = Crop.find(@bmp.crop_id)
+        add_buffer_operation(139, crop.number, 0, crop.heat_units, 0, 33, 2, @scenario.id)
+        (total_strips*2).times do |i|
+          j=0
+          subareas.each do |s|
+            if i == 0 then  # update the current subareas. And save the initial areas in an array to calculate further areas.
+              areas[j] = s.wsa 
+              j += 1
+              s.wsa = s.wsa / total_strips * crop_area
+              s.save
+              iops = s.iops
+            else
+              s_new = s.dup
+              s_new.number = number
+              number += 1
+              #s_new.iops = iops
+              #s_new.inps = inps
+              #s_new.iow = iow
+              s_new.subarea_type = "CB"
+              if s_new.chl == s_new.rchl then
+                s_new.rchl *= 0.90
+              end
+              s_new.bmp_id = @bmp.id
+              if i.even? then
+                s_new.wsa = areas[j] / total_strips * crop_area
+                s_new.description = "Contour Main Crop Strip" 
+              else
+                s_new.wsa = areas[j] / total_strips * buffer_area
+                s_new.description = "Contour Buffer Grass Strip"
+                s_new.iops = iops + 1     
+              end
+              j += 1
+              s_new.save
+            end
+          end
+        end
       else  # others 
         create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, @field.field_area, @bmp.id, id, false, "create")
       end
@@ -1365,11 +1422,11 @@ class BmpsController < ApplicationController
 
   def delete_existing_subarea(name)
     subarea = Subarea.find_by_scenario_id_and_subarea_type(params[:scenario_id], name)
-	if !(subarea == nil) && @bmp.sides == 0 then
-		return update_wsa("+", subarea.wsa)
-	else
-		return "OK"
-	end
+  	if !(subarea == nil) && @bmp.sides == 0 then
+  		return update_wsa("+", subarea.wsa)
+  	else
+  		return "OK"
+  	end
     subarea.delete
   end
 ##############################  PRIVATE  ###############################

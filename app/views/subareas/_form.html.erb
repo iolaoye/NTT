@@ -15,15 +15,15 @@
   <tr class='gvRowStyleOdd'>
     <td><div class="field">
         <b><%= f.label :inps %></b><br>
-        <%= f.number_field :inps, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :inps, :class => "fieldNumbers", :min => 0, :step => 1 %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :iops %></b><br>
-        <%= f.number_field :iops, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :iops, :class => "fieldNumbers", :min => 0, :step => 1 %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :iow %></b><br>
-        <%= f.number_field :iow, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :iow, :class => "fieldNumbers", :min => 0, :step => 1 %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :ii %></b><br>
@@ -304,11 +304,11 @@
   <tr class='gvRowStyleOdd'>
     <td><div class="field">
         <b><%= f.label :bir %></b><br>
-        <%= f.number_field :bir, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :bir, :class => "fieldNumbers", min: 0, :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :efi %></b><br>
-        <%= f.number_field :efi, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :efi, :class => "fieldNumbers", min: 0, :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :vimx %></b><br>
