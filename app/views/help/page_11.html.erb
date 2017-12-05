@@ -1,51 +1,73 @@
 <div class="main">
 	<div class="container">
 		<h1><%= t('resultspage.header') %></h1><br>
-			<p><%= raw t('resultspage.body1') %></p><br>
+			<p><%= raw t('resultspage.body1') %></p>
 
-		<h3><%= t('resultspage.nav.header') %></h3>
+		<%#= t('resultspage.nav.header') %>
 			<h2><%= t('resultspage.nav.view.header') %></h2>
 				<p><%= raw t('resultspage.nav.view.body1') %></p>
-				<%= image_tag("help/page_9/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:300px;width: 100%;") %>
+				<%#= image_tag("help/page_9/image001.png", :alt => "Image 001", :style =>"border:1px solid gray;max-width:300px;width: 100%;") %>
 				<p><%= raw t('resultspage.nav.view.body2') %></p>
-				<p><%= raw t('resultspage.nav.view.body3') %></p>
-				<p><%= raw t('resultspage.nav.view.body4') %></p>
-				<p><%= raw t('resultspage.nav.view.body5') %></p>
+				<%#= raw t('resultspage.nav.view.body3') %>
+				<%#= raw t('resultspage.nav.view.body4') %>
+				<%#= raw t('resultspage.nav.view.body5') %>
 			<h2><%= t('resultspage.nav.manner.header') %></h2>
 				<p><%= raw t('resultspage.nav.manner.body1') %></p>
-				<% if ENV["APP_VERSION"] == "standard" %>
-				<%= image_tag("help/page_9/image002.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:480px;width: 100%;") %>
-				<% else %>
-				<%= image_tag("help/page_9/image002_modified.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:480px;width: 100%;") %>
-				<% end %>
-			<h2><%= t('resultspage.nav.expand.header') %></h2>
-				<p><%= raw t('resultspage.nav.expand.body1') %></p><br>
-		<h3><%= t('resultspage.understand.header') %></h3>
+				<p><%= raw t('resultspage.nav.manner.body2') %></p>
+				<p><%= raw t('resultspage.nav.manner.body3') %></p>
+				<p><%= raw t('resultspage.nav.manner.body4') %></p>
+				<%= image_tag("help/page_9/image001.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:350px;width: 100%;") %>
+				<%# if ENV["APP_VERSION"] == "standard" %>
+				<%#= image_tag("help/page_9/image002.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:480px;width: 100%;") %>
+				<%# else %>
+				<%#= image_tag("help/page_9/image002_modified.png", :alt => "Image 002", :style =>"border:1px solid gray;max-width:480px;width: 100%;") %>
+				<%# end %>
+			<%#= t('resultspage.nav.expand.header') %>
+				<%#= raw t('resultspage.nav.expand.body1') %>
+		<%#= t('resultspage.understand.header') %>
 			<h2><%= t('resultspage.understand.tabular.header') %></h2>
+			<%= image_tag("help/page_9/image003.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:1180px;width: 100%;") %><br>
 				<p><%= raw t('resultspage.understand.tabular.body1') %></p>
-				<%= image_tag("help/page_9/image003.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:1180px;width: 100%;") %>
 				<p><%= raw t('resultspage.understand.tabular.body2') %></p>
 				<p><%= raw t('resultspage.understand.tabular.body3') %></p>
 				<p><%= raw t('resultspage.understand.tabular.body4') %></p>
-				<p><%= raw t('resultspage.understand.tabular.body5') %></p>
+				<%#= raw t('resultspage.understand.tabular.body5') %>
 			<h2><%= t('resultspage.understand.graphical.header') %></h2>
 				<p><%= raw t('resultspage.understand.graphical.body1') %></p>
-				<ol>
+				<%= image_tag("help/page_9/image002_modified.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:400px;width: 100%;") %><br>
+				<!--<ol>
 					<li>
 					<p><%= raw t('resultspage.understand.graphical.item1.body1') %></p>
 					<p><%= raw t('resultspage.understand.graphical.item1.body2') %></p>
 					<%= image_tag("help/page_9/image004.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:200px;width: 100%;") %>
 					</li>
 					<li><p><%= raw t('resultspage.understand.graphical.item2') %></p></li>
-				</ol>
-
+				</ol>-->
 			<h2><%= t('resultspage.understand.economic.header') %></h2>
 				<p><%= raw t('resultspage.understand.economic.body1') %></p>
-				<p><%= raw t('resultspage.understand.economic.body2') %></p>
-		<h2><%= t('resultspage.saving.header') %></h2>
+				<%#= raw t('resultspage.understand.economic.body2') %>
+		<h3><%= t('resultspage.saving.header') %></h3><br>
+		<h4><%= t('resultspage.saving.body') %></h4><br>
 			<p><%= raw t('resultspage.saving.body1') %></p>
 			<p><%= raw t('resultspage.saving.body2') %></p>
+			<p><%= raw t('resultspage.saving.body3') %></p>
+			<p><%= raw t('resultspage.saving.body4') %></p>
+			<p><%= raw t('resultspage.saving.body5') %></p>
+			<p><%= raw t('resultspage.saving.body6') %></p><br>
+			<h4><%= t('resultspage.saving.body7') %></h4><br>
+			<p><%= raw t('resultspage.saving.body8') %></p>
+			<ol>
+				<li><p><%= raw t('resultspage.saving.item1') %></p></li>
+				<%= image_tag("help/page_9/image004.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:180px;width: 100%;") %><br>
+				<li><p><%= raw t('resultspage.saving.item2') %></p></li>
+			</ol><br>
+			<h2><%= t('resultspage.eco.header') %></h2>
+			<p><%= raw t('resultspage.eco.body1') %></p>
+			<p><%= raw t('resultspage.eco.body2') %></p><br>
+			<h2><%= t('resultspage.pdf.header') %></h2>
+			<p><%= raw t('resultspage.pdf.body1') %></p>
+			<p><%= raw t('resultspage.pdf.body2') %></p><br>
 	</div>
 </div>
-<br><%= link_to "< Prev", help_path("page_10", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_12", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
+<br><%= link_to "< Prev", help_path("page_10", :project_id => params[:project_id]), :class => "btn btn-primary" %>&nbsp;&nbsp;<%= link_to "Next >", help_path("page_13", :project_id => params[:project_id]), :class => "btn btn-primary" %></br>
 <br><%= link_to t('help.return_to_table'), help_path("index", :project_id => params[:project_id]), :class => "btn btn-primary" %><br>

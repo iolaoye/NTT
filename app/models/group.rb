@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  attr_accessible :group_name, :group_name_spanish, :id
+  attr_accessible :group_name, :spanish_group_name, :id
   #associations
 	has_many :results
 end

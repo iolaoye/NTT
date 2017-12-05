@@ -175,6 +175,8 @@ updateTypes = ->
       $("#div_tillage").show()
       $("#div_type").show()
       $("#operation_type_id").prop('required',true)
+      $("#operation_depth").prop('required',true)
+      $("#operation_amount").prop('required',true)
       $("#div_type")[0].children[0].innerText = "Irrigation Method"
     when "7"   # continuous grazing
       url = "/fertilizers.json?id=animal"
@@ -188,6 +190,7 @@ updateTypes = ->
       $("#div_fertilizer").hide()
       $("#div_amount").show()
       $("#div_type").hide()
+      $("#operation_amount").prop('required',true)
     else
       url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       $("#div_fertilizer").hide()
