@@ -104,7 +104,7 @@ class LocationsController < ApplicationController
           site.field_id = @field.id
           site.save
           #step 4 find or create weather
-          if (@field.weather_id == nil) then
+          if (@field.weather_id == nil or @field.weather == nil) then
             #create the weather for this field
             @weather = Weather.new
           else
