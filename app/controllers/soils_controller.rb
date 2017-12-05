@@ -23,10 +23,10 @@ class SoilsController < ApplicationController
 # GET /soils
 # GET /soils.json
   def index
-    msg = ""
+    msg = "OK"
     if @field.updated == true then
       msg = request_soils()
-      flash[:info] = msg
+      if msg != "OK" then flash[:info] = msg end
     end
     @soils = Soil.where(:field_id => params[:field_id])
     add_breadcrumb t('menu.soils')
@@ -185,7 +185,7 @@ class SoilsController < ApplicationController
       @soil.slope = soil[1]["slope"]
       if @soil.slope == 0 then
         @soil.slope = 0.01
-        msg = "Unable to calculate slope - Please modify them accordingly."
+        msg = t('soil.no_slope_msg')
       end
       @soil.percentage = soil[1]["pct"]
       @soil.percentage = @soil.percentage.round(2)
