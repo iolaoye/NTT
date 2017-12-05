@@ -150,7 +150,6 @@ class SoilsController < ApplicationController
   end
 
   def request_soils()
-    debugger
     uri = URI(URL_NTT)
     res = Net::HTTP.post_form(uri, "data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates, "rg" => "yes")
     if !res.body.include?("error") then
@@ -166,20 +165,17 @@ class SoilsController < ApplicationController
   ## Create soils receiving from map for each field.
   def create_soils(data)
     msg = "OK"
-    debugger
     #delete all of the soils for this field
     soils1 = Soil.where(:field_id => @field.id)
     soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
     total_percentage = 0
 
     data.each do |soil|
-      debugger
       #todo check for erros to soils level as well as layers level.
     #for j in 1..params["field#{i}soils"].to_i
       if soil[0] == "soils" then
         next
       end #
-      debugger
       @soil = @field.soils.new
       @soil.key =  soil[1]["mukey"]
       @soil.symbol = soil[1]["musym"]
