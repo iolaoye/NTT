@@ -531,6 +531,7 @@ en:
     new : New
     layer: Soil Layer
     aluminum: Aluminum (ppm)
+    no_slope_msg: Unable to calculate some soil slopes. Please review them and modify accordingly
   layer:
     new_layer: New layer
     create_layer: Create Layer
