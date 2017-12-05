@@ -2,19 +2,11 @@ class SoilOperationsController < ApplicationController
   # GET /soil_operations
   # GET /soil_operations.json
 
-   def index
+  def index
     add_breadcrumb t('menu.utility_file'), controller: "soil_operations", action: "index"
     add_breadcrumb t('menu.operations')
-  	#@soil = 0
-  	#@scenario = 0
     @soil = Soil.where(:field_id => params[:field_id]).first
-  	#if soils != nil then
-  		#@soil = soils[0]
-  	#end
   	@scenario = Scenario.where(:field_id => params[:field_id]).first
-  	#if scenarios != nil then
-  		#@scenario = scenarios[0]
-  	#end
     @soil_operations = SoilOperation.where(:soil_id => @soil.id, :scenario_id => @scenario.id)
     respond_to do |format|
       format.html # index.html.erb
