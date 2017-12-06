@@ -104,18 +104,8 @@ class ResultsController < ApplicationController
       @before_button_clicked = false
       @errors = Array.new
       results = Result.new
-	  #if params[:result1][:scenario_id] == nil or params[:result1][:scenario_id] == "" then @scenario1 = 0 else @scenario1 = params[:result1][:scenario_id] end
-  	  #if params[:result2][:scenario_id] == nil or params[:result2][:scenario_id] == "" then @scenario2 = 0 else @scenario2 = params[:result2][:scenario_id] end
-  	  #if params[:result3][:scenario_id] == nil or params[:result3][:scenario_id] == "" then @scenario3 = 0 else @scenario3 = params[:result3][:scenario_id] end
-      if session[:simulation] == 'scenario' then
+     if session[:simulation] == 'scenario' then
         case true
-          #when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
-            #results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id], :scenario_id => params[:result2][:scenario_id], :scenario_id => params[:result3][:scenario_id], :soil_id => 0).where("crop_id > 0")
-          #when params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != ""
-            #results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id], :scenario_id => params[:result2][:scenario_id]).where("crop_id > 0")
-          #when params[:result1][:scenario_id] != ""
-            #results = Result.where(:field_id => params[:field_id], :scenario_id => params[:result1][:scenario_id]).where("crop_id > 0")
-
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
             results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2, @scenario3], :soil_id => 0).where("crop_id > 0")
           when @scenario1 > "0" && @scenario2 > "0"
@@ -640,8 +630,9 @@ class ResultsController < ApplicationController
           @x = "Month"
           if params[:result6] != nil && params[:result6][:description_id] != "" then
             @description = params[:result6][:description_id]
-            @title = Description.find(@description).description
-            @y = Description.find(@description).unit
+            description = Description.find(@description)
+            @title = description.description
+            @y = description.unit
             if params[:result1] != nil
               if params[:result1][:scenario_id] != "" then
                 @scenario1 = params[:result1][:scenario_id]
