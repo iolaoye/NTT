@@ -776,7 +776,7 @@ en:
   navbar:
     by_soil: By+Soil
   result:
-    summary: General
+    summary: Tabular
     by_soil: By Soil
     download_pdf: Download PDF
     download_csv: Download CSV
