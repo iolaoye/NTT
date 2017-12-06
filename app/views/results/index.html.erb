@@ -42,7 +42,7 @@
 		          <td><%= collection_select :result3, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed3'), :selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
 		        <% end %>
 		        <% case @type %>
-		        <% when t('general.view'), t('result.summary'), "Results: Tabular" %>
+		        <% when t('general.view'), t('result.summary'), "Tabular" %>
 	              	<td>
 	    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
 	    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
