@@ -1,8 +1,8 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <% @user_id = session[:user_id] %>
 <% @user = User.find(@user_id) %>
-<% @project = Project.find(@project) %>
-<% @location = Location.find(session[:location_id]) %>
+<%# @project = Project.find(@project) %>
+<% @location = @project.location %>
 <% t = Time.now %>
 <% @result_scenario1 = session[:scenario1] %>
 <% @result_scenario2 = session[:scenario2] %>
