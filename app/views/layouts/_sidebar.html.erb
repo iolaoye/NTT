@@ -90,14 +90,13 @@
 
 	  <% if result_submenu %>
       <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-        <li class="results-label">Tabular</li>
         <li class="<%= (controller.action_name == "index") ? "active" : "0" %>">
           <% if controller.action_name == "index" %>
             <div class="sub-header-icon">
               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             </div>
           <% end %>
-          <%= link_to t('result.summary'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
+          <%= link_to t('result.summary'), project_field_results_path(@project, @field, :button => t('menu.results') + ': ' + t('result.summary'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
         </li>
         <% if ENV["APP_VERSION"] == "modified, standard" %>
           <li class="<%= (controller.action_name == "by_soils") ? "active" : "" %>">
