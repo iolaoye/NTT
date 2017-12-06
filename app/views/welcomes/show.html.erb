@@ -1,11 +1,16 @@
 ﻿<%= form_tag welcome_path do %>
   <div class="field less-padding">
-    <p><%= t('welcome_note.thanks') %></p>
-    <strong><%= t('general.note') %></strong>
-    <p><%= t('welcome_note.note1') %></p>
-    <p><%= t('welcome_note.note2') %></p>
-    <p><%= t('welcome_note.final') %></p>
-    <p><%= t('welcome_note.name') %></p><br>
+    <h2><%= raw t('welcome_note.header')%></h2>
+    <p><%= raw t('welcome_note.body1') %></p>
+    <p><%= raw t('welcome_note.body2') %></p>
+    <p><%= raw t('welcome_note.body3') %></p>
+    <p><%= raw t('welcome_note.body4') %></p>
+    <p><%= raw t('welcome_note.body5') %></p>
+    <p><%= raw t('welcome_note.body6') %></p>
+    <% if ENV["APP_VERSION"] == "standard" %>
+    <p style="border:1px; border-style:solid; padding: 4px;"><%= raw t('welcome_note.body7') %></p>
+    <% end %>
+    <h3><%= raw t('welcome_note.name') %></h3><br>
     <%= link_to t('general.begin'), welcomes_path, :class => 'light_green_button' %>
   </div>
 <% end %>

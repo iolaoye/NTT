@@ -12,7 +12,7 @@
 			<%= t('contact1.city') %><br>
 			<%= t('contact1.phone') %><br>
 			<%#= t('contact1.fax') %>
-			<%= t('contact1.email') %></li>
+			<%= raw t('contact1.email') %></li>
 			<br>
 			<% if ENV["APP_VERSION"] == "modified" %>
 			<li><b><%= t('contact2.name') %></b><br>
@@ -20,7 +20,7 @@
 			<U><%= t('contact2.dept') %><br></U>
 			<%= t('contact2.city') %><br>
 			<%= t('contact2.phone') %><br>
-			<%= t('contact2.email') %></li>
+			<%= raw t('contact2.email') %></li>
 			<% end %>
 		</ul>
 		<p><%= raw t('contact3.statement') %></p>
@@ -33,7 +33,7 @@
 			<%= t('contact1.city') %><br>
 			<%= t('contact1.phone') %><br>
 			<%#= t('contact1.fax') %>
-			<%= t('contact1.email') %></li>
+			<%= raw t('contact1.email') %></li>
 			<br>
 			<li><b><%= t('contact3.name') %></b><br>
 			<%= t('contact3.position') %><br>
@@ -43,7 +43,7 @@
 			<%= t('contact3.city') %><br>
 			<%= t('contact3.phone') %><br>
 			<%#= t('contact3.fax') %>
-			<%= t('contact3.email') %></li>
+			<%= raw t('contact3.email') %></li>
 		</ul>
 		<br>
 

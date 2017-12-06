@@ -122,16 +122,18 @@
 
       <div class="row featurette">
         <div class="col-md-12">
-          <h2 class="featurette-heading"><%= t('models.welcome') %> <%= t('general.to')%> NTT. </h2>
-          <p><%= t('welcome_note.thanks') %></p>
-
-<p><%= t('general.note') %><br>
-  <%= t('welcome_note.note1') %></p>
-
-<p><%= t('welcome_note.note2') %></p>
-
-<p><%= t('welcome_note.final') %></p><br>
-
-<p>Dr. Ali Saleh</p>
+          <img src="/serve_image/usda_logo.png" style= "max-width:100px;width: 100%;" alt="logo" />
+          <h2><%= raw t('welcome_note.header')%></h2>
+          <img src="/serve_image/tiaer_logo.png" style= "max-width:65px;width: 100%;position:absolute; top:0; right:0; padding:9px;" alt="logo" />
+          <p><%= raw t('welcome_note.body1') %></p>
+          <p><%= raw t('welcome_note.body2') %></p>
+          <p><%= raw t('welcome_note.body3') %></p>
+          <p><%= raw t('welcome_note.body4') %></p>
+          <p><%= raw t('welcome_note.body5') %></p>
+          <p><%= raw t('welcome_note.body6') %></p>
+          <p>Dr. Ali Saleh</p>
+          <!--<% if ENV["APP_VERSION"] == "standard" %>
+          <center><p style="border:1px solid gray;max-width:300px;width: 100%;"><%= raw t('welcome_note.body7') %></p></center>
+          <% end %>-->
         </div>
       </div>
