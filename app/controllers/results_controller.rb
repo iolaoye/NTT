@@ -2,6 +2,7 @@ class ResultsController < ApplicationController
   include OperationsHelper
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
+  	
   	@type = t('general.view') + ' ' + t('result.monthly') + "-" + t('result.charts')
   	index
   	#render "index"
