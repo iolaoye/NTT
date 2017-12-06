@@ -130,7 +130,8 @@ class ResultsController < ApplicationController
       end # end results.each
     end # end if params[:result1] != nil
   	if params[:button] != nil
-  		@type = params[:button]
+  		#@type = params[:button]
+  		@type = t("result.summary")
   	else
   		if params[:button_annual] != nil
   			@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
@@ -151,8 +152,8 @@ class ResultsController < ApplicationController
     if @type != nil
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
-        when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil")
-			if @type.include? t('general.view') then
+        when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil"), t("result.summary")
+			if @type.include? t('result.summary')  then
 				#if params[:result1] != nil
 					#if !params[:result1][:scenario_id].eql?("") then
 					if @scenario1 > "0" then
