@@ -143,7 +143,7 @@ wb.styles do |s|
         value2 = result[3]
         difference1 = value2 - result[1]
         reduction1 = difference1 / result[1] * 100 unless result[1] == 0
-        total_area1 = difference1 * @total_area
+        total_area1 = difference1 * @total_area1
       end
       value3 = 0
       reduction2 = 0
@@ -151,7 +151,7 @@ wb.styles do |s|
         value3 = result[5]
         difference2 = value3 - result[1]
         reduction2 = difference2 / result[1] * 100 unless result[1] == 0
-        total_area2 = difference2 * @total_area
+        total_area2 = difference2 * @total_area2
       end
       if I18n.locale.eql?(:en)
         if !@scenario2.blank?
@@ -184,7 +184,7 @@ wb.styles do |s|
           value2 = ns[3]
           difference1 = value2 - ns[1]
           reduction1 = difference1 / ns[1] * 100 unless ns[1] == 0
-          total_area1 = difference1 * @total_area
+          total_area1 = difference1 * @total_area1
         end
         value3 = 0
         reduction2 = 0
@@ -192,7 +192,7 @@ wb.styles do |s|
           value3 = ns[5]
           difference2 = value3 - ns[1]
           reduction2 = difference2 / ns[1] * 100 unless ns[1] == 0
-          total_area2 = difference2 * @total_area
+          total_area2 = difference2 * @total_area2
         end
         if I18n.locale.eql?(:en)
           if !@scenario2.blank?
@@ -224,7 +224,7 @@ wb.styles do |s|
           value2 = ps[3]
           difference1 = value2 - ps[1]
           reduction1 = difference1 / ps[1] * 100 unless ps[1] == 0
-          total_area1 = difference1 * @total_area
+          total_area1 = difference1 * @total_area1
         end
         value3 = 0
         reduction2 = 0
@@ -232,7 +232,7 @@ wb.styles do |s|
           value3 = ps[5]
           difference2 = value3 - ps[1]
           reduction2 = difference2 / ps[1] * 100 unless ps[1] == 0
-          total_area2 = difference2 * @total_area
+          total_area2 = difference2 * @total_area2
         end
         if I18n.locale.eql?(:en)
           if !@scenario2.blank?
@@ -264,7 +264,7 @@ wb.styles do |s|
           value2 = ts[3]
           difference1 = value2 - ts[1]
           reduction1 = difference1 / ts[1] * 100 unless ts[1] == 0
-          total_area1 = difference1 * @total_area
+          total_area1 = difference1 * @total_area1
         end
         value3 = 0
         reduction2 = 0
@@ -272,7 +272,7 @@ wb.styles do |s|
           value3 = ts[5]
           difference2 = value3 - ts[1]
           reduction2 = difference2 / ts[1] * 100 unless ts[1] == 0
-          total_area2 = difference2 * @total_area
+          total_area2 = difference2 * @total_area2
         end
         if I18n.locale.eql?(:en)
           if !@scenario2.blank?
@@ -304,7 +304,7 @@ wb.styles do |s|
           value2 = ws[3]
           difference1 = value2 - ws[1]
           reduction1 = difference1 / ws[1] * 100 unless ws[1] == 0
-          total_area1 = difference1 * @total_area
+          total_area1 = difference1 * @total_area1
         end
         value3 = 0
         reduction2 = 0
@@ -312,7 +312,7 @@ wb.styles do |s|
           value3 = ws[5]
           difference2 = value3 - ws[1]
           reduction2 = difference2 / ws[1] * 100 unless ws[1] == 0
-          total_area2 = difference2 * @total_area
+          total_area2 = difference2 * @total_area2
         end
         if I18n.locale.eql?(:en)
           if !@scenario2.blank?
