@@ -95,17 +95,17 @@
 	    </table>
 	</div>
 </form>
-
 <% if @type == t("general.view") + " " + t('result.annual') + "-" + t('result.charts') || @type == t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') then %>
-  <strong><h4><%= @title %></h4></strong>
-  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+	<% if @type.include? t('result.annual') then @title += " " + t('result.upto12') end %>
+  	<strong><h4><%= @title %></h4></strong>
+  	<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
         <%= column_chart [
         { :name => t('result.1st_scenario'), :data => @charts1 },
         { :name => t('result.2nd_scenario'), :data => @charts2 },
         { :name => t('result.3rd_scenario'), :data => @charts3 }
         ], { library: {hAxis: {title: @x}, vAxis: {title: @y}}}
         %>
-    <br/>
+    	<br/>
     <div class="table-responsive">
     	<table class='table table-bordered' style="white-space: nowrap;">
 	        <% if (@present1 || @present2 || @present3)  %>
