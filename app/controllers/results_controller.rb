@@ -2,13 +2,13 @@ class ResultsController < ApplicationController
   include OperationsHelper
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
-  	@type = t('menu.results') + ': ' + t('result.monthly') + "-" + t('result.charts')
+  	@type = t('general.view') + ' ' + t('result.monthly') + "-" + t('result.charts')
   	index
   	#render "index"
   end
   ###############################  ANNUAL CHART  ###################################
   def annual_charts
-  	@type = t('menu.results') + ': ' + t('result.annual') + "-" + t('result.charts') 
+  	@type = t('general.view') + ' ' + t('result.annual') + "-" + t('result.charts') 
   	index
   	#render "index"
   end
