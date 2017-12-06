@@ -24,6 +24,7 @@ class SoilsController < ApplicationController
 # GET /soils.json
   def index
     msg = "OK"
+    flash[:info] = nil
     if @field.updated == true then
       msg = request_soils()
       if msg != "OK" then flash[:info] = msg end
