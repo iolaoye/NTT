@@ -48,18 +48,22 @@
 	r_root = Rails.root.to_s
 	WICK_FOLDER = r_root + '/public/Wicked/bin/'
 
-	#osx dev
-	#WICK_ENV = "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf_darwin_x86"
-
-	#windows dev
-	if Rails.env == "development"
+	host_os = RbConfig::CONFIG['host_os']
+	case host_os
+	when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+		#windows dev
 		WICK_ENV = WICK_FOLDER + 'wkhtmltopdf.exe'
-	end
-
-	#linux prod
-	if Rails.env == "production"
+	when /darwin|mac os/
+		#osx dev
+		WICK_ENV = "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf_darwin_x86"
+	when /linux/
+		#linux prod
+		WICK_ENV = "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf_linux_amd64"
+	when /solaris|bsd/
+	else
 		WICK_ENV = "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf_linux_amd64"
 	end
+
 
 #convertion values
 	AC_TO_HA = 0.404685645
