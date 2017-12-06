@@ -108,7 +108,7 @@
             <%= link_to t('result.by_soil'), by_soils_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
           </li>
 	      <% end %>
-        <li class="results-label">Graphic</a></li>
+        <!-- <li class="results-label">Graphic</a></li> -->
         <li class="<%= (controller.action_name == "annual_charts") ? "active" : "" %>">
           <% if controller.action_name == "annual_charts" %>
             <div class="sub-header-icon">
