@@ -23,7 +23,6 @@ class CommentsController < ApplicationController
 
   # POST /comments
   def create
-    debugger
     @comment = Comment.new(comment_params)
 
     if @comment.save
