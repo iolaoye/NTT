@@ -3,7 +3,11 @@ class IssuesController < ApplicationController
 
   # GET /issues
   def index
-    @issues = Issue.where(:user_id => session[:user_id]).includes(:status, :user, :type)
+    if params[:id] != nil then
+      @issues = Issue.where(:user_id => session[:user_id]).includes(:status, :user, :type)
+    else
+      @issues = Issue.where(:developer_id => session[:user_id]).includes(:status, :user, :type)
+    end
   end
 
   # GET /issues/1
