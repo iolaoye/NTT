@@ -1,7 +1,6 @@
-class DreatePriorities < ActiveRecord::Migration
+class CreatePriorities < ActiveRecord::Migration
   def change
-    create_table :types do |t|
-      t.integer :issue_id
+    create_table :priorities do |t|
       t.string :name
 
       t.timestamps null: false
