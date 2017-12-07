@@ -1,4 +1,8 @@
 NTTG3::Application.routes.draw do
+  resources :types
+  resources :statuses
+  resources :comments
+  resources :issues
   resources :groups
   resources :soil_tests
   resources :soil_tests
