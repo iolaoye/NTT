@@ -3,8 +3,7 @@ class IssuesController < ApplicationController
 
   # GET /issues
   def index
-    debugger
-    @issues = Issue.includes(:comment, :status, :user, :type).where(:user_id => session[:user_id])
+    @issues = Issue.where(:user_id => session[:user_id]).includes(:status, :user, :type)
   end
 
   # GET /issues/1
@@ -13,17 +12,20 @@ class IssuesController < ApplicationController
 
   # GET /issues/new
   def new
+    @action = 1
     @issue = Issue.new
   end
 
   # GET /issues/1/edit
   def edit
+    @action = 2
   end
 
   # POST /issues
   def create
     @issue = Issue.new(issue_params)
-
+    @issue.user_id = session[:user_id]
+    @issue.priority_id = params[:issue][:priority_id]
     if @issue.save
       redirect_to @issue, notice: 'Issue was successfully created.'
     else
@@ -33,6 +35,7 @@ class IssuesController < ApplicationController
 
   # PATCH/PUT /issues/1
   def update
+    @issue.priority_id = params[:issue][:priority_id]
     if @issue.update(issue_params)
       redirect_to @issue, notice: 'Issue was successfully updated.'
     else
@@ -54,6 +57,6 @@ class IssuesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def issue_params
-      params.require(:issue).permit(:id, :title, :description, :comment_id, :expected_data, :close_date, :status_id, :user_id, :type_id)
+      params.require(:issue).permit(:id, :title, :description, :comment_id, :expected_data, :close_date, :status_id, :user_id, :type_id, :priority_id)
     end
 end

@@ -23,17 +23,17 @@
     <%= f.label :expected_data %><br>
     <%= f.date_select :expected_data %>
   </div>
-  <div class="field">
-    <%= f.label :close_date %><br>
-    <%= f.date_select :close_date %>
-  </div>
-  <div class="field">
+  <div class="field" <%= " style='display: none'; " unless @action == 1 %>>
     <%= f.label :status_id %><br>
-    <%= f.number_field :status_id %>
+    <%= collection_select :issue, :status_id, Status.all, :id, :name, {:prompt => t('general.select') + " Request " + "Status"}%>
   </div>
-  <div class="field">
+  <div>
     <%= f.label :type_id %><br>
-    <%= f.number_field :type_id %>
+    <%= collection_select :issue, :type_id, Type.all, :id, :name, {:prompt => t('general.select') + " Request " + "Type"}%>
+  </div>
+  <div>
+    <%= f.label :priority_id %><br>
+    <%= collection_select :issue, :priority_id, Importance.all, :id, :name, {:prompt => t('general.select') + " Request " + "Priority"}%>
   </div>
   <div class="actions">
     <%= f.submit %>

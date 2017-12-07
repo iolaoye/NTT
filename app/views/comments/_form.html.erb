@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :issue_id %><br>
-    <%= f.number_field :issue_id %>
+    <%= f.number_field :issue_id, :readonly => true %>
   </div>
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.label :comment %><br>
+    <%= f.text_area :description, :rows => 10, :columns => 200 %>
   </div>
   <div class="actions">
     <%= f.submit %>
