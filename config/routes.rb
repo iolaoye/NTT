@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :importances
   resources :types
   resources :statuses
   resources :comments

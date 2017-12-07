@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-file = "db/priorities.rb"
+file = "db/importances.rb"
 load file
 
 file = "db/statuses.rb"
