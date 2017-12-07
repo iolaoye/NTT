@@ -1,3 +1,3 @@
 class Type < ActiveRecord::Base
-	attr_accessible :user_id, :name
+	attr_accessible :name
 end
