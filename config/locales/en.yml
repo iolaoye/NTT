@@ -431,10 +431,14 @@ en:
     continues_grazing: Continues Grazing
     rotational_grazing: Rotational Grazing
   welcome_note:
-    thanks: 'Thank you very much for using this program. The current version of “Nutrient Tracking Tool (NTT): Next generation” is designed to assess the environmental and economic impacts of various management practices on water and air quality at the field or small watershed level. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry at the selected land (agricultural, forestry, and urban) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at saleh@tiaer.tarleton.edu or by phone (254) 968-9799.'
-    note1: '1. Although the database in NTT available for mainland USA, access to the databases for NTT simulation is limited to where the NTT has been tested and verified. This assure the users that results obtained from this version of NTT is relatively reliable for the conditions where the program has been verified. However, the last version of NTT (www.nn.tarleton.edu/ntt) allows the users to access the data throughout the mainland US.'
-    note2: '2. This version of NTT is written both in English and Spanish.'
-    final: 'Finally, as the NTT project leader and behalf of all of my project team (Oscar Gallego and Edward Osei), I would like to thank the funding sources and our colleagues, in particular the farmers and producers, for their contribution in designing this program.'
+    header: '<center>Welcome</center>'
+    body1: 'I would like to thank and welcome you for using the <strong>Nutrient Tracking Tool (NTT)</strong> Program. This program was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Offices including office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, National Institute of Food and Agriculture (NIFA), and various state agencies.'
+    body2: 'NTT is a web-based, site-specific application that estimates nutrient and sediment losses at the field and/or watershed scales. Agricultural producers and land managers can define a number of management scenarios and generate a report showing the expected nutrient loss differences between any selected scenarios for a given Area of Interest (AOI).'
+    body3: 'NTT compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield. Estimates are made using the <strong>APEX</strong> (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model (Williams et al. 2000). Results represent average losses from the field based on 35 years of simulated weather.'
+    body4: 'NTT requires regional soils, climate and site-specific crop management information. NTT currently provides selections for all regions of <strong><u>U.S. and Puerto Rico territory</u></strong>, but it has only been validated for a limited number of states and counties. As validation becomes possible in other parts of the country, parameter files may be updated for additional counties in future versions.'
+    body5: 'The current version of NTT is designed to evaluate the environmental and economic (upcoming) impacts of various management practices on water quality/quantity and air quality at the field and/or small watershed levels. The NTT is an Internet-based program and requires no software to download. NTT imports the required databases, such as weather, soil, management, and land geometry for your selected Area of Interest (AOI) (e.g., agricultural and/or forestry) for the user using the existing GIS and non-GIS based database anywhere in the mainland United States. The NTT simulate the baseline and numerous conservation management scenarios using the APEX. Please review “about NTT” section for information regarding the new functions and science in current version of NTT. For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at <a href="mailto:saleh@tiaer.tarleton.edu?Subject=Hello%20again" target="_top"><u>saleh@tiaer.tarleton.edu</u></a> or by phone (254) 968-9799. For technical support please contact Ali Saleh or Oscar Gallego at <a href="mailto:gallego@tiaer.tarleton.edu?Subject=Hello%20again" target="_top"><u>(gallego@tiaer.tarleton.edu)</u></a>.'
+    body6: 'Finally, as the NTT project leader and behalf of all of my project team (Oscar Gallego and Edward Osei), I would like to thank the funding sources and our colleagues, in particular the farmers and producers, for their contribution in designing this program.'
+    body7: 'This version of NTT is available in<br> both English and Spanish.'
     name: 'Dr. Ali Saleh'
   menu:
     welcome: Welcome
@@ -882,14 +886,14 @@ en:
     city: 'Stephenville, TX 76402'
     phone: '(254)968-9079 (Phone)'
     fax: '(254)968-9790 (Fax)'
-    email: 'saleh@tarleton.edu'
+    email: '<a href="mailto:saleh@tiaer.tarleton.edu?Subject=Hello%20again" target="_top">saleh@tarleton.edu</a>'
   contact2:
     name: 'Mindy Selman'
     position: 'Senior Markets Analyst'
     dept: 'USDA Office of Environmental Markets'
     city: 'Washington, DC'
     phone: '(202)304-5154'
-    email: 'mselman@oce.usda.gov'
+    email: '<a href="mailto:mselman@oce.usda.gov?Subject=Hello%20again" target="_top">mselman@oce.usda.gov</a>'
   contact3:
     statement: 'For <strong>technical</strong> questions or comments regarding the Nutrient Tracking Tool <strong>(NTT)</strong>, please contact:'
     name: 'Oscar Gallego'
@@ -900,7 +904,7 @@ en:
     city: 'Stephenville, TX 76402'
     phone: '(254)968-9787 (Phone)'
     fax: '(254)968-9790 (Fax)'
-    email: 'gallego@tiaer.tarleton.edu'
+    email: '<a href="mailto:gallego@tiaer.tarleton.edu?Subject=Hello%20again" target="_top">gallego@tiaer.tarleton.edu</a>'
   help:
     header: NTT Table of Contents
     return_to_table: 'Return to Table of Contents'
