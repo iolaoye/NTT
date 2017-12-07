@@ -1,7 +1,7 @@
 module ScenariosHelper
 	def add_scenario_to_soils(scenario)
 		field = Field.find(scenario.field_id)
-		soils = Soil.where(:field_id => scenario.field_id)
+		soils = field.soils
 		i = 0
 		total_percentage = soils.where(:selected => true).sum(:percentage)
 		total_selected = soils.where(:selected => true).count
@@ -555,9 +555,10 @@ module ScenariosHelper
     end
 
 	def update_wsa(operation, wsa)
-		soils = Soil.where(:field_id => params[:field_id], :selected => true)
+		soils = @field.soils.where(:selected => true)
+		#soils = Soil.where(:field_id => params[:field_id], :selected => true)
 		soils.each do |soil|
-			subarea = Subarea.find_by_scenario_id_and_soil_id(params[:scenario_id], soil.id)
+			subarea = @scenario.subareas.find_by_soil_id(soil.id)
 			if operation == "+"
 				subarea.wsa += wsa * soil.percentage / 100
 			else
@@ -601,47 +602,47 @@ module ScenariosHelper
 		#TODO oper.LuNumber = lunum <- visual basic code
 	end
 
-  def update_soil_operation(soil_operation, soil_id, operation)
-    soil_operation.activity_id = operation.activity_id
-    soil_operation.scenario_id = operation.scenario_id
-    soil_operation.operation_id = operation.id
-    soil_operation.soil_id = soil_id
-    soil_operation.year = operation.year
-    soil_operation.month = operation.month_id
-    soil_operation.day = operation.day
-    case operation.activity_id
-      when 1, 3 #planting, tillage
-        soil_operation.apex_operation = operation.type_id
-        soil_operation.type_id = operation.type_id
-      when 2, 7 #fertilizer, grazing
-        soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
-        soil_operation.type_id = operation.subtype_id
-      when 4 #Harvest. Take harvest operation from crop table
-        soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
-        soil_operation.type_id = operation.subtype_id
-      else
-        soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
-        soil_operation.type_id = operation.type_id
-    end
-    soil_operation.tractor_id = 0
+	def update_soil_operation(soil_operation, soil_id, operation)
+	soil_operation.activity_id = operation.activity_id
+	soil_operation.scenario_id = operation.scenario_id
+	soil_operation.operation_id = operation.id
+	soil_operation.soil_id = soil_id
+	soil_operation.year = operation.year
+	soil_operation.month = operation.month_id
+	soil_operation.day = operation.day
+	case operation.activity_id
+	  when 1, 3 #planting, tillage
+	    soil_operation.apex_operation = operation.type_id
+	    soil_operation.type_id = operation.type_id
+	  when 2, 7 #fertilizer, grazing
+	    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
+	    soil_operation.type_id = operation.subtype_id
+	  when 4 #Harvest. Take harvest operation from crop table
+	    soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
+	    soil_operation.type_id = operation.subtype_id
+	  else
+	    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
+	    soil_operation.type_id = operation.type_id
+	end
+	soil_operation.tractor_id = 0
 	if operation.crop_id == 0 then
 		soil_operation.apex_crop = 0
 	else
 		soil_operation.apex_crop = Crop.find(operation.crop_id).number
 	end
-    soil_operation.opv1 = set_opval1(operation)
-    soil_operation.opv2 = set_opval2(soil_operation.soil_id, operation)
-    soil_operation.opv3 = 0
-    soil_operation.opv4 = set_opval4(operation)
-    soil_operation.opv5 = set_opval5(operation)
-    soil_operation.opv6 = 0
-    soil_operation.opv7 = 0
-    if soil_operation.save
-      return "OK"
-    else
-      return soil_operation.errors
-    end
-  end
+	soil_operation.opv1 = set_opval1(operation)
+	soil_operation.opv2 = set_opval2(soil_operation.soil_id, operation)
+	soil_operation.opv3 = 0
+	soil_operation.opv4 = set_opval4(operation)
+	soil_operation.opv5 = set_opval5(operation)
+	soil_operation.opv6 = 0
+	soil_operation.opv7 = 0
+	if soil_operation.save
+	  return "OK"
+	else
+	  return soil_operation.errors
+	end
+	end
 
   def set_opval5(operation)
     case operation.activity_id
@@ -751,6 +752,23 @@ module ScenariosHelper
     centroid.cx = centroid.cx / (i)
     centroid.cy = centroid.cy / (i)
     return centroid
+  end
+
+  def add_soil_operation(operation)
+    #@project = Project.find(params[:project_id])
+    #@field = Field.find(params[:field_id])
+    #@scenario = Scenario.find(params[:scenario_id])
+    soils = @field.soils
+    #soils = Soil.where(:field_id => Scenario.find(@operation.scenario_id).field_id)
+    msg = "OK"
+    soils.each do |soil|
+      if msg.eql?("OK")
+        msg = update_soil_operation(SoilOperation.new, soil.id, operation)
+      else
+        break
+      end
+    end
+    return msg
   end
 
 end

@@ -17,7 +17,7 @@
     <%= flash[:info] %>
   </div>
 <% end %>
-<div class="page-header"><h1><%=@type + " " %><%= t('result.upto12') unless @type != t("general.view") + " " + t('result.annual') + "-" + t('result.charts') %></h1></div>
+<div class="page-header"><h1><%=@type + " " %><%= t('result.upto12') unless @type != t('menu.results') + ': ' + t('result.annual') + "-" + t('result.charts')  %></h1></div>
 
 <form id="myForm">
 	<div class="field">
@@ -42,7 +42,7 @@
 		          <td><%= collection_select :result3, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed3'), :selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
 		        <% end %>
 		        <% case @type %>
-		        <% when t('general.view'), t('result.summary') %>
+		        <% when t('general.view'), t('result.summary'), "Tabular" %>
 	              	<td>
 	    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
 	    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
@@ -72,7 +72,7 @@
 		              <td><%= collection_select :result5, :description_id, @descriptions.where(:group_id => @group), :id, :description, {:prompt => t('result.select_category'), :selected => @description}, {:required => true} %></td>
 					  <td><%#= select :result5, :description_id, options_for_select(@des.map { |obj| [obj['description'], obj['id']] }) %>
 		            <% else %>
-		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :group_name_spanish, {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
+		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :spanish_group_name, {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
 		              <td><%= collection_select :result5, :description_id, @descriptions.where("id != 52"), :id, :spanish_description, {:prompt => t('result.select_category'), :selected => @description}, {:required => true} %></td>
 		            <% end %>
 					<% if I18n.locale.eql?(:en) %>
@@ -95,17 +95,17 @@
 	    </table>
 	</div>
 </form>
-
 <% if @type == t("general.view") + " " + t('result.annual') + "-" + t('result.charts') || @type == t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') then %>
-  <strong><h4><%= @title %></h4></strong>
-  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+	<% if @type.include? t('result.annual') then @title += " " + t('result.upto12') end %>
+  	<strong><h4><%= @title %></h4></strong>
+  	<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
         <%= column_chart [
         { :name => t('result.1st_scenario'), :data => @charts1 },
         { :name => t('result.2nd_scenario'), :data => @charts2 },
         { :name => t('result.3rd_scenario'), :data => @charts3 }
         ], { library: {hAxis: {title: @x}, vAxis: {title: @y}}}
         %>
-    <br/>
+    	<br/>
     <div class="table-responsive">
     	<table class='table table-bordered' style="white-space: nowrap;">
 	        <% if (@present1 || @present2 || @present3)  %>

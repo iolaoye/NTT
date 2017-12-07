@@ -13,9 +13,6 @@ class SoilsController < ApplicationController
 # GET /1/soils.json
   def list
     @soils = Soil.where(:field_id => params[:id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @soils }
@@ -26,15 +23,13 @@ class SoilsController < ApplicationController
 # GET /soils
 # GET /soils.json
   def index
+    msg = "OK"
+    flash[:info] = nil
     if @field.updated == true then
-      #send request for soil
-      request_soils()
+      msg = request_soils()
+      if msg != "OK" then flash[:info] = msg end
     end
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @soils = Soil.where(:field_id => params[:field_id])
-    #@weather = @field.weather
-	
     add_breadcrumb t('menu.soils')
 
     respond_to do |format|
@@ -42,7 +37,7 @@ class SoilsController < ApplicationController
       format.json { render json: @soils }
     end
   end
-
+################################  SHOW  #################################
 # GET /soils/1
 # GET /soils/1.json
   def show
@@ -58,9 +53,6 @@ class SoilsController < ApplicationController
 # GET /soils/new.json
   def new
     @soil = Soil.new
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-
     add_breadcrumb t('menu.soils')
 
     respond_to do |format|
@@ -72,12 +64,9 @@ class SoilsController < ApplicationController
 ################################  EDIT   #################################
 # GET /soils/1/edit
   def edit
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:id])
-
     add_breadcrumb t('menu.soils'), project_field_soils_path(@project, @field)
-	add_breadcrumb t('general.editing') + " " + t('menu.soils')
+  	add_breadcrumb t('general.editing') + " " + t('menu.soils')
   end
 
 ################################  CREATE   #################################
@@ -85,8 +74,6 @@ class SoilsController < ApplicationController
 # POST /soils.json
   def create
     @soil = Soil.new(soil_params)
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @soil.field_id = @field.id
 
     respond_to do |format|
@@ -106,8 +93,6 @@ class SoilsController < ApplicationController
 # PATCH/PUT /soils/1.json
   def update
     @soil = Soil.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     #the wsa in subareas should be updated if % was updated as well as chl and rchl
     wsa_conversion = Field.find(@soil.field_id).field_area / 100 * AC_TO_HA
     soil_id = Soil.where(:selected => true).last.id
@@ -132,8 +117,6 @@ class SoilsController < ApplicationController
 # DELETE /soils/1
 # DELETE /soils/1.json
   def destroy
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:id])
     if @soil.destroy
 		respond_to do |format|
@@ -147,12 +130,7 @@ class SoilsController < ApplicationController
 # DELETE /soils/1
 # DELETE /soils/1.json
   def save_soils
-  	#@project = Project.find(params[:project_id])
-  	#@field = Field.find(params[:field_id])
-  	#@weather = @field.weather
-
   	add_breadcrumb 'Soils'
-
   	for i in 0..(@field.soils.count - 1)
   		layer = @field.soils[i].layers[0]
   		layer.organic_matter = params[:om][i]
@@ -176,8 +154,9 @@ class SoilsController < ApplicationController
     uri = URI(URL_NTT)
     res = Net::HTTP.post_form(uri, "data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates, "rg" => "yes")
     if !res.body.include?("error") then
-      create_soils(YAML.load(res.body))
-      return "OK"
+      msg = "OK"
+      msg = create_soils(YAML.load(res.body))
+      return msg
     else
       return res.body
     end
@@ -186,6 +165,7 @@ class SoilsController < ApplicationController
   ###################################### create_soil ######################################
   ## Create soils receiving from map for each field.
   def create_soils(data)
+    msg = "OK"
     #delete all of the soils for this field
     soils1 = Soil.where(:field_id => @field.id)
     soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
@@ -204,6 +184,10 @@ class SoilsController < ApplicationController
       @soil.name = soil[1]["muname"]
       @soil.albedo = soil[1]["albedo"]
       @soil.slope = soil[1]["slope"]
+      if @soil.slope == 0 then
+        @soil.slope = 0.01
+        msg = t('soil.no_slope_msg')
+      end
       @soil.percentage = soil[1]["pct"]
       @soil.percentage = @soil.percentage.round(2)
       @soil.drainage_id = soil[1]["drain"]
@@ -234,6 +218,8 @@ class SoilsController < ApplicationController
         if !soil[0] != "error" then
           create_layers(soil[1])
         end
+      else
+        msg = "Soils was not saved " + @soil.name
       end
     end #end for create_soils
     soils = Soil.where(:field_id => @field.id).order(percentage: :desc)
@@ -259,6 +245,7 @@ class SoilsController < ApplicationController
     @field.field_average_slope = @field.soils.average(:slope)
     @field.updated = false
     @field.save
+    return msg
   end
 
   ###################################### create_soil layers ######################################

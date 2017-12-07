@@ -24,7 +24,7 @@
                     <% if @results2 != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
                     <% difference1 = value2 - result.value %>
                     <% reduction1 = difference1 / result.value * 100 %>
-                    <% total_area1 = difference1 * @total_area%>
+                    <% total_area1 = difference1 * @total_area1%>
                     <% if (i % 2 == 0) then %>
                         <% if (result.description_id % 10 == 0) %>
                             <tr class="table_row_even">
@@ -295,7 +295,7 @@
                         <% if @results3 != nil %> <%value3 = @results3.find_by_description_id(result.description_id).value %> <% end %>
                         <% difference2 = value3- result.value%>
                         <% reduction2 = difference2 / result.value * 100%>
-                        <% total_area2 = difference2 * @total_area%>
+                        <% total_area2 = difference2 * @total_area2%>
                         <% if (i % 2 == 0) then %>
                             <% if (result.description_id % 10 == 0) %>
                                 <tr class="table_row_even">
