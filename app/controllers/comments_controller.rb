@@ -3,7 +3,8 @@ class CommentsController < ApplicationController
 
   # GET /comments
   def index
-    @comments = Comment.all
+    @issue_id = params[:issue_id]
+    @comments = Comment.where(:issue_id => params[:issue_id])
   end
 
   # GET /comments/1
@@ -13,6 +14,7 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @comment = Comment.new
+    @comment.issue_id = params[:issue_id]
   end
 
   # GET /comments/1/edit
@@ -21,6 +23,7 @@ class CommentsController < ApplicationController
 
   # POST /comments
   def create
+    debugger
     @comment = Comment.new(comment_params)
 
     if @comment.save
@@ -53,6 +56,6 @@ class CommentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def comment_params
-      params.require(:comment).permit(:issue_id, :name)
+      params.require(:comment).permit(:issue_id, :description)
     end
 end
