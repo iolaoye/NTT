@@ -3,7 +3,7 @@ class IssuesController < ApplicationController
 
   # GET /issues
   def index
-    @issues = Issue.all
+    @issues = Issue.includes(:comment, :status, :user, :type).where(:user_id => session[:user_id])
   end
 
   # GET /issues/1
