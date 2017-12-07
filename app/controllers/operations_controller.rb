@@ -617,10 +617,10 @@ class OperationsController < ApplicationController
       operation.subtype_id = 0
       case operation.activity_id
         when 1 #planting operation. Take planting code from crop table and plant population as well
-          if operation.activity_id == 1 && (params[:tillage][:id]=="") then  #if no-till is selected the planting code change to 139.
+          if operation.activity_id == 1 && params[:tillage][:id]=="" && @crop.lu_number != 28 then  #if no-till is selected the planting code change to 139.
             operation.type_id = 139
           else
-            operation.type_id = Crop.find(operation.crop_id).planting_code            
+            operation.type_id = @crop.planting_code            
           end
           operation.amount = plant_population
         when 2, 7  #fertilizer and grazing
