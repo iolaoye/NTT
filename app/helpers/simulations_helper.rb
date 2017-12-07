@@ -1712,8 +1712,10 @@ module SimulationsHelper
   	    #clean all of the results exiting for this scenario.
   		  if session[:simulation] == "scenario" then
           # clean results for scenario to avoid keeping some results from previous simulation
-          Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
-          Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
+          @scenario.results.delete_all
+          @scenario.charts.delete_all
+          #Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
+          #Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
   		  else
           # clean results for watershed to avoid keeping some results from previous simulation
           Result.where(:watershed_id => @watershed.id).delete_all
@@ -1721,8 +1723,9 @@ module SimulationsHelper
   		  end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
-        start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
-        apex_start_year = start_year + 1
+        apex_start_year = @field.weather.simulation_initial_year - 5 + 1
+        #start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
+        #apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results(apex_start_year, msg)
         msg = load_crop_results(apex_start_year)
@@ -1916,34 +1919,36 @@ module SimulationsHelper
     org_p =0
 
     bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 10)
-	if !(bmp.blank? || bmp == nil) then
-		total_manure = bmp.number_of_animals.to_f * bmp.hours.to_f / 24 * bmp.dry_manure
-		no3 += total_manure * bmp.days * bmp.no3_n
-		po4 += total_manure * bmp.days * bmp.po4_p
-		org_n += total_manure * bmp.days * bmp.org_n
-		org_p += total_manure * bmp.days * bmp.org_p
-		if session[:simulation] == 'scenario'
-		  soils = Soil.where(:field_id => @field.id, :selected => true)
-		  soils.each do |soil|
-			results = Result.where(:soil_id => soil.id, :field_id => @field.id, :scenario_id => @scenario.id)
-			results.each do |result|
-			  update_value_of_results(result, false, Field.find(@field.id).field_area * (soil.percentage / 100), no3, po4, org_n, org_p)
-			  result.save
-			end
-		  end
-		end
-		if session[:simulation] == 'scenario'
-		  results = Result.where(:soil_id => 0, :field_id => @field.id, :scenario_id => @scenario.id)
-		else
-		  results = Result.where(:watershed_id => @watershed.id)
-		end
+  	if !(bmp.blank? || bmp == nil) then
+  		total_manure = bmp.number_of_animals.to_f * bmp.hours.to_f / 24 * bmp.dry_manure
+  		no3 += total_manure * bmp.days * bmp.no3_n
+  		po4 += total_manure * bmp.days * bmp.po4_p
+  		org_n += total_manure * bmp.days * bmp.org_n
+  		org_p += total_manure * bmp.days * bmp.org_p
+  		if session[:simulation] == 'scenario'
+  		  soils = @field.soils.where(:selected => true)
+  		  soils.each do |soil|
+        #results = Result.where(:soil_id => soil.id, :field_id => @field.id, :scenario_id => @scenario.id)
+  			results = @scenario.results.where(:soil_id => soil.id)
+  			results.each do |result|
+  			  update_value_of_results(result, false, @field.field_area * (soil.percentage / 100), no3, po4, org_n, org_p)
+  			  result.save
+  			end
+  		  end
+  		end
+  		if session[:simulation] == 'scenario'
+        #results = Result.where(:soil_id => 0, :field_id => @field.id, :scenario_id => @scenario.id)
+  		  results = @scenario.results.where(:soil_id => 0)
+  		else
+  		  results = Result.where(:watershed_id => @watershed.id)
+  		end
 
-		results.each do |result|
-		  update_value_of_results(result, true, Field.find(@field.id).field_area, no3, po4, org_n, org_p)
-		  result.save
-		end
-	end  # end if bmp blank or nil
-	return "OK"
+  		results.each do |result|
+  		  update_value_of_results(result, true, @field.field_area, no3, po4, org_n, org_p)
+  		  result.save
+  		end
+  	end  # end if bmp blank or nil
+  	return "OK"
   end
 
   def update_value_of_results(result, is_total, percentage, no3, po4, org_n, org_p)

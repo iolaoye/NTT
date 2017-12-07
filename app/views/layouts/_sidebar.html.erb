@@ -84,13 +84,12 @@
   				  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
   				</div>
 			  <% end %>
-			  <%= link_to t('menu.results'), project_field_results_path(@project, @field, :button => t('general.view'), :simulation => 'scenario', :locale=>I18n.locale) %>
+			  <%= link_to t('menu.results'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario', :locale=>I18n.locale) %>
 			</li>
 	  <% end %>
 
 	  <% if result_submenu %>
       <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-        <li class="results-label">Tabular</li>
         <li class="<%= (controller.action_name == "index") ? "active" : "0" %>">
           <% if controller.action_name == "index" %>
             <div class="sub-header-icon">
@@ -109,14 +108,14 @@
             <%= link_to t('result.by_soil'), by_soils_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
           </li>
 	      <% end %>
-        <li class="results-label">Graphic</a></li>
+        <!-- <li class="results-label">Graphic</a></li> -->
         <li class="<%= (controller.action_name == "annual_charts") ? "active" : "" %>">
           <% if controller.action_name == "annual_charts" %>
             <div class="sub-header-icon">
               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             </div>
           <% end %>
-          <%= link_to t("result.annual"), annual_charts_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub"%>
+          <%= link_to t("result.annual") + "-" + t('models.chart'), annual_charts_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub"%>
         </li>
         <li class="<%= (controller.action_name == "monthly_charts") ? "active" : "" %>">
           <% if controller.action_name == "monthly_charts" %>
@@ -124,7 +123,7 @@
               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             </div>
           <% end %>
-          <%= link_to t("result.monthly"), monthly_charts_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
+          <%= link_to t("result.monthly") + "-" + t('models.chart'), monthly_charts_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
         </li>
       </ul>
     <% end %>

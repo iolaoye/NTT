@@ -536,7 +536,7 @@ es:
     new: Nuevo
     layer: Capa de Suelo
     aluminum: Aluminio (ppm)
-  layer:
+    no_slope_msg: No fue posible calcular la inlcinación de algunos suelos. Por favor revisarlos y modificarlos como corresponda.
     new_layer: Nueva Capa
     create_layer: Crear Capa
     layer_number: Número de Capa
@@ -810,7 +810,7 @@ es:
     confidence: Intervalo de Confidencia
     total_units: Area Total
     units_ac: Area Unidad
-    upto12: (hasta los ùltimos 12 years)
+    upto12: (hasta los ùltimos 12 años)
     stress: Estrés
   users:
     confirmation: Confirmación de la contraseña

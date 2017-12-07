@@ -1,0 +1,41 @@
+<%= form_for(@issue) do |f| %>
+  <% if @issue.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@issue.errors.count, "error") %> prohibited this issue from being saved:</h2>
+
+      <ul>
+      <% @issue.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :expected_data %><br>
+    <%= f.date_select :expected_data %>
+  </div>
+  <div class="field" <%= " style='display: none'; " unless @action == 1 %>>
+    <%= f.label :status_id %><br>
+    <%= collection_select :issue, :status_id, Status.all, :id, :name, {:prompt => t('general.select') + " Request " + "Status"}%>
+  </div>
+  <div>
+    <%= f.label :type_id %><br>
+    <%= collection_select :issue, :type_id, Type.all, :id, :name, {:prompt => t('general.select') + " Request " + "Type"}%>
+  </div>
+  <div>
+    <%= f.label :priority_id %><br>
+    <%= collection_select :issue, :priority_id, Importance.all, :id, :name, {:prompt => t('general.select') + " Request " + "Priority"}%>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

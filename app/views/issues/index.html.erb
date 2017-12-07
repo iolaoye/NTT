@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header"><h1><%= "Issues" %></h1></div>
+<%= link_to 'New Issue', new_issue_path %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Opened date</th>
+      <th>Expected date</th>
+      <th>Close date</th>
+      <th>Status</th>
+      <th>User</th>
+      <th>Type</th>
+      <th>Priority</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @issues.each do |issue| %>
+      <tr>
+        <td><%= issue.id %></td>
+        <td><%= issue.title %></td>
+        <td><%= issue.description %></td>
+        <td><%= issue.created_at %></td>
+        <td><%= issue.expected_data %></td>
+        <td><%= issue.close_date %></td>
+        <td><%= issue.status.name %></td>
+        <td><%= issue.user.name %></td>
+        <td><%= issue.type.name %></td>
+        <td><%= issue.priority_id %></td>        
+        <td><%= link_to 'Show', issue %></td>
+        <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
+        <td><%= link_to 'Comment', comments_path(:issue_id => issue.id) %>
+        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

@@ -184,10 +184,12 @@ class ScenariosController < ApplicationController
 # DELETE /scenarios/1.json
   def destroy
     @errors = Array.new
-    @scenario = Scenario.find(params[:id])
+    #@scenario = Scenario.find(params[:id])
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
-    Subarea.where(:scenario_id => @scenario.id).delete_all
+    #msg = @scenario.delete_files
+    #@scenario.subareas.delete_all
+    #Subarea.where(:scenario_id => @scenario.id).delete_all
     if @scenario.destroy
       flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.deleted')
     end
@@ -456,14 +458,35 @@ class ScenariosController < ApplicationController
   end
 
   def copy_other_scenario
-  	@use_old_soil = false
-  	msg = duplicate_scenario(params[:scenario][:id], " copy", params[:field_id])
-  	#@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    @scenarios = Scenario.where(:field_id => @field.id)
-    add_breadcrumb 'Scenarios'
-    return msg
+  	name = " copy"
+	scenario = Scenario.find(params[:scenario][:id])   #1. find scenario to copy
+	#2. copy scenario to new scenario
+  	new_scenario = scenario.dup
+	new_scenario.name = scenario.name + name
+	new_scenario.field_id = @field.id
+	#new_scenario.last_simulation = ""
+	if new_scenario.save
+		#new_scenario_id = new_scenario.id
+		#3. Copy subareas info by scenario
+		add_scenario_to_soils(new_scenario)
+		#4. Copy operations info
+		scenario.operations.each do |operation|
+  			new_op = operation.dup
+			new_op.scenario_id = new_scenario.id
+			new_op.save
+			add_soil_operation(new_op)
+		end   # end bmps.each
+		#5. Copy bmps info
+		@new_scenario_id = new_scenario.id
+		scenario.bmps.each do |b|
+			duplicate_bmp(b)
+		end   # end bmps.each
+	else
+		return "Error Saving scenario"
+	end   # end if scenario saved
+  	return "OK"
   end
+
 
   def download
   	#@project = Project.find(params[:project_id])
