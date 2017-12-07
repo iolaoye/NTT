@@ -431,7 +431,7 @@ en:
     continues_grazing: Continues Grazing
     rotational_grazing: Rotational Grazing
   welcome_note:
-    header: '<center>Welcome</center>'
+    header: '<center>WELCOME</center>'
     body1: 'I would like to thank and welcome you for using the <strong>Nutrient Tracking Tool (NTT)</strong> Program. This program was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Offices including office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, National Institute of Food and Agriculture (NIFA), and various state agencies.'
     body2: 'NTT is a web-based, site-specific application that estimates nutrient and sediment losses at the field and/or watershed scales. Agricultural producers and land managers can define a number of management scenarios and generate a report showing the expected nutrient loss differences between any selected scenarios for a given Area of Interest (AOI).'
     body3: 'NTT compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield. Estimates are made using the <strong>APEX</strong> (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model (Williams et al. 2000). Results represent average losses from the field based on 35 years of simulated weather.'
@@ -673,8 +673,8 @@ en:
     stream_fencing_frequency: Days in Stream
     hours: Hours per day
     dry_manure: Dry defecated
-    no3_n_html: 'NO<sub>3</sub>-N'
-    po4_p_html: 'PO<sub>4</sub>-P'
+    no3_n_html: 'NO₃-N'
+    po4_p_html: 'PO₄-P'
     org_n_html: 'Org N'
     org_p_html: 'Org P'
     width: Width
@@ -851,6 +851,10 @@ en:
     overview4: 'NTT compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield. Estimates are made using the <strong>APEX</strong> model (Williams et al. 2000). Results represent average losses from the field based on 35 years of simulated weather.'
     overview5: 'NTT requires regional soils, climate and site-specific crop management information. NTT currently provides selections for <strong>every U.S. county</strong>, but it has only been validated for a limited number of states and counties. As validation becomes possible in other parts of the country, parameter files may be updated for additional counties in future versions.'
     overview6: 'For more information regarding NTT, please refer to Saleh et al. (2011 and 2014).'
+    overview7: 'Now, there are two versions of new NTT program available:'
+    item9: 'The “R&D” version (E) which will be used by researchers and educational institutes for teaching and training purposes. The “EDUCATIONAL” version (P) includes all functions available in NTT. Detailed information  '
+    item10: 'The “PRODUCERS” version is a easier to use and will include the essential NTT functions required for use for other users, such as farm producers.'
+    overview8: 'Nevertheless, the data sources and APEX simulations in both versions are similar.'
     process0: 'Process'
     process: 'User supplied information is processed using a biophysical simulation model, the Agricultural Policy Environmental eXtender (APEX; Williams et al., 2000).'
     selections0: 'Available Selections'
@@ -872,8 +876,11 @@ en:
     disclaimer1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the validity of the results and functioning of the program and related program material, nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of the results generated from the tool.'
     disclaimer2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
     references0: 'References'
-    references1: 'A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading. Soil and Water Conservation Society. November/December 2011 vol. 66 no. 6 400-410.'
-    references2: 'Williams J.R., Arnold J.G., Srinivasan R. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+    references1: 'Peter J. A. Kleinman , A. N. Sharpley , K. Gartley , W. M. Jarrell , S. Kuo , R. G. Menon , R. Myers , K. R. Reddy  & E. O. Skogley. 2007. Interlaboratory comparison of soil phosphorus extracted by various soil test methods.  Journal of Communications in Soil Science and Plant Analysis Volume 32, 2001 - Issue 15-16 Pages 2325-2345.'
+    references2: 'Saleh, A, O. Gallego, and E. Osei. 2015. Evaluating Nutrient Tracking Tool and simulated conservation practices. Journal of Soil and Water Conservation. July/August 2015—Vol. 70, No. 4.'
+    references3: 'Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading. Soil and Water Conservation Society. November/December 2011 vol. 66 no. 6 400-410.'
+    references4: 'Williams J.R., Arnold J.G., Srinivasan R. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+    references5: 'Winchell, M., D. Meals, S. Folle, J. Moore, D. Braun, C. DeLeo and K. Budreski. 2011. Identification of critical source areas of phosphorus within the Vermont sector of the Missisquoi Bay basin. Grand Isle, VT: Lake Champlain Basin Program.'
   contact1:
     header: 'Contact Information'
     statement: 'For questions or comments regarding the Nutrient Tracking Tool <strong>(NTT)</strong>, please contact:'
@@ -1215,19 +1222,19 @@ en:
     header: Navigation Basics
     overview:
         header: Overview
-        statement: 'The Nutrient Tracking Tool was designed to be user friendly, with ten main pages:'
+        statement: 'The Nutrient Tracking Tool was designed to be user friendly, with following main pages:'
         statement_modified: 'The Nutrient Tracking Tool was designed to be user friendly, with nine main pages:'
-        project: 'On the <a href=/help/page_3?locale=en><u>Projects</u></a> page, users can create a project by enter the name and description of the project, open saved/example projects, or upload projects from local source.'
-        project_modified: 'On the <a href=/help/page_3?locale=en><u>Projects</u></a> page, users can create a project by enter the name and description of the project, open saved projects, or upload projects from local source.'
-        location: 'On the <a href=/help/page_4?locale=en><u>Location</u></a> page, the users delineate the field or fields in their project using the interactive map. Alternately, users may upload their own shape files.'
-        fields: 'On the <a href=/help/page_5?locale=en><u>Fields</u></a> page, the users either create new fields or verify the fields drawn on the Location page. Clicking on the fields allows the user to further define the field characteristics in the soils and management pages.'
-        soils: 'On the <a href=/help/page_6?locale=en><u>Soils</u></a> page, the users may verify or delete the soils returned by the SSURGO database for their field. Users are also asked to indicate the soil P content for the field.'
-        weather: 'On the <a href=/help/page_7?locale=en><u>Weather</u></a> page, the users select the source of  weather information, as well as the length of simulation.'
-        management: 'On the <a href=/help/page_8?locale=en><u>Management</u></a> page, users create and name one or more management scenarios for the field. Each management scenario must be further defined on the Operations and Conservation Practices sub-project pages. Once the management scenario(s) has been defined, users may also simulate the scenarios by selecting the box next to the scenario name and clicking “simulate selected scenario”.'
-        subproject: 'On the <a href=/help/page_9?locale=en><u>Operation</u></a> page, users create the crop schedule and define management for the given field management scenario.'
-        simulation: 'On the <a href=/help/page_10?locale=en><u>Conservation Practices</u></a> page, users indicate the conservation practices that are in place on the field for the given field management scenario.'
-        results: 'On the <a href=/help/page_11?locale=en><u>Results</u></a> page, users can view and compare results of up to three management scenarios for a given field in tabular or graphical presentations.'
-        modifications: 'On the <a href=/help/page_13?locale=en><u>Field Routing</u></a> page, users are able to create and name field routing scenarios. A routing scenario will route runoff from one field to the next in the specified order. For each routing scenarios users will need to list the field-scenario order.'
+        project: 'On the <a href=/help/page_3?locale=en><u><i>Projects</i></u></a> page, users can create a project by enter the name and description of the project, open saved/example projects, or upload projects from local source.'
+        project_modified: 'On the <a href=/help/page_3?locale=en><u><i>Projects</i></u></a> page, users can create a project by enter the name and description of the project, open saved projects, or upload projects from local source.'
+        location: 'On the <a href=/help/page_4?locale=en><u><i>Location</i></u></a> page, the users delineate the field or fields in their project using the interactive map. Alternately, users may upload their own shape files.'
+        fields: 'On the <a href=/help/page_5?locale=en><u><i>Fields</i></u></a> page, the users either create new fields or verify the fields drawn on the Location page. Clicking on the fields allows the user to further define the field characteristics in the soils and management pages.'
+        soils: 'On the <a href=/help/page_6?locale=en><u><i>Soils</i></u></a> page, the users may verify or delete the soils returned by the SSURGO database for their field. Users are also asked to indicate the soil P content for the field.'
+        weather: 'On the <a href=/help/page_7?locale=en><u><i>Weather</i></u></a> page, the users select the source of  weather information, as well as the length of simulation.'
+        management: 'On the <a href=/help/page_8?locale=en><u><i>Management</i></u></a> page, users create and name one or more management scenarios for the field. Each management scenario must be further defined on the Operations and Conservation Practices sub-project pages. Once the management scenario(s) has been defined, users may also simulate the scenarios by selecting the box next to the scenario name and clicking “simulate selected scenario”.'
+        subproject: 'On the <a href=/help/page_9?locale=en><u><i>Operation</i></u></a> page, users create the crop schedule and define management for the given field management scenario.'
+        simulation: 'On the <a href=/help/page_10?locale=en><u><i>Conservation Practices</i></u></a> page, users indicate the conservation practices that are in place on the field for the given field management scenario.'
+        results: 'On the <a href=/help/page_11?locale=en><u><i>Results</i></u></a> page, users can view and compare results of up to three management scenarios for a given field in tabular or graphical presentations. In addition, a PDF-formatted report for the project and results summary will be available for upload.'
+        modifications: 'On the <a href=/help/page_13?locale=en><u><i>Field Routing</i></u></a> page, users are able to create and name field routing scenarios. This also can be used for simulating for different scenario management in multiple fields or at subbasins within a watershed. A routing scenario will route runoff, sediment, and nutrients from one field to the next (within a subbasin and from a subbasin to the next if used for a watershed) in the specified order. For each routing scenarios users will need to list the field-scenario order.'
         advance: 'To advance to the next page, simply click <strong>Save and Continue.</strong>'
     dataentrybasics:
         header: Data Entry Basics
@@ -1280,8 +1287,8 @@ en:
   projpage:
     header: Projects
     header_modified: My Projects
-    statement: After logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project, upload an example project, or open a saved project.
-    statement_modified: After logging in, you will be directed to the My Projects page. My Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project, or open a saved project.
+    statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project, upload an example project, or open a saved project.
+    statement_modified: After creating an account in NTT and logging in, you will be directed to the My Projects page. My Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project, or open a saved project.
     initial:
         header: To Start a Project
         statement: There are <b>three initial choices</b> to start a new project:<br>
@@ -1296,6 +1303,7 @@ en:
         header: Upload Project
         body1: Users may use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
         body2: Click <strong>Upload Project</strong>, then select <strong>Choose File</strong> and navigate to the saved file on your computer. After you have selected the project, click the <strong>Upload Project</strong> button to upload the project and continue.
+        body3: User is able to save their project under their NTT account<br><br> and upload them on their hard drive
     example:
         header: Upload Example
         body1: Users may choose to use an example project, click the <strong>Upload Example</strong> button, and then select from the options to load a sample project file.
@@ -1485,7 +1493,7 @@ en:
     overview:
         header: Overview
         body: 'After clicking on a field to begin editing on the <strong>Fields</strong> page, the user will be directed to the <strong>Soils</strong> page. The Soils page is a field-level page. The Soils page allows the user to rename the field and adjust the acres; and verify, modify or delete soils returned from the SSURGO soils database and add/edit layers for the particular field selected in the Fields page. NTT returns a maximum of 3 soils for every field. These soils represent the most predominant soils in the AOI. NTT is limited to 3 soils in order to minimize model processing time.'
-        body_modified: 'After clicking on a field to begin editing on the <strong>Fields</strong> page, the user will be directed to the <strong>Soils</strong> page. The Soils page is a field-level page. The Soils page allows the user to rename the field and adjust the acres; input soil P values; and verify soils returned from the SSURGO soils database for the particular field selected in the Fields page. NTT returns a maximum of 3 soils for every field. These soils represent the most predominant soils in the AOI. NTT is limited to 3 soils in order to minimize model processing time.'
+        body_modified: 'After clicking on a field to begin editing on the <strong>Fields</strong> page, the user will be directed to the <strong>Soils</strong> page. The Soils page is a field-level page. The Soils page allows the user to rename the field and adjust the acres; input soil P values; and verify soils returned from the SSURGO soils database for the particular field selected in the Fields page (Just for E version). NTT returns a maximum of 3 soils for every field. These soils represent the most predominant soils in the AOI. NTT is limited to 3 soils in order to minimize model processing time.'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
         item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <img src="/serve_image/edit.png"> icon in the <strong>Actions</strong> column.'
         item2_modified: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics.'
@@ -1504,6 +1512,11 @@ en:
             body: 'Soil P test values provide NTT with a starting point for phosphorus in the soil. If you do not have a soil P test for your soil, leave these fields blank and NTT will use default soil P values.'
             body1: '<strong>Soil Test:</strong> The user should select a soil test, if applicable, that was used to determine the soil phosphorus. Currently NTT includes conversions for the Fe-strip test, Olsen, Bray-1, and Mehlich-3 tests. If you have used a different test, please select Other. If you do not have a soil test for phosphorus, please select None. As we modify NTT for other parts of the country we will include additional tests and P conversions.'
             body2: '<strong>Soil P:</strong> Users should enter the soil phosphorus test value for their field, if available. If None was selected for the P test then this field will be disabled and a minimum phosphorus concentration in the soil will be used. Similarly, if a soil test is selected, but the field Soil P value is left blank, the tool will assume a minimum phosphorus concentration in the soil.'
+            body3: 'Soil test phosphorus (STP), obtained by the following methods are converted to Mehlich-3 (M3) before inputted in soil data database (The STP-depth is set at 0-6-inch depth by default). The user STP input in NTT is converted Mehlich-3 equivalent using the following equations:'
+            item1: 'Modified Morgan (MM) method (Winchell et al., 2011) <br> M3 = 6.718 × 𝑀𝑀 − 11.83 × PH − 32.757 × 𝑀𝑀/AL + 90.73 <br><br> Where, PH soil PH and AL is soil Aluminum at the top soil 6-inch depth.'
+            item2: 'Fe_strip method (Peter et al., 2007) <br> M3= 0.10 + 1.61 Fe-strip P'
+            item3: 'Olsen_P method (Peter et al., 2007) <br> M3 = 14.8 + 1.54 Olsen P'
+            item4: 'Modified Bray-1) method (Peter et al., 2007) <br> M3 = 10.8 + 0.99 Bray-1 P'
         addremove:
             header: Manage/Modify Soils
             body1: 'Between 1 and 3 soils will appear in the list of soils returned for your field. These represent the most predominant soils in your field as returned by the SSURGO Soils database.'
@@ -1551,7 +1564,7 @@ en:
             body2: 'The user can copy scenarios from other projects and use it in the existing project. to copy scenarios click <strong>Copy Scenario..</strong> which will create a copy of the selected scenario. To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
     manipulate:
         header: Copy Scenario from other Field
-        body1: 'The user can copy scenarios from other fields and use it in the existing field. To copy scenarios click <strong>Copy Scenario from other Field</strong> at the top of the page, then select the field and scenario that you wish to copy. Click the <strong>Copy</strong> button when done. The scenario will be copied and will appear in the list of management scenarios for that field.'
+        body1: 'The user can copy scenarios from other fields and use it in the existing field. To copy scenarios click <strong>Copy Scenario from other Field</strong> at the top of the page, then select the field and scenario that you wish to copy. Click the <strong>Copy</strong> button when done. The scenario will be copied and will appear in the list of management scenarios for that field. In Addition, a scenario could be duplicated and renamed and modified for different management scenario within a field by using the copy key under the action options.'
         body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
     operation:
         header: Manage Field Scenarios
@@ -2069,7 +2082,7 @@ en:
     To <strong>Delete</strong> this site, click <img src="/serve_image/delete.png"> under action column.<br>
   routing:
     header: Field Routing (Watershed) Page
-    body1: 'The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field. NTT will route flows from field to field, essentially creating a small watershed simulation. You may note that the load at the outlet of the watershed is less than the sum of the edge of field loads for each individually simulated field. This is because NTT simulates attenuation effects of water and nutrients as they flow over the landscape.'
+    body1: 'The watershed page allows users to simulate different scenario management in multiple fields or at subbasins within a watershed. A routing scenario will route runoff, sediment, and nutrients from one field to the next (within a subbasin and from a subbasin to the next if used for a watershed) in the specified order. For each routing scenarios users will need to list the field-scenario order to combine multiple fields and scenarios and simulate them as a single field. NTT will route flows from field to field, essentially creating a small watershed simulation. You may note that the load at the outlet of the watershed is less than the sum of the edge of field loads for each individually simulated field. This is because NTT simulates attenuation effects of water and nutrients as they flow over the landscape.'
     create:
         header: Create/Name Your Watershed
         body1: 'To begin creating a field routing scenario, click Add New Field Routing (Watershed). Once you do this, a text box will pop up where you can type in the name of the scenario:'
