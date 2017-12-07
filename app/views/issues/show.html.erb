@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id:</strong>
+  <%= @issue.id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @issue.title %>
+</p>
+
+<p>
+  <strong>Descritpion:</strong>
+  <%= @issue.descritpion %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @issue.comment_id %>
+</p>
+
+<p>
+  <strong>Expected data:</strong>
+  <%= @issue.expected_data %>
+</p>
+
+<p>
+  <strong>Close date:</strong>
+  <%= @issue.close_date %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @issue.status_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @issue.user_id %>
+</p>
+
+<p>
+  <strong>Class:</strong>
+  <%= @issue.class_id %>
+</p>
+
+<%= link_to 'Edit', edit_issue_path(@issue) %> |
+<%= link_to 'Back', issues_path %>
