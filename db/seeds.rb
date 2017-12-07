@@ -1,12 +1,12 @@
 # encoding: utf-8
 
-file = "db/importances.rb"
+file = "db/seeds/importances.rb"
 load file
 
-file = "db/statuses.rb"
+file = "db/seeds/statuses.rb"
 load file
 
-file = "db/types.rb"
+file = "db/seeds/types.rb"
 load file
 
 cont = false
