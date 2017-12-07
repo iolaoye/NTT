@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Issues</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Descritpion</th>
+      <th>Comment</th>
+      <th>Expected data</th>
+      <th>Close date</th>
+      <th>Status</th>
+      <th>User</th>
+      <th>Class</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @issues.each do |issue| %>
+      <tr>
+        <td><%= issue.id %></td>
+        <td><%= issue.title %></td>
+        <td><%= issue.descritpion %></td>
+        <td><%= issue.comment_id %></td>
+        <td><%= issue.expected_data %></td>
+        <td><%= issue.close_date %></td>
+        <td><%= issue.status_id %></td>
+        <td><%= issue.user_id %></td>
+        <td><%= issue.class_id %></td>
+        <td><%= link_to 'Show', issue %></td>
+        <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
+        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Issue', new_issue_path %>
