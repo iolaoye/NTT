@@ -9,6 +9,15 @@ load file
 file = "db/seeds/types.rb"
 load file
 
+file = "db/seeds/crops.rb"
+load file
+
+file = "db/seeds/crop_schedules.rb"
+load file
+
+file = "db/seeds/schedules.rb"
+load file
+
 cont = false
 
 if cont then
