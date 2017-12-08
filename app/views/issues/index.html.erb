@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <div class="page-header"><h1><%= "Issues" %></h1></div>
-<%= link_to 'New Issue', new_issue_path %>
+<%= link_to 'New Issue', new_issue_path, class: "btn btn-primary" %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -12,10 +12,12 @@
       <th>Expected date</th>
       <th>Close date</th>
       <th>Status</th>
-      <th>User</th>
+      <% if session[:dev] %>
+        <th>User</th>
+      <% end %>
       <th>Type</th>
       <th>Priority</th>
-      <th colspan="3"></th>
+      <th colspan="4">Actions</th>
     </tr>
   </thead>
 
@@ -29,7 +31,9 @@
         <td><%= issue.expected_data %></td>
         <td><%= issue.close_date %></td>
         <td><%= issue.status.name %></td>
-        <td><%= issue.user.name %></td>
+        <% if session[:dev] %>
+          <td><%= issue.user.name %></td>
+        <% end %>
         <td><%= issue.type.name %></td>
         <td><%= issue.priority_id %></td>        
         <td><%= link_to 'Show', issue %></td>

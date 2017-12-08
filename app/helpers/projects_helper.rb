@@ -275,7 +275,7 @@ module ProjectsHelper
 
   ######################### Duplicate a Subareas by scenario/bmp #################################################
   def duplicate_subareas_by_bmp(bmp_id, new_bmp_id)
-	subareas = Subarea.where(:bmp_id => bmp_id, :scenario_id => @new_scenario_id)
+	subareas = Subarea.where(:bmp_id => bmp_id)
 	subareas.each do |subarea|
 		new = subarea.dup
 		new.bmp_id = new_bmp_id
