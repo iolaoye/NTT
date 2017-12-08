@@ -694,7 +694,7 @@ es:
     hours_grazed: '# de horas consecutivas por day en pastoreo'
     days_grazed: '# días consecutivos en pastoreo a la vez (en cada subparcela)'
     rest_time: 'Tiempo de descanso de los pastos (días) entre pastoreos'
-    application_rate: "Si zero (0.0), N se aplica a la tase requerida por el cultivo "
+    application_rate_html: "Si zero (0.0), N se aplica a la tase requerida para el cultivo "
   months:
     january: Enero
     february: Febrero

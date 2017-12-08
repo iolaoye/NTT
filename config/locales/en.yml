@@ -707,7 +707,7 @@ en:
     hours_grazed: '# of consecutive hours per day grazed'
     days_grazed: '# of consecutive days grazed in each paddock'
     rest_time: 'paddock rest time between grazing (days)'
-    application_rate: If zero (0.0) N applied at the crop N required rate
+    application_rate_html: 'If zero (0) N applied at the crop N required rate'
   months:
     january: January
     february: February
