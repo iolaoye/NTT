@@ -364,7 +364,7 @@
             <tr>
               <td class="indent" colspan="2">
                 <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
-                <%= number_field :bmp_ww, :width, :value => bmp.width, :min => 0, :max => 1, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_ww, :width, :value => bmp.width, :min => 0, :step => '0.01', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
