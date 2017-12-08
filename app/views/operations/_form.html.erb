@@ -20,13 +20,21 @@
 		<%= hidden_field_tag "cc_month", @cc_plt_date.month, { :id => "cc_month" } %>
 		<%= hidden_field_tag "cc_day", @cc_plt_date.day, { :id => "cc_day" } %>
 	<% end %>
-	<div class="field">
+	<div class="field" readonly="">
 		<%= label :activity_id, t('scenario.operation') %>
-		<% if I18n.locale.eql?(:en) %>
-			<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
+		<% if @operation.activity_id == 0 || @operation.activity_id == nil %>
+			<% if I18n.locale.eql?(:en) %>
+				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
+			<% else %>
+				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
+			<% end %>
 		<% else %>
-			<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => @operation.activity_id}, {:required => true} %>
-		<% end %>
+			<% if I18n.locale.eql?(:en) %>
+				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true, :disabled => 'disabled'} %>
+			<% else %>
+				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => (params[:operation] || @operation.activity_id)}, {:required => true, :disabled => 'disabled'} %>
+			<% end %>
+		<% end %>		
 	</div>
 	<div class="field" id="div_crops">
 		<%= label :crop_id, t('operation.crop') %>
