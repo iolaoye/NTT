@@ -667,7 +667,7 @@ class BmpsController < ApplicationController
 		@bmp.save
 		msg = pads_pipes(type)
 		@iops = @field.soils.count
-		@inps = @field.soils.count
+		@inps = 1
         #@iops = subarea.iops + 1 #selected the last iops to inform the subarea the folowing iops to create.
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
           create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create")
@@ -692,7 +692,7 @@ class BmpsController < ApplicationController
 		  @bmp.area = params[:bmp_ppnd][:area]
 		  @bmp.depth = params[:bmp_cb2]
 		  @iops = @field.soils.count
-		  @inps = @field.soils.count
+		  @inps = 1
 		  if @bmp.save then
 			  msg = pads_pipes(type)
 			  if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
@@ -1297,10 +1297,10 @@ class BmpsController < ApplicationController
           end
         end
         subarea = @scenario.subareas.find_by_soil_id(soil.id)
-        @inps = 0
+        @inps = 1
         if subarea != nil then
           #if i == 0 then
-            @inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
+            #@inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
             #i += 1
           #end
           if soil.selected

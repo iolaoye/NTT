@@ -3,11 +3,8 @@ class IssuesController < ApplicationController
 
   # GET /issues
   def index
-    if params[:id] != nil then
-      @issues = Issue.where(:user_id => session[:user_id]).includes(:status, :user, :type)
-    else
-      @issues = Issue.where(:developer_id => session[:user_id]).includes(:status, :user, :type)
-    end
+    session[:dev] = params[:dev]
+    get_issues()
   end
 
   # GET /issues/1
@@ -31,7 +28,8 @@ class IssuesController < ApplicationController
     @issue.user_id = session[:user_id]
     @issue.priority_id = params[:issue][:priority_id]
     if @issue.save
-      redirect_to @issue, notice: 'Issue was successfully created.'
+      get_issues
+      render "index", notice: 'Issue was successfully created.'
     else
       render :new
     end
@@ -41,7 +39,8 @@ class IssuesController < ApplicationController
   def update
     @issue.priority_id = params[:issue][:priority_id]
     if @issue.update(issue_params)
-      redirect_to @issue, notice: 'Issue was successfully updated.'
+      get_issues
+      render :index, notice: 'Issue was successfully updated.'
     else
       render :edit
     end
@@ -61,6 +60,14 @@ class IssuesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def issue_params
-      params.require(:issue).permit(:id, :title, :description, :comment_id, :expected_data, :close_date, :status_id, :user_id, :type_id, :priority_id)
+      params.require(:issue).permit(:id, :title, :description, :comment_id, :expected_data, :close_date, :status_id, :user_id, :type_id, :priority_id, :developer_id)
+    end
+
+    def get_issues
+      if session[:dev] == "1" then
+        @issues = Issue.where(:developer_id => session[:user_id]).includes(:status, :user, :type)
+      else
+        @issues = Issue.where(:user_id => session[:user_id]).includes(:status, :user, :type)
+      end
     end
 end

@@ -5,6 +5,7 @@ class ScenariosController < ApplicationController
   include ScenariosHelper
   include SimulationsHelper
   include ProjectsHelper
+  include ApplicationHelper
 ################################  scenario bmps #################################
 # GET /scenarios/1
 # GET /1/scenarios.json

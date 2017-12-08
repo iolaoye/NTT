@@ -124,7 +124,7 @@
               <td class="field indent2" id = "td_n_rate" colspan="2"<%= " style='display: none'; " unless bmp.depth == 2%>
                <%= label :days, t('operation.application_rate') + " (" + t('bmp.lbs') + "/" + t("bmp.acres") + ")"%>
                <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :class => "gvTitleStyleNumber" %>
-                <!-- <strong><a href="#" id="n_rate_trigger" style="color:blue;">(?)</a></strong> -->
+               <%= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
               </td>
             </tr>
           <% when 3 %>
@@ -364,7 +364,7 @@
             <tr>
               <td class="indent" colspan="2">
                 <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
-                <%= number_field :bmp_ww, :width, :value => bmp.width, :min => 0, :max => 1, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_ww, :width, :value => bmp.width, :min => 0, :step => '0.01', :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
