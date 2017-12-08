@@ -41,7 +41,9 @@ class OperationsController < ApplicationController
     operation.subtype_id = 1
     operation.scenario_id = @scenario.id
     operation.rotation = params[:bmp_ccr][:year]
-    operation.save
+    if operation.save
+      add_soil_operation(operation)
+    end  
   end
 ################################  SHOW  #################################
 # GET /operations/1
