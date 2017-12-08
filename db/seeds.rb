@@ -18,6 +18,12 @@ load file
 file = "db/seeds/schedules.rb"
 load file
 
+file = "db/seeds/controls.rb"
+load file
+
+file = "db/seeds/parameters.rb"
+load file
+
 cont = false
 
 if cont then
