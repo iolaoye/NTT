@@ -1,6 +1,6 @@
 class Issue < ActiveRecord::Base
   
-  attr_accessible :title, :description, :comment_id, :expected_data, :close_date, :status_id, :user_id, :type_id, :created_at, :updated_at
+  attr_accessible :title, :description, :comment_id, :expected_data, :close_date, :status_id, :user_id, :type_id, :created_at, :updated_at, :developer_id
 
   belongs_to :user
   belongs_to :status
