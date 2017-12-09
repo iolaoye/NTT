@@ -22,19 +22,11 @@
 	<% end %>
 	<div class="field" >
 		<%= label :activity_id, t('scenario.operation') %>
-		<% if @operation.activity_id == 0 || @operation.activity_id == nil %>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
 			<% else %>
 				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
 			<% end %>
-		<% else %>
-			<% if I18n.locale.eql?(:en) %>
-				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true, :readonly => 'true'} %>
-			<% else %>
-				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => (params[:operation] || @operation.activity_id)}, {:required => true, :disabled => 'disabled'} %>
-			<% end %>
-		<% end %>		
 	</div>
 	<div class="field" id="div_crops">
 		<%= label :crop_id, t('operation.crop') %>
