@@ -275,7 +275,30 @@ update_tillages = ->
      $("#till_title").show()
      $("#till_list").show()
 
+upload_days = (select_day, selected_month) ->
+  select_day[0].children[select_day[0].length-3].disabled = false
+  select_day[0].children[select_day[0].length-2].disabled = false
+  select_day[0].children[select_day[0].length-1].disabled = false
+
+  switch selected_month
+    when "4", "6", "9", "11"
+      select_day[0].children[select_day[0].length-1].disabled = true
+    when "2"
+      select_day[0].children[select_day[0].length-3].disabled = true
+      select_day[0].children[select_day[0].length-2].disabled = true
+      select_day[0].children[select_day[0].length-1].disabled = true
+
+
 $(document).ready ->
+   $("#day1").click ->
+        upload_days($("#day1"), $("#month_id1").val())
+
+    $("#bmp_ccr_day").click ->
+        upload_days($("#bmp_ccr_day"), $("#bmp_ccr_month").val())
+
+    $("#operation_day").click ->
+        upload_days($("#operation_day"), $("#operation_month_id").val())
+
     $("#btnBack").click ->
         upload_crop(false)
 

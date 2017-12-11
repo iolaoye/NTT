@@ -96,7 +96,7 @@
 						<% end %>
 					  </table><br>
 					  <% if cover_crop == "" %>
-					  	<%= link_to t('operation.add_planting'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => rotation.crop_id), :class => 'btn btn-success'%>
+					  	<%= link_to t('operation.add_planting'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 1, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'%>
 					  <% end %>
 				   </div>
 				<% end %>
@@ -136,7 +136,7 @@
 							</tr>
 						<% end %>
 					  </table><br>
-					  <%= link_to t('operation.add_fertilizer'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 2, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
+					  <%= link_to t('operation.add_fertilizer'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 2, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 					</div>
 				<% end %>
 				<% if @scenario.tillage_operations(rotation).any? %>
@@ -163,7 +163,7 @@
 						</tr>
 						<% end %>
 					  </table><br>
-					  <%= link_to t('operation.add_tillage'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 3, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
+					  <%= link_to t('operation.add_tillage'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 3, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 					</div>
 				<% end %>
 				<% if @scenario.irrigation_operations(rotation).any? %>
@@ -199,7 +199,7 @@
 					</tr>
 					<% end %>
 				   </table><br>
-				   <%= link_to t('operation.add_irrigation'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 6, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
+				   <%= link_to t('operation.add_irrigation'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 6, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 				 </div>
 				<% end %>
 				<% if @scenario.continuous_grazing_operations(rotation).any? %>
@@ -242,7 +242,7 @@
 						      </tr>
 					      	<% end %>
 					    </table><br>
-					    <%= link_to t('result.add') + " " + t('general.continues_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 7, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
+					    <%= link_to t('result.add') + " " + t('general.continues_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 7, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 					</div> 
 				<% end %>
 				<% if @scenario.rotational_grazing_operations(rotation).any? %>
@@ -312,7 +312,7 @@
 							</tr>
 						<% end %>
 						</table><br>
-					    <%= link_to t('operation.add_liming'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 10, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
+					    <%= link_to t('operation.add_liming'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 10, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 				  	</div>
 				<% end %>
 				<% if @scenario.burn_operations(rotation).any? %>
@@ -337,7 +337,7 @@
 					</tr>
 					<% end %>
 					</table><br>
-				   <%= link_to t('operation.add_burn'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 9, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
+				   <%= link_to t('operation.add_burn'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 9, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 				  </div>
 				<% end %>
 				<% if @scenario.harvest_operations(rotation).any? %>
@@ -359,7 +359,7 @@
 								</tr>
 							<% end %>
 					  </table><br>
-					  <%= link_to t('operation.add_harvest'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 4, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
+					  <%= link_to t('operation.add_harvest'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 4, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 					</div>
 				<% end %>
 				<% if @scenario.kill_operations(rotation).any? %>
@@ -381,7 +381,7 @@
 							</tr>
 						<% end %>
 					</table><br>
-					<%= link_to t('operation.add_kill'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 5, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
+					<%= link_to t('operation.add_kill'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 5, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 				  </div>
 				<% end %>. 
 				<% if @scenario.pesticide_operations(rotation).any? %>
@@ -405,7 +405,7 @@
 							</tr>
 						<% end %>
 				      </table><br>
-				      <%= link_to "Add New Pesticide Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 11, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
+				      <%= link_to "Add New Pesticide Operation", new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 11, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 				    </div>
 				<% end %>
 			</div>
