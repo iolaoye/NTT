@@ -5,7 +5,7 @@ class ApexParametersController < ApplicationController
   def index
     #@field = Field.find(params[:field_id])
     #@project = Project.find(params[:project_id])
-    @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id])
+    @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => @project.id)
 		
     add_breadcrumb t('menu.utility_file')
     add_breadcrumb t('menu.parameters_file')
@@ -18,7 +18,7 @@ class ApexParametersController < ApplicationController
   # GET /apex_parameters/1
   # GET /apex_parameters/1.json
   def show
-    @apex_parameter = ApexParameter.where(:project_id => params[:project_id]).find(params[:id])
+    @apex_parameter = ApexParameter.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -41,7 +41,7 @@ class ApexParametersController < ApplicationController
   def edit
     #@field = Field.find(params[:field_id])
     #@project = Project.find(params[:project_id])
-    @apex_parameter = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id]).find(params[:id])
+    @apex_parameter = ApexParameter.includes(:parameter_description).find(params[:id))
     @parameter_name = @apex_parameter.parameter_description.name
     @low_range = @apex_parameter.parameter_description.range_low
     @high_range = @apex_parameter.parameter_description.range_high
@@ -69,8 +69,8 @@ class ApexParametersController < ApplicationController
 
   # PATCH/PUT /apex_parameters/1
   # PATCH/PUT /apex_parameters/1.json
-  def update
-    @apex_parameter = ApexParameter.where(:project_id => params[:project_id]).find(params[:id])
+  def updated
+    @apex_parameter = ApexParameter.find(params[:id])
 
     respond_to do |format|
       if @apex_parameter.update_attributes(apex_parameter_params)
@@ -86,7 +86,7 @@ class ApexParametersController < ApplicationController
   # DELETE /apex_parameters/1
   # DELETE /apex_parameters/1.json
   def destroy
-    @apex_parameter = ApexParameter.where(:project_id => params[:project_id]).find(params[:id])
+    @apex_parameter = ApexParameter.find(params[:id])
     @apex_parameter.destroy
 
     respond_to do |format|
@@ -96,24 +96,24 @@ class ApexParametersController < ApplicationController
   end
 
   def reset
-    parameters = Parameter.where(:state_id => Location.find(session[:location_id]).state_id)
+  parameters = Parameter.where(:state_id => @project.location.state_id)
 	if parameters == nil or parameters.blank? then
 		parameters = Parameter.where(:state_id => 99)
 	end
 
-    @apex_parameters = ApexParameter.where(:project_id => params[:project_id])
+    @apex_parameters = ApexParameter.where(:project_id => @project.id)
     @apex_parameters.delete_all()
 
     parameters.each do |parameter|
 		  apex_parameter = ApexParameter.new
 		  apex_parameter.parameter_description_id = parameter.number
 		  apex_parameter.value = parameter.default_value
-		  apex_parameter.project_id = params[:project_id]
+		  apex_parameter.project_id = @project.id
 		  apex_parameter.save
     end
     #field = Field.find(params[:field_id])
     #@project = Project.find(params[:project_id])
-    @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => params[:project_id])
+    @apex_parameters = ApexParameter.includes(:parameter_description).where(:project_id => @project.id)
 		
     add_breadcrumb 'Utility Files'
     add_breadcrumb 'Parameters'
