@@ -121,7 +121,11 @@
               </td>-->
             </tr>
             <tr>
-              <td class="field indent2" id = "td_n_rate" colspan="2"<%= " style='display: none'; " unless bmp.depth == 2%>
+              <% if bmp.depth == 1 %>              
+                <td class="field indent2" id = "td_n_rate" colspan="2" style="display: none">
+              <% else %>
+                <td class="field indent2" id = "td_n_rate" colspan="2">
+              <% end %>
                <%= label :days, t('operation.application_rate') + " (" + t('bmp.lbs') + "/" + t("bmp.acres") + ")"%>
                <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
                <%= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
@@ -528,11 +532,6 @@
   <%= link_to t('general.back'), project_field_scenario_operations_path(@project.id, @field.id, @scenario.id), :class => "btn btn-primary" %>
   <%= submit_tag t("submit.savecontinue"), name: "button", class: "btn btn-primary" %>
 <% end %>
-<div id="pop-up1" style="display:none">
-  <h6>
-    Amount fertilizer applied to lower N stress. At zero (0) means apply N as much as needed.
-  </h6>
-</div>
 <div id="pop-up">
   <h6>
     This factor is used to trigger the automatic irrigation and means what plant water stress is allowed.
@@ -838,7 +837,7 @@
 
 <script>
   $(function() {
-    var moveLeft = 300;
+    var moveLeft = 600;
     var moveDown = -150;
 
     $('a#trigger').hover(function(e) {
@@ -851,18 +850,4 @@
       $("div#pop-up").css('top', e.pageY + moveDown).css('left', moveLeft);
     });
   });
-
-  $(function() {
-    var moveLeft = 300;
-    var moveDown = -150;
-    $('a#n_rate_trigger').hover(function(e) {
-      $('div#pop-up1').show();
-      }, function() {
-      $('div#pop-up1').hide();
-    });
-
-    $('a#n_rate_trigger').mousemove(function(e) {
-      $("div#pop-up1").css('top', moveDown).css('left', moveLeft);
-    })
-  })
 </script>
