@@ -44,8 +44,8 @@
   </div>
   <div class="field" <%= " style=display:none;" unless User.find(session[:user_id]).admin?%>>
     <%= f.label :developer_id %><br>
-    <%= collection_select :issue, :developer_id, User.where(:company => 'Tiaer'), :id, :email, {:prompt => t('general.select') + " Developer "}%>
-    <%#= collection_select :issue, :priority_id, User.where("company like '%tiaer%'"), :id, :email, {:prompt => t('general.select') + " Developer "}%>
+    <%#= collection_select :issue, :developer_id, User.where(:company => 'Tiaer'), :id, :email, {:prompt => t('general.select') + " Developer "}%>
+    <%= collection_select :issue, :priority_id, User.where("company like '%tiaer%'"), :id, :email, {:prompt => t('general.select') + " Developer "}%>
   </div>
   <div class="actions">
     <%= f.submit %>
