@@ -41,7 +41,7 @@ class ApexParametersController < ApplicationController
   def edit
     #@field = Field.find(params[:field_id])
     #@project = Project.find(params[:project_id])
-    @apex_parameter = ApexParameter.includes(:parameter_description).find(params[:id))
+    @apex_parameter = ApexParameter.includes(:parameter_description).find(params[:id])
     @parameter_name = @apex_parameter.parameter_description.name
     @low_range = @apex_parameter.parameter_description.range_low
     @high_range = @apex_parameter.parameter_description.range_high
