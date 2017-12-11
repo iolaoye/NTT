@@ -116,8 +116,8 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, info: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
-        flash[:info]=""
-        flash[:notice] = t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+        flash[:info]= t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+        flash[:error] = ""
         format.html { redirect_to user_projects_path(session[:user_id]) }
         #format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -841,7 +841,7 @@ class ProjectsController < ApplicationController
           save_watershed_scenario_information(xml, wss)
         end # end scenarios each
       } # end scenarios
-    
+
     results = Result.where(:watershed_id => watershed.id)
       xml.results {
         results.each do |result|
@@ -881,7 +881,7 @@ class ProjectsController < ApplicationController
 
   def sort_column
     case params[:column]
-      when "Project Name" 
+      when "Project Name"
         return "Name"
       when "Last Modified"
         return "updated_at"
