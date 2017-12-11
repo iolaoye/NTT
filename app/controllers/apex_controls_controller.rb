@@ -20,7 +20,7 @@ class ApexControlsController < ApplicationController
   # GET /apex_controls/1
   # GET /apex_controls/1.json
   def show
-    @apex_control = ApexControl.where(:project_id => params[:project_id]).find(params[:id])
+    @apex_control = ApexControl.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -43,7 +43,7 @@ class ApexControlsController < ApplicationController
   def edit
     #@field = Field.find(params[:field_id])
     #@project = Project.find(params[:project_id])
-  	@apex_control = ApexControl.includes(:control_description).where(:project_id => params[:project_id]).find(params[:id])
+  	@apex_control = ApexControl.includes(:control_description).find(params[:id])
   	@control_code = @apex_control.control_description.code
   	@low_range = @apex_control.control_description.range_low
   	@high_range = @apex_control.control_description.range_high
@@ -72,7 +72,7 @@ class ApexControlsController < ApplicationController
   # PATCH/PUT /apex_controls/1
   # PATCH/PUT /apex_controls/1.json
   def update
-    @apex_control = ApexControl.where(:project_id => params[:project_id]).find(params[:id])
+    @apex_control = ApexControl.find(params[:id])
 
     respond_to do |format|
       if @apex_control.update_attributes(apex_control_params)
@@ -88,7 +88,7 @@ class ApexControlsController < ApplicationController
   # DELETE /apex_controls/1
   # DELETE /apex_controls/1.json
   def destroy
-    @apex_control = ApexControl.where(:project_id => params[:project_id]).find(params[:id])
+    @apex_control = ApexControl.find(params[:id])
     @apex_control.destroy
 
     respond_to do |format|
@@ -103,16 +103,16 @@ class ApexControlsController < ApplicationController
 		  controls = Control.where(:state_id => 99)
     end
     #ApexControl.where("project_id = " + params[:project_id].to_s + " AND control_description_id != 1 AND control_description_id != 2").delete_all()
-    ApexControl.where("project_id = " + params[:project_id].to_s).delete_all()
+    ApexControl.where(:project_id => @project.id).delete_all()
 
     controls.each do |control|
   		apex_control = ApexControl.new
   		apex_control.control_description_id = control.number
-      apex_control.project_id = params[:project_id]
+      apex_control.project_id = @project.id
       if control.number != 1 && control.number != 2
   		  apex_control.value = control.default_value
       else
-        weather = Weather.find(Field.find_by_location_id(Location.find_by_project_id(params[:project_id]).id).weather_id)
+        weather = Weather.find(@field.weather_id)
         if control.number == 1 then
           apex_control.value = weather.simulation_final_year - weather.simulation_initial_year + 5 + 1
         end
@@ -124,7 +124,7 @@ class ApexControlsController < ApplicationController
     end
     #@field = Field.find(params[:field_id])
     #@project = Project.find(params[:project_id])
-  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => params[:project_id])	
+  	@apex_controls = ApexControl.includes(:control_description).where(:project_id => @project.id)	
 	
     add_breadcrumb 'Utility Files'
     add_breadcrumb 'Controls'
