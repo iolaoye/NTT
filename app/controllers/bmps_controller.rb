@@ -1310,7 +1310,7 @@ class BmpsController < ApplicationController
       end
       if id == 15 then   #contour buffer
         total_width = @bmp.width + @bmp.crop_width
-        total_strips = (@field.field_area * AC_TO_HA * 10000) / (total_width * FT_TO_MM).to_i
+        total_strips = ((@field.field_area * AC_TO_HA * 10000) / (total_width * FT_TO_MM)).to_i
         buffer_area = @bmp.width / total_width 
         crop_area = @bmp.crop_width / total_width 
         if total_strips > MAX_STRIPS then total_strips = MAX_STRIPS end
