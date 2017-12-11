@@ -164,6 +164,14 @@ class FieldsController < ApplicationController
     field.soil_test = params[:field][:soil_test]
   	field.soilp = params[:field][:soilp]
     field.soil_aliminum = params[:field][:soil_aliminum]
+    fields = @project.fields.pluck(:id, :field_name)
+    fields.each do |key, value|
+      if field.id != key 
+        if field.field_name = Field.find(key).field_name
+          msg = "duplicate field name"
+        end
+      end
+    end
   	if field.save
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
@@ -195,8 +203,11 @@ class FieldsController < ApplicationController
   	    format.html { redirect_to project_field_scenarios_path(@project, field), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit", notice: msg }
-        format.json { render json: @field.errors, status: :unprocessable_entity }
+        if msg.include?("duplicate")
+          flash[:error] = "Field name already exists."
+        end
+        format.html { redirect_to project_field_soils_path(@project, field) }
+        format.json { render json: field.errors, status: :unprocessable_entity }
       end
     end
   end
