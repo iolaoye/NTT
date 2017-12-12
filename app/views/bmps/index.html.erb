@@ -84,7 +84,7 @@
             <tr>
               <td class="field indent2" id = "irrigation_efficiency" colspan="2" >
                 <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.percentage_range') %>
-                <%= number_field :bmp_ai, :irrigation_efficiency, :value => (1 - bmp.irrigation_efficiency) * 100, :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_ai, :irrigation_efficiency, :value => (1 - bmp.irrigation_efficiency) * 100, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
                 <% if bmp.irrigation_id == 1 %> <% range = "70-80%" %>
                   <% elsif bmp.irrigation_id == 2 %> <% range = "50-70%" %>
                   <% elsif bmp.irrigation_id == 3 %> <% range = "80-95%" %>
@@ -104,14 +104,14 @@
             <tr>
               <td class="indent2" colspan="2">
                 <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.percentage_range') %>
-                <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
                 <strong><a href="#" id="trigger" style="color:blue;">(?)</a></strong>
               </td>
             </tr>
             <tr>
               <td class="field indent2" id = "maximum_single_application" colspan="2" >
                <%= label :days, t('bmp.maximum_single_application') + " (" + " 1-15 in.)"%>
-               <%= number_field :bmp_ai, :maximum_single_application, :value => bmp.maximum_single_application, :min => 1, :max => 15, :class => "gvTitleStyleNumber" %>
+               <%= number_field :bmp_ai, :maximum_single_application, :value => bmp.maximum_single_application, :step => 'any', :min => 1, :max => 15, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
@@ -127,7 +127,7 @@
                 <td class="field indent2" id = "td_n_rate" colspan="2">
               <% end %>
                <%= label :days, t('operation.application_rate') + " (" + t('bmp.lbs') + "/" + t("bmp.acres") + ")"%>
-               <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :class => "gvTitleStyleNumber" %>
+               <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
                <%= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
               </td>
             </tr>
@@ -135,7 +135,7 @@
             <tr>
               <td class="field indent" id = "depth" colspan="2" >
                 <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
-                <%= number_field :bmp_td, :depth, :value => bmp.depth, :class => "gvTitleStyleNumber", :min => 0 %>
+                <%= number_field :bmp_td, :depth, :value => bmp.depth, :step => 'any', :class => "gvTitleStyleNumber", :min => 0 %>
               </td>
             </tr>
           <% when 4 %>
@@ -203,7 +203,7 @@
             <tr>
               <td class="field indent" colspan="2" id = "area" colspan="2">
                 <%= label :depth, t('pdf.area') + " (" + t('bmp.acres')  + ")"%>
-                <%= number_field :bmp_wl, :area, :value => bmp.area, :class => "gvTitleStyleNumber"%>
+                <%= number_field :bmp_wl, :area, :value => bmp.area, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
             </tr>
             <tr >
@@ -224,14 +224,14 @@
                 <% else %>
                   <% ie = 0 %>
                 <% end %>
-                <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :min => 0, :max => 100, :class => "gvTitleStyleNumber", :step => 'any' %>
+                <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
           <% when 10 %>
             <tr>
               <td class="indent" colspan="2">
                 <%= label :depth, t('operation.animals')  %>
-                <%= number_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals, :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
@@ -239,7 +239,7 @@
                 <%= label :days, t('bmp.stream_fencing_frequency') + " " + t('bmp.days_range') %>
                 <%= number_field :bmp_sf, :days, :value => bmp.days, :style=>"width:50px", :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
                   <%= label :hours, t('bmp.hours') + " " + t('bmp.hours_range') %>
-                <%= number_field :bmp_sf, :hours, :value => bmp.hours, :style=>"width:50px", :min => 0, :max => 24, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_sf, :hours, :value => bmp.hours, :style=>"width:50px", :step => '0.1', :min => 0, :max => 24, :class => "gvTitleStyleNumber" %>
                 </td>
             </tr>
             <tr>
@@ -259,31 +259,31 @@
             <tr>
               <td class="indent2" colspan="2">
               <%= label :dry_manure, t('bmp.dry_manure') + " (" + t('bmp.lbs')  + ")"%>
-              <%= number_field :bmp_sf, :dry_manure, :value => bmp.dry_manure, :step => 'any', :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_sf, :dry_manure, :value => bmp.dry_manure, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent2" colspan="2">
               <%= label :no3_n, t('bmp.no3_n_html') + " " + t('bmp.zero_to_one') %>
-              <%= number_field :bmp_sf, :no3_n, :value => bmp.no3_n, :step => 'any', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_sf, :no3_n, :value => bmp.no3_n, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent2" colspan="2">
               <%= label :po4_p, t('bmp.po4_p_html') + " " + t('bmp.zero_to_one') %>
-              <%= number_field :bmp_sf, :po4_p, :value => bmp.po4_p, :step => 'any', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_sf, :po4_p, :value => bmp.po4_p, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent2" colspan="2">
               <%= label :org_n, t('bmp.org_n_html') + " " + t('bmp.zero_to_one') %>
-              <%= number_field :bmp_sf, :org_n, :value => bmp.org_n, :step => 'any', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_sf, :org_n, :value => bmp.org_n, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent2" colspan="2">
               <%= label :org_p, t('bmp.org_p_html') + " " + t('bmp.zero_to_one') %>
-              <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :step => 'any', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
           <% when 13 %>
@@ -315,20 +315,20 @@
             <tr>
               <td class="indent2" colspan="2">
                 <%= t('pdf.area') + " (" + t('bmp.acres') + ")"%>
-                <%= number_field :bmp_fs, :area, :value => bmp.area, :class => "gvTitleStyleNumber", :min => "0", :step => "any" %>
+                <%= number_field :bmp_fs, :area, :value => bmp.area, :step => 'any', :class => "gvTitleStyleNumber", :min => "0" %>
                 <%= label :area, " (" + t('general.optional') + ")", :style => "color:blue" %>
                 </td>
             </tr>
             <tr>
               <td class="indent2" colspan="2">
                 <%= t('pdf.filter_strip').sub('Buffer', 'Strip') + " " + t('bmp.width') + " (" + t('bmp.ft') + ")" %>
-                <%= number_field :bmp_fs, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_fs, :width, :value => bmp.width, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr id = "tr_grass_field_portion" <%= "style=display:none" if bmp.depth == 13%>>
               <td class="indent2" colspan="2">
                 <%= t('pdf.riparian_forest').sub('Buffer', 'Strip') + " " + t('bmp.width') + " (" + t('bmp.ft') + ")" %>
-                <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_fs, :grass_field_portion, :value => bmp.grass_field_portion, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr style='display:none'>
@@ -368,7 +368,7 @@
             <tr>
               <td class="indent" colspan="2">
                 <%= t('bmp.width') + " (" + t('bmp.ft') + ")" %>
-                <%= number_field :bmp_ww, :width, :value => bmp.width, :min => 0, :step => '0.01', :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_ww, :width, :value => bmp.width, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
@@ -391,20 +391,20 @@
             <tr>
               <td class="indent" colspan="2">
                 <%= t('bmp.buffer_width') + " (" + t('bmp.ft') + ")" %>
-                <%= number_field :bmp_cb, :width, :value => bmp.width, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_cb, :width, :value => bmp.width, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent" colspan="2">
                 <%= t('bmp.crop_width') + " (" + t('bmp.ft') + ")"%>
-                <%= number_field :bmp_cb, :crop_width, :value => bmp.crop_width, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_cb, :crop_width, :value => bmp.crop_width, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
           <% when 16 %>
             <tr>
             <td class="indent" colspan="2">
               <%= t('bmp.slope_reduction') + " " + t('bmp.percentage_range') %>
-              <%= number_field :bmp_ll, :slope_reduction, :value => bmp.slope_reduction, :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_ll, :slope_reduction, :value => bmp.slope_reduction, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
           <% when 17 %>
