@@ -30,7 +30,7 @@
         <td><%= issue.created_at %></td>
         <td><%= issue.expected_data %></td>
         <td><%= issue.close_date %></td>
-        <% if issue.status.id == 1 %>
+        <% if issue.status.id == 2 %>
           <td><font color="green"><%= issue.status.name %></font></td> 
         <% else %>
           <td ><font color="red"><%= issue.status.name %></font></td>
