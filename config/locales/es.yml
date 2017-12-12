@@ -547,6 +547,7 @@ es:
     scenario_name: Nombre Escenario
     scenario: Escenario
     simulate: Simular
+    add_crop_rotation: needs a crop rotation for a successful simulation.
     operation: Operación
     create_scenario: Crear Escenario
     select_scenario: Seleccione Escenario
