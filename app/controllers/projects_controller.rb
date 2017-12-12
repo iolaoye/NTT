@@ -116,8 +116,8 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, info: t('models.project') + "" + t('notices.created') }
         format.json { render json: @project, status: :created, location: @project }
       else
-        flash[:info]=""
-        flash[:notice] = t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+        flash[:info]= t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+        flash[:error] = ""
         format.html { redirect_to user_projects_path(session[:user_id]) }
         #format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -219,31 +219,31 @@ class ProjectsController < ApplicationController
       end
       @data.root.elements.each do |node|
         case node.name
-          when "project"
-            msg = upload_project_new_version(node)
-          when "location"
-            msg = upload_location_new_version(node)
-          when "StartInfo"
-            msg = upload_project_info(node)
-          when "FarmInfo"
-            msg = upload_location_info1(node)
-          when "FieldInfo"
-            msg = upload_field_info(node)
-      msg = renumber_subareas()
-          when "SiteInfo"
-            msg = upload_site_info(node)
-          when "controls"
-      node.elements.each do |c|
-        msg = upload_control_values_new_version(c)
-      end
-          when "ControlValues"
-            msg = upload_control_values(node)
-          when "ParmValues"
-            msg = upload_parameter_values(node)
-          when "parameters"
-      node.elements.each do |c|
-        msg = upload_parameter_values_new_version(c)
-      end
+        when "project"
+          msg = upload_project_new_version(node)
+        when "location"
+          msg = upload_location_new_version(node)
+        when "StartInfo"
+          msg = upload_project_info(node)
+        when "FarmInfo"
+          msg = upload_location_info1(node)
+        when "FieldInfo"
+          msg = upload_field_info(node)
+          msg = renumber_subareas()
+        when "SiteInfo"
+          msg = upload_site_info(node)
+        when "controls"
+          node.elements.each do |c|
+            msg = upload_control_values_new_version(c)
+          end
+        when "ControlValues"
+          msg = upload_control_values(node)
+        when "ParmValues"
+          msg = upload_parameter_values(node)
+        when "parameters"
+          node.elements.each do |c|
+            msg = upload_parameter_values_new_version(c)
+          end
         end
         break if (msg != "OK" && msg != true)
       end
@@ -841,7 +841,7 @@ class ProjectsController < ApplicationController
           save_watershed_scenario_information(xml, wss)
         end # end scenarios each
       } # end scenarios
-    
+
     results = Result.where(:watershed_id => watershed.id)
       xml.results {
         results.each do |result|
@@ -881,7 +881,7 @@ class ProjectsController < ApplicationController
 
   def sort_column
     case params[:column]
-      when "Project Name" 
+      when "Project Name"
         return "Name"
       when "Last Modified"
         return "updated_at"
@@ -2189,52 +2189,52 @@ class ProjectsController < ApplicationController
     apex_till_code = 0
     node.elements.each do |p|
       case p.name
-        when "EventId" #use to take the event id to be able to match this operation with the operations in scenarios
-          #look for the same opeerations in in the SoilOperation table to add the operation id
-          event_id = p.text
-        when "ApexOpAbbreviation"
-          operation.activity_id = Activity.find_by_abbreviation(p.text.strip).id
-        when "Year"
-          operation.year = p.text
-        when "Month"
-          operation.month_id = p.text
-        when "Day"
-          operation.day = p.text
-        when "ApexCrop"
-          operation.crop_id = Crop.find_by_number(p.text).id
-        when "NO3"
-          operation.no3_n = p.text
-        when "PO4"
-          operation.po4_p = p.text
-        when "OrgN"
-          operation.org_n = p.text
-        when "OrgP"
-          operation.org_p = p.text
-        when "ApexOpv1"
-          operation.amount = p.text
-      if operation.activity_id == 1 then (operation.amount /= AC_TO_FT2).round(2) end
-        when "ApexOpv2"
-          operation.depth = p.text
-        when "ApexTillCode"
-          apex_till_code = p.text.to_i
-        when "ApexTillName"
-          case operation.activity_id
-            when 1 #planting
-              operation.type_id = apex_till_code
-      when 3 #tillage
-              operation.type_id = apex_till_code
-            when 2 # fertilizer
-              if p.text == "Commercial Fertilizer"
-                operation.type_id = 1
-                operation.subtype_id = 1
-              else
-                operation.type_id = 2
-                operation.subtype_id = 56
-              end
-      when 7  # Grazing
-        operation.type_id = Fertilizer.find_by_name(p.text.upcase).code
-          end # end case p.text
-      end # case
+      when "EventId" #use to take the event id to be able to match this operation with the operations in scenarios
+        #look for the same opeerations in in the SoilOperation table to add the operation id
+        event_id = p.text
+      when "ApexOpAbbreviation"
+        operation.activity_id = Activity.find_by_abbreviation(p.text.strip).id
+      when "Year"
+        operation.year = p.text
+      when "Month"
+        operation.month_id = p.text
+      when "Day"
+        operation.day = p.text
+      when "ApexCrop"
+        operation.crop_id = Crop.find_by_number(p.text).id
+      when "NO3"
+        operation.no3_n = p.text.to_f * 100
+      when "PO4"
+        operation.po4_p = p.text.to_f * 100
+      when "OrgN"
+        operation.org_n = p.text.to_f * 100
+      when "OrgP"
+        operation.org_p = p.text.to_f * 100
+      when "ApexOpv1"
+        operation.amount = p.text
+        if operation.activity_id == 1 then (operation.amount /= AC_TO_FT2).round(2) end
+      when "ApexOpv2"
+        operation.depth = p.text
+      when "ApexTillCode"
+        apex_till_code = p.text.to_i
+      when "ApexTillName"
+        case operation.activity_id
+        when 1 #planting
+          operation.type_id = apex_till_code
+        when 3 #tillage
+            operation.type_id = apex_till_code
+        when 2 # fertilizer
+          if p.text == "Commercial Fertilizer"
+            operation.type_id = 1
+            operation.subtype_id = 1
+          else
+            operation.type_id = 2
+            operation.subtype_id = 56
+          end  # end if p.text
+        when 7  # Grazing
+          operation.type_id = Fertilizer.find_by_name(p.text.upcase).code
+        end # end activity_id
+      end # case p.name
     end # end each
     if operation.save then
       soils = Soil.where(:field_id => field_id)
@@ -2359,10 +2359,14 @@ class ProjectsController < ApplicationController
   def upload_result_info(node, field_id, soil_id, scenario_id)
     node.elements.each do |p|
       case p.name
-        when "Crops"
-          upload_crop_soil_result_info(p, field_id, soil_id, scenario_id)
-        when "Soil"
-          upload_soil_result_info(p, field_id, soil_id, scenario_id)
+      when "Crops"
+        upload_crop_soil_result_info(p, field_id, soil_id, scenario_id)
+      when "Soil"
+        upload_soil_result_info(p, field_id, soil_id, scenario_id)
+      when "lastSimulation"
+        sc = Scenario.find(scenario_id)
+        sc.last_simulation = p.text
+        sc.save
       end # end case p.name
     end # end node.elements.each
   end
@@ -2372,22 +2376,22 @@ class ProjectsController < ApplicationController
     result = Result.new
     result.scenario_id = scenario_id
     result.watershed_id = watershed_id
-  result.field_id = field_id
+    result.field_id = field_id
     new_result.elements.each do |p|
       case p.name
-        when "value"
-          result.value = p.text
-        when "ci_value"
-          result.ci_value = p.text
-        when "description_id"
-          result.description_id = p.text
-    when "soil_id"
-      if p.text == "0"
-        result.soil_id = 0
-      else
-        result.soil_id = Soil.find_by_soil_id_old(p.text).id
-      end
-    when "crop_id"
+      when "value"
+        result.value = p.text
+      when "ci_value"
+        result.ci_value = p.text
+      when "description_id"
+        result.description_id = p.text
+      when "soil_id"
+        if p.text == "0"
+          result.soil_id = 0
+        else
+          result.soil_id = Soil.find_by_soil_id_old(p.text).id
+        end
+      when "crop_id"
         result.crop_id = p.text
       end # end case
     end # end each
@@ -2401,106 +2405,106 @@ class ProjectsController < ApplicationController
   def upload_soil_result_info(node, field_id, soil_id, scenario_id)
     #tile drain flow is duplicated in the old version NTTG2 VB. So is needed to control that the second one is not used
     tile_drain = false
-  total_n = 0
-  total_n_ci = 0
-  total_p = 0
-  total_p_ci = 0
-  total_runoff = 0
-  total_runoff_ci = 0
-  total_other_water = 0
-  total_other_water_ci = 0
-  total_sediment = 0
-  total_sediment_ci = 0
+    total_n = 0
+    total_n_ci = 0
+    total_p = 0
+    total_p_ci = 0
+    total_runoff = 0
+    total_runoff_ci = 0
+    total_other_water = 0
+    total_other_water_ci = 0
+    total_sediment = 0
+    total_sediment_ci = 0
     node.elements.each do |p|
       case p.name
         when "OrgN"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 21)
-      total_n = total_n + @result.value
+          total_n = total_n + @result.value
         when "OrgNCI"
           @result.ci_value = p.text
           @result.save
-      total_n_ci = total_n_ci + @result.ci_value
+          total_n_ci = total_n_ci + @result.ci_value
         when "runoffN"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 22)
-      total_n = total_n + @result.value
+          total_n = total_n + @result.value
         when "runoffNCI"
           @result.ci_value = p.text
           @result.save
-      total_n_ci = total_n_ci + @result.ci_value
+          total_n_ci = total_n_ci + @result.ci_value
         when "subsurfaceN"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 23)
-      total_n = total_n + @result.value
+          total_n = total_n + @result.value
         when "subsurfaceNCI"
           @result.ci_value = p.text
           @result.save
-      total_n_ci = total_n_ci + @result.ci_value
+          total_n_ci = total_n_ci + @result.ci_value
         when "OrgP"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 31)
-      total_p = total_p + @result.value
+          total_p = total_p + @result.value
         when "OrgPCI"
           @result.ci_value = p.text
           @result.save
-      total_p_ci = total_p_ci + @result.ci_value
+          total_p_ci = total_p_ci + @result.ci_value
         when "PO4"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 32)
-      total_p = total_p + @result.value
+          total_p = total_p + @result.value
         when "PO4CI"
           @result.ci_value = p.text
           @result.save
-      total_p_ci = total_p_ci + @result.ci_value
+          total_p_ci = total_p_ci + @result.ci_value
         when "runoff"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 41)
-      total_runoff = total_runoff + @result.value
+         total_runoff = total_runoff + @result.value
         when "runoffCI"
           @result.ci_value = p.text
           @result.save
-      total_runoff_ci = total_runoff_ci + @result.ci_value
+          total_runoff_ci = total_runoff_ci + @result.ci_value
         when "subsurfaceFlow"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 42)
-      total_runoff = total_runoff + @result.value
+          total_runoff = total_runoff + @result.value
         when "subsurfaceFlowCI"
           @result.ci_value = p.text
           @result.save
-      total_runoff_ci = total_runoff_ci + @result.ci_value
+          total_runoff_ci = total_runoff_ci + @result.ci_value
         when "tileDrainFlow"
           if tile_drain == false then
             @result = add_result(field_id, soil_id, scenario_id, p.text, 43)
-        total_runoff = total_runoff + @result.value
+            total_runoff = total_runoff + @result.value
           end
         when "tileDrainFlowCI"
           if tile_drain == false then
             tile_drain = true
             @result.ci_value = p.text
             @result.save
-        total_runoff_ci = total_runoff_ci + @result.ci_value
+            total_runoff_ci = total_runoff_ci + @result.ci_value
           end
         when "irrigation"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 51)
-      total_other_water = total_other_water + @result.value
+          total_other_water = total_other_water + @result.value
         when "irrigationCI"
           @result.ci_value = p.text
           @result.save
-      total_other_water_ci = total_other_water_ci + @result.value
+          total_other_water_ci = total_other_water_ci + @result.value
         when "deepPerFlow"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 52)
-      total_other_water = total_other_water + @result.value
+          total_other_water = total_other_water + @result.value
         when "deepPerFlowCI"
           @result.ci_value = p.text
           @result.save
-      total_other_water_ci = total_other_water_ci + @result.ci_value
+          total_other_water_ci = total_other_water_ci + @result.ci_value
         when "Sediment"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 61)
-      total_sediment = total_sediment + @result.value
+          total_sediment = total_sediment + @result.value
         when "SedimentCI"
           @result.ci_value = p.text
           @result.save
-      total_sediment_ci = total_sediment_ci + @result.ci_value
+          total_sediment_ci = total_sediment_ci + @result.ci_value
           #add manure. It is not in the old version projects
           @result = add_result(field_id, soil_id, scenario_id, 0, 62)
-      total_sediment = total_sediment + @result.value
+          total_sediment = total_sediment + @result.value
           @result.ci_value = 0
           @result.save
-      total_sediment_ci = total_sediment_ci + @result.ci_value
+          total_sediment_ci = total_sediment_ci + @result.ci_value
         when "Manure" # just in case this exist in some projects the values for manuer (62) are updated
           @result = Result.where(:field_id => field_id, :soil_id => soil_id, :scenario_id => scenario_id, description_id => 62)
           if @result != nil then
@@ -2513,18 +2517,18 @@ class ProjectsController < ApplicationController
           end
         when "tileDrainN"
           @result = add_result(field_id, soil_id, scenario_id, p.text, 24)
-      total_n = total_n + @result.value
+          total_n = total_n + @result.value
         when "tileDrainP"
           @result1 = add_result(field_id, soil_id, scenario_id, p.text, 33)
-      total_p = total_p + @result1.value
+          total_p = total_p + @result1.value
         when "tileDrainNCI"
           @result.ci_value = p.text
           @result.save
-      total_n_ci = total_n_ci + @result.value
+          total_n_ci = total_n_ci + @result.value
         when "tileDrainPCI"
           @result1.ci_value = p.text
           @result1.save
-      total_p_ci = total_p_ci + @result1.ci_value
+          total_p_ci = total_p_ci + @result1.ci_value
         when "annualFlow"
           upload_chart_info(p, field_id, 0, scenario_id, 41)
         when "annualNO3"
