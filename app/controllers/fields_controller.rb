@@ -167,7 +167,7 @@ class FieldsController < ApplicationController
     fields = @project.fields.pluck(:id, :field_name)
     fields.each do |key, value|
       if field.id != key 
-        if field.field_name = Field.find(key).field_name
+        if field.field_name == Field.find(key).field_name
           msg = "duplicate field name"
         end
       end
