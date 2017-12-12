@@ -30,7 +30,11 @@
         <td><%= issue.created_at %></td>
         <td><%= issue.expected_data %></td>
         <td><%= issue.close_date %></td>
-        <td><%= issue.status.name %></td>
+        <% if issue.status.id == 1 %>
+          <td><font color="green"><%= issue.status.name %></font></td> 
+        <% else %>
+          <td ><font color="red"><%= issue.status.name %></font></td>
+        <% end %>
         <% if session[:dev] %>
           <td><%= issue.user.name %></td>
         <% end %>
