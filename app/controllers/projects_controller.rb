@@ -2367,7 +2367,6 @@ class ProjectsController < ApplicationController
         sc = Scenario.find(scenario_id)
         sc.last_simulation = p.text
         sc.save
-                debugger
       end # end case p.name
     end # end node.elements.each
   end
