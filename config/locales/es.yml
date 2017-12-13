@@ -294,6 +294,7 @@ es:
     deleted: " ha sido borrado/a."
     updated: " fue actualizado/a satisfactoriamente."
     created: " fue creado correctamente."
+    multiple_created: " creado correctamente."
     copied: copiado exitosamente.
     uploaded: " se ha subido/a."
     downloaded: " ha sido descargado/a."
