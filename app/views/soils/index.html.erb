@@ -4,10 +4,10 @@
 		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 		<%= notice %>
 	  </div>
-	<% when flash[:info] %>
+	<% when flash[:error] %>
 	  <div class="flash_alert">
 		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-		<%= flash[:info] %>
+		<%= flash[:error] %>
 	  </div>
 <% end %>
 
@@ -35,7 +35,7 @@
 			</div>
 			<div class="field" title="">
 				<%= t('soil.soilp') %>
-				<%= f.number_field :soilp, :class => 'gvTitleStyleNumber', :step => "any" %>
+				<%= f.number_field :soilp, :class => 'gvTitleStyleNumber', :step => "0.01", :min => 0 %>
 			</div>
 		<% end %>
 		<div class="table-responsive">
@@ -53,7 +53,7 @@
 					<%end%>
 					<th class="gvTitleStyleNumber"><%= t('soil.percentage') %></th>
 					<% if ENV["APP_VERSION"] == "standard" %>
-					<th class="gvCellStyleTitle"><%= t('general.actions') %></th> 
+					<th class="gvCellStyleTitle"><%= t('general.actions') %></th>
 					<% end %>
 				</tr>
 				</thead>
@@ -69,7 +69,7 @@
 						<td class="gvCellStyleText"><%= soil.group %></td>
 						<td class="gvTitleStyleNumber"><%= soil.slope %></td>
 						<% if ENV["APP_VERSION"] == "modified" %>
-							<td class="gvCellStyleNumber"><%= text_field_tag "om[]", soil.id, :value=>soil.layers.first.organic_matter, :class => 'numbers', :step => "any" %></td>
+							<td class="gvCellStyleNumber"><%= number_field_tag "om[]", soil.id, :value=>soil.layers.first.organic_matter, :min => 0, :class => 'numbers', :step => "any" %></td>
 						<% else %>
 							<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
 						<% end %>

@@ -1,10 +1,9 @@
 <% if notice != nil %>
     <div class="success_alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= notice %>
+      <%= flash[:info] = "Field was successfully created." %>
     </div>
 <% end %>
-
 <div class="page-header"><h1><%= t('field.field_title') %></h1></div>
 <%#= button_to t('field.create_field'), new_field_path, :method => "get", :class => "btn btn-primary" %>
 <%#= button_to t('submit.continue'), field_scenarios_field_path, :method => "get", :class => "btn btn-success" %>
@@ -16,7 +15,7 @@
 			<thead>
 			<tr>
 				<th><%= t('field.field_name')%></th>
-				<th class="gvTitleStyleNumber"><%= t('field.field_area')%></th>
+				<th class="gvTitleStyleNumber"><%= t('field.field_area') + " (ac)"%></th>
 				<!-- <th class="gvTitleStyleNumber"><%= t('field.field_avg_slope')%></th> -->
 				<th><%#= t('field.field_type')%></th>
 				<th><%= t('general.actions')%></th>

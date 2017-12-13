@@ -94,6 +94,10 @@ class ScenariosController < ApplicationController
     ActiveRecord::Base.transaction do
 	  params[:select_scenario].each do |scenario_id|
 		  @scenario = Scenario.find(scenario_id)
+		  if @scenario.operations.count <= 0 then
+		  	@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+		  	return
+		  end
 		  msg = run_scenario
 		  unless msg.eql?("OK")
 			@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
@@ -237,8 +241,12 @@ class ScenariosController < ApplicationController
 		  @scenario = Scenario.find(scenario_id)
 		  msg = run_aplcat
 		  unless msg.eql?("OK")
+			if msg.include?('cannot be null')
+		  	  @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+		  	else
 			  @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-			  raise ActiveRecord::Rollback
+			end
+			raise ActiveRecord::Rollback
 	      end # end if msg
       end # end each do params loop
 	end

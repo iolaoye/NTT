@@ -549,6 +549,7 @@ en:
     scenario_name: Scenario Name
     scenario: Scenario
     simulate: Simulate
+    add_crop_rotation: needs a crop rotation for a successful simulation.
     operation: Operation
     create_scenario: Create Scenario
     select_scenario: Select Scenario
@@ -661,7 +662,7 @@ en:
     p_c: Pump Capacity
     latksatf: Multiplication factor to determine lateral ksat
     crop: Crop
-    water_stress_factor: Water stress factor
+    water_stress_factor: Plant Water stress factor
     irrigation_efficiency: Irrigation efficiency
     area_control: Percentage of field area controled by pond
     maximum_single_application: Maximum single application
@@ -987,7 +988,7 @@ en:
     bmp_info: Best Management Practices (BMPs) Information
     autoirrigation: Autoirrigation
     irrigation: Irrigation
-    water_stress_factor: Water stress factor
+    water_stress_factor: Plant Water stress factor
     irrigation_efficiency: Irrigation efficiency
     max_single_application: Maximum single application
     safety_factor: Safety factor
@@ -1615,7 +1616,7 @@ en:
                 header: 'Auto Irrigation:'
                 body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
                 item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
-                item2: '<strong>Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
+                item2: '<strong>Plant Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The plant water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
                 item3: '<strong>Irrigation Efficiency:</strong> This value is the fraction of irrigation application that is not lost to runoff. This must be a value that is greater than 0 and less than or equal to 1. The closer the value is to 0, the greater the percentage of water lost to runoff. The closer the value is to 0, the less that percentage. A value of 1 means that no water was lost to runoff.'
                 item4: '<strong>Frequency:</strong> Frequency is the days in between which auto irrigation takes place (if the value is 1, this means that there is auto irrigation every day; two means every other day; three means every three days; etc.) The value can be any whole number greater than zero and less than or equal to 365.'
                 item5: '<strong>Maximum Single Application:</strong> This value signifies the amount of water than can be applied in a single day. It is in inches, and it can be any number greater than 0. However, it is set to a default value of 3.'
@@ -1907,7 +1908,7 @@ en:
         item1: '<strong>Irrigation Type:</strong> Irrigation types include sprinkler, furrow/flood, drip, and furrow diking.'
         item2: '<strong>Irrigation Efficiency:</strong> This value is the fraction of irrigation application that is not lost to runoff. This must be a value that is greater than 0 and less than or equal to 1. The closer the value is to 0, the greater the percentage of water lost to runoff and does not reach the crop. A value of 1 means that no water was lost to runoff. Different irrigation systems have different irrigation efficiencies. NTT supplies typical irrigation efficiency values for the irrigation type selected, but these values can be modified by the user.'
         item3: '<strong>Irrigate a Maximum of every (0-365) days:</strong> This field is asking for the maximum frequency (in days) that irrigation can take place. If the frequency is set to 1, then irrigation can occur every day. If frequency is set to 7 then irrigation can occur, at most, once a week. The value can be any whole number greater than or equal to zero and less than or equal to 365.'
-        item4: '<strong>Water Stress Factor:</strong> The water stress factor indicates the water stress level of the crop. This is the value that is used to trigger the start of auto irrigation. For example, if water stress is set to 0.8 then NTT will trigger an irrigation event when the crop is 80% water-stressed, as long as conditions for maximum frequency are also met. The water stress factor can be any value greater than 0 and less than or equal to 1. The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on.'
+        item4: '<strong>Water Stress Factor:</strong> The water stress factor indicates the water stress level of the crop. This is the value that is used to trigger the start of auto irrigation. For example, if water stress is set to 0.8 then NTT will trigger an irrigation event when the crop is 80% water-stressed, as long as conditions for maximum frequency are also met. The plant water stress factor can be any value greater than 0 and less than or equal to 1. The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on.'
         item5: '<strong>Maximum Single Application:</strong> This value signifies the maximum amount of water than can be applied in a single irrigation event. It is in inches, and it can be any number greater than 0. If there are no constraints on the maximum single application, this value should be set to a high number.'
         body2: Autofertigation
         body3: 'Autofertigation is the application of fertilizers, soil amendments, or other water-soluble products through an autoirrigation system. Autofertigation is an automatic fertilization process in which fertilizer is dissolved and distributed through the irrigation system. This makes autofertigation very similar to autoirrigation with the only additional user input required being nitrogen concentration.'
