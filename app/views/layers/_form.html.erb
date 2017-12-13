@@ -27,14 +27,14 @@
     <%= f.label :soil_p_initial, t('soil.soilp') %>
     <%= f.number_field :soil_p_initial, :class => 'gvTitleStyleNumber', :step => "0.01", :min => 0 %>
   </div>
-  <div class="field" style="display:none;">
+  <!--<div class="field" style="display:none;">
     <%= f.label :soil_p, t('soil.soilp') %>
 	<%# if @layer.depth > 3.95 %>
 		<%#= f.number_field :soil_p, :class => 'gvTitleStyleNumber', min: 0, :step => 'any', :disabled => 'disabled'%>
 	<%# else %>
 		<%= f.number_field :soil_p, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
 	<%# end %>
-  </div>
+  </div>-->
   <div class="field">
     <%= f.label :bulk_density, t('soil.bulk_density') %>
     <%= f.number_field :bulk_density, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>

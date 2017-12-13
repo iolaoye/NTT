@@ -134,7 +134,7 @@ class LayersController < ApplicationController
           params[:layer][:soil_p] = 0 
         elsif !params[:layer][:soil_p_initial].blank?
           if soil_test.id == 7 then
-            params[:layer][:soil_p] = soil_test.factor2 * params[:layer][:soil_p_initial] - soil_test.factor1 * params[:layer][:ph] - 32.757 * (params[:layer][:soil_aluminum]) + 90.73
+            params[:layer][:soil_p] = soil_test.factor2 * params[:layer][:soil_p_initial].to_f - soil_test.factor1 * params[:layer][:ph].to_f - 32.757 * (params[:layer][:soil_aluminum].to_f) + 90.73
           else
             params[:layer][:soil_p] = soil_test.factor1 + soil_test.factor2 * params[:layer][:soil_p_initial].to_f
           end
