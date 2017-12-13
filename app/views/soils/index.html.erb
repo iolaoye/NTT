@@ -4,10 +4,10 @@
 		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 		<%= notice %>
 	  </div>
-	<% when flash[:info] %>
+	<% when flash[:error] %>
 	  <div class="flash_alert">
 		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-		<%= flash[:info] %>
+		<%= flash[:error] %>
 	  </div>
 <% end %>
 

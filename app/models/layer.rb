@@ -10,6 +10,7 @@ class Layer < ActiveRecord::Base
 	validates_presence_of :depth
 	validates_presence_of :clay
 	validate :sum
+  validates :depth, numericality: { greater_than: 0 }
   #Intialization
     after_initialize :init
   #Functions
