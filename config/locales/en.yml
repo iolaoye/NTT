@@ -510,7 +510,7 @@ en:
     final_simulation_error: must not be greater than the final year of weather information. Maximum value is
     update_simulation: Update Simulation Period
   soil:
-    test: Soil Test
+    test: Soil P Test
     layers: Layers
     soil: Soil
     layer: Layer

@@ -493,6 +493,7 @@ class BmpsController < ApplicationController
             subarea.bir = params[:bmp_ai][:water_stress_factor]
 			      subarea.bir /= 100
 			      @bmp.water_stress_factor = subarea.bir
+            if subarea.bir >= 1 then subarea.bir = 0.99 end
             subarea.efi = 1.0 - (params[:bmp_ai][:irrigation_efficiency].to_f / 100)
 			      @bmp.irrigation_efficiency = subarea.efi
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
