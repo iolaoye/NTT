@@ -511,6 +511,7 @@ es:
     final_simulation_error: no debe ser mayor que el último año de información meteorológica. El valor máximo es
     update_simulation: Actualizar Período de Simulación
   soil:
+    test: P en pruueba del suelo
     layers: Capas
     soil: Suelo
     layer: Capa
