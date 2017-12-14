@@ -247,3 +247,6 @@ Schedule.create!({:id => 281,:event_order => 1,:month => 3,:day => 5,:year => 1,
 Schedule.create!({:id => 282,:event_order => 2,:month => 6,:day => 15,:year => 1,:activity_id => 2,:apex_operation => 580,:apex_crop => 166,:apex_fertilizer => 1,:apex_opv1 => 60.0,:apex_opv2 => 0.0,:crop_schedule_id => 48}, :without_protection => true)
 Schedule.create!({:id => 283,:event_order => 3,:month => 6,:day => 15,:year => 1,:activity_id => 2,:apex_operation => 580,:apex_crop => 166,:apex_fertilizer => 2,:apex_opv1 => 25.0,:apex_opv2 => 0.0,:crop_schedule_id => 48}, :without_protection => true)
 Schedule.create!({:id => 284,:event_order => 4,:month => 10,:day => 1,:year => 1,:activity_id => 4,:apex_operation => 623,:apex_crop => 166,:apex_fertilizer => 0,:apex_opv1 => 0.0,:apex_opv2 => 0.0,:crop_schedule_id => 48}, :without_protection => true)
+Schedule.create!({:id => 285,:event_order => 1,:month => 1,:day => 1,:year => 1,:activity_id => 1,:apex_operation => 132,:apex_crop => 36,:apex_fertilizer => 0,:apex_opv1 => 0.0,:apex_opv2 => 0.0,:crop_schedule_id => 58}, :without_protection => true)
+
+
