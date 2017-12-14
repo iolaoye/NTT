@@ -174,7 +174,7 @@ class SoilsController < ApplicationController
     data.each do |soil|
       #todo check for erros to soils level as well as layers level.
     #for j in 1..params["field#{i}soils"].to_i
-      if soil[0] == "soils" then
+      if soil[0] == "soils" || soil[1]["lay_number"] == 0 then
         next
       end #
       @soil = @field.soils.new

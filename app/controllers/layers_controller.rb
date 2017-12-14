@@ -127,8 +127,19 @@ class LayersController < ApplicationController
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     @soil = Soil.find(params[:soil_id])
-
     respond_to do |format|
+      if layer_params
+        soil_test = SoilTest.find(params[:layer][:soil_test_id])
+        if params[:layer][:soil_p_initial].blank? 
+          params[:layer][:soil_p] = 0 
+        elsif !params[:layer][:soil_p_initial].blank?
+          if soil_test.id == 7 then
+            params[:layer][:soil_p] = soil_test.factor2 * params[:layer][:soil_p_initial].to_f - soil_test.factor1 * params[:layer][:ph].to_f - 32.757 * (params[:layer][:soil_aluminum].to_f) + 90.73
+          else
+            params[:layer][:soil_p] = soil_test.factor1 + soil_test.factor2 * params[:layer][:soil_p_initial].to_f
+          end
+        end
+      end
       if @layer.update_attributes(layer_params)
         #if params[:add_more] == "Save" && params[:finish] == nil
           format.html { redirect_to project_field_soil_layers_path(@project, @field, @soil), notice: t('models.layer') + "" + t('notices.updated') }
@@ -166,6 +177,7 @@ class LayersController < ApplicationController
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def layer_params
     params.require(:layer).permit(:bulk_density, :clay, :depth, :organic_matter, :ph, :sand, :silt, :soil_id, :soil_p,
-                                  :uw, :fc, :wn, :smb, :cac, :cec, :rok, :cnds, :rsd, :bdd, :psp, :satc, :id, :created_at, :updated_at)
+                                  :uw, :fc, :wn, :smb, :cac, :cec, :rok, :cnds, :rsd, :bdd, :psp, :satc, :id, :soil_test_id,
+                                  :soil_p_initial, :soil_aluminum, :created_at, :updated_at)
   end
 end
