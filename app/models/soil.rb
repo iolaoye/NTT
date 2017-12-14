@@ -11,6 +11,7 @@ class Soil < ActiveRecord::Base
      validates_presence_of :key, :group, :name, :slope
      validates :albedo, numericality: { greater_than_or_equal_to: 0 }
      validates :slope, numericality: { greater_than: 0 }
+     validates_format_of :group, :with => /\A([a-dA-d]\/[a-dA-d]{1}|[a-dA-d]{1})\z/
   #scopes
     default_scope { order("percentage DESC") }
 end
