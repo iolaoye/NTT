@@ -106,15 +106,15 @@
     </div></td>
     <td><div class="field">
         <b><%= f.label :chd %></b><br>
-        <%= f.number_field :chd, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :chd, :class => "fieldNumbers", :min => 0, :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :chs %></b><br>
-        <%= f.number_field :chs, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :chs, :class => "fieldNumbers", :min => 0, :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :chn %></b><br>
-        <%= f.number_field :chn, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :chn, :class => "fieldNumbers", :min => 0, :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :slp %></b><br>
@@ -126,22 +126,22 @@
     </div></td>
     <td><div class="field">
         <b><%= f.label :upn %></b><br>
-        <%= f.number_field :upn, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :upn, :class => "fieldNumbers", :min => 0, :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :ffpq %></b><br>
-        <%= f.number_field :ffpq, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :ffpq, :class => "fieldNumbers", :min => 0, :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :urbf %></b><br>
-        <%= f.number_field :urbf, :class => "fieldNumbers", :min => 0 %>
+        <%= f.number_field :urbf, :class => "fieldNumbers", :min => 0 , :step => 'any'%>
     </div></td>
 	<td></td>
   </tr>
   <tr class='gvRowStyleOdd'>
     <td><div class="field">
         <b><%= f.label :rchl %></b><br>
-        <%= f.number_field :rchl, :class => "fieldNumbers", :value => (number_with_precision(f.object.rchl, :precision => 4) || 0), :step => '0.0001' %>
+        <%= f.number_field :rchl, :class => "fieldNumbers", :value => (number_with_precision(f.object.rchl, :precision => 4) || 0), :step => 'any' %>
     </div></td>
     <td><div class="field">
         <b><%= f.label :rchd %></b><br>
