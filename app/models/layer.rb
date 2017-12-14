@@ -5,10 +5,16 @@ class Layer < ActiveRecord::Base
   #scopes
     default_scope {order("depth ASC")}
   #validation
-	validates_presence_of :sand
-	validates_presence_of :silt
-	validates_presence_of :depth
-	validates_presence_of :clay
+	validates_presence_of :sand, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 100 }
+	validates_presence_of :silt, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 100 }
+	validates_presence_of :depth, numericality: { greater_than: 0 }
+	validates_presence_of :clay, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 100 }
+  validates_presence_of :soil_test_id
+  validates_presence_of :soil_p_initial, numericality: { greater_than_or_equal_to: 0 }, if: "soil_test_id != 1"
+  validates_presence_of :soil_aluminum, numericality: { greater_than_or_equal_to: 0 }, if: "soil_test_id == 7"
+  validates_presence_of :bulk_density, numericality: { greater_than_or_equal_to: 0 }
+  validates_presence_of :organic_matter, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+  validates_presence_of :ph, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 14 }
 	validate :sum
   validates :depth, numericality: { greater_than: 0 }
   #Intialization
