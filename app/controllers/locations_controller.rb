@@ -141,6 +141,7 @@ class LocationsController < ApplicationController
             @field.weather_id = @weather.id
           end
           if @field.save then
+            flash[:notice] = t('models.field') + "(s)" + t('notices.multiple_created')
     	      @weather.field_id = @field.id
     	      session[:field_id] = @field.id
           end

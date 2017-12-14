@@ -13,16 +13,28 @@
 
   <div class="field">
     <%= f.label :depth, t('soil.depth') %>
-	<%= f.number_field :depth, :class => 'gvTitleStyleNumber', min: 0, :step => 'any'  %>
+	  <%= f.number_field :depth, :class => 'gvTitleStyleNumber', min: 0, :step => 'any'  %>
   </div>
   <div class="field">
+    <%= f.label :soil_test_id, t('soil.test') %>
+    <%= f.collection_select :soil_test_id, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @layer.soil_test_id}, {:required => true} %></td>
+  </div>
+  <div class="field" title="" id="div_soil_al"<%= "style=display:none;" unless :soil_aluminum == 7 %>>
+    <%= f.label :soil_aluminum, t('soil.aluminum') %>
+    <%= f.number_field :soil_aluminum, :class => 'gvTitleStyleNumber', :step => "any", :min => 0 %>
+  </div>
+  <div class="field">
+    <%= f.label :soil_p_initial, t('soil.soilp') %>
+    <%= f.number_field :soil_p_initial, :class => 'gvTitleStyleNumber', :step => "0.01", :min => 0 %>
+  </div>
+  <!--<div class="field" style="display:none;">
     <%= f.label :soil_p, t('soil.soilp') %>
 	<%# if @layer.depth > 3.95 %>
 		<%#= f.number_field :soil_p, :class => 'gvTitleStyleNumber', min: 0, :step => 'any', :disabled => 'disabled'%>
 	<%# else %>
 		<%= f.number_field :soil_p, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
 	<%# end %>
-  </div>
+  </div>-->
   <div class="field">
     <%= f.label :bulk_density, t('soil.bulk_density') %>
     <%= f.number_field :bulk_density, :class => 'gvTitleStyleNumber', min: 0, :step => 'any' %>
