@@ -429,7 +429,7 @@ en:
     stop: Stop
     no_additional_needed: No additional information is needed
     unit_acre: "unit / ac"
-    continues_grazing: Continues Grazing
+    continues_grazing: Continuous Grazing
     rotational_grazing: Rotational Grazing
   welcome_note:
     header: '<center>WELCOME</center>'
@@ -626,7 +626,7 @@ en:
     planting_method: Planting Method
     manure_composition: Manure Composition
     planting_date: Planting Date
-    continues_grazing: Continues Grazing
+    continues_grazing: Continuous Grazing
     rotational_grazing: Rotational Grazing
     total_n: Total N (0-100%)
     total_p: Total P (0-100%)
