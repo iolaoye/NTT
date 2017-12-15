@@ -174,7 +174,7 @@ class SoilsController < ApplicationController
     data.each do |soil|
       #todo check for erros to soils level as well as layers level.
     #for j in 1..params["field#{i}soils"].to_i
-      if soil[0] == "soils" then
+      if soil[0] == "soils" || soil[1]["lay_number"] == 0 then
         next
       end #
       @soil = @field.soils.new
@@ -216,7 +216,7 @@ class SoilsController < ApplicationController
 
       if @soil.save then
         if !soil[0] != "error" then
-          create_layers(soil[1])
+          create_layers(soil[1], )
         end
       else
         msg = "Soils was not saved " + @soil.name
@@ -252,21 +252,33 @@ class SoilsController < ApplicationController
   ## Create layers receiving from map for each soil.
   def create_layers(layers)
     #for l in 1..params["field#{i}soil#{j}layers"].to_i
-    layers.each do |l|
-      if !l[0].include?("layer") then
-        next
-      end
+    for l in 1..layers["lay_number"].to_i
+    #layers.each do |l|
+      #if !l[0].include?("layer") then
+        #next
+      #end
+      debugger
+      layer_number = "layer" + l.to_s 
       layer = @soil.layers.new
-      layer.sand = l[1]["sand"]
-      layer.silt = l[1]["silt"]
-      layer.clay = l[1]["clay"]
-      layer.bulk_density = l[1]["bd"]
-      layer.organic_matter = l[1]["om"]
-      layer.ph = l[1]["ph"]
-      layer.depth = l[1]["depth"]
+      layer.sand = layers[layer_number]["sand"]
+      layer.silt = layers[layer_number]["silt"]
+      layer.clay = layers[layer_number]["clay"]
+      layer.bulk_density = layers[layer_number]["bd"]
+      layer.organic_matter = layers[layer_number]["om"]
+      layer.ph = layers[layer_number]["ph"]
+      layer.depth = layers[layer_number]["depth"]
+
+      #layer.sand = l[1]["sand"]
+      #layer.silt = l[1]["silt"]
+      #layer.clay = l[1]["clay"]
+      #layer.bulk_density = l[1]["bd"]
+      #layer.organic_matter = l[1]["om"]
+      #layer.ph = l[1]["ph"]
+      #layer.depth = l[1]["depth"]
       layer.depth /= IN_TO_CM
       layer.depth = layer.depth.round(2)
-      layer.cec = l[1]["cec"]
+      #layer.cec = l[1]["cec"]
+      layer.cec = layers[layer_number]["cec"]
       layer.soil_p = 0
       if layer.save then
         saved = 1
