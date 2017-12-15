@@ -216,7 +216,7 @@ class SoilsController < ApplicationController
 
       if @soil.save then
         if !soil[0] != "error" then
-          create_layers(soil[1], )
+          create_layers(soil[1])
         end
       else
         msg = "Soils was not saved " + @soil.name
