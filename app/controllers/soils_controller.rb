@@ -29,7 +29,7 @@ class SoilsController < ApplicationController
       msg = request_soils()
       if msg != "OK" then flash[:info] = msg end
     end
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = @field.soils
     add_breadcrumb t('menu.soils')
 
     respond_to do |format|
@@ -167,8 +167,8 @@ class SoilsController < ApplicationController
   def create_soils(data)
     msg = "OK"
     #delete all of the soils for this field
-    soils1 = Soil.where(:field_id => @field.id)
-    soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
+    soils1 = @field.soils.destroy_all
+    #soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
     total_percentage = 0
 
     data.each do |soil|
@@ -222,7 +222,7 @@ class SoilsController < ApplicationController
         msg = "Soils was not saved " + @soil.name
       end
     end #end for create_soils
-    soils = Soil.where(:field_id => @field.id).order(percentage: :desc)
+    soils = @field.soils.order(percentage: :desc)
 
     i=1
     soils.each do |soil|
