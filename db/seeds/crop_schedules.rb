@@ -57,3 +57,4 @@ CropSchedule.create!({:id => 54,:name => "Nursery Evergreen Tree",:state_id => "
 CropSchedule.create!({:id => 55,:name => "Ash Tree",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 56,:name => "Oak Tree",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 57,:name => "Christmas Tree",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 58,:name => "Rangeland",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
