@@ -626,13 +626,13 @@ en:
     planting_method: Planting Method
     manure_composition: Manure Composition
     planting_date: Planting Date
-    continues_grazing: Continuous Grazing 
+    continues_grazing: Continuous Grazing
     rotational_grazing: Rotational Grazing
     total_n: Total N (0-100%)
     total_p: Total P (0-100%)
     application_rate: Application Rate
   bmp:
-    bmp_group: BMP Group
+    bmp_group: "BMP Group"
     select_bmp: Select BMP Group
     create_bmp: Create BMP
     zero_to_one: "(0.00 - 1.00)"
