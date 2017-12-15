@@ -29,7 +29,7 @@ class SoilsController < ApplicationController
       msg = request_soils()
       if msg != "OK" then flash[:info] = msg end
     end
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = @field.soils
     add_breadcrumb t('menu.soils')
 
     respond_to do |format|
@@ -167,8 +167,8 @@ class SoilsController < ApplicationController
   def create_soils(data)
     msg = "OK"
     #delete all of the soils for this field
-    soils1 = Soil.where(:field_id => @field.id)
-    soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
+    soils1 = @field.soils.destroy_all
+    #soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
     total_percentage = 0
 
     data.each do |soil|
@@ -215,14 +215,14 @@ class SoilsController < ApplicationController
       end
 
       if @soil.save then
-        if !soil[0] != "error" then
+        #if soil[0] != "error" then
           create_layers(soil[1])
-        end
+        #end
       else
         msg = "Soils was not saved " + @soil.name
       end
     end #end for create_soils
-    soils = Soil.where(:field_id => @field.id).order(percentage: :desc)
+    soils = @field.soils.order(percentage: :desc)
 
     i=1
     soils.each do |soil|
@@ -252,21 +252,32 @@ class SoilsController < ApplicationController
   ## Create layers receiving from map for each soil.
   def create_layers(layers)
     #for l in 1..params["field#{i}soil#{j}layers"].to_i
-    layers.each do |l|
-      if !l[0].include?("layer") then
-        next
-      end
+    for l in 1..layers["lay_number"].to_i
+    #layers.each do |l|
+      #if !l[0].include?("layer") then
+        #next
+      #end
+      layer_number = "layer" + l.to_s 
       layer = @soil.layers.new
-      layer.sand = l[1]["sand"]
-      layer.silt = l[1]["silt"]
-      layer.clay = l[1]["clay"]
-      layer.bulk_density = l[1]["bd"]
-      layer.organic_matter = l[1]["om"]
-      layer.ph = l[1]["ph"]
-      layer.depth = l[1]["depth"]
+      layer.sand = layers[layer_number]["sand"]
+      layer.silt = layers[layer_number]["silt"]
+      layer.clay = layers[layer_number]["clay"]
+      layer.bulk_density = layers[layer_number]["bd"]
+      layer.organic_matter = layers[layer_number]["om"]
+      layer.ph = layers[layer_number]["ph"]
+      layer.depth = layers[layer_number]["depth"]
+
+      #layer.sand = l[1]["sand"]
+      #layer.silt = l[1]["silt"]
+      #layer.clay = l[1]["clay"]
+      #layer.bulk_density = l[1]["bd"]
+      #layer.organic_matter = l[1]["om"]
+      #layer.ph = l[1]["ph"]
+      #layer.depth = l[1]["depth"]
       layer.depth /= IN_TO_CM
       layer.depth = layer.depth.round(2)
-      layer.cec = l[1]["cec"]
+      #layer.cec = l[1]["cec"]
+      layer.cec = layers[layer_number]["cec"]
       layer.soil_p = 0
       if layer.save then
         saved = 1

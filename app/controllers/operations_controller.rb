@@ -301,16 +301,17 @@ class OperationsController < ApplicationController
 # DELETE /operations/1
 # DELETE /operations/1.json
   def destroy
-    @operation = Operation.find(params[:id])
-    soil_operations = SoilOperation.where(:operation_id => @operation.id)
+    operation = Operation.find(params[:id])
+    soil_operations = SoilOperation.where(:operation_id => operation.id)
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     #@scenario = Scenario.find(params[:scenario_id])
-    if @operation.activity_id == 7 || @operation.activity_id == 9 then
+    if operation.activity_id == 7 || operation.activity_id == 9 then
       #delete stop grazing linked to this grazing operation
-      Operation.find_by_type_id(@operation.id).destroy
+      stop_op = Operation.find_by_type_id(operation.id)
+      if stop_op != nil then stop_op.destroy end
     end
-    if @operation.destroy
+    if operation.destroy
       flash[:notice] = t('models.operation') + t('notices.deleted')
     end
     if soil_operations != nil

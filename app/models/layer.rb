@@ -46,6 +46,7 @@ class Layer < ActiveRecord::Base
     self.satc  ||= 0.0
     self.soil_aluminum ||= 0.0
     self.soil_p_initial ||= 0.0
+    self.soil_test_id ||= 0
   end
 
   def sum

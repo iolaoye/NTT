@@ -33,13 +33,13 @@
 			    <% field_id = 0 %>
 		        <% if session[:simulation] == 'scenario' %>
 				  <% field_id = @field.id %>
-		          <td><%= collection_select :result1, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
-		          <td><%= collection_select :result2, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
-		          <td><%= collection_select :result3, :scenario_id, Scenario.where("field_id = ? and last_simulation > ?", @field.id, 0), :id, :name, {:include_blank => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
+		          <td><%= collection_select :result1, :scenario_id, @field.scenarios.where("last_simulation > ?", 0), :id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
+		          <td><%= collection_select :result2, :scenario_id, @field.scenarios.where("last_simulation > ?",0), :id, :name, {:include_blank => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
+		          <td><%= collection_select :result3, :scenario_id, @field.scenarios.where("last_simulation > ?", 0), :id, :name, {:include_blank => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
 		        <% else %>
-		          <td><%= collection_select :result1, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed1'), :selected => @scenario1}, {:required => true, :style => "width:160px"} %></td>
-		          <td><%= collection_select :result2, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed2'), :selected => @scenario2}, {:required => false, :style =>"width:160px"} %></td>
-		          <td><%= collection_select :result3, :scenario_id, Watershed.where(:location_id => session[:location_id]), :id, :name, {:include_blank => t('result.select_watershed3'), :selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
+		          <td><%= collection_select :result1, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed1'), :selected => @scenario1}, {:required => true, :style => "width:160px"} %></td>
+		          <td><%= collection_select :result2, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed2'), :selected => @scenario2}, {:required => false, :style =>"width:160px"} %></td>
+		          <td><%= collection_select :result3, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed3'), :selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
 		        <% end %>
 		        <% case @type %>
 		        <% when t('general.view'), t('result.summary'), "Tabular" %>
