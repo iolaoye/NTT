@@ -1361,16 +1361,6 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", operation.opv4) #Opv4. No entry needed.
 
         operation.opv5 == nil ? apex_string += sprintf("%8.2f", 0) : operation.opv5 < 0.01 ? apex_string += sprintf("%8.6f", operation.opv5) : apex_string += sprintf("%8.2f", operation.opv5) #Opv 5 Plant Population.
-      when 6 #irrigation
-        apex_string += sprintf("%5d", 0) #
-        items[0] = "Irrigation"
-        values[0] = operation.opv2
-        apex_string += sprintf("%8.2f", operation.opv1) #Volume applied for irrigation in mm
-        nirr = 1
-        apex_string += sprintf("%8.2f", 0) #opval2
-        apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
-        apex_string += sprintf("%8.2f", 0) and sprintf("%8.2f", operation.opv2) #Opv4 Irrigation Efficiency
-        apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
         oper = Operation.where(:id => operation.operation_id).first
@@ -1408,32 +1398,6 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
-      when 7 # grazing              #Grazing - kind and number of animals
-        apex_string += sprintf("%5d", 0) #
-        #if number of animals were enter in modify page and it is the first grazing operation
-        if @grazingb == false then
-          items[3] = "DryMatterIntake"
-          #create_herd file and send to APEX
-		      current_oper = Operation.find(operation.operation_id)
-          values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
-          #animalB = operation.ApexTillCode
-          @grazingb = true
-          if current_oper.no3_n != 0 || current_oper.po4_p != 0 || current_oper.org_n != 0 || current_oper.org_p != 0 || current_oper.nh3 != 0 then
-            #animal_code = get_animal_code(operation.type_id)
-            change_fert_for_grazing(current_oper.no3_n, current_oper.po4_p, current_oper.org_n, current_oper.org_p, current_oper.type_id, current_oper.nh3)
-          end
-        end
-        apex_string += sprintf("%8.4f", operation.opv1)
-        items[0] = "Kind"
-        values[0] = operation.type_id
-        items[1] = "Animals"
-        values[1] = operation.opv1
-        items[2] = "Hours"
-        values[2] = operation.opv2
-        apex_string += sprintf("%8.2f", 0) #opval2
-        apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
-        apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
-        apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
       when 3 #tillage
         apex_string += sprintf("%5d", 0)
         apex_string += sprintf("%8.2f", 0)
@@ -1462,6 +1426,43 @@ module SimulationsHelper
         values[0] = operation.opv2
         items[1] = "Time of Operation"
         values[1] = operation.opv2
+        apex_string += sprintf("%8.2f", 0) #opval2
+        apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
+        apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
+        apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
+      when 6 #irrigation
+        apex_string += sprintf("%5d", 0) #
+        items[0] = "Irrigation"
+        values[0] = operation.opv2
+        apex_string += sprintf("%8.2f", operation.opv1) #Volume applied for irrigation in mm
+        nirr = 1
+        apex_string += sprintf("%8.2f", 0) #opval2. No entry needed
+        apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
+        #apex_string += sprintf("%8.2f", 0) and sprintf("%8.2f", operation.opv2) #Opv4 Irrigation Efficiency
+        apex_string += sprintf("%8.2f", operation.opv4) #Opv4 Irrigation Efficiency
+        apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
+      when 7 # grazing              #Grazing - kind and number of animals
+        apex_string += sprintf("%5d", 0) #
+        #if number of animals were enter in modify page and it is the first grazing operation
+        if @grazingb == false then
+          items[3] = "DryMatterIntake"
+          #create_herd file and send to APEX
+          current_oper = Operation.find(operation.operation_id)
+          values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
+          #animalB = operation.ApexTillCode
+          @grazingb = true
+          if current_oper.no3_n != 0 || current_oper.po4_p != 0 || current_oper.org_n != 0 || current_oper.org_p != 0 || current_oper.nh3 != 0 then
+            #animal_code = get_animal_code(operation.type_id)
+            change_fert_for_grazing(current_oper.no3_n, current_oper.po4_p, current_oper.org_n, current_oper.org_p, current_oper.type_id, current_oper.nh3)
+          end
+        end
+        apex_string += sprintf("%8.4f", operation.opv1)
+        items[0] = "Kind"
+        values[0] = operation.type_id
+        items[1] = "Animals"
+        values[1] = operation.opv1
+        items[2] = "Hours"
+        values[2] = operation.opv2
         apex_string += sprintf("%8.2f", 0) #opval2
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.

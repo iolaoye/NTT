@@ -132,7 +132,9 @@ class OperationsController < ApplicationController
         params[:operation][:org_p] = total_p * fert_type.yp * 100
       end
       operation = Operation.new(operation_params)
-      #update_amount()   #CONVERT T/ac to lbs/ac
+      #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
+        #params[:operation][:depth] = params[:operation][:depth].to_f / 100 
+      #end
       operation.scenario_id = params[:scenario_id]
       if operation.activity_id == 9 then
         operation.moisture = params[:operation][:moisture]
@@ -236,7 +238,9 @@ class OperationsController < ApplicationController
       params[:operation][:po4_p] = total_p * fert_type.yn * 100
       params[:operation][:org_p] = total_p * fert_type.yp * 100
     end
-
+    #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
+      #params[:operation][:depth] = params[:operation][:depth].to_f / 100 
+    #end
     @operation = Operation.find(params[:id])
     #@field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)

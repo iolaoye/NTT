@@ -715,8 +715,8 @@ module ScenariosHelper
   def set_opval4(operation)
     opv4 = 0.0
     case operation.activity_id
-      when 6 #irrigation
-        opv4 = 1 - operation.depth unless operation.depth == nil
+      when 6 #irrigation efficiency. Converted from % to fraction
+        opv4 = 1 - operation.depth/100 unless operation.depth == nil
     end
     return opv4
   end
