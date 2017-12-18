@@ -14,7 +14,7 @@ one:
   soil_group_b: 1
   soil_group_c: 1
   soil_group_d: 1
-  type: 
+  type1: 
   yield_unit: MyString
   bushel_weight: 1.5
   conversion_factor: 1.5
@@ -43,7 +43,7 @@ two:
   soil_group_b: 1
   soil_group_c: 1
   soil_group_d: 1
-  type: 
+  type1: 
   yield_unit: MyString
   bushel_weight: 1.5
   conversion_factor: 1.5
