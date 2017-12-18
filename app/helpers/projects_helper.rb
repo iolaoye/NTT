@@ -293,7 +293,7 @@ module ProjectsHelper
   def duplicate_operations(scenario_id)
 	operations = Operation.where(:scenario_id => scenario_id)
 	operations.each do |operation|
-		if operation.activity_id == 8 then # if stop grazing operation is duplicated differently
+		if operation.activity_id == 8 || operation.activity_id == 10 then # if stop grazing operation is duplicated differently
 			next 
 		end
   		new = operation.dup
@@ -302,16 +302,18 @@ module ProjectsHelper
 			return "Error Saving operation"
 		else
 			duplicate_soil_operations_by_scenarios(operation.id, new.id)
-			if operation.activity_id == 7 then #continues grazing
-				kill_operation = operations.find_by_type_id(operation.id)
-				if kill_operation != nil then #create the stop grazing operation
-					new_stop_graizing = kill_operation.dup
+			if operation.activity_id == 7 || operation.activity_id == 9 then #continuous grazing
+				stop_operation = operations.find_by_type_id(operation.id)
+				if stop_operation != nil then #create the stop grazing operation
+					new_stop_graizing = stop_operation.dup
 					new_stop_graizing.scenario_id = @new_scenario_id
 					new_stop_graizing.type_id = new.id
 					if !new_stop_graizing.save
 						return "Error Saving operation"
-					else				
-						duplicate_soil_operations_by_scenarios(operation.id, new_stop_graizing.id)
+					else
+						if operation.activity_id == 7 then
+							duplicate_soil_operations_by_scenarios(operation.id, new_stop_graizing.id)
+						end
 					end
 				end 
 			end			
