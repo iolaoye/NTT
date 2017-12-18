@@ -132,7 +132,9 @@ class OperationsController < ApplicationController
         params[:operation][:org_p] = total_p * fert_type.yp * 100
       end
       operation = Operation.new(operation_params)
-      #update_amount()   #CONVERT T/ac to lbs/ac
+      #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
+        #params[:operation][:depth] = params[:operation][:depth].to_f / 100 
+      #end
       operation.scenario_id = params[:scenario_id]
       if operation.activity_id == 9 then
         operation.moisture = params[:operation][:moisture]
@@ -236,7 +238,9 @@ class OperationsController < ApplicationController
       params[:operation][:po4_p] = total_p * fert_type.yn * 100
       params[:operation][:org_p] = total_p * fert_type.yp * 100
     end
-
+    #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
+      #params[:operation][:depth] = params[:operation][:depth].to_f / 100 
+    #end
     @operation = Operation.find(params[:id])
     #@field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)
@@ -253,14 +257,14 @@ class OperationsController < ApplicationController
         end
         if @operation.activity_id == 7 || @operation.activity_id == 9 then
           if (Operation.find_by_type_id(@operation.type_id) != nil) then
-            @operation1 = Operation.find_by_type_id(@operation.type_id)
+            @operation1 = Operation.find_by_type_id(@operation.id)
           else
             operation_id = @operation.id
             @operation1 = Operation.new(operation_params)
             if @operation.activity_id == 7 then 
-              @operation.activity_id = 8
+              @operation1.activity_id = 8
             else
-              @operation.activity_id = 10
+              @operation1.activity_id = 10
             end
             @operation1.type_id = operation_id
             @operation1.scenario_id = params[:scenario_id]
@@ -301,16 +305,17 @@ class OperationsController < ApplicationController
 # DELETE /operations/1
 # DELETE /operations/1.json
   def destroy
-    @operation = Operation.find(params[:id])
-    soil_operations = SoilOperation.where(:operation_id => @operation.id)
+    operation = Operation.find(params[:id])
+    soil_operations = SoilOperation.where(:operation_id => operation.id)
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     #@scenario = Scenario.find(params[:scenario_id])
-    if @operation.activity_id == 7 || @operation.activity_id == 9 then
+    if operation.activity_id == 7 || operation.activity_id == 9 then
       #delete stop grazing linked to this grazing operation
-      Operation.find_by_type_id(@operation.id).destroy
+      stop_op = Operation.find_by_type_id(operation.id)
+      if stop_op != nil then stop_op.destroy end
     end
-    if @operation.destroy
+    if operation.destroy
       flash[:notice] = t('models.operation') + t('notices.deleted')
     end
     if soil_operations != nil

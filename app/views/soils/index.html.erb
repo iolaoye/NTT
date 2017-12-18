@@ -14,7 +14,7 @@
 <div class="page-header"><h1><%= t("menu.soils") %></h1></div>
 
 <% if @soils.count > 0 %>
-	  <%= form_for [@project, @field] do |f| %>
+	<%= form_for [@project, @field] do |f| %>
 	    <div class="field" title="Name of Field">
 			<%= f.label t('field.field_name') %>
 			<%= f.text_field :field_name, :required => true %>

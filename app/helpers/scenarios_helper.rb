@@ -689,10 +689,18 @@ module ScenariosHelper
       	case operation.type_id
       	when 1
 			opv1 = (operation.amount * LBS_TO_KG / AC_TO_HA).round(2) #kg/ha of fertilizer applied converted from lbs/ac
-        when 3
-          	opv1 = (operation.amount * 9350 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
         when 2
+        	if operation.moisture == nil then
+        		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
+        		operation.save
+        	end
         	opv1 = (operation.amount * 2471 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
+        when 3
+        	if operation.moisture == nil then
+        		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
+        		operation.save
+        	end
+          	opv1 = (operation.amount * 9350 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
         end
       when 6 #irrigation
         opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
@@ -707,8 +715,8 @@ module ScenariosHelper
   def set_opval4(operation)
     opv4 = 0.0
     case operation.activity_id
-      when 6 #irrigation
-        opv4 = 1 - operation.depth unless operation.depth == nil
+      when 6 #irrigation efficiency. Converted from % to fraction
+        opv4 = 1 - operation.depth/100 unless operation.depth == nil
     end
     return opv4
   end

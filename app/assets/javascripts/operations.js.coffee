@@ -214,6 +214,25 @@ updateTypes = ->
 	  $("#div_amount")[0].children[0].innerText = labels.amount_label.split(",")[0] + labels.amount_units
 	  $("#div_depth")[0].children[0].innerText = labels.depth_label.split(",")[0] + labels.depth_units
 
+take_efficiency = ->
+  if ($("#operation_activity_id").val() == "6")
+    switch $("#operation_type_id").val()
+       when "1" #Sprinkle
+           $("#operation_depth").val(70)
+           #$("#bmp_ai_irrigation_efficiency_lable").val("70 - 80%")
+       when "2" #Furrow/Flood
+           $("#operation_depth").val(65)
+           #$("#bmp_ai_irrigation_efficiency_lable").val("50 - 70%")
+       when "3" #Drip
+           $("#operation_depth").val(85)
+           #$("#bmp_ai_irrigation_efficiency_lable").val("80 - 95%")
+       when "7" #Furow Diken
+           $("#operation_depth").val(90)
+           #$("#bmp_ai_irrigation_efficiency_lable").val("80 - 95%")
+       when "8" #Tailwater
+           $("#operation_depth").val(65)
+           #$("#bmp_ai_irrigation_efficiency_lable").val("50 - 70%")
+
 updateFerts = ->
   if ($("#operation_activity_id").val() == "2")
     $("#div_nutrients").hide()
@@ -321,6 +340,7 @@ $(document).ready ->
     $("#operation_type_id").change ->
       updateFerts()
       updatePlantPopulation()
+      take_efficiency()
 
     $("#operation_subtype_id").change ->
       updateNutrients(0)

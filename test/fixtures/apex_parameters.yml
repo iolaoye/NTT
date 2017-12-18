@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  parameter_id: 1
+  parameter_description_id: 1
   value: 1.5
   project_id: 1
 
 two:
-  parameter_id: 1
+  parameter_description_id: 1
   value: 1.5
   project_id: 1

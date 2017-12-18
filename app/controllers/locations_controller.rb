@@ -147,7 +147,6 @@ class LocationsController < ApplicationController
           end
           @weather.save
         end # end for fields
-
         # step 5: update location
         state_abbreviation = params[:state]
   		  if state_abbreviation.length > 2 then  #if state_abbreviation.length > 2 means it is state name
@@ -165,6 +164,8 @@ class LocationsController < ApplicationController
   			  @location.county_id = 0
   		  else
   			  county_name.slice! " County"
+          county_name.slice! " Parish"   #Lousiana Counties
+          county_name.slice! "  Borough" #Alaska Counties.
   			  county = County.find_by_county_name(county_name)
   			  if county == nil then 
   				  @location.county_id = 0
