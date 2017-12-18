@@ -257,14 +257,14 @@ class OperationsController < ApplicationController
         end
         if @operation.activity_id == 7 || @operation.activity_id == 9 then
           if (Operation.find_by_type_id(@operation.type_id) != nil) then
-            @operation1 = Operation.find_by_type_id(@operation.type_id)
+            @operation1 = Operation.find_by_type_id(@operation.id)
           else
             operation_id = @operation.id
             @operation1 = Operation.new(operation_params)
             if @operation.activity_id == 7 then 
-              @operation.activity_id = 8
+              @operation1.activity_id = 8
             else
-              @operation.activity_id = 10
+              @operation1.activity_id = 10
             end
             @operation1.type_id = operation_id
             @operation1.scenario_id = params[:scenario_id]

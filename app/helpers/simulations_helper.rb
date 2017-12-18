@@ -78,13 +78,13 @@ module SimulationsHelper
 
   def send_files1_to_APEX(file)
     start = @scenario.operations.find_by_activity_id(9)
-    bmp_string = ""
+    rotational_grazing = ""
     if start != nil then
-      bmp_string = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + start.amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
+      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + start.amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
     end
     stop = @scenario.operations.find_by_activity_id(10)
     if stop != nil
-      bmp_string += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
+      rotational_grazing += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
     end
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
     url = URI.parse(URL_NTT)
@@ -92,7 +92,7 @@ module SimulationsHelper
     http.read_timeout = 120
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     req = Net::HTTP::Post.new(url.path)
-    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => bmp_string})
+    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => rotational_grazing})
     res = http.request(req)
     if res.body.include?("Created") then
       return "OK"
@@ -910,6 +910,8 @@ module SimulationsHelper
   		if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
   			sLine += sprintf("%4d", _subarea_info.iops) #operation
   		else
+        #when @grazing the operation number should be the following because the subareas are reduce to 1
+        if @grazing != nil then _subarea_info.iops = i end
   			sLine += sprintf("%4d", _subarea_info.iops)   #operation
   		end
   		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
@@ -1248,9 +1250,6 @@ module SimulationsHelper
     crop_ant = 0
     oper_ant = 799
     found = false
-    #Dim animalCode As Short = 0
-    #Dim cn As Single = 0
-
     for i in 0..(8 - 1)
       items[i] = ""
       values[i] = 0
@@ -1262,11 +1261,9 @@ module SimulationsHelper
     if crop_ant != operation.apex_crop then
       crop = Crop.find_by_number(operation.apex_crop)
       if crop != nil then
-        #if crop.number == operation.apex_crop then
         lu_number = crop.lu_number
         harvest_code = crop.harvest_code
         filter_strip = crop.type1
-        #end
       end
       crop_ant = operation.apex_crop
     end
