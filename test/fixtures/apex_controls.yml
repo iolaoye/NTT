@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  control_id: 1
+  control_description_id: 1
   value: 1.5
 
 two:
-  control_id: 1
+  control_description_id: 1
   value: 1.5

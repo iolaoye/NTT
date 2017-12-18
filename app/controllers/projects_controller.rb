@@ -151,9 +151,9 @@ class ProjectsController < ApplicationController
     location.destroy_all unless location == []
     respond_to do |format|
     if @project.destroy
-      format.html { redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.deleted') }
-    format.json { head :no_content }
-      end
+      format.html { redirect_to user_projects_path(session[:user_id]), notice: t('models.project') + " " + @project.name + t('notices.deleted') }
+      format.json { head :no_content }
+    end
   end
     @projects = Project.where(:user_id => params[:user_id])
   end
