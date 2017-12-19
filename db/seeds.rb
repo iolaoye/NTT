@@ -30,6 +30,9 @@ load file
 file = "db/seeds/bmpsublists.rb"
 load file
 
+file = "db/seeds/tillages.rb"
+load file
+
 cont = false
 
 if cont then
