@@ -911,7 +911,7 @@ module SimulationsHelper
   			sLine += sprintf("%4d", _subarea_info.iops) #operation
   		else
         #when @grazing the operation number should be the following because the subareas are reduce to 1
-        if @grazing != nil then _subarea_info.iops = i end
+        if @grazing != nil then _subarea_info.iops = i+1 end
   			sLine += sprintf("%4d", _subarea_info.iops)   #operation
   		end
   		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
