@@ -419,14 +419,57 @@ footer a:hover{
 }
 }
 
+#welcome_header {
+  margin: 0 auto;
+  width: 100%;
+  height: 500px;
+}
+#welcome_buttons {
+  margin-top: 6%;
+  margin-right: 10%;
+  float: right;
+}
+
+#welcome_info {
+  margin: 0 auto;
+  width: 100%;
+  float: left;
+  height: 200px;
+}
+
+#welcome_info > center > p {
+  width: 10%;
+  height: 25%;
+  display: inline-block;
+  margin-right: 5%;
+  margin-left: 4%;
+  margin-top: 4%;
+  margin-bottom: 0.5em;
+}
+
+#welcome > h1 {
+  text-align: center;
+  padding-top: 50px;
+}
+
+#welcome > p {
+  text-align: center;
+}
+
+h1 > img {
+  width: 50px;
+  height: 50px;
+}
+
 .table-responsive {
     overflow-x: visible;
     }
 
 .carousel {
-  height: 400px;
+  height: 100%;
   margin-bottom: 20px;
-
+  width: 70%;
+  float: left;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
@@ -438,7 +481,7 @@ footer a:hover{
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 400px;
+  height: 100%;
   background-color: #777;
 }
 .carousel-inner > .item > img {
@@ -446,7 +489,7 @@ footer a:hover{
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 400px;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
