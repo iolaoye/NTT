@@ -17,3 +17,6 @@
 
 # Ignore file containing environment variables
 /config/initializers/app_env_vars.rb
+
+# ignore the database.yml
+/config/database.yml
