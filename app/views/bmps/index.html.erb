@@ -218,13 +218,13 @@
           <% when 9 %>
             <tr>
               <td class="field indent" colspan="2" id = "fraction_control_by_pond" >
-                <%= label :control, t('bmp.area_control') + " " + t('bmp.percentage_range')  %>
+                <%= label_tag :control, t('bmp.area_control_html') + " " + t('bmp.zero_to_one')  %>
                 <% if bmp.irrigation_efficiency  != nil %>
-                  <% ie = bmp.irrigation_efficiency * 100 %>
+                  <% ie = bmp.irrigation_efficiency %>
                 <% else %>
                   <% ie = 0 %>
                 <% end %>
-                <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :step => 'any', :min => 0, :max => 1, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
           <% when 10 %>
