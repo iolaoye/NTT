@@ -152,12 +152,15 @@ class WatershedsController < ApplicationController
 				watershed_scenarios.each do |p|
 				  @scenario = Scenario.find(p.scenario_id)
 				  @field = Field.find(p.field_id)
-				  #params[:field_id] = p.field_id
-				  @soils = Soil.where(:field_id => p.field_id).where(:selected => true)
+				  @grazing = @scenario.operations.find_by_activity_id([7, 9])
+				  if @grazing == nil then
+				  	@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
+				  else
+				  	@soils = Soil.where(:field_id => p.field_id).where(:selected => true).limit(1)
+				  end
+				  #@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
 				  if msg.eql?("OK") then msg = create_soils() else return msg end
-				  #if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg end
 				  if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-				  #if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg end
 				  j+=1
 				end # end watershed_scenarios.each
 				print_array_to_file(@soil_list, "soil.dat")
