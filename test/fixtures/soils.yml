@@ -10,7 +10,7 @@ one:
   slope: 1.5
   percentage: 1.5
   field_id: 1
-  drainage_type: MyString
+  drainage_id: 1
 
 two:
   selected: false
@@ -22,4 +22,4 @@ two:
   slope: 1.5
   percentage: 1.5
   field_id: 1
-  drainage_type: MyString
+  drainage_id: 1
