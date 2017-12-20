@@ -2,10 +2,8 @@
 
 one:
   name: MyString
-  field_id: 1
-  scenario_id: 1
+  location_id: 1
 
 two:
   name: MyString
-  field_id: 1
-  scenario_id: 1
+  location_id: 1
