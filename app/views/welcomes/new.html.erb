@@ -1,108 +1,100 @@
 <div class="pageContainer">
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-      <li data-target="#myCarousel" data-slide-to="3"></li>
-      <li data-target="#myCarousel" data-slide-to="4"></li>
-      <li data-target="#myCarousel" data-slide-to="5"></li>
-      <li data-target="#myCarousel" data-slide-to="6"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <%= image_tag 'pic1.jpg', :class => "first-slide" %>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="intro">Pasture and Crop Land Management Systems</h1>
-            <p></p>
-            <!-- <p>A couple of introductory sentences would go here, e.g. "NTT allows farmers to simulate BMPS and operations..." etc.</p> -->
+  <div id="welcome_header">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+        <li data-target="#myCarousel" data-slide-to="5"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <%= image_tag 'pic1.jpg', :class => "first-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p></p>
+              <!-- <p>A couple of introductory sentences would go here, e.g. "NTT allows farmers to simulate BMPS and operations..." etc.</p> -->
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <%= image_tag 'grazing.png', :class => "second-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+             <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p></p>
+              <!-- <p>This can be some different text from the first image, or the same.</p> -->
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <%= image_tag 'pic3.jpg', :class => "third-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p></p>
+              <!-- <p>This can be some different text from the first image, or the same.</p> -->           
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <%= image_tag 'pic5.jpg', :class => "fourth-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p></p>
+              <!-- <p>This can be some different text from the first image, or the same.</p> -->
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <%= image_tag 'corn2.png', :class => "fifth-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p></p>
+              <!-- <p>This can be some different text from the first image, or the same.</p> -->
+            </div>
+          </div>
+        </div>
+        <div class="item">
+        <%= image_tag 'pic9.png', :class => "sixth-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p></p>
+              <!-- <p>This can be some different text from the first image, or the same.</p> -->
+            </div>
           </div>
         </div>
       </div>
-      <div class="item">
-        <%= image_tag 'pic2.jpg', :class => "second-slide" %>
-        <div class="container">
-          <div class="carousel-caption">
-           <h1 class="intro">Nutrient Management Systems</h1>
-            <p></p>
-            <!-- <p>This can be some different text from the first image, or the same.</p> -->
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <%= image_tag 'pic3.jpg', :class => "third-slide" %>
-        <div class="container">
-          <div class="carousel-caption">
-          <h1 class="intro">Nutrient Trading Program</h1>
-            <p></p>
-            <!-- <p>This can be some different text from the first image, or the same.</p> -->           
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <%= image_tag 'pic4.jpg', :class => "fourth-slide" %>
-        <div class="container">
-          <div class="carousel-caption">
-          <h1 class="intro">Irrigation and Fertigation Systems</h1>
-            <p></p>
-            <!-- <p>This can be some different text from the first image, or the same.</p> -->
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <%= image_tag 'pic7.jpg', :class => "fifth-slide" %>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="intro">Animal Production Management Systems</h1>
-            <p></p>
-            <!-- <p>This can be some different text from the first image, or the same.</p> -->
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <%= image_tag 'pic8.jpg', :class => "sixth-slide" %>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="intro">Structural Management Practices</h1>
-            <p></p>
-            <!-- <p>This can be some different text from the first image, or the same.</p> -->
-          </div>
-        </div>
-      </div>
-      <div class="item">
-      <%= image_tag 'pic9.png', :class => "seventh-slide" %>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="intro">Farm Management Decision Making</h1>
-            <p></p>
-            <!-- <p>This can be some different text from the first image, or the same.</p> -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only"><%= t('general.previous') %></span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only"><%= t('general.next') %></span>
-    </a>
-  </div><!-- /.carousel -->
-  <div id="welcome">
-    <h1><%= image_tag 'tiaer_logo.png', :style => "align: left; margin-right: 350px;" %>Welcome <%= image_tag 'usda_logo.png', :style => "align: right; margin-left: 350px;" %></h1>
-    <br><br>
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only"><%= t('general.previous') %></span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only"><%= t('general.next') %></span>
+      </a>
+    </div><!-- /.carousel -->
+    <div id="welcome">
+        <h1>Welcome</h1>
       <p>Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. </p>
-    <%= render :template => "sessions/index" %>
+      <%= render :template => "sessions/index" %>
+      <%= image_tag 'tiaer_logo.png', :style => "margin-left: 10%; height: 80px;" %>
+      <%= image_tag 'usda_logo.png', :style => "margin-left: 40%; height: 60px;" %>
+    </div>
   </div>
   <div id="welcome_info">
     <center>
       <p><a href='#' onclick="show('popup1')"><%= image_tag 'info_icon.png', :style => "height: 50px;" %><br>About NTT</a></p>
-      <p><a href='#' onclick="show('popup3')"><%= image_tag 'data_icon.png', :style => "height: 50px;" %><br>Required Data</a></p>
       <p><a href='#' onclick="show('popup4')"><%= image_tag 'future_icon.png', :style => "height: 50px;" %><br>What's New</a></p>
-      <p><a href='#' onclick="show('popup2')"><%= image_tag 'what_how_icon.png', :style => "height: 55px;" %><br>Other Models</a></p>
+      <!--<p><a href='#' onclick="show('popup2')"><%= image_tag 'what_how_icon.png', :style => "height: 55px;" %><br>Other Models</a></p>-->
+      <p><a href='#' onclick="show('popup3')"><%= image_tag 'video2.png', :style => "height: 50px;" %><br>Instructions</a></p>
       <p><a href='#' onclick="show('popup5')"><%= image_tag 'contact_icon.png', :style => "height: 45px" %><br>Contact Us</a></p>
     </center>
   </div>
@@ -112,7 +104,7 @@
       NTT is a web-based, site-specific application that estimates nutrient and sediment losses for crop and pasture at the field and/or watershed scales. Agricultural producers and land managers can define a number of management scenarios for any given field or area of interest (AOI). NTT will estimate nutrient (nitrogen and phosphorus) losses, sediment losses, and crop yields differences between the scenarios and present results in customizable reports.
       NTT estimates are made using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model (Williams et al. 2000). Results represent average nutrient and sediment losses from the field based on 35 years of simulated weather. 
       NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. Additional funding for development of NTT was provided by NIFA, the USDA Conservation Innovation Grants program, and various state governments.
-</p>
+    </p>
   </div>
   <!-- Benefits icon -->
   <div class="popup" id="popup2">
@@ -124,17 +116,20 @@
           <li>NTT for education and research purposes: (<a href="http://NTT_RE@tiaer.tarleton.edu">http://ntt_re@tiaer.tarleton.edu</a>)</li>
           <li>Last version of NTT: (<a href="http://nn.tarleton.edu/nttg2">nn.tarleton.edu/nttg2</a>)</li>
         </ol>
-        <li>A watershed scale model titled "Comprehensive Economic Environmental Optimization Tool (CEEOT): CEEOT" is available to download from www.tiaer.tarleton.edu. CEEOT is an integrated program that includes APEX, SWAT and Farm Economic Model (FEM) models to evaluate the economic and environmental impacts of conservation practices at the farm and watershed scales. CEEOT is not an internet-based  model. To obtain more information and/or download a copy of CEEOT program, please visit www.tiaer.tarleton.edu.</li>
+        <li></li>
       </ol>
     </p>
   </div>
-  <!-- Data icon -->
+  <!-- Video icon -->
   <div class="popup" id="popup3">
+    <p>Coming soon...  </p><a class="close" onclick="hide('popup3')">×</a>
+  </div>
+  <!--<div class="popup" id="popup3">
     <p><strong>Data Requirements</strong><a class="close" onclick="hide('popup3')">×</a><br><br>
       NTT requires regional soils, climate and site-specific crop management information. NTT currently provides selections for all regions of U.S. and Puerto Rico
       territory, but it has only been validated for a limited number of states and counties. As validation becomes possible in other parts of the country, parameter
       files may be updated for additional counties in future versions.</p>
-  </div>
+  </div>-->
   <!-- Future icon -->
   <div class="popup" id="popup4">
     <strong>What's New</strong><a class="close" onclick="hide('popup4')">×</a><br><br>
@@ -149,7 +144,31 @@
       or by phone (254) 968-9799. For technical support please contact Ali Saleh or Oscar Gallego at <a href="mailto:gallego@tiaer.tarleton.edu">gallego@tiaer.tarleton.edu</a>.</p>
   </div>
 </div>
+<div class="container-bottom">
+  <h3 style="clear: both;">Related Tools</h3>
+  <hr>
+  <div style="float: left; width: 32%; margin-right: 1%;">
+    <h4>CEOTT</h4>
+    <p>A watershed scale model titled "Comprehensive Economic Environmental Optimization Tool (CEEOT): CEEOT" is available to download from www.tiaer.tarleton.edu. CEEOT is an integrated program that includes APEX, SWAT and Farm Economic Model (FEM) models to evaluate the economic and environmental impacts of conservation practices at the farm and watershed scales. CEEOT is not an internet-based  model. To obtain more information and/or download a copy of CEEOT program, please visit www.tiaer.tarleton.edu.</p>
+  </div>
+  <div style="float: left; width: 32%; margin-right: 1%">
+    <h4>NTT-RE</h4>
+    <p></p>
+  </div>
+  <div style="float: left; width: 32%; margin-right: 1%;">
+    <h4>NTT-G3</h4>
+    <p></p>
+  </div>
+  <br style="clear: left;" />
+  <!--
 
+  <div>
+    <h4>NTT-RE</h4>
+  </div>
+  <div>
+    <h4>NTT-G3</h4>
+  </div>-->
+</div>
 <script>
   $ = function(id) {
     return document.getElementById(id);
