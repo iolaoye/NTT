@@ -5,10 +5,7 @@ one:
   field_id: 1
   soil_id: 1
   scenario_id: 1
-  detailed: 
-  description: MyString
-  spanish_description: MyString
-  units: MyString
+  description_id: 1
   value: 1.5
 
 two:
@@ -16,8 +13,5 @@ two:
   field_id: 1
   soil_id: 1
   scenario_id: 1
-  detailed: 
-  description: MyString
-  spanish_description: MyString
-  units: MyString
+  description_id: 1
   value: 1.5

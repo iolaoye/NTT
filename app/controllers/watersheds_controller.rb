@@ -151,8 +151,8 @@ class WatershedsController < ApplicationController
 			  		@state_abbreviation = State.find(state_id).state_abbreviation
 			  	end
 				watershed_scenarios.each do |p|
-				  	@scenario = Scenario.find(p.scenario_id)
-				  	@field = Field.find(p.field_id)
+				  @scenario = Scenario.find(p.scenario_id)
+				  @field = Field.find(p.field_id)
 					@grazing = @scenario.operations.find_by_activity_id([7, 9])
 					if @grazing == nil then
 						#@soils = @field.soils.where(:selected => true)

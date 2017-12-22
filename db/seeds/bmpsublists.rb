@@ -7,7 +7,7 @@ Bmpsublist.create!({:id => 5,:name => "Pads and Pipes - Two-Stage Ditch System",
 Bmpsublist.create!({:id => 6,:name => "Pads and Pipes - Ditch Enlargement and Reservoir System",:status => true,:bmplist_id => 2,:spanish_name => "Almohadillas y Tuberias - Ampliacion de la Zanja y Sistema de Represa"}, :without_protection => true)
 Bmpsublist.create!({:id => 7,:name => "Pads and Pipes - Tailwater Irrigation",:status => true,:bmplist_id => 2,:spanish_name => "Almohadillas y Tuberias - Irrigacion desde Reserva"}, :without_protection => true)
 Bmpsublist.create!({:id => 8,:name => "Wetlands",:status => true,:bmplist_id => 3,:spanish_name => "Humedales"}, :without_protection => true)
-Bmpsublist.create!({:id => 9,:name => "Ponds",:status => true,:bmplist_id => 3,:spanish_name => "Lagunas"}, :without_protection => true)
+Bmpsublist.create!({:id => 9,:name => "Ponds/Water & Sediment Control Basin",:status => true,:bmplist_id => 3,:spanish_name => "Lagunas"}, :without_protection => true)
 Bmpsublist.create!({:id => 10,:name => "Stream Fencing (Livestock Access Control)",:status => true,:bmplist_id => 4,:spanish_name => "Cercado del rio (Control de Acceso del Ganado)"}, :without_protection => true)
 Bmpsublist.create!({:id => 11,:name => "Streambank Stabilization",:status => true,:bmplist_id => 4,:spanish_name => "Estabilizacion de la Orilla del rio"}, :without_protection => true)
 Bmpsublist.create!({:id => 12,:name => "Riparian Forest Buffer",:status => true,:bmplist_id => 4,:spanish_name => "Bosque Ribereno"}, :without_protection => true)

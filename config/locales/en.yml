@@ -665,7 +665,7 @@ en:
     crop: Crop
     water_stress_factor: Plant Water stress factor
     irrigation_efficiency: Irrigation efficiency
-    area_control: Percentage of field area controled by pond
+    area_control_html: 'Fraction of field controlled by pond/WASCB'
     maximum_single_application: Maximum single application
     safety_factor: Safety factor
     depth: Depth
