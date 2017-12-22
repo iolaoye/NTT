@@ -9,8 +9,8 @@
     <div class="login-form">
       <h2><%= t('submit.login') %></h2>
       <div class="field">
-        <%= text_field_tag :email, nil, placeholder: (t('.email')), :class => "form_input" %>
-        <%= password_field_tag :password, nil, placeholder: (t('.password')), :class => "form_input" %>
+        <%= text_field_tag :email, nil, :required => true, placeholder: (t('.email')), :class => "form_input" %>
+        <%= password_field_tag :password, nil, :required => true, placeholder: (t('.password')), :class => "form_input" %>
       </div>
         <div id="left_button">
           <%= submit_tag t('submit.login'), :class => "btn btn-primary" %>
