@@ -1,5 +1,9 @@
 ﻿<ul class="nav navbar-nav">
-  <li><a href="/"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> NTT - Nutrient Tracking Tool</a></li>
+	<% if ENV["APP_VERSION"] == "modified" %>
+  		<li><a href="/"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> NTT - Nutrient Tracking Tool</a></li>
+  	<% else %>
+  		<li><a href="/"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> NTT-RE - Nutrient Tracking Tool for Research and Education</a></li>
+  	<% end %>
 </ul>
 <ul class="nav navbar-nav navbar-right">
   <li><% if signed_in? %><%= link_to t('menu.welcome')  + " " + current_user.name + " - " + t('menu.signout'), logout_path %><% else %><% end %></li>
