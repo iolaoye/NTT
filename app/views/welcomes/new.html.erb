@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="item">
-          <%= image_tag 'grazing.png', :class => "second-slide" %>
+          <%= image_tag 'grazing.jpg', :class => "second-slide" %>
           <div class="container">
             <div class="carousel-caption">
              <h1 class="intro">Nutrient Tracking Tool</h1>
@@ -84,9 +84,9 @@
     <div id="welcome">
         <h1>Welcome</h1>
       <p>Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. </p>
-      <%= render :template => "sessions/index" %>
-      <%= image_tag 'tiaer_logo.png', :style => "margin-left: 10%; height: 80px;" %>
-      <%= image_tag 'usda_logo1.png', :style => "margin-left: 5%; height: 35px; margin-top: 10%;" %>
+      <%= render :template => "sessions/index", :style => "white-space: normal;" %>
+      <%= image_tag 'tiaer_logo.png', :style => "margin-left: 10%; max-height: 80px; height: auto; position:relative; z-index:0;" %>
+      <%= image_tag 'usda_logo1.png', :style => "margin-left: 5%; max-height: 35px; margin-top: 10%; height: auto; position:relative; z-index:0;" %>
     </div>
   </div>
   <div id="welcome_info">

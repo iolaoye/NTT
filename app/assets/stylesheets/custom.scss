@@ -390,7 +390,8 @@ footer a:hover{
 }
 
 #welcome .page-container {
-  height: 345px;  
+  height: 345px;
+  white-space: normal;
 }
 
 .page-container {
@@ -435,6 +436,8 @@ footer a:hover{
   max-width: 250px;
   margin: 0 auto;
   display: inline-block;
+  position: relative;
+  z-index: 1;
 }
 
 .login-form > h2, #forgot_pass > a {
@@ -552,12 +555,15 @@ footer a:hover{
   line-height: 150%;
   float: left;
   color: #ffffff;
+  white-space: normal;
 }
 
 #welcome {
   width: 30%;
   background-color: #204060;
   height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 h1 > img {
