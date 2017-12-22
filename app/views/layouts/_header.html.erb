@@ -2,5 +2,5 @@
   <li><a href="/"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> NTT - Nutrient Tracking Tool</a></li>
 </ul>
 <ul class="nav navbar-nav navbar-right">
-  <li><% if signed_in? %><%= link_to t('menu.welcome')  + " " + current_user.name + " - " + t('menu.signout'), logout_path %><% else %><%= link_to t('menu.signin'), login_path %><% end %></li>
+  <li><% if signed_in? %><%= link_to t('menu.welcome')  + " " + current_user.name + " - " + t('menu.signout'), logout_path %><% else %><% end %></li>
 </ul>
