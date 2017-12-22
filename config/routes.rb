@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :faqs
   resources :importances
   resources :types
   resources :statuses
@@ -172,6 +173,7 @@ NTTG3::Application.routes.draw do
   root :to => 'welcomes#index'
 
   get '/about' => "about#index", :as => "about"
+  #get '/faq' => "faq#index", :as => "faq"
   get '/contact' => "contact#index", :as => "contact"
 
   #get '/help/' => redirect('/help/index')
