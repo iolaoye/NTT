@@ -229,7 +229,7 @@ class ScenariosController < ApplicationController
 	end
   end
 
-################################  aplcat - simulate the selected scenario for aplcat #################################
+  ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
     @errors = Array.new
 	if params[:select_scenario] == nil then
@@ -510,7 +510,6 @@ class ScenariosController < ApplicationController
 		@herd_list = Array.new
 		msg = "OK"
 	    dir_name = APEX + "/APEX" + session[:session_id]
-	    #dir_name2 = "#{Rails.root}/data/#{session[:session_id]}"
 	    if !File.exists?(dir_name)
 	      FileUtils.mkdir_p(dir_name)
 	    end
@@ -547,19 +546,16 @@ class ScenariosController < ApplicationController
 	    	@soils = @field.soils.where(:selected => true)
 	    else
 	    	@soils = @field.soils.where(:selected => true).limit(1)
-		end	    	
+		end
 	    @soil_list = Array.new
 	    if msg.eql?("OK") then msg = create_soils() else return msg  end
-	    #if msg.eql?("OK") then msg = send_file_to_APEX(@soil_list, "soil.dat") else return msg  end
 	    @subarea_file = Array.new
 	    @soil_number = 0
 	    if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
-	    #if msg.eql?("OK") then msg = send_file_to_APEX(@opcs_list_file, "opcs.dat") else return msg  end
 	    if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
 	    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
 	    @scenario.last_simulation = Time.now
 	    if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
-	    #@scenarios = Scenario.where(:field_id => params[:field_id])
 	    return msg
   	end # end show method
 

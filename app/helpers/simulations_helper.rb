@@ -913,10 +913,10 @@ module SimulationsHelper
   		else
         #when @grazing the operation number should be the following because the subareas are reduce to 1
         if @grazing != nil then
-          if session[:simulation] != "scenario" then 
-            _subarea_info.iops = @soil_number + 1
+          if session[:simulation] != "scenario" then
+            _subarea_info.iops = @soil_number + 1 
           else
-            _subarea_info.iops = i+1
+            _subarea_info.iops = i + 1
           end
         end
   			sLine += sprintf("%4d", _subarea_info.iops)   #operation
