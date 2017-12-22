@@ -1,4 +1,6 @@
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
+<div class="pageContainer">
+  <div id="welcome_header">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -7,9 +9,6 @@
         <li data-target="#myCarousel" data-slide-to="3"></li>
         <li data-target="#myCarousel" data-slide-to="4"></li>
         <li data-target="#myCarousel" data-slide-to="5"></li>
-        <li data-target="#myCarousel" data-slide-to="6"></li>
-        <li data-target="#myCarousel" data-slide-to="7"></li>
-        <li data-target="#myCarousel" data-slide-to="8"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
@@ -19,93 +18,56 @@
               <h1 class="intro">Nutrient Tracking Tool</h1>
               <p></p>
               <!-- <p>A couple of introductory sentences would go here, e.g. "NTT allows farmers to simulate BMPS and operations..." etc.</p> -->
-              <%= button_to t('menu.signup') + " " + t('general.today') , new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %></div></div>
+            </div>
+          </div>
         </div>
-       <div class="item">
-          <%= image_tag 'pic2.jpg', :class => "second-slide" %>
+        <div class="item">
+          <%= image_tag 'grazing.png', :class => "second-slide" %>
           <div class="container">
             <div class="carousel-caption">
              <h1 class="intro">Nutrient Tracking Tool</h1>
               <p></p>
               <!-- <p>This can be some different text from the first image, or the same.</p> -->
-              <%= button_to t('menu.signup') + " " + t('general.today') , new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
             </div>
           </div>
         </div>
         <div class="item">
-        <%= image_tag 'pic3.jpg', :class => "third-slide" %>
+          <%= image_tag 'pic3.jpg', :class => "third-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+            <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p></p>
+              <!-- <p>This can be some different text from the first image, or the same.</p> -->           
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <%= image_tag 'pic5.jpg', :class => "fourth-slide" %>
           <div class="container">
             <div class="carousel-caption">
             <h1 class="intro">Nutrient Tracking Tool</h1>
               <p></p>
               <!-- <p>This can be some different text from the first image, or the same.</p> -->
-              <%= button_to t('menu.signup') + " " + t('general.today') , new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
             </div>
           </div>
         </div>
         <div class="item">
-        <%= image_tag 'pic4.jpg', :class => "fourth-slide" %>
-          <div class="container">
-            <div class="carousel-caption">
-            <h1 class="intro">Nutrient Tracking Tool</h1>
-              <p></p>
-              <!-- <p>This can be some different text from the first image, or the same.</p> -->
-              <%= button_to t('menu.signup') + " " + t('general.today') , new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-        <%= image_tag 'pic5.jpg', :class => "fifth-slide" %>
-          <div class="container">
-            <div class="carousel-caption">
-            <h1 class="intro">Nutrient Tracking Tool</h1>
-              <p></p>
-              <!-- <p>This can be some different text from the first image, or the same.</p> -->
-              <%= button_to t('menu.signup') + " " + t('general.today') , new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-        <%= image_tag 'pic6.jpg', :class => "sixth-slide" %>
-          <div class="container">
-            <div class="carousel-caption">
-            <h1 class="intro">Nutrient Tracking Tool</h1>
-              <p></p>
-              <!-- <p>This can be some different text from the first image, or the same.</p> -->
-              <%= button_to t('menu.signup') + " " + t('general.today') , new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-        <%= image_tag 'pic7.jpg', :class => "seventh-slide" %>
-          <div class="container">
-            <div class="carousel-caption">
-            <h1 class="intro">Nutrient Tracking Tool</h1>
-              <p></p>
-              <!-- <p>This can be some different text from the first image, or the same.</p> -->
-              <%= button_to t('menu.signup') + " " + t('general.today') , new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-        <%= image_tag 'pic8.jpg', :class => "eigth-slide" %>
-          <div class="container">
-            <div class="carousel-caption">
-            <h1 class="intro">Nutrient Tracking Tool</h1>
-              <p></p>
-              <!-- <p>This can be some different text from the first image, or the same.</p> -->
-              <%= button_to t('menu.signup') + " " + t('general.today') , new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-        <%= image_tag 'pic9.png', :class => "ninth-slide" %>
+          <%= image_tag 'corn2.png', :class => "fifth-slide" %>
           <div class="container">
             <div class="carousel-caption">
               <h1 class="intro">Nutrient Tracking Tool</h1>
               <p></p>
               <!-- <p>This can be some different text from the first image, or the same.</p> -->
-              <%= button_to t('menu.signup') + " " + t('general.today') , new_user_path, :method => "get", :class => "btn btn-lg btn-primary" %> or <%= button_to t('menu.signin'), login_path, :method => "get", :class => "btn btn-lg btn-primary" %>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+        <%= image_tag 'pic9.png', :class => "sixth-slide" %>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1 class="intro">Nutrient Tracking Tool</h1>
+              <p></p>
+              <!-- <p>This can be some different text from the first image, or the same.</p> -->
             </div>
           </div>
         </div>
@@ -119,21 +81,103 @@
         <span class="sr-only"><%= t('general.next') %></span>
       </a>
     </div><!-- /.carousel -->
+    <div id="welcome">
+        <h1>Welcome</h1>
+      <p>Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. </p>
+      <%= render :template => "sessions/index" %>
+      <%= image_tag 'tiaer_logo.png', :style => "margin-left: 10%; height: 80px;" %>
+      <%= image_tag 'usda_logo1.png', :style => "margin-left: 5%; height: 35px; margin-top: 10%;" %>
+    </div>
+  </div>
+  <div id="welcome_info">
+    <center>
+      <p><a href='#' onclick="show('popup1')"><%= image_tag 'info_icon.png', :style => "height: 50px;" %><br>About NTT</a></p>
+      <p><a href='#' onclick="show('popup4')"><%= image_tag 'future_icon.png', :style => "height: 50px;" %><br>What's New</a></p>
+      <!--<p><a href='#' onclick="show('popup2')"><%= image_tag 'what_how_icon.png', :style => "height: 55px;" %><br>Other Models</a></p>-->
+      <p><a href='#' onclick="show('popup3')"><%= image_tag 'video2.png', :style => "height: 50px;" %><br>Instructions</a></p>
+      <p><a href='#' onclick="show('popup5')"><%= image_tag 'contact_icon.png', :style => "height: 45px" %><br>Contact Us</a></p>
+    </center>
+  </div>
+  <!-- Info icon -->
+  <div class="popup" id="popup1">
+    <p><strong>About NTT</strong><a class="close" onclick="hide('popup1')">×</a><br><br>
+      NTT is a web-based, site-specific application that estimates nutrient and sediment losses for crop and pasture at the field and/or watershed scales. Agricultural producers and land managers can define a number of management scenarios for any given field or area of interest (AOI). NTT will estimate nutrient (nitrogen and phosphorus) losses, sediment losses, and crop yields differences between the scenarios and present results in customizable reports.
+      NTT estimates are made using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model (Williams et al. 2000). Results represent average nutrient and sediment losses from the field based on 35 years of simulated weather. 
+      NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. Additional funding for development of NTT was provided by NIFA, the USDA Conservation Innovation Grants program, and various state governments.
+    </p>
+  </div>
+  <!-- Benefits icon -->
+  <div class="popup" id="popup2">
+    <p><strong>Other Available Models</strong><a class="close" onclick="hide('popup2')">×</a><br><br>
+      In addition to this version of NTT, the following versions of NTT are available to use:
+      <ol>
+        <li>Field/small watershed models:</li>
+        <ol type='a'>
+          <li>NTT for education and research purposes: (<a href="http://NTT_RE@tiaer.tarleton.edu">http://ntt_re@tiaer.tarleton.edu</a>)</li>
+          <li>Last version of NTT: (<a href="http://nn.tarleton.edu/nttg2">nn.tarleton.edu/nttg2</a>)</li>
+        </ol>
+        <li></li>
+      </ol>
+    </p>
+  </div>
+  <!-- Video icon -->
+  <div class="popup" id="popup3">
+    <p>Coming soon...  </p><a class="close" onclick="hide('popup3')">×</a>
+  </div>
+  <!--<div class="popup" id="popup3">
+    <p><strong>Data Requirements</strong><a class="close" onclick="hide('popup3')">×</a><br><br>
+      NTT requires regional soils, climate and site-specific crop management information. NTT currently provides selections for all regions of U.S. and Puerto Rico
+      territory, but it has only been validated for a limited number of states and counties. As validation becomes possible in other parts of the country, parameter
+      files may be updated for additional counties in future versions.</p>
+  </div>-->
+  <!-- Future icon -->
+  <div class="popup" id="popup4">
+    <strong>What's New</strong><a class="close" onclick="hide('popup4')">×</a><br><br>
+    <p>NTT has been updated and re-released as a national-level tool. NTT can now be used to estimate nutrient and sediment losses from crop and pasture operations across the contiguous United  States.
+    NTT is constantly being improved, so stay tuned to find out when new features are being added.
+    </p>
+  </div>
+  <!-- Contact icon -->
+  <div class="popup" id="popup5">
+    <p><strong>Contact Us</strong><a class="close" onclick="hide('popup5')">×</a><br><br>
+      For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at <a href="mailto:saleh@tiaer.tarleton.edu">saleh@tiaer.tarleton.edu</a>
+      or by phone (254) 968-9799. For technical support please contact Ali Saleh or Oscar Gallego at <a href="mailto:gallego@tiaer.tarleton.edu">gallego@tiaer.tarleton.edu</a>.</p>
+  </div>
+</div>
+<div class="container-bottom">
+  <h3 style="clear: both;">Related Tools</h3>
+  <hr>
+  <div style="float: left; width: 31%; margin-right: 2%;">
+    <h4>CEOTT</h4>
+    <p>CEEOT (Comprehensive Economic Environmental Optimization Tool) is a single-alone watershed-scale program. CEEOT will to evaluate the BMP's the economic and environmental impacts of conservation practices at the farm and watershed scales. CEEOT is not an internet-based model. Please visit <a href="http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html">http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html</a> for more information.</p>
+  </div>
+  <div style="float: left; width: 31%; margin-right: 2%">
+    <h4>NTT-RE</h4>
+    <p>NTT-RE is more comprehensive version of the current version of  NTT and intended to be used for Research and Education purposes. Please refer to <a href="http://ntt_re@tiaer.tarleton.edu">http://ntt-re@tiaer.tarleton.edu</a> for more information.</p>
+  </div>
+  <div style="float: left; width: 31%; margin-right: 2%;">
+    <h4>NTT-G2</h4>
+    <p>NTT-G2 is the  last version of NTT and is available at <a href="http://nn.tarleton.edu/nttG2">http://nn.tarleton.edu/nttG2</a>. </p>
+  </div>
+  <br style="clear: left;" />
+  <!--
 
-      <div class="row featurette">
-        <div class="col-md-12">
-          <img src="/serve_image/tiaer_logo.png" style= "max-width:65px;width: 100%; position:absolute; top:0; left:0; padding:9px;" alt="logo" />
-          <h2><%= raw t('welcome_note.header')%></h2>
-          <img src="/serve_image/usda_logo.png" style= "max-width:100px;width: 100%; position:absolute; top:0; right:0; padding:9px;" alt="logo" /><br>
-          <p><%= raw t('welcome_note.body1') %></p>
-          <p><%= raw t('welcome_note.body2') %></p>
-          <p><%= raw t('welcome_note.body3') %></p>
-          <p><%= raw t('welcome_note.body4') %></p>
-          <p><%= raw t('welcome_note.body5') %></p>
-          <p><%= raw t('welcome_note.body6') %></p>
-          <p>Dr. Ali Saleh</p>
-          <!--<% if ENV["APP_VERSION"] == "standard" %>
-          <center><p style="border:1px solid gray;max-width:300px;width: 100%;"><%= raw t('welcome_note.body7') %></p></center>
-          <% end %>-->
-        </div>
-      </div>
+  <div>
+    <h4>NTT-RE</h4>
+  </div>
+  <div>
+    <h4>NTT-G3</h4>
+  </div>-->
+</div>
+<script>
+  $ = function(id) {
+    return document.getElementById(id);
+  }
+
+  var show = function(id) {
+    $(id).style.display ='block';
+  }
+  var hide = function(id) {
+    $(id).style.display ='none';
+  }
+</script>
