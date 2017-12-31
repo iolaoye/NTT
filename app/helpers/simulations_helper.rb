@@ -1609,10 +1609,14 @@ module SimulationsHelper
   def change_fert_for_grazing(no3n, po4p, org_n, org_p, fert, nh3)
     newLine = sprintf("%5d", fert)
     newLine = newLine + " " + "Manure  "
+    if no3n == nil then no3n = 0 end
     newLine = newLine + " " + sprintf("%7.4f", no3n)
+    if po4p == nil then po4p = 0 end
     newLine = newLine + " " + sprintf("%7.4f", po4p)
     newLine = newLine + " " + sprintf("%7.4f", 0)
+    if org_n == nil then org_n = 0 end
     newLine = newLine + " " + sprintf("%7.4f", org_n)
+    if org_p == nil then org_p = 0 end
     newLine = newLine + " " + sprintf("%7.4f", org_p)
 	if nh3 == nil then
 		nh3 = 0.350
