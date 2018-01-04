@@ -301,7 +301,8 @@ module ProjectsHelper
 		if !new.save
 			return "Error Saving operation"
 		else
-			duplicate_soil_operations_by_scenarios(operation.id, new.id) unless operation.activity_id == 7
+			debugger
+			duplicate_soil_operations_by_scenarios(operation.id, new.id) 
 			if operation.activity_id == 7 || operation.activity_id == 9 then #continuous and rotational grazing
 				stop_operation = operations.find_by_type_id(operation.id)
 				if stop_operation != nil then #create the stop grazing operation
