@@ -109,6 +109,7 @@ getGrazingFields = ->
     $("#div_type")[0].children[0].innerText = "Animal Type"
 
 updateTypes = ->
+  $("#operation_nh4_n").hide()
   $("#div_amount").hide()
   $("#div_depth").hide()
   $("#div_nutrients").hide()
