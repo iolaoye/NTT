@@ -2,9 +2,9 @@ require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
 
-  test "password_reset" do
+  def test_reset_email
     user = users(:michael)
-    user.reset_token = User.new_token
+    user.reset_token = user.new_token
     mail = UserMailer.password_reset(user)
     assert_equal "Password reset", mail.subject
     assert_equal [user.email], mail.to

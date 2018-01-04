@@ -4,14 +4,10 @@ one:
   county_name: MyString
   county_code: MyString
   status: 1
-  latitude: 1.5
-  longitude: 1.5
   state_id: 1
 
 two:
   county_name: MyString
   county_code: MyString
   status: 1
-  latitude: 1.5
-  longitude: 1.5
   state_id: 1

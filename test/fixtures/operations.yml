@@ -2,7 +2,7 @@
 
 one:
   crop_id: 1
-  operation_id: 1
+  activity_id: 1
   day: 1
   month_id: 1
   year: 1
@@ -17,7 +17,7 @@ one:
 
 two:
   crop_id: 1
-  operation_id: 1
+  activity_id: 1
   day: 1
   month_id: 1
   year: 1

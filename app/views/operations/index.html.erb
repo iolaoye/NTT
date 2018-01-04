@@ -177,7 +177,7 @@
 						<td class="optable"><b><%= (t'pdf.day') %></b></td>
 						<td class="optable"><b><%= t('general.type') %></b></td>
 						<td class="optable" style="text-align: right"><b><%= t('operation.volume') %></b></td>
-						<td class="optable" style="text-align: right"><b><%= t('bmp.depth') %></b></td>
+						<td class="optable" style="text-align: right"><b><%= t('bmp.irrigation_efficiency' + "(%)") %></b></td>
 						<td class="optable" style="text-align:right"><b><%= t('general.actions') %></b></td>
 					</tr>
 					<% @scenario.irrigation_operations(rotation).each do |op| %>
@@ -191,7 +191,7 @@
 						  <td><%= Irrigation.find(op.type_id).spanish_name %></td>
 						<% end %>
 						<td class="gvTitleStyleNumber"><%= op.amount %></td>
-						<td class="gvTitleStyleNumber"><%= op.depth %></td>
+						<td class="gvTitleStyleNumber"><%= op.depth%></td>
 						<td style="text-align:right">
 						  <%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.edit') %>
 						  <%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, op), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
@@ -271,7 +271,7 @@
 							<td><%= op.day %></td>
 							<% if op.activity_id == 9 %>
 								<% if (I18n.locale.eql?(:en)) %>
-								  <td><%= op.type_name %></td>
+								  <td><%= Fertilizer.find(op.type_id).name %></td>
 								<% else %>
 								  <td><%= Fertilizer.find(op.type_id).spanish_name %></td>
 								<% end %>

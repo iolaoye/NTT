@@ -603,45 +603,45 @@ module ScenariosHelper
 	end
 
 	def update_soil_operation(soil_operation, soil_id, operation)
-	soil_operation.activity_id = operation.activity_id
-	soil_operation.scenario_id = operation.scenario_id
-	soil_operation.operation_id = operation.id
-	soil_operation.soil_id = soil_id
-	soil_operation.year = operation.year
-	soil_operation.month = operation.month_id
-	soil_operation.day = operation.day
-	case operation.activity_id
-	  when 1, 3 #planting, tillage
-	    soil_operation.apex_operation = operation.type_id
-	    soil_operation.type_id = operation.type_id
-	  when 2, 7 #fertilizer, grazing
-	    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
-	    soil_operation.type_id = operation.subtype_id
-	  when 4 #Harvest. Take harvest operation from crop table
-	    soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
-	    soil_operation.type_id = operation.subtype_id
-	  else
-	    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
-	    soil_operation.type_id = operation.type_id
-	end
-	soil_operation.tractor_id = 0
-	if operation.crop_id == 0 then
-		soil_operation.apex_crop = 0
-	else
-		soil_operation.apex_crop = Crop.find(operation.crop_id).number
-	end
-	soil_operation.opv1 = set_opval1(operation)
-	soil_operation.opv2 = set_opval2(soil_operation.soil_id, operation)
-	soil_operation.opv3 = 0
-	soil_operation.opv4 = set_opval4(operation)
-	soil_operation.opv5 = set_opval5(operation)
-	soil_operation.opv6 = 0
-	soil_operation.opv7 = 0
-	if soil_operation.save
-	  return "OK"
-	else
-	  return soil_operation.errors
-	end
+		soil_operation.activity_id = operation.activity_id
+		soil_operation.scenario_id = operation.scenario_id
+		soil_operation.operation_id = operation.id
+		soil_operation.soil_id = soil_id
+		soil_operation.year = operation.year
+		soil_operation.month = operation.month_id
+		soil_operation.day = operation.day
+		case operation.activity_id
+		  when 1, 3 #planting, tillage
+		    soil_operation.apex_operation = operation.type_id
+		    soil_operation.type_id = operation.type_id
+		  when 2, 7 #fertilizer, grazing
+		    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
+		    soil_operation.type_id = operation.subtype_id
+		  when 4 #Harvest. Take harvest operation from crop table
+		    soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
+		    soil_operation.type_id = operation.subtype_id
+		  else
+		    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
+		    soil_operation.type_id = operation.type_id
+		end
+		soil_operation.tractor_id = 0
+		if operation.crop_id == 0 then
+			soil_operation.apex_crop = 0
+		else
+			soil_operation.apex_crop = Crop.find(operation.crop_id).number
+		end
+		soil_operation.opv1 = set_opval1(operation)
+		soil_operation.opv2 = set_opval2(soil_operation.soil_id, operation)
+		soil_operation.opv3 = 0
+		soil_operation.opv4 = set_opval4(operation)
+		soil_operation.opv5 = set_opval5(operation)
+		soil_operation.opv6 = 0
+		soil_operation.opv7 = 0
+		if soil_operation.save
+		  return "OK"
+		else
+		  return soil_operation.errors
+		end
 	end
 
   def set_opval5(operation)
@@ -677,7 +677,7 @@ module ScenariosHelper
   def set_opval1(operation)
     opv1 = 1.0
     case operation.activity_id
-      when 1 #planting take heat units
+    when 1 #planting take heat units
 		#this code will calculate Heat Unist base on location and crop - Was taken back to take from database- Ali 11/2/2016 
         #client = Savon.client(wsdl: URL_Weather)
         #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(params[:field_id]).latitude, "nlon" => Weather.find_by_field_id(params[:field_id]).longitude})
@@ -685,18 +685,28 @@ module ScenariosHelper
 		#this code will take Heat Units from database according to Ali 11/2/216
 		opv1 = Crop.find(operation.crop_id).heat_units
       #opv1 = 2.2
-      when 2 #fertilizer - converte amount applied
+    when 2 #fertilizer - converte amount applied
       	case operation.type_id
       	when 1
 			opv1 = (operation.amount * LBS_TO_KG / AC_TO_HA).round(2) #kg/ha of fertilizer applied converted from lbs/ac
-        when 3
-          	opv1 = (operation.amount * 9350 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
         when 2
+        	if operation.moisture == nil then
+        		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
+        		operation.save
+        	end
         	opv1 = (operation.amount * 2471 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
+        when 3
+        	if operation.moisture == nil then
+        		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
+        		operation.save
+        	end
+          	opv1 = (operation.amount * 9350 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
         end
-      when 6 #irrigation
+    when 6 #irrigation
         opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
-      when 12 #liming
+    when 7, 9 #grazing
+    	opv1 = @scenario.subareas[0].wsa / operation.amount  #since it is grazing just first subarea is used.
+    when 12 #liming
         opv1 = operation.amount / THA_TO_TAC #converts input t/ac to APEX t/ha
     end
     return opv1
@@ -707,8 +717,8 @@ module ScenariosHelper
   def set_opval4(operation)
     opv4 = 0.0
     case operation.activity_id
-      when 6 #irrigation
-        opv4 = 1 - operation.depth unless operation.depth == nil
+      when 6 #irrigation efficiency. Converted from % to fraction
+        opv4 = 1 - operation.depth/100 unless operation.depth == nil
     end
     return opv4
   end

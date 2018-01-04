@@ -1,3 +1,4 @@
+
 module SimulationsHelper
   PHMIN = 3.5
   PHMAX = 9.0
@@ -15,54 +16,54 @@ module SimulationsHelper
     @apex_control = ""
     @apex_controls = ApexControl.where(:project_id => params[:project_id])
     require 'net/http'
-	if @apex_controls.count == 76 then
-		ap = ApexControl.new
-		ap.project_id = @project.id
-		ap.control_description_id = 77
-		ap.value = 0
-		ap.save
-		ap = ApexControl.new
-		ap.project_id = @project.id
-		ap.control_description_id = 78
-		ap.value = 1
-		ap.save
-	end
-	@apex_controls = ApexControl.where(:project_id => params[:project_id])
-    @apex_controls.each do |c|
-      case c.control_description_id
-        when 1..19 #line 1
-          @apex_control += sprintf("%4d", c.value)
-        when 20
-          @apex_control += sprintf("%4d", c.value) + "\n"
-        when 21..37 #line 2
-          @apex_control += sprintf("%4d", c.value)
-        when 38
-          @apex_control += sprintf("%4d", c.value) + "\n"
-        when 39..47 #line 3
-          @apex_control += sprintf("%8.2f", c.value)
-        when 48
-          @apex_control += sprintf("%8.2f", c.value) + "\n"
-        when 49..57 #line 4
-          @apex_control += sprintf("%8.2f", c.value)
-        when 58
-          @apex_control += sprintf("%8.2f", c.value) + "\n"
-        when 59..67 #line 5
-          @apex_control += sprintf("%8.2f", c.value)
-        when 68
-          @apex_control += sprintf("%8.2f", c.value) + "\n"
-        when 69..77 #line 6
-          @apex_control += sprintf("%8.2f", c.value)
-        when 78
-          @apex_control += sprintf("%8.2f", c.value) + "\n"
-		  #line 7
-		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BNO3  Line 7 col 1
-		  @apex_control += sprintf("%8.2f", 60)  #todo. this is temporary adding BAP(1)  Line 7 col 2
-		  @apex_control += sprintf("%8.2f", 120)  #todo. this is temporary adding BAP(2)  Line 7 col 3
-		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BAP(3)  Line 7 col 4
+  	if @apex_controls.count == 76 then
+  		ap = ApexControl.new
+  		ap.project_id = @project.id
+  		ap.control_description_id = 77
+  		ap.value = 0
+  		ap.save
+  		ap = ApexControl.new
+  		ap.project_id = @project.id
+  		ap.control_description_id = 78
+  		ap.value = 1
+  		ap.save
+  	end
+  	@apex_controls = ApexControl.where(:project_id => params[:project_id])
+      @apex_controls.each do |c|
+        case c.control_description_id
+          when 1..19 #line 1
+            @apex_control += sprintf("%4d", c.value)
+          when 20
+            @apex_control += sprintf("%4d", c.value) + "\n"
+          when 21..37 #line 2
+            @apex_control += sprintf("%4d", c.value)
+          when 38
+            @apex_control += sprintf("%4d", c.value) + "\n"
+          when 39..47 #line 3
+            @apex_control += sprintf("%8.2f", c.value)
+          when 48
+            @apex_control += sprintf("%8.2f", c.value) + "\n"
+          when 49..57 #line 4
+            @apex_control += sprintf("%8.2f", c.value)
+          when 58
+            @apex_control += sprintf("%8.2f", c.value) + "\n"
+          when 59..67 #line 5
+            @apex_control += sprintf("%8.2f", c.value)
+          when 68
+            @apex_control += sprintf("%8.2f", c.value) + "\n"
+          when 69..77 #line 6
+            @apex_control += sprintf("%8.2f", c.value)
+          when 78
+            @apex_control += sprintf("%8.2f", c.value) + "\n"
+  		  #line 7
+  		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BNO3  Line 7 col 1
+  		  @apex_control += sprintf("%8.2f", 60)  #todo. this is temporary adding BAP(1)  Line 7 col 2
+  		  @apex_control += sprintf("%8.2f", 120)  #todo. this is temporary adding BAP(2)  Line 7 col 3
+  		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BAP(3)  Line 7 col 4
+        end
       end
-    end
-    #msg = send_file_to_APEX(apex_string, "Apexcont.dat")
-	msg = "OK"
+      #msg = send_file_to_APEX(apex_string, "Apexcont.dat")
+  	msg = "OK"
   end
 
   def send_files_to_APEX(file)
@@ -78,13 +79,14 @@ module SimulationsHelper
 
   def send_files1_to_APEX(file)
     start = @scenario.operations.find_by_activity_id(9)
-    bmp_string = ""
+    rotational_grazing = ""
     if start != nil then
-      bmp_string = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + start.amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
+      amount = start.amount * Fertilizer.find_by_code(start.type_id).convertion_unit
+      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
     end
     stop = @scenario.operations.find_by_activity_id(10)
     if stop != nil
-      bmp_string += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
+      rotational_grazing += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
     end
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
     url = URI.parse(URL_NTT)
@@ -92,7 +94,7 @@ module SimulationsHelper
     http.read_timeout = 120
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     req = Net::HTTP::Post.new(url.path)
-    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => bmp_string})
+    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => rotational_grazing})
     res = http.request(req)
     if res.body.include?("Created") then
       return "OK"
@@ -199,42 +201,42 @@ module SimulationsHelper
   end
 
   def create_wind_wp1_files()
-	county_id = @project.location.county_id
-	if county_id > 0
-		county = County.find(county_id)
-	else
-		county = nil
-	end
-    if county != nil then
-		wind_wp1_name = county.wind_wp1_name
-		wind_wp1_code = county.wind_wp1_code
-	else
-		wind_wp1_name = "CHINAG"
-		wind_wp1_code = 999
-	end
-    apex_run_string = "APEX001   1IWPNIWND   1   0   0"
-    client = Savon.client(wsdl: URL_Weather)
-	###### create wp1 file from weather and send to server ########
-    #response = client.call(:create_wp1_from_weather1, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => wind_wp1_code})
-    #response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "pgm" => 'APEX'})
-	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => county.county_state_code})
-    #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result][:string]
-    if response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] == "created" then
-		return "OK"
-	else
-		return "Error creating wp1 and wind files"
-	end
+  	county_id = @project.location.county_id
+  	if county_id > 0
+  		county = County.find(county_id)
+  	else
+  		county = nil
+  	end
+      if county != nil then
+  		wind_wp1_name = county.wind_wp1_name
+  		wind_wp1_code = county.wind_wp1_code
+  	else
+  		wind_wp1_name = "CHINAG"
+  		wind_wp1_code = 999
+  	end
+      apex_run_string = "APEX001   1IWPNIWND   1   0   0"
+      client = Savon.client(wsdl: URL_Weather)
+  	###### create wp1 file from weather and send to server ########
+      #response = client.call(:create_wp1_from_weather1, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => wind_wp1_code})
+      #response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "pgm" => 'APEX'})
+  	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => county.county_state_code})
+      #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result][:string]
+      if response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] == "created" then
+  		return "OK"
+  	else
+  		return "Error creating wp1 and wind files"
+  	end
 
-    #msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wp1")
-    #client = Savon.client(wsdl: URL_Weather)
-	######### create eind file and send to server ########
-    #response = client.call(:get_weather, message: {"path" => WIND + "/" + wind_wp1_name + ".wnd"})
-    #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-    #msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wnd")
-	######### create apexrun file and send to server ########
-    #apex_run_string["IWPN"] = sprintf("%4d", wind_wp1_code)
-    #apex_run_string["IWND"] = sprintf("%4d", wind_wp1_code)
-    #msg = send_file_to_APEX(apex_run_string, "Apexrun.dat")
+      #msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wp1")
+      #client = Savon.client(wsdl: URL_Weather)
+  	######### create eind file and send to server ########
+      #response = client.call(:get_weather, message: {"path" => WIND + "/" + wind_wp1_name + ".wnd"})
+      #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
+      #msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wnd")
+  	######### create apexrun file and send to server ########
+      #apex_run_string["IWPN"] = sprintf("%4d", wind_wp1_code)
+      #apex_run_string["IWND"] = sprintf("%4d", wind_wp1_code)
+      #msg = send_file_to_APEX(apex_run_string, "Apexrun.dat")
   end
 
   def create_weather_file(dir_name, field_id)
@@ -297,8 +299,8 @@ module SimulationsHelper
     end #end if
     #msg = send_file_to_APEX(@apex_wth, "APEX.wth")
     #todo fix widn and wp1 files with the real name
-	#msg = send_files_to_APEX("FILES")
-	return "OK"
+    #msg = send_files_to_APEX("FILES")
+    return "OK"
   end
 
   def create_soils()
@@ -805,11 +807,9 @@ module SimulationsHelper
     if @grazing == nil then
       subareas = @scenario.subareas.where("soil_id > 0 AND (bmp_id = 0 OR bmp_id is NULL)")
     else
-      #subareas = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
       subareas = @scenario.subareas.where("soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
     end
   	subareas.each do |subarea|
-  		#soil = Soil.find(subarea.soil_id)
       soil = subarea.soil
   		if soil.selected then
   			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
@@ -867,33 +867,32 @@ module SimulationsHelper
 
     #for Each buf In _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bufferInfo
 	  buffer = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND bmp_id != 'nil' AND bmp_id != 0 AND soil_id = 0")
-      buffer.each do |buf|
-        if !(buf.subarea_type == "PPDE" || buf.subarea_type == "PPTW" || buf.subarea_type == "AITW" || buf.subarea_type == "CBMain")
-          #create the operation file for this subarea.
-          @last_subarea += 1
-          opcsFile.Add(buf.SubareaTitle)
-          opcsFile.Add(".OPC " & buf.SubareaTitle + " file Operation:1  Date: " + @dtNow1)
-          opcsFile.Add(buf._operationsInfo(0).LuNumber.ToString.PadLeft(4))
-          operations = Operation.where(:scenario_id => params[:id])
-          #for Each oper In buf._operationsInfo
-          operations.each do |oper|
-            opcsFile.Add(sprintf("%3d", oper.year) + sprintf("%3d", oper.month) + sprintf("%3d", oper) + sprintf("%5d", oper.apex_code) + sprintf("%5d", 0) + sprintf("%5d", oper.apex_crop) + sprintf("%5d", oper.subtype) + sprintf("%8.2f", oper.opv1) + sprintf("%8.2f", oper.opv2))
-          end
-          opcsFile.Add("End " & buf.description)
-		else
-			i -= 1
+    buffer.each do |buf|
+      if !(buf.subarea_type == "PPDE" || buf.subarea_type == "PPTW" || buf.subarea_type == "AITW" || buf.subarea_type == "CBMain")
+        #create the operation file for this subarea.
+        @last_subarea += 1
+        opcsFile.Add(buf.SubareaTitle)
+        opcsFile.Add(".OPC " & buf.SubareaTitle + " file Operation:1  Date: " + @dtNow1)
+        opcsFile.Add(buf._operationsInfo(0).LuNumber.ToString.PadLeft(4))
+        operations = Operation.where(:scenario_id => params[:id])
+        #for Each oper In buf._operationsInfo
+        operations.each do |oper|
+          opcsFile.Add(sprintf("%3d", oper.year) + sprintf("%3d", oper.month) + sprintf("%3d", oper) + sprintf("%5d", oper.apex_code) + sprintf("%5d", 0) + sprintf("%5d", oper.apex_crop) + sprintf("%5d", oper.subtype) + sprintf("%8.2f", oper.opv1) + sprintf("%8.2f", oper.opv2))
         end
-        add_subarea_file(buf, operation_number, last_owner1, i, nirr, true, 0)
-		i+=1
+        opcsFile.Add("End " & buf.description)
+	    else
+        i -= 1
       end
-
+      add_subarea_file(buf, operation_number, last_owner1, i, nirr, true, 0)
+	    i+=1
+    end
     @last_soil_sub = @last_soil2
     last_owner = last_owner1
     #todo check this one.
     #$last_subarea += _fieldsInfo1(currentFieldNumber)._soilsInfo(i - 1)._scenariosInfo(currentScenarioNumber)._subareasInfo_subarea_info..Iops
     #print_array_to_file(@subarea_file, "APEX.sub")
     #msg = send_file_to_APEX(@subarea_file, "APEX.sub")
-	msg = "OK"
+    msg = "OK"
     return msg
   end  #end method create_subarea1
 
@@ -908,30 +907,33 @@ module SimulationsHelper
     #/line 2
     @last_soil2 = j + @last_soil_sub
     last_owner1 = @last_soil2
-	if buffer then
-		#sLine = sprintf("%4d", @last_soil2-1)  #soil
-		sLine = sprintf("%4d", _subarea_info.inps)  #soil
-		if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
-			sLine += sprintf("%4d", _subarea_info.iops) #operation
-		else
-			#sLine += sprintf("%4d", @soil_number + 1)   #operation
-			sLine += sprintf("%4d", _subarea_info.iops)   #operation
-		end
-		#sLine += sprintf("%4d", last_owner1-1) #owner id. Should change for each field
-		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
-	else
-		#sLine = sprintf("%4d", @soil_number + 1)  #soil
-		#sLine += sprintf("%4d", @soil_number + 1)   #operation
-		#sLine += sprintf("%4d", last_owner1) #owner id. Should change for each field
-    if session[:simulation] == "scenario" then
-      sLine = sprintf("%4d", _subarea_info.inps)  #soil
-      sLine += sprintf("%4d", _subarea_info.iops)   #operation
-    else
-      sLine = sprintf("%4d", @soil_number+1)  #soil
-      sLine += sprintf("%4d", @soil_number+1)   #operation
-    end
-    sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
-	end
+  	if buffer then
+  		sLine = sprintf("%4d", _subarea_info.inps)  #soil
+  		if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
+  			sLine += sprintf("%4d", _subarea_info.iops) #operation
+  		else
+        #when @grazing the operation number should be the following because the subareas are reduce to 1
+        if @grazing != nil then
+          if session[:simulation] != "scenario" then
+            _subarea_info.iops = @soil_number + 1 
+          else
+            _subarea_info.iops = i + 1
+          end
+        end
+  			sLine += sprintf("%4d", _subarea_info.iops)   #operation
+  		end
+  		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
+  	else
+      if session[:simulation] == "scenario" then
+        sLine = sprintf("%4d", _subarea_info.inps)  #soil
+        sLine += sprintf("%4d", _subarea_info.iops)   #operation
+      else
+        #sLine = sprintf("%4d", @soil_number+1)  #soil
+        sLine = sprintf("%4d", _subarea_info.inps)  #soil
+        sLine += sprintf("%4d", @soil_number+1)   #operation
+      end
+      sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
+  	end
     if _subarea_info.iow == 0 then
       _subarea_info.iow = 1
     end
@@ -1256,9 +1258,6 @@ module SimulationsHelper
     crop_ant = 0
     oper_ant = 799
     found = false
-    #Dim animalCode As Short = 0
-    #Dim cn As Single = 0
-
     for i in 0..(8 - 1)
       items[i] = ""
       values[i] = 0
@@ -1270,11 +1269,9 @@ module SimulationsHelper
     if crop_ant != operation.apex_crop then
       crop = Crop.find_by_number(operation.apex_crop)
       if crop != nil then
-        #if crop.number == operation.apex_crop then
         lu_number = crop.lu_number
         harvest_code = crop.harvest_code
         filter_strip = crop.type1
-        #end
       end
       crop_ant = operation.apex_crop
     end
@@ -1369,16 +1366,6 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", operation.opv4) #Opv4. No entry needed.
 
         operation.opv5 == nil ? apex_string += sprintf("%8.2f", 0) : operation.opv5 < 0.01 ? apex_string += sprintf("%8.6f", operation.opv5) : apex_string += sprintf("%8.2f", operation.opv5) #Opv 5 Plant Population.
-      when 6 #irrigation
-        apex_string += sprintf("%5d", 0) #
-        items[0] = "Irrigation"
-        values[0] = operation.opv2
-        apex_string += sprintf("%8.2f", operation.opv1) #Volume applied for irrigation in mm
-        nirr = 1
-        apex_string += sprintf("%8.2f", 0) #opval2
-        apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
-        apex_string += sprintf("%8.2f", 0) and sprintf("%8.2f", operation.opv2) #Opv4 Irrigation Efficiency
-        apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
         oper = Operation.where(:id => operation.operation_id).first
@@ -1416,32 +1403,6 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
-      when 7 # grazing              #Grazing - kind and number of animals
-        apex_string += sprintf("%5d", 0) #
-        #if number of animals were enter in modify page and it is the first grazing operation
-        if @grazingb == false then
-          items[3] = "DryMatterIntake"
-          #create_herd file and send to APEX
-		      current_oper = Operation.find(operation.operation_id)
-          values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
-          #animalB = operation.ApexTillCode
-          @grazingb = true
-          if current_oper.no3_n != 0 || current_oper.po4_p != 0 || current_oper.org_n != 0 || current_oper.org_p != 0 || current_oper.nh3 != 0 then
-            #animal_code = get_animal_code(operation.type_id)
-            change_fert_for_grazing(current_oper.no3_n, current_oper.po4_p, current_oper.org_n, current_oper.org_p, current_oper.type_id, current_oper.nh3)
-          end
-        end
-        apex_string += sprintf("%8.4f", operation.opv1)
-        items[0] = "Kind"
-        values[0] = operation.type_id
-        items[1] = "Animals"
-        values[1] = operation.opv1
-        items[2] = "Hours"
-        values[2] = operation.opv2
-        apex_string += sprintf("%8.2f", 0) #opval2
-        apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
-        apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
-        apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
       when 3 #tillage
         apex_string += sprintf("%5d", 0)
         apex_string += sprintf("%8.2f", 0)
@@ -1474,6 +1435,43 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
+      when 6 #irrigation
+        apex_string += sprintf("%5d", 0) #
+        items[0] = "Irrigation"
+        values[0] = operation.opv2
+        apex_string += sprintf("%8.2f", operation.opv1) #Volume applied for irrigation in mm
+        nirr = 1
+        apex_string += sprintf("%8.2f", 0) #opval2. No entry needed
+        apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
+        #apex_string += sprintf("%8.2f", 0) and sprintf("%8.2f", operation.opv2) #Opv4 Irrigation Efficiency
+        apex_string += sprintf("%8.2f", operation.opv4) #Opv4 Irrigation Efficiency
+        apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
+      when 7 # grazing              #Grazing - kind and number of animals
+        apex_string += sprintf("%5d", 0) #
+        #if number of animals were enter in modify page and it is the first grazing operation
+        if @grazingb == false then
+          items[3] = "DryMatterIntake"
+          #create_herd file and send to APEX
+          current_oper = Operation.find(operation.operation_id)
+          values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
+          #animalB = operation.ApexTillCode
+          @grazingb = true
+          if current_oper.no3_n != 0 || current_oper.po4_p != 0 || current_oper.org_n != 0 || current_oper.org_p != 0 || current_oper.nh3 != 0 then
+            #animal_code = get_animal_code(operation.type_id)
+            change_fert_for_grazing(current_oper.no3_n, current_oper.po4_p, current_oper.org_n, current_oper.org_p, current_oper.type_id, current_oper.nh3)
+          end
+        end
+        apex_string += sprintf("%8.4f", operation.opv1)
+        items[0] = "Kind"
+        values[0] = operation.type_id
+        items[1] = "Animals"
+        values[1] = operation.opv1
+        items[2] = "Hours"
+        values[2] = operation.opv2
+        apex_string += sprintf("%8.2f", 0) #opval2
+        apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
+        apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
+        apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
       when 8 #stopGrazing
         apex_string += sprintf("%5d", 0) #
         apex_string += sprintf("%8.2f", 0)
@@ -1483,7 +1481,7 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
-      when 10 # liming
+      when 11 # liming
         apex_string += sprintf("%5d", 0) #
         apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
       else #No entry needed.
@@ -1611,10 +1609,14 @@ module SimulationsHelper
   def change_fert_for_grazing(no3n, po4p, org_n, org_p, fert, nh3)
     newLine = sprintf("%5d", fert)
     newLine = newLine + " " + "Manure  "
+    if no3n == nil then no3n = 0 end
     newLine = newLine + " " + sprintf("%7.4f", no3n)
+    if po4p == nil then po4p = 0 end
     newLine = newLine + " " + sprintf("%7.4f", po4p)
     newLine = newLine + " " + sprintf("%7.4f", 0)
+    if org_n == nil then org_n = 0 end
     newLine = newLine + " " + sprintf("%7.4f", org_n)
+    if org_p == nil then org_p = 0 end
     newLine = newLine + " " + sprintf("%7.4f", org_p)
 	if nh3 == nil then
 		nh3 = 0.350
@@ -2320,9 +2322,9 @@ module SimulationsHelper
     #calculate number of animals.
     case animal_code
         when 43		#"Dairy"    '1
-            manureProduced = 3.9
+            manureProduced = 4.5
             bioConsumed = 9.1
-            urineProduced = 11.8
+            urineProduced = 8.2
             manureId = 43
         #when "Dairy-dry cow"    '2
         #    manureProduced = 5.5
@@ -2340,7 +2342,7 @@ module SimulationsHelper
         #    urineProduced = 8.2
         #    manureId = 43
         when 44   #"Beef"    '5
-            manureProduced = 3.9
+            manureProduced = 4.5
             bioConsumed = 9.1
             urineProduced = 8.2
             manureId = 44
@@ -2407,7 +2409,7 @@ module SimulationsHelper
         else
             manureProduced = 12
             bioConsumed = 9.08
-            urineProduced = 0
+            urineProduced = 6.8
             manureId = 56
       end   # end case
 
@@ -2420,10 +2422,10 @@ module SimulationsHelper
       #        conversionUnit = animal.ConversionUnit
       #    End If
       #Next
-
 	    conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
       @last_herd += 1
-      animalField = animals * soil_percentage / 100
+      #commented because in grazing just one soil is used. 
+      #animalField = animals * soil_percentage / 100
       herdFile = sprintf("%4d", @last_herd) #For different owners
       #comentarized because there is not field divided anymore
       #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
@@ -2431,7 +2433,7 @@ module SimulationsHelper
       #Else
       #    herdFile &= Format(CInt(animalField(i) * conversionUnit), "#####0.0").PadLeft(8)
       #End If
-      herdFile += sprintf("%8.1f", (animalField * conversion_unit).round(0))
+      herdFile += sprintf("%8.1f", (animals * conversion_unit).round(0))
       herdFile += sprintf("%8.1f", animal_code)
       herdFile += sprintf("%8.2f",(24 - hours) / 24)
       herdFile += sprintf("%8.2f",bioConsumed)

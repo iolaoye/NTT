@@ -735,7 +735,7 @@ class BmpsController < ApplicationController
 
 ### ID: 9
   def pond(type)
-  	@bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency].to_f / 100
+  	@bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency].to_f 
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
       subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first

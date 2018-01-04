@@ -1,28 +1,28 @@
-﻿<%= form_tag session_path do %>
-  <% if notice != nil %>
-    <div class="success_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <%= notice %>
-    </div>
-  <% end %>
-    <div class="page-container">
-    <div class="container-form">
+﻿<div class="page-container">
+  <%= form_tag session_path do %>
+    <% if notice != nil %>
+      <div class="success_alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <%= notice %>
+      </div>
+    <% end %>
+    <div class="login-form">
       <h2><%= t('submit.login') %></h2>
       <div class="field">
-        <%= text_field_tag :email, nil, placeholder: (t('.email')), :class => "form_input" %>
-        <%= password_field_tag :password, nil, placeholder: (t('.password')), :class => "form_input" %>
+        <%= text_field_tag :email, nil, :required => true, placeholder: (t('.email')), :class => "form_input" %>
+        <%= password_field_tag :password, nil, :required => true, placeholder: (t('.password')), :class => "form_input" %>
       </div>
-        <div id="left_button">
-          <%= submit_tag t('submit.login'), :class => "btn btn-primary" %>
-        </div>
-<% end %>
-<% #end of form_tag for login input %>
-        <div id="right_button">
-          <%= button_to t('.new_user'), users_new_path, method: :get, :class => "btn btn-primary" %>
-        </div>
-        <br/>
-        <div id="forgot_pass">
-          <%= link_to 'Forgot Password?', new_password_reset_path %>
-        </div>
-    </div>
-    </div>
+      <div id="left_button">
+        <%= submit_tag t('submit.login'), :class => "btn btn-primary" %>
+      </div>
+  <% end %>
+  <% #end of form_tag for login input %>
+  <div id="right_button">
+    <%= button_to t('.new_user'), users_new_path, method: :get, :class => "btn btn-primary" %>
+  </div>
+  <br/>
+  <div id="forgot_pass">
+    <%= link_to 'Forgot Password?', new_password_reset_path %>
+  </div>
+</div>
+</div>
