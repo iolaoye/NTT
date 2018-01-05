@@ -26,7 +26,11 @@
 				<%#= raw t('resultspage.nav.expand.body1') %>
 		<%#= t('resultspage.understand.header') %>
 			<h2><%= t('resultspage.understand.tabular.header') %></h2>
+			<% if ENV["APP_VERSION"] == "standard" %>
+			<%= image_tag("help/page_9/image003_standard.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:1180px;width: 100%;") %><br>
+			<% else %>
 			<%= image_tag("help/page_9/image003.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:1180px;width: 100%;") %><br>
+			<% end %>
 				<p><%= raw t('resultspage.understand.tabular.body1') %></p>
 				<p><%= raw t('resultspage.understand.tabular.body2') %></p>
 				<p><%= raw t('resultspage.understand.tabular.body3') %></p>
