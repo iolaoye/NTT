@@ -856,8 +856,8 @@ en:
     overview5: 'NTT requires regional soils, climate and site-specific crop management information. NTT currently provides selections for <strong>every U.S. county</strong>, but it has only been validated for a limited number of states and counties. As validation becomes possible in other parts of the country, parameter files may be updated for additional counties in future versions.'
     overview6: 'For more information regarding NTT, please refer to Saleh et al. (2011 and 2014).'
     overview7: 'Now, there are two versions of new NTT program available:'
-    item9: 'The “R&D” version (E) which will be used by researchers and educational institutes for teaching and training purposes. The “EDUCATIONAL” version (P) includes all functions available in NTT. Detailed information  '
-    item10: 'The “PRODUCERS” version is a easier to use and will include the essential NTT functions required for use for other users, such as farm producers.'
+    item9: 'The version (RE) which will be used by researchers and educational institutes for teaching and training purposes. The “EDUCATIONAL” version (P) includes all functions available in NTT. Detailed information  '
+    item10: 'The “BASIC” version is a easier to use and will include the essential NTT functions required for use for other users, such as farm producers.'
     overview8: 'Nevertheless, the data sources and APEX simulations in both versions are similar.'
     process0: 'Process'
     process: 'User supplied information is processed using a biophysical simulation model, the Agricultural Policy Environmental eXtender (APEX; Williams et al., 2000).'
@@ -1291,8 +1291,8 @@ en:
   projpage:
     header: Projects
     header_modified: My Projects
-    statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project, upload an example project, or open a saved project.
-    statement_modified: After creating an account in NTT and logging in, you will be directed to the My Projects page. My Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project, or open a saved project.
+    statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project (open a saved project), upload an example project.
+    statement_modified: After creating an account in NTT and logging in, you will be directed to the My Projects page. My Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project (open a saved project).
     initial:
         header: To Start a Project
         statement: There are <b>three initial choices</b> to start a new project:<br>
@@ -1573,7 +1573,7 @@ en:
         body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
     operation:
         header: Manage Field Scenarios
-        body: 'The Management Scenarios page includes a list of the scenarios created for the field. The list includes the scenario name, fields for weather, soils, layers and operations, simulation date, and an actions column.'
+        body: 'The Management Scenarios page includes a list of the scenarios created for the field. The list includes the scenario name, fields for weather, soils and operations, simulation date, and an actions column.'
         body1: 'A green check will appear in the weather, soils, layers and operations columns where these are present for the scenario. In order to successfully simulate a scenario, all four of these elements must contain a green check. The <strong>weather, soils</strong> and <storng>layers</strong> should be checked when a management scenario is first created, as these elements are derived from the map and are automatically associated with each field. However, the operations column will be blank until the user enters management information for the scenario. A green check will appear in the <strong>operations</strong> column once management information is present for the field.'
         body2: 'The <strong>simulation date</strong> field indicates the date on which the scenario was last simulated by the model. If the simulation date field is blank it means that the field has not been simulated. (See Simulating Scenarios to learn more about how to simulate a scenario.)'
         body3: 'The <strong>Actions</strong> column contains three different icons, representing different actions. The edit <img src="/serve_image/edit.png"> icon allows you to modify the name of the scenario. The copy <img src="/serve_image/copy.jpg"> icon creates a copy of your management scenario. And the delete <img src="/serve_image/delete.png"> icon will delete the management scenario.'
@@ -1618,7 +1618,7 @@ en:
                 header: 'Auto Irrigation:'
                 body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
                 item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
-                item2: '<strong>Plant Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The plant water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
+                item2: '<strong>Plant Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The plant water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 100, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
                 item3: '<strong>Irrigation Efficiency:</strong> This value is the fraction of irrigation application that is not lost to runoff. This must be a value that is greater than 0 and less than or equal to 1. The closer the value is to 0, the greater the percentage of water lost to runoff. The closer the value is to 0, the less that percentage. A value of 1 means that no water was lost to runoff.'
                 item4: '<strong>Frequency:</strong> Frequency is the days in between which auto irrigation takes place (if the value is 1, this means that there is auto irrigation every day; two means every other day; three means every three days; etc.) The value can be any whole number greater than zero and less than or equal to 365.'
                 item5: '<strong>Maximum Single Application:</strong> This value signifies the amount of water than can be applied in a single day. It is in inches, and it can be any number greater than 0. However, it is set to a default value of 3.'
@@ -1790,7 +1790,7 @@ en:
   operation_page:
     header: Operation Page
     body1: 'Once a scenario has been created on the <strong>Management</strong> page, the user is advanced to the <strong>Operations</strong> page to begin inputting the management characteristics such as the crop schedule, tillage, fertilizer, harvest, and grazing operations.'
-    body2: 'A cropping system is <strong>REQUIRED</strong> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. A field may have multiple crops, or a single crop. There are different options available in <strong>Operation Page</strong> for manipulating a cropping system. All of them are described below:'
+    body2: 'A cropping system is <strong>REQUIRED</strong> for the user to be able to advance and simulate the NTT. The user can add rotations that are one year in length or much longer. A field may have multiple crops, or a single crop. There are different options available in <strong>Operation Page</strong> for manipulating a cropping system as below:'
     rotation:
         header: Add Crop to Rotation
         name:
@@ -1939,7 +1939,7 @@ en:
     buffer:
        header: Grass Buffer/Forest Buffer
        body: Forest Buffer
-       body1: 'Forest buffers are linear wooded areas with well-developed root systems, an organic surface layer, and understory vegetation. When they are adjacent to open water they are referred to as riparian forest buffers. Non-riparian buffers are linear wooded areas along down-slope field edges. Forest buffers trap sediment and increase infiltration, thereby reducing sediment and nutrient losses. Forest buffers often include a grass buffer between the field and the forested buffer. If present, please also include the width and vegetation type of the grass buffer.'
+       body1: 'Forest buffers are linear wooded areas with well-developed root systems, an organic surface layer, and understory vegetation. When they are adjacent to open water they are referred to as riparian forest buffers. Non-riparian buffers are linear wooded areas along down-slope field edges. Forest buffers trap sediment and increase infiltration, thereby reducing sediment and nutrient losses. Forest buffers often include a grass buffer between the field and the forested buffer. If present, please also include the width of the grass buffer.'
        body2: 'The inputs for Forest Buffer are the following:'
        item1: '<strong>Area (ac.):</strong> This is the total area of the Riparian Buffer. This field is optional. If left blank, the area will automatically be calculated using the width of the buffer and the length of the field edge (where the field edge is calculated as the square root of the area of the field).'
        item2: '<strong>Grass Strip Width (ft.):</strong> This is the width of the grass strip between the crop and the forested buffer, if present.'
