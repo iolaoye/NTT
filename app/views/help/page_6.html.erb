@@ -43,7 +43,11 @@
 					<li><%= raw t('soilpage.mapsystem.info.item4') %></li><br>
 				</ol>
 				<% end %>
+				<% if ENV["APP_VERSION"] == "standard" %>
 			<h2><%= t('soilpage.mapsystem.addremove.header') %></h2>
+				<% else %>
+			<h2><%= t('soilpage.mapsystem.addremove.header_modified') %></h2>
+			<% end %>
 				<p><%= raw t('soilpage.mapsystem.addremove.body1') %></p>
         <p><%= raw t('soilpage.mapsystem.addremove.body2') %></p>
 				<p><%= raw t('soilpage.mapsystem.addremove.body3') %></p>

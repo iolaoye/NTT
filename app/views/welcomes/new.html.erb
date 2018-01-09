@@ -37,7 +37,7 @@
             <div class="carousel-caption">
             <h1 class="intro">Nutrient Tracking Tool</h1>
               <p></p>
-              <!-- <p>This can be some different text from the first image, or the same.</p> -->           
+              <!-- <p>This can be some different text from the first image, or the same.</p> -->
             </div>
           </div>
         </div>
@@ -88,13 +88,13 @@
     </tr>
       <p>Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. </p>
       <%= render :template => "sessions/index", :style => "white-space: normal;" %>
-      <%= image_tag 'tiaer_logo.png', :align=> "left", :style => "margin-left: 2%; max-height: 80px;  " %>
-      <%= image_tag 'usda_logo1.png', :align=> "center", :style => "margin-left: 2%; margin-right: 2%; max-height: 35px; margin-top: 5%; " %>
+      <%= image_tag 'tiaer_logo.png', :align=> "left", :style => "margin-left: 2%; max-height: 70px;  " %>
+      <%= image_tag 'USDA_logo.png', :align=> "right", :style => "margin-left: 2%; margin-right: 2%; max-height: 45px; margin-top: 3.6%" %>
     </table>
     </div>
   </div>
   <div id="welcome_info">
-    <center>
+    <center style="margin-top:-3%">
       <p><a href='#' onclick="show('popup1')"><%= image_tag 'info_icon.png', :style => "height: 50px;" %><br>About NTT</a></p>
       <p><a href='#' onclick="show('popup4')"><%= image_tag 'future_icon.png', :style => "height: 50px;" %><br>What's New</a></p>
       <!--<p><a href='#' onclick="show('popup2')"><%= image_tag 'what_how_icon.png', :style => "height: 55px;" %><br>Other Models</a></p>-->
@@ -106,7 +106,7 @@
   <div class="popup" id="popup1">
     <p><strong>About NTT</strong><a class="close" onclick="hide('popup1')">×</a><br><br>
       NTT is a web-based, site-specific application that estimates nutrient and sediment losses for crop and pasture at the field and/or watershed scales. Agricultural producers and land managers can define a number of management scenarios for any given field or area of interest (AOI). NTT will estimate nutrient (nitrogen and phosphorus) losses, sediment losses, and crop yields differences between the scenarios and present results in customizable reports.
-      NTT estimates are made using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model (Williams et al. 2000). Results represent average nutrient and sediment losses from the field based on 35 years of simulated weather. 
+      NTT estimates are made using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model (Williams et al. 2000). Results represent average nutrient and sediment losses from the field based on 35 years of simulated weather.
       NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. Additional funding for development of NTT was provided by NIFA, the USDA Conservation Innovation Grants program, and various state governments.
     </p>
   </div>
@@ -148,25 +148,25 @@
       or by phone (254) 968-9799. For technical support please contact Ali Saleh or Oscar Gallego at <a href="mailto:gallego@tiaer.tarleton.edu">gallego@tiaer.tarleton.edu</a>.</p>
   </div>
 </div>
-<div class="container-bottom">
+<div class="container-bottom" style="margin-top:-3%">
   <h3 style="clear: both;">Related Tools</h3>
   <hr>
   <div style="float: left; width: 31%; margin-right: 2%;">
-    <h4>CEOTT</h4>
-    <p>Comprehensive Economic Environmental Optimization Tool (CEEOT) is a stand-alone watershed-scale tool. CEEOT evaluates the economic and environmental impacts of conservation practices at the farm and watershed scales. CEEOT is not an internet-based model. Please visit <a href="http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html">http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html</a> for more information.</p>
+    <h4>CEEOT</h4>
+    <p style="font-family:verdana;">Comprehensive Economic Environmental Optimization Tool (CEEOT) is a stand-alone watershed-scale tool. CEEOT evaluates the economic and environmental impacts of conservation practices at the farm and watershed scales. CEEOT is not an internet-based model. Please visit <a href="http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html">http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html</a> for more information.</p>
   </div>
   <div style="float: left; width: 31%; margin-right: 2%">
     <% if ENV["APP_VERSION"] == "modified" %>
       <h4>NTT-RE</h4>
-      <p>Nutrient Tracking Tool for Research and Education (NTT-RE) is more comprehensive version of the current version of NTT and intended to be used for Research and Education purposes. <a href="http://ntt-re.tiaer.tarleton.edu">Go to NTT-RE</a> </p>
+      <p style="font-family:verdana;">Nutrient Tracking Tool for Research and Education (NTT-RE) is more comprehensive version of the current version of NTT and intended to be used for Research and Education purposes. <a href="http://ntt-re.tiaer.tarleton.edu">Go to NTT-RE</a> </p>
     <% else %>
       <h4>NTT</h4>
-      <p>Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants. <a href="http://ntt.tiaer.tarleton.edu">Go to NTT</a> </p>
+      <p style="font-family:verdana;">Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants. <a href="http://ntt.tiaer.tarleton.edu">Go to NTT</a> </p>
     <% end %>
   </div>
   <div style="float: left; width: 31%; margin-right: 2%;">
     <h4>NTT-G2</h4>
-    <p>NTT v.2 is the previous version of NTT and is still accessible to users. <a href="http://nn.tarleton.edu/nttG2">Go to NTT v.2</a>. </p>
+    <p style="font-family:verdana;">NTT v.2 is the previous version of NTT and is still accessible to users. <a href="http://nn.tarleton.edu/nttG2">Go to NTT v.2</a>. </p>
   </div>
   <br style="clear: left;" />
   <!--
