@@ -848,16 +848,16 @@ en:
     low_range: Low Range
     high_range: High Range
   about:
-    overview0: 'Nutrient Tracking Tool'
     overview1: 'The <strong>Nutrient Tracking Tool (NTT)</strong> was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, and various state agencies.'
     overview2: 'NTT is a web-based, site-specific application that estimates nutrient and sediment losses at the field scale or at the small watershed scale.'
     overview3: 'Agricultural producers and land managers can define a number of management scenarios and generate a report showing the expected nutrient loss differences between any selected scenarios for a given field or small watershed.'
     overview4: 'NTT compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield. Estimates are made using the <strong>APEX</strong> model (Williams et al. 2000). Results represent average losses from the field based on 35 years of simulated weather.'
     overview5: 'NTT requires regional soils, climate and site-specific crop management information. NTT currently provides selections for <strong>every U.S. county</strong>, but it has only been validated for a limited number of states and counties. As validation becomes possible in other parts of the country, parameter files may be updated for additional counties in future versions.'
     overview6: 'For more information regarding NTT, please refer to Saleh et al. (2011 and 2014).'
-    overview7: 'Now, there are two versions of new NTT program available:'
-    item9: 'The version (RE) which will be used by researchers and educational institutes for teaching and training purposes. The “EDUCATIONAL” version (P) includes all functions available in NTT. Detailed information  '
-    item10: 'The “BASIC” version is a easier to use and will include the essential NTT functions required for use for other users, such as farm producers.'
+    overview7: 'There are two versions of new NTT program available:'
+    item9: 'The BASIC version is a user-friendly version of NTT that allows users to estimate N, P and sediment from crop and pasture lands.'
+    item10: 'The Research and Education version of NTT (NTT-RE) was developed for researchers and educational institutes for teaching and training purposes. NTT-RE includes additional functions allowing the user to view and edit soil layers, view crop water and nutrient stresses, and modify and the APEX parameters file for calibration and validation purposes.'
+    item11: 'The data sources and APEX simulations in both versions are identical. For more information regarding NTT, please refer to Saleh et al. (2011 and 2015).'
     overview8: 'Nevertheless, the data sources and APEX simulations in both versions are similar.'
     process0: 'Process'
     process: 'User supplied information is processed using a biophysical simulation model, the Agricultural Policy Environmental eXtender (APEX; Williams et al., 2000).'
@@ -1289,10 +1289,9 @@ en:
     Click <strong>Next ></strong> to go to the next page.<br>
     Click <strong>Return to Table of Contents</strong> to go to the NTT Table of Contents.<br>
   projpage:
-    header: Projects
-    header_modified: My Projects
+    header: Projects Page
     statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project (open a saved project), upload an example project.
-    statement_modified: After creating an account in NTT and logging in, you will be directed to the My Projects page. My Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project (open a saved project).
+    statement_modified: After creating an account in NTT and logging in, you will be directed to the My Projects page. My Projects displays all projects that the user has previously created. On this page, users can create a new project, (open a saved projects, or upload a project stored on their local machine).
     initial:
         header: To Start a Project
         statement: There are <b>three initial choices</b> to start a new project:<br>
@@ -1305,7 +1304,7 @@ en:
         body2: After you have entered the information, click the Save button to save the information and continue.
     open:
         header: Upload Project
-        body1: Users may use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.
+        body1: Users may use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information and stored on their local machine.
         body2: Click <strong>Upload Project</strong>, then select <strong>Choose File</strong> and navigate to the saved file on your computer. After you have selected the project, click the <strong>Upload Project</strong> button to upload the project and continue.
         body3: User is able to save their project under their NTT account<br><br> and upload them on their hard drive
     example:
@@ -1348,25 +1347,25 @@ en:
     This page is about Nutrient Tracking Tool (NTT).<br></br>
     Click <strong>Return to Table of Contents</strong> to go to the help page.
   locpage:
-    header: Location
+    header: Location Page
     mapsystem:
-        body1: 'Once creating a project, users will be asked to define the location of the project using the interactive Google map. The interactive map allows the user to define one or more areas of interest (AOI). The area of interest should correlate to fields within the project area. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for User Input.'
+        body1: 'After creating a new project, users will be asked to define the location of the project using the interactive Google map. The interactive map allows the user to define one or more areas of interest (AOI). The area of interest should correlate to fields within the project area. The map is <strong>ONLY used for mainland United States</strong>. If you would like to simulate using an area outside of mainland United States, follow the instructions for User Input.'
         body2: 'When defining the AOI, the underlying weather, soils, and slope information is retrieved from the underlying spatial data.'
         header: Mapping System
         body3: 'There are two ways to define your areas of interest: you may manually draw your areas of interest using the zoom features and drawing tools on the interactive map, or you may upload your own shapefle.'
         body4: 'There are <strong>4 options</strong> within the mapping system:'
         option1:
-            header: 'Option 1: Upload shapefile'
-            body4: 'If you already have a shapefile that you would like to use as your project area you may upload the shapefile. You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder.'
+            header: 'Upload Shapefile'
+            body4: 'If you already have a shapefile that you would like to use as your project area you may upload the shapefile. You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to be within a .zip folder, and you need to upload that .zip folder.'
             item1:
                 body1: '<strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button Choose file under the Upload Shapefile as shown in the figure:'
-                body3: '<strong>Uploading a Shapefile:</strong> Once you have located the shapefiles you wish to use, upload the files by clicking the Upload Shapefile button.'
+                body3: '<strong>Uploading a Shapefile:</strong> Once you have located the .zip file containing the shapefiles you wish to use, upload the files by clicking the Upload Shapefile button.'
             item2: '<strong>Drawing Fields:</strong> Next, you will need to draw fields within the farm. Since the farm is only for reference, it does not actually matter whether or not the fields are completely within the farm or not. The program will draw the information from the fields and not the farm. To draw a field, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.'
             item3:
                 body3: '<strong>Uploading a Shapefile:</strong> Once you have located the shapefiles you wish to use, upload the files by clicking the Upload Shapefile button.'
             item4: '<strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the Submit button.'
         option2:
-            header: 'Option 2: Zoom and draw the AOI '
+            header: 'Zoom and draw the AOI '
             body1: 'If you do not already have a shapefile you may draw your AOI using the zoom features and drawing tools on the interactive map. Users may draw multiple AOIs. AOIs should represent fields within the project area.'
             item1: '<strong>Zoom to your area of interest:</strong> There are several ways to zoom in to your area of interest. You may enter an address, enter the lat/long (using the correct format where latitude comes before longitude, north latitude is positive, east longitude is positive), select the state and county from the available pick lists, or manually zoom on the map using the zoom tool.'
             item2: '<strong>Draw your Area of Interest (AOI):</strong> Once you are zoomed in on your area of interest, click the polygon button <img src="/serve_image/drawing_tool.png"> at the top center of the map. Next, use your mouse to click the corners of your polygon as shown in the figure below. A field is considered an area of interest in NTT. After drawing the field, a message will pop up telling the user to enter the name of the AOI as shown below. Enter the name of the field and click OK. As the user enters the name, it will replace the default name in the text box for the field as shown in the following figure. From this point the field name entered will refer to the selected location.
@@ -1461,7 +1460,7 @@ en:
     <strong>Period to Simulate</strong><br>
     The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>
   fieldpage:
-    header: Fields
+    header: Fields Page
     body1: 'The Fields page displays the AOIs/fields that you have defied for your project. From the Fields page, you can begin entering scenario and management information for each field. You may also delete fields/AOIs from your project on this page.'
     body2: 'If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will simply allow users to verify the field(s) and advance.'
     createdel:
@@ -1493,7 +1492,7 @@ en:
     In order to edit the characteristics of a field, click on the field to navigate to the soil page where user can change the name of the field and the field area. The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area and type in the correct area.<br></br>
     Click on the field and continue to the Soils page.
   soilpage:
-    header: Soils
+    header: Soils Page
     overview:
         header: Overview
         body: 'After clicking on a field to begin editing on the <strong>Fields</strong> page, the user will be directed to the <strong>Soils</strong> page. The Soils page is a field-level page. The Soils page allows the user to rename the field and adjust the acres; and verify, modify or delete soils returned from the SSURGO soils database and add/edit layers for the particular field selected in the Fields page. NTT returns a maximum of 3 soils for every field. These soils represent the most predominant soils in the AOI. NTT is limited to 3 soils in order to minimize model processing time.'
@@ -1978,19 +1977,19 @@ en:
        body1: '* See USDA website: <a href="http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849"><u>http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849</u></a> for more detailed term descriptions.'
 
   resultspage:
-    header: Field Results Page
+    header: Results Page
     body1: 'The results page allows you to view the results for the field/scenario combinations that you simulated. You cannot review the results unless the field/scenario has been simulated. Please see simulating scenarios for more information.'
     nav:
         view:
-            header: Viewing the Desired Results
+            header: Viewing the Results
             body1: 'To view the results on one or more field scenarios, the user may click the <strong>View Results</strong> button at the top of the Scenario Management page. Alternately, the user may click on <strong>Results</strong> in the left navigation menu.'
-            body2: 'After clicking on View Results, the user will be directed to the Tabluar View page as a default. Users may also choose to view data in graphical view (see Graphical View).'
+            body2: 'After clicking on View Results, the user will be directed to the Tabluar View page as a default. Users may also choose to view data in graphical view by clicking Annual-Chart or Monthly-Chart on the side navigation menu.'
             body3: 'It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario.'
             body4: 'It is very likely that, when the user first arrives at the Results page, that the first scenario that was simulated will be selected for both the first scenario and second scenario, so be sure to select the correct scenarios before continuing.'
             body5: 'The results of the scenarios are presented in a tabular format, in the order in which they were selected. In this case, the scenario results are presented for “grape”, “grape_irr”, and then “grape_grass”. The Difference and Reduction values are relative to the first scenario, “grape” in this case.'
         manner:
             header: 'Tabular View'
-            body1: 'The user may choose to compare up to three field scenarios in the tabular view. Use the drop down to select each field scenario. Click View when you are finished.'
+            body1: 'To compare the results of up to three field scenarios in the tabular view, use the drop down to select each field scenario. Click View when you are finished.'
             body2: 'HINT: if you only have one or two scenarios you wish to compare, select the same scenario multiple times so that there is a scenario selected for each column of the tabular display.'
             body3: 'The user may toggle between two different units in the tabular view. The user may view results in units/acre (e.g., lbs/acre) or as total units summed across the area of the field (e.g., lbs).'
             body4: 'After clicking View, the table will populate with the results of each scenario. Users have the option of downloading the results as a CSV file, or as a PDF file.'
@@ -2002,9 +2001,10 @@ en:
         header: Understanding the Results
         tabular:
             header: Interpreting Tabular Results
-            body1: 'The scenario results presented in your table represent AVERAGE annual edge of field losses across the period of simulation. NTT simulates over a period of 35 years. To view year by year results, the user can view use the Graphical results feature (See View Graphical Results.). The name of Scenario 1 will appear at the top of the first Losses column. This column displays the nutrient, sediment and flow losses at the edge of the field for Scenario 1 in addition to the estimated yields. Scenario 1 is the first column of data, Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that you made when selecting the first and second scenario (see: Viewing the Desired Results above).'
-            body2: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
-            body3: 'The Difference is the amount decreased (First Scenario – Second Scenario) for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
+            body1: 'The scenario results presented in your table represent AVERAGE annual edge of field losses across the period of simulation. NTT simulates over a period of 35 years. To view year by year results, the user can view use the Graphical results feature (See View Graphical Results.). The name of Scenario 1 will appear at the top of the first Losses column. This column displays the nutrient, sediment and flow losses at the edge of the field for Scenario 1 in addition to the estimated yields. Scenario 1 is the first column of data, Scenario 2 results are represented in the next column and highlighted in a different color. In addition to displaying results in the “Losses” column, Scenario 2 also has a “Change” column that represents the change in losses between scenario 1 and scenario 2. Scenario 3 results are also highlighted in another color. The Change column represents the change in losses between scenario 1 and scenario 3.'
+            body2: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result (e.g. increased losses as compared to scenario 1) and positive numbers indicate a desired result (e.g. reduced losses as compared to scenario 1).</strong>'
+            header1: Expanding Results
+            body3: 'In the Tabular view, results for Total Nitrogen, Total Phosphorus, surface/subsurface & Tile Drain flow, Other Water info, Total sediment, and yield are summarized. To drill-down, click the check box next to the row of interest. For instance, when expanding the Total Nitrogen row, users will be able to view the results for Organic N, Runoff N, Subsurface N and Tile Drain N, which comprise the Total Nitrogen losses value.'
             body4: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area).</strong>'
             body5: 'The N, P, Temperature, and  water stress levels in “tabular results” page are the indicators for optimizing the crop yield. For example, 20% N stress means that crop still use more N to reach its optimal yield.'
         graphical:
@@ -2016,7 +2016,7 @@ en:
             item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong>'
         economic:
             header: Expanding Results
-            body1: 'A box under the Detail column indicates that you can expand the Description to view more results. An expanded Results page for nutrient tabular results is shown below:'
+            body1: 'In the Tabular view, results for Total Nitrogen, Total Phosphorus, surface/subsurface & Tile Drain flow, Other Water info, Total sediment, and yield are summarized. To drill-down, click the check box next to the row of interest. For instance, when expanding the Total Nitrogen row, users will be able to view the results for Organic N, Runoff N, Subsurface N and Tile Drain N, which comprise the Total Nitrogen losses value.'
             body2: 'The economic results shown in the Baseline, Alternative, and Difference columns are all expressed on a per acre basis. The total economic impact for the entire simulated area of interest is shown in the Total Area column.'
     saving:
         header: Understanding the Results
@@ -2027,10 +2027,10 @@ en:
         body4: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
         body5: 'The Difference is the amount decreased (First Scenario – Second Scenario) for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
         body6: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario.</strong> For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area).</strong>'
-        body7: Understanding Nutrient Results in Graphical Form
-        body8: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong>Graphs.</strong>'
-        item1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart. Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
-        item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong>'
+        body7: Viewing Results Graphically
+        body8: 'In addition to being able to view your results in tabular form, NTT also provides the option of viewing results graphically. There are two graphical views for the user to select from: annual and monthly results. The user can select these views using the left navigation menu.'
+        item1: '<strong>Annual Charts (Most recent 12 Years):</strong> Annual Charts allow users to view the annual average losses for a specific constituents (for example flow or sediment) for most recent 12 years of the simulation. To select the annual view, click Annual-Chart in the left navigation menu. Once this option has been selected, the user selects the scenarios they would like to compare, and the constituent they would like to view, as shown below. This will bring up the selected results on the graph. In addition to the graph, the annual results are displayed below the graph in tabular form and can also be exported.'
+        item2: '<strong>Monthly Chart (The entire period):</strong> The monthly chart view allows users to view monthly averages losses for the particular constituents over the period of the simulation (35 years). To view the monthly chart view, click Monthly-Chart from the left hand navigation menu. Monthly charts are limited to constituents that APEX summarizes monthly (see drop-down list od options below).'
     eco:
         header: Understanding Economics Results
         body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results.</strong> This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow.'
@@ -2091,16 +2091,16 @@ en:
     To <strong>Edit</strong> this site, click <img src="/serve_image/edit.png"> icon. After editing, click <strong>Update Site</strong> to save the values or click <strong>Back</strong> to go back.<br>
     To <strong>Delete</strong> this site, click <img src="/serve_image/delete.png"> under action column.<br>
   routing:
-    header: Field Routing (Watershed) Page
-    body1: 'The watershed page allows users to simulate different scenario management in multiple fields or at subbasins within a watershed. A routing scenario will route runoff, sediment, and nutrients from one field to the next (within a subbasin and from a subbasin to the next if used for a watershed) in the specified order. For each routing scenarios users will need to list the field-scenario order to combine multiple fields and scenarios and simulate them as a single field. NTT will route flows from field to field, essentially creating a small watershed simulation. You may note that the load at the outlet of the watershed is less than the sum of the edge of field loads for each individually simulated field. This is because NTT simulates attenuation effects of water and nutrients as they flow over the landscape.'
+    header: Field Routing (Watershed) Scenarios
+    body1: 'The field routing/watershed watershedfeature allows users to simulate routing between fields. Alternately, users can use the field routing function to simulate a watershed, where instead of fields, the AOIs represent subbasins. A routing scenario will route runoff, sediment, and nutrients from one field to the next (or from one subbasin to the next if used to stimulate watershed) in the specified order. For each routing scenarios/watershed created by the user, the user will need to list the field-scenario routing order. When viewing results, you may note that the load at the outlet of the watershed is less than the sum of the edge of field loads for each individually simulated field/subbasin. This is because NTT simulates attenuation effects of water and nutrients as they flow over the landscape.'
     create:
         header: Create/Name Your Watershed
         body1: 'To begin creating a field routing scenario, click Add New Field Routing (Watershed). Once you do this, a text box will pop up where you can type in the name of the scenario:'
         body2: 'Once you enter the name, click <strong>Save</strong>.'
     build:
         header: Build Watershed Scenario
-        body1: 'Once you have created and named your watershed scenario, it will appear in the list of watershed scenarios. Click the watershed scenario <strong>name</strong> to begin defining your watershed scenario.'
-        body2: 'When building your watershed scenario, you will begin adding fields/scenarios in the order that you wish to route. You may not add a field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the field and scenario from the drop down lists and click <strong>Add Fields / Scenario</strong>. Continue to add fields/scenarios until your watershed scenario is complete.'
+        body1: 'Once you have created and named your field routing/watershed scenario, it will appear in the list of watershed scenarios. Click the watershed scenario <strong>name</strong> to begin defining your watershed scenario.'
+        body2: 'When building your watershed scenario, you will begin adding fields/scenarios in the order that you wish to route the flow between fields. You may not add a field more than once to the same watershed scenario (the idea is combining fields to simulate as one field). To add field/scenario combinations to the watershed scenario, select the field and scenario from the drop down lists and click <strong>Add Fields / Scenario</strong>. Continue to add fields/scenarios until your watershed scenario is complete.'
         body3: 'Once you have finished selecting, click <strong>Back</strong> to go back to the watershed page.'
     manage:
         header: Manage Watershed Scenarios
@@ -2111,7 +2111,7 @@ en:
     results:
         header: Simulating/Viewing Results for Field Routing
         body1: 'To simulate a watershed scenario, select the name(s) of the watershed to stimulate and click <strong>Stimulate Selected Field Routing (Watershed)</strong>. Your watershed may take a few minutes to simulate. Once simulation is complete, a simulation date/time will appear in the Simulation Date field next to the watershed scenario name.'
-        body2: 'To view results for field routings, select the scenario(s) you wish to view and click View <strong>Results</strong>.'
+        body2: 'To view results for field routings, select the scenario(s) you wish to view and click View <strong>Results</strong>. Results of Field Routing/Watershed scenarios are displayed in the same way that results are displayed for individual fields—with both tabular and graphical views.'
 
   modpage:
     header: Modifications Page Help
