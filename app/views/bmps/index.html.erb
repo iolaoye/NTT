@@ -103,7 +103,7 @@
             </tr>
             <tr>
               <td class="indent2" colspan="2">
-                <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.percentage_range') %>
+                <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_hundred') %>
                 <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
                 <strong><a href="#" id="trigger" style="color:blue;">(?)</a></strong>
               </td>
@@ -534,9 +534,9 @@
 <% end %>
 <div id="pop-up">
   <h6>
-    This factor is used to trigger the automatic irrigation and means what plant water stress is allowed.
-    At zero (0) means not autoirrigation at all, at one hundred (100) means not plant water stress allowed.
-    When the stress level is reached, the model will automatically starts irrigation.
+    This factor is used to trigger the automatic irrigation and fertigation based on the plant water stress level.
+    For example, the irrigation application amount would be much higher at 90% stress level as compared to that of
+    20%. The value should be grater than 0.
   </h6>
 </div>
 
@@ -837,8 +837,8 @@
 
 <script>
   $(function() {
-    var moveLeft = 600;
-    var moveDown = -150;
+    var moveLeft = 300;
+    var moveDown = -220;
 
     $('a#trigger').hover(function(e) {
       $('div#pop-up').show();
