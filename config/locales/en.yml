@@ -636,6 +636,7 @@ en:
     select_bmp: Select BMP Group
     create_bmp: Create BMP
     zero_to_one: "(0.00 - 1.00)"
+    zero_to_hundred: "(0.00 - 100.00)"
     zero_to_max: "(0.00 – 99999.00)"
     quarter_to_one: "(0.25 - 1.00)"
     quarter_to_three_fourths: "(0.25 - 0.75)"
@@ -663,7 +664,7 @@ en:
     p_c: Pump Capacity
     latksatf: Multiplication factor to determine lateral ksat
     crop: Crop
-    water_stress_factor: Plant Water stress factor
+    water_stress_factor: Percent allowable plant water stress level
     irrigation_efficiency: Irrigation efficiency
     area_control_html: 'Fraction of field controlled by pond/WASCB'
     maximum_single_application: Maximum single application
