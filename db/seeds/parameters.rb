@@ -113,7 +113,7 @@ Parameter.create!({:id => 110, :number => 11, :default_value => -100, :state_id 
 Parameter.create!({:id => 111, :number => 12, :default_value => 2.0, :state_id => 36}, :without_protection => true)
 Parameter.create!({:id => 112, :number => 13, :default_value => 2, :state_id => 36}, :without_protection => true)
 Parameter.create!({:id => 113, :number => 14, :default_value => 0.6, :state_id => 36}, :without_protection => true)
-Parameter.create!({:id => 114, :number => 15, :default_value => 0.1, :state_id => 36}, :without_protection => true)
+Parameter.create!({:id => 114, :number => 15, :default_value => 0.05, :state_id => 36}, :without_protection => true)
 Parameter.create!({:id => 115, :number => 16, :default_value => 1, :state_id => 36}, :without_protection => true)
 Parameter.create!({:id => 116, :number => 17, :default_value => 0.2, :state_id => 36}, :without_protection => true)
 Parameter.create!({:id => 117, :number => 18, :default_value => 1.5, :state_id => 36}, :without_protection => true)
