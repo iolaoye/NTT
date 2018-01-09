@@ -56,7 +56,7 @@ class BmpsController < ApplicationController
   			bmp.bmpsublist_id = bmpsublist.id
   			case bmp.bmpsublist_id
   			  when 1  #autoirrigation/autofertigation - defaults
-    				bmp.water_stress_factor = 20
+    				bmp.water_stress_factor = 0.2
     				bmp.days = 14
     				bmp.irrigation_efficiency = 0
             bmp.maximum_single_application = 3
