@@ -26,15 +26,20 @@
 				<%#= raw t('resultspage.nav.expand.body1') %>
 		<%#= t('resultspage.understand.header') %>
 			<h2><%= t('resultspage.understand.tabular.header') %></h2>
+			<% if ENV["APP_VERSION"] == "standard" %>
+			<%= image_tag("help/page_9/image003_standard.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:1180px;width: 100%;") %><br>
+			<% else %>
 			<%= image_tag("help/page_9/image003.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:1180px;width: 100%;") %><br>
+			<% end %>
 				<p><%= raw t('resultspage.understand.tabular.body1') %></p>
 				<p><%= raw t('resultspage.understand.tabular.body2') %></p>
 				<p><%= raw t('resultspage.understand.tabular.body3') %></p>
 				<p><%= raw t('resultspage.understand.tabular.body4') %></p>
+				<p><%= raw t('resultspage.understand.tabular.body5') %></p>
 				<%#= raw t('resultspage.understand.tabular.body5') %>
 			<h2><%= t('resultspage.understand.graphical.header') %></h2>
 				<p><%= raw t('resultspage.understand.graphical.body1') %></p>
-				<%= image_tag("help/page_9/image002_modified.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:400px;width: 100%;") %><br>
+				<%= image_tag("help/page_9/image002.png", :alt => "Image 003", :style =>"border:1px solid gray;max-width:400px;width: 100%;") %><br>
 				<!--<ol>
 					<li>
 					<p><%= raw t('resultspage.understand.graphical.item1.body1') %></p>
@@ -60,6 +65,7 @@
 				<li><p><%= raw t('resultspage.saving.item1') %></p></li>
 				<%= image_tag("help/page_9/image004.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:180px;width: 100%;") %><br>
 				<li><p><%= raw t('resultspage.saving.item2') %></p></li>
+				<%= image_tag("help/page_9/image005.png", :alt => "Image 004", :style =>"border:1px solid gray;max-width:130px;width: 100%;") %><br>
 			</ol><br>
 			<!--<h2><%= t('resultspage.eco.header') %></h2>
 			<p><%= raw t('resultspage.eco.body1') %></p>

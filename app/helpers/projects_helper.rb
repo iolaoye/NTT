@@ -185,9 +185,9 @@ module ProjectsHelper
 	new_project.name = @project.name + " copy" 
 	new_project.user_id = session[:user_id]
 	if new_project.save
+		duplicate_location(new_project.id)
 		msg = duplicate_apex_control(new_project.id)
 		if msg == "OK" then duplicate_apex_parameter(new_project.id) else return msg end
-		duplicate_location(new_project.id)
 		"OK"
 	else
 		"Error Saving project"
@@ -301,8 +301,8 @@ module ProjectsHelper
 		if !new.save
 			return "Error Saving operation"
 		else
-			duplicate_soil_operations_by_scenarios(operation.id, new.id)
-			if operation.activity_id == 7 || operation.activity_id == 9 then #continuous grazing
+			duplicate_soil_operations_by_scenarios(operation.id, new.id) 
+			if operation.activity_id == 7 || operation.activity_id == 9 then #continuous and rotational grazing
 				stop_operation = operations.find_by_type_id(operation.id)
 				if stop_operation != nil then #create the stop grazing operation
 					new_stop_graizing = stop_operation.dup
@@ -312,7 +312,7 @@ module ProjectsHelper
 						return "Error Saving operation"
 					else
 						if operation.activity_id == 7 then
-							duplicate_soil_operations_by_scenarios(operation.id, new_stop_graizing.id)
+							duplicate_soil_operations_by_scenarios(stop_operation.id, new_stop_graizing.id)
 						end
 					end
 				end 

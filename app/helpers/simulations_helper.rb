@@ -81,7 +81,8 @@ module SimulationsHelper
     start = @scenario.operations.find_by_activity_id(9)
     rotational_grazing = ""
     if start != nil then
-      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + start.amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
+      amount = start.amount * Fertilizer.find_by_code(start.type_id).convertion_unit
+      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
     end
     stop = @scenario.operations.find_by_activity_id(10)
     if stop != nil
@@ -1480,7 +1481,7 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
-      when 10 # liming
+      when 11 # liming
         apex_string += sprintf("%5d", 0) #
         apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
       else #No entry needed.
@@ -1608,10 +1609,14 @@ module SimulationsHelper
   def change_fert_for_grazing(no3n, po4p, org_n, org_p, fert, nh3)
     newLine = sprintf("%5d", fert)
     newLine = newLine + " " + "Manure  "
+    if no3n == nil then no3n = 0 end
     newLine = newLine + " " + sprintf("%7.4f", no3n)
+    if po4p == nil then po4p = 0 end
     newLine = newLine + " " + sprintf("%7.4f", po4p)
     newLine = newLine + " " + sprintf("%7.4f", 0)
+    if org_n == nil then org_n = 0 end
     newLine = newLine + " " + sprintf("%7.4f", org_n)
+    if org_p == nil then org_p = 0 end
     newLine = newLine + " " + sprintf("%7.4f", org_p)
 	if nh3 == nil then
 		nh3 = 0.350
@@ -2317,9 +2322,9 @@ module SimulationsHelper
     #calculate number of animals.
     case animal_code
         when 43		#"Dairy"    '1
-            manureProduced = 3.9
+            manureProduced = 4.5
             bioConsumed = 9.1
-            urineProduced = 11.8
+            urineProduced = 8.2
             manureId = 43
         #when "Dairy-dry cow"    '2
         #    manureProduced = 5.5
@@ -2337,7 +2342,7 @@ module SimulationsHelper
         #    urineProduced = 8.2
         #    manureId = 43
         when 44   #"Beef"    '5
-            manureProduced = 3.9
+            manureProduced = 4.5
             bioConsumed = 9.1
             urineProduced = 8.2
             manureId = 44
@@ -2404,7 +2409,7 @@ module SimulationsHelper
         else
             manureProduced = 12
             bioConsumed = 9.08
-            urineProduced = 0
+            urineProduced = 6.8
             manureId = 56
       end   # end case
 
@@ -2417,10 +2422,10 @@ module SimulationsHelper
       #        conversionUnit = animal.ConversionUnit
       #    End If
       #Next
-
 	    conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
       @last_herd += 1
-      animalField = animals * soil_percentage / 100
+      #commented because in grazing just one soil is used. 
+      #animalField = animals * soil_percentage / 100
       herdFile = sprintf("%4d", @last_herd) #For different owners
       #comentarized because there is not field divided anymore
       #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
@@ -2428,7 +2433,7 @@ module SimulationsHelper
       #Else
       #    herdFile &= Format(CInt(animalField(i) * conversionUnit), "#####0.0").PadLeft(8)
       #End If
-      herdFile += sprintf("%8.1f", (animalField * conversion_unit).round(0))
+      herdFile += sprintf("%8.1f", (animals * conversion_unit).round(0))
       herdFile += sprintf("%8.1f", animal_code)
       herdFile += sprintf("%8.2f",(24 - hours) / 24)
       herdFile += sprintf("%8.2f",bioConsumed)
