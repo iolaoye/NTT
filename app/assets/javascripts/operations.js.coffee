@@ -187,6 +187,7 @@ updateTypes = ->
       getGrazingFields()
       $("#div_grazed").show()
       $("#div_resttime").show()
+      $("#operation_nh4_n").show()
     when "12"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
