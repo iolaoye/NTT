@@ -1,4 +1,4 @@
-<div class="pageContainer">
+<div class="page-container">
   <div id="welcome_header">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
@@ -81,12 +81,16 @@
         <span class="sr-only"><%= t('general.next') %></span>
       </a>
     </div><!-- /.carousel -->
-    <div id="welcome">
-        <h1>Welcome</h1>
+    <div id="welcome", :style = "display: inline-block">
+      <table>
+        <tr>
+      <h1>Welcome</h1>
+    </tr>
       <p>Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. </p>
       <%= render :template => "sessions/index", :style => "white-space: normal;" %>
-      <%= image_tag 'tiaer_logo.png', :style => "margin-left: 10%; max-height: 80px; height: auto; position:relative; z-index:0;" %>
-      <%= image_tag 'usda_logo1.png', :style => "margin-left: 5%; max-height: 35px; margin-top: 10%; height: auto; position:relative; z-index:0;" %>
+      <%= image_tag 'tiaer_logo.png', :align=> "left", :style => "margin-left: 2%; max-height: 80px;  " %>
+      <%= image_tag 'usda_logo1.png', :align=> "center", :style => "margin-left: 2%; margin-right: 2%; max-height: 35px; margin-top: 5%; " %>
+    </table>
     </div>
   </div>
   <div id="welcome_info">
@@ -149,20 +153,20 @@
   <hr>
   <div style="float: left; width: 31%; margin-right: 2%;">
     <h4>CEOTT</h4>
-    <p>CEEOT (Comprehensive Economic Environmental Optimization Tool) is a single-alone watershed-scale program. CEEOT will to evaluate the BMP's the economic and environmental impacts of conservation practices at the farm and watershed scales. CEEOT is not an internet-based model. Please visit <a href="http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html">http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html</a> for more information.</p>
+    <p>Comprehensive Economic Environmental Optimization Tool (CEEOT) is a stand-alone watershed-scale tool. CEEOT evaluates the economic and environmental impacts of conservation practices at the farm and watershed scales. CEEOT is not an internet-based model. Please visit <a href="http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html">http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html</a> for more information.</p>
   </div>
   <div style="float: left; width: 31%; margin-right: 2%">
     <% if ENV["APP_VERSION"] == "modified" %>
-      <h4>NTT</h4>
-      <p>NTT is the basic version and is designed for common users including the producers and Nutrient Trading program participants. Please refer to http//ntt.tiaer.tarleton.edu for more information.</p>
-    <% else %>
       <h4>NTT-RE</h4>
-      <p>NTT-RE is more comprehensive version of the current version of  NTT and intended to be used for Research and Education purposes. Please refer to <a href="http://ntt_re.tiaer.tarleton.edu">http://ntt-re.tiaer.tarleton.edu</a> for more information.</p>
+      <p>Nutrient Tracking Tool for Research and Education (NTT-RE) is more comprehensive version of the current version of NTT and intended to be used for Research and Education purposes. <a href="http://ntt-re.tiaer.tarleton.edu">Go to NTT-RE</a> </p>
+    <% else %>
+      <h4>NTT</h4>
+      <p>Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants. <a href="http://ntt.tiaer.tarleton.edu">Go to NTT</a> </p>
     <% end %>
   </div>
   <div style="float: left; width: 31%; margin-right: 2%;">
     <h4>NTT-G2</h4>
-    <p>NTT-G2 is the last version of NTT and is available at <a href="http://nn.tarleton.edu/nttG2">http://nn.tarleton.edu/nttG2</a>. </p>
+    <p>NTT v.2 is the previous version of NTT and is still accessible to users. <a href="http://nn.tarleton.edu/nttG2">Go to NTT v.2</a>. </p>
   </div>
   <br style="clear: left;" />
   <!--

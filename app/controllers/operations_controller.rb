@@ -251,21 +251,18 @@ class OperationsController < ApplicationController
     respond_to do |format|
       if @operation.update_attributes(operation_params)
         #update_amount()
-        soil_operations = SoilOperation.where(:operation_id => @operation.id)
-        soil_operations.each do |soil_operation|
-          update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
-        end
+        #soil_operations = SoilOperation.where(:operation_id => @operation.id)
+        #soil_operations.each do |soil_operation|
+          #update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
+        #end
+        SoilOperation.where(:operation_id => @operation.id).delete_all  #delete updated soilOperation and create the new ones.
+        if @operation.activity_id != 9 then add_soil_operation(@operation) end
         if @operation.activity_id == 7 || @operation.activity_id == 9 then
-          if (Operation.find_by_type_id(@operation.type_id) != nil) then
+          if (Operation.find_by_type_id(@operation.id) != nil) then
             @operation1 = Operation.find_by_type_id(@operation.id)
           else
             operation_id = @operation.id
             @operation1 = Operation.new(operation_params)
-            if @operation.activity_id == 7 then 
-              @operation1.activity_id = 8
-            else
-              @operation1.activity_id = 10
-            end
             @operation1.type_id = operation_id
             @operation1.scenario_id = params[:scenario_id]
             @operation1.amount = 0
@@ -278,14 +275,20 @@ class OperationsController < ApplicationController
             @operation1.moisture = 0
             @operation1.subtype_id = 0
           end
+          if @operation.activity_id == 7 then
+            @operation1.activity_id = 8
+          else
+            @operation1.activity_id = 10
+          end
           @operation1.year = params[:year1]
           @operation1.month_id = params[:month_id1]
           @operation1.day = params[:day1]
           @operation1.save
-          soil_operations = SoilOperation.where(:operation_id => @operation1.id)
-          soil_operations.each do |soil_operation|
-            update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
-          end
+          if @operation.activity_id != 9 then add_soil_operation(@operation1) end
+          #soil_operations = SoilOperation.where(:operation_id => @operation1.id)
+          #soil_operations.each do |soil_operation|
+            #update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
+          #end
         end
         if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }

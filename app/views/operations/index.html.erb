@@ -271,7 +271,7 @@
 							<td><%= op.day %></td>
 							<% if op.activity_id == 9 %>
 								<% if (I18n.locale.eql?(:en)) %>
-								  <td><%= op.type_name %></td>
+								  <td><%= Fertilizer.find(op.type_id).name %></td>
 								<% else %>
 								  <td><%= Fertilizer.find(op.type_id).spanish_name %></td>
 								<% end %>

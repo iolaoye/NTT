@@ -98,7 +98,7 @@ getGrazingFields = ->
     $("#operation_amount").prop('min',1)
     $("#operation_depth").prop('min',1)
     if $("#operation_activity_id").val() == "9"
-      $("#operation_moisture").prop('required',true)
+      $("#operation_moisture").prop('required',false)
       $("#operation_nh4_n").prop('required',true)
       $("#operation_moisture").prop('min',1)
       $("#operation_nh4_n").prop('min',1)
@@ -109,6 +109,7 @@ getGrazingFields = ->
     $("#div_type")[0].children[0].innerText = "Animal Type"
 
 updateTypes = ->
+  $("#operation_nh4_n").hide()
   $("#div_amount").hide()
   $("#div_depth").hide()
   $("#div_nutrients").hide()
