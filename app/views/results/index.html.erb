@@ -50,7 +50,7 @@
 	            	<td><%= submit_tag t("general.view"), :id => "summary", name: "button", :class => "btn btn-primary" %>
 						<% if @results1 != nil %>
 							<% if !request.url.include?(url_for("/fields/0/results?")) %>
-								<%= link_to t('result.download_pdf'), { :action => "index", :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
+								<%= link_to t('result.download_pdf'), { :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
 							<% end %>
 						    <!-- Download CSV/Excel button -->
 						    <%= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
@@ -80,7 +80,6 @@
 					<% else %>
 						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
 					<% end %>
-		            <td><%= submit_tag t("general.view"), name: "button_annual", :class => "btn btn-primary" %></td>
 					</tr>
 	        	<% when t('result.monthly') + "-" + t('result.charts'), t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') %>
 		            <% if I18n.locale.eql?(:en) %>
@@ -97,13 +96,13 @@
 </form>
 <% if @type == t("general.view") + " " + t('result.annual') + "-" + t('result.charts') || @type == t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') then %>
 	<% if @type.include? t('result.annual') then @title += " " + t('result.upto12') end %>
-  	<strong><h4><%= @title %></h4></strong>
+  	<strong><h4><%= @title %></h4></strong> 
   	<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
         <%= column_chart [
         { :name => t('result.1st_scenario'), :data => @charts1 },
         { :name => t('result.2nd_scenario'), :data => @charts2 },
         { :name => t('result.3rd_scenario'), :data => @charts3 }
-        ], { library: {hAxis: {title: @x}, vAxis: {title: @y}}}
+        ], { library: {hAxis: {title: @x}, vAxis: {title: @y}} }
         %>
     	<br/>
     <div class="table-responsive">
