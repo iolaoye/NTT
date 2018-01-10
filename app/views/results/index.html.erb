@@ -80,6 +80,9 @@
 					<% else %>
 						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
 					<% end %>
+		            <td>
+		            	<%= submit_tag t("general.view"), name: "button_annual", :class => "btn btn-primary" %>
+		            </td>
 					</tr>
 	        	<% when t('result.monthly') + "-" + t('result.charts'), t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') %>
 		            <% if I18n.locale.eql?(:en) %>
