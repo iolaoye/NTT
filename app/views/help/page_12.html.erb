@@ -1,11 +1,13 @@
 <div class="main">
 	<div class="container">
 		<h1><%= t('modpage.header') %></h1><br>
+		<% if ENV["APP_VERSION"] == "standard" %>
 			<p><%= raw t('modpage.body1') %></p><br>
 		<h2><%= t('modpage.make.header') %></h2>
 			<p><%= raw t('modpage.make.body1') %></p>
 			<p><%= raw t('modpage.make.body2') %></p>
 			<p><%= raw t('modpage.make.body3') %></p>
+			<% end %>
 		<h2><%= t('modpage.downloading.header') %></h2>
 			<p><%= raw t('modpage.downloading.body1') %></p>
 	</div>

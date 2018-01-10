@@ -98,7 +98,7 @@
       <p><a href='#' onclick="show('popup1')"><%= image_tag 'info_icon.png', :style => "height: 50px;" %><br>About NTT</a></p>
       <p><a href='#' onclick="show('popup4')"><%= image_tag 'future_icon.png', :style => "height: 50px;" %><br>What's New</a></p>
       <!--<p><a href='#' onclick="show('popup2')"><%= image_tag 'what_how_icon.png', :style => "height: 55px;" %><br>Other Models</a></p>-->
-      <p><a href='#' onclick="show('popup3')"><%= image_tag 'video2.png', :style => "height: 50px;" %><br>Instructions</a></p>
+      <p><a href='#' onclick="show('popup3')"><%= image_tag 'video2.png', :style => "height: 50px;" %><br>Presentations</a></p>
       <p><a href='#' onclick="show('popup5')"><%= image_tag 'contact_icon.png', :style => "height: 45px" %><br>Contact Us</a></p>
     </center>
   </div>
@@ -109,6 +109,10 @@
       NTT estimates are made using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model (Williams et al. 2000). Results represent average nutrient and sediment losses from the field based on 35 years of simulated weather.
       NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. Additional funding for development of NTT was provided by NIFA, the USDA Conservation Innovation Grants program, and various state governments.
     </p>
+    <!--<p><strong>NTT Disclaimer</strong><br>
+      Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the validity of the results and functioning of the program and related program material, nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of the results generated from the tool.
+      The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.
+    </p>-->
   </div>
   <!-- Benefits icon -->
   <div class="popup" id="popup2">
@@ -126,7 +130,9 @@
   </div>
   <!-- Video icon -->
   <div class="popup" id="popup3">
-    <p>Coming soon...  </p><a class="close" onclick="hide('popup3')">×</a>
+    <p><a class="close" onclick="hide('popup3')">×</a><br>
+      Coming soon..<!--<object width="800" height="800" align="right" style="margin-top:-50%;"><iframe width="850" height="480" src="https://www.youtube.com/embed/yDdGvTIs7aM" frameborder="10" gesture="media" allow="encrypted-media" allowfullscreen></iframe></object>-->
+    </p>
   </div>
   <!--<div class="popup" id="popup3">
     <p><strong>Data Requirements</strong><a class="close" onclick="hide('popup3')">×</a><br><br>
@@ -148,14 +154,14 @@
       or by phone (254) 968-9799. For technical support please contact Ali Saleh or Oscar Gallego at <a href="mailto:gallego@tiaer.tarleton.edu">gallego@tiaer.tarleton.edu</a>.</p>
   </div>
 </div>
-<div class="container-bottom" style="margin-top:-3%">
+<div class="container-bottom" style="margin-top: 10%;">
   <h3 style="clear: both;">Related Tools</h3>
   <hr>
-  <div style="float: left; width: 31%; margin-right: 2%;">
+  <div style="float: left; width: 31%; margin-right: 2%; margin-top: -1.7%">
     <h4>CEEOT</h4>
-    <p style="font-family:verdana;">Comprehensive Economic Environmental Optimization Tool (CEEOT) is a stand-alone watershed-scale tool. CEEOT evaluates the economic and environmental impacts of conservation practices at the farm and watershed scales. CEEOT is not an internet-based model. Please visit <a href="http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html">http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html</a> for more information.</p>
+    <p style="font-family:verdana;">Comprehensive Economic Environmental Optimization Tool (CEEOT) is a stand-alone watershed-scale tool. CEEOT evaluates the economic and environmental impacts of conservation practices at the farm and watershed scales. Please visit <a href="http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html">http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html</a> for more information.</p>
   </div>
-  <div style="float: left; width: 31%; margin-right: 2%">
+  <div style="float: left; width: 31%; margin-right: 2%; margin-top: -1.7%">
     <% if ENV["APP_VERSION"] == "modified" %>
       <h4>NTT-RE</h4>
       <p style="font-family:verdana;">Nutrient Tracking Tool for Research and Education (NTT-RE) is more comprehensive version of the current version of NTT and intended to be used for Research and Education purposes. <a href="http://ntt-re.tiaer.tarleton.edu">Go to NTT-RE</a> </p>
@@ -164,7 +170,7 @@
       <p style="font-family:verdana;">Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants. <a href="http://ntt.tiaer.tarleton.edu">Go to NTT</a> </p>
     <% end %>
   </div>
-  <div style="float: left; width: 31%; margin-right: 2%;">
+  <div style="float: left; width: 31%; margin-right: 2%; margin-top: -1.7%">
     <h4>NTT-G2</h4>
     <p style="font-family:verdana;">NTT v.2 is the previous version of NTT and is still accessible to users. <a href="http://nn.tarleton.edu/nttG2">Go to NTT v.2</a>. </p>
   </div>
