@@ -1144,7 +1144,6 @@ module SimulationsHelper
           s_o_new.apex_crop = bmp.crop_id
           s_o_new.activity_id = bmp.activity_id
           s_o_new.opv1 = set_opval1(bmp)
-          #s_o_new.opv2 = set_opval2(SoilOperation.find(last_op_id).soil_id, bmp)
           s_o_new.opv3 = 0
           s_o_new.opv4 = 0
           s_o_new.opv5 = set_opval5(bmp)
@@ -1157,7 +1156,6 @@ module SimulationsHelper
           if last_year > bmp.year then  # validate if last_year is greater than cover crop planting year
             soil_oper = @soil_operations.where(:year => bmp.year + 1).first
             cc_kill_date = Date.parse(sprintf("%2d", soil_oper.year) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))
-            #cc_kill_date += 1.year
           else
             soil_oper = @soil_operations.first
             cc_kill_date = Date.parse(sprintf("%2d", 1) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))          
@@ -1176,8 +1174,6 @@ module SimulationsHelper
           s_o_new_kill.opv5 = 0
           s_o_new_kill.opv6 = 0
           s_o_new_kill.opv7 = 0
-          #cc_number += 1
-          #cc_hash[cc_number] = s_o_new
           last_op_id += 1
           s_o_new_kill.id = last_op_id
           cc_number += 1
@@ -1192,12 +1188,10 @@ module SimulationsHelper
           if c_cs.count > 0  then
             date_oper = Date.parse(sprintf("%2d", soil_operation[1].year) + "/" + sprintf("%2d", soil_operation[1].month) + "/" + sprintf("%2d", soil_operation[1].day))
             if c_c_p == false and date_oper > cc_plt_date then 
-              #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
               j+=1
               c_c_p = true
             end
             if c_c_k == false and date_oper > cc_kill_date then 
-              #add_operation(s_o_new_kill, irrigation_type, nirr, soil_percentage, j)
               j+=1
               c_c_k = true
             end
@@ -1208,7 +1202,6 @@ module SimulationsHelper
       end #end soil_operations.each do
       #just in case the planting operation was after the last operation in the soil_operations file.
       if c_c_p == false and c_cs.count > 0 then
-        #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
       end
       # add to the tillage file the new fertilizer operations - one for each depth
       append_file("tillOrg.dat", "till.dat", "till")

@@ -63,6 +63,7 @@
 				<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id, :status => true), :code, :spanish_name, {:prompt => t('general.select'), :selected => @operation.type_id}, {:required => true} %>
 			<% end %>
 		</div>
+		<%= f.hidden_field :subtype_id, :value => @operation.subtype_id %>
 		<div id="div_fertilizer" class="field" style="display:none" >
 			<%= f.label t('general.type') %>
 			<% if I18n.locale.eql?(:en) %>
@@ -388,7 +389,7 @@
 		</div>
 		<div class="field" id="div_depth">
 		  <%= f.label :hours_in_field, t('operation.hours') %>
-		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
+		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
 	    </div>
         <div class="field" id="div_grazed" style="display:none">
             <%= f.label :days_grazed, t('bmp.days_grazed')  %>
@@ -463,7 +464,7 @@
 		</div>
 		<div class="field" id="div_depth">
 		  <%= f.label :hours_in_field, t('operation.hours') %>
-		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 1, :step => 'any', :required => true %>
+		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any', :required => true %>
 	    </div>
         <div class="field" id="div_grazed" >
             <%= f.label :days_grazed, t('bmp.days_grazed') %>
