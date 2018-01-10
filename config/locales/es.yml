@@ -634,6 +634,7 @@ es:
     select_bmp:  Seleccione Grupo de BPG
     create_bmp: Crear BPG
     zero_to_one: "(0.00 - 1.00)"
+    zero_to_hundred: "(0.00 - 100.00)"
     zero_to_max: "(0.00 – 99999.00)"
     quarter_to_one: "(0.25 - 1.00)"
     quarter_to_three_fourths: "(0.25 - 0.75)"

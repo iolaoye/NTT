@@ -63,6 +63,7 @@
 				<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id, :status => true), :code, :spanish_name, {:prompt => t('general.select'), :selected => @operation.type_id}, {:required => true} %>
 			<% end %>
 		</div>
+		<%= f.hidden_field :subtype_id, :value => @operation.subtype_id %>
 		<div id="div_fertilizer" class="field" style="display:none" >
 			<%= f.label t('general.type') %>
 			<% if I18n.locale.eql?(:en) %>
