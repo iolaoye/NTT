@@ -106,17 +106,18 @@
             </div>
             <div class="nav navbar-nav navbar-left">
               <ul class="footerleft">
+                <% unless ENV["APP_VERSION"] == "modified" %><li><div class="language"><%= t('help.language') %>
+                   <span class="tooltiptext">
+                     <%= link_to t("languages.english"), :locale=>'en', :project_id => params[:project_id]%><br>
+                     <%= link_to t("languages.spanish"), :locale=>'es', :project_id => params[:project_id]%>
+                     </span>
+               </li><% end %>
                    <li><a href="#" data-toggle="modal" data-target="#instructions"><%= t('footer.instructions')%></a></li>
-                   <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
-                   <li><%= link_to t("footer.about_ntt"), about_path(@user) %></li>
+                   <li><a href="#" data-toggle="modal" data-target="#documents"><%= t('footer.documentations')%></a></li>
                    <li><%= link_to t("footer.help"), help_path("index", @user) %></li>
                    <li><%= link_to 'FAQ', faqs_path(@user) %></li>
-                   <% unless ENV["APP_VERSION"] == "modified" %><li><div class="language"><%= t('help.language') %>
-                      <span class="tooltiptext">
-                        <%= link_to t("languages.english"), :locale=>'en', :project_id => params[:project_id]%><br>
-                        <%= link_to t("languages.spanish"), :locale=>'es', :project_id => params[:project_id]%>
-                        </span>
-                  </li><% end %>
+                   <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
+                   <!--<li><%= link_to t("footer.about_ntt"), about_path(@user) %></li>-->
               </ul>
             </div>
         </div>
@@ -254,3 +255,22 @@ gallego@tiaer.tarleton.edu
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="documents" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <table>
+          <% if ENV["APP_VERSION"] == "modified" %>
+          <tr><td><%= t('documents_basic_html')%></td></tr>
+          <% else %>
+          <tr><td><%= t('documents_re_html')%></td></tr>
+          <% end %>
+        </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
