@@ -237,16 +237,26 @@ Stephenville, TX 76402<br>
 saleh@tarleton.edu</li></ul>
 <br>
 
-<%= raw t('contact2.statement') %><br><br>
+<% if ENV["APP_VERSION"] == "modified" %>
+<ul><li><b>Mindy Selman</b></li>
+<%= t('contact2.position') %><br>
+USDA Office of Environmental Markets<br>
+Washington, DC<br>
+Stephenville, TX 76402<br>
+(202)304-5154 (Phone)<br>
+mselman@oce.usda.gov<br><br></ul>
+  <% end %>
+
+<%= raw t('contact3.statement') %><br><br>
 
 <ul><li><b>Oscar Gallego</b></li>
-<%= t('contact2.position') %><br>
+<%= t('contact3.position') %><br>
 P.O. Box T410<br>
 Tarleton State University<br>
 Stephenville, TX 76402<br>
 (254)968-9787 (Phone)<br>
 (254)968-9790 (Fax)<br>
-gallego@tiaer.tarleton.edu
+gallego@tiaer.tarleton.edu</ul>
 
       </div>
       <div class="modal-footer">
