@@ -69,7 +69,7 @@ class ApexParametersController < ApplicationController
 
   # PATCH/PUT /apex_parameters/1
   # PATCH/PUT /apex_parameters/1.json
-  def updated
+  def update
     @apex_parameter = ApexParameter.find(params[:id])
 
     respond_to do |format|
