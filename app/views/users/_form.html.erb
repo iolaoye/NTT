@@ -29,9 +29,9 @@
 
     <div id="right_button">
       <% if (I18n.locale.eql?(:en)) %>
-          <%= button_to t('general.back'), login_path, method: :get, :class => "btn btn-primary" %>
+          <%= button_to t('general.back'), root_path, method: :get, :class => "btn btn-primary" %>
       <% else %>
-          <%= button_to t('general.back'), login_path, method: :get, :class => "btn btn-primary" %>
+          <%= button_to t('general.back'), root_path, method: :get, :class => "btn btn-primary" %>
       <% end %>
     </div>
     </div>
