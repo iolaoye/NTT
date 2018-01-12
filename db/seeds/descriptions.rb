@@ -1,7 +1,7 @@
 Description.delete_all
 Description.create!({:id => 20,:detail => false,:description => "Total N",:spanish_description => "Total N",:unit => "lbs/ac",:position => nil,:period => 2,:order_id => 0,:group_id => 3}, :without_protection => true)
 Description.create!({:id => 21,:detail => true,:description => "Org N",:spanish_description => "Org N",:unit => "lbs/ac",:position => nil,:period => 1,:order_id => 1,:group_id => 3}, :without_protection => true)
-Description.create!({:id => 22,:detail => true,:description => "Runoff N",:spanish_description => "N en Flujo",:unit => "lbs/ac",:position => nil,:period => 1,:order_id => 2}, :without_protection => true)
+Description.create!({:id => 22,:detail => true,:description => "Runoff N",:spanish_description => "N en Flujo",:unit => "lbs/ac",:position => nil,:period => 1,:order_id => 2,:group_id => 3}, :without_protection => true)
 Description.create!({:id => 23,:detail => true,:description => "Subsurface N",:spanish_description => "N en Subsuelo",:unit => "lbs/ac",:position => nil,:period => 2,:order_id => 3,:group_id => 3}, :without_protection => true)
 Description.create!({:id => 24,:detail => true,:description => "Tile Drain N",:spanish_description => "N en Sistema de Drenaje",:unit => "lbs/ac",:position => nil,:period => 2,:order_id => 4,:group_id => 3}, :without_protection => true)
 Description.create!({:id => 30,:detail => false,:description => "Total P",:spanish_description => "Total P",:unit => "lbs/ac",:position => nil,:period => 2,:order_id => 8,:group_id => 4}, :without_protection => true)

@@ -490,6 +490,7 @@ en:
     about_ntt: 'About NTT'
     help: Help
     Language: Language
+    documentations: Documentations
   languages:
     english: 'English'
     spanish: 'Spanish'
@@ -1171,6 +1172,10 @@ en:
     ln2: 'Animal feed code (refer to feed composition table file "FCT-NASEM-2016.txt")'
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
     ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
+  documents_basic_html:
+    <a href="/app/assets/basic_help.pdf" download="User Manual.pdf"><u>User Manual</u></a>
+  documents_re_html:
+    <a href="/app/assets/re_help.pdf" download="User Manual.pdf"><u>User Manual</u></a>
   instructions:
     projects: To select an existing project, click on the project name
     fields: To select a field, click on the field name
@@ -1291,7 +1296,7 @@ en:
     Click <strong>Return to Table of Contents</strong> to go to the NTT Table of Contents.<br>
   projpage:
     header: Projects Page
-    statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, upload a project (open a saved project), upload an example project.
+    statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, (open a saved projects, or upload a project stored on their local machine), upload an example project.
     statement_modified: After creating an account in NTT and logging in, you will be directed to the My Projects page. My Projects displays all projects that the user has previously created. On this page, users can create a new project, (open a saved projects, or upload a project stored on their local machine).
     initial:
         header: To Start a Project
