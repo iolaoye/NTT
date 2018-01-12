@@ -1,0 +1,93 @@
+<%= form_for(@annual_result) do |f| %>
+  <% if @annual_result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@annual_result.errors.count, "error") %> prohibited this annual_result from being saved:</h2>
+
+      <ul>
+      <% @annual_result.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :scenario_id %><br>
+    <%= f.text_field :scenario_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sub1 %><br>
+    <%= f.text_field :sub1 %>
+  </div>
+  <div class="field">
+    <%= f.label :year %><br>
+    <%= f.text_field :year %>
+  </div>
+  <div class="field">
+    <%= f.label :flow %><br>
+    <%= f.text_field :flow %>
+  </div>
+  <div class="field">
+    <%= f.label :qdr %><br>
+    <%= f.text_field :qdr %>
+  </div>
+  <div class="field">
+    <%= f.label :surface_flow %><br>
+    <%= f.text_field :surface_flow %>
+  </div>
+  <div class="field">
+    <%= f.label :sed %><br>
+    <%= f.text_field :sed %>
+  </div>
+  <div class="field">
+    <%= f.label :ymnu %><br>
+    <%= f.text_field :ymnu %>
+  </div>
+  <div class="field">
+    <%= f.label :orgp %><br>
+    <%= f.text_field :orgp %>
+  </div>
+  <div class="field">
+    <%= f.label :po4 %><br>
+    <%= f.text_field :po4 %>
+  </div>
+  <div class="field">
+    <%= f.label :orgn %><br>
+    <%= f.text_field :orgn %>
+  </div>
+  <div class="field">
+    <%= f.label :no3 %><br>
+    <%= f.text_field :no3 %>
+  </div>
+  <div class="field">
+    <%= f.label :qdrn %><br>
+    <%= f.text_field :qdrn %>
+  </div>
+  <div class="field">
+    <%= f.label :qdrp %><br>
+    <%= f.text_field :qdrp %>
+  </div>
+  <div class="field">
+    <%= f.label :qn %><br>
+    <%= f.text_field :qn %>
+  </div>
+  <div class="field">
+    <%= f.label :dprk %><br>
+    <%= f.text_field :dprk %>
+  </div>
+  <div class="field">
+    <%= f.label :irri %><br>
+    <%= f.text_field :irri %>
+  </div>
+  <div class="field">
+    <%= f.label :pcp %><br>
+    <%= f.text_field :pcp %>
+  </div>
+  <div class="field">
+    <%= f.label :n2o %><br>
+    <%= f.text_field :n2o %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

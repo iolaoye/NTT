@@ -95,7 +95,6 @@ class ResultsController < ApplicationController
 	  #else
 	    #@field = 0
   	#end
-  	
     @soil = "0"
     #load crop for each scenario selected
     i = 70
@@ -817,14 +816,25 @@ class ResultsController < ApplicationController
         chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND description_id = ? AND month_year <= ?", params[:field_id], scenario_id, @soil, @description, 12)
       end
     end
+    if chart_values == nil || chart_values.blank? then   # means the scenario hasn't been simulated or it was using the new result file annual_results
+    	if month_or_year == 1 then   # get results for annual values sub1 == 0
+    		chart_description = get_description_annual()
+    		chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :scenario_id => scenario_id).last(12)
+    	else  #get results for monthly sub1 > 0
+    		chart_description = get_description_monthly()
+    		chart_values = AnnualResult.select("year AS month_year").where("sub1 > 0? AND scenario_id = ?", 0, scenario_id).group(:sub1).pluck('avg(orgn)')
+    	end
+
+    end
     charts = Array.new
 	if month_or_year == 2 then
-		chart_values.each do |c|
+		for i in 1..chart_values.length
+		#chart_values.each do |c|
 		  chart = Array.new
 		  #chart.push(c.month_year)
 		  #chart.push(listMonths[c.month_year-1][0])
-		  chart.push(t('date.abbr_month_names')[c.month_year])
-		  chart.push(c.value)
+		  chart.push(t('date.abbr_month_names')[i])
+		  chart.push(chart_values[i-1])
 		  charts.push(chart)
 		end
 	else
@@ -846,4 +856,70 @@ class ResultsController < ApplicationController
 	end
     return charts
   end #end method get_chart_serie
+
+  	def get_description_annual
+	  	case @description
+		when "21"
+			chart_description = "orgn"
+		when "23"
+			chart_description = "no3 AS value"
+		when "31"
+			chart_description = "orgp AS value"
+		when "32"
+			chart_description = "po4 AS value"
+		when "41"
+			chart_description = "surface_flow AS value"
+		when "61"
+			chart_description = "sed AS value"
+		else
+			chart_description = ""
+		end
+	end
+
+	def get_description_monthly
+	  	case @description
+		when "20"
+			chart_description = "orgn + no3 + qdrn AS value"
+		when "21"
+			chart_description = "orgn AS value"
+		when "22"
+			chart_description = "no3 - qn AS value"
+		when "23"
+			chart_description = "no3 AS value"
+		when "24"
+			chart_description = "qdrn AS value"
+		when "30"
+			chart_description = "orgp + po4 + qdrp AS value"
+		when "31"
+			chart_description = "orgp AS value"
+		when "32"
+			chart_description = "po4 AS value"
+		when "33"
+			chart_description = "qdrp AS value"
+		when "40"
+			chart_description = "flow + qdr AS value"
+		when "41"
+			chart_description = "surface_flow AS value"
+		when "42"
+			chart_description = "flow - surface_flow AS value"
+		when "43"
+			chart_description = "qdr AS value"
+		when "50"
+			chart_description = "irri + dprk AS value"
+		when "51"
+			chart_description = "irri AS value"
+		when "52"
+			chart_description = "dprk AS value"
+		when "60"
+			chart_description = "sed + ymnu AS value"
+		when "61"
+			chart_description = "sed AS value"
+		when "62"
+			chart_description = "ymnu AS value"
+		when "100"
+			chart_description = "pcp AS value"
+		else
+			chart_description = ""
+		end
+	end
 end
