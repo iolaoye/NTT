@@ -95,16 +95,16 @@
   </div>
   <div id="welcome_info">
     <center style="margin-top:-3%">
-      <p><a href='#' onclick="show('popup1')"><%= image_tag 'info_icon.png', :style => "height: 50px;" %><br>About NTT</a></p>
-      <p><a href='#' onclick="show('popup4')"><%= image_tag 'future_icon.png', :style => "height: 50px;" %><br>What's New</a></p>
+      <p><a href='#' id='icon1'><%= image_tag 'info_icon.png', :style => "height: 50px;" %><br>About NTT</a></p>
+      <p><a href='#' id='icon2'><%= image_tag 'future_icon.png', :style => "height: 50px;" %><br>What's New</a></p>
       <!--<p><a href='#' onclick="show('popup2')"><%= image_tag 'what_how_icon.png', :style => "height: 55px;" %><br>Other Models</a></p>-->
-      <p><a href='#' onclick="show('popup3')"><%= image_tag 'video2.png', :style => "height: 50px;" %><br>Presentations</a></p>
-      <p><a href='#' onclick="show('popup5')"><%= image_tag 'contact_icon.png', :style => "height: 45px" %><br>Contact Us</a></p>
+      <p><a href='#' id='icon3'><%= image_tag 'video2.png', :style => "height: 50px;" %><br>Presentations</a></p>
+      <p><a href='#' id='icon4'><%= image_tag 'contact_icon.png', :style => "height: 45px" %><br>Contact Us</a></p>
     </center>
   </div>
   <!-- Info icon -->
   <div class="popup" id="popup1">
-    <p><strong>About NTT</strong><a class="close" onclick="hide('popup1')">×</a><br><br>
+    <p><strong>About NTT</strong><a class="close" id='close1'>×</a><br><br>
       NTT is a web-based, site-specific application that estimates nutrient and sediment losses for crop and pasture at the field and/or watershed scales. Agricultural producers and land managers can define a number of management scenarios for any given field or area of interest (AOI). NTT will estimate nutrient (nitrogen and phosphorus) losses, sediment losses, and crop yields differences between the scenarios and present results in customizable reports.
       NTT estimates are made using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model (Williams et al. 2000). Results represent average nutrient and sediment losses from the field based on 35 years of simulated weather.
       NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. Additional funding for development of NTT was provided by NIFA, the USDA Conservation Innovation Grants program, and various state governments.
@@ -115,6 +115,7 @@
     </p>
   </div>
   <!-- Benefits icon -->
+  <!--
   <div class="popup" id="popup2">
     <p><strong>Other Available Models</strong><a class="close" onclick="hide('popup2')">×</a><br><br>
       In addition to this version of NTT, the following versions of NTT are available to use:
@@ -128,12 +129,13 @@
       </ol>
     </p>
   </div>
+  -->
   <!-- Video icon -->
   <div class="popup" id="popup3">
-    <p><strong>Nutrient Tracking Tool (NTT): General Description</strong><a class="close" onclick="hide('popup3')">×</a><br>
+    <p><strong>Nutrient Tracking Tool (NTT): General Description</strong><a class="close" id='close3'>×</a><br>
       <div class="videoWrapper">
-      <iframe width="100%" height="480" src="https://www.youtube.com/embed/yDdGvTIs7aM" frameborder="50" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-    </div>
+        <iframe class="ntt-video" width="100%" height="480" src="https://www.youtube.com/embed/yDdGvTIs7aM?enablejsapi=1&version=3&playerapiid=ytplayer" frameborder="50" gesture="media" allow="encrypted-media" allowfullscreen=true allowscriptaccess="always"></iframe>
+      </div>
     </p>
   </div>
   <!--<div class="popup" id="popup3">
@@ -143,15 +145,15 @@
       files may be updated for additional counties in future versions.</p>
   </div>-->
   <!-- Future icon -->
-  <div class="popup" id="popup4">
-    <strong>What's New</strong><a class="close" onclick="hide('popup4')">×</a><br><br>
+  <div class="popup" id="popup2">
+    <strong>What's New</strong><a class="close" id='close2'>×</a><br><br>
     <p>NTT has been updated and re-released as a national-level tool. NTT can now be used to estimate nutrient and sediment losses from crop and pasture operations across the contiguous United  States.
     NTT is constantly being improved, so stay tuned to find out when new features are being added.
     </p>
   </div>
   <!-- Contact icon -->
-  <div class="popup" id="popup5">
-    <p><strong>Contact Us</strong><a class="close" onclick="hide('popup5')">×</a><br><br>
+  <div class="popup" id="popup4">
+    <p><strong>Contact Us</strong><a class="close" id='close4'>×</a><br><br>
       For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at <a href="mailto:saleh@tiaer.tarleton.edu">saleh@tiaer.tarleton.edu</a>
       or by phone (254) 968-9799. For technical support please contact Ali Saleh or Oscar Gallego at <a href="mailto:gallego@tiaer.tarleton.edu">gallego@tiaer.tarleton.edu</a>.</p>
   </div>
@@ -186,15 +188,27 @@
     <h4>NTT-G3</h4>
   </div>-->
 </div>
-<script>
-  $ = function(id) {
-    return document.getElementById(id);
-  }
+<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
 
-  var show = function(id) {
-    $(id).style.display ='block';
-  }
-  var hide = function(id) {
-    $(id).style.display ='none';
-  }
+    $('[id^=close').click(function() {
+      var elementIDNum = (this.id).replace(/[^0-9]+/g, "");
+      var clicked = $('#popup'+elementIDNum);
+      clicked.each(function(i, elem) {
+        $(elem).toggle($(elem).css('display') == 'none');
+      });
+      $('.ntt-video').each(function(){
+        this.contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*')
+      });
+    });
+    $('[id^=icon').click(function() {
+      var elementIDNum = (this.id).replace(/[^0-9]+/g, "");
+      var clicked = $('#popup'+elementIDNum);
+      clicked.each(function(i, elem) {
+        $(elem).toggle($(elem).css('display') == 'none');
+      });
+    });
+  });
+
 </script>
