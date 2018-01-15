@@ -59,33 +59,33 @@ class ResultsController < ApplicationController
 	@scenario1 = "0"
 	if params[:result1] != nil then
 		if params[:result1][:scenario_id] == nil then
-			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or Scenario.find_by_id(session[:scenario1]) == nil
+			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
 
 		else
 			@scenario1 = params[:result1][:scenario_id]
 		end
    	else
-		@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or Scenario.find_by_id(session[:scenario1]) == nil
+		@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
 	end
 	@scenario2 ="0"
 	if params[:result2] != nil then
 		if params[:result2][:scenario_id] == nil then
-			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or Scenario.find_by_id(session[:scenario2]) == nil
+			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @field.scenarios.find_by_id(session[:scenario2]) == nil
 		else
 			@scenario2 = params[:result2][:scenario_id]
 		end
 	else
-		@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or Scenario.find_by_id(session[:scenario2]) == nil
+		@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @field.scenarios.find_by_id(session[:scenario2]) == nil
 	end
 	@scenario3="0"
 	if params[:result3] != nil then
 		if params[:result3][:scenario_id] == nil then
-			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or Scenario.find_by_id(session[:scenario3]) == nil
+			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @field.scenarios.find_by_id(session[:scenario3]) == nil
 		else
 			@scenario3 = params[:result3][:scenario_id]
 		end
 	else
-		@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or Scenario.find_by_id(session[:scenario3]) == nil
+		@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @field.scenarios.find_by_id(session[:scenario3]) == nil
 	end
     if session[:simulation].eql?('scenario') then
 		@field_name = @field.field_name
