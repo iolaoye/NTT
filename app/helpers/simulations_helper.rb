@@ -1137,8 +1137,10 @@ module SimulationsHelper
       end
       c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop operation
       cc_number = @scenario.operations.last.id
+      @c_cs = false
       c_cs.each do |bmp|
         if bmp != nil then
+          @c_cs = true
           s_o_new = SoilOperation.new
           s_o_new.year = bmp.year
           s_o_new.month = bmp.month_id

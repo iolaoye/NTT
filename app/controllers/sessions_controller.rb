@@ -6,8 +6,8 @@ class SessionsController < ApplicationController
       session[:status] = "signed" # store user id in session
       redirect_to user_projects_path(current_user.id), :notice => t('general.log_in') # redirect is successful
     else
-      flash.now[:alert] = "Invalid login/password combination" # alert if error
-      render :action => 'index' # redirect to the same page
+      flash[:info] = "Invalid login/password combination" # alert if error
+      redirect_to root_path # redirect to the same page
     end
   end
 

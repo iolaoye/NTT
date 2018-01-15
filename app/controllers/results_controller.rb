@@ -60,7 +60,6 @@ class ResultsController < ApplicationController
 	if params[:result1] != nil then
 		if params[:result1][:scenario_id] == nil then
 			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
-
 		else
 			@scenario1 = params[:result1][:scenario_id]
 		end
@@ -676,7 +675,7 @@ class ResultsController < ApplicationController
   	  template: "/results/report",
   	  footer: {center: '[page] of [topage]'},
   	  header: {spacing: -6, html: {template: '/layouts/_report_header.html'}},
-  	  margin: {top: 16}
+  	  margin: {top: 20}
       send_data(pdf, :filename => "report.pdf")
 	  return
     end # if format is pdf

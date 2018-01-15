@@ -126,9 +126,7 @@ $(document).ready ->
   display_button()
   generate_pdf()
   check_for_errors()
-  switch $("#result5_category_group_id").val()
-    when "1","6"
-      $("#result5_description_id").hide()
+  update_categories()
 
   $("#result1_scenario_id").change ->
     #update_crops()
