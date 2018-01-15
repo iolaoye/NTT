@@ -1879,11 +1879,13 @@ module SimulationsHelper
     pcp = 0
     total_subs = 0
     i=1
+    total_records = 0
     #apex_control = ApexControl.where(:project_id => params[:project_id])
     initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
     data.each_line do |tempa|
       if i > 3 then
         year = tempa[1, 4].to_i
+        month = tempa[6, 4].to_i
         #subs = tempa[0, 5].to_i
         next if year < apex_start_year #take years greater or equal than ApexStartYear.
         #if subs != 0 and subs != sub_ant then
@@ -1892,34 +1894,55 @@ module SimulationsHelper
         #next if (subs == sub_ant || (session[:simulation] == "watershed" && subs != 0)) && subs != 0 #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
         #next if subs == sub_ant  #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
         #sub_ant = subs
-        one_result = Hash.new
-        one_result["sub1"] = tempa[6, 4]
-        one_result["year"] = year
-        #one_result["flow"] = tempa[31, 9].to_f * MM_TO_IN
-        one_result["surface_flow"] = tempa[12, 10].to_f * MM_TO_IN
-        one_result["sed"] = tempa[23, 10].to_f * THA_TO_TAC
-        #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
-        one_result["orgp"] = tempa[45, 10].to_f * 20 * (KG_TO_LBS / HA_TO_AC)        #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
-        one_result["po4"] = tempa[67, 10].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result["orgn"] = tempa[34, 10].to_f * 10 * (KG_TO_LBS / HA_TO_AC)   #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
-        one_result["no3"] = tempa[56, 10].to_f * (KG_TO_LBS / HA_TO_AC)
-        #one_result["qn"] = tempa[245, 10].to_f * (KG_TO_LBS / HA_TO_AC)
-        #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
-        #one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
-        #one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        #one_result["qdrp"] = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
-        #one_result["dprk"] = tempa[135, 9].to_f * MM_TO_IN
-        #one_result["dprk"] = 0 # Deep percolation hidden in results table. deep percolation shows again per Mindy's request. 10/13/2017
-        #one_result["irri"] = tempa[237, 8].to_f * MM_TO_IN
-        #one_result["pcp"] = tempa[229, 8].to_f * MM_TO_IN
-        #one_result["prkn"] = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        #one_result["n2o"] = tempa[153, 9].to_f
-        results_data.push(one_result)
+        if total_subs == 0 then
+          one_result = Hash.new
+          one_result["sub1"] = month
+          #one_result["year"] = year
+          #one_result["flow"] = tempa[31, 9].to_f * MM_TO_IN
+          one_result["surface_flow"] = tempa[12, 10].to_f * MM_TO_IN
+          one_result["sed"] = tempa[23, 10].to_f * THA_TO_TAC
+          #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
+          one_result["orgp"] = tempa[45, 10].to_f * 20 * (KG_TO_LBS / HA_TO_AC)        #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
+          one_result["po4"] = tempa[67, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          one_result["orgn"] = tempa[34, 10].to_f * 10 * (KG_TO_LBS / HA_TO_AC)   #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
+          one_result["no3"] = tempa[56, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          #one_result["qn"] = tempa[245, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
+          #one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
+          #one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+          #one_result["qdrp"] = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+          # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
+          #one_result["dprk"] = tempa[135, 9].to_f * MM_TO_IN
+          #one_result["dprk"] = 0 # Deep percolation hidden in results table. deep percolation shows again per Mindy's request. 10/13/2017
+          #one_result["irri"] = tempa[237, 8].to_f * MM_TO_IN
+          #one_result["pcp"] = tempa[229, 8].to_f * MM_TO_IN
+          #one_result["prkn"] = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+          #one_result["n2o"] = tempa[153, 9].to_f
+          results_data.push(one_result)
+          if month == 12 then total_subs = 1 end
+        else
+          results_data[month-1]["surface_flow"] += tempa[12, 10].to_f * MM_TO_IN
+          results_data[month-1]["sed"] += tempa[23, 10].to_f * THA_TO_TAC
+          #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
+          results_data[month-1]["orgp"] += tempa[45, 10].to_f * 20 * (KG_TO_LBS / HA_TO_AC)        #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
+          results_data[month-1]["po4"] += tempa[67, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          results_data[month-1]["orgn"] += tempa[34, 10].to_f * 10 * (KG_TO_LBS / HA_TO_AC)   #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
+          results_data[month-1]["no3"] += tempa[56, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+        end
+        if month == 12 then total_records += 1 end
       else
         i = i + 1
       end   # end if i > 3
     end   #end data.each_line
+    for i in 0..11
+      results_data[i]["surface_flow"] /= total_records
+      results_data[i]["sed"] /= total_records
+      #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
+      results_data[i]["orgp"] /= total_records
+      results_data[i]["po4"] /= total_records
+      results_data[i]["orgn"] /= total_records
+      results_data[i]["no3"] /= total_records
+    end
     @scenario.annual_results.create(results_data)
     #msg = average_totals(results_data) # average totals
     

@@ -822,7 +822,7 @@ class ResultsController < ApplicationController
     		chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :scenario_id => scenario_id).last(12)
     	else  #get results for monthly sub1 > 0
     		chart_description = get_description_monthly()
-    		chart_values = AnnualResult.select("year AS month_year").where("sub1 > 0? AND scenario_id = ?", 0, scenario_id).group(:sub1).pluck(chart_description)
+    		chart_values = AnnualResult.select("year AS month_year").where("sub1 > ? AND scenario_id = ?", 0, scenario_id).group(:sub1).pluck(chart_description)
     	end
     end
     charts = Array.new
@@ -860,8 +860,8 @@ class ResultsController < ApplicationController
 	  	case @description
 		when "21"
 			chart_description = "avg(orgn)"
-		when "23"
-			chart_description = "'avg(no3)"
+		when "22"
+			chart_description = "avg(no3)"
 		when "31"
 			chart_description = 'avg(orgp)'
 		when "32"

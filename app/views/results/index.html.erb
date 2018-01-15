@@ -823,7 +823,7 @@
 							<% end %>
 							<% row_id = t + "row" + (70 + i).to_s %>
 							<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-								<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= cr["name"] + " (" + unit + ")" %></th>
+								<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= crop.name + " (" + unit + ")" %></th>
 								<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.0f", cr["yield1"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci1"]) + ")" %></td>
 								<% if @scenario2 != "0" && @scenario2 != "" then %>
 									<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.0f", cr["yield2"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci2"]) + ")" %></td>
