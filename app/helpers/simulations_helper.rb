@@ -1727,8 +1727,8 @@ module SimulationsHelper
         #start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
         #apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
-        msg = load_results_annual(apex_start_year, msg)
-        msg = load_crop_results(apex_start_year)
+        #msg = load_results_annual(apex_start_year, msg)
+        #msg = load_crop_results(apex_start_year)
       rescue => e
         msg = "Failed, Error: " + e.inspect
         raise ActiveRecord::Rollback
