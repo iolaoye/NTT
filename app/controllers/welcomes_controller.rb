@@ -6,6 +6,7 @@ class WelcomesController < ApplicationController
   end
 
   def new
+    @user = User.new
   end
 
   def index
