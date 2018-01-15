@@ -252,7 +252,7 @@ class ResultsController < ApplicationController
 						if @results1.count > 0
 							@present1 = true
 						else
-							if params[:result1] != nil then @errors.push(t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase) end
+							#if params[:result1] != nil then @errors.push(t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase) end
 						    @results1 = nil
 						end
 						session[:scenario2] = ""
@@ -406,7 +406,7 @@ class ResultsController < ApplicationController
 						if @results2.count > 0
 							@present2 = true
 						else
-							if params[:result2] != nil then @errors.push(t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase) end
+							#if params[:result2] != nil then @errors.push(t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase) end
 						    @results2 = nil
 						end
 						session[:scenario3] = ""
@@ -561,7 +561,7 @@ class ResultsController < ApplicationController
 						if @results3.count > 0
 							@present3 = true
 						else
-							if params[:result3] != nil then @errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase) end
+							#if params[:result3] != nil then @errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase) end
 						    @results3 = nil
 						end
 					end   # end result 3
@@ -600,7 +600,7 @@ class ResultsController < ApplicationController
                 if @charts1.count > 0
                   @present1 = true
                 else
-                  @errors.push(t('result.first_scenario_error') + " " + t('general.values').pluralize.downcase)
+                  #@errors.push(t('result.first_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then
@@ -609,7 +609,7 @@ class ResultsController < ApplicationController
                 if @charts2.count > 0
                   @present2 = true
                 else
-                  @errors.push(t('result.second_scenario_error') + " " + t('general.values').pluralize.downcase)
+                  #@errors.push(t('result.second_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result3][:scenario_id] != "" then
@@ -618,7 +618,7 @@ class ResultsController < ApplicationController
                 if @charts3.count > 0
                   @present3 = true
                 else
-                  @errors.push(t('result.third_scenario_error') + " " + t('general.values').pluralize.downcase)
+                  #@errors.push(t('result.third_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
             end
@@ -641,7 +641,7 @@ class ResultsController < ApplicationController
                 if @charts1.count > 0
                   @present1 = true
                 else
-                  @errors.push(t('result.first_scenario_error') + " " + t('result.charts').pluralize.downcase)
+                  #@errors.push(t('result.first_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then
@@ -650,7 +650,7 @@ class ResultsController < ApplicationController
                 if @charts2.count > 0
                   @present2 = true
                 else
-                  @errors.push(t('result.second_scenario_error') + " " + t('result.charts').pluralize.downcase)
+                  #@errors.push(t('result.second_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result3][:scenario_id] != "" then
@@ -659,7 +659,7 @@ class ResultsController < ApplicationController
                 if @charts3.count > 0
                   @present3 = true
                 else
-                  @errors.push(t('result.third_scenario_error') + " " + t('result.charts').pluralize.downcase)
+                  #@errors.push(t('result.third_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
             end
@@ -822,9 +822,8 @@ class ResultsController < ApplicationController
     		chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :scenario_id => scenario_id).last(12)
     	else  #get results for monthly sub1 > 0
     		chart_description = get_description_monthly()
-    		chart_values = AnnualResult.select("year AS month_year").where("sub1 > 0? AND scenario_id = ?", 0, scenario_id).group(:sub1).pluck('avg(orgn)')
+    		chart_values = AnnualResult.select("year AS month_year").where("sub1 > 0? AND scenario_id = ?", 0, scenario_id).group(:sub1).pluck(chart_description)
     	end
-
     end
     charts = Array.new
 	if month_or_year == 2 then
@@ -857,26 +856,26 @@ class ResultsController < ApplicationController
     return charts
   end #end method get_chart_serie
 
-  	def get_description_annual
+  	def get_description_monthly
 	  	case @description
 		when "21"
-			chart_description = "orgn"
+			chart_description = "avg(orgn)"
 		when "23"
-			chart_description = "no3 AS value"
+			chart_description = "'avg(no3)"
 		when "31"
-			chart_description = "orgp AS value"
+			chart_description = 'avg(orgp)'
 		when "32"
-			chart_description = "po4 AS value"
+			chart_description = 'avg(po4)'
 		when "41"
-			chart_description = "surface_flow AS value"
+			chart_description = 'avg(surface_flow)'
 		when "61"
-			chart_description = "sed AS value"
+			chart_description = 'avg(sed)'
 		else
 			chart_description = ""
 		end
 	end
 
-	def get_description_monthly
+	def get_description_annual
 	  	case @description
 		when "20"
 			chart_description = "orgn + no3 + qdrn AS value"

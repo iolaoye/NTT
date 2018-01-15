@@ -1728,7 +1728,6 @@ module SimulationsHelper
         #apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
         msg = load_results_annual(apex_start_year, msg)
-        debugger
         msg = load_crop_results(apex_start_year)
       rescue => e
         msg = "Failed, Error: " + e.inspect
@@ -1832,7 +1831,6 @@ module SimulationsHelper
   end
 
   def load_crop_results(apex_start_year)
-    debugger
     msg = "OK"
     crops_data = Array.new
     #oneCrop = Struct.new(:sub1, :name, :year, :yield, :ws, :ts, :ns, :ps, :as1)
@@ -1850,18 +1848,16 @@ module SimulationsHelper
         one_crop["year"] = year1
         one_crop["name"] = tempa[28, 4]
         one_crop["yldg"] = tempa[33, 9].to_f
-        one_crop["yldf"] += tempa[43, 9].to_f
+        one_crop["yldf"] = tempa[43, 9].to_f
         one_crop["ws"] = tempa[63, 9].to_f
         one_crop["ns"] = tempa[73, 9].to_f
         one_crop["ps"] = tempa[83, 9].to_f
         one_crop["ts"] = tempa[93, 9].to_f
         #one_crop["as1 = tempa[103, 9].to_f
         crops_data.push(one_crop)
-        debugger
       end # end if j>=10
       j+=1
     end #end data.each
-    debugger
     @scenario.crop_results.create(crops_data)
     #crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean, v.map(&:ns).mean, v.map(&:ts).mean, v.map(&:ps).mean, v.map(&:ws).mean] }
     #average_crops_result(crops_data_by_crop_year, 70) #crop results
@@ -2042,7 +2038,7 @@ module SimulationsHelper
         i = i + 1
       end   # end if i > 3
     end   #end data.each_line
-    msg = average_totals(results_data) # average totals
+    #msg = average_totals(results_data) # average totals
     msg = load_monthly_values(apex_start_year)
     msg = load_monthly(apex_start_year)
     #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed

@@ -8,6 +8,7 @@ class Field < ActiveRecord::Base
 	has_many :results, :dependent => :destroy
     has_many :charts, :dependent => :destroy
 	has_many :watershed_scenarios, :dependent => :destroy
+	has_many :annual_results, :through => :scenarios
 	belongs_to :location
   #validations
 	 validates_uniqueness_of :location_id, :scope => :field_name
