@@ -57,37 +57,68 @@ class ResultsController < ApplicationController
     add_breadcrumb t('menu.results')
 	
 	@scenario1 = "0"
-	if params[:result1] != nil then
-		if params[:result1][:scenario_id] == nil then
-			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
-		else
-			@scenario1 = params[:result1][:scenario_id]
-		end
-   	else
-		@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
-	end
-	@scenario2 ="0"
-	if params[:result2] != nil then
-		if params[:result2][:scenario_id] == nil then
-			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @field.scenarios.find_by_id(session[:scenario2]) == nil
-		else
-			@scenario2 = params[:result2][:scenario_id]
-		end
-	else
-		@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @field.scenarios.find_by_id(session[:scenario2]) == nil
-	end
-	@scenario3="0"
-	if params[:result3] != nil then
-		if params[:result3][:scenario_id] == nil then
-			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @field.scenarios.find_by_id(session[:scenario3]) == nil
-		else
-			@scenario3 = params[:result3][:scenario_id]
-		end
-	else
-		@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @field.scenarios.find_by_id(session[:scenario3]) == nil
-	end
+	@scenario2 = "0"
+	@scenario3 = "0"
     if session[:simulation].eql?('scenario') then
 		@field_name = @field.field_name
+
+		if params[:result1] != nil then
+			if params[:result1][:scenario_id] == nil then
+				@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
+			else
+				@scenario1 = params[:result1][:scenario_id]
+			end
+	   	else
+			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
+		end
+
+		if params[:result2] != nil then
+			if params[:result2][:scenario_id] == nil then
+				@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @field.scenarios.find_by_id(session[:scenario2]) == nil
+			else
+				@scenario2 = params[:result2][:scenario_id]
+			end
+		else
+			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @field.scenarios.find_by_id(session[:scenario2]) == nil
+		end
+		if params[:result3] != nil then
+			if params[:result3][:scenario_id] == nil then
+				@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @field.scenarios.find_by_id(session[:scenario3]) == nil
+			else
+				@scenario3 = params[:result3][:scenario_id]
+			end
+		else
+			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @field.scenarios.find_by_id(session[:scenario3]) == nil
+		end
+	else
+		if params[:result1] != nil then
+			if params[:result1][:scenario_id] == nil then
+				@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @project.location.watersheds.find_by_id(session[:scenario1]) == nil
+			else
+				@scenario1 = params[:result1][:scenario_id]
+			end
+	   	else
+			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @project.location.watersheds.find_by_id(session[:scenario1]) == nil
+		end
+
+		if params[:result2] != nil then
+			if params[:result2][:scenario_id] == nil then
+				@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @project.location.watersheds.find_by_id(session[:scenario2]) == nil
+			else
+				@scenario2 = params[:result2][:scenario_id]
+			end
+		else
+			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @project.location.watersheds.find_by_id(session[:scenario2]) == nil
+		end
+		if params[:result3] != nil then
+			if params[:result3][:scenario_id] == nil then
+				@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @project.location.watersheds.find_by_id(session[:scenario3]) == nil
+			else
+				@scenario3 = params[:result3][:scenario_id]
+			end
+		else
+			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @project.location.watersheds.find_by_id(session[:scenario3]) == nil
+		end
     end
   	#if !(params[:field_id] == "0")
   		#@field = Field.find(params[:field_id])
@@ -921,6 +952,8 @@ class ResultsController < ApplicationController
 			chart_description = "ymnu AS value"
 		when "70" 
 			chart_description = "yldg+yldf AS value"
+		when "92" 
+			chart_description = "n2o AS value"
 		when "100"
 			chart_description = "pcp AS value"
 		else
