@@ -1355,6 +1355,9 @@
 			    <% if @results1 != nil && @present %>
 				<% else %>
 					<% total_area = 0 %>
+					<% row_id = t + "row" + "20" %>
+					<% if @scenario1 != "0" then %>
+
 					<% if session[:simulation] == "scenario" %>
 						<% total_area = @field.field_area %>
 					<% else %>
@@ -1364,8 +1367,8 @@
 							<% total_area += ws.field.field_area %>
 						<% end %>
 					<% end %>
-					<% row_id = t + "row" + "20" %>
-					<% if @scenario1 != "0" then %>
+
+					
 						<% averages1 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario1).pluck('avg(orgn)*' + total_area.to_s, 'avg(qn)*' + total_area.to_s, 'avg(no3-qn)*' + total_area.to_s, 'avg(qdrn)*' + total_area.to_s, 'avg(orgp)*' + total_area.to_s, 'avg(po4)*' + total_area.to_s, 'avg(qdrp)*' + total_area.to_s, 'avg(surface_flow)*' + total_area.to_s, 'avg(flow-surface_flow)*' + total_area.to_s, 'avg(qdr)*' + total_area.to_s, 'avg(irri)*' + total_area.to_s, 'avg(dprk)*' + total_area.to_s, 'avg(sed)*' + total_area.to_s, 'avg(ymnu)*' + total_area.to_s) %>
 						<% crops1 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg)*' + total_area.to_s + "-" +  'avg(yldf)*' + total_area.to_s, 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
 						<% averages2 = "0" %>
