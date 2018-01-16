@@ -3,7 +3,31 @@ class CropResultsController < ApplicationController
 
   # GET /crop_results
   def index
-    @crop_results = CropResult.all
+    if params[:id1] != nil && params[:id2] != nil && params[:id3] != nil
+      @crop_results = CropResult.select("name, sub1").where("scenario_id = ? || scenario_id = ? || scenario_id = ?", params[:id1], params[:id2], params[:id3]).distinct
+    elsif params[:id1] != nil && params[:id2] 
+      @crop_results = CropResult.select("name, sub1").where("scenario_id = ? OR scenario_id = ?", params[:id1], params[:id2]).distinct
+    elsif params[:id1] != nil 
+      @crop_results = CropResult.select("name, sub1").where("scenario_id = ?", params[:id1]).distinct
+    else
+      @crop_results = CropResult.all
+    end
+    cr_ant = ""
+    crops = Array.new
+    @crop_results.each do |cr|
+      crop = Crop.find_by_code(cr.name)
+      if cr_ant != cr.name then
+        crop_hash = Hash.new
+        crop_hash["name"] = crop.name
+        crop_hash["crop_id"] = crop.id
+        crops.push(crop_hash)
+        cr_ant = cr.name
+      end
+    end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: crops}
+    end
   end
 
   # GET /crop_results/1
