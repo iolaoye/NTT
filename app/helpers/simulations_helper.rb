@@ -1720,8 +1720,12 @@ module SimulationsHelper
           #Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
   		  else
           # clean results for watershed to avoid keeping some results from previous simulation
-          Result.where(:watershed_id => @watershed.id).delete_all
-          Chart.where(:watershed_id => @watershed.id).delete_all
+          #Result.where(:watershed_id => @watershed.id).delete_all
+          #Chart.where(:watershed_id => @watershed.id).delete_all
+          @watershed.results.delete_all
+          @watershed.charts.delete_all
+          @watershed.annual_results.delete_all
+          @watershed.crop_results.delete_all
   		  end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
@@ -1825,7 +1829,11 @@ module SimulationsHelper
         i = i + 1
       end   # end if i > 3
     end   #end data.each_line
-    @scenario.annual_results.create(results_data)
+    if session[:simulation] == "scenario" then
+      @scenario.annual_results.create(results_data)
+    else
+      @watershed.annual_results.create(results_data)
+    end
     #msg = average_totals(results_data) # average totals
     msg = load_results_monthly(apex_start_year)
     #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
@@ -1945,7 +1953,11 @@ module SimulationsHelper
       results_data[i]["orgn"] /= total_records
       results_data[i]["no3"] /= total_records
     end
-    @scenario.annual_results.create(results_data)
+    if session[:simulation] == "scenario" then
+      @scenario.annual_results.create(results_data)
+    else
+      @watershed.annual_results.create(results_data)
+    end
     #msg = average_totals(results_data) # average totals
     
     #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed

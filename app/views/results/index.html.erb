@@ -351,29 +351,33 @@
 				    <% end %>  <!-- @results1.each -->
 				<% else %>
 					<% row_id = t + "row" + "20" %>
+					<% @id = "scenario_id" %>
+					<% if session[:simulation] != "scenario" then %>
+						<% @id = "watershed_id" %>
+					<% end %>
 					<% if @scenario1 != "0" then %>
 						<% require 'enumerable/confidence_interval' %>
-						<% results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario1) %>
+						<% results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :"#{@id}" => @scenario1) %>
 						<% cis1 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } %>
-						<% averages1 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario1).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
-						<% crops1 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
-						<% crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where("scenario_id = ? AND yldg+yldf > ?", @scenario1, 0) %>
+						<% averages1 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario1).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
+						<% crops1 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+						<% crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario1, 0) %>
 						<% cic1 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
 						<%# cic1 = crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]} %>
 						<% averages2 = nil %>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<% results_data2 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario2) %>
+							<% results_data2 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0,  :"#{@id}" => @scenario2) %>
 							<% cis2 = results_data2.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } %>
-							<% averages2 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario2).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
-							<% crops2 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
-							<% crops_data2 = CropResult.select('*', 'yldg+yldf AS yield').where("scenario_id = ? AND yldg+yldf > ?", @scenario2, 0) %>
+							<% averages2 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario2).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
+							<% crops2 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+							<% crops_data2 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario2, 0) %>
 							<% cic2 = Hash[*crops_data2.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
 							<% if @scenario3 != "0" && @scenario2 != ""  then %>
-								<% results_data3 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario3) %>
+								<% results_data3 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0,  :"#{@id}" => @scenario3) %>
 								<% cis3 = results_data3.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } %>
-								<% averages3 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario3).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
-								<% crops3 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
-								<% crops_data3 = CropResult.select('*', 'yldg+yldf AS yield').where("scenario_id = ? AND yldg+yldf > ?", @scenario3, 0) %>
+								<% averages3 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario3).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
+								<% crops3 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+								<% crops_data3 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario3, 0) %>
 								<% cic3 = Hash[*crops_data3.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
 							<% end %>
 						<% end %>
@@ -1333,7 +1337,7 @@
 						<% if !@present3 %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@results3[0].scenario_id).name%></th><%end%>
 					<% else %>
 						<% if !@present1 %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Watershed.find(@results1[0].watershed_id).name%></th><%end%>
-						<% if !@present1 %> <th colspan="2" style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@results1[0].watershed_id).name%></th><%end%>
+						<% if !@present2 %> <th colspan="2" style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@results1[0].watershed_id).name%></th><%end%>
 						<% if !@present3 %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@results3[0].watershed_id).name%></th><%end%>
 					<% end %>
 			  	</tr>
@@ -1350,17 +1354,28 @@
 		  		<% t = "t" %>
 			    <% if @results1 != nil && @present %>
 				<% else %>
+				<% debugger %>
+					<% total_area = 0 %>
+					<% if session[:simulation] == "scenario" %>
+						<% total_area = @field.field_area %>
+					<% else %>
+						<% watershed = Watershed.find(@scenario1) %>
+						<% total_area = 0 %>
+						<% watershed.watershed_scenarios.each do |ws| %>
+							<% total_area += ws.field.field_area %>
+						<% end %>
+					<% end %>
 					<% row_id = t + "row" + "20" %>
 					<% if @scenario1 != "0" then %>
-						<% averages1 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario1).pluck('avg(orgn)*' + @field.field_area.to_s, 'avg(qn)*' + @field.field_area.to_s, 'avg(no3-qn)*' + @field.field_area.to_s, 'avg(qdrn)*' + @field.field_area.to_s, 'avg(orgp)*' + @field.field_area.to_s, 'avg(po4)*' + @field.field_area.to_s, 'avg(qdrp)*' + @field.field_area.to_s, 'avg(surface_flow)*' + @field.field_area.to_s, 'avg(flow-surface_flow)*' + @field.field_area.to_s, 'avg(qdr)*' + @field.field_area.to_s, 'avg(irri)*' + @field.field_area.to_s, 'avg(dprk)*' + @field.field_area.to_s, 'avg(sed)*' + @field.field_area.to_s, 'avg(ymnu)*' + @field.field_area.to_s) %>
-						<% crops1 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg)*' + @field.field_area.to_s + "-" +  'avg(yldf)*' + @field.field_area.to_s, 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+						<% averages1 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario1).pluck('avg(orgn)*' + total_area.to_s, 'avg(qn)*' + total_area.to_s, 'avg(no3-qn)*' + total_area.to_s, 'avg(qdrn)*' + total_area.to_s, 'avg(orgp)*' + total_area.to_s, 'avg(po4)*' + total_area.to_s, 'avg(qdrp)*' + total_area.to_s, 'avg(surface_flow)*' + total_area.to_s, 'avg(flow-surface_flow)*' + total_area.to_s, 'avg(qdr)*' + total_area.to_s, 'avg(irri)*' + total_area.to_s, 'avg(dprk)*' + total_area.to_s, 'avg(sed)*' + total_area.to_s, 'avg(ymnu)*' + total_area.to_s) %>
+						<% crops1 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg)*' + total_area.to_s + "-" +  'avg(yldf)*' + total_area.to_s, 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
 						<% averages2 = "0" %>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<% averages2 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario2).pluck('avg(orgn)*' + @field.field_area.to_s, 'avg(qn)*' + @field.field_area.to_s, 'avg(no3-qn)*' + @field.field_area.to_s, 'avg(qdrn)*' + @field.field_area.to_s, 'avg(orgp)*' + @field.field_area.to_s, 'avg(po4)*' + @field.field_area.to_s, 'avg(qdrp)*' + @field.field_area.to_s, 'avg(surface_flow)*' + @field.field_area.to_s, 'avg(flow-surface_flow)*' + @field.field_area.to_s, 'avg(qdr)*' + @field.field_area.to_s, 'avg(irri)*' + @field.field_area.to_s, 'avg(dprk)*' + @field.field_area.to_s, 'avg(sed)*' + @field.field_area.to_s, 'avg(ymnu)*' + @field.field_area.to_s) %>
-						<% crops2 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg)*' + @field.field_area.to_s + "-" +  'avg(yldf)*' + @field.field_area.to_s, 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+							<% averages2 = AnnualResult.where(:sub1 => 0, :"#{@id}"=> @scenario2).pluck('avg(orgn)*' + total_area.to_s, 'avg(qn)*' + total_area.to_s, 'avg(no3-qn)*' + total_area.to_s, 'avg(qdrn)*' + total_area.to_s, 'avg(orgp)*' + total_area.to_s, 'avg(po4)*' + total_area.to_s, 'avg(qdrp)*' + total_area.to_s, 'avg(surface_flow)*' + total_area.to_s, 'avg(flow-surface_flow)*' + total_area.to_s, 'avg(qdr)*' + total_area.to_s, 'avg(irri)*' + total_area.to_s, 'avg(dprk)*' + total_area.to_s, 'avg(sed)*' + total_area.to_s, 'avg(ymnu)*' + total_area.to_s) %>
+						<% crops2 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg)*' + total_area.to_s + "-" +  'avg(yldf)*' + total_area.to_s, 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
 							<% if @scenario3 != "0" && @scenario3 != ""  then %>
-								<% averages3 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario3).pluck('avg(orgn)*' + @field.field_area.to_s, 'avg(qn)*' + @field.field_area.to_s, 'avg(no3-qn)*' + @field.field_area.to_s, 'avg(qdrn)*' + @field.field_area.to_s, 'avg(orgp)*' + @field.field_area.to_s, 'avg(po4)*' + @field.field_area.to_s, 'avg(qdrp)*' + @field.field_area.to_s, 'avg(surface_flow)*' + @field.field_area.to_s, 'avg(flow-surface_flow)*' + @field.field_area.to_s, 'avg(qdr)*' + @field.field_area.to_s, 'avg(irri)*' + @field.field_area.to_s, 'avg(dprk)*' + @field.field_area.to_s, 'avg(sed)*' + @field.field_area.to_s, 'avg(ymnu)*' + @field.field_area.to_s) %>
-						<% crops3 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg)*' + @field.field_area.to_s + "-" +  'avg(yldf)*' + @field.field_area.to_s, 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+								<% averages3 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario3).pluck('avg(orgn)*' + total_area.to_s, 'avg(qn)*' + total_area.to_s, 'avg(no3-qn)*' + total_area.to_s, 'avg(qdrn)*' + total_area.to_s, 'avg(orgp)*' + total_area.to_s, 'avg(po4)*' + total_area.to_s, 'avg(qdrp)*' + total_area.to_s, 'avg(surface_flow)*' + total_area.to_s, 'avg(flow-surface_flow)*' + total_area.to_s, 'avg(qdr)*' + total_area.to_s, 'avg(irri)*' + total_area.to_s, 'avg(dprk)*' + total_area.to_s, 'avg(sed)*' + total_area.to_s, 'avg(ymnu)*' + total_area.to_s) %>
+						<% crops3 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg)*' + total_area.to_s + "-" +  'avg(yldf)*' + total_area.to_s, 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
 							<% end %>
 						<% end %>
 						<tr class="gvRowStyleOdd", id = <%=row_id%>>
