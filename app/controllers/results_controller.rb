@@ -847,17 +847,21 @@ class ResultsController < ApplicationController
       end
     end
     if chart_values == nil || chart_values.blank? then   # means the scenario hasn't been simulated or it was using the new result file annual_results
+		id = "scenario_id"
+		if session[:simulation] != "scenario" then
+			id = "watershed_id"
+		end
     	if month_or_year == 1 then   # get results for annual values sub1 == 0
     		chart_description = get_description_annual()
     		if @description != "70" then
-    			chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :scenario_id => scenario_id).last(12)
+    			chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :"#{id}" => scenario_id).last(12)
     		else
-    			chart_values = CropResult.select("year as month_year", "yldg+yldf as value").where(:scenario_id => scenario_id).group(:name, :year).last(12)
+    			chart_values = CropResult.select("year as month_year", "yldg+yldf as value").where(:"#{id}" => scenario_id).group(:name, :year).last(12)
     			#chart_values = CropResult.select("year AS month_year", "yldg+yldf as value").where(:scenario_id => 736).group(:name, :year).pluck("yldg+yldf as value").last(12)
     		end
     	else  #get results for monthly sub1 > 0
     		chart_description = get_description_monthly()
-    		chart_values = AnnualResult.select("year AS month_year").where("sub1 > ? AND scenario_id = ?", 0, scenario_id).group(:sub1).pluck(chart_description)
+    		chart_values = AnnualResult.select("year AS month_year").where("sub1 > ? AND " + id + " = ?", 0, scenario_id).group(:sub1).pluck(chart_description)
     	end
     end
     charts = Array.new
