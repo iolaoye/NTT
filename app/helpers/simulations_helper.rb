@@ -1868,7 +1868,11 @@ module SimulationsHelper
       end # end if j>=10
       j+=1
     end #end data.each
-    @scenario.crop_results.create(crops_data)
+    if session[:simulation] == "scenario" then
+      @scenario.crop_results.create(crops_data)
+    else
+      @watershed.crop_results.create(crops_data)
+    end
     #crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean, v.map(&:ns).mean, v.map(&:ts).mean, v.map(&:ps).mean, v.map(&:ws).mean] }
     #average_crops_result(crops_data_by_crop_year, 70) #crop results
     return "OK"
