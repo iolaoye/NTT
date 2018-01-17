@@ -1,5 +1,5 @@
 class Watershed < ActiveRecord::Base
-  attr_accessible :field_id, :name, :scenario_id
+  attr_accessible :location_id, :name
   #associations
 	has_many :charts, :dependent => :destroy
 	has_many :watershed_scenarios, :dependent => :destroy
