@@ -601,8 +601,39 @@ class ResultsController < ApplicationController
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
 		  @chart_type = 0
           @x = "Year"
-          debugger
             @crops = Array.new
+			#scenario_id = session[:simulation].downcase + "_id"
+			#if params[:result1] != nil && params[:result2] != nil && params[:result3] != nil then
+				#if params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
+			  		#@crop_results = CropResult.select("name, sub1").where(scenario_id + " = ? || " + scenario_id + " = ? || " + scenario_id + " = ?", params[:result1][:scenario_id],params[:result2][:scenario_id],params[:result3][:scenario_id]).distinct
+				#end	
+			#elsif params[:result1] != nil && params[:result2] != nil then
+				#if [:result1][:scenario_id] != "" && params[:result2][:scenario_id] != ""
+			  		#@crop_results = CropResult.select("name, sub1").where(scenario_id + " = ? || " + scenario_id + " = ?", params[:result3][:scenario_id],params[:result2][:scenario_id]).distinct
+			  	#end
+			#elsif params[:result1] then
+				#if params[:result1][:scenario_id] != "" then
+			  		#@crop_results = CropResult.select("name, sub1").where(scenario_id + " = ?", params[:result1][:scenario_id]).distinct
+			  	#end
+			#else
+			#end
+			#@crop_results.each do |cr|
+			  #crop = Crop.find_by_code(cr.name)
+			  #found = false
+			  #@crops.each do |cp|
+			    #if crop.name == cp["name"] then 
+			      #found = true
+			      #break
+			    #end 
+			  #end
+			  #if !found then 
+			    #crop_hash = Hash.new
+			    #crop_hash["name"] = crop.name
+			    #crop_hash["crop_id"] = crop.id
+			    #@crops.push(crop_hash)
+			    #cr_ant = cr.name
+			  #end
+			#end
           #if session[:simulation] == "scenario"
 		    #@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ? or scenario_id = ? or scenario_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
           #else

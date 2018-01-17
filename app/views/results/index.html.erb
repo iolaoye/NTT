@@ -75,7 +75,6 @@
 		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :spanish_group_name, {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
 		              <td><%= collection_select :result5, :description_id, @descriptions.where("id != 52"), :id, :spanish_description, {:prompt => t('result.select_category'), :selected => @description}, {:required => true} %></td>
 		            <% end %>
-		            <% debugger %>
 					<% if I18n.locale.eql?(:en) %>
 						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
 					<% else %>
