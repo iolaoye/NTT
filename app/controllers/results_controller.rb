@@ -887,7 +887,8 @@ class ResultsController < ApplicationController
     			chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :"#{id}" => scenario_id).last(12)
     		else
     			crop = Crop.find(params[:result7][:crop_id])
-    			chart_values = CropResult.select("year as month_year", "yldg+yldf as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year).last(12)
+    			conversion_factor = crop.conversion_factor * AC_TO_HA / (crop.dry_matter/100)
+    			chart_values = CropResult.select("year as month_year", "(yldg+yldf) *" + conversion_factor.to_s + " as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year).last(12)
     			#chart_values = CropResult.select("year AS month_year", "yldg+yldf as value").where(:scenario_id => 736).group(:name, :year).pluck("yldg+yldf as value").last(12)
     		end
     	else  #get results for monthly sub1 > 0
