@@ -903,7 +903,7 @@ class ResultsController < ApplicationController
     end
     charts = Array.new(11)
     #debugger
-	if month_or_year == 2 then
+	if month_or_year == 2 then  #monthly
 		for i in 1..chart_values.length
 		#chart_values.each do |c|
 		  chart = Array.new
@@ -913,27 +913,37 @@ class ResultsController < ApplicationController
 		  chart.push(chart_values[i-1])
 		  charts[i-1] = chart
 		end
-	else
+	else  # annual
 		current_year = first_year + 1
 		i = 0
-		chart_values.each do |c|
-			#debugger
-			while current_year < c.month_year
-				debugger
+		if chart_values.length == 0 then
+			for i in 0..11
 				chart = Array.new
 				chart.push(current_year)
 				chart.push(0)
+				current_year += 1
+				charts[i] = chart
+			end
+		else
+			chart_values.each do |c|
+				#debugger
+				while current_year < c.month_year
+					debugger
+					chart = Array.new
+					chart.push(current_year)
+					chart.push(0)
+					charts[i] = chart
+					current_year +=1
+					i += 1
+				end
+				chart = Array.new
+				chart.push(c.month_year)
+				chart.push(c.value)
 				charts[i] = chart
 				current_year +=1
 				i += 1
+				if i > 11 then break end
 			end
-			chart = Array.new
-			chart.push(c.month_year)
-			chart.push(c.value)
-			charts[i] = chart
-			current_year +=1
-			i += 1
-			if i > 11 then break end
 		end
 	end
     return charts
