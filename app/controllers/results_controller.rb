@@ -2,7 +2,6 @@ class ResultsController < ApplicationController
   include OperationsHelper
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
-
   	@type = t('general.view') + ' ' + t('result.monthly') + "-" + t('result.charts')
   	index
   	#render "index"
@@ -71,7 +70,6 @@ class ResultsController < ApplicationController
 	   	else
 			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
 		end
-
 		if params[:result2] != nil then
 			if params[:result2][:scenario_id] == nil then
 				@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @field.scenarios.find_by_id(session[:scenario2]) == nil
@@ -100,7 +98,6 @@ class ResultsController < ApplicationController
 	   	else
 			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @project.location.watersheds.find_by_id(session[:scenario1]) == nil
 		end
-
 		if params[:result2] != nil then
 			if params[:result2][:scenario_id] == nil then
 				@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @project.location.watersheds.find_by_id(session[:scenario2]) == nil
@@ -604,11 +601,13 @@ class ResultsController < ApplicationController
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
 		  @chart_type = 0
           @x = "Year"
-          if session[:simulation] == "scenario"
-		    @crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ? or scenario_id = ? or scenario_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
-          else
-            @crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (watershed_id = ? or watershed_id = ? or watershed_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
-          end
+          debugger
+            @crops = Array.new
+          #if session[:simulation] == "scenario"
+		    #@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ? or scenario_id = ? or scenario_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
+          #else
+            #@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (watershed_id = ? or watershed_id = ? or watershed_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
+          #end
           if params[:result5] != nil && params[:result5][:description_id] != "" then
             @description = params[:result5][:description_id]
             @group = params[:result5_category][:group_id]

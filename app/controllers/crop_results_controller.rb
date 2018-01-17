@@ -3,12 +3,14 @@ class CropResultsController < ApplicationController
 
   # GET /crop_results
   def index
+    #debugger
+    scenario_id = params[:session].downcase + "_id"
     if params[:id1] != nil && params[:id2] != nil && params[:id3] != nil
-      @crop_results = CropResult.select("name, sub1").where("scenario_id = ? || scenario_id = ? || scenario_id = ?", params[:id1], params[:id2], params[:id3]).distinct
+      @crop_results = CropResult.select("name, sub1").where(scenario_id + " = ? || " + scenario_id + " = ? || " + scenario_id + " = ?", params[:id1], params[:id2], params[:id3]).distinct
     elsif params[:id1] != nil && params[:id2] 
-      @crop_results = CropResult.select("name, sub1").where("scenario_id = ? OR scenario_id = ?", params[:id1], params[:id2]).distinct
+      @crop_results = CropResult.select("name, sub1").where(scenario_id + " = ? || " + scenario_id + " = ?", params[:id1], params[:id2]).distinct
     elsif params[:id1] != nil 
-      @crop_results = CropResult.select("name, sub1").where("scenario_id = ?", params[:id1]).distinct
+      @crop_results = CropResult.select("name, sub1").where(scenario_id + " = ?", params[:id1]).distinct
     else
       @crop_results = CropResult.all
     end
@@ -16,7 +18,14 @@ class CropResultsController < ApplicationController
     crops = Array.new
     @crop_results.each do |cr|
       crop = Crop.find_by_code(cr.name)
-      if cr_ant != cr.name then
+      found = false
+      crops.each do |cp|
+        if crop.name == cp["name"] then 
+          found = true
+          break
+        end 
+      end
+      if !found then 
         crop_hash = Hash.new
         crop_hash["name"] = crop.name
         crop_hash["crop_id"] = crop.id
