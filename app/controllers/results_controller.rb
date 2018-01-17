@@ -60,7 +60,6 @@ class ResultsController < ApplicationController
 	@scenario3 = "0"
     if session[:simulation].eql?('scenario') then
 		@field_name = @field.field_name
-
 		if params[:result1] != nil then
 			if params[:result1][:scenario_id] == nil then
 				@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
