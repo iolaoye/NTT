@@ -886,7 +886,8 @@ class ResultsController < ApplicationController
     		if @description != "70" then
     			chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :"#{id}" => scenario_id).last(12)
     		else
-    			chart_values = CropResult.select("year as month_year", "yldg+yldf as value").where(:"#{id}" => scenario_id).group(:name, :year).last(12)
+    			crop = Crop.find(params[:result7][:crop_id])
+    			chart_values = CropResult.select("year as month_year", "yldg+yldf as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year).last(12)
     			#chart_values = CropResult.select("year AS month_year", "yldg+yldf as value").where(:scenario_id => 736).group(:name, :year).pluck("yldg+yldf as value").last(12)
     		end
     	else  #get results for monthly sub1 > 0
@@ -894,7 +895,8 @@ class ResultsController < ApplicationController
     		chart_values = AnnualResult.select("year AS month_year").where("sub1 > ? AND " + id + " = ?", 0, scenario_id).group(:sub1).pluck(chart_description)
     	end
     end
-    charts = Array.new
+    charts = Array.new(11)
+    #debugger
 	if month_or_year == 2 then
 		for i in 1..chart_values.length
 		#chart_values.each do |c|
@@ -903,23 +905,29 @@ class ResultsController < ApplicationController
 		  #chart.push(listMonths[c.month_year-1][0])
 		  chart.push(t('date.abbr_month_names')[i])
 		  chart.push(chart_values[i-1])
-		  charts.push(chart)
+		  charts[i-1] = chart
 		end
 	else
 		current_year = first_year + 1
+		i = 0
 		chart_values.each do |c|
+			#debugger
 			while current_year < c.month_year
+				debugger
 				chart = Array.new
 				chart.push(current_year)
 				chart.push(0)
-				charts.push(chart)
+				charts[i] = chart
 				current_year +=1
+				i += 1
 			end
 			chart = Array.new
 			chart.push(c.month_year)
 			chart.push(c.value)
-			charts.push(chart)
+			charts[i] = chart
 			current_year +=1
+			i += 1
+			if i > 11 then break end
 		end
 	end
     return charts
