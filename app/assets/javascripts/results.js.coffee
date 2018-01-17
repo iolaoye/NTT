@@ -39,7 +39,7 @@ show_crops = ->
       $("#td_crops").toggle(true)
       items = []
       items.push "<option value>Select Crop</option>"
-      url = "/results/" + $("#result1_scenario_id").val() + ".json" + "?id2=" + $("#result2_scenario_id").val() + "&id3=" + $("#result3_scenario_id").val()
+      url = "/crop_results.json" + "?id1=" + $("#result1_scenario_id").val() + "&id2=" + $("#result2_scenario_id").val() + "&id3=" + $("#result3_scenario_id").val() + "&session=" + $("#session_name").val()
       $.getJSON url, (crops_list) ->
          $.each crops_list, (key, crop) ->
             items.push "<option value=\"" + crop.crop_id + "\">" + crop.name + "</option>"
@@ -126,9 +126,7 @@ $(document).ready ->
   display_button()
   generate_pdf()
   check_for_errors()
-  switch $("#result5_category_group_id").val()
-    when "1","6"
-      $("#result5_description_id").hide()
+  update_categories()
 
   $("#result1_scenario_id").change ->
     #update_crops()

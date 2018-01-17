@@ -1173,9 +1173,9 @@ en:
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
     ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   documents_basic_html:
-    <a href="/app/assets/basic_help.pdf" download="User Manual.pdf"><u>User Manual</u></a>
+    <a href="/basic_help.pdf" download="User_Manual.pdf"><u>User Manual</u></a>
   documents_re_html:
-    <a href="/app/assets/re_help.pdf" download="User Manual.pdf"><u>User Manual</u></a>
+    <a href="/re_help.pdf" download="User_Manual.pdf"><u>User Manual</u></a>
   instructions:
     projects: To select an existing project, click on the project name
     fields: To select a field, click on the field name

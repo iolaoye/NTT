@@ -1,0 +1,53 @@
+<%= form_for(@crop_result) do |f| %>
+  <% if @crop_result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@crop_result.errors.count, "error") %> prohibited this crop_result from being saved:</h2>
+
+      <ul>
+      <% @crop_result.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :scenario_id %><br>
+    <%= f.text_field :scenario_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sub1 %><br>
+    <%= f.text_field :sub1 %>
+  </div>
+  <div class="field">
+    <%= f.label :year %><br>
+    <%= f.text_field :year %>
+  </div>
+  <div class="field">
+    <%= f.label :yldg %><br>
+    <%= f.text_field :yldg %>
+  </div>
+  <div class="field">
+    <%= f.label :yldf %><br>
+    <%= f.text_field :yldf %>
+  </div>
+  <div class="field">
+    <%= f.label :ws %><br>
+    <%= f.text_field :ws %>
+  </div>
+  <div class="field">
+    <%= f.label :ns %><br>
+    <%= f.text_field :ns %>
+  </div>
+  <div class="field">
+    <%= f.label :ps %><br>
+    <%= f.text_field :ps %>
+  </div>
+  <div class="field">
+    <%= f.label :ts %><br>
+    <%= f.text_field :ts %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

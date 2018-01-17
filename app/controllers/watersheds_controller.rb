@@ -309,7 +309,7 @@ class WatershedsController < ApplicationController
 	@watershed_scenarios_count = 0
   	watersheds.each do |watershed|
   		@watershed_scenarios_count += watershed.watershed_scenarios.count
-  		@watershed_results_count += watershed.results.count
+  		@watershed_results_count += watershed.annual_results.count
   	end
   end
 
