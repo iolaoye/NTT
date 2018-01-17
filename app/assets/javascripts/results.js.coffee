@@ -39,7 +39,7 @@ show_crops = ->
       $("#td_crops").toggle(true)
       items = []
       items.push "<option value>Select Crop</option>"
-      url = "/crop_results.json" + "?id1=" + $("#result1_scenario_id").val() + "&id2=" + $("#result2_scenario_id").val() + "&id3=" + $("#result3_scenario_id").val()
+      url = "/crop_results.json" + "?id1=" + $("#result1_scenario_id").val() + "&id2=" + $("#result2_scenario_id").val() + "&id3=" + $("#result3_scenario_id").val() + "&session=" + $("#session_name").val()
       $.getJSON url, (crops_list) ->
          $.each crops_list, (key, crop) ->
             items.push "<option value=\"" + crop.crop_id + "\">" + crop.name + "</option>"
