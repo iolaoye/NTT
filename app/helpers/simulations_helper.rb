@@ -978,7 +978,8 @@ module SimulationsHelper
 		if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
 		  _subarea_info.rchl = _subarea_info.chl
 		end
-		if (operation_number > 1 && i == 0) || i > 0 then
+		if (operation_number > 1 && i == 0) then
+      _subarea_info.rchl = _subarea_info.rchl * 0.9
 		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
 		  #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
 		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)

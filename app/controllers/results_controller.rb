@@ -60,7 +60,6 @@ class ResultsController < ApplicationController
 	@scenario3 = "0"
     if session[:simulation].eql?('scenario') then
 		@field_name = @field.field_name
-
 		if params[:result1] != nil then
 			if params[:result1][:scenario_id] == nil then
 				@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
@@ -199,7 +198,8 @@ class ResultsController < ApplicationController
 									@total_area1 -= b.area
 								end
 							end
-							@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
+							#@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
+							@results1 = AnnualResult.where(:scenario_id => @scenario1)
 							@crop_results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
 							@crop_stress1_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
 							@crop_stress1_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
@@ -214,7 +214,8 @@ class ResultsController < ApplicationController
 									end
 								end
 							end
-							@results1 = Result.where(:watershed_id => @scenario1, :crop_id => 0).includes(:description).includes(:description)
+							#@results1 = Result.where(:watershed_id => @scenario1, :crop_id => 0).includes(:description).includes(:description)
+							@results1 = AnnualResult.where(:watershed_id => @scenario1)
 							@crop_results1 = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 70, 80)
 							@crop_stress1_ns = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 200, 211)
 							@crop_stress1_ps = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 210, 221)
@@ -302,7 +303,8 @@ class ResultsController < ApplicationController
 									@total_area2 -= b.area
 								end
 							end
-							@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
+							@results2 = AnnualResult.where(:scenario_id => @scenario2)
+							#@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
 							@crop_results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
 							@crop_stress2_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
 							@crop_stress2_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
@@ -317,7 +319,8 @@ class ResultsController < ApplicationController
 									end
 								end
 							end
-							@results2 = Result.where(:watershed_id => @scenario2, :crop_id => 0).includes(:description).includes(:description)
+							@results2 = AnnualResult.where(:watershed_id => @scenario2)
+							#@results2 = Result.where(:watershed_id => @scenario2, :crop_id => 0).includes(:description).includes(:description)
 							@crop_results2 = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 70, 80)
 							@crop_stress2_ns = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 200, 211)
 							@crop_stress2_ps = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 210, 221)
@@ -455,7 +458,8 @@ class ResultsController < ApplicationController
 									@total_area3 -= b.area
 								end
 							end
-							@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
+							@results3 = AnnualResult.where(:scenario_id => @scenario3)
+							#@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
 							#@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id > 0")
 							@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
 							@crop_stress3_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
@@ -470,8 +474,9 @@ class ResultsController < ApplicationController
 										@total_area3 += Field.find(ws.field_id).field_area
 									end
 								end
-							end							
-							@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0).includes(:description).includes(:description)
+							end
+							@results3 = AnnualResult.where(:watershed_id => @scenario3)					
+							#@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0).includes(:description).includes(:description)
 							@crop_results3 = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 70, 80)
 							@crop_stress3_ns = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 200, 211)
 							@crop_stress3_ps = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 210, 221)
@@ -898,7 +903,7 @@ class ResultsController < ApplicationController
     end
     charts = Array.new(11)
     #debugger
-	if month_or_year == 2 then
+	if month_or_year == 2 then  #monthly
 		for i in 1..chart_values.length
 		#chart_values.each do |c|
 		  chart = Array.new
@@ -908,27 +913,37 @@ class ResultsController < ApplicationController
 		  chart.push(chart_values[i-1])
 		  charts[i-1] = chart
 		end
-	else
+	else  # annual
 		current_year = first_year + 1
 		i = 0
-		chart_values.each do |c|
-			#debugger
-			while current_year < c.month_year
-				debugger
+		if chart_values.length == 0 then
+			for i in 0..11
 				chart = Array.new
 				chart.push(current_year)
 				chart.push(0)
+				current_year += 1
+				charts[i] = chart
+			end
+		else
+			chart_values.each do |c|
+				#debugger
+				while current_year < c.month_year
+					debugger
+					chart = Array.new
+					chart.push(current_year)
+					chart.push(0)
+					charts[i] = chart
+					current_year +=1
+					i += 1
+				end
+				chart = Array.new
+				chart.push(c.month_year)
+				chart.push(c.value)
 				charts[i] = chart
 				current_year +=1
 				i += 1
+				if i > 11 then break end
 			end
-			chart = Array.new
-			chart.push(c.month_year)
-			chart.push(c.value)
-			charts[i] = chart
-			current_year +=1
-			i += 1
-			if i > 11 then break end
 		end
 	end
     return charts
