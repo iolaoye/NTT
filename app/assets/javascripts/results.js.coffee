@@ -141,7 +141,11 @@ $(document).ready ->
 
   $("#result3_scenario_id").change ->
     #update_crops()
-    set_buttons(false)
+    if $("#result2_scenario_id").val() == ""
+      alert('Please select a 2nd scenario.')
+      $("#result3_scenario_id").val('')
+    else
+      set_buttons(false)
 
   $("#summary").click (event) ->
     set_buttons(true)
