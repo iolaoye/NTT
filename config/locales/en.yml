@@ -591,7 +591,7 @@ en:
     hours: 'Hours grazed per day (0-24)'
     depth: 'Depth (in)'
     no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
-    po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
+    po4_p_html: 'P<sub>2</sub>O<sub>5</sub> (0-100%)'
     org_n_html: 'Organic N (0-100%)'
     org_p_html: 'Organic P (0-100%)'
     org_c_html: 'Organic Carbon'

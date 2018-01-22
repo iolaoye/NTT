@@ -66,7 +66,10 @@ updateNutrients = (animal) ->
       else
         $.getJSON url, (fertilizer) ->
           $("#operation_no3_n").val(fertilizer.qn)
-          $("#operation_po4_p").val(fertilizer.qp)
+          if (fertilizer.qp == 100)
+            $("#operation_po4_p").val(fertilizer.qp)
+          else
+            $("#operation_po4_p").val(Math.round(fertilizer.qp/0.4364))
           $("#operation_org_n").val(fertilizer.yn)
           $("#operation_org_p").val(fertilizer.yp)
           $("#operation_nh3").val("")
