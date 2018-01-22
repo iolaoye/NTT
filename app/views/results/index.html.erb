@@ -778,11 +778,12 @@
 		<table class='table table-bordered', style="white-space: nowrap;">
 		  	<thead> <!-- titles -->
 			  	<tr class='gvHeaderStyle' >
+			  		<% debugger %>
 			  		<th></th>
 			  		<% if session[:simulation] == 'scenario' %>
 						<% if @scenario1 == "0" || @scenario1 == "" %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Scenario.find(@scenario1).name%></th><%end%>
-						<% if @scenario3 == "0" || @scenario2 == ""  %> <th colspan="2" style="text-align:center"><%= t('result.scenario2') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@scenario2).name%></th><%end%>
-						<% if @scenario1 == "0" || @scenario3 == ""  %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@scenario3).name%></th><%end%>
+						<% if @scenario2 == "0" || @scenario2 == ""  %> <th colspan="2" style="text-align:center"><%= t('result.scenario2') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@scenario2).name%></th><%end%>
+						<% if @scenario3 == "0" || @scenario3 == ""  %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@scenario3).name%></th><%end%>
 					<% else %>
 						<% if @scenario1 == "0" || @scenario1 == ""  %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Watershed.find(@scenario1).name%></th><%end%>
 						<% if @scenario2 == "0" || @scenario2 == ""  %> <th colspan="2" style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@scenario2).name%></th><%end%>
@@ -804,6 +805,7 @@
 				<%# else %>
 					<% total_area = 0 %>
 					<% row_id = t + "row" + "20" %>
+					<% debugger %>
 					<% if @scenario1 != "0" then %>
 						<% if session[:simulation] == "scenario" %>
 							<% total_area = @total_area1 %>
