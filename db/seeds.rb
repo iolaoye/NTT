@@ -17,6 +17,9 @@ load file
 file = "db/seeds/descriptions.rb"
 load file
 
+file = "db/seeds/fertilizers.rb"
+load file
+
 cont = false
 
 if cont then
