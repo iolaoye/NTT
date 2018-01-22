@@ -778,7 +778,6 @@
 		<table class='table table-bordered', style="white-space: nowrap;">
 		  	<thead> <!-- titles -->
 			  	<tr class='gvHeaderStyle' >
-			  		<% debugger %>
 			  		<th></th>
 			  		<% if session[:simulation] == 'scenario' %>
 						<% if @scenario1 == "0" || @scenario1 == "" %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Scenario.find(@scenario1).name%></th><%end%>
@@ -805,7 +804,6 @@
 				<%# else %>
 					<% total_area = 0 %>
 					<% row_id = t + "row" + "20" %>
-					<% debugger %>
 					<% if @scenario1 != "0" then %>
 						<% if session[:simulation] == "scenario" %>
 							<% total_area = @total_area1 %>
