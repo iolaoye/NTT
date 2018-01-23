@@ -18,3 +18,4 @@ module OperationsHelper
 	]
   end
 end
+

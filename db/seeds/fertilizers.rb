@@ -1,4 +1,4 @@
-Fertilizer.delete_all
+Fertilizer.delete_all 
 Fertilizer.create!({:id => 1,:code => 1,:name => "Element-N(N)",:qn => 100,:qp => 0.0,:yn => 0.0,:yp => 0.0,:nh3 => 0.0,:dry_matter => 0.0,:fertilizer_type_id => 1,:convertion_unit => 1.0,:status => true,:animal => false,:spanish_name => "Elemento-N"}, :without_protection => true)
 Fertilizer.create!({:id => 2,:code => 2,:name => "Element-P(P)",:qn => 0.0,:qp => 100,:yn => 0.0,:yp => 0.0,:nh3 => 0.0,:dry_matter => 0.0,:fertilizer_type_id => 1,:convertion_unit => 1.0,:status => true,:animal => false,:spanish_name => "Elemento-P"}, :without_protection => true)
 Fertilizer.create!({:id => 3,:code => 3,:name => "ANH-NH3",:qn => 0.0,:qp => 0.0,:yn => 0.0,:yp => 0.0,:nh3 => 1.0,:dry_matter => 0.0,:fertilizer_type_id => 1,:convertion_unit => 1.0,:status => false,:animal => false,:spanish_name => "ANHYDROUS AMMONIA (ANH-NH3)"}, :without_protection => true)
