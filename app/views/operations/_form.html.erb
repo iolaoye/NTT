@@ -170,7 +170,7 @@
 		  	<div class="field" >
 		  		<% if @operation.type_id == 1 && @operation.po4_p == 100 %>
 					<%= f.label :po4_p, 'P (0-100%)' %>
-					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any', disabled: true %>
+					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any', readonly: true %>
 				<% else %>
 					<%= f.label :po4_p, t('operation.po4_p_html') %>
 					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'%>
