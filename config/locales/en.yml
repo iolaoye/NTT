@@ -625,7 +625,7 @@ en:
     add_cover_crop: Add Cover Crop
     po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
     planting_method: Planting Method
-    manure_composition: Manure Composition
+    manure_composition: Fertilizer Composition (Concetration)
     planting_date: Planting Date
     continues_grazing: Continuous Grazing
     rotational_grazing: Rotational Grazing
