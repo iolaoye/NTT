@@ -95,6 +95,9 @@ class OperationsController < ApplicationController
     #@project = Project.find(params[:project_id])
     #@cover_crops = Crop.where("type1 like '%CC%'")
     @operation = Operation.find(params[:id])
+    if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
+      @operation.po4_p = (@operation.po4_p / PO4_TO_P2O5).round(1)
+    end
     if @operation.activity_id == 1 && @operation.subtype_id == 1 then
       @crops = Crop.where("type1 like '%CC%'")
     else
@@ -132,6 +135,9 @@ class OperationsController < ApplicationController
         params[:operation][:org_p] = total_p * fert_type.yp * 100
       end
       operation = Operation.new(operation_params)
+      if operation.activity_id == 2 && operation.type_id == 1 && operation.po4_p > 0 && operation.po4_p < 100 then
+        operaiton.po4_p *= PO4_TO_P2O5 
+      end
       #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
         #params[:operation][:depth] = params[:operation][:depth].to_f / 100 
       #end
@@ -196,26 +202,28 @@ class OperationsController < ApplicationController
       else
         saved = false
       end
-    end
-    respond_to do |format|
-      if saved
-        if soil_op_saved
-          if params[:add_more] == t('submit.add_more') && params[:finish] == nil
-            format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
-            format.json { render json: @operation, status: :created, location: @operation }
-          elsif params[:finish] == t('submit.finish') && params[:add_more] == nil
-            format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
-            format.json { render json: @operation, status: :created, location: @operation }
+
+      respond_to do |format|
+        if saved
+          if soil_op_saved
+            if params[:add_more] == t('submit.add_more') && params[:finish] == nil
+              format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
+              format.json { render json: operation, status: :created, location: operation }
+            elsif params[:finish] == t('submit.finish') && params[:add_more] == nil
+              format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
+              format.json { render json: operation, status: :created, location: operation }
+            end
+          else
+            @fertilizers = Fertilizer.where(:fertilizer_type_id => operation.type_id, :status => true).order("name")
+            format.html { render action: "new" }
+            format.json { render json: msg, status: :unprocessable_entity }
           end
         else
-          @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
+          @fertilizers = Fertilizer.where(:fertilizer_type_id => operation.type_id, :status => true).order("name")
+          @operation = operation
           format.html { render action: "new" }
-          format.json { render json: msg, status: :unprocessable_entity }
+          format.json { render json: operation.errors, status: :unprocessable_entity }
         end
-      else
-        @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
-        format.html { render action: "new" }
-        format.json { render json: @operation.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -237,19 +245,19 @@ class OperationsController < ApplicationController
       params[:operation][:org_n] = total_n * fert_type.qp * 100
       params[:operation][:po4_p] = total_p * fert_type.yn * 100
       params[:operation][:org_p] = total_p * fert_type.yp * 100
-    end
+    end 
     #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
       #params[:operation][:depth] = params[:operation][:depth].to_f / 100 
     #end
     @operation = Operation.find(params[:id])
-    #@field = Field.find(params[:field_id])
     @crops = Crop.load_crops(@project.location.state_id)
-    #@cover_crops = Crop.where("type1 like '%CC%'")
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
-    #@project = Project.find(params[:project_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     respond_to do |format|
       if @operation.update_attributes(operation_params)
+        if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
+          @operation.po4_p *= PO4_TO_P2O5
+          @operation.save
+        end
         #update_amount()
         #soil_operations = SoilOperation.where(:operation_id => @operation.id)
         #soil_operations.each do |soil_operation|

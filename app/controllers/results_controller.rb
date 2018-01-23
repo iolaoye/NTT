@@ -618,7 +618,7 @@ class ResultsController < ApplicationController
     		chart_values = AnnualResult.select("year AS month_year").where("sub1 > ? AND " + id + " = ?", 0, scenario_id).group(:sub1).pluck(chart_description)
     	end
     end
-    charts = Array.new(11)
+    charts = Array.new(chart_values.length)
 	if month_or_year == 2 then  #monthly
 		for i in 1..chart_values.length
 		#chart_values.each do |c|
@@ -733,3 +733,4 @@ class ResultsController < ApplicationController
 		end
 	end
 end
+

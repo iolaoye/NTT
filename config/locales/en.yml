@@ -581,7 +581,7 @@ en:
     irrigation: Irrigation
     plant_population: 'Plant Population (seeds sq/ft)(*optional)'
     load_operation: Load Operation
-    sum: 'total nutrients should be less or equal to 1'
+    sum: 'total nutrients should be less or equal to 100'
     save: Save
     open: 'Open Saved Cropping System'
     saved: 'saved Cropping System'
@@ -591,7 +591,7 @@ en:
     hours: 'Hours grazed per day (0-24)'
     depth: 'Depth (in)'
     no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
-    po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
+    po4_p_html: 'P<sub>2</sub>O<sub>5</sub> (0-100%)'
     org_n_html: 'Organic N (0-100%)'
     org_p_html: 'Organic P (0-100%)'
     org_c_html: 'Organic Carbon'
@@ -625,10 +625,10 @@ en:
     add_cover_crop: Add Cover Crop
     po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
     planting_method: Planting Method
-    manure_composition: Manure Composition
+    manure_composition: Fertilizer Composition (Concetration)
     planting_date: Planting Date
     continues_grazing: Continuous Grazing
-    rotational_grazing: Rotational Grazing
+    rotational_grazing: Rotational Grazing 
     total_n: Total N (0-100%)
     total_p: Total P (0-100%)
     application_rate: Application Rate

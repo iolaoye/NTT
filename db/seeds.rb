@@ -17,6 +17,9 @@ load file
 file = "db/seeds/descriptions.rb"
 load file
 
+file = "db/seeds/fertilizers.rb"
+load file
+
 cont = false
 
 if cont then
@@ -59,7 +62,7 @@ if cont then
 
 	file = "db/seeds/drainages.rb"
 	load file
-
+ 
 	file = "db/seeds/events.rb"
 	load file
 
