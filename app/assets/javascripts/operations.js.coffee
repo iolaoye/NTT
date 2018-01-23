@@ -47,7 +47,7 @@ updateNutrients = (animal) ->
       $("#operation_nh3").val("")
       $("#operation_org_c").val("")
       #$("#operation_org_c").val("")
-  else
+  else 
     url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
     if ($("#operation_activity_id").val() == "2")
       if ($("#operation_type_id").val() != "1")

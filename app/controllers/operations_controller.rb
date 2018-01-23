@@ -245,7 +245,7 @@ class OperationsController < ApplicationController
       params[:operation][:org_n] = total_n * fert_type.qp * 100
       params[:operation][:po4_p] = total_p * fert_type.yn * 100
       params[:operation][:org_p] = total_p * fert_type.yp * 100
-    end
+    end 
     #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
       #params[:operation][:depth] = params[:operation][:depth].to_f / 100 
     #end

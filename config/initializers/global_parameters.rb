@@ -40,7 +40,7 @@
 	PRISM2 = 'E:/Weather/weatherFiles/borrar'
 	WP1 = 'E:/Weather/wp1File'
 	WIND = 'E:/Weather/wndFile'
-
+ 
 #folder for download project files
 	DOWNLOAD = 'public/download'
 
