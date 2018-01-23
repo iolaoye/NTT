@@ -88,6 +88,7 @@
 	KM_TO_M = 1000
 	FSEFF = 1.0
 	MAX_STRIPS = 6
+	PO4_TO_P2O5 = 0.4364
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'
