@@ -96,7 +96,7 @@ class OperationsController < ApplicationController
     #@cover_crops = Crop.where("type1 like '%CC%'")
     @operation = Operation.find(params[:id])
     if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
-      @operation.po4_p /= PO4_TO_P2O5 
+      @operation.po4_p = (@operation.po4_p / PO4_TO_P2O5).round(1)
     end
     if @operation.activity_id == 1 && @operation.subtype_id == 1 then
       @crops = Crop.where("type1 like '%CC%'")
