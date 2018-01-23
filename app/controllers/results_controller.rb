@@ -456,8 +456,8 @@ class ResultsController < ApplicationController
   	  page_size: "Letter", layout: "pdf",
   	  template: "/results/report",
   	  footer: {center: '[page] of [topage]'},
-  	  header: {spacing: -6, html: {template: '/layouts/_report_header.html'}},
-  	  margin: {top: 20}
+  	  header: {spacing: -5, html: {template: '/layouts/_report_header.html'}},
+  	  margin: {top: 40}
       send_data(pdf, :filename => "report.pdf")
 	  return
     end # if format is pdf
