@@ -24,7 +24,7 @@
 	<div class="field" >
 		<%= label :activity_id, t('scenario.operation') %>
 			<% if I18n.locale.eql?(:en) %>
-				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :name, {:prompt => 'Select Operation', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
+				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :name, {:prompt => 'Select Operation', :selected => @operation.activity_id || (params[:operation])}, {:required => true} %>
 			<% else %>
 				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
 			<% end %>
@@ -215,7 +215,7 @@
 				<div class="field">
 					<%= f.label :moisture, t('operation.moisture_con') %>
 					<%= number_field :op, :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
-				</div> 
+				</div>
 			</div>
 		<% end %>
 	<% when 3 # tillage %>
@@ -511,7 +511,7 @@
 				<%= f.label :moisture, t('operation.moisture_con') %>
 				<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 			</div> -->
-		</div> 
+		</div>
 	<% when 12 # liming %>
 		<div id="div_date" style="display:none" >
 			<%= f.label :stop, t('general.stop'), :class => 'field' %>
@@ -731,7 +731,7 @@
 			<div class="field">
 				<%= f.label :moisture, t('operation.moisture_con') %>
 				<%= number_field :op, :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
-			</div> 
+			</div>
 		</div>
 		<%= f.hidden_field :rotation, :value => @operation.rotation %>
 	<% end %>

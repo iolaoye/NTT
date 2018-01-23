@@ -581,7 +581,7 @@ en:
     irrigation: Irrigation
     plant_population: 'Plant Population (seeds sq/ft)(*optional)'
     load_operation: Load Operation
-    sum: 'total nutrients should be less or equal to 1'
+    sum: 'total nutrients should be less or equal to 100'
     save: Save
     open: 'Open Saved Cropping System'
     saved: 'saved Cropping System'
@@ -826,7 +826,7 @@ en:
     second_scenario_error: Second scenario has no
     third_scenario_error: Third scenario has no
     pdf_download_error: You must run a summary before you can download a pdf
-    confidence: Confindence Interval
+    confidence: Confidence Interval
     total_units: Total Area
     units_ac: Unit Area
     upto12: (up to the last 12 years)
