@@ -54,7 +54,6 @@ class ResultsController < ApplicationController
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 71 or (id > 80 and id < 200)")
     add_breadcrumb t('menu.results')
-	
 	@scenario1 = "0"
 	@scenario2 = "0"
 	@scenario3 = "0"
@@ -129,31 +128,31 @@ class ResultsController < ApplicationController
       @present = true
       @before_button_clicked = false
       @errors = Array.new
-      results = Result.new
+      #results = Result.new
      if session[:simulation] == 'scenario' then
         case true
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
-            results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2, @scenario3], :soil_id => 0).where("crop_id > 0")
+            #results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2, @scenario3], :soil_id => 0).where("crop_id > 0")
           when @scenario1 > "0" && @scenario2 > "0"
-            results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2]).where("crop_id > 0")
+            #results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2]).where("crop_id > 0")
           when @scenario1 > "0"
-            results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1).where("crop_id > 0")
+            #results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1).where("crop_id > 0")
         end # end case true
       else
         case true
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
-            results = Result.where(:watershed_id => [@scenario1, @scenario2, @scenario3]).where("crop_id > 0")
+            #results = Result.where(:watershed_id => [@scenario1, @scenario2, @scenario3]).where("crop_id > 0")
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
-            results = Result.where(:watershed_id => [@scenario1, @scenario2]).where("crop_id > 0")
+            #results = Result.where(:watershed_id => [@scenario1, @scenario2]).where("crop_id > 0")
           when @scenario1 > "0"
-            results = Result.where(:watershed_id => @scenario1).where("crop_id > 0")
+            #results = Result.where(:watershed_id => @scenario1).where("crop_id > 0")
         end # end case true
       end
-      results.each do |result|
-        i+=1
+      #results.each do |result|
+        #i+=1
         #get crops name for each result to add to description list
-        crop = Crop.find(result.crop_id)
-      end # end results.each
+        #crop = Crop.find(result.crop_id)
+      #end # end results.each
     end # end if params[:result1] != nil
   	if params[:button] != nil
   		#@type = params[:button]
@@ -457,8 +456,8 @@ class ResultsController < ApplicationController
   	  page_size: "Letter", layout: "pdf",
   	  template: "/results/report",
   	  footer: {center: '[page] of [topage]'},
-  	  header: {spacing: -6, html: {template: '/layouts/_report_header.html'}},
-  	  margin: {top: 20}
+  	  header: {spacing: -5, html: {template: '/layouts/_report_header.html'}},
+  	  margin: {top: 40}
       send_data(pdf, :filename => "report.pdf")
 	  return
     end # if format is pdf

@@ -63,9 +63,9 @@
 				<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id, :status => true), :code, :spanish_name, {:prompt => t('general.select'), :selected => @operation.type_id}, {:required => true} %>
 			<% end %>
 		</div>
-		<%= f.hidden_field :subtype_id, :value => @operation.subtype_id %>
+		<%#= f.hidden_field :subtype_id, :value => @operation.subtype_id %>
 		<div id="div_fertilizer" class="field" style="display:none" >
-			<%= f.label t('general.type') %>
+      <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -138,7 +138,7 @@
 			 <%= collection_select :operation, :type_id, FertilizerType.all, :id, :spanish_name, {:prompt => t('general.select') + " " + t("general.one"), :selected => @operation.type_id}, {:required => true} %>
 			<% end %>
 		</div>
-		<div class="field" id="div_fertilizer" >
+    <div class="field" id="div_fertilizer" >
 			<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
@@ -146,7 +146,7 @@
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante', :selected => @operation.subtype_id} %>
 			<% end %>
 		</div>
-		<div class="field" id="div_amount">
+    <div class="field" id="div_amount">
 			<% if @operation.type_id == 1 then %>
 				<%= f.label :amount, t('operation.application_rate') + " (lbs/ac)" %>
 			<% elsif @operation.type_id == 2 %>
@@ -174,12 +174,12 @@
 				<% else %>
 					<%= f.label :po4_p, t('operation.po4_p_html') %>
 					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'%>
-				<% end %>			
+				<% end %>
 		  	</div>
 		  	<div class="field" style="display:none">
 				<%= f.label :org_n, t('operation.org_n_html') %>
 				<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
-		  	</div> 
+		  	</div>
 		  	<div class="field" style="display:none">
 				<%= f.label :org_p, t('operation.org_p_html') %>
 				<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
@@ -306,7 +306,7 @@
 			<% end %>
 		</div>
 		<div id="div_fertilizer" style="display:none" >
-			<%= f.label :type_id, t('general.type') %>
+      <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -381,7 +381,7 @@
 			<% end %>
 		</div>
 		<div id="div_fertilizer" style="display:none">
-			<%= f.label :type_id, t('operation.fertilizer') %>
+      <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -456,7 +456,7 @@
 			<% end %>
 		</div>
 		<div id="div_fertilizer" style="display:none">
-			<%= f.label :type_id, t('operation.fertilizer') %>
+      <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -530,7 +530,7 @@
 			<% end %>
 		</div>
 		<div id="div_fertilizer" style="display:none" >
-			<%= f.label :type_id, t('general.type') %>
+      <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -603,7 +603,7 @@
         <% end %>
       </div>
       <div id="div_fertilizer" class="field" style="display:none" >
-        <%= f.label t('general.type') %>
+        <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
         <% if I18n.locale.eql?(:en) %>
           <%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
         <% else %>

@@ -53,7 +53,8 @@
 								<%= link_to t('result.download_pdf'), { :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
 							<% end %>
 						    <!-- Download CSV/Excel button -->
-						    <%= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
+						    <%# todo un comment this when the excel program that dowenload the excel files is fixed by Brandon.
+						    <%#= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
 						<% end %>
 					</td>
 						<tr><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
@@ -117,7 +118,7 @@
 			  	</tr>
 				<tr class='gvHeaderStyle'>
 					<th style="border-right: thick double #ff0000" ><%= t('result.description') %></th>
-					<th ><%= "Losses(±)" %></th>
+					<th style="border-right: thick double #ff0000" ><%= "Losses(±)" %></th>
 					<th ><%= "Losses(±)" %></th>
 					<th style="border-right: thick double #ff0000"><%= t('general.change') + "(%)"%></th>
 					<th ><%= "Losses(±)" %></th>
