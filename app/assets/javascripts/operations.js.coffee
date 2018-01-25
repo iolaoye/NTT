@@ -47,7 +47,7 @@ updateNutrients = (animal) ->
       $("#operation_nh3").val("")
       $("#operation_org_c").val("")
       #$("#operation_org_c").val("")
-  else 
+  else
     url = "/fertilizers/" + $("#operation_subtype_id").val() + ".json"
     if ($("#operation_activity_id").val() == "2")
       if ($("#operation_type_id").val() != "1")
@@ -72,7 +72,7 @@ updateNutrients = (animal) ->
             $("#operation_po4_p").attr("readonly", true)
           else
             $("#operation_po4_p").val(Math.round(fertilizer.qp/0.4364))
-            $("#div_nutrients")[0].children[2].children[0].innerHTML = "P<sub>2</sub>O<sub>5</sub> (0-100%)"            
+            $("#div_nutrients")[0].children[2].children[0].innerHTML = "P<sub>2</sub>O<sub>5</sub> (0-100%)"
             $("#operation_po4_p").attr("readonly", false)
           $("#operation_org_n").val(fertilizer.yn)
           $("#operation_org_p").val(fertilizer.yp)
@@ -255,7 +255,7 @@ updateFerts = ->
           $("#div_amount")[0].children[0].innerText = "Application rate(t/ac)"
           $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/t)"
           $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/t)"
-      else 
+      else
           $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
           $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/1000 gallons)"
           $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/1000 gallons)"
@@ -388,6 +388,7 @@ $(document).ready ->
     $('#replace').click ->
       $('#year').toggle(!@checked)
       $('#year_label').toggle(!@checked)
+      $('#plant_title').toggle(!@checked)
       document.getElementById('year').disabled = @checked
       if (@checked)
         r = confirm('Are you sure? When you upload, this will delete all your current operations')
@@ -395,4 +396,5 @@ $(document).ready ->
           $("#replace").removeAttr('checked');
           $('#year').toggle(true)
           $('#year_label').toggle(true)
+          $('#plant_title').toggle(true)
       return
