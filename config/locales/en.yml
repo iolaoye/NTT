@@ -567,7 +567,7 @@ en:
     edit: Editing Operation
     create_operation: Create Operation
     upload: 'Upload'
-    replace: Replace current operations
+    replace: 'Replace Current Operations'
     cropping_system: 'Cropping System'
     fertilizer_category: Fertilizer Category
     crop: Crop
@@ -628,7 +628,7 @@ en:
     manure_composition: Fertilizer Composition (Concetration)
     planting_date: Planting Date
     continues_grazing: Continuous Grazing
-    rotational_grazing: Rotational Grazing 
+    rotational_grazing: Rotational Grazing
     total_n: Total N (0-100%)
     total_p: Total P (0-100%)
     application_rate: Application Rate

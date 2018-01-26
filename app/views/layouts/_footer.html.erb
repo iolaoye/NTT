@@ -80,6 +80,9 @@
                         <%if !(request.url.include?(url_for=("/fields?"))) %>
                           <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                         <% end %>
+                        <%if request.url.include?(url_for=("/operations?")) %>
+                        <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
+                        <%end%>
                       <% end %>
                   <% end %>
                   <%if request.url.include?(url_for=("/grazing_parameters?")) %>
