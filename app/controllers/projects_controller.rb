@@ -175,7 +175,7 @@ class ProjectsController < ApplicationController
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_project
-  saved = upload_prj()
+    saved = upload_prj()
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.uploaded')
@@ -1603,7 +1603,7 @@ class ProjectsController < ApplicationController
           end
         when "Results"
           if saved == true then
-            upload_result_info(p, field_id, soil_id, scenario_id)
+            #upload_result_info(p, field_id, soil_id, scenario_id)
           else
             return "Error saving scenario"
           end
@@ -2360,9 +2360,9 @@ class ProjectsController < ApplicationController
     node.elements.each do |p|
       case p.name
       when "Crops"
-        upload_crop_soil_result_info(p, field_id, soil_id, scenario_id)
+        #upload_crop_soil_result_info(p, field_id, soil_id, scenario_id)
       when "Soil"
-        upload_soil_result_info(p, field_id, soil_id, scenario_id)
+        #upload_soil_result_info(p, field_id, soil_id, scenario_id)
       when "lastSimulation"
         sc = Scenario.find(scenario_id)
         sc.last_simulation = p.text
@@ -2530,23 +2530,23 @@ class ProjectsController < ApplicationController
           @result1.save
           total_p_ci = total_p_ci + @result1.ci_value
         when "annualFlow"
-          upload_chart_info(p, field_id, 0, scenario_id, 41)
+          #upload_chart_info(p, field_id, 0, scenario_id, 41)
         when "annualNO3"
-          upload_chart_info(p, field_id, 0, scenario_id, 22)
+          #upload_chart_info(p, field_id, 0, scenario_id, 22)
         when "annualOrgN"
-          upload_chart_info(p, field_id, 0, scenario_id, 21)
+          #upload_chart_info(p, field_id, 0, scenario_id, 21)
         when "annualOrgP"
-          upload_chart_info(p, field_id, 0, scenario_id, 31)
+          #upload_chart_info(p, field_id, 0, scenario_id, 31)
         when "annualPO4"
-          upload_chart_info(p, field_id, 0, scenario_id, 32)
+          #upload_chart_info(p, field_id, 0, scenario_id, 32)
         when "annualSediment"
-          upload_chart_info(p, field_id, 0, scenario_id, 61)
+          #upload_chart_info(p, field_id, 0, scenario_id, 61)
         when "annualPrecipitation"
-          upload_chart_info(p, field_id, 0, scenario_id, 100)
+          #upload_chart_info(p, field_id, 0, scenario_id, 100)
         when "annualCropYield"
           #p.elements.each do |p|
           #upload annual crops
-          upload_chart_crop_info(p, field_id, 0, scenario_id)
+          #upload_chart_crop_info(p, field_id, 0, scenario_id)
         #end
       end # end case p.name
     end # end node.elements.each
@@ -2630,7 +2630,7 @@ class ProjectsController < ApplicationController
           upload_operation_info(p, scenario_id, field_id)
         when "Results"
           scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
-          upload_result_info(p, field_id, 0, scenario_id)
+          #upload_result_info(p, field_id, 0, scenario_id)
         when "Bmps"
           scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
           upload_bmp_info(p, scenario_id)
