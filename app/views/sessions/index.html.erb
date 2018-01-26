@@ -39,8 +39,36 @@
       </div>
       <br/>
       <div id="forgot_pass">
-        <%= link_to 'Forgot Password?', new_password_reset_path %>
+        <%= link_to 'Forgot Password?', "javascript:void(0);", :id => "form_102" %>
       </div>
+    </div>
+    <div class="toggable" id="user_102" style="display: none">
+      <%= form_for(@user) do |f| %>
+      <div class="page-container">
+        <div class="container-form">
+          <h2 style = "color: #ffffff;"><%= 'Forgot Password' %></h2>
+          <div class="field">
+            <%= form_for(:password_reset, url: password_resets_path) do |f| %>
+              <%= f.label :email, :style => "float: left; color: #ffffff;" %>
+              <%= f.email_field :email, :class => "form_input", :style => "width: 80%" %>
+            </div>
+
+            <div id="left_button" style = "margin-left: 45px; margin-top: 20px;">
+              <%= f.submit t('result.submit'), :class => "btn btn-primary", :style => "width: 130px;" %>
+            </div>
+            <% end %>
+
+            <div id="right_button" onclick="myFunction1()" style = "margin-right: 10px; margin-top: 20px;">
+              <% if (I18n.locale.eql?(:en)) %>
+                  <%= button_to t('general.back'), "javascript:void(0);", :class => "btn btn-primary", :id => "form_100"%>
+              <% else %>
+                  <%= button_to t('general.back'), "javascript:void(0);", :class => "btn btn-primary", :id => "form_100" %>
+              <% end %>
+            </div>
+
+        </div>
+      </div>
+      <% end %>
     </div>
     <div class="toggable" id="user_101" style="display: none">
       <%= form_for(@user) do |f| %>
