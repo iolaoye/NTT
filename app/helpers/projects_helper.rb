@@ -122,14 +122,14 @@ module ProjectsHelper
 		field.scenarios.each do |s|
 			duplicate_scenario(s.id, "", new_field.id)
 			# DUPLIATE results when soil_id > 0.
-			results = field.results.where(:field_id => field.id, :scenario_id => s.id)
-			results.each do |r|
-				duplicate_result(r.id, new_field.id)
-			end
-			charts = field.charts.where(:field_id => field.id, :scenario_id => s.id)
-			charts.each do |c|
-				duplicate_chart(c.id, new_field.id)
-			end
+			#results = field.results.where(:field_id => field.id, :scenario_id => s.id)
+			#results.each do |r|
+				#duplicate_result(r.id, new_field.id)
+			#end
+			#charts = field.charts.where(:field_id => field.id, :scenario_id => s.id)
+			#charts.each do |c|
+				#duplicate_chart(c.id, new_field.id)
+			#end
 		end   # end scnearios.each
 		"OK"
 	else
