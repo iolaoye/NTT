@@ -33,15 +33,15 @@ module ProjectsHelper
   end   # end duplicate location
 
   ######################### Duplicate results #################################################
-  def duplicate_result(result_id, new_field_id)
+  def duplicate_result(result)
 	#1. copy result to new result
-		result = Result.find(result_id)   #1. find result to copy
+		#result = Result.find(result_id)   #1. find result to copy
 		new_result = result.dup
-		new_result.field_id = new_field_id
+		#new_result.field_id = new_field_id
 		new_result.scenario_id = @new_scenario_id
-		if result.soil_id > 0 then
-			new_result.soil_id = Soil.find_by_soil_id_old(result.soil_id).id
-		end 
+		#if result.soil_id > 0 then
+			#new_result.soil_id = Soil.find_by_soil_id_old(result.soil_id).id
+		#end 
 		if new_result.save
 			"OK"
 		else
@@ -121,11 +121,6 @@ module ProjectsHelper
 		#end
 		field.scenarios.each do |s|
 			duplicate_scenario(s.id, "", new_field.id)
-			# DUPLIATE results when soil_id > 0.
-			#results = field.results.where(:field_id => field.id, :scenario_id => s.id)
-			#results.each do |r|
-				#duplicate_result(r.id, new_field.id)
-			#end
 			#charts = field.charts.where(:field_id => field.id, :scenario_id => s.id)
 			#charts.each do |c|
 				#duplicate_chart(c.id, new_field.id)
@@ -380,7 +375,16 @@ module ProjectsHelper
 		scenario.bmps.each do |b|
 			duplicate_bmp(b)
 		end   # end bmps.each
-	else
+		# Duplicate annual results when soil_id > 0.
+		results = scenario.annual_results
+		results.each do |r|
+			duplicate_result(r)
+		end
+		# Duplicate crop results when soil_id > 0.
+		results = scenario.crop_results
+		results.each do |r|
+			duplicate_result(r)
+		end	else
 		return "Error Saving scenario"
 	end   # end if scenario saved
   	return "OK"
