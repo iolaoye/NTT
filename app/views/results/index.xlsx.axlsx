@@ -4,339 +4,349 @@ wb.styles do |s|
   main_row = s.add_style :bg_color => "D5DDE5", :fg_color => "0000FF"
   wb.add_worksheet(name: "Results") do |sheet|
     if session[:simulation] == 'scenario'
-      if @present1
-        if @present2
-          if @present3
-            sheet.add_row [t('result.description'), Scenario.find(@results1[0].scenario_id).name, "±", Scenario.find(@results2[0].scenario_id).name, "±", t('result.difference'), t('result.reduction'), t('result.total_area'), Scenario.find(@results3[0].scenario_id).name, "±", t('result.difference'), t('result.reduction'), t('result.total_area')], :types => [:string]
+      if !@scenario1.blank?
+        if !@scenario2.blank?
+          if !@scenario3.blank?
+            sheet.add_row ["", Scenario.find(@results1[0].scenario_id).name, Scenario.find(@results2[0].scenario_id).name, "", Scenario.find(@results3[0].scenario_id).name], :types => [:string], :widths => [20, :auto, :auto, :auto]
           else
-            sheet.add_row [t('result.description'), Scenario.find(@results1[0].scenario_id).name, "±", Scenario.find(@results2[0].scenario_id).name, "±", t('result.difference'), t('result.reduction'), t('result.total_area'), t('result.scenario3'), "±", t('result.difference'), t('result.reduction'), t('result.total_area')], :types => [:string]
+            sheet.add_row ["", Scenario.find(@results1[0].scenario_id).name, Scenario.find(@results2[0].scenario_id).name, "", t('result.scenario3')], :types => [:string], :widths => [20, :auto, :auto, :auto]
           end
         else
-          sheet.add_row [t('result.description'), Scenario.find(@results1[0].scenario_id).name, "±", t('result.scenario2'), "±", t('result.difference'), t('result.reduction'), t('result.total_area'), t('result.scenario3'), "±", t('result.difference'), t('result.reduction'), t('result.total_area')], :types => [:string]
+          sheet.add_row ["", Scenario.find(@results1[0].scenario_id).name, t('result.scenario2'), "", t('result.scenario3')], :types => [:string], :widths => [20, :auto, :auto, :auto]
         end
       else
-        sheet.add_row [t('result.description'), t('result.scenario1'), "±", t('result.scenario2'), "±", t('result.difference'), t('result.reduction'), t('result.total_area'), t('result.scenario3'), "±", t('result.difference'), t('result.reduction'), t('result.total_area')], :types => [:string]
+        sheet.add_row ["", t('result.scenario1'), t('result.scenario2'), "", t('result.scenario3')], :types => [:string], :widths => [:auto, :auto, :auto, :auto]
       end
     else
-      if @present1
-        if @present2
-          if @present3
-            sheet.add_row [t('result.description'), Watershed.find(@results1[0].watershed_id).name, "±", Watershed.find(@results2[0].watershed_id).name, "±", t('result.difference'), t('result.reduction'), t('result.total_area'), Watershed.find(@results3[0].watershed_id).name, "±", t('result.difference'), t('result.reduction'), t('result.total_area')], :types => [:string]
-          else
-            sheet.add_row [t('result.description'), Watershed.find(@results1[0].watershed_id).name, "±", Watershed.find(@results2[0].watershed_id).name, "±", t('result.difference'), t('result.reduction'), t('result.total_area'), t('result.scenario3'), "±", t('result.difference'), t('result.reduction'), t('result.total_area')], :types => [:string]
-          end
-        else
-          sheet.add_row [t('result.description'), Watershed.find(@results1[0].watershed_id).name, "±", t('result.scenario2'), "±", t('result.difference'), t('result.reduction'), t('result.total_area'), t('result.scenario3'), "±", t('result.difference'), t('result.reduction'), t('result.total_area')], :types => [:string]
-        end
-      else
-        sheet.add_row [t('result.description'), t('result.scenario1'), "±", t('result.scenario2'), "±", t('result.difference'), t('result.reduction'), t('result.total_area'), t('result.scenario3'), "±", t('result.difference'), t('result.reduction'), t('result.total_area')], :types => [:string]
-      end
-    end
-    sheet['A1:M1'].each { |c| c.style = table_header }
-    if @results1 != nil && @present
-      @results1.each do |result|
-        description = Description.find(result.description_id)
-        value2 = 0
-        if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil
-          value2 = @results2.find_by_description_id(result.description_id).value
-        end
-        difference1 = value2 - result.value
-        reduction1 = difference1 / result.value * 100
-        total_area1 = difference1 * @total_area1
-        value3 = 0
-        if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil
-          value3 = @results3.find_by_description_id(result.description_id).value
-        end
-        difference2 = value3- result.value
-        reduction2 = difference2 / result.value * 100
-        total_area2 = difference2 * @total_area2
-        case (result.description_id % 10)
-          when 0
-            if result.description_id == 70
-              if I18n.locale.eql?(:en)
-                sheet.add_row [description.description, "", "", "", "", "", "", "", "", "", "", "", ""], :types => :string, :style => main_row
-              else
-                sheet.add_row [description.spanish_description, "", "", "", "", "", "", "", "", "", "", "", ""], :types => :string, :style => main_row
-              end
-            elsif result.description_id == 90 && ENV["APP_VERSION"] == "modified"
-            else
-              if I18n.locale.eql?(:en)
-                if @results2 != nil
-                  if @results3 != nil
-                    sheet.add_row [description.description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), sprintf("%8.2f", value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", value3), sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float], :style => main_row
-                  else
-                    sheet.add_row [description.description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), sprintf("%8.2f", value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), "", "", "", "", ""], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :string, :string, :string, :string, :string], :style => main_row
-                  end
-                else
-                  sheet.add_row [description.description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), "", "", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string], :style => main_row
-                end
-              else
-                if @results2 != nil
-                  if @results3 != nil
-                    sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), sprintf("%8.2f", value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", value3), sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float], :style => main_row
-                  else
-                    sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), sprintf("%8.2f", value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), "", "", "", "", ""], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :string, :string, :string, :string, :string], :style => main_row
-                  end
-                else
-                  sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), "", "", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string], :style => main_row
-                end
-              end
-            end
-          else
-            if result.description_id > 70 && result.description_id < 80
-              if I18n.locale.eql?(:en)
-                if @results2 != nil
-                  if @results3 != nil
-                    sheet.add_row [description.description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), sprintf("%8.2f", value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", value3), sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-                  else
-                    sheet.add_row [description.description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), sprintf("%8.2f", value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-                  end
-                else
-                  sheet.add_row [description.description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value)], :types => [:string, :float, :float]
-                end
-              else
-                if @results2 != nil
-                  if @results3 != nil
-                    sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), sprintf("%8.2f", value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", value3), sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-                  else
-                    sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), sprintf("%8.2f", value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-                  end
-                else
-                  sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value)], :types => [:string, :float, :float]
-                end
-              end
-            elsif result.description_id > 90 && result.description_id < 93 && ENV["APP_VERSION"] == "modified"
-            else
-              format = "%8.2f"
-              if result.description_id >= 60 && result.description_id <= 69
-                format = "%8.4f"
-              end
-              if I18n.locale.eql?(:en)
-                if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil
-                  if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil
-                    sheet.add_row [description.description + "(" + description.unit + ")", sprintf(format, result.value), sprintf("%8.2f", result.ci_value), sprintf(format, value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf(format, difference1), sprintf(format, reduction1), sprintf(format, total_area1), sprintf(format, value3).to_s, sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value), sprintf(format, difference2), sprintf(format, reduction2), sprintf(format, reduction2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-                  else
-                    sheet.add_row [description.description + "(" + description.unit + ")", sprintf(format, result.value), sprintf("%8.2f", result.ci_value), sprintf(format, value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf(format, difference1), sprintf(format, reduction1), sprintf(format, total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-                  end
-                else
-                  sheet.add_row [description.description + "(" + description.unit + ")", sprintf(format, result.value), sprintf("%8.2f", result.ci_value)], :types => [:string, :float, :float]
-                end
-              else
-                if @results2 != nil && @results2.find_by_description_id(result.description_id) != nil
-                  if @results3 != nil && @results3.find_by_description_id(result.description_id) != nil
-                    sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf(format, value), sprintf("%8.2f", result.ci_value), sprintf(format, value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf(format, difference1), sprintf(format, reduction1), sprintf(format, total_area1), sprintf(format, value3).to_s, sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value), sprintf(format, difference2), sprintf(format, reduction2), sprintf(format, reduction2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-                  else
-                    sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf(format, value), sprintf("%8.2f", result.ci_value), sprintf(format, value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf(format, difference1), sprintf(format, reduction1), sprintf(format, total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-                  end
-                elsif
-                  sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf(format, result.value), sprintf("%8.2f", result.ci_value)], :types => [:string, :float, :float]
-                end
-              end
-            end
-          end
-      end
-    end
-    @crop_results.each do |result|
-      value2 = 0
-      reduction1 = 0
-      if @scenario2 != "" then
-        value2 = result[3]
-        difference1 = value2 - result[1]
-        reduction1 = difference1 / result[1] * 100 unless result[1] == 0
-        total_area1 = difference1 * @total_area1
-      end
-      value3 = 0
-      reduction2 = 0
-      if @scenario3 != "" then
-        value3 = result[5]
-        difference2 = value3 - result[1]
-        reduction2 = difference2 / result[1] * 100 unless result[1] == 0
-        total_area2 = difference2 * @total_area2
-      end
-      if I18n.locale.eql?(:en)
+      if !@scenario1.blank?
         if !@scenario2.blank?
           if !@scenario3.blank?
-            sheet.add_row [Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2]), sprintf("%8.2f", result[3]), sprintf("%8.2f", result[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", result[5]), sprintf("%8.2f", result[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
+            sheet.add_row ["", Watershed.find(@results1[0].watershed_id).name, Watershed.find(@results2[0].watershed_id).name, "", Watershed.find(@results3[0].watershed_id).name], :types => [:string], :widths => [20, :auto, :auto, :auto]
           else
-            sheet.add_row [Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2]), sprintf("%8.2f", result[3]), sprintf("%8.2f", result[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
+            sheet.add_row ["", Watershed.find(@results1[0].watershed_id).name, Watershed.find(@results2[0].watershed_id).name, "", t('result.scenario3')], :types => [:string], :widths => [20, :auto, :auto, :auto]
           end
         else
-          sheet.add_row [Crop.find(result[0]).name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2])], :types => [:string, :float, :float]
+          sheet.add_row ["", Watershed.find(@results1[0].watershed_id).name, t('result.scenario2'), "", t('result.scenario3')], :types => [:string], :widths => [20, :auto, :auto, :auto]
         end
       else
-        if !@scenario2.blank?
-          if !@scenario3.blank?
-            sheet.add_row [Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2]), sprintf("%8.2f", result[3]), sprintf("%8.2f", result[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", result[5]), sprintf("%8.2f", result[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-          else
-            sheet.add_row [Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2]), sprintf("%8.2f", result[3]), sprintf("%8.2f", result[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-          end
-        else
-          sheet.add_row [Crop.find(result[0]).spanish_name + "(" + Crop.find(result[0]).yield_unit + ")", sprintf("%8.2f", result[1]), sprintf("%8.2f", result[2])], :types => [:string, :float, :float]
-        end
+        sheet.add_row ["", t('result.scenario1'), t('result.scenario2'), "", t('result.scenario3')], :types => [:string], :widths => [:auto, :auto, :auto, :auto]
       end
     end
-    if @results1 != nil && @present and ENV["APP_VERSION"] == "standard"
-      sheet.add_row ["N Stress", "", "", "", "", "", "", "", "", "", "", "", ""], :types => [:string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string], :style => main_row
-      @stress_ns_results.each do |ns|
-        value2 = 0
-        reduction1 = 0
-        if !@scenario2.blank? then
-          value2 = ns[3]
-          difference1 = value2 - ns[1]
-          reduction1 = difference1 / ns[1] * 100 unless ns[1] == 0
-          total_area1 = difference1 * @total_area1
+    sheet.merge_cells "C1:D1"
+    sheet.merge_cells "E1:F1"
+    sheet.add_row [t('result.description'), "Losses(±)", "Losses(±)", t('general.change')+"(%)", "Losses(±)", t('general.change')+"(%)"], :types => [:string]
+    sheet['A1:F2'].each { |c| c.style = table_header }
+    @id = "scenario_id"
+      if session[:simulation] != "scenario"
+        @id = "watershed_id"
+      end
+    if @scenario1 != "0"
+      require 'enumerable/confidence_interval'
+      results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario1)
+      cis1 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
+      averages1 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario1).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)')
+      crops1 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+      crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario1, 0)
+      cic1 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
+      averages2 = nil
+      if @scenario2 != "0" && @scenario2 != ""
+        results_data2 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0,  :scenario_id => @scenario2)
+        cis2 = results_data2.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
+        averages2 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario2).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)')
+        crops2 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+        crops_data2 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario2, 0) 
+        cic2 = Hash[*crops_data2.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] 
+        if @scenario3 != "0" && @scenario2 != ""
+          results_data3 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0,  :scenario_id => @scenario3)
+          cis3 = results_data3.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } 
+          averages3 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario3).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') 
+          crops3 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+          crops_data3 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario3, 0) 
+          cic3 = Hash[*crops_data3.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] 
         end
-        value3 = 0
-        reduction2 = 0
-        if !@scenario3.blank? then
-          value3 = ns[5]
-          difference2 = value3 - ns[1]
-          reduction2 = difference2 / ns[1] * 100 unless ns[1] == 0
-          total_area2 = difference2 * @total_area2
-        end
-        if I18n.locale.eql?(:en)
-          if !@scenario2.blank?
-            if !@scenario3.blank?
-              sheet.add_row [Crop.find(ns[0]).name + "(days)", sprintf("%8.2f", ns[1]), sprintf("%8.2f", ns[2]), sprintf("%8.2f", ns[3]), sprintf("%8.2f", ns[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", ns[5]), sprintf("%8.2f", ns[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-            else
-              sheet.add_row [Crop.find(ns[0]).name + "(days)", sprintf("%8.2f", ns[1]), sprintf("%8.2f", ns[2]), sprintf("%8.2f", ns[3]), sprintf("%8.2f", ns[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-            end
-          else
-            sheet.add_row [Crop.find(ns[0]).name + "(days)", sprintf("%8.2f", ns[1]), sprintf("%8.2f", ns[2])], :types => [:string, :float, :float]
-          end
+      end
+      if @scenario2 != "0" && @scenario2 != ""
+        if @scenario3 != "0" && @scenario3 != ""
+          difference1 = averages3[0][0]+averages3[0][1]+averages3[0][2]+averages3[0][3]-(averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3])
+          reduction1 = difference1 / (averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) * 100
+          sheet.add_row ["Total N (lbs/ac)", sprintf("%8.1f", averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) + " (" + sprintf("%8.1f",cis1[0][1]+cis1[0][2]+cis1[0][3]+cis1[0][4]) + ")", sprintf("%8.1f", averages2[0][0]+averages2[0][1]+averages2[0][2]+averages2[0][3]) + " (" + sprintf("%8.1f",cis2[0][1]+cis2[0][2]+cis2[0][3]+cis2[0][4]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", sprintf("%8.1f", averages3[0][0]+averages3[0][1]+averages3[0][2]+averages3[0][3]) + " (" + sprintf("%8.1f",cis3[0][1]+cis3[0][2]+cis3[0][3]+cis3[0][4]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")"], :types => :string, :style => main_row
+          sheet.add_row ["Org N (lbs/ac)", sprintf("%8.2f", averages1[0][0]).to_s + " (" + sprintf("%8.1f", cis1[0][1]) + ")", sprintf("%8.2f", averages2[0][0]) + " (" + sprintf("%8.1f", cis2[0][1]) + ")", sprintf("%8.2f", averages2[0][0]-averages1[0][0]) + " (" + sprintf("%8.2f", ((averages2[0][0]-averages1[0][0]) / averages1[0][0]) * 100) + ")", sprintf("%8.2f", averages3[0][0]) + " (" + sprintf("%8.1f", cis3[0][1]) + ")", sprintf("%8.2f", averages3[0][0]-averages1[0][0]) + " (" + sprintf("%8.2f", ((averages3[0][0]-averages1[0][0]) / averages1[0][0]) * 100) + ")"], :types => :string
+          sheet.add_row ["Runoff N (lbs/ac)", sprintf("%8.2f", averages1[0][1]).to_s + " (" + sprintf("%8.1f", cis1[0][2]) + ")", sprintf("%8.2f", averages2[0][1]) + " (" + sprintf("%8.1f", cis2[0][2]) + ")", sprintf("%8.2f", averages2[0][1]-averages1[0][1]) + " (" + sprintf("%8.2f", ((averages2[0][1]-averages1[0][1]) / averages1[0][1]) * 100) + ")", sprintf("%8.2f", averages3[0][1]) + " (" + sprintf("%8.1f", cis3[0][2]) + ")", sprintf("%8.2f", averages3[0][1]-averages1[0][1]) + " (" + sprintf("%8.2f", ((averages3[0][1]-averages1[0][1]) / averages1[0][1]) * 100) + ")"], :types => :string
+          sheet.add_row ["Subsurface N (lbs/ac)", sprintf("%8.2f", averages1[0][2]).to_s + " (" + sprintf("%8.1f", cis1[0][3]) + ")", sprintf("%8.2f", averages2[0][2]) + " (" + sprintf("%8.1f", cis2[0][3]) + ")", sprintf("%8.2f", averages2[0][2]-averages1[0][2]) + " (" + sprintf("%8.2f", ((averages2[0][2]-averages1[0][2]) / averages1[0][2]) * 100) + ")", sprintf("%8.2f", averages3[0][2]) + " (" + sprintf("%8.1f", cis3[0][3]) + ")", sprintf("%8.2f", averages3[0][2]-averages1[0][2]) + " (" + sprintf("%8.2f", ((averages3[0][2]-averages1[0][2]) / averages1[0][2]) * 100) + ")"], :types => :string
+          sheet.add_row ["Tile Drain N (lbs/ac)", sprintf("%8.2f", averages1[0][3]).to_s + " (" + sprintf("%8.1f", cis1[0][4]) + ")", sprintf("%8.2f", averages2[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", cis2[0][4]) + ")", sprintf("%8.2f", averages2[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", ((averages2[0][3]-averages1[0][3]) / averages1[0][3]) * 100) + ")", sprintf("%8.2f", averages3[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", cis3[0][4]) + ")", sprintf("%8.2f", averages3[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", ((averages3[0][3]-averages1[0][3]) / averages1[0][3]) * 100) + ")"], :types => :string
+        
+          difference1 = averages3[0][4]+averages3[0][5]+averages3[0][6]-(averages1[0][4]+averages1[0][5]+averages1[0][6])
+          reduction1 = difference1 / (averages1[0][4]+averages1[0][5]+averages1[0][6]) * 100
+          sheet.add_row ["Total P (lbs/ac)", sprintf("%8.1f", averages1[0][4]+averages1[0][5]+averages1[0][6]) + " (" + sprintf("%8.1f",cis1[0][5]+cis1[0][6]+cis1[0][7]) + ")", sprintf("%8.1f", averages2[0][4]+averages2[0][5]+averages2[0][6]) + " (" + sprintf("%8.1f",cis2[0][5]+cis2[0][6]+cis2[0][7]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", sprintf("%8.1f", averages3[0][4]+averages3[0][5]+averages3[0][6]) + " (" + sprintf("%8.1f",cis3[0][5]+cis3[0][6]+cis3[0][7]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")"], :types => :string, :style => main_row
+          sheet.add_row ["Org P (lbs/ac)", sprintf("%8.2f", averages1[0][4]).to_s + " (" + sprintf("%8.1f", cis1[0][5]) + ")", sprintf("%8.2f", averages2[0][4]) + " (" + sprintf("%8.1f", cis2[0][5]) + ")", sprintf("%8.2f", averages2[0][4]-averages1[0][4]) + " (" + sprintf("%8.2f", ((averages2[0][4]-averages1[0][4]) / averages1[0][4]) * 100) + ")", sprintf("%8.2f", averages3[0][4]) + " (" + sprintf("%8.1f", cis3[0][5]) + ")", sprintf("%8.2f", averages3[0][4]-averages1[0][4]).to_s + " (" + sprintf("%8.2f", ((averages3[0][4]-averages1[0][4]) / averages1[0][4]) * 100) + ")"], :types => :string
+          sheet.add_row ["PO4 (lbs/ac)", sprintf("%8.2f", averages1[0][5]).to_s + " (" + sprintf("%8.1f", cis1[0][6]) + ")", sprintf("%8.2f", averages2[0][5])+ " (" + sprintf("%8.1f", cis2[0][6]) + ")", sprintf("%8.2f", averages2[0][5]-averages1[0][5]) + " (" + sprintf("%8.2f", ((averages2[0][5]-averages1[0][5]) / averages1[0][5]) * 100) + ")", sprintf("%8.2f", averages3[0][5]) + " (" + sprintf("%8.1f", cis3[0][6]) + ")", sprintf("%8.2f", averages3[0][5]-averages1[0][5]) + " (" + sprintf("%8.2f", ((averages3[0][5]-averages1[0][5]) / averages1[0][5]) * 100) + ")"], :types => :string
+          sheet.add_row ["Tile Drain P (lbs/ac)", sprintf("%8.2f", averages1[0][6]).to_s + " (" + sprintf("%8.1f", cis1[0][7]) + ")", sprintf("%8.2f", averages2[0][6]) + " (" + sprintf("%8.1f", cis2[0][7]) + ")", sprintf("%8.2f", averages2[0][6]-averages1[0][6]) + " (" + sprintf("%8.2f", ((averages2[0][6]-averages1[0][6]) / averages1[0][6]) * 100) + ")", sprintf("%8.2f", averages3[0][6]) + " (" + sprintf("%8.1f", cis3[0][7]) + ")", sprintf("%8.2f", averages3[0][6]-averages1[0][6]) + " (" + sprintf("%8.2f", ((averages3[0][6]-averages1[0][6]) / averages1[0][6]) * 100) + ")"], :types => :string
+        
+          difference1 = averages3[0][7]+averages3[0][8]+averages3[0][9]-(averages1[0][7]+averages1[0][8]+averages1[0][9])
+          reduction1 = difference1 / (averages1[0][7]+averages1[0][8]+averages1[0][9]) * 100
+          sheet.add_row ["Surface/Subsurface/Tile Drain Flow (in)", sprintf("%8.1f", averages1[0][7]+averages1[0][8]+averages1[0][9]) + " (" + sprintf("%8.1f",cis1[0][8]+cis1[0][9]+cis1[0][10]) + ")", sprintf("%8.1f", averages2[0][7]+averages2[0][8]+averages2[0][9]) + " (" + sprintf("%8.1f",cis2[0][8]+cis2[0][9]+cis2[0][10]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", sprintf("%8.1f", averages3[0][7]+averages3[0][8]+averages3[0][9]) + " (" + sprintf("%8.1f",cis3[0][8]+cis3[0][9]+cis3[0][10]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1).to_s + ")"], :types => :string, :style => main_row
+          sheet.add_row ["Surface Flow (in)", sprintf("%8.2f", averages1[0][7]) + " (" + sprintf("%8.1f", cis1[0][8]) + ")", sprintf("%8.2f", averages2[0][7]) + " (" + sprintf("%8.1f", cis2[0][8]) + ")", sprintf("%8.2f", averages2[0][7]-averages1[0][7]) + " (" + sprintf("%8.2f", ((averages2[0][7]-averages1[0][7]) / averages1[0][7]) * 100) + ")", sprintf("%8.2f", averages3[0][7]) + " (" + sprintf("%8.1f", cis3[0][8]) + ")", sprintf("%8.2f", averages3[0][7]-averages1[0][7]) + " (" + sprintf("%8.2f", ((averages3[0][7]-averages1[0][7]) / averages1[0][7]) * 100) + ")"], :types => :string
+          sheet.add_row ["Subsurface Flow (in)", sprintf("%8.2f", averages1[0][8]) + " (" + sprintf("%8.1f", cis1[0][9]) + ")", sprintf("%8.2f", averages2[0][8]) + " (" + sprintf("%8.1f", cis2[0][9]) + ")", sprintf("%8.2f", averages2[0][8]-averages1[0][8]) + " (" + sprintf("%8.2f", ((averages2[0][8]-averages1[0][8]) / averages1[0][8]) * 100) + ")", sprintf("%8.2f", averages3[0][8]) + " (" + sprintf("%8.1f", cis3[0][9]) + ")", sprintf("%8.2f", averages3[0][8]-averages1[0][8]) + " (" + sprintf("%8.2f", ((averages3[0][8]-averages1[0][8]) / averages1[0][8]) * 100) + ")"], :types => :string
+          sheet.add_row ["Tile Drain Flow (in)", sprintf("%8.2f", averages1[0][9]) + " (" + sprintf("%8.1f", cis1[0][10]) + ")", sprintf("%8.2f", averages2[0][9]) + " (" + sprintf("%8.1f", cis2[0][10]) + ")", sprintf("%8.2f", averages2[0][9]-averages1[0][9]) + " (" + sprintf("%8.2f", ((averages2[0][9]-averages1[0][9]) / averages1[0][9]) * 100) + ")", sprintf("%8.2f", averages3[0][9]) + " (" + sprintf("%8.1f", cis3[0][10]) + ")", sprintf("%8.2f", averages3[0][9]-averages1[0][9]) + " (" + sprintf("%8.2f", ((averages3[0][9]-averages1[0][9]) / averages1[0][9]) * 100) + ")"], :types => :string
+        
+          difference1 = averages3[0][10]+averages3[0][11]-(averages1[0][10]+averages1[0][11])
+          reduction1 = difference1 / (averages1[0][10]+averages1[0][11]) * 100
+          sheet.add_row ["Total Other Water Info (in)", sprintf("%8.1f", averages1[0][10]+averages1[0][11]).to_s + " (" + sprintf("%8.1f",cis1[0][11]+cis1[0][12]) + ")", sprintf("%8.1f", averages2[0][10]+averages2[0][11]) + " (" + sprintf("%8.1f",cis2[0][11]+cis2[0][12]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", sprintf("%8.1f", averages3[0][10]+averages3[0][11]) + " (" + sprintf("%8.1f",cis3[0][11]+cis3[0][12]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")"], :types => :string, :style => main_row
+          sheet.add_row ["Irrigation Runoff (in)", sprintf("%8.2f", averages1[0][10]).to_s + " (" + sprintf("%8.1f", cis1[0][11]) + ")", sprintf("%8.2f", averages2[0][10]) + " (" + sprintf("%8.1f", cis2[0][11]) + ")", sprintf("%8.2f", averages2[0][10]-averages1[0][10]) + " (" + sprintf("%8.2f", ((averages2[0][10]-averages1[0][10]) / averages1[0][10]) * 100) + ")", sprintf("%8.2f", averages3[0][10]) + " (" + sprintf("%8.1f", cis3[0][11]) + ")", sprintf("%8.2f", averages3[0][10]-averages1[0][10]) + " (" + sprintf("%8.2f", ((averages3[0][10]-averages1[0][10]) / averages1[0][10]) * 100) + ")"], :types => :string
+          sheet.add_row ["Deep Percolation (in)", sprintf("%8.2f", averages1[0][11]) + " (" + sprintf("%8.1f", cis1[0][12]) + ")", sprintf("%8.2f", averages2[0][11]) + " (" + sprintf("%8.1f",cis2[0][12]) + ")", sprintf("%8.2f", averages2[0][11]-averages1[0][11]) + " (" + sprintf("%8.2f", ((averages2[0][11]-averages1[0][11]) / averages1[0][11]) * 100) + ")", sprintf("%8.2f", averages3[0][11]) + " (" + sprintf("%8.1f", cis3[0][12]) + ")", sprintf("%8.2f", averages3[0][11]-averages1[0][11]) + " (" + sprintf("%8.2f", ((averages3[0][11]-averages1[0][11]) / averages1[0][11]) * 100) + ")"], :types => :string
+        
+          difference1 = averages3[0][12]+averages3[0][13]-(averages1[0][12]+averages1[0][13])
+          reduction1 = difference1 / (averages1[0][12]+averages1[0][13]) * 100
+          sheet.add_row ["Total Sediment (t/ac)", sprintf("%8.1f", averages1[0][12]+averages1[0][13]) + " (" + sprintf("%8.1f",cis1[0][13]+cis1[0][14]) + ")", sprintf("%8.1f", averages2[0][12]+averages2[0][13]) + " (" + sprintf("%8.1f",cis2[0][13]+cis2[0][14]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", sprintf("%8.1f", averages3[0][12]+averages3[0][13]) + " (" + sprintf("%8.1f",cis3[0][13]+cis3[0][14]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")"], :types => :string, :style => main_row
+          sheet.add_row ["Surface Erosion (t/ac)", sprintf("%8.4f", averages1[0][12]) + " (" + sprintf("%8.1f", cis1[0][13]) + ")", sprintf("%8.4f", averages2[0][12]) + " (" + sprintf("%8.1f", cis2[0][13]) + ")", sprintf("%8.4f", averages2[0][12]-averages1[0][12]) + " (" + sprintf("%8.2f", ((averages2[0][12]-averages1[0][12]) / averages1[0][12]) * 100) + ")", sprintf("%8.4f", averages3[0][12]) + " (" + sprintf("%8.1f", cis3[0][13]) + ")", sprintf("%8.4f", averages3[0][12]-averages1[0][12]) + " (" + sprintf("%8.2f", ((averages3[0][12]-averages1[0][12]) / averages1[0][12]) * 100) + ")"], :types => :string
+          sheet.add_row ["Manure Erosion", sprintf("%8.4f", averages1[0][13]) + " (" + sprintf("%8.1f", cis1[0][14]) + ")", sprintf("%8.4f", averages2[0][13]) + " (" + sprintf("%8.1f", cis2[0][14]) + ")", sprintf("%8.4f", averages2[0][13]-averages1[0][13]) + " (" + sprintf("%8.2f", ((averages2[0][13]-averages1[0][13]) / averages1[0][13]) * 100) + ")", sprintf("%8.4f", averages3[0][13]) + " (" + sprintf("%8.1f", cis3[0][14]) + ")", sprintf("%8.4f", averages3[0][13]-averages1[0][13]) + " (" + sprintf("%8.2f", ((averages3[0][13]-averages1[0][13]) / averages1[0][13]) * 100) + ")"], :types => :string
         else
-          if !@scenario2.blank?
-            if !@scenario3.blank?
-              sheet.add_row [Crop.find(ns[0]).spanish_name + "(days)", sprintf("%8.2f", ns[1]), sprintf("%8.2f", ns[2]), sprintf("%8.2f", ns[3]), sprintf("%8.2f", ns[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", ns[5]), sprintf("%8.2f", ns[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-            else
-              sheet.add_row [Crop.find(ns[0]).spanish_name + "(days)", sprintf("%8.2f", ns[1]), sprintf("%8.2f", ns[2]), sprintf("%8.2f", ns[3]), sprintf("%8.2f", ns[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
+          difference1 = averages2[0][0]+averages2[0][1]+averages2[0][2]+averages2[0][3]-(averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3])
+          reduction1 = difference1 / (averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) * 100
+          sheet.add_row ["Total N (lbs/ac)", sprintf("%8.1f", averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) + " (" + sprintf("%8.1f",cis1[0][1]+cis1[0][2]+cis1[0][3]+cis1[0][4]) + ")", sprintf("%8.1f", averages2[0][0]+averages2[0][1]+averages2[0][2]+averages2[0][3]) + " (" + sprintf("%8.1f",cis2[0][1]+cis2[0][2]+cis2[0][3]+cis2[0][4]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", "", ""], :types => :string, :style => main_row
+          sheet.add_row ["Org N (lbs/ac)", sprintf("%8.2f", averages1[0][0]).to_s + " (" + sprintf("%8.1f", cis1[0][1]) + ")", sprintf("%8.2f", averages2[0][0]) + " (" + sprintf("%8.1f", cis2[0][1]) + ")", sprintf("%8.2f", averages2[0][0]-averages1[0][0]) + " (" + sprintf("%8.2f", ((averages2[0][0]-averages1[0][0]) / averages1[0][0]) * 100) + ")", "", ""], :types => :string
+          sheet.add_row ["Runoff N (lbs/ac)", sprintf("%8.2f", averages1[0][1]).to_s + " (" + sprintf("%8.1f", cis1[0][2]) + ")", sprintf("%8.2f", averages2[0][1]) + " (" + sprintf("%8.1f", cis2[0][2]) + ")", sprintf("%8.2f", averages2[0][1]-averages1[0][1]) + " (" + sprintf("%8.2f", ((averages2[0][1]-averages1[0][1]) / averages1[0][1]) * 100) + ")", "", ""], :types => :string
+          sheet.add_row ["Subsurface N (lbs/ac)", sprintf("%8.2f", averages1[0][2]).to_s + " (" + sprintf("%8.1f", cis1[0][3]) + ")", sprintf("%8.2f", averages2[0][2]) + " (" + sprintf("%8.1f", cis2[0][3]) + ")", sprintf("%8.2f", averages2[0][2]-averages1[0][2]) + " (" + sprintf("%8.2f", ((averages2[0][2]-averages1[0][2]) / averages1[0][2]) * 100) + ")", "", ""], :types => :string
+          sheet.add_row ["Tile Drain N (lbs/ac)", sprintf("%8.2f", averages1[0][3]).to_s + " (" + sprintf("%8.1f", cis1[0][4]) + ")", sprintf("%8.2f", averages2[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", cis2[0][4]) + ")", sprintf("%8.2f", averages2[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", ((averages2[0][3]-averages1[0][3]) / averages1[0][3]) * 100) + ")", "", ""], :types => :string
+        
+          difference1 = averages2[0][4]+averages2[0][5]+averages2[0][6]-(averages1[0][4]+averages1[0][5]+averages1[0][6])
+          reduction1 = difference1 / (averages1[0][4]+averages1[0][5]+averages1[0][6]) * 100
+          sheet.add_row ["Total P (lbs/ac)", sprintf("%8.1f", averages1[0][4]+averages1[0][5]+averages1[0][6]) + " (" + sprintf("%8.1f",cis1[0][5]+cis1[0][6]+cis1[0][7]) + ")", sprintf("%8.1f", averages2[0][4]+averages2[0][5]+averages2[0][6]) + " (" + sprintf("%8.1f",cis2[0][5]+cis2[0][6]+cis2[0][7]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", "", ""], :types => :string, :style => main_row
+          sheet.add_row ["Org P (lbs/ac)", sprintf("%8.2f", averages1[0][4]).to_s + " (" + sprintf("%8.1f", cis1[0][5]) + ")", sprintf("%8.2f", averages2[0][4]) + " (" + sprintf("%8.1f", cis2[0][5]) + ")", sprintf("%8.2f", averages2[0][4]-averages1[0][4]) + " (" + sprintf("%8.2f", ((averages2[0][4]-averages1[0][4]) / averages1[0][4]) * 100) + ")", "", ""], :types => :string
+          sheet.add_row ["PO4 (lbs/ac)", sprintf("%8.2f", averages1[0][5]).to_s + " (" + sprintf("%8.1f", cis1[0][6]) + ")", sprintf("%8.2f", averages2[0][5])+ " (" + sprintf("%8.1f", cis2[0][6]) + ")", sprintf("%8.2f", averages2[0][5]-averages1[0][5]) + " (" + sprintf("%8.2f", ((averages2[0][5]-averages1[0][5]) / averages1[0][5]) * 100) + ")", "", ""], :types => :string
+          sheet.add_row ["Tile Drain P (lbs/ac)", sprintf("%8.2f", averages1[0][6]).to_s + " (" + sprintf("%8.1f", cis1[0][7]) + ")", sprintf("%8.2f", averages2[0][6]) + " (" + sprintf("%8.1f", cis2[0][7]) + ")", sprintf("%8.2f", averages2[0][6]-averages1[0][6]) + " (" + sprintf("%8.2f", ((averages2[0][6]-averages1[0][6]) / averages1[0][6]) * 100) + ")", "", ""], :types => :string
+        
+          difference1 = averages2[0][7]+averages2[0][8]+averages2[0][9]-(averages1[0][7]+averages1[0][8]+averages1[0][9])
+          reduction1 = difference1 / (averages1[0][7]+averages1[0][8]+averages1[0][9]) * 100
+          sheet.add_row ["Surface/Subsurface/Tile Drain Flow (in)", sprintf("%8.1f", averages1[0][7]+averages1[0][8]+averages1[0][9]) + " (" + sprintf("%8.1f",cis1[0][8]+cis1[0][9]+cis1[0][10]) + ")", sprintf("%8.1f", averages2[0][7]+averages2[0][8]+averages2[0][9]) + " (" + sprintf("%8.1f",cis2[0][8]+cis2[0][9]+cis2[0][10]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", "", ""], :types => :string, :style => main_row
+          sheet.add_row ["Surface Flow (in)", sprintf("%8.2f", averages1[0][7]) + " (" + sprintf("%8.1f", cis1[0][8]) + ")", sprintf("%8.2f", averages2[0][7]) + " (" + sprintf("%8.1f", cis2[0][8]) + ")", sprintf("%8.2f", averages2[0][7]-averages1[0][7]) + " (" + sprintf("%8.2f", ((averages2[0][7]-averages1[0][7]) / averages1[0][7]) * 100) + ")", "", ""], :types => :string
+          sheet.add_row ["Subsurface Flow (in)", sprintf("%8.2f", averages1[0][8]) + " (" + sprintf("%8.1f", cis1[0][9]) + ")", sprintf("%8.2f", averages2[0][8]) + " (" + sprintf("%8.1f", cis2[0][9]) + ")", sprintf("%8.2f", averages2[0][8]-averages1[0][8]) + " (" + sprintf("%8.2f", ((averages2[0][8]-averages1[0][8]) / averages1[0][8]) * 100) + ")", "", ""], :types => :string
+          sheet.add_row ["Tile Drain Flow (in)", sprintf("%8.2f", averages1[0][9]) + " (" + sprintf("%8.1f", cis1[0][10]) + ")", sprintf("%8.2f", averages2[0][9]) + " (" + sprintf("%8.1f", cis2[0][10]) + ")", sprintf("%8.2f", averages2[0][9]-averages1[0][9]) + " (" + sprintf("%8.2f", ((averages2[0][9]-averages1[0][9]) / averages1[0][9]) * 100) + ")", "", ""], :types => :string
+        
+          difference1 = averages2[0][10]+averages2[0][11]-(averages1[0][10]+averages1[0][11]) 
+          reduction1 = difference1 / (averages1[0][10]+averages1[0][11]) * 100 
+          sheet.add_row ["Total Other Water Info (in)", sprintf("%8.1f", averages1[0][10]+averages1[0][11]).to_s + " (" + sprintf("%8.1f",cis1[0][11]+cis1[0][12]) + ")", sprintf("%8.1f", averages2[0][10]+averages2[0][11]) + " (" + sprintf("%8.1f",cis2[0][11]+cis2[0][12]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", "", ""], :types => :string, :style => main_row
+          sheet.add_row ["Irrigation Runoff (in)", sprintf("%8.2f", averages1[0][10]).to_s + " (" + sprintf("%8.1f", cis1[0][11]) + ")", sprintf("%8.2f", averages2[0][10]) + " (" + sprintf("%8.1f", cis2[0][11]) + ")", sprintf("%8.2f", averages2[0][10]-averages1[0][10]) + " (" + sprintf("%8.2f", ((averages2[0][10]-averages1[0][10]) / averages1[0][10]) * 100) + ")", "", ""], :types => :string
+          sheet.add_row ["Deep Percolation (in)", sprintf("%8.2f", averages1[0][11]) + " (" + sprintf("%8.1f", cis1[0][12]) + ")", sprintf("%8.2f", averages2[0][11]) + " (" + sprintf("%8.1f",cis2[0][12]) + ")", sprintf("%8.2f", averages2[0][11]-averages1[0][11]) + " (" + sprintf("%8.2f", ((averages2[0][11]-averages1[0][11]) / averages1[0][11]) * 100) + ")", "", ""], :types => :string
+        
+          difference1 = averages2[0][12]+averages2[0][13]-(averages1[0][12]+averages1[0][13])
+          reduction1 = difference1 / (averages1[0][12]+averages1[0][13]) * 100
+          sheet.add_row ["Total Sediment (t/ac)", sprintf("%8.1f", averages1[0][12]+averages1[0][13]) + " (" + sprintf("%8.1f",cis1[0][13]+cis1[0][14]) + ")", sprintf("%8.1f", averages2[0][12]+averages2[0][13]) + " (" + sprintf("%8.1f",cis2[0][13]+cis2[0][14]) + ")", sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")", "", ""], :types => :string, :style => main_row
+          sheet.add_row ["Surface Erosion (t/ac)", sprintf("%8.4f", averages1[0][12]) + " (" + sprintf("%8.1f", cis1[0][13]) + ")", sprintf("%8.4f", averages2[0][12]) + " (" + sprintf("%8.1f", cis2[0][13]) + ")", sprintf("%8.4f", averages2[0][12]-averages1[0][12]) + " (" + sprintf("%8.2f", ((averages2[0][12]-averages1[0][12]) / averages1[0][12]) * 100) + ")", "", ""], :types => :string
+          sheet.add_row ["Manure Erosion", sprintf("%8.4f", averages1[0][13]) + " (" + sprintf("%8.1f", cis1[0][14]) + ")", sprintf("%8.4f", averages2[0][13]) + " (" + sprintf("%8.1f", cis2[0][14]) + ")", sprintf("%8.4f", averages2[0][13]-averages1[0][13]) + " (" + sprintf("%8.2f", ((averages2[0][13]-averages1[0][13]) / averages1[0][13]) * 100) + ")", "", ""], :types => :string
+        end
+      else
+        sheet.add_row ["Total N (lbs/ac)", sprintf("%8.1f", averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) + " (" + sprintf("%8.1f",cis1[0][1]+cis1[0][2]+cis1[0][3]+cis1[0][4]) + ")", "", "", "", ""], :types => :string, :style => main_row
+        sheet.add_row ["Org N (lbs/ac)", sprintf("%8.2f", averages1[0][0]).to_s + " (" + sprintf("%8.1f", cis1[0][1]) + ")", "", "", "", ""], :types => :string
+        sheet.add_row ["Runoff N (lbs/ac)", sprintf("%8.2f", averages1[0][1]).to_s + " (" + sprintf("%8.1f", cis1[0][2]) + ")", "", "", "", ""], :types => :string
+        sheet.add_row ["Subsurface N (lbs/ac)", sprintf("%8.2f", averages1[0][2]).to_s + " (" + sprintf("%8.1f", cis1[0][3]) + ")", "", "", "", ""], :types => :string
+        sheet.add_row ["Tile Drain N (lbs/ac)", sprintf("%8.2f", averages1[0][3]).to_s + " (" + sprintf("%8.1f", cis1[0][4]) + ")", "", "", "", ""], :types => :string
+        
+        sheet.add_row ["Total P (lbs/ac)", sprintf("%8.1f", averages1[0][4]+averages1[0][5]+averages1[0][6]) + " (" + sprintf("%8.1f",cis1[0][5]+cis1[0][6]+cis1[0][7]) + ")", "", "", "", ""], :types => :string, :style => main_row
+        sheet.add_row ["Org P (lbs/ac)", sprintf("%8.2f", averages1[0][4]).to_s + " (" + sprintf("%8.1f", cis1[0][5]) + ")", "", "", "", ""], :types => :string
+        sheet.add_row ["PO4 (lbs/ac)", sprintf("%8.2f", averages1[0][5]).to_s + " (" + sprintf("%8.1f", cis1[0][6]) + ")", "", "", "", ""], :types => :string
+        sheet.add_row ["Tile Drain P (lbs/ac)", sprintf("%8.2f", averages1[0][6]).to_s + " (" + sprintf("%8.1f", cis1[0][7]) + ")", "", "", "", ""], :types => :string
+        
+        sheet.add_row ["Surface/Subsurface/Tile Drain Flow (in)", sprintf("%8.1f", averages1[0][7]+averages1[0][8]+averages1[0][9]) + " (" + sprintf("%8.1f",cis1[0][8]+cis1[0][9]+cis1[0][10]) + ")", "", "", "", ""], :types => :string, :style => main_row
+        sheet.add_row ["Surface Flow (in)", sprintf("%8.2f", averages1[0][7]) + " (" + sprintf("%8.1f", cis1[0][8]) + ")", "", "", "", ""], :types => :string
+        sheet.add_row ["Subsurface Flow (in)", sprintf("%8.2f", averages1[0][8]) + " (" + sprintf("%8.1f", cis1[0][9]) + ")", "", "", "", ""], :types => :string
+        sheet.add_row ["Tile Drain Flow (in)", sprintf("%8.2f", averages1[0][9]) + " (" + sprintf("%8.1f", cis1[0][10]) + ")", "", "", "", ""], :types => :string
+        
+        sheet.add_row ["Total Other Water Info (in)", sprintf("%8.1f", averages1[0][10]+averages1[0][11]).to_s + " (" + sprintf("%8.1f",cis1[0][11]+cis1[0][12]) + ")", "", "", "", ""], :types => :string, :style => main_row
+        sheet.add_row ["Irrigation Runoff (in)", sprintf("%8.2f", averages1[0][10]).to_s + " (" + sprintf("%8.1f", cis1[0][11]) + ")", "", "", "", ""], :types => :string
+        sheet.add_row ["Deep Percolation (in)", sprintf("%8.2f", averages1[0][11]) + " (" + sprintf("%8.1f", cis1[0][12]) + ")", "", "", "", ""], :types => :string
+        
+        sheet.add_row ["Total Sediment (t/ac)", sprintf("%8.1f", averages1[0][12]+averages1[0][13]) + " (" + sprintf("%8.1f",cis1[0][13]+cis1[0][14]) + ")", "", "", "", ""], :types => :string, :style => main_row
+        sheet.add_row ["Surface Erosion", sprintf("%8.4f", averages1[0][12]) + " (" + sprintf("%8.1f", cis1[0][13]) + ")", "", "", "", ""], :types => :string
+        sheet.add_row ["Manure Erosion", sprintf("%8.4f", averages1[0][13]) + " (" + sprintf("%8.1f", cis1[0][14]) + ")", "", "", "", ""], :types => :string
+      end
+      sheet.add_row ["Crop Yield", "", "", "", "", ""], :types => :string, :style => main_row
+      crop_results = Array.new
+      crops1.each do |cr1|
+        crop_result = Hash.new
+        crop_result["name"] = cr1[5]
+        crop_result["yield1"] = cr1[0]
+        crop_result["ci1"] = cic1.assoc(cr1[5])[1]
+        crop_result["ws1"] = cr1[1].round(0)
+        crop_result["ns1"] = cr1[2].round(0)
+        crop_result["ps1"] = cr1[3].round(0)
+        crop_result["ts1"] = cr1[4].round(0)
+        crop_result["yield2"] = 0
+        crop_result["ci2"] = 0
+        crop_result["ws2"] = 0
+        crop_result["ns2"] = 0
+        crop_result["ps2"] = 0
+        crop_result["ts2"] = 0
+        crop_result["yield3"] = 0
+        crop_result["ci3"] = 0
+        crop_result["ws3"] = 0
+        crop_result["ns3"] = 0
+        crop_result["ps3"] = 0
+        crop_result["ts3"] = 0
+        if @scenario2 != "0" && @scenario2 != ""
+          crops2.each do |cr2|
+            if cr2[5] == cr1[5]
+              crop_result["yield2"] = cr2[0]
+              crop_result["ci2"] = cic2.assoc(cr2[5])[1]
+              crop_result["ws2"] = cr2[1].round(0)
+              crop_result["ns2"] = cr2[2].round(0)
+              crop_result["ps2"] = cr2[3].round(0)
+              crop_result["ts2"] = cr2[4].round(0)
             end
-          else
-            sheet.add_row [Crop.find(ns[0]).spanish_name + "(days)", sprintf("%8.2f", ns[1]), sprintf("%8.2f", ns[2])], :types => [:string, :float, :float]
+          end
+        end
+        if @scenario3 != "0" && @scenario3 != ""
+          crops3.each do |cr3|
+            if cr3[5] == cr1[5] then
+              crop_result["yield3"] = cr3[0]
+              crop_result["ci3"] = cic3.assoc(cr3[5])[1]
+              crop_result["ws3"] = cr3[1].round(0)
+              crop_result["ns3"] = cr3[2].round(0)
+              crop_result["ps3"] = cr3[3].round(0)
+              crop_result["ts3"] = cr3[4].round(0)
+            end
+          end
+        end
+        crop_results.push(crop_result)
+      end
+      if @scenario2 != "0" && @scenario2 != ""
+        crops2.each do |cr2|
+          found = false
+          crops1.each do |cr1|
+            if cr2[5] == cr1[5]
+              found = true
+              break
+            end
+          end
+          if found == false
+            crop_result = Hash.new
+            crop_result["name"] = cr2[5]
+            crop_result["yield1"] = 0
+            crop_result["ci1"] = 0
+            crop_result["ws1"] = 0
+            crop_result["ns1"] = 0
+            crop_result["ps1"] = 0
+            crop_result["ts1"] = 0
+            crop_result["yield2"] = cr2[0]
+            crop_result["ci2"] = cic2.assoc(cr2[5])[1]
+            crop_result["ws2"] = cr2[1]
+            crop_result["ns2"] = cr2[2]
+            crop_result["ps2"] = cr2[3]
+            crop_result["ts2"] = cr2[4]
+            crop_result["yield3"] = 0
+            crop_result["ci3"] = 0
+            crop_result["ws3"] = 0
+            crop_result["ns3"] = 0
+            crop_result["ps3"] = 0
+            crop_result["ts3"] = 0
+            if @scenario3 != "0" && @scenario3 != ""
+              crops3.each do |cr3|
+                if cr3[5] == cr2[5] then
+                  crop_result["yield3"] = cr3[0]
+                  crop_result["ci3"] = cic3.assoc(cr3[5])[1]
+                  crop_result["ws3"] = cr3[1]
+                  crop_result["ns3"] = cr3[2]
+                  crop_result["ps3"] = cr3[3]
+                  crop_result["ts3"] = cr3[4]
+                end
+              end
+            end
+            crop_results.push(crop_result)
           end
         end
       end
-      sheet.add_row ["P Stress", "", "", "", "", "", "", "", "", "", "", "", ""], :types => [:string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string], :style => main_row
-      @stress_ps_results.each do |ps|
-        value2 = 0
-        reduction1 = 0
-        if !@scenario2.blank? then
-          value2 = ps[3]
-          difference1 = value2 - ps[1]
-          reduction1 = difference1 / ps[1] * 100 unless ps[1] == 0
-          total_area1 = difference1 * @total_area1
-        end
-        value3 = 0
-        reduction2 = 0
-        if !@scenario3.blank? then
-          value3 = ps[5]
-          difference2 = value3 - ps[1]
-          reduction2 = difference2 / ps[1] * 100 unless ps[1] == 0
-          total_area2 = difference2 * @total_area2
-        end
-        if I18n.locale.eql?(:en)
-          if !@scenario2.blank?
-            if !@scenario3.blank?
-              sheet.add_row [Crop.find(ps[0]).name + "(days)", sprintf("%8.2f", ps[1]), sprintf("%8.2f", ps[2]), sprintf("%8.2f", ps[3]), sprintf("%8.2f", ps[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", ps[5]), sprintf("%8.2f", ps[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-            else
-              sheet.add_row [Crop.find(ps[0]).name + "(days)", sprintf("%8.2f", ps[1]), sprintf("%8.2f", ps[2]), sprintf("%8.2f", ps[3]), sprintf("%8.2f", ps[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-            end
-          else
-            sheet.add_row [Crop.find(ps[0]).name + "(days)", sprintf("%8.2f", ps[1]), sprintf("%8.2f", ps[2])], :types => [:string, :float, :float]
-          end
-        else
-          if !@scenario2.blank?
-            if !@scenario3.blank?
-              sheet.add_row [Crop.find(ps[0]).spanish_name + "(days)", sprintf("%8.2f", ps[1]), sprintf("%8.2f", ps[2]), sprintf("%8.2f", ps[3]), sprintf("%8.2f", ps[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", ps[5]), sprintf("%8.2f", ps[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-            else
-              sheet.add_row [Crop.find(ps[0]).spanish_name + "(days)", sprintf("%8.2f", ps[1]), sprintf("%8.2f", ps[2]), sprintf("%8.2f", ps[3]), sprintf("%8.2f", ps[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-            end
-          else
-            sheet.add_row [Crop.find(ps[0]).spanish_name + "(days)", sprintf("%8.2f", ps[1]), sprintf("%8.2f", ps[2])], :types => [:string, :float, :float]
+      if @scenario3 != "0" && @scenario3 != ""
+        crops3.each do |cr3|
+          found = false
+          crop_results.each do |cr|
+            if cr3[5] == cr["name"] then
+              found = true
+              break
+            end 
+          end 
+          if found == false then
+            crop_result = Hash.new
+            crop_result["name"] = cr3[5]
+            crop_result["yield1"] = 0
+            crop_result["ci1"] = 0
+            crop_result["ws1"] = 0
+            crop_result["ns1"] = 0
+            crop_result["ps1"] = 0
+            crop_result["ts1"] = 0
+            crop_result["yield2"] = 0
+            crop_result["ci2"] = 0
+            crop_result["ws2"] = 0
+            crop_result["ns2"] = 0
+            crop_result["ps2"] = 0
+            crop_result["ts2"] = 0
+            crop_result["yield3"] = cr3[0]
+            crop_result["ci3"] = cic3.assoc(cr3[5])[1]
+            crop_result["ws3"] = cr3[1]
+            crop_result["ns3"] = cr3[2]
+            crop_result["ps3"] = cr3[3]
+            crop_result["ts3"] = cr3[4]
+            crop_results.push(crop_result)
           end
         end
       end
-      sheet.add_row ["Temperature Stress", "", "", "", "", "", "", "", "", "", "", "", ""], :types => [:string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string], :style => main_row
-      @stress_ts_results.each do |ts|
-        value2 = 0
-        reduction1 = 0
-        if !@scenario2.blank? then
-          value2 = ts[3]
-          difference1 = value2 - ts[1]
-          reduction1 = difference1 / ts[1] * 100 unless ts[1] == 0
-          total_area1 = difference1 * @total_area1
+      crop_results.each do |cr|
+        crop = Crop.find_by_code(cr["name"]) 
+        conversion_factor = 1 * AC_TO_HA 
+        dry_matter = 100 
+        unit = "t/ac" 
+        if crop != nil
+          conversion_factor = crop.conversion_factor * AC_TO_HA 
+          dry_matter = crop.dry_matter 
+          unit = crop.yield_unit + "/ac" 
         end
-        value3 = 0
-        reduction2 = 0
-        if !@scenario3.blank? then
-          value3 = ts[5]
-          difference2 = value3 - ts[1]
-          reduction2 = difference2 / ts[1] * 100 unless ts[1] == 0
-          total_area2 = difference2 * @total_area2
-        end
-        if I18n.locale.eql?(:en)
-          if !@scenario2.blank?
-            if !@scenario3.blank?
-              sheet.add_row [Crop.find(ts[0]).name + "(days)", sprintf("%8.2f", ts[1]), sprintf("%8.2f", ts[2]), sprintf("%8.2f", ts[3]), sprintf("%8.2f", ts[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", ts[5]), sprintf("%8.2f", ts[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-            else
-              sheet.add_row [Crop.find(ts[0]).name + "(days)", sprintf("%8.2f", ts[1]), sprintf("%8.2f", ts[2]), sprintf("%8.2f", ts[3]), sprintf("%8.2f", ts[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-            end
+        if @scenario2 != "0" && @scenario2 != ""
+          if @scenario3 != "0" && @scenario3 != ""
+            sheet.add_row [crop.name+" ("+unit+")", sprintf("%8.0f", cr["yield1"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci1"]) + ")", sprintf("%8.0f", cr["yield2"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci2"]) + ")", sprintf("%8.0f", (cr["yield2"]-cr["yield1"])* conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", (cr["yield2"]-cr["yield1"]) * 100 / cr["yield1"]) + ")", sprintf("%8.0f", cr["yield3"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci3"]) + ")", sprintf("%8.0f", (cr["yield3"]-cr["yield1"])* conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", (cr["yield3"]-cr["yield1"])*100 / cr["yield1"]) + ")"], :types => :string  
           else
-            sheet.add_row [Crop.find(ts[0]).name + "(days)", sprintf("%8.2f", ts[1]), sprintf("%8.2f", ts[2])], :types => [:string, :float, :float]
+            sheet.add_row [crop.name+" ("+unit+")", sprintf("%8.0f", cr["yield1"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci1"]) + ")", sprintf("%8.0f", cr["yield2"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci2"]) + ")", sprintf("%8.0f", (cr["yield2"]-cr["yield1"])* conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", (cr["yield2"]-cr["yield1"]) * 100 / cr["yield1"]) + ")", "", ""], :types => :string
           end
         else
-          if !@scenario2.blank?
-            if !@scenario3.blank?
-              sheet.add_row [Crop.find(ts[0]).spanish_name + "(days)", sprintf("%8.2f", ts[1]), sprintf("%8.2f", ts[2]), sprintf("%8.2f", ts[3]), sprintf("%8.2f", ts[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", ts[5]), sprintf("%8.2f", ts[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-            else
-              sheet.add_row [Crop.find(ts[0]).spanish_name + "(days)", sprintf("%8.2f", ts[1]), sprintf("%8.2f", ts[2]), sprintf("%8.2f", ts[3]), sprintf("%8.2f", ts[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-            end
-          else
-            sheet.add_row [Crop.find(ts[0]).spanish_name + "(days)", sprintf("%8.2f", ts[1]), sprintf("%8.2f", ts[2])], :types => [:string, :float, :float]
-          end
+          sheet.add_row [crop.name+" ("+unit+")", sprintf("%8.0f", cr["yield1"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci1"]) + ")", "", "", "", ""], :types => :string
         end
       end
-      sheet.add_row ["Water Stress", "", "", "", "", "", "", "", "", "", "", "", ""], :types => [:string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string], :style => main_row
-      @stress_ws_results.each do |ws|
-        value2 = 0
-        reduction1 = 0
-        if !@scenario2.blank? then
-          value2 = ws[3]
-          difference1 = value2 - ws[1]
-          reduction1 = difference1 / ws[1] * 100 unless ws[1] == 0
-          total_area1 = difference1 * @total_area1
-        end
-        value3 = 0
-        reduction2 = 0
-        if !@scenario3.blank? then
-          value3 = ws[5]
-          difference2 = value3 - ws[1]
-          reduction2 = difference2 / ws[1] * 100 unless ws[1] == 0
-          total_area2 = difference2 * @total_area2
-        end
-        if I18n.locale.eql?(:en)
-          if !@scenario2.blank?
-            if !@scenario3.blank?
-              sheet.add_row [Crop.find(ws[0]).name + "(days)", sprintf("%8.2f", ws[1]), sprintf("%8.2f", ws[2]), sprintf("%8.2f", ws[3]), sprintf("%8.2f", ws[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", ws[5]), sprintf("%8.2f", ws[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
+      #sheet.add_row [description.spanish_description + "(" + description.unit + ")", sprintf("%8.2f", result.value), sprintf("%8.2f", result.ci_value), sprintf("%8.2f", value2), sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), "", "", "", "", ""], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :string, :string, :string, :string, :string], :style => main_row
+      if ENV["APP_VERSION"] == "standard" && crop_results.count > 0
+        sheet.add_row ["N Stress", "", "", "", ""], :types => :string, :style => main_row
+        crop_results.each do |cr|
+          crop = Crop.find_by_code(cr["name"])
+          if @scenario2 != "" && @scenario2 != "0"
+            if @scenario3 != "" && @scenario3 != "0"
+              sheet.add_row [crop.name + " (days)", sprintf("%8.0f", cr["ns1"]) + " (" + sprintf("%8.1f", cr["ns1"]*100.0/crop.dyam) + "%)", sprintf("%8.0f", cr["ns2"]) + " (" + sprintf("%8.1f", (cr["ns2"] * 100.0 / crop.dyam).round(1)) + "%)", sprintf("%8.0f", cr["ns2"]-cr["ns1"]) + " (" + sprintf("%8.1f", (cr["ns2"]-cr["ns1"])*100 / cr["ns1"]) + ")", sprintf("%8.0f", cr["ns3"]) + " (" + sprintf("%8.1f", cr["ns3"] * 100.0 / crop.dyam.round(1)) + "%)", sprintf("%8.0f", cr["ns3"]-cr["ns1"]) + " (" + sprintf("%8.1f", (cr["ns3"]-cr["ns1"]) * 100 / cr["ns1"]) + ")"], :types => :string      
             else
-              sheet.add_row [Crop.find(ws[0]).name + "(days)", sprintf("%8.2f", ws[1]), sprintf("%8.2f", ws[2]), sprintf("%8.2f", ws[3]), sprintf("%8.2f", ws[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
+              sheet.add_row [crop.name + " (days)", sprintf("%8.0f", cr["ns1"]) + " (" + sprintf("%8.1f", cr["ns1"]*100.0/crop.dyam) + "%)", sprintf("%8.0f", cr["ns2"]) + " (" + sprintf("%8.1f", (cr["ns2"] * 100.0 / crop.dyam).round(1)) + "%)", sprintf("%8.0f", cr["ns2"]-cr["ns1"]) + " (" + sprintf("%8.1f", (cr["ns2"]-cr["ns1"])*100 / cr["ns1"]) + ")", "", ""], :types => :string      
             end
           else
-            sheet.add_row [Crop.find(ws[0]).name + "(days)", sprintf("%8.2f", ws[1]), sprintf("%8.2f", ws[2])], :types => [:string, :float, :float]
-          end
-        else
-          if !@scenario2.blank?
-            if !@scenario3.blank?
-              sheet.add_row [Crop.find(ws[0]).spanish_name + "(days)", sprintf("%8.2f", ws[1]), sprintf("%8.2f", ws[2]), sprintf("%8.2f", ws[3]), sprintf("%8.2f", ws[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1), sprintf("%8.2f", ws[5]), sprintf("%8.2f", ws[6]), sprintf("%8.2f", difference2), sprintf("%8.2f", reduction2), sprintf("%8.2f", total_area2)], :types => [:string, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float, :float]
-            else
-              sheet.add_row [Crop.find(ws[0]).spanish_name + "(days)", sprintf("%8.2f", ws[1]), sprintf("%8.2f", ws[2]), sprintf("%8.2f", ws[3]), sprintf("%8.2f", ws[4]), sprintf("%8.2f", difference1), sprintf("%8.2f", reduction1), sprintf("%8.2f", total_area1)], :types => [:string, :float, :float, :float, :float, :float, :float, :float]
-            end
-          else
-            sheet.add_row [Crop.find(ws[0]).spanish_name + "(days)", sprintf("%8.2f", ws[1]), sprintf("%8.2f", ns[2])], :types => [:string, :float, :float]
+            sheet.add_row [crop.name + " (days)", sprintf("%8.0f", cr["ns1"]) + " (" + sprintf("%8.1f", cr["ns1"]*100.0/crop.dyam) + "%)", "", "", ""], :types => :string    
           end
         end
+        sheet.add_row ["P Stress", "", "", "", ""], :types => :string, :style => main_row
+=begin
+        crop_results.each do |cr|
+          crop = Crop.find_by_code(cr["name"])
+          if @scenario2 != "" && @scenario2 != "0"
+            if @scenario3 != "" && @scenario3 != "0"
+              sheet.add_row [crop.name + " (days)", sprintf("%8.0f", cr["ns1"]) + " (" + sprintf("%8.1f", cr["ns1"]*100.0/crop.dyam) + "%)", sprintf("%8.0f", cr["ns2"]) + " (" + sprintf("%8.1f", (cr["ns2"] * 100.0 / crop.dyam).round(1)) + "%)", sprintf("%8.0f", cr["ns2"]-cr["ns1"]) + " (" + sprintf("%8.1f", (cr["ns2"]-cr["ns1"])*100 / cr["ns1"]) + ")", sprintf("%8.0f", cr["ns3"]) + " (" + sprintf("%8.1f", cr["ns3"] * 100.0 / crop.dyam.round(1)) + "%)", sprintf("%8.0f", cr["ns3"]-cr["ns1"]) + " (" + sprintf("%8.1f", (cr["ns3"]-cr["ns1"]) * 100 / cr["ns1"]) + ")"], :types => :string      
+            else
+              sheet.add_row [crop.name + " (days)", sprintf("%8.0f", cr["ns1"]) + " (" + sprintf("%8.1f", cr["ns1"]*100.0/crop.dyam) + "%)", sprintf("%8.0f", cr["ns2"]) + " (" + sprintf("%8.1f", (cr["ns2"] * 100.0 / crop.dyam).round(1)) + "%)", sprintf("%8.0f", cr["ns2"]-cr["ns1"]) + " (" + sprintf("%8.1f", (cr["ns2"]-cr["ns1"])*100 / cr["ns1"]) + ")", "", ""], :types => :string      
+            end
+          else
+            sheet.add_row [crop.name + " (days)", sprintf("%8.0f", cr["ns1"]) + " (" + sprintf("%8.1f", cr["ns1"]*100.0/crop.dyam) + "%)", "", "", ""], :types => :string    
+          end
+        end
+        sheet.add_row ["Temperature Stress", "", "", "", ""], :types => :string, :style => main_row
+        crop_results.each do |cr|
+        end
+        sheet.add_row ["Water Stress", "", "", "", ""], :types => :string, :style => main_row
+        crop_results.each do |cr|
+        end
+=end
       end
-    end
+    end #end scenario != "0"
     sheet.column_widths nil
   end
 end

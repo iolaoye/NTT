@@ -53,7 +53,7 @@
 								<%= link_to t('result.download_pdf'), { :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
 							<% end %>
 						    <!-- Download CSV/Excel button -->
-						    <%# todo un comment this when the excel program that dowenload the excel files is fixed by Brandon.
+						    <%# todo un comment this when the excel program that dowenload the excel files is fixed by Brandon. %>
 						    <%#= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
 						<% end %>
 					</td>
@@ -164,9 +164,13 @@
 							<%= "Total N" + " (" + "lbs/ac" + ")" %>
 							<%= check_box_tag "Total N" %>
 						</th>
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) + " (" + sprintf("%8.1f",cis1[0][1]+cis1[0][2]+cis1[0][3]+cis1[0][4]) + ")" %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9">
+							<%= sprintf("%8.1f", averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) + " (" + sprintf("%8.1f",cis1[0][1]+cis1[0][2]+cis1[0][3]+cis1[0][4]) + ")" %>
+						</td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", averages2[0][0]+averages2[0][1]+averages2[0][2]+averages2[0][3]) + " (" + sprintf("%8.1f",cis2[0][1]+cis2[0][2]+cis2[0][3]+cis2[0][4]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD">
+								<%= sprintf("%8.1f", averages2[0][0]+averages2[0][1]+averages2[0][2]+averages2[0][3]) + " (" + sprintf("%8.1f",cis2[0][1]+cis2[0][2]+cis2[0][3]+cis2[0][4]) + ")" %>
+							</td>
 							<% difference1 = averages2[0][0]+averages2[0][1]+averages2[0][2]+averages2[0][3]-(averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) %>
 							<% reduction1 = difference1 / (averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>	

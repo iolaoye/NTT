@@ -178,7 +178,7 @@ class ResultsController < ApplicationController
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
         when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil"), t("result.summary")
-			if @type.include? t('result.summary')  then
+			if (@type.include? t('result.summary') or @type.include? t('general.view')) then
 				#if params[:result1] != nil
 					#if !params[:result1][:scenario_id].eql?("") then
 					if @scenario1 > "0" then
