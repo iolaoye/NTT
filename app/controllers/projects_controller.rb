@@ -536,17 +536,17 @@ class ProjectsController < ApplicationController
         end # end subarea.each
       } # end xml.subareas
 
-      results = Result.where(:scenario_id => scenario.id)
+      results = scenario.annual_results
       xml.results {
         results.each do |result|
           save_result_information(xml, result)
         end # end results.each
       } # end xml.results
 
-      charts = Chart.where(:scenario_id => scenario.id)
-      xml.charts {
-        charts.each do |chart|
-          save_chart_information(xml, chart)
+      crops = scenario.crop_results
+      xml.crop_results {
+        crops.each do |crop|
+          save_crop_result_information(xml, crop)
         end # end charts.each
       } # end xml.charts
     } # end xml.scenario
@@ -597,14 +597,47 @@ class ProjectsController < ApplicationController
 
   def save_result_information(xml, result)
     xml.result {
-    xml.watershed_id result.watershed_id
-    xml.field_id result.field_id
-    xml.soil_id result.soil_id
-    xml.scenario_id result.scenario_id
-      xml.value result.value
-      xml.ci_value result.ci_value
-      xml.description_id result.description_id
-      xml.crop_id result.crop_id
+      xml.watershed_id result.watershed_id
+    #xml.field_id result.field_id
+    #xml.soil_id result.soil_id
+      xml.scenario_id result.scenario_id
+      xml.sub1 result.sub1
+      xml.year result.year
+      xml.flow result.flow
+      xml.qdr result.qdr
+      xml.surface_flow result.surface_flow
+      xml.sed result.sed
+      xml.ymnu result.ymnu
+      xml.orgp result.orgp
+      xml.po4 result.po4
+      xml.orgn result.orgn
+      xml.no3 result.no3
+      xml.qdrn result.qdrn
+      xml.qdrp result.qdrp
+      xml.qn result.qn
+      xml.dprk result.dprk
+      xml.irri result.irri
+      xml.pcp result.pcp
+      xml.n2o result.n2o
+      xml.prkn result.prkn
+    } # xml each result end
+  end  # end method
+
+  def save_crop_result_information(xml, result)
+    xml.result {
+      xml.watershed_id result.watershed_id
+    #xml.field_id result.field_id
+    #xml.soil_id result.soil_id
+      xml.scenario_id result.scenario_id
+      xml.name result.name
+      xml.sub1 result.sub1
+      xml.year result.year
+      xml.yldg result.yldg
+      xml.yldf result.yldf
+      xml.ws result.ws
+      xml.ns result.ns
+      xml.ps result.ps
+      xml.ts result.ts
     } # xml each result end
   end  # end method
 
@@ -842,17 +875,17 @@ class ProjectsController < ApplicationController
         end # end scenarios each
       } # end scenarios
 
-    results = Result.where(:watershed_id => watershed.id)
+    results = watershed.annual_results
       xml.results {
         results.each do |result|
           save_result_information(xml, result)
         end # end results.each
       } # end xml.results
 
-      charts = Chart.where(:watershed_id => watershed.id)
-      xml.charts {
-        charts.each do |chart|
-          save_chart_information(xml, chart)
+      crops = watershed.crop_results
+      xml.crop_results {
+        crops.each do |crop|
+          save_crop_result_information(xml, crop)
         end # end charts.each
       } # end xml.charts
     } # xml each watershed end
