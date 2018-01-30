@@ -590,8 +590,8 @@ en:
     animals: 'Total animal units'
     hours: 'Hours grazed per day (0-24)'
     depth: 'Depth (in)'
-    no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
-    po4_p_html: 'P<sub>2</sub>O<sub>5</sub> (0-100%)'
+    no3_n_html: 'Element-N (0-100%)'
+    po4_p_html: 'Element-P (0-100%)'
     org_n_html: 'Organic N (0-100%)'
     org_p_html: 'Organic P (0-100%)'
     org_c_html: 'Organic Carbon'
@@ -623,7 +623,7 @@ en:
     add_start_grazing: 'Add Grazing'
     add_stop_grazing: 'Add Stop Grazing'
     add_cover_crop: Add Cover Crop
-    po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
+    po4_note: If P2O5 please multiply by 0.4364 to convert to element-P
     planting_method: Planting Method
     manure_composition: Fertilizer Composition (Concetration)
     planting_date: Planting Date
@@ -678,10 +678,10 @@ en:
     stream_fencing_frequency: Days in Stream
     hours: Hours per day
     dry_manure: Dry defecated
-    no3_n_html: 'NO₃-N'
-    po4_p_html: 'PO₄-P'
-    org_n_html: 'Org N'
-    org_p_html: 'Org P'
+    no3_n_html: 'Element-N'
+    po4_p_html: 'Element-P'
+    org_n_html: 'Organic-N'
+    org_p_html: 'Organic-P'
     width: Width
     buffer_width: Grass buffer width
     waterways_info: Including both sides of channel
@@ -1677,7 +1677,7 @@ en:
                 item3: '<strong>Hours/Day in Stream:</strong> Number of hours per day that animals will be in the stream. This is a number between 0 and 24.'
                 item4: '<strong>Select Animal:</strong> This is the type of animal that will be temporarily excluded. Options are beef, dairy, horse, sheep, and swine.'
                 item5: '<strong>Dry Manure:</strong> This is the dry manure per day that each animal produces in pounds.'
-                item6: '<strong>Nutrient Fractions:</strong> NO3, PO4, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
+                item6: '<strong>Nutrient Fractions:</strong> element-N, element-P, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
                 item7: '<strong>Filter Strip Inputs:</strong> (See Filter Strip)'
             stabilization:
                 header: 'Streambank Stabilization:'
