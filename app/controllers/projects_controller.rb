@@ -1684,7 +1684,7 @@ class ProjectsController < ApplicationController
           end
         when "charts"
           p.elements.each do |r|
-            msg = upload_chart_new_version(scenario.id, 0, field_id, r)
+            msg = upload_crop_result_new_version(scenario.id, 0, field_id, r)
             if msg != "OK"
               return msg
             end
@@ -2406,26 +2406,50 @@ class ProjectsController < ApplicationController
   # end method
 
   def upload_result_new_version(scenario_id, watershed_id, field_id, new_result)
-    result = Result.new
+    result = AnnualResult.new
     result.scenario_id = scenario_id
     result.watershed_id = watershed_id
-    result.field_id = field_id
+    #result.field_id = field_id
     new_result.elements.each do |p|
       case p.name
-      when "value"
-        result.value = p.text
-      when "ci_value"
-        result.ci_value = p.text
-      when "description_id"
-        result.description_id = p.text
-      when "soil_id"
-        if p.text == "0"
-          result.soil_id = 0
-        else
-          result.soil_id = Soil.find_by_soil_id_old(p.text).id
-        end
-      when "crop_id"
-        result.crop_id = p.text
+      when "sub1"
+        result.sub1 = p.text
+      when "year"
+        result.year = p.text
+      when "flow"
+        result.flow = p.text
+      when "qdr"
+        result.qdr = p.text
+      when "surface_flow"
+        result.surface_flow = p.text
+      when "sed"
+        result.sed = p.text
+      when "ymnu"
+        result.ymnu = p.text
+      when "orgp"
+        result.orgp = p.text
+      when "po4"
+        result.po4 = p.text
+      when "orgn"
+        result.orgn = p.text
+      when "no3"
+        result.no3 = p.text
+      when "qdrn"
+        result.qdrn = p.text
+      when "qdrp"
+        result.qdrp = p.text
+      when "qn"
+        result.qn = p.text
+      when "dprk"
+        result.dprk = p.text
+      when "irri"
+        result.irri = p.text
+      when "pcp"
+        result.pcp = p.text
+      when "n2o"
+        result.n2o = p.text
+      when "prkn"
+        result.prkn = p.text
       end # end case
     end # end each
     if result.save
@@ -2583,34 +2607,34 @@ class ProjectsController < ApplicationController
         #end
       end # end case p.name
     end # end node.elements.each
-  #add total n
+    #add total n
     @result = add_result(field_id, soil_id, scenario_id, total_n, 20)
     @result.ci_value = total_n_ci
     @result.save
-  #add total p
+    #add total p
     @result = add_result(field_id, soil_id, scenario_id, total_p, 30)
     @result.ci_value = total_p_ci
     @result.save
-  #add total runoff
+    #add total runoff
     @result = add_result(field_id, soil_id, scenario_id, total_runoff, 40)
     @result.ci_value = total_runoff_ci
     @result.save
-  #add total other water information
+    #add total other water information
     @result = add_result(field_id, soil_id, scenario_id, total_other_water, 50)
     @result.ci_value = total_other_water_ci
     @result.save
-  #add total sediment
+    #add total sediment
     @result = add_result(field_id, soil_id, scenario_id, total_sediment, 60)
     @result.ci_value = total_sediment_ci
     @result.save
-  #add total crop (zeros because crop are not totalized
+    #add total crop (zeros because crop are not totalized
     @result = add_result(field_id, soil_id, scenario_id, 0, 70)
     @result.save
-  #add total area
+    #add total area
     @result = add_result(field_id, soil_id, scenario_id, Field.find(field_id).field_area, 10)
-  #@result.save
-  #save result id for total area in order to substract the bmp buffer areas from it.
-  @result_id = @result.id
+    #@result.save
+    #save result id for total area in order to substract the bmp buffer areas from it.
+    @result_id = @result.id
   end
 
   def add_result(field_id, soil_id, scenario_id, p_text, description_id)
@@ -2725,29 +2749,37 @@ class ProjectsController < ApplicationController
     end # end node each
   end
 
-  def upload_chart_new_version(scenario_id, watershed_id, field_id, new_chart)
+  def upload_crop_result_new_version(scenario_id, watershed_id, field_id, new_chart)
     chart = Chart.new
     chart.scenario_id = scenario_id
-  chart.watershed_id = watershed_id
-    chart.field_id = field_id
+    chart.watershed_id = watershed_id
+    #chart.field_id = field_id
     new_chart.elements.each do |p|
       case p.name
-        when "value"
-          chart.value = p.text
-        when "month_year"
-          chart.month_year = p.text
-        when "description_id"
-          chart.description_id = p.text
-    when "soil_id"
-        chart.soil_id = p.text
-      when "crop_id"
-        chart.crop_id = p.text
+      when "name"
+        result.name
+      when "sub1" 
+        result.sub1
+      when "year" 
+        result.year
+      when "yldg" 
+        result.yldg
+      when "yldf" 
+        result.yldf
+      when "ws" 
+        result.ws
+      when "ns" 
+        result.ns
+      when "ps" 
+        result.ps
+      when "ts" 
+       result.ts
       end # end case
     end # end each
     if chart.save
       return "OK"
     else
-      return "chart could not be saved"
+      return "crop result could not be saved"
     end
   end
 
@@ -3469,7 +3501,7 @@ class ProjectsController < ApplicationController
           end
         when "charts"
           p.elements.each do |r|
-            msg = upload_chart_new_version(0, watershed.id, 0, r)
+            msg = upload_crop_result_new_version(0, watershed.id, 0, r)
             if msg != "OK"
               return msg
             end
