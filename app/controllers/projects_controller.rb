@@ -678,7 +678,6 @@ class ProjectsController < ApplicationController
           save_climate_information(xml, climate)
         end # end climates.each
       } # end xml.climates
-      debugger
       subareas = Subarea.where(:bmp_id => bmp.id)
       xml.subareas {
         subareas.each do |subarea|
