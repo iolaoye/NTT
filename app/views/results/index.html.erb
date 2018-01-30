@@ -54,7 +54,7 @@
 							<% end %>
 						    <!-- Download CSV/Excel button -->
 						    <%# todo un comment this when the excel program that dowenload the excel files is fixed by Brandon. %>
-						    <%#= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
+						    <%= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
 						<% end %>
 					</td>
 						<tr><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
@@ -692,7 +692,7 @@
 								<% end %>
 								<% if @scenario3 != "0" && @scenario3 != "" then %>
 									<td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.0f", cr["ps3"]) + " (" + sprintf("%8.1f", cr["ps3"] * 100.0 / crop.dyam.round(1)) + "%)" %></td>
-									<td class=<%= if cr["ps3"]-cr["ps1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", cr["ps3"]-cr["ps1"]) + " (" + sprintf("%8.2f", (cr["ps3"]-cr["ps1"]) *100/ cr["ns1"]) + ")" unless cr["ps1"]==0 %></td>
+									<td class=<%= if cr["ps3"]-cr["ps1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", cr["ps3"]-cr["ps1"]) + " (" + sprintf("%8.2f", (cr["ps3"]-cr["ps1"]) *100/ cr["ps1"]) + ")" unless cr["ps1"]==0 %></td>
 								<% end %>
 							</tr>
 							<% i += 1 %>
