@@ -129,10 +129,12 @@ $(document).ready ->
   update_categories()
 
   $("#result1_scenario_id").change ->
+    show_crops()
     #update_crops()
     set_buttons(false)
 
   $("#result2_scenario_id").change ->
+    show_crops()
     #update_crops()
     set_buttons(false)
 
@@ -140,6 +142,7 @@ $(document).ready ->
     update_categories()
 
   $("#result3_scenario_id").change ->
+    show_crops()
     #update_crops()
     if $("#result2_scenario_id").val() == ""
       alert('Please select a 2nd scenario.')
