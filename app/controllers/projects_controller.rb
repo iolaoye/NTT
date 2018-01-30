@@ -520,7 +520,7 @@ class ProjectsController < ApplicationController
         end # end operation.each
       } #end xml.operations
 
-      bmps = Bmp.where(:scenario_id => scenario.id)
+      bmps = scenario.bmps
       xml.bmps {
         bmps.each do |bmp|
           save_bmp_information(xml, bmp)
@@ -678,15 +678,14 @@ class ProjectsController < ApplicationController
           save_climate_information(xml, climate)
         end # end climates.each
       } # end xml.climates
-
-      subareas = Subarea.where(:bmp_id => bmp.bmp_id)
+      subareas = Subarea.where(:bmp_id => bmp.id)
       xml.subareas {
         subareas.each do |subarea|
           save_subarea_information(xml, subarea)
         end # end subareas.each
       } # end xml.subareas
 
-      soil_operations = SoilOperation.where(:bmp_id => bmp.bmp_id)
+      soil_operations = SoilOperation.where(:bmp_id => bmp.id)
       xml.soil_operations {
         soil_operations.each do |so|
           save_soil_operation_information(xml, so)
@@ -1682,7 +1681,7 @@ class ProjectsController < ApplicationController
               return msg
             end
           end
-        when "charts"
+        when "crop_results"
           p.elements.each do |r|
             msg = upload_crop_result_new_version(scenario.id, 0, field_id, r)
             if msg != "OK"
@@ -2749,34 +2748,34 @@ class ProjectsController < ApplicationController
     end # end node each
   end
 
-  def upload_crop_result_new_version(scenario_id, watershed_id, field_id, new_chart)
-    chart = Chart.new
-    chart.scenario_id = scenario_id
-    chart.watershed_id = watershed_id
+  def upload_crop_result_new_version(scenario_id, watershed_id, field_id, new_crop)
+    result = CropResult.new
+    result.scenario_id = scenario_id
+    result.watershed_id = watershed_id
     #chart.field_id = field_id
-    new_chart.elements.each do |p|
+    new_crop.elements.each do |p|
       case p.name
       when "name"
-        result.name
+        result.name = p.text
       when "sub1" 
-        result.sub1
+        result.sub1 = p.text
       when "year" 
-        result.year
+        result.year = p.text
       when "yldg" 
-        result.yldg
+        result.yldg = p.text
       when "yldf" 
-        result.yldf
+        result.yldf = p.text
       when "ws" 
-        result.ws
+        result.ws = p.text
       when "ns" 
-        result.ns
+        result.ns = p.text
       when "ps" 
-        result.ps
+        result.ps = p.text
       when "ts" 
-       result.ts
+       result.ts = p.text
       end # end case
     end # end each
-    if chart.save
+    if result.save
       return "OK"
     else
       return "crop result could not be saved"
@@ -3478,34 +3477,34 @@ class ProjectsController < ApplicationController
     watershed = Watershed.new
     node.elements.each do |p|
       case p.name
-        when "name"
-          watershed.name = p.text
-      if !watershed.save then
-        return "Watershed could not be saved"
-          end
+      when "name"
+        watershed.name = p.text
+        if !watershed.save then
+          return "Watershed could not be saved"
+        end
       when "last_simulation"
-      watershed.last_simulation = p.text
-      if !watershed.save then
-        return "Watershed could not be saved"
+        watershed.last_simulation = p.text
+        if !watershed.save then
+          return "Watershed could not be saved"
+        end
+      when "watershed_scenarios"
+        p.elements.each do |node|
+          msg = upload_watershed_scenario_information_new_version(node, watershed.id)
+        end
+      when "results"
+        p.elements.each do |r|
+          msg = upload_result_new_version(0, watershed.id, 0, r)
+          if msg != "OK"
+            return msg
           end
-        when "watershed_scenarios"
-            p.elements.each do |node|
-              msg = upload_watershed_scenario_information_new_version(node, watershed.id)
-            end
-    when "results"
-          p.elements.each do |r|
-            msg = upload_result_new_version(0, watershed.id, 0, r)
-            if msg != "OK"
-              return msg
-            end
+        end
+      when "crop_results"
+        p.elements.each do |r|
+          msg = upload_crop_result_new_version(0, watershed.id, 0, r)
+          if msg != "OK"
+            return msg
           end
-        when "charts"
-          p.elements.each do |r|
-            msg = upload_crop_result_new_version(0, watershed.id, 0, r)
-            if msg != "OK"
-              return msg
-            end
-          end
+        end
       end # end case
     end # end each
   if watershed.save
