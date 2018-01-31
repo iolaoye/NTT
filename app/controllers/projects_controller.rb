@@ -2394,7 +2394,7 @@ class ProjectsController < ApplicationController
       when "Crops"
         #upload_crop_soil_result_info(p, field_id, soil_id, scenario_id)
       when "Soil"
-        #upload_soil_result_info(p, field_id, soil_id, scenario_id)
+        upload_soil_result_info(p, field_id, soil_id, scenario_id)
       when "lastSimulation"
         sc = Scenario.find(scenario_id)
         sc.last_simulation = p.text
@@ -2462,15 +2462,15 @@ class ProjectsController < ApplicationController
     #tile drain flow is duplicated in the old version NTTG2 VB. So is needed to control that the second one is not used
     tile_drain = false
     total_n = 0
-    total_n_ci = 0
+    #total_n_ci = 0
     total_p = 0
-    total_p_ci = 0
+    #total_p_ci = 0
     total_runoff = 0
-    total_runoff_ci = 0
+    #total_runoff_ci = 0
     total_other_water = 0
-    total_other_water_ci = 0
+    #total_other_water_ci = 0
     total_sediment = 0
-    total_sediment_ci = 0
+    #total_sediment_ci = 0
     node.elements.each do |p|
       case p.name
         when "OrgN"
@@ -2637,9 +2637,9 @@ class ProjectsController < ApplicationController
   end
 
   def add_result(field_id, soil_id, scenario_id, p_text, description_id)
-    result = Result.new
-    result.field_id = field_id
-    result.soil_id = soil_id
+    result = AnnualResult.new
+    #result.field_id = field_id
+    #result.soil_id = soil_id
     result.scenario_id = scenario_id
     result.value = p_text
     result.description_id = description_id
