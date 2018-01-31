@@ -242,8 +242,8 @@ class OperationsController < ApplicationController
       end
       fert_type = Fertilizer.find(params[:operation][:subtype_id])
       params[:operation][:no3_n] = total_n * fert_type.qn * 100
-      params[:operation][:org_n] = total_n * fert_type.qp * 100
-      params[:operation][:po4_p] = total_p * fert_type.yn * 100
+      params[:operation][:org_n] = total_n * fert_type.yn * 100
+      params[:operation][:po4_p] = total_p * fert_type.qp * 100
       params[:operation][:org_p] = total_p * fert_type.yp * 100
     end 
     #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
