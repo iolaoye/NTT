@@ -91,7 +91,7 @@ module SimulationsHelper
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
     url = URI.parse(URL_NTT)
     http = Net::HTTP.new(url.host,url.port)
-    http.read_timeout = 120
+    http.read_timeout = 2000   #seconds
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     req = Net::HTTP::Post.new(url.path)
     req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => rotational_grazing})
