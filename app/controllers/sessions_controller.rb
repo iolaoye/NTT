@@ -35,5 +35,6 @@ class SessionsController < ApplicationController
     redirect_to root_path, :notice => t('general.log_out') # redirect
     session[:user_id] = ""
     session[:status] = "" # store user id in session
+    sign_out
   end
 end
