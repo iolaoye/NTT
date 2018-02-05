@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 				@user.errors.full_messages.each do |error|
 					@errors.push(error)
 				end
-				flash[:error] = @errors
+				flash[:errors] = @errors
 				format.html { redirect_to root_path }
 				#format.json { render json: @errors, status: :unprocessable_entity }
 			end
