@@ -7,8 +7,8 @@
 <% @results3 = @field.scenarios.find(@result_scenario1).annual_results unless @result_scenario3 == "" %>
 
 <div class="group_header first_group"><%=t('pdf.annual_results')%></div>
-<table style="border:thin solid black; border-radius: 3px; background: #204060" class="table_fill">
-    <thead style="color: white">
+<table style="border:thin solid black; border-radius: 3px; background: #204060;" class="table_fill">
+    <thead style="color: white; display: table-row-group">
         <tr class='gvHeaderStyle' >
             <th></th>
             <% if session[:simulation] == 'scenario' %>
