@@ -1,5 +1,6 @@
 
 class WatershedsController < ApplicationController
+  include ProjectsHelper
   include SimulationsHelper
   include ApplicationHelper
 
@@ -172,8 +173,8 @@ class WatershedsController < ApplicationController
 				print_array_to_file(@opcs_list_file, "OPCS.dat")
 				if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
 				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
-				if !msg.include?("Error") then 
-					msg = read_apex_results(msg) 
+				if !msg.include?("Error") then
+					msg = read_apex_results(msg)
 					@watershed.last_simulation = Time.now
 				end
 				@watershed.save
@@ -330,7 +331,7 @@ class WatershedsController < ApplicationController
   	@project = Project.find(params[:project_id])
     download_apex_files()
   end
-  
+
   private
 
   # Use this method to whitelist the permissible parameters. Example:
@@ -340,4 +341,11 @@ class WatershedsController < ApplicationController
     params.require(:watershed).permit(:name, :location_id, :id, :created_at, :updated_at)
   end
 
+  ####################### Copy Watershed ########################
+  def copy_watershed
+    msg = duplicate_watershed(params[:id], params[:location_id])
+      @watersheds = Watershed.where(:location_id => @location.id)
+      add_breadcrumb 'Watershed'
+    render "index"
+  end
 end
