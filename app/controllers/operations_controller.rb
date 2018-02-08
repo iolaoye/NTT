@@ -10,7 +10,7 @@ class OperationsController < ApplicationController
     @operations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id")
     if params[:bmp_ccr] != nil then
       add_cover_crop
-    end 
+    end
     crop_schedule()
     add_breadcrumb t('menu.operations')
     @rotations = @scenario.operations.where(:activity_id => 1).reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
@@ -43,7 +43,7 @@ class OperationsController < ApplicationController
     operation.rotation = params[:bmp_ccr][:year]
     if operation.save
       add_soil_operation(operation)
-    end  
+    end
   end
 ################################  SHOW  #################################
 # GET /operations/1
@@ -101,7 +101,7 @@ class OperationsController < ApplicationController
     if @operation.activity_id == 1 && @operation.subtype_id == 1 then
       @crops = Crop.where("type1 like '%CC%'")
     else
-      @crops 
+      @crops
       @crops = Crop.load_crops(Location.find_by_project_id(@project.id).state_id)
     end
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
@@ -124,7 +124,7 @@ class OperationsController < ApplicationController
         if params[:operation][:type_id] == "2" #solid manure
           total_n = (params[:op][:total_n_con].to_f/2000)/((100-params[:op][:moisture].to_f)/100)
           total_p = ((params[:op][:total_p_con].to_f*0.44)/2000)/((100-params[:op][:moisture].to_f)/100)
-        elsif params[:operation][:type_id] == "3" #liquid manure 
+        elsif params[:operation][:type_id] == "3" #liquid manure
           total_n = (params[:op][:total_n_con].to_f*0.011982)/(100-params[:op][:moisture].to_f)
           total_p = (params[:op][:total_p_con].to_f*0.44*0.011982)/(100-params[:op][:moisture].to_f)
         end
@@ -136,10 +136,10 @@ class OperationsController < ApplicationController
       end
       operation = Operation.new(operation_params)
       if operation.activity_id == 2 && operation.type_id == 1 && operation.po4_p > 0 && operation.po4_p < 100 then
-        operaiton.po4_p *= PO4_TO_P2O5 
+        operation.po4_p *= PO4_TO_P2O5
       end
       #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
-        #params[:operation][:depth] = params[:operation][:depth].to_f / 100 
+        #params[:operation][:depth] = params[:operation][:depth].to_f / 100
       #end
       operation.scenario_id = params[:scenario_id]
       if operation.activity_id == 9 then
@@ -169,7 +169,7 @@ class OperationsController < ApplicationController
         if operation.activity_id == 7 || operation.activity_id == 9 then
           operation_id = operation.id
           operation1 = Operation.new(operation_params)
-          if operation.activity_id == 7 then 
+          if operation.activity_id == 7 then
             operation1.activity_id = 8
           else
             operation1.activity_id = 10
@@ -187,9 +187,9 @@ class OperationsController < ApplicationController
           operation1.org_p = 0
           operation1.nh3 = 0
           operation1.subtype_id = 0
-          operation1.rotation = params[:operation][:rotation] 
+          operation1.rotation = params[:operation][:rotation]
           operation1.save
-          if operation1.activity_id == 8 then 
+          if operation1.activity_id == 8 then
             msg = add_soil_operation(operation1)
             if msg.eql?("OK")
               soil_op_saved = true
@@ -236,7 +236,7 @@ class OperationsController < ApplicationController
       if params[:operation][:type_id] == "2" #solid manure
         total_n = (params[:operation][:org_c].to_f/2000)/((100-params[:operation][:moisture].to_f)/100)
         total_p = ((params[:operation][:nh4_n].to_f*0.44)/2000)/((100-params[:operation][:moisture].to_f)/100)
-      elsif params[:operation][:type_id] == "3" #liquid manure 
+      elsif params[:operation][:type_id] == "3" #liquid manure
         total_n = (params[:operation][:org_c].to_f*0.11982)/(100-params[:operation][:moisture].to_f)
         total_p = (params[:operation][:nh4_n].to_f*0.44*0.11982)/(100-params[:operation][:moisture].to_f)
       end
@@ -245,9 +245,9 @@ class OperationsController < ApplicationController
       params[:operation][:org_n] = total_n * fert_type.yn * 100
       params[:operation][:po4_p] = total_p * fert_type.qp * 100
       params[:operation][:org_p] = total_p * fert_type.yp * 100
-    end 
+    end
     #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
-      #params[:operation][:depth] = params[:operation][:depth].to_f / 100 
+      #params[:operation][:depth] = params[:operation][:depth].to_f / 100
     #end
     @operation = Operation.find(params[:id])
     @crops = Crop.load_crops(@project.location.state_id)
@@ -564,7 +564,7 @@ class OperationsController < ApplicationController
       operation.type_id = event.apex_operation
       operation.depth = event.apex_opv2
       operation.scenario_id = @scenario.id
-      operation.rotation = operation.year 
+      operation.rotation = operation.year
       if operation.save
         msg = add_soil_operation(operation)
         notice = t('scenario.operation') + " " + t('general.created')
@@ -638,7 +638,7 @@ class OperationsController < ApplicationController
           if operation.activity_id == 1 && params[:tillage][:id]=="" && @crop.lu_number != 28 then  #if no-till is selected the planting code change to 139.
             operation.type_id = 139
           else
-            operation.type_id = @crop.planting_code            
+            operation.type_id = @crop.planting_code
           end
           operation.amount = plant_population
         when 2, 7  #fertilizer and grazing

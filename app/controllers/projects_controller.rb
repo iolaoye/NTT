@@ -1044,9 +1044,9 @@ class ProjectsController < ApplicationController
             else
               return "location could not be saved " + msg
             end  # end location.save
-          when "watershed"
+          when "watersheds"
             p.elements.each do |ws|
-              msg = upload_watershed_information_new_version(ws)
+              watershed_id = upload_watershed_information_new_version(location.id, ws)
             end
         end # end case p.name
       end # end node.elements do
@@ -2757,21 +2757,21 @@ class ProjectsController < ApplicationController
       case p.name
       when "name"
         result.name = p.text
-      when "sub1" 
+      when "sub1"
         result.sub1 = p.text
-      when "year" 
+      when "year"
         result.year = p.text
-      when "yldg" 
+      when "yldg"
         result.yldg = p.text
-      when "yldf" 
+      when "yldf"
         result.yldf = p.text
-      when "ws" 
+      when "ws"
         result.ws = p.text
-      when "ns" 
+      when "ns"
         result.ns = p.text
-      when "ps" 
+      when "ps"
         result.ps = p.text
-      when "ts" 
+      when "ts"
        result.ts = p.text
       end # end case
     end # end each
@@ -3473,8 +3473,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def upload_watershed_information_new_version(node)
+  def upload_watershed_information_new_version(location_id, node)
     watershed = Watershed.new
+    watershed.location_id = location_id
     node.elements.each do |p|
       case p.name
       when "name"

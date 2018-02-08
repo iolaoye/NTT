@@ -41,7 +41,7 @@ module ProjectsHelper
 		new_result.scenario_id = @new_scenario_id
 		#if result.soil_id > 0 then
 			#new_result.soil_id = Soil.find_by_soil_id_old(result.soil_id).id
-		#end 
+		#end
 		if new_result.save
 			"OK"
 		else
@@ -142,6 +142,9 @@ module ProjectsHelper
 		@project.location.fields.each do |f|
 			duplicate_field(f.id, new_location.id)
 		end
+    @project.location.watersheds.each do |w|
+      duplicate_watershed(w.id, new_location.id)
+    end
 			"OK"
 		else
 			"Error Saving location"
@@ -154,18 +157,18 @@ module ProjectsHelper
 	@project.apex_controls.each do |apex_control|
 		new_apex_control = apex_control.dup
 		new_apex_control.project_id = new_project_id
-		if !new_apex_control.save then return "Error copying control values" end 
+		if !new_apex_control.save then return "Error copying control values" end
 	end  # end apex_controls.each
 	return "OK"
   end   # end duplicate apex_control
 
   ######################### Duplicate a apex_parameter #################################################
   def duplicate_apex_parameter(new_project_id)
-	#2. copy apexparameter 
+	#2. copy apexparameter
 	@project.apex_parameters.each do |apex_parameter|
 		new_apex_parameter = apex_parameter.dup
 		new_apex_parameter.project_id = new_project_id
-		if !new_apex_parameter.save then return "Error copying parameters values" end 
+		if !new_apex_parameter.save then return "Error copying parameters values" end
 	end  # end apex_parameters.each
 	return "OK"
   end   # end duplicate apex_parameter
@@ -176,8 +179,8 @@ module ProjectsHelper
 	#1. find project to copy
 	@project = Project.find(params[:id])
 	#2. copy project to new project
-  	new_project = @project.dup  
-	new_project.name = @project.name + " copy" 
+  	new_project = @project.dup
+	new_project.name = @project.name + " copy"
 	new_project.user_id = session[:user_id]
 	if new_project.save
 		duplicate_location(new_project.id)
@@ -269,7 +272,7 @@ module ProjectsHelper
 			return "Error Saving subarea"
 		end
 	end   # end subareas.each
-  end 
+  end
 
   ######################### Duplicate a Subareas by scenario/bmp #################################################
   def duplicate_subareas_by_bmp(bmp_id, new_bmp_id)
@@ -282,21 +285,21 @@ module ProjectsHelper
 			return "Error Saving subarea by bmp"
 		end
 	end   # end subareas.each
-  end 
+  end
 
   ######################### Duplicate a Operations #################################################
   def duplicate_operations(scenario_id)
 	operations = Operation.where(:scenario_id => scenario_id)
 	operations.each do |operation|
 		if operation.activity_id == 8 || operation.activity_id == 10 then # if stop grazing operation is duplicated differently
-			next 
+			next
 		end
   		new = operation.dup
 		new.scenario_id = @new_scenario_id
 		if !new.save
 			return "Error Saving operation"
 		else
-			duplicate_soil_operations_by_scenarios(operation.id, new.id) 
+			duplicate_soil_operations_by_scenarios(operation.id, new.id)
 			if operation.activity_id == 7 || operation.activity_id == 9 then #continuous and rotational grazing
 				stop_operation = operations.find_by_type_id(operation.id)
 				if stop_operation != nil then #create the stop grazing operation
@@ -310,11 +313,11 @@ module ProjectsHelper
 							duplicate_soil_operations_by_scenarios(stop_operation.id, new_stop_graizing.id)
 						end
 					end
-				end 
-			end			
+				end
+			end
 		end
 	end   # end operation.each
-  end 
+  end
 
   ######################### Duplicate a SoilOperation by operation/soil #################################################
   def duplicate_soil_operations_by_scenarios(operation_id, new_operation_id)
@@ -330,12 +333,12 @@ module ProjectsHelper
 			return "Error Saving soil operation"
 		end
 	end
-  end 
+  end
 
   ######################### Duplicate a SoilOperation by bmp #################################################
   def duplicate_soil_operation_by_bmp(bmp_id, new_bmp_id)
 	soil_operations = SoilOperation.where(:bmp_id => bmp_id)
-	soil_operations.each do |soil_operation| 
+	soil_operations.each do |soil_operation|
   		new = soil_operation.dup
 		new.scenario_id = @new_scenario_id
 		new.bmp_id = new_bmp_id
@@ -343,7 +346,7 @@ module ProjectsHelper
 			return "Error Saving soil operation by Bmp"
 		end
 	end
-  end 
+  end
 
   ######################### Duplicate a Bmps #################################################
   def duplicate_bmp(bmp)
@@ -355,7 +358,7 @@ module ProjectsHelper
 		duplicate_soil_operation_by_bmp(bmp.id, new.id)
 		duplicate_subareas_by_bmp(bmp.id, new.id)
 	end
-  end 
+  end
 
   ######################### Duplicate a Scenario  #################################################
   def duplicate_scenario(scenario_id, name, new_field_id)
@@ -365,9 +368,9 @@ module ProjectsHelper
 	new_scenario.name = scenario.name + name
 	new_scenario.field_id = new_field_id
 	#new_scenario.last_simulation = ""
-	if new_scenario.save
-		@new_scenario_id = new_scenario.id
-		#3. Copy subareas info by scenario
+  if new_scenario.save
+    @new_scenario_id = new_scenario.id
+    #3. Copy subareas info by scenario
 		duplicate_subareas_by_scenario(scenario.id)
 		#4. Copy operations info
 		duplicate_operations(scenario.id)
@@ -389,4 +392,28 @@ module ProjectsHelper
 	end   # end if scenario saved
   	return "OK"
   end
+
+  ####################### Duplicate Watershed Scenarios ######################
+  def duplicate_watershed_scenarios(scenarios_id, new_watershed_id)
+    scenarios = WatershedScenario.find(scenarios_id)
+    new_scenarios = scenarios.dup
+    new_scenarios.watershed_id = new_watershed_id
+    if !new_scenarios.save
+      return "Failed to save watershed scenario"
+    end
+  end
+
+  ######################## Duplicate Watershed ################################################
+    def duplicate_watershed(watershed_id, new_location_id)
+    watershed = Watershed.find(watershed_id)
+    new_watershed = watershed.dup
+    new_watershed.location_id = new_location_id
+      if !new_watershed.save
+        return "Watershed not Saved"
+      end
+      watershed.watershed_scenarios.each do |ws|
+        duplicate_watershed_scenarios(ws.id, new_watershed.id)
+      end
+    end
+
 end
