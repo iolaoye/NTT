@@ -32,15 +32,15 @@ class ProjectsController < ApplicationController
     if params[:id] == "upload" then
       redirect_to "upload"
     end
-    @project = Project.find(params[:id])
-    @location = Location.find_by_project_id(params[:id])
+    #@project = Project.find(params[:id])
+    @location = @project.location
     session[:location_id] = @location.id
-  case true
-    when Project.find(params[:id]).version == "NTTG3_special"
+    case true
+    when @project.version == "NTTG3_special"
       redirect_to states_path()
-        when Field.where(:location_id => @location.id).count > 0 && Project.find(params[:id]).version == "NTTG3"  # load fields
+    when @location.fields.count > 0 && @project.version == "NTTG3"  # load fields
       redirect_to project_fields_path(@project)
-        else # Load map
+    else # Load map
       redirect_to project_location_path(@project, @location)
     end # end case true
   end
