@@ -1,4 +1,5 @@
 class WatershedScenariosController < ApplicationController
+  include ProjectsHelper
 ################################ INDEX #################################
   # GET /watershed_scenarios
   # GET /watershed_scenarios.json
@@ -81,7 +82,7 @@ class WatershedScenariosController < ApplicationController
     end
   end
 
-  ################################# DELETE ################################ 
+  ################################# DELETE ################################
   # DELETE /watershed_scenarios/1
   # DELETE /watershed_scenarios/1.json
   def destroy

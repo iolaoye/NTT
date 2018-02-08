@@ -12,8 +12,8 @@ class PasswordResetsController < ApplicationController
       flash[:notice] = "Email sent with password reset instructions"
       redirect_to welcomes_path
     else
-      flash.now[:error] = "Email address not found"
-      render "new"
+      flash[:error] = "Email address not found"
+      redirect_to welcomes_path
     end
   end
 
@@ -23,6 +23,9 @@ class PasswordResetsController < ApplicationController
   def update
     if (params[:user][:password].empty? || params[:user][:password_confirmation].empty?)
       flash[:error] = "Password can't be empty"
+      render 'edit'
+    elsif (!params[:user][:password].eql?(params[:user][:password_confirmation]))
+      flash[:error] = "Password does not match the confirmation password"
       render 'edit'
     elsif @user.update_attributes(user_params)
       session[:user_id] = @user.id
