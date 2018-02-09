@@ -29,7 +29,7 @@
             <% if (params[:locale] == "en") %>
                 <%= f.label :way, way.way_name %>
             <% else %>
-                <%= f.label :way, way.spanish_name %>
+                <%= f.label :way, way.spanish_name.gsub('Informacion', 'Información').gsub('especificas', 'específicas') %>
             <% end %>
           </div>
       <% end %>

@@ -502,7 +502,7 @@ en:
     years_of_simulation: Simulation period
     update: 'Update Weather'
     legend: Select the kind of weather you want to use
-    choose_file_lenged: Choose the file to Upload
+    choose_file_lenged: "Choose the file to Upload"
     enter_coordinates: Enter Coordinates
     initial_year: initial year
     final_year: final year

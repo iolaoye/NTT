@@ -491,6 +491,7 @@ es:
     about_ntt: 'Acerca de NTT'
     help: Ayuda
     Language: Idioma
+    documentations: Documentación
   languages:
     english: Inglés
     spanish: Español
@@ -511,7 +512,7 @@ es:
     final_simulation_error: no debe ser mayor que el último año de información meteorológica. El valor máximo es
     update_simulation: Actualizar Período de Simulación
   soil:
-    test: P en pruueba del suelo
+    test: P en prueba del suelo
     layers: Capas
     soil: Suelo
     layer: Capa
@@ -524,7 +525,7 @@ es:
     slope: Inclinación
     percentage: Porcentaje
     drainage: Drenaje
-    depth: 'Profundidad (pulg.)'
+    depth: 'Profundidad (in.)'
     soilp: 'P en el Suelo (ppm)'
     bulk_density: 'Densidad de la masa (Mg/m3)'
     sand: 'Arena (%)'
@@ -1934,7 +1935,7 @@ es:
                 <ol>
                     <li>Optar por utilizar la información meteorológica Utilizando datos <strong>PRISM</strong></li>
                     <li>Usar su propio archivo del Clima</li>
-                    <li>Usando el clima de coordenadas especificas (USA only)</li>
+                    <li>Usando el clima de coordenadas especificas (solamente USA)</li>
                 </ol>
                 Para usar su propio archivo del Clima, el usuario tiene que tener un archivo de texto con el siguiente formato.<br>
                 Todas las columnas deben estar separados por al menos un espacio físico (Por favor, no use un tab para insertar el espacio)
