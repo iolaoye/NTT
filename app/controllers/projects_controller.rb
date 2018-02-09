@@ -369,7 +369,7 @@ class ProjectsController < ApplicationController
   def save_field_information(xml, field)
     xml.field {
       #field information
-    xml.id field.id
+      xml.id field.id
       xml.field_name field.field_name
       xml.field_area field.field_area
       xml.field_average_slope field.field_average_slope
@@ -893,7 +893,7 @@ class ProjectsController < ApplicationController
   def save_watershed_scenario_information(xml, watershed_scenario)
     xml.watershed_scenario {
       xml.field_id watershed_scenario.field_id
-      xml.scenario_id watershed_scenario.field_id
+      xml.scenario_id watershed_scenario.scenario_id
     }
   end
 
@@ -1037,6 +1037,9 @@ class ProjectsController < ApplicationController
             location.coordinates = p.text
           when "fields"
             if location.save
+              #create an array of hashes to hold the old field id and the new field id to use in the watershed download
+              @field_ids = Array.new
+              @scenario_ids = Array.new
               session[:location_id] = location.id
               p.elements.each do |f|
                 msg = upload_field_new_version(f)
@@ -1115,49 +1118,56 @@ class ProjectsController < ApplicationController
   end
 
   def upload_field_new_version(node)
+    field_id = Hash.new
     field = Field.new
+    old_field_id = 0
     field.location_id = session[:location_id]
     node.elements.each do |p|
       case p.name
-        when "field_name"
-          field.field_name = p.text
-        when "field_area"
-          field.field_area = p.text
-        when "field_average_slope"
-          field.field_average_slope = p.text
-        when "field_type"
-          field.field_type = p.text
-        when "coordinates"
-          field.coordinates = p.text
-          if field.save! then
-            session[:field_id] = field.id
-          else
-            return "field could not be saved"
-          end
-        when "weather"
-          msg = upload_weather_new_version(p, field.id)
+      when "id"
+        old_field_id = p.text
+      when "field_name"
+        field.field_name = p.text
+      when "field_area"
+        field.field_area = p.text
+      when "field_average_slope"
+        field.field_average_slope = p.text
+      when "field_type"
+        field.field_type = p.text
+      when "coordinates"
+        field.coordinates = p.text
+        if field.save! then
+          session[:field_id] = field.id
+          field_id[old_field_id] = field.id
+          @field_ids.push(field_id)
+        else
+          return "field could not be saved"
+        end
+      when "weather"
+        msg = upload_weather_new_version(p, field.id)
+        if msg != "OK"
+          return msg
+        end
+      when "site"
+        msg = upload_site_new_version(p, field.id)
+        if msg != "OK"
+          return msg
+        end
+      when "soils"
+        p.elements.each do |f|
+          msg = upload_soil_new_version(field.id, f)
           if msg != "OK"
             return msg
           end
-        when "site"
-          msg = upload_site_new_version(p, field.id)
-          if msg != "OK"
-            return msg
+        end
+      when "scenarios"
+        #create and array and hash to have the new and the old scenario id to use in watersheds.
+        p.elements.each do |f|
+          scenario_id = upload_scenario_new_version(field.id, f)
+          if scenario_id == nil then
+            return "scenario could not be saved"
           end
-        when "soils"
-          p.elements.each do |f|
-            msg = upload_soil_new_version(field.id, f)
-            if msg != "OK"
-              return msg
-            end
-          end
-        when "scenarios"
-          p.elements.each do |f|
-            scenario_id = upload_scenario_new_version(field.id, f)
-            if scenario_id == nil then
-              return "scenario could not be saved"
-            end
-          end
+        end
       end
     end
     return "OK"
@@ -1646,60 +1656,66 @@ class ProjectsController < ApplicationController
 
   def upload_scenario_new_version(field_id, new_scenario)
     msg = "OK"
+    scenario_id = Hash.new
     scenario = Scenario.new
     scenario.field_id = field_id
+    old_scenario_id = 0
     new_scenario.elements.each do |p|
       case p.name
-        when "name"
-          scenario.name = p.text
+      when "id"
+        old_scenario_id = p.text
+      when "name"
+        scenario.name = p.text
         if !scenario.save then
-        return "scenario could not be saved"
-      end
-    when "last_simulation"
-      scenario.last_simulation = p.text
-      if !scenario.save then
-        return "scenario could not be saved"
-      end
-        when "operations"
-          p.elements.each do |o|
-            msg = upload_operation_new_version(scenario.id, o)
-            if msg != "OK"
-              return msg
-            end
+          return "scenario could not be saved"
+        end
+      when "last_simulation"
+        scenario.last_simulation = p.text
+        if !scenario.save then
+          return "scenario could not be saved"
+        end
+      when "operations"
+        p.elements.each do |o|
+          msg = upload_operation_new_version(scenario.id, o)
+          if msg != "OK"
+            return msg
           end
-        when "bmps"
-          p.elements.each do |b|
-            msg = upload_bmp_info_new_version(scenario.id, b)
-            if msg != "OK"
-              return msg
-            end
+        end
+      when "bmps"
+        p.elements.each do |b|
+          msg = upload_bmp_info_new_version(scenario.id, b)
+          if msg != "OK"
+            return msg
           end
-        when "results"
-          p.elements.each do |r|
-            msg = upload_result_new_version(scenario.id, 0, field_id, r)
-            if msg != "OK"
-              return msg
-            end
+        end
+      when "results"
+        p.elements.each do |r|
+          msg = upload_result_new_version(scenario.id, 0, field_id, r)
+          if msg != "OK"
+            return msg
           end
-        when "crop_results"
-          p.elements.each do |r|
-            msg = upload_crop_result_new_version(scenario.id, 0, field_id, r)
-            if msg != "OK"
-              return msg
-            end
+        end
+      when "crop_results"
+        p.elements.each do |r|
+          msg = upload_crop_result_new_version(scenario.id, 0, field_id, r)
+          if msg != "OK"
+            return msg
           end
-        when "subareas"
-          p.elements.each do |sa|
-            msg = upload_subarea_new_version(0, scenario.id, sa)
-            if msg != "OK"
-              return msg
-            end
+        end
+      when "subareas"
+        p.elements.each do |sa|
+          msg = upload_subarea_new_version(0, scenario.id, sa)
+          if msg != "OK"
+            return msg
           end
+        end
       end
     end
     if !scenario.save then
       return "scenario could not be saved"
     end
+    scenario_id[old_scenario_id] = scenario.id
+    @scenario_ids.push(scenario_id)
     return msg
   end
 
@@ -3508,12 +3524,12 @@ class ProjectsController < ApplicationController
         end
       end # end case
     end # end each
-  if watershed.save
-      session[:watershed_id] = watershed.id
-    return "OK"
-  else
-    return "Watershed could not be saved"
-  end
+    if watershed.save
+        session[:watershed_id] = watershed.id
+      return "OK"
+    else
+      return "Watershed could not be saved"
+    end
   end
 
   def upload_watershed_scenario_information_new_version(node, watershed_id)
@@ -3522,10 +3538,25 @@ class ProjectsController < ApplicationController
     node.elements.each do |p|
       case p.name
         when "field_id"
-          watershed_scenario.field_id = p.text
+          @field_ids.each do |field_id|
+            if field_id.has_key?(p.text) then
+              watershed_scenario.field_id = field_id.fetch(p.text)
+            end
+          end
+          #watershed_scenario.field_id = p.text
         when "scenario_id"
-          watershed_scenario.scenario_id = p.text
+          @scenario_ids.each do |scenario_id|
+            if scenario_id.has_key?(p.text) then
+              watershed_scenario.scenario_id = scenario_id.fetch(p.text)
+            end
+          end
+          #watershed_scenario.scenario_id = p.text
       end # end case
     end # end each element
+    if watershed_scenario.save
+      return "OK"
+    else
+      return "watershed_scenarios could not be saved"
+    end
   end
 end
