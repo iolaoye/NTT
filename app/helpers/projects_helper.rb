@@ -99,6 +99,9 @@ module ProjectsHelper
 	new_field = field.dup
 	new_field.location_id = new_location_id
 	if new_field.save
+    field_id = Hash.new(0)
+    field_id = field.id
+    @field_ids.push(field_id)
 		#duplicate site
 		new_site = field.site.dup
 		new_site.field_id = new_field.id
@@ -139,6 +142,8 @@ module ProjectsHelper
   	new_location = @project.location.dup
 	new_location.project_id = new_project_id
 	if new_location.save
+    @field_ids = Array.new
+    @scenario_ids = Array.new
 		@project.location.fields.each do |f|
 			duplicate_field(f.id, new_location.id)
 		end
@@ -369,6 +374,9 @@ module ProjectsHelper
 	new_scenario.field_id = new_field_id
 	#new_scenario.last_simulation = ""
   if new_scenario.save
+    scenario_id = Hash.new(0)
+    scenario_id = scenario.id
+    @scenario_ids.push(scenario_id)
     @new_scenario_id = new_scenario.id
     #3. Copy subareas info by scenario
 		duplicate_subareas_by_scenario(scenario.id)
@@ -398,6 +406,24 @@ module ProjectsHelper
     scenarios = WatershedScenario.find(scenarios_id)
     new_scenarios = scenarios.dup
     new_scenarios.watershed_id = new_watershed_id
+    node.elements.each do |p|
+      case p.name
+        when "field_id"
+          @field_ids.each do |field_id|
+            if field_id.has_key?(p.text) then
+              watershed_scenario.field_id = field_id.fetch(p.text)
+            end
+          end
+          #watershed_scenario.field_id = p.text
+        when "scenario_id"
+          @scenario_ids.each do |scenario_id|
+            if scenario_id.has_key?(p.text) then
+              watershed_scenario.scenario_id = scenario_id.fetch(p.text)
+            end
+          end
+          #watershed_scenario.scenario_id = p.text
+      end # end case
+    end # end each element
     if !new_scenarios.save
       return "Failed to save watershed scenario"
     end
