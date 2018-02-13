@@ -608,7 +608,7 @@ es:
     liming: Encalado
     start_grazing: Pasteo
     stop_grazing: Terminar Pasteo
-    seed: 'Cantidad de Siembra (seeds/ft)(opcional)'
+    seed: 'Cantidad de Siembra (semillas/ft)(opcional)'
     amount_applied: 'Cantidad Aplicada'
     add_planting: 'Añadir operación de Plantar'
     add_fertilizer: 'Añadir operación de Fertilizante'
@@ -621,7 +621,7 @@ es:
     add_start_grazing: 'Añadir operación de Pasteo'
     add_stop_grazing: 'Añadir operación de Terminar Pasteo'
     add_cover_crop: "Añadir Cultivo de Proteccion"
-    po4_note: If P2O5 please multiply by 0.4364 to convert to elemento-P
+    po4_note: Si P2O5 multiplique por 0.4364 para convertir a element-P
     planting_method: Metodo de sembrado
     manure_composition: Composición del Fertilizante (Concetración)
     planting_date: Fecha de Cultivo

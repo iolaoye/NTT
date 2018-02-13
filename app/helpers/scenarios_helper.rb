@@ -694,7 +694,7 @@ module ScenariosHelper
         		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
         		operation.save
         	end
-        	opv1 = (operation.amount * 2471 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
+        	opv1 = (operation.amount * 2247 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
         when 3
         	if operation.moisture == nil then
         		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter

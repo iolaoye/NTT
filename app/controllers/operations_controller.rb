@@ -123,10 +123,10 @@ class OperationsController < ApplicationController
       if params[:operation][:activity_id] == "2" && params[:operation][:type_id] != "1"
         if params[:operation][:type_id] == "2" #solid manure
           total_n = (params[:op][:total_n_con].to_f/2000)/((100-params[:op][:moisture].to_f)/100)
-          total_p = ((params[:op][:total_p_con].to_f*0.44)/2000)/((100-params[:op][:moisture].to_f)/100)
+          total_p = ((params[:op][:total_p_con].to_f*PO4_TO_P2O5)/2000)/((100-params[:op][:moisture].to_f)/100)
         elsif params[:operation][:type_id] == "3" #liquid manure
           total_n = (params[:op][:total_n_con].to_f*0.011982)/(100-params[:op][:moisture].to_f)
-          total_p = (params[:op][:total_p_con].to_f*0.44*0.011982)/(100-params[:op][:moisture].to_f)
+          total_p = (params[:op][:total_p_con].to_f*PO4_TO_P2O5*0.011982)/(100-params[:op][:moisture].to_f)
         end
         fert_type = Fertilizer.find(params[:operation][:subtype_id])
         params[:operation][:no3_n] = total_n * fert_type.qn * 100
@@ -235,10 +235,10 @@ class OperationsController < ApplicationController
     if params[:operation][:activity_id] == "2" && params[:operation][:type_id] != "1"
       if params[:operation][:type_id] == "2" #solid manure
         total_n = (params[:operation][:org_c].to_f/2000)/((100-params[:operation][:moisture].to_f)/100)
-        total_p = ((params[:operation][:nh4_n].to_f*0.44)/2000)/((100-params[:operation][:moisture].to_f)/100)
+        total_p = ((params[:operation][:nh4_n].to_f*PO4_TO_P2O5)/2000)/((100-params[:operation][:moisture].to_f)/100)
       elsif params[:operation][:type_id] == "3" #liquid manure
         total_n = (params[:operation][:org_c].to_f*0.11982)/(100-params[:operation][:moisture].to_f)
-        total_p = (params[:operation][:nh4_n].to_f*0.44*0.11982)/(100-params[:operation][:moisture].to_f)
+        total_p = (params[:operation][:nh4_n].to_f*PO4_TO_P2O5*0.11982)/(100-params[:operation][:moisture].to_f)
       end
       fert_type = Fertilizer.find(params[:operation][:subtype_id])
       params[:operation][:no3_n] = total_n * fert_type.qn * 100
