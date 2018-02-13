@@ -491,6 +491,7 @@ es:
     about_ntt: 'Acerca de NTT'
     help: Ayuda
     Language: Idioma
+    documentations: Documentación
   languages:
     english: Inglés
     spanish: Español
@@ -511,7 +512,7 @@ es:
     final_simulation_error: no debe ser mayor que el último año de información meteorológica. El valor máximo es
     update_simulation: Actualizar Período de Simulación
   soil:
-    test: P en pruueba del suelo
+    test: P en prueba del suelo
     layers: Capas
     soil: Suelo
     layer: Capa
@@ -524,7 +525,7 @@ es:
     slope: Inclinación
     percentage: Porcentaje
     drainage: Drenaje
-    depth: 'Profundidad (pulg.)'
+    depth: 'Profundidad (in.)'
     soilp: 'P en el Suelo (ppm)'
     bulk_density: 'Densidad de la masa (Mg/m3)'
     sand: 'Arena (%)'
@@ -587,8 +588,8 @@ es:
     animals: 'Número de animales'
     hours: 'Horas en parcela (0-24)'
     depth: 'Profundidad (pulg.)'
-    no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
-    po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
+    no3_n_html: 'elemento-N (0-100%)'
+    po4_p_html: 'elemento-P (0-100%)'
     org_n_html: 'Org N (0-100%)'
     org_p_html: 'Org P (0-100%)'
     org_c_html: 'Organic Carbon'
@@ -607,7 +608,7 @@ es:
     liming: Encalado
     start_grazing: Pasteo
     stop_grazing: Terminar Pasteo
-    seed: 'Cantidad de Siembra (seeds/ft)(opcional)'
+    seed: 'Cantidad de Siembra (semillas/ft)(opcional)'
     amount_applied: 'Cantidad Aplicada'
     add_planting: 'Añadir operación de Plantar'
     add_fertilizer: 'Añadir operación de Fertilizante'
@@ -620,9 +621,9 @@ es:
     add_start_grazing: 'Añadir operación de Pasteo'
     add_stop_grazing: 'Añadir operación de Terminar Pasteo'
     add_cover_crop: "Añadir Cultivo de Proteccion"
-    po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
+    po4_note: Si P2O5 multiplique por 0.4364 para convertir a element-P
     planting_method: Metodo de sembrado
-    manure_composition: Composición del estiércol
+    manure_composition: Composición del Fertilizante (Concetración)
     planting_date: Fecha de Cultivo
     continues_grazing: Pastoreo Continuo
     rotational_grazing: Pastoreo Rotacional
@@ -665,10 +666,10 @@ es:
     stream_fencing_frequency: Días en la corriente
     hours: Horas por día
     dry_manure: Estiércol seco
-    no3_n_html: 'NO<sub>3</sub>-N'
-    po4_p_html: 'PO<sub>4</sub>-P'
-    org_n_html: 'Org N'
-    org_p_html: 'Org P'
+    no3_n_html: 'elemento-N'
+    po4_p_html: 'elemento-P'
+    org_n_html: 'N Orgánico'
+    org_p_html: 'P Orgánico'
     width: Ancho
     buffer_width: Ancho del Buffer de pasto
     waterways_info: Incluyendo ambos lados del canal
@@ -1125,6 +1126,10 @@ es:
     ln2: 'Animal feed code (refer to feed composition table file "FCT-NASEM-2016.txt")'
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
     ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
+  documents_basic_html:
+    <a href="/basic_help.pdf" download="Manual_de_usuario.pdf"><u>Manual de usuario</u></a>
+  documents_re_html:
+    <a href="/re_help.pdf" download="Manual_de_usuario.pdf"><u>Manual de usuario</u></a>
   instructions:
     projects: Para seleccionar un proyecto existente, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
@@ -1603,7 +1608,7 @@ es:
                 item3: '<strong>Hours/Day in Stream:</strong> Number of hours per day that animals will be in the stream. This is a number between 0 and 24.'
                 item4: '<strong>Select Animal:</strong> This is the type of animal that will be temporarily excluded. Options are beef, dairy, horse, sheep, and swine.'
                 item5: '<strong>Dry Manure:</strong> This is the dry manure per day that each animal produces in pounds.'
-                item6: '<strong>Nutrient Fractions:</strong> NO3, PO4, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
+                item6: '<strong>Nutrient Fractions:</strong> elemento-N, elemento-P, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
                 item7: '<strong>Filter Strip Inputs:</strong> (See Filter Strip)'
             stabilization:
                 header: 'Streambank Stabilization:'
@@ -1930,7 +1935,7 @@ es:
                 <ol>
                     <li>Optar por utilizar la información meteorológica Utilizando datos <strong>PRISM</strong></li>
                     <li>Usar su propio archivo del Clima</li>
-                    <li>Usando el clima de coordenadas especificas (USA only)</li>
+                    <li>Usando el clima de coordenadas especificas (solamente USA)</li>
                 </ol>
                 Para usar su propio archivo del Clima, el usuario tiene que tener un archivo de texto con el siguiente formato.<br>
                 Todas las columnas deben estar separados por al menos un espacio físico (Por favor, no use un tab para insertar el espacio)

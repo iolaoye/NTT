@@ -502,7 +502,7 @@ en:
     years_of_simulation: Simulation period
     update: 'Update Weather'
     legend: Select the kind of weather you want to use
-    choose_file_lenged: Choose the file to Upload
+    choose_file_lenged: "Choose the file to Upload"
     enter_coordinates: Enter Coordinates
     initial_year: initial year
     final_year: final year
@@ -567,7 +567,7 @@ en:
     edit: Editing Operation
     create_operation: Create Operation
     upload: 'Upload'
-    replace: Replace current operations
+    replace: 'Replace Current Operations'
     cropping_system: 'Cropping System'
     fertilizer_category: Fertilizer Category
     crop: Crop
@@ -581,7 +581,7 @@ en:
     irrigation: Irrigation
     plant_population: 'Plant Population (seeds sq/ft)(*optional)'
     load_operation: Load Operation
-    sum: 'total nutrients should be less or equal to 1'
+    sum: 'total nutrients should be less or equal to 100'
     save: Save
     open: 'Open Saved Cropping System'
     saved: 'saved Cropping System'
@@ -590,8 +590,8 @@ en:
     animals: 'Total animal units'
     hours: 'Hours grazed per day (0-24)'
     depth: 'Depth (in)'
-    no3_n_html: 'NO<sub>3</sub>-N (0-100%)'
-    po4_p_html: 'PO<sub>4</sub>-P (0-100%)'
+    no3_n_html: 'Element-N (0-100%)'
+    po4_p_html: 'Element-P (0-100%)'
     org_n_html: 'Organic N (0-100%)'
     org_p_html: 'Organic P (0-100%)'
     org_c_html: 'Organic Carbon'
@@ -623,9 +623,9 @@ en:
     add_start_grazing: 'Add Grazing'
     add_stop_grazing: 'Add Stop Grazing'
     add_cover_crop: Add Cover Crop
-    po4_note: If P2O5 please multiply by 0.4364 to convert to PO4-P
+    po4_note: If P2O5 please multiply by 0.4364 to convert to element-P
     planting_method: Planting Method
-    manure_composition: Manure Composition
+    manure_composition: Fertilizer Composition (Concetration)
     planting_date: Planting Date
     continues_grazing: Continuous Grazing
     rotational_grazing: Rotational Grazing
@@ -678,10 +678,10 @@ en:
     stream_fencing_frequency: Days in Stream
     hours: Hours per day
     dry_manure: Dry defecated
-    no3_n_html: 'NO₃-N'
-    po4_p_html: 'PO₄-P'
-    org_n_html: 'Org N'
-    org_p_html: 'Org P'
+    no3_n_html: 'Element-N'
+    po4_p_html: 'Element-P'
+    org_n_html: 'Organic-N'
+    org_p_html: 'Organic-P'
     width: Width
     buffer_width: Grass buffer width
     waterways_info: Including both sides of channel
@@ -826,7 +826,7 @@ en:
     second_scenario_error: Second scenario has no
     third_scenario_error: Third scenario has no
     pdf_download_error: You must run a summary before you can download a pdf
-    confidence: Confindence Interval
+    confidence: Confidence Interval
     total_units: Total Area
     units_ac: Unit Area
     upto12: (up to the last 12 years)
@@ -1173,9 +1173,9 @@ en:
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
     ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   documents_basic_html:
-    <a href="/app/assets/basic_help.pdf" download="User Manual.pdf"><u>User Manual</u></a>
+    <a href="/basic_help.pdf" download="User_Manual.pdf"><u>User Manual</u></a>
   documents_re_html:
-    <a href="/app/assets/re_help.pdf" download="User Manual.pdf"><u>User Manual</u></a>
+    <a href="/re_help.pdf" download="User_Manual.pdf"><u>User Manual</u></a>
   instructions:
     projects: To select an existing project, click on the project name
     fields: To select a field, click on the field name
@@ -1677,7 +1677,7 @@ en:
                 item3: '<strong>Hours/Day in Stream:</strong> Number of hours per day that animals will be in the stream. This is a number between 0 and 24.'
                 item4: '<strong>Select Animal:</strong> This is the type of animal that will be temporarily excluded. Options are beef, dairy, horse, sheep, and swine.'
                 item5: '<strong>Dry Manure:</strong> This is the dry manure per day that each animal produces in pounds.'
-                item6: '<strong>Nutrient Fractions:</strong> NO3, PO4, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
+                item6: '<strong>Nutrient Fractions:</strong> element-N, element-P, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
                 item7: '<strong>Filter Strip Inputs:</strong> (See Filter Strip)'
             stabilization:
                 header: 'Streambank Stabilization:'

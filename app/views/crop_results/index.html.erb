@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Crop Results</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Scenario</th>
+      <th>Sub1</th>
+      <th>Year</th>
+      <th>Yldg</th>
+      <th>Yldf</th>
+      <th>Ws</th>
+      <th>Ns</th>
+      <th>Ps</th>
+      <th>Ts</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @crop_results.each do |crop_result| %>
+      <tr>
+        <td><%= crop_result.scenario_id %></td>
+        <td><%= crop_result.sub1 %></td>
+        <td><%= crop_result.year %></td>
+        <td><%= crop_result.yldg %></td>
+        <td><%= crop_result.yldf %></td>
+        <td><%= crop_result.ws %></td>
+        <td><%= crop_result.ns %></td>
+        <td><%= crop_result.ps %></td>
+        <td><%= crop_result.ts %></td>
+        <td><%= link_to 'Show', crop_result %></td>
+        <td><%= link_to 'Edit', edit_crop_result_path(crop_result) %></td>
+        <td><%= link_to 'Destroy', crop_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Crop result', new_crop_result_path %>

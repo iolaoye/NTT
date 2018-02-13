@@ -264,7 +264,7 @@ include ScenariosHelper
   		when 9
   			if data[8].to_f < -900 then ws = sprintf("%6.1f",data[8]) else ws = sprintf("%6.2f",data[8]) end
   	  end   # end case data.len
-      weather_file.write("  " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + sr + tmax + tmin + pcp + rh + ws + "\n")
+      weather_file.write("  " + sprintf("%4d",data[0].to_i) + sprintf("%4d",data[1].to_i) + sprintf("%4d",data[2].to_i) + sr + tmax + tmin + pcp + rh + ws + "\n")
     end  # end file.open
   	weather_file.close
   	#verify that there are more than 5 years of weather period.

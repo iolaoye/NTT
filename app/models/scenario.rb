@@ -11,6 +11,8 @@ class Scenario < ActiveRecord::Base
 	has_many :grazing_parameters, :dependent => :destroy
 	has_many :supplement_parameters, :dependent => :destroy
 	has_many :watershed_scenarios, :dependent => :destroy
+	has_many :annual_results, :dependent => :destroy
+	has_many :crop_results, :dependent => :destroy
 	belongs_to :field
   #validations
     validates_uniqueness_of :name, :scope => :field_id

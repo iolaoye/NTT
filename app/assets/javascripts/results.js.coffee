@@ -39,7 +39,7 @@ show_crops = ->
       $("#td_crops").toggle(true)
       items = []
       items.push "<option value>Select Crop</option>"
-      url = "/results/" + $("#result1_scenario_id").val() + ".json" + "?id2=" + $("#result2_scenario_id").val() + "&id3=" + $("#result3_scenario_id").val()
+      url = "/crop_results.json" + "?id1=" + $("#result1_scenario_id").val() + "&id2=" + $("#result2_scenario_id").val() + "&id3=" + $("#result3_scenario_id").val() + "&session=" + $("#session_name").val()
       $.getJSON url, (crops_list) ->
          $.each crops_list, (key, crop) ->
             items.push "<option value=\"" + crop.crop_id + "\">" + crop.name + "</option>"
@@ -129,10 +129,12 @@ $(document).ready ->
   update_categories()
 
   $("#result1_scenario_id").change ->
+    show_crops()
     #update_crops()
     set_buttons(false)
 
   $("#result2_scenario_id").change ->
+    show_crops()
     #update_crops()
     set_buttons(false)
 
@@ -140,8 +142,13 @@ $(document).ready ->
     update_categories()
 
   $("#result3_scenario_id").change ->
+    show_crops()
     #update_crops()
-    set_buttons(false)
+    if $("#result2_scenario_id").val() == ""
+      alert('Please select a 2nd scenario.')
+      $("#result3_scenario_id").val('')
+    else
+      set_buttons(false)
 
   $("#summary").click (event) ->
     set_buttons(true)

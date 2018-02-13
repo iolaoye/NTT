@@ -2,7 +2,6 @@ class ResultsController < ApplicationController
   include OperationsHelper
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
-
   	@type = t('general.view') + ' ' + t('result.monthly') + "-" + t('result.charts')
   	index
   	#render "index"
@@ -55,46 +54,72 @@ class ResultsController < ApplicationController
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 71 or (id > 80 and id < 200)")
     add_breadcrumb t('menu.results')
-	
 	@scenario1 = "0"
-	if params[:result1] != nil then
-		if params[:result1][:scenario_id] == nil then
-			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or Scenario.find_by_id(session[:scenario1]) == nil
-		else
-			@scenario1 = params[:result1][:scenario_id]
-		end
-   	else
-		@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or Scenario.find_by_id(session[:scenario1]) == nil
-	end
-	@scenario2 ="0"
-	if params[:result2] != nil then
-		if params[:result2][:scenario_id] == nil then
-			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or Scenario.find_by_id(session[:scenario2]) == nil
-		else
-			@scenario2 = params[:result2][:scenario_id]
-		end
-	else
-		@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or Scenario.find_by_id(session[:scenario2]) == nil
-	end
-	@scenario3="0"
-	if params[:result3] != nil then
-		if params[:result3][:scenario_id] == nil then
-			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or Scenario.find_by_id(session[:scenario3]) == nil
-		else
-			@scenario3 = params[:result3][:scenario_id]
-		end
-	else
-		@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or Scenario.find_by_id(session[:scenario3]) == nil
-	end
+	@scenario2 = "0"
+	@scenario3 = "0"
     if session[:simulation].eql?('scenario') then
 		@field_name = @field.field_name
+		if params[:result1] != nil then
+			if params[:result1][:scenario_id] == nil then
+				@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
+			else
+				@scenario1 = params[:result1][:scenario_id]
+			end
+	   	else
+			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @field.scenarios.find_by_id(session[:scenario1]) == nil
+		end
+		if params[:result2] != nil then
+			if params[:result2][:scenario_id] == nil then
+				@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @field.scenarios.find_by_id(session[:scenario2]) == nil
+			else
+				@scenario2 = params[:result2][:scenario_id]
+			end
+		else
+			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @field.scenarios.find_by_id(session[:scenario2]) == nil
+		end
+		if params[:result3] != nil then
+			if params[:result3][:scenario_id] == nil then
+				@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @field.scenarios.find_by_id(session[:scenario3]) == nil
+			else
+				@scenario3 = params[:result3][:scenario_id]
+			end
+		else
+			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @field.scenarios.find_by_id(session[:scenario3]) == nil
+		end
+	else
+		if params[:result1] != nil then
+			if params[:result1][:scenario_id] == nil then
+				@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @project.location.watersheds.find_by_id(session[:scenario1]) == nil
+			else
+				@scenario1 = params[:result1][:scenario_id]
+			end
+	   	else
+			@scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @project.location.watersheds.find_by_id(session[:scenario1]) == nil
+		end
+		if params[:result2] != nil then
+			if params[:result2][:scenario_id] == nil then
+				@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @project.location.watersheds.find_by_id(session[:scenario2]) == nil
+			else
+				@scenario2 = params[:result2][:scenario_id]
+			end
+		else
+			@scenario2 = session[:scenario2] unless session[:scenario2] == nil or session[:scenario2] == "" or @project.location.watersheds.find_by_id(session[:scenario2]) == nil
+		end
+		if params[:result3] != nil then
+			if params[:result3][:scenario_id] == nil then
+				@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @project.location.watersheds.find_by_id(session[:scenario3]) == nil
+			else
+				@scenario3 = params[:result3][:scenario_id]
+			end
+		else
+			@scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @project.location.watersheds.find_by_id(session[:scenario3]) == nil
+		end
     end
   	#if !(params[:field_id] == "0")
   		#@field = Field.find(params[:field_id])
 	  #else
 	    #@field = 0
   	#end
-  	
     @soil = "0"
     #load crop for each scenario selected
     i = 70
@@ -103,31 +128,31 @@ class ResultsController < ApplicationController
       @present = true
       @before_button_clicked = false
       @errors = Array.new
-      results = Result.new
+      #results = Result.new
      if session[:simulation] == 'scenario' then
         case true
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
-            results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2, @scenario3], :soil_id => 0).where("crop_id > 0")
+            #results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2, @scenario3], :soil_id => 0).where("crop_id > 0")
           when @scenario1 > "0" && @scenario2 > "0"
-            results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2]).where("crop_id > 0")
+            #results = Result.where(:field_id => params[:field_id], :scenario_id => [@scenario1, @scenario2]).where("crop_id > 0")
           when @scenario1 > "0"
-            results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1).where("crop_id > 0")
+            #results = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1).where("crop_id > 0")
         end # end case true
       else
         case true
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
-            results = Result.where(:watershed_id => [@scenario1, @scenario2, @scenario3]).where("crop_id > 0")
+            #results = Result.where(:watershed_id => [@scenario1, @scenario2, @scenario3]).where("crop_id > 0")
           when @scenario1 > "0" && @scenario2 > "0" && @scenario3 > "0"
-            results = Result.where(:watershed_id => [@scenario1, @scenario2]).where("crop_id > 0")
+            #results = Result.where(:watershed_id => [@scenario1, @scenario2]).where("crop_id > 0")
           when @scenario1 > "0"
-            results = Result.where(:watershed_id => @scenario1).where("crop_id > 0")
+            #results = Result.where(:watershed_id => @scenario1).where("crop_id > 0")
         end # end case true
       end
-      results.each do |result|
-        i+=1
+      #results.each do |result|
+        #i+=1
         #get crops name for each result to add to description list
-        crop = Crop.find(result.crop_id)
-      end # end results.each
+        #crop = Crop.find(result.crop_id)
+      #end # end results.each
     end # end if params[:result1] != nil
   	if params[:button] != nil
   		#@type = params[:button]
@@ -144,16 +169,16 @@ class ResultsController < ApplicationController
   	if @type == nil then
   		@type = t("general.view")
   	end
-	@crop_results = []
-	@stress_ws_results = []
-    @stress_ns_results = []
-    @stress_ps_results = []
-    @stress_ts_results = []
+	#@crop_results = []
+	#@stress_ws_results = []
+    #@stress_ns_results = []
+    #@stress_ps_results = []
+    #@stress_ts_results = []
     if @type != nil
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
         when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil"), t("result.summary")
-			if @type.include? t('result.summary')  then
+			if (@type.include? t('result.summary') or @type.include? t('general.view')) then
 				#if params[:result1] != nil
 					#if !params[:result1][:scenario_id].eql?("") then
 					if @scenario1 > "0" then
@@ -172,12 +197,13 @@ class ResultsController < ApplicationController
 									@total_area1 -= b.area
 								end
 							end
-							@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
-							@crop_results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
-							@crop_stress1_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
-							@crop_stress1_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
-							@crop_stress1_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
-							@crop_stress1_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
+							#@results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
+							@results1 = AnnualResult.where(:scenario_id => @scenario1)
+							#@crop_results1 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
+							#@crop_stress1_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
+							#@crop_stress1_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
+							#@crop_stress1_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
+							#@crop_stress1_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario1, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
 						else
 							if params[:result1] != nil 
 								if !params[:result1][:scenario_id].empty? then
@@ -187,73 +213,13 @@ class ResultsController < ApplicationController
 									end
 								end
 							end
-							@results1 = Result.where(:watershed_id => @scenario1, :crop_id => 0).includes(:description).includes(:description)
-							@crop_results1 = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 70, 80)
-							@crop_stress1_ns = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 200, 211)
-							@crop_stress1_ps = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 210, 221)
-							@crop_stress1_ts = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 220, 231)
-							@crop_stress1_ws = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 230, 241)
-						end
-						@crop_results1.each do |cr|
-							crop_result = []
-							crop_result[0] = cr.crop_id
-							crop_result[1] = cr.value
-							crop_result[2] = cr.ci_value
-							crop_result[3] = 0
-							crop_result[4] = 0
-							crop_result[5] = 0
-							crop_result[6] = 0
-							@crop_results.push(crop_result)
-						end
-						@crop_stress1_ws.each do |ws|
-						  water_stress = []
-						  water_stress[0] = ws.crop_id
-						  water_stress[1] = ws.value
-						  water_stress[2] = ws.ci_value
-						  water_stress[3] = 0
-						  water_stress[4] = 0
-						  water_stress[5] = 0
-						  water_stress[6] = 0
-						  @stress_ws_results.push(water_stress)
-						end
-						@crop_stress1_ps.each do |ps|
-						  p_stress = []
-						  p_stress[0] = ps.crop_id
-						  p_stress[1] = ps.value
-						  p_stress[2] = ps.ci_value
-						  p_stress[3] = 0
-						  p_stress[4] = 0
-						  p_stress[5] = 0
-						  p_stress[6] = 0
-						  @stress_ps_results.push(p_stress)
-						end
-						@crop_stress1_ns.each do |ns|
-						  n_stress = []
-						  n_stress[0] = ns.crop_id
-						  n_stress[1] = ns.value
-						  n_stress[2] = ns.ci_value
-						  n_stress[3] = 0
-						  n_stress[4] = 0
-						  n_stress[5] = 0
-						  n_stress[6] = 0
-						  @stress_ns_results.push(n_stress)
-						end
-						@crop_stress1_ts.each do |ts|
-						  temp_stress = []
-						  temp_stress[0] = ts.crop_id
-						  temp_stress[1] = ts.value
-						  temp_stress[2] = ts.ci_value
-						  temp_stress[3] = 0
-						  temp_stress[4] = 0
-						  temp_stress[5] = 0
-						  temp_stress[6] = 0
-						  @stress_ts_results.push(temp_stress)
-						end
-						if @results1.count > 0
-							@present1 = true
-						else
-							if params[:result1] != nil then @errors.push(t('result.first_scenario_error') + " " + t('result.result').pluralize.downcase) end
-						    @results1 = nil
+							#@results1 = Result.where(:watershed_id => @scenario1, :crop_id => 0).includes(:description).includes(:description)
+							@results1 = AnnualResult.where(:watershed_id => @scenario1)
+							#@crop_results1 = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 70, 80)
+							#@crop_stress1_ns = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 200, 211)
+							#@crop_stress1_ps = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 210, 221)
+							#@crop_stress1_ts = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 220, 231)
+							#@crop_stress1_ws = Result.where(:watershed_id => @scenario1).where("description_id > ? and description_id < ?", 230, 241)
 						end
 						session[:scenario2] = ""
 						session[:scenario3] = ""
@@ -275,12 +241,13 @@ class ResultsController < ApplicationController
 									@total_area2 -= b.area
 								end
 							end
-							@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
-							@crop_results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
-							@crop_stress2_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
-							@crop_stress2_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
-							@crop_stress2_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
-							@crop_stress2_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
+							@results2 = AnnualResult.where(:scenario_id => @scenario2)
+							#@results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
+							#@crop_results2 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
+							#@crop_stress2_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
+							#@crop_stress2_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
+							#@crop_stress2_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
+							#@crop_stress2_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario2, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
 						else
 							if params[:result1] != nil 
 								if !params[:result1][:scenario_id].empty? then
@@ -290,125 +257,15 @@ class ResultsController < ApplicationController
 									end
 								end
 							end
-							@results2 = Result.where(:watershed_id => @scenario2, :crop_id => 0).includes(:description).includes(:description)
-							@crop_results2 = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 70, 80)
-							@crop_stress2_ns = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 200, 211)
-							@crop_stress2_ps = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 210, 221)
-							@crop_stress2_ts = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 220, 231)
-							@crop_stress2_ws = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 230, 241)
+							@results2 = AnnualResult.where(:watershed_id => @scenario2)
+							#@results2 = Result.where(:watershed_id => @scenario2, :crop_id => 0).includes(:description).includes(:description)
+							#@crop_results2 = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 70, 80)
+							#@crop_stress2_ns = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 200, 211)
+							#@crop_stress2_ps = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 210, 221)
+							#@crop_stress2_ts = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 220, 231)
+							#@crop_stress2_ws = Result.where(:watershed_id => @scenario2).where("description_id > ? and description_id < ?", 230, 241)
 						end
 						found = false
-						@crop_results2.each do |crop2|
-							@crop_results.each do |crop|
-								if crop2.crop_id == crop[0] then
-									crop[3] = crop2.value
-									crop[4] = crop2.ci_value
-									found = true
-									break
-								end
-							end
-							if found == false then
-								crop_result = []
-								crop_result[0] = crop2.crop_id
-								crop_result[1] = 0
-								crop_result[2] = 0
-								crop_result[3] = crop2.value
-								crop_result[4] = crop2.ci_value
-								crop_result[5] = 0
-								crop_result[6] = 0
-								@crop_results.push(crop_result)
-							end
-						end
-						@crop_stress2_ws.each do |ws2|
-						  @stress_ws_results.each do |ws|
-							if ws2.crop_id == ws[0]
-							  ws[3] = ws2.value
-							  ws[4] = ws2.ci_value
-							  found = true
-							  break
-							end
-						  end
-						  if found == false
-							water_stress = []
-							water_stress[0] = ws2.crop_id
-							water_stress[1] = 0
-							water_stress[2] = 0
-							water_stress[3] = ws2.value
-							water_stress[4] = ws2.ci_value
-							water_stress[5] = 0
-							water_stress[6] = 0
-							@stress_ws_results.push(water_stress)
-						  end
-						end
-						@crop_stress2_ps.each do |ps2|
-						  @stress_ps_results.each do |ps|
-							if ps2.crop_id == ps[0]
-							  ps[3] = ps2.value
-							  ps[4] = ps2.ci_value
-							  found = true
-							  break
-							end
-						  end
-						  if found == false
-							p_stress = []
-							p_stress[0] = ps2.crop_id
-							p_stress[1] = 0
-							p_stress[2] = 0
-							p_stress[3] = ps2.value
-							p_stress[4] = ps2.ci_value
-							p_stress[5] = 0
-							p_stress[6] = 0
-							@stress_ps_results.push(p_stress)
-						  end
-						end
-						@crop_stress2_ns.each do |ns2|
-						  @stress_ns_results.each do |ns|
-							if ns2.crop_id == ns[0]
-							  ns[3] = ns2.value
-							  ns[4] = ns2.ci_value
-							  found = true
-							  break
-							end
-						  end
-						  if found == false
-							n_stress = []
-							n_stress[0] = ns2.crop_id
-							n_stress[1] = 0
-							n_stress[2] = 0
-							n_stress[3] = ns2.value
-							n_stress[4] = ns2.ci_value
-							n_stress[5] = 0
-							n_stress[6] = 0
-							@stress_ns_results.push(n_stress)
-						  end
-						end
-						@crop_stress2_ts.each do |ts2|
-						  @stress_ts_results.each do |ts|
-							if ts2.crop_id == ts[0]
-							  ts[3] = ts2.value
-							  ts[4] = ts2.ci_value
-							  found = true
-							  break
-							end
-						  end
-						  if found == false
-							temp_stress = []
-							temp_stress[0] = ts2.crop_id
-							temp_stress[1] = 0
-							temp_stress[2] = 0
-							temp_stress[3] = ts2.value
-							temp_stress[4] = ts2.ci_value
-							temp_stress[5] = 0
-							temp_stress[6] = 0
-							@stress_ts_results.push(temp_stress)
-						  end
-						end
-						if @results2.count > 0
-							@present2 = true
-						else
-							if params[:result2] != nil then @errors.push(t('result.second_scenario_error') + " " + t('result.result').pluralize.downcase) end
-						    @results2 = nil
-						end
 						session[:scenario3] = ""
 					end
 					#if params[:result3][:scenario_id] != "" then
@@ -428,13 +285,14 @@ class ResultsController < ApplicationController
 									@total_area3 -= b.area
 								end
 							end
-							@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
+							@results3 = AnnualResult.where(:scenario_id => @scenario3)
+							#@results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id = 0 or crop_id is null").includes(:description)
 							#@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("crop_id > 0")
-							@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
-							@crop_stress3_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
-							@crop_stress3_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
-							@crop_stress3_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
-							@crop_stress3_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
+							#@crop_results3 = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 70, 80).order("crop_id asc")
+							#@crop_stress3_ns = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 200, 211)
+							#@crop_stress3_ps = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 210, 221)
+							#@crop_stress3_ts = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 220, 231)
+							#@crop_stress3_ws = Result.where(:field_id => params[:field_id], :scenario_id => @scenario3, :soil_id => @soil).where("description_id > ? and description_id < ?", 230, 241)
 						else
 							if params[:result1] != nil 
 								if !params[:result1][:scenario_id].empty? then
@@ -443,127 +301,17 @@ class ResultsController < ApplicationController
 										@total_area3 += Field.find(ws.field_id).field_area
 									end
 								end
-							end							
-							@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0).includes(:description).includes(:description)
-							@crop_results3 = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 70, 80)
-							@crop_stress3_ns = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 200, 211)
-							@crop_stress3_ps = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 210, 221)
-							@crop_stress3_ts = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 220, 231)
-							@crop_stress3_ws = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 230, 241)
+							end
+							@results3 = AnnualResult.where(:watershed_id => @scenario3)					
+							#@results3 = Result.where(:watershed_id => @scenario3, :crop_id => 0).includes(:description).includes(:description)
+							#@crop_results3 = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 70, 80)
+							#@crop_stress3_ns = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 200, 211)
+							#@crop_stress3_ps = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 210, 221)
+							#@crop_stress3_ts = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 220, 231)
+							#@crop_stress3_ws = Result.where(:watershed_id => @scenario3).where("description_id > ? and description_id < ?", 230, 241)
 						end
 						found = false
-						found = false
-						@crop_results3.each do |crop3|
-							@crop_results.each do |crop|
-								if crop3.crop_id == crop[0] then
-									crop[5] = crop3.value
-									crop[6] = crop3.ci_value
-									found = true
-									break
-								end
-							end
-							if found == false then
-								crop_result = []
-								crop_result[0] = crop3.crop_id
-								crop_result[1] = 0
-								crop_result[2] = 0
-								crop_result[3] = 0
-								crop_result[4] = 0
-								crop_result[5] = crop3.value
-								crop_result[6] = crop3.ci_value
-								@crop_results.push(crop_result)
-							end
-						end
-						@crop_stress3_ws.each do |ws3|
-						  @stress_ws_results.each do |ws|
-							if ws3.crop_id == ws[0]
-							  ws[5] = ws3.value
-							  ws[6] = ws3.ci_value
-							  found = true
-							  break
-							end
-						  end
-						  if found == false
-							water_stress = []
-							water_stress[0] = ws3.crop_id
-							water_stress[1] = 0
-							water_stress[2] = 0
-							water_stress[3] = 0
-							water_stress[4] = 0
-							water_stress[5] = ws3.value
-							water_stress[6] = ws3.ci_value
-							@stress_ws_results.push(water_stress)
-						  end
-						end
-						@crop_stress3_ps.each do |ps3|
-						  @stress_ps_results.each do |ps|
-							if ps3.crop_id == ps[0]
-							  ps[5] = ps3.value
-							  ps[6] = ps3.ci_value
-							  found = true
-							  break
-							end
-						  end
-						  if found == false
-							p_stress = []
-							p_stress[0] = ps3.crop_id
-							p_stress[1] = 0
-							p_stress[2] = 0
-							p_stress[3] = 0
-							p_stress[4] = 0
-							p_stress[5] = ps3.value
-							p_stress[6] = ps3.ci_value
-							@stress_ps_results.push(p_stress)
-						  end
-						end
-						@crop_stress3_ns.each do |ns3|
-						  @stress_ns_results.each do |ns|
-							if ns3.crop_id == ns[0]
-							  ns[5] = ns3.value
-							  ns[6] = ns3.ci_value
-							  found = true
-							  break
-							end
-						  end
-						  if found == false
-							n_stress = []
-							n_stress[0] = ns3.crop_id
-							n_stress[1] = 0
-							n_stress[2] = 0
-							n_stress[3] = 0
-							n_stress[4] = 0
-							n_stress[5] = ns3.value
-							n_stress[6] = ns3.ci_value
-							@stress_ns_results.push(n_stress)
-						  end
-						end
-						@crop_stress3_ts.each do |ts3|
-						  @stress_ts_results.each do |ts|
-							if ts3.crop_id == ts[0]
-							  ts[5] = ts3.value
-							  ts[6] = ts3.ci_value
-							  found = true
-							  break
-							end
-						  end
-						  if found == false
-							temp_stress = []
-							temp_stress[0] = ts3.crop_id
-							temp_stress[1] = 0
-							temp_stress[2] = 0
-							temp_stress[3] = 0
-							temp_stress[4] = 0
-							temp_stress[5] = ts3.value
-							temp_stress[6] = ts3.ci_value
-							@stress_ts_results.push(temp_stress)
-						  end
-						end
-						if @results3.count > 0
-							@present3 = true
-						else
-							if params[:result3] != nil then @errors.push(t('result.third_scenario_error') + " " + t('result.result').pluralize.downcase) end
-						    @results3 = nil
-						end
+
 					end   # end result 3
 				#end # end if params[:result1] != nill
 			end #end if params button summary
@@ -574,11 +322,44 @@ class ResultsController < ApplicationController
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
 		  @chart_type = 0
           @x = "Year"
-          if session[:simulation] == "scenario"
-		    @crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ? or scenario_id = ? or scenario_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
-          else
-            @crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (watershed_id = ? or watershed_id = ? or watershed_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
-          end
+            @crops = Array.new
+			#scenario_id = session[:simulation].downcase + "_id"
+			#if params[:result1] != nil && params[:result2] != nil && params[:result3] != nil then
+				#if params[:result1][:scenario_id] != "" && params[:result2][:scenario_id] != "" && params[:result3][:scenario_id] != ""
+			  		#@crop_results = CropResult.select("name, sub1").where(scenario_id + " = ? || " + scenario_id + " = ? || " + scenario_id + " = ?", params[:result1][:scenario_id],params[:result2][:scenario_id],params[:result3][:scenario_id]).distinct
+				#end	
+			#elsif params[:result1] != nil && params[:result2] != nil then
+				#if [:result1][:scenario_id] != "" && params[:result2][:scenario_id] != ""
+			  		#@crop_results = CropResult.select("name, sub1").where(scenario_id + " = ? || " + scenario_id + " = ?", params[:result3][:scenario_id],params[:result2][:scenario_id]).distinct
+			  	#end
+			#elsif params[:result1] then
+				#if params[:result1][:scenario_id] != "" then
+			  		#@crop_results = CropResult.select("name, sub1").where(scenario_id + " = ?", params[:result1][:scenario_id]).distinct
+			  	#end
+			#else
+			#end
+			#@crop_results.each do |cr|
+			  #crop = Crop.find_by_code(cr.name)
+			  #found = false
+			  #@crops.each do |cp|
+			    #if crop.name == cp["name"] then 
+			      #found = true
+			      #break
+			    #end 
+			  #end
+			  #if !found then 
+			    #crop_hash = Hash.new
+			    #crop_hash["name"] = crop.name
+			    #crop_hash["crop_id"] = crop.id
+			    #@crops.push(crop_hash)
+			    #cr_ant = cr.name
+			  #end
+			#end
+          #if session[:simulation] == "scenario"
+		    #@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (scenario_id = ? or scenario_id = ? or scenario_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
+          #else
+            #@crops = Result.select("crop_id, crops.name, crops.spanish_name").joins(:crop).where("description_id < ? and (watershed_id = ? or watershed_id = ? or watershed_id = ?)", 100, @scenario1.to_s, @scenario2.to_s, @scenario3.to_s).uniq
+          #end
           if params[:result5] != nil && params[:result5][:description_id] != "" then
             @description = params[:result5][:description_id]
             @group = params[:result5_category][:group_id]
@@ -600,7 +381,7 @@ class ResultsController < ApplicationController
                 if @charts1.count > 0
                   @present1 = true
                 else
-                  @errors.push(t('result.first_scenario_error') + " " + t('general.values').pluralize.downcase)
+                  #@errors.push(t('result.first_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then
@@ -609,7 +390,7 @@ class ResultsController < ApplicationController
                 if @charts2.count > 0
                   @present2 = true
                 else
-                  @errors.push(t('result.second_scenario_error') + " " + t('general.values').pluralize.downcase)
+                  #@errors.push(t('result.second_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result3][:scenario_id] != "" then
@@ -618,7 +399,7 @@ class ResultsController < ApplicationController
                 if @charts3.count > 0
                   @present3 = true
                 else
-                  @errors.push(t('result.third_scenario_error') + " " + t('general.values').pluralize.downcase)
+                  #@errors.push(t('result.third_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
             end
@@ -641,7 +422,7 @@ class ResultsController < ApplicationController
                 if @charts1.count > 0
                   @present1 = true
                 else
-                  @errors.push(t('result.first_scenario_error') + " " + t('result.charts').pluralize.downcase)
+                  #@errors.push(t('result.first_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then
@@ -650,7 +431,7 @@ class ResultsController < ApplicationController
                 if @charts2.count > 0
                   @present2 = true
                 else
-                  @errors.push(t('result.second_scenario_error') + " " + t('result.charts').pluralize.downcase)
+                  #@errors.push(t('result.second_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result3][:scenario_id] != "" then
@@ -659,7 +440,7 @@ class ResultsController < ApplicationController
                 if @charts3.count > 0
                   @present3 = true
                 else
-                  @errors.push(t('result.third_scenario_error') + " " + t('result.charts').pluralize.downcase)
+                  #@errors.push(t('result.third_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
             end
@@ -675,8 +456,8 @@ class ResultsController < ApplicationController
   	  page_size: "Letter", layout: "pdf",
   	  template: "/results/report",
   	  footer: {center: '[page] of [topage]'},
-  	  header: {spacing: -6, html: {template: '/layouts/_report_header.html'}},
-  	  margin: {top: 20}
+  	  header: {spacing: -5, html: {template: '/layouts/_report_header.html'}},
+  	  margin: {top: 40}
       send_data(pdf, :filename => "report.pdf")
 	  return
     end # if format is pdf
@@ -816,33 +597,139 @@ class ResultsController < ApplicationController
         chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND description_id = ? AND month_year <= ?", params[:field_id], scenario_id, @soil, @description, 12)
       end
     end
-    charts = Array.new
-	if month_or_year == 2 then
-		chart_values.each do |c|
+    if chart_values == nil || chart_values.blank? then   # means the scenario hasn't been simulated or it was using the new result file annual_results
+		id = "scenario_id"
+		if session[:simulation] != "scenario" then
+			id = "watershed_id"
+		end
+    	if month_or_year == 1 then   # get results for annual values sub1 == 0
+    		chart_description = get_description_annual()
+    		if @description != "70" then
+    			chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :"#{id}" => scenario_id).last(12)
+    		else
+    			crop = Crop.find(params[:result7][:crop_id])
+    			conversion_factor = crop.conversion_factor * AC_TO_HA / (crop.dry_matter/100)
+    			chart_values = CropResult.select("year as month_year", "(yldg+yldf) *" + conversion_factor.to_s + " as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year).last(12)
+    			#chart_values = CropResult.select("year AS month_year", "yldg+yldf as value").where(:scenario_id => 736).group(:name, :year).pluck("yldg+yldf as value").last(12)
+    		end
+    	else  #get results for monthly sub1 > 0
+    		chart_description = get_description_monthly()
+    		chart_values = AnnualResult.select("year AS month_year").where("sub1 > ? AND " + id + " = ?", 0, scenario_id).group(:sub1).pluck(chart_description)
+    	end
+    end
+    charts = Array.new(chart_values.length)
+	if month_or_year == 2 then  #monthly
+		for i in 1..chart_values.length
+		#chart_values.each do |c|
 		  chart = Array.new
 		  #chart.push(c.month_year)
 		  #chart.push(listMonths[c.month_year-1][0])
-		  chart.push(t('date.abbr_month_names')[c.month_year])
-		  chart.push(c.value)
-		  charts.push(chart)
+		  chart.push(t('date.abbr_month_names')[i])
+		  chart.push(chart_values[i-1])
+		  charts[i-1] = chart
 		end
-	else
+	else  # annual
 		current_year = first_year + 1
-		chart_values.each do |c|
-			while current_year < c.month_year
+		i = 0
+		if chart_values.length == 0 then
+			for i in 0..11
 				chart = Array.new
 				chart.push(current_year)
 				chart.push(0)
-				charts.push(chart)
-				current_year +=1
+				current_year += 1
+				charts[i] = chart
 			end
-			chart = Array.new
-			chart.push(c.month_year)
-			chart.push(c.value)
-			charts.push(chart)
-			current_year +=1
+		else
+			chart_values.each do |c|
+				while current_year < c.month_year
+					chart = Array.new
+					chart.push(current_year)
+					chart.push(0)
+					charts[i] = chart
+					current_year +=1
+					i += 1
+				end
+				chart = Array.new
+				chart.push(c.month_year)
+				chart.push(c.value)
+				charts[i] = chart
+				current_year +=1
+				i += 1
+				if i > 11 then break end
+			end
 		end
 	end
     return charts
   end #end method get_chart_serie
+
+  	def get_description_monthly
+	  	case @description
+		when "21"
+			chart_description = "avg(orgn)"
+		when "22"
+			chart_description = "avg(no3)"
+		when "31"
+			chart_description = 'avg(orgp)'
+		when "32"
+			chart_description = 'avg(po4)'
+		when "41"
+			chart_description = 'avg(surface_flow)'
+		when "61"
+			chart_description = 'avg(sed)'
+		else
+			chart_description = ""
+		end
+	end
+
+	def get_description_annual
+	  	case @description
+		when "20"
+			chart_description = "orgn + no3 + qdrn AS value"
+		when "21"
+			chart_description = "orgn AS value"
+		when "22"
+			chart_description = "no3 - qn AS value"
+		when "23"
+			chart_description = "no3 AS value"
+		when "24"
+			chart_description = "qdrn AS value"
+		when "30"
+			chart_description = "orgp + po4 + qdrp AS value"
+		when "31"
+			chart_description = "orgp AS value"
+		when "32"
+			chart_description = "po4 AS value"
+		when "33"
+			chart_description = "qdrp AS value"
+		when "40"
+			chart_description = "flow + qdr AS value"
+		when "41"
+			chart_description = "surface_flow AS value"
+		when "42"
+			chart_description = "flow - surface_flow AS value"
+		when "43"
+			chart_description = "qdr AS value"
+		when "50"
+			chart_description = "irri + dprk AS value"
+		when "51"
+			chart_description = "irri AS value"
+		when "52"
+			chart_description = "dprk AS value"
+		when "60"
+			chart_description = "sed + ymnu AS value"
+		when "61"
+			chart_description = "sed AS value"
+		when "62"
+			chart_description = "ymnu AS value"
+		when "70" 
+			chart_description = "yldg+yldf AS value"
+		when "92" 
+			chart_description = "n2o AS value"
+		when "100"
+			chart_description = "pcp AS value"
+		else
+			chart_description = ""
+		end
+	end
 end
+
