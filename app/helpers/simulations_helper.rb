@@ -1386,9 +1386,9 @@ module SimulationsHelper
           #org_c = oper.org_c / 100
         end
 		    if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, oper.nh3, oper.subtype_id, org_c)
+			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
 		    else
-			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, oper.nh3, oper.subtype_id, org_c)
+			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
 		    end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
