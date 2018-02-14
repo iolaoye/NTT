@@ -96,9 +96,13 @@ module ProjectsHelper
   def duplicate_field(field_id, new_location_id)
 	#1. copy field to new field
 	field = Field.find(field_id)   #1. find field to copy
+  field_id = Hash.new
 	new_field = field.dup
 	new_field.location_id = new_location_id
 	if new_field.save
+    field_id = Hash.new
+    field_id[field.id] = new_field.id
+    @field_ids.push(field_id)
 		#duplicate site
 		new_site = field.site.dup
 		new_site.field_id = new_field.id
@@ -139,6 +143,8 @@ module ProjectsHelper
   	new_location = @project.location.dup
 	new_location.project_id = new_project_id
 	if new_location.save
+    @field_ids = Array.new
+    @scenario_ids = Array.new
 		@project.location.fields.each do |f|
 			duplicate_field(f.id, new_location.id)
 		end
@@ -364,11 +370,15 @@ module ProjectsHelper
   def duplicate_scenario(scenario_id, name, new_field_id)
 	scenario = Scenario.find(scenario_id)   #1. find scenario to copy
 	#2. copy scenario to new scenario
+  scenario_id = Hash.new
   	new_scenario = scenario.dup
 	new_scenario.name = scenario.name + name
 	new_scenario.field_id = new_field_id
 	#new_scenario.last_simulation = ""
   if new_scenario.save
+    scenario_id = Hash.new
+    scenario_id[scenario.id] = new_scenario.id
+    @scenario_ids.push(scenario_id)
     @new_scenario_id = new_scenario.id
     #3. Copy subareas info by scenario
 		duplicate_subareas_by_scenario(scenario.id)
