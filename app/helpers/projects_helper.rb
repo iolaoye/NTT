@@ -370,17 +370,17 @@ module ProjectsHelper
   def duplicate_scenario(scenario_id, name, new_field_id)
 	scenario = Scenario.find(scenario_id)   #1. find scenario to copy
 	#2. copy scenario to new scenario
-  scenario_id = Hash.new
+  	scenario_id = Hash.new
   	new_scenario = scenario.dup
 	new_scenario.name = scenario.name + name
 	new_scenario.field_id = new_field_id
 	#new_scenario.last_simulation = ""
-  if new_scenario.save
-    scenario_id = Hash.new
-    scenario_id[scenario.id] = new_scenario.id
-    @scenario_ids.push(scenario_id)
-    @new_scenario_id = new_scenario.id
-    #3. Copy subareas info by scenario
+  	if new_scenario.save
+	    scenario_id = Hash.new
+	    scenario_id[scenario.id] = new_scenario.id
+	    if @scenario_ids != nil then @scenario_ids.push(scenario_id) end
+	    @new_scenario_id = new_scenario.id
+	    #3. Copy subareas info by scenario
 		duplicate_subareas_by_scenario(scenario.id)
 		#4. Copy operations info
 		duplicate_operations(scenario.id)
