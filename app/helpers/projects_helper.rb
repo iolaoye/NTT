@@ -143,13 +143,13 @@ module ProjectsHelper
   	new_location = @project.location.dup
 	new_location.project_id = new_project_id
 	if new_location.save
-    @field_ids = Array.new
-    @scenario_ids = Array.new
+    	@field_ids = Array.new
+    	@scenario_ids = Array.new
 		@project.location.fields.each do |f|
 			duplicate_field(f.id, new_location.id)
 		end
-    @project.location.watersheds.each do |w|
-      duplicate_watershed(w.id, new_location.id)
+    	@project.location.watersheds.each do |w|
+      	duplicate_watershed(w.id, new_location.id)
     end
 			"OK"
 		else
@@ -405,10 +405,20 @@ module ProjectsHelper
 
   ####################### Duplicate Watershed Scenarios ######################
   def duplicate_watershed_scenarios(scenarios_id, new_watershed_id)
-    scenarios = WatershedScenario.find(scenarios_id)
-    new_scenarios = scenarios.dup
-    new_scenarios.watershed_id = new_watershed_id
-    if !new_scenarios.save
+    scenario = WatershedScenario.find(scenarios_id)
+    new_scenario = scenario.dup
+    new_scenario.watershed_id = new_watershed_id
+    @field_ids.each do |field_id|
+    	if field_id.has_key?(scenario.field_id) then
+           new_scenario.field_id = field_id.fetch(scenario.field_id)
+        end
+    end
+        @scenario_ids.each do |scenario_id|
+    	if scenario_id.has_key?(scenario.scenario_id) then
+           new_scenario.scenario_id = scenario_id.fetch(scenario.scenario_id)
+        end
+    end
+    if !new_scenario.save
       return "Failed to save watershed scenario"
     end
   end
