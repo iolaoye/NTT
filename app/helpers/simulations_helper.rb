@@ -1372,22 +1372,23 @@ module SimulationsHelper
 		    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
         #divide by 100 to convert percentage to fraction
         org_c = 0
-        if oper.org_c == nil then
+        if oper.activity_id == 2 then
           case oper.type_id
-            when 2 #Manure
-              if Operation.find(operation.operation_id).type_id == 57 then
-                org_c = 0.10 #liquide
-              else
-                org_c = 0.25 #solid
-              end
-          end
-        else
-          org_c = oper.org_c / 100
+          when 2 # solid Manure
+              #if Operation.find(operation.operation_id).type_id == 57 then
+            org_c = 0.25 
+              #else
+              #end
+          when 3  #liquid manure
+            org_c = 0.10
+          end#
+        #else
+          #org_c = oper.org_c / 100
         end
 		    if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)
+			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, oper.nh3, oper.subtype_id, org_c)
 		    else
-			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)
+			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, oper.nh3, oper.subtype_id, org_c)
 		    end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
