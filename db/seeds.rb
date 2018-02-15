@@ -8,6 +8,12 @@ load file
 file = "db/seeds/ways.rb"
 load file
 
+file = "db/seeds/fertilizers.rb"
+load file
+
+file = "db/seeds/crops.rb"
+load file
+
 cont = false
 
 if cont then
