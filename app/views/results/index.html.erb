@@ -138,7 +138,7 @@
 					<% results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :"#{@id}" => @scenario1) %>
 					<% cis1 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } %>
 					<% averages1 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario1).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
-					<% crops1 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+					<% crops1 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg) + avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
 					<% crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario1, 0) %>
 					<% cic1 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
 					<%# cic1 = crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]} %>
@@ -147,14 +147,14 @@
 						<% results_data2 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0,  :"#{@id}" => @scenario2) %>
 						<% cis2 = results_data2.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } %>
 						<% averages2 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario2).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
-						<% crops2 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+						<% crops2 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg) + avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
 						<% crops_data2 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario2, 0) %>
 						<% cic2 = Hash[*crops_data2.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
 						<% if @scenario3 != "0" && @scenario2 != ""  then %>
 							<% results_data3 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0,  :"#{@id}" => @scenario3) %>
 							<% cis3 = results_data3.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } %>
 							<% averages3 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario3).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
-							<% crops3 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+							<% crops3 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg) + avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
 							<% crops_data3 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario3, 0) %>
 							<% cic3 = Hash[*crops_data3.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
 						<% end %>
