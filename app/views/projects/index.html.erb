@@ -55,7 +55,7 @@
 								  			<%= link_to image_tag("download.gif"), download_project_path(project) %>
 								  			<%= link_to image_tag("edit.png"), edit_user_project_path(@user, project) %>
 								  			<%= link_to image_tag("copy.jpg"), copy_project_project_path(project), data: {disable_with: 'Please wait, copying this project . . .', method: :get} %>
-								  			<%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
+								  			<%= link_to image_tag("delete.png"), project, :id=>project.description, method: :delete, data: { confirm: t('general.confirm') } %>
 							  			</td>
 							  			<% if @user.admin %> <td><%= project.user.name%></td> <% end %>
 						  			</tr>
