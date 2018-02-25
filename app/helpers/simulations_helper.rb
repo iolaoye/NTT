@@ -82,7 +82,7 @@ module SimulationsHelper
     rotational_grazing = ""
     if start != nil then
       amount = start.amount * Fertilizer.find_by_code(start.type_id).convertion_unit
-      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
+      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + amount.round(2).to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
     end
     stop = @scenario.operations.find_by_activity_id(10)
     if stop != nil
@@ -1103,7 +1103,6 @@ module SimulationsHelper
 
     return "OK"
   end
-
 
   def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
     #This suroutine create operation files using information entered by user.
