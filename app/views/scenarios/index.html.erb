@@ -87,7 +87,7 @@
 					<% else %>
 					<tr class="gvRowStyleOdd">
 					<% end %>
-						<td class="gvCellStyleText">
+						<td id="<%= scenario.name %>" class="gvCellStyleText">
 						  <%= check_box_tag "select_scenario[]", scenario.id %>
 						</td>
 						<td class="table-link">

@@ -46,8 +46,8 @@
 							<tbody>
 								<% @projects.each do |project| %>
 						  			<tr>
-							  			<% if project.location.id == nil %> <td class="table-link"><%= link_to project.name, project_path(project) %></td>
-							  			<% else %> <td class="table-link"><%= link_to project.name, project_fields_path(project) %></td>
+							  			<% if project.location.id == nil %> <td id="<%= project.name %>" class="table-link"><%= link_to project.name, project_path(project) %></td>
+							  			<% else %> <td id="<%= project.name %>" class="table-link"><%= link_to project.name, project_fields_path(project) %></td>
 							  			<% end %>
 							  			<td><%= project.description %></td>
 							  			<td><%= project.updated_at.to_date %></td>

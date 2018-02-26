@@ -39,6 +39,7 @@ GEM
       gyoku (>= 0.4.0)
       nokogiri
     arel (6.0.4)
+    auto_click (0.3.0)
     autoprefixer-rails (8.0.0)
       execjs
     axlsx (2.0.1)
@@ -202,6 +203,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  auto_click
   axlsx_rails
   bcrypt-ruby
   bootstrap-sass
