@@ -241,10 +241,10 @@ class OperationsController < ApplicationController
         total_p = (params[:operation][:nh4_n].to_f*PO4_TO_P2O5*0.11982)/(100-params[:operation][:moisture].to_f)
       end
       fert_type = Fertilizer.find(params[:operation][:subtype_id])
-      params[:operation][:no3_n] = total_n * fert_type.qn * 100
-      params[:operation][:org_n] = total_n * fert_type.yn * 100
-      params[:operation][:po4_p] = total_p * fert_type.qp * 100
-      params[:operation][:org_p] = total_p * fert_type.yp * 100
+      params[:operation][:no3_n] = total_n * fert_type.qn 
+      params[:operation][:org_n] = total_n * fert_type.yn
+      params[:operation][:po4_p] = total_p * fert_type.qp 
+      params[:operation][:org_p] = total_p * fert_type.yp 
     end
     #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
       #params[:operation][:depth] = params[:operation][:depth].to_f / 100
