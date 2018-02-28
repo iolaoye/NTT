@@ -734,7 +734,6 @@ class OperationsController < ApplicationController
   end
 
   def calculate_nutrients(total_n_con, moisture, total_p_con)
-    debugger
     if params[:operation][:activity_id] == "2" && params[:operation][:type_id] != "1"
       if params[:operation][:type_id] == "2" #solid manure
         total_n = (total_n_con/2000)/((100-moisture)/100)
