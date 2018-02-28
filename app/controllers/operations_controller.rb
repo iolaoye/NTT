@@ -122,17 +122,17 @@ class OperationsController < ApplicationController
     ActiveRecord::Base.transaction do
       if params[:operation][:activity_id] == "2" && params[:operation][:type_id] != "1"
         if params[:operation][:type_id] == "2" #solid manure
-          total_n = (params[:op][:total_n_con].to_f/2000)/((100-params[:op][:moisture].to_f)/100)
-          total_p = ((params[:op][:total_p_con].to_f*PO4_TO_P2O5)/2000)/((100-params[:op][:moisture].to_f)/100)
+          total_n = (params[:op][:total_n_con].to_f/2000)/(100-params[:op][:moisture].to_f)
+          total_p = ((params[:op][:total_p_con].to_f*PO4_TO_P2O5)/2000)/(100-params[:op][:moisture].to_f)
         elsif params[:operation][:type_id] == "3" #liquid manure
           total_n = (params[:op][:total_n_con].to_f*0.011982)/(100-params[:op][:moisture].to_f)
           total_p = (params[:op][:total_p_con].to_f*PO4_TO_P2O5*0.011982)/(100-params[:op][:moisture].to_f)
         end
         fert_type = Fertilizer.find(params[:operation][:subtype_id])
-        params[:operation][:no3_n] = total_n * fert_type.qn * 100
-        params[:operation][:org_n] = total_n * fert_type.yn * 100
-        params[:operation][:po4_p] = total_p * fert_type.qp * 100
-        params[:operation][:org_p] = total_p * fert_type.yp * 100
+        params[:operation][:no3_n] = total_n * fert_type.qn 
+        params[:operation][:org_n] = total_n * fert_type.yn 
+        params[:operation][:po4_p] = total_p * fert_type.qp 
+        params[:operation][:org_p] = total_p * fert_type.yp
       end
       operation = Operation.new(operation_params)
       if operation.activity_id == 2 && operation.type_id == 1 && operation.po4_p > 0 && operation.po4_p < 100 then
