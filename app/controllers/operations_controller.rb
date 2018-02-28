@@ -743,10 +743,10 @@ class OperationsController < ApplicationController
         total_p = (total_p_con*PO4_TO_P2O5*0.011982)/(100-moisture)
       end
       fert_type = Fertilizer.find(params[:operation][:subtype_id])
-      params[:operation][:no3_n] = total_n * fert_type.qn 
-      params[:operation][:org_n] = total_n * fert_type.yn
-      params[:operation][:po4_p] = total_p * fert_type.qp 
-      params[:operation][:org_p] = total_p * fert_type.yp 
+      params[:operation][:no3_n] = total_n * fert_type.qn * 100  #convert fraction to percentage. When fert line is being changed (simuilation_helper/add_operation)
+      params[:operation][:org_n] = total_n * fert_type.yn * 100
+      params[:operation][:po4_p] = total_p * fert_type.qp * 100
+      params[:operation][:org_p] = total_p * fert_type.yp * 100
     end
   end
 
