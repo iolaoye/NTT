@@ -67,7 +67,8 @@ module SimulationsHelper
   end
 
   def send_files_to_APEX(file)
-    uri = URI(URL_NTT)
+    debugger
+    uri = URI(URL_TIAER)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth, "rg" => "")
     if res.body.include?("Created") then
@@ -88,8 +89,9 @@ module SimulationsHelper
     if stop != nil
       rotational_grazing += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
     end
+    debugger
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    url = URI.parse(URL_NTT)
+    url = URI.parse(URL_TIAER)
     http = Net::HTTP.new(url.host,url.port)
     http.read_timeout = 2000   #seconds
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
@@ -104,7 +106,8 @@ module SimulationsHelper
   end
 
   def send_file_to_APEX(apex_string, file)
-    uri = URI(URL_NTT)
+    debugger
+    uri = URI(URL_TIAER)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
@@ -115,7 +118,8 @@ module SimulationsHelper
   end
 
   def send_file1_to_APEX(apex_string, file)
-    uri = URI(URL_NTT)
+    debugger
+    uri = URI(URL_TIAER)
     res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
       return "OK"
@@ -804,10 +808,12 @@ module SimulationsHelper
     last_owner1 = 0
     i=0
   	nirr = 0
+    debugger
     if @grazing == nil then
       subareas = @scenario.subareas.where("soil_id > 0 AND (bmp_id = 0 OR bmp_id is NULL)")
     else
       subareas = @scenario.subareas.where("soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
+      subareas[0].wsa = @field.field_area * AC_TO_HA
     end
   	subareas.each do |subarea|
       soil = subarea.soil
@@ -1105,6 +1111,7 @@ module SimulationsHelper
   end
 
   def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
+    debugger
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @grazingb = false
@@ -1528,12 +1535,14 @@ module SimulationsHelper
           end
         end
       when "fert"
+        debugger
         File.open(File.join(path, target_file), "a+") do |f|
           @new_fert_line.each do |row|
             f << row
           end
         end
     end #end case file_type
+    debugger
     msg = send_file_to_APEX(read_file(target_file, false), target_file)
     #todo chcek how this will work with fert changing for grazing and fert appliction at the same time. Suggestion. firs get the changes for both and then change the fert file.
   end
