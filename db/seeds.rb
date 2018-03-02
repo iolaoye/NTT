@@ -5,13 +5,7 @@ load file
 file = "db/seeds/schedules.rb"
 load file
 
-file = "db/seeds/ways.rb"
-load file
-
-file = "db/seeds/fertilizers.rb"
-load file
-
-file = "db/seeds/crops.rb"
+file = "db/seeds/tillages.rb"
 load file
 
 cont = false
