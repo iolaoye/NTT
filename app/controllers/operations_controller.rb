@@ -120,20 +120,7 @@ class OperationsController < ApplicationController
     soil_op_saved = false
     #msg = "Unknown error"
     ActiveRecord::Base.transaction do
-      if params[:operation][:activity_id] == "2" && params[:operation][:type_id] != "1"
-        if params[:operation][:type_id] == "2" #solid manure
-          total_n = (params[:op][:total_n_con].to_f/2000)/((100-params[:op][:moisture].to_f)/100)
-          total_p = ((params[:op][:total_p_con].to_f*PO4_TO_P2O5)/2000)/((100-params[:op][:moisture].to_f)/100)
-        elsif params[:operation][:type_id] == "3" #liquid manure
-          total_n = (params[:op][:total_n_con].to_f*0.011982)/(100-params[:op][:moisture].to_f)
-          total_p = (params[:op][:total_p_con].to_f*PO4_TO_P2O5*0.011982)/(100-params[:op][:moisture].to_f)
-        end
-        fert_type = Fertilizer.find(params[:operation][:subtype_id])
-        params[:operation][:no3_n] = total_n * fert_type.qn * 100
-        params[:operation][:org_n] = total_n * fert_type.yn * 100
-        params[:operation][:po4_p] = total_p * fert_type.qp * 100
-        params[:operation][:org_p] = total_p * fert_type.yp * 100
-      end
+      calculate_nutrients(params[:op][:total_n_con].to_f, params[:op][:moisture].to_f, params[:op][:total_p_con].to_f)
       operation = Operation.new(operation_params)
       if operation.activity_id == 2 && operation.type_id == 1 && operation.po4_p > 0 && operation.po4_p < 100 then
         operation.po4_p *= PO4_TO_P2O5
@@ -154,7 +141,7 @@ class OperationsController < ApplicationController
       @crops = Crop.load_crops(@project.location.state_id)
       if operation.save
         #saves start grazing operation in SoilOperation table
-        if operation.activity_id != 9 then
+        if operation.activity_id != 9 && operation.activity_id != 10 then
           msg = add_soil_operation(operation)
         end
         saved = true
@@ -232,20 +219,7 @@ class OperationsController < ApplicationController
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
-    if params[:operation][:activity_id] == "2" && params[:operation][:type_id] != "1"
-      if params[:operation][:type_id] == "2" #solid manure
-        total_n = (params[:operation][:org_c].to_f/2000)/((100-params[:operation][:moisture].to_f)/100)
-        total_p = ((params[:operation][:nh4_n].to_f*PO4_TO_P2O5)/2000)/((100-params[:operation][:moisture].to_f)/100)
-      elsif params[:operation][:type_id] == "3" #liquid manure
-        total_n = (params[:operation][:org_c].to_f*0.11982)/(100-params[:operation][:moisture].to_f)
-        total_p = (params[:operation][:nh4_n].to_f*PO4_TO_P2O5*0.11982)/(100-params[:operation][:moisture].to_f)
-      end
-      fert_type = Fertilizer.find(params[:operation][:subtype_id])
-      params[:operation][:no3_n] = total_n * fert_type.qn * 100
-      params[:operation][:org_n] = total_n * fert_type.yn * 100
-      params[:operation][:po4_p] = total_p * fert_type.qp * 100
-      params[:operation][:org_p] = total_p * fert_type.yp * 100
-    end
+    calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f)
     #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
       #params[:operation][:depth] = params[:operation][:depth].to_f / 100
     #end
@@ -263,8 +237,8 @@ class OperationsController < ApplicationController
         #soil_operations.each do |soil_operation|
           #update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         #end
-        SoilOperation.where(:operation_id => @operation.id).delete_all  #delete updated soilOperation and create the new ones.
-        if @operation.activity_id != 9 then add_soil_operation(@operation) end
+        SoilOperation.where("operation_id = ? OR (type_id = ? AND apex_operation = ?)", @operation.id, @operation.id, 427).delete_all  #delete updated soilOperation and create the new ones.
+        if @operation.activity_id != 9 && @operation.activity_id != 10 then add_soil_operation(@operation) end
         if @operation.activity_id == 7 || @operation.activity_id == 9 then
           if (Operation.find_by_type_id(@operation.id) != nil) then
             @operation1 = Operation.find_by_type_id(@operation.id)
@@ -292,7 +266,7 @@ class OperationsController < ApplicationController
           @operation1.month_id = params[:month_id1]
           @operation1.day = params[:day1]
           @operation1.save
-          if @operation.activity_id != 9 then add_soil_operation(@operation1) end
+          if @operation1.activity_id != 9 && @operation1.activity_id != 10 then add_soil_operation(@operation1) end
           #soil_operations = SoilOperation.where(:operation_id => @operation1.id)
           #soil_operations.each do |soil_operation|
             #update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
@@ -757,6 +731,23 @@ class OperationsController < ApplicationController
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def operation_params
     params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id, :moisture, :org_c, :nh4_n, :rotation)
+  end
+
+  def calculate_nutrients(total_n_con, moisture, total_p_con)
+    if params[:operation][:activity_id] == "2" && params[:operation][:type_id] != "1"
+      if params[:operation][:type_id] == "2" #solid manure
+        total_n = (total_n_con/2000)/((100-moisture)/100)
+        total_p = ((total_p_con*PO4_TO_P2O5)/2000)/((100-moisture)/100)
+      elsif params[:operation][:type_id] == "3" #liquid manure
+        total_n = (total_n_con*0.011982)/(100-moisture)
+        total_p = (total_p_con*PO4_TO_P2O5*0.011982)/(100-moisture)
+      end
+      fert_type = Fertilizer.find(params[:operation][:subtype_id])
+      params[:operation][:no3_n] = total_n * fert_type.qn * 100  #convert fraction to percentage. When fert line is being changed (simuilation_helper/add_operation)
+      params[:operation][:org_n] = total_n * fert_type.yn * 100
+      params[:operation][:po4_p] = total_p * fert_type.qp * 100
+      params[:operation][:org_p] = total_p * fert_type.yp * 100
+    end
   end
 
   def add_soil_operation(operation)
