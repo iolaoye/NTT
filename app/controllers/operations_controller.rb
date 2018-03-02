@@ -141,7 +141,7 @@ class OperationsController < ApplicationController
       @crops = Crop.load_crops(@project.location.state_id)
       if operation.save
         #saves start grazing operation in SoilOperation table
-        if operation.activity_id != 9 then
+        if operation.activity_id != 9 && operation.activity_id != 10 then
           msg = add_soil_operation(operation)
         end
         saved = true
@@ -237,8 +237,8 @@ class OperationsController < ApplicationController
         #soil_operations.each do |soil_operation|
           #update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
         #end
-        SoilOperation.where(:operation_id => @operation.id).delete_all  #delete updated soilOperation and create the new ones.
-        if @operation.activity_id != 9 then add_soil_operation(@operation) end
+        SoilOperation.where("operation_id = ? OR (type_id = ? AND apex_operation = ?)", @operation.id, @operation.id, 427).delete_all  #delete updated soilOperation and create the new ones.
+        if @operation.activity_id != 9 && @operation.activity_id != 10 then add_soil_operation(@operation) end
         if @operation.activity_id == 7 || @operation.activity_id == 9 then
           if (Operation.find_by_type_id(@operation.id) != nil) then
             @operation1 = Operation.find_by_type_id(@operation.id)
@@ -266,7 +266,7 @@ class OperationsController < ApplicationController
           @operation1.month_id = params[:month_id1]
           @operation1.day = params[:day1]
           @operation1.save
-          if @operation.activity_id != 9 then add_soil_operation(@operation1) end
+          if @operation1.activity_id != 9 && @operation1.activity_id != 10 then add_soil_operation(@operation1) end
           #soil_operations = SoilOperation.where(:operation_id => @operation1.id)
           #soil_operations.each do |soil_operation|
             #update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
