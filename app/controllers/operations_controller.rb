@@ -120,7 +120,12 @@ class OperationsController < ApplicationController
     soil_op_saved = false
     #msg = "Unknown error"
     ActiveRecord::Base.transaction do
-      calculate_nutrients(params[:op][:total_n_con].to_f, params[:op][:moisture].to_f, params[:op][:total_p_con].to_f)
+      case true
+      when params[:op] != nil then
+        calculate_nutrients(params[:op][:total_n_con].to_f, params[:op][:moisture].to_f, params[:op][:total_p_con].to_f)
+      when params[:operation] != nil
+        calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f)
+     end
       operation = Operation.new(operation_params)
       if operation.activity_id == 2 && operation.type_id == 1 && operation.po4_p > 0 && operation.po4_p < 100 then
         operation.po4_p *= PO4_TO_P2O5
