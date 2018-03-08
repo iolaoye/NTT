@@ -230,7 +230,7 @@
 							<td class=<%= if averages2[0][3]-averages1[0][3] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", ((averages2[0][3]-averages1[0][3]) / averages1[0][3]) * 100) + ")" %></td>	
 						<% end %>
 						<% if @scenario3 != "0" && @scenario3 != "" then %>
-							<td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", cis3[0][4]) + ")" %></td>
+							<td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][3]) + " (" + sprintf("%8.1f", cis3[0][4]) + ")" %></td>
 							<td class=<%= if averages3[0][3]-averages1[0][3] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", ((averages3[0][3]-averages1[0][3]) / averages1[0][3]) * 100) + ")" %></td>									
 						<% end %>							
 					</tr>
