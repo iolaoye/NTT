@@ -1105,7 +1105,7 @@ module SimulationsHelper
     return "OK"
   end
 
-  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
+  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)    
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @grazingb = false

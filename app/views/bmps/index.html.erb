@@ -121,7 +121,7 @@
               </td>-->
             </tr>
             <tr>
-              <% if bmp.depth == 1 %>              
+              <% if bmp.depth == 1 %>
                 <td class="field indent2" id = "td_n_rate" colspan="2" style="display: none">
               <% else %>
                 <td class="field indent2" id = "td_n_rate" colspan="2">
@@ -224,7 +224,7 @@
                 <% else %>
                   <% ie = 0 %>
                 <% end %>
-                <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :step => 'any', :min => 0, :max => 1, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_pnd, :irrigation_efficiency, :value => ie, :step => '0.01', :min => 0, :max => 1, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
           <% when 10 %>
@@ -265,25 +265,25 @@
             <tr>
               <td class="indent2" colspan="2">
               <%= label :no3_n, t('bmp.no3_n_html') + " " + t('bmp.zero_to_one') %>
-              <%= number_field :bmp_sf, :no3_n, :value => bmp.no3_n, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_sf, :no3_n, :value => bmp.no3_n, :step => '0.001', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent2" colspan="2">
               <%= label :po4_p, t('bmp.po4_p_html') + " " + t('bmp.zero_to_one') %>
-              <%= number_field :bmp_sf, :po4_p, :value => bmp.po4_p, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_sf, :po4_p, :value => bmp.po4_p, :step => '0.001', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent2" colspan="2">
               <%= label :org_n, t('bmp.org_n_html') + " " + t('bmp.zero_to_one') %>
-              <%= number_field :bmp_sf, :org_n, :value => bmp.org_n, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_sf, :org_n, :value => bmp.org_n, :step => '0.001', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
               <td class="indent2" colspan="2">
               <%= label :org_p, t('bmp.org_p_html') + " " + t('bmp.zero_to_one') %>
-              <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
+              <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :step => '0.001', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
           <% when 13 %>
