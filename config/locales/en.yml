@@ -1042,14 +1042,16 @@ en:
   aplcat:
       noc: Number of Cows
       nomb: Number of mature bulls
-      norh: Number of Replacement Heifers
+      norh: Number of First Calf Heifers
+      nocrh: Number of Calves to be Raised as Heifers
       abwc: Average Body Weight of Cows (lb)
       abwmb: Average Body Weight of Mature Bulls (lb)
-      abwh: Average Body Weight of Heifers (lb)
+      abwh: Average Body Weight of First Calf Heifers (lb)
+      abwrh: Average Body Weight of Replacement Heifers (lb)
       prh: Proportion of Replacement Heifers (%)
       prb: Proportion of Replacement Bulls (%)
       adwgbc: Average daily weight gain (lb) by calves/growing cattle
-      adwgbh: Average daily weight gain (lb) by heifers
+      adwgbh: Average daily weight gain (lb) by replacement heifers
       mrga: Mortality rate of growing animals (%)
       jdcc: Julian day of cows conceiving
       gpc: Gestation period of cows
@@ -1058,6 +1060,7 @@ en:
       srop: Success rate of pregnancy (%)
       bwoc: Birth weight of calves (lb)
       jdbs: Julian day of buying/selling
+      abc: Animal Breed Code
       dmd: Dry Matter Digestibility (DMD)(%)
       dmi: "DMI (% of body weight)"
       napanr: Stocking rate in native range. Number of animals/acre
@@ -1089,13 +1092,47 @@ en:
       animal_growth_parameters: Animal Growth and Nutrition Parameters
       environmental_parameters: Environmental Parameters
       greenhouse_parameters: Greenhouse Parameters
+      simulation_parameters: Simulation Parameters
+      mrgauh: Mortality rate of growing animals until harvest
+      plac: Proportion of live animal to carcass (%)
+      pcbb: Proportion of carcass to boneless beef
+      fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excerted)
+      domd: Digestibility of milk (DMD) %
+      vsim: Volatile solid in manure (kg of dry organic matter)
+      faueea: Fraction of urinary energy expressed as fraction of GE
+      acim: Ash content in manure (fraction of dry matter intake)
+      mmppm: Maximum methane production potential for the manure (Bo)
+      cffm: Conversion factor for manure management system
+      fnemm: Fraction of nitrogen excretion managed in manure management system
+      effd: Emission factor for direct N2O emissions from manure management system
+      ptbd: Proportion (for beef by-products) to be discounted in footprint estimation
+      pocib: Proportion of carbon in beef cattle manure (% on a dry matter basis)
+      bneap: 'Bulls: Nitrogen excretion as proportion of intake (%)'
+      cneap: 'Cows: Nitrogen excretion as proportion of intake (%)'
+      hneap: 'Heifers: Nitrogen excretion as proportion of intake (%)'
+      pobw: Proportion (0 to 1) of body weight as shrunk body weight (SBW)
+      posw: Proportion (0 to 1) of shrunk weight gain (SWG) as empty body gain (EBG)
+      posb: Proportion (0 to 1) of shrunk body weight (SBW) as empty body weight (EBW)
+      poad: Proportion (0 to 1) of apparent digestion of RDP in rumen
+      poada: Proportion (0 to 1) of apparent digestion of RUP in abomasum
+      cibo: '% change in bodyweight for over-eating'
+      simulation_methods: Simulation Methods
       water_use_pumping_parameters: Water Use and Pumping Parameters
       other_parameters: Other Parameters
       animal_feed_parameters: Animal Feed Parameters
       avg_temp: Daily average temperature for each month
       avg_rh: Daily average relative humidity for each month
       grazing: Grazing
-      mm_type: Enter 1 to use IPCC tier 2 and 2 to use a fraction of manure to estimate manure methane
+      mm_type: Manure to estimate manure methane
+      ipcc: Use IPCC tier 2
+      chianese: Use Chianese (co-efficient method based on total manure)
+      nit: Nitrogen balance estimation
+      wal: Waldip and Dong
+      nasem: NASEM equation 16_1 and 16_3
+      massb: Mass balance approach
+      fqd: Forage quality data
+      ufq: Use forage quality
+      dufq: Don't use forage quality
       fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excreted)
       supplement_parameters: Supplement Parameters
   grazing:
@@ -1109,6 +1146,11 @@ en:
       norh: 'Total number of female animals kept by the producer as a replacement for the cows sold'
       abwc: 'Body weight of Cows in pounds'
       abwmb: 'Body weight of Bulls in pounds'
+      abwrh: 'Average Body weight of Replacement Heifers in pounds'
+      nocrh: 'Total number of Calves to be raised as Heifers'
+      abc: 'Animal breed code to be selected from AnimalBreedDatabase.txt'
+      graze_code: 'Refer to feed composition table file "FCT-NASEM-2016.txt"'
+      dmis: '% of animal bodyweight (OR) lb/day'
       abwh: 'Body weight of Heifers in pounds'
       prh: 'A value of 10  % means Cows live in the Cow-Calf system for ten years before slaughter'
       prb: 'A value of 20  % means Bulls live in the Cow-Calf system for five years before slaughter'
@@ -1158,15 +1200,22 @@ en:
       animal_feed_parameters:
       supplement_parameters:
   graze:
-    total: 'Total number of grasses grazed by cattle'
-    code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
-    sjd: 'Starting julian day of grazing'
-    ejd: 'Ending julian day of grazing'
-    dmi_code: 'Dry Matter Intake (DMI) code Use 1: Prop. of animal weight 2: Absolute rates 3:Estimate'
-    dmi_cows: 'DMI of cows (% of animal bodyweight (OR) lb/day)'
-    dmi_bulls: 'DMI of bulls (% of animal bodyweight (OR) lb/day)'
-    dmi_heifers: 'DMI of heifers (% of animal bodyweight (OR) lb/day)'
-    dmi_calves: 'DMI of calves (% of animal bodyweight (OR) lb/day)'
+    forage: 'Read daily forage production data (from APEX/other external source)'
+    yes: 'Yes'
+    no: 'No'
+    total: 'Total number of feedings in a year'
+    code_for: 'What the animal eat; Forage ID from "FCT-NASEM-2018.txt"'
+    code_supp: 'What the animal eat; Suplement/concentrate ID from "FCT-NASEM-2018.txt"'
+    sjd: 'Starting julian day for the feeding period'
+    ejd: 'Ending julian day for the feeding period'
+    dmi_code: 'Basis of Dry Matter Intake'
+    dmi_code1: '1: % of body weight'
+    dmi_code2: '2: Absolute quantity'
+    dmi_cows: 'Dry Matter Intake of cows'
+    dmi_bulls: 'Dry Matter Intake of bulls'
+    dmi_heifers: 'Dry Matter Intake of first calves heifers'
+    dmi_calves: 'Dry Matter Intake of calves'
+    dmi_rheifers: 'Dry Matter Intake of replacement heifers'
     gwf: 'Green water footprint (L/kg)'
     ln1: 'Line 1: Total number of animal feed cattle have access to'
     ln2: 'Animal feed code (refer to feed composition table file "FCT-NASEM-2016.txt")'
