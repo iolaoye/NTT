@@ -100,6 +100,6 @@ class GrazingParametersController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def grazing_parameter_params
-      params.require(:grazing_parameter).permit(:code, :dmi_bulls, :dmi_calves, :dmi_code, :dmi_cows, :dmi_heifers, :ending_julian_day, :green_water_footprint, :starting_julian_day, :forage, :dmi_rheifers)
+      params.require(:grazing_parameter).permit(:code, :code_for, :dmi_bulls, :dmi_calves, :dmi_code, :dmi_cows, :dmi_heifers, :ending_julian_day, :green_water_footprint, :starting_julian_day, :forage, :dmi_rheifers)
     end
 end

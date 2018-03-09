@@ -1,6 +1,6 @@
 class AplcatParameter < ActiveRecord::Base
   attr_accessor :mrgauh, :plac, :pcbb, :fmbmm, :domd, :vsim, :faueea, :acim, :mmppm, :cffm, :fnemm, :effd, :ptbd, :pocib, :bneap,
-         :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :abwrh, :nocrh, :abc
+         :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :abwrh, :nocrh, :abc, :mm_type, :nit, :fqd, :uovfi, :srwc
   attr_accessible :abwc, :abwh, :abwmb, :adwgbc, :noc, :nomb, :norh, :prh, :adwgbh, :mrga, :jdcc, :gpc,
 				 :tpwg, :csefa , :srop, :bwoc, :jdbs, :dmd, :dmi, :napanr, :napaip, :mpsm, :splm, :pmme, :rhaeba, :toaboba,
 				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape,
@@ -13,9 +13,9 @@ class AplcatParameter < ActiveRecord::Base
 	  if self.new_record?
 		self.abwc = 1300
 		self.noc = 100
-		self.abwh =  600
+		self.abwh =  900
 		self.abwmb =  1500
-		self.adwgbc = 1.75
+		self.adwgbc = 1.7
 		self.nomb = 8
 		self.norh = 25
 		self.prb =  20.0

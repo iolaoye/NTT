@@ -72,6 +72,11 @@ class CreateAplcatParameters < ActiveRecord::Migration
     t.float :poad
     t.float :poada
     t.float :cibo
+    t.integer :mm_type
+    t.integer :nit
+    t.integer :fqd
+    t.integer :uovfi
+    t.integer :srwc
 
       t.timestamps
     end

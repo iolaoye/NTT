@@ -101,6 +101,6 @@ class SupplementParametersController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def supplement_parameter_params
-      params.require(:supplement_parameter).permit(:code, :starting_julian_day, :ending_julian_day, :dmi_bulls, :dmi_calves, :dmi_code, :dmi_cows, :dmi_heifers, :green_water_footprint, :scenario_id, :forage, :dmi_rheifers)
+      params.require(:supplement_parameter).permit(:code, :code_for, :starting_julian_day, :ending_julian_day, :dmi_bulls, :dmi_calves, :dmi_code, :dmi_cows, :dmi_heifers, :green_water_footprint, :scenario_id, :forage, :dmi_rheifers)
     end
 end

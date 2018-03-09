@@ -54,27 +54,32 @@ class CreateTableAplcatParameters < ActiveRecord::Migration
     t.integer :nocrh
     t.integer :abc
     t.float :plac
-    t.float :pcbb 
-    t.float :fmbmm 
-    t.float :domd 
-    t.float :vsim 
-    t.float :faueea 
-    t.float :acim 
-    t.float :mmppm 
-    t.float :cffm 
-    t.float :fnemm 
-    t.float :effd 
-    t.float :ptbd 
-    t.float :pocib 
+    t.float :pcbb
+    t.float :fmbmm
+    t.float :domd
+    t.float :vsim
+    t.float :faueea
+    t.float :acim
+    t.float :mmppm
+    t.float :cffm
+    t.float :fnemm
+    t.float :effd
+    t.float :ptbd
+    t.float :pocib
     t.float :bneap
-    t.float :cneap 
-    t.float :hneap 
-    t.float :pobw 
-    t.float :posw 
-    t.float :posb 
-    t.float :poad 
-    t.float :poada 
-    t.float :cibo 
+    t.float :cneap
+    t.float :hneap
+    t.float :pobw
+    t.float :posw
+    t.float :posb
+    t.float :poad
+    t.float :poada
+    t.float :cibo
+    t.integer :mm_type
+    t.integer :nit
+    t.integer :fqd
+    t.integer :uovfi
+    t.integer :srwc
 
       t.timestamps
     end

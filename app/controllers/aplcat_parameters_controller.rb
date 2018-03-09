@@ -149,6 +149,6 @@ class AplcatParametersController < ApplicationController
 				 :tpwg, :csefa , :srop, :bwoc, :jdbs, :dmd, :dmi, :napanr, :napaip, :mpsm, :splm, :pmme, :rhaeba, :toaboba,
 				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape,
 				 :platc, :pctbb, :ptdife, :tnggbc, :prb, :mrgauh, :plac, :pcbb, :fmbmm, :domd, :vsim, :faueea, :acim, :mmppm, :cffm, :fnemm, :effd, :ptbd, :pocib, :bneap,
-         :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :abwrh, :nocrh, :abc)
+         :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :abwrh, :nocrh, :abc, :mm_type, :nit, :fqd, :uovfi, :srwc)
     end
 end

@@ -1098,14 +1098,14 @@ en:
       pcbb: Proportion of carcass to boneless beef
       fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excerted)
       domd: Digestibility of milk (DMD) %
-      vsim: Volatile solid in manure (kg of dry organic matter)
-      faueea: Fraction of urinary energy expressed as fraction of GE
+      vsim: Volatile solid in manure (kg of dry organic matter) If it is zero; model will estimate
+      faueea: 'Fraction of urinary energy expressed as fraction of GE (Typical values: 0.4 forage diet and 0.02 for grain diet)'
       acim: Ash content in manure (fraction of dry matter intake)
       mmppm: Maximum methane production potential for the manure (Bo)
-      cffm: Conversion factor for manure management system
+      cffm: 'Conversion factor for manure management system (Increases with temperature: pasture 1-2 storage 2-5)'
       fnemm: Fraction of nitrogen excretion managed in manure management system
       effd: Emission factor for direct N2O emissions from manure management system
-      ptbd: Proportion (for beef by-products) to be discounted in footprint estimation
+      ptbd: Proportion (for beef by-products) to be discounted in footprint estimation (e.g. value of byproducts)
       pocib: Proportion of carbon in beef cattle manure (% on a dry matter basis)
       bneap: 'Bulls: Nitrogen excretion as proportion of intake (%)'
       cneap: 'Cows: Nitrogen excretion as proportion of intake (%)'
@@ -1133,6 +1133,12 @@ en:
       fqd: Forage quality data
       ufq: Use forage quality
       dufq: Don't use forage quality
+      uovfi: Use of variable forage intake rate w.r.t. quality in grazing period
+      vr1: Variable rate
+      ib2: As indicated below
+      srwc: Simulate realistic weight change in proportion to availability of animal
+      syes: Yes, Simulate
+      sno: No, Don't simulate
       fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excreted)
       supplement_parameters: Supplement Parameters
   grazing:
