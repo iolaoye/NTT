@@ -15,10 +15,10 @@
     <%= radio_button_tag :forage, "1"%> <%= t('graze.yes') %><br>
     <%= radio_button_tag :forage, "2"%> <%= t('graze.no') %><br>
   </div>
-  <div class="field">
+  <!--<div class="field">
     <%=  t('graze.total') %><br>
     <%= f.number_field :code, min: 0, max: 10 %>
-  </div><br>
+  </div>--><br>
 
 <table class="table table-striped">
   <tbody>
@@ -62,7 +62,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('graze.dmi_cows') %><br>
-            <%= f.number_field :dmi_cows, :title => t('aplcat_tooltip.dmis') %>
+            <%= f.number_field :for_dmi_cows, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
           </div>
         </tr>
       </td>
@@ -70,7 +70,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('graze.dmi_bulls') %><br>
-            <%= f.number_field :dmi_bulls, :title => t('aplcat_tooltip.dmis') %>
+            <%= f.number_field :for_dmi_bulls, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
           </div>
         </tr>
       </td>
@@ -78,7 +78,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('graze.dmi_heifers') %><br>
-            <%= f.number_field :dmi_heifers, :title => t('aplcat_tooltip.dmis') %>
+            <%= f.number_field :for_dmi_heifers, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
           </div>
         </tr>
       </td>
@@ -86,7 +86,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('graze.dmi_calves') %><br>
-            <%= f.number_field :dmi_calves, :title => t('aplcat_tooltip.dmis') %>
+            <%= f.number_field :for_dmi_calves, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
           </div>
         </tr>
       </td>
@@ -94,7 +94,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('graze.dmi_rheifers') %><br>
-            <%= f.number_field :dmi_rheifers, :title => t('aplcat_tooltip.dmis') %>
+            <%= f.number_field :for_dmi_rheifers, :title => t('aplcat_tooltip.dmis'), :type => "number" %>
           </div>
         </td>
       </tr>
@@ -134,7 +134,7 @@
           <td class="indent" colspan="2">
             <div class="field">
               <%= t('graze.dmi_cows') %><br>
-              <%= f.number_field :dmi_cows, :title => t('aplcat_tooltip.dmis') %>
+              <%= f.number_field :dmi_cows, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
             </div>
           </tr>
         </td>
@@ -142,7 +142,7 @@
           <td class="indent" colspan="2">
             <div class="field">
               <%= t('graze.dmi_bulls') %><br>
-              <%= f.number_field :dmi_bulls, :title => t('aplcat_tooltip.dmis') %>
+              <%= f.number_field :dmi_bulls, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
             </div>
           </tr>
         </td>
@@ -150,7 +150,7 @@
           <td class="indent" colspan="2">
             <div class="field">
               <%= t('graze.dmi_heifers') %><br>
-              <%= f.number_field :dmi_heifers, :title => t('aplcat_tooltip.dmis') %>
+              <%= f.number_field :dmi_heifers, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
             </div>
           </tr>
         </td>
@@ -158,7 +158,7 @@
           <td class="indent" colspan="2">
             <div class="field">
               <%= t('graze.dmi_calves') %><br>
-              <%= f.number_field :dmi_calves, :title => t('aplcat_tooltip.dmis') %>
+              <%= f.number_field :dmi_calves, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
             </div>
           </tr>
         </td>
@@ -166,7 +166,7 @@
           <td class="indent" colspan="2">
             <div class="field">
               <%= t('graze.dmi_rheifers') %><br>
-              <%= f.number_field :dmi_heifers, :title => t('aplcat_tooltip.dmis') %>
+              <%= f.number_field :dmi_rheifers, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
             </div>
           </td>
         </tr>
