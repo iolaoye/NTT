@@ -411,6 +411,64 @@
 <%end%>
 </div>
 
+<div style='display:none' id="div_10">
+  <%= field_set_tag t('aplcat.scenario_file'), class:'fieldset' do %>
+  <table>
+    <thread>
+      <tr>
+        <th><div class="field">
+          <%=  t('aplcat.mdogfc') %>
+          <%= f.number_field :mdogfc, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %>
+        </div>
+      </th>
+      <th><div class="field">
+        <%=  t('aplcat.mxdogfc') %>
+        <%= f.number_field :mxdogfc, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %>
+      </div>
+    </th>
+  </tr>
+  <tr>
+    <th><div class="field">
+      <%=  t('aplcat.cwsoj') %>
+      <%= f.number_field :cwsoj, class: 'gvTitleStyleNumber', :step => 'any', min: 1, max: 366 %>
+    </div>
+  </th>
+    <th><div class="field">
+      <%=  t('aplcat.cweoj') %>
+      <%= f.number_field :cweoj, class: 'gvTitleStyleNumber', :step => 'any', min: 1, max: 366 %>
+    </div>
+  </th>
+</tr>
+  <tr>
+    <th><div class="field">
+      <%= t('aplcat.ewc') %><br>
+      <%= radio_button_tag :ewc, "1"%> <%= t('aplcat.early') %><br>
+      <%= radio_button_tag :ewc, "2"%> <%= t('aplcat.late') %><br>
+      <%= radio_button_tag :ewc, "3"%> <%= t('aplcat.no_change') %><br>
+    </div>
+  </th>
+    <th><div class="field">
+      <%=  t('aplcat.nodew') %>
+      <%= f.number_field :nodew, class: 'gvTitleStyleNumber', :step => 'any', min: 7, max: 44 %>
+    </div>
+  </th>
+  </tr>
+    <tr>
+      <th><div class="field">
+        <%=  t('aplcat.byosm') %>
+        <%= f.number_field :byosm, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %>
+      </div>
+    </th>
+    <th><div class="field">
+      <%=  t('aplcat.eyosm') %>
+      <%= f.number_field :eyosm, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %>
+    </div>
+  </th>
+  </tr>
+</table>
+  </thread>
+  <%end%>
+  </div>
 
   <div class="actions">
     <%= hidden_field_tag(:type, @type) %>
@@ -422,7 +480,7 @@
 <script>
 	function show_div() {
 	    var div_id = ""
-		for(i=1; i<= 9; i++) {
+		for(i=1; i<= 10; i++) {
 			div_id = "div_".concat(i);
 		    document.getElementById(div_id).style.display="none";
 		}

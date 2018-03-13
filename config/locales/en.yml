@@ -1139,6 +1139,18 @@ en:
       srwc: Simulate realistic weight change in proportion to availability of animal
       syes: Yes, Simulate
       sno: No, Don't simulate
+      scenario_file: Scenario File
+      mdogfc: Minimum days of gestation for cows
+      mxdogfc: Maximum days of gestation for cows
+      cwsoj: Calving window starts on Julian day
+      cweoj: Calving window ends on Julian day
+      ewc: Early weaning code
+      early: Early
+      late: Late
+      no_change: No change
+      nodew: Number of days early/late weaning
+      byosm: Beginning year of simulation
+      eyosm: Ending year of simulation
       fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excreted)
       supplement_parameters: Supplement Parameters
   grazing:

@@ -48,6 +48,7 @@ class AplcatParametersController < ApplicationController
 	@aplcat[t('aplcat.other_parameters')] = 7
   @aplcat[t('aplcat.simulation_parameters')] = 8
   @aplcat[t('aplcat.simulation_methods')] = 9
+  @aplcat[t('aplcat.scenario_file')] = 10
 
 	add_breadcrumb 'Aplcat'
   	if params[:id] == nil then
@@ -73,6 +74,8 @@ class AplcatParametersController < ApplicationController
     add_breadcrumb 'Simulation Parameters'
   when 9
     add_breadcrumb 'Simulation Methods'
+  when 10
+    add_breadcrumb 'Scenario File'
 	else
 	  add_breadcrumb 'Animal Parameters'
 	end
@@ -149,6 +152,6 @@ class AplcatParametersController < ApplicationController
 				 :tpwg, :csefa , :srop, :bwoc, :jdbs, :dmd, :dmi, :napanr, :napaip, :mpsm, :splm, :pmme, :rhaeba, :toaboba,
 				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape,
 				 :platc, :pctbb, :ptdife, :tnggbc, :prb, :mrgauh, :plac, :pcbb, :fmbmm, :domd, :vsim, :faueea, :acim, :mmppm, :cffm, :fnemm, :effd, :ptbd, :pocib, :bneap,
-         :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :abwrh, :nocrh, :abc, :mm_type, :nit, :fqd, :uovfi, :srwc)
+         :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :abwrh, :nocrh, :abc, :mm_type, :nit, :fqd, :uovfi, :srwc, :mdogfc, :mxdogfc, :cwsoj, :cweoj, :ewc, :nodew, :byosm, :eyosm)
     end
 end
