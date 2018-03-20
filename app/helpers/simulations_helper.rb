@@ -67,7 +67,7 @@ module SimulationsHelper
   end
 
   def send_files_to_APEX(file)
-    uri = URI(URL_NTT)
+    uri = URI(URL_TIAER)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth, "rg" => "")
     if res.body.include?("Created") then
@@ -82,16 +82,16 @@ module SimulationsHelper
     rotational_grazing = ""
     if start != nil then
       amount = start.amount * Fertilizer.find_by_code(start.type_id).convertion_unit
-      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
+      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + amount.round(2).to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
     end
     stop = @scenario.operations.find_by_activity_id(10)
     if stop != nil
       rotational_grazing += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
     end
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    url = URI.parse(URL_NTT)
+    url = URI.parse(URL_TIAER)
     http = Net::HTTP.new(url.host,url.port)
-    http.read_timeout = 120
+    http.read_timeout = 2000   #seconds
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     req = Net::HTTP::Post.new(url.path)
     req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => rotational_grazing})
@@ -104,7 +104,7 @@ module SimulationsHelper
   end
 
   def send_file_to_APEX(apex_string, file)
-    uri = URI(URL_NTT)
+    uri = URI(URL_TIAER)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
@@ -115,7 +115,7 @@ module SimulationsHelper
   end
 
   def send_file1_to_APEX(apex_string, file)
-    uri = URI(URL_NTT)
+    uri = URI(URL_TIAER)
     res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
       return "OK"
@@ -808,6 +808,7 @@ module SimulationsHelper
       subareas = @scenario.subareas.where("soil_id > 0 AND (bmp_id = 0 OR bmp_id is NULL)")
     else
       subareas = @scenario.subareas.where("soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
+      subareas[0].wsa = @field.field_area * AC_TO_HA
     end
   	subareas.each do |subarea|
       soil = subarea.soil
@@ -978,7 +979,8 @@ module SimulationsHelper
 		if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
 		  _subarea_info.rchl = _subarea_info.chl
 		end
-		if (operation_number > 1 && i == 0) || i > 0 then
+		if (operation_number > 1 && i == 0) then
+      _subarea_info.rchl = _subarea_info.rchl * 0.9
 		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
 		  #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
 		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
@@ -1065,6 +1067,9 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.fdsf)
     @subarea_file.push(sLine + "\n")
     #/line 10
+    if !buffer && @c_cs then
+      _subarea_info.pec -= 0.20
+    end
     sLine = sprintf("%8.2f", _subarea_info.pec)
     sLine += sprintf("%8.2f", _subarea_info.dalg)
     sLine += sprintf("%8.2f", _subarea_info.vlgn)
@@ -1100,7 +1105,7 @@ module SimulationsHelper
     return "OK"
   end
 
-  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
+  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)    
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @grazingb = false
@@ -1134,8 +1139,10 @@ module SimulationsHelper
       end
       c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop operation
       cc_number = @scenario.operations.last.id
+      @c_cs = false
       c_cs.each do |bmp|
         if bmp != nil then
+          @c_cs = true
           s_o_new = SoilOperation.new
           s_o_new.year = bmp.year
           s_o_new.month = bmp.month_id
@@ -1144,7 +1151,6 @@ module SimulationsHelper
           s_o_new.apex_crop = bmp.crop_id
           s_o_new.activity_id = bmp.activity_id
           s_o_new.opv1 = set_opval1(bmp)
-          #s_o_new.opv2 = set_opval2(SoilOperation.find(last_op_id).soil_id, bmp)
           s_o_new.opv3 = 0
           s_o_new.opv4 = 0
           s_o_new.opv5 = set_opval5(bmp)
@@ -1157,7 +1163,6 @@ module SimulationsHelper
           if last_year > bmp.year then  # validate if last_year is greater than cover crop planting year
             soil_oper = @soil_operations.where(:year => bmp.year + 1).first
             cc_kill_date = Date.parse(sprintf("%2d", soil_oper.year) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))
-            #cc_kill_date += 1.year
           else
             soil_oper = @soil_operations.first
             cc_kill_date = Date.parse(sprintf("%2d", 1) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))          
@@ -1176,8 +1181,6 @@ module SimulationsHelper
           s_o_new_kill.opv5 = 0
           s_o_new_kill.opv6 = 0
           s_o_new_kill.opv7 = 0
-          #cc_number += 1
-          #cc_hash[cc_number] = s_o_new
           last_op_id += 1
           s_o_new_kill.id = last_op_id
           cc_number += 1
@@ -1192,12 +1195,10 @@ module SimulationsHelper
           if c_cs.count > 0  then
             date_oper = Date.parse(sprintf("%2d", soil_operation[1].year) + "/" + sprintf("%2d", soil_operation[1].month) + "/" + sprintf("%2d", soil_operation[1].day))
             if c_c_p == false and date_oper > cc_plt_date then 
-              #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
               j+=1
               c_c_p = true
             end
             if c_c_k == false and date_oper > cc_kill_date then 
-              #add_operation(s_o_new_kill, irrigation_type, nirr, soil_percentage, j)
               j+=1
               c_c_k = true
             end
@@ -1208,7 +1209,6 @@ module SimulationsHelper
       end #end soil_operations.each do
       #just in case the planting operation was after the last operation in the soil_operations file.
       if c_c_p == false and c_cs.count > 0 then
-        #add_operation(s_o_new, irrigation_type, nirr, soil_percentage, j)
       end
       # add to the tillage file the new fertilizer operations - one for each depth
       append_file("tillOrg.dat", "till.dat", "till")
@@ -1372,22 +1372,23 @@ module SimulationsHelper
 		    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
         #divide by 100 to convert percentage to fraction
         org_c = 0
-        if oper.org_c == nil then
+        if oper.activity_id == 2 then
           case oper.type_id
-            when 2 #Manure
-              if Operation.find(operation.operation_id).type_id == 57 then
-                org_c = 0.10 #liquide
-              else
-                org_c = 0.25 #solid
-              end
-          end
-        else
-          org_c = oper.org_c / 100
+          when 2 # solid Manure
+              #if Operation.find(operation.operation_id).type_id == 57 then
+            org_c = 0.25 
+              #else
+              #end
+          when 3  #liquid manure
+            org_c = 0.10
+          end#
+        #else
+          #org_c = oper.org_c / 100
         end
 		    if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)
+			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
 		    else
-			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, Operation.find(operation.operation_id).type_id, oper.nh3, oper.subtype_id, org_c)
+			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
 		    end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
@@ -1716,12 +1717,18 @@ module SimulationsHelper
           # clean results for scenario to avoid keeping some results from previous simulation
           @scenario.results.delete_all
           @scenario.charts.delete_all
+          @scenario.annual_results.delete_all
+          @scenario.crop_results.delete_all
           #Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
           #Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
   		  else
           # clean results for watershed to avoid keeping some results from previous simulation
-          Result.where(:watershed_id => @watershed.id).delete_all
-          Chart.where(:watershed_id => @watershed.id).delete_all
+          #Result.where(:watershed_id => @watershed.id).delete_all
+          #Chart.where(:watershed_id => @watershed.id).delete_all
+          @watershed.results.delete_all
+          @watershed.charts.delete_all
+          @watershed.annual_results.delete_all
+          @watershed.crop_results.delete_all
   		  end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
@@ -1729,7 +1736,7 @@ module SimulationsHelper
         #start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
         #apex_start_year = start_year + 1
         #take results from .NTT file for all but crops
-        msg = load_results(apex_start_year, msg)
+        msg = load_results_annual(apex_start_year, msg)
         msg = load_crop_results(apex_start_year)
       rescue => e
         msg = "Failed, Error: " + e.inspect
@@ -1738,6 +1745,231 @@ module SimulationsHelper
         return msg
       end
     end
+  end
+
+  def load_results_annual(apex_start_year, data)
+    msg = "OK"
+    results_data = Array.new
+    sub_ant = 99
+    qdr_sum = 0
+    qdrn_sum = 0
+    qdrp_sum = 0
+    irri_sum = 0
+    dprk_sum = 0
+    prkn_sum = 0
+    n2o_sum = 0
+    pcp = 0
+    total_subs = 0
+    i=1
+    #apex_control = ApexControl.where(:project_id => params[:project_id])
+    initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
+    data.each_line do |tempa|
+      if i > 3 then
+        year = tempa[7, 4].to_i
+        subs = tempa[0, 5].to_i
+        next if year < apex_start_year #take years greater or equal than ApexStartYear.
+        if subs != 0 and subs != sub_ant then
+          total_subs += 1
+        end
+        #next if (subs == sub_ant || (session[:simulation] == "watershed" && subs != 0)) && subs != 0 #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
+        next if subs == sub_ant  #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
+        sub_ant = subs
+        one_result = Hash.new
+        one_result["sub1"] = subs
+        one_result["year"] = year
+        one_result["flow"] = tempa[31, 9].to_f * MM_TO_IN
+        one_result["surface_flow"] = tempa[254, 9].to_f * MM_TO_IN
+        one_result["sed"] = tempa[40, 9].to_f * THA_TO_TAC
+        one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
+        one_result["orgp"] = tempa[58, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["po4"] = tempa[76, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["orgn"] = tempa[49, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["no3"] = tempa[67, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["qn"] = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
+        one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
+        one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["qdrp"] = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
+        one_result["dprk"] = tempa[135, 9].to_f * MM_TO_IN
+        #one_result["dprk"] = 0 # Deep percolation hidden in results table. deep percolation shows again per Mindy's request. 10/13/2017
+        one_result["irri"] = tempa[237, 8].to_f * MM_TO_IN
+        one_result["pcp"] = tempa[229, 8].to_f * MM_TO_IN
+        one_result["prkn"] = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["n2o"] = tempa[153, 9].to_f
+        if subs == 0 then
+          one_result["qdr"] = qdr_sum / total_subs
+          one_result["qdrn"] = qdrn_sum / total_subs
+          one_result["qdrp"] = qdrp_sum / total_subs
+          one_result["dprk"] = dprk_sum / total_subs
+          one_result["irri"] = irri_sum / total_subs
+          one_result["prkn"] = prkn_sum / total_subs
+          one_result["n2o"] = n2o_sum / total_subs
+          one_result["pcp"] = pcp / total_subs
+          qdr_sum = 0
+          qdrn_sum = 0
+          qdrp_sum = 0
+          irri_sum = 0
+          dprk_sum = 0
+          prkn_sum = 0
+          n2o_sum = 0
+          pcp = 0
+          total_subs = 0
+        else
+          qdr_sum += one_result["qdr"]
+          qdrn_sum += one_result["qdrn"]
+          qdrp_sum += one_result["qdrp"]
+          irri_sum += one_result["irri"]
+          dprk_sum += one_result["dprk"]
+          prkn_sum += one_result["prkn"]
+          n2o_sum += one_result["n2o"]
+          pcp += one_result["pcp"]
+        end  # end if sub == 0
+        if subs == 0 then
+          results_data.push(one_result)
+        end
+      else
+        i = i + 1
+      end   # end if i > 3
+    end   #end data.each_line
+    if session[:simulation] == "scenario" then
+      @scenario.annual_results.create(results_data)
+    else
+      @watershed.annual_results.create(results_data)
+    end
+    #msg = average_totals(results_data) # average totals
+    msg = load_results_monthly(apex_start_year)
+    #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
+    return update_results_table_with_fencing
+  end
+
+  def load_crop_results(apex_start_year)
+    msg = "OK"
+    crops_data = Array.new
+    #oneCrop = Struct.new(:sub1, :name, :year, :yield, :ws, :ts, :ns, :ps, :as1)
+    data = send_file_to_APEX("ACY", session[:session_id]) #this operation will ask for ACY file
+    #todo validate that the file was uploaded correctly
+    j = 1
+    data.each_line do |tempa|
+      if j >= 10 then
+        one_crop = Hash.new
+        year1 = tempa[18, 4].to_i
+        subs = tempa[5, 5].to_i
+        next if year1 < apex_start_year #take years greater or equal than ApexStartYear.
+        #one_crop = oneCrop.new
+        one_crop["sub1"] = subs
+        one_crop["year"] = year1
+        one_crop["name"] = tempa[28, 4]
+        one_crop["yldg"] = tempa[33, 9].to_f
+        one_crop["yldf"] = tempa[43, 9].to_f
+        one_crop["ws"] = tempa[63, 9].to_f
+        one_crop["ns"] = tempa[73, 9].to_f
+        one_crop["ps"] = tempa[83, 9].to_f
+        one_crop["ts"] = tempa[93, 9].to_f
+        #one_crop["as1 = tempa[103, 9].to_f
+        crops_data.push(one_crop)
+      end # end if j>=10
+      j+=1
+    end #end data.each
+    if session[:simulation] == "scenario" then
+      @scenario.crop_results.create(crops_data)
+    else
+      @watershed.crop_results.create(crops_data)
+    end
+    #crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean, v.map(&:ns).mean, v.map(&:ts).mean, v.map(&:ps).mean, v.map(&:ws).mean] }
+    #average_crops_result(crops_data_by_crop_year, 70) #crop results
+    return "OK"
+  end #end method
+
+  def load_results_monthly(apex_start_year)
+    data = send_file_to_APEX("MSW", session[:session_id]) #this operation will ask for MSW file
+    msg = "OK"
+    results_data = Array.new
+    sub_ant = 99
+    qdr_sum = 0
+    qdrn_sum = 0
+    qdrp_sum = 0
+    irri_sum = 0
+    dprk_sum = 0
+    prkn_sum = 0
+    n2o_sum = 0
+    pcp = 0
+    total_subs = 0
+    i=1
+    total_records = 0
+    #apex_control = ApexControl.where(:project_id => params[:project_id])
+    initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
+    data.each_line do |tempa|
+      if i > 3 then
+        year = tempa[1, 4].to_i
+        month = tempa[6, 4].to_i
+        #subs = tempa[0, 5].to_i
+        next if year < apex_start_year #take years greater or equal than ApexStartYear.
+        #if subs != 0 and subs != sub_ant then
+          #total_subs += 1
+        #end
+        #next if (subs == sub_ant || (session[:simulation] == "watershed" && subs != 0)) && subs != 0 #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
+        #next if subs == sub_ant  #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
+        #sub_ant = subs
+        if total_subs == 0 then
+          one_result = Hash.new
+          one_result["sub1"] = month
+          #one_result["year"] = year
+          #one_result["flow"] = tempa[31, 9].to_f * MM_TO_IN
+          one_result["surface_flow"] = tempa[12, 10].to_f * MM_TO_IN
+          one_result["sed"] = tempa[23, 10].to_f * THA_TO_TAC
+          #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
+          one_result["orgp"] = tempa[45, 10].to_f * 20 * (KG_TO_LBS / HA_TO_AC)        #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
+          one_result["po4"] = tempa[67, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          one_result["orgn"] = tempa[34, 10].to_f * 10 * (KG_TO_LBS / HA_TO_AC)   #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
+          one_result["no3"] = tempa[56, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          #one_result["qn"] = tempa[245, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
+          #one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
+          #one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+          #one_result["qdrp"] = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+          # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
+          #one_result["dprk"] = tempa[135, 9].to_f * MM_TO_IN
+          #one_result["dprk"] = 0 # Deep percolation hidden in results table. deep percolation shows again per Mindy's request. 10/13/2017
+          #one_result["irri"] = tempa[237, 8].to_f * MM_TO_IN
+          #one_result["pcp"] = tempa[229, 8].to_f * MM_TO_IN
+          #one_result["prkn"] = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+          #one_result["n2o"] = tempa[153, 9].to_f
+          results_data.push(one_result)
+          if month == 12 then total_subs = 1 end
+        else
+          results_data[month-1]["surface_flow"] += tempa[12, 10].to_f * MM_TO_IN
+          results_data[month-1]["sed"] += tempa[23, 10].to_f * THA_TO_TAC
+          #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
+          results_data[month-1]["orgp"] += tempa[45, 10].to_f * 20 * (KG_TO_LBS / HA_TO_AC)        #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
+          results_data[month-1]["po4"] += tempa[67, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          results_data[month-1]["orgn"] += tempa[34, 10].to_f * 10 * (KG_TO_LBS / HA_TO_AC)   #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
+          results_data[month-1]["no3"] += tempa[56, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+        end
+        if month == 12 then total_records += 1 end
+      else
+        i = i + 1
+      end   # end if i > 3
+    end   #end data.each_line
+    for i in 0..11
+      results_data[i]["surface_flow"] /= total_records
+      results_data[i]["sed"] /= total_records
+      #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
+      results_data[i]["orgp"] /= total_records
+      results_data[i]["po4"] /= total_records
+      results_data[i]["orgn"] /= total_records
+      results_data[i]["no3"] /= total_records
+    end
+    if session[:simulation] == "scenario" then
+      @scenario.annual_results.create(results_data)
+    else
+      @watershed.annual_results.create(results_data)
+    end
+    #msg = average_totals(results_data) # average totals
+    
+    #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
+    #return update_results_table_with_fencing
+    return msg
   end
 
   def load_results(apex_start_year, data)
@@ -1850,8 +2082,9 @@ module SimulationsHelper
         i = i + 1
       end   # end if i > 3
     end   #end data.each_line
-    msg = average_totals(results_data) # average totals
+    #msg = average_totals(results_data) # average totals
     msg = load_monthly_values(apex_start_year)
+    msg = load_monthly(apex_start_year)
     #This calculate fencing nutrients for each scenario and add to nutrients of results. check for scenarios and watershed
     return update_results_table_with_fencing
   end
@@ -2193,38 +2426,6 @@ module SimulationsHelper
   def fixed_array(size, other)
     Array.new(size) { |i| other[i] }
   end
-
-  def load_crop_results(apex_start_year)
-    msg = "OK"
-    crops_data = Array.new
-    oneCrop = Struct.new(:sub1, :name, :year, :yield, :ws, :ts, :ns, :ps, :as1)
-    data = send_file_to_APEX("ACY", session[:session_id]) #this operation will ask for ACY file
-    #todo validate that the file was uploaded correctly
-    j = 1
-    data.each_line do |tempa|
-      if j >= 10 then
-        year1 = tempa[18, 4].to_i
-        subs = tempa[5, 5].to_i
-        next if year1 < apex_start_year #take years greater or equal than ApexStartYear.
-        one_crop = oneCrop.new
-        one_crop.sub1 = subs
-        one_crop.year = year1
-        one_crop.name = tempa[28, 4]
-        one_crop.yield = tempa[33, 9].to_f
-        one_crop.yield += tempa[43, 9].to_f unless (one_crop.name == "COTS" || one_crop.name == "COTP")
-        one_crop.ws = tempa[63, 9].to_f
-        one_crop.ns = tempa[73, 9].to_f
-        one_crop.ps = tempa[83, 9].to_f
-        one_crop.ts = tempa[93, 9].to_f
-        one_crop.as1 = tempa[103, 9].to_f
-        crops_data.push(one_crop)
-      end # end if j>=10
-      j+=1
-    end #end data.each
-    crops_data_by_crop_year = crops_data.group_by { |s| [s.name, s.year] }.map { |k, v| [k, v.map(&:yield).mean, v.map(&:ns).mean, v.map(&:ts).mean, v.map(&:ps).mean, v.map(&:ws).mean] }
-    average_crops_result(crops_data_by_crop_year, 70) #crop results
-    return "OK"
-  end #end method
 
   def average_crops_result(items, desc_id)
     yield_by_name = Array.new

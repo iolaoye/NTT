@@ -56,7 +56,7 @@ class BmpsController < ApplicationController
   			bmp.bmpsublist_id = bmpsublist.id
   			case bmp.bmpsublist_id
   			  when 1  #autoirrigation/autofertigation - defaults
-    				bmp.water_stress_factor = 0.80
+    				bmp.water_stress_factor = 0.2
     				bmp.days = 14
     				bmp.irrigation_efficiency = 0
             bmp.maximum_single_application = 3
@@ -491,8 +491,8 @@ class BmpsController < ApplicationController
             subarea.iri = params[:bmp_ai][:days]
 			      @bmp.days = subarea.iri
             subarea.bir = params[:bmp_ai][:water_stress_factor]
-			      subarea.bir /= 100
-			      @bmp.water_stress_factor = subarea.bir
+			      subarea.bir = (100 - subarea.bir) / 100
+            @bmp.water_stress_factor = 1-subarea.bir
             if subarea.bir >= 1 then subarea.bir = 0.99 end
             subarea.efi = 1.0 - (params[:bmp_ai][:irrigation_efficiency].to_f / 100)
 			      @bmp.irrigation_efficiency = subarea.efi
@@ -562,7 +562,8 @@ class BmpsController < ApplicationController
             subarea.iri = params[:bmp_ai][:days]
             @bmp.days = subarea.iri
             subarea.bir = params[:bmp_ai][:water_stress_factor]
-            @bmp.water_stress_factor = subarea.bir
+            subarea.bir = (100 - subarea.bir) / 100
+            @bmp.water_stress_factor = 1-subarea.bir
             subarea.efi = 1.0 - params[:bmp_ai][:irrigation_efficiency].to_f
             @bmp.irrigation_efficiency = params[:bmp_ai][:irrigation_efficiency].to_f
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
@@ -834,9 +835,14 @@ class BmpsController < ApplicationController
           @bmp.grass_field_portion = 0.00
         end
     		if @bmp.area == 0 || @bmp.area == nil then
-    			length = Math.sqrt(@field.field_area)			# find the length of the field
-    			width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_KM			# convert width from ft to km
-    			@bmp.area = (length * width / AC_TO_KM2).round(2)	# calculate area in km and convert to ac
+          #previous area calculation
+    			#length = Math.sqrt(@field.field_area)			# find the length of the field
+    			#width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_KM			# convert width from ft to km
+    			#@bmp.area = (length * width / AC_TO_KM2).round(2)	# calculate area in km and convert to ac
+          #change the calculation on 2/26/18 accordin to Ali e-mail
+          length = Math.sqrt(@field.field_area * AC_TO_M2)    #convert ac to m2 and take sqrt to find lenght
+          width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_M  # convert width ft to width m
+          @bmp.area = (length * width) / AC_TO_M2   # calculate area in m2 and convert back to ac
     		end
       	if @bmp.save then
     			if @bmp.depth == 13 then

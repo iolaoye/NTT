@@ -11,8 +11,8 @@
 	VERSION = "NTTG3"
 
 # URL to send information to NTT, which return the results
-	URL_NTT = 'http://nn.tarleton.edu/NTTRails/NNRestService.ashx' 
-	#URL_NTT1 = 'http://45.40.132.224/NNMultipleStates/NNRestService.ashx' 
+	URL_TIAER = 'http://nn.tarleton.edu/NTTRails/NNRestService.ashx' 
+	URL_CLOUD = 'http://45.40.132.224/NTTRails/NNRestService.ashx' 
 
 # URL to get heat units
 	URL_HU = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
@@ -40,7 +40,7 @@
 	PRISM2 = 'E:/Weather/weatherFiles/borrar'
 	WP1 = 'E:/Weather/wp1File'
 	WIND = 'E:/Weather/wndFile'
-
+ 
 #folder for download project files
 	DOWNLOAD = 'public/download'
 
@@ -88,6 +88,7 @@
 	KM_TO_M = 1000
 	FSEFF = 1.0
 	MAX_STRIPS = 6
+	PO4_TO_P2O5 = 0.4364
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'

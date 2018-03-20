@@ -44,3 +44,5 @@ class Operation < ActiveRecord::Base
     self.delete
   end
 end
+
+

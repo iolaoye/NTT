@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
+		@errors = Array.new
 		respond_to do |format|
 			if @user.save
 				session[:user_id] = @user.id 		# store user id in session
@@ -29,8 +30,12 @@ class UsersController < ApplicationController
 					format.html { redirect_to welcome_path(0), :notice => "User successfully added"	}# redirect is successful	  
 				end
 			else
-				format.html { render action: :new }
-				format.json { render json: @user.errors, status: :unprocessable_entity }
+				@user.errors.full_messages.each do |error|
+					@errors.push(error)
+				end
+				flash[:errors] = @errors
+				format.html { redirect_to root_path }
+				#format.json { render json: @errors, status: :unprocessable_entity }
 			end
 	  end
   end

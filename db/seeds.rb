@@ -1,33 +1,8 @@
 # encoding: utf-8
-
-file = "db/seeds/importances.rb"
-load file
-
-file = "db/seeds/statuses.rb"
-load file
-
-file = "db/seeds/types.rb"
-load file
-
-file = "db/seeds/crops.rb"
-load file
-
 file = "db/seeds/crop_schedules.rb"
 load file
 
 file = "db/seeds/schedules.rb"
-load file
-
-file = "db/seeds/controls.rb"
-load file
-
-file = "db/seeds/parameters.rb"
-load file
-
-file = "db/seeds/activities.rb"
-load file
-
-file = "db/seeds/bmpsublists.rb"
 load file
 
 file = "db/seeds/tillages.rb"
@@ -75,7 +50,7 @@ if cont then
 
 	file = "db/seeds/drainages.rb"
 	load file
-
+ 
 	file = "db/seeds/events.rb"
 	load file
 
