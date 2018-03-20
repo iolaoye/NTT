@@ -1462,31 +1462,44 @@ es:
     The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area and type in the correct area.<br></br>
     Click <strong>Save</strong> to save the information and continue to the Soils page or back to go back to the fields page.
   soilpage:
-    header: Soils Page
+    header: Página de suelos
     overview:
-        header: Overview
-        body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
-        body_modified: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 3 general rules that apply to all methods. They are as follows:'
+        header: Visión de conjunto
+        body: 'Después de hacer clic en un campo para comenzar a editar en la página <strong> Campos </strong>, se dirigirá al usuario a la página <strong> Suelos </strong>. La página de Suelos es una página de nivel de campo. La página de Suelos permite al usuario cambiar el nombre del campo y ajustar los acres; y verificar, modificar o eliminar los suelos devueltos de la base de datos de suelos de SSURGO y agregar / editar capas para el campo particular seleccionado en la página Campos. NTT devuelve un máximo de 3 suelos por cada campo. Estos suelos representan los suelos más predominantes en el AOI. NTT está limitado a 3 suelos para minimizar el tiempo de procesamiento del modelo.'
+        body_modified: 'After clicking on a field to begin editing on the <strong>Fields</strong> page, the user will be directed to the <strong>Soils</strong> page. The Soils page is a field-level page. The Soils page allows the user to rename the field and adjust the acres; input soil P values; and verify soils returned from the SSURGO soils database for the particular field selected in the Fields page (Just for E version). NTT returns a maximum of 3 soils for every field. These soils represent the most predominant soils in the AOI. NTT is limited to 3 soils in order to minimize model processing time.'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
-        item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.'
+        item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <img src="/serve_image/edit.png"> icon in the <strong>Actions</strong> column.'
         item2_modified: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics.'
         item3: 'However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.'
-        item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <b>Soil Layers</b> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
+        item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
     mapsystem:
-        header: Soil Information
+        header: Nombre / área del campo
         body: 'Users have different options of modifying their soil information. The list below shows all the possible ways that are available in NTT for modifying the soil information.'
         select:
-            header: Adding/Deleting a Soil
-            body1: 'Users can add a new soil by clicking on the <strong>New</strong> button. This will open a new page with all the soils inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new soil inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
-            body2: 'After the soil has been added the user needs to enter at least one layer. The user needs to go to the layers page by clicking on the <b>Soil Layers</b> icon in the <b>Actions</b> column. The rest of the steps are described below in the "Adding/Deleting Layers" description.'
-            body3: 'To delete a soil simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
+            header: Modifying a Soil
+            body1: '<strong> Nombre del campo: </strong> el nombre que el usuario le ha dado al AOI se completa previamente aquí. El usuario puede modificar el nombre si lo desea. El nuevo nombre también se actualizará en la página Campos.'
+            body2: '<strong> Área de campo: </strong> el área de campo muestra el área calculada del campo en acres. El usuario puede refinar este valor si es necesario.'
+            body3: 'To delete a soil simply click on the <img src="/serve_image/delete.png"> icon in the <b>Actions</b> column.'
         info:
-            header: Editing Soil/Layer Information
-            body: 'Some of the soil and all of the layer information can be edited when the el Sitema de Mapa was used. The user can change the soil/layer information by clicking on the <b>Edit</b> icon in the <b>Actions</b> column. It will open a new page that lets the user edit and change the different informations available for the soil. This option is also available for the layers. Once they have done this, they can save the changed inforamtion by clicking on the <b>Save</b> button.'
+            header: Soil Phosphorus
+            body: 'Soil P test values provide NTT with a starting point for phosphorus in the soil. If you do not have a soil P test for your soil, leave these fields blank and NTT will use default soil P values.'
+            body1: '<strong>Soil P Test:</strong> The user should select a soil test, if applicable, that was used to determine the soil phosphorus. Currently NTT includes conversions for the Fe-strip test, Olsen, Bray-1, and Mehlich-3 tests. If you have used a different test, please select Other. If you do not have a soil test for phosphorus, please select None. As we modify NTT for other parts of the country we will include additional tests and P conversions.'
+            body2: '<strong>Soil P:</strong> Users should enter the soil phosphorus test value for their field, if available. If None was selected for the P test then this field will be disabled and a minimum phosphorus concentration in the soil will be used. Similarly, if a soil test is selected, but the field Soil P value is left blank, the tool will assume a minimum phosphorus concentration in the soil.'
+            body3: 'Soil test phosphorus (STP), obtained by the following methods are converted to Mehlich-3 (M3) before inputted in soil data database (The STP-depth is set at 0-6-inch depth by default). The user STP input in NTT is converted Mehlich-3 equivalent using the following equations:'
+            item1: 'Modified Morgan (MM) method (Winchell et al., 2011) <br> M3 = 6.718 × 𝑀𝑀 − 11.83 × PH − 32.757 × 𝑀𝑀/AL + 90.73 <br><br> Where, PH soil PH and AL is soil Aluminum at the top soil 6-inch depth.'
+            item2: 'Fe_strip method (Peter et al., 2007) <br> M3= 0.10 + 1.61 Fe-strip P'
+            item3: 'Olsen_P method (Peter et al., 2007) <br> M3 = 14.8 + 1.54 Olsen P'
+            item4: 'Modified Bray-1) method (Peter et al., 2007) <br> M3 = 10.8 + 0.99 Bray-1 P'
         addremove:
-            header: Adding/Deleting Layers
-            body1: 'Users can add a new layer by clicking on the <strong>New Layer</strong> button. This will open a new page with all the layers inforamtion for which the user needs to enter valid information. Once they have done this, they can save the new layer inforamtion by clicking on the <b>Save</b> button. If the page shows an error message than it means that there are inaccurate values that need to be fixed before advancing.'
-            body2: 'To delete a layer simply click on the <strong>Delete</strong> icon in the <b>Actions</b> column.'
+            header: Administrar / modificar suelos
+            header_modified: Manage/Modify Organic Matter
+            cuerpo1: 'Entre 1 y 3 suelos aparecerán en la lista de suelos devueltos para su campo. Estos representan los suelos más predominantes en su campo según lo devuelto por la base de datos de Suelos de SSURGO.'
+            body2: 'NTT devolverá el <strong> nombre del suelo </strong> y el <strong> grupo de suelos </strong> para cada suelo. Estos datos se derivan de la base de datos de suelos de SSURGO.'
+            body3: 'La pendiente del suelo <strong> </strong> para cada suelo se calcula dinámicamente mediante NTT utilizando las capas del Modelo de Elevación Digital de 30 metros (DEM) asociadas a su campo'
+            body4: 'El valor predeterminado <strong> materia orgánica del suelo (%) </strong> devuelto por la base de datos de suelos de SSURGO se muestra para cada suelo en la lista de suelos. Sin embargo, si el usuario tiene datos más precisos, puede ingresar aquí ".'
+            body5: '<strong> Porcentaje </strong> representa el área de cobertura ajustada del suelo para su campo. Debido a que NTT selecciona solo los 3 suelos más predominantes, el área de cobertura de cada uno se expande proporcionalmente para obtener una cobertura del campo del 100%.'
+            body6: 'Los usuarios pueden <strong> agregar / eliminar capa </strong> de su lista de suelos si no desean que se use en la ejecución del modelo. Simplemente haga clic en el ícono <img src = "/serve_image/layers.png"> en la columna Acciones del suelo que desea agregar / eliminar la capa.'
+            body7: 'Los usuarios pueden <strong> editar el suelo </strong> de su lista de suelos si desean cambiar algunos valores. Simplemente haga clic en el ícono <img src="/serve_image/edit.png"> en la columna Acciones del suelo que desea editar.'
     advance:
         header: Advancing
         body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
