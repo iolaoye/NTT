@@ -1087,7 +1087,7 @@ en:
       pctbb: proportion of carcass to boneless beef (%)
       ptdife: Proportion (for beef by-products) to be discounted in footprint estimation
       tnggbc: Total number of grasses grazed by cattle
-      animal_parameters: ANIMAL PARAMETERS
+      animal_parameters: Animal Parameters
       animal_manure_parameters: Animal Manure Parameters
       animal_growth_parameters: Animal Growth and Nutrition Parameters
       environmental_parameters: Environmental Parameters
@@ -1151,7 +1151,7 @@ en:
       nodew: Number of days early/late weaning
       byosm: Beginning year of simulation
       eyosm: Ending year of simulation
-      divv_11: Water Estimation Parameters 
+      divv_11: Water Estimation Parameters
       drinkg: Drinking water adjustment factor for weight:Growing animals
       drinkl: Drinking water adjustment factor for weight:Lactating cows
       drinkm: Drinking water adjustment factor for weight:Mature bulls
