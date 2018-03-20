@@ -1493,7 +1493,7 @@ es:
         addremove:
             header: Administrar / modificar suelos
             header_modified: Manage/Modify Organic Matter
-            cuerpo1: 'Entre 1 y 3 suelos aparecerán en la lista de suelos devueltos para su campo. Estos representan los suelos más predominantes en su campo según lo devuelto por la base de datos de Suelos de SSURGO.'
+            body1: 'Entre 1 y 3 suelos aparecerán en la lista de suelos devueltos para su campo. Estos representan los suelos más predominantes en su campo según lo devuelto por la base de datos de Suelos de SSURGO.'
             body2: 'NTT devolverá el <strong> nombre del suelo </strong> y el <strong> grupo de suelos </strong> para cada suelo. Estos datos se derivan de la base de datos de suelos de SSURGO.'
             body3: 'La pendiente del suelo <strong> </strong> para cada suelo se calcula dinámicamente mediante NTT utilizando las capas del Modelo de Elevación Digital de 30 metros (DEM) asociadas a su campo'
             body4: 'El valor predeterminado <strong> materia orgánica del suelo (%) </strong> devuelto por la base de datos de suelos de SSURGO se muestra para cada suelo en la lista de suelos. Sin embargo, si el usuario tiene datos más precisos, puede ingresar aquí ".'
