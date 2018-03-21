@@ -91,7 +91,13 @@ class CreateAplcatParameters < ActiveRecord::Migration
     t.float :sriip
     t.float :pogu
     t.float :adoa
-    t.float :ape
+    t.integer :forage_id,
+    t.integer :jincrease,
+    t.integer :opt4,
+    t.float :highest,
+    t.float :lowest,
+    t.integer :stabilization,
+    t.integer :decline
 
       t.timestamps
     end

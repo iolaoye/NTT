@@ -896,7 +896,7 @@ en:
     box: 'P.O. Box T410'
     uni: 'Tarleton State University'
     city: 'Stephenville, TX 76402'
-    phone: '(254)968-9079 (Phone)'
+    phone: '(254)968-9799 (Phone)'
     fax: '(254)968-9790 (Fax)'
     email: '<a href="mailto:saleh@tiaer.tarleton.edu?Subject=Hello%20again" target="_top">saleh@tarleton.edu</a>'
   contact2:
@@ -1093,6 +1093,20 @@ en:
       environmental_parameters: Environmental Parameters
       greenhouse_parameters: Greenhouse Parameters
       simulation_parameters: Simulation Parameters
+      forage_quantity_input: Forage Quantity Input
+      forage_id: Forage Id (refer to "FCT-NASEM-2018.txt")
+      jdi: 'Julian days indicating:'
+      increase: Increase
+      stabilization: Stabilization
+      decline: Decline
+      opt4: Option 4
+      cplof: Crude protein levels (% DM) of forage
+      lowest: Lowest
+      highest: Highest
+      tdnlof: TDN levels (% DM) of forage
+      nlof: NDF levels (% DM) of forage
+      alof: ADF levels (% DM) of forage
+      firobw: Feed intake rates (% of body weight)
       mrgauh: Mortality rate of growing animals until harvest
       plac: Proportion of live animal to carcass (%)
       pcbb: Proportion of carcass to boneless beef
