@@ -1095,11 +1095,11 @@ en:
       simulation_parameters: Simulation Parameters
       forage_quantity_input: Forage Quantity Input
       forage_id: Forage Id (refer to "FCT-NASEM-2018.txt")
-      jdi: 'Julian days indicating:'
-      increase: Increase
-      stabilization: Stabilization
-      decline: Decline
-      opt4: Option 4
+      jdi: 'Forage Quantity Improvement:'
+      increase: Begin to increase
+      stabilization: Start to stabilize
+      decline: End of stability
+      opt4: Start to decline
       cplof: Crude protein levels (% DM) of forage
       lowest: Lowest
       highest: Highest

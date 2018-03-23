@@ -384,7 +384,7 @@
   <%= field_set_tag t('aplcat.simulation_methods'), class:'fieldset' do %>
   <div class="field">
     <%= t('aplcat.mm_type') %><br>
-    <%= radio_button_tag :mm_type, "1"%> <%= t('aplcat.ipcc') %><br>
+    <%= radio_button_tag :mm_type, "1", :checked => "checked"%> <%= t('aplcat.ipcc') %><br>
     <%= radio_button_tag :mm_type, "2"%> <%= t('aplcat.chianese') %><br>
   </div>
   <div class="field">
@@ -395,17 +395,17 @@
   </div>
   <div class="field">
     <%= t('aplcat.fqd') %><br>
-    <%= radio_button_tag :fqd, "1"%> <%= t('aplcat.ufq') %><br>
+    <%= radio_button_tag :fqd, "1", :checked => "checked"%> <%= t('aplcat.ufq') %><br>
     <%= radio_button_tag :fqd, "2"%> <%= t('aplcat.dufq') %><br>
   </div>
   <div class="field">
     <%= t('aplcat.uovfi') %><br>
-    <%= radio_button_tag :uovfi, "1"%> <%= t('aplcat.vr1') %><br>
+    <%= radio_button_tag :uovfi, "1", :checked => "checked"%> <%= t('aplcat.vr1') %><br>
     <%= radio_button_tag :uovfi, "2"%> <%= t('aplcat.ib2') %><br>
   </div>
   <div class="field">
     <%= t('aplcat.srwc') %><br>
-    <%= radio_button_tag :srwc, "1"%> <%= t('aplcat.syes') %><br>
+    <%= radio_button_tag :srwc, "1", :checked => "checked"%> <%= t('aplcat.syes') %><br>
     <%= radio_button_tag :srwc, "2"%> <%= t('aplcat.sno') %><br>
   </div>
 <%end%>
@@ -418,50 +418,50 @@
       <tr>
         <th><div class="field">
           <%=  t('aplcat.mdogfc') %>
-          <%= f.number_field :mdogfc, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %>
+          <%= f.number_field :mdogfc, class: 'gvTitleStyleNumber', :step => 'any', value: 283, min: 0 %>
         </div>
       </th>
       <th><div class="field">
         <%=  t('aplcat.mxdogfc') %>
-        <%= f.number_field :mxdogfc, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %>
+        <%= f.number_field :mxdogfc, class: 'gvTitleStyleNumber', :step => 'any', value: 284, min: 0 %>
       </div>
     </th>
   </tr>
   <tr>
     <th><div class="field">
       <%=  t('aplcat.cwsoj') %>
-      <%= f.number_field :cwsoj, class: 'gvTitleStyleNumber', :step => 'any', min: 1, max: 366 %>
+      <%= f.number_field :cwsoj, class: 'gvTitleStyleNumber', :step => 'any', min: 1, value: 81, max: 366 %>
     </div>
   </th>
     <th><div class="field">
       <%=  t('aplcat.cweoj') %>
-      <%= f.number_field :cweoj, class: 'gvTitleStyleNumber', :step => 'any', min: 1, max: 366 %>
+      <%= f.number_field :cweoj, class: 'gvTitleStyleNumber', :step => 'any', min: 1, value: 83, max: 366 %>
     </div>
   </th>
 </tr>
   <tr>
     <th><div class="field">
       <%= t('aplcat.ewc') %><br>
-      <%= radio_button_tag :ewc, "1"%> <%= t('aplcat.early') %><br>
+      <%= radio_button_tag :ewc, "1", :checked => "checked"%> <%= t('aplcat.early') %><br>
       <%= radio_button_tag :ewc, "2"%> <%= t('aplcat.late') %><br>
       <%= radio_button_tag :ewc, "3"%> <%= t('aplcat.no_change') %><br>
     </div>
   </th>
     <th><div class="field">
       <%=  t('aplcat.nodew') %>
-      <%= f.number_field :nodew, class: 'gvTitleStyleNumber', :step => 'any', min: 7, max: 44 %>
+      <%= f.number_field :nodew, class: 'gvTitleStyleNumber', :step => 'any', value: 7, min: 7, max: 44 %>
     </div>
   </th>
   </tr>
     <tr>
       <th><div class="field">
         <%=  t('aplcat.byosm') %>
-        <%= f.number_field :byosm, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %>
+        <%= f.number_field :byosm, class: 'gvTitleStyleNumber', :step => 'any', value: 2012, min: 0 %>
       </div>
     </th>
     <th><div class="field">
       <%=  t('aplcat.eyosm') %>
-      <%= f.number_field :eyosm, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %>
+      <%= f.number_field :eyosm, class: 'gvTitleStyleNumber', :step => 'any', value: 2014, min: 0 %>
     </div>
   </th>
   </tr>
