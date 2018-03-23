@@ -6,6 +6,18 @@
 
 <p><b>Ending julian day:</b><%= @grazing_parameter.ending_julian_day %></p>
 
+<p><b>Forage dmi cows:</b><%= @grazing_parameter.for_dmi_cows %></p>
+
+<p><b>Forage dmi bulls:</b><%= @grazing_parameter.for_dmi_bulls %></p>
+
+<p><b>Forage dmi heifers:</b><%= @grazing_parameter.for_dmi_heifers %></p>
+
+<p><b>Forage dmi calves:</b><%= @grazing_parameter.for_dmi_calves %></p>
+
+<p><b>Forage dmi replacement heifers:</b><%= @grazing_parameter.for_dmi_rheifers %></p>
+
+<p><b>Green water footprint:</b><%= @grazing_parameter.green_water_footprint %></p>
+
 <p><b>Dmi code:</b><%= @grazing_parameter.dmi_code %></p>
 
 <p><b>Dmi cows:</b><%= @grazing_parameter.dmi_cows %></p>
@@ -16,7 +28,7 @@
 
 <p><b>Dmi calves:</b><%= @grazing_parameter.dmi_calves %></p>
 
-<p><b>Green water footprint:</b><%= @grazing_parameter.green_water_footprint %></p>
+<p><b>Dmi replacement heifers:</b><%= @grazing_parameter.dmi_rheifers %></p>
 
-<%= link_to 'Edit', edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, @grazing_parameter.id), :class => "btn btn-primary" %> 
+<%= link_to 'Edit', edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, @grazing_parameter.id), :class => "btn btn-primary" %>
 <%= link_to 'Back', project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :class => "btn btn-primary" %>
