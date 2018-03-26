@@ -7,12 +7,20 @@
       <thead>
         <tr class='gvHeaderStyle'>
           <th class="gvCellStyleTitle">Type of Supplement</th>
+          <th class="gvCellStyleTitle">Starting julian day</th>
+          <th class="gvCellStyleTitle">Ending julian day</th>
+          <th class="gvCellStyleTitle">Forage Dmi cows</th>
+          <th class="gvCellStyleTitle">Forage Dmi bulls</th>
+          <th class="gvCellStyleTitle">Forage Dmi heifers</th>
+          <th class="gvCellStyleTitle">Forage Dmi calves</th>
+          <th class="gvCellStyleTitle">Forage dmi replacement heifers</th>
+          <th class="gvCellStyleTitle">Green water footprint</th>
           <th class="gvCellStyleTitle">Dmi code</th>
           <th class="gvCellStyleTitle">Dmi cows</th>
           <th class="gvCellStyleTitle">Dmi bulls</th>
           <th class="gvCellStyleTitle">Dmi heifers</th>
           <th class="gvCellStyleTitle">Dmi calves</th>
-          <th class="gvCellStyleTitle">Green water footprint</th>
+          <th class="gvCellStyleTitle">Dmi replacement heifers</th>
           <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
         </tr>
       </thead>
@@ -26,12 +34,20 @@
 					<tr class="gvRowStyleOdd">
 				<% end %>
         <td><%= supplement_parameter.code %></td>
+        <td><%= supplement_parameter.starting_julian_day %></td>
+        <td><%= supplement_parameter.ending_julian_day %></td>
+        <td><%= supplement_parameter.for_dmi_cows %></td>
+        <td><%= supplement_parameter.for_dmi_bulls %></td>
+        <td><%= supplement_parameter.for_dmi_heifers %></td>
+        <td><%= supplement_parameter.for_dmi_calves %></td>
+        <td><%= supplement_parameter.for_dmi_rheifers %></td>
+        <td><%= supplement_parameter.green_water_footprint %></td>
         <td><%= supplement_parameter.dmi_code %></td>
         <td><%= supplement_parameter.dmi_cows %></td>
         <td><%= supplement_parameter.dmi_bulls %></td>
         <td><%= supplement_parameter.dmi_heifers %></td>
         <td><%= supplement_parameter.dmi_calves %></td>
-        <td><%= supplement_parameter.green_water_footprint %></td>
+        <td><%= supplement_parameter.dmi_rheifers %></td>
         <td>
             <%= link_to image_tag("view.png"), project_field_scenario_supplement_parameter_path(@project, @field, @scenario, supplement_parameter) %>
             <%= link_to image_tag("edit.png"), edit_project_field_scenario_supplement_parameter_path(@project, @field, @scenario, supplement_parameter) %>
@@ -44,5 +60,5 @@
     </table>
   </div>
   </div>
-      
+
 <%= link_to 'New supplement parameter', new_project_field_scenario_supplement_parameter_path(@project, @field, @scenario), :class => 'btn btn-success' %>
