@@ -737,8 +737,8 @@
 	<% end %>
 
 	<div class="actions">
-		<%= f.submit t('submit.add_more'), :name => "add_more", :class => "btn btn-primary" %>
-		<%= f.submit t('submit.finish'), :name => "finish", :class => "btn btn-primary" %>
+		<%= f.submit t('submit.add_more'), :name => "add_more", :class => "btn btn-primary", :id => "test" %>
+		<%= f.submit t('submit.finish'), :name => "finish", :class => "btn btn-primary", :id => "test" %>
 		<%= link_to t('general.back'), project_field_scenario_operations_path(@project, @field, @scenario), :class => "btn btn-primary" %>
 	</div>
 <% end %>
