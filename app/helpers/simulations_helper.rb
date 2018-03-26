@@ -67,7 +67,7 @@ module SimulationsHelper
   end
 
   def send_files_to_APEX(file)
-    uri = URI(URL_NTT)
+    uri = URI(URL_TIAER)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth, "rg" => "")
     if res.body.include?("Created") then
@@ -82,14 +82,14 @@ module SimulationsHelper
     rotational_grazing = ""
     if start != nil then
       amount = start.amount * Fertilizer.find_by_code(start.type_id).convertion_unit
-      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + amount.to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
+      rotational_grazing = Crop.find(start.crop_id).number.to_s + "|" + start.day.to_s + "|" + start.month_id.to_s + "|" + start.year.to_s + "|" + start.type_id.to_s + "|" + amount.round(2).to_s + "|" + start.depth.to_s + "|" + start.no3_n.to_s + "|" + start.po4_p.to_s + "|" + start.org_n.to_s + "|" + start.org_p.to_s + "|" + start.moisture.to_s + "|" + start.nh4_n.to_s
     end
     stop = @scenario.operations.find_by_activity_id(10)
     if stop != nil
       rotational_grazing += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
     end
     #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    url = URI.parse(URL_NTT)
+    url = URI.parse(URL_TIAER)
     http = Net::HTTP.new(url.host,url.port)
     http.read_timeout = 2000   #seconds
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
@@ -104,7 +104,7 @@ module SimulationsHelper
   end
 
   def send_file_to_APEX(apex_string, file)
-    uri = URI(URL_NTT)
+    uri = URI(URL_TIAER)
     #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
     res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
@@ -115,7 +115,7 @@ module SimulationsHelper
   end
 
   def send_file1_to_APEX(apex_string, file)
-    uri = URI(URL_NTT)
+    uri = URI(URL_TIAER)
     res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
     if res.body.include?("Created") then
       return "OK"
@@ -808,6 +808,7 @@ module SimulationsHelper
       subareas = @scenario.subareas.where("soil_id > 0 AND (bmp_id = 0 OR bmp_id is NULL)")
     else
       subareas = @scenario.subareas.where("soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
+      subareas[0].wsa = @field.field_area * AC_TO_HA
     end
   	subareas.each do |subarea|
       soil = subarea.soil
@@ -1104,8 +1105,7 @@ module SimulationsHelper
     return "OK"
   end
 
-
-  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
+  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)    
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @grazingb = false

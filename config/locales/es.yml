@@ -3,8 +3,8 @@
 es:
   activerecord:
     form_errors:
-        one: No se pudo guardar este/a %{model} porque se encontró un error
-        other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
+        one: No se pudo salvar este/a %{model} porque se encontró un error
+        other: No se pudo salvar este/a %{model} porque se encontraron %{count} errores
     run_errors:
       one: No se pudo correr este/a %{model} porque se encontró un error
       other: No se pudo correr este/a %{model} porque se encontraron %{count} errores
@@ -288,8 +288,8 @@ es:
     template:
       body: 'Se encontraron problemas con los siguientes campos:'
       header:
-        one: No se pudo guardar este/a %{model} porque se encontró 1 error
-        other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
+        one: No se pudo salvar este/a %{model} porque se encontró 1 error
+        other: No se pudo salvar este/a %{model} porque se encontraron %{count} errores
   notices:
     deleted: " ha sido borrado/a."
     updated: " fue actualizado/a satisfactoriamente."
@@ -580,7 +580,7 @@ es:
     plant_population: 'Población de Planta (seeds/ac)(*opcional)'
     load_operation: Cargar Operación
     sum: 'El total de los nutrientes deben ser menor o igual a 1'
-    save: Guardar
+    save: Salvar
     open: 'Abrir Sistema de Cultivo guardado'
     saved: 'Sistema de Cultivo guardado'
     volume: 'Volumen (pulg.)'
@@ -745,7 +745,7 @@ es:
     already_selected: 'Ese parcela ya ha sido seleccionado. Por favor, elija otra vez.'
   submit:
     create: Crear
-    save: Guardar
+    save: Salvar
     login: Iniciar sesión
     update: Actualizar
     new_user: Usuario Nuevo
@@ -1187,7 +1187,7 @@ es:
     overview:
         header: Resumen
         statement: 'La herramienta de seguimiento de nutrientes fue diseñada de para ser fácil de usar, con diez pantallas principales:'
-        project: 'En la pantalla de <a href=/help/page_3?locale=en>Proyecto</a> , el usuario ingresa el nombre y la descripción del proyecto, o puede abrir proyectos guardados o proyectos de ejemplo o cerrar/guardar el proyecto activo.'
+        project: 'En la pantalla de <a href=/help/page_3?locale=en>Proyecto</a> , el usuario ingresa el nombre y la descripción del proyecto, o puede abrir proyectos guardados o proyectos de ejemplo o cerrar/salvar el proyecto activo.'
         location: 'En la pantalla de <a href=/help/page_4?locale=en>Ubicación</a> , los usuarios ingresan la ubicación del proyecto basado en datos de SIG, en el input de estado/Condado, o la entrada manual del usuario.'
         weather: 'En la pantalla de <a href=/help/page_5?locale=en>Clima</a> , los usuarios ingresan o verifican la información meteorológica, y la longitud de la simulación.'
         fields: 'En la pantalla de <a href=/help/page_6?locale=en>Parcelas</a> , los usuarios crean nuevos campos o verifican los campos dibujados en la página ubicación.'
@@ -1259,7 +1259,7 @@ es:
     create:
         header: Crear nuevo proyecto opción
         body1: 'Seleccionando el botón "Crear Proyecto Nuevo" solicita al usuario el nombre de proyecto y la información de descripción.'
-        body2: 'Después de haber introducido la información, haga clic a  <b>Salvar y Continuar</b> para guardar la información y continuar.'
+        body2: 'Después de haber introducido la información, haga clic a  <b>Salvar y Continuar</b> para salvar la información y continuar.'
     open:
         header: Abrir proyecto salvado
         body1: 'También se puede utilizar <b>Abrir un Proyecto Salvado</b> para abrir un archivo de NTT previamente salvado en el computador del usuario.'
@@ -1944,7 +1944,7 @@ es:
                     <li>Ejemplo(1981 1 8 0 2.0 -13.5 11.30).</li>
                 </ul>
                 <p>Para subir su propio archivo de clima, seleccione <strong><em>Usar su propio archivo del Clima</em></strong> y después has clic en <strong><em>Choose File</em></strong>, después seleccione el archivo de clima de su equipo y, finalmente, haga clic en Abrir. Despues, seleccione <strong><em>Actualizar el Clima</em></strong> para finalizar los cambios.</p>
-                <p><strong>Nota:</strong> Tenga en cuenta que si carga su propio archivo de clima, no se guardará al guardar el proyecto. Si sube un proyecto previamente guardado y utilizó la posibilidad de subir su propio archivo de clima, tendrá que cargar el archivo de clima de nuevo, pero para seguridad, debe simular cualquier escenario de nuevo.</p>
+                <p><strong>Nota:</strong> Tenga en cuenta que si carga su propio archivo de clima, no se guardará al salvar el proyecto. Si sube un proyecto previamente guardado y utilizó la posibilidad de subir su propio archivo de clima, tendrá que cargar el archivo de clima de nuevo, pero para seguridad, debe simular cualquier escenario de nuevo.</p>
     soils: >
                 La página de suelos permite al usuario crear o ver los suelos para cada parcela. Ellos (los tres suelos dominantes) son automáticamente subido basado en el área de interés y los campos seleccionados.<br><br>
                 Ahora tiene un par de opciones

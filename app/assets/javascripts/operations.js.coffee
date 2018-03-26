@@ -394,7 +394,7 @@ $(document).ready ->
         r = confirm('Are you sure? When you upload, this will delete all your current operations')
         if r == false
           $("#replace").removeAttr('checked');
-          $('#year').toggle(true)
+          $('#year').toggle(true).removeAttr("disabled")
           $('#year_label').toggle(true)
           $('#plant_title').toggle(true)
       return
