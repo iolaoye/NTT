@@ -1,14 +1,4 @@
 # encoding: utf-8
-
-file = "db/seeds/importances.rb"
-load file
-
-file = "db/seeds/statuses.rb"
-load file
-
-file = "db/seeds/types.rb"
-load file
-
 file = "db/seeds/crops.rb"
 load file
 
@@ -24,15 +14,12 @@ load file
 file = "db/seeds/parameters.rb"
 load file
 
-file = "db/seeds/activities.rb"
+file = "db/seeds/descriptions.rb"
 load file
 
-file = "db/seeds/bmpsublists.rb"
+file = "db/seeds/fertilizers.rb"
 load file
 
-file = "db/seeds/tillages.rb"
-load file
-	
 cont = false
 
 if cont then
@@ -75,7 +62,7 @@ if cont then
 
 	file = "db/seeds/drainages.rb"
 	load file
-
+ 
 	file = "db/seeds/events.rb"
 	load file
 

@@ -290,7 +290,12 @@ footer a:hover{
         margin-left: 25px;
     }
 
-
+.faq h2, .faq a{
+  display: inline-block;
+  margin-left: 5px;
+  text-decoration: none;
+  width: 50%;
+}
 
 .container .text-muted {
   margin: 20px 0;
@@ -389,12 +394,48 @@ footer a:hover{
 
 }
 
+#welcome .page-container {
+  height: 345px;
+  white-space: normal;
+}
+
 .page-container {
   text-align: center;
 }
 
-.container-form {
+.pageContainer {
   background-color: #ffffff;
+  min-height: 100%;
+  box-shadow: 0 2px 8px #999999;
+  padding: 0px 0px 0px !important;
+  margin: 0 20%;
+}
+
+.container-bottom {
+  margin: 8% 20%;
+  width: 60%;
+}
+
+.container-bottom a {
+  color: #0000ff;
+
+  &:hover {
+    color: #0000ff;
+    background-color: #DCDCDC;
+  }
+}
+
+.container-bottom p {
+  text-align: left;
+  font-family: Georgia;
+}
+
+.container-bottom h4 {
+  color: #000099;
+  text-align: center;
+}
+
+.container-form {
   min-height: 100%;
   box-shadow: 0 2px 8px #204060;
   padding: 1px 40px 40px 40px;
@@ -403,7 +444,27 @@ footer a:hover{
   display: inline-block;
 }
 
-.container-form > h2 {
+.login-form {
+  padding: 1px 40px 40px 40px;
+  max-width: 250px;
+  margin: 0 auto;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+.login-form > h2, #forgot_pass > a {
+  padding: 0 20px 0 20px;
+  display: block;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.login-form input {
+  margin-bottom: 5%;
+}
+
+.container-form > h2, .login-form > h2 {
   text-align: center;
 }
 
@@ -419,15 +480,135 @@ footer a:hover{
 }
 }
 
+.videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.popup .close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.popup .close:hover {
+  color: red;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  width: auto;
+  min-width: 650px;
+  left: 40%;
+  margin-left: -150px;
+  height: auto;
+  top: 50%;
+  margin-top: -100px;
+  background: #FFF;
+  z-index: 20;
+  max-width: 400px;
+}
+
+#popup1:after, #popup2:after, #popup3:after, #popup4:after, #popup5:after {
+  position: fixed;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: -2;
+}
+
+#popup1:before, #popup2:before, #popup3:before, #popup4:before, #popup5:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #FFF;
+  z-index: -1;
+}
+
+#welcome_header {
+  margin: 0 auto;
+  width: 100%;
+  height: 500px;
+}
+
+#welcome_info {
+  margin: 0 auto;
+  width: 100%;
+  float: left;
+}
+
+#welcome_info p {
+  width: 10%;
+  height: 25%;
+  display: inline-block;
+  margin-right: 5%;
+  margin-left: 4%;
+  margin-top: 4%;
+  margin-bottom: 0.5em;
+}
+
+#welcome > h1 {
+  text-align: center;
+  padding-top: 2%;
+  padding-bottom: 3%;
+  font-size: 24pt;
+  color: #ffffff;
+}
+
+#welcome p {
+  text-align: center;
+  font-size: 10pt;
+  line-height: 150%;
+  float: left;
+  color: #ffffff;
+  white-space: normal;
+}
+
+#welcome {
+  width: 30%;
+  background-color: #204060;
+  height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+h1 > img {
+  width: 75px;
+  height: 75px;
+}
+
 .table-responsive {
     overflow-x: visible;
     }
 
 .carousel {
-  height: 400px;
-  margin-bottom: 20px;
-
+  height: 100%;
+  width: 70%;
+  float: right;
 }
+
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
   z-index: 10;
@@ -438,7 +619,7 @@ footer a:hover{
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 400px;
+  height: 500px;
   background-color: #777;
 }
 .carousel-inner > .item > img {
@@ -446,7 +627,7 @@ footer a:hover{
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 400px;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -665,7 +846,7 @@ label {
 
 #forgot_pass {
   float: left;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 #right_button {

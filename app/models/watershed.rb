@@ -1,10 +1,12 @@
 class Watershed < ActiveRecord::Base
-  attr_accessible :field_id, :name, :scenario_id
+  attr_accessible :location_id, :name
   #associations
 	has_many :charts, :dependent => :destroy
 	has_many :watershed_scenarios, :dependent => :destroy
 	has_many :results, :dependent => :destroy
-    belongs_to :location
+  has_many :annual_results, :dependent => :destroy
+  has_many :crop_results, :dependent => :destroy
+  belongs_to :location
 
 	#accepts_nested_attributes_for :watershed_scenarios
   #validations

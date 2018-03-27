@@ -175,7 +175,7 @@ class ProjectsController < ApplicationController
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_project
-  saved = upload_prj()
+    saved = upload_prj()
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.uploaded')
@@ -520,7 +520,7 @@ class ProjectsController < ApplicationController
         end # end operation.each
       } #end xml.operations
 
-      bmps = Bmp.where(:scenario_id => scenario.id)
+      bmps = scenario.bmps
       xml.bmps {
         bmps.each do |bmp|
           save_bmp_information(xml, bmp)
@@ -536,17 +536,17 @@ class ProjectsController < ApplicationController
         end # end subarea.each
       } # end xml.subareas
 
-      results = Result.where(:scenario_id => scenario.id)
+      results = scenario.annual_results
       xml.results {
         results.each do |result|
           save_result_information(xml, result)
         end # end results.each
       } # end xml.results
 
-      charts = Chart.where(:scenario_id => scenario.id)
-      xml.charts {
-        charts.each do |chart|
-          save_chart_information(xml, chart)
+      crops = scenario.crop_results
+      xml.crop_results {
+        crops.each do |crop|
+          save_crop_result_information(xml, crop)
         end # end charts.each
       } # end xml.charts
     } # end xml.scenario
@@ -597,14 +597,47 @@ class ProjectsController < ApplicationController
 
   def save_result_information(xml, result)
     xml.result {
-    xml.watershed_id result.watershed_id
-    xml.field_id result.field_id
-    xml.soil_id result.soil_id
-    xml.scenario_id result.scenario_id
-      xml.value result.value
-      xml.ci_value result.ci_value
-      xml.description_id result.description_id
-      xml.crop_id result.crop_id
+      xml.watershed_id result.watershed_id
+    #xml.field_id result.field_id
+    #xml.soil_id result.soil_id
+      xml.scenario_id result.scenario_id
+      xml.sub1 result.sub1
+      xml.year result.year
+      xml.flow result.flow
+      xml.qdr result.qdr
+      xml.surface_flow result.surface_flow
+      xml.sed result.sed
+      xml.ymnu result.ymnu
+      xml.orgp result.orgp
+      xml.po4 result.po4
+      xml.orgn result.orgn
+      xml.no3 result.no3
+      xml.qdrn result.qdrn
+      xml.qdrp result.qdrp
+      xml.qn result.qn
+      xml.dprk result.dprk
+      xml.irri result.irri
+      xml.pcp result.pcp
+      xml.n2o result.n2o
+      xml.prkn result.prkn
+    } # xml each result end
+  end  # end method
+
+  def save_crop_result_information(xml, result)
+    xml.result {
+      xml.watershed_id result.watershed_id
+    #xml.field_id result.field_id
+    #xml.soil_id result.soil_id
+      xml.scenario_id result.scenario_id
+      xml.name result.name
+      xml.sub1 result.sub1
+      xml.year result.year
+      xml.yldg result.yldg
+      xml.yldf result.yldf
+      xml.ws result.ws
+      xml.ns result.ns
+      xml.ps result.ps
+      xml.ts result.ts
     } # xml each result end
   end  # end method
 
@@ -645,15 +678,14 @@ class ProjectsController < ApplicationController
           save_climate_information(xml, climate)
         end # end climates.each
       } # end xml.climates
-
-      subareas = Subarea.where(:bmp_id => bmp.bmp_id)
+      subareas = Subarea.where(:bmp_id => bmp.id)
       xml.subareas {
         subareas.each do |subarea|
           save_subarea_information(xml, subarea)
         end # end subareas.each
       } # end xml.subareas
 
-      soil_operations = SoilOperation.where(:bmp_id => bmp.bmp_id)
+      soil_operations = SoilOperation.where(:bmp_id => bmp.id)
       xml.soil_operations {
         soil_operations.each do |so|
           save_soil_operation_information(xml, so)
@@ -842,17 +874,17 @@ class ProjectsController < ApplicationController
         end # end scenarios each
       } # end scenarios
 
-    results = Result.where(:watershed_id => watershed.id)
+    results = watershed.annual_results
       xml.results {
         results.each do |result|
           save_result_information(xml, result)
         end # end results.each
       } # end xml.results
 
-      charts = Chart.where(:watershed_id => watershed.id)
-      xml.charts {
-        charts.each do |chart|
-          save_chart_information(xml, chart)
+      crops = watershed.crop_results
+      xml.crop_results {
+        crops.each do |crop|
+          save_crop_result_information(xml, crop)
         end # end charts.each
       } # end xml.charts
     } # xml each watershed end
@@ -1603,7 +1635,7 @@ class ProjectsController < ApplicationController
           end
         when "Results"
           if saved == true then
-            upload_result_info(p, field_id, soil_id, scenario_id)
+            #upload_result_info(p, field_id, soil_id, scenario_id)
           else
             return "Error saving scenario"
           end
@@ -1649,9 +1681,9 @@ class ProjectsController < ApplicationController
               return msg
             end
           end
-        when "charts"
+        when "crop_results"
           p.elements.each do |r|
-            msg = upload_chart_new_version(scenario.id, 0, field_id, r)
+            msg = upload_crop_result_new_version(scenario.id, 0, field_id, r)
             if msg != "OK"
               return msg
             end
@@ -2360,7 +2392,7 @@ class ProjectsController < ApplicationController
     node.elements.each do |p|
       case p.name
       when "Crops"
-        upload_crop_soil_result_info(p, field_id, soil_id, scenario_id)
+        #upload_crop_soil_result_info(p, field_id, soil_id, scenario_id)
       when "Soil"
         upload_soil_result_info(p, field_id, soil_id, scenario_id)
       when "lastSimulation"
@@ -2373,26 +2405,50 @@ class ProjectsController < ApplicationController
   # end method
 
   def upload_result_new_version(scenario_id, watershed_id, field_id, new_result)
-    result = Result.new
+    result = AnnualResult.new
     result.scenario_id = scenario_id
     result.watershed_id = watershed_id
-    result.field_id = field_id
+    #result.field_id = field_id
     new_result.elements.each do |p|
       case p.name
-      when "value"
-        result.value = p.text
-      when "ci_value"
-        result.ci_value = p.text
-      when "description_id"
-        result.description_id = p.text
-      when "soil_id"
-        if p.text == "0"
-          result.soil_id = 0
-        else
-          result.soil_id = Soil.find_by_soil_id_old(p.text).id
-        end
-      when "crop_id"
-        result.crop_id = p.text
+      when "sub1"
+        result.sub1 = p.text
+      when "year"
+        result.year = p.text
+      when "flow"
+        result.flow = p.text
+      when "qdr"
+        result.qdr = p.text
+      when "surface_flow"
+        result.surface_flow = p.text
+      when "sed"
+        result.sed = p.text
+      when "ymnu"
+        result.ymnu = p.text
+      when "orgp"
+        result.orgp = p.text
+      when "po4"
+        result.po4 = p.text
+      when "orgn"
+        result.orgn = p.text
+      when "no3"
+        result.no3 = p.text
+      when "qdrn"
+        result.qdrn = p.text
+      when "qdrp"
+        result.qdrp = p.text
+      when "qn"
+        result.qn = p.text
+      when "dprk"
+        result.dprk = p.text
+      when "irri"
+        result.irri = p.text
+      when "pcp"
+        result.pcp = p.text
+      when "n2o"
+        result.n2o = p.text
+      when "prkn"
+        result.prkn = p.text
       end # end case
     end # end each
     if result.save
@@ -2406,15 +2462,15 @@ class ProjectsController < ApplicationController
     #tile drain flow is duplicated in the old version NTTG2 VB. So is needed to control that the second one is not used
     tile_drain = false
     total_n = 0
-    total_n_ci = 0
+    #total_n_ci = 0
     total_p = 0
-    total_p_ci = 0
+    #total_p_ci = 0
     total_runoff = 0
-    total_runoff_ci = 0
+    #total_runoff_ci = 0
     total_other_water = 0
-    total_other_water_ci = 0
+    #total_other_water_ci = 0
     total_sediment = 0
-    total_sediment_ci = 0
+    #total_sediment_ci = 0
     node.elements.each do |p|
       case p.name
         when "OrgN"
@@ -2530,60 +2586,60 @@ class ProjectsController < ApplicationController
           @result1.save
           total_p_ci = total_p_ci + @result1.ci_value
         when "annualFlow"
-          upload_chart_info(p, field_id, 0, scenario_id, 41)
+          #upload_chart_info(p, field_id, 0, scenario_id, 41)
         when "annualNO3"
-          upload_chart_info(p, field_id, 0, scenario_id, 22)
+          #upload_chart_info(p, field_id, 0, scenario_id, 22)
         when "annualOrgN"
-          upload_chart_info(p, field_id, 0, scenario_id, 21)
+          #upload_chart_info(p, field_id, 0, scenario_id, 21)
         when "annualOrgP"
-          upload_chart_info(p, field_id, 0, scenario_id, 31)
+          #upload_chart_info(p, field_id, 0, scenario_id, 31)
         when "annualPO4"
-          upload_chart_info(p, field_id, 0, scenario_id, 32)
+          #upload_chart_info(p, field_id, 0, scenario_id, 32)
         when "annualSediment"
-          upload_chart_info(p, field_id, 0, scenario_id, 61)
+          #upload_chart_info(p, field_id, 0, scenario_id, 61)
         when "annualPrecipitation"
-          upload_chart_info(p, field_id, 0, scenario_id, 100)
+          #upload_chart_info(p, field_id, 0, scenario_id, 100)
         when "annualCropYield"
           #p.elements.each do |p|
           #upload annual crops
-          upload_chart_crop_info(p, field_id, 0, scenario_id)
+          #upload_chart_crop_info(p, field_id, 0, scenario_id)
         #end
       end # end case p.name
     end # end node.elements.each
-  #add total n
+    #add total n
     @result = add_result(field_id, soil_id, scenario_id, total_n, 20)
     @result.ci_value = total_n_ci
     @result.save
-  #add total p
+    #add total p
     @result = add_result(field_id, soil_id, scenario_id, total_p, 30)
     @result.ci_value = total_p_ci
     @result.save
-  #add total runoff
+    #add total runoff
     @result = add_result(field_id, soil_id, scenario_id, total_runoff, 40)
     @result.ci_value = total_runoff_ci
     @result.save
-  #add total other water information
+    #add total other water information
     @result = add_result(field_id, soil_id, scenario_id, total_other_water, 50)
     @result.ci_value = total_other_water_ci
     @result.save
-  #add total sediment
+    #add total sediment
     @result = add_result(field_id, soil_id, scenario_id, total_sediment, 60)
     @result.ci_value = total_sediment_ci
     @result.save
-  #add total crop (zeros because crop are not totalized
+    #add total crop (zeros because crop are not totalized
     @result = add_result(field_id, soil_id, scenario_id, 0, 70)
     @result.save
-  #add total area
+    #add total area
     @result = add_result(field_id, soil_id, scenario_id, Field.find(field_id).field_area, 10)
-  #@result.save
-  #save result id for total area in order to substract the bmp buffer areas from it.
-  @result_id = @result.id
+    #@result.save
+    #save result id for total area in order to substract the bmp buffer areas from it.
+    @result_id = @result.id
   end
 
   def add_result(field_id, soil_id, scenario_id, p_text, description_id)
-    result = Result.new
-    result.field_id = field_id
-    result.soil_id = soil_id
+    result = AnnualResult.new
+    #result.field_id = field_id
+    #result.soil_id = soil_id
     result.scenario_id = scenario_id
     result.value = p_text
     result.description_id = description_id
@@ -2630,7 +2686,7 @@ class ProjectsController < ApplicationController
           upload_operation_info(p, scenario_id, field_id)
         when "Results"
           scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
-          upload_result_info(p, field_id, 0, scenario_id)
+          #upload_result_info(p, field_id, 0, scenario_id)
         when "Bmps"
           scenario_id = Scenario.find_by_field_id_and_name(field_id, name).id
           upload_bmp_info(p, scenario_id)
@@ -2692,29 +2748,37 @@ class ProjectsController < ApplicationController
     end # end node each
   end
 
-  def upload_chart_new_version(scenario_id, watershed_id, field_id, new_chart)
-    chart = Chart.new
-    chart.scenario_id = scenario_id
-  chart.watershed_id = watershed_id
-    chart.field_id = field_id
-    new_chart.elements.each do |p|
+  def upload_crop_result_new_version(scenario_id, watershed_id, field_id, new_crop)
+    result = CropResult.new
+    result.scenario_id = scenario_id
+    result.watershed_id = watershed_id
+    #chart.field_id = field_id
+    new_crop.elements.each do |p|
       case p.name
-        when "value"
-          chart.value = p.text
-        when "month_year"
-          chart.month_year = p.text
-        when "description_id"
-          chart.description_id = p.text
-    when "soil_id"
-        chart.soil_id = p.text
-      when "crop_id"
-        chart.crop_id = p.text
+      when "name"
+        result.name = p.text
+      when "sub1" 
+        result.sub1 = p.text
+      when "year" 
+        result.year = p.text
+      when "yldg" 
+        result.yldg = p.text
+      when "yldf" 
+        result.yldf = p.text
+      when "ws" 
+        result.ws = p.text
+      when "ns" 
+        result.ns = p.text
+      when "ps" 
+        result.ps = p.text
+      when "ts" 
+       result.ts = p.text
       end # end case
     end # end each
-    if chart.save
+    if result.save
       return "OK"
     else
-      return "chart could not be saved"
+      return "crop result could not be saved"
     end
   end
 
@@ -3413,34 +3477,34 @@ class ProjectsController < ApplicationController
     watershed = Watershed.new
     node.elements.each do |p|
       case p.name
-        when "name"
-          watershed.name = p.text
-      if !watershed.save then
-        return "Watershed could not be saved"
-          end
+      when "name"
+        watershed.name = p.text
+        if !watershed.save then
+          return "Watershed could not be saved"
+        end
       when "last_simulation"
-      watershed.last_simulation = p.text
-      if !watershed.save then
-        return "Watershed could not be saved"
+        watershed.last_simulation = p.text
+        if !watershed.save then
+          return "Watershed could not be saved"
+        end
+      when "watershed_scenarios"
+        p.elements.each do |node|
+          msg = upload_watershed_scenario_information_new_version(node, watershed.id)
+        end
+      when "results"
+        p.elements.each do |r|
+          msg = upload_result_new_version(0, watershed.id, 0, r)
+          if msg != "OK"
+            return msg
           end
-        when "watershed_scenarios"
-            p.elements.each do |node|
-              msg = upload_watershed_scenario_information_new_version(node, watershed.id)
-            end
-    when "results"
-          p.elements.each do |r|
-            msg = upload_result_new_version(0, watershed.id, 0, r)
-            if msg != "OK"
-              return msg
-            end
+        end
+      when "crop_results"
+        p.elements.each do |r|
+          msg = upload_crop_result_new_version(0, watershed.id, 0, r)
+          if msg != "OK"
+            return msg
           end
-        when "charts"
-          p.elements.each do |r|
-            msg = upload_chart_new_version(0, watershed.id, 0, r)
-            if msg != "OK"
-              return msg
-            end
-          end
+        end
       end # end case
     end # end each
   if watershed.save

@@ -1,0 +1,35 @@
+<div class="page-header"><h1>Frequently Asked Questions</h1></div>
+<div class="main">
+  <div class="container faq">
+    <a id="faq_1"><%= image_tag 'expand.png', :id => "open1", :class => "icon" %><h2>What is NTT?</h2></a>
+    <p id='1' class="toggable" style="display: none;">The Nutrient Tracking Tool (NTT) is a free, online, user-friendly tool that quantitatively estimates the nitrogen, phosphorus and sediment losses from crop and pasture lands. It has been developed by the Texas Institute of Applied Environmental Research (TIAER) at Tarleton State University in cooperation with USDA’s Office of Environmental Markets, NRCS, and ARS. While NTT has been around for several years (e.g. a version of NTT is used in the Chesapeake Bay, and another version is used in Arkansas), this version represents the first national version of the tool.</p>
+
+    <a id="faq_2"><%= image_tag 'expand.png', :id => "open2", :class => "icon" %><h2>Is this tool national in scope?</h2></a>
+    <p id='2' class="toggable" style="display: none;">Yes, this tool can be used anywhere in the continental United States. However, in most cases model parameters are generalized. We are currently working with ARS to create region-specific parameters for areas of the country where measured data exist that can help refine estimates in the tool. The tool currently includes region-specific parameters for the Great Lakes region as well as Ohio and parts of the Upper Mississippi. Revised parameters will be available in future releases of the tool as they become available.</p>
+
+    <a id="faq_3"><%= image_tag 'expand.png', :id => "open3", :class => "icon" %><h2>Will my data be protected?</h2></a>
+    <p id='3' class="toggable" name="3" style="display: none;">NTT is password protected and no one sees your data but you.</p>
+
+    <a id="faq_4"><%= image_tag 'expand.png', :id => "open4", :class => "icon" %><h2>What crops are included?</h2></a>
+    <p id='4' class="toggable" style="display: none;">Pasture as well as most major crops are included in the tool.</p>
+
+    <a id="faq_5"><%= image_tag 'expand.png', :id => "open5", :class => "icon" %><h2>What conservation practices are included?</h2></a>
+    <p id='5' class="toggable" style="display: none;">The tool simulates a variety of management and conservation practices including: irrigation, tile drains, nutrient management (type, timing, placement and rate), no till, conservation till, cover crops, ponds/water and sediment control basins, wetlands, buffers (forest and grass), grass waterways, contour buffer strips, terracing, manure treatment, and rotational grazing. Users can also simulate land conversion to perennial crops or forest.</p>
+
+    <a id="faq_6"><%= image_tag 'expand.png', :id => "open6", :class => "icon" %><h2>What is the plan to improve/maintain NTT over time?</h2></a>
+    <p id='6' class="toggable" style="display: none;">NTT is housed and maintained at Tarleton State University. USDA’s Office of Environmental Markets is committed to contributing to the update and maintenance of NTT as long as it is useful to stakeholders. NTT versions will be updated regularly with regional parameters provided by ARS as well as improved functionality and features as needed.</p>
+    
+    <a id="faq_7"><%= image_tag 'expand.png', :id => "open7", :class => "icon" %><h2>What is the engine behind NTT?</h2></a>
+    <p id='7' class="toggable" style="display: none;">NTT uses the APEX model to simulate edge-of-field losses, as well as to simulate routing between fields.</p>
+
+    <a id="faq_8"><%= image_tag 'expand.png', :id => "open8", :class => "icon" %><h2>What type of environmental data is used to provision NTT?</h2></a>
+    <p id='8' class="toggable" style="display: none;">NTT grabs soils, slope and weather information from national databases based on the location of your field. Soils come from the National Soil Survey database (SSRUGO). NTT simulates your field using only the three predominant soils in your field (by percent coverage). Weather is pulled from the national PRISM database. NTT simulates your rotation over 35 years of historic weather. Finally, slope information is calculated based on the 30m resolution digital elevation model (DEM) layer of the map.</p>
+
+    <a id="faq_9"><%= image_tag 'expand.png', :id => "open9", :class => "icon" %><h2>What do the nutrient and sediment losses estimated by NTT represent?</h2></a>
+    <p id='9' class="toggable" style="display: none;">Because your rotation is simulated over 35 years of historic weather, the nitrogen, phosphorous and sediment losses represent the average annual losses at the edge of the field for a given management scenario. Users can also view the results graphically by year in order to view inter-annual variability, or by month, to view average monthly variability.</p>
+
+    <a id="faq_10"><%= image_tag 'expand.png', :id => "open10", :class => "icon" %><h2>Why did USDA support the development of NTT?</h2></a>
+    <p id='10' class="toggable" style="display: none;">USDA’s interest in developing NTT was for water quality markets which require methods and tools for quantitatively estimating nutrient and sediment losses from a variety of agricultural and best management practices. However, the tool can be used for a variety of applications, including farmer education and outreach, corporate sustainability, and academic or analytical applications.</p>
+
+  </div>
+</div>

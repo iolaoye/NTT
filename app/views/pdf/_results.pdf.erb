@@ -1,544 +1,694 @@
 <% @descriptions = Description.all %>
-<% @results1 = Result.where(:field_id => @field.id, :scenario_id => @result_scenario1, :soil_id => @soil) unless @result_scenario1 == "" %>
-<% @results2 = Result.where(:field_id => @field.id, :scenario_id => @result_scenario2, :soil_id => @soil) unless @result_scenario2 == "" %>
-<% @results3 = Result.where(:field_id => @field.id, :scenario_id => @result_scenario3, :soil_id => @soil) unless @result_scenario3 == "" %>
+<%# @results1 = Result.where(:field_id => @field.id, :scenario_id => @result_scenario1, :soil_id => @soil) unless @result_scenario1 == "" %>
+<%# @results2 = Result.where(:field_id => @field.id, :scenario_id => @result_scenario2, :soil_id => @soil) unless @result_scenario2 == "" %>
+<%# @results3 = Result.where(:field_id => @field.id, :scenario_id => @result_scenario3, :soil_id => @soil) unless @result_scenario3 == "" %>
+<% @results1 = @field.scenarios.find(@result_scenario1).annual_results unless @result_scenario1 == "" %>
+<% @results2 = @field.scenarios.find(@result_scenario1).annual_results unless @result_scenario2 == "" %>
+<% @results3 = @field.scenarios.find(@result_scenario1).annual_results unless @result_scenario3 == "" %>
 
 <div class="group_header first_group"><%=t('pdf.annual_results')%></div>
-<table class="table_fill">
-    <thead>
-        <tr>
-            <th class="table_head"><%=t('pdf.description')%></th>
-            <th class="table_head">1st <%=t('pdf.scenario')%></th>
-            <th class="table_head">2nd <%=t('pdf.scenario')%></th>
-            <th class="table_head"><%=t('pdf.difference')%></th>
-            <th class="table_head"><%=t('pdf.reduction')%> (%)</th>
-            <th class="table_head"><%=t('pdf.total_area')%></th>
+<table style="border:thin solid black; border-radius: 3px; background: #204060" class="table_fill">
+    <thead style="color: white">
+        <tr class='gvHeaderStyle' >
+            <th></th>
+            <% if session[:simulation] == 'scenario' %>
+                <% if @scenario1 == "0" || @scenario1 == "" %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Scenario.find(@scenario1).name%></th><%end%>
+                <% if @scenario2 == "0" || @scenario2 == ""  %> <th colspan="2" style="text-align:center"><%= t('result.scenario2') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@scenario2).name%></th><%end%>
+                <% if @scenario3 == "0" || @scenario3 == ""  %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Scenario.find(@scenario3).name%></th><%end%>
+            <% else %>
+                <% if @scenario1 == "0" || @scenario1 == ""  %> <th style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th style="text-align:center"><%=Watershed.find(@scenario1).name%></th><%end%>
+                <% if @scenario2 == "0" || @scenario2 == ""  %> <th colspan="2" style="text-align:center"><%= t('result.scenario1') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@scenario2).name%></th><%end%>
+                <% if @scenario3 == "0" || @scenario3 == ""  %> <th colspan="2" style="text-align:center"><%= t('result.scenario3') %></th> <% else %> <th colspan="2" style="text-align:center"><%=Watershed.find(@scenario3).name%></th><%end%>
+            <% end %>
+        </tr>
+        <tr class='gvHeaderStyle'>
+            <th style="border:thin solid black" ><%= t('result.description') %></th>
+            <th style="border:thin solid black"><%= "Losses(±)" %></th>
+            <th style="border:thin solid black"><%= "Losses(±)" %></th>
+            <th style="border:thin solid black"><%= t('general.change') + "(%)"%></th>
+            <th style="border:thin solid black"><%= "Losses(±)" %></th>
+            <th style="border:thin solid black"><%= t('general.change') + "(%)"%></th>
         </tr>
     </thead>
-    <tbody>
-        <% i = 1 %>
-        <% if @results1 != nil %>
-            <% @results1.each do |result| %>
-                <% if I18n.locale.eql?(:en) %>
-                    <% value2 = 0 %>
-                    <% if @results2 != nil then %> <%value2 = @results2.find_by_description_id(result.description_id).value %> <% end %>
-                    <% difference1 = value2 - result.value %>
-                    <% reduction1 = difference1 / result.value * 100 %>
-                    <% total_area1 = difference1 * @total_area1%>
-                    <% if (i % 2 == 0) then %>
-                        <% if (result.description_id % 10 == 0) %>
-                            <tr class="table_row_even">
-                            <% if result.description_id == 70 %>
-                                <td class="row text bold"><%= Description.find(result.description_id).description %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                            <% else %>
-                                <td class="row text bold"><%= Description.find(result.description_id).description %></td>
-                                <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %>
-                                    <td class="row text bold"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                <% end %>
-                            <% end %>
-                            </tr>
-                        <% else %>
-                            <tr class="table_row_even">
-                            <% if result.description_id > 70 && result.description_id < 90 %>
-                                <td class="row number"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-                                <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %> 
-                                    <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                <% end %>
-                            <% else %>
-                                <td class="row number"><%= Description.find(result.description_id).description %></td>
-                                <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %>
-                                    <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                <% end %>
-                            <% end %>
-                            </tr>
-                        <% end %>
-                    <% else %>
-                        <% if (result.description_id % 10 == 0) %>
-                            <tr class="table_row_odd">
-                            <% if result.description_id == 70 %>
-                                <td class="row text bold"><%= Description.find(result.description_id).description %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                            <% else %>
-                                <td class="row text bold"><%= Description.find(result.description_id).description %></td>
-                                <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %>
-                                    <td class="row text bold"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                <% end %>
-                            <% end %>
-                            </tr>
-                        <% else %>
-                            <tr class="table_row_odd">
-                            <% if result.description_id > 70 && result.description_id < 90 %>
-                                <td class="row number"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-                                <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %> 
-                                    <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                <% end %>
-                            <% else %>
-                                <td class="row number"><%= Description.find(result.description_id).description %></td>
-                                <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %>
-                                    <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                <% end %>
-                            <% end %>
-                            </tr>
+    <tbody style="background: white">
+        <% t = "s" %>
+        <%# else %>
+        <% row_id = t + "row" + "20" %>
+        <% @id = "scenario_id" %>
+        <% if session[:simulation] != "scenario" then %>
+            <% @id = "watershed_id" %>
+        <% end %>
+        <% if @scenario1 != "0" then %>
+            <% require 'enumerable/confidence_interval' %>
+            <% results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :"#{@id}" => @scenario1) %>
+            <% cis1 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } %>
+            <% averages1 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario1).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
+            <% crops1 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+            <% crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario1, 0) %>
+            <% cic1 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
+            <%# cic1 = crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]} %>
+            <% averages2 = nil %>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+                <% results_data2 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0,  :"#{@id}" => @scenario2) %>
+                <% cis2 = results_data2.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } %>
+                <% averages2 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario2).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
+                <% crops2 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+                <% crops_data2 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario2, 0) %>
+                <% cic2 = Hash[*crops_data2.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
+                <% if @scenario3 != "0" && @scenario2 != ""  then %>
+                    <% results_data3 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0,  :"#{@id}" => @scenario3) %>
+                    <% cis3 = results_data3.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] } %>
+                    <% averages3 = AnnualResult.where(:sub1 => 0, :"#{@id}" => @scenario3).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)') %>
+                    <% crops3 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
+                    <% crops_data3 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario3, 0) %>
+                    <% cic3 = Hash[*crops_data3.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
+                <% end %>
+            <% end %>
+            <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                <th class="gvTotalText" style=" text-align:left">
+                    <%= "Total N" + " (" + "lbs/ac" + ")" %>
+                    <%#= check_box_tag "Total N" %>
+                </th>
+                <td class="gvTotalText" style="  background-color:#FFE8F9">
+                    <%= sprintf("%8.1f", averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) + " (" + sprintf("%8.1f",cis1[0][1]+cis1[0][2]+cis1[0][3]+cis1[0][4]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", averages2[0][0]+averages2[0][1]+averages2[0][2]+averages2[0][3]) + " (" + sprintf("%8.1f",cis2[0][1]+cis2[0][2]+cis2[0][3]+cis2[0][4]) + ")" %></td>
+                    <% difference1 = averages2[0][0]+averages2[0][1]+averages2[0][2]+averages2[0][3]-(averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) %>
+                    <% reduction1 = difference1 / (averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) * 100 %>
+                    <td class= "gvTotalText" style=" background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td> 
+                <% end %>
+                <% if @scenario3!= "0" && @scenario3 != "" then %>
+                    <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", averages3[0][0]+averages3[0][1]+averages3[0][2]+averages3[0][3]) + " (" + sprintf("%8.1f",cis3[0][1]+cis3[0][2]+cis3[0][3]+cis3[0][4]) + ")" %></td>
+                    <% difference1 = averages3[0][0]+averages3[0][1]+averages3[0][2]+averages3[0][3]-(averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) %>
+                    <% reduction1 = difference1 / (averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) * 100 %>
+                    <td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td> 
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "21" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText " style="  text-align:right; padding-right: 10px;"><%= "Org N" + " (" + "lbs/ac" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][0]).to_s + " (" + sprintf("%8.1f", cis1[0][1]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][0]) + " (" + sprintf("%8.1f", cis2[0][1]) + ")" %></td>
+                    <td class=<%= if averages2[0][0]-averages1[0][0] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][0]-averages1[0][0]) + " (" + sprintf("%8.2f", ((averages2[0][0]-averages1[0][0]) / averages1[0][0]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][0]) + " (" + sprintf("%8.1f", cis3[0][1]) + ")" %></td>
+                    <td class=<%= if averages3[0][0]-averages1[0][0] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][0]-averages1[0][0]) + " (" + sprintf("%8.2f", ((averages3[0][0]-averages1[0][0]) / averages1[0][0]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "22" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="  text-align:right; padding-right: 10px;"><%= "Runoff N" + " (" + "lbs/ac" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][1]).to_s + " (" + sprintf("%8.1f", cis1[0][2]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][1]) + " (" + sprintf("%8.1f", cis2[0][2]) + ")" %></td>
+                    <td class=<%= if averages2[0][1]-averages1[0][1] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][1]-averages1[0][1]) + " (" + sprintf("%8.2f", ((averages2[0][1]-averages1[0][1]) / averages1[0][1]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][1]) + " (" + sprintf("%8.1f", cis3[0][2]) + ")" %></td>
+                    <td class=<%= if averages3[0][1]-averages1[0][1] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][1]-averages1[0][1]) + " (" + sprintf("%8.2f", ((averages3[0][1]-averages1[0][1]) / averages1[0][1]) * 100) + ")" %></td>
+                <% end %>                               
+            </tr>
+            <% row_id = t + "row" + "23" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="  text-align:right; padding-right: 10px;"><%= "Subsurface N" + " (" + "lbs/ac" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style="  background-color:#FFE8F9">
+                    <%= sprintf("%8.2f", averages1[0][2]).to_s + " (" + sprintf("%8.1f", cis1[0][3]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][2]) + " (" + sprintf("%8.1f", cis2[0][3]) + ")" %></td>
+                    <td class=<%= if averages2[0][2]-averages1[0][2] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][2]-averages1[0][2]) + " (" + sprintf("%8.2f", ((averages2[0][2]-averages1[0][2]) / averages1[0][2]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][2]) + " (" + sprintf("%8.1f", cis3[0][3]) + ")" %></td>
+                    <td class=<%= if averages3[0][2]-averages1[0][2] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][2]-averages1[0][2]) + " (" + sprintf("%8.2f", ((averages3[0][2]-averages1[0][2]) / averages1[0][2]) * 100) + ")" %></td>
+                <% end %>                           
+            </tr>
+            <% row_id = t + "row" + "24" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= "Tile Drain N" + " (" + "lbs/ac" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style="  background-color:#FFE8F9">
+                    <%= sprintf("%8.2f", averages1[0][3]).to_s + " (" + sprintf("%8.1f", cis1[0][4]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", cis2[0][4]) + ")" %></td>
+                    <td class=<%= if averages2[0][3]-averages1[0][3] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", ((averages2[0][3]-averages1[0][3]) / averages1[0][3]) * 100) + ")" %></td>    
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", cis3[0][4]) + ")" %></td>
+                    <td class=<%= if averages3[0][3]-averages1[0][3] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", ((averages3[0][3]-averages1[0][3]) / averages1[0][3]) * 100) + ")" %></td>                                    
+                <% end %>                           
+            </tr>
+            <%# P values %>
+            <% row_id = t + "row" + "30" %>
+            <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                <th class="gvTotalText" style="   text-align:left">
+                    <%= "Total P" + " (" + "lbs/ac" + ")" %>
+                    <%#= check_box_tag "Total P" %>
+                </th>
+                <td class="gvTotalText" style=" background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][4]+averages1[0][5]+averages1[0][6]) + " (" + sprintf("%8.1f",cis1[0][5]+cis1[0][6]+cis1[0][7]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", averages2[0][4]+averages2[0][5]+averages2[0][6]) + " (" + sprintf("%8.1f",cis2[0][5]+cis2[0][6]+cis2[0][7]) + ")" %></td>
+                    <% difference1 = averages2[0][4]+averages2[0][5]+averages2[0][6]-(averages1[0][4]+averages1[0][5]+averages1[0][6]) %>
+                    <% reduction1 = difference1 / (averages1[0][4]+averages1[0][5]+averages1[0][6]) * 100 %>
+                    <td class= "gvTotalText" style=" background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>                                 
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", averages3[0][4]+averages3[0][5]+averages3[0][6]) + " (" + sprintf("%8.1f",cis3[0][5]+cis3[0][6]+cis3[0][7]) + ")" %></td>
+                    <% difference1 = averages3[0][4]+averages3[0][5]+averages3[0][6]-(averages1[0][4]+averages1[0][5]+averages1[0][6]) %>
+                    <% reduction1 = difference1 / (averages1[0][4]+averages1[0][5]+averages1[0][6]) * 100 %>
+                    <td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td> 
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "31" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= "Org P" + " (" + "lbs/ac" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][4]).to_s + " (" + sprintf("%8.1f", cis1[0][5]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][4]) + " (" + sprintf("%8.1f", cis2[0][5]) + ")" %></td>
+                    <td class=<%= if averages2[0][4]-averages1[0][4] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][4]-averages1[0][4]) + " (" + sprintf("%8.2f", ((averages2[0][4]-averages1[0][4]) / averages1[0][4]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][4]) + " (" + sprintf("%8.1f", cis3[0][5]) + ")" %></td>
+                    <td class=<%= if averages3[0][4]-averages1[0][4] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][4]-averages1[0][4]).to_s + " (" + sprintf("%8.2f", ((averages3[0][4]-averages1[0][4]) / averages1[0][4]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "32" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="    text-align:right; padding-right: 10px;"><%= "PO4" + " (" + "lbs/ac" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][5]).to_s + " (" + sprintf("%8.1f", cis1[0][6]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][5])+ " (" + sprintf("%8.1f", cis2[0][6]) + ")" %></td>
+                    <td class=<%= if averages2[0][5]-averages1[0][5] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][5]-averages1[0][5]) + " (" + sprintf("%8.2f", ((averages2[0][5]-averages1[0][5]) / averages1[0][5]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][5]) + " (" + sprintf("%8.1f", cis3[0][6]) + ")" %></td>
+                    <td class=<%= if averages3[0][5]-averages1[0][5] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][5]-averages1[0][5]) + " (" + sprintf("%8.2f", ((averages3[0][5]-averages1[0][5]) / averages1[0][5]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "33" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= "Tile Drain P" + " (" + "lbs/ac" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][6]).to_s + " (" + sprintf("%8.1f", cis1[0][7]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][6]) + " (" + sprintf("%8.1f", cis2[0][7]) + ")" %></td>
+                    <td class=<%= if averages2[0][6]-averages1[0][6] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][6]-averages1[0][6]) + " (" + sprintf("%8.2f", ((averages2[0][6]-averages1[0][6]) / averages1[0][6]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][6]) + " (" + sprintf("%8.1f", cis3[0][7]) + ")" %></td>
+                    <td class=<%= if averages3[0][6]-averages1[0][6] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][6]-averages1[0][6]) + " (" + sprintf("%8.2f", ((averages3[0][6]-averages1[0][6]) / averages1[0][6]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <%# Flow values %>
+            <% row_id = t + "row" + "40" %>
+            <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                <th class="gvTotalText" style="   text-align:left">
+                    <%= "Surface/Subsurface/Tile Drain Flow" + " (" + "in" + ")" %>
+                    <%#= check_box_tag "Total P" %>
+                </th>
+                <td class="gvTotalText" style=" background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][7]+averages1[0][8]+averages1[0][9]) + " (" + sprintf("%8.1f",cis1[0][8]+cis1[0][9]+cis1[0][10]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", averages2[0][7]+averages2[0][8]+averages2[0][9]) + " (" + sprintf("%8.1f",cis2[0][8]+cis2[0][9]+cis2[0][10]) + ")" %></td>
+                    <% difference1 = averages2[0][7]+averages2[0][8]+averages2[0][9]-(averages1[0][7]+averages1[0][8]+averages1[0][9]) %>
+                    <% reduction1 = difference1 / (averages1[0][7]+averages1[0][8]+averages1[0][9]) * 100 %>
+                    <td class= "gvTotalText" style=" background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+                <% end %>
+                <% if @scenario3 > "0" && @scenario3 != "" then %>
+                    <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", averages3[0][7]+averages3[0][8]+averages3[0][9]) + " (" + sprintf("%8.1f",cis3[0][8]+cis3[0][9]+cis3[0][10]) + ")" %></td>
+                    <% difference1 = averages3[0][7]+averages3[0][8]+averages3[0][9]-(averages1[0][7]+averages1[0][8]+averages1[0][9]) %>
+                    <% reduction1 = difference1 / (averages1[0][7]+averages1[0][8]+averages1[0][9]) * 100 %>
+                    <td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>    
+                <% end %>                           
+            </tr>
+            <% row_id = t + "row" + "41" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= "Surface Flow" + " (" + "in" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][7]) + " (" + sprintf("%8.1f", cis1[0][8]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][7]) + " (" + sprintf("%8.1f", cis2[0][8]) + ")" %></td>
+                    <td class=<%= if averages2[0][7]-averages1[0][7] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][7]-averages1[0][7]) + " (" + sprintf("%8.2f", ((averages2[0][7]-averages1[0][7]) / averages1[0][7]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][7]) + " (" + sprintf("%8.1f", cis3[0][8]) + ")" %></td>
+                    <td class=<%= if averages3[0][7]-averages1[0][7] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][7]-averages1[0][7]) + " (" + sprintf("%8.2f", ((averages3[0][7]-averages1[0][7]) / averages1[0][7]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "42" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= "Subsurface Flow" + " (" + "in" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][8]) + " (" + sprintf("%8.1f", cis1[0][9]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][8]) + " (" + sprintf("%8.1f", cis2[0][9]) + ")" %></td>
+                    <td class=<%= if averages2[0][8]-averages1[0][8] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][8]-averages1[0][8]) + " (" + sprintf("%8.2f", ((averages2[0][8]-averages1[0][8]) / averages1[0][8]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][8]) + " (" + sprintf("%8.1f", cis3[0][9]) + ")" %></td>
+                    <td class=<%= if averages3[0][8]-averages1[0][8] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][8]-averages1[0][8]) + " (" + sprintf("%8.2f", ((averages3[0][8]-averages1[0][8]) / averages1[0][8]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "43" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= "Tile Drain Flow" + " (" + "in" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][9]) + " (" + sprintf("%8.1f", cis1[0][10]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][9]) + " (" + sprintf("%8.1f", cis2[0][10]) + ")" %></td>
+                    <td class=<%= if averages2[0][9]-averages1[0][9] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][9]-averages1[0][9]) + " (" + sprintf("%8.2f", ((averages2[0][9]-averages1[0][9]) / averages1[0][9]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][9]) + " (" + sprintf("%8.1f", cis3[0][10]) + ")" %></td>
+                    <td class=<%= if averages3[0][9]-averages1[0][9] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][9]-averages1[0][9]) + " (" + sprintf("%8.2f", ((averages3[0][9]-averages1[0][9]) / averages1[0][9]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <%# Other Flow values %>
+            <% row_id = t + "row" + "50" %>
+            <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                <th class="gvTotalText" style="   text-align:left">
+                    <%= "Total Other Water Info" + " (" + "in" + ")" %>
+                    <%#= check_box_tag "Total P" %>
+                </th>
+                <td class="gvTotalText" style=" background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][10]+averages1[0][11]).to_s + " (" + sprintf("%8.1f",cis1[0][11]+cis1[0][12]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", averages2[0][10]+averages2[0][11]) + " (" + sprintf("%8.1f",cis2[0][11]+cis2[0][12]) + ")" %></td>
+                    <% difference1 = averages2[0][10]+averages2[0][11]-(averages1[0][10]+averages1[0][11]) %>
+                    <% reduction1 = difference1 / (averages1[0][10]+averages1[0][11]) * 100 %>
+                    <td class= "gvTotalText" style=" background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+                <% end %>
+                <% if @scenario3 > "0" && @scenario3 != "" then %>
+                    <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", averages3[0][10]+averages3[0][11]) + " (" + sprintf("%8.1f",cis3[0][11]+cis3[0][12]) + ")" %></td>
+                    <% difference1 = averages3[0][10]+averages3[0][11]-(averages1[0][10]+averages1[0][11]) %>
+                    <% reduction1 = difference1 / (averages1[0][10]+averages1[0][11]) * 100 %>
+                    <td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td> 
+                <% end %>                               
+            </tr>
+            <% row_id = t + "row" + "51" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="  text-align:right; padding-right: 10px;"><%= "Irrigation Runoff" + " (" + "in" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][10]).to_s + " (" + sprintf("%8.1f", cis1[0][11]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][10]) + " (" + sprintf("%8.1f", cis2[0][11]) + ")" %></td>
+                    <td class=<%= if averages2[0][10]-averages1[0][10] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][10]-averages1[0][10]) + " (" + sprintf("%8.2f", ((averages2[0][10]-averages1[0][10]) / averages1[0][10]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][10]) + " (" + sprintf("%8.1f", cis3[0][11]) + ")" %></td>
+                    <td class=<%= if averages3[0][10]-averages1[0][10] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][10]-averages1[0][10]) + " (" + sprintf("%8.2f", ((averages3[0][10]-averages1[0][10]) / averages1[0][10]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "52" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="  text-align:right; padding-right: 10px;"><%= "Deep Percolation" + " (" + "in" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][11]) + " (" + sprintf("%8.1f", cis1[0][12]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][11]) + " (" + sprintf("%8.1f",cis2[0][12]) + ")" %></td>
+                    <td class=<%= if averages2[0][11]-averages1[0][11] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][11]-averages1[0][11]) + " (" + sprintf("%8.2f", ((averages2[0][11]-averages1[0][11]) / averages1[0][11]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][11]) + " (" + sprintf("%8.1f", cis3[0][12]) + ")" %></td>
+                    <td class=<%= if averages3[0][11]-averages1[0][11] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", averages3[0][11]-averages1[0][11]) + " (" + sprintf("%8.2f", ((averages3[0][11]-averages1[0][11]) / averages1[0][11]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <%# Erosion %>
+            <% row_id = t + "row" + "60" %>
+            <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                <th class="gvTotalText" style="   text-align:left">
+                    <%= "Total Sediment" + " (" + "t/ac" + ")" %>
+                    <%#= check_box_tag "Total P" %>
+                </th>
+                <td class="gvTotalText" style=" background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][12]+averages1[0][13]) + " (" + sprintf("%8.1f",cis1[0][13]+cis1[0][14]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", averages2[0][12]+averages2[0][13]) + " (" + sprintf("%8.1f",cis2[0][13]+cis2[0][14]) + ")" %></td>
+                    <% difference1 = averages2[0][12]+averages2[0][13]-(averages1[0][12]+averages1[0][13]) %>
+                    <% reduction1 = difference1 / (averages1[0][12]+averages1[0][13]) * 100 %>
+                    <td class= "gvTotalText" style=" background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+                <% end %>
+                <% if @scenario3 > "0" && @scenario3 != "" then %>
+                    <td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", averages3[0][12]+averages3[0][13]) + " (" + sprintf("%8.1f",cis3[0][13]+cis3[0][14]) + ")" %></td>
+                    <% difference1 = averages3[0][12]+averages3[0][13]-(averages1[0][12]+averages1[0][13]) %>
+                    <% reduction1 = difference1 / (averages1[0][12]+averages1[0][13]) * 100 %>
+                    <td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td> 
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "61" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= "Surface Erosion" + " (" + "t/ac" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.4f", averages1[0][12]) + " (" + sprintf("%8.1f", cis1[0][13]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.4f", averages2[0][12]) + " (" + sprintf("%8.1f", cis2[0][13]) + ")" %></td>
+                    <td class=<%= if averages2[0][12]-averages1[0][12] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.4f", averages2[0][12]-averages1[0][12]) + " (" + sprintf("%8.2f", ((averages2[0][12]-averages1[0][12]) / averages1[0][12]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.4f", averages3[0][12]) + " (" + sprintf("%8.1f", cis3[0][13]) + ")" %></td>
+                    <td class=<%= if averages3[0][12]-averages1[0][12] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.4f", averages3[0][12]-averages1[0][12]) + " (" + sprintf("%8.2f", ((averages3[0][12]-averages1[0][12]) / averages1[0][12]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <% row_id = t + "row" + "62" %>
+            <tr class="gvRowStyleEven" id = <%=row_id%> >
+                <th class="gvDetailText bottom_border" style="  text-align:right; padding-right: 10px;"><%= "Manure Erosion" + " (" + "t/ac" + ")" %></th>
+                <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.4f", averages1[0][13]) + " (" + sprintf("%8.1f", cis1[0][14]) + ")" %></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.4f", averages2[0][13]) + " (" + sprintf("%8.1f", cis2[0][14]) + ")" %></td>
+                    <td class=<%= if averages2[0][13]-averages1[0][13] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.4f", averages2[0][13]-averages1[0][13]) + " (" + sprintf("%8.2f", ((averages2[0][13]-averages1[0][13]) / averages1[0][13]) * 100) + ")" %></td>
+                <% end %>
+                <% if @scenario3 != "0" && @scenario3 != "" then %>
+                    <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.4f", averages3[0][13]) + " (" + sprintf("%8.1f", cis3[0][14]) + ")" %></td>
+                    <td class=<%= if averages3[0][13]-averages1[0][13] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.4f", averages3[0][13]-averages1[0][13]) + " (" + sprintf("%8.2f", ((averages3[0][13]-averages1[0][13]) / averages1[0][13]) * 100) + ")" %></td>
+                <% end %>
+            </tr>
+            <%# Crops %>
+            <% row_id = t + "row" + "70" %>
+            <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                <th class="gvTotalText" style="  text-align:left">
+                    <%= "Crop Yield"  %>
+                    <%#= check_box_tag "Crop Yield" %>
+                </th>
+                <td class="gvTotalText" style=" background-color:#FFE8F9"></td>
+                <% if @scenario2 != "0" && @scenario2 != "" then %>
+                    <td class="gvTotalText" style="background-color:#DEFFFD"></td>
+                    <td class= "gvTotalText" style=" background-color:#DEFFFD"></td>
+                <% end %>
+                <% if @scenario3 > "0" then %>
+                    <td class="gvTotalText" style="background-color:#CADCFF"></td>
+                    <td class= "gvTotalText" style="background-color:#CADCFF"></td> 
+                <% end %>
+            </tr>
+            <%# Determine the number of crops to list them and the stress values %>
+            <% i = 1 %>
+            <% crop_results = Array.new %>
+            <% crops1.each do |cr1| %>
+                <% crop_result = Hash.new %>
+                <% crop_result["name"] = cr1[5] %>
+                <% crop_result["yield1"] = cr1[0] %>
+                <% crop_result["ci1"] = cic1.assoc(cr1[5])[1] %>
+                <% crop_result["ws1"] = cr1[1].round(0) %>
+                <% crop_result["ns1"] = cr1[2].round(0) %>
+                <% crop_result["ps1"] = cr1[3].round(0) %>
+                <% crop_result["ts1"] = cr1[4].round(0) %>
+                <% crop_result["yield2"] = 0 %>
+                <% crop_result["ci2"] = 0 %>
+                <% crop_result["ws2"] = 0 %>
+                <% crop_result["ns2"] = 0 %>
+                <% crop_result["ps2"] = 0 %>
+                <% crop_result["ts2"] = 0 %>
+                <% crop_result["yield3"] = 0 %>
+                <% crop_result["ci3"] = 0 %>
+                <% crop_result["ws3"] = 0 %>
+                <% crop_result["ns3"] = 0 %>
+                <% crop_result["ps3"] = 0 %>
+                <% crop_result["ts3"] = 0 %>
+                <% if @scenario2 != "0" && @scenario2 != "" then%>
+                    <% crops2.each do |cr2| %>
+                        <% if cr2[5] == cr1[5] then %>
+                            <% crop_result["yield2"] = cr2[0] %>
+                            <% crop_result["ci2"] = cic2.assoc(cr2[5])[1] %>
+                            <% crop_result["ws2"] = cr2[1].round(0) %>
+                            <% crop_result["ns2"] = cr2[2].round(0) %>
+                            <% crop_result["ps2"] = cr2[3].round(0) %>
+                            <% crop_result["ts2"] = cr2[4].round(0) %>
                         <% end %>
                     <% end %>
-                <% else %> <!-- SPANISH -->
-                    <% if (i % 2 == 0) then %>
-                        <% if (result.description_id % 10 == 0) %>
-                            <tr class="table_row_even">
-                            <% if result.description_id == 70 %>
-                                <td class="row text bold"><%= Description.find(result.description_id).spanish_description %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                            <% else %>
-                                <td class="row text bold"><%= Description.find(result.description_id).spanish_description %></td>
-                                <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %>
-                                    <td class="row text bold"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                <% end %>
-                            <% end %>
-                            </tr>
-                        <% else %>
-                            <tr class="table_row_even">
-                            <% if result.description_id > 70 && result.description_id < 90 %>
-                                <td class="row number"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-                                <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %> 
-                                    <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                <% end %>
-                            <% else %>
-                                <td class="row number"><%= Description.find(result.description_id).spanish_description %></td>
-                                <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %>
-                                    <td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                    <td class="row number"><%= %></td>
-                                <% end %>
-                            <% end %>
-                            </tr>
-                        <% end %>
-                    <% else %>
-                        <% if (result.description_id % 10 == 0) %>
-                            <tr class="table_row_odd">
-                            <% if result.description_id == 70 %>
-                                <td class="row text bold"><%= Description.find(result.description_id).spanish_description %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                                <td class="row text bold"><%= %></td>
-                            <% else %>
-                                <td class="row text bold"><%= Description.find(result.description_id).spanish_description %></td>
-                                <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                <% if @results2 != nil %>
-                                    <td class="row text bold"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", difference1) %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", reduction1) %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", total_area1) %></td>
-                                <% else %>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                <% end %>
-                            <% end %>
-                            </tr>
-                        <% else %>
-                            <tr class="table_row_odd">
-								<% if result.description_id > 70 && result.description_id < 90 %>
-									<td class="row number"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-									<td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-									<% if @results2 != nil %> 
-										<td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-										<td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-										<td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-										<td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-									<% else %>
-										<td class="row number"><%= %></td>
-										<td class="row number"><%= %></td>
-										<td class="row number"><%= %></td>
-										<td class="row number"><%= %></td>
-									<% end %>
-								<% else %>
-									<td class="row number"><%= Description.find(result.description_id).spanish_description %></td>
-									<td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-									<% if @results2 != nil %>
-										<td class="row number"><%= sprintf("%8.2f", value2).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-										<td class="row number"><%= sprintf("%8.2f", difference1) %></td>
-										<td class="row number"><%= sprintf("%8.2f", reduction1) %></td>
-										<td class="row number"><%= sprintf("%8.2f", total_area1) %></td>
-									<% else %>
-										<td class="row number"><%= %></td>
-										<td class="row number"><%= %></td>
-										<td class="row number"><%= %></td>
-										<td class="row number"><%= %></td>
-									<% end %>
-								<% end %>
-                            </tr>
-                        <% end %>  #totals
-                    <% end %> # end language
-					</br>
                 <% end %>
-                <% i = i + 1 %>
+                <% if @scenario3 != "0" && @scenario3 != "" then%>
+                    <% crops3.each do |cr3| %>
+                        <% if cr3[5] == cr1[5] then %>
+                            <% crop_result["yield3"] = cr3[0] %>
+                            <% crop_result["ci3"] = cic3.assoc(cr3[5])[1] %>
+                            <% crop_result["ws3"] = cr3[1].round(0) %>
+                            <% crop_result["ns3"] = cr3[2].round(0) %>
+                            <% crop_result["ps3"] = cr3[3].round(0) %>
+                            <% crop_result["ts3"] = cr3[4].round(0) %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+                <% crop_results.push(crop_result) %>
+            <% end %>
+            <%# will find out if there are new crops in scenario 2 %>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+                <% crops2.each do |cr2| %>
+                    <% found = false %>
+                    <% crops1.each do |cr1|%>
+                        <% if cr2[5] == cr1[5] then %>
+                            <% found = true %>
+                            <% break %>
+                        <% end %>
+                    <% end %>
+                    <% if found == false then %>   <%# this is a new crop and needs to be added to the list %>
+                        <% crop_result = Hash.new %>
+                        <% crop_result["name"] = cr2[5] %>
+                        <% crop_result["yield1"] = 0 %>
+                        <% crop_result["ci1"] = 0 %>
+                        <% crop_result["ws1"] = 0 %>
+                        <% crop_result["ns1"] = 0 %>
+                        <% crop_result["ps1"] = 0 %>
+                        <% crop_result["ts1"] = 0 %>
+                        <% crop_result["yield2"] = cr2[0] %>
+                        <% crop_result["ci2"] = cic2.assoc(cr2[5])[1] %>
+                        <% crop_result["ws2"] = cr2[1] %>
+                        <% crop_result["ns2"] = cr2[2] %>
+                        <% crop_result["ps2"] = cr2[3] %>
+                        <% crop_result["ts2"] = cr2[4] %>
+                        <% crop_result["yield3"] = 0 %>
+                        <% crop_result["ci3"] = 0 %>
+                        <% crop_result["ws3"] = 0 %>
+                        <% crop_result["ns3"] = 0 %>
+                        <% crop_result["ps3"] = 0 %>
+                        <% crop_result["ts3"] = 0 %>
+                        <% if @scenario3 != "0" && @scenario3 != "" then %>
+                            <% crops3.each do |cr3| %>
+                                <% if cr3[5] == cr2[5] then %>
+                                    <% crop_result["yield3"] = cr3[0] %>
+                                    <% crop_result["ci3"] = cic3.assoc(cr3[5])[1] %>
+                                    <% crop_result["ws3"] = cr3[1] %>
+                                    <% crop_result["ns3"] = cr3[2] %>
+                                    <% crop_result["ps3"] = cr3[3] %>
+                                    <% crop_result["ts3"] = cr3[4] %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                        <% crop_results.push(crop_result) %>
+                    <% end %>
+                <% end %>
+            <% end %>
+            <%# will find out if there are new crops in scenario 3 %>
+            <% if @scenario3 != "0" && @scenario3 != "" then %>
+                <% crops3.each do |cr3| %>
+                    <% found = false %>
+                    <% crop_results.each do |cr|%>
+                        <% if cr3[5] == cr["name"] then %>
+                            <% found = true %>
+                            <% break %>
+                        <% end %>
+                    <% end %>
+                    <% if found == false then %>   <%# this is a new crop and needs to be added to the list %>
+                        <% crop_result = Hash.new %>
+                        <% crop_result["name"] = cr3[5] %>
+                        <% crop_result["yield1"] = 0 %>
+                        <% crop_result["ci1"] = 0 %>
+                        <% crop_result["ws1"] = 0 %>
+                        <% crop_result["ns1"] = 0 %>
+                        <% crop_result["ps1"] = 0 %>
+                        <% crop_result["ts1"] = 0 %>
+                        <% crop_result["yield2"] = 0 %>
+                        <% crop_result["ci2"] = 0 %>
+                        <% crop_result["ws2"] = 0 %>
+                        <% crop_result["ns2"] = 0 %>
+                        <% crop_result["ps2"] = 0 %>
+                        <% crop_result["ts2"] = 0 %>
+                        <% crop_result["yield3"] = cr3[0] %>
+                        <% crop_result["ci3"] = cic3.assoc(cr3[5])[1] %>
+                        <% crop_result["ws3"] = cr3[1] %>
+                        <% crop_result["ns3"] = cr3[2] %>
+                        <% crop_result["ps3"] = cr3[3] %>
+                        <% crop_result["ts3"] = cr3[4] %>
+                        <% crop_results.push(crop_result) %>
+                    <% end %>
+                <% end %>
+            <% end %>
+            <style>
+                tr {
+                    border: 3px double black;
+                }
+            </style>
+            <% crop_results.each do |cr| %>
+                <%# get conversion unit dry matter to calculate yield and also take the unts %>
+                <% crop = Crop.find_by_code(cr["name"]) %>
+                <% conversion_factor = 1 * AC_TO_HA %>
+                <% dry_matter = 100 %>
+                <% unit = "t/ac" %>
+                <% if crop != nil then %>
+                  <% conversion_factor = crop.conversion_factor * AC_TO_HA %>
+                  <% dry_matter = crop.dry_matter %>
+                  <% unit = crop.yield_unit + "/ac" %>
+                  <%# cr["ci1"] = cr["ci1"] * conversion_factor / (dry_matter/100)%>
+                <% end %>
+                <% row_id = t + "row" + (70 + i).to_s %>
+                <tr class="gvRowStyleEven" id = <%=row_id%> >
+                    <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= crop.name + " (" + unit + ")" %></th>
+                    <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.0f", cr["yield1"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci1"]) + ")" %></td>
+                    <% if @scenario2 != "0" && @scenario2 != "" then %>
+                        <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.0f", cr["yield2"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci2"]) + ")" %></td>
+                        <td class=<%= if cr["yield2"]-cr["yield1"] <= 0 then "nutrients_negative bottom_border" else "nutrients_positive bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.0f", (cr["yield2"]-cr["yield1"])* conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", (cr["yield2"]-cr["yield1"]) * 100 / cr["yield1"]) + ")" unless cr["yield1"]==0 %></td>    
+                    <% end %>
+                    <% if @scenario3 != "0" && @scenario3 != "" then %>
+                        <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.0f", cr["yield3"] * conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", cr["ci3"]) + ")" %></td>
+                        <td class=<%= if cr["yield3"]-cr["yield1"] <= 0 then "nutrients_negative bottom_border" else "nutrients_positive bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.0f", (cr["yield3"]-cr["yield1"])* conversion_factor / (dry_matter/100)) + " (" + sprintf("%8.1f", (cr["yield3"]-cr["yield1"])*100 / cr["yield1"]) + ")" unless cr["yield1"]==0 %></td>
+                    <% end %>
+                </tr>
+                <% i += 1 %>
+            <% end %>
+            <% if ENV["APP_VERSION"] == "standard" %>
+                <% row_id = t + "row" + "200" %>
+                <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                    <th class="gvTotalText" style="   text-align:left">
+                        <%= "N Stress"  %>
+                        <%#= check_box_tag "N Stress" %>
+                    </th>
+                    <td class="gvTotalText" style=" background-color:#FFE8F9"></td>
+                    <% if @scenario2 != "0" && @scenario2 != "" then %>
+                        <td class="gvTotalText" style="background-color:#DEFFFD"></td>
+                        <td class= "gvTotalText" style=" background-color:#DEFFFD"></td>
+                    <% end %>
+                    <% if @scenario3 > "0" then %>
+                        <td class="gvTotalText" style="background-color:#CADCFF"></td>
+                        <td class= "gvTotalText" style="background-color:#CADCFF"></td> 
+                    <% end %>
+                </tr>
+                <% crop_results.each do |cr| %>
+                    <%# get conversion unit dry matter to calculate yield and also take the unts %>
+                    <% crop = Crop.find_by_code(cr["name"]) %>
+                    <%# if crop != nil then %>
+                    <%# end %>
+                    <% row_id = t + "row" + (200 + i).to_s %>
+                    <tr class="gvRowStyleEven" id = <%=row_id%> >
+                        <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= crop.name + " (" + "days" + ")" %></th>
+                        <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.0f", cr["ns1"]) + " (" + sprintf("%8.1f", cr["ns1"]*100.0/crop.dyam) + "%)" %></td>
+                        <% if @scenario2 != "0" && @scenario2 != "" then %>
+                            <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.0f", cr["ns2"]) + " (" + sprintf("%8.1f", (cr["ns2"] * 100.0 / crop.dyam).round(1)) + "%)" %></td>
+                            <td class=<%= if cr["ns2"]-cr["ns1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.0f", cr["ns2"]-cr["ns1"]) + " (" + sprintf("%8.1f", (cr["ns2"]-cr["ns1"])*100 / cr["ns1"]) + ")" unless cr["ns1"]==0 %></td>  
+                        <% end %>
+                        <% if @scenario3 != "0" && @scenario3 != "" then %>
+                            <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.0f", cr["ns3"]) + " (" + sprintf("%8.1f", cr["ns3"] * 100.0 / crop.dyam.round(1)) + "%)" %></td>
+                            <td class=<%= if cr["ns3"]-cr["ns1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.0f", cr["ns3"]-cr["ns1"]) + " (" + sprintf("%8.1f", (cr["ns3"]-cr["ns1"]) * 100 / cr["ns1"]) + ")" unless cr["ns1"]==0 %></td>
+                        <% end %>
+                    </tr>
+                    <% i += 1 %>
+                <% end %>
+                <% row_id = t + "row" + "210" %>
+                <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                    <th class="gvTotalText" style="   text-align:left">
+                        <%= "P Stress"  %>
+                        <%#= check_box_tag "P Stress" %>
+                    </th>
+                    <td class="gvTotalText" style=" background-color:#FFE8F9"></td>
+                    <% if @scenario2 != "0" && @scenario2 != "" then %>
+                        <td class="gvTotalText" style="background-color:#DEFFFD"></td>
+                        <td class= "gvTotalText" style=" background-color:#DEFFFD"></td>
+                    <% end %>
+                    <% if @scenario3 > "0" then %>
+                        <td class="gvTotalText" style="background-color:#CADCFF"></td>
+                        <td class= "gvTotalText" style="background-color:#CADCFF"></td> 
+                    <% end %>
+                </tr>
+                <% crop_results.each do |cr| %>
+                    <%# get conversion unit dry matter to calculate yield and also take the unts %>
+                    <% crop = Crop.find_by_code(cr["name"]) %>
+                    <%# if crop != nil then %>
+                    <%# end %>
+                    <% row_id = t + "row" + (210 + i).to_s %>
+                    <tr class="gvRowStyleEven" id = <%=row_id%> >
+                        <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= crop.name + " (" + "days" + ")" %></th>
+                        <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.0f", cr["ps1"]) + " (" + sprintf("%8.1f", cr["ps1"]*100.0/crop.dyam) + "%)" %></td>
+                        <% if @scenario2 != "0" && @scenario2 != "" then %>
+                            <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.0f", cr["ps2"]) + " (" + sprintf("%8.1f", (cr["ps2"] * 100.0 / crop.dyam).round(1)) + "%)" %></td>
+                            <td class=<%= if cr["ps2"]-cr["ns1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", cr["ps2"]-cr["ps1"]) + " (" + sprintf("%8.2f", (cr["ps2"]-cr["ps1"]) *100/ cr["ps1"]) + ")" unless cr["ps1"]==0 %></td>  
+                        <% end %>
+                        <% if @scenario3 != "0" && @scenario3 != "" then %>
+                            <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.0f", cr["ps3"]) + " (" + sprintf("%8.1f", cr["ps3"] * 100.0 / crop.dyam.round(1)) + "%)" %></td>
+                            <td class=<%= if cr["ps3"]-cr["ps1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", cr["ps3"]-cr["ps1"]) + " (" + sprintf("%8.2f", (cr["ps3"]-cr["ps1"]) *100/ cr["ns1"]) + ")" unless cr["ps1"]==0 %></td>
+                        <% end %>
+                    </tr>
+                    <% i += 1 %>
+                <% end %>
+                <% row_id = t + "row" + "220" %>
+                <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                    <th class="gvTotalText" style="   text-align:left">
+                        <%= "Temperature Stress"  %>
+                        <%#= check_box_tag "Temperature Stress" %>
+                    </th>
+                    <td class="gvTotalText" style=" background-color:#FFE8F9"></td>
+                    <% if @scenario2 != "0" && @scenario2 != "" then %>
+                        <td class="gvTotalText" style="background-color:#DEFFFD"></td>
+                        <td class= "gvTotalText" style=" background-color:#DEFFFD"></td>
+                    <% end %>
+                    <% if @scenario3 > "0" then %>
+                        <td class="gvTotalText" style="background-color:#CADCFF"></td>
+                        <td class= "gvTotalText" style="background-color:#CADCFF"></td> 
+                    <% end %>
+                </tr>
+                <% crop_results.each do |cr| %>
+                    <%# get conversion unit dry matter to calculate yield and also take the unts %>
+                    <% crop = Crop.find_by_code(cr["name"]) %>
+                    <%# if crop != nil then %>
+                    <%# end %>
+                    <% row_id = t + "row" + (220 + i).to_s %>
+                    <tr class="gvRowStyleEven" id = <%=row_id%> >
+                        <th class="gvDetailText bottom_border" style="   text-align:right; padding-right: 10px;"><%= crop.name + " (" + "days" + ")" %></th>
+                        <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.0f", cr["ts1"]) + " (" + sprintf("%8.1f", cr["ts1"]*100.0/crop.dyam) + "%)" %></td>
+                        <% if @scenario2 != "0" && @scenario2 != "" then %>
+                            <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.0f", cr["ts2"]) + " (" + sprintf("%8.1f", (cr["ts2"] * 100.0 / crop.dyam).round(1)) + "%)" %></td>
+                            <td class=<%= if cr["ts2"]-cr["ts1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", cr["ts2"]-cr["ts1"]) + " (" + sprintf("%8.2f", (cr["ts2"]-cr["ts1"]) * 100 / cr["ts1"]) + ")" unless cr["ts1"]==0 %></td>    
+                        <% end %>
+                        <% if @scenario3 != "0" && @scenario3 != "" then %>
+                            <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.0f", cr["ts3"]) + " (" + sprintf("%8.1f", cr["ts3"] * 100.0 / crop.dyam.round(1)) + "%)" %></td>
+                            <td class=<%= if cr["ts3"]-cr["ts1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", cr["ts3"]-cr["ts1"]) + " (" + sprintf("%8.2f", (cr["ts3"]-cr["ts1"]) * 100 / cr["ts1"]) + ")" unless cr["ts1"]==0 %></td>
+                        <% end %>
+                    </tr>
+                    <% i += 1 %>
+                <% end %>
+                <% row_id = t + "row" + "230" %>
+                <tr class="gvRowStyleOdd", id = <%=row_id%>>
+                    <th class="gvTotalText" style="   text-align:left">
+                        <%= "Water Stress"  %>
+                        <%#= check_box_tag "Water Stress" %>
+                    </th>
+                    <td class="gvTotalText" style=" background-color:#FFE8F9"></td>
+                    <% if @scenario2 != "0" && @scenario2 != "" then %>
+                        <td class="gvTotalText" style="background-color:#DEFFFD"></td>
+                        <td class= "gvTotalText" style=" background-color:#DEFFFD"></td>
+                    <% end %>
+                    <% if @scenario3 > "0" then %>
+                        <td class="gvTotalText" style="background-color:#CADCFF"></td>
+                        <td class= "gvTotalText" style="background-color:#CADCFF"></td> 
+                    <% end %>
+                </tr>
+                <% crop_results.each do |cr| %>
+                    <%# get conversion unit dry matter to calculate yield and also take the unts %>
+                    <% crop = Crop.find_by_code(cr["name"]) %>
+                    <% if crop != nil then %>
+                    <% end %>
+                    <% row_id = t + "row" + (230 + i).to_s %>
+                    <tr class="gvRowStyleEven" id = <%=row_id%> >
+                        <th class="gvDetailText bottom_border" style="  text-align:right; padding-right: 10px;"><%= crop.name + " (" + "days" + ")" %></th>
+                        <td class="gvCellStyleNumber bottom_border" style=" background-color:#FFE8F9"><%= sprintf("%8.0f", cr["ws1"]) + " (" + sprintf("%8.1f", cr["ws1"]*100.0/crop.dyam) + "%)" %></td>
+                        <% if @scenario2 != "0" && @scenario2 != "" then %>
+                            <td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.0f", cr["ws2"]) + " (" + sprintf("%8.1f", (cr["ws2"] * 100.0 / crop.dyam).round(1)) + "%)" %></td>
+                            <td class=<%= if cr["ws2"]-cr["ws1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style=" background-color:#DEFFFD"><%= sprintf("%8.2f", cr["ws2"]-cr["ws1"]) + " (" + sprintf("%8.2f", (cr["ws2"]-cr["ws1"]) *100/ cr["ws1"]) + ")" unless cr["ws1"]==0 %></td>  
+                        <% end %>
+                        <% if @scenario3 != "0" && @scenario3 != "" then %>
+                            <td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.0f", cr["ws3"]) + " (" + sprintf("%8.1f", cr["ws3"] * 100.0 / crop.dyam.round(1)) + "%)" %></td>
+                            <td class=<%= if cr["ns3"]-cr["ws1"] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", cr["ws3"]-cr["ws1"]) + " (" + sprintf("%8.2f", (cr["ws3"]-cr["ws1"]) *100/ cr["ws1"]) + ")" unless cr["ws1"]==0 %></td>
+                        <% end %>
+                    </tr>
+                    <% i += 1 %>
+                <% end %>
             <% end %>
         <% end %>
+        <!--Crop result here -->
+        <% id = 70%>
     </tbody>
+
+
+
+
+
 </table>
 
 <div class="page-break"></div>
 
-<% if @results3 != nil %>
-    <table class="table_fill">
-        <thead>
-            <tr>
-                <th class="table_head"><%=t('pdf.description')%></th>
-                <th class="table_head">1st <%=t('pdf.scenario')%></th>
-                <th class="table_head">3rd <%=t('pdf.scenario')%></th>
-                <th class="table_head"><%=t('pdf.difference')%></th>
-                <th class="table_head"><%=t('pdf.reduction')%> (%)</th>
-                <th class="table_head"><%=t('pdf.total_area')%></th>
-            </tr>
-        </thead>
-        <tbody>
-            <% i = 1 %>
-            <% if @results1 != nil %>
-                <% @results1.each do |result| %>
-                    <% if I18n.locale.eql?(:en) %>          
-                        <% value3 = 0 %>
-                        <% if @results3 != nil %> <%value3 = @results3.find_by_description_id(result.description_id).value %> <% end %>
-                        <% difference2 = value3- result.value%>
-                        <% reduction2 = difference2 / result.value * 100%>
-                        <% total_area2 = difference2 * @total_area2%>
-                        <% if (i % 2 == 0) then %>
-                            <% if (result.description_id % 10 == 0) %>
-                                <tr class="table_row_even">
-                                <% if result.description_id == 70 %>
-                                    <td class="row text bold"><%= Description.find(result.description_id).description %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                <% else %>
-                                    <td class="row text bold"><%= Description.find(result.description_id).description %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %>
-                                        <td class="row text bold"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                    <% end %>
-                                <% end %>
-                                </tr>
-                            <% else %>
-                                <tr class="table_row_even">
-                                <% if result.description_id > 70 && result.description_id < 90 %>
-                                    <td class="row number"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %> 
-                                        <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                    <% end %>
-                                <% else %>
-                                    <td class="row number"><%= Description.find(result.description_id).description %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %>
-                                        <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                    <% end %>
-                                <% end %>
-                                </tr>
-                            <% end %>
-                        <% else %>
-                            <% if (result.description_id % 10 == 0) %>
-                                <tr class="table_row_odd">
-                                <% if result.description_id == 70 %>
-                                    <td class="row text bold"><%= Description.find(result.description_id).description %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                <% else %>
-                                    <td class="row text bold"><%= Description.find(result.description_id).description %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %>
-                                        <td class="row text bold"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                    <% end %>
-                                <% end %>
-                                </tr>
-                            <% else %>
-                                <tr class="table_row_odd">
-                                <% if result.description_id > 70 && result.description_id < 90 %>
-                                    <td class="row number"><%= Crop.find(result.crop_id).name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %> 
-                                        <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                    <% end %>
-                                <% else %>
-                                    <td class="row number"><%= Description.find(result.description_id).description %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %>
-                                        <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                    <% end %>
-                                <% end %>
-                                </tr>
-                            <% end %>
-                        <% end %>
-                    <% else %> <!-- SPANISH -->
-                        <% if (i % 2 == 0) then %>
-                            <% if (result.description_id % 10 == 0) %>
-                                <tr class="table_row_even">
-                                <% if result.description_id == 70 %>
-                                    <td class="row text bold"><%= Description.find(result.description_id).spanish_description %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                <% else %>
-                                    <td class="row text bold"><%= Description.find(result.description_id).spanish_description %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %>
-                                        <td class="row text bold"><%= sprintf("%8.2f", value23).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                    <% end %>
-                                <% end %>
-                                </tr>
-                            <% else %>
-                                <tr class="table_row_even">
-                                <% if result.description_id > 70 && result.description_id < 90 %>
-                                    <td class="row number"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %> 
-                                        <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                    <% end %>
-                                <% else %>
-                                    <td class="row number"><%= Description.find(result.description_id).spanish_description %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %>
-                                        <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                    <% end %>
-                                <% end %>
-                                </tr>
-                            <% end %>
-                        <% else %>
-                            <% if (result.description_id % 10 == 0) %>
-                                <tr class="table_row_odd">
-                                <% if result.description_id == 70 %>
-                                    <td class="row text bold"><%= Description.find(result.description_id).spanish_description %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                    <td class="row text bold"><%= %></td>
-                                <% else %>
-                                    <td class="row text bold"><%= Description.find(result.description_id).spanish_description %></td>
-                                    <td class="row text bold"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %>
-                                        <td class="row text bold"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row text bold"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                        <td class="row text bold"><%= %></td>
-                                    <% end %>
-                                <% end %>
-                                </tr>
-                            <% else %>
-                                <tr class="table_row_odd">
-                                <% if result.description_id > 70 && result.description_id < 90 %>
-                                    <td class="row number"><%= Crop.find(result.crop_id).spanish_name + "(" + Crop.find(result.crop_id).yield_unit + ")" %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %> 
-                                        <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results2.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                    <% end %>
-                                <% else %>
-                                    <td class="row number"><%= Description.find(result.description_id).spanish_description %></td>
-                                    <td class="row number"><%= sprintf("%8.2f", result.value).to_s + "  ±" + sprintf("%8.2f", result.ci_value).to_s %></td>
-                                    <% if @results3 != nil %>
-                                        <td class="row number"><%= sprintf("%8.2f", value3).to_s + "  ±" + sprintf("%8.2f", @results3.find_by_description_id(result.description_id).ci_value).to_s %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", difference2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", reduction2) %></td>
-                                        <td class="row number"><%= sprintf("%8.2f", total_area2) %></td>
-                                    <% else %>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                        <td class="row number"><%= %></td>
-                                    <% end %>
-                                <% end %>
-                                </tr>
-                            <% end %>
-                        <% end %>
-                    <% end %>
-                    <% i = i + 1 %>
-                <% end %>
-            <% end %>
-        </tbody>
-    </table>
-<% end %>

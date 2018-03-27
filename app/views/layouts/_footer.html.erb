@@ -80,6 +80,9 @@
                         <%if !(request.url.include?(url_for=("/fields?"))) %>
                           <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                         <% end %>
+                        <%if request.url.include?(url_for=("/operations?")) %>
+                        <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
+                        <%end%>
                       <% end %>
                   <% end %>
                   <%if request.url.include?(url_for=("/grazing_parameters?")) %>
@@ -106,16 +109,18 @@
             </div>
             <div class="nav navbar-nav navbar-left">
               <ul class="footerleft">
+                <% unless ENV["APP_VERSION"] == "modified" %><li><div class="language"><%= t('help.language') %>
+                   <span class="tooltiptext">
+                     <%= link_to t("languages.english"), :locale=>'en', :project_id => params[:project_id]%><br>
+                     <%= link_to t("languages.spanish"), :locale=>'es', :project_id => params[:project_id]%>
+                     </span>
+               </li><% end %>
                    <li><a href="#" data-toggle="modal" data-target="#instructions"><%= t('footer.instructions')%></a></li>
-                   <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
-                   <li><%= link_to t("footer.about_ntt"), about_path(@user) %></li>
+                   <li><a href="#" data-toggle="modal" data-target="#documents"><%= t('footer.documentations')%></a></li>
                    <li><%= link_to t("footer.help"), help_path("index", @user) %></li>
-                   <% unless ENV["APP_VERSION"] == "modified" %><li><div class="language"><%= t('help.language') %>
-                      <span class="tooltiptext">
-                        <%= link_to t("languages.english"), :locale=>'en', :project_id => params[:project_id]%><br>
-                        <%= link_to t("languages.spanish"), :locale=>'es', :project_id => params[:project_id]%>
-                        </span>
-                  </li><% end %>
+                   <li><%= link_to 'FAQ', faqs_path(@user) %></li>
+                   <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
+                   <!--<li><%= link_to t("footer.about_ntt"), about_path(@user) %></li>-->
               </ul>
             </div>
         </div>
@@ -235,16 +240,26 @@ Stephenville, TX 76402<br>
 saleh@tarleton.edu</li></ul>
 <br>
 
-<%= raw t('contact2.statement') %><br><br>
+<% if ENV["APP_VERSION"] == "modified" %>
+<ul><li><b>Mindy Selman</b></li>
+<%= t('contact2.position') %><br>
+USDA Office of Environmental Markets<br>
+Washington, DC<br>
+Stephenville, TX 76402<br>
+(202)304-5154 (Phone)<br>
+mselman@oce.usda.gov<br><br></ul>
+  <% end %>
+
+<%= raw t('contact3.statement') %><br><br>
 
 <ul><li><b>Oscar Gallego</b></li>
-<%= t('contact2.position') %><br>
+<%= t('contact3.position') %><br>
 P.O. Box T410<br>
 Tarleton State University<br>
 Stephenville, TX 76402<br>
 (254)968-9787 (Phone)<br>
 (254)968-9790 (Fax)<br>
-gallego@tiaer.tarleton.edu
+gallego@tiaer.tarleton.edu</ul>
 
       </div>
       <div class="modal-footer">
@@ -253,3 +268,22 @@ gallego@tiaer.tarleton.edu
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="documents" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <table>
+          <% if ENV["APP_VERSION"] == "modified" %>
+          <tr><td><%= t('documents_basic_html')%></td></tr>
+          <% else %>
+          <tr><td><%= t('documents_re_html')%></td></tr>
+          <% end %>
+        </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

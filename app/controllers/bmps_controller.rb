@@ -56,7 +56,7 @@ class BmpsController < ApplicationController
   			bmp.bmpsublist_id = bmpsublist.id
   			case bmp.bmpsublist_id
   			  when 1  #autoirrigation/autofertigation - defaults
-    				bmp.water_stress_factor = 0.80
+    				bmp.water_stress_factor = 0.2
     				bmp.days = 14
     				bmp.irrigation_efficiency = 0
             bmp.maximum_single_application = 3
@@ -491,8 +491,8 @@ class BmpsController < ApplicationController
             subarea.iri = params[:bmp_ai][:days]
 			      @bmp.days = subarea.iri
             subarea.bir = params[:bmp_ai][:water_stress_factor]
-			      subarea.bir /= 100
-			      @bmp.water_stress_factor = subarea.bir
+			      subarea.bir = (100 - subarea.bir) / 100
+            @bmp.water_stress_factor = 1-subarea.bir
             if subarea.bir >= 1 then subarea.bir = 0.99 end
             subarea.efi = 1.0 - (params[:bmp_ai][:irrigation_efficiency].to_f / 100)
 			      @bmp.irrigation_efficiency = subarea.efi
@@ -562,7 +562,8 @@ class BmpsController < ApplicationController
             subarea.iri = params[:bmp_ai][:days]
             @bmp.days = subarea.iri
             subarea.bir = params[:bmp_ai][:water_stress_factor]
-            @bmp.water_stress_factor = subarea.bir
+            subarea.bir = (100 - subarea.bir) / 100
+            @bmp.water_stress_factor = 1-subarea.bir
             subarea.efi = 1.0 - params[:bmp_ai][:irrigation_efficiency].to_f
             @bmp.irrigation_efficiency = params[:bmp_ai][:irrigation_efficiency].to_f
             subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
@@ -1328,13 +1329,18 @@ class BmpsController < ApplicationController
           j=0
           subareas.each do |s|
             if i == 0 then  # update the current subareas. And save the initial areas in an array to calculate further areas.
-              areas[j] = s.wsa 
-              j += 1
+              areas[j] = s.wsa
+              s.rchl = s.chl
               s.wsa = s.wsa / total_strips * crop_area
+              if j > 0 && s.wsa > 0 then
+                s.wsa *= -1
+              end
               s.save
+              j += 1
               iops = s.iops
             else
               s_new = s.dup
+              s_new.rchl = s_new.chl
               s_new.number = number
               number += 1
               #s_new.iops = iops
@@ -1353,7 +1359,11 @@ class BmpsController < ApplicationController
                 s_new.wsa = areas[j] / total_strips * buffer_area
                 s_new.description = "0000000000000000  .sub Contour Buffer Grass Strip"
                 s_new.iops = iops + 1
-                if j > 0 then s_new.wsa *= -1 end
+                if j > 0 then
+                  s_new.wsa *= -1
+                else
+                  s_new.rchl = s_new.chl * 0.9
+                end
               end
               j += 1
               s_new.save

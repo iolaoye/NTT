@@ -66,7 +66,14 @@ updateNutrients = (animal) ->
       else
         $.getJSON url, (fertilizer) ->
           $("#operation_no3_n").val(fertilizer.qn)
-          $("#operation_po4_p").val(fertilizer.qp)
+          if (fertilizer.qp == 100)
+            $("#operation_po4_p").val(fertilizer.qp)
+            $("#div_nutrients")[0].children[2].children[0].innerHTML = "P (0-100%)"
+            $("#operation_po4_p").attr("readonly", true)
+          else
+            $("#operation_po4_p").val(Math.round(fertilizer.qp/0.4364))
+            $("#div_nutrients")[0].children[2].children[0].innerHTML = "P<sub>2</sub>O<sub>5</sub> (0-100%)"
+            $("#operation_po4_p").attr("readonly", false)
           $("#operation_org_n").val(fertilizer.yn)
           $("#operation_org_p").val(fertilizer.yp)
           $("#operation_nh3").val("")
@@ -98,7 +105,7 @@ getGrazingFields = ->
     $("#operation_amount").prop('min',1)
     $("#operation_depth").prop('min',1)
     if $("#operation_activity_id").val() == "9"
-      $("#operation_moisture").prop('required',true)
+      $("#operation_moisture").prop('required',false)
       $("#operation_nh4_n").prop('required',true)
       $("#operation_moisture").prop('min',1)
       $("#operation_nh4_n").prop('min',1)
@@ -109,6 +116,7 @@ getGrazingFields = ->
     $("#div_type")[0].children[0].innerText = "Animal Type"
 
 updateTypes = ->
+  $("#operation_nh4_n").hide()
   $("#div_amount").hide()
   $("#div_depth").hide()
   $("#div_nutrients").hide()
@@ -186,6 +194,7 @@ updateTypes = ->
       getGrazingFields()
       $("#div_grazed").show()
       $("#div_resttime").show()
+      $("#operation_nh4_n").show()
     when "12"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
@@ -246,7 +255,7 @@ updateFerts = ->
           $("#div_amount")[0].children[0].innerText = "Application rate(t/ac)"
           $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/t)"
           $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/t)"
-      else 
+      else
           $("#div_amount")[0].children[0].innerText = "Application rate(x1000gal/ac)"
           $("#div_other_nutrients")[0].children[0].children[0].innerText = "Total N concentration (lbs/1000 gallons)"
           $("#div_other_nutrients")[0].children[1].children[0].innerText = "Total P concentration (lbs/1000 gallons)"
@@ -379,6 +388,7 @@ $(document).ready ->
     $('#replace').click ->
       $('#year').toggle(!@checked)
       $('#year_label').toggle(!@checked)
+      $('#plant_title').toggle(!@checked)
       document.getElementById('year').disabled = @checked
       if (@checked)
         r = confirm('Are you sure? When you upload, this will delete all your current operations')
@@ -386,4 +396,5 @@ $(document).ready ->
           $("#replace").removeAttr('checked');
           $('#year').toggle(true)
           $('#year_label').toggle(true)
+          $('#plant_title').toggle(true)
       return

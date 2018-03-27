@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Annual Results</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Scenario</th>
+      <th>Sub1</th>
+      <th>Year</th>
+      <th>Flow</th>
+      <th>Qdr</th>
+      <th>Surface flow</th>
+      <th>Sed</th>
+      <th>Ymnu</th>
+      <th>Orgp</th>
+      <th>Po4</th>
+      <th>Orgn</th>
+      <th>No3</th>
+      <th>Qdrn</th>
+      <th>Qdrp</th>
+      <th>Qn</th>
+      <th>Dprk</th>
+      <th>Irri</th>
+      <th>Pcp</th>
+      <th>N2o</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @annual_results.each do |annual_result| %>
+      <tr>
+        <td><%= annual_result.scenario_id %></td>
+        <td><%= annual_result.sub1 %></td>
+        <td><%= annual_result.year %></td>
+        <td><%= annual_result.flow %></td>
+        <td><%= annual_result.qdr %></td>
+        <td><%= annual_result.surface_flow %></td>
+        <td><%= annual_result.sed %></td>
+        <td><%= annual_result.ymnu %></td>
+        <td><%= annual_result.orgp %></td>
+        <td><%= annual_result.po4 %></td>
+        <td><%= annual_result.orgn %></td>
+        <td><%= annual_result.no3 %></td>
+        <td><%= annual_result.qdrn %></td>
+        <td><%= annual_result.qdrp %></td>
+        <td><%= annual_result.qn %></td>
+        <td><%= annual_result.dprk %></td>
+        <td><%= annual_result.irri %></td>
+        <td><%= annual_result.pcp %></td>
+        <td><%= annual_result.n2o %></td>
+        <td><%= link_to 'Show', annual_result %></td>
+        <td><%= link_to 'Edit', edit_annual_result_path(annual_result) %></td>
+        <td><%= link_to 'Destroy', annual_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Annual result', new_annual_result_path %>

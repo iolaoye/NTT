@@ -6,8 +6,8 @@ class SessionsController < ApplicationController
       session[:status] = "signed" # store user id in session
       redirect_to user_projects_path(current_user.id), :notice => t('general.log_in') # redirect is successful
     else
-      flash.now[:alert] = "Invalid login/password combination" # alert if error
-      render :action => 'index' # redirect to the same page
+      flash[:info] = "Invalid login/password combination" # alert if error
+      redirect_to root_path # redirect to the same page
     end
   end
 
@@ -32,8 +32,9 @@ class SessionsController < ApplicationController
 #destroy session on login out
   def destroy
     reset_session # reset all of the values for the current session
-    redirect_to login_path, :notice => t('general.log_out') # redirect
+    redirect_to root_path, :notice => t('general.log_out') # redirect
     session[:user_id] = ""
     session[:status] = "" # store user id in session
+    sign_out
   end
 end

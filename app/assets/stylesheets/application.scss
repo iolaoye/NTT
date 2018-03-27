@@ -44,6 +44,12 @@
   margin-bottom: 15px;
 }
 
+#welcome .success_alert {
+  padding: 5px;
+  margin-top: -3%;
+  position: absolute;
+}
+
 .info_alert {
   margin-top: 15px;
   padding: 20px;
@@ -66,6 +72,8 @@
   background-color: #f44336; /* Red */
   color: white;
   margin-bottom: 15px;
+  position: absolute;
+  z-index: 2;
 }
 
 .flash_alert > h3 {
@@ -75,6 +83,17 @@
 .flash_alert > ul li {
   font-size: 12px;
   color: #e9e9e9;
+}
+
+#alert-flash {
+  position: absolute;
+  width: 30%;
+  margin-left: 35%;
+  margin-top: -8%;
+}
+
+#alert-flash span {
+  margin-left: 95%;
 }
 
 .create_font { font-weight: bold; font-size:20px; }

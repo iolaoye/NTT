@@ -1,5 +1,8 @@
+
 class WatershedsController < ApplicationController
   include SimulationsHelper
+  include ApplicationHelper
+
   before_filter :set_notifications
 
   def set_notifications
@@ -13,7 +16,7 @@ class WatershedsController < ApplicationController
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => session[:location_id])
     watershed_scenarios_count(@watersheds)
-    @project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
     respond_to do |format|
       format.html notice: t('watershed.watershed') + " " + t('general.created') # list.html.erb
       format.json { render json: @watersheds }
@@ -25,7 +28,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds.json
   def index
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
-    @project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
     @watersheds = Watershed.where(:location_id => @project.location.id)
     watershed_scenarios_count(@watersheds)
 
@@ -83,7 +86,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /watersheds/1.json
   def simulate
-    @project = Project.find(params[:project_id])
+    #@project = Project.find(params[:project_id])
     @errors = Array.new
 	if !(params[:commit].include?("Simulate")) then
 		#update watershed_scenarios
@@ -152,16 +155,18 @@ class WatershedsController < ApplicationController
 				watershed_scenarios.each do |p|
 				  @scenario = Scenario.find(p.scenario_id)
 				  @field = Field.find(p.field_id)
-				  @grazing = @scenario.operations.find_by_activity_id([7, 9])
-				  if @grazing == nil then
-				  	@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
-				  else
-				  	@soils = Soil.where(:field_id => p.field_id).where(:selected => true).limit(1)
-				  end
-				  #@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
-				  if msg.eql?("OK") then msg = create_soils() else return msg end
-				  if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-				  j+=1
+					@grazing = @scenario.operations.find_by_activity_id([7, 9])
+					if @grazing == nil then
+						#@soils = @field.soils.where(:selected => true)
+						@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
+					else
+						#@soils = @field.soils.where(:selected => true).limit(1)
+						@soils = Soil.where(:field_id => p.field_id).where(:selected => true).limit(1)
+					end
+				  	#@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
+				  	if msg.eql?("OK") then msg = create_soils() else return msg end
+				  	if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+				  	j+=1
 				end # end watershed_scenarios.each
 				print_array_to_file(@soil_list, "soil.dat")
 				print_array_to_file(@opcs_list_file, "OPCS.dat")
@@ -233,30 +238,41 @@ class WatershedsController < ApplicationController
   # PATCH/PUT /watersheds/1
   # PATCH/PUT /watersheds/1.json
   def update
+  	@watershed = Watershed.find(params[:id])
+  	respond_to do |format|
+      if @watershed.update_attributes(watershed_params)
+      	@watersheds = @project.location.watersheds
+        format.html { redirect_to project_watersheds_path(@project), notice: 'Watershed was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @watershed.errors, status: :unprocessable_entity }
+      end
+    end
     #find the number for the collection
-	for i in 1..20
-		field = "field" + i.to_s
-		scenario = "scenario" + i.to_s
-		if !(params[field] == nil) then
-			break
-		end
-	end
+	#for i in 1..20
+		#field = "field" + i.to_s
+		#scenario = "scenario" + i.to_s
+		#if !(params[field] == nil) then
+			#break
+		#end
+	#end
 	#status = new_scenario(field, scenario)
-	@notice = nil
-	case status
-		when "saved"
-			@notice = "Saved"
-		when "exist"
-			@error = "Already Exist"
-		when "error"
-			@error = "Error"
-	end
-	@project = Project.find(Location.find(Watershed.find(params[:id]).location_id).project_id)
-    @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
-    @watersheds = Watershed.where(:location_id => @project.location.id)
-    watershed_scenarios_count(@watersheds)
-	params[:project_id] = @project.id
-    render "index"
+	#@notice = nil
+	#case status
+		#when "saved"
+			#@notice = "Saved"
+		#when "exist"
+			#@error = "Already Exist"
+		#when "error"
+			#@error = "Error"
+	#end
+	#@project = Project.find(Location.find(Watershed.find(params[:id]).location_id).project_id)
+    #@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
+    #@watersheds = Watershed.where(:location_id => @project.location.id)
+    #watershed_scenarios_count(@watersheds)
+	#params[:project_id] = @project.id
+    #render "index"
   end
 
   ################################ destroy #################################
@@ -306,7 +322,7 @@ class WatershedsController < ApplicationController
 	@watershed_scenarios_count = 0
   	watersheds.each do |watershed|
   		@watershed_scenarios_count += watershed.watershed_scenarios.count
-  		@watershed_results_count += watershed.results.count
+  		@watershed_results_count += watershed.annual_results.count
   	end
   end
 
@@ -321,7 +337,7 @@ class WatershedsController < ApplicationController
   # params.require(:person).permit(:name, :age)
   # Also, you can specialize this method with per-user checking of permissible attributes.
   def watershed_params
-    params.require(:watershed).permit(:field_id, :name, :scenario_id, :location_id, :id, :created_at, :updated_at)
+    params.require(:watershed).permit(:name, :location_id, :id, :created_at, :updated_at)
   end
 
 end

@@ -33,15 +33,15 @@ module ProjectsHelper
   end   # end duplicate location
 
   ######################### Duplicate results #################################################
-  def duplicate_result(result_id, new_field_id)
+  def duplicate_result(result)
 	#1. copy result to new result
-		result = Result.find(result_id)   #1. find result to copy
+		#result = Result.find(result_id)   #1. find result to copy
 		new_result = result.dup
-		new_result.field_id = new_field_id
+		#new_result.field_id = new_field_id
 		new_result.scenario_id = @new_scenario_id
-		if result.soil_id > 0 then
-			new_result.soil_id = Soil.find_by_soil_id_old(result.soil_id).id
-		end 
+		#if result.soil_id > 0 then
+			#new_result.soil_id = Soil.find_by_soil_id_old(result.soil_id).id
+		#end 
 		if new_result.save
 			"OK"
 		else
@@ -121,15 +121,10 @@ module ProjectsHelper
 		#end
 		field.scenarios.each do |s|
 			duplicate_scenario(s.id, "", new_field.id)
-			# DUPLIATE results when soil_id > 0.
-			results = field.results.where(:field_id => field.id, :scenario_id => s.id)
-			results.each do |r|
-				duplicate_result(r.id, new_field.id)
-			end
-			charts = field.charts.where(:field_id => field.id, :scenario_id => s.id)
-			charts.each do |c|
-				duplicate_chart(c.id, new_field.id)
-			end
+			#charts = field.charts.where(:field_id => field.id, :scenario_id => s.id)
+			#charts.each do |c|
+				#duplicate_chart(c.id, new_field.id)
+			#end
 		end   # end scnearios.each
 		"OK"
 	else
@@ -185,9 +180,9 @@ module ProjectsHelper
 	new_project.name = @project.name + " copy" 
 	new_project.user_id = session[:user_id]
 	if new_project.save
+		duplicate_location(new_project.id)
 		msg = duplicate_apex_control(new_project.id)
 		if msg == "OK" then duplicate_apex_parameter(new_project.id) else return msg end
-		duplicate_location(new_project.id)
 		"OK"
 	else
 		"Error Saving project"
@@ -301,8 +296,8 @@ module ProjectsHelper
 		if !new.save
 			return "Error Saving operation"
 		else
-			duplicate_soil_operations_by_scenarios(operation.id, new.id)
-			if operation.activity_id == 7 || operation.activity_id == 9 then #continuous grazing
+			duplicate_soil_operations_by_scenarios(operation.id, new.id) 
+			if operation.activity_id == 7 || operation.activity_id == 9 then #continuous and rotational grazing
 				stop_operation = operations.find_by_type_id(operation.id)
 				if stop_operation != nil then #create the stop grazing operation
 					new_stop_graizing = stop_operation.dup
@@ -312,7 +307,7 @@ module ProjectsHelper
 						return "Error Saving operation"
 					else
 						if operation.activity_id == 7 then
-							duplicate_soil_operations_by_scenarios(operation.id, new_stop_graizing.id)
+							duplicate_soil_operations_by_scenarios(stop_operation.id, new_stop_graizing.id)
 						end
 					end
 				end 
@@ -380,7 +375,16 @@ module ProjectsHelper
 		scenario.bmps.each do |b|
 			duplicate_bmp(b)
 		end   # end bmps.each
-	else
+		# Duplicate annual results when soil_id > 0.
+		results = scenario.annual_results
+		results.each do |r|
+			duplicate_result(r)
+		end
+		# Duplicate crop results when soil_id > 0.
+		results = scenario.crop_results
+		results.each do |r|
+			duplicate_result(r)
+		end	else
 		return "Error Saving scenario"
 	end   # end if scenario saved
   	return "OK"
