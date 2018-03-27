@@ -1512,44 +1512,237 @@ es:
     If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.<br></br>
     However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
     Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.
+  # managepage:
+  #   header: Management Page Help
+  #   overview:
+  #       header: Overview
+  #       body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
+  #   create:
+  #       header: Creating a Scenario
+  #       add:
+  #           body1: 'The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
+  #           body2: 'The user can copy scenarios from other projects and use it in the existing project. to copy scenarios click <strong>Copy Scenario..</strong> which will create a copy of the selected scenario. To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
+  #   manipulate:
+  #       header: Manipulating a Scenario’s Characteristics
+  #       body1: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices '
+  #       body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
+  #   operation:
+  #       header: Operation Page
+  #       body: 'A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below: '
+  #       item1:
+  #           header: <b>Add Crop to Rotation:</b>
+  #           body1: 'Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
+  #       item2:
+  #           header: <b>Add New Operation (Creating Operations from Scratch):</b>
+  #           body1: 'The user can also create a new Cropping System from scratch. To do this, the user needs to  click on the <strong><em>Add New Operation</em></strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
+  #           body2: 'If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b><em>Edit</em></b> icon in the <b><em>Actions</em></b> column. This will take the user to a new page where they can make the required changes to the operation.'
+  #           body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
+  #   bmpnav:
+  #       header: Best Management Practices (BMPs) Navigation
+  #       body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
+  #       add:
+  #           header: 'Adding a BMP:'
+  #           body1: 'To add a BMP, the user needs to select a BMP by clicking on the check box under the <b><em>Select</em></b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then select the specific BMP (for example Auto Irrigation), as shown below:'
+  #           body2: 'Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.'
+  #           body3: 'Where there is a drop-down menu with the title <b><em>Select One</b></em> allows the user to select from a range of options.'
+  #           body4: 'Where there is a checkbox <b><em>Select</em></b> the user can simply click on it to select the BMP.'
+  #           body5: 'Remember that, if a BMP is expanded when you first get to the page, it means that this BMP has been selected.'
+  #       mutualbmp:
+  #           header: 'Mutually Exclusive BMPs'
+  #           body1: 'Some BMPs can co-exist with other BMPs. For the most part, most BMPs can co-exist with other BMPs. However there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have:'
+  #           item1: 'Auto Irrigation and Auto Fertigation'
+  #           item2: 'Auto Irrigation and any Pads and Pipes'
+  #           item3: 'Only one Pads and Pipes is allowed at the same time'
+  #           item4: 'Filter Strip and Riparian Buffer'
+  #           item5: 'Waterways and Riparian Buffer'
+  #           item6: 'Filter Strip and Waterways'
+  #           item7: 'Contour Buffer and Filter Strip/Riparian Buffer'
+  #           body2: 'Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.'
+  #   bmpdesc:
+  #       header: 'Best Management Practices (BMPs) Descriptions'
+  #       body: 'Below are the descriptions of the different BMPs that are available under NTT.'
+  #       auto:
+  #           header: 'Auto Irrigation and Fertigation'
+  #           irrigation:
+  #               header: 'Auto Irrigation:'
+  #               body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
+  #               item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
+  #               item2: '<strong>Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
+  #               item3: '<strong>Irrigation Efficiency:</strong> This value is the fraction of irrigation application that is not lost to runoff. This must be a value that is greater than 0 and less than or equal to 1. The closer the value is to 0, the greater the percentage of water lost to runoff. The closer the value is to 0, the less that percentage. A value of 1 means that no water was lost to runoff.'
+  #               item4: '<strong>Frequency:</strong> Frequency is the days in between which auto irrigation takes place (if the value is 1, this means that there is auto irrigation every day; two means every other day; three means every three days; etc.) The value can be any whole number greater than zero and less than or equal to 365.'
+  #               item5: '<strong>Maximum Single Application:</strong> This value signifies the amount of water than can be applied in a single day. It is in inches, and it can be any number greater than 0. However, it is set to a default value of 3.'
+  #               item6: '<strong>Furrow Dike Safety Factor:</strong> This is the fraction of furrow dike volume that is available for water storage. If the user is uncertain of the volume of the furrow dike then a lower value should be input. This value is a value greater than or equal to 0 but less than 1. The closer the value is to 1 the more volume is available for water storage. A higher value will lower runoff and erosion.'
+  #           fertigation:
+  #               header: 'Auto Fertigation:'
+  #               body: 'Fertigation is the application of fertilizers, soil amendments, or other water-soluble products through an irrigation system. Auto Fertigation is an automatic fertilization process in which fertilizer is dissolved and distributed along with water in your drip or spray irrigation system*. This makes Auto Fertigation very similar to Auto Irrigation. In fact, all of the inputs into Auto Irrigation are in Auto Fertigation. To see these inputs, see Auto Irrigation. However, there is one additional input in Auto Fertigation:'
+  #               item1: '<strong>Nitrogen Concentration:</strong> The amount of nitrogen in the Automatic Fertigation in parts per million.'
+  #       drainsystem:
+  #           header: Drainage Water Management System
+  #           tile:
+  #               header: 'Tile Drain:'
+  #               body1: 'Tile drainage is a practice for removing excess water from the subsurface of soil intended for agriculture. Drainage brings excessive soil moisture levels down for optimal crop growth. Tile drainage is often the best recourse for reducing high subsurface water levels to improve crop yields. Too much subsurface water can be counterproductive to agriculture by preventing root development, and inhibiting the growth of crops. Excessive water also can limit access to the land, particularly by farm machinery.'
+  #               body2: 'For NTT applications, underground drainage systems are simulated in APEX. The depth of the drainage system to reduce plant stress is a key parameter used in simulating tile drainage systems in NTT. Tile drainage simulation in NTT increases subsurface flow, which may provide an avenue for increased nutrient losses in subsurface flow. The input for Tile Drain is:'
+  #               item1: '<strong>Depth:</strong> this is the depth in feet at which the drainage system is installed. It is any number greater than 0.'
+  #           ppnoditch:
+  #               header: 'Pads and Pipes - No Ditch Improvement:'
+  #               body1: 'Pads and Pipes are an above ground water drainage system that is used to both drain excess water and slow down flow of the water. In this type of drainage system the farmer raises the land on a certain number of sides of the field. Pipes are then applied through which the water can flow out of. In this particular method of pads and pipes, there is no improvement to the ditch into where the excess water flows.'
+  #               item1: '<strong>Pads and Pipes Width:</strong> This is the raised area of the field in feet. This area is not able to be used for planting crops. This can be any number greater than 0 on NTT.'
+  #               item2: '<strong># of Sides Covered by Pipes:</strong> The farmer can apply pads and pipes to one or more sides of the field. This is the number of sides where the farmer applied the pads and pipes. This is mostly an economic issue, since applying more pipes reduces the amount of area that is available for planting.'
+  #           pp2stage:
+  #               header: 'Pads and Pipes - Two Stage Ditch System:'
+  #               body1: 'This particular method of Pads and Pipes is very similar to the Pads and Pipes – No Ditch Improvement (see above for more information). The main difference is that using this method improves the ditch, creating a collection of water inside the ditch before the water is drained. The inputs for this method are the same as Pads and Pipes – No Ditch Improvement (see above).'
+  #           ppreservoir:
+  #               header: 'Pads and Pipes – Ditch Enlargement and Reservoir System:'
+  #               body1: 'This particular method of pads and pipes is very similar to the Pads and Pipes – Two Stage Ditch System. This method also has an improved ditch system. However, in this method, the water in the ditch is drained into a reservoir system. The inputs are the same as Pads and Pipes – No Ditch Improvement, with one additional input:'
+  #               item1: '<strong>Reservoir Area (ac.):</strong> This is the reservoir area in acres. Since this area is being used a reservoir, crops cannot be grown in this area.'
+  #           pptailwater:
+  #               header: 'Pads and Pipes – Tailwater Irrigation:'
+  #               body1: 'This particular method of pads and pipes is very similar to Pads and Pipes – Ditch Enlargement and Reservoir System (see above). The only difference is that once the water has gone to the reservoir system, the water is then pumped back to the crop field, where irrigation is then applied to the crops.'
+  #               body2: 'This system requires the inputs for Pads and Pipes –Ditch Enlargement and Reservoir System, as well as the inputs for Auto Irrigation (see Auto Irrigation). A message will come up on NTT to input the Auto Irrigation information.'
+  #       wetponds:
+  #           header: Wetlands and Ponds
+  #           wetlands:
+  #               header: 'Wetlands:'
+  #               body1: 'Wetlands are those areas that are inundated or saturated by surface or groundwater at a frequency and duration sufficient to support, and that under normal circumstances do support, a prevalence of vegetation typically adapted for life in saturated soil conditions. Wetlands generally include swamps, marshes, bogs and similar areas.'
+  #               body2: 'The wetland area is simulated as a shallow reservoir (1 ft. depth) with growing wetland vegetation – it is essentially simulated as an artificial wetland and not a natural wetland. The slope of wetland area is set as one percent. Simulated wetlands trap sediment, reduce runoff, increase infiltration, and also increase uptake of water and nutrients by the vegetation in the area covered by the wetland. The only input required for wetlands is:'
+  #               item1: '<strong>Area:</strong> The area of the wetland is input in acres. Since this area is no longer able to be used for crop production, there may be a lower total crop yield (although there may be a greater crop yield/acre).'
+  #           ponds:
+  #               header: 'Ponds:'
+  #               body1: 'Ponds are used to provide water for livestock, fish and wildlife, recreation, fire control, develop renewable energy systems, and other related uses, and to maintain or improve water quality by retaining the runoff from upland field. Only one input is required for ponds:'
+  #               item1: '<strong>Fraction of Area Controlled by Ponds:</strong> This is the fraction (a value between 0 and 1) and is simply the fraction of the subareas which flows through (is controlled by) ponds. This only affects only the hydrology that originates in this subarea. Inflow from other subareas is not routed through the ponds in this subarea. The exact location of the ponds, however, is unknown. A greater value could help improve water quality by retaining the runoff from the upland fields.'
+  #       stream:
+  #           header: 'Stream and Riparian Management:'
+  #           fencing:
+  #               header: Stream Fencing (Livestock Access Control)
+  #               body1: 'Access control means the temporary or permanent exclusion of animals from an area to achieve and maintain the desired resource conditions. * If it is only a temporary exclusion, the user can enter the information regarding how much time the animals actually spend within the fenced area. Because excluding the animals from the stream allows a grassed area to grow, the user must also add the information for a filter strip.'
+  #               body2: 'The following are the inputs for Stream Fencing:'
+  #               item1: '<strong>Number of Animals:</strong> These are the number of animals that will be temporarily excluded (and therefore also temporarily allowed) into the area. This is a number greater than 0.'
+  #               item2: '<strong>Days in Stream:</strong> This is the number of days out of a year that the animals will be in the stream. This is a number greater than 0.'
+  #               item3: '<strong>Hours/Day in Stream:</strong> Number of hours per day that animals will be in the stream. This is a number between 0 and 24.'
+  #               item4: '<strong>Select Animal:</strong> This is the type of animal that will be temporarily excluded. Options are beef, dairy, horse, sheep, and swine.'
+  #               item5: '<strong>Dry Manure:</strong> This is the dry manure per day that each animal produces in pounds.'
+  #               item6: '<strong>Nutrient Fractions:</strong> elemento-N, elemento-P, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
+  #               item7: '<strong>Filter Strip Inputs:</strong> (See Filter Strip)'
+  #           stabilization:
+  #               header: 'Streambank Stabilization:'
+  #               body1: 'Stabilization of streambanks is done to prevent the loss of land or damage to land uses or facilities adjacent to the banks of streams or constructed channels properties. Streambank stabilization results in 1) maintaining the flow capacity of streams or channels; 2) Reducing the offsite or downstream effects of sediment resulting from bank erosion; and 3) improving or enhance the stream corridor for fish and wildlife habitat, aesthetics, recreation.'
+  #               body2: 'If you would like to use the Streambank Stabilization, click on the <strong><em>Select</em></strong> button.'
+  #           forestbuffer:
+  #               header: 'Riparian Buffer:'
+  #               body1: 'A riparian buffer is a forested area of land adjacent to a body of water such as a river, stream, pond, lake, marshland, estuary, canal, playa or reservoir. Riparian forests are simulated in a manner similar to the filter strip practice with the additional assumption that there are trees along the length of the riparian zone in addition to selected crops that are growing in the simulated area. The forested area traps sediment and increases infiltration, thereby reducing sediment and nutrient losses. Plant uptake of nutrient in the forested area also reduces nutrient losses downstream.'
+  #               body2: 'The inputs for Riparian buffer are the following:'
+  #               item1: '<strong>Efficiency:</strong> This is the efficiency of the forest buffer, and is any fraction between 0.1 and 1.0.'
+  #               item2: '<strong>Area (ac.):</strong> This is the total area of the Riparian Buffer. It is subtracted from the crop area.'
+  #               item3: '<strong>Width (ft.):</strong> This is the width of the Riparian Buffer in feet.'
+  #               item4: '<strong>Grass Field Portion:</strong> This is the percentage of the Forest Buffer that is composed of grass rather than of trees, and needs to be a number between 0.25 and 0.75.'
+  #               item5: '<strong>Buffer Slope Ration to Upland:</strong> This is the slope ratio (a number between 0.25 and 1.00) to the upland.'
+  #           filterstrip:
+  #               header: 'Filter Strip:'
+  #               body1: 'A filter strip is a type of buffer strip that is an area of vegetation, generally narrow in width and long across the downslope edge of a field, that slows the rate of runoff, allowing sediments, organic matter, and other pollutants that are being conveyed by the water to be removed by settling out. Filter strips reduce erosion and the accompanying sediment-bound pollution.'
+  #               body2: 'A filter strip is specified in NTT by indicating its width and the type of crop planted.  The width of filter strip is used to calculate its area. The area of filter strip is subtracted from the main farmland and is simulated as a separate field. Flow, sediment, and nutrients are routed from the farmland to this filter strip before leaving the edge of the farmland.'
+  #               body3: 'In NTT, filter strips function by providing for better infiltration of soluble nutrients, trapping of sediment, and uptake of water and nutrients by the filter strip vegetation. The saturated conductivity value is also modified for filter strip simulation in NTT.'
+  #               body4: 'The inputs for Filter Strip are the following:'
+  #               item1: '<strong>Vegetation:</strong> This is the type of grass or vegetation that is planted in the Filter Strip. To select one, click on the drop down box and make your selection.'
+  #               item2: '<strong>Efficiency:</strong> This is the efficiency of the Filter Strip.'
+  #               item3: '<strong>Area:</strong> This is the area of the filter strip in acres, which is subtracted from the total area of the field in the results page and is simulated as a separate field. It must be a number greater than 0.'
+  #               item4: '<strong>Width:</strong> This is the width in feet of the filter strip. Filter Strips are typically narrow in width. This can be any value greater than 0.'
+  #               item5: '<strong>Strip Slope to Upland:</strong> This value is a fraction between 0.25 and 0.75 and indicates the slope towards the farmland (which is upland).'
+  #           waterway:
+  #               header: 'Grass Waterway:'
+  #               body1: 'Waterways are vegetated channels that conduct and dispose of overland flow from upstream areas. Waterways typically work by increasing the surface roughness (with the vegetation) which reduces the velocity of flow.'
+  #               body2: 'The inputs for Waterways are the following:'
+  #               item1: '<strong>Crop:</strong> This is the type of grass or vegetation that is used in the channel.'
+  #               item2: '<strong>Width:</strong> This is the width, in feet, including both sides of the vegetated channel. This can be any number greater than 0.'
+  #       contour:
+  #           header: 'Contour Buffer (Strip Farming):'
+  #           body1: 'A contour buffer strip is an area of land maintained in permanent vegetation that helps to control air, soil, and water quality and other environmental problems primarily on land that is used for agriculture. Buffer strips trap sediment and enhance filtration of nutrients and pesticides by slowing down runoff that could enter the local surface waters.'
+  #           body2: 'The buffer strip is simulated based on the width of the buffer and main crop, and the vegetation planted in the buffer.  The number of strips and area are calculated according to the total field area and the widths of buffer and main field, which are inputs to the model.'
+  #           body3: 'The inputs for Contour Buffer are:'
+  #           item1: '<strong>Crop:</strong> This is the type of grass or vegetation that will be present in the buffer sections of the contour buffer. Select one from the drop down list of options.'
+  #           item2: '<strong>Grass Buffer Width:</strong> This is the width, in feet, of the buffer strips. It can be any number greater than 0. Buffer width, along with crop width, determine the number of buffer and crop strips in the field.'
+  #           item3: '<strong>Crop Buffer Width:</strong> This is the width, in feet, of the strips of the main crop that was planted. It can be any number greater than 0. Crop width, along with buffer width, determine the number of buffer and crop strips in the field.'
+  #       landgrading:
+  #           header: Land Grading
+  #           leveling:
+  #               header: 'Land Leveling:'
+  #               body1: 'Land leveling is used to reduce the slope on very high soil slopes. By reducing the slope, the surface land is better able to retain irrigation and soil water. The input for land leveling is:'
+  #               item1: '<strong>Slope Reduction:</strong> This is the percent reduction in the slope of the soil. The number can be any percentage between 0% and 100%. The closer the slope is to 100, the more the slope is reduced.'
+  #           terrace:
+  #               header: 'Terrace System:'
+  #               body1: 'A terrace system is a leveled section of a hill cultivated area, designed as a method of soil conservation to slow or prevent the rapid surface runoff of water. Terraces decrease hill slope-length, reduce formation of gullies, and intercept and conduct runoff to a safe outlet thereby reducing sediment content in runoff water. Often, in application the landscape is formed into multiple terraces, giving a stepped appearance. Terraces are simulated by reducing the practice factor (PEC). If you would like to apply a terrace system, click on the <strong><em>Select</em></strong> button.'
+  #           liming:
+  #               header: 'Liming:'
+  #               body1: 'In agriculture, the application of agricultural limestone is used to prevent the acidification of the soil. This most often occurs when nitrogen fertilizers are applied over long periods of time. For many soils, the simulation of liming is needed to simulate the application of agricultural limestone (which increases soil pH/reduces aluminum saturation). However, since this is not needed for all soils, the user has the ability to turn it off. When the user first reaches the Management page, liming is turned on by default. To turn it off, the user can uncheck the <strong><em>Select</em></strong> button.'
+  #           manure:
+  #               header: 'Manure Control:'
+  #               body1: 'Users need to enter manure operation in their cropping system before applying the manure control.'
+  #           tmp:
+  #               header: 'Temperature and Precipitation Changes:'
+  #               body1: ''
+  #           asphalt:
+  #               header: 'Asphalt or Concrete:'
+  #               body1: 'Users can select if the cropping system is Asfalt or Concrete.'
+  #           grass:
+  #               header: 'Grass Cover:'
+  #               body1: 'Users can select if the cropping system is Grass Cover.'
+  #           slope:
+  #               header: 'Slope Adjustment:'
+  #               body1: 'Users can select if the cropping system had slope adjustment.'
+  #           shade:
+  #               header: 'Shading:'
+  #               body1: 'Shading is similar to Filter Strip. For more information on shading, see Filter Strip. '
+  #               body2: 'The inputs for Shading are the following:'
+  #               item1: '<strong>Vegetation:</strong> This is the type of grass or vegetation that is planted in the shading. To select one, click on the drop down box and make your selection.'
+  #               item2: '<strong>Area:</strong> This is the area of the shading in acres, which is subtracted from the total area of the field in the results page and is simulated as a separate field. It must be a number greater than 0.'
+  #               item3: '<strong>Width:</strong> This is the width in feet of the shading. Shadings are typically narrow in width. This can be any value greater than 0.'
+  #               item4: '<strong>Buffer Slope Ration to Upland:</strong> This value is a fraction between 0.25 and 1.00 and indicates the slope towards the farmland (which is upland).'
+  #   reference:
+  #       header: Reference
+  #       body1: '* See USDA website: http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849 for more detailed term descriptions.'
   managepage:
-    header: Management Page Help
+    header: Escenarios de gestión
     overview:
-        header: Overview
-        body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
+        header: Visión de conjunto
+        body: 'Una vez que haga clic en Guardar y continuar en la página Suelos, los usuarios avanzarán a la página <strong> Escenarios de gestión </strong>. La página Escenarios de gestión es una página de nivel de campo donde el usuario crea, gestiona y simula escenarios de gestión para cada campo. Los usuarios pueden crear múltiples escenarios para cada campo con el fin de comparar cómo las diferentes prácticas de conservación y manejo de cultivos tendrán un impacto en las pérdidas y los rendimientos de nutrientes.'
     create:
-        header: Creating a Scenario
+        header: Crear un escenario de campo
         add:
-            body1: 'The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
-            body2: 'The user can copy scenarios from other projects and use it in the existing project. to copy scenarios click <strong>Copy Scenario..</strong> which will create a copy of the selected scenario. To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
+            body1: 'El usuario puede crear un escenario haciendo clic en el botón <strong> Agregar nuevo escenario </strong>. Se les pedirá a los usuarios que nombren el escenario, por ejemplo, "Baseline" o "Alternative" o "Auto-Irrigation". Después de dar un nombre al escenario, haga clic en el botón <strong> Guardar </strong> que creará el escenario y lo avanzará a la página <strong> Operaciones </strong> donde el usuario comenzará a definir el programa de recorte y prácticas de conservación. <a href=/help/page_9?locale=en> <u> (consulte la página de operaciones) </u> </a>'
+            body2: 'El usuario puede copiar escenarios de otros proyectos y usarlos en el proyecto existente. para copiar escenarios, haga clic en <strong> Copiar escenario .. </strong> que creará una copia del escenario seleccionado. Para comparar dos escenarios, cree un escenario de línea base y un escenario alternativo con diferentes características de escenario. Luego puede ver todo esto en la página de resultados. Puede agregar tantos escenarios como sea necesario.'
     manipulate:
-        header: Manipulating a Scenario’s Characteristics
-        body1: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices '
-        body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
+        header: Copiar escenario de otro campo
+        body1: 'El usuario puede copiar escenarios de otros campos y usarlos en el campo existente. Para copiar escenarios, haga clic en <strong> Copiar escenario de otro campo </strong> en la parte superior de la página, luego seleccione el campo y el escenario que desea copiar. Haga clic en el botón <strong> Copiar </strong> cuando haya terminado. El escenario se copiará y aparecerá en la lista de escenarios de gestión para ese campo. Además, un escenario puede ser duplicado y renombrado y modificado para diferentes escenarios de gestión dentro de un campo usando la tecla de copia debajo de las opciones de acción.'
+        body2: 'El usuario no necesita agregar BMP para avanzar o para que se ejecute el escenario. Sin embargo, el usuario necesita agregar un sistema de cultivo. Para agregar un sistema de cultivo o BMP, el usuario debe ir a su página respectiva y seguir las instrucciones que se describen a continuación.'
     operation:
-        header: Operation Page
-        body: 'A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below: '
+        header: Administrar escenarios de campo
+        body: 'La página Escenarios de gestión incluye una lista de los escenarios creados para el campo. La lista incluye el nombre del escenario, los campos de clima, suelos y operaciones, fecha de simulación y una columna de acciones.'
+        body1: 'Aparecerá una verificación verde en las columnas de clima, suelos, capas y operaciones donde estas estén presentes para el escenario. Para simular con éxito un escenario, los cuatro de estos elementos deben contener una verificación verde. Las capas de <strong> clima, suelos </strong> y <storng> </strong> deben verificarse cuando se crea un escenario de gestión por primera vez, ya que estos elementos se derivan del mapa y se asocian automáticamente con cada campo. Sin embargo, la columna de operaciones estará en blanco hasta que el usuario ingrese la información de administración para el escenario. Aparecerá una verificación verde en la columna <strong> operaciones </strong> una vez que haya información de administración para el campo.'
+        body2: 'El campo <strong> fecha de simulación </strong> indica la fecha en la que el modelo simuló por última vez el escenario. Si el campo de fecha de simulación está en blanco, significa que el campo no ha sido simulado. (Consulte Simular escenarios para obtener más información sobre cómo simular un escenario).'
+        body3: 'La columna <strong> Acciones </strong> contiene tres iconos diferentes, que representan diferentes acciones. El icono de edición <img src="/serve_image/edit.png"> le permite modificar el nombre del escenario. El icono de copiar <img src = "/serve_image/copy.jpg"> crea una copia de su escenario de administración. Y el icono de borrar <img src = "/ serve_image / delete.png"> eliminará el escenario de gestión.'
         item1:
-            header: <b>Add Crop to Rotation:</b>
-            body1: 'Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
+            header: <b>Agregar cultivo a rotacion:</b>
+            body1: 'Al usar esta opción, se abre una nueva página que permite al usuario seleccionar desde sistemas de cultivo comunes. El usuario puede manipular estos sistemas de cultivo preexistentes una vez que se agregan.'
         item2:
-            header: <b>Add New Operation (Creating Operations from Scratch):</b>
-            body1: 'The user can also create a new Cropping System from scratch. To do this, the user needs to  click on the <strong><em>Add New Operation</em></strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
-            body2: 'If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b><em>Edit</em></b> icon in the <b><em>Actions</em></b> column. This will take the user to a new page where they can make the required changes to the operation.'
-            body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
-    bmpnav:
-        header: Best Management Practices (BMPs) Navigation
-        body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
-        add:
-            header: 'Adding a BMP:'
-            body1: 'To add a BMP, the user needs to select a BMP by clicking on the check box under the <b><em>Select</em></b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then select the specific BMP (for example Auto Irrigation), as shown below:'
-            body2: 'Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.'
-            body3: 'Where there is a drop-down menu with the title <b><em>Select One</b></em> allows the user to select from a range of options.'
-            body4: 'Where there is a checkbox <b><em>Select</em></b> the user can simply click on it to select the BMP.'
-            body5: 'Remember that, if a BMP is expanded when you first get to the page, it means that this BMP has been selected.'
-        mutualbmp:
-            header: 'Mutually Exclusive BMPs'
-            body1: 'Some BMPs can co-exist with other BMPs. For the most part, most BMPs can co-exist with other BMPs. However there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have:'
+            header: <b>Agregar nueva operación (Crear operaciones desde cero):</b>
+            body1: 'El usuario también puede crear un nuevo sistema de cultivo desde cero. Para hacer esto, el usuario debe hacer clic en el botón <strong> <em> Agregar nueva operación </em> </strong>. Esto llevará al usuario a una nueva página, allí el usuario debe seleccionar el cultivo, la operación y el tipo en el año (esto es importante si la rotación de cultivos involucra cultivos múltiples durante varios años - MAZORCA el año 1 y SOJA el año 2) , mes y día Dependiendo de la Operación que se seleccione, es posible que el usuario deba ingresar o seleccionar más opciones (por ejemplo, plantar requiere una población de plantas y un método de plantación). Si es necesario, el usuario también puede cambiar la composición de nutrientes.'
+            body2: 'Si el usuario decide cambiar los valores o cualquier otra inforamción de una operación, el usuario puede cambiar los valores de la operación haciendo clic en el icono <b> <em> Editar </em> </b> en el <b> <em> Acciones </em> </b> columna. Esto llevará al usuario a una nueva página donde pueden realizar los cambios necesarios en la operación.'
+            body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <img src="/serve_image/edit.png"> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
+    simulation:
+        header: Simular escenarios de campo
+        body: 'Una vez que haya completado uno o más escenarios para su campo, debe simular los escenarios para obtener resultados. Al simular los escenarios, está ejecutando el proyecto a través del modelo APEX, que arrojará resultados para las pérdidas estimadas de nutrientes y sedimentos, así como los rendimientos de los cultivos. Para simular un escenario, marque la casilla junto al escenario o escenarios que desea ejecutar y luego haga clic en el botón <strong> Simular escenario seleccionado </strong>.'
+        body1: 'Antes de intentar simular un escenario, asegúrese de que haya marcas verdes en el clima, suelos, capas y columnas de operaciones. Cada uno de estos elementos debe estar presente en el escenario antes de que pueda ser simulado con éxito por el modelo APEX. La simulación de los escenarios puede tomar uno o más minutos.'
+        body2: 'Una vez que se ha simulado con éxito un escenario, el campo <strong> fecha de simulación </ strong> mostrará la fecha y la hora de la simulación más reciente.'
+        body3: 'Nota: Si modifica un escenario de gestión, deberá volver a ejecutar el escenario para ver los resultados del escenario actualizado.'
+        result:
+            header: 'Visualización de resultados'
+            body1: 'Haga clic en el botón <strong> Ver resultados </ strong> para ver los resultados de los escenarios simulados. Se le avanzará a la página de resultados donde puede seleccionar hasta tres escenarios para comparar a la vez. <a href=/help/page_11?locale=en> <u> (Consulte Visualización de resultados para obtener más información). </u> </a>'
+            body2: 'Entonces el usuario necesita ingresar la información para el BMP particular. Siempre que haya un cuadro de texto, el usuario puede colocar el cursor sobre el cuadro de texto para ver un rango de valores aceptables.'
+            body3: 'Donde hay un menú desplegable con el título <b> <em> Seleccionar uno </b> </em> permite al usuario seleccionar entre un rango de opciones.'
+            body4: 'Cuando hay una casilla de verificación <b> <em> Seleccionar </em> </b>, el usuario puede simplemente hacer clic en ella para seleccionar la BMP.'
+            body5: 'Recuerde que, si un BMP se expande cuando llega por primera vez a la página, significa que este BMP ha sido seleccionado.'
+        apex:
+            header: 'Descargando archivos APEX'
+            body1: 'Después de haber simulado un escenario de gestión, puede descargar los archivos APEX si lo desea. Esta característica generalmente es para usuarios avanzados que deseen guardar estos archivos para ejecutarlos en otra versión de APEX. Alternativamente, esta característica se puede usar para aquellos que desean almacenar archivos de proyectos localmente en lugar de en el servidor. Los archivos APEX pueden cargarse y visualizarse en la página Gestión de proyectos. Para descargar los archivos APEX, seleccione un escenario de administración y luego haga clic en <strong> Descargar archivos APEX. </strong>'
             item1: 'Auto Irrigation and Auto Fertigation'
             item2: 'Auto Irrigation and any Pads and Pipes'
             item3: 'Only one Pads and Pipes is allowed at the same time'
@@ -1567,7 +1760,7 @@ es:
                 header: 'Auto Irrigation:'
                 body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
                 item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
-                item2: '<strong>Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
+                item2: '<strong>Plant Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The plant water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 100, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
                 item3: '<strong>Irrigation Efficiency:</strong> This value is the fraction of irrigation application that is not lost to runoff. This must be a value that is greater than 0 and less than or equal to 1. The closer the value is to 0, the greater the percentage of water lost to runoff. The closer the value is to 0, the less that percentage. A value of 1 means that no water was lost to runoff.'
                 item4: '<strong>Frequency:</strong> Frequency is the days in between which auto irrigation takes place (if the value is 1, this means that there is auto irrigation every day; two means every other day; three means every three days; etc.) The value can be any whole number greater than zero and less than or equal to 365.'
                 item5: '<strong>Maximum Single Application:</strong> This value signifies the amount of water than can be applied in a single day. It is in inches, and it can be any number greater than 0. However, it is set to a default value of 3.'
@@ -1611,9 +1804,9 @@ es:
                 body1: 'Ponds are used to provide water for livestock, fish and wildlife, recreation, fire control, develop renewable energy systems, and other related uses, and to maintain or improve water quality by retaining the runoff from upland field. Only one input is required for ponds:'
                 item1: '<strong>Fraction of Area Controlled by Ponds:</strong> This is the fraction (a value between 0 and 1) and is simply the fraction of the subareas which flows through (is controlled by) ponds. This only affects only the hydrology that originates in this subarea. Inflow from other subareas is not routed through the ponds in this subarea. The exact location of the ponds, however, is unknown. A greater value could help improve water quality by retaining the runoff from the upland fields.'
         stream:
-            header: 'Stream and Riparian Management:'
+            header: Stream and Riparian Management
             fencing:
-                header: Stream Fencing (Livestock Access Control)
+                header: 'Stream Fencing (Livestock Access Control):'
                 body1: 'Access control means the temporary or permanent exclusion of animals from an area to achieve and maintain the desired resource conditions. * If it is only a temporary exclusion, the user can enter the information regarding how much time the animals actually spend within the fenced area. Because excluding the animals from the stream allows a grassed area to grow, the user must also add the information for a filter strip.'
                 body2: 'The following are the inputs for Stream Fencing:'
                 item1: '<strong>Number of Animals:</strong> These are the number of animals that will be temporarily excluded (and therefore also temporarily allowed) into the area. This is a number greater than 0.'
@@ -1621,7 +1814,7 @@ es:
                 item3: '<strong>Hours/Day in Stream:</strong> Number of hours per day that animals will be in the stream. This is a number between 0 and 24.'
                 item4: '<strong>Select Animal:</strong> This is the type of animal that will be temporarily excluded. Options are beef, dairy, horse, sheep, and swine.'
                 item5: '<strong>Dry Manure:</strong> This is the dry manure per day that each animal produces in pounds.'
-                item6: '<strong>Nutrient Fractions:</strong> elemento-N, elemento-P, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
+                item6: '<strong>Nutrient Fractions:</strong> element-N, element-P, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
                 item7: '<strong>Filter Strip Inputs:</strong> (See Filter Strip)'
             stabilization:
                 header: 'Streambank Stabilization:'
@@ -1630,7 +1823,7 @@ es:
             forestbuffer:
                 header: 'Riparian Buffer:'
                 body1: 'A riparian buffer is a forested area of land adjacent to a body of water such as a river, stream, pond, lake, marshland, estuary, canal, playa or reservoir. Riparian forests are simulated in a manner similar to the filter strip practice with the additional assumption that there are trees along the length of the riparian zone in addition to selected crops that are growing in the simulated area. The forested area traps sediment and increases infiltration, thereby reducing sediment and nutrient losses. Plant uptake of nutrient in the forested area also reduces nutrient losses downstream.'
-                body2: 'The inputs for Riparian buffer are the following:'
+                body2: 'The inputs for Riparian Buffer are the following:'
                 item1: '<strong>Efficiency:</strong> This is the efficiency of the forest buffer, and is any fraction between 0.1 and 1.0.'
                 item2: '<strong>Area (ac.):</strong> This is the total area of the Riparian Buffer. It is subtracted from the crop area.'
                 item3: '<strong>Width (ft.):</strong> This is the width of the Riparian Buffer in feet.'
@@ -1662,7 +1855,7 @@ es:
             item2: '<strong>Grass Buffer Width:</strong> This is the width, in feet, of the buffer strips. It can be any number greater than 0. Buffer width, along with crop width, determine the number of buffer and crop strips in the field.'
             item3: '<strong>Crop Buffer Width:</strong> This is the width, in feet, of the strips of the main crop that was planted. It can be any number greater than 0. Crop width, along with buffer width, determine the number of buffer and crop strips in the field.'
         landgrading:
-            header: Land Grading
+            header: 'Land Grading'
             leveling:
                 header: 'Land Leveling:'
                 body1: 'Land leveling is used to reduce the slope on very high soil slopes. By reducing the slope, the surface land is better able to retain irrigation and soil water. The input for land leveling is:'
@@ -1696,9 +1889,6 @@ es:
                 item2: '<strong>Area:</strong> This is the area of the shading in acres, which is subtracted from the total area of the field in the results page and is simulated as a separate field. It must be a number greater than 0.'
                 item3: '<strong>Width:</strong> This is the width in feet of the shading. Shadings are typically narrow in width. This can be any value greater than 0.'
                 item4: '<strong>Buffer Slope Ration to Upland:</strong> This value is a fraction between 0.25 and 1.00 and indicates the slope towards the farmland (which is upland).'
-    reference:
-        header: Reference
-        body1: '* See USDA website: http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849 for more detailed term descriptions.'
   managepage_html:
       <strong>Scenarios</strong><br></br>
       The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save</strong> button which will create the scenario and advances the user to the operation page.<br><br>
