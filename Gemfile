@@ -27,7 +27,6 @@ gem 'breadcrumbs_on_rails'
 gem 'turbolinks', '~> 2.5', '>= 2.5.3'
 gem 'jquery-turbolinks'
 
-gem 'zip-zip'      # Needed by axlsx
 gem 'axlsx_rails'  # Provide templates for the axlsx gem
 
 gem 'protected_attributes'
@@ -61,4 +60,3 @@ gem 'wkhtmltopdf-binary'
 gem 'cancan'
 gem 'rack-timeout'
 gem 'mysql2', '~> 0.3.18'
-gem 'selenium-webdriver'
