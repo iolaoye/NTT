@@ -490,7 +490,7 @@ en:
     about_ntt: 'About NTT'
     help: Help
     Language: Language
-    documentations: Documentations
+    documentations: Documentation
   languages:
     english: 'English'
     spanish: 'Spanish'
@@ -502,7 +502,7 @@ en:
     years_of_simulation: Simulation period
     update: 'Update Weather'
     legend: Select the kind of weather you want to use
-    choose_file_lenged: Choose the file to Upload
+    choose_file_lenged: "Choose the file to Upload"
     enter_coordinates: Enter Coordinates
     initial_year: initial year
     final_year: final year
@@ -879,7 +879,10 @@ en:
     item7: 'Water quality in terms of <strong>nitrogen</strong> (ammonium, nitrate, and organic), <strong>phosphorus</strong> (soluble and adsorbed/mineral and organic), and <strong>pesticides concentrations</strong> may be estimated for each subarea and at the watershed outlet.'
     item8: 'Commercial or manure may be applied at any rate and depth on specified dates or automatically.'
     disclaimer0: 'Disclaimer'
-    disclaimer1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the validity of the results and functioning of the program and related program material, nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of the results generated from the tool.'
+    disclaimer1: 'Last updated: 16 Feb 2018<br><br>
+                  The information contained in NTT (Nutrient Tracking Tool) has been tested for use in the <strong>Ohio counties surrounding Lake Erie, in the Mississippi Delta, Missouri, Yakima County in the State of Washington, the northern portion of Oregon, Maryland, Delaware, Pennsylvania, Virginia, Puerto Rico, and Sonoma County in California.</strong> Because your area of interest may contain unique features, the program may not provide the appropriate results in your area when model default parameters are used. All input data and results should be carefully reviewed as errors or omissions in the input data may lead to misleading outcomes. We are currently in the process of completing the testing and validating NTT across the US (this page will be updated accordingly as new information becomes available).<p> 
+                  If you have questions regarding the application of NTT or are interested in having it calibrated and validated for your area, please contact Dr. Ali Saleh at (254)592-1975 (saleh@tiaer.tarleton.edu) or Ms. Mindy Selman at (202) 401-0531 (mselman@oce.usda.gov).<p>
+                  Finally, although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the validity of the results and functioning of the program and related program material, nor shall the fact of distribution constitute any such warranty; and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of the results generated from the tool. The authors and their affiliated institution, TIAER, Tarleton State University, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
     disclaimer2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
     references0: 'References'
     references1: 'Peter J. A. Kleinman , A. N. Sharpley , K. Gartley , W. M. Jarrell , S. Kuo , R. G. Menon , R. Myers , K. R. Reddy  & E. O. Skogley. 2007. Interlaboratory comparison of soil phosphorus extracted by various soil test methods.  Journal of Communications in Soil Science and Plant Analysis Volume 32, 2001 - Issue 15-16 Pages 2325-2345.'

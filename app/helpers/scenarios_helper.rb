@@ -694,7 +694,7 @@ module ScenariosHelper
         		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
         		operation.save
         	end
-        	opv1 = (operation.amount * 2471 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
+        	opv1 = (operation.amount * 2247 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
         when 3
         	if operation.moisture == nil then
         		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
@@ -705,7 +705,11 @@ module ScenariosHelper
     when 6 #irrigation
         opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
     when 7, 9 #grazing
-    	opv1 = @scenario.subareas[0].wsa / operation.amount  #since it is grazing just first subarea is used.
+    	if @scenario == nil then 
+    		opv1 = Scenario.find(operation.scenario_id).subareas[0].wsa / operation.amount
+    	else
+    		opv1 = @scenario.subareas[0].wsa / operation.amount  #since it is grazing just first subarea is used.
+    	end
     when 12 #liming
         opv1 = operation.amount / THA_TO_TAC #converts input t/ac to APEX t/ha
     end
