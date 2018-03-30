@@ -10,7 +10,6 @@ class WelcomesController < ApplicationController
   end
 
   def index
-    debugger
   	if signed_in?
       redirect_to new_welcome_path
       #@projects = Project.where(:user_id => session[:user_id])
