@@ -160,7 +160,7 @@
 					<% end %>
 					<tr class="gvRowStyleOdd", id = <%=row_id%>>
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<a id="ntrigger" class="gvTotalText"><%= "Total N" + " (" + "lbs/ac" + ")" %></a>
+							<a id="show1" class="gvTotalText"><%= "Total N" + " (" + "lbs/ac" + ")" %></a>
 							<%= check_box_tag "Total N" %>
 						</th>
 						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9">
@@ -183,7 +183,7 @@
 					</tr>
 					<% row_id = t + "row" + "21" %>
 					<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="ntrigger" class="gvTotalText"><%= "Org N" + " (" + "lbs/ac" + ")" %></a></th>
+						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Org N" + " (" + "lbs/ac" + ")" %></a></th>
 						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][0]).to_s + " (" + sprintf("%8.1f", cis1[0][1]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
 							<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][0]) + " (" + sprintf("%8.1f", cis2[0][1]) + ")" %></td>
@@ -196,7 +196,7 @@
 					</tr>
 					<% row_id = t + "row" + "22" %>
 					<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="ntrigger" class="gvTotalText"><%= "Runoff N" + " (" + "lbs/ac" + ")" %></a></th>
+						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show3" class="gvTotalText"><%= "Runoff N" + " (" + "lbs/ac" + ")" %></a></th>
 						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][1]).to_s + " (" + sprintf("%8.1f", cis1[0][2]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
 							<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][1]) + " (" + sprintf("%8.1f", cis2[0][2]) + ")" %></td>
@@ -209,7 +209,7 @@
 					</tr>
 					<% row_id = t + "row" + "23" %>
 					<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="ntrigger" class="gvTotalText"><%= "Subsurface N" + " (" + "lbs/ac" + ")" %></a></th>
+						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show4" class="gvTotalText"><%= "Subsurface N" + " (" + "lbs/ac" + ")" %></a></th>
 						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][2]).to_s + " (" + sprintf("%8.1f", cis1[0][3]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
 							<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][2]) + " (" + sprintf("%8.1f", cis2[0][3]) + ")" %></td>
@@ -222,7 +222,7 @@
 					</tr>
 					<% row_id = t + "row" + "24" %>
 					<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="ntrigger" class="gvTotalText"><%= "Tile Drain N" + " (" + "lbs/ac" + ")" %></a></th>
+						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show5" class="gvTotalText"><%= "Tile Drain N" + " (" + "lbs/ac" + ")" %></a></th>
 						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][3]).to_s + " (" + sprintf("%8.1f", cis1[0][4]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
 							<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][3]) + " (" + sprintf("%8.1f", cis2[0][4]) + ")" %></td>
@@ -237,7 +237,7 @@
 					<% row_id = t + "row" + "30" %>
 					<tr class="gvRowStyleOdd", id = <%=row_id%>>
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<a id="ntrigger" class="gvTotalText"><%= "Total P" + " (" + "lbs/ac" + ")" %></a>
+							<a id="show6" class="gvTotalText"><%= "Total P" + " (" + "lbs/ac" + ")" %></a>
 							<%= check_box_tag "Total P" %>
 						</th>
 						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][4]+averages1[0][5]+averages1[0][6]) + " (" + sprintf("%8.1f",cis1[0][5]+cis1[0][6]+cis1[0][7]) + ")" %></td>
@@ -256,7 +256,7 @@
 					</tr>
 					<% row_id = t + "row" + "31" %>
 					<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="ntrigger" class="gvTotalText"><%= "Org P" + " (" + "lbs/ac" + ")" %></a></th>
+						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show7" class="gvTotalText"><%= "Org P" + " (" + "lbs/ac" + ")" %></a></th>
 						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][4]).to_s + " (" + sprintf("%8.1f", cis1[0][5]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
 							<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][4]) + " (" + sprintf("%8.1f", cis2[0][5]) + ")" %></td>
@@ -269,7 +269,7 @@
 					</tr>
 					<% row_id = t + "row" + "32" %>
 					<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="ntrigger" class="gvTotalText"><%= "PO4" + " (" + "lbs/ac" + ")" %></a></th>
+						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show8" class="gvTotalText"><%= "PO4" + " (" + "lbs/ac" + ")" %></a></th>
 						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][5]).to_s + " (" + sprintf("%8.1f", cis1[0][6]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
 							<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][5])+ " (" + sprintf("%8.1f", cis2[0][6]) + ")" %></td>
@@ -282,7 +282,7 @@
 					</tr>
 					<% row_id = t + "row" + "33" %>
 					<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="ntrigger" class="gvTotalText"><%= "Tile Drain P" + " (" + "lbs/ac" + ")" %></a></th>
+						<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show9" class="gvTotalText"><%= "Tile Drain P" + " (" + "lbs/ac" + ")" %></a></th>
 						<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][6]).to_s + " (" + sprintf("%8.1f", cis1[0][7]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
 							<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][6]) + " (" + sprintf("%8.1f", cis2[0][7]) + ")" %></td>
@@ -297,7 +297,7 @@
 					<% row_id = t + "row" + "40" %>
 					<tr class="gvRowStyleOdd", id = <%=row_id%>>
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<a id="ntrigger" class="gvTotalText"><%= "Surface/Subsurface/Tile Drain Flow" + " (" + "in" + ")" %></a>
+							<a id="show10" class="gvTotalText"><%= "Surface/Subsurface/Tile Drain Flow" + " (" + "in" + ")" %></a>
 							<%= check_box_tag "Total P" %>
 						</th>
 						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][7]+averages1[0][8]+averages1[0][9]) + " (" + sprintf("%8.1f",cis1[0][8]+cis1[0][9]+cis1[0][10]) + ")" %></td>
@@ -1263,187 +1263,185 @@
 
  <br>
 
- <div id="pop-up-1">
+ <div id="pop-up-1" class="description_pop-up">
    <p>Average annual of combined organic, runoff, subsurface, and tile drainage N</p>
  </div>
 
- <div id="pop-up-2">
+ <div id="pop-up-2" class="description_pop-up">
    <p>Average annual rate of organic N loss with sediment</p>
  </div>
 
- <div id="pop-up-3">
+ <div id="pop-up-3" class="description_pop-up">
    <p>Average annual rate of soluble N loss with surface runoff</p>
  </div>
 
- <div id="pop-up-4">
+ <div id="pop-up-4" class="description_pop-up">
    <p>Average annual rate of soluble N loss in subsurface flow</p>
  </div>
 
- <div id="pop-up-5">
+ <div id="pop-up-5" class="description_pop-up">
    <p>Average annual rate of soluble N loss with tile flow</p>
  </div>
 
- <div id="pop-up-6">
+ <div id="pop-up-6" class="description_pop-up">
    <p>Average annual rate of organic P loss with sediment</p>
  </div>
 
- <div id="pop-up-7">
+ <div id="pop-up-7" class="description_pop-up">
    <p>Average annual rate of soluble P loss with surface runoff</p>
  </div>
 
- <div id="pop-up-8">
+ <div id="pop-up-8" class="description_pop-up">
    <p>Average annual rate of soluble P loss with tile flow</p>
  </div>
 
- <div id="pop-up-9">
+ <div id="pop-up-9" class="description_pop-up">
    <p>Average annual surface runoff</p>
  </div>
 
- <div id="pop-up-10">
+ <div id="pop-up-10" class="description_pop-up">
    <p>Average annual of subsurface flow</p>
  </div>
 
- <div id="pop-up-11">
+ <div id="pop-up-11" class="description_pop-up">
    <p>Average annual tile drain runoff</p>
  </div>
 
- <div id="pop-up-12">
+ <div id="pop-up-12" class="description_pop-up">
    <p>Average annual applied irrigation</p>
  </div>
 
- <div id="pop-up-13">
+ <div id="pop-up-13" class="description_pop-up">
    <p>Annual average deep perculated water</p>
  </div>
 
- <div id="pop-up-14">
+ <div id="pop-up-14" class="description_pop-up">
    <p>Average annual rate of soil erosion from soil surface</p>
  </div>
 
- <div id="pop-up-15">
+ <div id="pop-up-15" class="description_pop-up">
    <p>Average annual rate of manure erosion from soil surface</p>
  </div>
 
- <div id="pop-up-16">
+ <div id="pop-up-16" class="description_pop-up">
    <p>Average annual rate of harvested crop yield</p>
  </div>
 
- <div id="pop-up-17">
+ <div id="pop-up-17" class="description_pop-up">
    <p>This is the N stress level- the higher number means the higher crop N defficiency</p>
  </div>
 
- <div id="pop-up-18">
+ <div id="pop-up-18" class="description_pop-up">
    <p>This is the P stress level- the higher number means the higher crop P defficiency</p>
  </div>
 
- <div id="pop-up-19">
+ <div id="pop-up-19" class="description_pop-up">
    <p>This is the temperature stress level- the higher number means the higher crop heat unit defficiency</p>
  </div>
 
- <div id="pop-up-20">
+ <div id="pop-up-20" class="description_pop-up">
    <p>This is the water stress level- the higher number means the higher crop water defficiency</p>
  </div>
 
- <div id="pop-up-21">
+ <div id="pop-up-21" class="description_pop-up">
    <p>Average annual percipitation</p>
  </div>
 
- <div id="pop-up-22">
+ <div id="pop-up-22" class="description_pop-up">
    <p>Average annual surface runoff</p>
  </div>
 
- <div id="pop-up-23">
+ <div id="pop-up-23" class="description_pop-up">
    <p>Average annual of subsurface flow</p>
  </div>
 
- <div id="pop-up-24">
+ <div id="pop-up-24" class="description_pop-up">
    <p>Average annual tile drain runoff</p>
  </div>
 
- <div id="pop-up-25">
+ <div id="pop-up-25" class="description_pop-up">
    <p>Average annual of combined organic, runoff, subsurface, and tile drainage N</p>
  </div>
 
- <div id="pop-up-26">
+ <div id="pop-up-26" class="description_pop-up">
    <p>Average annual rate of organic N loss with sediment </p>
  </div>
 
- <div id="pop-up-27">
+ <div id="pop-up-27" class="description_pop-up">
    <p>Average annual rate of soluble N loss with surface runoff </p>
  </div>
 
- <div id="pop-up-28">
+ <div id="pop-up-28" class="description_pop-up">
    <p>Average annual rate of soluble N loss in subsurface flow </p>
  </div>
 
- <div id="pop-up-29">
+ <div id="pop-up-29" class="description_pop-up">
    <p>Average annual rate of soluble N loss with tile flow</p>
  </div>
 
- <div id="pop-up-30">
+ <div id="pop-up-30" class="description_pop-up">
    <p>Average annual rate of soluble N2O loss with tile flow</p>
  </div>
 
- <div id="pop-up-31">
+ <div id="pop-up-31" class="description_pop-up">
    <p>Average annual rate of organic P loss with sediment</p>
  </div>
 
- <div id="pop-up-32">
+ <div id="pop-up-32" class="description_pop-up">
    <p>Average annual rate of soluble P loss with surface runoff</p>
  </div>
 
- <div id="pop-up-33">
+ <div id="pop-up-33" class="description_pop-up">
    <p>Average annual rate of soluble P loss with tile flow</p>
  </div>
 
- <div id="pop-up-34">
+ <div id="pop-up-34" class="description_pop-up">
    <p>Average annual rate of soil erosion from soil surface</p>
  </div>
 
- <div id="pop-up-35">
+ <div id="pop-up-35" class="description_pop-up">
    <p>Average annual rate of manure erosion from soil surface</p>
  </div>
 
- <div id="pop-up-36">
+ <div id="pop-up-36" class="description_pop-up">
    <p>Average monthly  rate of organic N loss with sediment </p>
  </div>
 
- <div id="pop-up-37">
+ <div id="pop-up-37" class="description_pop-up">
    <p>Average monthly rate of soluble N loss with surface runoff </p>
  </div>
 
- <div id="pop-up-38">
+ <div id="pop-up-38" class="description_pop-up">
    <p>Average monthly rate of soluble N loss in subsurface flow </p>
  </div>
 
- <div id="pop-up-39">
+ <div id="pop-up-39" class="description_pop-up">
    <p>Average monthly rate of soluble N loss with tile flow</p>
  </div>
 
- <div id="pop-up-40">
+ <div id="pop-up-40" class="description_pop-up">
    <p>Average monthly rate of soluble N2O loss with tile flow</p>
  </div>
 
- <div id="pop-up-41">
+ <div id="pop-up-41" class="description_pop-up">
    <p>Average monthly  rate of soil erosion from soil surface</p>
  </div>
 
 <%= hidden_field_tag "errors", @errors, { :id => "errors" } %>
 
 <script>
-/*
-$(function() {
-	var moveLeft = -300;
-	var moveDown = -80;
-
-	$('a#ntrigger').hover(function(e) {
-		  $('div#n-pop-up').show();
-	}, function() {
-			$('div#n-pop-up').hide();
-	});
-
-	$('a#ntrigger').mousemove(function(e) {
-		$("div#n-pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
-	});
-
-});*/
+  var elementIDNum = 0;
+  $('[id^=show').hover(function() {
+    //extracts id # from id of element clicked (e.g. checkbox_3 = 3)
+    elementIDNum = (this.id).replace(/[^0-9]+/g, "");
+    var check = $("#show"+elementIDNum);
+    var moveLeft = -300;
+    var moveDown = -80;
+    $('div#pop-up-'+elementIDNum).show();
+    $(this).mousemove(function(e) {
+      $("div#pop-up-"+elementIDNum).css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+    });
+  }, function() {
+      $('div#pop-up-'+elementIDNum).hide();
+  });
 </script>

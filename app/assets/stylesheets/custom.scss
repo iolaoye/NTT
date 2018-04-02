@@ -935,3 +935,19 @@ th.optable {
     font-size: 16px;
     text-shadow: 0 0 1px rgba(0,0,0,0.3);
 }
+
+div#n-pop-up {
+  display: none;
+  position: absolute;
+  width: 280px;
+  padding: 10px;
+  background: #F5F5F5;
+  color: #000000;
+  border: 1px solid #1a1a1a;
+  font-size: 90%;
+}
+
+a.gvTotalText:hover {
+  text-decoration: none;
+  color: Blue;
+}
