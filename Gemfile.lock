@@ -39,7 +39,6 @@ GEM
       gyoku (>= 0.4.0)
       nokogiri
     arel (6.0.4)
-    auto_click (0.3.0)
     autoprefixer-rails (8.0.0)
       execjs
     axlsx (2.0.1)
@@ -102,8 +101,7 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.1.0)
     minitest (5.11.3)
-    mysql2 (0.4.10)
-    mysql2 (0.4.10-x86-mingw32)
+    mysql2 (0.3.21-x86-mingw32)
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
@@ -203,7 +201,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  auto_click
   axlsx_rails
   bcrypt-ruby
   bootstrap-sass
@@ -215,7 +212,7 @@ DEPENDENCIES
   coffee-script-source (= 1.8.0)
   jquery-rails
   jquery-turbolinks
-  mysql2
+  mysql2 (~> 0.3.18)
   nokogiri (= 1.6.8)
   protected_attributes
   rack-timeout
