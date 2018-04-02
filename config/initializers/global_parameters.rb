@@ -4,24 +4,24 @@
 
 
 # URL to the mapping application
-	URL_MAP = 'http://nn.tarleton.edu/GoogleMapNRCS_Test/Default.aspx'
+	URL_MAP = 'http://ntt.tarleton.edu/GoogleMapNRCS_Test/Default.aspx'
 	#URL_MAP = 'http://nn.tarleton.edu/NTTRails/Default.aspx'
 
 #NTT verision
 	VERSION = "NTTG3"
 
 # URL to send information to NTT, which return the results
-	URL_TIAER = 'http://nn.tarleton.edu/NTTRails/NNRestService.ashx' 
+	URL_TIAER = 'http://ntt.tarleton.edu/NTTRails/NNRestService.ashx' 
 	URL_CLOUD = 'http://45.40.132.224/NTTRails/NNRestService.ashx' 
 
-# URL to get heat units
+# URL to get heat unitsß
 	URL_HU = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
 # URL to get weather information
-	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
+	URL_Weather = 'http://ntt.tarleton.edu/weather/service.asmx?WSDL'
 
 # URL to get soils information
-	URL_SoilsInfo = 'http://nn.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
+	URL_SoilsInfo = 'http://ntt.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
 
 #APEX folders.
 	APEX = "public/NTTFiles"
