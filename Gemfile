@@ -60,6 +60,5 @@ gem 'wkhtmltopdf-binary'
 
 gem 'cancan'
 gem 'rack-timeout'
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.18'
 gem 'auto_click'
-gem 'selenium-webdriver', '~> 3.11'
