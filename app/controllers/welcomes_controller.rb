@@ -11,9 +11,8 @@ class WelcomesController < ApplicationController
 
   def index
   	if signed_in?
-      redirect_to new_welcome_path
-      #@projects = Project.where(:user_id => session[:user_id])
-      #redirect_to user_projects_path(current_user)
+      @projects = Project.where(:user_id => session[:user_id])
+      redirect_to user_projects_path(current_user)
   	else
      	redirect_to new_welcome_path
 	end
