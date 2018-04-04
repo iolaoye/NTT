@@ -4,24 +4,26 @@
 
 
 # URL to the mapping application
-	URL_MAP = 'http://ntt.tarleton.edu/GoogleMapNRCS_Test/Default.aspx'
-	#URL_MAP = 'http://nn.tarleton.edu/NTTRails/Default.aspx'
+	#URL_MAP = 'http://ntt.tarleton.edu/GoogleMapNRCS_Test/Default.aspx'
+	URL_MAP = 'http://nn.tarleton.edu/GoogleMapNRCS_Test/Default.aspx'
 
 #NTT verision
 	VERSION = "NTTG3"
 
 # URL to send information to NTT, which return the results
-	URL_TIAER = 'http://ntt.tarleton.edu/NTTRails/NNRestService.ashx' 
+	URL_TIAER = 'http://ntt.tarleton.edu/NTTRails/NNRestService.ashx'
+	#URL_TIAER = 'http://nn.tarleton.edu/NTTRails/NNRestService.ashx'
 	URL_CLOUD = 'http://45.40.132.224/NTTRails/NNRestService.ashx' 
 
 # URL to get heat unitsß
-	URL_HU = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
+	#URL_HU = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
 # URL to get weather information
 	URL_Weather = 'http://ntt.tarleton.edu/weather/service.asmx?WSDL'
+	#URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
 # URL to get soils information
-	URL_SoilsInfo = 'http://ntt.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
+	URL_SoilsInfo = 'http://nn.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
 
 #APEX folders.
 	APEX = "public/NTTFiles"
@@ -83,7 +85,7 @@
 	FT2_TO_M2 = 0.092903
 	FT_TO_MM = 304.8
 	AC_TO_KM2 = 0.00404685643
-	KM2_TO_HA = 247.10538147
+	KM2_TO_HA = 100
 	HA_TO_M2 = 10000
 	KM_TO_M = 1000
 	FSEFF = 1.0
