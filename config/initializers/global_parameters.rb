@@ -46,7 +46,7 @@
 #folder for download project files to
 	DOWNLOAD = 'public/download'
 #folder for download project files from
-	REMOTE = "http://tiaer.tarleton.edu//ceeot-swapp//ZIP/"
+	#REMOTE = "http://nn.tarleton.edu/weather"
 
 #folder for wick program - this is to print results in pdf file
 	r_root = Rails.root.to_s
