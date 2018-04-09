@@ -960,7 +960,11 @@ module SimulationsHelper
     @subarea_file.push(sLine + "\n")
     #/line 4
     if _subarea_info.wsa > 0 && i > 0 && !buffer then
-      sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
+      if _subarea_info.scenario.subareas.where("subarea_type = ? OR subarea_type = ?", "WL", "PND").count <= 0 then
+        sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
+      else
+        sLine = sprintf("%8.2f", _subarea_info.wsa)
+      end
     else
       sLine = sprintf("%8.2f", _subarea_info.wsa)
     end
