@@ -323,7 +323,7 @@
 	  </div>
     <div class="field">
 		<%=  t('aplcat.cffm') %>
-		<%= f.number_field :cffm, class: 'gvTitleStyleNumber', :value => '1.5', :step => '0.1', min: 0, max: 1 %>
+		<%= f.number_field :cffm, class: 'gvTitleStyleNumber', :value => '0.5', :step => '0.1', min: 0, max: 1 %>
 	  </div>
     <div class="field">
 		<%=  t('aplcat.fnemm') %>
@@ -335,23 +335,23 @@
 	  </div>
     <div class="field">
 		<%=  t('aplcat.ptbd') %>
-		<%= f.number_field :ptbd, class: 'gvTitleStyleNumber', :value => '11.15', :step => '0.01', min: 0, max: 1 %>
+		<%= f.number_field :ptbd, class: 'gvTitleStyleNumber', :value => '0.01', :step => '0.01', min: 0, max: 1 %>
 	  </div>
     <div class="field">
 		<%=  t('aplcat.pocib') %>
-		<%= f.number_field :pocib, class: 'gvTitleStyleNumber', :value => '30.0', :step => '0.1', min: 0, max: 1 %>
+		<%= f.number_field :pocib, class: 'gvTitleStyleNumber', :value => '0.0', :step => '0.1', min: 0, max: 1 %>
 	  </div>
     <div class="field">
 		<%=  t('aplcat.bneap') %>
-		<%= f.number_field :bneap, class: 'gvTitleStyleNumber', :value => '90', :step => 'any', min: 0, max: 1 %>
+		<%= f.number_field :bneap, class: 'gvTitleStyleNumber', :value => '0.1', :step => '0.1', min: 0, max: 1 %>
 	  </div>
     <div class="field">
 		<%=  t('aplcat.cneap') %>
-		<%= f.number_field :cneap, class: 'gvTitleStyleNumber', :value => '80', :step => 'any', min: 0, max: 1 %>
+		<%= f.number_field :cneap, class: 'gvTitleStyleNumber', :value => '0.1', :step => '0.1', min: 0, max: 1 %>
 	  </div>
     <div class="field">
 		<%=  t('aplcat.hneap') %>
-		<%= f.number_field :hneap, class: 'gvTitleStyleNumber', :value => '75', :step => 'any', min: 0, max: 1 %>
+		<%= f.number_field :hneap, class: 'gvTitleStyleNumber', :value => '0.1', :step => '0.1', min: 0, max: 1 %>
 	  </div>
     <div class="field">
 		<%=  t('aplcat.pobw') %>
@@ -630,6 +630,41 @@
   <% end %>
   </div>
 
+  <div style='display:none' id="div_13">
+    <%= field_set_tag t('aplcat.animal_transport_input'), class:'fieldset' do %>
+    <div class="field" id="numbers">
+      <%=  t('aplcat.totaltrip') %><br>
+      <%#= select_tag "number", options_for_select(listnum, :selected => 1), :onchange => "show_opt()" %>
+    </div>
+    <div class="field">
+      <%=  t('aplcat.tripn') %>
+      <%= f.number_field :tripn, class: 'gvTitleStyleNumber', :value => '1', :step => 'any' %>
+    </div>
+    <div class="field">
+      <%=  t('aplcat.freqtrip') %>
+      <%= f.number_field :freqtrip, class: 'gvTitleStyleNumber', :value => '1', :step => 'any', :min => 1, :max => 10 %>
+    </div>
+    <div class="field">
+      <%=  t('aplcat.filedetails') %>
+      <%= f.text_field :filedetails, :maxlength => "25", :placeholder => "Enter Text Here" %>
+    </div>
+    <div class="field">
+      <%= t('aplcat.cattlepro') %><br>
+      <%= radio_button_tag :cattlepro, "1", :checked => "checked"%> <%= t('graze.yes') %><br>
+      <%= radio_button_tag :cattlepro, "2"%> <%= t('graze.no') %><br>
+    </div>
+    <div class="field">
+      <%=  t('aplcat.purpose') %>
+      <%= f.text_field :purpose, :maxlength => "25", :placeholder => "Enter Text Here" %>
+    </div>
+    <div class="field">
+      <%= t('aplcat.codepurpose') %><br>
+      <%= radio_button_tag :codepurpose, "1"%> <%= t('aplcat.buying') %><br>
+      <%= radio_button_tag :codepurpose, "2"%> <%= t('aplcat.selling') %><br>
+    </div>
+  <%end%>
+  </div>
+
   <div class="actions">
     <%= hidden_field_tag(:type, @type) %>
 	  <%= f.submit  t('submit.save'), :class => "btn btn-primary"  %>
@@ -640,7 +675,7 @@
 <script>
 	function show_div() {
 	    var div_id = ""
-		for(i=1; i<= 12; i++) {
+		for(i=1; i<= 13; i++) {
 			div_id = "div_".concat(i);
 		    document.getElementById(div_id).style.display="none";
 		}

@@ -2,7 +2,9 @@ class AplcatParameter < ActiveRecord::Base
   attr_accessor :mrgauh, :plac, :pcbb, :fmbmm, :domd, :vsim, :faueea, :acim, :mmppm, :cffm, :fnemm, :effd, :ptbd, :pocib, :bneap,
          :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :abwrh, :nocrh, :abc, :mm_type, :nit, :fqd, :uovfi, :srwc, :mdogfc,
          :mxdogfc, :cwsoj, :cweoj, :ewc, :nodew, :byosm, :eyosm, :drinkg, :drinkl, :drinkm, :avgtm, :avghm, :rhae, :tabo, :mpism, :spilm,
-         :pom, :srinr, :sriip, :pogu, :adoa, :ape, :forage_id, :jincrease, :opt4, :highest, :lowest, :stabilization, :decline
+         :pom, :srinr, :sriip, :pogu, :adoa, :ape, :forage_id, :jincrease, :opt4, :highest, :lowest, :stabilization, :decline,
+         :tripn, :freqtrip, :filedetails, :cattlepro, :purpose
+
   attr_accessible :abwc, :abwh, :abwmb, :adwgbc, :noc, :nomb, :norh, :prh, :adwgbh, :mrga, :jdcc, :gpc,
 				 :tpwg, :csefa , :srop, :bwoc, :jdbs, :dmd, :dmi, :napanr, :napaip, :mpsm, :splm, :pmme, :rhaeba, :toaboba,
 				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape,
