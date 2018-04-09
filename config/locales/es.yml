@@ -1943,6 +1943,90 @@ es:
         simulate:
             header: Resultados de la simulación y visualización para cuencas
             body1: 'Para simular o ver resultados de subproyectos, donde el título <strong><em>Seleccione Clase</em></strong> está presente (como es en la página de simulación y resultados), simplemente seleccione el subproyecto, como se muestra a continuación:'
+  operation_page:
+    header: Página de operación
+    body1: 'Una vez que se ha creado un escenario en la página <strong> Gestión </strong>, el usuario pasa a la página <strong> Operaciones </strong> para comenzar a ingresar las características de gestión, como el programa de cultivo, la labranza, el fertilizante y la cosecha. y operaciones de pastoreo.'
+    body2: 'Un sistema de recorte es <strong> OBLIGATORIO </strong> para que el usuario pueda avanzar y simular el NTT. El usuario puede agregar rotaciones que duran un año o mucho más. Un campo puede tener múltiples cultivos o un solo cultivo. Hay diferentes opciones disponibles en <strong> Página de operación </strong> para manipular un sistema de cultivo de la siguiente manera:'
+    rotation:
+        header: Añadir cultivo a la rotación
+        name:
+            header: Nombrando su cuenca hidrográfica
+            body1: 'Para agregar un recorte a la rotación, haga clic en <strong> Agregar cultivo a rotación. </strong> Luego se le pide al usuario que seleccione un cultivo de la lista de selección, un tipo de labranza (cero, reducido hasta, o intensivo hasta) y año de rotación. La lista de cultivos se personaliza de acuerdo con la región en la que se encuentra el proyecto. El año de rotación indica la secuencia del cultivo dentro del cronograma de cosecha, no representa el año calendario. Una vez que el usuario ha seleccionado un tipo de cultivo, tipo de labranza y año de rotación, al hacer clic en <strong> Cargar </strong> se agregará el recorte a la programación de cultivo.'
+            body2: 'Una vez que se agrega un cultivo al cronograma del cultivo, se observará que incluye varias características de manejo por defecto, que incluyen una fecha de siembra, aplicaciones de fertilizantes, cronograma de labranza y cosecha. Estas operaciones se pueden modificar o eliminar según sea necesario y se pueden agregar nuevas operaciones.'
+            body3: 'La lista de operaciones para cada cultivo se puede desplegar o expandir haciendo clic en los botones [-] o [+] al lado del nombre del cultivo, respectivamente.'
+        select:
+            header: Agregar nueva operación
+            body1: 'Los usuarios pueden agregar operaciones a sus rotaciones o crear un sistema de cultivo desde cero utilizando el botón <strong> Agregar nueva operación </strong> en la parte superior de la página. Se le pedirá que seleccione el cultivo, el tipo de operación, el año y la fecha. El año indica la posición del cultivo en el programa de cultivo, por ejemplo, MAIZ año 1 y SOYBEAN año 2.'
+            body2: 'Dependiendo del tipo de operación, habrá campos adicionales para ingresar. A continuación se incluyen descripciones de los diferentes tipos de operaciones y los campos adicionales requeridos para cada uno.'
+        item1:
+            header: Plantando
+            body1: 'Método de planta: el usuario debe indicar el método de siembra utilizando la lista de selección del equipo de siembra provisto.'
+            body2: 'Cantidad de siembra (semillas / pies cuadrados): este campo se completa previamente con tasas de siembra estándar para cada tipo de cultivo. Si el usuario tiene información más específica sobre la velocidad de siembra, puede ingresarla aquí.'
+        item2:
+            header: Fertilizante
+            body1: 'Categoría de fertilizante: el usuario debe indicar la categoría de fertilizante (comercial, estiércol líquido o abono sólido).'
+            body2: 'Tipo de fertilizante: la lista de selección de tipo de fertilizante variará según la categoría de fertilizante seleccionada. Para el abono de estiércol, la lista de selección contendrá tipos de estiércol animal.'
+            body3: 'Cantidad: el usuario debe indicar la cantidad de fertilizante aplicado. Las unidades variarán según el tipo de fertilizante seleccionado (lbs / ac, tons / ac, 1000 gal / ca).'
+            body4: 'Profundidad: si se incorpora el fertilizante, el usuario debe indicar la profundidad de incorporación aquí. Si el fertilizante no está incorporado, este campo puede dejarse en blanco.'
+            body5: 'Composición de Fertilizantes (solo fertilizantes comerciales): para fertilizantes comerciales, estos campos indican la composición de N y P. Estos campos se completan previamente según el tipo de fertilizante seleccionado, pero se pueden modificar si es necesario.'
+            body6: 'Concentración total de N (estiércol sólido / líquido solamente): para el abono de estiércol, el usuario debe indicar el contenido total de N por tonelada de estiércol sólido o por 1000 galones de estiércol líquido. Los valores típicos se completan previamente para el usuario, pero se pueden modificar.'
+            body7: 'Concentración total de P (estiércol sólido / líquido solamente): para el abono de estiércol, el usuario debe indicar el contenido total de P por tonelada de estiércol sólido o por 1000 galones de estiércol líquido. Los valores típicos se completan previamente para el usuario, pero se pueden modificar.'
+            body8: 'Contenido de humedad (estiércol sólido / líquido solamente): para el fertilizante de estiércol, este es el porcentaje, en peso, del contenido de humedad en el estiércol. Se proporcionan valores típicos para cada tipo de estiércol, pero el usuario puede modificarlos.'
+        item3:
+            header: Labranza
+            body1: 'Método de labranza: el usuario debe indicar el método de labranza usando la selección desplegable.'
+        item4:
+            header: Cosecha
+            body1: 'No se necesitan datos adicionales más allá del cultivo, año y fecha.'
+        item5:
+            header: Final de temporada
+            body1: 'El final de la temporada solo requiere la información del cultivo, año y fecha del usuario.'
+            body2: 'Nota: El final de la temporada indica al modelo que la cosecha se retira del campo. Si una operación de fin de temporada no está presente, entonces el modelo asume que la cosecha se deja crecer. El final de la temporada debe usarse para todos los cultivos anuales. Para ciertos cultivos perennes como el heno y el pasto, las operaciones de fin de temporada pueden estar ausentes del programa de cultivo.'
+        item6:
+            header: Irrigación manual
+            body1: 'Método de riego: el usuario indica el tipo de sistema de riego que se está utilizando.'
+            body2: 'Cantidad: el usuario indica el volumen de agua aplicado en este evento de riego en pulgadas.'
+            body3: 'Eficiencia de riego: este campo tiene como valor predeterminado un valor de eficiencia de riego típico (como una fracción) basado en el método de riego que se selecciona. Este valor puede ser modificado.'
+            body4: 'Nota: En las páginas de Prácticas de conservación hay una opción para <strong> autoirrigación </strong> y <strong> autofertigación </strong> que automatiza el riego en su campo en función de los parámetros del usuario. Consulte <a href=/help/page_10?locale=en> <u> autoirrigation / autofertigation </u> </a> para obtener más información.'
+        item7:
+            header: Pastoreo continuo
+            body1: 'Inicio / finalización Fechas de pastoreo: el usuario indica las fechas de inicio y finalización del pastoreo en el campo.'
+            body2: 'Tipo de animal: el usuario indica el tipo de animales que se pastan en el campo.'
+            body3: 'Unidades de animales: el usuario indica el total de unidades de animales que se pastan en el campo. Las unidades de animales representan 1,000 libras de peso de animales vivos.'
+            body4: 'Horas en el campo: el usuario indica el total de horas por día que los animales son apacentados en el campo.'
+            body5: 'Composición del estiércol: estos campos se rellenan previamente con composiciones típicas de estiércol para el tipo de animal seleccionado. Estos campos pueden ser modificados por el usuario si es necesario.'
+        item8:
+            header: Pastoreo rotacional
+            body1: 'La operación de pastoreo rotacional, a diferencia del pastoreo continuo, supone que el pasto se divide en potreros y que el ganado se mueve a través de los potreros, según sea necesario. Por lo tanto, cada cuartón recibe un período de recuperación entre los eventos de pastoreo, lo que mejora la cobertura vegetal.'
+            body2: 'Inicio / finalización Fechas de pastoreo: el usuario indica las fechas de inicio y finalización del pastoreo en el campo.'
+            body3: 'Tipo de animal: el usuario indica el tipo de animales que se pastan en el campo'
+            body4: 'Unidades de animales: el usuario indica el total de unidades de animales que se pastan en el campo. Las unidades de animales representan 1,000 libras de peso vivo.'
+            body5: 'Horas en el campo: el usuario indica el total de horas por día que los animales son apacentados en el campo.'
+            body6: 'Número de días consecutivos apacentados a la vez (en cada cuartón): el usuario indica el número de días que el ganado pasará en cada cuartón antes de ser rotado a un nuevo potrero.'
+            body7: 'Tiempo de descanso del pasto (días) entre el pastoreo: el usuario indica el número de días que el pasto descansa entre los ciclos de pastoreo rotacionales.'
+            body8: 'Concentración total de N: el usuario debe indicar el contenido total de N por tonelada de estiércol fresco. Los valores típicos se completan previamente para el usuario, pero se pueden modificar si se conocen.'
+            body9: 'Concentración total de P: el usuario debe indicar el contenido total de P por tonelada de estiércol fresco. Los valores típicos se completan previamente para el usuario, pero se pueden modificar si se conocen.'
+        item9:
+            header: Quemar
+            body1: 'No se requieren datos adicionales por parte de los usuarios más allá de la cosecha, el año y la fecha'
+        item10:
+            header: Liming
+            body1: 'Cantidad: el usuario debe indicar la cantidad de cal aplicada (lbs / ac).'
+        cover:
+            header: Agregar una cosecha de portada
+            body1: 'Para agregar un recorte de cobertura, haga clic en el botón <strong> Añadir cubierta de cobertura </strong> en la parte superior de la página. Los usuarios indicarán el tipo de cultivo de cobertura, año de cultivo de cobertura, fecha de siembra y método de siembra. El año de cobertura del cultivo debe indicar el año dentro de la rotación en que se planta el cultivo de cobertura. NTT agregará automáticamente la fecha de cosecha para el cultivo de cobertura basado en el próximo cultivo en la rotación. Los cultivos de cobertura no se fertilizan y no se cosechan, sino que se cortan antes de plantar la próxima cosecha en la rotación.'
+            body2: 'Nota: Si desea agregar un cultivo de cobertura comercial, hágalo de la misma forma que agregaría otro cultivo a su programa de cosecha. Por ejemplo, agregue "Trigo de invierno" a su cronograma de cosecha haciendo clic en <strong> Agregar cosecha a rotación </strong> y seleccionando en la lista de selección de cosecha (NO utilizando el botón Agregar cubierta). Agregar una cosecha de esta manera permitirá a los usuarios aplicar fertilizantes, labranza y operaciones de cosecha (etc.).'
+        edit:
+            header: Editar operación
+            body1: Los usuarios pueden cambiar los valores o cualquier otra información en una operación haciendo clic en el ícono <strong> Editar </strong> <img src = "/ serve_image / edit.png"> en la columna <strong> Acciones </strong> siguiente a la operación. Una vez que se haya editado la operación, haga clic en <strong> Finalizar </strong> para guardar y volver a la página Operaciones. Al hacer clic en <strong> Atrás </strong>, el usuario regresará a la página Operaciones sin guardar los cambios en la operación. Al hacer clic en <strong> Agregar más </strong> se guardará el cambio en la operación actual y se permitirá que el usuario continúe agregando operaciones adicionales sin volver a la página Operaciones.
+        delete:
+            header: Eliminar una operación
+            body1: Para eliminar una operación, haga clic en el icono Eliminar <img src = "/serve_image/delete.png"> en la columna Acciones de la operación que desea eliminar.
+        switch:
+            header: Cambiar vista
+            body1: 'Al hacer clic en Cambiar vista en la parte superior de la página, puede cambiar su vista de una organizada por cultivo y tipo de operación a una que esté organizada por fecha.'
+            body2: 'Una vez que esté satisfecho con su programa de recorte, haga clic en Continuar en la parte superior de la página. Pasará a la página de Prácticas de Conservación donde puede indicar cualquier práctica de conservación que esté presente en el campo.'
+ 
   watershedpage_html:
     <strong>Field Routing (Watershed)</strong><br></br>
     The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.<br></br>
