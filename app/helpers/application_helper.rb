@@ -132,8 +132,6 @@ module ApplicationHelper
 		File.open(path, "wb") do |saved_file|
 		    # the following "open" is provided by open-uri
 		    open("http://nn.tarleton.edu//NTTRails//NNRestService.ashx?test=zip&path=" + path_source + ".zip", "rb") do |read_file|
-		    #open("http://nn.tarleton.edu//download/" + file_name[2], "rb") do |read_file|
-		    #open(REMOTE + file_name[2], "rb") do |read_file|
 		      saved_file.write(read_file.read)
 	      	end
 			send_file path, :type => "application/xml", :x_sendfile => true
