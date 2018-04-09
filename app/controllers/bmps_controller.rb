@@ -718,24 +718,24 @@ class BmpsController < ApplicationController
   def wetlands(type)
     case type
       when "create"
-		@bmp.area = params[:bmp_wl][:area]
-		if params[:bmp_wl][:buffer_land] == nil then
-			@bmp.sides = 0
-		else
-			@bmp.sides = 1
-		end
-		if @bmp.save then
-			return create_new_subarea("WL", 8)
-		end
+    	  @bmp.area = params[:bmp_wl][:area]
+    		if params[:bmp_wl][:buffer_land] == nil then
+    			@bmp.sides = 0
+    		else
+    			@bmp.sides = 1
+    		end
+    		if @bmp.save then
+    			return create_new_subarea("WL", 8)
+    		end
       when "update"
         update_existing_subarea("WL", 8)
       when "delete"
-	    return delete_existing_subarea("WL")
+        return delete_existing_subarea("WL")
     end
   end   # end method
 
-### ID: 9
-  def pond(type)
+### ID: 9. This was the old pond version. It only adda the pond fraction to the fields in the subarea file
+  def pond_old(type)
   	@bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency].to_f 
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
@@ -754,7 +754,29 @@ class BmpsController < ApplicationController
     return "OK"
   end     # end method
 
-  ### ID: 10
+### ID: 9. This was the new pond version. It add a new field for the pond
+  def pond(type)
+    case type
+      when "create"
+        @bmp.area = 0.247105 #ac =  0.1 ha
+        if params[:bmp_pnd][:irrigation_efficiency] == nil then
+          @bmp.sides = 0
+          @bmp.irrigation_efficiency = 0
+        else
+          @bmp.sides = 1
+          @bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency]
+        end
+        if @bmp.save then
+          return create_new_subarea("PND", 9)
+        end
+      when "update"
+        update_existing_subarea("PND", 9)
+      when "delete"
+        return delete_existing_subarea("PND")
+    end
+  end     # end method
+
+### ID: 10
   def stream_fencing(type)
   	@bmp.number_of_animals = params[:bmp_sf][:number_of_animals]
   	@bmp.days = params[:bmp_sf][:days]
@@ -1268,6 +1290,10 @@ class BmpsController < ApplicationController
     case id
       when 8
         if @bmp.area != nil
+          is_filled = true;
+        end
+      when 9
+        if @bmp.irrigation_efficiency != nil
           is_filled = true;
         end
       when 12

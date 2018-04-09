@@ -259,6 +259,54 @@ module ScenariosHelper
 				#line 10
 				subarea.pec = 1
 				add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
+			when 9    #Ponds
+				#line 2
+				subarea.number = 107
+				#subarea.iops = soil_id
+				#subarea.iow = 1
+				#line 5
+				subarea.rchl = soil_area * AC_TO_KM2 / temp_length    #soil_area here is the reservior area
+				#line 4
+				subarea.wsa = soil_area * AC_TO_HA * -1      #soil_area here is the reservior area. Negative on 04/09/18 according to Dr. Saleh
+				# reduce the area of others subareas proportionally
+				if @bmp.sides == 0 then
+					update_wsa("-", subarea.wsa)
+				end
+				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
+				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
+				subarea.slp = 0.0025
+				subarea.splg = calculate_slope_length(subarea.slp * 100)
+				subarea.chs = 0.0
+				subarea.chn = 0.0
+				subarea.upn = 0.0
+				subarea.ffpq = 0.0
+				#line 5
+				subarea.rchd = 0.0
+				subarea.rcbw = 0.0
+				subarea.rctw = 0.0
+				subarea.rchs = 0.0
+				subarea.rchn = 0.0
+				subarea.rchc = 0.2
+				subarea.rchk = 0.2
+				#line 6
+				subarea.rsee = 0.0
+				subarea.rsae = 0.0
+				subarea.rsve = 0
+				subarea.rsep = 0.0
+				subarea.rsap = 0.0
+				subarea.rsvp = 0
+				subarea.rsrr = 0
+				subarea.rsv = 0
+				subarea.rsys = 0
+				subarea.rsyn = 0
+				#line 7
+				subarea.rshc = 0.0
+				subarea.rsdp = 0
+				subarea.rsbd = 0.0
+				subarea.pcof = @bmp.irrigation_efficiency
+				#line 10
+				subarea.pec = 1
+				#add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
 			when 12    #Riperian Forest
 				grass_field_portion = @bmp.grass_field_portion / (@bmp.width + @bmp.grass_field_portion)
 				if !checker
