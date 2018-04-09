@@ -1430,18 +1430,20 @@
 <%= hidden_field_tag "errors", @errors, { :id => "errors" } %>
 
 <script>
-  var elementIDNum = 0;
-  $('[id^=show').hover(function() {
-    //extracts id # from id of element clicked (e.g. checkbox_3 = 3)
-    elementIDNum = (this.id).replace(/[^0-9]+/g, "");
-    var check = $("#show"+elementIDNum);
-    var moveLeft = -300;
-    var moveDown = -80;
-    $('div#pop-up-'+elementIDNum).show();
-    $(this).mousemove(function(e) {
-      $("div#pop-up-"+elementIDNum).css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+  $(document).ready(function(event) {
+    var elementIDNum = 0;
+    $('[id^=show').hover(function() {
+      //extracts id # from id of element clicked (e.g. checkbox_3 = 3)
+      elementIDNum = (this.id).replace(/[^0-9]+/g, "");
+      var check = $("#show"+elementIDNum);
+      var moveLeft = -300;
+      var moveDown = -80;
+      $('div#pop-up-'+elementIDNum).show();
+      $(this).mousemove(function(e) {
+        $("div#pop-up-"+elementIDNum).css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+      });
+    }, function() {
+        $('div#pop-up-'+elementIDNum).hide();
     });
-  }, function() {
-      $('div#pop-up-'+elementIDNum).hide();
   });
 </script>
