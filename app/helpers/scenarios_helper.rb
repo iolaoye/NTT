@@ -220,7 +220,7 @@ module ScenariosHelper
 				#line 5
 				subarea.rchl = soil_area * AC_TO_KM2 / temp_length    #soil_area here is the reservior area
 				#line 4
-				subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
+				subarea.wsa = soil_area * AC_TO_HA * -1      #soil_area here is the reservior area. Negative on 04/09/18 according to Dr. Saleh
 				# reduce the area of others subareas proportionally
 				if @bmp.sides == 0 then
 					update_wsa("-", subarea.wsa)
