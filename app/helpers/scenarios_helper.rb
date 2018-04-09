@@ -227,7 +227,7 @@ module ScenariosHelper
 				end
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
-				subarea.slp = 0.01
+				subarea.slp = 0.0025
 				subarea.splg = calculate_slope_length(subarea.slp * 100)
 				subarea.chs = 0.0
 				subarea.chn = 0.0
@@ -283,7 +283,7 @@ module ScenariosHelper
 						fs_area = soil_area * AC_TO_HA * (grass_field_portion)
 						subarea.wsa = fs_area       #soil_area here is the reservior area
 					else
-						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
+						subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA      # KM2_TO_HA
 						fs_area = subarea.wsa
 					end
 					if @bmp.sides == 0 then
@@ -337,7 +337,7 @@ module ScenariosHelper
 					if soil_area != nil
 						subarea.wsa = soil_area * AC_TO_HA * (1-grass_field_portion)     #soil_area here is the reservior area
 					else
-						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
+						subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA       # KM2_TO_HA
 					end
 					#subarea.wsa = subarea.wsa
 					if @bmp.sides == 0 then
@@ -384,7 +384,7 @@ module ScenariosHelper
 					temp_length = soil_area * AC_TO_KM2  / subarea.rchl
 					subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
 				else
-					subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
+					subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA       # KM2_TO_HA
 					soil_area = subarea.wsa * HA_TO_AC
 				end
 				if @bmp.sides == 0 then
@@ -462,7 +462,7 @@ module ScenariosHelper
 					temp_length = soil_area * AC_TO_KM2 / subarea.rchl
 					subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
 				else
-					subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
+					subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA       # KM2_TO_HA
 				end
 				## updatewsa
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
