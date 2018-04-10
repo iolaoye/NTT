@@ -286,7 +286,7 @@ es:
         other: "no tiene la longitud correcta (%{count} caracteres exactos)"
       other_than: debe ser distinto de %{count}
     template:
-      body: 'Se encontraron problemas con los siguientes campos:'
+      body: 'Se encontraron problemas con los siguientes parcelas:'
       header:
         one: No se pudo salvar este/a %{model} porque se encontró 1 error
         other: No se pudo salvar este/a %{model} porque se encontraron %{count} errores
@@ -915,7 +915,7 @@ es:
     station_name: Nombre de estación
     weather_period: Período de Clima
     simulation_period: Período de Simulación
-    field_info: Información del campo
+    field_info: Información del parcela
     area: Área
     channel_erodibility: Erosionabilidad del Canal
     average_slope: Promedio de Inclinación
@@ -970,7 +970,7 @@ es:
     dry_manure: Estiércol seco
     streambank_stabilization: Estabilizacion de la Orilla del rio
     riparian_forest: Bosque Ribereno
-    grass_field_portion: Porción de pasto del campo
+    grass_field_portion: Porción de pasto del parcela
     slope_ratio: Proporción de inclinación
     filter_strip: Zona de Contencion Filtrante
     waterway: Canal de Agua (Zona de Pasto)
@@ -1190,7 +1190,7 @@ es:
         project: 'En la pantalla de <a href=/help/page_3?locale=en>Proyecto</a> , el usuario ingresa el nombre y la descripción del proyecto, o puede abrir proyectos guardados o proyectos de ejemplo o cerrar/salvar el proyecto activo.'
         location: 'En la pantalla de <a href=/help/page_4?locale=en>Ubicación</a> , los usuarios ingresan la ubicación del proyecto basado en datos de SIG, en el input de estado/Condado, o la entrada manual del usuario.'
         weather: 'En la pantalla de <a href=/help/page_5?locale=en>Clima</a> , los usuarios ingresan o verifican la información meteorológica, y la longitud de la simulación.'
-        fields: 'En la pantalla de <a href=/help/page_6?locale=en>Parcelas</a> , los usuarios crean nuevos campos o verifican los campos dibujados en la página ubicación.'
+        fields: 'En la pantalla de <a href=/help/page_6?locale=en>Parcelas</a> , los usuarios crean nuevos parcelas o verifican los parcelas dibujados en la página ubicación.'
         soils: 'En la pantalla de <a href=/help/page_7?locale=en>Suelos</a> , los usuarios verifican/agregan/eliminan los suelos y las capas correspondientes a esos suelos para el proyecto, o pueden entrar la información completa del suelo si el proyecto se basa en la entrada de datos manual.'
         management: 'En la pantalla de <a href=/help/page_8?locale=en>Operaciones</a> , los usuarios introducen la información de manejo y la información de los escenarios.'
         subproject: 'En la pantalla de <a href=/help/page_9?locale=en>Subproyecto</a> , los usuarios pueden seleccionar otras combinaciones de parcelas/escenario no seleccionados en la página de Operación (estos se llaman subproyectos).'
@@ -1202,8 +1202,8 @@ es:
         header: Datos básicos de entrada
         body: '<b>NTT</b> requiere mínima información del usuario para calcular los valores del seguimiento de nutrientes para los informes.'
     dataentryfield:
-        header: Campo de entrada de datos ayuda
-        body: 'Coloque el puntero del ratón para situar el cursor sobre el campo de entrada de datos para ver una breve descripción de los datos que necesitan ser introducidos.'
+        header: parcela de entrada de datos ayuda
+        body: 'Coloque el puntero del ratón para situar el cursor sobre el parcela de entrada de datos para ver una breve descripción de los datos que necesitan ser introducidos.'
     dropdownlist:
         header: Selección de la lista desplegable
         body: 'Una selección de lista desplegable ofrece una lista de artículos para seleccionar. Haga clic en la selección de la lista desplegable para buscar un elemento en la lista, como se muestra en este ejemplo:'
@@ -1214,7 +1214,7 @@ es:
         header: Área de texto
         body: 'Haga clic en un área de texto para introducir una o más líneas de información como se muestra en este ejemplo:'
   validate:
-    required: Requerido campo(s) que falta en
+    required: Requerido parcela(s) que falta en
     input_greater: El valor entrado debe ser mayor que
     input_lessthan: El valor entrado debe ser menor que
     input_greaterequal: El valor entrado debe ser mayor que o igual a
@@ -1465,7 +1465,7 @@ es:
     header: Página de suelos
     overview:
         header: Visión de conjunto
-        body: 'Después de hacer clic en un campo para comenzar a editar en la página <strong> Campos </strong>, se dirigirá al usuario a la página <strong> Suelos </strong>. La página de Suelos es una página de nivel de campo. La página de Suelos permite al usuario cambiar el nombre del campo y ajustar los acres; y verificar, modificar o eliminar los suelos devueltos de la base de datos de suelos de SSURGO y agregar / editar capas para el campo particular seleccionado en la página Campos. NTT devuelve un máximo de 3 suelos por cada campo. Estos suelos representan los suelos más predominantes en el AOI. NTT está limitado a 3 suelos para minimizar el tiempo de procesamiento del modelo.'
+        body: 'Después de hacer clic en un parcela para comenzar a editar en la página <strong> parcelas </strong>, se dirigirá al usuario a la página <strong> Suelos </strong>. La página de Suelos es una página de nivel de parcela. La página de Suelos permite al usuario cambiar el nombre del parcela y ajustar los acres; y verificar, modificar o eliminar los suelos devueltos de la base de datos de suelos de SSURGO y agregar / editar capas para el parcela particular seleccionado en la página parcelas. NTT devuelve un máximo de 3 suelos por cada parcela. Estos suelos representan los suelos más predominantes en el AOI. NTT está limitado a 3 suelos para minimizar el tiempo de procesamiento del modelo.'
         body_modified: 'After clicking on a field to begin editing on the <strong>Fields</strong> page, the user will be directed to the <strong>Soils</strong> page. The Soils page is a field-level page. The Soils page allows the user to rename the field and adjust the acres; input soil P values; and verify soils returned from the SSURGO soils database for the particular field selected in the Fields page (Just for E version). NTT returns a maximum of 3 soils for every field. These soils represent the most predominant soils in the AOI. NTT is limited to 3 soils in order to minimize model processing time.'
         item1: 'The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.'
         item2: 'If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <img src="/serve_image/edit.png"> icon in the <strong>Actions</strong> column.'
@@ -1473,12 +1473,12 @@ es:
         item3: 'However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.'
         item4: 'Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.'
     mapsystem:
-        header: Nombre / área del campo
+        header: Nombre / área del parcela
         body: 'Users have different options of modifying their soil information. The list below shows all the possible ways that are available in NTT for modifying the soil information.'
         select:
             header: Modifying a Soil
-            body1: '<strong> Nombre del campo: </strong> el nombre que el usuario le ha dado al AOI se completa previamente aquí. El usuario puede modificar el nombre si lo desea. El nuevo nombre también se actualizará en la página Campos.'
-            body2: '<strong> Área de campo: </strong> el área de campo muestra el área calculada del campo en acres. El usuario puede refinar este valor si es necesario.'
+            body1: '<strong> Nombre del parcela: </strong> el nombre que el usuario le ha dado al AOI se completa previamente aquí. El usuario puede modificar el nombre si lo desea. El nuevo nombre también se actualizará en la página parcelas.'
+            body2: '<strong> Área de parcela: </strong> el área de parcela muestra el área calculada del parcela en acres. El usuario puede refinar este valor si es necesario.'
             body3: 'To delete a soil simply click on the <img src="/serve_image/delete.png"> icon in the <b>Actions</b> column.'
         info:
             header: Soil Phosphorus
@@ -1493,11 +1493,11 @@ es:
         addremove:
             header: Administrar / modificar suelos
             header_modified: Manage/Modify Organic Matter
-            body1: 'Entre 1 y 3 suelos aparecerán en la lista de suelos devueltos para su campo. Estos representan los suelos más predominantes en su campo según lo devuelto por la base de datos de Suelos de SSURGO.'
+            body1: 'Entre 1 y 3 suelos aparecerán en la lista de suelos devueltos para su parcela. Estos representan los suelos más predominantes en su parcela según lo devuelto por la base de datos de Suelos de SSURGO.'
             body2: 'NTT devolverá el <strong> nombre del suelo </strong> y el <strong> grupo de suelos </strong> para cada suelo. Estos datos se derivan de la base de datos de suelos de SSURGO.'
-            body3: 'La pendiente del suelo <strong> </strong> para cada suelo se calcula dinámicamente mediante NTT utilizando las capas del Modelo de Elevación Digital de 30 metros (DEM) asociadas a su campo'
+            body3: 'La pendiente del suelo <strong> </strong> para cada suelo se calcula dinámicamente mediante NTT utilizando las capas del Modelo de Elevación Digital de 30 metros (DEM) asociadas a su parcela'
             body4: 'El valor predeterminado <strong> materia orgánica del suelo (%) </strong> devuelto por la base de datos de suelos de SSURGO se muestra para cada suelo en la lista de suelos. Sin embargo, si el usuario tiene datos más precisos, puede ingresar aquí ".'
-            body5: '<strong> Porcentaje </strong> representa el área de cobertura ajustada del suelo para su campo. Debido a que NTT selecciona solo los 3 suelos más predominantes, el área de cobertura de cada uno se expande proporcionalmente para obtener una cobertura del campo del 100%.'
+            body5: '<strong> Porcentaje </strong> representa el área de cobertura ajustada del suelo para su parcela. Debido a que NTT selecciona solo los 3 suelos más predominantes, el área de cobertura de cada uno se expande proporcionalmente para obtener una cobertura del parcela del 100%.'
             body6: 'Los usuarios pueden <strong> agregar / eliminar capa </strong> de su lista de suelos si no desean que se use en la ejecución del modelo. Simplemente haga clic en el ícono <img src = "/serve_image/layers.png"> en la columna Acciones del suelo que desea agregar / eliminar la capa.'
             body7: 'Los usuarios pueden <strong> editar el suelo </strong> de su lista de suelos si desean cambiar algunos valores. Simplemente haga clic en el ícono <img src="/serve_image/edit.png"> en la columna Acciones del suelo que desea editar.'
     advance:
@@ -1703,21 +1703,21 @@ es:
     header: Escenarios de gestión
     overview:
         header: Visión de conjunto
-        body: 'Una vez que haga clic en Guardar y continuar en la página Suelos, los usuarios avanzarán a la página <strong> Escenarios de gestión </strong>. La página Escenarios de gestión es una página de nivel de campo donde el usuario crea, gestiona y simula escenarios de gestión para cada campo. Los usuarios pueden crear múltiples escenarios para cada campo con el fin de comparar cómo las diferentes prácticas de conservación y manejo de cultivos tendrán un impacto en las pérdidas y los rendimientos de nutrientes.'
+        body: 'Una vez que haga clic en Guardar y continuar en la página Suelos, los usuarios avanzarán a la página <strong> Escenarios de gestión </strong>. La página Escenarios de gestión es una página de nivel de parcela donde el usuario crea, gestiona y simula escenarios de gestión para cada parcela. Los usuarios pueden crear múltiples escenarios para cada parcela con el fin de comparar cómo las diferentes prácticas de conservación y manejo de cultivos tendrán un impacto en las pérdidas y los rendimientos de nutrientes.'
     create:
-        header: Crear un escenario de campo
+        header: Crear un escenario de parcela
         add:
             body1: 'El usuario puede crear un escenario haciendo clic en el botón <strong> Agregar nuevo escenario </strong>. Se les pedirá a los usuarios que nombren el escenario, por ejemplo, "Baseline" o "Alternative" o "Auto-Irrigation". Después de dar un nombre al escenario, haga clic en el botón <strong> Guardar </strong> que creará el escenario y lo avanzará a la página <strong> Operaciones </strong> donde el usuario comenzará a definir el programa de recorte y prácticas de conservación. <a href=/help/page_9?locale=en> <u> (consulte la página de operaciones) </u> </a>'
             body2: 'El usuario puede copiar escenarios de otros proyectos y usarlos en el proyecto existente. para copiar escenarios, haga clic en <strong> Copiar escenario .. </strong> que creará una copia del escenario seleccionado. Para comparar dos escenarios, cree un escenario de línea base y un escenario alternativo con diferentes características de escenario. Luego puede ver todo esto en la página de resultados. Puede agregar tantos escenarios como sea necesario.'
     manipulate:
-        header: Copiar escenario de otro campo
-        body1: 'El usuario puede copiar escenarios de otros campos y usarlos en el campo existente. Para copiar escenarios, haga clic en <strong> Copiar escenario de otro campo </strong> en la parte superior de la página, luego seleccione el campo y el escenario que desea copiar. Haga clic en el botón <strong> Copiar </strong> cuando haya terminado. El escenario se copiará y aparecerá en la lista de escenarios de gestión para ese campo. Además, un escenario puede ser duplicado y renombrado y modificado para diferentes escenarios de gestión dentro de un campo usando la tecla de copia debajo de las opciones de acción.'
+        header: Copiar escenario de otro parcela
+        body1: 'El usuario puede copiar escenarios de otros parcelas y usarlos en el parcela existente. Para copiar escenarios, haga clic en <strong> Copiar escenario de otro parcela </strong> en la parte superior de la página, luego seleccione el parcela y el escenario que desea copiar. Haga clic en el botón <strong> Copiar </strong> cuando haya terminado. El escenario se copiará y aparecerá en la lista de escenarios de gestión para ese parcela. Además, un escenario puede ser duplicado y renombrado y modificado para diferentes escenarios de gestión dentro de un parcela usando la tecla de copia debajo de las opciones de acción.'
         body2: 'El usuario no necesita agregar BMP para avanzar o para que se ejecute el escenario. Sin embargo, el usuario necesita agregar un sistema de cultivo. Para agregar un sistema de cultivo o BMP, el usuario debe ir a su página respectiva y seguir las instrucciones que se describen a continuación.'
     operation:
-        header: Administrar escenarios de campo
-        body: 'La página Escenarios de gestión incluye una lista de los escenarios creados para el campo. La lista incluye el nombre del escenario, los campos de clima, suelos y operaciones, fecha de simulación y una columna de acciones.'
-        body1: 'Aparecerá una verificación verde en las columnas de clima, suelos, capas y operaciones donde estas estén presentes para el escenario. Para simular con éxito un escenario, los cuatro de estos elementos deben contener una verificación verde. Las capas de <strong> clima, suelos </strong> y <storng> </strong> deben verificarse cuando se crea un escenario de gestión por primera vez, ya que estos elementos se derivan del mapa y se asocian automáticamente con cada campo. Sin embargo, la columna de operaciones estará en blanco hasta que el usuario ingrese la información de administración para el escenario. Aparecerá una verificación verde en la columna <strong> operaciones </strong> una vez que haya información de administración para el campo.'
-        body2: 'El campo <strong> fecha de simulación </strong> indica la fecha en la que el modelo simuló por última vez el escenario. Si el campo de fecha de simulación está en blanco, significa que el campo no ha sido simulado. (Consulte Simular escenarios para obtener más información sobre cómo simular un escenario).'
+        header: Administrar escenarios de parcela
+        body: 'La página Escenarios de gestión incluye una lista de los escenarios creados para el parcela. La lista incluye el nombre del escenario, los parcelas de clima, suelos y operaciones, fecha de simulación y una columna de acciones.'
+        body1: 'Aparecerá una verificación verde en las columnas de clima, suelos, capas y operaciones donde estas estén presentes para el escenario. Para simular con éxito un escenario, los cuatro de estos elementos deben contener una verificación verde. Las capas de <strong> clima, suelos </strong> y <storng> </strong> deben verificarse cuando se crea un escenario de gestión por primera vez, ya que estos elementos se derivan del mapa y se asocian automáticamente con cada parcela. Sin embargo, la columna de operaciones estará en blanco hasta que el usuario ingrese la información de administración para el escenario. Aparecerá una verificación verde en la columna <strong> operaciones </strong> una vez que haya información de administración para el parcela.'
+        body2: 'El parcela <strong> fecha de simulación </strong> indica la fecha en la que el modelo simuló por última vez el escenario. Si el parcela de fecha de simulación está en blanco, significa que el parcela no ha sido simulado. (Consulte Simular escenarios para obtener más información sobre cómo simular un escenario).'
         body3: 'La columna <strong> Acciones </strong> contiene tres iconos diferentes, que representan diferentes acciones. El icono de edición <img src="/serve_image/edit.png"> le permite modificar el nombre del escenario. El icono de copiar <img src = "/serve_image/copy.jpg"> crea una copia de su escenario de administración. Y el icono de borrar <img src = "/ serve_image / delete.png"> eliminará el escenario de gestión.'
         item1:
             header: <b>Agregar cultivo a rotacion:</b>
@@ -1728,10 +1728,10 @@ es:
             body2: 'Si el usuario decide cambiar los valores o cualquier otra inforamción de una operación, el usuario puede cambiar los valores de la operación haciendo clic en el icono <b> <em> Editar </em> </b> en el <b> <em> Acciones </em> </b> columna. Esto llevará al usuario a una nueva página donde pueden realizar los cambios necesarios en la operación.'
             body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <img src="/serve_image/edit.png"> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
     simulation:
-        header: Simular escenarios de campo
-        body: 'Una vez que haya completado uno o más escenarios para su campo, debe simular los escenarios para obtener resultados. Al simular los escenarios, está ejecutando el proyecto a través del modelo APEX, que arrojará resultados para las pérdidas estimadas de nutrientes y sedimentos, así como los rendimientos de los cultivos. Para simular un escenario, marque la casilla junto al escenario o escenarios que desea ejecutar y luego haga clic en el botón <strong> Simular escenario seleccionado </strong>.'
+        header: Simular escenarios de parcela
+        body: 'Una vez que haya completado uno o más escenarios para su parcela, debe simular los escenarios para obtener resultados. Al simular los escenarios, está ejecutando el proyecto a través del modelo APEX, que arrojará resultados para las pérdidas estimadas de nutrientes y sedimentos, así como los rendimientos de los cultivos. Para simular un escenario, marque la casilla junto al escenario o escenarios que desea ejecutar y luego haga clic en el botón <strong> Simular escenario seleccionado </strong>.'
         body1: 'Antes de intentar simular un escenario, asegúrese de que haya marcas verdes en el clima, suelos, capas y columnas de operaciones. Cada uno de estos elementos debe estar presente en el escenario antes de que pueda ser simulado con éxito por el modelo APEX. La simulación de los escenarios puede tomar uno o más minutos.'
-        body2: 'Una vez que se ha simulado con éxito un escenario, el campo <strong> fecha de simulación </ strong> mostrará la fecha y la hora de la simulación más reciente.'
+        body2: 'Una vez que se ha simulado con éxito un escenario, el parcela <strong> fecha de simulación </ strong> mostrará la fecha y la hora de la simulación más reciente.'
         body3: 'Nota: Si modifica un escenario de gestión, deberá volver a ejecutar el escenario para ver los resultados del escenario actualizado.'
         result:
             header: 'Visualización de resultados'
@@ -1929,7 +1929,7 @@ es:
       Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.
   watershedpage:
     header: Ayuda para la página de cuencas
-    body1: 'La página de cuencas le permite al usuario combinar varias parcelas y escenarios y simularlas como un único campo.'
+    body1: 'La página de cuencas le permite al usuario combinar varias parcelas y escenarios y simularlas como un único parcela.'
     create:
         header: Crear un cuenca
         name:
@@ -1937,7 +1937,7 @@ es:
             body1: 'Para crear un cuenca, haga clic a <strong><em>Nueva Cuenca</em></strong>. Cuando esto ha sido hecho, un cuadro de texto aparecerá donde se puede escribir el nombre del cuenca:'
             body2: 'Una vez que ingresa el nombre, haga clic en <strong><em>Crear Cuenca</em></strong>.'
         select:
-            header: Seleccionar campos/escenarios para simular
+            header: Seleccionar parcelas/escenarios para simular
             body1: 'Cuando el usuario nombre su cuenca, puede agregar las parcelas y los escenarios que desea simular. No puede agregar una parcela más de una vez al mismo cuenca (la idea es combinar las parcelas y escenarios para simular como una sola parcela). Para agregar las combinaciones de escenarios/parcelas del cuenca, seleccione las combinaciones de escenarios y parcelas y haga clic a <strong><em>Seleccionar Escenario</em></strong>.'
             body2: 'Cuando haya terminado, haga clic en <strong><em>Añadir a Cuenca</em></strong>.'
         simulate:
@@ -1946,7 +1946,7 @@ es:
   operation_page:
     header: Página de operación
     body1: 'Una vez que se ha creado un escenario en la página <strong> Gestión </strong>, el usuario pasa a la página <strong> Operaciones </strong> para comenzar a ingresar las características de gestión, como el programa de cultivo, la labranza, el fertilizante y la cosecha. y operaciones de pastoreo.'
-    body2: 'Un sistema de recorte es <strong> OBLIGATORIO </strong> para que el usuario pueda avanzar y simular el NTT. El usuario puede agregar rotaciones que duran un año o mucho más. Un campo puede tener múltiples cultivos o un solo cultivo. Hay diferentes opciones disponibles en <strong> Página de operación </strong> para manipular un sistema de cultivo de la siguiente manera:'
+    body2: 'Un sistema de recorte es <strong> OBLIGATORIO </strong> para que el usuario pueda avanzar y simular el NTT. El usuario puede agregar rotaciones que duran un año o mucho más. Un parcela puede tener múltiples cultivos o un solo cultivo. Hay diferentes opciones disponibles en <strong> Página de operación </strong> para manipular un sistema de cultivo de la siguiente manera:'
     rotation:
         header: Añadir cultivo a la rotación
         name:
@@ -1957,18 +1957,18 @@ es:
         select:
             header: Agregar nueva operación
             body1: 'Los usuarios pueden agregar operaciones a sus rotaciones o crear un sistema de cultivo desde cero utilizando el botón <strong> Agregar nueva operación </strong> en la parte superior de la página. Se le pedirá que seleccione el cultivo, el tipo de operación, el año y la fecha. El año indica la posición del cultivo en el programa de cultivo, por ejemplo, MAIZ año 1 y SOYBEAN año 2.'
-            body2: 'Dependiendo del tipo de operación, habrá campos adicionales para ingresar. A continuación se incluyen descripciones de los diferentes tipos de operaciones y los campos adicionales requeridos para cada uno.'
+            body2: 'Dependiendo del tipo de operación, habrá parcelas adicionales para ingresar. A continuación se incluyen descripciones de los diferentes tipos de operaciones y los parcelas adicionales requeridos para cada uno.'
         item1:
             header: Plantando
             body1: 'Método de planta: el usuario debe indicar el método de siembra utilizando la lista de selección del equipo de siembra provisto.'
-            body2: 'Cantidad de siembra (semillas / pies cuadrados): este campo se completa previamente con tasas de siembra estándar para cada tipo de cultivo. Si el usuario tiene información más específica sobre la velocidad de siembra, puede ingresarla aquí.'
+            body2: 'Cantidad de siembra (semillas / pies cuadrados): este parcela se completa previamente con tasas de siembra estándar para cada tipo de cultivo. Si el usuario tiene información más específica sobre la velocidad de siembra, puede ingresarla aquí.'
         item2:
             header: Fertilizante
             body1: 'Categoría de fertilizante: el usuario debe indicar la categoría de fertilizante (comercial, estiércol líquido o abono sólido).'
             body2: 'Tipo de fertilizante: la lista de selección de tipo de fertilizante variará según la categoría de fertilizante seleccionada. Para el abono de estiércol, la lista de selección contendrá tipos de estiércol animal.'
             body3: 'Cantidad: el usuario debe indicar la cantidad de fertilizante aplicado. Las unidades variarán según el tipo de fertilizante seleccionado (lbs / ac, tons / ac, 1000 gal / ca).'
-            body4: 'Profundidad: si se incorpora el fertilizante, el usuario debe indicar la profundidad de incorporación aquí. Si el fertilizante no está incorporado, este campo puede dejarse en blanco.'
-            body5: 'Composición de Fertilizantes (solo fertilizantes comerciales): para fertilizantes comerciales, estos campos indican la composición de N y P. Estos campos se completan previamente según el tipo de fertilizante seleccionado, pero se pueden modificar si es necesario.'
+            body4: 'Profundidad: si se incorpora el fertilizante, el usuario debe indicar la profundidad de incorporación aquí. Si el fertilizante no está incorporado, este parcela puede dejarse en blanco.'
+            body5: 'Composición de Fertilizantes (solo fertilizantes comerciales): para fertilizantes comerciales, estos parcelas indican la composición de N y P. Estos parcelas se completan previamente según el tipo de fertilizante seleccionado, pero se pueden modificar si es necesario.'
             body6: 'Concentración total de N (estiércol sólido / líquido solamente): para el abono de estiércol, el usuario debe indicar el contenido total de N por tonelada de estiércol sólido o por 1000 galones de estiércol líquido. Los valores típicos se completan previamente para el usuario, pero se pueden modificar.'
             body7: 'Concentración total de P (estiércol sólido / líquido solamente): para el abono de estiércol, el usuario debe indicar el contenido total de P por tonelada de estiércol sólido o por 1000 galones de estiércol líquido. Los valores típicos se completan previamente para el usuario, pero se pueden modificar.'
             body8: 'Contenido de humedad (estiércol sólido / líquido solamente): para el fertilizante de estiércol, este es el porcentaje, en peso, del contenido de humedad en el estiércol. Se proporcionan valores típicos para cada tipo de estiércol, pero el usuario puede modificarlos.'
@@ -1981,27 +1981,27 @@ es:
         item5:
             header: Final de temporada
             body1: 'El final de la temporada solo requiere la información del cultivo, año y fecha del usuario.'
-            body2: 'Nota: El final de la temporada indica al modelo que la cosecha se retira del campo. Si una operación de fin de temporada no está presente, entonces el modelo asume que la cosecha se deja crecer. El final de la temporada debe usarse para todos los cultivos anuales. Para ciertos cultivos perennes como el heno y el pasto, las operaciones de fin de temporada pueden estar ausentes del programa de cultivo.'
+            body2: 'Nota: El final de la temporada indica al modelo que la cosecha se retira del parcela. Si una operación de fin de temporada no está presente, entonces el modelo asume que la cosecha se deja crecer. El final de la temporada debe usarse para todos los cultivos anuales. Para ciertos cultivos perennes como el heno y el pasto, las operaciones de fin de temporada pueden estar ausentes del programa de cultivo.'
         item6:
             header: Irrigación manual
             body1: 'Método de riego: el usuario indica el tipo de sistema de riego que se está utilizando.'
             body2: 'Cantidad: el usuario indica el volumen de agua aplicado en este evento de riego en pulgadas.'
-            body3: 'Eficiencia de riego: este campo tiene como valor predeterminado un valor de eficiencia de riego típico (como una fracción) basado en el método de riego que se selecciona. Este valor puede ser modificado.'
-            body4: 'Nota: En las páginas de Prácticas de conservación hay una opción para <strong> autoirrigación </strong> y <strong> autofertigación </strong> que automatiza el riego en su campo en función de los parámetros del usuario. Consulte <a href=/help/page_10?locale=en> <u> autoirrigation / autofertigation </u> </a> para obtener más información.'
+            body3: 'Eficiencia de riego: este parcela tiene como valor predeterminado un valor de eficiencia de riego típico (como una fracción) basado en el método de riego que se selecciona. Este valor puede ser modificado.'
+            body4: 'Nota: En las páginas de Prácticas de conservación hay una opción para <strong> autoirrigación </strong> y <strong> autofertigación </strong> que automatiza el riego en su parcela en función de los parámetros del usuario. Consulte <a href=/help/page_10?locale=en> <u> autoirrigation / autofertigation </u> </a> para obtener más información.'
         item7:
             header: Pastoreo continuo
-            body1: 'Inicio / finalización Fechas de pastoreo: el usuario indica las fechas de inicio y finalización del pastoreo en el campo.'
-            body2: 'Tipo de animal: el usuario indica el tipo de animales que se pastan en el campo.'
-            body3: 'Unidades de animales: el usuario indica el total de unidades de animales que se pastan en el campo. Las unidades de animales representan 1,000 libras de peso de animales vivos.'
-            body4: 'Horas en el campo: el usuario indica el total de horas por día que los animales son apacentados en el campo.'
-            body5: 'Composición del estiércol: estos campos se rellenan previamente con composiciones típicas de estiércol para el tipo de animal seleccionado. Estos campos pueden ser modificados por el usuario si es necesario.'
+            body1: 'Inicio / finalización Fechas de pastoreo: el usuario indica las fechas de inicio y finalización del pastoreo en el parcela.'
+            body2: 'Tipo de animal: el usuario indica el tipo de animales que se pastan en el parcela.'
+            body3: 'Unidades de animales: el usuario indica el total de unidades de animales que se pastan en el parcela. Las unidades de animales representan 1,000 libras de peso de animales vivos.'
+            body4: 'Horas en el parcela: el usuario indica el total de horas por día que los animales son apacentados en el parcela.'
+            body5: 'Composición del estiércol: estos parcelas se rellenan previamente con composiciones típicas de estiércol para el tipo de animal seleccionado. Estos parcelas pueden ser modificados por el usuario si es necesario.'
         item8:
             header: Pastoreo rotacional
             body1: 'La operación de pastoreo rotacional, a diferencia del pastoreo continuo, supone que el pasto se divide en potreros y que el ganado se mueve a través de los potreros, según sea necesario. Por lo tanto, cada cuartón recibe un período de recuperación entre los eventos de pastoreo, lo que mejora la cobertura vegetal.'
-            body2: 'Inicio / finalización Fechas de pastoreo: el usuario indica las fechas de inicio y finalización del pastoreo en el campo.'
-            body3: 'Tipo de animal: el usuario indica el tipo de animales que se pastan en el campo'
-            body4: 'Unidades de animales: el usuario indica el total de unidades de animales que se pastan en el campo. Las unidades de animales representan 1,000 libras de peso vivo.'
-            body5: 'Horas en el campo: el usuario indica el total de horas por día que los animales son apacentados en el campo.'
+            body2: 'Inicio / finalización Fechas de pastoreo: el usuario indica las fechas de inicio y finalización del pastoreo en el parcela.'
+            body3: 'Tipo de animal: el usuario indica el tipo de animales que se pastan en el parcela'
+            body4: 'Unidades de animales: el usuario indica el total de unidades de animales que se pastan en el parcela. Las unidades de animales representan 1,000 libras de peso vivo.'
+            body5: 'Horas en el parcela: el usuario indica el total de horas por día que los animales son apacentados en el parcela.'
             body6: 'Número de días consecutivos apacentados a la vez (en cada cuartón): el usuario indica el número de días que el ganado pasará en cada cuartón antes de ser rotado a un nuevo potrero.'
             body7: 'Tiempo de descanso del pasto (días) entre el pastoreo: el usuario indica el número de días que el pasto descansa entre los ciclos de pastoreo rotacionales.'
             body8: 'Concentración total de N: el usuario debe indicar el contenido total de N por tonelada de estiércol fresco. Los valores típicos se completan previamente para el usuario, pero se pueden modificar si se conocen.'
@@ -2025,7 +2025,7 @@ es:
         switch:
             header: Cambiar vista
             body1: 'Al hacer clic en Cambiar vista en la parte superior de la página, puede cambiar su vista de una organizada por cultivo y tipo de operación a una que esté organizada por fecha.'
-            body2: 'Una vez que esté satisfecho con su programa de recorte, haga clic en Continuar en la parte superior de la página. Pasará a la página de Prácticas de Conservación donde puede indicar cualquier práctica de conservación que esté presente en el campo.'
+            body2: 'Una vez que esté satisfecho con su programa de recorte, haga clic en Continuar en la parte superior de la página. Pasará a la página de Prácticas de Conservación donde puede indicar cualquier práctica de conservación que esté presente en el parcela.'
  
   watershedpage_html:
     <strong>Field Routing (Watershed)</strong><br></br>
@@ -2046,14 +2046,14 @@ es:
   
   conservation:
     header: Prácticas de conservación
-    body1: 'Una vez que se hayan agregado el programa y las operaciones de cultivo, haga clic en el botón <strong> Continuar </strong> en la parte superior de la página de Operaciones. Esto avanzará a la página <strong> Prácticas de conservación </strong>. En esta página, los usuarios indicarán las prácticas de conservación estructural que están vigentes en el campo. Si no existen prácticas de conservación en el campo, simplemente haga clic en <strong> Guardar y continuar </ strong> en la parte inferior de la página Prácticas de conservación, que devolverá al usuario a la página Escenario de gestión. Alternativamente, los usuarios pueden navegar directamente a la página Escenario de gestión utilizando los enlaces de navegación de la izquierda.'
+    body1: 'Una vez que se hayan agregado el programa y las operaciones de cultivo, haga clic en el botón <strong> Continuar </strong> en la parte superior de la página de Operaciones. Esto avanzará a la página <strong> Prácticas de conservación </strong>. En esta página, los usuarios indicarán las prácticas de conservación estructural que están vigentes en el parcela. Si no existen prácticas de conservación en el parcela, simplemente haga clic en <strong> Guardar y continuar </ strong> en la parte inferior de la página Prácticas de conservación, que devolverá al usuario a la página Escenario de gestión. Alternativamente, los usuarios pueden navegar directamente a la página Escenario de gestión utilizando los enlaces de navegación de la izquierda.'
     add:
         header: Agregar una práctica de conservación
-        body1: 'Para agregar una práctica de conservación, haga clic en la casilla de verificación en la columna Seleccionar de la práctica de conservación que desea agregar. Los usuarios pueden agregar más de una práctica de conservación a un campo, aunque algunas prácticas de conservación son mutuamente excluyentes. (Ver Prácticas de Conservación Mutuamente Exclusivas para más detalles.) Las prácticas de conservación están organizadas por grupos, y el usuario puede seleccionar la práctica específica que le interesa agregar. Para agregar la práctica de conservación, expanda el grupo particular haciendo clic en la casilla de verificación en la columna de selección. Una vez que se selecciona el grupo de práctica de conservación, seleccione la opción específica dentro del grupo que desea agregar y complete los campos requeridos.'
-        body2: 'Una vez que el usuario ha hecho esto, el usuario debe seleccionar la combinación Campo / Escenario O seleccionar el subproyecto seleccionado previamente seleccionando de los cuadros desplegables correspondientes.'
+        body1: 'Para agregar una práctica de conservación, haga clic en la casilla de verificación en la columna Seleccionar de la práctica de conservación que desea agregar. Los usuarios pueden agregar más de una práctica de conservación a un parcela, aunque algunas prácticas de conservación son mutuamente excluyentes. (Ver Prácticas de Conservación Mutuamente Exclusivas para más detalles.) Las prácticas de conservación están organizadas por grupos, y el usuario puede seleccionar la práctica específica que le interesa agregar. Para agregar la práctica de conservación, expanda el grupo particular haciendo clic en la casilla de verificación en la columna de selección. Una vez que se selecciona el grupo de práctica de conservación, seleccione la opción específica dentro del grupo que desea agregar y complete los parcelas requeridos.'
+        body2: 'Una vez que el usuario ha hecho esto, el usuario debe seleccionar la combinación parcela / Escenario O seleccionar el subproyecto seleccionado previamente seleccionando de los cuadros desplegables correspondientes.'
     exclusive:
         header: Prácticas de Conservación Mutuamente Exclusivas
-        body1: 'Para agregar un campo / escenario o subproyecto a ejecutar, seleccione <strong> Agregar subproyecto para ejecutar </strong> o <strong> Agregar campo / escenario para ejecutar </strong>. El botón específico que estará disponible dependerá de la selección que haya realizado en el encabezado <strong> Seleccionar tipo </ strong>. Una vez que haya agregado todos los campos / escenarios o subproyectos, es hora de simular. Los campos / escenarios o subproyectos que agregó se verán en la página, como se muestra a continuación:'
+        body1: 'Para agregar un parcela / escenario o subproyecto a ejecutar, seleccione <strong> Agregar subproyecto para ejecutar </strong> o <strong> Agregar parcela / escenario para ejecutar </strong>. El botón específico que estará disponible dependerá de la selección que haya realizado en el encabezado <strong> Seleccionar tipo </ strong>. Una vez que haya agregado todos los parcelas / escenarios o subproyectos, es hora de simular. Los parcelas / escenarios o subproyectos que agregó se verán en la página, como se muestra a continuación:'
         item1: 'Riego automático y Fertigación automática'
         item2: 'Tampón de hierba y Tampón forestal'
         item3: 'Vías acuáticas y pastizales de hierba / bosques'
@@ -2064,16 +2064,16 @@ es:
     auto:
         header: Riego automático y Fertigación automática
         body: Autoirrigation
-        body1: 'Los sistemas de riego automático son sistemas de riego controlados por un controlador computarizado. La automirrigación en general puede aumentar en gran medida el rendimiento del cultivo. Dentro de NTT, la característica de riego automático regará el campo cuando se cumplan ciertos criterios suministrados por el usuario para el estrés hídrico y la frecuencia, y limitará la aplicación del agua al monto máximo de la aplicación suministrada por el usuario. Las entradas de usuario requeridas para el riego automático incluyen:'
+        body1: 'Los sistemas de riego automático son sistemas de riego controlados por un controlador computarizado. La automirrigación en general puede aumentar en gran medida el rendimiento del cultivo. Dentro de NTT, la característica de riego automático regará el parcela cuando se cumplan ciertos criterios suministrados por el usuario para el estrés hídrico y la frecuencia, y limitará la aplicación del agua al monto máximo de la aplicación suministrada por el usuario. Las entradas de usuario requeridas para el riego automático incluyen:'
         item1: '<strong> Tipo de riego: </strong> los tipos de irrigación incluyen rociadores, surcos / inundaciones, goteo y surcos.'
         item2: '<strong> Eficiencia del riego: </strong> este valor es la fracción de la aplicación de riego que no se pierde por la escorrentía. Este debe ser un valor que sea mayor que 0 y menor que o igual a 1. Cuanto más cerca esté el valor de 0, mayor será el porcentaje de agua perdida por la escorrentía y no llegará al cultivo. Un valor de 1 significa que no se perdió agua en la escorrentía. Los diferentes sistemas de riego tienen diferentes eficiencias de riego. NTT proporciona los valores de eficiencia de riego típicos para el tipo de riego seleccionado, pero estos valores pueden ser modificados por el usuario.'
-        item3: '<strong> Irrigue un máximo de cada (0-365) días: </strong> este campo solicita la frecuencia máxima (en días) en que puede realizarse el riego. Si la frecuencia se establece en 1, entonces la irrigación puede ocurrir todos los días. Si la frecuencia se establece en 7, puede producirse riego, como máximo, una vez a la semana. El valor puede ser cualquier número entero mayor que o igual a cero e inferior o igual a 365.'
+        item3: '<strong> Irrigue un máximo de cada (0-365) días: </strong> este parcela solicita la frecuencia máxima (en días) en que puede realizarse el riego. Si la frecuencia se establece en 1, entonces la irrigación puede ocurrir todos los días. Si la frecuencia se establece en 7, puede producirse riego, como máximo, una vez a la semana. El valor puede ser cualquier número entero mayor que o igual a cero e inferior o igual a 365.'
         item4: '<strong> Factor de estrés hídrico de la planta: </strong> el factor de estrés hídrico indica el nivel de estrés hídrico del cultivo. Este es el valor que se usa para activar el riego automático. Por ejemplo, si el estrés hídrico se establece en 0,8, entonces NTT desencadenará un evento de riego cuando el cultivo tenga un 80% de estrés hídrico, siempre que también se cumplan las condiciones para la frecuencia máxima. El factor de estrés hídrico de la planta puede ser cualquier valor mayor que 0 y menor que o igual a 1. Cuanto más cerca esté el valor de 1, menos estrés hídrico se permite antes de que se encienda el riego automático.'
         item5: '<strong> Máxima aplicación única: </strong> este valor representa la cantidad máxima de agua que se puede aplicar en un solo evento de riego. Está en pulgadas, y puede ser cualquier número mayor que 0. Si no hay restricciones en la aplicación única máxima, este valor debe establecerse en un número alto.'
         body2: Autofertigation
         body3: 'La autofertigación es la aplicación de fertilizantes, enmiendas del suelo u otros productos solubles en agua a través de un sistema de autoirrigación. La autofertigación es un proceso de fertilización automático en el cual el fertilizante se disuelve y se distribuye a través del sistema de irrigación. Esto hace que la autofertigación sea muy similar a la automirrigación, ya que la única entrada de usuario adicional requerida es la concentración de nitrógeno.'
         item6: '<strong> Concentración de nitrógeno: </strong> la cantidad de nitrógeno en el agua de riego en partes por millón. El N total aplicado a través de la autofertigación dependerá de la frecuencia total de riego que a su vez depende del estrés hídrico, la frecuencia y los factores de aplicación máximos establecidos por el usuario.'
-        body4: '<strong> Nota: </strong> los nutrientes aplicados a través de la autofertigación son adicionales a los nutrientes de fertilizantes comerciales y de estiércol que se aplican al cultivo (como parte de las operaciones de fertilización). Si rocía el estiércol en su campo periódicamente, lo mejor es representarlo como una aplicación de estiércol y no a través de la función de autofertigación.'
+        body4: '<strong> Nota: </strong> los nutrientes aplicados a través de la autofertigación son adicionales a los nutrientes de fertilizantes comerciales y de estiércol que se aplican al cultivo (como parte de las operaciones de fertilización). Si rocía el estiércol en su parcela periódicamente, lo mejor es representarlo como una aplicación de estiércol y no a través de la función de autofertigación.'
     drain:
        header: Drenaje de azulejos
        body1: 'El drenaje de azulejos es una práctica para remover el exceso de agua subsuperficial de suelos agrícolas usando tuberías perforadas. El drenaje reduce los niveles excesivos de humedad del suelo para un crecimiento óptimo del cultivo. El drenaje de baldosas es a menudo el mejor recurso para reducir los altos niveles de agua subsuperficial para mejorar los rendimientos de los cultivos. Demasiada agua subterránea puede ser contraproducente para la agricultura al prevenir el desarrollo de la raíz e inhibir el crecimiento de los cultivos. El exceso de agua también puede limitar el acceso a la tierra, particularmente por maquinaria agrícola.'
@@ -2084,28 +2084,28 @@ es:
        body1: 'Los humedales son aquellas áreas que están inundadas o saturadas por aguas superficiales o subterráneas con una frecuencia y duración suficientes para soportar, y que bajo circunstancias normales son compatibles, una prevalencia de vegetación típicamente adaptada para vivir en condiciones de suelo saturado. Humedales generalmente incluyen pantanos, marismas, pantanos y áreas similares.'
        body2: 'El área del humedal se simula como un depósito poco profundo (1 ft. De profundidad) con vegetación creciente de humedales; se simula esencialmente como un humedal artificial y no como un humedal natural. La pendiente del área de humedal se establece en 1%. Los humedales simulados atrapan los sedimentos, reducen la escorrentía, aumentan la infiltración y también aumentan la absorción de agua y nutrientes por la vegetación en el área cubierta por el humedal. Los insumos requeridos para los humedales incluyen:'
        item1: '<strong> Área: </strong> el área del humedal se ingresa en acres. Dado que esta área ya no se puede utilizar para la producción de cultivos, puede haber un rendimiento total del cultivo más bajo (aunque puede haber un mayor rendimiento del cultivo / acre).'
-       item2: '<strong> ¿Se incluye el área de humedal en su AOI?: </strong> Los usuarios indican aquí si el AOI que representa el campo incluye la característica de humedal dentro del polígono dibujado o si la característica de humedal se encuentra fuera del AOI. Si la característica de humedal se incluye en el AOI, los acres de humedal se restarán del área de campo.'
+       item2: '<strong> ¿Se incluye el área de humedal en su AOI?: </strong> Los usuarios indican aquí si el AOI que representa el parcela incluye la característica de humedal dentro del polígono dibujado o si la característica de humedal se encuentra fuera del AOI. Si la característica de humedal se incluye en el AOI, los acres de humedal se restarán del área de parcela.'
     ponds:
        header: Estanques / agua y cuencas de control de sedimentos
-       body1: 'Las cuencas de control de agua y sedimentos (WASCOB), o estanques, consisten en un terraplén a través de la pendiente de un campo o vía acuática menor para detener y liberar temporalmente agua a través de una salida de tubería o mediante infiltración. Están construidos perpendicularmente a la dirección del flujo y paralelos entre sí. Los WASCOB generalmente se instalan en áreas donde la tierra es relativamente empinada y ondulada. Detengan el agua de las zonas de influencia, lo que induce la sedimentación y controla la liberación de agua, lo que reduce el poder erosivo del agua aguas abajo. Beneficios adicionales son el establecimiento de contaminantes unidos a los sedimentos y cierta infiltración. Solo se requiere una entrada para los estanques: fracción del área controlada por los estanques.'
-       body2: '<strong> Fracción del área controlada por estanques / WASCB: </strong> Esta es la fracción (un valor entre 0 y 1) del escurrimiento del campo que fluye (está controlado por) el estanque / WASCOB. Según se modelaron, los estanques solo tratan la escorrentía que se origina en este campo. La entrada de otros campos no se dirige a través de los estanques. Se supone que los estanques / WASCOB están dentro del campo.'
+       body1: 'Las cuencas de control de agua y sedimentos (WASCOB), o estanques, consisten en un terraplén a través de la pendiente de un parcela o vía acuática menor para detener y liberar temporalmente agua a través de una salida de tubería o mediante infiltración. Están construidos perpendicularmente a la dirección del flujo y paralelos entre sí. Los WASCOB generalmente se instalan en áreas donde la tierra es relativamente empinada y ondulada. Detengan el agua de las zonas de influencia, lo que induce la sedimentación y controla la liberación de agua, lo que reduce el poder erosivo del agua aguas abajo. Beneficios adicionales son el establecimiento de contaminantes unidos a los sedimentos y cierta infiltración. Solo se requiere una entrada para los estanques: fracción del área controlada por los estanques.'
+       body2: '<strong> Fracción del área controlada por estanques / WASCB: </strong> Esta es la fracción (un valor entre 0 y 1) del escurrimiento del parcela que fluye (está controlado por) el estanque / WASCOB. Según se modelaron, los estanques solo tratan la escorrentía que se origina en este parcela. La entrada de otros parcelas no se dirige a través de los estanques. Se supone que los estanques / WASCOB están dentro del parcela.'
     fencing:
         header: Stream Fencing (Control de acceso de ganado) (SF)
         body1: 'SF es para mantener al ganado fuera de los arroyos, se ve como una forma de mejorar la calidad del agua. La esgrima evitará la defecación de los animales en los arroyos, lo que constituye una contribución directa del estiércol, los nutrientes del estiércol y los patógenos al recurso hídrico superficial. Además, la esgrima de arroyos previene la erosión del banco y protege el hábitat acuático.'
-        body2: 'SF se simula indicando el número de animales en la corriente, las cantidades diarias de estiércol producido por el animal seleccionado (incluyendo caballos, vacas lecheras, cerdos, ganado, ovejas y cabras), y el tiempo (horas / día) y días de un año que los animales pasan en la corriente. En NTT, el vallado de arroyos elimina o reduce la deposición directa de nutrientes en los arroyos como fuente puntual y detiene la desestabilización de los bancos de arroyos que a menudo es causada por el tráfico de ganado. Esto se hace simulando el área entre la cerca y el borde de la corriente como campo FS. El usuario tiene la opción de describir el área, la eficiencia y el tipo de pasto que crece para el nuevo FS, como se muestra en. Es importante saber que NTT no permitirá la selección de otro FS para el mismo canal de flujo de la "gestión Página de información.'
+        body2: 'SF se simula indicando el número de animales en la corriente, las cantidades diarias de estiércol producido por el animal seleccionado (incluyendo caballos, vacas lecheras, cerdos, ganado, ovejas y cabras), y el tiempo (horas / día) y días de un año que los animales pasan en la corriente. En NTT, el vallado de arroyos elimina o reduce la deposición directa de nutrientes en los arroyos como fuente puntual y detiene la desestabilización de los bancos de arroyos que a menudo es causada por el tráfico de ganado. Esto se hace simulando el área entre la cerca y el borde de la corriente como parcela FS. El usuario tiene la opción de describir el área, la eficiencia y el tipo de pasto que crece para el nuevo FS, como se muestra en. Es importante saber que NTT no permitirá la selección de otro FS para el mismo canal de flujo de la "gestión Página de información.'
         body3: 'El estiércol defecado de los animales en la corriente se considera una fuente puntual directa de nutrientes en el agua. Las cantidades de nutrientes (N y P) en formas sólidas y líquidas se calculan en función del tipo de estiércol producido por el animal específico (proporcionado por el usuario o los valores predeterminados) y el período del año en que pasan una parte de su tiempo en la corriente.'
     buffer:
        header: Tampón de hierba / Tampón forestal
        body: Tampón forestal
-       body1: 'Los amortiguadores forestales son áreas arboladas lineales con sistemas de raíces bien desarrollados, una capa superficial orgánica y vegetación del sotobosque. Cuando se encuentran junto a aguas abiertas, se los denomina tajos de bosques ribereños. Los buffers no ribereños son áreas arboladas lineales a lo largo de los bordes de los campos de pendiente descendente. Los amortiguadores forestales atrapan los sedimentos y aumentan la infiltración, lo que reduce la pérdida de sedimentos y nutrientes. Los amortiguadores forestales a menudo incluyen un amortiguador de pastos entre el campo y el amortiguador arbolado. Si está presente, incluya también el ancho del buffer de hierba.'
+       body1: 'Los amortiguadores forestales son áreas arboladas lineales con sistemas de raíces bien desarrollados, una capa superficial orgánica y vegetación del sotobosque. Cuando se encuentran junto a aguas abiertas, se los denomina tajos de bosques ribereños. Los buffers no ribereños son áreas arboladas lineales a lo largo de los bordes de los parcelas de pendiente descendente. Los amortiguadores forestales atrapan los sedimentos y aumentan la infiltración, lo que reduce la pérdida de sedimentos y nutrientes. Los amortiguadores forestales a menudo incluyen un amortiguador de pastos entre el parcela y el amortiguador arbolado. Si está presente, incluya también el ancho del buffer de hierba.'
        body2: 'Las entradas para Forest Buffer son las siguientes:'
-       item1: '<strong> Área (ac.): </strong> Esta es el área total del Tampón ribereño. Este campo es opcional. Si se deja en blanco, el área se calculará automáticamente utilizando el ancho del búfer y la longitud del borde del campo (donde el borde del campo se calcula como la raíz cuadrada del área del campo).'
+       item1: '<strong> Área (ac.): </strong> Esta es el área total del Tampón ribereño. Este parcela es opcional. Si se deja en blanco, el área se calculará automáticamente utilizando el ancho del búfer y la longitud del borde del parcela (donde el borde del parcela se calcula como la raíz cuadrada del área del parcela).'
        item2: '<strong> Ancho de franja de césped (pies): </strong> este es el ancho de la franja de césped entre el cultivo y el amortiguador arbolado, si está presente.'
        item3: '<strong> Ancho de franja de bosque (ft.): </strong> Este es el ancho del búfer del bosque (sin incluir la franja de césped).'
-       item4: '<strong> Fracción de campo tratada por el búfer: </strong> es la fracción estimada (0,00-1,00) de la escorrentía del campo que se enruta a través del búfer.'
-       item5: '<strong> ¿Se incluye el búfer en AOI?: </strong> si se ha dibujado el búfer como parte del AOI, el área se restará del área de recorte. Si no se ha dibujado como parte del AOI, se supondrá que es adyacente a un borde del campo.'
+       item4: '<strong> Fracción de parcela tratada por el búfer: </strong> es la fracción estimada (0,00-1,00) de la escorrentía del parcela que se enruta a través del búfer.'
+       item5: '<strong> ¿Se incluye el búfer en AOI?: </strong> si se ha dibujado el búfer como parte del AOI, el área se restará del área de recorte. Si no se ha dibujado como parte del AOI, se supondrá que es adyacente a un borde del parcela.'
        body3: Tampón de hierba
-       body4: 'Los amortiguadores de pasto, también conocidos como bandas de filtro, son un área de vegetación, generalmente angosta en anchura y larga a lo largo del borde descendente de un campo, que ralentiza la velocidad de escorrentía, permitiendo sedimentos, materia orgánica y otros contaminantes que se transportan por el agua que se eliminará estableciéndose. Las tiras de filtro reducen la erosión y la contaminación asociada a los sedimentos.'
+       body4: 'Los amortiguadores de pasto, también conocidos como bandas de filtro, son un área de vegetación, generalmente angosta en anchura y larga a lo largo del borde descendente de un parcela, que ralentiza la velocidad de escorrentía, permitiendo sedimentos, materia orgánica y otros contaminantes que se transportan por el agua que se eliminará estableciéndose. Las tiras de filtro reducen la erosión y la contaminación asociada a los sedimentos.'
        body5: 'En NTT, las tiras de filtro funcionan al proporcionar una mejor infiltración de nutrientes solubles, la captura de sedimentos y una mayor absorción de agua y nutrientes por la vegetación de la tira filtrante. El valor de conductividad saturada también se modifica para la simulación de tira de filtro en NTT.'
        body6: 'Las entradas para los buffers de pastos son las mismas que para los buffers forestales (ver Forest Buffer), con el requisito adicional de que el usuario especifique el tipo de vegetación.'
        item6: '<strong> Vegetación: </strong> este es el tipo de pasto o vegetación que se planta en la franja filtrante.'
@@ -2114,13 +2114,13 @@ es:
        body1: 'Una vía de agua con pasto es un terraplén natural o construido, conformado o clasificado y establecido en una vegetación adecuada para el transporte seguro de la escorrentía. Los cursos de agua con pasto están diseñados para evitar la erosión del suelo al drenar el agua de escorrentía de las tierras de cultivo adyacentes. A medida que el agua se desplaza por la vía fluvial, la vegetación de pasto evita la erosión que de otro modo sería el resultado de los flujos concentrados y la absorción de nutrientes. Los cursos de agua con pasto también ayudan a prevenir la erosión de cárcavas en áreas de flujo concentrado. Por ejemplo, pueden usarse para drenar la escorrentía de terrazas y derivaciones de agua de escorrentía. Al interceptar la escorrentía, los cursos de agua con pasto reducen la erosión y minimizan las pérdidas de nutrientes. Las entradas para vías navegables incluyen:'
        item1: '<strong> Recortar: </strong> este es el tipo de pasto o vegetación que se usa en el canal.'
        item2: '<strong> Ancho: </strong> es el ancho del canal de césped, en pies, incluidos ambos lados del canal con vegetación. Esto puede ser cualquier número mayor que 0.'
-       item3: '<strong> Fracción del campo tratada por el canal de pasto: </strong> la fracción del campo que drena hacia el canal de pasto. Un número entre 0.00 y 1.00.'
+       item3: '<strong> Fracción del parcela tratada por el canal de pasto: </strong> la fracción del parcela que drena hacia el canal de pasto. Un número entre 0.00 y 1.00.'
     contour:
        header: Contour Buffer (Strip Farming)
-       body1: 'Las bandas de amortiguación de contorno son bandas permanentes y estrechas de gramíneas / leguminosas plantadas en el contorno (transversal o perpendicular a una pendiente) entre franjas más anchas de cultivos. Los amortiguadores de contornos atrapan los sedimentos y mejoran la filtración de nutrientes y pesticidas al disminuir la escorrentía que podría ingresar a las aguas superficiales locales. Los campos de entrada del usuario para los buffers de contorno incluyen:'
+       body1: 'Las bandas de amortiguación de contorno son bandas permanentes y estrechas de gramíneas / leguminosas plantadas en el contorno (transversal o perpendicular a una pendiente) entre franjas más anchas de cultivos. Los amortiguadores de contornos atrapan los sedimentos y mejoran la filtración de nutrientes y pesticidas al disminuir la escorrentía que podría ingresar a las aguas superficiales locales. Los parcelas de entrada del usuario para los buffers de contorno incluyen:'
        item1: '<strong> Recortar: </strong> este es el tipo de pasto o vegetación que estará presente en las secciones de tampón del tampón de contorno.'
-       item2: '<strong> Ancho del búfer de hierba: </strong> Este es el ancho, en pies, de las bandas de protección. Puede ser cualquier número mayor que 0. El ancho del buffer, junto con el ancho del cultivo, determina la cantidad de tampones y franjas de cultivo en el campo.'
-       item3: '<strong> Ancho de la franja de cultivo: </strong> es el ancho, en pies, de las franjas del cultivo principal que se plantó. Puede ser cualquier número mayor que 0. El ancho del cultivo, junto con el ancho del búfer, determina el número de búferes y franjas de cultivo en el campo.'
+       item2: '<strong> Ancho del búfer de hierba: </strong> Este es el ancho, en pies, de las bandas de protección. Puede ser cualquier número mayor que 0. El ancho del buffer, junto con el ancho del cultivo, determina la cantidad de tampones y franjas de cultivo en el parcela.'
+       item3: '<strong> Ancho de la franja de cultivo: </strong> es el ancho, en pies, de las franjas del cultivo principal que se plantó. Puede ser cualquier número mayor que 0. El ancho del cultivo, junto con el ancho del búfer, determina el número de búferes y franjas de cultivo en el parcela.'
     leveling:
        header: Nivelación de tierras
        body1: 'La nivelación de la tierra se usa para reducir la pendiente en las pendientes altas del suelo. Al reducir la pendiente, la superficie de la tierra es más capaz de retener el agua y el suelo, lo que reduce la erosión y aumenta la infiltración. La entrada para nivelar la tierra es un porcentaje de reducción de pendiente.'
@@ -2130,7 +2130,7 @@ es:
        body1: 'Un sistema de terraza es una sección nivelada de un área cultivada en una colina, diseñada como un método de conservación del suelo para disminuir o prevenir la rápida escorrentía superficial del agua. Las terrazas disminuyen la longitud de la pendiente de la colina, reducen la formación de barrancos e interceptan y conducen la escorrentía a una salida segura, lo que reduce el contenido de sedimentos en el agua de escorrentía. A menudo, en la aplicación, el paisaje se forma en múltiples terrazas, dando una apariencia escalonada. Las terrazas se simulan reduciendo el factor de práctica (PEC). Si desea aplicar un sistema de terraza, haga clic en el botón <strong> Seleccionar </strong>.'
     manure:
        header: Control del estiércol
-       body1: 'El grupo de práctica Control de estiércol aparece solo si se aplica estiércol en el escenario de manejo. Actualmente, se incluyen tres tecnologías de estiércol en NTT: Primary Screen, DAF y NH3 stripper. La pantalla primaria implica la eliminación de sólidos del estiércol líquido. La flotación por aire disuelto (DAF) es un proceso avanzado de separación de estiércol para eliminar los sólidos y el fósforo del estiércol. NH3 stripper es un proceso de extracción de amoniaco de estiércol digerido. Cada proceso afecta la composición de nutrientes del estiércol líquido que luego se aplica a los campos. Al seleccionar una tecnología de estiércol, los campos de composición de estiércol rellenarán previamente con los valores predeterminados que muestran el cambio esperado en la composición del estiércol. Los usuarios pueden modificar estos valores si lo desean.'
+       body1: 'El grupo de práctica Control de estiércol aparece solo si se aplica estiércol en el escenario de manejo. Actualmente, se incluyen tres tecnologías de estiércol en NTT: Primary Screen, DAF y NH3 stripper. La pantalla primaria implica la eliminación de sólidos del estiércol líquido. La flotación por aire disuelto (DAF) es un proceso avanzado de separación de estiércol para eliminar los sólidos y el fósforo del estiércol. NH3 stripper es un proceso de extracción de amoniaco de estiércol digerido. Cada proceso afecta la composición de nutrientes del estiércol líquido que luego se aplica a los parcelas. Al seleccionar una tecnología de estiércol, los parcelas de composición de estiércol rellenarán previamente con los valores predeterminados que muestran el cambio esperado en la composición del estiércol. Los usuarios pueden modificar estos valores si lo desean.'
     ref:
        header: Referencia
        body1: '* Ver el sitio web del USDA: <a href="http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849"><u>http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849</u></a> para descripciones de términos más detalladas.'
@@ -2326,7 +2326,7 @@ es:
                 <p>Para subir su propio archivo de clima, seleccione <strong><em>Usar su propio archivo del Clima</em></strong> y después has clic en <strong><em>Choose File</em></strong>, después seleccione el archivo de clima de su equipo y, finalmente, haga clic en Abrir. Despues, seleccione <strong><em>Actualizar el Clima</em></strong> para finalizar los cambios.</p>
                 <p><strong>Nota:</strong> Tenga en cuenta que si carga su propio archivo de clima, no se guardará al salvar el proyecto. Si sube un proyecto previamente guardado y utilizó la posibilidad de subir su propio archivo de clima, tendrá que cargar el archivo de clima de nuevo, pero para seguridad, debe simular cualquier escenario de nuevo.</p>
     soils: >
-                La página de suelos permite al usuario crear o ver los suelos para cada parcela. Ellos (los tres suelos dominantes) son automáticamente subido basado en el área de interés y los campos seleccionados.<br><br>
+                La página de suelos permite al usuario crear o ver los suelos para cada parcela. Ellos (los tres suelos dominantes) son automáticamente subido basado en el área de interés y los parcelas seleccionados.<br><br>
                 Ahora tiene un par de opciones
                 <ol>
                   <li>Seleccione <strong><em>Adicionar Suelo</em></strong> para crear un suelo nuevo.</li>
@@ -2363,14 +2363,14 @@ es:
                 </ul>
                 <p>Cualquier escenario puede ser seleccionado en cualquiera de los tres menús desplegables, y los escenarios se puede repetir si se desea.</p>
                 <p>Despues de que al menos un escenario ha sido seleccionado, un resumenOnce at least one scenarios is chosen, un resumen se puede ejecutar haciendo clic en <strong><em>Resumen</em></strong>, y luego, si se desea, un pdf se puede descargar haciendo clic en <strong><em>Descargar PDF</em></strong>.</p>
-                <p>También tiene otras opciones a solo un <strong>Resumen</strong>. Estos requieren las misma entradas con un campo adicional</p>
+                <p>También tiene otras opciones a solo un <strong>Resumen</strong>. Estos requieren las misma entradas con un parcela adicional</p>
                 <ol>
                     <li>Resumen por Suelo</li>
-                        <ul><li>Campo adicional: Suelo</li></ul>
+                        <ul><li>parcela adicional: Suelo</li></ul>
                     <li>Anual Gráficas</li>
-                        <ul><li>Campo adicional: Tipo de gráfico</li></ul>
+                        <ul><li>parcela adicional: Tipo de gráfico</li></ul>
                     <li>Mensual Gráficas</li>
-                        <ul><li>Campo adicional: Tipo de gráfico</li></ul>
+                        <ul><li>parcela adicional: Tipo de gráfico</li></ul>
                 </ol>
                 <p><strong>Nota:</strong> Un PDF sólo puede ser descargado después de que el resumen ha sido ejecutado, en el tab <strong>Resumen</strong>. Si cualquiera de los escenarios de cambia, tendrá que ejecutar de nuevo el resumen antes de descargar el PDF</p>
     operations: >
@@ -2398,7 +2398,7 @@ es:
                     <li>Seleccione <strong>Nueva Cuenca</strong> para crear una nueva operación</li>
                 </ol>
                 <p>Después de crear una cuenca, puede hacer clic en el nombre de la cunca para ver y editar los detalles de la cuenca.</p>
-                <p>Puede utilizar los menús desplegables en la parte superior para añadir un campo y escenario (escenario de cuencas), o seleccione el icono de la "x" roja debajo de <strong>Opciones</strong> para borrar un escenario de cuenca.</p>
+                <p>Puede utilizar los menús desplegables en la parte superior para añadir un parcela y escenario (escenario de cuencas), o seleccione el icono de la "x" roja debajo de <strong>Opciones</strong> para borrar un escenario de cuenca.</p>
                 Para <strong>Editar</strong> una cuenca (solo el nombre), seleccione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
                 Para <strong>Borrar</strong> una cuenca, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
                 <p><strong>Nota:</strong> Para editar los detalles de una cuenca y añadir/eliminar escenarios de las cuencas, ebe hacer clic en el nombre de cuencas. La opción de edición debajo de <strong>Opciones</strong> sólo se le permitirá editar el nombre.</p>
@@ -2406,7 +2406,7 @@ es:
                 Aquí podrás ver todos los escenarios de las cuencas hidrográficas que usted ha creado ningún o si no lo ha hecho, usted tiene la opción de crear un nuevo escenario de cuenca
                 <p>Para crear un nuevo escenario de cuencas, debe seleccionar una <strong>Parcela</strong> de la lista desplegable <strong><em>Parcelas</em></strong>, un <strong>Escenario</strong> de la lista desplegable <strong><em>Escenarios</em></strong> y despus seleccionar <strong><em>Adicionar a la cuenca</em></strong>.</p>
                 Para <strong>Borrar</strong> un escenario de cuenca, seleccione el icono de la "x" roja debajo de <strong>Opciones</strong>.
-                <p><strong>Nota:</strong> Ninguna combinación de campo/escenario se puede utilizar dos veces.</p>
+                <p><strong>Nota:</strong> Ninguna combinación de parcela/escenario se puede utilizar dos veces.</p>
     apex_controls: >
                 Aquí podrás ver todos los controles enumerados.<br><br>
                 Para <strong>Editar</strong> un control, seleccione el icono del lapiz debajo de <strong>Opciones</strong>.
