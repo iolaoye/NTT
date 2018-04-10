@@ -614,11 +614,11 @@ class BmpsController < ApplicationController
         case type
           when "create", "update"
             subarea.idr = params[:bmp_td][:depth].to_f * FT_TO_MM
-			@bmp.depth = params[:bmp_td][:depth]
-			subarea.drt = 2
+			       @bmp.depth = params[:bmp_td][:depth]
+			       subarea.drt = 2
           when "delete"
             subarea.idr = 0
-			subarea.drt = 0
+            subarea.drt = 0
         end
         if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
@@ -735,7 +735,7 @@ class BmpsController < ApplicationController
   end   # end method
 
 ### ID: 9. This was the old pond version. It only adda the pond fraction to the fields in the subarea file
-  def pond_old(type)
+  def pond(type)
   	@bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency].to_f 
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
@@ -744,8 +744,34 @@ class BmpsController < ApplicationController
         case type
           when "create", "update"
             subarea.pcof = @bmp.irrigation_efficiency
+            #subarea.rsee = 0.3
+            #subarea.rsae = subarea.wsa * @bmp.irrigation_efficiency
+            #subarea.rsve = 50
+            #subarea.rsep = 0.3
+            #subarea.rsap = subarea.rsae
+            #subarea.rsvp = 25
+            #subarea.rsv = 20
+            #subarea.rsrr = 20
+            #subarea.rsys = 300
+            #subarea.rsyn = 300
+            #subarea.rshc = 0.001
+            #subarea.rsdp = 360
+            #subarea.rsbd = 0.8
           when "delete"
             subarea.pcof = 0
+            #subarea.rsee = 0.0
+            #subarea.rsae = 0.0
+            #subarea.rsve = 0.0
+            #subarea.rsep = 0.0
+            #subarea.rsap = 0.0
+            #subarea.rsvp = 0.0
+            #subarea.rsv = 0.0
+            #subarea.rsrr = 0.0
+            #subarea.rsys = 0.0
+            #subarea.rsyn = 0.0
+            #subarea.rshc = 0.0
+            #subarea.rsdp = 0.0
+            #subarea.rsbd = 0.0
           else
         end
         if !subarea.save then return "Enable to save value in the subarea file" end
@@ -755,7 +781,7 @@ class BmpsController < ApplicationController
   end     # end method
 
 ### ID: 9. This was the new pond version. It add a new field for the pond
-  def pond(type)
+  def pond_new(type)
     case type
       when "create"
         @bmp.area = 0.247105 #ac =  0.1 ha
