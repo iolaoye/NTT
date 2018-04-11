@@ -289,12 +289,11 @@ module ScenariosHelper
 				subarea.rchc = 0.2
 				subarea.rchk = 0.2
 				#line 6
-				debugger
 				subarea.rsee = 0.3
-				subarea.rsae = subarea.wsa * Bmp.find(bmp_id).irrigation_efficiency
+				subarea.rsae = subarea.wsa * -1
 				subarea.rsve = 50
 				subarea.rsep = 0.3
-				subarea.rsap = subarea.wsa * Bmp.find(bmp_id).irrigation_efficiency
+				subarea.rsap = subarea.wsa * -1
 				subarea.rsvp = 25
 				subarea.rsrr = 20
 				subarea.rsv = 20
