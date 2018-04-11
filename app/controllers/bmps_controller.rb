@@ -735,19 +735,15 @@ class BmpsController < ApplicationController
   end   # end method
 
 ### ID: 9. This was the old pond version. It only adda the pond fraction to the fields in the subarea file
-  def pond_old(type)
+  def pond(type)
   	@bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency].to_f 
     @soils = Soil.where(:field_id => params[:field_id])
     i = 0
     @soils.each do |soil|
-      i += 1
       subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
-            if !(params[:bmp_td][:depth] == "") && i < 3 then
-              subarea.pcof = 0
-            else
               subarea.pcof = @bmp.irrigation_efficiency
             end
           when "delete"
@@ -760,7 +756,7 @@ class BmpsController < ApplicationController
   end     # end method
 
 ### ID: 9. This was the new pond version. It add a new field for the pond
-  def pond(type)
+  def pond_new(type)
     case type
       when "create"
         @bmp.area = 0
