@@ -745,7 +745,6 @@ class BmpsController < ApplicationController
         case type
           when "create", "update"
               subarea.pcof = @bmp.irrigation_efficiency
-            end
           when "delete"
             subarea.pcof = 0
         end
