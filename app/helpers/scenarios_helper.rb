@@ -270,7 +270,7 @@ module ScenariosHelper
 				subarea.wsa = soil_area * AC_TO_HA * -1      #soil_area here is the reservior area. Negative on 04/09/18 according to Dr. Saleh
 				# reduce the area of others subareas proportionally
 				if @bmp.sides == 0 then
-					update_wsa("-", subarea.wsa)
+					#update_wsa("-", subarea.wsa)
 				end
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
@@ -289,21 +289,21 @@ module ScenariosHelper
 				subarea.rchc = 0.2
 				subarea.rchk = 0.2
 				#line 6
-				subarea.rsee = 0.0
-				subarea.rsae = 0.0
-				subarea.rsve = 0
-				subarea.rsep = 0.0
-				subarea.rsap = 0.0
-				subarea.rsvp = 0
-				subarea.rsrr = 0
-				subarea.rsv = 0
-				subarea.rsys = 0
-				subarea.rsyn = 0
+				subarea.rsee = 0.3
+				subarea.rsae = subarea.wsa * -1
+				subarea.rsve = 50
+				subarea.rsep = 0.3
+				subarea.rsap = subarea.wsa * -1
+				subarea.rsvp = 25
+				subarea.rsrr = 20
+				subarea.rsv = 20
+				subarea.rsys = 300
+				subarea.rsyn = 300
 				#line 7
-				subarea.rshc = 0.0
-				subarea.rsdp = 0
-				subarea.rsbd = 0.0
-				subarea.pcof = @bmp.irrigation_efficiency
+				subarea.rshc = 0.001
+				subarea.rsdp = 360
+				subarea.rsbd = 0.8
+				#subarea.pcof = @bmp.irrigation_efficiency
 				#line 10
 				subarea.pec = 1
 				#add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
