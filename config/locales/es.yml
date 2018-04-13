@@ -1278,32 +1278,30 @@ es:
         body2: ''
         body3: 'El cerrar un Proyecto activo borrará toda la información de ese Proyecto. Debido a esto, si usted necesitara usar el pryecto mas tarde, eis extremadamente importante que salve le Proyecto antes de cerrarlo. Presionando el botón <b>Cerrar Proyecto Activo</b> , la información será borrada (y perdida si no se salvo previamente). Si usted no ha salvado el Proyecto y lo quiere hacer, presione cancelar y siga las instrucciones para “Salvar Proyecto Activo” antes mencionadas.'
   projpage_html:
-    <strong>Start of a Project</strong> <br></br>
-    Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
-    to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
-    <strong>To Start a Project</strong><br>
-    There are <b>three initial choices</b> to start a new project:<br>
-    Select the <b>Create New Project</b> option to start a project from scratch<br>
-    Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br>
-    Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br><br>
-    <strong>Create New Project Option</strong><br>
-    Selecting the <strong>Create New Project</strong> button asks the user for the project name, and description information.
-    After you have entered the information, click the <strong>Create Project</strong> button to save the information and continue.<br>
-    After you have opened the save project, click the <strong>Save Changes</strong> button to save the information and continue.<br><br>
-    <strong>Upload Project Option</strong><br>
-    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.<br><br>
-    <strong>Open an Example Project Option</strong><br>
-    You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.
-    After you have entered the information, click the <b>Save</b> button to save the information and continue.<br><br>
-    <strong>Download Project</strong><br>
-    You can click the <img src="/serve_image/download.gif"> button to save the current project that you are working on.
-    <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.<br></br>
-    <strong>Edit Project</strong><br>
-    To edit the name or the discription of the project then click <img src="/serve_image/edit.png">.<br><br>
-    <strong>Copy Project</strong><br>
-    To copy and create another same project then click <img src="/serve_image/copy.jpg">.<br><br>
-    <strong>Delete Project</strong><br>
-    To delete any project, click <img src="/serve_image/delete.png">.
+    <strong>Iniciar un Proyecto</strong> <br></br>
+    Bienvenido al sistema de ayuda para Nutrient Tracking Tool (NTT). Esta aplicación fue diseñada para proveer un uso simple pero exhaustivo de una herramienta seguimiento de nutrientes, evaluació y reporte para lograr un entendimiento 
+    básico de como navegar en la aplicación de <strong>NTT</strong>.<br><br>
+  proj_body1: Hay <b>tres opciones iniciales</b> para iniciar un nuevo proyecto:<br>
+  proj_body1_modified: Hay <b>dos opciones iniciales</b> para iniciar un nuevo proyecto:<br>
+  proj_body2: Seleccione la opción <b>Projecto Nuevo</b> para iniciar un proyect desde el principio<br>
+    Seleccione la opción <b>Subir Proyecto</b> para iniciar con un proyecto <b>salvado previamente</b>.<br>
+  proj_body3: Seleccione la opción <b>Subir Ejemplo</b> para iniciar con un <b>ejemplo predefinido</b>.<br><br>
+  proj_body4: <strong>1. Opción Crear Proyecto Nuevo</strong><br>
+    Seleccionando el botón <strong>Proyecto Nuevo</strong> pregutará por el nombre del proyecto, y la descripción.
+    Después de haber entrado la información, precione el botón <strong>Salvar</strong> para salvar la información y continuar. Si no, click <strong>Cancelar</strong>.<br><br>
+    <strong>2. Opción Subir Proyecto</strong><br>
+    Puede también usar el botón <strong>Subir Proyecto</strong> para recuperar un proyecto de NTT con información previamente salvado.<br><br>
+  proj_body5: <strong>3. Opción Subir Proyecto Ejemplo</strong><br>
+    Puede también usar el botón <b>Subir Ejemplo</b>, y luego seleccionar un exmplo de la lista presentada para subir el proyecto deseado.
+    Presione el botón <img src="/serve_image/download.gif"> para salvar el proyecto en el que esta actualmente trabajando.<br><br>
+  proj_body6: <strong>Bajar un Proyecto</strong><br>
+     <strong>Importante:</strong> Si usted usa su propio archivo del clima, es importante subir ese archivo de nuevo antes de correr una nueva simulación, ya que estos archivos subidos no son salvados cuando el archivo es salvado.<br></br>
+    <strong>Editar un Proyecto</strong><br>
+    Para cambiar el nombre o la descripción de un proyecto presione <img src="/serve_image/edit.png">.<br><br>
+    <strong>Copiar un Proyecto</strong><br>
+    Para duplicar un proyecto presione <img src="/serve_image/copy.jpg">.<br><br>
+    <strong>Borrar un Proyecto</strong><br>
+    Para borrar cualquier proyecto presione <img src="/serve_image/delete.png">.
   about_ntt_html:
     <strong>About Page</strong><br></br>
     This page is about Nutrient Tracking Tool (NTT).<br></br>
@@ -1426,9 +1424,9 @@ es:
     <strong>Period to Simulate</strong><br>
     The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>
   fieldpage:
-    header: Fields Page
-    body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected el Sitema de Mapa in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the el Sitema de Mapa), always you can go back to the Map and add more soils.'
-    body2: 'If you selected el Sitema de Mapa, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
+    header: Página de Parcelas
+    body1: 'La página de parcelas permite borrar o verificar parcelas las cuales serán usadas para la información de suelos la página siguiente. En la mayoría de los casos, sin importar la selecciones anteriores, usted tendrá las mismas opciones en la página de parcelas. Borrando parcelas en esta página, también serán borradas en el sistema de mapa. Siempre el usuario puede regrasar al mapa y borrar/ adicionar parcelas.'
+    body2: 'Esta página le permitirá cambiar varias características acerca de la parcela, y también simplemente verificar las parcelas y continuar.'
     createdel:
         header: Creating/Deleting a Field
         create:
@@ -1438,31 +1436,29 @@ es:
             header: <strong>Deleting a Field</strong>
             body: 'To delete field(s), simply click the "Red Cross" icon on the actions column.'
     characteristics:
-        header: Changing Field Characteristics
-        body: 'In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.'
+        header: Cambiar las características de la parcela
+        body: 'Para cambiar las características de una parcela, presione en el icono <b>Pencil.</b>'
         name:
-            header: Changing the Field Name
-            body: 'In order to change field’s name, simply click on the current name of the field (in this case field1) to change. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
+            header: Cambiar el nombre de la parcela
+            body: 'Para cambiar el nombre de la parcela, simplemente presione borre el nombre actual y escriba el nuevo nombre. Una vez todos los cambios han sido echos, presione el botón "Salvar" para salvar los cambios echos a la parcela.'
         area:
-            header: Changing the Field Area
-            body: 'The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 38.33) and type in the correct area, as shown in the picture above. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
+            header: Cambiar el área de la parcela
+            body: 'El área de la parcela se representa en acres. Cualquier valor que este en rojo, significa que el valor es incorrecto, y solicitará asl usuario entrar el valor correcto. Para cambiar el área de la parcela , simply click on the current area (in this case 38.33) and type in the correct area, as shown in the picture above. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
     advance:
         header: Advancing
         body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, weathers, results, and apex page.'
         body_modified: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, results, and apex page.'
   fieldpage_html:
-    <strong>Fields Page</strong><br></br>
-    The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields by clicking <img src="/serve_image/delete.png"> (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.
-    If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.<br></br>
-    <strong>Changing Field Characteristics</strong><br>
-    In order to edit the characteristics of a field, click on the <img src="/serve_image/edit.png"> icon to navigate to an edit page.<br></br>
-    <strong>Changing the Field Name</strong><br>
-    In order to change field’s name, simply click on the current name of the field and type in the name of the field.<br></br>
-    <strong>Changing the Field Area</strong><br>
-    The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area and type in the correct area.<br></br>
-    Click <strong>Save</strong> to save the information and continue to the Soils page or back to go back to the fields page.
+    <strong>Página de Parcelas</strong><br></br>
+    La página de parcelas permite borrar o verificar parcelas las cuales serán usadas para la información de suelos la página siguiente. En la mayoría de los casos, sin importar la selecciones anteriores, usted tendrá las mismas opciones en la página de parcelas. Borrando parcelas en esta página, también serán borradas en el sistema de mapa. Siempre el usuario puede regrasar al mapa y borrar/ adicionar parcelas.<br><br>
+    <strong>Cambiar las características de la parcela</strong><br>
+    Para cambiar las características de una parcela, presione en el icono <b>Pencil.</b><br></br>
+    <strong>Cambiar el nombre de la parcela</strong><br>
+    Para cambiar el nombre de la parcela, simplemente presione borre el nombre actual y escriba el nuevo nombre. Una vez todos los cambios han sido echos, presione el botón "Salvar" para salvar los cambios echos a la parcela.<br></br>
+    <strong>Cambiar el área de la parcela</strong><br>
+    El área de la parcela se representa en acres. Cualquier valor que este en rojo, significa que el valor es incorrecto, y solicitará al usuario entrar el valor correcto. Para cambiar el área de la parcela , simplemente entre el área correcta. Una vez los cambios hayan sido echos, presione el botón "Salvar" para salvar los cambios echos en la parcela.<br>
   soilpage:
-    header: Soils Page
+    header: Página de Suelos
     overview:
         header: Overview
         body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
@@ -1492,13 +1488,26 @@ es:
         body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
         body_modified: 'The user can click <strong>Continue</strong> to advance to the next page.'
   soilpage_html:
-    <strong>Soils Page</strong><br></br>
-    The Soils page allows the user to verify, select, or create the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
-    general rules that apply to all methods. They are as follows<br></br>
-    The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.<br></br>
-    If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.<br></br>
-    However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
-    Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.
+    <strong>Página de Suelos</strong><br></br>
+  soil_body1: La página de suelos permite al usuario verificar los suelos para la parcela seleccionada en la Página de Parcelas. Hay 3 reglas generales que aplican a los suelos;<br></br>
+    Para editar y cambiar las características del suelo, presione en el icono <strong>Pencil</strong> en la columna <strong>Action</strong>.<br></br>
+  soil_body1_modified: The Soils page allows the user to delete the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 2 general rules that apply to all methods. They are as follows.<br></br>
+  soil_body2: 1. Cada uno de los suelos tiene que tener al menos una capa. Usted puede ver si un suelo tiene capas Presionando en el icono <img src="/serve_image/layers.png"> en la columna de acciones. Esto le mostrará la información de las capas para el suelo en particular seleccionado. El usuario puede agregar o borrar capas en la página de capas.<br><br>
+    2. Si el porcentaje total de los suelos es menos de 100%, NTT ajustará los valores adecuadamente.<br></br>
+    3. Sin embargo, el porcentaje total de los suelos no puede ser mayor a 100% o equal a 0%. si este es el caso, NTT automáticamente ajustará los valores.<br></br>
+  soil_body2_modified: 1. The total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
+    2. User can delete soil(s) by clicking <img src="/serve_image/delete.png"> icon under Action column.<br><br>
+  soil_body3: Presione <strong>Save And Continue</Strong> para ir a la página de escenarios.
+  layers_html:
+    <strong>Página de Capas</strong><br><br>
+    Esta página le permite al usuario adicionar, editar y borrar las capas del suelo así;<br></br>
+    1. <strong>Adicionando Capas</strong><br>
+    Para adicionar capa(s), simplemente presione en <strong>Adicionar Capa de Suelo</strong> el cual abrirá la página que le permitira adicionar una capa. Después de entrar los valores deseados presione el botón <strong>Salvar</strong> para salvar la nueva capa o presione <strong>Regresar</strong> para regresar a la página de capas sin salvar los cambios entrados. Recuerde que el procentaje de arcilla, arena, y limo deberia ser 100%.<br><br>
+    2. <strong>Editando Capas</strong><br>
+    Para editar una capa existente, presione <img src="/serve_image/edit.png"> bajo la columna de opcionesel cual le permitirá al usuario entrar los valores deseados.<br><br>
+    3. <strong>Borrando Capas</strong><br>
+    Para borrar una capa existente, presione <img src="/serve_image/delete.png"> bajo la columna de opciones.<br><br>
+    Se puede adicionar, cambiar o borrar cuantas capas se queran con un límite mínimo de una capa y máximo de 10. Presione <strong>Regresar a Suelos</strong> para regresar a la página de suelos o presione <strong>Continuar</strong> para ir a la página de escenarios.
   managepage:
     header: Management Page Help
     overview:
