@@ -20,166 +20,167 @@
     <%= f.number_field :code, min: 0, max: 10 %>
   </div>--><br>
 
-<table class="table table-striped">
-  <tbody>
-    <td style="cursor: pointer"> <h4> DATA ON FORAGE/HAY </h4></td>
-  </tbody>
-    <tbody class="toggable borders">
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.code_for') %><br>
-            <%= f.number_field :code, :title => t('aplcat_tooltip.graze_code'), min: 1, max: 177 %>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.sjd') %><br>
-            <%= f.number_field :starting_julian_day, min: 1, max: 365 %>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.ejd') %><br>
-            <%= f.number_field :ending_julian_day, min: 1, max: 366  %>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.dmi_code') %><br>
-            <%= radio_button_tag :dmi_code1, "1"%> <%= t('graze.dmi_code1') %><br>
-            <%= radio_button_tag :dmi_code1, "2"%> <%= t('graze.dmi_code2') %><br>
-          </div>
-        </tr>
-      </td>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.dmi_cows') %><br>
-            <%= f.number_field :for_dmi_cows, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
-          </div>
-        </tr>
-      </td>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.dmi_bulls') %><br>
-            <%= f.number_field :for_dmi_bulls, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
-          </div>
-        </tr>
-      </td>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.dmi_heifers') %><br>
-            <%= f.number_field :for_dmi_heifers, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
-          </div>
-        </tr>
-      </td>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.dmi_calves') %><br>
-            <%= f.number_field :for_dmi_calves, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
-          </div>
-        </tr>
-      </td>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.dmi_rheifers') %><br>
-            <%= f.number_field :for_dmi_rheifers, :title => t('aplcat_tooltip.dmis'), :type => "number" %>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.gwf') %><br>
-            <%= f.number_field :green_water_footprint, min: 1.0, max: 10000, step: 0.1 %>
-          </div>
-        </tr>
-      </td>
+  <table class="table table-striped">
+    <tbody>
+      <td style="cursor: pointer"> <h4> DATA ON FORAGE/HAY </h4></td>
     </tbody>
-</table>
-
-<table class="table table-striped">
-  <tbody>
-    <td style="cursor: pointer"> <h4> DATA ON SUPPLEMENT/HAY </h4></td>
-  </tbody>
-    <tbody class="toggable borders">
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.code_supp') %><br>
-            <%= f.number_field :dmi_code, :title => t('aplcat_tooltip.graze_code'), min: 1, max: 177 %>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%= t('graze.dmi_code') %><br>
-            <%= radio_button_tag :dmi_code1, "1"%> <%= t('graze.dmi_code1') %><br>
-            <%= radio_button_tag :dmi_code1, "2"%> <%= t('graze.dmi_code2') %><br>
-          </div>
-        </tr>
+      <tbody class="toggable borders">
         <tr>
           <td class="indent" colspan="2">
             <div class="field">
-              <%= t('graze.dmi_cows') %><br>
-              <%= f.number_field :dmi_cows, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
-            </div>
-          </tr>
-        </td>
-        <tr>
-          <td class="indent" colspan="2">
-            <div class="field">
-              <%= t('graze.dmi_bulls') %><br>
-              <%= f.number_field :dmi_bulls, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
-            </div>
-          </tr>
-        </td>
-        <tr>
-          <td class="indent" colspan="2">
-            <div class="field">
-              <%= t('graze.dmi_heifers') %><br>
-              <%= f.number_field :dmi_heifers, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
-            </div>
-          </tr>
-        </td>
-        <tr>
-          <td class="indent" colspan="2">
-            <div class="field">
-              <%= t('graze.dmi_calves') %><br>
-              <%= f.number_field :dmi_calves, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
-            </div>
-          </tr>
-        </td>
-        <tr>
-          <td class="indent" colspan="2">
-            <div class="field">
-              <%= t('graze.dmi_rheifers') %><br>
-              <%= f.number_field :dmi_rheifers, :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+              <%= t('graze.code_for') %>
+              <%= f.number_field :code, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.graze_code'), min: 1, max: 177 %>
             </div>
           </td>
         </tr>
         <tr>
           <td class="indent" colspan="2">
             <div class="field">
-              <%= t('graze.gwf') %><br>
-              <%= f.number_field :green_water_footprint, min: 1.0, max: 10000, step: 0.1 %>
+              <%= t('graze.sjd') %>
+              <%= f.number_field :starting_julian_day, class: 'gvTitleStyleNumber', min: 1, max: 365 %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.ejd') %>
+              <%= f.number_field :ending_julian_day, class: 'gvTitleStyleNumber', min: 1, max: 366  %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.dmi_code') %><br>
+              <%= f.radio_button :for_button, "1" %> <%= t('graze.dmi_code1') %><br>
+              <%= f.radio_button :for_button, "2" %> <%= t('graze.dmi_code2') %><br>
             </div>
           </tr>
         </td>
-  </tbody>
-</table>
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.dmi_cows') %>
+              <%= f.number_field :for_dmi_cows, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+            </div>
+          </tr>
+        </td>
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.dmi_bulls') %>
+              <%= f.number_field :for_dmi_bulls, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+            </div>
+          </tr>
+        </td>
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.dmi_heifers') %>
+              <%= f.number_field :for_dmi_heifers, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+            </div>
+          </tr>
+        </td>
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.dmi_calves') %>
+              <%= f.number_field :for_dmi_calves, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+            </div>
+          </tr>
+        </td>
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.dmi_rheifers') %>
+              <%= f.number_field :for_dmi_rheifers, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :type => "number" %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.gwff') %>
+              <%= f.number_field :green_water_footprint, class: 'gvTitleStyleNumber', min: 1.0, max: 10000, step: 0.1 %>
+            </div>
+          </tr>
+        </td>
+      </tbody>
+  </table>
+
+  <table class="table table-striped">
+    <tbody>
+      <td style="cursor: pointer"> <h4> DATA ON SUPPLEMENT/HAY </h4></td>
+    </tbody>
+      <tbody class="toggable borders">
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.code_supp') %>
+              <%= f.number_field :dmi_code, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.graze_code'), min: 1, max: 177 %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="indent" colspan="2">
+            <div class="field">
+              <%= t('graze.dmi_code') %><br>
+              <%= radio_button_tag :supplement_button, "1"%> <%= t('graze.dmi_code1') %><br>
+              <%= radio_button_tag :supplement_button, "2"%> <%= t('graze.dmi_code2') %><br>
+            </div>
+          </tr>
+          <tr>
+            <td class="indent" colspan="2">
+              <div class="field">
+                <%= t('graze.dmi_cows') %>
+                <%= f.number_field :dmi_cows, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+              </div>
+            </tr>
+          </td>
+          <tr>
+            <td class="indent" colspan="2">
+              <div class="field">
+                <%= t('graze.dmi_bulls') %>
+                <%= f.number_field :dmi_bulls, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+              </div>
+            </tr>
+          </td>
+          <tr>
+            <td class="indent" colspan="2">
+              <div class="field">
+                <%= t('graze.dmi_heifers') %>
+                <%= f.number_field :dmi_heifers, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+              </div>
+            </tr>
+          </td>
+          <tr>
+            <td class="indent" colspan="2">
+              <div class="field">
+                <%= t('graze.dmi_calves') %>
+                <%= f.number_field :dmi_calves, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+              </div>
+            </tr>
+          </td>
+          <tr>
+            <td class="indent" colspan="2">
+              <div class="field">
+                <%= t('graze.dmi_rheifers') %>
+                <%= f.number_field :dmi_rheifers, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.dmis'), :step => "0.1" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="indent" colspan="2">
+              <div class="field">
+                <%= t('graze.gwfs') %>
+                <%= f.number_field :green_water_footprint_supplement, class: 'gvTitleStyleNumber', min: 1.0, max: 10000, step: 0.1 %>
+              </div>
+            </tr>
+          </td>
+    </tbody>
+  </table>
+
   <div class="actions">
     <%= f.submit :class => "btn btn-primary" %>
 	<%= link_to 'Back', project_field_scenario_grazing_parameters_path %>
