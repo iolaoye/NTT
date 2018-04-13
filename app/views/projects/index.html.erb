@@ -46,8 +46,8 @@
 							<tbody>
 								<% @projects.each do |project| %>
 						  			<tr>
-							  			<% if project.location.id == nil %> <td class="table-link"><%= link_to project.name, project_path(project) %></td>
-							  			<% else %> <td class="table-link"><%= link_to project.name, project_fields_path(project) %></td>
+							  			<% if project.location.id == nil %> <td id="<%= project.name %>" class="table-link"><%= link_to project.name, project_path(project) %></td>
+							  			<% else %> <td id="<%= project.name %>" class="table-link"><%= link_to project.name, project_fields_path(project) %></td>
 							  			<% end %>
 							  			<td><%= project.description %></td>
 							  			<td><%= project.updated_at.to_date %></td>
@@ -55,7 +55,7 @@
 								  			<%= link_to image_tag("download.gif"), download_project_path(project) %>
 								  			<%= link_to image_tag("edit.png"), edit_user_project_path(@user, project) %>
 								  			<%= link_to image_tag("copy.jpg"), copy_project_project_path(project), data: {disable_with: 'Please wait, copying this project . . .', method: :get} %>
-								  			<%= link_to image_tag("delete.png"), project, method: :delete, data: { confirm: t('general.confirm') } %>
+								  			<%= link_to image_tag("delete.png"), project, :id=>project.description, method: :delete, data: { confirm: t('general.confirm') } %>
 							  			</td>
 							  			<% if @user.admin %> <td><%= project.user.name%></td> <% end %>
 						  			</tr>
