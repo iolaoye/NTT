@@ -1458,7 +1458,7 @@ es:
     <strong>Cambiar el área de la parcela</strong><br>
     El área de la parcela se representa en acres. Cualquier valor que este en rojo, significa que el valor es incorrecto, y solicitará al usuario entrar el valor correcto. Para cambiar el área de la parcela , simplemente entre el área correcta. Una vez los cambios hayan sido echos, presione el botón "Salvar" para salvar los cambios echos en la parcela.<br>
   soilpage:
-    header: Página de Suelos
+    header: Página de Suelos.
     overview:
         header: Overview
         body: 'The Soils page allows the user to verify, select, or create the soils for the particular field selected in the <b>Field Page</b> and that he or she would like to use for the simulation. Depending on the <a href=/help/page_4>Location</a> method that was selected, the user has to enter varying amounts of information. The information below is organized by the <a href=/help/page_4>Location</a> method that was selected. Regardless of the method that was selected however there are 4 general rules that apply to all methods. They are as follows:'
