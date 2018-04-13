@@ -52,7 +52,6 @@
 								<%= link_to t('result.download_pdf'), { :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
 							<% end %>
 						    <!-- Download CSV/Excel button -->
-						    <%# todo un comment this when the excel program that dowenload the excel files is fixed by Brandon. %>
 						    <%= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
 						<% end %>
 					</td>
@@ -98,7 +97,7 @@
 	    </table>
 	</div>
 </form>
-<% if @type == "Tabular" then %>
+<% if @type == t("result.summary") then %>
 	<div id="tbl_detailed" class="table-responsive">
 	  <div class="panel panel-default">
 		<table class='table table-bordered', style="white-space: nowrap;">
