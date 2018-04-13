@@ -220,14 +220,14 @@ module ScenariosHelper
 				#line 5
 				subarea.rchl = soil_area * AC_TO_KM2 / temp_length    #soil_area here is the reservior area
 				#line 4
-				subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
+				subarea.wsa = soil_area * AC_TO_HA * -1      #soil_area here is the reservior area. Negative on 04/09/18 according to Dr. Saleh
 				# reduce the area of others subareas proportionally
 				if @bmp.sides == 0 then
 					update_wsa("-", subarea.wsa)
 				end
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
-				subarea.slp = 0.01
+				subarea.slp = 0.0025
 				subarea.splg = calculate_slope_length(subarea.slp * 100)
 				subarea.chs = 0.0
 				subarea.chn = 0.0
@@ -259,6 +259,54 @@ module ScenariosHelper
 				#line 10
 				subarea.pec = 1
 				add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
+			when 9    #Ponds
+				#line 2
+				subarea.number = 107
+				#subarea.iops = soil_id
+				#subarea.iow = 1
+				#line 5
+				subarea.rchl = soil_area * AC_TO_KM2 / temp_length    #soil_area here is the reservior area
+				#line 4
+				subarea.wsa = soil_area * AC_TO_HA * -1      #soil_area here is the reservior area. Negative on 04/09/18 according to Dr. Saleh
+				# reduce the area of others subareas proportionally
+				if @bmp.sides == 0 then
+					#update_wsa("-", subarea.wsa)
+				end
+				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
+				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
+				subarea.slp = 0.0025
+				subarea.splg = calculate_slope_length(subarea.slp * 100)
+				subarea.chs = 0.0
+				subarea.chn = 0.0
+				subarea.upn = 0.0
+				subarea.ffpq = 0.0
+				#line 5
+				subarea.rchd = 0.0
+				subarea.rcbw = 0.0
+				subarea.rctw = 0.0
+				subarea.rchs = 0.0
+				subarea.rchn = 0.0
+				subarea.rchc = 0.2
+				subarea.rchk = 0.2
+				#line 6
+				subarea.rsee = 0.3
+				subarea.rsae = subarea.wsa * -1
+				subarea.rsve = 50
+				subarea.rsep = 0.3
+				subarea.rsap = subarea.wsa * -1
+				subarea.rsvp = 25
+				subarea.rsrr = 20
+				subarea.rsv = 20
+				subarea.rsys = 300
+				subarea.rsyn = 300
+				#line 7
+				subarea.rshc = 0.001
+				subarea.rsdp = 360
+				subarea.rsbd = 0.8
+				#subarea.pcof = @bmp.irrigation_efficiency
+				#line 10
+				subarea.pec = 1
+				#add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
 			when 12    #Riperian Forest
 				grass_field_portion = @bmp.grass_field_portion / (@bmp.width + @bmp.grass_field_portion)
 				if !checker
@@ -283,7 +331,7 @@ module ScenariosHelper
 						fs_area = soil_area * AC_TO_HA * (grass_field_portion)
 						subarea.wsa = fs_area       #soil_area here is the reservior area
 					else
-						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
+						subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA      # KM2_TO_HA
 						fs_area = subarea.wsa
 					end
 					if @bmp.sides == 0 then
@@ -337,7 +385,7 @@ module ScenariosHelper
 					if soil_area != nil
 						subarea.wsa = soil_area * AC_TO_HA * (1-grass_field_portion)     #soil_area here is the reservior area
 					else
-						subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
+						subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA       # KM2_TO_HA
 					end
 					#subarea.wsa = subarea.wsa
 					if @bmp.sides == 0 then
@@ -384,7 +432,7 @@ module ScenariosHelper
 					temp_length = soil_area * AC_TO_KM2  / subarea.rchl
 					subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
 				else
-					subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
+					subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA       # KM2_TO_HA
 					soil_area = subarea.wsa * HA_TO_AC
 				end
 				if @bmp.sides == 0 then
@@ -462,7 +510,7 @@ module ScenariosHelper
 					temp_length = soil_area * AC_TO_KM2 / subarea.rchl
 					subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
 				else
-					subarea.wsa = temp_length * subarea.rchl * 100      # KM2_TO_HA
+					subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA       # KM2_TO_HA
 				end
 				## updatewsa
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))

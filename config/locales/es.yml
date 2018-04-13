@@ -1278,32 +1278,30 @@ es:
         body2: ''
         body3: 'El cerrar un Proyecto activo borrará toda la información de ese Proyecto. Debido a esto, si usted necesitara usar el pryecto mas tarde, eis extremadamente importante que salve le Proyecto antes de cerrarlo. Presionando el botón <b>Cerrar Proyecto Activo</b> , la información será borrada (y perdida si no se salvo previamente). Si usted no ha salvado el Proyecto y lo quiere hacer, presione cancelar y siga las instrucciones para “Salvar Proyecto Activo” antes mencionadas.'
   projpage_html:
-    <strong>Start of a Project</strong> <br></br>
-    Welcome to the help system for Nutrient Tracking Tool (<strong>NTT</strong>). This web-based software application was designed to provide a simple to use but comprehensive nutrient tracking, evaluation, and reporting tool
-    to get a basic understanding of how to navigate the <strong>NTT</strong> application. <br><br>
-    <strong>To Start a Project</strong><br>
-    There are <b>three initial choices</b> to start a new project:<br>
-    Select the <b>Create New Project</b> option to start a project from scratch<br>
-    Select the <b>Upload Project</b> option to start a <b>previously saved</b> project.<br>
-    Select the <b>Upload Example</b> option to start a <b>pre-defined example</b> project.<br><br>
-    <strong>Create New Project Option</strong><br>
-    Selecting the <strong>Create New Project</strong> button asks the user for the project name, and description information.
-    After you have entered the information, click the <strong>Create Project</strong> button to save the information and continue.<br>
-    After you have opened the save project, click the <strong>Save Changes</strong> button to save the information and continue.<br><br>
-    <strong>Upload Project Option</strong><br>
-    You can also use the <strong>Upload Project</strong> button to retrieve an NTT Save File containing previously saved information.<br><br>
-    <strong>Open an Example Project Option</strong><br>
-    You can also use the <b>Upload Example</b> button, and then select from the options to load a sample project file.
-    After you have entered the information, click the <b>Save</b> button to save the information and continue.<br><br>
-    <strong>Download Project</strong><br>
-    You can click the <img src="/serve_image/download.gif"> button to save the current project that you are working on.
-    <strong>Important:</strong> If you uploaded your own weather files, it is important to upload these and simulate again, as these uploaded files will not be saved when you save the active project.<br></br>
-    <strong>Edit Project</strong><br>
-    To edit the name or the discription of the project then click <img src="/serve_image/edit.png">.<br><br>
-    <strong>Copy Project</strong><br>
-    To copy and create another same project then click <img src="/serve_image/copy.jpg">.<br><br>
-    <strong>Delete Project</strong><br>
-    To delete any project, click <img src="/serve_image/delete.png">.
+    <strong>Iniciar un Proyecto</strong> <br></br>
+    Bienvenido al sistema de ayuda para Nutrient Tracking Tool (NTT). Esta aplicación fue diseñada para proveer un uso simple pero exhaustivo de una herramienta seguimiento de nutrientes, evaluació y reporte para lograr un entendimiento 
+    básico de como navegar en la aplicación de <strong>NTT</strong>.<br><br>
+  proj_body1: Hay <b>tres opciones iniciales</b> para iniciar un nuevo proyecto:<br>
+  proj_body1_modified: Hay <b>dos opciones iniciales</b> para iniciar un nuevo proyecto:<br>
+  proj_body2: Seleccione la opción <b>Projecto Nuevo</b> para iniciar un proyect desde el principio<br>
+    Seleccione la opción <b>Subir Proyecto</b> para iniciar con un proyecto <b>salvado previamente</b>.<br>
+  proj_body3: Seleccione la opción <b>Subir Ejemplo</b> para iniciar con un <b>ejemplo predefinido</b>.<br><br>
+  proj_body4: <strong>1. Opción Crear Proyecto Nuevo</strong><br>
+    Seleccionando el botón <strong>Proyecto Nuevo</strong> pregutará por el nombre del proyecto, y la descripción.
+    Después de haber entrado la información, precione el botón <strong>Salvar</strong> para salvar la información y continuar. Si no, click <strong>Cancelar</strong>.<br><br>
+    <strong>2. Opción Subir Proyecto</strong><br>
+    Puede también usar el botón <strong>Subir Proyecto</strong> para recuperar un proyecto de NTT con información previamente salvado.<br><br>
+  proj_body5: <strong>3. Opción Subir Proyecto Ejemplo</strong><br>
+    Puede también usar el botón <b>Subir Ejemplo</b>, y luego seleccionar un exmplo de la lista presentada para subir el proyecto deseado.
+    Presione el botón <img src="/serve_image/download.gif"> para salvar el proyecto en el que esta actualmente trabajando.<br><br>
+  proj_body6: <strong>Bajar un Proyecto</strong><br>
+     <strong>Importante:</strong> Si usted usa su propio archivo del clima, es importante subir ese archivo de nuevo antes de correr una nueva simulación, ya que estos archivos subidos no son salvados cuando el archivo es salvado.<br></br>
+    <strong>Editar un Proyecto</strong><br>
+    Para cambiar el nombre o la descripción de un proyecto presione <img src="/serve_image/edit.png">.<br><br>
+    <strong>Copiar un Proyecto</strong><br>
+    Para duplicar un proyecto presione <img src="/serve_image/copy.jpg">.<br><br>
+    <strong>Borrar un Proyecto</strong><br>
+    Para borrar cualquier proyecto presione <img src="/serve_image/delete.png">.
   about_ntt_html:
     <strong>About Page</strong><br></br>
     This page is about Nutrient Tracking Tool (NTT).<br></br>
@@ -1426,9 +1424,9 @@ es:
     <strong>Period to Simulate</strong><br>
     The period to simulate tool allows you to select the number of years that you would like to simulate. You can type in the years as shown below that you would like to simulate for. However, the program will simulate five years before the year that you selected as a method to warm up and give the user more accurate simulation results. Because of this, the user must select a start year that is at least five years after the initial year for which weather information is available. For example, if weather information is available from 1981 to 2012, the user must select a start year for the period to simulate that is 1986 or later. In the Results page, the last twelve years that are simulated are shown on the graphs. However, if there were less than twelve years in the Period to Simulate, then all of the years are accounted for in the graphs. <strong>The “Period to Simulate” information is required for all weather options.</strong>
   fieldpage:
-    header: Fields Page
-    body1: 'The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected el Sitema de Mapa in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields (deleting fields here will also delete the fields that were drawn or uploaded on the el Sitema de Mapa), always you can go back to the Map and add more soils.'
-    body2: 'If you selected el Sitema de Mapa, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.'
+    header: Página de Parcelas
+    body1: 'La página de parcelas permite borrar o verificar parcelas las cuales serán usadas para la información de suelos la página siguiente. En la mayoría de los casos, sin importar la selecciones anteriores, usted tendrá las mismas opciones en la página de parcelas. Borrando parcelas en esta página, también serán borradas en el sistema de mapa. Siempre el usuario puede regrasar al mapa y borrar/ adicionar parcelas.'
+    body2: 'Esta página le permitirá cambiar varias características acerca de la parcela, y también simplemente verificar las parcelas y continuar.'
     createdel:
         header: Creating/Deleting a Field
         create:
@@ -1438,31 +1436,29 @@ es:
             header: <strong>Deleting a Field</strong>
             body: 'To delete field(s), simply click the "Red Cross" icon on the actions column.'
     characteristics:
-        header: Changing Field Characteristics
-        body: 'In order to edit the characteristics of a field, click on the <b>Pencil</b> icon to navigate to an edit page.'
+        header: Cambiar las características de la parcela
+        body: 'Para cambiar las características de una parcela, presione en el icono <b>Pencil.</b>'
         name:
-            header: Changing the Field Name
-            body: 'In order to change field’s name, simply click on the current name of the field (in this case field1) to change. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
+            header: Cambiar el nombre de la parcela
+            body: 'Para cambiar el nombre de la parcela, simplemente presione borre el nombre actual y escriba el nuevo nombre. Una vez todos los cambios han sido echos, presione el botón "Salvar" para salvar los cambios echos a la parcela.'
         area:
-            header: Changing the Field Area
-            body: 'The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area (in this case 38.33) and type in the correct area, as shown in the picture above. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
+            header: Cambiar el área de la parcela
+            body: 'El área de la parcela se representa en acres. Cualquier valor que este en rojo, significa que el valor es incorrecto, y solicitará asl usuario entrar el valor correcto. Para cambiar el área de la parcela , simply click on the current area (in this case 38.33) and type in the correct area, as shown in the picture above. Once all the changes have been made, simply click on "Save" button to save the changes made to the field.'
     advance:
         header: Advancing
         body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, weathers, results, and apex page.'
         body_modified: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, results, and apex page.'
   fieldpage_html:
-    <strong>Fields Page</strong><br></br>
-    The Fields page allows you to add/delete or verify fields which will be used for soil information in the following page. For the most part, regardless of your previous selections, you will have the same options on the Fields page. However, there is one small exception. If you selected Mapping System in the <a href=/help/page_4>Location</a> page, you can add fields in this page, but the fields added are not shown in the map. You may delete fields by clicking <img src="/serve_image/delete.png"> (deleting fields here will also delete the fields that were drawn or uploaded on the Mapping System), always you can go back to the Map and add more soils.
-    If you selected Mapping System, the fields that you drew or uploaded will already be on the Fields page. This page will allow you to change several characteristics about the field, and also simply verify the field(s) and advance. If you selected any other method, you have not created any fields yet. This will be the page where you will do so.<br></br>
-    <strong>Changing Field Characteristics</strong><br>
-    In order to edit the characteristics of a field, click on the <img src="/serve_image/edit.png"> icon to navigate to an edit page.<br></br>
-    <strong>Changing the Field Name</strong><br>
-    In order to change field’s name, simply click on the current name of the field and type in the name of the field.<br></br>
-    <strong>Changing the Field Area</strong><br>
-    The field area is represented in acres. Any value that is in red, as the area will originally be, means that this value is incorrect, and asks the user to enter the correct value. To change the area of the field, simply click on the current area and type in the correct area.<br></br>
-    Click <strong>Save</strong> to save the information and continue to the Soils page or back to go back to the fields page.
+    <strong>Página de Parcelas</strong><br></br>
+    La página de parcelas permite borrar o verificar parcelas las cuales serán usadas para la información de suelos la página siguiente. En la mayoría de los casos, sin importar la selecciones anteriores, usted tendrá las mismas opciones en la página de parcelas. Borrando parcelas en esta página, también serán borradas en el sistema de mapa. Siempre el usuario puede regrasar al mapa y borrar/ adicionar parcelas.<br><br>
+    <strong>Cambiar las características de la parcela</strong><br>
+    Para cambiar las características de una parcela, presione en el icono <b>Pencil.</b><br></br>
+    <strong>Cambiar el nombre de la parcela</strong><br>
+    Para cambiar el nombre de la parcela, simplemente presione borre el nombre actual y escriba el nuevo nombre. Una vez todos los cambios han sido echos, presione el botón "Salvar" para salvar los cambios echos a la parcela.<br></br>
+    <strong>Cambiar el área de la parcela</strong><br>
+    El área de la parcela se representa en acres. Cualquier valor que este en rojo, significa que el valor es incorrecto, y solicitará al usuario entrar el valor correcto. Para cambiar el área de la parcela , simplemente entre el área correcta. Una vez los cambios hayan sido echos, presione el botón "Salvar" para salvar los cambios echos en la parcela.<br>
   soilpage:
-    header: Página de suelos
+    header: Página de Suelos.
     overview:
         header: Visión de conjunto
         body: 'Después de hacer clic en un parcela para comenzar a editar en la página <strong> parcelas </strong>, se dirigirá al usuario a la página <strong> Suelos </strong>. La página de Suelos es una página de nivel de parcela. La página de Suelos permite al usuario cambiar el nombre del parcela y ajustar los acres; y verificar, modificar o eliminar los suelos devueltos de la base de datos de suelos de SSURGO y agregar / editar capas para el parcela particular seleccionado en la página parcelas. NTT devuelve un máximo de 3 suelos por cada parcela. Estos suelos representan los suelos más predominantes en el AOI. NTT está limitado a 3 suelos para minimizar el tiempo de procesamiento del modelo.'
@@ -1505,200 +1501,26 @@ es:
         body: 'The user can add as many soils or layers as they wish, as long as they keep in mind the four requirements listed at the beginning of the page. Once the all of the information has been entered, verified, or manipulated the user can click <strong>Continue</strong> to advance to the next page.'
         body_modified: 'The user can click <strong>Continue</strong> to advance to the next page.'
   soilpage_html:
-    <strong>Soils Page</strong><br></br>
-    The Soils page allows the user to verify, select, or create the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. Depending on the Location method that was selected, the user has to enter varying amounts of information. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 4
-    general rules that apply to all methods. They are as follows<br></br>
-    The user can select a <strong>minimum of one</strong> soil and a <strong>maximum of three</strong> soils.<br></br>
-    If the total soil percentage of the selected soils is less than 100%, NTT will adjust the values accordingly. The soil percentage is seen on the right hand corner of the soils characteristics. To edit the percentages of the soils, click on the <strong>Pencil</strong> icon in the <strong>Action</strong> column.<br></br>
-    However, the total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
-    Each of the soils has to have AT LEAST one layer. You can view whether a soil has layers by clicking on the <img src="/serve_image/layers.png"> icon in the actions column. This will show the layers information for this particular soil in Layers information. If the Soil does not have layers, the user needs to manually enter them.
-  # managepage:
-  #   header: Management Page Help
-  #   overview:
-  #       header: Overview
-  #       body: 'The Management page is where you actually enter the operations and scenarios for your fields. The modifications made in this page applys to the particular field that was selected in the <b>Field Page</b>. Here, you can select the cropping system (including tillage) and the best management practices. By creating multiple scenarios (a Baseline and Alternative for example), the user is able to see the economic and environmental impacts a specific management practice (for example Auto Irrigation) could have based on the location of the user’s fields.'
-  #   create:
-  #       header: Creating a Scenario
-  #       add:
-  #           body1: 'The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save and Continue</strong> button which will create the scenario and advances the user to the operation page.'
-  #           body2: 'The user can copy scenarios from other projects and use it in the existing project. to copy scenarios click <strong>Copy Scenario..</strong> which will create a copy of the selected scenario. To compare two scenarios, create a Baseline scenario and an Alternative scenario with different scenario characteristics. You can then view all this in the results page. You can add as many scenarios as necessary.'
-  #   manipulate:
-  #       header: Manipulating a Scenario’s Characteristics
-  #       body1: 'Once a scenario has been created, you can manipulate characteristics such as the cropping system (including tillage) and the best management practices. The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices '
-  #       body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
-  #   operation:
-  #       header: Operation Page
-  #       body: 'A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below: '
-  #       item1:
-  #           header: <b>Add Crop to Rotation:</b>
-  #           body1: 'Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.'
-  #       item2:
-  #           header: <b>Add New Operation (Creating Operations from Scratch):</b>
-  #           body1: 'The user can also create a new Cropping System from scratch. To do this, the user needs to  click on the <strong><em>Add New Operation</em></strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.'
-  #           body2: 'If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <b><em>Edit</em></b> icon in the <b><em>Actions</em></b> column. This will take the user to a new page where they can make the required changes to the operation.'
-  #           body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <b><em>Delete</em></b> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
-  #   bmpnav:
-  #       header: Best Management Practices (BMPs) Navigation
-  #       body: 'Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.'
-  #       add:
-  #           header: 'Adding a BMP:'
-  #           body1: 'To add a BMP, the user needs to select a BMP by clicking on the check box under the <b><em>Select</em></b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then select the specific BMP (for example Auto Irrigation), as shown below:'
-  #           body2: 'Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.'
-  #           body3: 'Where there is a drop-down menu with the title <b><em>Select One</b></em> allows the user to select from a range of options.'
-  #           body4: 'Where there is a checkbox <b><em>Select</em></b> the user can simply click on it to select the BMP.'
-  #           body5: 'Remember that, if a BMP is expanded when you first get to the page, it means that this BMP has been selected.'
-  #       mutualbmp:
-  #           header: 'Mutually Exclusive BMPs'
-  #           body1: 'Some BMPs can co-exist with other BMPs. For the most part, most BMPs can co-exist with other BMPs. However there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have:'
-  #           item1: 'Auto Irrigation and Auto Fertigation'
-  #           item2: 'Auto Irrigation and any Pads and Pipes'
-  #           item3: 'Only one Pads and Pipes is allowed at the same time'
-  #           item4: 'Filter Strip and Riparian Buffer'
-  #           item5: 'Waterways and Riparian Buffer'
-  #           item6: 'Filter Strip and Waterways'
-  #           item7: 'Contour Buffer and Filter Strip/Riparian Buffer'
-  #           body2: 'Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.'
-  #   bmpdesc:
-  #       header: 'Best Management Practices (BMPs) Descriptions'
-  #       body: 'Below are the descriptions of the different BMPs that are available under NTT.'
-  #       auto:
-  #           header: 'Auto Irrigation and Fertigation'
-  #           irrigation:
-  #               header: 'Auto Irrigation:'
-  #               body: 'Automatic irrigation systems are irrigation systems that are controlled by a computerized controller. These types of systems are convenient. Auto irrigation overall can greatly increase crop yield. However, if auto irrigation is applied to a region where there is no need (such as an area with ample rainfall) adding auto irrigation will cause little to no change from the baseline. The user needs to input in the information of the auto irrigation system, including:'
-  #               item1: '<strong>Irrigation Type:</strong> Irrigation type is the kind of auto irrigation that the user will be using. They include: sprinkle, furrow/flood, drip, furrow diking, and pads and pipes – tailwater irrigation. If you select furrow diking, you also have to input the safety factor (#6 on this list).'
-  #               item2: '<strong>Water Stress Factor:</strong> This is the value that is used to trigger the start of auto irrigation. It is set to a default value of 0.8. The water stress factor can be any value greater than 0 and less than or equal to 1. While a value of 0 is not permitted, it would signify manual irrigation (no automatic irrigation). The closer the value is to 1, the less water stress is allowed before the automatic irrigation is turned on. If the value is equal to 1, water stress is not allowed.'
-  #               item3: '<strong>Irrigation Efficiency:</strong> This value is the fraction of irrigation application that is not lost to runoff. This must be a value that is greater than 0 and less than or equal to 1. The closer the value is to 0, the greater the percentage of water lost to runoff. The closer the value is to 0, the less that percentage. A value of 1 means that no water was lost to runoff.'
-  #               item4: '<strong>Frequency:</strong> Frequency is the days in between which auto irrigation takes place (if the value is 1, this means that there is auto irrigation every day; two means every other day; three means every three days; etc.) The value can be any whole number greater than zero and less than or equal to 365.'
-  #               item5: '<strong>Maximum Single Application:</strong> This value signifies the amount of water than can be applied in a single day. It is in inches, and it can be any number greater than 0. However, it is set to a default value of 3.'
-  #               item6: '<strong>Furrow Dike Safety Factor:</strong> This is the fraction of furrow dike volume that is available for water storage. If the user is uncertain of the volume of the furrow dike then a lower value should be input. This value is a value greater than or equal to 0 but less than 1. The closer the value is to 1 the more volume is available for water storage. A higher value will lower runoff and erosion.'
-  #           fertigation:
-  #               header: 'Auto Fertigation:'
-  #               body: 'Fertigation is the application of fertilizers, soil amendments, or other water-soluble products through an irrigation system. Auto Fertigation is an automatic fertilization process in which fertilizer is dissolved and distributed along with water in your drip or spray irrigation system*. This makes Auto Fertigation very similar to Auto Irrigation. In fact, all of the inputs into Auto Irrigation are in Auto Fertigation. To see these inputs, see Auto Irrigation. However, there is one additional input in Auto Fertigation:'
-  #               item1: '<strong>Nitrogen Concentration:</strong> The amount of nitrogen in the Automatic Fertigation in parts per million.'
-  #       drainsystem:
-  #           header: Drainage Water Management System
-  #           tile:
-  #               header: 'Tile Drain:'
-  #               body1: 'Tile drainage is a practice for removing excess water from the subsurface of soil intended for agriculture. Drainage brings excessive soil moisture levels down for optimal crop growth. Tile drainage is often the best recourse for reducing high subsurface water levels to improve crop yields. Too much subsurface water can be counterproductive to agriculture by preventing root development, and inhibiting the growth of crops. Excessive water also can limit access to the land, particularly by farm machinery.'
-  #               body2: 'For NTT applications, underground drainage systems are simulated in APEX. The depth of the drainage system to reduce plant stress is a key parameter used in simulating tile drainage systems in NTT. Tile drainage simulation in NTT increases subsurface flow, which may provide an avenue for increased nutrient losses in subsurface flow. The input for Tile Drain is:'
-  #               item1: '<strong>Depth:</strong> this is the depth in feet at which the drainage system is installed. It is any number greater than 0.'
-  #           ppnoditch:
-  #               header: 'Pads and Pipes - No Ditch Improvement:'
-  #               body1: 'Pads and Pipes are an above ground water drainage system that is used to both drain excess water and slow down flow of the water. In this type of drainage system the farmer raises the land on a certain number of sides of the field. Pipes are then applied through which the water can flow out of. In this particular method of pads and pipes, there is no improvement to the ditch into where the excess water flows.'
-  #               item1: '<strong>Pads and Pipes Width:</strong> This is the raised area of the field in feet. This area is not able to be used for planting crops. This can be any number greater than 0 on NTT.'
-  #               item2: '<strong># of Sides Covered by Pipes:</strong> The farmer can apply pads and pipes to one or more sides of the field. This is the number of sides where the farmer applied the pads and pipes. This is mostly an economic issue, since applying more pipes reduces the amount of area that is available for planting.'
-  #           pp2stage:
-  #               header: 'Pads and Pipes - Two Stage Ditch System:'
-  #               body1: 'This particular method of Pads and Pipes is very similar to the Pads and Pipes – No Ditch Improvement (see above for more information). The main difference is that using this method improves the ditch, creating a collection of water inside the ditch before the water is drained. The inputs for this method are the same as Pads and Pipes – No Ditch Improvement (see above).'
-  #           ppreservoir:
-  #               header: 'Pads and Pipes – Ditch Enlargement and Reservoir System:'
-  #               body1: 'This particular method of pads and pipes is very similar to the Pads and Pipes – Two Stage Ditch System. This method also has an improved ditch system. However, in this method, the water in the ditch is drained into a reservoir system. The inputs are the same as Pads and Pipes – No Ditch Improvement, with one additional input:'
-  #               item1: '<strong>Reservoir Area (ac.):</strong> This is the reservoir area in acres. Since this area is being used a reservoir, crops cannot be grown in this area.'
-  #           pptailwater:
-  #               header: 'Pads and Pipes – Tailwater Irrigation:'
-  #               body1: 'This particular method of pads and pipes is very similar to Pads and Pipes – Ditch Enlargement and Reservoir System (see above). The only difference is that once the water has gone to the reservoir system, the water is then pumped back to the crop field, where irrigation is then applied to the crops.'
-  #               body2: 'This system requires the inputs for Pads and Pipes –Ditch Enlargement and Reservoir System, as well as the inputs for Auto Irrigation (see Auto Irrigation). A message will come up on NTT to input the Auto Irrigation information.'
-  #       wetponds:
-  #           header: Wetlands and Ponds
-  #           wetlands:
-  #               header: 'Wetlands:'
-  #               body1: 'Wetlands are those areas that are inundated or saturated by surface or groundwater at a frequency and duration sufficient to support, and that under normal circumstances do support, a prevalence of vegetation typically adapted for life in saturated soil conditions. Wetlands generally include swamps, marshes, bogs and similar areas.'
-  #               body2: 'The wetland area is simulated as a shallow reservoir (1 ft. depth) with growing wetland vegetation – it is essentially simulated as an artificial wetland and not a natural wetland. The slope of wetland area is set as one percent. Simulated wetlands trap sediment, reduce runoff, increase infiltration, and also increase uptake of water and nutrients by the vegetation in the area covered by the wetland. The only input required for wetlands is:'
-  #               item1: '<strong>Area:</strong> The area of the wetland is input in acres. Since this area is no longer able to be used for crop production, there may be a lower total crop yield (although there may be a greater crop yield/acre).'
-  #           ponds:
-  #               header: 'Ponds:'
-  #               body1: 'Ponds are used to provide water for livestock, fish and wildlife, recreation, fire control, develop renewable energy systems, and other related uses, and to maintain or improve water quality by retaining the runoff from upland field. Only one input is required for ponds:'
-  #               item1: '<strong>Fraction of Area Controlled by Ponds:</strong> This is the fraction (a value between 0 and 1) and is simply the fraction of the subareas which flows through (is controlled by) ponds. This only affects only the hydrology that originates in this subarea. Inflow from other subareas is not routed through the ponds in this subarea. The exact location of the ponds, however, is unknown. A greater value could help improve water quality by retaining the runoff from the upland fields.'
-  #       stream:
-  #           header: 'Stream and Riparian Management:'
-  #           fencing:
-  #               header: Stream Fencing (Livestock Access Control)
-  #               body1: 'Access control means the temporary or permanent exclusion of animals from an area to achieve and maintain the desired resource conditions. * If it is only a temporary exclusion, the user can enter the information regarding how much time the animals actually spend within the fenced area. Because excluding the animals from the stream allows a grassed area to grow, the user must also add the information for a filter strip.'
-  #               body2: 'The following are the inputs for Stream Fencing:'
-  #               item1: '<strong>Number of Animals:</strong> These are the number of animals that will be temporarily excluded (and therefore also temporarily allowed) into the area. This is a number greater than 0.'
-  #               item2: '<strong>Days in Stream:</strong> This is the number of days out of a year that the animals will be in the stream. This is a number greater than 0.'
-  #               item3: '<strong>Hours/Day in Stream:</strong> Number of hours per day that animals will be in the stream. This is a number between 0 and 24.'
-  #               item4: '<strong>Select Animal:</strong> This is the type of animal that will be temporarily excluded. Options are beef, dairy, horse, sheep, and swine.'
-  #               item5: '<strong>Dry Manure:</strong> This is the dry manure per day that each animal produces in pounds.'
-  #               item6: '<strong>Nutrient Fractions:</strong> elemento-N, elemento-P, Org N, and Org P. Enter the fraction that each one of these nutrients has in the manure.'
-  #               item7: '<strong>Filter Strip Inputs:</strong> (See Filter Strip)'
-  #           stabilization:
-  #               header: 'Streambank Stabilization:'
-  #               body1: 'Stabilization of streambanks is done to prevent the loss of land or damage to land uses or facilities adjacent to the banks of streams or constructed channels properties. Streambank stabilization results in 1) maintaining the flow capacity of streams or channels; 2) Reducing the offsite or downstream effects of sediment resulting from bank erosion; and 3) improving or enhance the stream corridor for fish and wildlife habitat, aesthetics, recreation.'
-  #               body2: 'If you would like to use the Streambank Stabilization, click on the <strong><em>Select</em></strong> button.'
-  #           forestbuffer:
-  #               header: 'Riparian Buffer:'
-  #               body1: 'A riparian buffer is a forested area of land adjacent to a body of water such as a river, stream, pond, lake, marshland, estuary, canal, playa or reservoir. Riparian forests are simulated in a manner similar to the filter strip practice with the additional assumption that there are trees along the length of the riparian zone in addition to selected crops that are growing in the simulated area. The forested area traps sediment and increases infiltration, thereby reducing sediment and nutrient losses. Plant uptake of nutrient in the forested area also reduces nutrient losses downstream.'
-  #               body2: 'The inputs for Riparian buffer are the following:'
-  #               item1: '<strong>Efficiency:</strong> This is the efficiency of the forest buffer, and is any fraction between 0.1 and 1.0.'
-  #               item2: '<strong>Area (ac.):</strong> This is the total area of the Riparian Buffer. It is subtracted from the crop area.'
-  #               item3: '<strong>Width (ft.):</strong> This is the width of the Riparian Buffer in feet.'
-  #               item4: '<strong>Grass Field Portion:</strong> This is the percentage of the Forest Buffer that is composed of grass rather than of trees, and needs to be a number between 0.25 and 0.75.'
-  #               item5: '<strong>Buffer Slope Ration to Upland:</strong> This is the slope ratio (a number between 0.25 and 1.00) to the upland.'
-  #           filterstrip:
-  #               header: 'Filter Strip:'
-  #               body1: 'A filter strip is a type of buffer strip that is an area of vegetation, generally narrow in width and long across the downslope edge of a field, that slows the rate of runoff, allowing sediments, organic matter, and other pollutants that are being conveyed by the water to be removed by settling out. Filter strips reduce erosion and the accompanying sediment-bound pollution.'
-  #               body2: 'A filter strip is specified in NTT by indicating its width and the type of crop planted.  The width of filter strip is used to calculate its area. The area of filter strip is subtracted from the main farmland and is simulated as a separate field. Flow, sediment, and nutrients are routed from the farmland to this filter strip before leaving the edge of the farmland.'
-  #               body3: 'In NTT, filter strips function by providing for better infiltration of soluble nutrients, trapping of sediment, and uptake of water and nutrients by the filter strip vegetation. The saturated conductivity value is also modified for filter strip simulation in NTT.'
-  #               body4: 'The inputs for Filter Strip are the following:'
-  #               item1: '<strong>Vegetation:</strong> This is the type of grass or vegetation that is planted in the Filter Strip. To select one, click on the drop down box and make your selection.'
-  #               item2: '<strong>Efficiency:</strong> This is the efficiency of the Filter Strip.'
-  #               item3: '<strong>Area:</strong> This is the area of the filter strip in acres, which is subtracted from the total area of the field in the results page and is simulated as a separate field. It must be a number greater than 0.'
-  #               item4: '<strong>Width:</strong> This is the width in feet of the filter strip. Filter Strips are typically narrow in width. This can be any value greater than 0.'
-  #               item5: '<strong>Strip Slope to Upland:</strong> This value is a fraction between 0.25 and 0.75 and indicates the slope towards the farmland (which is upland).'
-  #           waterway:
-  #               header: 'Grass Waterway:'
-  #               body1: 'Waterways are vegetated channels that conduct and dispose of overland flow from upstream areas. Waterways typically work by increasing the surface roughness (with the vegetation) which reduces the velocity of flow.'
-  #               body2: 'The inputs for Waterways are the following:'
-  #               item1: '<strong>Crop:</strong> This is the type of grass or vegetation that is used in the channel.'
-  #               item2: '<strong>Width:</strong> This is the width, in feet, including both sides of the vegetated channel. This can be any number greater than 0.'
-  #       contour:
-  #           header: 'Contour Buffer (Strip Farming):'
-  #           body1: 'A contour buffer strip is an area of land maintained in permanent vegetation that helps to control air, soil, and water quality and other environmental problems primarily on land that is used for agriculture. Buffer strips trap sediment and enhance filtration of nutrients and pesticides by slowing down runoff that could enter the local surface waters.'
-  #           body2: 'The buffer strip is simulated based on the width of the buffer and main crop, and the vegetation planted in the buffer.  The number of strips and area are calculated according to the total field area and the widths of buffer and main field, which are inputs to the model.'
-  #           body3: 'The inputs for Contour Buffer are:'
-  #           item1: '<strong>Crop:</strong> This is the type of grass or vegetation that will be present in the buffer sections of the contour buffer. Select one from the drop down list of options.'
-  #           item2: '<strong>Grass Buffer Width:</strong> This is the width, in feet, of the buffer strips. It can be any number greater than 0. Buffer width, along with crop width, determine the number of buffer and crop strips in the field.'
-  #           item3: '<strong>Crop Buffer Width:</strong> This is the width, in feet, of the strips of the main crop that was planted. It can be any number greater than 0. Crop width, along with buffer width, determine the number of buffer and crop strips in the field.'
-  #       landgrading:
-  #           header: Land Grading
-  #           leveling:
-  #               header: 'Land Leveling:'
-  #               body1: 'Land leveling is used to reduce the slope on very high soil slopes. By reducing the slope, the surface land is better able to retain irrigation and soil water. The input for land leveling is:'
-  #               item1: '<strong>Slope Reduction:</strong> This is the percent reduction in the slope of the soil. The number can be any percentage between 0% and 100%. The closer the slope is to 100, the more the slope is reduced.'
-  #           terrace:
-  #               header: 'Terrace System:'
-  #               body1: 'A terrace system is a leveled section of a hill cultivated area, designed as a method of soil conservation to slow or prevent the rapid surface runoff of water. Terraces decrease hill slope-length, reduce formation of gullies, and intercept and conduct runoff to a safe outlet thereby reducing sediment content in runoff water. Often, in application the landscape is formed into multiple terraces, giving a stepped appearance. Terraces are simulated by reducing the practice factor (PEC). If you would like to apply a terrace system, click on the <strong><em>Select</em></strong> button.'
-  #           liming:
-  #               header: 'Liming:'
-  #               body1: 'In agriculture, the application of agricultural limestone is used to prevent the acidification of the soil. This most often occurs when nitrogen fertilizers are applied over long periods of time. For many soils, the simulation of liming is needed to simulate the application of agricultural limestone (which increases soil pH/reduces aluminum saturation). However, since this is not needed for all soils, the user has the ability to turn it off. When the user first reaches the Management page, liming is turned on by default. To turn it off, the user can uncheck the <strong><em>Select</em></strong> button.'
-  #           manure:
-  #               header: 'Manure Control:'
-  #               body1: 'Users need to enter manure operation in their cropping system before applying the manure control.'
-  #           tmp:
-  #               header: 'Temperature and Precipitation Changes:'
-  #               body1: ''
-  #           asphalt:
-  #               header: 'Asphalt or Concrete:'
-  #               body1: 'Users can select if the cropping system is Asfalt or Concrete.'
-  #           grass:
-  #               header: 'Grass Cover:'
-  #               body1: 'Users can select if the cropping system is Grass Cover.'
-  #           slope:
-  #               header: 'Slope Adjustment:'
-  #               body1: 'Users can select if the cropping system had slope adjustment.'
-  #           shade:
-  #               header: 'Shading:'
-  #               body1: 'Shading is similar to Filter Strip. For more information on shading, see Filter Strip. '
-  #               body2: 'The inputs for Shading are the following:'
-  #               item1: '<strong>Vegetation:</strong> This is the type of grass or vegetation that is planted in the shading. To select one, click on the drop down box and make your selection.'
-  #               item2: '<strong>Area:</strong> This is the area of the shading in acres, which is subtracted from the total area of the field in the results page and is simulated as a separate field. It must be a number greater than 0.'
-  #               item3: '<strong>Width:</strong> This is the width in feet of the shading. Shadings are typically narrow in width. This can be any value greater than 0.'
-  #               item4: '<strong>Buffer Slope Ration to Upland:</strong> This value is a fraction between 0.25 and 1.00 and indicates the slope towards the farmland (which is upland).'
-  #   reference:
-  #       header: Reference
-  #       body1: '* See USDA website: http://www.nrcs.usda.gov/wps/portal/nrcs/detailfull/national/technical/?&cid=nrcs143_026849 for more detailed term descriptions.'
+    <strong>Página de Suelos</strong><br></br>
+  soil_body1: La página de suelos permite al usuario verificar los suelos para la parcela seleccionada en la Página de Parcelas. Hay 3 reglas generales que aplican a los suelos;<br></br>
+    Para editar y cambiar las características del suelo, presione en el icono <strong>Pencil</strong> en la columna <strong>Action</strong>.<br></br>
+  soil_body1_modified: The Soils page allows the user to delete the soils for the particular field selected in the Field Page and that he or she would like to use for the simulation. The information below is organized by the Location method that was selected. Regardless of the method that was selected however there are 2 general rules that apply to all methods. They are as follows.<br></br>
+  soil_body2: 1. Cada uno de los suelos tiene que tener al menos una capa. Usted puede ver si un suelo tiene capas Presionando en el icono <img src="/serve_image/layers.png"> en la columna de acciones. Esto le mostrará la información de las capas para el suelo en particular seleccionado. El usuario puede agregar o borrar capas en la página de capas.<br><br>
+    2. Si el porcentaje total de los suelos es menos de 100%, NTT ajustará los valores adecuadamente.<br></br>
+    3. Sin embargo, el porcentaje total de los suelos no puede ser mayor a 100% o equal a 0%. si este es el caso, NTT automáticamente ajustará los valores.<br></br>
+  soil_body2_modified: 1. The total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
+    2. User can delete soil(s) by clicking <img src="/serve_image/delete.png"> icon under Action column.<br><br>
+  soil_body3: Presione <strong>Save And Continue</Strong> para ir a la página de escenarios.
+  layers_html:
+    <strong>Página de Capas</strong><br><br>
+    Esta página le permite al usuario adicionar, editar y borrar las capas del suelo así;<br></br>
+    1. <strong>Adicionando Capas</strong><br>
+    Para adicionar capa(s), simplemente presione en <strong>Adicionar Capa de Suelo</strong> el cual abrirá la página que le permitira adicionar una capa. Después de entrar los valores deseados presione el botón <strong>Salvar</strong> para salvar la nueva capa o presione <strong>Regresar</strong> para regresar a la página de capas sin salvar los cambios entrados. Recuerde que el procentaje de arcilla, arena, y limo deberia ser 100%.<br><br>
+    2. <strong>Editando Capas</strong><br>
+    Para editar una capa existente, presione <img src="/serve_image/edit.png"> bajo la columna de opcionesel cual le permitirá al usuario entrar los valores deseados.<br><br>
+    3. <strong>Borrando Capas</strong><br>
+    Para borrar una capa existente, presione <img src="/serve_image/delete.png"> bajo la columna de opciones.<br><br>
+    Se puede adicionar, cambiar o borrar cuantas capas se queran con un límite mínimo de una capa y máximo de 10. Presione <strong>Regresar a Suelos</strong> para regresar a la página de suelos o presione <strong>Continuar</strong> para ir a la página de escenarios.
   managepage:
     header: Escenarios de gestión
     overview:
