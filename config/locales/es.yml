@@ -2322,6 +2322,42 @@ es:
     To <strong>View</strong> this site, click the <img src="/serve_image/view.png"> icon.<br>
     To <strong>Edit</strong> this site, click <img src="/serve_image/edit.png"> icon.<br>
     To <strong>Delete</strong> this site, click <img src="/serve_image/delete.png"> under action column.<br>
+  
+  routing:
+    header: Escenarios de enrutamiento de campo (cuenca hidrográfica)
+    body1: 'La función de enrutamiento de campo / cuenca hidrográfica permite a los usuarios simular el enrutamiento entre campos. Alternativamente, los usuarios pueden usar la función de enrutamiento de campo para simular una cuenca hidrográfica, donde en lugar de campos, los AOI representan subcuencas. Un escenario de enrutamiento enviará la escorrentía, los sedimentos y los nutrientes de un campo a otro (o de una subcuenca a la siguiente si se utilizan para estimular la cuenca hidrográfica) en el orden especificado. Para cada escenario de enrutamiento / cuenca hidrográfica creado por el usuario, el usuario deberá enumerar el orden de enrutamiento del escenario de campo. Al ver los resultados, puede observar que la carga en la salida de la cuenca hidrográfica es menor que la suma de las cargas del borde de campo para cada campo / subcuenca individualmente simulado. Esto se debe a que NTT simula los efectos de atenuación del agua y los nutrientes a medida que fluyen sobre el paisaje.'
+    create:
+        header: Crea / nombra tu cuenca hidrográfica
+        body1: 'Para comenzar a crear un escenario de enrutamiento de campo, haga clic en Agregar nuevo enrutamiento de campo (Cuenca). Una vez que haga esto, aparecerá un cuadro de texto donde puede escribir el nombre del escenario:'
+        body2: 'Una vez que ingrese el nombre, haga clic en <strong> Guardar </strong>.'
+    build:
+        header: Escenario de construcción de cuencas hidrográficas
+        body1: 'Una vez que haya creado y nombrado su enrutamiento de campo / escenario de cuenca, aparecerá en la lista de escenarios de cuencas hidrográficas. Haga clic en el escenario <strong> nombre </strong> de cuenca para comenzar a definir su escenario de cuenca.'
+        body2: 'Al construir su escenario de cuenca hidrográfica, comenzará a agregar campos / escenarios en el orden en que desea encaminar el flujo entre los campos. No puede agregar un campo más de una vez al mismo escenario de cuenca (la idea es combinar campos para simular como un campo). Para agregar combinaciones de campo / escenario al escenario de cuenca, seleccione el campo y el escenario de las listas desplegables y haga clic en <strong> Agregar campos / Escenario </strong>. Continúe agregando campos / escenarios hasta que se complete su escenario de cuenca hidrográfica.'
+        body3: 'Una vez que haya terminado de seleccionar, haga clic en <strong> Atrás </strong> para volver a la página de la cuenca.'
+    manage:
+        header: Administrar escenarios de cuencas hidrográficas
+        body1: 'La lista de escenarios de cuencas hidrográficas que ha creado aparecerá en la página Enrutamiento de campo (Cuenca).'
+        body2: 'Para comenzar a definir su escenario de cuenca, o para editar un escenario de cuenca que ya ha definido, haga clic en el <strong> nombre de escenario </strong> para comenzar a definir / editar el escenario.'
+        body3: 'Para eliminar su escenario de cuenca hidrográfica, haga clic en el icono Eliminar <img src = "/serve_image/delete.png">.'
+        body4: 'Para cambiar el nombre de su escenario de cuenca hidrográfica, haga clic en el icono de edición <img src = "/ serve_image / edit.png">.'
+    results:
+        header: Simulación / visualización de resultados para el enrutamiento de campo
+        body1: 'Para simular un escenario de cuenca hidrográfica, seleccione los nombres de la cuenca hidrográfica para estimular y haga clic en <strong> Estimular el enrutamiento de campo seleccionado (cuenca) </strong>. Su cuenca hidrográfica puede tardar unos minutos en simular. Una vez que se completa la simulación, aparecerá una fecha / hora de simulación en el campo Fecha de simulación al lado del nombre del escenario de la cuenca.'
+        body2: 'Para ver los resultados de las rutas de campo, seleccione los escenarios que desea ver y haga clic en Ver <strong> Resultados </strong>. Los resultados de los escenarios de enrutamiento de campo / cuenca hidrográfica se muestran de la misma manera que los resultados se muestran para campos individuales, con vistas tabulares y gráficas.'
+
+  modpage:
+    header: Modifications Page Help
+    body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'
+    make:
+        header: Making Modifications
+        body1: 'To make modifications to the APEX file, first select the file that you want to work with (under “Select File drop down box), and then (if applicable) select the field and scenario you want to manipulate (selecting the field and scenario may not be necessary), as shown below:'
+        body2: 'Then, click on <strong>Edit File</strong> to see the file. The variables shown have the same names as they appeared in the APEX manual.'
+        body3: '<strong>You do not need to run a simulation for the changes you made in previous pages to be reflected on the files in the Modification pages.</strong>'
+    downloading:
+        header: Downloading APEX folder
+        body1: 'The user can download the files corresponding to the LAST SIMULATION by clicking <strong>Downloading APEX Folder</strong>. However, for changes to be visible here, the user does need to run a simulation. Also, if you are running multiple scenarios or fields, the APEX folder will contain the files that were run in the last simulation that was fun. Since a different simulation is needed for different scenarios and fields, you can view which simulation was run last by viewing the <a href=/help/page_10?locale=en>Simulation</a> page, which will give you the time of simulation for all the scenarios/fields/subprojects. To change the order of simulation, you can do this in the <a href=/help/page_10?locale=en>Simulation</a> page also. The last scenario/field/subproject added to the simulation page will be the last to simulate and also the files that the APEX folder will contain.'
+
   modpage:
     header: Modifications Page Help
     body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'
