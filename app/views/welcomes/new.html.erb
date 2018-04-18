@@ -86,6 +86,7 @@
         <tr>
       <h1>Welcome</h1>
     </tr>
+      <!--<p><font color="red">This site will be down for upgrade and maintenance untill 5:00 PM Monday April 2, 2018.</font></p><br>-->
       <p>Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. </p>
       <%= render :template => "sessions/index", :style => "white-space: normal;" %>
       <%= image_tag 'tiaer_logo.png', :align=> "left", :style => "margin-left: 2%; max-height: 70px;  " %>
@@ -108,11 +109,8 @@
       NTT is a web-based, site-specific application that estimates nutrient and sediment losses for crop and pasture at the field and/or watershed scales. Agricultural producers and land managers can define a number of management scenarios for any given field or area of interest (AOI). NTT will estimate nutrient (nitrogen and phosphorus) losses, sediment losses, and crop yields differences between the scenarios and present results in customizable reports.
       NTT estimates are made using the APEX (Agricultural Policy/Extender; Williams et al. 2010) (Version 0806) model (Williams et al. 2000). Results represent average nutrient and sediment losses from the field based on 35 years of simulated weather.
       NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. Additional funding for development of NTT was provided by NIFA, the USDA Conservation Innovation Grants program, and various state governments.
-    </p>
-    <p><strong>NTT Disclaimer</strong><br><br>
-      Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the validity of the results and functioning of the program and related program material, nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of the results generated from the tool.
-      The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.
-    </p>
+        <p><strong><%=t('about.disclaimer0')%></strong></p>
+        <p><%= raw t('about.disclaimer1') %></p>
   </div>
   <!-- Benefits icon -->
   <!--

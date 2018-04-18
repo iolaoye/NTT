@@ -27,7 +27,7 @@ class SoilsController < ApplicationController
     flash[:info] = nil
     if @field.updated == true then
       msg = request_soils()
-      if msg != "OK" then flash[:info] = msg end
+      if msg != "OK" then flash.now[:info] = msg end
     end
     @soils = @field.soils
     add_breadcrumb t('menu.soils')
@@ -199,7 +199,7 @@ class SoilsController < ApplicationController
       @soil.zqt = 2
       if @soil.drainage_id != nil then
         case true
-          when 1 
+          when 1
             @soil.wtmx = 0
           when 2
             @soil.wtmx = 4
@@ -257,7 +257,7 @@ class SoilsController < ApplicationController
       #if !l[0].include?("layer") then
         #next
       #end
-      layer_number = "layer" + l.to_s 
+      layer_number = "layer" + l.to_s
       layer = @soil.layers.new
       layer.sand = layers[layer_number]["sand"]
       layer.silt = layers[layer_number]["silt"]

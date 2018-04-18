@@ -975,17 +975,17 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.urbf)
     @subarea_file.push(sLine + "\n")
     #/line 5
-	if (_subarea_info.bmp_id == 0 || _subarea_info.bmp_id == nil)  && _subarea_info.subarea_type == "Soil"
-		if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
-		  _subarea_info.rchl = _subarea_info.chl
-		end
-		if (operation_number > 1 && i == 0) then
-      _subarea_info.rchl = _subarea_info.rchl * 0.9
-		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
-		  #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
-		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
-		end
-	end
+    if (_subarea_info.bmp_id == 0 || _subarea_info.bmp_id == nil)  && _subarea_info.subarea_type == "Soil"
+  		if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
+  		  _subarea_info.rchl = _subarea_info.chl
+  		end
+  		if (operation_number > 1 && i == 0) then
+        _subarea_info.rchl = _subarea_info.rchl * 0.9
+  		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
+  		  #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
+  		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
+  		end
+    end
     sLine = sprintf("%8.4f", _subarea_info.rchl)
     sLine += sprintf("%8.2f", _subarea_info.rchd)
     sLine += sprintf("%8.2f", _subarea_info.rcbw)
@@ -1013,18 +1013,25 @@ module SimulationsHelper
     sLine = sprintf("%8.3f", _subarea_info.rshc)
     sLine += sprintf("%8.2f", _subarea_info.rsdp)
     sLine += sprintf("%8.2f", _subarea_info.rsbd)
-	if _subarea_info.pcof == nil then
-		_subarea_info.pcof = 0
-	end
+  	if _subarea_info.pcof == nil then
+  		_subarea_info.pcof = 0
+  	end
     sLine += sprintf("%8.2f", _subarea_info.pcof)
-	if _subarea_info.bcof == nil then
-		_subarea_info.bcof = 0
-	end
+  	if _subarea_info.bcof == nil then
+  		_subarea_info.bcof = 0
+  	end
     sLine += sprintf("%8.2f", _subarea_info.bcof)
     sLine += sprintf("%8.2f", _subarea_info.bffl)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
     @subarea_file.push(sLine + "\n")
-    #/line 8
-	sLine = "  0"
+      #/line 8
+  	sLine = "  0"
     if _subarea_info.nirr > 0 then
       sLine += sprintf("%1d", _subarea_info.nirr)
     else
@@ -1082,21 +1089,21 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.firg)
     @subarea_file.push(sLine + "\n")
     #/line 11
-	if @grazingb == true and _subarea_info.xtp1 == 0 then
-		sLine = sprintf("%4d", 1)
-	else
-		sLine = sprintf("%4d", _subarea_info.ny1)
-	end
+  	if @grazingb == true and _subarea_info.xtp1 == 0 then
+  		sLine = sprintf("%4d", 1)
+  	else
+  		sLine = sprintf("%4d", _subarea_info.ny1)
+  	end
     sLine += sprintf("%4d", _subarea_info.ny2)
     sLine += sprintf("%4d", _subarea_info.ny3)
     sLine += sprintf("%4d", _subarea_info.ny4)
     @subarea_file.push(sLine + "\n")
     #/line 12
-	if @grazingb == true and _subarea_info.xtp1 == 0 then
-		sLine = sprintf("%8.2f", 0.01)
-	else
-		sLine = sprintf("%8.2f", _subarea_info.xtp1)
-	end
+  	if @grazingb == true and _subarea_info.xtp1 == 0 then
+  		sLine = sprintf("%8.2f", 0.01)
+  	else
+  		sLine = sprintf("%8.2f", _subarea_info.xtp1)
+  	end
     sLine += sprintf("%8.2f", _subarea_info.xtp2)
     sLine += sprintf("%8.2f", _subarea_info.xtp3)
     sLine += sprintf("%8.2f", _subarea_info.xtp4)
