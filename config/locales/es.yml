@@ -836,21 +836,60 @@ es:
     value: Valor
     low_range: Bajo Alcance
     high_range: Alto Alcance
+  # about:
+  #   overview0: 'Visión General'
+  #   overview1: 'Nutrient Tracking Tool (NTT) fue diseñado y desarrollado por Texas Institute for Applied Environmental Research (TIAER), Tarleton State University con fondos del programa Conservation Innovation Grants de USDA-NRCS y varias agencias del estado.'
+  #   overview2: 'La aplicación on-line <b>NTT</b> compara sistemas de manejo agrícolas para calcular cambios en perdida de nutrientes esperado.'
+  #   overview3: 'Los productores agrícolas y adminstradores de tierras pueden definir un número de escenarios y producir un reporte mostrando las diferencias de perdida de nutriente esperado entre cualquiera de los escenarios seleccionados. Para mas información acerca de NTT, puede se consultada en Saleh et al. (2011).'
+  #   process0: 'Proceso'
+  #   process: 'La información suminstrada por el usuario es procesada usando un modelo de simulación biofísico, el programa Agricultural Policy Environmental eXtender (APEX; Williams et al., 2000).'
+  #   disclaimer0: 'Descargo'
+  #   disclaimer1: 'Aunque NTT ha sido probado por sus desarrolladores, NO garantía, expresa o implícita, es dada a la validez de los resultados y la funcionalidad del programa y material relacionado al programa, ni deberá el echo de la distribución constituir ninguna de tales garantías, y NINGUNA responsabilidad es es asumida por los desarrolladores en conección con ello. El usuario asume todos los riesgos y responsabilidades por el uso y aplicación de NTT y la interpretación de los resultados generados por la herramienta.'
+  #   disclaimer2: 'Los autores y su institución afiliada, TIAER, y cualquier otra agencia del govierno de los Estados Unidos no será responsable por posibles daños a los usiarios de NTT, incluyendo perdida de utilidades, perdida de ahorros, perdida de tiempo, accines de las agencias reguladoras, o cualquier otro incidente o daño generado directo o indirecto ocurrido por el uso o la imposibilidad de usar NTT, sus bases de datos, sus resultados, o su documentación por cualquier proposito.'
+  #   selections0: 'Selecciiones Disponibles'
+  #   selections1: '<strong>Nutrient Tracking Tool (NTT)</strong> compara compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield.'
+  #   selections2: '<strong>NTT</strong> requiere suelos regionales, climas regionales, y parámetros de cultivo regionales. Como una nueva aplicación, <strong>NTT</strong> actualmente ofrece selecciones de <strong>todos los condados de EE.UU.</strong>, pero sólo ha sido validado para un número limitado de estados y condados.'
+  #   note1: '* A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading.  Soil and Water Conservation Society.  November/December 2011 vol. 66 no. 6 400-410.'
+  #   note2: '** Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
   about:
-    overview0: 'Visión General'
-    overview1: 'Nutrient Tracking Tool (NTT) fue diseñado y desarrollado por Texas Institute for Applied Environmental Research (TIAER), Tarleton State University con fondos del programa Conservation Innovation Grants de USDA-NRCS y varias agencias del estado.'
-    overview2: 'La aplicación on-line <b>NTT</b> compara sistemas de manejo agrícolas para calcular cambios en perdida de nutrientes esperado.'
-    overview3: 'Los productores agrícolas y adminstradores de tierras pueden definir un número de escenarios y producir un reporte mostrando las diferencias de perdida de nutriente esperado entre cualquiera de los escenarios seleccionados. Para mas información acerca de NTT, puede se consultada en Saleh et al. (2011).'
-    process0: 'Proceso'
-    process: 'La información suminstrada por el usuario es procesada usando un modelo de simulación biofísico, el programa Agricultural Policy Environmental eXtender (APEX; Williams et al., 2000).'
-    disclaimer0: 'Descargo'
-    disclaimer1: 'Aunque NTT ha sido probado por sus desarrolladores, NO garantía, expresa o implícita, es dada a la validez de los resultados y la funcionalidad del programa y material relacionado al programa, ni deberá el echo de la distribución constituir ninguna de tales garantías, y NINGUNA responsabilidad es es asumida por los desarrolladores en conección con ello. El usuario asume todos los riesgos y responsabilidades por el uso y aplicación de NTT y la interpretación de los resultados generados por la herramienta.'
-    disclaimer2: 'Los autores y su institución afiliada, TIAER, y cualquier otra agencia del govierno de los Estados Unidos no será responsable por posibles daños a los usiarios de NTT, incluyendo perdida de utilidades, perdida de ahorros, perdida de tiempo, accines de las agencias reguladoras, o cualquier otro incidente o daño generado directo o indirecto ocurrido por el uso o la imposibilidad de usar NTT, sus bases de datos, sus resultados, o su documentación por cualquier proposito.'
-    selections0: 'Selecciiones Disponibles'
-    selections1: '<strong>Nutrient Tracking Tool (NTT)</strong> compara compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield.'
-    selections2: '<strong>NTT</strong> requiere suelos regionales, climas regionales, y parámetros de cultivo regionales. Como una nueva aplicación, <strong>NTT</strong> actualmente ofrece selecciones de <strong>todos los condados de EE.UU.</strong>, pero sólo ha sido validado para un número limitado de estados y condados.'
+    overview1: 'La <strong> herramienta de seguimiento de nutrientes (NTT) </strong> fue diseñada y desarrollada por el Instituto de Texas para la Investigación Ambiental Aplicada (TIAER) de la Universidad Estatal de Tarleton con fondos de la Oficina de Mercados Ambientales del USDA, el programa de subvenciones para la innovación de conservación USDA-NRCS. y varias agencias estatales.'
+    overview2: 'NTT es una aplicación web específica para un sitio que estima las pérdidas de nutrientes y sedimentos a escala de parcela o en la escala de cuenca pequeña.'
+    overview3: 'Los productores agrícolas y los administradores de la tierra pueden definir una serie de escenarios de gestión y generar un informe que muestre las diferencias de pérdida de nutrientes esperadas entre los escenarios seleccionados para un parcela determinado o pequeña cuenca.'
+    overview4: 'NTT compara los sistemas de gestión agrícola para calcular un cambio en el flujo esperado, nitrógeno, fósforo, pérdidas de sedimentos y rendimiento de los cultivos. Las estimaciones se realizan utilizando el modelo <strong> APEX </strong> (Williams et al., 2000). Los resultados representan pérdidas promedio del parcela basadas en 35 años de clima simulado.'
+    overview5: 'NTT requiere suelos regionales, clima e información de manejo de cultivos específicos del sitio. NTT actualmente ofrece selecciones para <strong> cada condado de EE. UU. </strong>, pero solo se ha validado para un número limitado de estados y condados. Como la validación es posible en otras partes del país, los archivos de parámetros se pueden actualizar para condados adicionales en futuras versiones.'
+    overview6: 'Para obtener más información sobre NTT, consulte Saleh et al. (2011 y 2014).'
+    overview7: 'Hay dos versiones del nuevo programa NTT disponibles:'
+    item9: 'La versión BASIC es una versión fácil de usar de NTT que permite a los usuarios estimar el N, P y el sedimento de los cultivos y pastizales.'
+    item10: 'La versión de Investigación y Educación de NTT (NTT-RE) fue desarrollada para investigadores e institutos educativos con fines de enseñanza y capacitación. NTT-RE incluye funciones adicionales que permiten al usuario ver y editar capas de suelo, ver el agua de cultivo y las tensiones de nutrientes, y modificar y el archivo de parámetros APEX para fines de calibración y validación.'
+    item11: 'The data sources and APEX simulations in both versions are identical. For more information regarding NTT, please refer to Saleh et al. (2011 and 2015).'
+    overview8: 'Nevertheless, the data sources and APEX simulations in both versions are similar.'
+    process0: 'Process'
+    process: 'User supplied information is processed using a biophysical simulation model, the Agricultural Policy Environmental eXtender (APEX; Williams et al., 2000).'
+    selections0: 'Available Selections'
+    selections1: 'The <strong>Nutrient Tracking Tool (NTT)</strong> compares agricultural management systems to calculate a change in expected flow, nitrogen, phosphorus, sediment losses, and crop yield.'
+    selections2: '<strong>NTT</strong> requires regional soils, climate and crop parameters. As a new application, <strong>NTT</strong> currently provides selections for <strong>every U.S. county</strong>, but it has only been validated for a limited number of states and counties.'
     note1: '* A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading.  Soil and Water Conservation Society.  November/December 2011 vol. 66 no. 6 400-410.'
     note2: '** Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+    apex0: 'Sobre APEX'
+    apex1: 'NTT utiliza un modelo de simulación biofísica, el modelo de eXtender de Política Agrícola Ambiental (APEX), versión 0806, para procesar información suministrada por el usuario (APEX, Williams et al., 2000). A continuación se detallan las características del modelo APEX.'
+    item1: 'El <a href="https://epicapex.tamu.edu/"> <u> APEX (Política agrícola / eXtender ambiental) </u> </a> fue desarrollado para extender el <strong> EPIC </strong> capacidades modelo para granjas enteras y pequeñas cuencas hidrográficas (Williams et al., 2000).'
+    item2: 'Los componentes de simulación de parcela individuales de EPIC se usaron para el desarrollo de APEX.'
+    item3: 'Además de las funciones EPIC, APEX tiene componentes para <strong> enrutamiento de agua, sedimentos, nutrientes </strong> y <strong> plaguicidas </strong> en paisajes complejos y sistemas de canales hasta la salida de la cuenca.'
+    item4: 'Recientemente, la función <strong> destino de carbono </strong> y <strong> transporte </strong> del modelo <strong> CENTURY </strong> se incorporó a la última versión de APEX (versión 2110). Esto permite a APEX simular la dinámica de carbono en el sistema suelo-planta.'
+    item5: 'APEX también tiene componentes <strong> aguas subterráneas </strong> y <strong> depósitos </strong>. Un parcela o cuenca hidrográfica se puede subdividir tanto como sea necesario para asegurar que cada subárea sea relativamente homogénea en términos de suelo, uso de la tierra, gestión, etc.'
+    item6: 'Los <strong> mecanismos de enrutamiento </strong> permiten evaluar las interacciones entre subáreas que implican <strong> escorrentía superficial, flujo de retorno, deposición de sedimentos </strong> y <strong> degradación, transporte de nutrientes </strong> y <strong> flujo de agua subterránea. </strong>'
+    item7: 'Calidad del agua en términos de <strong> nitrógeno </strong> (amonio, nitrato y orgánico), <strong> fósforo </strong> (soluble y adsorbido / mineral y orgánico) y <strong> concentraciones de plaguicidas </strong> puede estimarse para cada subárea y en la salida de la cuenca.'
+    item8: 'Comercial o estiércol se puede aplicar a cualquier velocidad y profundidad en las fechas especificadas o automáticamente.'
+    disclaimer0: 'Renuncia'
+    disclaimer1: 'Aunque NTT ha sido probado por sus desarrolladores, NO se hace ninguna garantía, expresa o implícita, sobre la validez de los resultados y el funcionamiento del programa y el material relacionado del programa, ni el hecho de la distribución constituye ninguna garantía, y NO se responsabiliza asumido por los desarrolladores en relación con eso. El usuario asume todos los riesgos y responsabilidades para el uso y la aplicación de NTT y la interpretación de los resultados generados por la herramienta.'
+    disclaimer2: 'Los autores y su institución afiliada, TIAER y cualquier otra agencia del gobierno de los EE. UU. NO serán responsables ante los usuarios de NTT de ningún daño, incluidos los beneficios perdidos, los ahorros perdidos, el tiempo perdido, las acciones de las agencias reguladoras o cualquier otro incidente incidental o consecuente directo o indirecto. daños que se producen por el uso o la imposibilidad de utilizar NTT, sus bases de datos, sus resultados o su documentación para cualquier propósito.'
+    references0: 'Referencias'
+    references1: 'Peter J. A. Kleinman , A. N. Sharpley , K. Gartley , W. M. Jarrell , S. Kuo , R. G. Menon , R. Myers , K. R. Reddy  & E. O. Skogley. 2007. Interlaboratory comparison of soil phosphorus extracted by various soil test methods.  Journal of Communications in Soil Science and Plant Analysis Volume 32, 2001 - Issue 15-16 Pages 2325-2345.'
+    references2: 'Saleh, A, O. Gallego, and E. Osei. 2015. Evaluating Nutrient Tracking Tool and simulated conservation practices. Journal of Soil and Water Conservation. July/August 2015—Vol. 70, No. 4.'
+    references3: 'Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading. Soil and Water Conservation Society. November/December 2011 vol. 66 no. 6 400-410.'
+    references4: 'Williams J.R., Arnold J.G., Srinivasan R. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
+    references5: 'Winchell, M., D. Meals, S. Folle, J. Moore, D. Braun, C. DeLeo and K. Budreski. 2011. Identification of critical source areas of phosphorus within the Vermont sector of the Missisquoi Bay basin. Grand Isle, VT: Lake Champlain Basin Program.'
+
   contact1:
     header: 'Información de Contacto'
     statement: 'Para preguntas o comentarios acerca de la Herramient de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
@@ -893,6 +932,7 @@ es:
     getstarted10: Página del Simulación
     getstarted11: Página de resultados
     getstarted12: Página de Archivos APEX
+    getstarted13: Página de modificaciones
     understanding: La Comprensión de NTT
     understanding1: APEX
     understanding2: Descargo de responsabilidad del NTT
@@ -1307,30 +1347,32 @@ es:
     This page is about Nutrient Tracking Tool (NTT).<br></br>
     Click <strong>Return to Table of Contents</strong> to go to the help page.
   locpage:
-    header: Información de Ubicación
-    overview:
-        header: Visión General
+    header: Página de ubicación
     mapsystem:
-        header:
-        body1: 'El Sitema de Mapa le permite al usuario seleccionar las parcelas usando diferentes formas in el mapa. Los datos disponibles son <strong>UNICAMENTE para el área principal de los Estados Unidos.</strong>. Si usted quiere simular un área fuera de los Estados Unidos, se requiere que entre los datos de suelos y clima.'
-        body2: 'Despues de entrar los datos de suelos y clima mínimo o ninguna entrada adicional es requerida en las páginas mas adelante.'
-        body3: 'Para enfocarse en un área particular en los Estados Unidos el usuario puede hacerlo usando las herramientas de enfoque:'
-        body4: 'Hay <strong>4 opciones</strong> dentro de el Sitema de Mapa:'
+        body1: 'Después de crear un nuevo proyecto, se les pedirá a los usuarios que definan la ubicación del proyecto usando el mapa interactivo de Google. El mapa interactivo permite al usuario definir una o más áreas de interés (AOI). El área de interés debe correlacionarse con los parcelas dentro del área del proyecto. El mapa se utiliza <strong> ÚNICAMENTE para los Estados Unidos continentales </strong>. Si desea simular el uso de un área fuera de Estados Unidos continental, siga las instrucciones para la entrada del usuario.'
+        body2: 'Al definir el AOI, la información subyacente sobre el clima, los suelos y la pendiente se recupera de los datos espaciales subyacentes.'
+        header: Sistema de mapeo
+        body3: 'Hay dos formas de definir sus áreas de interés: puede dibujar manualmente sus áreas de interés utilizando las funciones de zoom y las herramientas de dibujo en el mapa interactivo, o puede cargar su propio shapefle.'
+        body4: 'Hay <strong> 4 opciones </strong> dentro del sistema de mapeo:'
         option1:
-            header: 'Opción 1: Elija un Area de Interes a ser dibujada'
+            header: 'Subir Shapefile'
+            body4: 'Si ya tiene un shapefile que le gustaría usar como su área de proyecto, puede cargar el shapefile. Tendrá que cargar un archivo que consta de al menos cuatro archivos con el mismo nombre pero diferentes extensiones (.shp, .shx, .dbf y .prj). Asegúrese de que el archivo .shp es el formato de un archivo de forma ESRI que utiliza el sistema de coordenadas geográficas (latitud y longitud). Los shapefiles deben estar dentro de una carpeta .zip, y debes subir esa carpeta .zip.'
             item1:
-                body1: '<strong>Drawing an Area of Interest Selection (AOIs):</strong> The user first needs to select the button <img src="/serve_image/drawing_tool.png"> at the top center, in order to draw an AOI in the GIS map. It is drawn by connecting dots with the mouse, creating a figure, as shown in the figure below. A field is considered an area of interest in NTT. After drawing the field, a message will pop up telling the user to enter the name of the farm as shown below. Enter the name of the field and advance. As the user enters the name, it will replace the default name in the text box for the field as shown in the following figure. From this point the field name entered will refer to the selected location.'
-                body3: 'Once the user clicks <strong>OK</strong>, the field location will be highlighted as shown below.'
-            item2: '<strong>Dibujar Parcelas:</strong> Para dibujar una parcela, select the <strong>Field</strong> button, and begin drawing the fields, as you did with the farm. The program will ask you to name the fields as it did with the farm.'
+                body1: '<strong> Elegir un archivo Shape: </strong> para elegir un shapefile, selecciona el botón Elegir archivo en el archivo Shape Upload como se muestra en la figura:'
+                body3: '<strong> Cargando un Shapefile: </strong> una vez que haya localizado el archivo .zip que contiene los shapefiles que desea usar, cargue los archivos haciendo clic en el botón Upload Shapefile.'
+            item2: '<strong> parcelas de dibujo: </strong> a continuación, deberá dibujar los parcelas dentro de la granja. Dado que la granja de servidores es solo para referencia, en realidad no importa si los parcelas están completamente dentro de la granja o no. El programa extraerá la información de los parcelas y no de la granja. Para dibujar un parcela, seleccione el botón <strong> parcela </strong> y comience a dibujar los parcelas, tal como lo hizo con la granja. El programa le pedirá que nombre los parcelas como lo hizo con la granja.'
             item3:
-                body3: '<strong>Submitting AOIs:</strong> Finally, once you have drawn the field, you <strong>need</strong> to click the <strong>Submit</strong> button. The actual map is a different program that is being run within NTT. By clicking <strong>Submit</strong>, the drawings are actually submitted to NTT.'
-            item4: '<strong>Deleting AOIs:</strong> To remove an AOI, first select the field that you would like to delete, and then click the <strong>Remove</strong> button.'
+                body3: '<strong> Cargando un Shapefile: </strong> una vez que haya localizado los archivos shape que desea usar, cargue los archivos haciendo clic en el botón Upload Shapefile.'
+            item4: '<strong> Enviar un Shapefile: </strong> debes enviar los cambios al mapa una vez que hayas subido. Asegúrese de hacer clic en el botón Enviar.'
         option2:
-            header: 'Option 2: Choose AOIs shapefile to upload'
-            item1: '<strong>Shapefile Format:</strong> You will need to upload a file that consists of at least four files with the same name but different extensions (.shp, .shx, .dbf, and .prj). Ensure that the .shp file is the format of an ESRI Shapefile that uses the geographic coordinate system (latitude and longitude). The shapefiles need to within a zip folder, and you need to upload that zip folder. '
-            item2: '<strong>Choosing a Shapefile:</strong> To choose a shapefile, select the button <strong>Choose file</strong> under the Upload Shapefile as shown in the figure:'
-            item3: '<strong>Uploading a Shapefile:</strong> To upload a shapefile, click the <strong>Upload Shapefile</strong> button. Make sure that you have chosen a shapefile.'
-            item4: '<strong>Submitting a Shapefile:</strong> You need to submit the changes to the map once you have uploaded. Be sure to click the <strong>Submit</strong> button.'
+            header: 'Zoom y dibujar el AOI'
+            body1: 'Si aún no tiene un shapefile, puede dibujar su AOI utilizando las funciones de zoom y las herramientas de dibujo en el mapa interactivo. Los usuarios pueden dibujar múltiples AOI. Los AOI deben representar parcelas dentro del área del proyecto.'
+            item1: '<strong> Acerque a su área de interés: </strong> hay varias formas de acercarse a su área de interés. Puede ingresar una dirección, ingresar el lat / long (usando el formato correcto donde la latitud viene antes de la longitud, la latitud norte es positiva, la longitud este es positiva), seleccionar el estado y el condado de las listas de selección disponibles, o hacer zoom manualmente en el mapa usando la herramienta de zoom.'
+            item2: '<strong> Dibuje su Área de interés (AOI): </strong> una vez que haya ampliado su área de interés, haga clic en el botón del polígono <img src = "/ serve_image / drawing_tool.png"> en la parte superior central de la mapa. Luego, usa tu mouse para hacer clic en las esquinas de tu polígono como se muestra en la figura a continuación. Un parcela se considera un área de interés en NTT. Después de dibujar el parcela, aparecerá un mensaje que le indicará al usuario que ingrese el nombre del AOI como se muestra a continuación. Ingrese el nombre del parcela y haga clic en Aceptar. A medida que el usuario ingrese el nombre, reemplazará el nombre predeterminado en el cuadro de texto para el parcela como se muestra en la siguiente figura. A partir de este punto, el nombre de parcela ingresado se referirá a la ubicación seleccionada.
+             Puede crear múltiples AOI / parcelas para su proyecto. Simplemente haga clic en el botón del polígono <img src = "/ serve_image / drawing_tool.png"> nuevamente y cree AOI adicionales.'
+            body2: 'Una vez que el usuario haga clic en <strong> Aceptar </strong>, la ubicación del parcela se resaltará como se muestra a continuación.'
+            item3: '<strong> Envío de AOI: </strong> una vez que tiene uno o más AOI, DEBE hacer clic en el botón Enviar. El mapa real es un programa diferente que se está ejecutando dentro de NTT. Al hacer clic en Enviar, los dibujos se envían a NTT.'
+            item4: '<strong> Eliminar AOIs: </strong> para eliminar un AOI, primero seleccione el parcela que desea eliminar y luego haga clic en el botón Eliminar AOI.'
         option3:
             header: 'Option 3: Choose area of interest by address'
             item1: '<strong>Zooming to Address:</strong> By typing in a valid United States address, you can zoom in to a particular address of interest. You can zoom in to a city (Stephenville, Texas for example), or zoom in to a more exact location by typing in the entire address.'
@@ -1428,13 +1470,13 @@ es:
     body1: 'La página de parcelas permite borrar o verificar parcelas las cuales serán usadas para la información de suelos la página siguiente. En la mayoría de los casos, sin importar la selecciones anteriores, usted tendrá las mismas opciones en la página de parcelas. Borrando parcelas en esta página, también serán borradas en el sistema de mapa. Siempre el usuario puede regrasar al mapa y borrar/ adicionar parcelas.'
     body2: 'Esta página le permitirá cambiar varias características acerca de la parcela, y también simplemente verificar las parcelas y continuar.'
     createdel:
-        header: Creating/Deleting a Field
+        header: Eliminar un parcela
         create:
-            header: '<strong>Creating a field</strong>'
-            body: 'To create field(s), Instructions are on the <a href=/help/page_4><b>Location</b></a> page.'
+            header: '<b> Crear un parcela </b>'
+            body: 'Para crear parcela (s), las instrucciones se encuentran en la página <a href=/help/page_4> <b> Ubicación </b> </a>.'
         delete:
-            header: <strong>Deleting a Field</strong>
-            body: 'To delete field(s), simply click the "Red Cross" icon on the actions column.'
+            header: <b> Eliminar un parcela </b>
+            body: 'Para eliminar parcela (s), simplemente haga clic en el icono <img src = "/serve_image/delete.png"> en la columna de acciones.'
     characteristics:
         header: Cambiar las características de la parcela
         body: 'Para cambiar las características de una parcela, presione en el icono <b>Pencil.</b>'
@@ -1557,7 +1599,7 @@ es:
         body3: 'Nota: Si modifica un escenario de gestión, deberá volver a ejecutar el escenario para ver los resultados del escenario actualizado.'
         result:
             header: 'Visualización de resultados'
-            body1: 'Haga clic en el botón <strong> Ver resultados </ strong> para ver los resultados de los escenarios simulados. Se le avanzará a la página de resultados donde puede seleccionar hasta tres escenarios para comparar a la vez. <a href=/help/page_11?locale=en> <u> (Consulte Visualización de resultados para obtener más información). </u> </a>'
+            body1: 'Haga clic en el botón <strong> Ver resultados </strong> para ver los resultados de los escenarios simulados. Se le avanzará a la página de resultados donde puede seleccionar hasta tres escenarios para comparar a la vez. <a href=/help/page_11?locale=en> <u> (Consulte Visualización de resultados para obtener más información). </u> </a>'
             body2: 'Entonces el usuario necesita ingresar la información para el BMP particular. Siempre que haya un cuadro de texto, el usuario puede colocar el cursor sobre el cuadro de texto para ver un rango de valores aceptables.'
             body3: 'Donde hay un menú desplegable con el título <b> <em> Seleccionar uno </b> </em> permite al usuario seleccionar entre un rango de opciones.'
             body4: 'Cuando hay una casilla de verificación <b> <em> Seleccionar </em> </b>, el usuario puede simplemente hacer clic en ella para seleccionar la BMP.'
@@ -1868,14 +1910,14 @@ es:
   
   conservation:
     header: Prácticas de conservación
-    body1: 'Una vez que se hayan agregado el programa y las operaciones de cultivo, haga clic en el botón <strong> Continuar </strong> en la parte superior de la página de Operaciones. Esto avanzará a la página <strong> Prácticas de conservación </strong>. En esta página, los usuarios indicarán las prácticas de conservación estructural que están vigentes en el parcela. Si no existen prácticas de conservación en el parcela, simplemente haga clic en <strong> Guardar y continuar </ strong> en la parte inferior de la página Prácticas de conservación, que devolverá al usuario a la página Escenario de gestión. Alternativamente, los usuarios pueden navegar directamente a la página Escenario de gestión utilizando los enlaces de navegación de la izquierda.'
+    body1: 'Una vez que se hayan agregado el programa y las operaciones de cultivo, haga clic en el botón <strong> Continuar </strong> en la parte superior de la página de Operaciones. Esto avanzará a la página <strong> Prácticas de conservación </strong>. En esta página, los usuarios indicarán las prácticas de conservación estructural que están vigentes en el parcela. Si no existen prácticas de conservación en el parcela, simplemente haga clic en <strong> Guardar y continuar </strong> en la parte inferior de la página Prácticas de conservación, que devolverá al usuario a la página Escenario de gestión. Alternativamente, los usuarios pueden navegar directamente a la página Escenario de gestión utilizando los enlaces de navegación de la izquierda.'
     add:
         header: Agregar una práctica de conservación
         body1: 'Para agregar una práctica de conservación, haga clic en la casilla de verificación en la columna Seleccionar de la práctica de conservación que desea agregar. Los usuarios pueden agregar más de una práctica de conservación a un parcela, aunque algunas prácticas de conservación son mutuamente excluyentes. (Ver Prácticas de Conservación Mutuamente Exclusivas para más detalles.) Las prácticas de conservación están organizadas por grupos, y el usuario puede seleccionar la práctica específica que le interesa agregar. Para agregar la práctica de conservación, expanda el grupo particular haciendo clic en la casilla de verificación en la columna de selección. Una vez que se selecciona el grupo de práctica de conservación, seleccione la opción específica dentro del grupo que desea agregar y complete los parcelas requeridos.'
         body2: 'Una vez que el usuario ha hecho esto, el usuario debe seleccionar la combinación parcela / Escenario O seleccionar el subproyecto seleccionado previamente seleccionando de los cuadros desplegables correspondientes.'
     exclusive:
         header: Prácticas de Conservación Mutuamente Exclusivas
-        body1: 'Para agregar un parcela / escenario o subproyecto a ejecutar, seleccione <strong> Agregar subproyecto para ejecutar </strong> o <strong> Agregar parcela / escenario para ejecutar </strong>. El botón específico que estará disponible dependerá de la selección que haya realizado en el encabezado <strong> Seleccionar tipo </ strong>. Una vez que haya agregado todos los parcelas / escenarios o subproyectos, es hora de simular. Los parcelas / escenarios o subproyectos que agregó se verán en la página, como se muestra a continuación:'
+        body1: 'Para agregar un parcela / escenario o subproyecto a ejecutar, seleccione <strong> Agregar subproyecto para ejecutar </strong> o <strong> Agregar parcela / escenario para ejecutar </strong>. El botón específico que estará disponible dependerá de la selección que haya realizado en el encabezado <strong> Seleccionar tipo </strong>. Una vez que haya agregado todos los parcelas / escenarios o subproyectos, es hora de simular. Los parcelas / escenarios o subproyectos que agregó se verán en la página, como se muestra a continuación:'
         item1: 'Riego automático y Fertigación automática'
         item2: 'Tampón de hierba y Tampón forestal'
         item3: 'Vías acuáticas y pastizales de hierba / bosques'
@@ -1985,48 +2027,113 @@ es:
             body1: 'To run the simulation, the user needs to click the <strong>Run Selected</strong> button. This will begin the simulation.'
             body2: 'Once you have had a successful simulation, check on the date and time of the simulation by looking at the heading “Last Simulation” to ensure that all of the fields/scenarios and subprojects were simulated as shown below:'
             body3: 'If this simulation is indeed correct, then you can click on Continue to view the <a href=/help/page_9?locale=en>results</a> of the simulations.'
+  # resultspage:
+  #   header: Results Page Help
+  #   body1: 'The results page allows you to view the results for the field/scenario combinations and subprojects that you simulated. This page is separated into two different sections: Navigation help, and Understanding the Results help.'
+  #   nav:
+  #       header: Navigation
+  #       view:
+  #           header: Viewing the Desired Results
+  #           body1: 'To view the desired results, the user must first select whether they want to view the results for the subprojects that they ran or for the field/scenarios that they ran. They can make this selection by choosing the appropriate selection under <strong>Select Type</strong>, as shown below:'
+  #           body2: 'If the user selects the Field/Scenario option, the appropriate field will also have to be selected.'
+  #           body3: 'It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario.'
+  #           body4: 'It is very likely that, when the user first arrives at the Results page, that the first scenario that was simulated will be selected for both the first scenario and second scenario, so be sure to select the correct scenarios before continuing.'
+  #           body5: 'The results of the scenarios are presented in a tabular format, in the order in which they were selected. In this case, the scenario results are presented for “grape”, “grape_irr”, and then “grape_grass”. The Difference and Reduction values are relative to the first scenario, “grape” in this case.'
+  #       manner:
+  #           header: 'Viewing the Results in the Desired Manner'
+  #           body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong>Tabular Results</strong>. To view the nutrient results in graphical form click on <strong>Graph Results</strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure.'
+  #       expand:
+  #           header: Expanding Results
+  #           body1: 'A box under the <strong>Detail</strong> column indicates that you can expand the <strong>Description</strong> to view more results. An expanded Results page for nutrient tabular results is shown below:'
+  #   understand:
+  #       header: Understanding the Results
+  #       tabular:
+  #           header: Understanding Nutrient Results in Tabular Form
+  #           body1: 'When you first reach the NTT Results page, you will be viewing the nutrient results in tabular form. The page will look as it does below.'
+  #           body2: 'These tabular results represent AVERAGES in all of the years that were simulated. To view year by year results, the user needs to go to Graphical results, and view them there. Scenario 1 represents the column to the right of the Description, and Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that you made when selecting the first and second scenario (see: Viewing the Desired Results above).'
+  #           body3: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
+  #           body4: 'The <strong>Difference</strong> is the amount decreased (First Scenario – Second Scenario) for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
+  #           body5: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area</strong>).'
+  #       graphical:
+  #           header: Understanding Nutrient Results in Graphical Form
+  #           body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong>Graphs</strong>.'
+  #           item1:
+  #               body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart.'
+  #               body2: 'Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
+  #           item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong>'
+  #       economic:
+  #           header: Understanding Economics Results
+  #           body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results</strong>. This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow.'
+  #           body2: 'The economic results shown in the Baseline, Alternative, and Difference columns are all expressed on a per acre basis. The total economic impact for the entire simulated area of interest is shown in the Total Area column.'
+  #   saving:
+  #       header: Saving the Results to a PDF file
+  #       body1: 'The results presented in the NTT screens can be saved to a PDF file. To access this utility, select the <strong>Create PDF</strong> button from the Results page. The NTT program writes a report file in PDF format that contains summary features of the scenarios, as well as the results produced from the simulations. The default name of the project report file can be changed by the user. The default location can also be change by the user depending on the browser options available. The first page of the results report file will look like the following.'
+  #       body2: 'In addition to the results of the simulations, the report file also contains detailed information about the soils and management information used as input for the NTT simulations.'
+  
   resultspage:
-    header: Results Page Help
-    body1: 'The results page allows you to view the results for the field/scenario combinations and subprojects that you simulated. This page is separated into two different sections: Navigation help, and Understanding the Results help.'
+    header: Página de resultados
+    body1: 'La página de resultados le permite ver los resultados de las combinaciones de parcela / escenario que simuló. No puede revisar los resultados a menos que el parcela / escenario haya sido simulado. Ver simulando escenarios para más información.'
     nav:
-        header: Navigation
         view:
-            header: Viewing the Desired Results
-            body1: 'To view the desired results, the user must first select whether they want to view the results for the subprojects that they ran or for the field/scenarios that they ran. They can make this selection by choosing the appropriate selection under <strong>Select Type</strong>, as shown below:'
-            body2: 'If the user selects the Field/Scenario option, the appropriate field will also have to be selected.'
-            body3: 'It is possible that there is only one field to select. That is okay. Next, the user needs to select the scenarios that they would like to view the results from by making their selection under First Scenario and Second Scenario.'
-            body4: 'It is very likely that, when the user first arrives at the Results page, that the first scenario that was simulated will be selected for both the first scenario and second scenario, so be sure to select the correct scenarios before continuing.'
-            body5: 'The results of the scenarios are presented in a tabular format, in the order in which they were selected. In this case, the scenario results are presented for “grape”, “grape_irr”, and then “grape_grass”. The Difference and Reduction values are relative to the first scenario, “grape” in this case.'
+            header: Viendo los resultados
+            body1: 'Para ver los resultados en uno o más escenarios de parcela, el usuario puede hacer clic en el botón <strong> Ver resultados </strong> en la parte superior de la página Gestión de escenarios. Alternativamente, el usuario puede hacer clic en <strong> Resultados </strong> en el menú de navegación izquierdo.'
+            body2: 'Después de hacer clic en Ver resultados, se dirigirá al usuario a la página Vista de Tabluar como valor predeterminado. Los usuarios también pueden elegir ver los datos en una vista gráfica haciendo clic en el gráfico anual o el gráfico mensual en el menú de navegación lateral.'
+            body3: 'Es posible que solo haya un parcela para seleccionar. Eso está bien. A continuación, el usuario debe seleccionar los escenarios de los que le gustaría ver los resultados haciendo su selección en Primer escenario y Segundo escenario.'
+            body4: 'Es muy probable que, cuando el usuario llegue a la página de resultados, se seleccione el primer escenario simulado para el primer escenario y el segundo, así que asegúrese de seleccionar los escenarios correctos antes de continuar.'
+            body5: 'Los resultados de los escenarios se presentan en un formato tabular, en el orden en que fueron seleccionados. En este caso, los resultados del escenario se presentan para "grape", "grape_irr" y luego "grape_grass". Los valores de Diferencia y Reducción son relativos al primer escenario, "uva" en este caso.'
         manner:
-            header: 'Viewing the Results in the Desired Manner'
-            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong>Tabular Results</strong>. To view the nutrient results in graphical form click on <strong>Graph Results</strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure.'
+            header: 'Vista tabular'
+            body1: 'Para comparar los resultados de hasta tres escenarios de parcela en la vista tabular, use el menú desplegable para seleccionar cada escenario de parcela. Haga clic en Ver cuando haya terminado.'
+            body2: 'SUGERENCIA: si solo tiene uno o dos escenarios que desea comparar, seleccione el mismo escenario varias veces para que haya un escenario seleccionado para cada columna de la pantalla tabular.'
+            body3: 'El usuario puede alternar entre dos unidades diferentes en la vista tabular. El usuario puede ver los resultados en unidades / acre (p. Ej., Lbs / acre) o como unidades totales sumadas en el área del parcela (p. Ej., Lbs).'
+            body4: 'Después de hacer clic en Ver, la tabla se completará con los resultados de cada escenario. Los usuarios tienen la opción de descargar los resultados como un archivo CSV o como un archivo PDF.'
+
         expand:
-            header: Expanding Results
-            body1: 'A box under the <strong>Detail</strong> column indicates that you can expand the <strong>Description</strong> to view more results. An expanded Results page for nutrient tabular results is shown below:'
+            header: Expansión de resultados
+            body1: 'Un cuadro debajo de la columna <strong> Detalle </strong> indica que puede expandir la <strong> Descripción </strong> para ver más resultados. A continuación, se muestra una página de Resultados ampliados para los resultados tabulares de nutrientes:'
     understand:
-        header: Understanding the Results
+        header: Comprender los resultados
         tabular:
-            header: Understanding Nutrient Results in Tabular Form
-            body1: 'When you first reach the NTT Results page, you will be viewing the nutrient results in tabular form. The page will look as it does below.'
-            body2: 'These tabular results represent AVERAGES in all of the years that were simulated. To view year by year results, the user needs to go to Graphical results, and view them there. Scenario 1 represents the column to the right of the Description, and Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that you made when selecting the first and second scenario (see: Viewing the Desired Results above).'
-            body3: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
-            body4: 'The <strong>Difference</strong> is the amount decreased (First Scenario – Second Scenario) for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
-            body5: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area</strong>).'
+            header: Interpretando los resultados tabulares
+            body1: 'Los resultados del escenario presentados en su tabla representan PROMEDIO anual de pérdidas de parcela de parcela durante el período de simulación. NTT simula en un período de 35 años. Para ver los resultados año por año, el usuario puede ver el uso de la función Resultados gráficos (Ver Ver resultados gráficos). El nombre del Escenario 1 aparecerá en la parte superior de la primera columna de Pérdidas. Esta columna muestra las pérdidas de nutrientes, sedimentos y flujo en el borde del parcela para el Escenario 1 además de los rendimientos estimados. El escenario 1 es la primera columna de datos, los resultados del escenario 2 se representan en la columna siguiente y se resaltan en un color diferente. Además de mostrar resultados en la columna "Pérdidas", el Escenario 2 también tiene una columna "Cambiar" que representa el cambio en las pérdidas entre el escenario 1 y el escenario 2. Los resultados del escenario 3 también se resaltan en otro color. La columna Cambiar representa el cambio en las pérdidas entre el escenario 1 y el escenario 3.'
+            body2: 'NTT está diseñado para comparar un escenario base (presente) con un escenario alternativo (futuro). Debido a esto, se supone que el usuario buscará mejoras en el escenario alternativo. Esto significa que <strong> números negativos en la diferencia y% de reducción representan un resultado indeseable (por ejemplo, mayores pérdidas en comparación con el escenario 1) y números positivos indican un resultado deseado (por ejemplo, pérdidas reducidas en comparación con el escenario 1). </strong>'
+            header1: Expansión de resultados
+            body3: 'En la vista tabular, se resumen los resultados para Nitrógeno total, Fósforo total, flujo de desagüe superficial / subsuperficial y de azulejo, Otra información de agua, sedimento total y rendimiento. Para desglosar, haga clic en la casilla de verificación junto a la fila de interés. Por ejemplo, al expandir la fila Nitrógeno total, los usuarios podrán ver los resultados para N orgánico, N de escorrentía, N de subsuelo y N de drenaje de mosaico, que comprenden el valor de Pérdidas totales de nitrógeno.'
+            body4: 'La columna Área total representa algo diferente a la fila Área total. Como los resultados en los dos escenarios son PER ACRE, la columna Área total le permite ver la diferencia que esto causaría para toda el área seleccionada por el usuario en páginas anteriores. Por ejemplo, en el ejemplo que se muestra arriba, el valor del Área total para MAIZ es 1100. Esto significa que para el parcela completo (no solo por acre), el usuario produce 1100 cultivos más usando el escenario alternativo versus el escenario base. Para N total, P total, Flujo total y Sedimento, un valor negativo en <strong> Área total </strong> indica un aumento de <strong> Primer escenario </strong> a <strong> Segundo escenario </strong>. Para estos, puede calcular <strong> Área total </ strong> utilizando la siguiente fórmula: <strong> (valor de referencia * área total) - (valor alternativo * área total) </ strong>. Por el contrario, para los cultivos, un valor negativo en <strong> Área total </ strong> indica una disminución de <strong> Primer escenario </ strong> a <strong> Segundo escenario </ strong>. Para los cultivos, puede calcular el <strong> área total </ strong> con la siguiente fórmula: <strong> (valor alternativo * área total) - (valor de referencia * área total). </strong>'
+            body5: 'Los niveles de N, P, temperatura y estrés hídrico en la página de "resultados tabulares" son los indicadores para optimizar el rendimiento del cultivo. Por ejemplo, un 20% de estrés de N significa que los cultivos aún usan más N para alcanzar su rendimiento óptimo.'
         graphical:
-            header: Understanding Nutrient Results in Graphical Form
-            body1: 'While viewing the nutrient results in tabular form allows you to view averages for the entire period, graphical results allow you to view results slightly different. There are two main methods of viewing results under graphical results. To use either of these methods, the user first needs to select <strong>Graphs</strong>.'
+            header: Viewing the Results in the Desired Manner
+            body1: 'NTT allows you to view the results of the simulation in several different manners. You can view the nutrient results in tabular or graphical form, and you can view the Economic results in a tabular form. To view the nutrient results in tabular form click on <strong>Tabular Results</strong>. To view the nutrient results in graphical form click on <strong>Annual or Monthly Chart option</strong>. The program displays a graphical view of the scenario results by month, as shown in the following figure.'
             item1:
                 body1: '<strong>Annual (Last 12 Years) Method:</strong> This method allows you to view averages for a specific results (for example flow or sediment) by viewing the yearly averages for these results. Unlike tabular results, you do not see the overall average when looking at results in this method but rather the averages for every year. To select this method you need to select <strong>Annual (Last 12 Years)</strong> under the first drop down box above the chart.'
                 body2: 'Once this option has been selected, the user needs to select the results that they would like to view, as shown below. This will bring up the selected results on the graph.'
             item2: '<strong>Monthly Average (The entire period) Method:</strong> This method allows you to view averages through the entire period of a particular month. Again, unlike the tabular method of viewing results, you cannot view the average for the entire time here. Rather you will see an average all of the January results, an average of all the February results, etc. To select this method follow the same instructions as for the annual method (described above), except that instead of selecting <strong>Annual (Last 12 Years)</strong> under the first drop down box, you need to select <strong>Monthly Average (The entire period).</strong>'
         economic:
-            header: Understanding Economics Results
-            body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results</strong>. This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow.'
+            header: Expanding Results
+            body1: 'In the Tabular view, results for Total Nitrogen, Total Phosphorus, surface/subsurface & Tile Drain flow, Other Water info, Total sediment, and yield are summarized. To drill-down, click the check box next to the row of interest. For instance, when expanding the Total Nitrogen row, users will be able to view the results for Organic N, Runoff N, Subsurface N and Tile Drain N, which comprise the Total Nitrogen losses value.'
             body2: 'The economic results shown in the Baseline, Alternative, and Difference columns are all expressed on a per acre basis. The total economic impact for the entire simulated area of interest is shown in the Total Area column.'
     saving:
+        header: Understanding the Results
+        body: Understanding Nutrient Results in Tabular Form
+        body1: 'When you first reach the NTT Results page, you will be viewing the nutrient results in tabular form. The page will look as it does below.'
+        body2: 'These tabular results represent AVERAGES in all of the years that were simulated. To view year by year results, the user needs to go to Graphical results, and view them there.'
+        body3: 'Scenario 1 represents the column to the right of the Description, and Scenario 2 represents the column to the left of the Difference. The names of these two particular columns will change according to the selections that you made when selecting the first and second scenario (see: Viewing the Desired Results above).'
+        body4: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
+        body5: 'The Difference is the amount decreased (First Scenario – Second Scenario) for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
+        body6: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario.</strong> For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area).</strong>'
+        body7: Viewing Results Graphically
+        body8: 'Además de poder ver los resultados en forma de tabla, NTT también ofrece la opción de ver los resultados de manera gráfica. Hay dos vistas gráficas para que el usuario seleccione entre: resultados anuales y mensuales. El usuario puede seleccionar estas vistas usando el menú de navegación izquierdo.'
+        item1: '<strong> Gráficos anuales (últimos 12 años): </strong> Los gráficos anuales permiten a los usuarios ver las pérdidas promedio anuales de un componente específico (por ejemplo, flujo o sedimento) durante los últimos 12 años de la simulación. Para seleccionar la vista anual, haga clic en Annual-Chart en el menú de navegación izquierdo. Una vez que se ha seleccionado esta opción, el usuario selecciona los escenarios que le gustaría comparar y el componente que desea ver, como se muestra a continuación. Esto mostrará los resultados seleccionados en el gráfico. Además del gráfico, los resultados anuales se muestran debajo del gráfico en forma de tabla y también se pueden exportar.'
+        item2: '<strong> Gráfico mensual (todo el período): </strong> la vista de gráfico mensual permite a los usuarios ver las pérdidas de promedios mensuales para los componentes particulares durante el período de la simulación (35 años). Para ver la vista de gráfico mensual, haga clic en Gráfico mensual en el menú de navegación de la izquierda. Los gráficos mensuales están limitados a los constituyentes que APEX resume mensualmente (consulte las opciones de la lista desplegable a continuación).'
+    eco:
+        header: Understanding Economics Results
+        body1: 'The final method available to view results is to view the economic results. These results are in tabular form. To select the economic results, simply click on <strong>Economic Results.</strong> This will show you the results for Total Revenue, Total Cost, Net Return, and Net Cash Flow.'
+        body2: 'The economic results shown in the Baseline, Alternative, and Difference columns are all expressed on a per acre basis. The total economic impact for the entire simulated area of interest is shown in the Total Area column.'
+    pdf:
         header: Saving the Results to a PDF file
-        body1: 'The results presented in the NTT screens can be saved to a PDF file. To access this utility, select the <strong>Create PDF</strong> button from the Results page. The NTT program writes a report file in PDF format that contains summary features of the scenarios, as well as the results produced from the simulations. The default name of the project report file can be changed by the user. The default location can also be change by the user depending on the browser options available. The first page of the results report file will look like the following.'
-        body2: 'In addition to the results of the simulations, the report file also contains detailed information about the soils and management information used as input for the NTT simulations.'
+        body1: 'The results presented in the NTT screens can be saved to a PDF file. To access this utility, select the <strong>Download PDF</strong> button from the Results page. The “Download PDF” function only be available after the tabular results are viewed by users. The NTT program writes a report file in PDF format that contains summary features of the scenarios, as well as the results produced from the simulations. The default name of the project report file can be changed by the user. The default location can also be change by the user depending on the browser options available. The first page of the results report file will look like the following.'
+        body2: 'Además de los resultados de las simulaciones, el archivo de informe también contiene información detallada sobre los suelos y la información de gestión utilizada como entrada para las simulaciones de NTT.'
+
   resultspage_html:
     <strong>Results</strong><br></br>
     The results page allows you to view the results for the field/scenario combinations and subprojects that you simulated.<br></br>
@@ -2079,17 +2186,53 @@ es:
     To <strong>View</strong> this site, click the <img src="/serve_image/view.png"> icon.<br>
     To <strong>Edit</strong> this site, click <img src="/serve_image/edit.png"> icon.<br>
     To <strong>Delete</strong> this site, click <img src="/serve_image/delete.png"> under action column.<br>
+  
+  routing:
+    header: Escenarios de enrutamiento de parcela (cuenca hidrográfica)
+    body1: 'La función de enrutamiento de parcela / cuenca hidrográfica permite a los usuarios simular el enrutamiento entre parcelas. Alternativamente, los usuarios pueden usar la función de enrutamiento de parcela para simular una cuenca hidrográfica, donde en lugar de parcelas, los AOI representan subcuencas. Un escenario de enrutamiento enviará la escorrentía, los sedimentos y los nutrientes de un parcela a otro (o de una subcuenca a la siguiente si se utilizan para estimular la cuenca hidrográfica) en el orden especificado. Para cada escenario de enrutamiento / cuenca hidrográfica creado por el usuario, el usuario deberá enumerar el orden de enrutamiento del escenario de parcela. Al ver los resultados, puede observar que la carga en la salida de la cuenca hidrográfica es menor que la suma de las cargas del borde de parcela para cada parcela / subcuenca individualmente simulado. Esto se debe a que NTT simula los efectos de atenuación del agua y los nutrientes a medida que fluyen sobre el paisaje.'
+    create:
+        header: Crea / nombra tu cuenca hidrográfica
+        body1: 'Para comenzar a crear un escenario de enrutamiento de parcela, haga clic en Agregar nuevo enrutamiento de parcela (Cuenca). Una vez que haga esto, aparecerá un cuadro de texto donde puede escribir el nombre del escenario:'
+        body2: 'Una vez que ingrese el nombre, haga clic en <strong> Guardar </strong>.'
+    build:
+        header: Escenario de construcción de cuencas hidrográficas
+        body1: 'Una vez que haya creado y nombrado su enrutamiento de parcela / escenario de cuenca, aparecerá en la lista de escenarios de cuencas hidrográficas. Haga clic en el escenario <strong> nombre </strong> de cuenca para comenzar a definir su escenario de cuenca.'
+        body2: 'Al construir su escenario de cuenca hidrográfica, comenzará a agregar parcelas / escenarios en el orden en que desea encaminar el flujo entre los parcelas. No puede agregar un parcela más de una vez al mismo escenario de cuenca (la idea es combinar parcelas para simular como un parcela). Para agregar combinaciones de parcela / escenario al escenario de cuenca, seleccione el parcela y el escenario de las listas desplegables y haga clic en <strong> Agregar parcelas / Escenario </strong>. Continúe agregando parcelas / escenarios hasta que se complete su escenario de cuenca hidrográfica.'
+        body3: 'Una vez que haya terminado de seleccionar, haga clic en <strong> Atrás </strong> para volver a la página de la cuenca.'
+    manage:
+        header: Administrar escenarios de cuencas hidrográficas
+        body1: 'La lista de escenarios de cuencas hidrográficas que ha creado aparecerá en la página Enrutamiento de parcela (Cuenca).'
+        body2: 'Para comenzar a definir su escenario de cuenca, o para editar un escenario de cuenca que ya ha definido, haga clic en el <strong> nombre de escenario </strong> para comenzar a definir / editar el escenario.'
+        body3: 'Para eliminar su escenario de cuenca hidrográfica, haga clic en el icono Eliminar <img src = "/serve_image/delete.png">.'
+        body4: 'Para cambiar el nombre de su escenario de cuenca hidrográfica, haga clic en el icono de edición <img src = "/ serve_image / edit.png">.'
+    results:
+        header: Simulación / visualización de resultados para el enrutamiento de parcela
+        body1: 'Para simular un escenario de cuenca hidrográfica, seleccione los nombres de la cuenca hidrográfica para estimular y haga clic en <strong> Estimular el enrutamiento de parcela seleccionado (cuenca) </strong>. Su cuenca hidrográfica puede tardar unos minutos en simular. Una vez que se completa la simulación, aparecerá una fecha / hora de simulación en el parcela Fecha de simulación al lado del nombre del escenario de la cuenca.'
+        body2: 'Para ver los resultados de las rutas de parcela, seleccione los escenarios que desea ver y haga clic en Ver <strong> Resultados </strong>. Los resultados de los escenarios de enrutamiento de parcela / cuenca hidrográfica se muestran de la misma manera que los resultados se muestran para parcelas individuales, con vistas tabulares y gráficas.'
+
   modpage:
-    header: Modifications Page Help
-    body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'
+    header: Ayuda de página de modificaciones
+    body1: 'La página de modificaciones le permite realizar cambios directamente en el archivo APEX. Esta página está destinada a ser utilizada por personas con conocimiento APEX. <strong> Los cambios realizados en la página Modificaciones no se reflejarán en páginas anteriores, pero los cambios realizados en páginas anteriores se reflejarán en la página Modificaciones. </strong> '
     make:
-        header: Making Modifications
-        body1: 'To make modifications to the APEX file, first select the file that you want to work with (under “Select File drop down box), and then (if applicable) select the field and scenario you want to manipulate (selecting the field and scenario may not be necessary), as shown below:'
-        body2: 'Then, click on <strong>Edit File</strong> to see the file. The variables shown have the same names as they appeared in the APEX manual.'
-        body3: '<strong>You do not need to run a simulation for the changes you made in previous pages to be reflected on the files in the Modification pages.</strong>'
+        header: hacer modificaciones
+        body1: 'Para realizar modificaciones en el archivo APEX, primero seleccione el archivo con el que desea trabajar (en el cuadro desplegable Seleccionar archivo), y luego (si corresponde) seleccione el campo y escenario que desea manipular (seleccionando el campo y escenario puede no ser necesario), como se muestra a continuación: '
+        body2: 'Luego, haz clic en <strong> Editar archivo </strong> para ver el archivo. Las variables que se muestran tienen los mismos nombres que aparecían en el manual de APEX.'
+        body3: '<strong> No necesita ejecutar una simulación para que los cambios realizados en las páginas anteriores se reflejen en los archivos de las páginas de modificación. </strong>'
     downloading:
-        header: Downloading APEX folder
-        body1: 'The user can download the files corresponding to the LAST SIMULATION by clicking <strong>Downloading APEX Folder</strong>. However, for changes to be visible here, the user does need to run a simulation. Also, if you are running multiple scenarios or fields, the APEX folder will contain the files that were run in the last simulation that was fun. Since a different simulation is needed for different scenarios and fields, you can view which simulation was run last by viewing the <a href=/help/page_10?locale=en>Simulation</a> page, which will give you the time of simulation for all the scenarios/fields/subprojects. To change the order of simulation, you can do this in the <a href=/help/page_10?locale=en>Simulation</a> page also. The last scenario/field/subproject added to the simulation page will be the last to simulate and also the files that the APEX folder will contain.'
+        header: descargar la carpeta APEX
+        body1: 'El usuario puede descargar los archivos correspondientes a la ÚLTIMA SIMULACIÓN haciendo clic en <strong> Descargar la carpeta APEX </strong>. Sin embargo, para que los cambios sean visibles aquí, el usuario necesita ejecutar una simulación. Además, si está ejecutando varios escenarios o campos, la carpeta APEX contendrá los archivos que se ejecutaron en la última simulación que fue divertida. Dado que se necesita una simulación diferente para diferentes escenarios y campos, puede ver qué simulación se ejecutó por última vez al ver la página <a href=/help/page_10?locale=en> Simulación </a>, que le dará el tiempo de simulación para todos los escenarios / campos / subproyectos. Para cambiar el orden de la simulación, puede hacerlo también en la página <a href=/help/page_10?locale=en> Simulación </a>. El último escenario / campo / subproyecto agregado a la página de simulación será el último en simular y también los archivos que contendrá la carpeta APEX. '
+  
+  # modpage:
+  #   header: Modifications Page Help
+  #   body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'
+  #   make:
+  #       header: Making Modifications
+  #       body1: 'To make modifications to the APEX file, first select the file that you want to work with (under “Select File drop down box), and then (if applicable) select the field and scenario you want to manipulate (selecting the field and scenario may not be necessary), as shown below:'
+  #       body2: 'Then, click on <strong>Edit File</strong> to see the file. The variables shown have the same names as they appeared in the APEX manual.'
+  #       body3: '<strong>You do not need to run a simulation for the changes you made in previous pages to be reflected on the files in the Modification pages.</strong>'
+  #   downloading:
+  #       header: Downloading APEX folder
+  #      body1: 'The user can download the files corresponding to the LAST SIMULATION by clicking <strong>Downloading APEX Folder</strong>. However, for changes to be visible here, the user does need to run a simulation. Also, if you are running multiple scenarios or fields, the APEX folder will contain the files that were run in the last simulation that was fun. Since a different simulation is needed for different scenarios and fields, you can view which simulation was run last by viewing the <a href=/help/page_10?locale=en>Simulation</a> page, which will give you the time of simulation for all the scenarios/fields/subprojects. To change the order of simulation, you can do this in the <a href=/help/page_10?locale=en>Simulation</a> page also. The last scenario/field/subproject added to the simulation page will be the last to simulate and also the files that the APEX folder will contain.'
   apexpage:
     header: APEX
     item1: 'The <a href="http://apex.tamu.edu/documentation/">APEX (Agricultural Policy/Environmental eXtender)</a> model was developed to extend the <strong>EPIC</strong> model capabilities to whole farms and small watersheds (Williams et al., 2000).'
