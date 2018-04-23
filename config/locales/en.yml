@@ -473,6 +473,7 @@ en:
     layers: Layers
     state: States
     utility_file: Utility Files
+    aplcat: Aplcat
   project:
     project: Project
     new_project: 'Create New Project'
@@ -1193,6 +1194,30 @@ en:
       codepurpose: Code indicating the purpose of the trip
       buying: Buying
       selling: Selling
+      calf: Calf
+      rep_heifers: Replacement Heifers
+      fc_heifers: First Calf Heifers
+      cow: Cow
+      bull: Bull
+      agr: Animal Growth Results
+      fir: Feed Intake Rates
+      wir: Water Intake Results
+      mer: Manure excretion Results
+      nbl: Nitrogen Balance Results
+      gavg: Grand Averages
+      ghge: Greenhouse gas emissions
+      animal_weights: Animal Weights
+      dry_matter_intake: Dry Matter Intake
+      gross_energy_intake: Gross Matter Intake
+      water_intake: Water Intake
+      solid_manure_excr: Soild Manure Excretion
+      nitrogen_intake: nitrogen_intake
+      total_nitrogen_excretion: Total Nitrogen Excretion
+      total_nitrogen_retained: Total Nitrogen Retained
+      fecal_nitrogen_excretion: Fecal Nitrogen Excretion
+      urine_nitrogen_excretion: Urine Nitrogen Excretion
+      enteric_methane_emission: Enteric Methane Emission
+      manure_methane_emission: Manure Methane Emission
 
   grazing:
       type:
