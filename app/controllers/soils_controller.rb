@@ -152,7 +152,7 @@ class SoilsController < ApplicationController
 
   def request_soils()
     uri = URI(URL_TIAER)
-    res = Net::HTTP.post_form(uri, "data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates, "rg" => "yes")
+    res = Net::HTTP.post_form(uri, "data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates.strip, "rg" => "yes")
     if !res.body.include?("error") then
       msg = "OK"
       msg = create_soils(YAML.load(res.body))
