@@ -956,7 +956,7 @@ class BmpsController < ApplicationController
             #subarea.slp = (subarea.slp / (1 - @old_percentage)) - (subarea.slp * (@bmp.slope_reduction / 100))
             #session[:old_percentage] = @bmp.slope_reduction / 100
           when "delete"
-            subarea.slp = @field.soils.find(subarea.soil_id).slope
+            subarea.slp = @field.soils.find(subarea.soil_id).slope / 100
             #subarea.slp = subarea.slp * 100 / (100 - @bmp.slope_reduction)
         end
         if !subarea.save then return "Enable to save value in the subarea file" end
