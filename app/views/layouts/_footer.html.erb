@@ -90,6 +90,11 @@
                     <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                     <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
+                  <%if request.url.include?(url_for=("/supplement_parameters?")) %>
+                    <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
+                    <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
+                    <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
+                  <% end %>
                   <%if request.url.include?(url_for=("/apex_controls?")) || request.url.include?(url_for=("/apex_parameters?")) || request.url.include?(url_for=("/subareas?")) || request.url.include?(url_for=("/apex_soils?")) || request.url.include?(url_for=("/apex_layers?")) || request.url.include?(url_for=("/soil_operations?"))%>
                       <%if request.url.include?(url_for=("/subareas?"))%>
                           <li><%= image_tag('view.png') %> <%= t('general.view') %></li>
