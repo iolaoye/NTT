@@ -8,7 +8,7 @@ module AplcatResultsHelper
 
   def options
 	[
-		[t('aplcat.agr'), 1], [t('aplcat.fir'), 2], [t('aplcat.wir'), 3], [t('aplcat.mer'), 4], [t('aplcat.nbl'), 5], [t('aplcat.gavg'), 6], [t('aplcat.ghge'), 7]
+		[t('aplcat.agr'), 1], [t('aplcat.fir'), 2], [t('aplcat.wir'), 3], [t('aplcat.mer'), 4], [t('aplcat.nbl'), 5], [t('aplcat.ghge'), 6]
 	]
   end
 end
