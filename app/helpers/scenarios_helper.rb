@@ -242,11 +242,11 @@ module ScenariosHelper
 				subarea.rchc = 0.0
 				subarea.rchk = 0.0
 				#line 6
-				subarea.rsee = 0.3
-				subarea.rsae = subarea.wsa
+				subarea.rsee = 0.31
+				subarea.rsae = subarea.wsa.abs #in case the are is negative
 				subarea.rsve = 50
 				subarea.rsep = 0.3
-				subarea.rsap = subarea.wsa
+				subarea.rsap = subarea.wsa.abs * 0.80  # for principal spill way
 				subarea.rsvp = 25
 				subarea.rsrr = 20
 				subarea.rsv = 20
