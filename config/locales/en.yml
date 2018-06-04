@@ -1218,7 +1218,36 @@ en:
       urine_nitrogen_excretion: Urine Nitrogen Excretion
       enteric_methane_emission: Enteric Methane Emission
       manure_methane_emission: Manure Methane Emission
-
+      co2_balance_input: CO2 Balance Input
+      selectp: Please select a parameter
+      nativer: Parameters for native range
+      n_tfa: Total farm area
+      n_sr: Stoking rate (ac/cow)
+      n_arnfa: Area receiving N fertilizer application (acres)
+      n_arpfa: Area receiving P fertilizer application (acres)
+      n_nfar: Nitrogen fertilizer application rate (kg of N/ha/year)
+      n_pfar: Phosphorus fertilizer application rate (kg of P/ha/year)
+      n_co2enfp: CO2 emission of Nitrogen fertilizer production (kg of CO2/kg of N use)
+      n_co2enfa: CO2 emission of N fertilizer application (35.25 kg of CO2/ha/year)
+      n_co2epfp: CO2 emission of phosphorus fertilizer production (kg of CO2/kg of P use)
+      n_lamf: Land atmosphere methane flux (kg of CO2/ha/year)
+      n_lan2of: Land atmosphere N2O flux (kg of CO2/ha/year)
+      n_laco2f: Land atmosphere CO2 flux (kf of CO2/ha/year)
+      n_socc: Soil organic carbon change (kg of CO2/ha/year)
+      introducedp: Parameters for introduced pasture
+      i_tfa: Total farm area
+      i_sr: Stoking rate (ac/cow)
+      i_arnfa: Area receiving N fertilizer application (acres)
+      i_arpfa: Area receiving P fertilizer application (acres)
+      i_nfar: Nitrogen fertilizer application rate (kg of N/ha/year)
+      i_pfar: Phosphorus fertilizer application rate (kg of P/ha/year)
+      i_co2enfp: CO2 emission of Nitrogen fertilizer production (kg of CO2/kg of N use)
+      i_co2enfa: CO2 emission of N fertilizer application (35.25 kg of CO2/ha/year)
+      i_co2epfp: CO2 emission of phosphorus fertilizer production (kg of CO2/kg of P use)
+      i_lamf: Land atmosphere methane flux (kg of CO2/ha/year)
+      i_lan2of: Land atmosphere N2O flux (kg of CO2/ha/year)
+      i_laco2f: Land atmosphere CO2 flux (kf of CO2/ha/year)
+      i_socc: Soil organic carbon change (kg of CO2/ha/year)
   grazing:
       type:
       start_julian:
