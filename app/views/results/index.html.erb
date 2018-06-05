@@ -1143,11 +1143,11 @@
 							<% crop = Crop.find_by_code(cr["name"]) %>
 						    <% conversion_factor = 1 * AC_TO_HA %>
 						    <% dry_matter = 100 %>
-						    <% unit = "bu" %>
+						    <% unit = "t" %>
 							<% if crop != nil then %>
 						      <% conversion_factor = crop.conversion_factor * AC_TO_HA %>
 						      <% dry_matter = crop.dry_matter %>
-						      <% unit = crop.yield_unit + "/bu" %>
+						      <% unit = crop.yield_unit  %>
 							<% end %>
 							<% row_id = t + "row" + (70 + i).to_s %>
 							<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
