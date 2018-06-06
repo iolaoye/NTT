@@ -1248,6 +1248,10 @@ en:
       i_lan2of: Land atmosphere N2O flux (kg of CO2/ha/year)
       i_laco2f: Land atmosphere CO2 flux (kf of CO2/ha/year)
       i_socc: Soil organic carbon change (kg of CO2/ha/year)
+      secondary_emissions_input: Secondary Emissions Input
+      theta: Theta (unit conversion constant) [Adopted from FEM]
+      fge: Fuel use constant for gasoline engines
+      fde: Fuel use constant for diesel engines
   grazing:
       type:
       start_julian:
