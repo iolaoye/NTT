@@ -807,8 +807,6 @@
 		  	</thead>
 		  	<tbody>
 		  		<% t = "t" %>
-			    <%# if @results1 != nil && @present %>
-				<%# else %>
 					<% total_area = 0 %>
 					<% row_id = t + "row" + "20" %>
 					<% if @scenario1 != "0" then %>
@@ -909,7 +907,7 @@
 						<% row_id = t + "row" + "30" %>
 						<tr class="gvRowStyleOdd", id = <%=row_id%>>
 							<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-								<%= "Total P" + " (" + "lbs/ac" + ")" %>
+								<%= "Total P" + " (" + "lbs" + ")" %>
 								<%= check_box_tag "Total P" %>
 							</th>
 							<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][4]+averages1[0][5]+averages1[0][6]).to_s + " (" + sprintf("%8.1f", cis1[0][5]+cis1[0][6]+cis1[0][7]) + ")" %></td>
@@ -969,7 +967,7 @@
 						<% row_id = t + "row" + "40" %>
 						<tr class="gvRowStyleOdd", id = <%=row_id%>>
 							<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-								<%= "Surface/Subsurface/Tile Drain Flow" + " (" + "in" + ")" %>
+								<%= "Surface/Subsurface/Tile Drain Flow" + " (" + "acre-in" + ")" %>
 								<%= check_box_tag "Total P" %>
 							</th>
 							<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][7]+averages1[0][8]+averages1[0][9]) + " (" + sprintf("%8.1f", cis1[0][8]+cis1[0][9]+cis1[0][10]) + ")" %></td>
@@ -1029,7 +1027,7 @@
 						<% row_id = t + "row" + "50" %>
 						<tr class="gvRowStyleOdd", id = <%=row_id%>>
 							<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-								<%= "Total Other Water Info" + " (" + "in" + ")" %>
+								<%= "Total Other Water Info" + " (" + "acre-in" + ")" %>
 								<%= check_box_tag "Total P" %>
 							</th>
 							<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][10]+averages1[0][11]) + " (" + sprintf("%8.1f", cis1[0][11]+cis1[0][12]) + ")" %></td>
@@ -1076,7 +1074,7 @@
 						<% row_id = t + "row" + "60" %>
 						<tr class="gvRowStyleOdd", id = <%=row_id%>>
 							<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-								<%= "Total Sediment" + " (" + "t/ac" + ")" %>
+								<%= "Total Sediment" + " (" + "t" + ")" %>
 								<%= check_box_tag "Total P" %>
 							</th>
 							<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][12]+averages1[0][13]) + " (" + sprintf("%8.1f", cis1[0][13]+cis1[0][14]) + ")" %></td>
@@ -1095,7 +1093,7 @@
 						</tr>
 						<% row_id = t + "row" + "61" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Surface Erosion" + " (" + "t/ac" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Surface Erosion" + " (" + "t" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.4f", averages1[0][12]) + " (" + sprintf("%8.1f", cis1[0][13]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.4f", averages2[0][12]) + " (" + sprintf("%8.1f", cis2[0][13]) + ")" %></td>
@@ -1108,7 +1106,7 @@
 						</tr>
 						<% row_id = t + "row" + "62" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Manure Erosion" + " (" + "t/ac" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Manure Erosion" + " (" + "t" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.4f", averages1[0][13]).to_s + " (" + sprintf("%8.1f", cis1[0][14]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.4f", averages2[0][13]) + " (" + sprintf("%8.1f", cis2[0][14]) + ")" %></td>
