@@ -836,7 +836,7 @@
 						<% end %>
 						<tr class="gvRowStyleOdd", id = <%=row_id%>>
 							<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-								<%= "Total N" + " (" + "lbs/ac" + ")" %>
+								<%= "Total N" + " (" + "lbs" + ")" %>
 								<%= check_box_tag "Total N" %>
 							</th>
 							<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]) + " (" + sprintf("%8.1f", cis1[0][1]+cis1[0][2]+cis1[0][3]+cis1[0][4]) + ")" %></td>
@@ -855,7 +855,7 @@
 						</tr>
 						<% row_id = t + "row" + "21" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Org N" + " (" + "lbs/ac" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Org N" + " (" + "lbs" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][0]) + " (" + sprintf("%8.1f", cis1[0][1]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][0]) + " (" + sprintf("%8.1f", cis2[0][1]) + ")" %></td>
@@ -868,7 +868,7 @@
 						</tr>
 						<% row_id = t + "row" + "22" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Runoff N" + " (" + "lbs/ac" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Runoff N" + " (" + "lbs" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][1]) + " (" + sprintf("%8.1f", cis1[0][2]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][1]) + " (" + sprintf("%8.1f", cis2[0][2]) + ")" %></td>
@@ -881,7 +881,7 @@
 						</tr>
 						<% row_id = t + "row" + "23" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Subsurface N" + " (" + "lbs/ac" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Subsurface N" + " (" + "lbs" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][2]).to_s + " (" + sprintf("%8.1f", cis1[0][3]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][2]) + " (" + sprintf("%8.1f", cis2[0][3]) + ")" %></td>
@@ -894,7 +894,7 @@
 						</tr>
 						<% row_id = t + "row" + "24" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Tile Drain N" + " (" + "lbs/ac" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Tile Drain N" + " (" + "lbs" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][3]).to_s + " (" + sprintf("%8.1f", cis1[0][4]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][3]-averages1[0][3]) + " (" + sprintf("%8.1f", cis2[0][4]) + ")" %></td>
@@ -928,7 +928,7 @@
 						</tr>
 						<% row_id = t + "row" + "31" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Org P" + " (" + "lbs/ac" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Org P" + " (" + "lbs" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][4]) + " (" + sprintf("%8.1f", cis1[0][5]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][4]) + " (" + sprintf("%8.1f", cis2[0][5]) + ")" %></td>
@@ -941,7 +941,7 @@
 						</tr>
 						<% row_id = t + "row" + "32" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "PO4" + " (" + "lbs/ac" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "PO4" + " (" + "lbs" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][5]) + " (" + sprintf("%8.1f", cis1[0][6]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][5]) + " (" + sprintf("%8.1f", cis2[0][6]) + ")" %></td>
@@ -954,7 +954,7 @@
 						</tr>
 						<% row_id = t + "row" + "33" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Tile Drain P" + " (" + "lbs/ac" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Tile Drain P" + " (" + "lbs" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][6]) + " (" + sprintf("%8.1f", cis1[0][7]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][6]) + " (" + sprintf("%8.1f", cis2[0][7]) + ")" %></td>
@@ -988,7 +988,7 @@
 						</tr>
 						<% row_id = t + "row" + "41" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Surface Flow" + " (" + "in" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Surface Flow" + " (" + "acre-in" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][7]) + " (" + sprintf("%8.1f", cis1[0][8]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][7]) + " (" + sprintf("%8.1f", cis2[0][8]) + ")" %></td>
@@ -1001,7 +1001,7 @@
 						</tr>
 						<% row_id = t + "row" + "42" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Subsurface Flow" + " (" + "in" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Subsurface Flow" + " (" + "acre-in" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][8]) + " (" + sprintf("%8.1f", cis1[0][9]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][8]) + " (" + sprintf("%8.1f", cis2[0][9]) + ")" %></td>
@@ -1014,7 +1014,7 @@
 						</tr>
 						<% row_id = t + "row" + "43" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Tile Drain Flow" + " (" + "in" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Tile Drain Flow" + " (" + "acre-in" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][9]).to_s + " (" + sprintf("%8.1f", cis1[0][10]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][9]) + " (" + sprintf("%8.1f", cis2[0][10]) + ")" %></td>
@@ -1048,7 +1048,7 @@
 						</tr>
 						<% row_id = t + "row" + "51" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Irrigation Runoff" + " (" + "in" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Irrigation Runoff" + " (" + "acre-in" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][10]) + " (" + sprintf("%8.1f", cis1[0][11]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][10]) + " (" + sprintf("%8.1f", cis2[0][11]) + ")" %></td>
@@ -1061,7 +1061,7 @@
 						</tr>
 						<% row_id = t + "row" + "52" %>
 						<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Deep Percolation" + " (" + "in" + ")" %></th>
+							<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><%= "Deep Percolation" + " (" + "acre-in" + ")" %></th>
 							<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", averages1[0][11]) + " (" + sprintf("%8.1f", cis1[0][12]) + ")" %></td>
 							<% if @scenario2 != "0" && @scenario2 != "" then %>
 								<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", averages2[0][11]) + " (" + sprintf("%8.1f", cis2[0][12]) + ")" %></td>
@@ -1143,11 +1143,11 @@
 							<% crop = Crop.find_by_code(cr["name"]) %>
 						    <% conversion_factor = 1 * AC_TO_HA %>
 						    <% dry_matter = 100 %>
-						    <% unit = "t/ac" %>
+						    <% unit = "t" %>
 							<% if crop != nil then %>
 						      <% conversion_factor = crop.conversion_factor * AC_TO_HA %>
 						      <% dry_matter = crop.dry_matter %>
-						      <% unit = crop.yield_unit + "/ac" %>
+						      <% unit = crop.yield_unit  %>
 							<% end %>
 							<% row_id = t + "row" + (70 + i).to_s %>
 							<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
