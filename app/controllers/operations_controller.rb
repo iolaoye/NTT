@@ -340,7 +340,7 @@ def index
     #@field = Field.find(params[:field_id])
     #@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
-    byebug
+    
     @count = @operations.count
     @highest_year = 0
     @operations.each do |operation|
