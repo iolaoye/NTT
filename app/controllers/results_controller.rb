@@ -580,14 +580,14 @@ class ResultsController < ApplicationController
       			params[:field_id] = ws.field_id
       		end
   		end
-  		first_year = Field.find(params[:field_id]).weather.simulation_final_year-12
+  		first_year = Field.find(params[:field_id]).weather.simulation_initial_year + 1
   		if @chart_type > 0 then
-  			chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").limit(12).reverse
+  			chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").reverse
   		else
 	        if session[:simulation] != 'scenario'
-	          	chart_values = Chart.select("month_year, value").where("field_id = ? AND watershed_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", 0, scenario_id, @soil, @description, first_year).order("month_year desc").limit(12).reverse
+	          	chart_values = Chart.select("month_year, value").where("field_id = ? AND watershed_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", 0, scenario_id, @soil, @description, first_year).order("month_year desc").reverse
 	        else
-	  		    chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", params[:field_id], scenario_id, @soil, @description, first_year).order("month_year desc").limit(12).reverse
+	  		    chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", params[:field_id], scenario_id, @soil, @description, first_year).order("month_year desc").reverse
 	        end
       	end
     else #means chart is monthly average
@@ -605,11 +605,11 @@ class ResultsController < ApplicationController
     	if month_or_year == 1 then   # get results for annual values sub1 == 0
     		chart_description = get_description_annual()
     		if @description != "70" then
-    			chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :"#{id}" => scenario_id).last(12)
+    			chart_values = AnnualResult.select("year AS month_year", chart_description).where(:sub1 => 0, :"#{id}" => scenario_id)
     		else
     			crop = Crop.find(params[:result7][:crop_id])
     			conversion_factor = crop.conversion_factor * AC_TO_HA / (crop.dry_matter/100)
-    			chart_values = CropResult.select("year as month_year", "(yldg+yldf) *" + conversion_factor.to_s + " as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year).last(12)
+    			chart_values = CropResult.select("year as month_year", "(yldg+yldf) *" + conversion_factor.to_s + " as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year)
     			#chart_values = CropResult.select("year AS month_year", "yldg+yldf as value").where(:scenario_id => 736).group(:name, :year).pluck("yldg+yldf as value").last(12)
     		end
     	else  #get results for monthly sub1 > 0
@@ -640,6 +640,7 @@ class ResultsController < ApplicationController
 				charts[i] = chart
 			end
 		else
+			last_year = Field.find(params[:field_id]).weather.simulation_final_year
 			chart_values.each do |c|
 				while current_year < c.month_year
 					chart = Array.new
@@ -655,7 +656,8 @@ class ResultsController < ApplicationController
 				charts[i] = chart
 				current_year +=1
 				i += 1
-				if i > 11 then break end
+				if i > last_year then break end				
+				#if i > 11 then break end
 			end
 		end
 	end
