@@ -379,10 +379,10 @@ class ProjectsController < ApplicationController
       xml.field_area field.field_area
       xml.field_average_slope field.field_average_slope
       xml.field_type field.field_type
-      xml.coordinates field.coordinates
       xml.soilp field.soilp 
-      xml.soil_aluminum field.soil_aliminum 
+      xml.soil_aliminum field.soil_aliminum 
       xml.soil_test field.soil_test
+      xml.coordinates field.coordinates   #any thing for field should be before coordinates beacuse here the new field is saved.
       
       weather = Weather.find_by_field_id(field.id)
       save_weather_information(xml, weather)
@@ -1153,6 +1153,12 @@ class ProjectsController < ApplicationController
         field.field_average_slope = p.text
       when "field_type"
         field.field_type = p.text
+      when "soilp"
+        field.soilp = p.text
+      when "soil_aliminum"
+        field.soil_aliminum = p.text
+      when "soil_test"
+        field.soil_test = p.text
       when "coordinates"
         field.coordinates = p.text
         if field.save! then
