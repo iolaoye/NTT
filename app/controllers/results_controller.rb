@@ -580,7 +580,8 @@ class ResultsController < ApplicationController
       			params[:field_id] = ws.field_id
       		end
   		end
-  		first_year = Field.find(params[:field_id]).weather.simulation_initial_year + 1
+  		#first_year = Field.find(params[:field_id]).weather.simulation_initial_year + 1
+  		first_year = params[:sim_initial_year].to_i
   		if @chart_type > 0 then
   			chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").reverse
   		else
@@ -640,7 +641,8 @@ class ResultsController < ApplicationController
 				charts[i] = chart
 			end
 		else
-			last_year = Field.find(params[:field_id]).weather.simulation_final_year
+			# last_year = Field.find(params[:field_id]).weather.simulation_final_year
+			last_year = params[:sim_final_year].to_i
 			chart_values.each do |c|
 				while current_year < c.month_year
 					chart = Array.new
