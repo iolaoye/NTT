@@ -1,7 +1,7 @@
 class FieldsController < ApplicationController
   #load_and_authorize_resource :project
   #load_and_authorize_resource :field, :through => :project
-
+  include SimulationsHelper
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
@@ -226,6 +226,29 @@ class FieldsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def simulate
+    @errors = Array.new
+    msg = "OK"
+
+    ActiveRecord::Base.transaction do
+      params[:select_field].each do |field_id|
+        @field = Field.find(field_id)
+        @field.scenarios.each do |scenario|
+          @scenario = scenario
+          if @scenario.operations.count <= 0 then
+            @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+            return
+          end
+          msg = run_scenario
+          unless msg.eql?("OK")
+            @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+            raise ActiveRecord::Rollback
+          end # end if msg
+        end  # end scenarios
+      end  # end fields
+    end   # end activeRecord
+  end   # end method simulate
 
   private
 
