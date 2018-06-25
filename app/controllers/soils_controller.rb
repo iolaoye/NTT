@@ -223,6 +223,7 @@ class SoilsController < ApplicationController
       end
 
       if @soil.save then
+        debugger
         #if soil[0] != "error" then
           create_layers(soil[1])
         #end
@@ -269,7 +270,7 @@ class SoilsController < ApplicationController
       layer = @soil.layers.new
       layer.sand = layers[layer_number]["sand"]
       layer.silt = layers[layer_number]["silt"]
-      layer.clay = layers[layer_number]["clay"]
+      layer.clay = 100 - layer.sand - layer.silt
       layer.bulk_density = layers[layer_number]["bd"]
       layer.organic_matter = layers[layer_number]["om"]
       layer.ph = layers[layer_number]["ph"]
@@ -287,6 +288,7 @@ class SoilsController < ApplicationController
       #layer.cec = l[1]["cec"]
       layer.cec = layers[layer_number]["cec"]
       layer.soil_p = 0
+      debugger
       if layer.save then
         saved = 1
       else
