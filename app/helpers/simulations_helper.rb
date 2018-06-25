@@ -303,7 +303,7 @@ module SimulationsHelper
     return "OK"
   end
 
-  def create_soils()
+  def create_apex_soils()
     msg = "OK"
     soilSlope =0
     series = ""
@@ -2703,7 +2703,7 @@ module SimulationsHelper
         @soils = @field.soils.where(:selected => true).limit(1)
       end
       @soil_list = Array.new
-      if msg.eql?("OK") then msg = create_soils() else return msg  end
+      if msg.eql?("OK") then msg = create_apex_soils() else return msg  end
       @subarea_file = Array.new
       @soil_number = 0
       if msg.eql?("OK") then msg = create_subareas(1) else return msg  end

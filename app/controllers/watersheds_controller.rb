@@ -165,7 +165,7 @@ class WatershedsController < ApplicationController
 						@soils = Soil.where(:field_id => p.field_id).where(:selected => true).limit(1)
 					end
 				  	#@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
-				  	if msg.eql?("OK") then msg = create_soils() else return msg end
+				  	if msg.eql?("OK") then msg = create_apex_soils() else return msg end
 				  	if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
 				  	j+=1
 				end # end watershed_scenarios.each

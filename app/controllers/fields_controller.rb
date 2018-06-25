@@ -230,24 +230,42 @@ class FieldsController < ApplicationController
   def simulate
     @errors = Array.new
     msg = "OK"
+    scenarios_simulated = 0
+    scenarios_no_simulated = 0
+  
+    fork do
+      ActiveRecord::Base.transaction do
+        params[:select_field].each do |field_id|
+          @field = Field.find(field_id)
+          @field.scenarios.each do |scenario|
+            @scenario = scenario
+            if @scenario.operations.count <= 0 then
+              @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+              return
+            end
+            msg = run_scenario
+            scenarios_simulated +=1
+            unless msg.eql?("OK")
+              scenarios_no_simulated += 1
+              @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+              raise ActiveRecord::Rollback
+            end # end if msg
+          end  # end scenarios
+        end  # end fields
+      end   # end activeRecord
+      #@user.send_fields_simulated_email
+      #user = User.find(session[:user_id])
+      #@user = user
+      #mail to: user.email, subject: "Fields were simulated"
 
-    ActiveRecord::Base.transaction do
-      params[:select_field].each do |field_id|
-        @field = Field.find(field_id)
-        @field.scenarios.each do |scenario|
-          @scenario = scenario
-          if @scenario.operations.count <= 0 then
-            @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-            return
-          end
-          msg = run_scenario
-          unless msg.eql?("OK")
-            @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-            raise ActiveRecord::Rollback
-          end # end if msg
-        end  # end scenarios
-      end  # end fields
-    end   # end activeRecord
+    end
+
+    if msg.eql?("OK") then
+      flash[:notice] = " Scenarios submitesd to simulate. An e-mail will be sent when the simulations ended."
+      redirect_to project_fields_path(@project)
+    else
+      render "index", error: msg
+    end # end if msg
   end   # end method simulate
 
   private

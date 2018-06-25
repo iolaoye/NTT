@@ -9,4 +9,10 @@ class UserMailer < ApplicationMailer
     @user = user
     mail to: user.email, subject: "NTT Password Reset"
   end
+
+  def fields_simulated(user)
+    @user = user
+    mail to: user.email, subject: "Fields were simulated"
+  end
+
 end
