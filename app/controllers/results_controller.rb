@@ -573,6 +573,7 @@ class ResultsController < ApplicationController
   end
 
   def get_chart_serie(scenario_id, month_or_year)
+    #byebug
     if month_or_year == 1 then #means chart is annual
   		if session[:simulation] != 'scenario' then
   			watershed_scenarios = WatershedScenario.where(:watershed_id => scenario_id)
@@ -580,14 +581,23 @@ class ResultsController < ApplicationController
       			params[:field_id] = ws.field_id
       		end
   		end
-  		first_year = Field.find(params[:field_id]).weather.simulation_initial_year + 1
+        first_year = params[:sim_initial_year].to_i
+        if first_year == 0 then 
+  		    first_year = Field.find(params[:field_id]).weather.simulation_initial_year + 1
+        end
   		if @chart_type > 0 then
-  			chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?", params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").reverse
+  			chart_values = Chart.select("month_year, value")
+                                .where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?", 
+                                        params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").reverse
   		else
 	        if session[:simulation] != 'scenario'
-	          	chart_values = Chart.select("month_year, value").where("field_id = ? AND watershed_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", 0, scenario_id, @soil, @description, first_year).order("month_year desc").reverse
+	          	chart_values = Chart.select("month_year, value")
+                                    .where("field_id = ? AND watershed_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", 0, 
+                                            scenario_id, @soil, @description, first_year).order("month_year desc").reverse
 	        else
-	  		    chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", params[:field_id], scenario_id, @soil, @description, first_year).order("month_year desc").reverse
+	  		    chart_values = Chart.select("month_year, value")
+                                    .where("field_id = ? AND scenario_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", 
+                                            params[:field_id], scenario_id, @soil, @description, first_year).order("month_year desc").reverse
 	        end
       	end
     else #means chart is monthly average
@@ -640,28 +650,34 @@ class ResultsController < ApplicationController
 				charts[i] = chart
 			end
 		else
-			last_year = Field.find(params[:field_id]).weather.simulation_final_year
-			chart_values.each do |c|
-				while current_year < c.month_year
-					chart = Array.new
-					chart.push(current_year)
-					chart.push(0)
-					charts[i] = chart
-					current_year +=1
-					i += 1
-				end
-				chart = Array.new
-				chart.push(c.month_year)
-				chart.push(c.value)
-				charts[i] = chart
-				current_year +=1
-				i += 1
-				if i > last_year then break end				
-				#if i > 11 then break end
+            last_year = params[:sim_final_year].to_i
+            if last_year == 0 then 
+		        last_year = Field.find(params[:field_id]).weather.simulation_final_year
+            end
+            chart_values.each do |c|
+                #byebug
+                # while current_year < c.month_year
+                #     chart = Array.new
+                #     chart.push(current_year)
+                #     chart.push(0)
+                #     charts[i] = chart
+                #     current_year +=1
+                #     i += 1
+                # end
+                if c.month_year >= first_year and c.month_year <= last_year then
+                    chart = Array.new
+                    chart.push(c.month_year)
+                    chart.push(c.value)
+                    charts[i] = chart
+                    current_year +=1
+                    i += 1
+                    if i > last_year then break end             
+                    #if i > 11 then break end
+                end
 			end
 		end
 	end
-    return charts
+    return charts.compact
   end #end method get_chart_serie
 
   	def get_description_monthly

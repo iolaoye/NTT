@@ -18,7 +18,7 @@
   </div>
 <% end %>
 <div class="page-header"><h1><%=@type + " " %><%= t('result.upto12') unless @type != t('menu.results') + ': ' + t('result.annual') + "-" + t('result.charts')  %></h1></div>
-<form id="myForm">
+<form id="myForm" onsubmit="return validateForm();">
 	<div class="field">
 	    <table>
 	      	<tr>
@@ -29,6 +29,26 @@
 	        	<% end %>
 	      	</tr>
 	      	<tr>
+	      		<% @years = (Field.find(params[:field_id]).weather.simulation_initial_year+1...Field.find(params[:field_id]).weather.simulation_final_year+1).entries %>
+	      		<%# debug @years %>
+	      		<td>
+	      			<select name="sim_initial_year">
+	      				<option value="default" selected="selected">Initial Year</option>
+	      				<% @years.each do |y| %>
+	      					<option value="<%= y %>"><%= y %></option>
+	      				<% end %>
+	      			</select>
+	      		</td>
+	      		<td>
+	      			<select name="sim_final_year">
+	      				<option value="" selected="selected">Final Year</option>
+	      				<% @years.each do |y| %>
+	      					<option value="<%= y %>"><%= y %></option>
+	      				<% end %>
+	      			</select>
+	      		</td> 
+			    <%# debug Weather.select(:simulation_initial_year).uniq.each %>
+			    <td><%# collection_select :result1, :scenario_id, @field.scenarios.all("last_simulation > ?", 0), :id, :name, {:include_blank => "Final Year", :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
 			    <% field_id = 0 %>
 		        <% if session[:simulation] == 'scenario' %>
 				  <% field_id = @field.id %>
@@ -1440,7 +1460,16 @@
 <%= hidden_field_tag "errors", @errors, { :id => "errors" } %>
 
 <script>
+  var initial_year = 0
+  var final_year = 0
+  
   $(document).ready(function(event) {
+  	$("[name='sim_initial_year']").change(() => {
+        initial_year = $("[name='sim_initial_year'] option:selected").val();
+    });
+    $("[name='sim_final_year']").change(() => {
+        final_year = $("[name='sim_final_year'] option:selected").val();
+    });
     var elementIDNum = 0;
     $('[id^=show').hover(function() {
       //extracts id # from id of element clicked (e.g. checkbox_3 = 3)
@@ -1456,4 +1485,15 @@
         $('div#pop-up-'+elementIDNum).hide();
     });
   });
+
+  function validateForm() {
+	console.log("hi");
+	console.log("Initial and final", initial_year, final_year);
+	
+	if (initial_year >= final_year) {
+		alert("Initial Year cannot be greater than or equal to final year");
+		return false;
+	}
+	return true;
+  }
 </script>
