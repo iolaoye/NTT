@@ -1,7 +1,7 @@
 class ScenariosController < ApplicationController
   load_and_authorize_resource :field
   load_and_authorize_resource :scenario, :through => :field
- 
+
   include ScenariosHelper
   include SimulationsHelper
   include ProjectsHelper
@@ -41,7 +41,7 @@ class ScenariosController < ApplicationController
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
-    
+
     if (params[:scenario] != nil)
 		msg = copy_other_scenario
 		if msg != "OK" then
@@ -79,7 +79,7 @@ class ScenariosController < ApplicationController
     else
       render "index", error: msg
     end # end if msg
-  end 
+  end
 
 ################################  Simulate NTT for selected scenarios  #################################
   def simulate_ntt
@@ -132,8 +132,8 @@ class ScenariosController < ApplicationController
     @scenario = Scenario.find(params[:id])
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
-	
-    
+
+
     add_breadcrumb t('menu.scenarios'), project_field_scenarios_path(@project, @field)
 	add_breadcrumb t('general.editing') + " " +  t('scenario.scenario')
   end
@@ -274,12 +274,15 @@ class ScenariosController < ApplicationController
 		apex_string += aplcat.norh.to_s + "\t" + "! " + t('aplcat.norh') + "\n"
 		apex_string += aplcat.abwh.to_s + "\t" + "! " + t('aplcat.abwh') + "\n"
 		apex_string += aplcat.nomb.to_s + "\t" + "! " + t('aplcat.nomb') + "\n"
+    apex_string += aplcat.nocrh.to_s + "\t" + "! " + t('aplcat.nocrh') + "\n"
+    apex_string += aplcat.abwrh.to_s + "\t" + "! " + t('aplcat.abwrh') + "\n"
+    apex_string += aplcat.abc.to_s + "\t" + "! " + t('aplcat.abc') + "\n"
 		apex_string += aplcat.abwmb.to_s + "\t" + "! " + t('aplcat.abwmb') + "\n"   #average body weight of mature cows
 		apex_string += sprintf("%.2f", aplcat.adwgbc) + "\t" + "! " + t('aplcat.adwgbc') + "\n"
 		apex_string += sprintf("%.2f", aplcat.adwgbh) + "\t" + "! " + t('aplcat.adwgbh') + "\n"
-		apex_string += sprintf("%.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"	
+		apex_string += sprintf("%.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"
 		apex_string += sprintf("%.2f", aplcat.prh) + "\t" + "! " + t('aplcat.prh') + "\n"
-		apex_string += sprintf("%.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"	
+		apex_string += sprintf("%.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"
 		apex_string += aplcat.jdcc.to_s + "\t" + "! " + t('aplcat.jdcc') + "\n"
 		apex_string += sprintf("%.2f", aplcat.gpc) + "\t" + "! " + t('aplcat.gpc') + "\n"
 		apex_string += sprintf("%.2f", aplcat.tpwg) + "\t" + "! " + t('aplcat.tpwg') + "\n"
@@ -303,15 +306,15 @@ class ScenariosController < ApplicationController
 		apex_string += "\n"
 		apex_string += "Data on animalfeed (grasses, hay and concentrates)" + "\n"
 		apex_string += "\n"
-		apex_string += sprintf("%d", grazing.count) 
+		apex_string += sprintf("%d", grazing.count)
 		for i in 0..grazing.count-1
-			apex_string += "\t" 
+			apex_string += "\t"
 		end
 		apex_string += "| " + t('graze.total') + "\n\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].code) + "\t"
-		end 
-		apex_string += "| " + t('graze.code') + "\n"
+		end
+		apex_string += "| " + t('graze.code_for') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].starting_julian_day) + "\t"
 		end
@@ -321,60 +324,132 @@ class ScenariosController < ApplicationController
 		end
 		apex_string += "| " + t('graze.ejd') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%d", grazing[i].dmi_code) + "\t"
+			apex_string += sprintf("%d", grazing[i].for_button) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_code') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%.2f", grazing[i].dmi_cows) + "\t"
+			apex_string += sprintf("%.2f", grazing[i].for_dmi_cows) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_cows') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%.2f", grazing[i].dmi_bulls) + "\t"
+			apex_string += sprintf("%.2f", grazing[i].for_dmi_bulls) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_bulls') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%.2f", grazing[i].dmi_heifers) + "\t"
+			apex_string += sprintf("%.2f", grazing[i].for_dmi_heifers) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_heifers') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%.2f", grazing[i].dmi_calves) + "\t"
+			apex_string += sprintf("%.2f", grazing[i].for_dmi_calves) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_calves') + "\n"
+    for i in 0..grazing.count-1
+      apex_string += sprintf("%.2f", grazing[i].for_dmi_rheifers) + "\t"
+    end
+    apex_string += "| " + t('graze.dmi_rheifers') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].green_water_footprint) + "\t"
 		end
-		apex_string += "| " + t('graze.gwf') + "\n"
-		apex_string += "\n"
+		apex_string += "| " + t('graze.gwff') + "\n"
+    for i in 0..grazing.count-1
+      apex_string += sprintf("%.2f", grazing[i].dmi_code) + "\t"
+    end
+    apex_string += "| " + t('graze.code_supp') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_cows) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_cows') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_bulls) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_bulls') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_heifers) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_heifers') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_calves) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_calves') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_rheifers) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_rheifers') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%d", grazing[i].green_water_footprint_supplement) + "\t"
+		end
+		apex_string += "| " + t('graze.gwfs') + "\n"
+    apex_string += "\n"
 		apex_string += "Data on animalfeed (Supplement/Concentrate)" + "\n"
 		apex_string += "\n"
-		for j in 0..supplement.count-1
+    for j in 0..supplement.count-1
 			apex_string += sprintf("%d", supplement[j].code) + "\t"
 		end
 		apex_string += "| " + t('supplement.code') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%d", supplement[j].starting_julian_day) + "\t"
+		end
+		apex_string += "| " + t('graze.sjd') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%d", supplement[j].dmi_code) + "\t"
+			apex_string += sprintf("%d", supplement[j].ending_julian_day) + "\t"
+		end
+		apex_string += "| " + t('graze.ejd') + "\n"
+		for j in 0..supplement.count-1
+			apex_string += sprintf("%d", supplement[j].for_button) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_code') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_cows) + "\t"
+			apex_string += sprintf("%.2f", supplement[j].for_dmi_cows) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_cows') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_bulls) + "\t"
+			apex_string += sprintf("%.2f", supplement[j].for_dmi_bulls) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_bulls') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_heifers) + "\t"
+			apex_string += sprintf("%.2f", supplement[j].for_dmi_heifers) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_heifers') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_calves) + "\t"
+			apex_string += sprintf("%.2f", supplement[j].for_dmi_calves) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_calves') + "\n"
+    for j in 0..supplement.count-1
+      apex_string += sprintf("%.2f", supplement[j].for_dmi_rheifers) + "\t"
+    end
+    apex_string += "| " + t('graze.dmi_rheifers') + "\n"
 		for j in 0..supplement.count-1
 			apex_string += sprintf("%d", supplement[j].green_water_footprint) + "\t"
 		end
-		apex_string += "| " + t('graze.gwf') + "\n"
+		apex_string += "| " + t('graze.gwff') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%d", supplement[j].dmi_code) + "\t"
+		end
+		apex_string += "| " + t('graze.code_supp') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_cows) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_cows') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_bulls) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_bulls') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_heifers) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_heifers') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_calves) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_calves') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_rheifers) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_rheifers') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%d", supplement[j].green_water_footprint_supplement) + "\t"
+		end
+		apex_string += "| " + t('graze.gwfs') + "\n"
 		apex_string += "\n"
 		apex_string += "IMPORTANT NOTE: Details of parameters defined in the above 8 lines:" + "\n"
 		apex_string += "\n"
@@ -427,9 +502,9 @@ class ScenariosController < ApplicationController
 		end
 		apex_string += sprintf("%.2f", aplcat.adwgbc) + "\t" + "! " + t('aplcat.adwgbc') + "\n"
 		apex_string += sprintf("%.2f", aplcat.adwgbh) + "\t" + "! " + t('aplcat.adwgbh') + "\n"
-		apex_string += sprintf("%.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"	
+		apex_string += sprintf("%.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"
 		apex_string += sprintf("%.2f", aplcat.prh) + "\t" + "! " + t('aplcat.prh') + "\n"
-		apex_string += sprintf("%.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"	
+		apex_string += sprintf("%.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"
 		apex_string += sprintf("%d", aplcat.jdcc) + "\t" + "! " + t('aplcat.jdcc') + "\n"
 		apex_string += sprintf("%d", aplcat.gpc) + "\t" + "! " + t('aplcat.gpc') + "\n"
 		apex_string += sprintf("%d", aplcat.srop) + "\t" + "! " + t('aplcat.srop') + "\n"
@@ -454,7 +529,7 @@ class ScenariosController < ApplicationController
 	    if msg.include?("Bull output file") then msg="OK" end
 		return msg
   	end
-  
+
   ################################  copy scenario selected  #################################
   def copy_scenario
 	@use_old_soil = false
@@ -502,7 +577,7 @@ class ScenariosController < ApplicationController
     #@field = Field.find(params[:field_id])
     download_apex_files()
   end
-  
+
   private
   	################################  run_scenario - run simulation called from show or index  #################################
   	def run_scenario()
@@ -553,7 +628,7 @@ class ScenariosController < ApplicationController
 	    @soil_number = 0
 	    if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
 	    if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
-	    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
+	    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information
 	    @scenario.last_simulation = Time.now
 	    if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
 	    return msg
