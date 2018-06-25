@@ -17,7 +17,7 @@
     <%= flash[:info] %>
   </div>
 <% end %>
-<div class="page-header"><h1><%=@type + " " %><%= t('result.upto12') unless @type != t('menu.results') + ': ' + t('result.annual') + "-" + t('result.charts')  %></h1></div>
+<div class="page-header"><h1><%=@type + " " %><%= "" unless @type != t('menu.results') + ': ' + t('result.annual') + "-" + t('result.charts')  %></h1></div>
 <form id="myForm" onsubmit="return validateForm();">
 	<div class="field">
 	    <table>
@@ -1205,7 +1205,7 @@
 		<% if !(@scenario2 == "0" || @scenario2 == "") then scenario2_name = Watershed.find(@scenario2).name end%>
 		<% if !(@scenario3 == "0" || @scenario3 == "") then scenario3_name = Watershed.find(@scenario3).name end%>
 	<% end %>
-	<% @title += " " + t('result.upto12') %>
+	<%# @title += " " + t('result.upto12') %>
   	<strong><h4><%= @title %></h4></strong>
   	<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
         <%= column_chart [
