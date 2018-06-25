@@ -8,40 +8,45 @@
 <%#= button_to t('field.create_field'), new_field_path, :method => "get", :class => "btn btn-primary" %>
 <%#= button_to t('submit.continue'), field_scenarios_field_path, :method => "get", :class => "btn btn-success" %>
 <%= form_tag simulate_project_fields_path(@project), method: :post do |f| %>
-	<% if @fields.count > 0 %>
+	<% if @fields.count > 0 and ENV["APP_VERSION"] == "standard" %>
 		<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('models.field'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %>
-		<br><%= t('instructions.fields') %><br>
-		<div class="table-responsive">
-			<div class="panel panel-default">
-			  <table class="table table-striped", id="tbl_fields", name="tbl_fields">
-				<thead>
-					<tr>
+		<br>
+	<% end %>
+	<%= t('instructions.fields') %><br>
+	<div class="table-responsive">
+		<div class="panel panel-default">
+		  <table class="table table-striped", id="tbl_fields", name="tbl_fields">
+			<thead>
+				<tr>
+					<%if ENV["APP_VERSION"] == "standard" then%>
 						<th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
-						<th><%= t('field.field_name')%></th>
-						<th class="gvTitleStyleNumber"><%= t('field.field_area') + " (ac)"%></th>
-						<!-- <th class="gvTitleStyleNumber"><%= t('field.field_avg_slope')%></th> -->
-						<th><%#= t('field.field_type')%></th>
-						<th><%= t('general.actions')%></th>
-					</tr>
-				</thead>
-				<tbody>
-					<% @fields.each do |field| %>
-						<tr>
+					<% end %>
+					<th><%= t('field.field_name')%></th>
+					<th class="gvTitleStyleNumber"><%= t('field.field_area') + " (ac)"%></th>
+					<!-- <th class="gvTitleStyleNumber"><%= t('field.field_avg_slope')%></th> -->
+					<th><%#= t('field.field_type')%></th>
+					<th><%= t('general.actions')%></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @fields.each do |field| %>
+					<tr>
+						<%if ENV["APP_VERSION"] == "standard" then%>
 							<td id="<%= field.field_name %>" class="gvCellStyleText">
 							  <%= check_box_tag "select_field[]", field.id %>
-							</td>						
-							<td id="<%= field.field_name %>"class="table-link"><%= link_to field.field_name, project_field_soils_path(@project, field) %></td>
-							<td class="gvCellStyleNumber"><%= field.field_area %></td>
-							<!-- <td><%= field.field_average_slope %></td> -->
-							<td><%#= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
-							<td><%#= link_to image_tag("edit.png"), project_field_path(@project.id, field), title: t('general.edit') %>
-								<%= link_to image_tag("delete.png"), project_field_path(@project, field), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
 							</td>
-						</tr>
-					<% end %>
-				</tbody>
-			  </table>
-			</div>
+						<% end %>
+						<td id="<%= field.field_name %>"class="table-link"><%= link_to field.field_name, project_field_soils_path(@project, field) %></td>
+						<td class="gvCellStyleNumber"><%= field.field_area %></td>
+						<!-- <td><%= field.field_average_slope %></td> -->
+						<td><%#= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
+						<td><%#= link_to image_tag("edit.png"), project_field_path(@project.id, field), title: t('general.edit') %>
+							<%= link_to image_tag("delete.png"), project_field_path(@project, field), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		  </table>
 		</div>
-	<% end %>
+	</div>
 <% end %>

@@ -29,24 +29,26 @@
 	        	<% end %>
 	      	</tr>
 	      	<tr>
-	      		<% @years = (Field.find(params[:field_id]).weather.simulation_initial_year+1...Field.find(params[:field_id]).weather.simulation_final_year+1).entries %>
-	      		<%# debug @years %>
-	      		<td>
-	      			<select name="sim_initial_year">
-	      				<option value="default" selected="selected">Initial Year</option>
-	      				<% @years.each do |y| %>
-	      					<option value="<%= y %>"><%= y %></option>
-	      				<% end %>
-	      			</select>
-	      		</td>
-	      		<td>
-	      			<select name="sim_final_year">
-	      				<option value="" selected="selected">Final Year</option>
-	      				<% @years.each do |y| %>
-	      					<option value="<%= y %>"><%= y %></option>
-	      				<% end %>
-	      			</select>
-	      		</td> 
+	      		<% if @type.include?(t('result.annual')) then %>
+		      		<% @years = (Field.find(params[:field_id]).weather.simulation_initial_year+1...Field.find(params[:field_id]).weather.simulation_final_year+1).entries %>
+		      		<%# debug @years %>
+		      		<td>
+		      			<select name="sim_initial_year">
+		      				<option value="default" selected="selected">Initial Year</option>
+		      				<% @years.each do |y| %>
+		      					<option value="<%= y %>"><%= y %></option>
+		      				<% end %>
+		      			</select>
+		      		</td>
+		      		<td>
+		      			<select name="sim_final_year">
+		      				<option value="" selected="selected">Final Year</option>
+		      				<% @years.each do |y| %>
+		      					<option value="<%= y %>"><%= y %></option>
+		      				<% end %>
+		      			</select>
+		      		</td> 
+		      	<% end %>
 			    <%# debug Weather.select(:simulation_initial_year).uniq.each %>
 			    <td><%# collection_select :result1, :scenario_id, @field.scenarios.all("last_simulation > ?", 0), :id, :name, {:include_blank => "Final Year", :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
 			    <% field_id = 0 %>

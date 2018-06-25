@@ -33,9 +33,9 @@ class User < ActiveRecord::Base
 	 def send_password_reset_email
 		 UserMailer.password_reset(self).deliver
 	 end
-	 #def send_fields_simulated_email
-	#	 UserMailer.fields_simulated(self).deliver
-	 #end
+	 def send_fields_simulated_email(msg)
+		 UserMailer.fields_simulated(self, msg).deliver_now
+	 end
 	 def self.new_token
 		 SecureRandom.urlsafe_base64
 	 end

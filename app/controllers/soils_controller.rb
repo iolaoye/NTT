@@ -288,6 +288,7 @@ class SoilsController < ApplicationController
       #layer.cec = l[1]["cec"]
       layer.cec = layers[layer_number]["cec"]
       layer.soil_p = 0
+      debugger
       if layer.save then
         saved = 1
       else

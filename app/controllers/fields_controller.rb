@@ -232,7 +232,7 @@ class FieldsController < ApplicationController
     msg = "OK"
     scenarios_simulated = 0
     scenarios_no_simulated = 0
-  
+
     fork do
       ActiveRecord::Base.transaction do
         params[:select_field].each do |field_id|
@@ -253,8 +253,8 @@ class FieldsController < ApplicationController
           end  # end scenarios
         end  # end fields
       end   # end activeRecord
-      #@user.send_fields_simulated_email
-      #user = User.find(session[:user_id])
+      @user = User.find(session[:user_id])
+      @user.send_fields_simulated_email("Total Scenarios simulated " + scenarios_simulated.to_s + ", in " + params[:select_field].count.to_s + " fields.")
       #@user = user
       #mail to: user.email, subject: "Fields were simulated"
 
