@@ -1,7 +1,9 @@
 # encoding: utf-8
-	file = "db/seeds/counties.rb"
+	file = "db/seeds/parameters.rb"
 	load file
 
+	file = "db/seeds/controls.rb"
+	load file
 
 cont = false
 
