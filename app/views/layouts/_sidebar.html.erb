@@ -9,6 +9,9 @@
   <%#= url_for %>
   <%#= @type %>
   <% request.url %>
+  <%= debug request.url %>
+  <%= debug result_submenu %>
+      
   <% if params[:field_id] == nil || params[:field_id] == "0" %>
   	<% field_name = "" %>
   <% else %>
@@ -97,6 +100,17 @@
             </div>
           <% end %>
           <%= link_to t('result.summary'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
+          <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub-sub">
+             <li>
+                <%= link_to t('result.all_years'), nil, :class=>"results-label-sub" %>
+             </li>
+             <li>
+                <%= link_to t("result.dry_years"), nil, :class=>"results-label-sub"%>
+             </li>
+             <li>
+                <%= link_to t("result.wet_years"), nil, :class=>"results-label-sub" %>
+             </li>
+         </ul>
         </li>
         <% if ENV["APP_VERSION"] == "modified, standard" %>
           <li class="<%= (controller.action_name == "by_soils") ? "active" : "" %>">
@@ -165,16 +179,17 @@
   		<% end %>
       <% if result_submenu || request.url.include?(url_for("/fields/0/results"))%>
          <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-           <li class="results-label">Tabular</li>
+           <!--<li class="results-label">Tabular</li>-->
            <li class="<%= (controller.action_name == "index") ? "active" : "0" %>">
              <% if controller.action_name == "index" %>
                <div class="sub-header-icon">
                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                </div>
+               
              <% end %>
-             <%= link_to t('result.summary'), project_field_results_path(@project, 0, :button => t('result.summary'), :simulation => 'Watershed', :locale=>I18n.locale), :class=>"results-label-sub" %>
+             <% link_to t('result.summary'), project_field_results_path(@project, 0, :button => t('result.summary'), :simulation => 'Watershed', :locale=>I18n.locale), :class=>"results-label-sub" %>
            </li>
-           <li class="results-label">Graphic</a></li>
+           <!--<li class="results-label">Graphic</a></li>-->
            <li class="<%= (controller.action_name == "annual_charts") ? "active" : "" %>">
              <% if controller.action_name == "annual_charts" %>
                <div class="sub-header-icon">
