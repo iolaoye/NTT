@@ -243,7 +243,7 @@ Control.create!({:id => 240,:default_value => 2.0,:state_id => 19,:number => 6},
 Control.create!({:id => 241,:default_value => 0.0,:state_id => 19,:number => 7}, :without_protection => true)
 Control.create!({:id => 242,:default_value => 0.0,:state_id => 19,:number => 8}, :without_protection => true)
 Control.create!({:id => 243,:default_value => 0.0,:state_id => 19,:number => 9}, :without_protection => true)
-Control.create!({:id => 244,:default_value => 5.0,:state_id => 19,:number => 10}, :without_protection => true)
+Control.create!({:id => 244,:default_value => 5.0, :state_id => 19,:number => 10}, :without_protection => true)
 Control.create!({:id => 245,:default_value => 0.0,:state_id => 19,:number => 11}, :without_protection => true)
 Control.create!({:id => 246,:default_value => 0.0,:state_id => 19,:number => 12}, :without_protection => true)
 Control.create!({:id => 247,:default_value => 0.0,:state_id => 19,:number => 13}, :without_protection => true)
