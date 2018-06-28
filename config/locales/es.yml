@@ -36,6 +36,9 @@ es:
       result:
         result: "Resultados"
         summary: "Resumen"
+        all_years: "Todos los años"
+        dry_years: "Años secos"
+        wet_years: "Años húmedos"
         by_soil: "Por Suelo"
         annual_charts: "Gráficas Anuales"
         monthly_charts: "Gráficas Mensuales"
@@ -771,6 +774,9 @@ es:
     by_soil: Por+Suelo
   result:
     summary: Resumen
+    all_years: "All Years"
+    dry_years: "Dry Years"
+    wet_years: "Wet Years"
     by_soil: Por Suelo
     download_pdf: Descargar PDF
     download_csv: Descargar CSV
