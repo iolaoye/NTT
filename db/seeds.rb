@@ -1,3 +1,6 @@
+######
+# remember to run export RAILS_ENV=production
+#######
 # encoding: utf-8
 	file = "db/seeds/parameters.rb"
 	load file
