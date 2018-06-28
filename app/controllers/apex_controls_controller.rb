@@ -98,6 +98,7 @@ class ApexControlsController < ApplicationController
   end
 
   def reset
+    debugger
     controls = Control.where(:state_id => @project.location.state_id)
     if controls.blank? || controls == nil then
 		  controls = Control.where(:state_id => 99)
