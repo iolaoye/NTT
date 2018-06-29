@@ -158,14 +158,11 @@
         <% when "soils" %>
               <tr><td><%= t('soilpage_html')%></td></tr>
               <% if ENV["APP_VERSION"] == "standard" %>
-              <tr><td><%= raw t('soil_body1')%></td></tr>
+                <tr><td><%= raw t('soil_body1')%></td></tr>
+                <tr><td><%= raw t('soil_body2')%></td></tr>
               <% else %>
-              <tr><td><%= raw t('soil_body1_modified')%></td></tr>
-              <% end %>
-              <% if ENV["APP_VERSION"] == "standard" %>
-              <tr><td><%= raw t('soil_body2')%></td></tr>
-              <% else %>
-              <tr><td><%= raw t('soil_body2_modified')%></td></tr>
+                <tr><td><%= raw t('soil_body1_modified')%></td></tr>
+                <tr><td><%= raw t('soil_body2_modified')%></td></tr>
               <% end %>
               <tr><td><%= raw t('soil_body3')%></td></tr>
         <% when "layers" %>

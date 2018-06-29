@@ -303,7 +303,7 @@ module SimulationsHelper
     return "OK"
   end
 
-  def create_soils()
+  def create_apex_soils()
     msg = "OK"
     soilSlope =0
     series = ""
@@ -959,6 +959,7 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.angl)
     @subarea_file.push(sLine + "\n")
     #/line 4
+    _subarea_info.wsa = _subarea_info.wsa.round(2)
     if _subarea_info.wsa > 0 && i > 0 && !buffer then
       sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
     else
@@ -975,17 +976,17 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.urbf)
     @subarea_file.push(sLine + "\n")
     #/line 5
-	if (_subarea_info.bmp_id == 0 || _subarea_info.bmp_id == nil)  && _subarea_info.subarea_type == "Soil"
-		if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
-		  _subarea_info.rchl = _subarea_info.chl
-		end
-		if (operation_number > 1 && i == 0) then
-      _subarea_info.rchl = _subarea_info.rchl * 0.9
-		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
-		  #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
-		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
-		end
-	end
+    if (_subarea_info.bmp_id == 0 || _subarea_info.bmp_id == nil)  && _subarea_info.subarea_type == "Soil"
+  		if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
+  		  _subarea_info.rchl = _subarea_info.chl
+  		end
+  		if (operation_number > 1 && i == 0) then
+        _subarea_info.rchl = _subarea_info.rchl * 0.9
+  		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
+  		  #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
+  		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
+  		end
+    end
     sLine = sprintf("%8.4f", _subarea_info.rchl)
     sLine += sprintf("%8.2f", _subarea_info.rchd)
     sLine += sprintf("%8.2f", _subarea_info.rcbw)
@@ -1013,18 +1014,25 @@ module SimulationsHelper
     sLine = sprintf("%8.3f", _subarea_info.rshc)
     sLine += sprintf("%8.2f", _subarea_info.rsdp)
     sLine += sprintf("%8.2f", _subarea_info.rsbd)
-	if _subarea_info.pcof == nil then
-		_subarea_info.pcof = 0
-	end
+  	if _subarea_info.pcof == nil then
+  		_subarea_info.pcof = 0
+  	end
     sLine += sprintf("%8.2f", _subarea_info.pcof)
-	if _subarea_info.bcof == nil then
-		_subarea_info.bcof = 0
-	end
+  	if _subarea_info.bcof == nil then
+  		_subarea_info.bcof = 0
+  	end
     sLine += sprintf("%8.2f", _subarea_info.bcof)
     sLine += sprintf("%8.2f", _subarea_info.bffl)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
     @subarea_file.push(sLine + "\n")
-    #/line 8
-	sLine = "  0"
+      #/line 8
+  	sLine = "  0"
     if _subarea_info.nirr > 0 then
       sLine += sprintf("%1d", _subarea_info.nirr)
     else
@@ -1082,21 +1090,21 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.firg)
     @subarea_file.push(sLine + "\n")
     #/line 11
-	if @grazingb == true and _subarea_info.xtp1 == 0 then
-		sLine = sprintf("%4d", 1)
-	else
-		sLine = sprintf("%4d", _subarea_info.ny1)
-	end
+  	if @grazingb == true and _subarea_info.xtp1 == 0 then
+  		sLine = sprintf("%4d", 1)
+  	else
+  		sLine = sprintf("%4d", _subarea_info.ny1)
+  	end
     sLine += sprintf("%4d", _subarea_info.ny2)
     sLine += sprintf("%4d", _subarea_info.ny3)
     sLine += sprintf("%4d", _subarea_info.ny4)
     @subarea_file.push(sLine + "\n")
     #/line 12
-	if @grazingb == true and _subarea_info.xtp1 == 0 then
-		sLine = sprintf("%8.2f", 0.01)
-	else
-		sLine = sprintf("%8.2f", _subarea_info.xtp1)
-	end
+  	if @grazingb == true and _subarea_info.xtp1 == 0 then
+  		sLine = sprintf("%8.2f", 0.01)
+  	else
+  		sLine = sprintf("%8.2f", _subarea_info.xtp1)
+  	end
     sLine += sprintf("%8.2f", _subarea_info.xtp2)
     sLine += sprintf("%8.2f", _subarea_info.xtp3)
     sLine += sprintf("%8.2f", _subarea_info.xtp4)
@@ -1105,7 +1113,7 @@ module SimulationsHelper
     return "OK"
   end
 
-  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
+  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)    
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @grazingb = false
@@ -2650,4 +2658,60 @@ module SimulationsHelper
 	    msg = send_file_to_APEX(@herd_list, "HERD.dat")
       return bioConsumed
     end #end create_herd_file
+
+        ################################  run_scenario - run simulation called from show or index  #################################
+    def run_scenario()
+      @last_herd = 0
+      @herd_list = Array.new
+      msg = "OK"
+      dir_name = APEX + "/APEX" + session[:session_id]
+      if !File.exists?(dir_name)
+        FileUtils.mkdir_p(dir_name)
+      end
+      #FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
+      #CREATE structure for nutrients that go with fert file
+      @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
+      @current_nutrients = Array.new
+      @new_fert_line = Array.new
+      @change_fert_for_grazing_line = Array.new
+      @fem_list = Array.new
+      @dtNow1  = Time.now.to_s
+      @opcs_list_file = Array.new
+      @depth_ant = Array.new
+      @opers = Array.new
+      @change_till_depth = Array.new
+      @last_soil_sub = 0
+      @last_subarea = 0
+      @last_herd = 0
+      @fert_code = 79
+      state_id = @project.location.state_id
+      @state_abbreviation = "**"
+      if state_id != 0 and state_id != nil then
+        @state_abbreviation = State.find(state_id).state_abbreviation
+      end
+      if msg.eql?("OK") then msg = create_control_file() else return msg end                  #this prepares the apexcont.dat file
+      if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
+      if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file
+      if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
+      if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
+      if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg  end
+      @last_soil = 0
+      @grazing = @scenario.operations.find_by_activity_id([7, 9])
+      if @grazing == nil then
+        @soils = @field.soils.where(:selected => true)
+      else
+        @soils = @field.soils.where(:selected => true).limit(1)
+      end
+      @soil_list = Array.new
+      if msg.eql?("OK") then msg = create_apex_soils() else return msg  end
+      @subarea_file = Array.new
+      @soil_number = 0
+      if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
+      if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
+      if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
+      @scenario.last_simulation = Time.now
+      if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
+      return msg
+    end # end show method
+
 end
