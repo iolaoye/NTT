@@ -117,6 +117,9 @@
                </li><% end %>
                    <li><a href="#" data-toggle="modal" data-target="#instructions"><%= t('footer.instructions')%></a></li>
                    <li><a href="#" data-toggle="modal" data-target="#documents"><%= t('footer.documentations')%></a></li>
+                   <% if  !(request.filtered_parameters["controller"].include? 'welcome' or request.filtered_parameters["controller"].include? 'project' or request.filtered_parameters["controller"].include? 'location') %>
+                   <li><a href="#" data-toggle="modal" data-target="#validation"><%= t('footer.validation')%></a></li>
+                   <% end %>
                    <li><%= link_to t("footer.help"), help_path("index", @user) %></li>
                    <li><%= link_to 'FAQ', faqs_path(@user) %></li>
                    <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
@@ -223,46 +226,46 @@
     <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title"> <%= t('contact1.header') %></h4>
-      </div>
-      <div class="modal-body">
-<%= raw t('contact1.statement')%><br><br>
-<ul>
-<li><b>Ali Saleh</b></li>
-<%= t('contact1.position') %><br>
-P.O. Box T410<br>
-Tarleton State University<br>
-Stephenville, TX 76402<br>
-(254)968-9079 (Phone)<br>
-(254)968-9790 (Fax)<br>
-saleh@tarleton.edu</li></ul>
-<br>
-
-<% if ENV["APP_VERSION"] == "modified" %>
-<ul><li><b>Mindy Selman</b></li>
-<%= t('contact2.position') %><br>
-USDA Office of Environmental Markets<br>
-Washington, DC<br>
-Stephenville, TX 76402<br>
-(202)304-5154 (Phone)<br>
-mselman@oce.usda.gov<br><br></ul>
-  <% end %>
-
-<%= raw t('contact3.statement') %><br><br>
-
-<ul><li><b>Oscar Gallego</b></li>
-<%= t('contact3.position') %><br>
-P.O. Box T410<br>
-Tarleton State University<br>
-Stephenville, TX 76402<br>
-(254)968-9787 (Phone)<br>
-(254)968-9790 (Fax)<br>
-gallego@tiaer.tarleton.edu</ul>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-      </div>
     </div>
+    <div class="modal-body">
+      <%= raw t('contact1.statement')%><br><br>
+      <ul>
+      <li><b>Ali Saleh</b></li>
+      <%= t('contact1.position') %><br>
+      P.O. Box T410<br>
+      Tarleton State University<br>
+      Stephenville, TX 76402<br>
+      (254)968-9079 (Phone)<br>
+      (254)968-9790 (Fax)<br>
+      saleh@tarleton.edu</li></ul>
+      <br>
+
+      <% if ENV["APP_VERSION"] == "modified" %>
+        <ul><li><b>Mindy Selman</b></li>
+        <%= t('contact2.position') %><br>
+        USDA Office of Environmental Markets<br>
+        Washington, DC<br>
+        Stephenville, TX 76402<br>
+        (202)304-5154 (Phone)<br>
+        mselman@oce.usda.gov<br><br></ul>
+      <% end %>
+
+      <%= raw t('contact3.statement') %><br><br>
+
+      <ul><li><b>Oscar Gallego</b></li>
+      <%= t('contact3.position') %><br>
+      P.O. Box T410<br>
+      Tarleton State University<br>
+      Stephenville, TX 76402<br>
+      (254)968-9787 (Phone)<br>
+      (254)968-9790 (Fax)<br>
+      gallego@tiaer.tarleton.edu</ul>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
   </div>
 </div>
 
@@ -277,10 +280,44 @@ gallego@tiaer.tarleton.edu</ul>
           <tr><td><%= t('documents_re_html')%></td></tr>
           <% end %>
         </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="validation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 900px" role="document">
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+      <% if request.filtered_parameters["controller"].include? 'welcome' or request.filtered_parameters["controller"].include? 'project' or request.filtered_parameters["controller"].include? 'location' %>
+        <% state_name = "" %>
+        <% state_abbr = "" %>
+      <% else %>
+        <% state_name = State.find(@project.location.state_id).state_name %>
+        <% state_abbr = State.find(@project.location.state_id).state_abbreviation.downcase %>      
+      <% end %>
+      <div class="modal-header">
+          <h4 class="modal-title"> <%= state_name %></h4>
+      </div>
+      <div class="modal-body">
+        <% statement = 'layouts/' + state_abbr %>
+        <% if lookup_context.find_all('layouts/_' + state_abbr).any? %>
+          <%= render statement %>
+        <% else %>
+          <%= raw t('validation.default')%>
+          <%= raw t('validation.no_validated')%>
+        <% end %>
+        <%#= raw t(statement, :default => t('validation.default'))%><br><br>
+        <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
