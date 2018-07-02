@@ -495,6 +495,7 @@ es:
     help: Ayuda
     Language: Idioma
     documentations: Documentación
+    validation: Validación
   languages:
     english: Inglés
     spanish: Español
@@ -895,7 +896,9 @@ es:
     references3: 'Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading. Soil and Water Conservation Society. November/December 2011 vol. 66 no. 6 400-410.'
     references4: 'Williams J.R., Arnold J.G., Srinivasan R. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
     references5: 'Winchell, M., D. Meals, S. Folle, J. Moore, D. Braun, C. DeLeo and K. Budreski. 2011. Identification of critical source areas of phosphorus within the Vermont sector of the Missisquoi Bay basin. Grand Isle, VT: Lake Champlain Basin Program.'
-
+  validation: 
+    default: 'Este estado aún no ha sido validado'
+    in: 'Aqui va el texto que Rewati me va ha dar para Indiana' 
   contact1:
     header: 'Información de Contacto'
     statement: 'Para preguntas o comentarios acerca de la Herramient de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
