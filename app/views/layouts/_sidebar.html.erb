@@ -99,16 +99,17 @@
               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             </div>
           <% end %>
-          <%= link_to t('result.summary'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
+          <%= link_to t('result.summary'), nil, :class=>"results-label-sub" %>
+          <!-- Sub menu for all, dry and wet years under tabular menu -->
           <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub-sub">
-             <li>
-                <%= link_to t('result.all_years'), nil, :class=>"results-label-sub" %>
+             <li> <!-- All Years -->
+                <%= link_to t('result.all_years'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
              </li>
-             <li>
-                <%= link_to t("result.dry_years"), nil, :class=>"results-label-sub"%>
+             <li> <!-- Dry Years -->
+                <%= link_to t("result.dry_years"), project_field_results_path(@project, @field, :button => t('result.dry_years'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub"%>
              </li>
-             <li>
-                <%= link_to t("result.wet_years"), nil, :class=>"results-label-sub" %>
+             <li> <!-- Wet Years -->
+                <%= link_to t("result.wet_years"), project_field_results_path(@project, @field, :button => t('result.wet_years'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
              </li>
          </ul>
         </li>

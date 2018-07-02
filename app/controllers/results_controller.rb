@@ -31,6 +31,7 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
+    byebug
   	if params[:simulation] != nil then
   		session[:simulation] = params[:simulation]
   	end
@@ -154,10 +155,20 @@ class ResultsController < ApplicationController
         #crop = Crop.find(result.crop_id)
       #end # end results.each
     end # end if params[:result1] != nil
+    byebug
   	if params[:button] != nil
   		#@type = params[:button]
-  		@type = t("result.summary")
-  	else
+  	    # dry years menu item was clicked
+        if (params[:button] == t('result.dry_years')) or (params[:year_type][:year_type] == t('result.dry_years'))
+            @type = t("result.dry_years")
+        # wet years menu item was clicked
+        elsif params[:button] == t('result.wet_years')
+            @type = t("result.wet_years")
+        # default to tabular / all years
+        else
+           @type = t("result.summary")
+        end
+    else
   		if params[:button_annual] != nil
   			@type = t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
   			@title = t('result.upto12')
@@ -175,7 +186,7 @@ class ResultsController < ApplicationController
     #@stress_ps_results = []
     #@stress_ts_results = []
     if @type != nil
-      (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
+      (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil) ? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
         when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil"), t("result.summary")
 			if (@type.include? t('result.summary') or @type.include? t('general.view')) then
@@ -408,6 +419,7 @@ class ResultsController < ApplicationController
             @title = ""
             @y = ""
           end
+        
         when t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
           @x = "Month"
           if params[:result6] != nil && params[:result6][:description_id] != "" then
@@ -449,8 +461,55 @@ class ResultsController < ApplicationController
             @title = ""
             @y = ""
           end
+        
+        when t('result.dry_years')
+            byebug
+            # lambda to retrieve results for each scenario. 
+            get_results = lambda do |scn| 
+                results = ""
+                if scn > "0" then
+                    byebug
+                    session[:scenario1] = scn
+                    if session[:simulation] == 'scenario'
+                        total_area = @field.field_area
+                        bmps = Scenario.find(scn).bmps
+                        bmps.each do |b|
+                            case b.bmpsublist_id
+                            when 13, 8 
+                                if b.sides == 1 then 
+                                    total_area -= b.area 
+                                end
+                            when 14, 15 
+                                total_area -= b.area
+                            end
+                        end
+                        results = AnnualResult.where(:scenario_id => @scenario1)
+                    else
+                        if params[:result1] != nil 
+                            if !params[:result1][:scenario_id].empty? then
+                                watershed_scenarios = 
+                                    WatershedScenario.where(:watershed_id => 
+                                        Watershed.find(params[:result1][:scenario_id]).id)
+                                
+                                watershed_scenarios.each do |ws|
+                                    total_area += Field.find(ws.field_id).field_area
+                                end
+                            end
+                        end
+                        results = AnnualResult.where(:watershed_id => scn)
+                    end
+                end
+                @type = t('result.dry_years')
+                results
+            end
+            @results1 = get_results.call @scenario1
+            @results2 = get_results.call @scenario2
+            @results3 = get_results.call @scenario3
+            byebug
+            
       end # end case type
     end # end if != nill <!--<h1><%=@type + " " + @title%></h1>-->
+
     if params[:format] == "pdf" then
       pdf = render_to_string pdf: "report",
   	  page_size: "Letter", layout: "pdf",
