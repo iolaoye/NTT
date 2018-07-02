@@ -1187,6 +1187,24 @@ en:
       animal_transport_input: Animal Transport Input
       totaltrip: Total number of trips in the simulation
       tripn: Trip number
+      trans_feeder: Transporting feeder cattle or transporting cattle for auction
+      trans_finish: Transporting finished cattle
+      categories_trans: Categories of animal transported
+      categories_slaug: Categories of animals finished and ready for slaughter
+      avg_marweight: Average market weight of each animal (lb)
+      num_animal: Number of animals in each category
+      mortality_rate: Mortality rate of cattle
+      distance: Distance moved (miles)
+      trailer: Trailer selected for moving
+      trucks: Truck selected for moving
+      fuel_type: Fuel type
+      same_vehicle: Use the same vehicle for all trips?
+      loading: Loading pressure equation
+      thoughtless: Thoughtless loading
+      arranged: Some arranged loading
+      floor_space: Floor space requirement based loading
+      carcass: Proportion of live animal becoming carcass (%)
+      boneless_beef: Proportion of carcass becoming boneless beef (%)
       freqtrip: Frequency of trip (once/how many years)
       filedetails: File name containing the details for the trip
       cattlepro: Whether empty trip is related to cattle production or not
