@@ -31,10 +31,7 @@
 			<% @id = "watershed_id" %>
 		<% end %>
 		<% if @scenario1 != "0" then %>
-			<% require 'enumerable/confidence_interval' %>
-			<% crops1 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg) + avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')%>
-			<% crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario1, 0) %>
-			<% cic1 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten] %>
+			<%# require 'enumerable/confidence_interval' %>
 			<tr class="gvRowStyleOdd", id = <%=row_id%>>
 				<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
 					<a id="show1" class="gvTotalText"><%= "Total N" + " (" + "lbs/ac" + ")" %></a>

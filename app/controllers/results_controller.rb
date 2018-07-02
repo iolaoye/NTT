@@ -31,6 +31,7 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
+  	require 'enumerable/confidence_interval'
   	if params[:simulation] != nil then
   		session[:simulation] = params[:simulation]
   	end
