@@ -125,9 +125,12 @@
                 <li>
                   <div class="language"><%= t('footer.validation') %>
                     <span class="tooltiptext">
+                      <% states_validated = [15,16] %>
                       <% states.each do |state| %>
                         <%# @state = state.state_abbreviation + '-' + state.state_name %>
-                        <%= link_to state.state_name, validation_path(state.state_abbreviation.downcase) %><br>
+                        <% if states_validated.include?(state.id) %>
+                          <%= link_to state.state_name, validation_path(state.state_abbreviation.downcase) %><br>
+                        <% end %>
                         <!-- <a href="#" data-toggle="modal" data-target="#validation"><%= @state%></a> -->
                       <% end %>
                     </span>
