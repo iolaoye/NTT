@@ -124,7 +124,7 @@
                 <li><a href="#" data-toggle="modal" data-target="#documents"><%= t('footer.documentations')%></a></li>
                 <li>
                   <div class="language"><%= t('footer.validation') %>
-                    <span class="tooltiptext">
+                    <span class="tooltiptext scrollable-menu" >
                       <% states.each do |state| %>
                         <%# @state = state.state_abbreviation + '-' + state.state_name %>
                         <%= link_to state.state_name, validation_path(state.state_abbreviation.downcase) %><br>
