@@ -107,23 +107,38 @@
                   <% end %>
                 </ul>
             </div>
+            <% states = State.all %>
             <div class="nav navbar-nav navbar-left">
               <ul class="footerleft">
-                <% unless ENV["APP_VERSION"] == "modified" %><li><div class="language"><%= t('help.language') %>
-                   <span class="tooltiptext">
-                     <%= link_to t("languages.english"), :locale=>'en', :project_id => params[:project_id]%><br>
-                     <%= link_to t("languages.spanish"), :locale=>'es', :project_id => params[:project_id]%>
-                     </span>
-               </li><% end %>
-                   <li><a href="#" data-toggle="modal" data-target="#instructions"><%= t('footer.instructions')%></a></li>
-                   <li><a href="#" data-toggle="modal" data-target="#documents"><%= t('footer.documentations')%></a></li>
-                   <% if  !(request.filtered_parameters["controller"].include? 'welcome' or request.filtered_parameters["controller"].include? 'project' or request.filtered_parameters["controller"].include? 'location') %>
-                   <li><a href="#" data-toggle="modal" data-target="#validation"><%= t('footer.validation')%></a></li>
-                   <% end %>
-                   <li><%= link_to t("footer.help"), help_path("index", @user) %></li>
-                   <li><%= link_to 'FAQ', faqs_path(@user) %></li>
-                   <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
-                   <!--<li><%= link_to t("footer.about_ntt"), about_path(@user) %></li>-->
+                <% unless ENV["APP_VERSION"] == "modified" %>
+                  <li>
+                    <div class="language"><%= t('help.language') %>
+                      <span class="tooltiptext">
+                        <%= link_to t("languages.english"), :locale=>'en', :project_id => params[:project_id]%><br>
+                        <%= link_to t("languages.spanish"), :locale=>'es', :project_id => params[:project_id]%>
+                      </span>
+                    </div>
+                  </li>
+                <% end %>
+                <li><a href="#" data-toggle="modal" data-target="#instructions"><%= t('footer.instructions')%></a></li>
+                <li><a href="#" data-toggle="modal" data-target="#documents"><%= t('footer.documentations')%></a></li>
+                <li>
+                  <div class="language"><%= t('footer.validation') %>
+                    <span class="tooltiptext scrollable-menu">
+                      <% states_validated = [15,16] %>
+                      <% states.each do |state| %>
+                        <%# @state = state.state_abbreviation + '-' + state.state_name %>
+                        <% if states_validated.include?(state.id) %>
+                          <%= link_to state.state_name, validation_path(state.state_abbreviation.downcase) %><br>
+                        <% end %>
+                        <!-- <a href="#" data-toggle="modal" data-target="#validation"><%= @state%></a> -->
+                      <% end %>
+                    </span>
+                  </div>
+                </li>
+                <li><%= link_to t("footer.help"), help_path("index", @user) %></li>
+                <li><%= link_to 'FAQ', faqs_path(@user) %></li>
+                <li><a href="#" data-toggle="modal" data-target="#contact"><%= t('footer.contact_us')%></a></li>
               </ul>
             </div>
         </div>
@@ -288,36 +303,4 @@
   </div>
 </div>
 
-<div class="modal fade" id="validation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" style="width: 900px" role="document">
-    <div class="modal-content">
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-      </div>
-      <% if request.filtered_parameters["controller"].include? 'welcome' or request.filtered_parameters["controller"].include? 'project' or request.filtered_parameters["controller"].include? 'location' %>
-        <% state_name = "" %>
-        <% state_abbr = "" %>
-      <% else %>
-        <% state_name = State.find(@project.location.state_id).state_name %>
-        <% state_abbr = State.find(@project.location.state_id).state_abbreviation.downcase %>      
-      <% end %>
-      <div class="modal-header">
-          <h4 class="modal-title"> <%= state_name %></h4>
-      </div>
-      <div class="modal-body">
-        <% statement = 'layouts/' + state_abbr %>
-        <% if lookup_context.find_all('layouts/_' + state_abbr).any? %>
-          <%= render statement %>
-        <% else %>
-          <%= raw t('validation.default')%>
-          <%= raw t('validation.no_validated')%>
-        <% end %>
-        <%#= raw t(statement, :default => t('validation.default'))%><br><br>
-        <br>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+

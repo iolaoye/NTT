@@ -2,6 +2,7 @@ NTTG3::Application.routes.draw do
   resources :crop_results
   resources :annual_results
   resources :faqs
+  resources :validations
   resources :importances
   resources :types
   resources :statuses
