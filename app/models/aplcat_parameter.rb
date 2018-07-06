@@ -16,7 +16,8 @@ class AplcatParameter < ActiveRecord::Base
          :mortality_rate_2, :distance_2, :trailer_2, :trucks_2, :fuel_type_2, :same_vehicle_2, :loading_2, :carcass_2, :boneless_beef_2, :trans_3,
          :categories_trans_3, :categories_slaug_3, :avg_marweight_3, :num_animal_3, :mortality_rate_3, :distance_3, :trailer_3, :trucks_3, :fuel_type_3,
          :same_vehicle_3, :loading_3, :carcass_3, :boneless_beef_3, :trans_4, :categories_trans_4, :categories_slaug_4, :avg_marweight_4, :num_animal_4,
-         :mortality_rate_4, :distance_4, :trailer_4, :trucks_4, :fuel_type_4, :same_vehicle_4, :loading_4, :carcass_4, :boneless_beef_4
+         :mortality_rate_4, :distance_4, :trailer_4, :trucks_4, :fuel_type_4, :same_vehicle_4, :loading_4, :carcass_4, :boneless_beef_4, :second_avg_marweight_1, :second_num_animal_1,
+         :second_avg_marweight_2, :second_num_animal_2, :second_avg_marweight_3, :second_num_animal_3, :second_avg_marweight_4, :second_num_animal_4
 
   #associations
 	  belongs_to :scenario
