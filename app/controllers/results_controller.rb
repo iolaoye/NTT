@@ -31,7 +31,7 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.json
   def index
-    byebug
+    
   	require 'enumerable/confidence_interval'
   	if params[:simulation] != nil then
   		session[:simulation] = params[:simulation]
@@ -150,7 +150,7 @@ class ResultsController < ApplicationController
         end # end case true
       end
     end # end if params[:result1] != nil
-    byebug
+    
   	if params[:button] != nil
   		#@type = params[:button]
   	    # dry years menu item was clicked
@@ -179,7 +179,7 @@ class ResultsController < ApplicationController
       @cis1 = nil
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
-        when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil"), t("result.summary")        	
+        when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil"), t("result.summary"), t('result.dry_years')     	
         	
 			if (@type.include? t('result.summary') or @type.include? t('general.view')) then
 				if @scenario1 > "0" then
@@ -445,8 +445,8 @@ class ResultsController < ApplicationController
             @y = ""
           end
         
+        # dry years
         when t('result.dry_years')
-            byebug
             if @scenario1 > "0" then
                 session[:scenario1] = @scenario1
                 if session[:simulation] == 'scenario'
@@ -465,7 +465,7 @@ class ResultsController < ApplicationController
                     results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario1).order(:pcp)
                     count = (results_data1.size * 25) / 100
                     results_data1 = results_data1.last(count).reverse
-                    byebug
+                    
                     
                     @cis1 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
 
@@ -522,7 +522,7 @@ class ResultsController < ApplicationController
                     results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario2).order(:pcp)
                     count = (results_data1.size * 25) / 100
                     results_data1 = results_data1.last(count).reverse
-                    byebug
+                    
                     
                     @cis2 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
                     @averages2 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario2).pluck('avg(orgn), avg(qn), avg(no3-qn), avg(qdrn), avg(orgp), avg(po4), avg(qdrp), avg(surface_flow), avg(flow-surface_flow), avg(qdr), avg(irri), avg(dprk), avg(sed), avg(ymnu)')
@@ -590,6 +590,163 @@ class ResultsController < ApplicationController
                     results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :watershed_id => @scenario3).order(:pcp)
                     count = (results_data1.size * 25) / 100
                     results_data1 = results_data1.last(count).reverse
+                    
+                    @cis3 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
+                    @averages3 = AnnualResult.where(:sub1 => 0, :watershed_id => @scenario3).pluck('avg(orgn), avg(qn), avg(no3-qn), avg(qdrn), avg(orgp), avg(po4), avg(qdrp), avg(surface_flow), avg(flow-surface_flow), avg(qdr), avg(irri), avg(dprk), avg(sed), avg(ymnu)')
+                    @totals3 = AnnualResult.where(:sub1 => 0, :watershed_id => @scenario3).pluck('avg(orgn)*' + @total_area3.to_s, 'avg(qn)*' + @total_area3.to_s, 'avg(no3-qn)*' + @total_area3.to_s, 'avg(qdrn)*' + @total_area3.to_s, 'avg(orgp)*' + @total_area3.to_s, 'avg(po4)*' + @total_area3.to_s, 'avg(qdrp)*' + @total_area3.to_s, 'avg(surface_flow)*' + @total_area3.to_s, 'avg(flow-surface_flow)*' + @total_area3.to_s, 'avg(qdr)*' + @total_area3.to_s, 'avg(irri)*' + @total_area3.to_s, 'avg(dprk)*' + @total_area3.to_s, 'avg(sed)*' + @total_area3.to_s, 'avg(ymnu)*' + @total_area3.to_s)
+                    crops_data3 = CropResult.select('*', 'yldg+yldf AS yield').where("watershed_id = ? AND yldg+yldf > ?", @scenario3, 0)
+                    @cic3 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
+                    @crops3 = CropResult.where("watershed_id = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg-yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+                end
+                found = false
+
+            end   # end result 3
+
+        # wet years
+        when t('result.wet_years')
+            if @scenario1 > "0" then
+                session[:scenario1] = @scenario1
+                if session[:simulation] == 'scenario'
+                    @total_area1 = @field.field_area
+                    bmps = Scenario.find(@scenario1).bmps
+                    bmps.each do |b|
+                        case b.bmpsublist_id
+                        when 13, 8
+                            if b.sides == 1 then
+                                @total_area1 -= b.area 
+                            end
+                        when 14, 15
+                            @total_area1 -= b.area
+                        end
+                    end
+                    results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario1).order(:pcp)
+                    count = (results_data1.size * 25) / 100
+                    results_data1 = results_data1.last(count)
+                    
+                    
+                    @cis1 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
+
+                    @averages1 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario1)
+                                             .pluck('avg(orgn), avg(qn), avg(no3-qn), avg(qdrn), avg(orgp), avg(po4), avg(qdrp),
+                                                    avg(surface_flow), avg(flow-surface_flow), avg(qdr), avg(irri), avg(dprk), avg(sed), avg(ymnu)')
+
+                    @totals1 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario1)
+                                           .pluck('avg(orgn)*' + @total_area1.to_s, 'avg(qn)*' + @total_area1.to_s, 'avg(no3-qn)*' + @total_area1.to_s, 
+                                                  'avg(qdrn)*' + @total_area1.to_s, 'avg(orgp)*' + @total_area1.to_s, 'avg(po4)*' + @total_area1.to_s, 
+                                                  'avg(qdrp)*' + @total_area1.to_s, 'avg(surface_flow)*' + @total_area1.to_s, 'avg(flow-surface_flow)*' + @total_area1.to_s, 
+                                                  'avg(qdr)*' + @total_area1.to_s, 'avg(irri)*' + @total_area1.to_s, 'avg(dprk)*' + @total_area1.to_s, 'avg(sed)*' + @total_area1.to_s, 'avg(ymnu)*' + @total_area1.to_s)
+                    crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where("scenario_id = ? AND yldg+yldf > ?", @scenario1, 0)
+                    @cic1 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
+                    @crops1 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg-yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+                else
+                    if params[:result1] != nil 
+                        if !params[:result1][:scenario_id].empty? then
+                            watershed_scenarios = WatershedScenario.where(:watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
+                            watershed_scenarios.each do |ws|
+                                @total_area1 += Field.find(ws.field_id).field_area
+                            end
+                        end
+                    end
+                    results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :watershed_id => @scenario1).order(:pcp)
+                    count = (results_data1.size * 25) / 100
+                    results_data1 = results_data1.last(count)
+                    
+                    @cis1 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
+                    @averages1 = AnnualResult.where(:sub1 => 0, :watershed_id => @scenario1).pluck('avg(orgn), avg(qn), avg(no3-qn), avg(qdrn), avg(orgp), avg(po4), avg(qdrp), avg(surface_flow), avg(flow-surface_flow), avg(qdr), avg(irri), avg(dprk), avg(sed), avg(ymnu)')
+                    @totals1 = AnnualResult.where(:sub1 => 0, :watershed_id => @scenario1).pluck('avg(orgn)*' + @total_area1.to_s, 'avg(qn)*' + @total_area1.to_s, 'avg(no3-qn)*' + @total_area1.to_s, 'avg(qdrn)*' + @total_area1.to_s, 'avg(orgp)*' + @total_area1.to_s, 'avg(po4)*' + @total_area1.to_s, 'avg(qdrp)*' + @total_area1.to_s, 'avg(surface_flow)*' + @total_area1.to_s, 'avg(flow-surface_flow)*' + @total_area1.to_s, 'avg(qdr)*' + @total_area1.to_s, 'avg(irri)*' + @total_area1.to_s, 'avg(dprk)*' + @total_area1.to_s, 'avg(sed)*' + @total_area1.to_s, 'avg(ymnu)*' + @total_area1.to_s)
+                    crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where("watershed_id = ? AND yldg+yldf > ?", @scenario1, 0)
+                    @cic1 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
+                    @crops1 = CropResult.where("watershed_id = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg-yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+                end
+                session[:scenario2] = ""
+                session[:scenario3] = ""
+            end
+            if @scenario2 > "0" then
+                session[:scenario2] = @scenario2
+                if session[:simulation] == 'scenario'
+                    @total_area2 = @field.field_area
+                    bmps = Scenario.find(@scenario2).bmps
+                    bmps.each do |b|
+                        case b.bmpsublist_id
+                        when 13, 8
+                            if b.sides == 1 then
+                                @total_area2 -= b.area 
+                            end
+                        when 14, 15
+                            @total_area2 -= b.area
+                        end
+                    end
+                    results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario2).order(:pcp)
+                    count = (results_data1.size * 25) / 100
+                    results_data1 = results_data1.last(count)
+                    
+                    
+                    @cis2 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
+                    @averages2 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario2).pluck('avg(orgn), avg(qn), avg(no3-qn), avg(qdrn), avg(orgp), avg(po4), avg(qdrp), avg(surface_flow), avg(flow-surface_flow), avg(qdr), avg(irri), avg(dprk), avg(sed), avg(ymnu)')
+                    @totals2 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario2).pluck('avg(orgn)*' + @total_area2.to_s, 'avg(qn)*' + @total_area2.to_s, 'avg(no3-qn)*' + @total_area2.to_s, 'avg(qdrn)*' + @total_area2.to_s, 'avg(orgp)*' + @total_area2.to_s, 'avg(po4)*' + @total_area2.to_s, 'avg(qdrp)*' + @total_area2.to_s, 'avg(surface_flow)*' + @total_area2.to_s, 'avg(flow-surface_flow)*' + @total_area2.to_s, 'avg(qdr)*' + @total_area2.to_s, 'avg(irri)*' + @total_area2.to_s, 'avg(dprk)*' + @total_area2.to_s, 'avg(sed)*' + @total_area2.to_s, 'avg(ymnu)*' + @total_area2.to_s)
+                    crops_data2 = CropResult.select('*', 'yldg+yldf AS yield').where("scenario_id = ? AND yldg+yldf > ?", @scenario2, 0)
+                    @cic2 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
+                    @crops2 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg-yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+                else
+                    if params[:result1] != nil 
+                        if !params[:result1][:scenario_id].empty? then
+                            watershed_scenarios = WatershedScenario.where(:watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
+                            watershed_scenarios.each do |ws|
+                                @total_area2 += Field.find(ws.field_id).field_area
+                            end
+                        end
+                    end
+                    results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :watershed_id => @scenario2).order(:pcp)
+                    count = (results_data1.size * 25) / 100
+                    results_data1 = results_data1.last(count)
+                    
+                    @cis2 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
+                    @averages2 = AnnualResult.where(:sub1 => 0, :watershed_id => @scenario2).pluck('avg(orgn), avg(qn), avg(no3-qn), avg(qdrn), avg(orgp), avg(po4), avg(qdrp), avg(surface_flow), avg(flow-surface_flow), avg(qdr), avg(irri), avg(dprk), avg(sed), avg(ymnu)')
+                    @totals2 = AnnualResult.where(:sub1 => 0, :watershed_id => @scenario2).pluck('avg(orgn)*' + @total_area2.to_s, 'avg(qn)*' + @total_area2.to_s, 'avg(no3-qn)*' + @total_area2.to_s, 'avg(qdrn)*' + @total_area2.to_s, 'avg(orgp)*' + @total_area2.to_s, 'avg(po4)*' + @total_area2.to_s, 'avg(qdrp)*' + @total_area2.to_s, 'avg(surface_flow)*' + @total_area2.to_s, 'avg(flow-surface_flow)*' + @total_area2.to_s, 'avg(qdr)*' + @total_area2.to_s, 'avg(irri)*' + @total_area2.to_s, 'avg(dprk)*' + @total_area2.to_s, 'avg(sed)*' + @total_area2.to_s, 'avg(ymnu)*' + @total_area2.to_s)
+                    crops_data2 = CropResult.select('*', 'yldg+yldf AS yield').where("watershed_id = ? AND yldg+yldf > ?", @scenario2, 0)
+                    @cic2 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
+                    @crops2 = CropResult.where("watershed_id = ? AND (yldg + yldf) > ?", @scenario2, 0).order("name").group(:name).pluck('avg(yldg-yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+                end
+                found = false
+                session[:scenario3] = ""
+            end
+            if @scenario3 > "0" then
+                session[:scenario3] = @scenario3
+                if session[:simulation] == 'scenario'
+                    @total_area3 = @field.field_area
+                    bmps = Scenario.find(@scenario3).bmps
+                    bmps.each do |b|
+                        case b.bmpsublist_id
+                        when 13, 8
+                            if b.sides == 1 then
+                                @total_area3 -= b.area 
+                            end
+                        when 14, 15
+                            @total_area3 -= b.area
+                        end
+                    end
+                    results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario3).order(:pcp)
+                    count = (results_data1.size * 25) / 100
+                    results_data1 = results_data1.last(count)
+                    
+                    @cis3 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
+                    @averages3 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario3).pluck('avg(orgn), avg(qn), avg(no3-qn), avg(qdrn), avg(orgp), avg(po4), avg(qdrp), avg(surface_flow), avg(flow-surface_flow), avg(qdr), avg(irri), avg(dprk), avg(sed), avg(ymnu)')
+                    @totals3 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario3).pluck('avg(orgn)*' + @total_area3.to_s, 'avg(qn)*' + @total_area3.to_s, 'avg(no3-qn)*' + @total_area3.to_s, 'avg(qdrn)*' + @total_area3.to_s, 'avg(orgp)*' + @total_area3.to_s, 'avg(po4)*' + @total_area3.to_s, 'avg(qdrp)*' + @total_area3.to_s, 'avg(surface_flow)*' + @total_area3.to_s, 'avg(flow-surface_flow)*' + @total_area3.to_s, 'avg(qdr)*' + @total_area3.to_s, 'avg(irri)*' + @total_area3.to_s, 'avg(dprk)*' + @total_area3.to_s, 'avg(sed)*' + @total_area3.to_s, 'avg(ymnu)*' + @total_area3.to_s)
+                    crops_data3 = CropResult.select('*', 'yldg+yldf AS yield').where("scenario_id = ? AND yldg+yldf > ?", @scenario3, 0)
+                    @cic3 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
+                    @crops3 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg-yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+                else
+                    if params[:result1] != nil 
+                        if !params[:result1][:scenario_id].empty? then
+                            watershed_scenarios = WatershedScenario.where(:watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
+                            watershed_scenarios.each do |ws|
+                                @total_area3 += Field.find(ws.field_id).field_area
+                            end
+                        end
+                    end
+                    results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :watershed_id => @scenario3).order(:pcp)
+                    count = (results_data1.size * 25) / 100
+                    results_data1 = results_data1.last(count)
                     
                     @cis3 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
                     @averages3 = AnnualResult.where(:sub1 => 0, :watershed_id => @scenario3).pluck('avg(orgn), avg(qn), avg(no3-qn), avg(qdrn), avg(orgp), avg(po4), avg(qdrp), avg(surface_flow), avg(flow-surface_flow), avg(qdr), avg(irri), avg(dprk), avg(sed), avg(ymnu)')
@@ -729,7 +886,7 @@ class ResultsController < ApplicationController
   end
 
   def get_chart_serie(scenario_id, month_or_year)
-    #byebug
+    #
     if month_or_year == 1 then #means chart is annual
   		if session[:simulation] != 'scenario' then
   			watershed_scenarios = WatershedScenario.where(:watershed_id => scenario_id)
@@ -811,7 +968,7 @@ class ResultsController < ApplicationController
 		        last_year = Field.find(params[:field_id]).weather.simulation_final_year
             end
             chart_values.each do |c|
-                #byebug
+                #
                 # while current_year < c.month_year
                 #     chart = Array.new
                 #     chart.push(current_year)
