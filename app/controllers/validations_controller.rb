@@ -2,7 +2,6 @@ class ValidationsController < ApplicationController
 
   # GET /validation
   def index
-  	debugger
   end
 
   # GET /validations/1
