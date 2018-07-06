@@ -154,7 +154,7 @@ class ResultsController < ApplicationController
   	if params[:button] != nil
   		#@type = params[:button]
   	    # dry years menu item was clicked
-        if (params[:button] == t('result.dry_years')) or (params[:year_type][:year_type] == t('result.dry_years'))
+        if (params[:button] == t('result.dry_years')) #or (params[:year_type][:year_type] == t('result.dry_years'))
             @type = t("result.dry_years")
         # wet years menu item was clicked
         elsif params[:button] == t('result.wet_years')
@@ -179,7 +179,7 @@ class ResultsController < ApplicationController
       @cis1 = nil
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil)? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
-        when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil"), t("result.summary"), t('result.dry_years')     	
+        when t("general.view"), t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil"), t("result.summary"), t('result.all_years')     	
         	
 			if (@type.include? t('result.summary') or @type.include? t('general.view')) then
 				if @scenario1 > "0" then
@@ -306,6 +306,7 @@ class ResultsController < ApplicationController
 						@crops3 = CropResult.where("watershed_id = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg-yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
 					end
 					found = false
+                    @type = t('result.all_years')
 
 				end   # end result 3
 			end #end if params button summary
@@ -447,6 +448,7 @@ class ResultsController < ApplicationController
         
         # dry years
         when t('result.dry_years')
+            
             if @scenario1 > "0" then
                 session[:scenario1] = @scenario1
                 if session[:simulation] == 'scenario'

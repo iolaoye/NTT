@@ -70,7 +70,7 @@
 		          	:selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
 		        <% end %>
 		        <% case @type %>
-		        <% when t('general.view'), t('result.summary'), t('result.dry_years'), t('result.wet_years'), "Tabular" %>
+		        <% when t('general.view'), t('result.summary'), t('result.dry_years'), t('result.all_years'), t('result.wet_years'), "Tabular" %>
 		        	<%= hidden_field(:year_type, :year_type, :value => @type) %>
 		        	<td>
 	    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
@@ -90,7 +90,8 @@
 						<tr><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
 
 		        <% when t("result.summary") + " " + t("result.by_soil"), t("general.view") + " " + t("result.by_soil")  %>
-	              	<td>
+	              	<%= hidden_field(:year_type, :year_type, :value => @type) %>
+                    <td>
 	    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
 	    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
 	    	        </td>
@@ -100,6 +101,7 @@
 						</tr>
 						<tr ><td colspan = "3"><%= "(±) = " + t('result.confidence') %></td></tr>
 	          	<% when t('result.annual')  + "-" + t('result.charts'), t("general.view") + " " + t('result.annual')  + "-" + t('result.charts')%>
+                    <%= hidden_field(:year_type, :year_type, :value => @type) %>
 		            <% if I18n.locale.eql?(:en) %>
 		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :group_name, {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
 		              <td><%= collection_select :result5, :description_id, @descriptions.where(:group_id => @group), :id, :description, {:prompt => t('result.select_category'), 
@@ -120,6 +122,7 @@
 			            </td>
 					</tr>
 	        	<% when t('result.monthly') + "-" + t('result.charts'), t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') %>
+                    <%= hidden_field(:year_type, :year_type, :value => @type) %>
 		            <% if I18n.locale.eql?(:en) %>
 		              <td><%= collection_select :result6, :description_id, Description.where("period = 1"), 
 		              	:id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
@@ -135,7 +138,7 @@
 	    </table>
 	</div>
 </form>
-<% if (@type == t("result.summary")) or (@type == t("result.dry_years")) or (@type == t("result.wet_years"))  then %>
+<% if (@type == t("result.summary")) or (@type == t("result.dry_years")) or (@type == t("result.all_years")) or (@type == t("result.wet_years"))  then %>
 	<div id="tbl_detailed" class="table-responsive">
 		<%= render 'detailed' %>
 	</div>
