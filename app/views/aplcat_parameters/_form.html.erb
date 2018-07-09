@@ -200,7 +200,7 @@
     <%= field_set_tag t('aplcat.environmental_parameters') , class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.rhaeba') %>
-		<%= f.number_field :rhaeba, class: 'gvTitleStyleNumber', :step => 'any' %>
+		<%= f.number_field :rhaeba, class: 'gvTitleStyleNumber', :max => 100, :step => 'any' %>
 	  </div>
 	  <div class="field">
 		<%=  t('aplcat.toaboba') %>
@@ -572,10 +572,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :cpl_lowest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 30.0 %>
+        <%= f.number_field :cpl_lowest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 5.0 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :cpl_highest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 30.0 %>
+        <%= f.number_field :cpl_highest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 5.0 %>
       </th>
     </tr>
   </table>
@@ -585,10 +585,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :tdn_lowest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 99.9 %>
+        <%= f.number_field :tdn_lowest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :tdn_highest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 99.9 %>
+        <%= f.number_field :tdn_highest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
     </tr>
   </table>
@@ -598,10 +598,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :ndf_lowest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 99.9 %>
+        <%= f.number_field :ndf_lowest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :ndf_highest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 99.9 %>
+        <%= f.number_field :ndf_highest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
     </tr>
   </table>
@@ -611,10 +611,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :adf_lowest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 99.9 %>
+        <%= f.number_field :adf_lowest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :adf_highest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 99.9 %>
+        <%= f.number_field :adf_highest, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
     </tr>
   </table>
@@ -624,10 +624,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :fir_lowest, class: 'gvTitleStyleNumber', :step => '0.001', min: 0.001, max: 4.0 %>
+        <%= f.number_field :fir_lowest, class: 'gvTitleStyleNumber', :step => '0.001', min: 0.001, max: 5.0 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :fir_highest, class: 'gvTitleStyleNumber', :step => '0.001', min: 0.001, max: 4.0 %>
+        <%= f.number_field :fir_highest, class: 'gvTitleStyleNumber', :step => '0.001', min: 0.001, max: 5.0 %>
       </th>
     </tr>
   </table>
