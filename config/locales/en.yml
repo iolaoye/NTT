@@ -1187,6 +1187,17 @@ en:
       ape: Average pumping efficiency (%) (40-70 usual range)
       fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excreted)
       supplement_parameters: Supplement Parameters
+      animal_transport_input: Animal Transport Input
+      totaltrip: Total number of trips in the simulation
+      tripn: Trip number
+      freqtrip: Frequency of trip (once/how many years)
+      filedetails: File name containing the details for the trip
+      cattlepro: Whether empty trip is related to cattle production or not
+      purpose: Purpose of the trip (Buying/Selling)
+      codepurpose: Code indicating the purpose of the trip
+      buying: Buying
+      selling: Selling
+
   grazing:
       type:
       start_julian:
