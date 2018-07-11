@@ -1,9 +1,9 @@
 class AddColumnToAplcatParameters < ActiveRecord::Migration
   def change
-    add_column :aplcat_parameters, :abwrh, :float
-    add_column :aplcat_parameters, :nocrh, :integer
-    add_column :aplcat_parameters, :abc, :integer
-    add_column :aplcat_parameters, :forage_id, :integer
+    #add_column :aplcat_parameters, :abwrh, :float
+    #add_column :aplcat_parameters, :nocrh, :integer
+    #add_column :aplcat_parameters, :abc, :integer
+    #add_column :aplcat_parameters, :forage_id, :integer
     add_column :aplcat_parameters, :jincrease, :integer
     add_column :aplcat_parameters, :stabilization, :integer
     add_column :aplcat_parameters, :decline, :integer
