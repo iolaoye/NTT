@@ -1137,7 +1137,7 @@ en:
       simulation_methods: Simulation Methods
       water_use_pumping_parameters: Water Use and Pumping Parameters
       other_parameters: Other Parameters
-      animal_feed_parameters: Animal Feed Parameters
+      animal_feed_parameters: Grazing Parameters
       avg_temp: Daily average temperature for each month
       avg_rh: Daily average relative humidity for each month
       grazing: Grazing
@@ -1271,15 +1271,16 @@ en:
     code_supp: 'What the animal eat; Suplement/concentrate ID from "FCT-NASEM-2018.txt"'
     sjd: 'Starting julian day for the feeding period'
     ejd: 'Ending julian day for the feeding period'
-    dmi_code: 'Basis of Dry Matter Intake'
+    dmi_code: 'Basis of Dry Matter Intake (DMI)'
     dmi_code1: '1: % of body weight'
     dmi_code2: '2: Absolute quantity'
-    dmi_cows: 'Dry Matter Intake of cows'
-    dmi_bulls: 'Dry Matter Intake of bulls'
-    dmi_heifers: 'Dry Matter Intake of first calves heifers'
-    dmi_calves: 'Dry Matter Intake of calves'
-    dmi_rheifers: 'Dry Matter Intake of replacement heifers'
-    gwf: 'Green water footprint (L/kg)'
+    dmi_cows: 'Dry Matter Intake (DMI) of cows'
+    dmi_bulls: 'Dry Matter Intake (DMI) of bulls'
+    dmi_heifers: 'Dry Matter Intake (DMI) of first calves heifers'
+    dmi_calves: 'Dry Matter Intake (DMI) of calves'
+    dmi_rheifers: 'Dry Matter Intake (DMI) of replacement heifers'
+    gwff: 'Green water footprint for forage'
+    gwfs: Green water footprint of supplement/concentrate
     ln1: 'Line 1: Total number of animal feed cattle have access to'
     ln2: 'Animal feed code (refer to feed composition table file "FCT-NASEM-2016.txt")'
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
