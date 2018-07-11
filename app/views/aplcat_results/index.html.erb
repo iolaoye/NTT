@@ -1,0 +1,40 @@
+<h1> Aplcat Results </h1>
+<div class="main">
+  <table>
+    <tr><h4> Select Animal and its corresponding option to view its results</h4></tr><br>
+      <tr>
+        <td><%= select_tag :animal_id, options_for_select(animals, :selected => 0, :required => true), {:prompt => t("Select Animal")} %></td>
+        <td><%= select_tag :option_id, options_for_select(options, :selected => 0, :required => true), {:prompt => t("Select options")} %></td>
+          <div class="actions">
+        <td><%= submit_tag t("general.view"), :id => "results", name: "button", :class => "btn btn-primary" %></td>
+        <td> <%= link_to 'Back', edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :class => "btn btn-primary" %></td>
+          </div>
+        </tr>
+      </table>
+        <div id="animal_growth_results" style=display:none>
+          <h5><%= t('aplcat.animal_weights' + ":") %></h5>
+        </div>
+        <div id="feed_intake_rates" style=display:none>
+          <h5><%= t('aplcat.dry_matter_intake' + ":") %><br>
+            <%= t('aplcat.gross_energy_intake' + ":") %></h5>
+          </div>
+          <div id="water_intake_results" style=display:none>
+            <h5><%= t('aplcat.water_intake' + ":") %></h5>
+          </div>
+          <div id="manure_excretion_results" style=display:none>
+            <h5><%= t('aplcat.solid_manure_excr' + ":") %></h5>
+          </div>
+          <div id="nitrogen_balance_results" style=display:none>
+            <h5><%= t('aplcat.nitrogen_intake' + ":") %><br>
+              <%= t('aplcat.total_nitrogen_excretion' + ":") %><br>
+              <%= t('aplcat.total_nitrogen_retained' + ":") %><br>
+              <%= t('aplcat.fecal_nitrogen_excretion' + ":") %></h5>
+            </div>
+            <div id="grand_averages" style=display:none>
+              <h5><%= t('aplcat.urine_nitrogen_excretion' + ":") %></h5>
+            </div>
+            <div id="greenhouse_gas_emission" style=display:none>
+              <h5><%= t('aplcat.enteric_methane_emission' + ":") %><br>
+                <%= t('aplcat.manure_methane_emission' + ":") %></h5>
+              </div>
+            </div>
