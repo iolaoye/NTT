@@ -94,7 +94,13 @@ class CreateTableAplcatParameters < ActiveRecord::Migration
     t.float :sriip
     t.float :pogu
     t.float :adoa
-    t.integer :forage_id,
+    t.integer :forage_id
+    t.integer :tripn
+    t.integer :freqtrip
+    t.string :filedetails
+    t.integer :cattlepro
+    t.string :purpose
+    t.integer :codepurpose
 
       t.timestamps
     end
