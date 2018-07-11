@@ -1,8 +1,8 @@
 class SupplementParametersController < ApplicationController
   before_filter :set_params
 
-  
-  
+
+
 
   def set_params
     @field = Field.find(params[:field_id])
@@ -14,7 +14,7 @@ class SupplementParametersController < ApplicationController
   # GET /supplement_parameters.json
   def index
     @supplement_parameters = SupplementParameter.where(:scenario_id => params[:scenario_id])
-	
+
 	add_breadcrumb 'Aplcat'
 	add_breadcrumb 'Supplement Parameters'
 
@@ -101,6 +101,6 @@ class SupplementParametersController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def supplement_parameter_params
-      params.require(:supplement_parameter).permit(:code, :dmi_bulls, :dmi_calves, :dmi_code, :dmi_cows, :dmi_heifers, :green_water_footprint, :scenario_id)
+      params.require(:supplement_parameter).permit(:code, :code_for, :starting_julian_day, :ending_julian_day, :dmi_bulls, :dmi_calves, :dmi_code, :dmi_cows, :dmi_heifers, :green_water_footprint, :scenario_id, :forage, :dmi_rheifers)
     end
 end

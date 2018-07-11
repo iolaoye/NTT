@@ -17,7 +17,7 @@ class CreateAplcatParameters < ActiveRecord::Migration
 	  t.integer :jdcc
 	  t.integer :gpc
 	  t.float :tpwg
-	  t.integer :csefa 
+	  t.integer :csefa
 	  t.float :srop
 	  t.float :bwoc
 	  t.integer :jdbs
@@ -47,6 +47,51 @@ class CreateAplcatParameters < ActiveRecord::Migration
 	  t.float :pctbb
 	  t.float :ptdife
 	  t.integer :tnggbc
+    t.float :mrgauh
+    t.float :abwrh
+    t.integer :nocrh
+    t.integer :abc
+    t.float :pcbb
+    t.float :fmbmm
+    t.float :domd
+    t.float :vsim
+    t.float :faueea
+    t.float :acim
+    t.float :mmppm
+    t.float :cffm
+    t.float :fnemm
+    t.float :effd
+    t.float :ptbd
+    t.float :pocib
+    t.float :bneap
+    t.float :cneap
+    t.float :hneap
+    t.float :pobw
+    t.float :posw
+    t.float :posb
+    t.float :poad
+    t.float :poada
+    t.float :cibo
+    t.integer :mm_type
+    t.integer :nit
+    t.integer :fqd
+    t.integer :uovfi
+    t.integer :srwc
+    t.float :drinkg
+    t.float :drinkl
+    t.float :drinkm
+    t.float :avgtm
+    t.float :avghm
+    t.float :rhae
+    t.float :tabo
+    t.float :mpism
+    t.float :spilm
+    t.float :pom
+    t.float :srinr
+    t.float :sriip
+    t.float :pogu
+    t.float :adoa
+    t.float :ape
 
       t.timestamps
     end
