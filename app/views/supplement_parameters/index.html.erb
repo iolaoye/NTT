@@ -1,26 +1,27 @@
 <div class="page-header"><h1><%= t("menu.supplement_parameters") %></h1></div>
 <%= link_to  'Aplcat' + " " + t('result.summary') + " " + t('menu.parameters_file'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :class => 'btn btn-primary' %>
-<td><%= link_to t('aplcat.grazing') + " " + t('menu.parameters_file'), project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td><br/><br/>
+<td><%= link_to t('aplcat.grazing') + " " + t('menu.parameters_file'), project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td>
+<td><%= link_to t('general.view') + " " + t('menu.results'), project_field_scenario_aplcat_results_path(@project, @field, @scenario), :class => 'btn btn-success' %></td><br/><br/>
 <div class="table-responsive">
   <div class="panel panel-default">
     <table class="table table-striped">
       <thead>
         <tr class='gvHeaderStyle'>
-          <th class="gvCellStyleTitle">Type of Supplement</th>
+          <th class="gvCellStyleTitle">Forage ID</th>
           <th class="gvCellStyleTitle">Starting julian day</th>
           <th class="gvCellStyleTitle">Ending julian day</th>
           <th class="gvCellStyleTitle">Forage DMI cows</th>
           <th class="gvCellStyleTitle">Forage DMI bulls</th>
           <th class="gvCellStyleTitle">Forage DMI heifers</th>
           <th class="gvCellStyleTitle">Forage DMI calves</th>
-          <th class="gvCellStyleTitle">Forage dmi replacement heifers</th>
+          <th class="gvCellStyleTitle">Forage DMI replacement heifers</th>
           <th class="gvCellStyleTitle">Green water footprint</th>
-          <th class="gvCellStyleTitle">DMI code</th>
-          <th class="gvCellStyleTitle">DMI cows</th>
-          <th class="gvCellStyleTitle">DMI bulls</th>
-          <th class="gvCellStyleTitle">DMI heifers</th>
-          <th class="gvCellStyleTitle">DMI calves</th>
-          <th class="gvCellStyleTitle">DMI replacement heifers</th>
+          <th class="gvCellStyleTitle">Supplement ID</th>
+          <th class="gvCellStyleTitle">Supplement DMI cows</th>
+          <th class="gvCellStyleTitle">Supplement DMI bulls</th>
+          <th class="gvCellStyleTitle">Supplement DMI heifers</th>
+          <th class="gvCellStyleTitle">Supplement DMI calves</th>
+          <th class="gvCellStyleTitle">Supplement DMI replacement heifers</th>
           <th class="gvCellStyleTitle">Green water footprint of supplement</th>
           <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
         </tr>
