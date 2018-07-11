@@ -9,18 +9,19 @@
           <th class="gvCellStyleTitle">Type of Supplement</th>
           <th class="gvCellStyleTitle">Starting julian day</th>
           <th class="gvCellStyleTitle">Ending julian day</th>
-          <th class="gvCellStyleTitle">Forage Dmi cows</th>
-          <th class="gvCellStyleTitle">Forage Dmi bulls</th>
-          <th class="gvCellStyleTitle">Forage Dmi heifers</th>
-          <th class="gvCellStyleTitle">Forage Dmi calves</th>
+          <th class="gvCellStyleTitle">Forage DMI cows</th>
+          <th class="gvCellStyleTitle">Forage DMI bulls</th>
+          <th class="gvCellStyleTitle">Forage DMI heifers</th>
+          <th class="gvCellStyleTitle">Forage DMI calves</th>
           <th class="gvCellStyleTitle">Forage dmi replacement heifers</th>
           <th class="gvCellStyleTitle">Green water footprint</th>
-          <th class="gvCellStyleTitle">Dmi code</th>
-          <th class="gvCellStyleTitle">Dmi cows</th>
-          <th class="gvCellStyleTitle">Dmi bulls</th>
-          <th class="gvCellStyleTitle">Dmi heifers</th>
-          <th class="gvCellStyleTitle">Dmi calves</th>
-          <th class="gvCellStyleTitle">Dmi replacement heifers</th>
+          <th class="gvCellStyleTitle">DMI code</th>
+          <th class="gvCellStyleTitle">DMI cows</th>
+          <th class="gvCellStyleTitle">DMI bulls</th>
+          <th class="gvCellStyleTitle">DMI heifers</th>
+          <th class="gvCellStyleTitle">DMI calves</th>
+          <th class="gvCellStyleTitle">DMI replacement heifers</th>
+          <th class="gvCellStyleTitle">Green water footprint of supplement</th>
           <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
         </tr>
       </thead>
@@ -48,6 +49,7 @@
         <td><%= supplement_parameter.dmi_heifers %></td>
         <td><%= supplement_parameter.dmi_calves %></td>
         <td><%= supplement_parameter.dmi_rheifers %></td>
+        <td><%= supplement_parameter.green_water_footprint_supplement %></td>
         <td>
             <%= link_to image_tag("view.png"), project_field_scenario_supplement_parameter_path(@project, @field, @scenario, supplement_parameter) %>
             <%= link_to image_tag("edit.png"), edit_project_field_scenario_supplement_parameter_path(@project, @field, @scenario, supplement_parameter) %>
