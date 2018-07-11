@@ -6,4 +6,9 @@ module AplcatParametersHelper
   	]
   end
 
+  def fuel_id
+    [
+      [t("Gasoline"), 1], [t("Diesel"), 2]
+    ]
+  end
 end

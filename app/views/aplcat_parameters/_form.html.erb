@@ -789,6 +789,67 @@
       </div>
     </div>
 
+    <div style='display:none' id="div_15">
+      <div class="field">
+      <%= field_set_tag t('aplcat.secondary_emissions_input'), class:'fieldset' do %>
+      <b><%= t("Engine related parameters for estimation of fuel consumption:") %></b><br><br>
+    <div class="field">
+      <%=  t('aplcat.theta') %>
+      <%= f.number_field :theta, class: 'gvTitleStyleNumber', :step => 'any' %>
+    </div>
+    <div class="field">
+      <%=  t('aplcat.fge') %>
+      <%= f.number_field :fge, class: 'gvTitleStyleNumber', :step => 'any' %>
+    </div>
+    <div class="field">
+      <%=  t('aplcat.fde') %>
+      <%= f.number_field :fde, class: 'gvTitleStyleNumber', :step => 'any' %>
+    </div>
+      <b><%= t("List of each field management operation performed in the year:") %></b><br><br>
+      <div class="field">
+        <table>
+          <tr>
+            <td></td>
+            <td><center><%=  t("Area applicable (ac)") %></center></td>
+            <td><center><%=  t("Equipment") %></center></td>
+            <td><center><%=  t("Fuel used") %></center></td>
+          </tr>
+            <tr>
+              <td><%=  t("First") %></td>
+              <td><%= f.number_field :first_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :first_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :first_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr>
+              <td><%=  t("Second") %></td>
+              <td><%= f.number_field :second_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :second_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :second_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr>
+              <td><%=  t("Third") %></td>
+              <td><%= f.number_field :third_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :third_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :third_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr>
+              <td><%=  t("Fourth") %></td>
+              <td><%= f.number_field :fourth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fourth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fourth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr>
+              <td><%=  t("Fifth") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+        </table>
+      </div>
+      <%end%>
+    </div>
+  </div>
+
   <div class="actions">
     <%= hidden_field_tag(:type, @type) %>
     <%= link_to t('general.back'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => "btn btn-primary"  %>
@@ -800,7 +861,7 @@
 <script>
 	function show_div() {
 	    var div_id = ""
-		for(i=1; i<= 14; i++) {
+		for(i=1; i<= 15; i++) {
 			div_id = "div_".concat(i);
 		    document.getElementById(div_id).style.display="none";
 		}
