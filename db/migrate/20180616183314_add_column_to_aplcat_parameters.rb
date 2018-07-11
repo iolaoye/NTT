@@ -1,4 +1,4 @@
-class AddColumnToAplcatParameters < ActiveRecord::Migration
+class AddColumnsToAplcatParameters < ActiveRecord::Migration
   def change
     add_column :aplcat_parameters, :abwrh, :float
     add_column :aplcat_parameters, :nocrh, :integer
