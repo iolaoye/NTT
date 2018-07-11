@@ -52,6 +52,7 @@ class AplcatParametersController < ApplicationController
   @aplcat[t('aplcat.divv_11')] = 11
   @aplcat[t('aplcat.forage_quantity_input')] = 12
   @aplcat[t('aplcat.animal_transport_input')] = 13
+  @aplcat[t('aplcat.co2_balance_input')] = 14
 
 	add_breadcrumb 'Aplcat'
   	if params[:id] == nil then
@@ -85,6 +86,8 @@ class AplcatParametersController < ApplicationController
     add_breadcrumb 'Forage Quantity Input'
   when 13
     add_breadcrumb 'Animal Transport Input'
+  when 14
+    add_breadcrumb 'CO2 Balance Input'
 	else
 	  add_breadcrumb 'Animal Parameters'
 	end
@@ -164,6 +167,9 @@ class AplcatParametersController < ApplicationController
          :crude_low, :crude_high, :tdn_low, :tdn_high, :ndf_low, :ndf_high, :adf_low, :adf_high, :feed_low, :feed_high, :tripn, :freqtrip, :filedetails,
          :cattlepro, :purpose, :codepurpose, :mdogfc, :mxdogfc, :cwsoj, :cweoj, :ewc, :nodew, :byosm, :eyosm, :mrgauh, :plac, :pcbb, :fmbmm, :domd,
          :faueea, :acim, :mmppm, :cffm, :fnemm, :effd, :ptbd, :pocib, :bneap, :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :drinkg,
-         :drinkl, :drinkm, :avgtm, :avghm, :rhae, :tabo, :mpism, :spilm, :pom, :srinr, :sriip, :pogu, :adoa, :ape)
+         :drinkl, :drinkm, :avgtm, :avghm, :rhae, :tabo, :mpism, :spilm, :pom, :srinr, :sriip, :pogu, :adoa, :ape, :n_tfa, :n_sr, :n_arnfa, :n_arpfa,
+         :n_nfar, :n_pfar, :n_co2enfa, :n_co2epfp, :n_co2enfp, :n_lamf, :n_lan2of, :n_laco2f, :n_socc, :i_tfa, :i_sr, :i_arnfa, :i_arpfa,
+         :i_nfar, :i_pfar, :i_co2enfa, :i_co2epfp, :i_co2enfp, :i_lamf, :i_lan2of, :i_laco2f, :i_socc, :cpl_lowest, :cpl_highest, :tdn_lowest,
+         :tdn_highest, :ndf_lowest, :ndf_highest, :adf_lowest, :adf_highest, :fir_lowest, :fir_highest)
     end
 end
