@@ -1,14 +1,12 @@
 class AplcatParameter < ActiveRecord::Base
-  attr_accessor :mrgauh, :plac, :pcbb, :fmbmm, :domd, :vsim, :faueea, :acim, :mmppm, :cffm, :fnemm, :effd, :ptbd, :pocib, :bneap,
-         :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :abwrh, :nocrh, :abc, :mm_type, :nit, :fqd, :uovfi, :srwc, :mdogfc,
-         :mxdogfc, :cwsoj, :cweoj, :ewc, :nodew, :byosm, :eyosm, :drinkg, :drinkl, :drinkm, :avgtm, :avghm, :rhae, :tabo, :mpism, :spilm,
-         :pom, :srinr, :sriip, :pogu, :adoa, :ape, :forage_id, :jincrease, :opt4, :highest, :lowest, :stabilization, :decline,
-         :tripn, :freqtrip, :filedetails, :cattlepro, :purpose
-
   attr_accessible :abwc, :abwh, :abwmb, :adwgbc, :noc, :nomb, :norh, :prh, :adwgbh, :mrga, :jdcc, :gpc,
 				 :tpwg, :csefa , :srop, :bwoc, :jdbs, :dmd, :dmi, :napanr, :napaip, :mpsm, :splm, :pmme, :rhaeba, :toaboba,
 				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape,
-				 :platc, :pctbb, :ptdife, :tnggbc, :prb, :mm_type, :fmbmm
+				 :platc, :pctbb, :ptdife, :tnggbc, :prb, :mm_type, :fmbmm, :abwrh, :nocrh, :abc, :forage_id, :jincrease, :stabilization, :decline, :opt4,
+         :crude_low, :crude_high, :tdn_low, :tdn_high, :ndf_low, :ndf_high, :adf_low, :adf_high, :feed_low, :feed_high, :tripn, :freqtrip, :filedetails,
+         :cattlepro, :purpose, :codepurpose, :mdogfc, :mxdogfc, :cwsoj, :cweoj, :ewc, :nodew, :byosm, :eyosm, :mrgauh, :plac, :pcbb, :domd,
+         :faueea, :acim, :mmppm, :cffm, :fnemm, :effd, :ptbd, :pocib, :bneap, :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :drinkg,
+         :drinkl, :drinkm, :avgtm, :avghm, :rhae, :tabo, :mpism, :spilm, :pom, :srinr, :sriip, :pogu, :adoa, :ape
 
   #associations
 	  belongs_to :scenario
