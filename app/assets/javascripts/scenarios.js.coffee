@@ -7,7 +7,7 @@ change_select_scenarios = ->
     for i in [1..tbl_scenarios[0].rows.length]
         tbl_scenarios[0].rows[i].cells[0].children[0].checked = tbl_scenarios[0].rows[0].cells[0].children[0].checked
 
-copy_from_other_field = -> 
+copy_from_other_field = ->
     $("#div_copy_other").toggle(true)
     $("#div_new").toggle(false)
 
@@ -40,6 +40,8 @@ $(document).ready ->
     $("#select_all").click ->
         change_select_scenarios()
     $("#simulate_scenario").click ->
+        loading_screen()
+    $("#simulate_aplcat").click ->
         loading_screen()
     $("#other_field_scenario").click ->
         copy_from_other_field()

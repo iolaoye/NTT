@@ -15,7 +15,7 @@
 		<tr>
       <td><%= link_to t('aplcat.grazing') + " " + t('menu.parameters_file'), project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td>
       <td><%= link_to t('aplcat.supplement_parameters'), project_field_scenario_supplement_parameters_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td>
-      <td><%= link_to t('general.view') + " " + t('menu.results'), project_field_scenario_aplcat_results_path(@project, @field, @scenario), :class => 'btn btn-success' %></td>
+      <td><%= link_to t('menu.aplcat') + " " + t('menu.results'), project_field_scenario_aplcat_results_path(@project, @field, @scenario), :class => 'btn btn-success' %></td>
     </tr>
       </table>
       <table>
@@ -672,8 +672,8 @@
 
   <div class="actions">
     <%= hidden_field_tag(:type, @type) %>
-	  <%= f.submit  t('submit.save'), :class => "btn btn-primary"  %>
-    <%= link_to t('general.back'), project_field_scenarios_path(@project, @field), :class => "btn btn-primary"  %>
+    <%= link_to t('general.back'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => "btn btn-primary"  %>
+    <%= link_to t('submit.savecontinue'), project_field_scenarios_path(@project, @field), :class => "btn btn-primary"  %>
   </div>
 <% end %>
 
