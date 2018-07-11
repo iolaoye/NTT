@@ -5,8 +5,6 @@ class GrazingParameter < ActiveRecord::Base
   #associations
 	  belongs_to :scenario
   #validation
-  validates_uniqueness_of :starting_julian_day
-  validates_uniqueness_of :ending_julian_day
   validates :for_dmi_cows, numericality: { greater_than_or_equal_to: 1.0,  less_than_or_equal_to: 3.0 }, if: "ending_julian_day == 1"
   validates :for_dmi_cows, numericality: { greater_than_or_equal_to: 15.0,  less_than_or_equal_to: 30.0 }, if: "ending_julian_day == 2"
   validates :for_dmi_bulls, numericality: { greater_than_or_equal_to: 1.0,  less_than_or_equal_to: 3.5 }, if: "ending_julian_day == 1"

@@ -91,7 +91,7 @@ class CreateAplcatParameters < ActiveRecord::Migration
     t.float :sriip
     t.float :pogu
     t.float :adoa
-    t.float :ape
+    t.integer :forage_id,
 
       t.timestamps
     end

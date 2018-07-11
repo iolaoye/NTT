@@ -9,12 +9,18 @@
           <th class="gvCellStyleTitle">Type of Grass</th>
           <th class="gvCellStyleTitle">Starting julian day</th>
           <th class="gvCellStyleTitle">Ending julian day</th>
+          <th class="gvCellStyleTitle">Forage Dmi cows</th>
+          <th class="gvCellStyleTitle">Forage Dmi bulls</th>
+          <th class="gvCellStyleTitle">Forage Dmi heifers</th>
+          <th class="gvCellStyleTitle">Forage Dmi calves</th>
+          <th class="gvCellStyleTitle">Forage dmi replacement heifers</th>
+          <th class="gvCellStyleTitle">Green water footprint</th>
           <th class="gvCellStyleTitle">Dmi code</th>
           <th class="gvCellStyleTitle">Dmi cows</th>
           <th class="gvCellStyleTitle">Dmi bulls</th>
           <th class="gvCellStyleTitle">Dmi heifers</th>
           <th class="gvCellStyleTitle">Dmi calves</th>
-          <th class="gvCellStyleTitle">Green water footprint</th>
+          <th class="gvCellStyleTitle">Dmi replacement heifers</th>
           <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
         </tr>
       </thead>
@@ -30,12 +36,18 @@
         <td><%= grazing_parameter.code %></td>
         <td><%= grazing_parameter.starting_julian_day %></td>
         <td><%= grazing_parameter.ending_julian_day %></td>
+        <td><%= grazing_parameter.for_dmi_cows %></td>
+        <td><%= grazing_parameter.for_dmi_bulls %></td>
+        <td><%= grazing_parameter.for_dmi_heifers %></td>
+        <td><%= grazing_parameter.for_dmi_calves %></td>
+        <td><%= grazing_parameter.for_dmi_rheifers %></td>
+        <td><%= grazing_parameter.green_water_footprint %></td>
         <td><%= grazing_parameter.dmi_code %></td>
         <td><%= grazing_parameter.dmi_cows %></td>
         <td><%= grazing_parameter.dmi_bulls %></td>
         <td><%= grazing_parameter.dmi_heifers %></td>
         <td><%= grazing_parameter.dmi_calves %></td>
-        <td><%= grazing_parameter.green_water_footprint %></td>
+        <td><%= grazing_parameter.dmi_rheifers %></td>
         <td>
             <%= link_to image_tag("view.png"), project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
             <%= link_to image_tag("edit.png"), edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
@@ -48,5 +60,5 @@
     </table>
   </div>
   </div>
-      
+
 <%= link_to 'New Grazing parameter', new_project_field_scenario_grazing_parameter_path(@project, @field, @scenario), :class => 'btn btn-success' %>

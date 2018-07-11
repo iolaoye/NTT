@@ -80,6 +80,21 @@ class CreateTableAplcatParameters < ActiveRecord::Migration
     t.integer :fqd
     t.integer :uovfi
     t.integer :srwc
+    t.float :drinkg
+    t.float :drinkl
+    t.float :drinkm
+    t.float :avgtm
+    t.float :avghm
+    t.float :rhae
+    t.float :tabo
+    t.float :mpism
+    t.float :spilm
+    t.float :pom
+    t.float :srinr
+    t.float :sriip
+    t.float :pogu
+    t.float :adoa
+    t.integer :forage_id,
 
       t.timestamps
     end
