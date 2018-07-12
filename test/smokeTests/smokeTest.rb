@@ -128,6 +128,9 @@ driver.find_element(:id, "simulate_scenario").click
 driver.find_element(:partial_link_text, 'Nutrient Tracking Tool').click
 driver.find_element(:partial_link_text, 'Last Modified').click
 driver.find_element(:partial_link_text, 'Last Modified').click
+sleep(1)
 driver.find_element(:id,"stest project description").click
+sleep(1)
 driver.switch_to.alert.accept()
+sleep(2)
 puts 'Test finished no errors'
