@@ -175,6 +175,7 @@ class ProjectsController < ApplicationController
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_project
+    
     saved = upload_prj()
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
@@ -186,11 +187,13 @@ class ProjectsController < ApplicationController
 
  ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_prj
+    
     @inps1 = 0
     saved = false
     msg = ""
     @upload_id = 0
     ActiveRecord::Base.transaction do
+      
       #begin
       msg = "OK"
       @upload_id = 0
@@ -218,6 +221,7 @@ class ProjectsController < ApplicationController
         end # end case examples
       end
       @data.root.elements.each do |node|
+        
         case node.name
         when "project"
           msg = upload_project_new_version(node)
@@ -228,6 +232,7 @@ class ProjectsController < ApplicationController
         when "FarmInfo"
           msg = upload_location_info1(node)
         when "FieldInfo"
+          
           msg = upload_field_info(node)
           msg = renumber_subareas()
         when "SiteInfo"
@@ -261,7 +266,7 @@ class ProjectsController < ApplicationController
       end
       #rescue NoMethodError => e
       #msg = e.inspect
-      #saved = false
+    #saved = false
       #raise ActiveRecord::Rollback
       #end
     end
@@ -374,7 +379,11 @@ class ProjectsController < ApplicationController
       xml.field_area field.field_area
       xml.field_average_slope field.field_average_slope
       xml.field_type field.field_type
-      xml.coordinates field.coordinates
+      xml.soilp field.soilp 
+      xml.soil_aliminum field.soil_aliminum 
+      xml.soil_test field.soil_test
+      xml.coordinates field.coordinates   #any thing for field should be before coordinates beacuse here the new field is saved.
+      
       weather = Weather.find_by_field_id(field.id)
       save_weather_information(xml, weather)
       site = Site.find_by_field_id(field.id)
@@ -501,6 +510,9 @@ class ProjectsController < ApplicationController
       xml.bdd layer.bdd
       xml.psp layer.psp
       xml.satc layer.satc
+      xml.soil_aliminum layer.soil_aluminum
+      xml.soil_test_id layer.soil_test_id
+      xml.soil_p_initial layer.soil_p_initial
     } # layer xml
   end
 
@@ -931,6 +943,7 @@ class ProjectsController < ApplicationController
       @project = Project.new
       @project.user_id = session[:user_id]
       node.elements.each do |p|
+        
         case p.name
           when "projectName"
             @project.name = p.text
@@ -953,10 +966,12 @@ class ProjectsController < ApplicationController
   end
 
   def upload_project_new_version(node)
+    
     #begin
       @project = Project.new
       @project.user_id = session[:user_id]
       node.elements.each do |p|
+        
         case p.name
           when "project_name" #if project name exists, save fails
       @project.name = p.text
@@ -1006,6 +1021,7 @@ class ProjectsController < ApplicationController
     begin
       location = Location.find(session[:location_id])
       node.elements.each do |p|
+        
         case p.name
           when "Coordinates"
             location.coordinates = p.text
@@ -1026,6 +1042,7 @@ class ProjectsController < ApplicationController
       location = Location.new
       location.project_id = @project.id
       node.elements.each do |p|
+        
         case p.name
           when "state_id"
             location.state_id = p.text
@@ -1062,10 +1079,12 @@ class ProjectsController < ApplicationController
   # end method
 
   def upload_field_info(node)
+    
     #begin
       field = Field.new
       field.location_id = session[:location_id]
       node.elements.each do |p|
+        
         case p.name
           when "Forestry"
             if p.text == "True" then
@@ -1134,6 +1153,12 @@ class ProjectsController < ApplicationController
         field.field_average_slope = p.text
       when "field_type"
         field.field_type = p.text
+      when "soilp"
+        field.soilp = p.text
+      when "soil_aliminum"
+        field.soil_aliminum = p.text
+      when "soil_test"
+        field.soil_test = p.text
       when "coordinates"
         field.coordinates = p.text
         if field.save! then
@@ -1325,10 +1350,12 @@ class ProjectsController < ApplicationController
   end
 
   def upload_soil_info(node, field_id)
+    
     soil = Soil.new
     soil.field_id = field_id
     soil.selected = false
     node.elements.each do |p|
+      
       case p.name
         when "Selected"
           if p.text == "True" then
@@ -1503,6 +1530,7 @@ class ProjectsController < ApplicationController
   end
 
   def upload_layer_info(node, soil_id)
+    
     layer = Layer.new
     layer.soil_id = soil_id
     node.elements.each do |p|
@@ -1510,6 +1538,7 @@ class ProjectsController < ApplicationController
         when "Depth"
           layer.depth = p.text
         when "SoilP"
+          
           layer.soil_p = p.text
         when "BD"
           layer.bulk_density = p.text
@@ -1556,9 +1585,11 @@ class ProjectsController < ApplicationController
   end
 
   def upload_layer_new_version(soil_id, node)
+    
     layer = Layer.new
     layer.soil_id = soil_id
     node.elements.each do |p|
+
       case p.name
         when "depth"
           layer.depth = p.text

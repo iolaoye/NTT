@@ -166,7 +166,9 @@ class LocationsController < ApplicationController
   			  county_name.slice! " County"
           county_name.slice! " Parish"   #Lousiana Counties
           county_name.slice! "  Borough" #Alaska Counties.
-  			  county = County.find_by_county_name(county_name)
+          county_name.slice! "'s"
+          county = state.counties.where("county_name like '%" + county_name + "%'").first
+  			  #county = County.find_by_county_name(county_name)
   			  if county == nil then 
   				  @location.county_id = 0
   			  else

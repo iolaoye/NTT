@@ -492,6 +492,7 @@ en:
     help: Help
     Language: Language
     documentations: Documentation
+    validation: Validation
   languages:
     english: 'English'
     spanish: 'Spanish'
@@ -880,7 +881,10 @@ en:
     item7: 'Water quality in terms of <strong>nitrogen</strong> (ammonium, nitrate, and organic), <strong>phosphorus</strong> (soluble and adsorbed/mineral and organic), and <strong>pesticides concentrations</strong> may be estimated for each subarea and at the watershed outlet.'
     item8: 'Commercial or manure may be applied at any rate and depth on specified dates or automatically.'
     disclaimer0: 'Disclaimer'
-    disclaimer1: 'Although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the validity of the results and functioning of the program and related program material, nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of the results generated from the tool.'
+    disclaimer1: 'Last updated: 16 Feb 2018<br><br>
+                  The information contained in NTT (Nutrient Tracking Tool) has been tested for use in the <strong>Ohio counties surrounding Lake Erie, in the Mississippi Delta, Missouri, Yakima County in the State of Washington, the northern portion of Oregon, Maryland, Delaware, Pennsylvania, Virginia, Puerto Rico, and Sonoma County in California.</strong> Because your area of interest may contain unique features, the program may not provide the appropriate results in your area when model default parameters are used. All input data and results should be carefully reviewed as errors or omissions in the input data may lead to misleading outcomes. We are currently in the process of completing the testing and validating NTT across the US (this page will be updated accordingly as new information becomes available).<p> 
+                  If you have questions regarding the application of NTT or are interested in having it calibrated and validated for your area, please contact Dr. Ali Saleh at (254)592-1975 (saleh@tiaer.tarleton.edu) or Ms. Mindy Selman at (202) 401-0531 (mselman@oce.usda.gov).<p>
+                  Finally, although NTT has been tested by its developers, NO warranty, expressed or implied, is made as to the validity of the results and functioning of the program and related program material, nor shall the fact of distribution constitute any such warranty; and NO responsibility is assumed by the developers in connection therewith. The user assumes all risks and responsibilities for the use and application of NTT and interpretation of the results generated from the tool. The authors and their affiliated institution, TIAER, Tarleton State University, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
     disclaimer2: 'The authors and their affiliated institution, TIAER, and any other U.S. Government agencies will NOT be liable to NTT users for any damage, including lost profits, lost savings, lost time, actions by regulatory agencies, or any other direct or indirect incidental or consequential damages occurring from the use of or inability to use NTT, its databases, its results, or its documentation for any purpose.'
     references0: 'References'
     references1: 'Peter J. A. Kleinman , A. N. Sharpley , K. Gartley , W. M. Jarrell , S. Kuo , R. G. Menon , R. Myers , K. R. Reddy  & E. O. Skogley. 2007. Interlaboratory comparison of soil phosphorus extracted by various soil test methods.  Journal of Communications in Soil Science and Plant Analysis Volume 32, 2001 - Issue 15-16 Pages 2325-2345.'
@@ -2265,7 +2269,7 @@ en:
     To <strong>Delete</strong> this site, click <img src="/serve_image/delete.png"> under action column.<br>
   routing:
     header: Field Routing (Watershed) Scenarios
-    body1: 'The field routing/watershed watershedfeature allows users to simulate routing between fields. Alternately, users can use the field routing function to simulate a watershed, where instead of fields, the AOIs represent subbasins. A routing scenario will route runoff, sediment, and nutrients from one field to the next (or from one subbasin to the next if used to stimulate watershed) in the specified order. For each routing scenarios/watershed created by the user, the user will need to list the field-scenario routing order. When viewing results, you may note that the load at the outlet of the watershed is less than the sum of the edge of field loads for each individually simulated field/subbasin. This is because NTT simulates attenuation effects of water and nutrients as they flow over the landscape.'
+    body1: 'The field routing/watershed feature allows users to simulate routing between fields. Alternately, users can use the field routing function to simulate a watershed, where instead of fields, the AOIs represent subbasins. A routing scenario will route runoff, sediment, and nutrients from one field to the next (or from one subbasin to the next if used to stimulate watershed) in the specified order. For each routing scenarios/watershed created by the user, the user will need to list the field-scenario routing order. When viewing results, you may note that the load at the outlet of the watershed is less than the sum of the edge of field loads for each individually simulated field/subbasin. This is because NTT simulates attenuation effects of water and nutrients as they flow over the landscape.'
     create:
         header: Create/Name Your Watershed
         body1: 'To begin creating a field routing scenario, click Add New Field Routing (Watershed). Once you do this, a text box will pop up where you can type in the name of the scenario:'
@@ -2449,3 +2453,17 @@ en:
     sites: >
               This is all the information about the APEX site.<br><br>
               To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong>
+
+  validation:
+    default: <strong>NTT general calibration and validation process</strong><br><br>
+             The Nutrient Tracking Tool (NTT) uses the Agricultural Policy Extender (APEX) model to estimate nutrient and sediment losses as well as crop yields. APEX uses a combination of site specific data (crop management information, weather, soil and slope) and regionalized environmental parameters to estimate the results produced in NTT program. Simulations are usually done for >30 years and the main function of NTT to evaluate and compare different farm-management practices in order to minimize nutrient and sediment losses while economically optimize the crop production. However, in order to ensure that parameters used in APEX for the regional NTT simulation are appropriate the following tasks within each stage are taken.
+              <br><br>
+              <strong>Stage 1.</strong> To obtain a general parameterization for each state/region, a series of NTT runs simulating common crop rotations, soils and, weather patterns for the region is done and the results are compared with expected crop yield and nutrient and sediment loss values obtained from National Agriculture Statistics Service, USDA (NASS 2017) . 
+              <br><br>
+              <strong>Stage 2.</strong> During this stage, the field-scale measured data from various sources (e.g., local measured studies and collaborators) are used to finalize the regional APEX parameters.
+              <br><br>
+              <strong>Stage 3.</strong> The final parameters obtained from stage 2 will be used to repeat the process described in stage 1. However, the various conservation practices, common to the local region, are also simulated and evaluated for all soils and weather conditions during this stage.
+              <br><br>
+              <strong>Stage 4.</strong> The final results are evaluated and presented to local stakeholders (if any) and collaborators. The results of the parameterization (for all stages) would be available on the NTT site.
+              <br><br>
+    no_validated: <strong>This state has not been validated yet</strong>  

@@ -27,7 +27,7 @@ class SoilsController < ApplicationController
     flash[:info] = nil
     if @field.updated == true then
       msg = request_soils()
-      if msg != "OK" then flash[:info] = msg end
+      if msg != "OK" then flash.now[:info] = msg end
     end
     @soils = @field.soils
     add_breadcrumb t('menu.soils')
@@ -95,13 +95,21 @@ class SoilsController < ApplicationController
     @soil = Soil.find(params[:id])
     #the wsa in subareas should be updated if % was updated as well as chl and rchl
     wsa_conversion = Field.find(@soil.field_id).field_area / 100 * AC_TO_HA
-    soil_id = Soil.where(:selected => true).last.id
+    soil_id = @field.soils.where(:selected => true).last.id
     respond_to do |format|
       if @soil.update_attributes(soil_params)
         if soil_id == @soil.id then
-          Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01) * 0.9, :slp => @soil.slope / 100)
+          Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
         else
           Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
+        end
+        #then look for scenario with land leveling bmp and adjust slope.
+        @soil.subareas.each do |sub1|
+           ll_bmp = sub1.scenario.bmps.find_by_bmpsublist_id(16)  #find if there is a land leveling bmp for this field
+          if ll_bmp != nil then
+            sub1.slp = sub1.slp * (100 - ll_bmp.slope_reduction) / 100
+            sub1.save
+          end
         end
         session[:soil_id] = @soil.id
         format.html { redirect_to project_field_soils_path(@project, @field), notice: t('models.soil') + " " + @soil.name + " " + t('notices.updated') }
@@ -152,7 +160,7 @@ class SoilsController < ApplicationController
 
   def request_soils()
     uri = URI(URL_TIAER)
-    res = Net::HTTP.post_form(uri, "data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates, "rg" => "yes")
+    res = Net::HTTP.post_form(uri, "data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates.strip, "rg" => "yes")
     if !res.body.include?("error") then
       msg = "OK"
       msg = create_soils(YAML.load(res.body))
@@ -199,7 +207,7 @@ class SoilsController < ApplicationController
       @soil.zqt = 2
       if @soil.drainage_id != nil then
         case true
-          when 1 
+          when 1
             @soil.wtmx = 0
           when 2
             @soil.wtmx = 4
@@ -257,11 +265,11 @@ class SoilsController < ApplicationController
       #if !l[0].include?("layer") then
         #next
       #end
-      layer_number = "layer" + l.to_s 
+      layer_number = "layer" + l.to_s
       layer = @soil.layers.new
       layer.sand = layers[layer_number]["sand"]
       layer.silt = layers[layer_number]["silt"]
-      layer.clay = layers[layer_number]["clay"]
+      layer.clay = 100 - layer.sand - layer.silt
       layer.bulk_density = layers[layer_number]["bd"]
       layer.organic_matter = layers[layer_number]["om"]
       layer.ph = layers[layer_number]["ph"]
