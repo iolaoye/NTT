@@ -10,7 +10,7 @@
 	<%#= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario), :class => 'btn btn-primary', :id => 'new_oper' %>
 	<%= button_tag t('operation.add_cover_crop'), :class => 'btn btn-primary', :id => 'new_ccr' %>
 	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views", :class => 'btn btn-primary', "onclick" => "saveView()" } %>
-	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success' %><br><br>
+	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success', :id => 'continue' %><br><br>
 	<div id="div_new" style="display:none">
 		<%= render "upload" %>
 	</div>
@@ -243,7 +243,7 @@
 					      	<% end %>
 					    </table><br>
 					    <%= link_to t('result.add') + " " + t('general.continues_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 7, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
-					</div> 
+					</div>
 				<% end %>
 				<% if @scenario.rotational_grazing_operations(rotation).any? %>
 					<div class="panel panel-primary">
@@ -286,7 +286,7 @@
 					      <% end %>
 					    </table><br>
 					    <%#= link_to t('operation.add_start_grazing'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 7, :crop => rotation.crop_id), :class => 'btn btn-success'  %>
-					</div> 
+					</div>
 				<% end %>
 				<% if @scenario.liming_operations(rotation).any? %>
 					<div class="panel panel-primary">
@@ -383,7 +383,7 @@
 					</table><br>
 					<%= link_to t('operation.add_kill'), new_project_field_scenario_operation_path(@project, @field, @scenario, :operation => 5, :crop => rotation.crop_id, :rotation => rotation.rotation), :class => 'btn btn-success'  %>
 				  </div>
-				<% end %>. 
+				<% end %>.
 				<% if @scenario.pesticide_operations(rotation).any? %>
 				    <div class="panel panel-primary">
 					  <h4>Pesticide</h4>

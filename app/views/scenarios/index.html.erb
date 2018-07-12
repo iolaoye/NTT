@@ -60,7 +60,7 @@
         <% end %>
 	    <% if @field.annual_results.count > 0 %>
 		    <%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
-		    <%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
+		    <% unless ENV["APP_VERSION"] == "modified" %><%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %><% end %> 
         <% end %>
 	    <br>
         <br>
@@ -89,7 +89,7 @@
 					<% else %>
 					<tr class="gvRowStyleOdd">
 					<% end %>
-						<td class="gvCellStyleText">
+						<td id="<%= scenario.name %>" class="gvCellStyleText">
 						  <%= check_box_tag "select_scenario[]", scenario.id %>
 						</td>
 						<td class="table-link">
