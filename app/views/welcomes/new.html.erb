@@ -86,6 +86,7 @@
         <tr>
       <h1>Welcome</h1>
     </tr>
+      <!--<p><font color="red">This site will be down for upgrade and maintenance untill 5:00 PM Monday April 2, 2018.</font></p><br>-->
       <p>Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. </p>
       <%= render :template => "sessions/index", :style => "white-space: normal;" %>
       <%= image_tag 'tiaer_logo.png', :align=> "left", :style => "margin-left: 2%; max-height: 70px;  " %>
@@ -143,7 +144,10 @@
   </div>-->
   <!-- Future icon -->
   <div class="popup" id="popup2">
-    <strong>What's New</strong><a class="close" id='close2'>×</a><br><br>
+    <strong>What's New</strong><a class="close" id='close2'>×</a>
+    <video width="100%" height="480" controls>
+      <source src="/whats_new.mp4" type="video/mp4">
+    </video><br>
     <p>NTT has been updated and re-released as a national-level tool. NTT can now be used to estimate nutrient and sediment losses from crop and pasture operations across the contiguous United  States.
     NTT is constantly being improved, so stay tuned to find out when new features are being added.
     </p>

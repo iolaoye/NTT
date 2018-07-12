@@ -122,36 +122,41 @@ module ApplicationHelper
 		end
 	end
 
-  def download_apex_files
-    client = Savon.client(wsdl: URL_Weather)
-    response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APEX", "session1" => session[:session_id], "type" => "apex"})
-    path = response.body[:download_apex_folder_response][:download_apex_folder_result]
-	  file_name = path.split("\\")
-	  path = File.join(DOWNLOAD, file_name[2])
-	  require 'open-uri'
-	  File.open(DOWNLOAD + "/" + file_name[2], "wb") do |saved_file|
-	    # the following "open" is provided by open-uri
-	    open("http://nn.tarleton.edu//download/" + file_name[2], "rb") do |read_file|
-	      saved_file.write(read_file.read)
-      end
-			send_file path, :type => "application/xml", :x_sendfile => true
+  	def download_apex_files
+	    client = Savon.client(wsdl: URL_Weather)
+	    response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APEX", "session1" => session[:session_id], "type" => "apex"})
+	    path_source = response.body[:download_apex_folder_response][:download_apex_folder_result]
+			if path_source.nil?
+				flash[:info] = "Error: No simulations exist in this session. " +
+												"Please run a simulation before downloading APEX files."
+				redirect_to project_field_scenarios_path(@project, @field)
+			else
+				file_name = path_source.split("\/")
+				path = File.join(DOWNLOAD, file_name[2] + ".zip")
+				require 'open-uri'
+				File.open(path, "wb") do |saved_file|
+			    # the following "open" is provided by open-uri
+			    open("http://nn.tarleton.edu//NTTRails//NNRestService.ashx?test=zip&path=" + path_source + ".zip", "rb") do |read_file|
+			      saved_file.write(read_file.read)
+		      end
+					send_file path, :type => "application/xml", :x_sendfile => true
+			  end
+			end
   	end
-  end
 
-  def download_aplcat_files
-    client = Savon.client(wsdl: URL_Weather)
-    response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APLCAT", "session1" => session[:session_id], "type" => "aplcat"})
-    path = response.body[:download_apex_folder_response][:download_apex_folder_result]
-	  file_name = path.split("\\")
-	  path = File.join(DOWNLOAD, file_name[2])
-	  require 'open-uri'
-	  File.open(DOWNLOAD + "/" + file_name[2], "wb") do |saved_file|
-	    # the following "open" is provided by open-uri
-	    open("http://nn.tarleton.edu//download/" + file_name[2], "rb") do |read_file|
-	      saved_file.write(read_file.read)
-      end
-			send_file path, :type => "application/xml", :x_sendfile => true
+  	def download_aplcat_files
+	    client = Savon.client(wsdl: URL_Weather)
+	    response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APLCAT", "session1" => session[:session_id], "type" => "aplcat"})
+	    path = response.body[:download_apex_folder_response][:download_apex_folder_result]
+		  file_name = path.split("\\")
+		  path = File.join(DOWNLOAD, file_name[2])
+		  require 'open-uri'
+		  File.open(DOWNLOAD + "/" + file_name[2], "wb") do |saved_file|
+		    # the following "open" is provided by open-uri
+		    open(REMOTE + file_name[2], "rb") do |read_file|
+		      saved_file.write(read_file.read)
+	      end
+				send_file path, :type => "application/xml", :x_sendfile => true
+	  	end
   	end
-  end
-
 end

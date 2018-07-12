@@ -6,13 +6,15 @@ class OperationsController < ApplicationController
 ################################  INDEX  #################################
 # GET /operations
 # GET /operations.json
-  def index
-    @operations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id")
+def index
+    #console
+    add_breadcrumb t('menu.operations')
+
     if params[:bmp_ccr] != nil then
       add_cover_crop
     end
     crop_schedule()
-    add_breadcrumb t('menu.operations')
+    @operations = @operations.reorder("year, month_id, day, rotation, crop_id")
     @rotations = @scenario.operations.where(:activity_id => 1).reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
     #array_of_ids = @scenario.operations.order(:rotation, :activity_id, :year).map(&:rotation&:crop_id)
     #@crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
@@ -22,6 +24,7 @@ class OperationsController < ApplicationController
       else
       @highest_year = 0
     end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @operations }
@@ -94,6 +97,7 @@ class OperationsController < ApplicationController
   def edit
     #@project = Project.find(params[:project_id])
     #@cover_crops = Crop.where("type1 like '%CC%'")
+    
     @operation = Operation.find(params[:id])
     if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
       @operation.po4_p = (@operation.po4_p / PO4_TO_P2O5).round(1)
@@ -336,6 +340,7 @@ class OperationsController < ApplicationController
     #@field = Field.find(params[:field_id])
     #@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
+    
     @count = @operations.count
     @highest_year = 0
     @operations.each do |operation|
@@ -443,7 +448,7 @@ class OperationsController < ApplicationController
 
 ################################  CALL WHEN CLICK IN UPLOAD CROP SCHEDULE  #################################
   def crop_schedule
-    #@operations = Operation.where(:scenario_id => params[:scenario_id])
+    @operations = Operation.where(:scenario_id => params[:scenario_id])
     @count = @operations.count
     @highest_year = 0
     @operations.each do |operation|

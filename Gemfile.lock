@@ -203,7 +203,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  auto_click
   axlsx_rails
   bcrypt-ruby
   bootstrap-sass

@@ -473,6 +473,7 @@ en:
     layers: Layers
     state: States
     utility_file: Utility Files
+    aplcat: Aplcat
   project:
     project: Project
     new_project: 'Create New Project'
@@ -491,6 +492,7 @@ en:
     help: Help
     Language: Language
     documentations: Documentation
+    validation: Validation
   languages:
     english: 'English'
     spanish: 'Spanish'
@@ -899,7 +901,7 @@ en:
     box: 'P.O. Box T410'
     uni: 'Tarleton State University'
     city: 'Stephenville, TX 76402'
-    phone: '(254)968-9079 (Phone)'
+    phone: '(254)968-9799 (Phone)'
     fax: '(254)968-9790 (Fax)'
     email: '<a href="mailto:saleh@tiaer.tarleton.edu?Subject=Hello%20again" target="_top">saleh@tarleton.edu</a>'
   contact2:
@@ -1045,14 +1047,16 @@ en:
   aplcat:
       noc: Number of Cows
       nomb: Number of mature bulls
-      norh: Number of Replacement Heifers
+      norh: Number of First Calf Heifers
+      nocrh: Number of Calves to be Raised as Heifers
       abwc: Average Body Weight of Cows (lb)
       abwmb: Average Body Weight of Mature Bulls (lb)
-      abwh: Average Body Weight of Heifers (lb)
+      abwh: Average Body Weight of First Calf Heifers (lb)
+      abwrh: Average Body Weight of Replacement Heifers (lb)
       prh: Proportion of Replacement Heifers (%)
       prb: Proportion of Replacement Bulls (%)
       adwgbc: Average daily weight gain (lb) by calves/growing cattle
-      adwgbh: Average daily weight gain (lb) by heifers
+      adwgbh: Average daily weight gain (lb) by replacement heifers
       mrga: Mortality rate of growing animals (%)
       jdcc: Julian day of cows conceiving
       gpc: Gestation period of cows
@@ -1061,6 +1065,7 @@ en:
       srop: Success rate of pregnancy (%)
       bwoc: Birth weight of calves (lb)
       jdbs: Julian day of buying/selling
+      abc: Animal Breed Code
       dmd: Dry Matter Digestibility (DMD)(%)
       dmi: "DMI (% of body weight)"
       napanr: Stocking rate in native range. Number of animals/acre
@@ -1087,20 +1092,188 @@ en:
       pctbb: proportion of carcass to boneless beef (%)
       ptdife: Proportion (for beef by-products) to be discounted in footprint estimation
       tnggbc: Total number of grasses grazed by cattle
-      animal_parameters: ANIMAL PARAMETERS
+      animal_parameters: Animal Parameters
       animal_manure_parameters: Animal Manure Parameters
       animal_growth_parameters: Animal Growth and Nutrition Parameters
       environmental_parameters: Environmental Parameters
       greenhouse_parameters: Greenhouse Parameters
+      simulation_parameters: Simulation Parameters
+      forage_quantity_input: Forage Quantity Input
+      forage_id: Forage Id (refer to "FCT-NASEM-2018.txt")
+      jdi: 'Forage Quantity Improvement:'
+      increase: Begin to increase
+      stabilization: Start to stabilize
+      decline: End of stability
+      opt4: Start to decline
+      cplof: Crude protein levels (% DM) of forage
+      lowest: Lowest
+      highest: Highest
+      tdnlof: TDN levels (% DM) of forage
+      nlof: NDF levels (% DM) of forage
+      alof: ADF levels (% DM) of forage
+      firobw: Feed intake rates (% of body weight)
+      mrgauh: Mortality rate of growing animals until harvest
+      plac: Proportion of live animal to carcass (%)
+      pcbb: Proportion of carcass to boneless beef
+      fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excerted)
+      domd: Digestibility of milk (DMD) %
+      vsim: Volatile solid in manure (kg of dry organic matter) If it is zero; model will estimate
+      faueea: 'Fraction of urinary energy expressed as fraction of GE (Typical values: 0.4 forage diet and 0.02 for grain diet)'
+      acim: Ash content in manure (fraction of dry matter intake)
+      mmppm: Maximum methane production potential for the manure (Bo)
+      cffm: 'Conversion factor for manure management system (Increases with temperature: pasture 1-2 storage 2-5)'
+      fnemm: Fraction of nitrogen excretion managed in manure management system
+      effd: Emission factor for direct N2O emissions from manure management system
+      ptbd: Proportion (for beef by-products) to be discounted in footprint estimation (e.g. value of byproducts)
+      pocib: Proportion of carbon in beef cattle manure (% on a dry matter basis)
+      bneap: 'Bulls: Nitrogen excretion as proportion of intake (%)'
+      cneap: 'Cows: Nitrogen excretion as proportion of intake (%)'
+      hneap: 'Heifers: Nitrogen excretion as proportion of intake (%)'
+      pobw: Proportion (0 to 1) of body weight as shrunk body weight (SBW)
+      posw: Proportion (0 to 1) of shrunk weight gain (SWG) as empty body gain (EBG)
+      posb: Proportion (0 to 1) of shrunk body weight (SBW) as empty body weight (EBW)
+      poad: Proportion (0 to 1) of apparent digestion of RDP in rumen
+      poada: Proportion (0 to 1) of apparent digestion of RUP in abomasum
+      cibo: '% change in bodyweight for over-eating'
+      simulation_methods: Simulation Methods
       water_use_pumping_parameters: Water Use and Pumping Parameters
       other_parameters: Other Parameters
-      animal_feed_parameters: Animal Feed Parameters
+      animal_feed_parameters: Grazing Parameters
       avg_temp: Daily average temperature for each month
       avg_rh: Daily average relative humidity for each month
       grazing: Grazing
-      mm_type: Enter 1 to use IPCC tier 2 and 2 to use a fraction of manure to estimate manure methane
+      mm_type: Manure to estimate manure methane
+      ipcc: Use IPCC tier 2
+      chianese: Use Chianese (co-efficient method based on total manure)
+      nit: Nitrogen balance estimation
+      wal: Waldip and Dong
+      nasem: NASEM equation 16_1 and 16_3
+      massb: Mass balance approach
+      fqd: Forage quality data
+      ufq: Use forage quality
+      dufq: Don't use forage quality
+      uovfi: Use of variable forage intake rate w.r.t. quality in grazing period
+      vr1: Variable rate
+      ib2: As indicated below
+      srwc: Simulate realistic weight change in proportion to availability of animal
+      syes: Yes, Simulate
+      sno: No, Don't simulate
+      scenario_file: Scenario File
+      mdogfc: Minimum days of gestation for cows
+      mxdogfc: Maximum days of gestation for cows
+      cwsoj: Calving window starts on Julian day
+      cweoj: Calving window ends on Julian day
+      ewc: Early weaning code
+      early: Early
+      late: Late
+      no_change: No change
+      nodew: Number of days early/late weaning
+      byosm: Beginning year of simulation
+      eyosm: Ending year of simulation
+      divv_11: Water Estimation Parameters
+      drinkg: Drinking water adjustment factor for weight:Growing animals
+      drinkl: Drinking water adjustment factor for weight:Lactating cows
+      drinkm: Drinking water adjustment factor for weight:Mature bulls
+      avgtm: Daily average temperature for each month
+      avghm: Daily average relative humidity for each month
+      rhae: Relative humidity of air exhaled by animals (%)
+      tabo: Temperature of air breathed out by animals (deg F)
+      mpism: Moisture present in solid manure (%)
+      spilm: Solids present in liquid manure (urine) (%)
+      pom: Proportion of manure (solid+liquid) moisture evaporated (%) [30-40% literature value]
+      srinr: "Stocking rate in native range: number of animals/acre"
+      sriip: "Stocking rate in introduced pasture: number of animals/acre"
+      pogu: Proportion of groundwater used (%) in animal production
+      adoa: Average depth of aquifer (feet)
+      ape: Average pumping efficiency (%) (40-70 usual range)
       fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excreted)
       supplement_parameters: Supplement Parameters
+      animal_transport_input: Animal Transport Input
+      totaltrip: Total number of trips in the simulation
+      tripn: Trip number
+      trans_feeder: Transporting feeder cattle or transporting cattle for auction
+      trans_finish: Transporting finished cattle
+      categories_trans: Categories of animal transported
+      categories_slaug: Categories of animals finished and ready for slaughter
+      avg_marweight: Average market weight of each animal (lb)
+      num_animal: Number of animals in each category
+      mortality_rate: Mortality rate of cattle
+      distance: Distance moved (miles)
+      trailer: Trailer selected for moving
+      trucks: Truck selected for moving
+      fuel_type: Fuel type
+      same_vehicle: Use the same vehicle for all trips?
+      loading: Loading pressure equation
+      thoughtless: Thoughtless loading
+      arranged: Some arranged loading
+      floor_space: Floor space requirement based loading
+      carcass: Proportion of live animal becoming carcass (%)
+      boneless_beef: Proportion of carcass becoming boneless beef (%)
+      freqtrip: Frequency of trip (once/how many years)
+      filedetails: File name containing the details for the trip
+      cattlepro: Whether empty trip is related to cattle production or not
+      purpose: Purpose of the trip (Buying/Selling)
+      codepurpose: Code indicating the purpose of the trip
+      buying: Buying
+      selling: Selling
+      calf: Calf
+      rep_heifers: Replacement Heifers
+      fc_heifers: First Calf Heifers
+      cow: Cow
+      bull: Bull
+      agr: Animal Growth Results
+      fir: Feed Intake Rates
+      wir: Water Intake Results
+      mer: Manure excretion Results
+      nbl: Nitrogen Balance Results
+      gavg: Grand Averages
+      ghge: Greenhouse gas emissions
+      animal_weights: Animal Weights
+      dry_matter_intake: Dry Matter Intake
+      gross_energy_intake: Gross Matter Intake
+      water_intake: Water Intake
+      solid_manure_excr: Soild Manure Excretion
+      nitrogen_intake: nitrogen_intake
+      total_nitrogen_excretion: Total Nitrogen Excretion
+      total_nitrogen_retained: Total Nitrogen Retained
+      fecal_nitrogen_excretion: Fecal Nitrogen Excretion
+      urine_nitrogen_excretion: Urine Nitrogen Excretion
+      enteric_methane_emission: Enteric Methane Emission
+      manure_methane_emission: Manure Methane Emission
+      co2_balance_input: CO2 Balance Input
+      selectp: Please select a parameter
+      nativer: Parameters for native range
+      n_tfa: Total farm area
+      n_sr: Stoking rate (ac/cow)
+      n_arnfa: Area receiving N fertilizer application (acres)
+      n_arpfa: Area receiving P fertilizer application (acres)
+      n_nfar: Nitrogen fertilizer application rate (kg of N/ha/year)
+      n_pfar: Phosphorus fertilizer application rate (kg of P/ha/year)
+      n_co2enfp: CO2 emission of Nitrogen fertilizer production (kg of CO2/kg of N use)
+      n_co2enfa: CO2 emission of N fertilizer application (35.25 kg of CO2/ha/year)
+      n_co2epfp: CO2 emission of phosphorus fertilizer production (kg of CO2/kg of P use)
+      n_lamf: Land atmosphere methane flux (kg of CO2/ha/year)
+      n_lan2of: Land atmosphere N2O flux (kg of CO2/ha/year)
+      n_laco2f: Land atmosphere CO2 flux (kf of CO2/ha/year)
+      n_socc: Soil organic carbon change (kg of CO2/ha/year)
+      introducedp: Parameters for introduced pasture
+      i_tfa: Total farm area
+      i_sr: Stoking rate (ac/cow)
+      i_arnfa: Area receiving N fertilizer application (acres)
+      i_arpfa: Area receiving P fertilizer application (acres)
+      i_nfar: Nitrogen fertilizer application rate (kg of N/ha/year)
+      i_pfar: Phosphorus fertilizer application rate (kg of P/ha/year)
+      i_co2enfp: CO2 emission of Nitrogen fertilizer production (kg of CO2/kg of N use)
+      i_co2enfa: CO2 emission of N fertilizer application (35.25 kg of CO2/ha/year)
+      i_co2epfp: CO2 emission of phosphorus fertilizer production (kg of CO2/kg of P use)
+      i_lamf: Land atmosphere methane flux (kg of CO2/ha/year)
+      i_lan2of: Land atmosphere N2O flux (kg of CO2/ha/year)
+      i_laco2f: Land atmosphere CO2 flux (kf of CO2/ha/year)
+      i_socc: Soil organic carbon change (kg of CO2/ha/year)
+      secondary_emissions_input: Secondary Emissions Input
+      theta: Theta (unit conversion constant) [Adopted from FEM]
+      fge: Fuel use constant for gasoline engines
+      fde: Fuel use constant for diesel engines
   grazing:
       type:
       start_julian:
@@ -1112,6 +1285,11 @@ en:
       norh: 'Total number of female animals kept by the producer as a replacement for the cows sold'
       abwc: 'Body weight of Cows in pounds'
       abwmb: 'Body weight of Bulls in pounds'
+      abwrh: 'Average Body weight of Replacement Heifers in pounds'
+      nocrh: 'Total number of Calves to be raised as Heifers'
+      abc: 'Animal breed code to be selected from AnimalBreedDatabase.txt'
+      graze_code: 'Refer to feed composition table file "FCT-NASEM-2016.txt"'
+      dmis: '% of animal bodyweight (OR) lb/day'
       abwh: 'Body weight of Heifers in pounds'
       prh: 'A value of 10  % means Cows live in the Cow-Calf system for ten years before slaughter'
       prb: 'A value of 20  % means Bulls live in the Cow-Calf system for five years before slaughter'
@@ -1161,20 +1339,28 @@ en:
       animal_feed_parameters:
       supplement_parameters:
   graze:
-    total: 'Total number of grasses grazed by cattle'
-    code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
-    sjd: 'Starting julian day of grazing'
-    ejd: 'Ending julian day of grazing'
-    dmi_code: 'Dry Matter Intake (DMI) code Use 1: Prop. of animal weight 2: Absolute rates 3:Estimate'
-    dmi_cows: 'DMI of cows (% of animal bodyweight (OR) lb/day)'
-    dmi_bulls: 'DMI of bulls (% of animal bodyweight (OR) lb/day)'
-    dmi_heifers: 'DMI of heifers (% of animal bodyweight (OR) lb/day)'
-    dmi_calves: 'DMI of calves (% of animal bodyweight (OR) lb/day)'
-    gwf: 'Green water footprint (L/kg)'
-    ln1: 'Line 1: Total number of animal feed cattle have access to'
+    forage: 'Read daily forage production data (from APEX/other external source)'
+    yes: 'Yes'
+    no: 'No'
+    total: 'Total number of feedings in a year'
+    code_for: 'What the animal eat; Forage ID from "FCT-NASEM-2018.txt"'
+    code_supp: 'What the animal eat; Suplement/concentrate ID from "FCT-NASEM-2018.txt"'
+    sjd: 'Starting julian day for the feeding period'
+    ejd: 'Ending julian day for the feeding period'
+    dmi_code: 'Basis of Dry Matter Intake (DMI)'
+    dmi_code1: '1: % of body weight'
+    dmi_code2: '2: Absolute quantity'
+    dmi_cows: 'Dry Matter Intake (DMI) of cows'
+    dmi_bulls: 'Dry Matter Intake (DMI) of bulls'
+    dmi_heifers: 'Dry Matter Intake (DMI) of first calves heifers'
+    dmi_calves: 'Dry Matter Intake (DMI) of calves'
+    dmi_rheifers: 'Dry Matter Intake (DMI) of replacement heifers'
+    gwff: 'Green water footprint for forage'
+    gwfs: Green water footprint of supplement/concentrate
+    ln1: 'Total number of animal feed cattle have access to'
     ln2: 'Animal feed code (refer to feed composition table file "FCT-NASEM-2016.txt")'
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
-    ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
+    ln10: 'Green water footprint (litres of water required to produce one kg of animal feed)'
   documents_basic_html:
     <a href="/basic_help.pdf" download="User_Manual.pdf"><u>User Manual</u></a>
   documents_re_html:
@@ -2101,7 +2287,7 @@ en:
     To <strong>Delete</strong> this site, click <img src="/serve_image/delete.png"> under action column.<br>
   routing:
     header: Field Routing (Watershed) Scenarios
-    body1: 'The field routing/watershed watershedfeature allows users to simulate routing between fields. Alternately, users can use the field routing function to simulate a watershed, where instead of fields, the AOIs represent subbasins. A routing scenario will route runoff, sediment, and nutrients from one field to the next (or from one subbasin to the next if used to stimulate watershed) in the specified order. For each routing scenarios/watershed created by the user, the user will need to list the field-scenario routing order. When viewing results, you may note that the load at the outlet of the watershed is less than the sum of the edge of field loads for each individually simulated field/subbasin. This is because NTT simulates attenuation effects of water and nutrients as they flow over the landscape.'
+    body1: 'The field routing/watershed feature allows users to simulate routing between fields. Alternately, users can use the field routing function to simulate a watershed, where instead of fields, the AOIs represent subbasins. A routing scenario will route runoff, sediment, and nutrients from one field to the next (or from one subbasin to the next if used to stimulate watershed) in the specified order. For each routing scenarios/watershed created by the user, the user will need to list the field-scenario routing order. When viewing results, you may note that the load at the outlet of the watershed is less than the sum of the edge of field loads for each individually simulated field/subbasin. This is because NTT simulates attenuation effects of water and nutrients as they flow over the landscape.'
     create:
         header: Create/Name Your Watershed
         body1: 'To begin creating a field routing scenario, click Add New Field Routing (Watershed). Once you do this, a text box will pop up where you can type in the name of the scenario:'
@@ -2285,3 +2471,17 @@ en:
     sites: >
               This is all the information about the APEX site.<br><br>
               To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong>
+
+  validation:
+    default: <strong>NTT general calibration and validation process</strong><br><br>
+             The Nutrient Tracking Tool (NTT) uses the Agricultural Policy Extender (APEX) model to estimate nutrient and sediment losses as well as crop yields. APEX uses a combination of site specific data (crop management information, weather, soil and slope) and regionalized environmental parameters to estimate the results produced in NTT program. Simulations are usually done for >30 years and the main function of NTT to evaluate and compare different farm-management practices in order to minimize nutrient and sediment losses while economically optimize the crop production. However, in order to ensure that parameters used in APEX for the regional NTT simulation are appropriate the following tasks within each stage are taken.
+              <br><br>
+              <strong>Stage 1.</strong> To obtain a general parameterization for each state/region, a series of NTT runs simulating common crop rotations, soils and, weather patterns for the region is done and the results are compared with expected crop yield and nutrient and sediment loss values obtained from National Agriculture Statistics Service, USDA (NASS 2017) . 
+              <br><br>
+              <strong>Stage 2.</strong> During this stage, the field-scale measured data from various sources (e.g., local measured studies and collaborators) are used to finalize the regional APEX parameters.
+              <br><br>
+              <strong>Stage 3.</strong> The final parameters obtained from stage 2 will be used to repeat the process described in stage 1. However, the various conservation practices, common to the local region, are also simulated and evaluated for all soils and weather conditions during this stage.
+              <br><br>
+              <strong>Stage 4.</strong> The final results are evaluated and presented to local stakeholders (if any) and collaborators. The results of the parameterization (for all stages) would be available on the NTT site.
+              <br><br>
+    no_validated: <strong>This state has not been validated yet</strong>  

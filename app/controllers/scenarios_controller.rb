@@ -1,7 +1,7 @@
 class ScenariosController < ApplicationController
   load_and_authorize_resource :field
   load_and_authorize_resource :scenario, :through => :field
- 
+
   include ScenariosHelper
   include SimulationsHelper
   include ProjectsHelper
@@ -41,7 +41,7 @@ class ScenariosController < ApplicationController
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
-    
+
     if (params[:scenario] != nil)
 		msg = copy_other_scenario
 		if msg != "OK" then
@@ -79,7 +79,7 @@ class ScenariosController < ApplicationController
     else
       render "index", error: msg
     end # end if msg
-  end 
+  end
 
 ################################  Simulate NTT for selected scenarios  #################################
   def simulate_ntt
@@ -132,8 +132,8 @@ class ScenariosController < ApplicationController
     @scenario = Scenario.find(params[:id])
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
-	
-    
+
+
     add_breadcrumb t('menu.scenarios'), project_field_scenarios_path(@project, @field)
 	add_breadcrumb t('general.editing') + " " +  t('scenario.scenario')
   end
@@ -274,12 +274,15 @@ class ScenariosController < ApplicationController
 		apex_string += aplcat.norh.to_s + "\t" + "! " + t('aplcat.norh') + "\n"
 		apex_string += aplcat.abwh.to_s + "\t" + "! " + t('aplcat.abwh') + "\n"
 		apex_string += aplcat.nomb.to_s + "\t" + "! " + t('aplcat.nomb') + "\n"
+    apex_string += aplcat.nocrh.to_s + "\t" + "! " + t('aplcat.nocrh') + "\n"
+    apex_string += aplcat.abwrh.to_s + "\t" + "! " + t('aplcat.abwrh') + "\n"
+    apex_string += aplcat.abc.to_s + "\t" + "! " + t('aplcat.abc') + "\n"
 		apex_string += aplcat.abwmb.to_s + "\t" + "! " + t('aplcat.abwmb') + "\n"   #average body weight of mature cows
 		apex_string += sprintf("%.2f", aplcat.adwgbc) + "\t" + "! " + t('aplcat.adwgbc') + "\n"
 		apex_string += sprintf("%.2f", aplcat.adwgbh) + "\t" + "! " + t('aplcat.adwgbh') + "\n"
-		apex_string += sprintf("%.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"	
+		apex_string += sprintf("%.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"
 		apex_string += sprintf("%.2f", aplcat.prh) + "\t" + "! " + t('aplcat.prh') + "\n"
-		apex_string += sprintf("%.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"	
+		apex_string += sprintf("%.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"
 		apex_string += aplcat.jdcc.to_s + "\t" + "! " + t('aplcat.jdcc') + "\n"
 		apex_string += sprintf("%.2f", aplcat.gpc) + "\t" + "! " + t('aplcat.gpc') + "\n"
 		apex_string += sprintf("%.2f", aplcat.tpwg) + "\t" + "! " + t('aplcat.tpwg') + "\n"
@@ -300,18 +303,46 @@ class ScenariosController < ApplicationController
 		apex_string += sprintf("%.2f", aplcat.fnemimms) + "\t" + "! " + t('aplcat.fnemimms') + "\n"
 		apex_string += sprintf("%.2f", aplcat.effn2ofmms) + "\t" + "! " + t('aplcat.effn2ofmms') + "\n"
 		apex_string += sprintf("%.2f", aplcat.ptdife) + "\t" + "! " + t('aplcat.ptdife') + "\n"
+    apex_string += sprintf("%.2f", aplcat.mdogfc) + "\t" + "! " + t('aplcat.mdogfc') + "\n"
+    apex_string += sprintf("%.2f", aplcat.mxdogfc) + "\t" + "! " + t('aplcat.mxdogfc') + "\n"
+    apex_string += sprintf("%.2f", aplcat.cwsoj) + "\t" + "! " + t('aplcat.cwsoj') + "\n"
+    apex_string += sprintf("%.2f", aplcat.cweoj) + "\t" + "! " + t('aplcat.cweoj') + "\n"
+    apex_string += sprintf("%.2f", aplcat.ewc) + "\t" + "! " + t('aplcat.ewc') + "\n"
+    apex_string += sprintf("%.2f", aplcat.nodew) + "\t" + "! " + t('aplcat.nodew') + "\n"
+    apex_string += sprintf("%.2f", aplcat.byosm) + "\t" + "! " + t('aplcat.byosm') + "\n"
+    apex_string += sprintf("%.2f", aplcat.mrgauh) + "\t" + "! " + t('aplcat.mrgauh') + "\n"
+    apex_string += sprintf("%.2f", aplcat.plac) + "\t" + "! " + t('aplcat.plac') + "\n"
+    apex_string += sprintf("%.2f", aplcat.pcbb) + "\t" + "! " + t('aplcat.pcbb') + "\n"
+    apex_string += sprintf("%.2f", aplcat.domd) + "\t" + "! " + t('aplcat.domd') + "\n"
+    apex_string += sprintf("%.2f", aplcat.faueea) + "\t" + "! " + t('aplcat.faueea') + "\n"
+    apex_string += sprintf("%.2f", aplcat.acim) + "\t" + "! " + t('aplcat.acim') + "\n"
+    apex_string += sprintf("%.2f", aplcat.mmppm) + "\t" + "! " + t('aplcat.mmppm') + "\n"
+    apex_string += sprintf("%.2f", aplcat.cffm) + "\t" + "! " + t('aplcat.cffm') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fnemm) + "\t" + "! " + t('aplcat.fnemm') + "\n"
+    apex_string += sprintf("%.2f", aplcat.effd) + "\t" + "! " + t('aplcat.effd') + "\n"
+    apex_string += sprintf("%.2f", aplcat.ptbd) + "\t" + "! " + t('aplcat.ptbd') + "\n"
+    apex_string += sprintf("%.2f", aplcat.pocib) + "\t" + "! " + t('aplcat.pocib') + "\n"
+    apex_string += sprintf("%.2f", aplcat.bneap) + "\t" + "! " + t('aplcat.bneap') + "\n"
+    apex_string += sprintf("%.2f", aplcat.cneap) + "\t" + "! " + t('aplcat.cneap') + "\n"
+    apex_string += sprintf("%.2f", aplcat.hneap) + "\t" + "! " + t('aplcat.hneap') + "\n"
+    apex_string += sprintf("%.2f", aplcat.pobw) + "\t" + "! " + t('aplcat.pobw') + "\n"
+    apex_string += sprintf("%.2f", aplcat.posw) + "\t" + "! " + t('aplcat.posw') + "\n"
+    apex_string += sprintf("%.2f", aplcat.posb) + "\t" + "! " + t('aplcat.posb') + "\n"
+    apex_string += sprintf("%.2f", aplcat.poad) + "\t" + "! " + t('aplcat.poad') + "\n"
+    apex_string += sprintf("%.2f", aplcat.poada) + "\t" + "! " + t('aplcat.poada') + "\n"
+    apex_string += sprintf("%.2f", aplcat.cibo) + "\t" + "! " + t('aplcat.cibo') + "\n"
 		apex_string += "\n"
 		apex_string += "Data on animalfeed (grasses, hay and concentrates)" + "\n"
 		apex_string += "\n"
-		apex_string += sprintf("%d", grazing.count) 
+		apex_string += sprintf("%d", grazing.count)
 		for i in 0..grazing.count-1
-			apex_string += "\t" 
+			apex_string += "\t"
 		end
 		apex_string += "| " + t('graze.total') + "\n\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].code) + "\t"
-		end 
-		apex_string += "| " + t('graze.code') + "\n"
+		end
+		apex_string += "| " + t('graze.code_for') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].starting_julian_day) + "\t"
 		end
@@ -321,73 +352,146 @@ class ScenariosController < ApplicationController
 		end
 		apex_string += "| " + t('graze.ejd') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%d", grazing[i].dmi_code) + "\t"
+			apex_string += sprintf("%d", grazing[i].for_button) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_code') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%.2f", grazing[i].dmi_cows) + "\t"
+			apex_string += sprintf("%.2f", grazing[i].for_dmi_cows) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_cows') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%.2f", grazing[i].dmi_bulls) + "\t"
+			apex_string += sprintf("%.2f", grazing[i].for_dmi_bulls) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_bulls') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%.2f", grazing[i].dmi_heifers) + "\t"
+			apex_string += sprintf("%.2f", grazing[i].for_dmi_heifers) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_heifers') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%.2f", grazing[i].dmi_calves) + "\t"
+			apex_string += sprintf("%.2f", grazing[i].for_dmi_calves) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_calves') + "\n"
+    for i in 0..grazing.count-1
+      apex_string += sprintf("%.2f", grazing[i].for_dmi_rheifers) + "\t"
+    end
+    apex_string += "| " + t('graze.dmi_rheifers') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].green_water_footprint) + "\t"
 		end
-		apex_string += "| " + t('graze.gwf') + "\n"
-		apex_string += "\n"
+		apex_string += "| " + t('graze.gwff') + "\n"
+    for i in 0..grazing.count-1
+      apex_string += sprintf("%.2f", grazing[i].dmi_code) + "\t"
+    end
+    apex_string += "| " + t('graze.code_supp') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_cows) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_cows') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_bulls) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_bulls') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_heifers) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_heifers') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_calves) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_calves') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%.2f", grazing[i].dmi_rheifers) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_rheifers') + "\n"
+    for i in 0..grazing.count-1
+			apex_string += sprintf("%d", grazing[i].green_water_footprint_supplement) + "\t"
+		end
+		apex_string += "| " + t('graze.gwfs') + "\n"
+    apex_string += "\n"
 		apex_string += "Data on animalfeed (Supplement/Concentrate)" + "\n"
 		apex_string += "\n"
-		for j in 0..supplement.count-1
+    for j in 0..supplement.count-1
 			apex_string += sprintf("%d", supplement[j].code) + "\t"
 		end
 		apex_string += "| " + t('supplement.code') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%d", supplement[j].starting_julian_day) + "\t"
+		end
+		apex_string += "| " + t('graze.sjd') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%d", supplement[j].dmi_code) + "\t"
+			apex_string += sprintf("%d", supplement[j].ending_julian_day) + "\t"
+		end
+		apex_string += "| " + t('graze.ejd') + "\n"
+		for j in 0..supplement.count-1
+			apex_string += sprintf("%d", supplement[j].for_button) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_code') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_cows) + "\t"
+			apex_string += sprintf("%.2f", supplement[j].for_dmi_cows) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_cows') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_bulls) + "\t"
+			apex_string += sprintf("%.2f", supplement[j].for_dmi_bulls) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_bulls') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_heifers) + "\t"
+			apex_string += sprintf("%.2f", supplement[j].for_dmi_heifers) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_heifers') + "\n"
 		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_calves) + "\t"
+			apex_string += sprintf("%.2f", supplement[j].for_dmi_calves) + "\t"
 		end
 		apex_string += "| " + t('graze.dmi_calves') + "\n"
+    for j in 0..supplement.count-1
+      apex_string += sprintf("%.2f", supplement[j].for_dmi_rheifers) + "\t"
+    end
+    apex_string += "| " + t('graze.dmi_rheifers') + "\n"
 		for j in 0..supplement.count-1
 			apex_string += sprintf("%d", supplement[j].green_water_footprint) + "\t"
 		end
-		apex_string += "| " + t('graze.gwf') + "\n"
+		apex_string += "| " + t('graze.gwff') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%d", supplement[j].dmi_code) + "\t"
+		end
+		apex_string += "| " + t('graze.code_supp') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_cows) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_cows') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_bulls) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_bulls') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_heifers) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_heifers') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_calves) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_calves') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%.2f", supplement[j].dmi_rheifers) + "\t"
+		end
+		apex_string += "| " + t('graze.dmi_rheifers') + "\n"
+    for j in 0..supplement.count-1
+			apex_string += sprintf("%d", supplement[j].green_water_footprint_supplement) + "\t"
+		end
+		apex_string += "| " + t('graze.gwfs') + "\n"
 		apex_string += "\n"
-		apex_string += "IMPORTANT NOTE: Details of parameters defined in the above 8 lines:" + "\n"
+		apex_string += "IMPORTANT NOTE: Details of parameters defined in the above 11 lines:" + "\n"
 		apex_string += "\n"
-		apex_string += t('graze.ln1') + "\n"
-		apex_string += t('graze.ln2') + "\n"
+		apex_string += "Line 1: " + t('graze.total') + "\n"
+		apex_string += "Line 2: " + t('graze.code_for') + "\n"
 		apex_string += "Line 3: " + t('graze.sjd') + "\n"
 		apex_string += "Line 4: " + t('graze.ejd') + "\n"
-		apex_string += t('graze.ln5') + "\n"
+		apex_string += "Line 5: " + t('graze.ln5') + "\n"
 		apex_string += "Line 6: " + t('graze.dmi_cows') + "\n"
 		apex_string += "Line 7: " + t('graze.dmi_bulls') + "\n"
 		apex_string += "Line 8: " + t('graze.dmi_heifers') + "\n"
 		apex_string += "Line 9: " + t('graze.dmi_calves') + "\n"
-		apex_string += t('graze.ln10') + "\n"
+    apex_string += "Line 10: " + t('graze.dmi_rheifers') + "\n"
+    apex_string += "Line 11: " + t('graze.ln10') + "\n"
 		apex_string += "\n"
 		#***** send file to server "
 		msg = send_file_to_APEX(apex_string, "EmissionInputCowCalf.txt")
@@ -427,9 +531,9 @@ class ScenariosController < ApplicationController
 		end
 		apex_string += sprintf("%.2f", aplcat.adwgbc) + "\t" + "! " + t('aplcat.adwgbc') + "\n"
 		apex_string += sprintf("%.2f", aplcat.adwgbh) + "\t" + "! " + t('aplcat.adwgbh') + "\n"
-		apex_string += sprintf("%.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"	
+		apex_string += sprintf("%.2f", aplcat.mrga) + "\t" + "! " + t('aplcat.mrga') + "\n"
 		apex_string += sprintf("%.2f", aplcat.prh) + "\t" + "! " + t('aplcat.prh') + "\n"
-		apex_string += sprintf("%.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"	
+		apex_string += sprintf("%.2f", aplcat.prb) + "\t" + "! " + t('aplcat.prb') + "\n"
 		apex_string += sprintf("%d", aplcat.jdcc) + "\t" + "! " + t('aplcat.jdcc') + "\n"
 		apex_string += sprintf("%d", aplcat.gpc) + "\t" + "! " + t('aplcat.gpc') + "\n"
 		apex_string += sprintf("%d", aplcat.srop) + "\t" + "! " + t('aplcat.srop') + "\n"
@@ -449,12 +553,189 @@ class ScenariosController < ApplicationController
 		apex_string += sprintf("%.1f", aplcat.pgu) + "\t" + "! " + t('aplcat.pgu') + "\n"
 		apex_string += sprintf("%.1f", aplcat.ada) + "\t" + "! " + t('aplcat.ada') + "\n"
 		apex_string += sprintf("%d", aplcat.ape) + "\t" + "! " + t('aplcat.ape') + "\n"
+    apex_string += sprintf("%.2f", aplcat.drinkg) + "\t" + "! " + t('aplcat.drinkg') + "\n"
+    apex_string += sprintf("%.2f", aplcat.drinkl) + "\t" + "! " + t('aplcat.drinkl') + "\n"
+    apex_string += sprintf("%.2f", aplcat.drinkm) + "\t" + "! " + t('aplcat.drinkm') + "\n"
+    apex_string += sprintf("%.2f", aplcat.avghm) + "\t" + "! " + t('aplcat.avghm') + "\n"
+    apex_string += sprintf("%.2f", aplcat.avgtm) + "\t" + "! " + t('aplcat.avgtm') + "\n"
+    apex_string += sprintf("%.2f", aplcat.rhae) + "\t" + "! " + t('aplcat.rhae') + "\n"
+    apex_string += sprintf("%.2f", aplcat.tabo) + "\t" + "! " + t('aplcat.tabo') + "\n"
+    apex_string += sprintf("%.2f", aplcat.mpism) + "\t" + "! " + t('aplcat.mpism') + "\n"
+    apex_string += sprintf("%.2f", aplcat.spilm) + "\t" + "! " + t('aplcat.spilm') + "\n"
+    apex_string += sprintf("%.2f", aplcat.pom) + "\t" + "! " + t('aplcat.pom') + "\n"
+    apex_string += sprintf("%.2f", aplcat.srinl) + "\t" + "! " + t('aplcat.srinl') + "\n"
+    apex_string += sprintf("%.2f", aplcat.sriip) + "\t" + "! " + t('aplcat.sriip') + "\n"
+    apex_string += sprintf("%.2f", aplcat.pogu) + "\t" + "! " + t('aplcat.pogu') + "\n"
+    apex_string += sprintf("%.2f", aplcat.adoa) + "\t" + "! " + t('aplcat.adoa') + "\n"
 		msg = send_file_to_APEX(apex_string, "WaterEnergyInputCowCalf.txt")
+    apex_string += "\n"
+    apex_string = "Input file for estimating CO2 Balance Input" + "\n"
+		apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.n_tfa) + "\t" + "! " + t('aplcat.n_tfa') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_sr) + "\t" + "! " + t('aplcat.n_sr') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_arnfa) + "\t" + "! " + t('aplcat.n_arnfa') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_arpfa) + "\t" + "! " + t('aplcat.n_arpfa') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_nfar) + "\t" + "! " + t('aplcat.n_nfar') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_npfar) + "\t" + "! " + t('aplcat.n_npfar') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_co2enfp) + "\t" + "! " + t('aplcat.n_co2enfp') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_co2enfa) + "\t" + "! " + t('aplcat.n_co2enfa') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_lamf) + "\t" + "! " + t('aplcat.n_lamf') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_lan2of) + "\t" + "! " + t('aplcat.n_lan2of') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_laco2f) + "\t" + "! " + t('aplcat.n_laco2f') + "\n"
+    apex_string += sprintf("%.2f", aplcat.n_socc) + "\t" + "! " + t('aplcat.n_socc') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_tfa) + "\t" + "! " + t('aplcat.i_tfa') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_sr) + "\t" + "! " + t('aplcat.i_sr') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_arnfa) + "\t" + "! " + t('aplcat.i_arnfa') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_arpfa) + "\t" + "! " + t('aplcat.i_arpfa') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_nfar) + "\t" + "! " + t('aplcat.i_nfar') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_npfar) + "\t" + "! " + t('aplcat.i_npfar') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_co2enfp) + "\t" + "! " + t('aplcat.i_co2enfp') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_co2enfa) + "\t" + "! " + t('aplcat.i_co2enfa') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_lamf) + "\t" + "! " + t('aplcat.i_lamf') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_lan2of) + "\t" + "! " + t('aplcat.i_lan2of') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_laco2f) + "\t" + "! " + t('aplcat.i_laco2f') + "\n"
+    apex_string += sprintf("%.2f", aplcat.i_socc) + "\t" + "! " + t('aplcat.i_socc') + "\n"
+    apex_string += "\n"
+    apex_string = "Input file for estimating Forage Quantity Input" + "\n"
+		apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.forage_id) + "\t" + "! " + t('aplcat.forage_id') + "\n"
+    apex_string += sprintf("%.2f", aplcat.jincrease) + "\t" + "! " + t('aplcat.jincrease') + "\n"
+    apex_string += sprintf("%.2f", aplcat.stabilization) + "\t" + "! " + t('aplcat.stabilization') + "\n"
+    apex_string += sprintf("%.2f", aplcat.decline) + "\t" + "! " + t('aplcat.decline') + "\n"
+    apex_string += sprintf("%.2f", aplcat.opt4) + "\t" + "! " + t('aplcat.opt4') + "\n"
+    apex_string += sprintf("%.2f", aplcat.cpl_lowest) + "\t" + "! " + t('aplcat.cpl_lowest') + "\n"
+    apex_string += sprintf("%.2f", aplcat.cpl_highest) + "\t" + "! " + t('aplcat.cpl_highest') + "\n"
+    apex_string += sprintf("%.2f", aplcat.tdn_lowest) + "\t" + "! " + t('aplcat.tdn_lowest') + "\n"
+    apex_string += sprintf("%.2f", aplcat.tdn_highest) + "\t" + "! " + t('aplcat.tdn_highest') + "\n"
+    apex_string += sprintf("%.2f", aplcat.ndf_lowest) + "\t" + "! " + t('aplcat.ndf_lowest') + "\n"
+    apex_string += sprintf("%.2f", aplcat.ndf_highest) + "\t" + "! " + t('aplcat.ndf_highest') + "\n"
+    apex_string += sprintf("%.2f", aplcat.adf_lowest) + "\t" + "! " + t('aplcat.adf_lowest') + "\n"
+    apex_string += sprintf("%.2f", aplcat.adf_highest) + "\t" + "! " + t('aplcat.adf_highest') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fir_lowest) + "\t" + "! " + t('aplcat.fir_lowest') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fir_highest) + "\t" + "! " + t('aplcat.fir_highest') + "\n"
+    apex_string += "\n"
+    msg = send_file_to_APEX(apex_string, "Co2AndForageQuantityInputCowCalf.txt")
+    apex_string = "Input file for estimating Secondary Emmission Input" + "\n"
+		apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.theta) + "\t" + "! " + t('aplcat.theta') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fge) + "\t" + "! " + t('aplcat.fge') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fde) + "\t" + "! " + t('aplcat.fde') + "\n"
+    apex_string += sprintf("%.2f", aplcat.first_area) + "\t" + "! " + t('aplcat.first_area') + "\n"
+    apex_string += sprintf("%.2f", aplcat.first_fuel) + "\t" + "! " + t('aplcat.first_fuel') + "\n"
+    apex_string += sprintf("%.2f", aplcat.first_equip) + "\t" + "! " + t('aplcat.first_equip') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_area) + "\t" + "! " + t('aplcat.second_area') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_fuel) + "\t" + "! " + t('aplcat.second_fuel') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_equip) + "\t" + "! " + t('aplcat.second_equip') + "\n"
+    apex_string += sprintf("%.2f", aplcat.third_area) + "\t" + "! " + t('aplcat.third_area') + "\n"
+    apex_string += sprintf("%.2f", aplcat.third_fuel) + "\t" + "! " + t('aplcat.third_fuel') + "\n"
+    apex_string += sprintf("%.2f", aplcat.third_equip) + "\t" + "! " + t('aplcat.third_equip') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fourth_area) + "\t" + "! " + t('aplcat.fourth_area') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fourth_fuel) + "\t" + "! " + t('aplcat.fourth_fuel') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fourth_equip) + "\t" + "! " + t('aplcat.fourth_equip') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fifth_area) + "\t" + "! " + t('aplcat.fifth_area') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fifth_fuel) + "\t" + "! " + t('aplcat.fifth_fuel') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fifth_equip) + "\t" + "! " + t('aplcat.fifth_equip') + "\n"
+    apex_string += "\n"
+    apex_string = "Input file for estimating Animal Transport Input" + "\n"
+		apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.tripn) + "\t" + "! " + t('aplcat.tripn') + "\n"
+    apex_string += "\n"
+    apex_string = "This is the First Trip of Animal Transport Input" + "\n"
+    apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.trans_1) + "\t" + "! " + t("Transportation") + "\n"
+    apex_string += sprintf("%.2f", aplcat.categories_trans_1) + "\t" + "! " + t('aplcat.categories_trans') + "\n"
+    apex_string += sprintf("%.2f", aplcat.categories_slaug_1) + "\t" + "! " + t('aplcat.categories_slaug') + "\n"
+    apex_string += sprintf("%.2f", aplcat.avg_marweight_1) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+    apex_string += sprintf("%.2f", aplcat.num_animal_1) + "\t" + "! " + t('aplcat.num_animal') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_avg_marweight_1) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_num_animal_1) + "\t" + "! " + t('aplcat.num_animal') + "\n"
+    apex_string += sprintf("%.2f", aplcat.mortality_rate_1) + "\t" + "! " + t('aplcat.mortality_rate') + "\n"
+    apex_string += sprintf("%.2f", aplcat.distance_1) + "\t" + "! " + t('aplcat.distance') + "\n"
+    apex_string += sprintf("%.2f", aplcat.trailer_1) + "\t" + "! " + t('aplcat.trailer') + "\n"
+    apex_string += sprintf("%.2f", aplcat.trucks_1) + "\t" + "! " + t('aplcat.trucks') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fuel_type_1) + "\t" + "! " + t('aplcat.fuel_type') + "\n"
+    apex_string += sprintf("%.2f", aplcat.same_vehicle_1) + "\t" + "! " + t('aplcat.same_vehicle') + "\n"
+    apex_string += sprintf("%.2f", aplcat.loading_1) + "\t" + "! " + t('aplcat.loading') + "\n"
+    apex_string += sprintf("%.2f", aplcat.carcass_1) + "\t" + "! " + t('aplcat.carcass') + "\n"
+    apex_string += sprintf("%.2f", aplcat.boneless_beef_1) + "\t" + "! " + t('aplcat.boneless_beef') + "\n"
+    apex_string += "\n"
+    apex_string = "This is the Second Trip of Animal Transport Input" + "\n"
+    apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.trans_2) + "\t" + "! " + t("Transportation") + "\n"
+    apex_string += sprintf("%.2f", aplcat.categories_trans_2) + "\t" + "! " + t('aplcat.categories_trans') + "\n"
+    apex_string += sprintf("%.2f", aplcat.categories_slaug_2) + "\t" + "! " + t('aplcat.categories_slaug') + "\n"
+    apex_string += sprintf("%.2f", aplcat.avg_marweight_2) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+    apex_string += sprintf("%.2f", aplcat.num_animal_2) + "\t" + "! " + t('aplcat.num_animal') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_avg_marweight_2) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_num_animal_2) + "\t" + "! " + t('aplcat.num_animal') + "\n"
+    apex_string += sprintf("%.2f", aplcat.mortality_rate_2) + "\t" + "! " + t('aplcat.mortality_rate') + "\n"
+    apex_string += sprintf("%.2f", aplcat.distance_2) + "\t" + "! " + t('aplcat.distance') + "\n"
+    apex_string += sprintf("%.2f", aplcat.trailer_2) + "\t" + "! " + t('aplcat.trailer') + "\n"
+    apex_string += sprintf("%.2f", aplcat.trucks_2) + "\t" + "! " + t('aplcat.trucks') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fuel_type_2) + "\t" + "! " + t('aplcat.fuel_type') + "\n"
+    apex_string += sprintf("%.2f", aplcat.same_vehicle_2) + "\t" + "! " + t('aplcat.same_vehicle') + "\n"
+    apex_string += sprintf("%.2f", aplcat.loading_2) + "\t" + "! " + t('aplcat.loading') + "\n"
+    apex_string += sprintf("%.2f", aplcat.carcass_2) + "\t" + "! " + t('aplcat.carcass') + "\n"
+    apex_string += sprintf("%.2f", aplcat.boneless_beef_2) + "\t" + "! " + t('aplcat.boneless_beef') + "\n"
+    apex_string += "\n"
+    apex_string = "This is the Third Trip of Animal Transport Input" + "\n"
+    apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.trans_3) + "\t" + "! " + t("Transportation") + "\n"
+    apex_string += sprintf("%.2f", aplcat.categories_trans_3) + "\t" + "! " + t('aplcat.categories_trans') + "\n"
+    apex_string += sprintf("%.2f", aplcat.categories_slaug_3) + "\t" + "! " + t('aplcat.categories_slaug') + "\n"
+    apex_string += sprintf("%.2f", aplcat.avg_marweight_3) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+    apex_string += sprintf("%.2f", aplcat.num_animal_3) + "\t" + "! " + t('aplcat.num_animal') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_avg_marweight_3) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_num_animal_3) + "\t" + "! " + t('aplcat.num_animal') + "\n"
+    apex_string += sprintf("%.2f", aplcat.mortality_rate_3) + "\t" + "! " + t('aplcat.mortality_rate') + "\n"
+    apex_string += sprintf("%.2f", aplcat.distance_3) + "\t" + "! " + t('aplcat.distance') + "\n"
+    apex_string += sprintf("%.2f", aplcat.trailer_3) + "\t" + "! " + t('aplcat.trailer') + "\n"
+    apex_string += sprintf("%.2f", aplcat.trucks_3) + "\t" + "! " + t('aplcat.trucks') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fuel_type_3) + "\t" + "! " + t('aplcat.fuel_type') + "\n"
+    apex_string += sprintf("%.2f", aplcat.same_vehicle_3) + "\t" + "! " + t('aplcat.same_vehicle') + "\n"
+    apex_string += sprintf("%.2f", aplcat.loading_3) + "\t" + "! " + t('aplcat.loading') + "\n"
+    apex_string += sprintf("%.2f", aplcat.carcass_3) + "\t" + "! " + t('aplcat.carcass') + "\n"
+    apex_string += sprintf("%.2f", aplcat.boneless_beef_3) + "\t" + "! " + t('aplcat.boneless_beef') + "\n"
+    apex_string += "\n"
+    apex_string = "This is the Fourth Trip of Animal Transport Input" + "\n"
+    apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.trans_4) + "\t" + "! " + t("Transportation") + "\n"
+    apex_string += sprintf("%.2f", aplcat.categories_trans_4) + "\t" + "! " + t('aplcat.categories_trans') + "\n"
+    apex_string += sprintf("%.2f", aplcat.categories_slaug_4) + "\t" + "! " + t('aplcat.categories_slaug') + "\n"
+    apex_string += sprintf("%.2f", aplcat.avg_marweight_4) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+    apex_string += sprintf("%.2f", aplcat.num_animal_4) + "\t" + "! " + t('aplcat.num_animal') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_avg_marweight_4) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+    apex_string += sprintf("%.2f", aplcat.second_num_animal_4) + "\t" + "! " + t('aplcat.num_animal') + "\n"
+    apex_string += sprintf("%.2f", aplcat.mortality_rate_4) + "\t" + "! " + t('aplcat.mortality_rate') + "\n"
+    apex_string += sprintf("%.2f", aplcat.distance_4) + "\t" + "! " + t('aplcat.distance') + "\n"
+    apex_string += sprintf("%.2f", aplcat.trailer_4) + "\t" + "! " + t('aplcat.trailer') + "\n"
+    apex_string += sprintf("%.2f", aplcat.trucks_4) + "\t" + "! " + t('aplcat.trucks') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fuel_type_4) + "\t" + "! " + t('aplcat.fuel_type') + "\n"
+    apex_string += sprintf("%.2f", aplcat.same_vehicle_4) + "\t" + "! " + t('aplcat.same_vehicle') + "\n"
+    apex_string += sprintf("%.2f", aplcat.loading_4) + "\t" + "! " + t('aplcat.loading') + "\n"
+    apex_string += sprintf("%.2f", aplcat.carcass_4) + "\t" + "! " + t('aplcat.carcass') + "\n"
+    apex_string += sprintf("%.2f", aplcat.boneless_beef_4) + "\t" + "! " + t('aplcat.boneless_beef') + "\n"
+    apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.freqtrip) + "\t" + "! " + t('aplcat.freqtrip') + "\n"
+    apex_string += sprintf("%.2f", aplcat.filedetails) + "\t" + "! " + t('aplcat.filedetails') + "\n"
+    apex_string += sprintf("%.2f", aplcat.cattlepro) + "\t" + "! " + t('aplcat.cattlepro') + "\n"
+    apex_string += sprintf("%.2f", aplcat.purpose) + "\t" + "! " + t('aplcat.purpose') + "\n"
+    apex_string += sprintf("%.2f", aplcat.codepurpose) + "\t" + "! " + t('aplcat.codepurpose') + "\n"
+    apex_string += "\n"
+    apex_string = "Input file for estimating Simulation Methods" + "\n"
+		apex_string += "\n"
+    apex_string += sprintf("%.2f", aplcat.mm_type) + "\t" + "! " + t('aplcat.mm_type') + "\n"
+    apex_string += sprintf("%.2f", aplcat.nit) + "\t" + "! " + t('aplcat.nit') + "\n"
+    apex_string += sprintf("%.2f", aplcat.fqd) + "\t" + "! " + t('aplcat.fqd') + "\n"
+    apex_string += sprintf("%.2f", aplcat.uovfi) + "\t" + "! " + t('aplcat.uovfi') + "\n"
+    apex_string += sprintf("%.2f", aplcat.srwc) + "\t" + "! " + t('aplcat.srwc') + "\n"
+    apex_string += "\n"
+    msg = send_file_to_APEX(apex_string, "EmmisionTransportAndSimulationCowCalf.txt")
 	    if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
 	    if msg.include?("Bull output file") then msg="OK" end
 		return msg
   	end
-  
+
   ################################  copy scenario selected  #################################
   def copy_scenario
 	@use_old_soil = false
@@ -502,7 +783,7 @@ class ScenariosController < ApplicationController
     #@field = Field.find(params[:field_id])
     download_apex_files()
   end
-  
+
   private
   	################################  run_scenario - run simulation called from show or index  #################################
   	def run_scenario()
@@ -548,12 +829,12 @@ class ScenariosController < ApplicationController
 	    	@soils = @field.soils.where(:selected => true).limit(1)
 		end
 	    @soil_list = Array.new
-	    if msg.eql?("OK") then msg = create_soils() else return msg  end
+	    if msg.eql?("OK") then msg = create_apex_soils() else return msg  end
 	    @subarea_file = Array.new
 	    @soil_number = 0
 	    if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
 	    if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
-	    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
+	    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information
 	    @scenario.last_simulation = Time.now
 	    if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
 	    return msg

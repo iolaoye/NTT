@@ -642,7 +642,7 @@ ApexParameter.create!({:id => 40017,:parameter_description_id => 46,:value => 0.
 ApexParameter.create!({:id => 40018,:parameter_description_id => 47,:value => 1.0,:project_id => 711}, :without_protection => true)
 ApexParameter.create!({:id => 40019,:parameter_description_id => 48,:value => 0.0,:project_id => 711}, :without_protection => true)
 ApexParameter.create!({:id => 40020,:parameter_description_id => 49,:value => 5.0,:project_id => 711}, :without_protection => true)
-ApexParameter.create!({:id => 40021,:parameter_description_id => 50,:value => 1.0,:project_id => 711}, :without_protection => true)
+ApexParameter.create!({:id => 40021,:parameter_description_id => 50,:value => 0.1,:project_id => 711}, :without_protection => true)
 ApexParameter.create!({:id => 40022,:parameter_description_id => 51,:value => 0.5,:project_id => 711}, :without_protection => true)
 ApexParameter.create!({:id => 40023,:parameter_description_id => 52,:value => 10.0,:project_id => 711}, :without_protection => true)
 ApexParameter.create!({:id => 40024,:parameter_description_id => 53,:value => 0.9,:project_id => 711}, :without_protection => true)
