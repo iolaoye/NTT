@@ -233,7 +233,7 @@ class FieldsController < ApplicationController
     scenarios_simulated = 0
     scenarios_no_simulated = 0
 
-    fork do
+    fork do 
       ActiveRecord::Base.transaction do
         params[:select_field].each do |field_id|
           @field = Field.find(field_id)
