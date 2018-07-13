@@ -17,6 +17,7 @@ NTTG3::Application.routes.draw do
   resources :manure_controls
   resources :grazing_parameters
   resources :aplcat_parameters
+  resources :aplcat_results
   resources :control_descriptions
   resources :parameter_descriptions
   resources :drainages
@@ -90,6 +91,7 @@ NTTG3::Application.routes.draw do
 		    end
 		    resources :grazing_parameters
 		    resources :supplement_parameters
+        resources :aplcat_results
         post :simulate, on: :collection
         resources :operations do
           get :list, on: :collection

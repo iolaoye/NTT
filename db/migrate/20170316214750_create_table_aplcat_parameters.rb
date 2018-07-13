@@ -17,7 +17,7 @@ class CreateTableAplcatParameters < ActiveRecord::Migration
 	  t.integer :jdcc
 	  t.integer :gpc
 	  t.float :tpwg
-	  t.integer :csefa 
+	  t.integer :csefa
 	  t.float :srop
 	  t.float :bwoc
 	  t.integer :jdbs
