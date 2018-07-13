@@ -491,6 +491,7 @@ en:
     help: Help
     Language: Language
     documentations: Documentation
+    validation: Validation
   languages:
     english: 'English'
     spanish: 'Spanish'
@@ -2285,3 +2286,17 @@ en:
     sites: >
               This is all the information about the APEX site.<br><br>
               To <strong>Edit</strong> this site, click <strong><em>Edit</em></strong>
+
+  validation:
+    default: <strong>NTT general calibration and validation process</strong><br><br>
+             The Nutrient Tracking Tool (NTT) uses the Agricultural Policy Extender (APEX) model to estimate nutrient and sediment losses as well as crop yields. APEX uses a combination of site specific data (crop management information, weather, soil and slope) and regionalized environmental parameters to estimate the results produced in NTT program. Simulations are usually done for >30 years and the main function of NTT to evaluate and compare different farm-management practices in order to minimize nutrient and sediment losses while economically optimize the crop production. However, in order to ensure that parameters used in APEX for the regional NTT simulation are appropriate the following tasks within each stage are taken.
+              <br><br>
+              <strong>Stage 1.</strong> To obtain a general parameterization for each state/region, a series of NTT runs simulating common crop rotations, soils and, weather patterns for the region is done and the results are compared with expected crop yield and nutrient and sediment loss values obtained from National Agriculture Statistics Service, USDA (NASS 2017) . 
+              <br><br>
+              <strong>Stage 2.</strong> During this stage, the field-scale measured data from various sources (e.g., local measured studies and collaborators) are used to finalize the regional APEX parameters.
+              <br><br>
+              <strong>Stage 3.</strong> The final parameters obtained from stage 2 will be used to repeat the process described in stage 1. However, the various conservation practices, common to the local region, are also simulated and evaluated for all soils and weather conditions during this stage.
+              <br><br>
+              <strong>Stage 4.</strong> The final results are evaluated and presented to local stakeholders (if any) and collaborators. The results of the parameterization (for all stages) would be available on the NTT site.
+              <br><br>
+    no_validated: <strong>This state has not been validated yet</strong>  

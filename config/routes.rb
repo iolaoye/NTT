@@ -2,6 +2,7 @@ NTTG3::Application.routes.draw do
   resources :crop_results
   resources :annual_results
   resources :faqs
+  resources :validations
   resources :importances
   resources :types
   resources :statuses
@@ -118,7 +119,7 @@ NTTG3::Application.routes.draw do
         resources :layers do
           get :list, on: :member
         end
-		post :save_soils, on: :collection
+		    post :save_soils, on: :collection
         get :soil_layers, on: :member
       end
       resources :results do
@@ -130,11 +131,13 @@ NTTG3::Application.routes.draw do
         get :download_apex_files, on: :member
       end
       resources :apex_parameters do
-		get 'reset', on: :member
-	  end
+		    get 'reset', on: :member
+	    end
+
       resources :apex_controls do
-		get 'reset', on: :member
-	  end
+		    get 'reset', on: :member
+	    end
+    
       resources :apex_soils
       resources :apex_layers
       resources :subareas
@@ -142,6 +145,7 @@ NTTG3::Application.routes.draw do
         get 'download', :on => :collection
       end
       resources :sites
+      post :simulate, on: :collection
     end
 	  get 'copy_project', on: :member
   end
