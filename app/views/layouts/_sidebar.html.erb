@@ -68,8 +68,13 @@
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </div>
             <% end %>
+<<<<<<< HEAD
 			      <% unless ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" %>
               <%#= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %>
+=======
+			      <% unless ENV["APP_VERSION"] == "modified" %>
+              <%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %>
+>>>>>>> 628b6d66b8ab9f4dd3fcb991adfcef207ea779c5
             <% end %>
           </li>
         </ul>

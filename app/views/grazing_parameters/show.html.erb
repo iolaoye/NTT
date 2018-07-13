@@ -1,22 +1,37 @@
 <p id="notice"><%= notice %></p>
+<h3> Grazing Parameters </h3><br>
 
-<p><b>Code:</b><%= @grazing_parameter.code %></p>
+<p><b>Forage ID:</b><%= @grazing_parameter.code %></p>
 
 <p><b>Starting julian day:</b><%= @grazing_parameter.starting_julian_day %></p>
 
 <p><b>Ending julian day:</b><%= @grazing_parameter.ending_julian_day %></p>
 
-<p><b>Dmi code:</b><%= @grazing_parameter.dmi_code %></p>
+<p><b>Forage DMI cows:</b><%= @grazing_parameter.for_dmi_cows %></p>
 
-<p><b>Dmi cows:</b><%= @grazing_parameter.dmi_cows %></p>
+<p><b>Forage DMI bulls:</b><%= @grazing_parameter.for_dmi_bulls %></p>
 
-<p><b>Dmi bulls:</b><%= @grazing_parameter.dmi_bulls %></p>
+<p><b>Forage DMI heifers:</b><%= @grazing_parameter.for_dmi_heifers %></p>
 
-<p><b>Dmi heifers:</b><%= @grazing_parameter.dmi_heifers %></p>
+<p><b>Forage DMI calves:</b><%= @grazing_parameter.for_dmi_calves %></p>
 
-<p><b>Dmi calves:</b><%= @grazing_parameter.dmi_calves %></p>
+<p><b>Forage DMI replacement heifers:</b><%= @grazing_parameter.for_dmi_rheifers %></p>
 
 <p><b>Green water footprint:</b><%= @grazing_parameter.green_water_footprint %></p>
 
-<%= link_to 'Edit', edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, @grazing_parameter.id), :class => "btn btn-primary" %> 
+<p><b>Supplement DMI code:</b><%= @grazing_parameter.dmi_code %></p>
+
+<p><b>Supplement DMI cows:</b><%= @grazing_parameter.dmi_cows %></p>
+
+<p><b>Supplement DMI bulls:</b><%= @grazing_parameter.dmi_bulls %></p>
+
+<p><b>Supplement DMI heifers:</b><%= @grazing_parameter.dmi_heifers %></p>
+
+<p><b>Supplement DMI calves:</b><%= @grazing_parameter.dmi_calves %></p>
+
+<p><b>Supplement DMI replacement heifers:</b><%= @grazing_parameter.dmi_rheifers %></p>
+
+<p><b>Green water footprint of supplement/concentrate:</b><%= @grazing_parameter.green_water_footprint_supplement %></p>
+
+<%= link_to 'Edit', edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, @grazing_parameter.id), :class => "btn btn-primary" %>
 <%= link_to 'Back', project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :class => "btn btn-primary" %>

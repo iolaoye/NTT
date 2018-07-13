@@ -2,12 +2,12 @@
     $("#div_new").toggle(true)
     $("#div_copy_other").toggle(false)
 
-change_select = ->
+change_select_scenarios = ->
     tbl_scenarios = $("#tbl_scenarios")
     for i in [1..tbl_scenarios[0].rows.length]
         tbl_scenarios[0].rows[i].cells[0].children[0].checked = tbl_scenarios[0].rows[0].cells[0].children[0].checked
 
-copy_from_other_field = -> 
+copy_from_other_field = ->
     $("#div_copy_other").toggle(true)
     $("#div_new").toggle(false)
 
@@ -38,8 +38,10 @@ $(document).ready ->
     $("#new_scenario").click ->
         create_scenario()
     $("#select_all").click ->
-        change_select()
+        change_select_scenarios()
     $("#simulate_scenario").click ->
+        loading_screen()
+    $("#simulate_aplcat").click ->
         loading_screen()
     $("#other_field_scenario").click ->
         copy_from_other_field()
