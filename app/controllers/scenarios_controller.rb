@@ -510,7 +510,7 @@ class ScenariosController < ApplicationController
 		# take monthly avg max and min temp and get an average of those two
 		# take monthly rh to add to dringking water.
 		#county = County.find(Location.find(session[:location_id]).county_id)
-		county = @project.location.county_id)
+		county = @project.location.county_id
 	    if county != nil then
 	      client = Savon.client(wsdl: URL_Weather)
 	      response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
