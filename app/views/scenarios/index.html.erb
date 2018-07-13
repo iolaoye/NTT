@@ -56,7 +56,7 @@
     <% if @scenarios.count > 0 %>
 		<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('scenario.scenario'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %>
         <% unless ENV["APP_VERSION"] == "modified" %>
-    <%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + 'Aplcat', data: {disable_with: 'Please wait. Aplcat simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_aplcat" %>
+    <%#= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + 'Aplcat', data: {disable_with: 'Please wait. Aplcat simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_aplcat" %>
         <% end %>
 	    <% if @field.annual_results.count > 0 %>
 		    <%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
