@@ -69,7 +69,11 @@
               </div>
             <% end %>
 			      <% unless ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" %>
+<<<<<<< HEAD
                <%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %> 
+=======
+              <%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %>
+>>>>>>> ce0e98a43c0fb9db6a02dd4c427b408890870325
             <% end %>
           </li>
         </ul>
