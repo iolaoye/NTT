@@ -398,13 +398,14 @@
 		<div class="field" id="div_amount">
 		  	<%= f.label :animals, t('operation.animals') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
-            <!-- <% if operation.org_c == 1 %>
-                <%= t('operation.access_to_stream')%> <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
+		  	<%= f.label :hours, t('operation.access_to_stream'), :style => "display: none" %>
+            <% if operation.org_c == 1 %>
+                <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" style="display: none" >
             <% else %>
-                <%= t('operation.access_to_stream')%> <input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
+                <input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" style="display: none">
             <% end %>
-		  	<%= f.label :hours, t('bmp.hours') %>
-		  	<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %> -->
+		  	<%= f.label :hours, t('bmp.hours'), :style => "display: none" %>
+		  	<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any', :style => "display: none"%>
 		</div>
 		<div class="field" id="div_depth">
 		  	<%= f.label :hours_in_field, t('operation.hours') %>
