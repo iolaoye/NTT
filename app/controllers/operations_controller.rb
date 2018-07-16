@@ -228,11 +228,20 @@ def index
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
-    calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f)
+    if params[:operation][:activity_id] != "7"
+      calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f)
+    end
     #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
       #params[:operation][:depth] = params[:operation][:depth].to_f / 100
     #end
     @operation = Operation.find(params[:id])
+    if params[:operation][:activity_id] == "7"
+      if params[:access][:to_stream] == "on"
+        @operation.org_c = 1
+      else
+        @operation.org_c = 0
+      end
+    end
     @crops = Crop.load_crops(@project.location.state_id)
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     respond_to do |format|
