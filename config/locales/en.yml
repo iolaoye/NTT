@@ -634,6 +634,7 @@ en:
     total_n: Total N (0-100%)
     total_p: Total P (0-100%)
     application_rate: Application Rate
+    access_to_stream: Animals have access to stream?
   bmp:
     bmp_group: "BMP Group"
     select_bmp: Select BMP Group

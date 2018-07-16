@@ -313,7 +313,7 @@
 			<% end %>
 		</div>
 		<div id="div_fertilizer" style="display:none" >
-      <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
+      		<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -398,6 +398,13 @@
 		<div class="field" id="div_amount">
 		  	<%= f.label :animals, t('operation.animals') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
+            <% if operation.org_c == 1 %>
+                <%= t('operation.access_to_stream')%> <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
+            <% else %>
+                <%= t('operation.access_to_stream')%> <input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
+            <% end %>
+		  	<%= f.label :hours, t('bmp.hours') %>
+		  	<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
 		</div>
 		<div class="field" id="div_depth">
 		  	<%= f.label :hours_in_field, t('operation.hours') %>
