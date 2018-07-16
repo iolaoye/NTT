@@ -1,20 +1,28 @@
 <div class="page-header"><h1><%= t("aplcat.animal_feed_parameters") %></h1></div>
 <%= link_to  'Aplcat' + " " + t('result.summary') + " " + t('menu.parameters_file'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :class => 'btn btn-primary' %>
-<td><%= link_to t('aplcat.supplement_parameters'), project_field_scenario_supplement_parameters_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td><br/><br/>
+<td><%= link_to t('aplcat.supplement_parameters'), project_field_scenario_supplement_parameters_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td>
+<td><%= link_to t('menu.aplcat') + " " + t('menu.results'), project_field_scenario_aplcat_results_path(@project, @field, @scenario), :class => 'btn btn-success' %></td><br/><br/>
 <div class="table-responsive">
   <div class="panel panel-default">
     <table class="table table-striped">
       <thead>
         <tr class='gvHeaderStyle'>
-          <th class="gvCellStyleTitle">Type of Grass</th>
+          <th class="gvCellStyleTitle">Forage ID</th>
           <th class="gvCellStyleTitle">Starting julian day</th>
           <th class="gvCellStyleTitle">Ending julian day</th>
-          <th class="gvCellStyleTitle">Dmi code</th>
-          <th class="gvCellStyleTitle">Dmi cows</th>
-          <th class="gvCellStyleTitle">Dmi bulls</th>
-          <th class="gvCellStyleTitle">Dmi heifers</th>
-          <th class="gvCellStyleTitle">Dmi calves</th>
-          <th class="gvCellStyleTitle">Green water footprint</th>
+          <th class="gvCellStyleTitle">Forage DMI cows</th>
+          <th class="gvCellStyleTitle">Forage DMI bulls</th>
+          <th class="gvCellStyleTitle">Forage DMI heifers</th>
+          <th class="gvCellStyleTitle">Forage DMI calves</th>
+          <th class="gvCellStyleTitle">Forage DMI replacement heifers</th>
+          <th class="gvCellStyleTitle">Green water footprint for forage</th>
+          <th class="gvCellStyleTitle">Supplement ID</th>
+          <th class="gvCellStyleTitle">Supplement DMI cows</th>
+          <th class="gvCellStyleTitle">Supplement DMI bulls</th>
+          <th class="gvCellStyleTitle">Supplement DMI heifers</th>
+          <th class="gvCellStyleTitle">Supplement DMI calves</th>
+          <th class="gvCellStyleTitle">Supplement DMI replacement heifers</th>
+          <th class="gvCellStyleTitle">Green water footprint for supplement</th>
           <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
         </tr>
       </thead>
@@ -30,12 +38,19 @@
         <td><%= grazing_parameter.code %></td>
         <td><%= grazing_parameter.starting_julian_day %></td>
         <td><%= grazing_parameter.ending_julian_day %></td>
+        <td><%= grazing_parameter.for_dmi_cows %></td>
+        <td><%= grazing_parameter.for_dmi_bulls %></td>
+        <td><%= grazing_parameter.for_dmi_heifers %></td>
+        <td><%= grazing_parameter.for_dmi_calves %></td>
+        <td><%= grazing_parameter.for_dmi_rheifers %></td>
+        <td><%= grazing_parameter.green_water_footprint %></td>
         <td><%= grazing_parameter.dmi_code %></td>
         <td><%= grazing_parameter.dmi_cows %></td>
         <td><%= grazing_parameter.dmi_bulls %></td>
         <td><%= grazing_parameter.dmi_heifers %></td>
         <td><%= grazing_parameter.dmi_calves %></td>
-        <td><%= grazing_parameter.green_water_footprint %></td>
+        <td><%= grazing_parameter.dmi_rheifers %></td>
+        <td><%= grazing_parameter.green_water_footprint_supplement %></td>
         <td>
             <%= link_to image_tag("view.png"), project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
             <%= link_to image_tag("edit.png"), edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
@@ -48,5 +63,5 @@
     </table>
   </div>
   </div>
-      
+
 <%= link_to 'New Grazing parameter', new_project_field_scenario_grazing_parameter_path(@project, @field, @scenario), :class => 'btn btn-success' %>

@@ -1,0 +1,115 @@
+<h1> Aplcat Results </h1>
+<div class="main">
+  <table>
+    <tr><h4> Select Animal and its corresponding option to view its results</h4></tr><br>
+      <tr>
+        <td><%= select_tag :animal_id, options_for_select(animals, :selected => 0, :required => true), {:prompt => t("Select Animal")} %></td>
+        <td><%= select_tag :option_id, options_for_select(options, :selected => 0, :required => true), {:prompt => t("Select options")} %></td>
+          <div class="actions">
+        <td><%= submit_tag t("general.view"), :id => "results", name: "button", :class => "btn btn-primary" %></td>
+        <td> <%= link_to 'Back', edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :class => "btn btn-primary" %></td>
+          </div>
+        </tr>
+      </table>
+      <div id="calf" style=display:none>
+        <%= field_set_tag t("Calf")%>
+      </div>
+      <div id="replacement_heifers" style=display:none>
+        <%= field_set_tag t("Replacement Heifers")%>
+      </div>
+      <div id="first_calf_heifers" style=display:none>
+        <%= field_set_tag t("First Calf Heifers")%>
+      </div>
+      <div id="cow" style=display:none>
+        <%= field_set_tag t("Cow")%>
+      </div>
+      <div id="bull" style=display:none>
+        <%= field_set_tag t("Bull")%>
+      </div>
+        <div id="all">
+        <div id="animal_growth_results" style=display:none>
+          <h5><b><%= t('aplcat.animal_weights' + ":") %></b></h5>
+        </div>
+        <div id="feed_intake_rates" style=display:none>
+          <h5><b><%= t('aplcat.dry_matter_intake' + ":") %></b><br><br>
+            <b><%= t('aplcat.gross_energy_intake' + ":") %></b></h5>
+          </div>
+          <div id="water_intake_results" style=display:none>
+            <h5><b><%= t('aplcat.water_intake' + ":") %></b></h5>
+          </div>
+          <div id="manure_excretion_results" style=display:none>
+            <h5><b><%= t('aplcat.solid_manure_excretion' + ":") %></b></h5>
+          </div>
+          <div id="nitrogen_balance_results" style=display:none>
+            <h5><b><%= t('aplcat.nitrogen_intake' + ":") %></b><br><br>
+              <b><%= t('aplcat.total_nitrogen_excretion' + ":") %></b><br><br>
+              <b><%= t('aplcat.total_nitrogen_retained' + ":") %></b><br><br>
+              <b><%= t('aplcat.fecal_nitrogen_excretion' + ":") %></b><br><br>
+              <b><%= t('aplcat.urine_nitrogen_excretion' + ":") %></b></h5>
+            </div>
+            <div id="greenhouse_gas_emission" style=display:none>
+              <h5><b><%= t('aplcat.enteric_methane_emission' + ":") %></b><br><br>
+                <b><%= t('aplcat.manure_methane_emission' + ":") %></b></h5>
+              </div>
+            </div>
+
+
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+            </script>
+            <script>
+            $(document).ready(function(){
+
+              $('#animal_id').on('change', function() {
+                if ( this.value == '')
+                {$("#all").hide();}
+                else
+                {$("#all").show();}
+                if ( this.value == '1')
+                {$("#calf").show();}
+                else
+                {$("#calf").hide();}
+                if ( this.value == '2')
+                {$("#replacement_heifers").show();}
+                else
+                {$("#replacement_heifers").hide();}
+                if ( this.value == '3')
+                {$("#first_calf_heifers").show();}
+                else
+                {$("#first_calf_heifers").hide();}
+                if ( this.value == '4')
+                {$("#cow").show();}
+                else
+                {$("#cow").hide();}
+                if ( this.value == '5')
+                {$("#bull").show();}
+                else
+                {$("#bull").hide();}
+            });
+            $('#option_id').on('change', function() {
+              if ( this.value == '1')
+              {$("#animal_growth_results").show();}
+              else
+              {$("#animal_growth_results").hide();}
+              if ( this.value == '2')
+              {$("#feed_intake_rates").show();}
+              else
+              {$("#feed_intake_rates").hide();}
+              if ( this.value == '3')
+              {$("#water_intake_results").show();}
+              else
+              {$("#water_intake_results").hide();}
+              if ( this.value == '4')
+              {$("#manure_excretion_results").show();}
+              else
+              {$("#manure_excretion_results").hide();}
+              if ( this.value == '5')
+              {$("#nitrogen_balance_results").show();}
+              else
+              {$("#nitrogen_balance_results").hide();}
+              if ( this.value == '6')
+              {$("#greenhouse_gas_emission").show();}
+              else
+              {$("#greenhouse_gas_emission").hide();}
+            });
+            });
+            </script>

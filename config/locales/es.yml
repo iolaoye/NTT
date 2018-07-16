@@ -634,6 +634,7 @@ es:
     total_n: N Total (0-100%)
     total_p: P Total (0-100%)
     application_rate: Cantidad Aplicada 
+    access_to_stream: Los animales tienen acceso al rio?
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG

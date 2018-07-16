@@ -77,7 +77,7 @@
 	    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
 	    	        </td>
 	            	<td><%= submit_tag t("general.view"), :id => "summary", name: "button", :class => "btn btn-primary" %>
-						<% if @results1 != nil %>
+						<% if @averages1 != nil %>
 							<% if !request.url.include?(url_for("/fields/0/results?")) %>
 								<%= link_to t('result.download_pdf'), { :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
 							<% end %>
@@ -327,91 +327,6 @@
    <p>Days of water stress</p>
  </div>
 
-<!--
- <div id="pop-up-24" class="description_pop-up">
-   <p>Average annual percipitation</p>
- </div>
-
- <div id="pop-up-25" class="description_pop-up">
-   <p>Average annual surface runoff</p>
- </div>
-
- <div id="pop-up-26" class="description_pop-up">
-   <p>Average annual of subsurface flow</p>
- </div>
-
- <div id="pop-up-27" class="description_pop-up">
-   <p>Average annual tile drain runoff</p>
- </div>
-
- <div id="pop-up-28" class="description_pop-up">
-   <p>Average annual of combined organic, runoff, subsurface, and tile drainage N</p>
- </div>
-
- <div id="pop-up-29" class="description_pop-up">
-   <p>Average annual rate of organic N loss with sediment </p>
- </div>
-
- <div id="pop-up-27" class="description_pop-up">
-   <p>Average annual rate of soluble N loss with surface runoff </p>
- </div>
-
- <div id="pop-up-28" class="description_pop-up">
-   <p>Average annual rate of soluble N loss in subsurface flow </p>
- </div>
-
- <div id="pop-up-29" class="description_pop-up">
-   <p>Average annual rate of soluble N loss with tile flow</p>
- </div>
-
- <div id="pop-up-30" class="description_pop-up">
-   <p>Average annual rate of soluble N2O loss with tile flow</p>
- </div>
-
- <div id="pop-up-31" class="description_pop-up">
-   <p>Average annual rate of organic P loss with sediment</p>
- </div>
-
- <div id="pop-up-32" class="description_pop-up">
-   <p>Average annual rate of soluble P loss with surface runoff</p>
- </div>
-
- <div id="pop-up-33" class="description_pop-up">
-   <p>Average annual rate of soluble P loss with tile flow</p>
- </div>
-
- <div id="pop-up-34" class="description_pop-up">
-   <p>Average annual rate of soil erosion from soil surface</p>
- </div>
-
- <div id="pop-up-35" class="description_pop-up">
-   <p>Average annual rate of manure erosion from soil surface</p>
- </div>
-
- <div id="pop-up-36" class="description_pop-up">
-   <p>Average monthly  rate of organic N loss with sediment </p>
- </div>
-
- <div id="pop-up-37" class="description_pop-up">
-   <p>Average monthly rate of soluble N loss with surface runoff </p>
- </div>
-
- <div id="pop-up-38" class="description_pop-up">
-   <p>Average monthly rate of soluble N loss in subsurface flow </p>
- </div>
-
- <div id="pop-up-39" class="description_pop-up">
-   <p>Average monthly rate of soluble N loss with tile flow</p>
- </div>
-
- <div id="pop-up-40" class="description_pop-up">
-   <p>Average monthly rate of soluble N2O loss with tile flow</p>
- </div>
-
- <div id="pop-up-41" class="description_pop-up">
-   <p>Average monthly  rate of soil erosion from soil surface</p>
- </div>
--->
 <%= hidden_field_tag "errors", @errors, { :id => "errors" } %>
 
 <script>

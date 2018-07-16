@@ -1,18 +1,37 @@
 <p id="notice"><%= notice %></p>
+<h3> Supplement Parameters </h3><br>
 
-<p><b>Code:</b><%= @supplement_parameter.code %></p>
+<p><b>Forage ID:</b><%= @supplement_parameter.code %></p>
 
-<p><b>Dmi code:</b><%= @supplement_parameter.dmi_code %></p>
+<p><b>Starting julian day:</b><%= @supplement_parameter.starting_julian_day %></p>
 
-<p><b>Dmi cows:</b><%= @supplement_parameter.dmi_cows %></p>
+<p><b>Ending julian day:</b><%= @supplement_parameter.ending_julian_day %></p>
 
-<p><b>Dmi bulls:</b><%= @supplement_parameter.dmi_bulls %></p>
+<p><b>Forage DMI cows:</b><%= @supplement_parameter.for_dmi_cows %></p>
 
-<p><b>Dmi heifers:</b><%= @supplement_parameter.dmi_heifers %></p>
+<p><b>Forage DMI bulls:</b><%= @supplement_parameter.for_dmi_bulls %></p>
 
-<p><b>Dmi calves:</b><%= @supplement_parameter.dmi_calves %></p>
+<p><b>Forage DMI heifers:</b><%= @supplement_parameter.for_dmi_heifers %></p>
+
+<p><b>Forage DMI calves:</b><%= @supplement_parameter.for_dmi_calves %></p>
+
+<p><b>Forage DMI replacement heifers:</b><%= @supplement_parameter.for_dmi_rheifers %></p>
 
 <p><b>Green water footprint:</b><%= @supplement_parameter.green_water_footprint %></p>
 
-<%= link_to 'Edit', edit_project_field_scenario_supplement_parameter_path(@project, @field, @scenario, @supplement_parameter.id), :class => "btn btn-primary" %> 
+<p><b>Supplement ID:</b><%= @supplement_parameter.dmi_code %></p>
+
+<p><b>Supplement DMI cows:</b><%= @supplement_parameter.dmi_cows %></p>
+
+<p><b>Supplement DMI bulls:</b><%= @supplement_parameter.dmi_bulls %></p>
+
+<p><b>Supplement DMI heifers:</b><%= @supplement_parameter.dmi_heifers %></p>
+
+<p><b>Supplement DMI calves:</b><%= @supplement_parameter.dmi_calves %></p>
+
+<p><b>Supplement DMI replacement heifers:</b><%= @supplement_parameter.dmi_rheifers %></p>
+
+<p><b>Green water footprint of supplement/concentrate:</b><%= @supplement_parameter.green_water_footprint_supplement %></p>
+
+<%= link_to 'Edit', edit_project_field_scenario_supplement_parameter_path(@project, @field, @scenario, @supplement_parameter.id), :class => "btn btn-primary" %>
 <%= link_to 'Back', project_field_scenario_supplement_parameters_path(@project, @field, @scenario), :class => "btn btn-primary" %>

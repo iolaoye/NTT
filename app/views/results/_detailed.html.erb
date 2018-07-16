@@ -345,7 +345,11 @@
 				<% crop_result = Hash.new %>
 				<% crop_result["name"] = cr1[5] %>
 				<% crop_result["yield1"] = cr1[0] %>
-				<% crop_result["ci1"] = @cic1.assoc(cr1[5])[1] %>
+				<% if @cic1.assoc(cr1[5]) != nil %>
+					<% crop_result["ci1"] = @cic1.assoc(cr1[5])[1] %>
+				<% else %>
+					<% crop_result["ci1"] = 0 %>
+				<% end %>
 				<% crop_result["ws1"] = cr1[1].round(0) %>
 				<% crop_result["ns1"] = cr1[2].round(0) %>
 				<% crop_result["ps1"] = cr1[3].round(0) %>
@@ -366,7 +370,11 @@
 					<% @crops2.each do |cr2| %>
 						<% if cr2[5] == cr1[5] then %>
 							<% crop_result["yield2"] = cr2[0] %>
-							<% crop_result["ci2"] = @cic2.assoc(cr2[5])[1] %>
+							<% if @cic2.assoc(cr2[5]) != nil %>
+								<% crop_result["ci2"] = @cic2.assoc(cr2[5])[1] %>
+							<% else %>
+								<% crop_result["ci2"] = 0 %>
+							<% end %>
 							<% crop_result["ws2"] = cr2[1].round(0) %>
 							<% crop_result["ns2"] = cr2[2].round(0) %>
 							<% crop_result["ps2"] = cr2[3].round(0) %>
@@ -378,7 +386,11 @@
 					<% @crops3.each do |cr3| %>
 						<% if cr3[5] == cr1[5] then %>
 							<% crop_result["yield3"] = cr3[0] %>
-							<% crop_result["ci3"] = @cic3.assoc(cr3[5])[1] %>
+							<% if @cic3.assoc(cr3[5]) != nil %>
+								<% crop_result["ci3"] = @cic3.assoc(cr3[5])[1] %>
+							<% else %>
+								<% crop_result["ci3"] = 0 %>
+							<% end %>							
 							<% crop_result["ws3"] = cr3[1].round(0) %>
 							<% crop_result["ns3"] = cr3[2].round(0) %>
 							<% crop_result["ps3"] = cr3[3].round(0) %>
@@ -408,7 +420,11 @@
 						<% crop_result["ps1"] = 0 %>
 						<% crop_result["ts1"] = 0 %>
 						<% crop_result["yield2"] = cr2[0] %>
-						<% crop_result["ci2"] = @cic2.assoc(cr2[5])[1] %>
+						<% if @cic2.assoc(cr2[5]) != nil %>
+							<% crop_result["ci2"] = @cic2.assoc(cr2[5])[1] %>
+						<% else %>
+							<% crop_result["ci2"] = 0 %>
+						<% end %>
 						<% crop_result["ws2"] = cr2[1] %>
 						<% crop_result["ns2"] = cr2[2] %>
 						<% crop_result["ps2"] = cr2[3] %>
@@ -423,7 +439,11 @@
 							<% @crops3.each do |cr3| %>
 								<% if cr3[5] == cr2[5] then %>
 									<% crop_result["yield3"] = cr3[0] %>
-									<% crop_result["ci3"] = @cic3.assoc(cr3[5])[1] %>
+									<% if @cic3.assoc(cr3[5]) != nil %>
+										<% crop_result["ci3"] = @cic3.assoc(cr3[5])[1] %>
+									<% else %>
+										<% crop_result["ci3"] = 0 %>
+									<% end %>
 									<% crop_result["ws3"] = cr3[1] %>
 									<% crop_result["ns3"] = cr3[2] %>
 									<% crop_result["ps3"] = cr3[3] %>
@@ -461,7 +481,11 @@
 						<% crop_result["ps2"] = 0 %>
 						<% crop_result["ts2"] = 0 %>
 						<% crop_result["yield3"] = cr3[0] %>
-						<% crop_result["ci3"] = @cic3.assoc(cr3[5])[1] %>
+						<% if @cic3.assoc(cr3[5]) != nil %>
+							<% crop_result["ci3"] = @cic3.assoc(cr3[5])[1] %>
+						<% else %>
+							<% crop_result["ci3"] = 0 %>
+						<% end %>
 						<% crop_result["ws3"] = cr3[1] %>
 						<% crop_result["ns3"] = cr3[2] %>
 						<% crop_result["ps3"] = cr3[3] %>

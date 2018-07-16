@@ -1148,7 +1148,7 @@ module SimulationsHelper
       c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop operation
       cc_number = @scenario.operations.last.id
       @c_cs = false
-      c_cs.each do |bmp|
+      c_cs.each do |bmp| 
         if bmp != nil then
           @c_cs = true
           s_o_new = SoilOperation.new
@@ -1241,21 +1241,9 @@ module SimulationsHelper
           end
         end
         for j in i..@soil_operations.count - 1
-          #drOut = SoilOperation.new
-          #drOut = drIn(j)
           @soil_operations[j].year = "1"
-          #drOuts.Add(drOut)
         end
-		    return @soil_operations.reorder("year, month, day, activity_id, id")
-        #if i > 0 then
-        #for j = 0 To i - 1
-        #drOut = drIn(j)
-        #drOuts.Add(drOut)
-        #next
-        #end
-        #Return drOuts
-        #else
-        #Return drIn
+        @soil_operations = @soil_operations.reorder("year, month, day, activity_id, id")  #reorder
       end
     end
   end

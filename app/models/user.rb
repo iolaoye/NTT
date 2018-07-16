@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
 	 def send_password_reset_email
 		 UserMailer.password_reset(self).deliver
 	 end
+
 	 def send_fields_simulated_email(msg)
 		 UserMailer.fields_simulated(self, msg).deliver_now
 	 end

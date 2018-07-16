@@ -166,7 +166,7 @@ class FieldsController < ApplicationController
     field.soil_aliminum = params[:field][:soil_aliminum]
     fields = @project.fields.pluck(:id, :field_name)
     fields.each do |key, value|
-      if field.id != key 
+      if field.id != key
         if field.field_name == Field.find(key).field_name
           msg = "duplicate field name"
         end
@@ -233,7 +233,7 @@ class FieldsController < ApplicationController
     scenarios_simulated = 0
     scenarios_no_simulated = 0
 
-    fork do
+    fork do 
       ActiveRecord::Base.transaction do
         params[:select_field].each do |field_id|
           @field = Field.find(field_id)
@@ -274,7 +274,7 @@ class FieldsController < ApplicationController
 # params.require(:person).permit(:name, :age)
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def field_params
-    params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at, :soilp)
+    params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at, :soilp, :soil_test)
   end
 
   def update_field()
