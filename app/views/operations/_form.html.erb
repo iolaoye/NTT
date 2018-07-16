@@ -160,14 +160,14 @@
 			<%= f.label :depth, t('operation.depth') %>
 			<%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
-    <div class="field" id="div_grazed" style="display:none">
-        <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-        <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
-    </div>
-    <div class="field" id="div_resttime" style="display:none">
-        <%= f.label :hours, t('bmp.rest_time')  %>
-        <%= f.number_field :nh4_n, :step => 'any', :class => "gvTitleStyleNumber" %>
-    </div>
+	    <div class="field" id="div_grazed" style="display:none">
+	        <%= f.label :days_grazed, t('bmp.days_grazed')  %>
+	        <%= f.number_field :org_c, :step => 'any', :class => "gvTitleStyleNumber" %>
+	    </div>
+	    <div class="field" id="div_resttime" style="display:none">
+	        <%= f.label :hours, t('bmp.rest_time')  %>
+	        <%= f.number_field :nh4_n, :step => 'any', :class => "gvTitleStyleNumber" %>
+	    </div>
 		<div class="field" id="div_nutrients" <% if @operation.type_id == 2 || @operation.type_id == 3 %> style="display:none;" <% end %>>
 		  	<h2><%= f.label :no3_n, t('operation.manure_composition') %></h2>
 		  	<div class="field" >
@@ -398,13 +398,13 @@
 		<div class="field" id="div_amount">
 		  	<%= f.label :animals, t('operation.animals') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
-            <% if operation.org_c == 1 %>
+            <!-- <% if operation.org_c == 1 %>
                 <%= t('operation.access_to_stream')%> <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
             <% else %>
                 <%= t('operation.access_to_stream')%> <input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
             <% end %>
 		  	<%= f.label :hours, t('bmp.hours') %>
-		  	<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
+		  	<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %> -->
 		</div>
 		<div class="field" id="div_depth">
 		  	<%= f.label :hours_in_field, t('operation.hours') %>
