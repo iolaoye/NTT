@@ -111,9 +111,6 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
 	  if params[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
@@ -325,7 +322,6 @@ class BmpsController < ApplicationController
     if @bmp.bmpsublist_id == 21
       @climate_array = populate_array(@climates, @climate_array)
     end
-
     msg = input_fields("update")
 
     respond_to do |format|
@@ -783,17 +779,29 @@ class BmpsController < ApplicationController
 
 ### ID: 10
   def stream_fencing(type)
-  	@bmp.number_of_animals = params[:bmp_sf][:number_of_animals]
-  	@bmp.days = params[:bmp_sf][:days]
-  	@bmp.hours = params[:bmp_sf][:hours]
-  	@bmp.animal_id = params[:bmp_sf][:animal_id]
-  	@bmp.dry_manure = params[:bmp_sf][:dry_manure]
-  	@bmp.no3_n = params[:bmp_sf][:no3_n]
-  	@bmp.po4_p = params[:bmp_sf][:po4_p]
-  	@bmp.org_n = params[:bmp_sf][:org_n]
-  	@bmp.org_p = params[:bmp_sf][:org_p]
-  	return "OK"
-  end
+    case type
+    when "create"  	#@bmp.number_of_animals = params[:bmp_sf][:number_of_animals]
+  	    @bmp.width = params[:bmp_sf][:width]
+  	    @bmp.depth = params[:bmp_sf][:depth]
+        @bmp.area = @bmp.width * @bmp.depth / AC_TO_FT2
+        op = @scenario.operations.where("activity_id = ? or activity_id = ?", 7, 9).first
+        if op != nil
+          @bmp.crop_id = Crop.find(op.crop_id).number
+        end
+      	#@bmp.animal_id = params[:bmp_sf][:animal_id]
+      	#@bmp.dry_manure = params[:bmp_sf][:dry_manure]
+      	#@bmp.no3_n = params[:bmp_sf][:no3_n]
+      	#@bmp.po4_p = params[:bmp_sf][:po4_p]
+      	#@bmp.org_n = params[:bmp_sf][:org_n]
+      	#@bmp.org_p = params[:bmp_sf][:org_p]
+      	#return "OK"
+        if @bmp.save then
+          return create_new_subarea("SF", 10)
+        end
+    when "delete"
+        return delete_existing_subarea("SF")
+    end
+end
 
 ### ID: 11
   def streambank_stabilization(type)
@@ -1299,6 +1307,10 @@ class BmpsController < ApplicationController
         end
       when 9
         if @bmp.irrigation_efficiency != nil
+          is_filled = true;
+        end
+      when 10
+        if @bmp.width != nil && @bmp.depth != nil
           is_filled = true;
         end
       when 12

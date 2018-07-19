@@ -679,13 +679,15 @@ en:
     number_of_animals: Number of animals
     irrigation_frequency: Irrigate a maximum of every
     stream_fencing_frequency: Days in Stream
-    hours: Hours per day
+    hours: Hours per day in stream
     dry_manure: Dry defecated
     no3_n_html: 'Element-N'
     po4_p_html: 'Element-P'
     org_n_html: 'Organic-N'
     org_p_html: 'Organic-P'
     width: Width
+    length: Length
+    fence: Fence measures
     buffer_width: Grass buffer width
     waterways_info: Including both sides of channel
     grass_field_portion: Portion of buffer area that is grass

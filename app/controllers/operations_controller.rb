@@ -95,9 +95,6 @@ def index
 ################################  Edit  #################################
 # GET /operations/1/edit
   def edit
-    #@project = Project.find(params[:project_id])
-    #@cover_crops = Crop.where("type1 like '%CC%'")
-    
     @operation = Operation.find(params[:id])
     if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
       @operation.po4_p = (@operation.po4_p / PO4_TO_P2O5).round(1)
@@ -105,12 +102,9 @@ def index
     if @operation.activity_id == 1 && @operation.subtype_id == 1 then
       @crops = Crop.where("type1 like '%CC%'")
     else
-      @crops
       @crops = Crop.load_crops(Location.find_by_project_id(@project.id).state_id)
     end
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     add_breadcrumb 'Operations', project_field_scenario_operations_path(@project, @field, @scenario)
     add_breadcrumb t('operation.edit')
   end
@@ -122,21 +116,23 @@ def index
     msg = "OK"
     saved = false
     soil_op_saved = false
-    #msg = "Unknown error"
+    
     ActiveRecord::Base.transaction do
       case true
       when params[:op] != nil then
-        calculate_nutrients(params[:op][:total_n_con].to_f, params[:op][:moisture].to_f, params[:op][:total_p_con].to_f)
+        if params[:op][:activity_id] != "7" && params[:op][:activity_id] != "9"
+          calculate_nutrients(params[:op][:total_n_con].to_f, params[:op][:moisture].to_f, params[:op][:total_p_con].to_f)
+        end
       when params[:operation] != nil
-        calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f)
-     end
+        if params[:operation][:activity_id] != "7" && params[:operation][:activity_id] != "9"
+          calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f)
+        end
+      end
       operation = Operation.new(operation_params)
       if operation.activity_id == 2 && operation.type_id == 1 && operation.po4_p > 0 && operation.po4_p < 100 then
         operation.po4_p *= PO4_TO_P2O5
       end
-      #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
-        #params[:operation][:depth] = params[:operation][:depth].to_f / 100
-      #end
+
       operation.scenario_id = params[:scenario_id]
       if operation.activity_id == 9 then
         operation.moisture = params[:operation][:moisture]
@@ -148,6 +144,14 @@ def index
       operation.org_c = params[:op][:total_n_con] unless params[:op]  == nil
       operation.rotation = params[:operation][:rotation]
       @crops = Crop.load_crops(@project.location.state_id)
+
+      if operation.activity_id == 7 || operation.activity_id == 9
+          if params[:access] != nil
+            operation.org_c = 1
+          else
+            operation.org_c = 0
+          end
+      end
       if operation.save
         #saves start grazing operation in SoilOperation table
         if operation.activity_id != 9 && operation.activity_id != 10 then
@@ -228,20 +232,11 @@ def index
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
-    if params[:operation][:activity_id] != "7"
+    if params[:operation][:activity_id] != "7" && params[:operation][:activity_id] != "9"
       calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f)
     end
-    #if params[:operation][:activity_id] == "6" then  # if manual irrigaiton convert efficiency from % to fraction
-      #params[:operation][:depth] = params[:operation][:depth].to_f / 100
-    #end
+
     @operation = Operation.find(params[:id])
-    if params[:operation][:activity_id] == "7"
-      if params[:access][:to_stream] == "on"
-        @operation.org_c = 1
-      else
-        @operation.org_c = 0
-      end
-    end
     @crops = Crop.load_crops(@project.location.state_id)
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     respond_to do |format|
@@ -250,11 +245,15 @@ def index
           @operation.po4_p *= PO4_TO_P2O5
           @operation.save
         end
-        #update_amount()
-        #soil_operations = SoilOperation.where(:operation_id => @operation.id)
-        #soil_operations.each do |soil_operation|
-          #update_soil_operation(soil_operation, soil_operation.soil_id, @operation)
-        #end
+
+        if params[:operation][:activity_id] == "7" || params[:operation][:activity_id] == "9" 
+          if params[:access] != nil
+            @operation.org_c = 1
+          else
+            @operation.org_c = 0
+          end
+          @operation.save
+        end
         SoilOperation.where("operation_id = ? OR (type_id = ? AND apex_operation = ?)", @operation.id, @operation.id, 427).delete_all  #delete updated soilOperation and create the new ones.
         if @operation.activity_id != 9 && @operation.activity_id != 10 then add_soil_operation(@operation) end
         if @operation.activity_id == 7 || @operation.activity_id == 9 then
@@ -285,10 +284,6 @@ def index
           @operation1.day = params[:day1]
           @operation1.save
           if @operation1.activity_id != 9 && @operation1.activity_id != 10 then add_soil_operation(@operation1) end
-          #soil_operations = SoilOperation.where(:operation_id => @operation1.id)
-          #soil_operations.each do |soil_operation|
-            #update_soil_operation(soil_operation, soil_operation.soil_id, @operation1)
-          #end
         end
         if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
