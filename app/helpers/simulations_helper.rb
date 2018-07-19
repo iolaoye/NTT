@@ -2148,37 +2148,44 @@ module SimulationsHelper
     po4 = 0
     org_n = 0
     org_p =0
-
-    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 10)
-  	if !(bmp.blank? || bmp == nil) then
-  		total_manure = bmp.number_of_animals.to_f * bmp.hours.to_f / 24 * bmp.dry_manure
-  		no3 += total_manure * bmp.days * bmp.no3_n
-  		po4 += total_manure * bmp.days * bmp.po4_p
-  		org_n += total_manure * bmp.days * bmp.org_n
-  		org_p += total_manure * bmp.days * bmp.org_p
-  		if session[:simulation] == 'scenario'
-  		  soils = @field.soils.where(:selected => true)
-  		  soils.each do |soil|
-        #results = Result.where(:soil_id => soil.id, :field_id => @field.id, :scenario_id => @scenario.id)
-  			results = @scenario.results.where(:soil_id => soil.id)
-  			results.each do |result|
-  			  update_value_of_results(result, false, @field.field_area * (soil.percentage / 100), no3, po4, org_n, org_p)
-  			  result.save
-  			end
-  		  end
-  		end
-  		if session[:simulation] == 'scenario'
-        #results = Result.where(:soil_id => 0, :field_id => @field.id, :scenario_id => @scenario.id)
-  		  results = @scenario.results.where(:soil_id => 0)
-  		else
-  		  results = Result.where(:watershed_id => @watershed.id)
-  		end
-
-  		results.each do |result|
-  		  update_value_of_results(result, true, @field.field_area, no3, po4, org_n, org_p)
-  		  result.save
-  		end
-  	end  # end if bmp blank or nil
+    bmp = @scenario.bmps.find_by_bmpsublist_id(10)
+    #bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 10)
+    if bmp != nil then return "OK" end
+    ops = @scenario.operations.where("activity_id = ? or activity_id = ?", 7, 9)
+    ops.each do |op|
+      if op.org_c == 1  then
+        # total manure / day
+    		total_manure = op.amount * op.nh3 / 24 * Fertilizer.find(op.type_id).dry_matter / 100
+        # nutrients / month
+    		no3 += total_manure * op.depth * op.no3_n
+    		po4 += total_manure * op.depth * op.po4_p
+    		org_n += total_manure * op.depth * op.org_n
+    		org_p += total_manure * op.depth * op.org_p
+    		#if session[:simulation] == 'scenario'
+    		  #soils = @field.soils.where(:selected => true)
+    		  #soils.each do |soil|
+      			#results = @scenario.annual_results.where(:soil_id => soil.id)
+      			#results.each do |result|
+      			  #update_value_of_results(result, false, @field.field_area * (soil.percentage / 100), no3, po4, org_n, org_p)
+      			  #result.save
+      			#end
+    		  #end
+        #end
+    		if session[:simulation] == 'scenario'
+    		  results = @scenario.annual_results.where(:sub1 => 0)
+    		else
+    		  results = AnnualResult.where(:watershed_id => @watershed.id)
+    		end
+    		results.each do |result|
+          result.no3 += no3 / @field.field_area
+          result.po4 += po4 / @field.field_area
+          result.orgn += org_n / @field.field_area
+          result.orgp += org_p / @field.field_area
+    		  #update_value_of_results(result, true, @field.field_area, no3, po4, org_n, org_p)
+    		  result.save
+    		end
+      end
+  	end
   	return "OK"
   end
 

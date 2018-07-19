@@ -89,7 +89,9 @@ updateNutrients = (animal) ->
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
     $("#div_fertilizer").hide()
+    $("#div_access_to_stream")[0].style.display = 'inline'    
     $("#div_amount").show()
+    #$("#div_access_to_stream").show()
     $("#div_depth").show()
     $("#div_tillage").show()
     $("#div_nutrients").hide()
@@ -118,6 +120,8 @@ getGrazingFields = ->
 updateTypes = ->
   $("#operation_nh4_n").hide()
   $("#div_amount").hide()
+  $("#div_access_to_stream").hide()
+  $("#div_hours_in_stream").hide()
   $("#div_depth").hide()
   $("#div_nutrients").hide()
   $("#div_moisture").hide()
@@ -316,8 +320,15 @@ upload_days = (select_day, selected_month) ->
       select_day[0].children[select_day[0].length-2].disabled = true
       select_day[0].children[select_day[0].length-1].disabled = true
 
+display_hours = (access) ->
+  if (access.checked)
+    $("#div_hours_in_stream")[0].style.display="inline"
+  else
+    $("#div_hours_in_stream")[0].style.display='none'
 
 $(document).ready ->
+   $("#access_to_stream").click ->
+        display_hours(this)
    $("#day1").click ->
         upload_days($("#day1"), $("#month_id1").val())
 

@@ -3,7 +3,7 @@ class AnnualResultsController < ApplicationController
 
   # GET /annual_results
   def index
-    @annual_results = AnnualResult.all
+    @annual_results = AnnualResult.where(:scenario_id => 4267)
   end
 
   # GET /annual_results/1
