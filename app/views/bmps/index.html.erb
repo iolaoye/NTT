@@ -34,8 +34,8 @@
         <% end %>
 
         <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
-          <%# if bmp.bmpsublist_id == 10 && ENV["APP_VERSION"] == "modified" changed whiel we fixed fencing%>
-          <% if bmp.bmpsublist_id == 10 %> 
+          <% if bmp.bmpsublist_id == 10 && ENV["APP_VERSION"] == "modified" %>
+          <%# if bmp.bmpsublist_id == 10 %> 
               <% next %>
           <% end %>
           <tr>
@@ -230,25 +230,22 @@
             </tr>
            <% when 10 %>
             <tr>
-              <td class="indent" colspan="2">
+              <td class="indent" colspan="2" style='display:none'>
                 <%= label :depth, t('operation.animals')  %>
                 <%= number_field :bmp_sf, :number_of_animals, :value => bmp.number_of_animals, :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
-              <td class="indent" colspan="2">
-                <%= label :days, t('bmp.stream_fencing_frequency') + " " + t('bmp.days_range') %>
-                <%= number_field :bmp_sf, :days, :value => bmp.days, :style=>"width:50px", :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
-                  <%= label :hours, t('bmp.hours') + " " + t('bmp.hours_range') %>
-                <%= number_field :bmp_sf, :hours, :value => bmp.hours, :style=>"width:50px", :step => '0.1', :min => 0, :max => 24, :class => "gvTitleStyleNumber" %>
+              <td class="indent" colspan="2" >
+                <div><%= label :fence, t('bmp.fence') %></div>
+                  <%= label :width, t('bmp.width') + "(" + t('bmp.ft') + ")" %>
+                  <%= number_field :bmp_sf, :width, :value => bmp.width, :style=>"width:70px", :min => 0, :class => "gvTitleStyleNumber" %>
+                  <%= label :length, t('bmp.length') + "(" + t('bmp.ft') + ")" %>
+                  <%= number_field :bmp_sf, :depth, :value => bmp.depth, :style=>"width:70px", :step => '0.1', :min => 0, :class => "gvTitleStyleNumber" %>
                 </td>
             </tr>
             <tr>
-              <td class="indent" colspan="2">
-              </td>
-            </tr>
-            <tr>
-              <td class="indent" colspan="2">
+              <td class="indent" colspan="2" style='display:none'>
                 <%= label :animal_id, t('bmp.animals') %>
                 <% if I18n.locale.equal?(:en) %>
                   <%= collection_select :bmp_sf, :animal_id, Fertilizer.where(:animal => true, :status => true), :id, :name, {:prompt => t('general.select') + " " + t('general.one'), :required => true, :selected => bmp.animal_id} %>
@@ -258,31 +255,31 @@
               </td>
             </tr>
             <tr>
-              <td class="indent2" colspan="2">
+              <td class="indent2" colspan="2" style='display:none'>
               <%= label :dry_manure, t('bmp.dry_manure') + " (" + t('bmp.lbs')  + ")"%>
               <%= number_field :bmp_sf, :dry_manure, :value => bmp.dry_manure, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
-              <td class="indent2" colspan="2">
+              <td class="indent2" colspan="2" style='display:none'>
               <%= label :no3_n, t('bmp.no3_n_html') + " " + t('bmp.zero_to_one') %>
               <%= number_field :bmp_sf, :no3_n, :value => bmp.no3_n, :step => '0.001', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
-              <td class="indent2" colspan="2">
+              <td class="indent2" colspan="2" style='display:none'>
               <%= label :po4_p, t('bmp.po4_p_html') + " " + t('bmp.zero_to_one') %>
               <%= number_field :bmp_sf, :po4_p, :value => bmp.po4_p, :step => '0.001', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
-              <td class="indent2" colspan="2">
+              <td class="indent2" colspan="2" style='display:none'>
               <%= label :org_n, t('bmp.org_n_html') + " " + t('bmp.zero_to_one') %>
               <%= number_field :bmp_sf, :org_n, :value => bmp.org_n, :step => '0.001', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
             <tr>
-              <td class="indent2" colspan="2">
+              <td class="indent2" colspan="2" style='display:none'>
               <%= label :org_p, t('bmp.org_p_html') + " " + t('bmp.zero_to_one') %>
               <%= number_field :bmp_sf, :org_p, :value => bmp.org_p, :step => '0.001', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
@@ -621,7 +618,7 @@
                 validationsBmpWl();
             } else if (elementIDNum == 9) {
                 validationsBmpPnd();
-            } else if (elementIDNum == 10) {
+            } else if (elementIDNum == 99) {
                 validationsBmpSf();
             } else if (elementIDNum == 13) {
                 validationsBmpFs();
