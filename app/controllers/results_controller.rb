@@ -258,12 +258,6 @@ class ResultsController < ApplicationController
                                  v.map(&:ymnu).confidence_interval
                     ]}
 
-                    # averages = AnnualResult.where(:sub1 => 0, :scenario_id => scenario_id)
-                    #                        .order('pcp '+order)
-                    #                        .limit(count)
-                    #                        .pluck('avg(orgn), avg(qn), avg(no3-qn), avg(qdrn), avg(orgp), avg(po4), avg(qdrp), avg(surface_flow), avg(flow-surface_flow),avg(qdr), avg(irri), avg(dprk), avg(sed), avg(ymnu)')
-
-                    #byebug
                     values = []
                     averages = []
                     fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow', 
@@ -297,7 +291,9 @@ class ResultsController < ApplicationController
                     crops_data = CropResult.select('*', 'yldg+yldf AS yield')
                                       .where("scenario_id = ? AND yldg+yldf > ?", scenario_id, 0)
                     
-                    crops_data = crops_data.where(:year => results_data.map(&:year))
+                    years = results_data.order('pcp '+order).limit(count).map(&:year)
+                    byebug
+                    crops_data = crops_data.where(:year => years)
                     
                     cic = Hash[*crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval] }.flatten]
 
