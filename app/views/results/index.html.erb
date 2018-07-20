@@ -103,24 +103,31 @@
 	          	<% when t('result.annual')  + "-" + t('result.charts'), t("general.view") + " " + t('result.annual')  + "-" + t('result.charts')%>
                     <%= hidden_field(:year_type, :year_type, :value => @type) %>
 		            <% if I18n.locale.eql?(:en) %>
-		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :group_name, {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
+		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :group_name, 
+                        {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
 		              <td><%= collection_select :result5, :description_id, @descriptions.where(:group_id => @group), :id, :description, {:prompt => t('result.select_category'), 
 		              	:selected => @description}, {:required => true} %></td>
 					  <td><%#= select :result5, :description_id, options_for_select(@des.map { |obj| [obj['description'], obj['id']] }) %>
 		            <% else %>
-		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :spanish_group_name, {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
+		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :spanish_group_name, 
+                        {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
 		              <td><%= collection_select :result5, :description_id, @descriptions.where("id != 52"), :id, :spanish_description, {:prompt => t('result.select_category'), 
 		              	:selected => @description}, {:required => true} %></td>
 		            <% end %>
 					<% if I18n.locale.eql?(:en) %>
-						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
+						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name, 
+                            {:prompt => t('result.select_crop'), :selected => @crop} %>
+                        </td>
 					<% else %>
-						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name, {:prompt => t('result.select_crop'), :selected => @crop} %></td>
+						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name,
+                            {:prompt => t('result.select_crop'), :selected => @crop} %>    
+                        </td>
 					<% end %>
 			            <td>
 			            	<%= submit_tag t("general.view"), name: "button_annual", :class => "btn btn-primary" %>
 			            </td>
 					</tr>
+                    byebug
 	        	<% when t('result.monthly') + "-" + t('result.charts'), t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') %>
                     <%= hidden_field(:year_type, :year_type, :value => @type) %>
 		            <% if I18n.locale.eql?(:en) %>
