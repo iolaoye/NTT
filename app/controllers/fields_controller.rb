@@ -258,7 +258,7 @@ class FieldsController < ApplicationController
             msg = run_scenario
             scenarios_simulated +=1
             if msg.eql?("OK")
-              simulation_msg += "Scenario " + @scenario.name + " successfully simulated"
+              simulation_msg += "Scenario " + @scenario.name + " successfully simulated\n"
             else
               scenarios_no_simulated += 1
               simulation_msg += "Error simulating scenario " + @scenario.name + " (" + msg + ")\n"
@@ -273,7 +273,7 @@ class FieldsController < ApplicationController
     end  # end fork
 
     if msg.eql?("OK") then
-      flash[:notice] = " Scenarios submitesd to simulate. An e-mail will be sent when the simulations ended."
+      flash[:notice] = " Scenarios submited to simulate. An e-mail will be sent when the simulations ended."
       redirect_to project_fields_path(@project)
     else
       render "index", error: msg
