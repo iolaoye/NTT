@@ -243,26 +243,29 @@ class FieldsController < ApplicationController
           @field = Field.find(field_id)
           if @field.updated == true then
             msg = request_soils()
-            if msg != "OK" then simulation_msg += "Unable to get soils for field" + @field.field_name + "\n" end
-            @field.scenarios.each do |scenario|
-              @scenario = scenario
-              if @scenario.operations.count <= 0 then
-                simulation_msg += "Scenario " + @scenario + " without operations" + "\n"
-                #@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-                return
-              end
-              msg = run_scenario
-              scenarios_simulated +=1
-              if msg.eql?("OK")
-                simulation_msg += "Scenario " + @scenario.name + " successfully simulated"
-              else
-                scenarios_no_simulated += 1
-                simulation_msg += "Error simulating scenario " + @scenario.name + " (" + msg + ")\n"
-                #@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-                raise ActiveRecord::Rollback
-              end # end if msg
-            end  # end scenarios
+            if msg != "OK" then 
+              simulation_msg += "Unable to get soils for field" + @field.field_name + "\n" 
+              next
+            end
           end
+          @field.scenarios.each do |scenario|
+            @scenario = scenario
+            if @scenario.operations.count <= 0 then
+              simulation_msg += "Scenario " + @scenario + " without operations" + "\n"
+              #@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+              return
+            end
+            msg = run_scenario
+            scenarios_simulated +=1
+            if msg.eql?("OK")
+              simulation_msg += "Scenario " + @scenario.name + " successfully simulated"
+            else
+              scenarios_no_simulated += 1
+              simulation_msg += "Error simulating scenario " + @scenario.name + " (" + msg + ")\n"
+              #@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+              raise ActiveRecord::Rollback
+            end # end if msg
+          end  # end scenarios
         end  # end fields
       end   # end activeRecord
       @user = User.find(session[:user_id])
