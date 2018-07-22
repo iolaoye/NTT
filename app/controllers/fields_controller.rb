@@ -248,20 +248,23 @@ class FieldsController < ApplicationController
               next
             end
           end
+          if @field.scenarios.count == 0 then
+              simulation_msg += "Field: " + @field.field_name + " without scenarios" + "\n"            
+          end
           @field.scenarios.each do |scenario|
             @scenario = scenario
             if @scenario.operations.count <= 0 then
-              simulation_msg += "Scenario " + @scenario + " without operations" + "\n"
+              simulation_msg += "Scenario " + @scenario + " / Field: " + @field.field_name + " without operations" + "\n"
               #@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
               return
             end
             msg = run_scenario
             scenarios_simulated +=1
             if msg.eql?("OK")
-              simulation_msg += "Scenario " + @scenario.name + " successfully simulated\n"
+              simulation_msg += "Scenario: " + @scenario.name + " / Field: " + @field.field_name + " successfully simulated\n"
             else
               scenarios_no_simulated += 1
-              simulation_msg += "Error simulating scenario " + @scenario.name + " (" + msg + ")\n"
+              simulation_msg += "Error simulating scenario " + @scenario.name + " / Field: " + @field.field_name + " (" + msg + ")\n"
               #@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
               raise ActiveRecord::Rollback
             end # end if msg
