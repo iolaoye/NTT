@@ -2,16 +2,17 @@ class FieldsController < ApplicationController
   #load_and_authorize_resource :project
   #load_and_authorize_resource :field, :through => :project
   include SimulationsHelper
+  include ScenariosHelper
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
-  def create_soils
-	  counties = Location.find(session[:location_id]).coordinates.split(",")
-    client = Savon.client(wsdl: URL_SoilsInfo)
-	  counties.each do |county|
-		response = client.call(:get_soils, message: {"county" => County.find(county).county_state_code})
-	  end
-  end
+  #def create_soils
+	  #counties = Location.find(session[:location_id]).coordinates.split(",")
+    #client = Savon.client(wsdl: URL_SoilsInfo)
+	  #counties.each do |county|
+		#response = client.call(:get_soils, message: {"county" => County.find(county).county_state_code})
+	  #end
+  #end
 ################################  scenarios list   #################################
 # GET /locations
 # GET /locations.json
@@ -227,38 +228,46 @@ class FieldsController < ApplicationController
     end
   end
 
+################################ SIMULATE FIELDS SELECTED  #################################
+# SIMULATE /fields
   def simulate
     @errors = Array.new
     msg = "OK"
     scenarios_simulated = 0
     scenarios_no_simulated = 0
 
-    fork do 
+    fork do
+      simulation_msg = ""
       ActiveRecord::Base.transaction do
         params[:select_field].each do |field_id|
           @field = Field.find(field_id)
-          @field.scenarios.each do |scenario|
-            @scenario = scenario
-            if @scenario.operations.count <= 0 then
-              @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-              return
-            end
-            msg = run_scenario
-            scenarios_simulated +=1
-            unless msg.eql?("OK")
-              scenarios_no_simulated += 1
-              @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-              raise ActiveRecord::Rollback
-            end # end if msg
-          end  # end scenarios
+          if @field.updated == true then
+            msg = request_soils()
+            if msg != "OK" then simulation_msg += "Unable to get soils for field" + @field.field_name + "\n" end
+            @field.scenarios.each do |scenario|
+              @scenario = scenario
+              if @scenario.operations.count <= 0 then
+                simulation_msg += "Scenario " + @scenario + " without operations" + "\n"
+                #@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+                return
+              end
+              msg = run_scenario
+              scenarios_simulated +=1
+              if msg.eql?("OK")
+                simulation_msg += "Scenario " + @scenario.name + " successfully simulated"
+              else
+                scenarios_no_simulated += 1
+                simulation_msg += "Error simulating scenario " + @scenario.name + " (" + msg + ")\n"
+                #@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+                raise ActiveRecord::Rollback
+              end # end if msg
+            end  # end scenarios
+          end
         end  # end fields
       end   # end activeRecord
       @user = User.find(session[:user_id])
-      @user.send_fields_simulated_email("Total Scenarios simulated " + scenarios_simulated.to_s + ", in " + params[:select_field].count.to_s + " fields.")
-      #@user = user
-      #mail to: user.email, subject: "Fields were simulated"
-
-    end
+      @user.send_fields_simulated_email("Total Scenarios simulated " + scenarios_simulated.to_s + ", in " + params[:select_field].count.to_s + " fields." + "\n" + simulation_msg)
+    end  # end fork
 
     if msg.eql?("OK") then
       flash[:notice] = " Scenarios submitesd to simulate. An e-mail will be sent when the simulations ended."
