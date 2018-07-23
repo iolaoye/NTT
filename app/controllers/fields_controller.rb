@@ -275,7 +275,8 @@ class FieldsController < ApplicationController
       rescue Exception => e
         simulation_msg += "Process failed due to: " + e.message + "\n"
       end
-      simulation_msg = "End time: " + Time.now.to_s + "\n"
+      simulation_msg += "End time: " + Time.now.to_s + "\n"
+      debugger
       @user = User.find(session[:user_id])
       @user.send_fields_simulated_email("Total Scenarios simulated " + scenarios_simulated.to_s + ", in " + params[:select_field].count.to_s + " fields." + "\n" + simulation_msg)
     end  # end fork
