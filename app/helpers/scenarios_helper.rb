@@ -869,8 +869,6 @@ module ScenariosHelper
 
 
   def request_soils()
-  	debugger
-
     url = URI.parse(URL_TIAER)
     http = Net::HTTP.new(url.host,url.port)
     http.read_timeout = 2000   #seconds
