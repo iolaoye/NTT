@@ -238,7 +238,6 @@ class FieldsController < ApplicationController
 
     fork do
       simulation_msg = ""
-      ActiveRecord::Base.transaction do
         params[:select_field].each do |field_id|
           @field = Field.find(field_id)
           if @field.updated == true then
@@ -258,19 +257,20 @@ class FieldsController < ApplicationController
               #@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
               return
             end
-            msg = run_scenario
-            scenarios_simulated +=1
-            if msg.eql?("OK")
-              simulation_msg += "Scenario: " + @scenario.name + " / Field: " + @field.field_name + " successfully simulated\n"
-            else
-              scenarios_no_simulated += 1
-              simulation_msg += "Error simulating scenario " + @scenario.name + " / Field: " + @field.field_name + " (" + msg + ")\n"
-              #@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-              raise ActiveRecord::Rollback
-            end # end if msg
+            ActiveRecord::Base.transaction do
+              msg = run_scenario
+              scenarios_simulated +=1
+              if msg.eql?("OK")
+                simulation_msg += "Scenario: " + @scenario.name + " / Field: " + @field.field_name + " successfully simulated\n"
+              else
+                scenarios_no_simulated += 1
+                simulation_msg += "Error simulating scenario " + @scenario.name + " / Field: " + @field.field_name + " (" + msg + ")\n"
+                #@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+                raise ActiveRecord::Rollback
+              end # end if msg
+            end   # end activeRecord
           end  # end scenarios
         end  # end fields
-      end   # end activeRecord
       @user = User.find(session[:user_id])
       @user.send_fields_simulated_email("Total Scenarios simulated " + scenarios_simulated.to_s + ", in " + params[:select_field].count.to_s + " fields." + "\n" + simulation_msg)
     end  # end fork
