@@ -545,7 +545,7 @@
 <div style='display:none' id="div_12">
   <%= field_set_tag t('aplcat.forage_quantity_input'), class:'fieldset' do %>
   <div class="field">
-  <%=  t('aplcat.forage_id') %>
+  <%=  t('aplcat.forage_id_html') %>
   <%= f.number_field :forage_id, class: 'gvTitleStyleNumber', :step => 'any', min: 1, max: 177 %>
   </div>
   <div class="field">
@@ -1136,7 +1136,7 @@
 
   <div class="actions">
     <%= hidden_field_tag(:type, @type) %>
-    <%= link_to t('general.back'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => "btn btn-primary"  %>
+    <%#= link_to t('general.back'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => "btn btn-primary"  %>
     <%= f.submit  t('submit.save'), :class => "btn btn-primary"  %>
     <%= link_to ("Continue to Scenario"), project_field_scenarios_path(@project, @field), :class => "btn btn-primary"  %>
   </div>
