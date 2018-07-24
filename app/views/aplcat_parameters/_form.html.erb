@@ -389,28 +389,28 @@
   <%= field_set_tag t('aplcat.simulation_methods'), class:'fieldset' do %>
   <div class="field">
     <%= t('aplcat.mm_type') %><br>
-    <%= radio_button_tag :mm_type, "1", :checked => "checked"%> <%= t('aplcat.ipcc') %><br>
+    <%= radio_button_tag :mm_type, "1"%> <%= t('aplcat.ipcc') %><br>
     <%= radio_button_tag :mm_type, "2"%> <%= t('aplcat.chianese') %><br>
   </div>
   <div class="field">
     <%= t('aplcat.nit') %><br>
     <%= radio_button_tag :nit, "1"%> <%= t('aplcat.wal') %><br>
     <%= radio_button_tag :nit, "2"%> <%= t('aplcat.nasem') %><br>
-    <%= radio_button_tag :nit, "3", :checked => "checked"%> <%= t('aplcat.massb') %><br>
+    <%= radio_button_tag :nit, "3"%> <%= t('aplcat.massb') %><br>
   </div>
   <div class="field">
     <%= t('aplcat.fqd') %><br>
-    <%= radio_button_tag :fqd, "1", :checked => "checked"%> <%= t('aplcat.ufq') %><br>
+    <%= radio_button_tag :fqd, "1"%> <%= t('aplcat.ufq') %><br>
     <%= radio_button_tag :fqd, "2"%> <%= t('aplcat.dufq') %><br>
   </div>
   <div class="field">
     <%= t('aplcat.uovfi') %><br>
-    <%= radio_button_tag :uovfi, "1", :checked => "checked"%> <%= t('aplcat.vr1') %><br>
+    <%= radio_button_tag :uovfi, "1"%> <%= t('aplcat.vr1') %><br>
     <%= radio_button_tag :uovfi, "2"%> <%= t('aplcat.ib2') %><br>
   </div>
   <div class="field">
     <%= t('aplcat.srwc') %><br>
-    <%= radio_button_tag :srwc, "1", :checked => "checked"%> <%= t('aplcat.syes') %><br>
+    <%= radio_button_tag :srwc, "1"%> <%= t('aplcat.syes') %><br>
     <%= radio_button_tag :srwc, "2"%> <%= t('aplcat.sno') %><br>
   </div>
 <%end%>
@@ -447,7 +447,7 @@
   <tr>
     <th><div class="field">
       <%= t('aplcat.ewc') %><br>
-      <%= radio_button_tag :ewc, "1", :checked => "checked"%> <%= t('aplcat.early') %><br>
+      <%= radio_button_tag :ewc, "1"%> <%= t('aplcat.early') %><br>
       <%= radio_button_tag :ewc, "2"%> <%= t('aplcat.late') %><br>
       <%= radio_button_tag :ewc, "3"%> <%= t('aplcat.no_change') %><br>
     </div>
@@ -490,14 +490,86 @@
       <%= f.number_field :drinkm, class: 'gvTitleStyleNumber', :step => '0.001', min: 0.001, max: 1.0 %>
     </div>
     <div class="field">
-      <%=  t('aplcat.avgtm') %>
-			<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
-      <%= f.number_field :avgtm, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 125.0 %>
+      <%=  t('aplcat.avgtm') %><br>
+			<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t("Select each months")} %><br>
+      <%#= f.number_field :avgtm, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 125.0 %>
+      <div style='display:none' id="t_jan">
+      <%= f.number_field :tjan, class: 'gvTitleStyleNumber', :placeholder => "January", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_feb">
+      <%= f.number_field :tfeb, class: 'gvTitleStyleNumber', :placeholder => "February", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_mar">
+      <%= f.number_field :tmar, class: 'gvTitleStyleNumber', :placeholder => "March", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_apr">
+      <%= f.number_field :tapr, class: 'gvTitleStyleNumber', :placeholder => "April", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_may">
+      <%= f.number_field :tmay, class: 'gvTitleStyleNumber', :placeholder => "May", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_jun">
+      <%= f.number_field :tjun, class: 'gvTitleStyleNumber', :placeholder => "June", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_jul">
+      <%= f.number_field :tjul, class: 'gvTitleStyleNumber', :placeholder => "July", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_aug">
+      <%= f.number_field :taug, class: 'gvTitleStyleNumber', :placeholder => "August", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_sep">
+      <%= f.number_field :tsep, class: 'gvTitleStyleNumber', :placeholder => "September", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_oct">
+      <%= f.number_field :toct, class: 'gvTitleStyleNumber', :placeholder => "October", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_nov">
+      <%= f.number_field :tnov, class: 'gvTitleStyleNumber', :placeholder => "November", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="t_dec">
+      <%= f.number_field :tdec, class: 'gvTitleStyleNumber', :placeholder => "December", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
     </div>
     <div class="field">
-      <%=  t('aplcat.avghm') %>
-			<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
-      <%= f.number_field :avghm, class: 'gvTitleStyleNumber', :step => '0.1', min: 20.0, max: 100.0 %>
+      <%=  t('aplcat.avghm') %><br>
+			<%= select_tag "month_id2", options_for_select(listMonths, :selected => 0), {:prompt => t("Select each months")} %>
+      <%#= f.number_field :avghm, class: 'gvTitleStyleNumber', :step => '0.1', min: 20.0, max: 100.0 %>
+      <div style='display:none' id="h_jan">
+      <%= f.number_field :hjan, class: 'gvTitleStyleNumber', :placeholder => "January", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_feb">
+      <%= f.number_field :hfeb, class: 'gvTitleStyleNumber', :placeholder => "February", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_mar">
+      <%= f.number_field :hmar, class: 'gvTitleStyleNumber', :placeholder => "March", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_apr">
+      <%= f.number_field :hapr, class: 'gvTitleStyleNumber', :placeholder => "April", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_may">
+      <%= f.number_field :hmay, class: 'gvTitleStyleNumber', :placeholder => "May", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_jun">
+      <%= f.number_field :hjun, class: 'gvTitleStyleNumber', :placeholder => "June", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_jul">
+      <%= f.number_field :hjul, class: 'gvTitleStyleNumber', :placeholder => "July", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_aug">
+      <%= f.number_field :haug, class: 'gvTitleStyleNumber', :placeholder => "August", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_sep">
+      <%= f.number_field :hsep, class: 'gvTitleStyleNumber', :placeholder => "September", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_oct">
+      <%= f.number_field :hoct, class: 'gvTitleStyleNumber', :placeholder => "October", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_nov">
+      <%= f.number_field :hnov, class: 'gvTitleStyleNumber', :placeholder => "November", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
+      <div style='display:none' id="h_dec">
+      <%= f.number_field :hdec, class: 'gvTitleStyleNumber', :placeholder => "December", :step => '0.1', min: 0.0, max: 125.0 %>
+      </div>
     </div>
     <div class="field">
       <%=  t('aplcat.rhae') %>
@@ -1195,3 +1267,115 @@ $(document).ready(function(){
   });
   });
   </script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('#month_id1').on('change', function() {
+      if ( this.value == '1')
+      {$("#t_jan").show();}
+      else
+      {$("#t_jan").hide();}
+      if ( this.value == '2')
+      {$("#t_feb").show();}
+      else
+      {$("#t_feb").hide();}
+      if ( this.value == '3')
+      {$("#t_mar").show();}
+      else
+      {$("#t_mar").hide();}
+      if ( this.value == '4')
+      {$("#t_apr").show();}
+      else
+      {$("#t_apr").hide();}
+      if ( this.value == '5')
+      {$("#t_may").show();}
+      else
+      {$("#t_may").hide();}
+      if ( this.value == '6')
+      {$("#t_jun").show();}
+      else
+      {$("#t_jun").hide();}
+      if ( this.value == '7')
+      {$("#t_jul").show();}
+      else
+      {$("#t_jul").hide();}
+      if ( this.value == '8')
+      {$("#t_aug").show();}
+      else
+      {$("#t_aug").hide();}
+      if ( this.value == '9')
+      {$("#t_sep").show();}
+      else
+      {$("#t_sep").hide();}
+      if ( this.value == '10')
+      {$("#t_oct").show();}
+      else
+      {$("#t_oct").hide();}
+      if ( this.value == '11')
+      {$("#t_nov").show();}
+      else
+      {$("#t_nov").hide();}
+      if ( this.value == '12')
+      {$("#t_dec").show();}
+      else
+      {$("#t_dec").hide();}
+    });
+    });
+</script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('#month_id2').on('change', function() {
+    if ( this.value == '1')
+    {$("#h_jan").show();}
+    else
+    {$("#h_jan").hide();}
+    if ( this.value == '2')
+    {$("#h_feb").show();}
+    else
+    {$("#h_feb").hide();}
+    if ( this.value == '3')
+    {$("#h_mar").show();}
+    else
+    {$("#h_mar").hide();}
+    if ( this.value == '4')
+    {$("#h_apr").show();}
+    else
+    {$("#h_apr").hide();}
+    if ( this.value == '5')
+    {$("#h_may").show();}
+    else
+    {$("#h_may").hide();}
+    if ( this.value == '6')
+    {$("#h_jun").show();}
+    else
+    {$("#h_jun").hide();}
+    if ( this.value == '7')
+    {$("#h_jul").show();}
+    else
+    {$("#h_jul").hide();}
+    if ( this.value == '8')
+    {$("#h_aug").show();}
+    else
+    {$("#h_aug").hide();}
+    if ( this.value == '9')
+    {$("#h_sep").show();}
+    else
+    {$("#h_sep").hide();}
+    if ( this.value == '10')
+    {$("#h_oct").show();}
+    else
+    {$("#h_oct").hide();}
+    if ( this.value == '11')
+    {$("#h_nov").show();}
+    else
+    {$("#h_nov").hide();}
+    if ( this.value == '12')
+    {$("#h_dec").show();}
+    else
+    {$("#h_dec").hide();}
+  });
+  });
+</script>
