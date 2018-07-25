@@ -34,8 +34,8 @@
         <% end %>
 
         <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
-          <% if bmp.bmpsublist_id == 10 && ENV["APP_VERSION"] == "modified" %>
-          <%# if bmp.bmpsublist_id == 10 %> 
+          <%# if bmp.bmpsublist_id == 10 && ENV["APP_VERSION"] == "modified" %>
+          <% if bmp.bmpsublist_id == 10 %> 
               <% next %>
           <% end %>
           <tr>
