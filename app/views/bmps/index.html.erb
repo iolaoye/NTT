@@ -34,7 +34,8 @@
         <% end %>
 
         <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
-          <% if bmp.bmpsublist_id == 10 && ENV["APP_VERSION"] == "modified" %>
+
+          <% if (bmp.bmpsublist_id == 10 && ENV["APP_VERSION"] == "modified") || (bmp.bmpsublist_id == 10 && @scenario.operations.where("activity_id = ? or activity_id = ?", 7, 9).count == 0) %>
           <%# if bmp.bmpsublist_id == 10 %> 
               <% next %>
           <% end %>
@@ -237,11 +238,14 @@
             </tr>
             <tr>
               <td class="indent" colspan="2" >
-                <div><%= label :fence, t('bmp.fence') %></div>
+                <div><%#= label :fence, t('bmp.fence') %></div>
                   <%= label :width, t('bmp.distance') + "(" + t('bmp.ft') + ")" %>
                   <%= number_field :bmp_sf, :width, :value => bmp.width, :style=>"width:70px", :min => 0, :class => "gvTitleStyleNumber" %>
-                  <%= label :length, t('bmp.length') + "(" + t('bmp.ft') + ")" %>
-                  <%= number_field :bmp_sf, :depth, :value => bmp.depth, :style=>"width:70px", :step => '0.1', :min => 0, :class => "gvTitleStyleNumber" %>
+                  <%= label :width_zero, t('bmp.zero_fence'), class: "title_label"%>
+                  <!-- <div style='display:none'>
+                    <%= label :length, t('bmp.length') + "(" + t('bmp.ft') + ")" %>
+                    <%= number_field :bmp_sf, :depth, :value => bmp.depth, :style=>"width:70px", :step => '0.1', :min => 0, :class => "gvTitleStyleNumber" %>
+                  </div> -->
                 </td>
             </tr>
             <tr>
