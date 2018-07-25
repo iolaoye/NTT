@@ -238,7 +238,7 @@
             <tr>
               <td class="indent" colspan="2" >
                 <div><%= label :fence, t('bmp.fence') %></div>
-                  <%= label :width, t('bmp.width') + "(" + t('bmp.ft') + ")" %>
+                  <%= label :width, t('bmp.distance') + "(" + t('bmp.ft') + ")" %>
                   <%= number_field :bmp_sf, :width, :value => bmp.width, :style=>"width:70px", :min => 0, :class => "gvTitleStyleNumber" %>
                   <%= label :length, t('bmp.length') + "(" + t('bmp.ft') + ")" %>
                   <%= number_field :bmp_sf, :depth, :value => bmp.depth, :style=>"width:70px", :step => '0.1', :min => 0, :class => "gvTitleStyleNumber" %>
