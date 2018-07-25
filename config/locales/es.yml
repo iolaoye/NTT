@@ -675,6 +675,7 @@ es:
     width: Ancho
     length: Largo
     fence: Medidas de la Cerca
+    distance: Distancia desde el rio
     buffer_width: Ancho del Buffer de pasto
     waterways_info: Incluyendo ambos lados del canal
     grass_field_portion: Porción del buffer que es pasto

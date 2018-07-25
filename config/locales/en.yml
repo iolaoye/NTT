@@ -688,6 +688,7 @@ en:
     width: Width
     length: Length
     fence: Fence measures
+    distance: Distance from stream
     buffer_width: Grass buffer width
     waterways_info: Including both sides of channel
     grass_field_portion: Portion of buffer area that is grass
