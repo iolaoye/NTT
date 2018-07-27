@@ -616,7 +616,7 @@ class BmpsController < ApplicationController
             subarea.idr = 0
             subarea.drt = 0
         end
-        if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Unable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
