@@ -485,7 +485,7 @@
 			<% else %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante', :selected => @operation.subtype_id} %>
 			<% end %>
-		</div>
+		</div> 
 		<div class="field" id="div_amount">
 		  	<%= f.label :animals, t('operation.animals') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 1, :step => 'any', :required => true %>
