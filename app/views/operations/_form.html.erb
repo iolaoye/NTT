@@ -489,6 +489,7 @@
 		<div class="field" id="div_amount">
 		  	<%= f.label :animals, t('operation.animals') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 1, :step => 'any', :required => true %>
+		  	<div style="display:none">
 		  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
             <% if @operation.org_c == 1 %>
                 <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
@@ -503,6 +504,7 @@
 			  	<%= f.label :hours_in_stream, t('bmp.hours')%>
 			  	<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
 		  	</div>
+		  </div>
 		</div>
 		<div class="field" id="div_depth">
 		  <%= f.label :hours_in_field, t('operation.hours') %>
