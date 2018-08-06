@@ -413,7 +413,7 @@
 			  	<%= f.label :hours_in_stream, t('bmp.hours')%>
 			  	<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
 		  	</div>
-		  	</div>
+		    </div>
 		</div>
 		<div class="field" id="div_depth">
 		  	<%= f.label :hours_in_field, t('operation.hours') %>
@@ -569,7 +569,7 @@
 			<% end %>
 		</div>
 		<div id="div_fertilizer" style="display:none" >
-      <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
+      	<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -625,35 +625,35 @@
 			</div>
 		</div>
     <% when 13 %>
-	      <div id="div_date" style="display:none" >
+      	<div id="div_date" style="display:none" >
 	        <%= f.label :stop, t('general.stop'), :class => 'field' %>
 	          <%= f.label :year, t('general.year'), :class => 'field' %>
 	        <%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
 	        <%= f.label :date, t('general.date'), :class => 'field' %>
 	        <%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
 	        <%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
-	        </div>
-	      <div id="div_type" class="field spacer_bottom" >
+        </div>
+	    <div id="div_type" class="field spacer_bottom" >
 	        <%= label :type_id, t('operation.planting_method')%>
 	        <% if I18n.locale.eql?(:en) %>
 	          <%= collection_select :operation, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one'), :selected => @operation.type_id}, {:required => true} %>
 	        <% else %>
 	          <%= collection_select :operation, :type_id, Tillage.where(:activity_id => 1, :status => true), :code, :spanish_name, {:prompt => t('general.select'), :selected => @operation.type_id}, {:required => true} %>
 	        <% end %>
-	      </div>
-	      <div id="div_fertilizer" class="field" style="display:none" >
+	    </div>
+	    <div id="div_fertilizer" class="field" style="display:none" >
 	        <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 	        <% if I18n.locale.eql?(:en) %>
 	          <%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 	        <% else %>
 	          <%= collection_select :operation, :subtype_id, @fertilizers, :id, :spanish_name, {:prompt => 'Seleccione Fertilizante', :selected => @operation.subtype_id} %>
 	        <% end %>
-	      </div>
-	      <div class="field" id="div_amount" style="display:none">
+	    </div>
+	    <div class="field" id="div_amount" style="display:none">
 	        <%= f.label t('operation.plant_population') %>
 	        <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
-	      </div>
-	      <div class="field" id="div_depth" style="display:none">
+	    </div>
+	    <div class="field" id="div_depth" style="display:none">
 	        <%= f.label :depth, t('operation.depth') %>
 	        <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 	      </div>
@@ -698,92 +698,93 @@
 					<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 				</div>
 			</div>
-		<% else # harvest, kill, stop grazing, burn%>
-			<div id="div_date" style="display:none">
-				<%= f.label :stop, t('general.stop'), :class => 'field' %>
-					<%= f.label :year, t('general.year'), :class => 'field' %>
-				<%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
-				<%= f.label :date, t('general.date'), :class => 'field' %>
-				<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
-				<%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
-		    </div>
-			<div id="div_type" style="display:none" >
-				<%= label :type_id, t('general.select') + " " + t('general.one') %>
-				<% if I18n.locale.eql?(:en) %>
-					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one')} %>
-				<% else %>
-					<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :spanish_name, {:prompt => t('general.select') + " " + t('general.one')} %>
-				<% end %>
-			</div>
-			<div id="div_fertilizer" style="display:none" >
-				<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type') %>
-				<% if I18n.locale.eql?(:en) %>
-					<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => t('general.select') + " " + t("general.one"), :selected => @operation.subtype_id} %>
-				<% else %>
-					<%= collection_select :operation, :subtype_id, @fertilizers, :id, :spanish_name, {:prompt => ('general.select') + " " + t("general.one"), :selected => @operation.subtype_id} %>
-				<% end %>
-			</div>
-			<div class="field" id="div_amount" style="display:none">
-			  	<%= f.label :amount, t('operation.amount') %>
-			  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
-			  	<div style="display:none">
-				  	<div style="display:none" id="div_access_to_stream">
-					  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
-	                	<input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
-			        </div>
-	            <div style="display:none" id="div_hours_in_stream">
-				<%= f.label :hours_in_stream, t('bmp.hours')%>
-				<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
-			  	</div>
-			  </div>
-			</div>
-			<div class="field" id="div_depth" style="display:none">
-			  <%= f.label :depth, t('operation.depth') %>
-			  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
-			</div>
-	        <div class="field" id="div_grazed" style="display:none">
-	            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
-	            <%= f.number_field :moisture, :step => 'any', :class => "gvTitleStyleNumber" %>
+		</div>
+	<% else # harvest, kill, stop grazing, burn%>
+		<div id="div_date" style="display:none">
+			<%= f.label :stop, t('general.stop'), :class => 'field' %>
+				<%= f.label :year, t('general.year'), :class => 'field' %>
+			<%= select_tag "year1", options_for_select(listYears, :selected => 0), {:prompt => t('datetime.prompts.year')} %>
+			<%= f.label :date, t('general.date'), :class => 'field' %>
+			<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t('datetime.prompts.month')} %>
+			<%= select_tag "day1", options_for_select(listDays, :selected => 0), {:prompt => t('datetime.prompts.day')} %>
+	    </div>
+		<div id="div_type" style="display:none" >
+			<%= label :type_id, t('general.select') + " " + t('general.one') %>
+			<% if I18n.locale.eql?(:en) %>
+				<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :eqp, {:prompt => t('general.select') + " " + t('general.one')} %>
+			<% else %>
+				<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id), :code, :spanish_name, {:prompt => t('general.select') + " " + t('general.one')} %>
+			<% end %>
+		</div>
+		<div id="div_fertilizer" style="display:none" >
+			<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type') %>
+			<% if I18n.locale.eql?(:en) %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => t('general.select') + " " + t("general.one"), :selected => @operation.subtype_id} %>
+			<% else %>
+				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :spanish_name, {:prompt => ('general.select') + " " + t("general.one"), :selected => @operation.subtype_id} %>
+			<% end %>
+		</div>
+		<div class="field" id="div_amount" style="display:none">
+		  	<%= f.label :amount, t('operation.amount') %>
+		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
+		  	<div style="display:none">
+		  	<div style="display:none" id="div_access_to_stream">
+			  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+            	<input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
 	        </div>
-	        <div class="field" id="div_resttime" style="display:none">
-	            <%= f.label :hours, t('bmp.rest_time')  %>
-	            <%= f.number_field :nh4_n, :step => 'any', :class => "gvTitleStyleNumber" %>
-	        </div>
-			<div class="field" id="div_nutrients" style="display:none">
-			  <h2><%= f.label :no3_n, t('operation.manure_composition') %></h2>
-			  <div class="field" >
-					<%= f.label :no3_n, t('operation.no3_n_html') %>
-					<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
-			  </div>
-			  <div class="field" >
-					<%= f.label :po4_p, t('operation.po4_p_html') %>
-					<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
-			  </div>
-			  <div class="field" style="display:none">
-					<%= f.label :org_n, t('operation.org_n_html') %>
-					<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
-			  </div>
-			  <div class="field" style="display:none">
-					<%= f.label :org_p, t('operation.org_p_html') %>
-					<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
-			  </div>
+            <div style="display:none" id="div_hours_in_stream">
+			  	<%= f.label :hours_in_stream, t('bmp.hours')%>
+			  	<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
+		  	</div>
+		  	</div>
+		</div>
+		<div class="field" id="div_depth" style="display:none">
+		  <%= f.label :depth, t('operation.depth') %>
+		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
+		</div>
+        <div class="field" id="div_grazed" style="display:none">
+            <%= f.label :days_grazed, t('bmp.days_grazed')  %>
+            <%= f.number_field :moisture, :step => 'any', :class => "gvTitleStyleNumber" %>
+        </div>
+        <div class="field" id="div_resttime" style="display:none">
+            <%= f.label :hours, t('bmp.rest_time')  %>
+            <%= f.number_field :nh4_n, :step => 'any', :class => "gvTitleStyleNumber" %>
+        </div>
+		<div class="field" id="div_nutrients" style="display:none">
+		  <h2><%= f.label :no3_n, t('operation.manure_composition') %></h2>
+		  <div class="field" >
+				<%= f.label :no3_n, t('operation.no3_n_html') %>
+				<%= f.number_field :no3_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+		  </div>
+		  <div class="field" >
+				<%= f.label :po4_p, t('operation.po4_p_html') %>
+				<%= f.number_field :po4_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+		  </div>
+		  <div class="field" style="display:none">
+				<%= f.label :org_n, t('operation.org_n_html') %>
+				<%= f.number_field :org_n, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+		  </div>
+		  <div class="field" style="display:none">
+				<%= f.label :org_p, t('operation.org_p_html') %>
+				<%= f.number_field :org_p, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any' %>
+		  </div>
+		</div>
+		<div class="field" id="div_other_nutrients" style="display:none">
+			<div class="field">
+				<%= f.label :org_c, t('operation.total_n_con') %>
+				<%= number_field :op, :total_n_con, :class => "gvTitleStyleNumber" %>
 			</div>
-			<div class="field" id="div_other_nutrients" style="display:none">
-				<div class="field">
-					<%= f.label :org_c, t('operation.total_n_con') %>
-					<%= number_field :op, :total_n_con, :class => "gvTitleStyleNumber" %>
-				</div>
-				<div class="field">
-					<%= f.label :nh4_n, t('operation.total_p_con') %>
-					<%= number_field :op, :total_p_con, :class => "gvTitleStyleNumber" %>
-				</div>
-				<div class="field">
-					<%= f.label :moisture, t('operation.moisture_con') %>
-					<%= number_field :op, :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
-				</div>
+			<div class="field">
+				<%= f.label :nh4_n, t('operation.total_p_con') %>
+				<%= number_field :op, :total_p_con, :class => "gvTitleStyleNumber" %>
 			</div>
-			<%= f.hidden_field :rotation, :value => @operation.rotation %>
-		<% end %>
+			<div class="field">
+				<%= f.label :moisture, t('operation.moisture_con') %>
+				<%= number_field :op, :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
+			</div>
+		</div>
+		<%= f.hidden_field :rotation, :value => @operation.rotation %>
+	<% end %>
 
 	<div class="actions">
 		<%= f.submit t('submit.add_more'), :name => "add_more", :class => "btn btn-primary", :id => "test" %>

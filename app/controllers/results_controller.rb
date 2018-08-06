@@ -272,7 +272,7 @@ class ResultsController < ApplicationController
 						@totals3 = AnnualResult.where(:sub1 => 0, :scenario_id => @scenario3).pluck('avg(orgn)*' + @total_area3.to_s, 'avg(qn)*' + @total_area3.to_s, 'avg(no3-qn)*' + @total_area3.to_s, 'avg(qdrn)*' + @total_area3.to_s, 'avg(orgp)*' + @total_area3.to_s, 'avg(po4)*' + @total_area3.to_s, 'avg(qdrp)*' + @total_area3.to_s, 'avg(surface_flow)*' + @total_area3.to_s, 'avg(flow-surface_flow)*' + @total_area3.to_s, 'avg(qdr)*' + @total_area3.to_s, 'avg(irri)*' + @total_area3.to_s, 'avg(dprk)*' + @total_area3.to_s, 'avg(sed)*' + @total_area3.to_s, 'avg(ymnu)*' + @total_area3.to_s)
 						crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where("scenario_id = ? AND yldg+yldf > ?", @scenario3, 0)
 						@cic3 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
-						@crops3 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg-yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+						@crops3 = CropResult.where("scenario_id = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg+yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
 					else
 						if params[:result1] != nil 
 							if !params[:result1][:scenario_id].empty? then
@@ -288,7 +288,7 @@ class ResultsController < ApplicationController
 						@totals3 = AnnualResult.where(:sub1 => 0, :watershed_id => @scenario3).pluck('avg(orgn)*' + @total_area3.to_s, 'avg(qn)*' + @total_area3.to_s, 'avg(no3-qn)*' + @total_area3.to_s, 'avg(qdrn)*' + @total_area3.to_s, 'avg(orgp)*' + @total_area3.to_s, 'avg(po4)*' + @total_area3.to_s, 'avg(qdrp)*' + @total_area3.to_s, 'avg(surface_flow)*' + @total_area3.to_s, 'avg(flow-surface_flow)*' + @total_area3.to_s, 'avg(qdr)*' + @total_area3.to_s, 'avg(irri)*' + @total_area3.to_s, 'avg(dprk)*' + @total_area3.to_s, 'avg(sed)*' + @total_area3.to_s, 'avg(ymnu)*' + @total_area3.to_s)
 						crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where("watershed_id = ? AND yldg+yldf > ?", @scenario3, 0)
 						@cic3 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
-						@crops3 = CropResult.where("watershed_id = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg-yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+						@crops3 = CropResult.where("watershed_id = ? AND (yldg + yldf) > ?", @scenario3, 0).order("name").group(:name).pluck('avg(yldg+yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
 					end
 					found = false
 

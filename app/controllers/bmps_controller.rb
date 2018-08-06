@@ -616,7 +616,7 @@ class BmpsController < ApplicationController
             subarea.idr = 0
             subarea.drt = 0
         end
-        if !subarea.save then return "Enable to save value in the subarea file" end
+        if !subarea.save then return "Unable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
     return "OK"
@@ -782,7 +782,7 @@ class BmpsController < ApplicationController
     case type
     when "create"  	#@bmp.number_of_animals = params[:bmp_sf][:number_of_animals]
   	    @bmp.width = params[:bmp_sf][:width]
-  	    @bmp.depth = params[:bmp_sf][:depth]
+  	    @bmp.depth = Math::sqrt(@field.field_area * AC_TO_FT2)
         @bmp.area = @bmp.width * @bmp.depth / AC_TO_FT2
         op = @scenario.operations.where("activity_id = ? or activity_id = ?", 7, 9).first
         if op != nil
@@ -796,7 +796,11 @@ class BmpsController < ApplicationController
       	#@bmp.org_p = params[:bmp_sf][:org_p]
       	#return "OK"
         if @bmp.save then
-          return create_new_subarea("SF", 10)
+          if @bmp.area > 0 then
+            return create_new_subarea("SF", 10)
+          else
+            return "OK"
+          end
         end
     when "delete"
         return delete_existing_subarea("SF")
@@ -1482,6 +1486,7 @@ end
   end
 
   def delete_existing_subarea(name)
+    debugger
     subarea = Subarea.find_by_scenario_id_and_subarea_type(params[:scenario_id], name)
   	#if !(subarea == nil) && @bmp.sides == 0 then
     if !(subarea == nil) && !(@bmp.bmpsublist_id == 9) then

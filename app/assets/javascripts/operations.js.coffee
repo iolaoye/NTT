@@ -59,6 +59,8 @@ updateNutrients = (animal) ->
           $("#operation_nh3").val("")
           $("#operation_org_c").val(fertilizer.total_n)
           $("#operation_nh4_n").val(fertilizer.total_p)
+          $("#div_other_nutrients")[0].children[0].children[1].value = fertilizer.total_n
+          $("#div_other_nutrients")[0].children[1].children[1].value = fertilizer.total_p
           $("#operation_moisture").val(100-fertilizer.dry_matter)
           $("#op_total_n_con").val(fertilizer.total_n)
           $("#op_total_p_con").val(fertilizer.total_p)
@@ -89,7 +91,7 @@ updateNutrients = (animal) ->
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
     $("#div_fertilizer").hide()
-    $("#div_access_to_stream")[0].style.display = 'inline'    
+    $("#div_access_to_stream")[0].style.display = 'none'    
     $("#div_amount").show()
     #$("#div_access_to_stream").show()
     $("#div_depth").show()

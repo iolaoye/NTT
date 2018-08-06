@@ -869,8 +869,15 @@ module ScenariosHelper
 
 
   def request_soils()
-    uri = URI(URL_TIAER)
-    res = Net::HTTP.post_form(uri, "data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates.strip, "rg" => "yes")
+    url = URI.parse(URL_TIAER)
+    http = Net::HTTP.new(url.host,url.port)
+    http.read_timeout = 2000   #seconds
+    #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
+    req = Net::HTTP::Post.new(url.path)
+    req.set_form_data({"data" => "Soils", "file" => "soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates.strip, "rg" => "yes"})
+    res = http.request(req)
+    #uri = URI(URL_TIAER)
+    #res = Net::HTTP.p("data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates.strip, "rg" => "yes")
     if !res.body.include?("error") then
       msg = "OK"
       msg = create_new_soils(YAML.load(res.body))

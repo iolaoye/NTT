@@ -25,8 +25,6 @@ class ScenariosController < ApplicationController
   def list
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => params[:field_id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     respond_to do |format|
       format.html # list.html.erb
       format.json { render json: @scenarios }
@@ -38,8 +36,6 @@ class ScenariosController < ApplicationController
   def index
     @errors = Array.new
   	msg = "OK"
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
 
     if (params[:scenario] != nil)
@@ -60,18 +56,17 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT  #################################
   def simulate
-	msg = "OK"
-	time_begin = Time.now
-	session[:simulation] = 'scenario'
-	case params[:commit]
-		when "Simulate Selected NTT", "Simular NTT", "Simulate Selected Scenario", "Simulate Scenarios", "Simular Seleccionado Escenario"
-			msg = simulate_ntt
-		when "Simulate Selected Aplcat", "Simular Aplcat"
-			msg = simulate_aplcat
-	end
-	#@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenarios = Scenario.where(:field_id => params[:field_id])
+  	msg = "OK"
+  	time_begin = Time.now
+  	session[:simulation] = 'scenario'
+  	case true
+  		when params[:commit].include?('NTT')
+  			msg = simulate_ntt
+  		when params[:commit].include?("APLCAT")
+  			msg = simulate_aplcat
+      when params[:commit].include?("FEM")
+        msg = simulate_fem
+  	end
     if msg.eql?("OK") then
 	  @scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
@@ -83,29 +78,27 @@ class ScenariosController < ApplicationController
 
 ################################  Simulate NTT for selected scenarios  #################################
   def simulate_ntt
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @errors = Array.new
     msg = "OK"
-	if params[:select_scenario] == nil then
-		@errors.push("Select at least one scenario to simulate ")
-		return "Select at least one scenario to simulate "
-	end
+  	if params[:select_scenario] == nil then
+  		@errors.push("Select at least one scenario to simulate ")
+  		return "Select at least one scenario to simulate "
+  	end
     ActiveRecord::Base.transaction do
-	  params[:select_scenario].each do |scenario_id|
-		  @scenario = Scenario.find(scenario_id)
-		  if @scenario.operations.count <= 0 then
-		  	@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-		  	return
-		  end
-		  msg = run_scenario
-		  unless msg.eql?("OK")
-			@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-			raise ActiveRecord::Rollback
-	      end # end if msg
+  	  params[:select_scenario].each do |scenario_id|
+  		  @scenario = Scenario.find(scenario_id)
+  		  if @scenario.operations.count <= 0 then
+  		  	@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+  		  	return
+  		  end
+  		  msg = run_scenario
+  		  unless msg.eql?("OK")
+  			   @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+  			   raise ActiveRecord::Rollback
+  	    end # end unless msg
       end # end each do params loop
     end
-	return msg
+  	return msg
   end
 ################################  NEW   #################################
 # GET /scenarios/new
@@ -113,8 +106,6 @@ class ScenariosController < ApplicationController
   def new
     @errors = Array.new
     @scenario = Scenario.new
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
 
     add_breadcrumb t('general.scenarios')
     add_breadcrumb 'Add New Scenario'
@@ -128,14 +119,9 @@ class ScenariosController < ApplicationController
 ################################  EDIT   #################################
 # GET /scenarios/1/edit
   def edit
-    #@errors = Array.new
     @scenario = Scenario.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-
-
     add_breadcrumb t('menu.scenarios'), project_field_scenarios_path(@project, @field)
-	add_breadcrumb t('general.editing') + " " +  t('scenario.scenario')
+	  add_breadcrumb t('general.editing') + " " +  t('scenario.scenario')
   end
 
 ################################  CREATE  #################################
@@ -144,8 +130,6 @@ class ScenariosController < ApplicationController
   def create
     @errors = Array.new
     @scenario = Scenario.new(scenario_params)
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @scenario.field_id = @field.id
     @watershed = Watershed.new(scenario_params)
     @watershed.save
@@ -170,9 +154,6 @@ class ScenariosController < ApplicationController
   def update
     @errors = Array.new
     @scenario = Scenario.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-
     respond_to do |format|
       if @scenario.update_attributes(scenario_params)
         format.html { redirect_to project_field_scenarios_path(@project, @field), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
@@ -189,12 +170,6 @@ class ScenariosController < ApplicationController
 # DELETE /scenarios/1.json
   def destroy
     @errors = Array.new
-    #@scenario = Scenario.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #msg = @scenario.delete_files
-    #@scenario.subareas.delete_all
-    #Subarea.where(:scenario_id => @scenario.id).delete_all
     if @scenario.destroy
       flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.deleted')
     end
@@ -209,50 +184,113 @@ class ScenariosController < ApplicationController
 # GET /scenarios/1
 # GET /scenarios/1.json
   def show()
-  	#@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @errors = Array.new
     ActiveRecord::Base.transaction do
-		msg = run_scenario
-		@scenarios = Scenario.where(:field_id => params[:field_id])
-		@project_name = Project.find(params[:project_id]).name
-		@field_name = Field.find(params[:field_id]).field_name
-		respond_to do |format|
-		  if msg.eql?("OK") then
-			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-			format.html { redirect_to project_field_scenarios_path(@project, @field) }
-		  else
-			flash[:error] = "Error simulating scenario - " + msg
-			format.html { render action: "list" }
-		  end # end if msg
-		end
-	end
+  		msg = run_scenario
+  		@scenarios = Scenario.where(:field_id => params[:field_id])
+  		@project_name = Project.find(params[:project_id]).name
+  		@field_name = Field.find(params[:field_id]).field_name
+  		respond_to do |format|
+  		  if msg.eql?("OK") then
+  			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
+  			format.html { redirect_to project_field_scenarios_path(@project, @field) }
+  		  else
+  			flash[:error] = "Error simulating scenario - " + msg
+  			format.html { render action: "list" }
+  		  end # end if msg
+  		end
+  	end
+  end
+
+################################  FEM - simulate the selected scenario for FEM #################################
+  def simulate_fem
+    @errors = Array.new
+    msg = "OK"
+    if params[:select_scenario] == nil then
+      @errors.push("Select at least one scenario to simulate ")
+      return "Select at least one scenario to simulate "
+    end
+    ActiveRecord::Base.transaction do
+      params[:select_scenario].each do |scenario_id|
+        @scenario = Scenario.find(scenario_id)
+        if @scenario.operations.count <= 0 then
+          @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+          return
+        end
+        #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
+        msg = run_fem
+        unless msg.eql?("OK")
+           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+           raise ActiveRecord::Rollback
+        end # end unless msg
+      end # end each do params loop
+    end
+    return msg
+  end
+
+################################  RUN-FEM - simulate the selected scenario for FEM #################################
+  def run_fem
+    
+    drive = "E:"
+    folder = drive + "\\NTTHTML5Files\\APEX" + session[:session_id]
+    #create NTT_FEMOptions.txt file
+    ntt_fem_Options = "ManureRateCode|Manure" + "\n"
+    ntt_fem_Options += "LatLongFile|" + drive + '\NTT_FEM\Long_Lat.txt' + "\n"
+    ntt_fem_Options += "FileDir|" + drive + '\NTT_FEM' + "\n"
+    ntt_fem_Options += "FEMPath|" + drive + '\NTT_FEM' + "\n"
+    ntt_fem_Options += "FEMFilesPath|" + folder + '\\' + "\n"
+    ntt_fem_Options += "MMSDir|" + drive + '\NTT_FEM' + "\n"
+    ntt_fem_Options += "FEMProgPath|" + drive + '\NTT_FEM' + "\n"
+    ntt_fem_Options += "OperationsLibraryFile|" + folder + '\\Local.mdb' + "\n"
+    ntt_fem_Options += "FEMOutputFile|" + folder + '\\NTTFEMOut.mdb' + "\n"
+    ntt_fem_Options += "TimeHorizon|" + @project.apex_controls[0].value.to_s + "\n"
+    ntt_fem_Options += "NTTPath|" + folder + "\n" 
+    ntt_fem_Options += "COUNTY|" + County.find(@project.location.county_id).county_state_code + "\n"
+    ntt_fem_Options += "Scenario|" + @scenario.name + "\n"
+    #find if there are bmps with area taken from the field
+    bmps_area = @scenario.bmps.where("area>0").sum(:area)
+    #find the crops in the scenario a take crop, yield, unit, field area, field area without bmps.
+    crops = @scenario.crop_results.group(:name).average("yldf+yldg")
+    crops.each do |c|
+      crop = Crop.find_by_code(c[0])
+      ntt_fem_Options +=  "CROP|" + c[0] + "|" + c[1].round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s
+    end
+    #send the file to server
+    msg = send_file_to_APEX(ntt_fem_Options, "NTT_FEMOptions.txt")
+    #create fembat01.bat file
+    ntt_fem_Options = drive + "\\"
+    ntt_fem_Options += "cd " + folder
+    ntt_fem_Options += drive + "\\NTT_FEM\\new2.exe"
+    #send the file to server
+    #msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
+
+    return "OK"
   end
 
   ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
     @errors = Array.new
-	if params[:select_scenario] == nil then
-		@errors.push("Select at least one Aplcat to simulate ")
-		return "Select at least one Aplcat to simulate "
-	end
+  	if params[:select_scenario] == nil then
+  		@errors.push("Select at least one Aplcat to simulate ")
+  		return "Select at least one Aplcat to simulate "
+  	end
     ActiveRecord::Base.transaction do
-	  params[:select_scenario].each do |scenario_id|
-		  @scenario = Scenario.find(scenario_id)
-		  msg = run_aplcat
-		  unless msg.eql?("OK")
-			if msg.include?('cannot be null')
-		  	  @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-		  	else
-			  @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-			end
-			raise ActiveRecord::Rollback
-	      end # end if msg
+  	  params[:select_scenario].each do |scenario_id|
+  		  @scenario = Scenario.find(scenario_id)
+  		  msg = run_aplcat
+  		  unless msg.eql?("OK")
+    			if msg.include?('cannot be null')
+    		  	  @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+    		  	else
+    			  @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+    			end
+    			raise ActiveRecord::Rollback
+  	    end # end if msg
       end # end each do params loop
-	end
+  	end
   end  # end method simulate_aplcat
 
-  	def run_aplcat
+  def run_aplcat
 	    msg = "OK"
 	    #find the aplcat parameters for the sceanrio selected
 		aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
