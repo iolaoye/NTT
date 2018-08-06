@@ -237,7 +237,8 @@ class FieldsController < ApplicationController
     scenarios_no_simulated = 0
 
     fork do
-      simulation_msg = ""
+      simulation_msg = "Start time: " + Time.now.to_s + "\n"
+      begin
         params[:select_field].each do |field_id|
           @field = Field.find(field_id)
           if @field.updated == true then
@@ -271,6 +272,10 @@ class FieldsController < ApplicationController
             end   # end activeRecord
           end  # end scenarios
         end  # end fields
+      rescue Exception => e
+        simulation_msg += "Process failed due to: " + e.message + "\n"
+      end
+      simulation_msg += "End time: " + Time.now.to_s + "\n"
       @user = User.find(session[:user_id])
       @user.send_fields_simulated_email("Total Scenarios simulated " + scenarios_simulated.to_s + ", in " + params[:select_field].count.to_s + " fields." + "\n" + simulation_msg)
     end  # end fork
