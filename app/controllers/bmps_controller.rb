@@ -1486,7 +1486,6 @@ end
   end
 
   def delete_existing_subarea(name)
-    debugger
     subarea = Subarea.find_by_scenario_id_and_subarea_type(params[:scenario_id], name)
   	#if !(subarea == nil) && @bmp.sides == 0 then
     if !(subarea == nil) && !(@bmp.bmpsublist_id == 9) then
