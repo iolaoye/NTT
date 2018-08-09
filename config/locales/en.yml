@@ -1279,6 +1279,19 @@ en:
       theta: Theta (unit conversion constant) [Adopted from FEM]
       fge: Fuel use constant for gasoline engines
       fde: Fuel use constant for diesel engines
+  aplcat_result:
+      aws: Animal weights
+      dmi: Dry matter intake
+      gei: Gross energy intake
+      wi: Water intake
+      sme: Solid manure excretion
+      ni: Nitrogen intake
+      tne: Total nitrogen excretion
+      tnr: Total nitrogen retained
+      fne: Fecal nitrogen excretion
+      une: Urine nitrogen excretion
+      eme: Entric methane emission
+      mme: Manure methane emission
   grazing:
       type:
       start_julian:
