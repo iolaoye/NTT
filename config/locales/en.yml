@@ -688,6 +688,8 @@ en:
     width: Width
     length: Length
     fence: Fence measures
+    distance: Distance from the stream to the fence
+    zero_fence: Zero means no buffer is created
     buffer_width: Grass buffer width
     waterways_info: Including both sides of channel
     grass_field_portion: Portion of buffer area that is grass
