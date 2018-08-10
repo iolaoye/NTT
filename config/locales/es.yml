@@ -669,13 +669,17 @@ es:
     number_of_animals: Número de animales
     irrigation_frequency: Regar a un máximo de cada
     stream_fencing_frequency: Días en la corriente
-    hours: Horas por día
+    hours: Horas por día en el rio
     dry_manure: Estiércol seco
     no3_n_html: 'elemento-N'
     po4_p_html: 'elemento-P'
     org_n_html: 'N Orgánico'
     org_p_html: 'P Orgánico'
     width: Ancho
+    length: Largo
+    fence: Medidas de la Cerca
+    distance: Distancia desde el rio hasta la cerca
+    zero_fence: Cero significa que no se crea un buffer 
     buffer_width: Ancho del Buffer de pasto
     waterways_info: Incluyendo ambos lados del canal
     grass_field_portion: Porción del buffer que es pasto
