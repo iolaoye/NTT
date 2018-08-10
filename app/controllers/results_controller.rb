@@ -292,9 +292,7 @@ class ResultsController < ApplicationController
                                       .where("scenario_id = ? AND yldg+yldf > ?", scenario_id, 0)
                     
                     years = results_data.order('pcp '+order).limit(count).map(&:year)
-                    byebug
                     crops_data = crops_data.where(:year => years)
-                    
                     cic = Hash[*crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval] }.flatten]
 
                     crops = crops_data.where("scenario_id = ? AND (yldg + yldf) > ?", scenario_id, 0)
