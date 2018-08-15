@@ -67,13 +67,51 @@ module SimulationsHelper
   end
 
   def send_files_to_APEX(file)
-    uri = URI(URL_TIAER)
-    #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth, "rg" => "")
-    if res.body.include?("Created") then
+    #uri = URI(URL_TIAER)
+    #res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth, "rg" => "")
+    #if res.body.include?("Created") then
+      #return "OK"
+    #else
+      #return res.body
+    #end
+    apex_string = ""
+    for i in 1..4
+      case i
+      when 1
+        apex_string = @apex_control
+      when 2
+        apex_string = @apex_parm
+      when 3
+        apex_string = @apex_site
+      when 4
+        apex_string = @apex_wth        
+      end
+      apex_string1=""
+      if apex_string.kind_of? Hash
+        apex_string[:string].each do |as|
+          apex_string1 += as + "*"
+        end
+      else
+        apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "")
+      end
+      case i
+      when 1
+        apex_control = apex_string1
+      when 2
+        apex_parm = apex_string1
+      when 3
+        apex_site = apex_string1
+      when 4
+        apex_wth = apex_string1
+      end
+    end   # end for
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_control, "parm" => apex_parm, "site" => apex_site, "wth" => apex_wth, "session_id" => session[:session_id]})
+    if response.body[:apex_files_response][:apex_files_result] == "created" then
       return "OK"
     else
-      return res.body
+      return response.body[:apex_files_response][:apex_files_result]
     end
   end
 
@@ -88,39 +126,94 @@ module SimulationsHelper
     if stop != nil
       rotational_grazing += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
     end
-    #uri = URI('http://nn.tarleton.edu/NNMultipleStates/NNRestService.ashx')
-    url = URI.parse(URL_TIAER)
-    http = Net::HTTP.new(url.host,url.port)
-    http.read_timeout = 2000   #seconds
-    #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    req = Net::HTTP::Post.new(url.path)
-    req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => rotational_grazing})
-    res = http.request(req)
-    if res.body.include?("Created") then
-      return "OK"
-    else
-      return res.body
-    end
+    #url = URI.parse(URL_TIAER)
+    #http = Net::HTTP.new(url.host,url.port)
+    #http.read_timeout = 2000   #seconds
+    #req = Net::HTTP::Post.new(url.path)
+    #req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => rotational_grazing})
+    #res = http.request(req)
+    #if res.body.include?("Created") then
+      #return "OK"
+    #else
+      #return res.body
+    #end
+    for i in 1..3
+      case i
+      when 1
+        apex_string = @soil_list
+      when 2
+        apex_string = @opcs_list_file
+      when 3
+        apex_string = @subarea_file
+      end
+      apex_string1=""
+      if apex_string.kind_of? Array
+        apex_string.each do |as|
+          apex_string1 += as.gsub("\n", "*").gsub("\r", "")
+        end
+      else
+        apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "")
+      end
+      case i
+      when 1
+        soil_list = apex_string1
+      when 2
+        opcs_list_file = apex_string1
+      when 3
+        subarea_file = apex_string1
+      end
+    end   # end for
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:run_apex, message: {"soil_dat" => soil_list, "opcs_dat" => opcs_list_file, "subarea" => subarea_file, "session_id" => session[:session_id], "rg" => rotational_grazing})
+    #if response.body[:run_apex_response][:run_apex_result] != "Error" then
+      return response.body[:run_apex_response][:run_apex_result]
+    #else
+      #return "OK"
+    #end
   end
 
   def send_file_to_APEX(apex_string, file)
-    uri = URI(URL_TIAER)
-    #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
-    if res.body.include?("Created") then
+    #uri = URI(URL_TIAER)
+    #res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
+    #if res.body.include?("Created") then
+      #return "OK"
+    #else
+      #return res.body
+    #end
+    apex_string1=""
+    if apex_string.kind_of? Array
+      apex_string.each do |as|
+        apex_string1 += as.gsub("\n", "*").gsub("\r", "")
+      end
+    else
+      apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "")
+    end 
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_string1, "session_id" => session[:session_id]})
+    if response.body[:apex_files_response][:apex_files_result] == "created" then
       return "OK"
     else
-      return res.body
+      return response.body[:apex_files_response][:apex_files_result]
     end
   end
 
   def send_file1_to_APEX(apex_string, file)
-    uri = URI(URL_TIAER)
-    res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
-    if res.body.include?("Created") then
-      return "OK"
+    #uri = URI(URL_TIAER)
+    #res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
+    #if res.body.include?("Created") then
+      #return "OK"
+    #else
+      #return res.body
+    #end
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:get_weather_info, message: {"file" => file})
+    if !response.body[:get_weather_info_response][:get_weather_info_result].include? "Error" then
+      return response.body[:get_weather_info_response][:get_weather_info_result] #return weather information
     else
-      return res.body
+      return response.body[:get_weather_info_response][:get_weather_info_result]  # Return error 
     end
   end
 
@@ -214,29 +307,16 @@ module SimulationsHelper
   		wind_wp1_name = "CHINAG"
   		wind_wp1_code = 999
   	end
-      apex_run_string = "APEX001   1IWPNIWND   1   0   0"
-      client = Savon.client(wsdl: URL_Weather)
+    apex_run_string = "APEX001   1IWPNIWND   1   0   0"
+    #client = Savon.client(wsdl: URL_Weather)
+    client = Savon.client(wsdl: URL_SoilsInfo)
   	###### create wp1 file from weather and send to server ########
-      #response = client.call(:create_wp1_from_weather1, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => wind_wp1_code})
-      #response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "pgm" => 'APEX'})
   	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => county.county_state_code})
-      #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result][:string]
       if response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] == "created" then
   		return "OK"
   	else
   		return "Error creating wp1 and wind files"
   	end
-
-      #msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wp1")
-      #client = Savon.client(wsdl: URL_Weather)
-  	######### create eind file and send to server ########
-      #response = client.call(:get_weather, message: {"path" => WIND + "/" + wind_wp1_name + ".wnd"})
-      #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-      #msg = send_file_to_APEX(weather_data.join("\n"), wind_wp1_name + ".wnd")
-  	######### create apexrun file and send to server ########
-      #apex_run_string["IWPN"] = sprintf("%4d", wind_wp1_code)
-      #apex_run_string["IWND"] = sprintf("%4d", wind_wp1_code)
-      #msg = send_file_to_APEX(apex_run_string, "Apexrun.dat")
   end
 
   def create_weather_file(dir_name, field_id)
@@ -254,6 +334,9 @@ module SimulationsHelper
       #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
       #print_array_to_file(PATH, "APEX.wth")
       @apex_wth = send_file1_to_APEX("WTH", path)
+      if @apex_wth.include? "Error"
+        return @apex_wth
+      end
     end
     #todo after file is copied if climate bmp is in place modified the weather file.
     bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)

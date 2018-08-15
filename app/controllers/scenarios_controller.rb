@@ -601,7 +601,6 @@ class ScenariosController < ApplicationController
 		apex_string += "\n"
     apex_string += aplcat.tjan.to_s + "\t" + "! " + t("January") + "\n"
     apex_string += aplcat.tfeb.to_s + "\t" + "! " + t("February") + "\n"
-    debugger
     apex_string += aplcat.tmar.to_s + "\t" + "! " + t("March") + "\n"
     apex_string += aplcat.tapr.to_s + "\t" + "! " + t("April") + "\n"
     apex_string += aplcat.tmay.to_s + "\t" + "! " + t("May") + "\n"
