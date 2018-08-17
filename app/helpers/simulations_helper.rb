@@ -74,6 +74,7 @@ module SimulationsHelper
     #else
       #return res.body
     #end
+    debugger
     apex_string = ""
     for i in 1..4
       case i
@@ -207,9 +208,10 @@ module SimulationsHelper
     #else
       #return res.body
     #end
+    debugger
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
-    response = client.call(:get_weather_info, message: {"file" => file})
+    response = client.call(:get_weather_info, message: {"file" => file, "i_year" => @field.weather.weather_initial_year, "f_year" => @field.weather.weather_final_year})
     if !response.body[:get_weather_info_response][:get_weather_info_result].include? "Error" then
       return response.body[:get_weather_info_response][:get_weather_info_result] #return weather information
     else
