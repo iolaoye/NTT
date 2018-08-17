@@ -36,6 +36,9 @@ en:
       result:
         result: "Results"
         summary: "Summary"
+        all_years: "All Years"
+        dry_years: "Dry Years"
+        wet_years: "Wet Years"
         by_soil: "By Soil"
         annual_charts: "Annual Charts"
         monthly_charts: "Monthly Charts"
@@ -793,6 +796,9 @@ en:
     by_soil: By+Soil
   result:
     summary: Tabular
+    all_years: "All Years"
+    dry_years: "Dry Years"
+    wet_years: "Wet Years"
     by_soil: By Soil
     download_pdf: Download PDF
     download_csv: Download CSV

@@ -49,7 +49,8 @@
 					<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 				<% end %>
 				<% if @scenario3!= "0" && @scenario3 != "" then %>
-					<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", @averages3[0][0]+@averages3[0][1]+@averages3[0][2]+@averages3[0][3]) + " (" + sprintf("%8.1f",@cis3[0][1]+@cis3[0][2]+@cis3[0][3]+@cis3[0][4]) + ")" %></td>
+					<td class="gvTotalText" style="background-color:#CADCFF">
+						<%= sprintf("%8.1f", @averages3[0][0]+@averages3[0][1]+@averages3[0][2]+@averages3[0][3]) + " (" + sprintf("%8.1f",@cis3[0][1]+@cis3[0][2]+@cis3[0][3]+@cis3[0][4]) + ")" %></td>
 					<% difference1 = @averages3[0][0]+@averages3[0][1]+@averages3[0][2]+@averages3[0][3]-(@averages1[0][0]+@averages1[0][1]+@averages1[0][2]+@averages1[0][3]) %>
 					<% reduction1 = difference1 / (@averages1[0][0]+@averages1[0][1]+@averages1[0][2]+@averages1[0][3]) * 100 %>
 					<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
@@ -58,7 +59,8 @@
 			<% row_id = t + "row" + "21" %>
 			<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Org N" + " (" + "lbs/ac" + ")" %></a></th>
-				<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @averages1[0][0]).to_s + " (" + sprintf("%8.1f", @cis1[0][1]) + ")" %></td>
+				<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9">
+					<%= sprintf("%8.2f", @averages1[0][0]).to_s + " (" + sprintf("%8.1f", @cis1[0][1]) + ")" %></td>
 				<% if @scenario2 != "0" && @scenario2 != "" then %>
 					<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @averages2[0][0]) + " (" + sprintf("%8.1f", @cis2[0][1]) + ")" %></td>
 					<td class=<%= if @averages2[0][0]-@averages1[0][0] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.2f", @averages2[0][0]-@averages1[0][0]) + " (" + sprintf("%8.2f", ((@averages2[0][0]-@averages1[0][0]) / @averages1[0][0]) * 100) + ")" %></td>
@@ -281,7 +283,8 @@
 					<a id="show16" class="gvTotalText"><%= "Total Sediment" + " (" + "t/ac" + ")" %></a>
 					<%= check_box_tag "Total P" %>
 				</th>
-				<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", @averages1[0][12]+@averages1[0][13]) + " (" + sprintf("%8.1f",@cis1[0][13]+@cis1[0][14]) + ")" %></td>
+				<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9">
+					<%= sprintf("%8.1f", @averages1[0][12]+@averages1[0][13]) + " (" + sprintf("%8.1f",@cis1[0][13]+@cis1[0][14]) + ")" %></td>
 				<% if @scenario2 != "0" && @scenario2 != "" then %>
 					<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", @averages2[0][12]+@averages2[0][13]) + " (" + sprintf("%8.1f",@cis2[0][13]+@cis2[0][14]) + ")" %></td>
 					<% difference1 = @averages2[0][12]+@averages2[0][13]-(@averages1[0][12]+@averages1[0][13]) %>
@@ -298,9 +301,13 @@
 			<% row_id = t + "row" + "61" %>
 			<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
 				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show17" class="gvTotalText"><%= "Surface Erosion" + " (" + "t/ac" + ")" %></a></th>
-				<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.4f", @averages1[0][12]) + " (" + sprintf("%8.1f", @cis1[0][13]) + ")" %></td>
+				<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9">
+					<%= sprintf("%8.4f", @averages1[0][12]) + " (" + sprintf("%8.1f", @cis1[0][13]) + ")" %>
+				</td>
 				<% if @scenario2 != "0" && @scenario2 != "" then %>
-					<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.4f", @averages2[0][12]) + " (" + sprintf("%8.1f", @cis2[0][13]) + ")" %></td>
+					<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD">
+						<%= sprintf("%8.4f", @averages2[0][12]) + " (" + sprintf("%8.1f", @cis2[0][13]) + ")" %>	
+					</td>
 					<td class=<%= if @averages2[0][12]-@averages1[0][12] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.4f", @averages2[0][12]-@averages1[0][12]) + " (" + sprintf("%8.2f", ((@averages2[0][12]-@averages1[0][12]) / @averages1[0][12]) * 100) + ")" %></td>
 				<% end %>
 				<% if @scenario3 != "0" && @scenario3 != "" then %>
@@ -319,6 +326,41 @@
 				<% if @scenario3 != "0" && @scenario3 != "" then %>
 					<td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.4f", @averages3[0][13]) + " (" + sprintf("%8.1f", @cis3[0][14]) + ")" %></td>
 					<td class=<%= if @averages3[0][13]-@averages1[0][13] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.4f", @averages3[0][13]-@averages1[0][13]) + " (" + sprintf("%8.2f", ((@averages3[0][13]-@averages1[0][13]) / @averages1[0][13]) * 100) + ")" %></td>
+				<% end %>
+			</tr>
+			<%# Other Information %>
+			<% row_id = t + "row" + "90" %>
+			<tr class="gvRowStyleOdd", id = <%=row_id%>>
+				<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
+					<a id="show24" class="gvTotalText"><%= "Other Information" + " " %></a>
+					<%= check_box_tag "Total P" %>
+				</th>
+				<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9">
+					<%#= sprintf("%8.1f", @averages1[0][12]+@averages1[0][13]) + " (" + sprintf("%8.1f",@cis1[0][13]+@cis1[0][14]) + ")" %></td>
+				<% if @scenario2 != "0" && @scenario2 != "" then %>
+					<td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.1f", @averages2[0][12]+@averages2[0][13]) + " (" + sprintf("%8.1f",@cis2[0][13]+@cis2[0][14]) + ")" %></td>
+					<%# difference1 = @averages2[0][12]+@averages2[0][13]-(@averages1[0][12]+@averages1[0][13]) %>
+					<%# reduction1 = difference1 / (@averages1[0][12]+@averages1[0][13]) * 100 %>
+					<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+				<% end %>
+				<% if @scenario3 > "0" && @scenario3 != "" then %>
+					<td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.1f", @averages3[0][12]+@averages3[0][13]) + " (" + sprintf("%8.1f",@cis3[0][13]+@cis3[0][14]) + ")" %></td>
+					<%# difference1 = @averages3[0][12]+@averages3[0][13]-(@averages1[0][12]+@averages1[0][13]) %>
+					<%# reduction1 = difference1 / (@averages1[0][12]+@averages1[0][13]) * 100 %>
+					<td class= "gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+				<% end %>
+			</tr>
+			<% row_id = t + "row" + "93" %>
+			<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
+				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show25" class="gvTotalText"><%= "Carbon" + " (" + "lbs/ac" + ")" %></a></th>
+				<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @averages1[0][14]) + " (" + sprintf("%8.1f", @cis1[0][15]) + ")" %></td>
+				<% if @scenario2 != "0" && @scenario2 != "" then %>
+					<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @averages2[0][14]) + " (" + sprintf("%8.1f", @cis2[0][15]) + ")" %></td>
+					<td class=<%= if @averages2[0][14]-@averages1[0][14] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.2f", @averages2[0][14]-@averages1[0][14]) + " (" + sprintf("%8.2f", ((@averages2[0][14]-@averages1[0][14]) / @averages1[0][14]) * 100) + ")" %></td>
+				<% end %>
+				<% if @scenario3 != "0" && @scenario3 != "" then %>
+					<td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", @averages3[0][14]) + " (" + sprintf("%8.1f", @cis3[0][15]) + ")" %></td>
+					<td class=<%= if @averages3[0][14]-@averages1[0][14] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", @averages3[0][14]-@averages1[0][14]) + " (" + sprintf("%8.2f", ((@averages3[0][14]-@averages1[0][14]) / @averages1[0][14]) * 100) + ")" %></td>
 				<% end %>
 			</tr>
 			<%# Crops %>

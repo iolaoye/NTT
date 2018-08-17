@@ -867,23 +867,28 @@ module ScenariosHelper
     return msg
   end
 
-
   def request_soils()
-    url = URI.parse(URL_TIAER)
-    http = Net::HTTP.new(url.host,url.port)
-    http.read_timeout = 2000   #seconds
-    #uri = URI('http://45.40.132.224/NNMultipleStates/NNRestService.ashx')
-    req = Net::HTTP::Post.new(url.path)
-    req.set_form_data({"data" => "Soils", "file" => "soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates.strip, "rg" => "yes"})
-    res = http.request(req)
-    #uri = URI(URL_TIAER)
-    #res = Net::HTTP.p("data" => "Soils", "file" => "Soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates.strip, "rg" => "yes")
-    if !res.body.include?("error") then
+    #url = URI.parse(URL_TIAER)
+    #http = Net::HTTP.new(url.host,url.port)
+    #http.read_timeout = 2000   #seconds
+    #req = Net::HTTP::Post.new(url.path)
+    #req.set_form_data({"data" => "Soils", "file" => "soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates.strip, "rg" => "yes"})
+    #res = http.request(req)
+    #if !res.body.include?("error") then
+      #msg = "OK"
+      #msg = create_new_soils(YAML.load(res.body))
+      #return msg
+    #else
+      #return res.body
+    #end
+    client = Savon.client(wsdl: URL_SoilsInfo)
+ 	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id]})
+    if response.body[:send_soils_response][:send_soils_result] != "Error" then
       msg = "OK"
-      msg = create_new_soils(YAML.load(res.body))
+      msg = create_new_soils(YAML.load(response.body[:send_soils_response][:send_soils_result]))
       return msg
     else
-      return res.body
+      return response.body
     end
   end
 
