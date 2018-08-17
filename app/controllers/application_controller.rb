@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 				ENV["APP_VERSION"] = "modified" 
 			when current_url.include?("ntt.bk.cbntt.org") 
 				ENV["APP_VERSION"] = "standard" 
-			when current_url.include?("ntt2.bk.cbntt.org") 
+			when current_url.include?("ntt2") 
 				ENV["APP_VERSION"] = "modified" 
 			when current_url.include?("ntt.tiaer") 
 				ENV["APP_VERSION"] = "modified" 
