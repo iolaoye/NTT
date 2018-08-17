@@ -91,7 +91,7 @@ updateNutrients = (animal) ->
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
     $("#div_fertilizer").hide()
-    $("#div_access_to_stream")[0].style.display = 'inline'    
+    $("#div_access_to_stream")[0].style.display = 'none'    
     $("#div_amount").show()
     #$("#div_access_to_stream").show()
     $("#div_depth").show()
