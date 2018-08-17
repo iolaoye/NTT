@@ -74,7 +74,6 @@ module SimulationsHelper
     #else
       #return res.body
     #end
-    debugger
     apex_string = ""
     for i in 1..4
       case i
@@ -208,7 +207,6 @@ module SimulationsHelper
     #else
       #return res.body
     #end
-    debugger
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
     response = client.call(:get_weather_info, message: {"file" => file, "i_year" => @field.weather.weather_initial_year, "f_year" => @field.weather.weather_final_year})
@@ -216,6 +214,17 @@ module SimulationsHelper
       return response.body[:get_weather_info_response][:get_weather_info_result] #return weather information
     else
       return response.body[:get_weather_info_response][:get_weather_info_result]  # Return error 
+    end
+  end
+
+  def get_file_from_APEX(file)
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### retrieve MSW, MWS, ACY files from apex simulation ########
+    response = client.call(:get_file, message: {"file" => file, "session_id" => session[:session_id]})
+    if !response.body[:get_file_response][:get_file_result] == "Error" then
+      return response.body[:get_file_response][:get_file_result]
+    else
+      return response.body[:get_file_response][:get_file_result]
     end
   end
 
@@ -1929,7 +1938,7 @@ module SimulationsHelper
     msg = "OK"
     crops_data = Array.new
     #oneCrop = Struct.new(:sub1, :name, :year, :yield, :ws, :ts, :ns, :ps, :as1)
-    data = send_file_to_APEX("ACY", session[:session_id]) #this operation will ask for ACY file
+    data = get_file_from_APEX("ACY") #this operation will ask for ACY file
     #todo validate that the file was uploaded correctly
     j = 1
     data.each_line do |tempa|
@@ -1964,7 +1973,7 @@ module SimulationsHelper
   end #end method
 
   def load_results_monthly(apex_start_year)
-    data = send_file_to_APEX("MSW", session[:session_id]) #this operation will ask for MSW file
+    data = get_file_from_APEX("MSW") #this operation will ask for MSW file
     msg = "OK"
     results_data = Array.new
     sub_ant = 99
@@ -2437,7 +2446,7 @@ module SimulationsHelper
   end
 
   def load_monthly_values(apex_start_year)
-    data = send_file_to_APEX("MSW", session[:session_id]) #this operation will ask for MSW file
+    data = get_file_from_APEX("MSW") #this operation will ask for MSW file
     #todo validate that the file was uploaded correctly
 
     annual_flow = fixed_array(12, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
@@ -2472,7 +2481,7 @@ module SimulationsHelper
 
     last_year -= apex_start_year + 1
 
-    data = send_file_to_APEX("MWS", session[:session_id]) #this operation will ask for MWS file
+    data = get_file_from_APEX("MWS") #this operation will ask for MWS file
     #todo validate that the file was uploaded correctly
     i=1
     data.each_line do |tempa|
