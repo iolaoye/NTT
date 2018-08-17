@@ -255,13 +255,14 @@ class ResultsController < ApplicationController
                                  v.map(&:irri).confidence_interval, 
                                  v.map(&:dprk).confidence_interval, 
                                  v.map(&:sed).confidence_interval, 
-                                 v.map(&:ymnu).confidence_interval
+                                 v.map(&:ymnu).confidence_interval,
+                                 v.map(&:co2).confidence_interval
                     ]}
 
                     values = []
                     averages = []
                     fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow', 
-                      'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu']
+                      'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2']
                     fields.each do |f| 
                       values.push(results_data.order('pcp ' + order).limit(count).pluck(f).inject(:+) / count)
                     end
@@ -286,7 +287,8 @@ class ResultsController < ApplicationController
                                                 'avg(irri)*' + total_area.to_s,
                                                 'avg(dprk)*' + total_area.to_s,
                                                 'avg(sed)*' + total_area.to_s,
-                                                'avg(ymnu)*' + total_area.to_s)  
+                                                'avg(ymnu)*' + total_area.to_s, 
+                                                'avg(co2)*' + total_area.to_s)  
 
                     crops_data = CropResult.select('*', 'yldg+yldf AS yield')
                                       .where("scenario_id = ? AND yldg+yldf > ?", scenario_id, 0)
