@@ -204,6 +204,12 @@ class ResultsController < ApplicationController
                 if not (scenario_id.eql? "0" or scenario_id.eql? "") 
                     results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow')
                                                .where(:sub1 => 0, :scenario_id => scenario_id)
+                    results_data.each do |rd|
+                      if rd.co2 == nil
+                        rd.co2 = 0
+                        rd.save
+                      end
+                    end
 
                     order = 'ASC'
                     if @type.eql? t('result.dry_years') then
