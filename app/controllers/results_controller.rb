@@ -265,7 +265,6 @@ class ResultsController < ApplicationController
                     fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow', 
                       'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2']
                     fields.each do |f|
-                      debugger
                       values.push(results_data.order('pcp ' + order).limit(count).pluck(f).inject(:+) / count)
                     end
 
