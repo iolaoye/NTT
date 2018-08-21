@@ -236,6 +236,7 @@ class ResultsController < ApplicationController
                             end
                         end
                     else
+                      if !params[:result1] == nil
                         if !params[:result1][:scenario_id].empty? then
                             watershed_scenarios = WatershedScenario.where(
                               :watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
@@ -243,6 +244,7 @@ class ResultsController < ApplicationController
                                 total_area += Field.find(ws.field_id).field_area
                             end
                         end
+                      end
                     end
                     
                     # determine which scenario this is.
