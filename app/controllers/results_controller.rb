@@ -297,10 +297,10 @@ class ResultsController < ApplicationController
                     crops_data = crops_data.where(:year => years)
                     cic = Hash[*crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval] }.flatten]
 
-                    crops = crops_data.where("scenario_id = ? AND (yield) > ?", scenario_id, 0)
+                    crops = crops_data.where("scenario_id = ? AND (yldg + yldf) > ?", scenario_id, 0)
                                         .order("name")                                        
                                         .group(:name)
-                                        .pluck('avg(yield)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
+                                        .pluck('avg(yldg+yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
 
 
                     return cis, averages, totals, cic, crops, total_area
