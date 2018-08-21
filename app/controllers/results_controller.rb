@@ -63,8 +63,10 @@ class ResultsController < ApplicationController
     @averages1 = []
     @averages2 = []
     @averages3 = []
-    
+    simul = ""
+
     if session[:simulation].eql?('scenario') then
+        simul = "scenario_id"
         @field_name = @field.field_name
         if params[:result1] != nil then
             if params[:result1][:scenario_id] == nil then
@@ -94,6 +96,7 @@ class ResultsController < ApplicationController
             @scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @field.scenarios.find_by_id(session[:scenario3]) == nil
         end
     else
+        simul = "watershed_id"
         if params[:result1] != nil then
             if params[:result1][:scenario_id] == nil then
                 @scenario1 = session[:scenario1] unless session[:scenario1] == nil or session[:scenario1] == "" or @project.location.watersheds.find_by_id(session[:scenario1]) == nil
@@ -191,7 +194,6 @@ class ResultsController < ApplicationController
     if @type != nil
       @cis1 = nil
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil) ? @soil = params[:result4][:soil_id] : @soil = "0"
-        
       case @type
         when t("general.view"), 
              t("result.summary"), 
@@ -203,9 +205,13 @@ class ResultsController < ApplicationController
         
             get_results = lambda do |scenario_id| 
                 if not (scenario_id.eql? "0" or scenario_id.eql? "") 
-                    results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow')
-                                               .where(:sub1 => 0, :scenario_id => scenario_id)
-
+                    results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where(:sub1 => 0, simul.to_sym => scenario_id)
+                    results_data.each do |rs|
+                      if rs.co2 == nil 
+                        rs.co2 = 0
+                        rs.save
+                      end
+                    end
                     order = 'ASC'
                     if @type.eql? t('result.dry_years') then
                         count = results_data.size * 0.25
@@ -272,7 +278,7 @@ class ResultsController < ApplicationController
               
                     #byebug 
 
-                    totals = AnnualResult.where(:sub1 => 0, :scenario_id => scenario_id)
+                    totals = AnnualResult.where(:sub1 => 0, simul.to_sym => scenario_id)
                                          .order('pcp ' + order)
                                          .limit(count)
                                          .pluck('avg(orgn)*' + total_area.to_s, 
@@ -292,13 +298,13 @@ class ResultsController < ApplicationController
                                                 'avg(co2)*' + total_area.to_s)  
 
                     crops_data = CropResult.select('*', 'yldg+yldf AS yield')
-                                      .where("scenario_id = ? AND yldg+yldf > ?", scenario_id, 0)
+                                      .where(simul + " = ? AND yldg+yldf > ?", scenario_id, 0)
                     
                     years = results_data.order('pcp '+order).limit(count).map(&:year)
                     crops_data = crops_data.where(:year => years)
                     cic = Hash[*crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval] }.flatten]
 
-                    crops = crops_data.where("scenario_id = ? AND (yldg + yldf) > ?", scenario_id, 0)
+                    crops = crops_data.where(simul + " = ? AND (yldg + yldf) > ?", scenario_id, 0)
                                         .order("name")                                        
                                         .group(:name)
                                         .pluck('avg(yldg+yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
