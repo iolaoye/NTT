@@ -55,7 +55,7 @@
               <%= t('graze.dmi_code') %><br>
               <%#= radio_button_tag :for_button, "1"%> <%#= t('graze.dmi_code1') %>
               <%#= radio_button_tag :for_button, "2"%> <%#= t('graze.dmi_code2') %>
-              <%= select_tag "dmi_forage", options_for_select(basis_dmi, :selected => 0), {:prompt => t("Select the basis of Intake"), :required => true} %><br>
+              <%= select_tag "for_button", options_for_select(basis_dmi, :selected => 0), {:prompt => t("Select the basis of Intake"), :required => true} %><br>
             </div>
           </tr>
         </td>
@@ -129,7 +129,7 @@
               <%= t('graze.dmi_code') %><br>
               <%#= radio_button_tag :supplement_button, "1"%> <%#= t('graze.dmi_code1') %>
               <%#= radio_button_tag :supplement_button, "2"%> <%#= t('graze.dmi_code2') %>
-              <%= select_tag "dmi_supplement", options_for_select(basis_dmi, :selected => 0), {:prompt => t("Select the basis of Intake"), :required => true} %><br>
+              <%= select_tag "supplement_button", options_for_select(basis_dmi, :selected => 0), {:prompt => t("Select the basis of Intake"), :required => true} %><br>
             </div>
           </tr>
           <tr>

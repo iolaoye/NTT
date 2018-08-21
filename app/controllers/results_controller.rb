@@ -205,6 +205,7 @@ class ResultsController < ApplicationController
         
             get_results = lambda do |scenario_id| 
                 if not (scenario_id.eql? "0" or scenario_id.eql? "") 
+
                     results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where(:sub1 => 0, simul.to_sym => scenario_id)
                     results_data.each do |rs|
                       if rs.co2 == nil 
