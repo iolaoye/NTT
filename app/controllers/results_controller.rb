@@ -50,9 +50,10 @@ class ResultsController < ApplicationController
     @description = 0
     @group = 0
     @title = ""
-    @total_area3 = 0
+    @total_area1 = 0
     @total_area2 = 0
     @total_area3 = 0
+    total_area = 0
     @field_name = ""
     @descriptions = Description.select("id, description, spanish_description").where("id < 71 or (id > 80 and id < 200)")
     add_breadcrumb t('menu.results')
@@ -263,7 +264,8 @@ class ResultsController < ApplicationController
                     averages = []
                     fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow', 
                       'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2']
-                    fields.each do |f| 
+                    fields.each do |f|
+                      debugger
                       values.push(results_data.order('pcp ' + order).limit(count).pluck(f).inject(:+) / count)
                     end
 
