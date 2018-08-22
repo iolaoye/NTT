@@ -152,28 +152,28 @@ wb.styles do |s|
         end
       else
         sheet.add_row ["Total N (lbs/ac)", sprintf("%8.1f", @averages1[0][0]+@averages1[0][1]+@averages1[0][2]+@averages1[0][3]), sprintf("%8.1f",@cis1[0][1]+@cis1[0][2]+@cis1[0][3]+@cis1[0][4]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
-        sheet.add_row ["Org N (lbs/ac)", sprintf("%8.2f", averages1[0][0]).to_s, sprintf("%8.1f", cis1[0][1]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
-        sheet.add_row ["Runoff N (lbs/ac)", sprintf("%8.2f", averages1[0][1]).to_s, sprintf("%8.1f", cis1[0][2]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
-        sheet.add_row ["Subsurface N (lbs/ac)", sprintf("%8.2f", averages1[0][2]).to_s, sprintf("%8.1f", cis1[0][3]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
-        sheet.add_row ["Tile Drain N (lbs/ac)", sprintf("%8.2f", averages1[0][3]).to_s, sprintf("%8.1f", cis1[0][4]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Org N (lbs/ac)", sprintf("%8.2f", @averages1[0][0]).to_s, sprintf("%8.1f", cis1[0][1]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Runoff N (lbs/ac)", sprintf("%8.2f", @averages1[0][1]).to_s, sprintf("%8.1f", @cis1[0][2]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Subsurface N (lbs/ac)", sprintf("%8.2f", @averages1[0][2]).to_s, sprintf("%8.1f", @cis1[0][3]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Tile Drain N (lbs/ac)", sprintf("%8.2f", @averages1[0][3]).to_s, sprintf("%8.1f", @cis1[0][4]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         
-        sheet.add_row ["Total P (lbs/ac)", sprintf("%8.1f", averages1[0][4]+averages1[0][5]+averages1[0][6]), " (" + sprintf("%8.1f",cis1[0][5]+cis1[0][6]+cis1[0][7]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
-        sheet.add_row ["Org P (lbs/ac)", sprintf("%8.2f", averages1[0][4]).to_s, sprintf("%8.1f", cis1[0][5]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
-        sheet.add_row ["PO4 (lbs/ac)", sprintf("%8.2f", averages1[0][5]).to_s, sprintf("%8.1f", cis1[0][6]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
-        sheet.add_row ["Tile Drain P (lbs/ac)", sprintf("%8.2f", averages1[0][6]).to_s, sprintf("%8.1f", cis1[0][7]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Total P (lbs/ac)", sprintf("%8.1f", @averages1[0][4]+@averages1[0][5]+@averages1[0][6]), " (" + sprintf("%8.1f",cis1[0][5]+@cis1[0][6]+@cis1[0][7]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
+        sheet.add_row ["Org P (lbs/ac)", sprintf("%8.2f", @averages1[0][4]).to_s, sprintf("%8.1f", @cis1[0][5]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["PO4 (lbs/ac)", sprintf("%8.2f", @averages1[0][5]).to_s, sprintf("%8.1f", @cis1[0][6]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Tile Drain P (lbs/ac)", sprintf("%8.2f", @averages1[0][6]).to_s, sprintf("%8.1f", @cis1[0][7]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         
-        sheet.add_row ["Surface/Subsurface/Tile Drain Flow (in)", sprintf("%8.1f", averages1[0][7]+averages1[0][8]+averages1[0][9]), sprintf("%8.1f",cis1[0][8]+cis1[0][9]+cis1[0][10]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
-        sheet.add_row ["Surface Flow (in)", sprintf("%8.2f", averages1[0][7]), sprintf("%8.1f", cis1[0][8]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
-        sheet.add_row ["Subsurface Flow (in)", sprintf("%8.2f", averages1[0][8]), sprintf("%8.1f", cis1[0][9]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
-        sheet.add_row ["Tile Drain Flow (in)", sprintf("%8.2f", averages1[0][9]), sprintf("%8.1f", cis1[0][10]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Surface/Subsurface/Tile Drain Flow (in)", sprintf("%8.1f", @averages1[0][7]+@averages1[0][8]+@averages1[0][9]), sprintf("%8.1f",@cis1[0][8]+@cis1[0][9]+@cis1[0][10]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
+        sheet.add_row ["Surface Flow (in)", sprintf("%8.2f", @averages1[0][7]), sprintf("%8.1f", @cis1[0][8]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Subsurface Flow (in)", sprintf("%8.2f", @averages1[0][8]), sprintf("%8.1f", @cis1[0][9]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Tile Drain Flow (in)", sprintf("%8.2f", @averages1[0][9]), sprintf("%8.1f", @cis1[0][10]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         
-        sheet.add_row ["Total Other Water Info (in)", sprintf("%8.1f", averages1[0][10]+averages1[0][11]).to_s, sprintf("%8.1f",cis1[0][11]+cis1[0][12]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
-        sheet.add_row ["Irrigation Runoff (in)", sprintf("%8.2f", averages1[0][10]).to_s, sprintf("%8.1f", cis1[0][11]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
-        sheet.add_row ["Deep Percolation (in)", sprintf("%8.2f", averages1[0][11]), sprintf("%8.1f", cis1[0][12]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Total Other Water Info (in)", sprintf("%8.1f", @averages1[0][10]+@averages1[0][11]).to_s, sprintf("%8.1f",@cis1[0][11]+@cis1[0][12]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
+        sheet.add_row ["Irrigation Runoff (in)", sprintf("%8.2f", @averages1[0][10]).to_s, sprintf("%8.1f", @cis1[0][11]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Deep Percolation (in)", sprintf("%8.2f", @averages1[0][11]), sprintf("%8.1f", @cis1[0][12]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         
-        sheet.add_row ["Total Sediment (t/ac)", sprintf("%8.1f", averages1[0][12]+averages1[0][13]), sprintf("%8.1f",cis1[0][13]+cis1[0][14]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
-        sheet.add_row ["Surface Erosion", sprintf("%8.4f", averages1[0][12]), sprintf("%8.1f", cis1[0][13]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
-        sheet.add_row ["Manure Erosion", sprintf("%8.4f", averages1[0][13]), sprintf("%8.1f", cis1[0][14]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Total Sediment (t/ac)", sprintf("%8.1f", @averages1[0][12]+@averages1[0][13]), sprintf("%8.1f",@cis1[0][13]+@cis1[0][14]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
+        sheet.add_row ["Surface Erosion", sprintf("%8.4f", @averages1[0][12]), sprintf("%8.1f", @cis1[0][13]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
+        sheet.add_row ["Manure Erosion", sprintf("%8.4f", @averages1[0][13]), sprintf("%8.1f", @cis1[0][14]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
       end
       sheet.add_row ["Crop Yield", "", "", "", "", "", "", "", "", "", ""], :types => :string, :style => main_row
       crop_results = Array.new
