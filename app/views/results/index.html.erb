@@ -30,8 +30,11 @@
 	      	</tr>
 	      	<tr>
 	      		<% if @type.include?(t('result.annual')) then %>
-		      		<% @years = (Field.find(params[:field_id]).weather.simulation_initial_year+1...Field.find(params[:field_id]).weather.simulation_final_year+1).entries %>
-		      		<%# debug @years %>
+	      			<% if session[:simulation] == 'scenario' %>
+			      		<% @years = (Field.find(params[:field_id]).weather.simulation_initial_year+1...Field.find(params[:field_id]).weather.simulation_final_year+1).entries %>
+			      	<% else %>
+			      		<% @years = (@project.location.watersheds[0].watershed_scenarios[0].field.weather.simulation_initial_year+1...@project.location.watersheds[0].watershed_scenarios[0].field.weather.simulation_final_year+1).entries %>
+			      	<% end %>
 		      		<td>
 		      			<select name="sim_initial_year">
 		      				<option value="default" selected="selected">Initial Year</option>
