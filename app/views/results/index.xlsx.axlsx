@@ -8,7 +8,7 @@ wb.styles do |s|
         if !@scenario2.blank?
           if !@scenario3.blank?
             sheet.add_row ["", Scenario.find(@scenario1).name, "", Scenario.find(@scenario2).name, "", "", "", Scenario.find(@scenario3).name, "", "", ""], :types => [:string], :widths => [20, :auto, :auto, :auto, :auto, :auto, :auto, 20]
-          elseyld
+          else
             sheet.add_row ["", Scenario.find(@scenario1).name, "", Scenario.find(@scenario2).name, "", "", "", t('result.scenario3'), "", "", ""], :types => [:string], :widths => [20, :auto, :auto, :auto, :auto, :auto, :auto, 20]
           end
         else
