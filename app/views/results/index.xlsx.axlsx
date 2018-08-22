@@ -26,8 +26,7 @@ wb.styles do |s|
             sheet.add_row ["", Watershed.find(@scenari).name, "", Watershed.find(@results2[0].watershed_id).name, "", "", "", t('result.scenario3'), "", "", ""], :types => [:string], :widths => [20, :auto, :auto, :auto, :auto, :auto, :auto, 20]
           end
         else
-        debugger
-          sheet.add_row ["", Watershed.find(@results1[0].watershed_id).name, "", t('result.scenario2'), "", "", "", t('result.scenario3'), "", "", ""], :types => [:string], :widths => [20, :auto, :auto, :auto, :auto, :auto, :auto, 20]
+          sheet.add_row ["", Watershed.find(@scenario1.name, "", t('result.scenario2'), "", "", "", t('result.scenario3'), "", "", ""], :types => [:string], :widths => [20, :auto, :auto, :auto, :auto, :auto, :auto, 20]
         end
       else
         sheet.add_row ["", t('result.scenario1'), "", t('result.scenario2'), "", "", "", t('result.scenario3'), "", "", ""], :types => [:string], :widths => [20, :auto, :auto, :auto, :auto, :auto, :auto, 20]
