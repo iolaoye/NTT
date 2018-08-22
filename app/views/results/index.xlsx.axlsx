@@ -157,7 +157,7 @@ wb.styles do |s|
         sheet.add_row ["Subsurface N (lbs/ac)", sprintf("%8.2f", @averages1[0][2]).to_s, sprintf("%8.1f", @cis1[0][3]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         sheet.add_row ["Tile Drain N (lbs/ac)", sprintf("%8.2f", @averages1[0][3]).to_s, sprintf("%8.1f", @cis1[0][4]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         
-        sheet.add_row ["Total P (lbs/ac)", sprintf("%8.1f", @averages1[0][4]+@averages1[0][5]+@averages1[0][6]), " (" + sprintf("%8.1f",cis1[0][5]+@cis1[0][6]+@cis1[0][7]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
+        sheet.add_row ["Total P (lbs/ac)", sprintf("%8.1f", @averages1[0][4]+@averages1[0][5]+@averages1[0][6]), " (" + sprintf("%8.1f",@cis1[0][5]+@cis1[0][6]+@cis1[0][7]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
         sheet.add_row ["Org P (lbs/ac)", sprintf("%8.2f", @averages1[0][4]).to_s, sprintf("%8.1f", @cis1[0][5]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         sheet.add_row ["PO4 (lbs/ac)", sprintf("%8.2f", @averages1[0][5]).to_s, sprintf("%8.1f", @cis1[0][6]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         sheet.add_row ["Tile Drain P (lbs/ac)", sprintf("%8.2f", @averages1[0][6]).to_s, sprintf("%8.1f", @cis1[0][7]) + ")", "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
