@@ -49,7 +49,7 @@ wb.styles do |s|
       require 'enumerable/confidence_interval'
       results_data1 = AnnualResult.select('*','no3-qn as no3', 'flow-surface_flow as flow').where(:sub1 => 0, :scenario_id => @scenario1)
       cis1 = results_data1.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).confidence_interval, v.map(&:qn).confidence_interval, v.map(&:no3).confidence_interval, v.map(&:qdrn).confidence_interval, v.map(&:orgp).confidence_interval, v.map(&:po4).confidence_interval, v.map(&:qdrp).confidence_interval, v.map(&:surface_flow).confidence_interval, v.map(&:flow).confidence_interval, v.map(&:qdr).confidence_interval, v.map(&:irri).confidence_interval, v.map(&:dprk).confidence_interval, v.map(&:sed).confidence_interval, v.map(&:ymnu).confidence_interval] }
-      averages1 = AnnualResult.where(:sub1 => 0, simul>to_sym => @scenario1).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)')
+      averages1 = AnnualResult.where(:sub1 => 0, simul.to_sym => @scenario1).pluck('avg(orgn)', 'avg(qn)', 'avg(no3-qn)', 'avg(qdrn)', 'avg(orgp)', 'avg(po4)', 'avg(qdrp)', 'avg(surface_flow)', 'avg(flow-surface_flow)', 'avg(qdr)', 'avg(irri)', 'avg(dprk)', 'avg(sed)', 'avg(ymnu)')
       crops1 = CropResult.where(@id + " = ? AND (yldg + yldf) > ?", @scenario1, 0).order("name").group(:name).pluck('avg(yldg) - avg(yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name')
       crops_data1 = CropResult.select('*', 'yldg+yldf AS yield').where(@id + " = ? AND yldg+yldf > ?", @scenario1, 0)
       cic1 = Hash[*crops_data1.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval]}.flatten]
