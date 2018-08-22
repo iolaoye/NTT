@@ -151,7 +151,7 @@ wb.styles do |s|
           sheet.add_row ["Manure Erosion", sprintf("%8.4f", averages1[0][13]), sprintf("%8.1f", cis1[0][14]), sprintf("%8.4f", averages2[0][13]), sprintf("%8.1f", cis2[0][14]), sprintf("%8.4f", averages2[0][13]-averages1[0][13]), sprintf("%8.2f", ((averages2[0][13]-averages1[0][13]) / averages1[0][13]) * 100), "", ""], :types => [:string, :float, :float, :float, :float, :float, :float]
         end
       else
-        sheet.add_row ["Total N (lbs/ac)", sprintf("%8.1f", averages1[0][0]+averages1[0][1]+averages1[0][2]+averages1[0][3]), sprintf("%8.1f",cis1[0][1]+cis1[0][2]+cis1[0][3]+cis1[0][4]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
+        sheet.add_row ["Total N (lbs/ac)", sprintf("%8.1f", @averages1[0][0]+@averages1[0][1]+@averages1[0][2]+@averages1[0][3]), sprintf("%8.1f",cis1[0][1]+cis1[0][2]+cis1[0][3]+cis1[0][4]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float], :style => main_row
         sheet.add_row ["Org N (lbs/ac)", sprintf("%8.2f", averages1[0][0]).to_s, sprintf("%8.1f", cis1[0][1]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         sheet.add_row ["Runoff N (lbs/ac)", sprintf("%8.2f", averages1[0][1]).to_s, sprintf("%8.1f", cis1[0][2]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
         sheet.add_row ["Subsurface N (lbs/ac)", sprintf("%8.2f", averages1[0][2]).to_s, sprintf("%8.1f", cis1[0][3]), "", "", "", "", "", "", "", ""], :types => [:string, :float, :float]
