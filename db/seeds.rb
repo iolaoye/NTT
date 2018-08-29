@@ -2,12 +2,9 @@
 # remember to run export RAILS_ENV=production
 #######
 # encoding: utf-8
-	file = "db/seeds/parameters.rb"
+	file = "db/seeds/schedules.rb"
 	load file
-
-	file = "db/seeds/controls.rb"
-	load file
-
+	
 cont = false
 
 if cont then
