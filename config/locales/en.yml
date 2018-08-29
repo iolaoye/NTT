@@ -474,6 +474,7 @@ en:
     state: States
     utility_file: Utility Files
     aplcat: Aplcat
+    download_aplcat: Download APLCAT Files
   project:
     project: Project
     new_project: 'Create New Project'
