@@ -5,29 +5,28 @@
 
 # URL to the mapping application
 	#URL_MAP = 'http://ntt.tarleton.edu/GoogleMapNRCS_Test/Default.aspx'
-	URL_MAP = 'http://nn.tarleton.edu/GoogleMapNRCS_Test/Default.aspx'
+	URL_MAP = 'http://ntt.ama.cbntt.org/GoogleMapNRCS_Test/Default.aspx'
 
 #NTT verision
 	VERSION = "NTTG3"
 
 # URL to send information to NTT, which return the results
-	URL_TIAER = 'http://nn.tarleton.edu/NTTRails/NNRestService.ashx'
+	#URL_TIAER = 'http://ntt.ama.cbntt.org/NTT_Soils/GetSoils.asmx?WSDL'
 	#URL_TIAER = 'http://nn.tarleton.edu/NTTRails/NNRestService.ashx'
-	URL_CLOUD = 'http://45.40.132.224/NTTRails/NNRestService.ashx'  
 
 # URL to get heat unitsß
 	#URL_HU = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
 # URL to get weather information
-	URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 	#URL_Weather = 'http://nn.tarleton.edu/weather/service.asmx?WSDL'
 
 # URL to get soils information
-	URL_SoilsInfo = 'http://nn.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
+	#URL_SoilsInfo = 'http://nn.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
+	URL_SoilsInfo = 'http://ntt.ama.cbntt.org/NTT_Soils/GetSoils.asmx?WSDL'
 
 #APEX folders.
 	APEX = "public/NTTFiles"
-	APEX_FOLDER = "E:/NTTHTML5Files"
+	APEX_FOLDER = "D:/NTTHTML5Files"
 	APEX_ORIGINAL = 'public/APEX1'
 
 #folder for examples
@@ -37,11 +36,11 @@
 	OWN = 'public/weather'
 
 #folder for Prism weather, wind, and wp1 files
-	PRISM = 'E:/Weather/weatherFiles/US'
-	PRISM1 = 'E:/Weather/weatherFiles/1981-2015'
-	PRISM2 = 'E:/Weather/weatherFiles/borrar'
-	WP1 = 'E:/Weather/wp1File'
-	WIND = 'E:/Weather/wndFile'
+	PRISM = 'D:/Weather/weatherFiles/US'
+	PRISM1 = 'D:/Weather/weatherFiles/1981-2015'
+	#PRISM2 = 'E:/Weather/weatherFiles/borrar'
+	WP1 = 'D:/Weather/wp1File'
+	WIND = 'D:/Weather/wndFile'
  
 #folder for download project files to
 	DOWNLOAD = 'public/download'
