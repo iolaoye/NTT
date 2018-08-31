@@ -146,9 +146,14 @@ module ApplicationHelper
   	end
 
   	def download_aplcat_files
-	    client = Savon.client(wsdl: URL_Weather)
-	    response = client.call(:download_apex_folder, message: {"NTTFilesFolder" => APEX_FOLDER + "/APLCAT", "session1" => session[:session_id], "type" => "aplcat"})
-	    path = response.body[:download_apex_folder_response][:download_apex_folder_result]
+	    client = Savon.client(wsdl: URL_SoilsInfo)
+	    response = client.call(:download_aplcat_folder, message: {"NTTFilesFolder" => APLCAT_FOLDER + "/APLCAT", "session1" => session[:session_id], "type" => "aplcat"})
+	    path = response.body[:download_aplcat_folder_response][:download_aplcat_folder_result]
+			if path.nil?
+				flash[:info] = "Error: No simulations exist in this session. " +
+												"Please run a simulation before downloading APEX files."
+				redirect_to project_field_scenarios_path(@project, @field)
+			else
 		  file_name = path.split("\\")
 		  path = File.join(DOWNLOAD, file_name[2])
 		  require 'open-uri'
@@ -160,4 +165,5 @@ module ApplicationHelper
 				send_file path, :type => "application/xml", :x_sendfile => true
 	  	end
   	end
+	end
 end
