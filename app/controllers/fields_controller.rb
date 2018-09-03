@@ -239,15 +239,12 @@ class FieldsController < ApplicationController
     input_file = params[:file].read.split(/\r\n/)
     i=0
     data = ""
-    logger.info("#{Time.now} process before read line by line " )
     input_file.each do |line|
-      logger.info("#{Time.now} process in lines " + line)
       data = line.split(",")
-      logger.info("#{Time.now} process field " + data[0])
       break if data[0].blank?
-      logger.info("#{Time.now} data[0] is not blank " + data[0])      
+      logger.info("#{Time.now} data[0] is not blank " + data[0].strip)      
       @field = Field.find_by_field_name(data[0].strip)
-      logger.info("#{Time.now} finding field " + @field.field)
+      logger.info("#{Time.now} finding field " + @field.field_name)
       if @field == nil
         @simulation_msg += "Field does not exist - " + data[0].strip
         next
