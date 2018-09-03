@@ -249,14 +249,14 @@ class FieldsController < ApplicationController
       end
       scenario = @field.scenarios.find_by_name(data[1].strip)
       if scenario != nil 
-        @simulation_msg += "Scenario existed. Was deleted => " + scenario.name + "\n"
+        @simulation_msg += "Scenario existed. Was deleted => " + @field.field_name + " / " + scenario.name + "\n"
         scenario.destroy
       end
       scenario = Scenario.new
       scenario.field_id = @field.id
       scenario.name = data[1].strip
       if scenario.save
-        @simulation_msg += "Scenario created => " + scenario.name + "\n"
+        @simulation_msg += "Scenario created => " + @field.field_name + " / " + scenario.name + "\n"
         #gets soil for the field
         if @field.updated == true then
           msg = request_soils()
@@ -272,7 +272,7 @@ class FieldsController < ApplicationController
         @highest_year = 0
         #'create operations'
         add_operation(nil, scenario.id, data[2].strip, "1", "0")
-        @simulation_msg += "Operations created for sceanrio => " + scenario.name
+        @simulation_msg += "Operations created for sceanrio => " + @field.field_name + " / " + scenario.name + "\n"
       end
     end
   end
@@ -286,7 +286,7 @@ class FieldsController < ApplicationController
     scenarios_no_simulated = 0
     @simulation_msg = ""
     fork do
-      if params[:commit].include? "Submit" 
+      if params[:commit].include? "Submit"
         msg = create_scenarios()
         @user = User.find(session[:user_id])
         @user.send_fields_simulated_email("Scenarios created " + "\n" + @simulation_msg)
