@@ -243,7 +243,9 @@ class FieldsController < ApplicationController
     input_file.each do |line|
       logger.info("#{Time.now} process in lines " + line)
       data = line.split(",")
+      logger.info("#{Time.now} process field " + data[0])
       break if data[0].blank?
+      logger.info("#{Time.now} data[0] is not blank " + data[0])      
       @field = Field.find_by_field_name(data[0].strip)
       logger.info("#{Time.now} finding field " + @field.field)
       if @field == nil
