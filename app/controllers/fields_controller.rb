@@ -230,19 +230,18 @@ class FieldsController < ApplicationController
 
 ################################ create_scenarios submitted on field page #########################
   def create_scenarios
-    logger.info("#{Time.now} process in create scenarios " + params[:file].original_filename)
     scenarios_file = params[:file].original_filename
     # create the file path
-    path = File.join(DOWNLOAD, scenarios_file)
+    #path = File.join(DOWNLOAD, scenarios_file)
     # open the scenarios file for writing.
-    sce_file = open(path, "w")
+    #sce_file = open(path, "w")
     input_file = params[:file].read.split(/\r\n/)
     i=0
     data = ""
     input_file.each do |line|
       data = line.split(",")
       break if data[0].blank?
-      logger.info("#{Time.now} data[0] is not blank " + data[0].strip)      
+  
       @field = Field.find_by_field_name(data[0].strip)
       logger.info("#{Time.now} finding field " + @field.field_name)
       if @field == nil
@@ -252,7 +251,6 @@ class FieldsController < ApplicationController
       scenario = @field.scenarios.find_by_name(data[1].strip)
       if scenario != nil 
         @simulation_msg += "Scenario existed. Was deleted => " + @field.field_name + " / " + scenario.name + "\n"
-      logger.info("#{Time.now} " + @simulation_msg)
         scenario.destroy
       end
       scenario = Scenario.new
@@ -270,13 +268,17 @@ class FieldsController < ApplicationController
             next
           end
         end
+              logger.info("#{Time.now} - going to add scenario to Soil")
         add_scenario_to_soils(scenario)
+              logger.info("#{Time.now} - after adding scenario to Soil")
         @cropping_systems = CropSchedule.all
         @operations = Operation.where(:scenario_id => scenario.id)
         @count = @operations.count
         @highest_year = 0
         #'create operations'
+              logger.info("#{Time.now} - going to add operations")
         add_operation(nil, scenario.id, data[2].strip, "1", "0")
+              logger.info("#{Time.now} - after adding operations")
         @simulation_msg += "Operations created for scenario => " + @field.field_name + " / " + scenario.name + "\n"
       logger.info("#{Time.now} " + @simulation_msg)
       end
