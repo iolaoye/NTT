@@ -272,7 +272,7 @@ class FieldsController < ApplicationController
         @highest_year = 0
         #'create operations'
         add_operation(nil, scenario.id, data[2].strip, "1", "0")
-        @simulation_msg += "Operations created for sceanrio => " + @field.field_name + " / " + scenario.name + "\n"
+        @simulation_msg += "Operations created for scenario => " + @field.field_name + " / " + scenario.name + "\n"
       end
     end
   end
@@ -280,14 +280,20 @@ class FieldsController < ApplicationController
 ################################ SIMULATE FIELDS SELECTED  #################################
 # SIMULATE /fields
   def simulate
+
     @errors = Array.new
     msg = "OK"
     scenarios_simulated = 0
     scenarios_no_simulated = 0
     @simulation_msg = ""
+
+    logger.info("#{Time.now} process started ")
     fork do
+
       if params[:commit].include? "Submit"
+    logger.info("#{Time.now} process was submitted ")
         msg = create_scenarios()
+    logger.info("#{Time.now} process ended ")
         @user = User.find(session[:user_id])
         @user.send_fields_simulated_email("Scenarios created " + "\n" + @simulation_msg)
 
