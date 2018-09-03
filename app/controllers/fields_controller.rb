@@ -277,7 +277,7 @@ class FieldsController < ApplicationController
         @highest_year = 0
         #'create operations'
               logger.info("#{Time.now} - going to add operations")
-        add_operation(nil, scenario.id, data[2].strip, "1", "0")
+        add_field_operations(nil, scenario.id, data[2].strip, "1", "0")
               logger.info("#{Time.now} - after adding operations")
         @simulation_msg += "Operations created for scenario => " + @field.field_name + " / " + scenario.name + "\n"
       logger.info("#{Time.now} " + @simulation_msg)
