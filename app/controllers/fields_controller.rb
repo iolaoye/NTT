@@ -228,26 +228,24 @@ class FieldsController < ApplicationController
     end
   end
 
+################################ create_scenarios submitted on field page #########################
   def create_scenarios
     logger.info("#{Time.now} process in create scenarios " + params[:file].original_filename)
     scenarios_file = params[:file].original_filename
     # create the file path
     path = File.join(DOWNLOAD, scenarios_file)
-    logger.info("#{Time.now} process in create scenarios " + path)
-
     # open the scenarios file for writing.
     sce_file = open(path, "w")
     input_file = params[:file].read.split(/\r\n/)
-    logger.info("#{Time.now} process in reading file " )
-
     i=0
     data = ""
-        logger.info("#{Time.now} process before read line by line " )
+    logger.info("#{Time.now} process before read line by line " )
     input_file.each do |line|
       logger.info("#{Time.now} process in lines " + line)
       data = line.split(",")
       break if data[0].blank?
       @field = Field.find_by_field_name(data[0].strip)
+      logger.info("#{Time.now} finding field " + @field.field)
       if @field == nil
         @simulation_msg += "Field does not exist - " + data[0].strip
         next
@@ -255,6 +253,7 @@ class FieldsController < ApplicationController
       scenario = @field.scenarios.find_by_name(data[1].strip)
       if scenario != nil 
         @simulation_msg += "Scenario existed. Was deleted => " + @field.field_name + " / " + scenario.name + "\n"
+      logger.info("#{Time.now} " + @simulation_msg)
         scenario.destroy
       end
       scenario = Scenario.new
@@ -262,11 +261,13 @@ class FieldsController < ApplicationController
       scenario.name = data[1].strip
       if scenario.save
         @simulation_msg += "Scenario created => " + @field.field_name + " / " + scenario.name + "\n"
+      logger.info("#{Time.now} " + @simulation_msg)
         #gets soil for the field
         if @field.updated == true then
           msg = request_soils()
           if msg != "OK" then 
             simulation_msg += "Unable to get soils for field" + @field.field_name + "\n" 
+      logger.info("#{Time.now} " + @simulation_msg)
             next
           end
         end
@@ -278,8 +279,10 @@ class FieldsController < ApplicationController
         #'create operations'
         add_operation(nil, scenario.id, data[2].strip, "1", "0")
         @simulation_msg += "Operations created for scenario => " + @field.field_name + " / " + scenario.name + "\n"
+      logger.info("#{Time.now} " + @simulation_msg)
       end
     end
+          logger.info("#{Time.now} " + @simulation_msg)
   end
 
 ################################ SIMULATE FIELDS SELECTED  #################################
