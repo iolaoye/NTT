@@ -132,6 +132,7 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     @scenario = Scenario.new(scenario_params)
     @scenario.field_id = @field.id
+    debugger
     @watershed = Watershed.new(scenario_params)
     @watershed.save
     respond_to do |format|
