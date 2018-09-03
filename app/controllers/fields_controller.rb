@@ -233,10 +233,12 @@ class FieldsController < ApplicationController
     scenarios_file = params[:file].original_filename
     # create the file path
     path = File.join(OWN, scenarios_file)
+    logger.info("#{Time.now} process in create scenarios " + path)
+
     # open the scenarios file for writing.
     sce_file = open(path, "w")
     input_file = params[:file].read.split(/\r\n/)
-    logger.info("#{Time.now} process in reading file " + input_file)
+    logger.info("#{Time.now} process in reading file " )
 
     i=0
     data = ""
