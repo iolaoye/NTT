@@ -229,17 +229,18 @@ class FieldsController < ApplicationController
   end
 
   def create_scenarios
-    logger.info("#{Time.now} process increate scenarios ")
+    logger.info("#{Time.now} process in create scenarios ")
     scenarios_file = params[:file].original_filename
     # create the file path
     path = File.join(OWN, scenarios_file)
     # open the scenarios file for writing.
     sce_file = open(path, "w")
-    #File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) } 
     input_file = params[:file].read.split(/\r\n/)
+    logger.info("#{Time.now} process in reading file " + input_file)
+
     i=0
     data = ""
-    #File.open(path, "r").each_line do |line|
+        logger.info("#{Time.now} process before read line by line " )
     input_file.each do |line|
       logger.info("#{Time.now} process in lines " + line)
       data = line.split(",")
