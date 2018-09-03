@@ -567,7 +567,7 @@ def index
 
 ########################################### Create_crop_rotation ##################
   def create_crop_rotation
-    add_operation(params[:replace], params[:scenario_id], params[:cropping_system][:id], params[:year], params[:tillage][:id])
+    add_field_operations(params[:replace], params[:scenario_id], params[:cropping_system][:id], params[:year], params[:tillage][:id])
   end  # end method
 
 ########################################### DOWNLOAD OPERATION IN XML FORMAT ##################
