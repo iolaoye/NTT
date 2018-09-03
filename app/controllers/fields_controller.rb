@@ -232,7 +232,7 @@ class FieldsController < ApplicationController
     logger.info("#{Time.now} process in create scenarios " + params[:file].original_filename)
     scenarios_file = params[:file].original_filename
     # create the file path
-    path = File.join(OWN, scenarios_file)
+    path = File.join(DOWNLOAD, scenarios_file)
     logger.info("#{Time.now} process in create scenarios " + path)
 
     # open the scenarios file for writing.
