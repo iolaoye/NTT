@@ -1,5 +1,6 @@
 module ScenariosHelper
 	def add_operation(replace, scenario_id, cropping_system_id, year, tillage_id)
+		logger.info("#{Time.now} add_operation process")
 		if replace != nil
 		  #Delete operations for the scenario selected
 		  Operation.where(:scenario_id => scenario_id).destroy_all
