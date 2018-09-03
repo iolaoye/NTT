@@ -229,6 +229,7 @@ class FieldsController < ApplicationController
   end
 
   def create_scenarios
+    logger.info("#{Time.now} process increate scenarios ")
     scenarios_file = params[:file].original_filename
     # create the file path
     path = File.join(OWN, scenarios_file)
@@ -240,6 +241,7 @@ class FieldsController < ApplicationController
     data = ""
     #File.open(path, "r").each_line do |line|
     input_file.each do |line|
+      logger.info("#{Time.now} process in lines " + line)
       data = line.split(",")
       break if data[0].blank?
       @field = Field.find_by_field_name(data[0].strip)
