@@ -243,7 +243,7 @@ class FieldsController < ApplicationController
       break if data[0].blank?
   
       @field = Field.find_by_field_name(data[0].strip)
-      logger.info("#{Time.now} finding field " + @field.field_name)
+      #logger.info("#{Time.now} finding field " + @field.field_name)
       if @field == nil
         @simulation_msg += "Field does not exist - " + data[0].strip
         next
@@ -258,17 +258,14 @@ class FieldsController < ApplicationController
       scenario.name = data[1].strip
       if scenario.save
         @simulation_msg += "Scenario created => " + @field.field_name + " / " + scenario.name + "\n"
-      logger.info("#{Time.now} " + @simulation_msg)
         #gets soil for the field
         if @field.updated == true then
           msg = request_soils()
           if msg != "OK" then 
-            simulation_msg += "Unable to get soils for field" + @field.field_name + "\n" 
-      logger.info("#{Time.now} " + @simulation_msg)
+            @simulation_msg += "Unable to get soils for field" + @field.field_name + "\n" 
             next
           end
         end
-              logger.info("#{Time.now} - going to add scenario to Soil")
         add_scenario_to_soils(scenario)
               logger.info("#{Time.now} - after adding scenario to Soil")
         @cropping_systems = CropSchedule.all
@@ -276,14 +273,10 @@ class FieldsController < ApplicationController
         @count = @operations.count
         @highest_year = 0
         #'create operations'
-              logger.info("#{Time.now} - going to add operations")
         add_field_operations(nil, scenario.id, data[2].strip, "1", "0")
-              logger.info("#{Time.now} - after adding operations")
         @simulation_msg += "Operations created for scenario => " + @field.field_name + " / " + scenario.name + "\n"
-      logger.info("#{Time.now} " + @simulation_msg)
       end
     end
-          logger.info("#{Time.now} " + @simulation_msg)
   end
 
 ################################ SIMULATE FIELDS SELECTED  #################################
@@ -298,11 +291,8 @@ class FieldsController < ApplicationController
 
     logger.info("#{Time.now} process started ")
     fork do
-
       if params[:commit].include? "Submit"
-    logger.info("#{Time.now} process was submitted ")
         msg = create_scenarios()
-    logger.info("#{Time.now} process ended ")
         @user = User.find(session[:user_id])
         @user.send_fields_simulated_email("Scenarios created " + "\n" + @simulation_msg)
 
@@ -327,7 +317,7 @@ class FieldsController < ApplicationController
             @field.scenarios.each do |scenario|
               @scenario = scenario
               if @scenario.operations.count <= 0 then
-                simulation_msg += "Scenario " + @scenario + " / Field: " + @field.field_name + " without operations" + "\n"
+                @simulation_msg += "Scenario " + @scenario + " / Field: " + @field.field_name + " without operations" + "\n"
                 #@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
                 return
               end
@@ -335,10 +325,10 @@ class FieldsController < ApplicationController
                 msg = run_scenario
                 scenarios_simulated +=1
                 if msg.eql?("OK")
-                  simulation_msg += "Scenario: " + @scenario.name + " / Field: " + @field.field_name + " successfully simulated\n"
+                  @simulation_msg += "Scenario: " + @scenario.name + " / Field: " + @field.field_name + " successfully simulated\n"
                 else
                   scenarios_no_simulated += 1
-                  simulation_msg += "Error simulating scenario " + @scenario.name + " / Field: " + @field.field_name + " (" + msg + ")\n"
+                  @simulation_msg += "Error simulating scenario " + @scenario.name + " / Field: " + @field.field_name + " (" + msg + ")\n"
                   #@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
                   raise ActiveRecord::Rollback
                 end # end if msg

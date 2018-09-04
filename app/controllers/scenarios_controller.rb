@@ -56,7 +56,6 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT  #################################
   def simulate
-    debugger
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
@@ -132,7 +131,6 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     @scenario = Scenario.new(scenario_params)
     @scenario.field_id = @field.id
-    debugger
     @watershed = Watershed.new(scenario_params)
     @watershed.save
     respond_to do |format|
@@ -552,7 +550,6 @@ class ScenariosController < ApplicationController
 		#county = County.find(Location.find(session[:location_id]).county_id)
 		county = County.find(@project.location.county_id)
 	 if county != nil then
-debugger
 	    client = Savon.client(wsdl: URL_SoilsInfo)
 	    response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "pgm" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
 
