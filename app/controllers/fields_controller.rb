@@ -231,10 +231,6 @@ class FieldsController < ApplicationController
 ################################ create_scenarios submitted on field page #########################
   def create_scenarios
     scenarios_file = params[:file].original_filename
-    # create the file path
-    #path = File.join(DOWNLOAD, scenarios_file)
-    # open the scenarios file for writing.
-    #sce_file = open(path, "w")
     input_file = params[:file].read.split(/\r\n/)
     i=0
     data = ""
@@ -267,7 +263,7 @@ class FieldsController < ApplicationController
           end
         end
         add_scenario_to_soils(scenario)
-              logger.info("#{Time.now} - after adding scenario to Soil")
+        logger.info("#{Time.now} - after adding scenario to Soil")
         @cropping_systems = CropSchedule.all
         @operations = Operation.where(:scenario_id => scenario.id)
         @count = @operations.count
