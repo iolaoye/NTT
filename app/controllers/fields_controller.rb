@@ -238,7 +238,7 @@ class FieldsController < ApplicationController
       data = line.split(",")
       break if data[0].blank?
   
-      @field = Field.find_by_field_name(data[0].strip)
+      @field = @project.fields.find_by_field_name(data[0].strip)
       #logger.info("#{Time.now} finding field " + @field.field_name)
       if @field == nil
         @simulation_msg += "Field does not exist - " + data[0].strip
