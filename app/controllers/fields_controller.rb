@@ -253,6 +253,7 @@ class FieldsController < ApplicationController
       scenario.field_id = @field.id
       scenario.name = data[1].strip
       if scenario.save
+        logger.info("#{Time.now} - scenario was saved " + scenario.id.to_s)
         @simulation_msg += "Scenario created => " + @field.field_name + " / " + scenario.name + "\n"
         #gets soil for the field
         if @field.updated == true then
