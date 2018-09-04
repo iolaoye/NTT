@@ -290,16 +290,16 @@ class FieldsController < ApplicationController
     @simulation_msg = ""
 
     logger.info("#{Time.now} process started ")
-    fork do
-      if params[:commit].include? "Submit"
+    if params[:commit].include? "Submit"
+      flash[:notice] = "Create scenarios process submitted. An e-mail will be sent when the process ended."
+      fork do
         msg = create_scenarios()
         @user = User.find(session[:user_id])
         @user.send_fields_simulated_email("Scenarios created " + "\n" + @simulation_msg)
-
-        if msg.eql?("OK") then
-          flash[:notice] = " Scenarios added to your fields. An e-mail will be sent when the process ended."
-        end 
-      else 
+      end
+    else
+      flash[:notice] = " Scenarios submited to simulate. An e-mail will be sent when the simulations ended."
+      fork do
         @simulation_msg = "Start time: " + Time.now.to_s + "\n"
         begin
           params[:select_field].each do |field_id|
@@ -341,11 +341,8 @@ class FieldsController < ApplicationController
         @simulation_msg += "End time: " + Time.now.to_s + "\n"
         @user = User.find(session[:user_id])
         @user.send_fields_simulated_email("Total Scenarios simulated " + scenarios_simulated.to_s + ", in " + params[:select_field].count.to_s + " fields." + "\n" + @simulation_msg)
-        if msg.eql?("OK") then
-          flash[:notice] = " Scenarios submited to simulate. An e-mail will be sent when the simulations ended."
-        end
-      end # end if commit
-    end  # end fork
+      end # end fork
+    end  # end if
     if msg.eql?("OK") then
       redirect_to project_fields_path(@project)
     else
