@@ -228,68 +228,128 @@ class FieldsController < ApplicationController
     end
   end
 
+################################ create_scenarios submitted on field page #########################
+  def create_scenarios
+    scenarios_file = params[:file].original_filename
+    input_file = params[:file].read.split(/\r\n/)
+    i=0
+    data = ""
+    input_file.each do |line|
+      data = line.split(",")
+      break if data[0].blank?
+  
+      @field = @project.fields.find_by_field_name(data[0].strip)
+      #logger.info("#{Time.now} finding field " + @field.field_name)
+      if @field == nil
+        @simulation_msg += "Field does not exist - " + data[0].strip
+        next
+      end
+      scenario = @field.scenarios.find_by_name(data[1].strip)
+      if scenario != nil 
+        @simulation_msg += "Scenario existed. Was deleted => " + @field.field_name + " / " + scenario.name + "\n"
+        scenario.destroy
+      end
+      scenario = Scenario.new
+      scenario.field_id = @field.id
+      scenario.name = data[1].strip
+      if scenario.save
+        logger.info("#{Time.now} - scenario was saved " + scenario.id.to_s)
+        @simulation_msg += "Scenario created => " + @field.field_name + " / " + scenario.name + "\n"
+        #gets soil for the field
+        if @field.updated == true then
+          msg = request_soils()
+          if msg != "OK" then 
+            @simulation_msg += "Unable to get soils for field" + @field.field_name + "\n" 
+            next
+          end
+        end
+        add_scenario_to_soils(scenario)
+        logger.info("#{Time.now} - after adding scenario to Soil")
+        @cropping_systems = CropSchedule.all
+        @operations = Operation.where(:scenario_id => scenario.id)
+        @count = @operations.count
+        @highest_year = 0
+        #'create operations'
+        add_field_operations(nil, scenario.id, data[2].strip, "1", "0")
+        @simulation_msg += "Operations created for scenario => " + @field.field_name + " / " + scenario.name + "\n"
+      end
+    end
+  end
+
 ################################ SIMULATE FIELDS SELECTED  #################################
 # SIMULATE /fields
   def simulate
+
     @errors = Array.new
     msg = "OK"
     scenarios_simulated = 0
     scenarios_no_simulated = 0
+    @simulation_msg = ""
 
-    fork do
-      simulation_msg = "Start time: " + Time.now.to_s + "\n"
-      begin
-        params[:select_field].each do |field_id|
-          @field = Field.find(field_id)
-          if @field.updated == true then
-            msg = request_soils()
-            if msg != "OK" then 
-              simulation_msg += "Unable to get soils for field" + @field.field_name + "\n" 
-              next
-            end
-          end
-          if @field.scenarios.count == 0 then
-              simulation_msg += "Field: " + @field.field_name + " without scenarios" + "\n"            
-          end
-          @field.scenarios.each do |scenario|
-            @scenario = scenario
-            if @scenario.operations.count <= 0 then
-              simulation_msg += "Scenario " + @scenario + " / Field: " + @field.field_name + " without operations" + "\n"
-              #@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-              return
-            end
-            ActiveRecord::Base.transaction do
-              msg = run_scenario
-              scenarios_simulated +=1
-              if msg.eql?("OK")
-                simulation_msg += "Scenario: " + @scenario.name + " / Field: " + @field.field_name + " successfully simulated\n"
-              else
-                scenarios_no_simulated += 1
-                simulation_msg += "Error simulating scenario " + @scenario.name + " / Field: " + @field.field_name + " (" + msg + ")\n"
-                #@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-                raise ActiveRecord::Rollback
-              end # end if msg
-            end   # end activeRecord
-          end  # end scenarios
-        end  # end fields
-      rescue Exception => e
-        simulation_msg += "Process failed due to: " + e.message + "\n"
+    logger.info("#{Time.now} process started ")
+    if params[:commit].include? "Submit"
+      flash[:notice] = "Create scenarios process submitted. An e-mail will be sent when the process ended."
+      fork do
+        msg = create_scenarios()
+        @user = User.find(session[:user_id])
+        @user.send_fields_simulated_email("Scenarios created " + "\n" + @simulation_msg)
       end
-      simulation_msg += "End time: " + Time.now.to_s + "\n"
-      @user = User.find(session[:user_id])
-      @user.send_fields_simulated_email("Total Scenarios simulated " + scenarios_simulated.to_s + ", in " + params[:select_field].count.to_s + " fields." + "\n" + simulation_msg)
-    end  # end fork
-
-    if msg.eql?("OK") then
+    else
       flash[:notice] = " Scenarios submited to simulate. An e-mail will be sent when the simulations ended."
+      fork do
+        @simulation_msg = "Start time: " + Time.now.to_s + "\n"
+        begin
+          params[:select_field].each do |field_id|
+            @field = Field.find(field_id)
+            if @field.updated == true then
+              msg = request_soils()
+              if msg != "OK" then 
+                @simulation_msg += "Unable to get soils for field" + @field.field_name + "\n" 
+                next
+              end
+            end # end if @field update
+            if @field.scenarios.count == 0 then
+                @simulation_msg += "Field: " + @field.field_name + " without scenarios" + "\n"            
+            end
+            @field.scenarios.each do |scenario|
+              @scenario = scenario
+              if @scenario.operations.count <= 0 then
+                @simulation_msg += "Scenario " + @scenario + " / Field: " + @field.field_name + " without operations" + "\n"
+                #@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+                return
+              end
+              ActiveRecord::Base.transaction do
+                msg = run_scenario
+                scenarios_simulated +=1
+                if msg.eql?("OK")
+                  @simulation_msg += "Scenario: " + @scenario.name + " / Field: " + @field.field_name + " successfully simulated\n"
+                else
+                  scenarios_no_simulated += 1
+                  @simulation_msg += "Error simulating scenario " + @scenario.name + " / Field: " + @field.field_name + " (" + msg + ")\n"
+                  #@errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+                  raise ActiveRecord::Rollback
+                end # end if msg
+              end   # end activeRecord
+            end  # end scenarios
+          end  # end fields
+        rescue Exception => e
+          @simulation_msg += "Process failed due to: " + e.message + "\n"
+        end # end begin and rescue
+        @simulation_msg += "End time: " + Time.now.to_s + "\n"
+        @user = User.find(session[:user_id])
+        @user.send_fields_simulated_email("Total Scenarios simulated " + scenarios_simulated.to_s + ", in " + params[:select_field].count.to_s + " fields." + "\n" + @simulation_msg)
+      end # end fork
+    end  # end if
+    if msg.eql?("OK") then
       redirect_to project_fields_path(@project)
     else
+      get_field_list
       render "index", error: msg
     end # end if msg
   end   # end method simulate
 
-  private
 
+  private
 # Use this method to whitelist the permissible parameters. Example:
 # params.require(:person).permit(:name, :age)
 # Also, you can specialize this method with per-user checking of permissible attributes.
