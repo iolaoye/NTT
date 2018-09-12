@@ -883,11 +883,13 @@ module ScenariosHelper
     when 6 #irrigation
         opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
     when 7, 9 #grazing
-    	if @scenario == nil then 
-    		opv1 = Scenario.find(operation.scenario_id).subareas[0].wsa / operation.amount
-    	else
-    		opv1 = @scenario.subareas[0].wsa / operation.amount  #since it is grazing just first subarea is used.
-    	end
+    	#since it is grazing just one soil is used. So, the area for that subarea is the total are for the field.
+    	#if @scenario == nil then 
+    		#opv1 = Scenario.find(operation.scenario_id).subareas[0].wsa / operation.amount
+    	#else
+    		#opv1 = @scenario.subareas[0].wsa / operation.amount  #since it is grazing just first subarea is used.
+    	#end
+    	opv1 = @field.field_area * AC_TO_HA / operation.amount
     when 12 #liming
         opv1 = operation.amount / THA_TO_TAC #converts input t/ac to APEX t/ha
     end
