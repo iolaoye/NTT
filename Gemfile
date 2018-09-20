@@ -58,5 +58,6 @@ gem 'wkhtmltopdf-binary'
 # gem 'pdfkit'
 
 gem 'cancan'
-gem 'rack-timeout'
+gem 'rack-timeout', '0.4.2'
 gem 'mysql2', '~> 0.3.18'
+
