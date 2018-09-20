@@ -36,3 +36,5 @@ CropSchedule.create!({:id => 60,:name => "Sorghum, Silage",:state_id => "*",:cla
 CropSchedule.create!({:id => 61,:name => "Oats, Spring",:state_id => "02,20,33,39,50",:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 62,:name => "Millet",:state_id => "6",:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 64,:name => "Pasture, Winter",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 65,:name => "Bananas",:state_id => "52",:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 66,:name => "Plantains",:state_id => "52",:class_id => 1,:status => true}, :without_protection => true)
