@@ -230,7 +230,7 @@ class ScenariosController < ApplicationController
 
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################
   def run_fem
-    
+
     drive = "E:"
     folder = drive + "\\NTTHTML5Files\\APEX" + session[:session_id]
     #create NTT_FEMOptions.txt file
@@ -244,7 +244,7 @@ class ScenariosController < ApplicationController
     ntt_fem_Options += "OperationsLibraryFile|" + folder + '\\Local.mdb' + "\n"
     ntt_fem_Options += "FEMOutputFile|" + folder + '\\NTTFEMOut.mdb' + "\n"
     ntt_fem_Options += "TimeHorizon|" + @project.apex_controls[0].value.to_s + "\n"
-    ntt_fem_Options += "NTTPath|" + folder + "\n" 
+    ntt_fem_Options += "NTTPath|" + folder + "\n"
     ntt_fem_Options += "COUNTY|" + County.find(@project.location.county_id).county_state_code + "\n"
     ntt_fem_Options += "Scenario|" + @scenario.name + "\n"
     #find if there are bmps with area taken from the field
@@ -856,6 +856,10 @@ class ScenariosController < ApplicationController
   	#@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     download_apex_files()
+  end
+
+  def download_aplcat
+    download_aplcat_files()
   end
 
   private
