@@ -2,6 +2,10 @@
 # remember to run export RAILS_ENV=production
 #######
 # encoding: utf-8
+
+	file = "db/seeds/crop_schedules.rb"
+	load file
+	
 	file = "db/seeds/schedules.rb"
 	load file
 	
