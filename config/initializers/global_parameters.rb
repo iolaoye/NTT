@@ -29,6 +29,9 @@
 	APEX_FOLDER = "D:/NTTHTML5Files"
 	APEX_ORIGINAL = 'public/APEX1'
 
+#APLCAT folders.
+	APLCAT_FOLDER = "D:/NTTHTML5Files"
+
 #folder for examples
 	EXAMPLES = "public/Examples"
 
@@ -41,7 +44,7 @@
 	#PRISM2 = 'E:/Weather/weatherFiles/borrar'
 	WP1 = 'D:/Weather/wp1File'
 	WIND = 'D:/Weather/wndFile'
- 
+
 #folder for download project files to
 	DOWNLOAD = 'public/download'
 #folder for download project files from
@@ -96,4 +99,3 @@
 	SMZ = '_SMZ'
 	ROAD = '_Road'
 	Crop_Road = 191  #191 is the crop id but the number is 300
-
