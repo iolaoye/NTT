@@ -62,7 +62,7 @@ class ScenariosController < ApplicationController
   	case true
   		when params[:commit].include?('NTT')
   			msg = simulate_ntt
-  		when params[:commit].include?("APLCAT")
+  		when params[:commit].include?("Aplcat")
   			msg = simulate_aplcat
       when params[:commit].include?("FEM")
         msg = simulate_fem
@@ -230,7 +230,7 @@ class ScenariosController < ApplicationController
 
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################
   def run_fem
-    
+
     drive = "E:"
     folder = drive + "\\NTTHTML5Files\\APEX" + session[:session_id]
     #create NTT_FEMOptions.txt file
@@ -244,7 +244,7 @@ class ScenariosController < ApplicationController
     ntt_fem_Options += "OperationsLibraryFile|" + folder + '\\Local.mdb' + "\n"
     ntt_fem_Options += "FEMOutputFile|" + folder + '\\NTTFEMOut.mdb' + "\n"
     ntt_fem_Options += "TimeHorizon|" + @project.apex_controls[0].value.to_s + "\n"
-    ntt_fem_Options += "NTTPath|" + folder + "\n" 
+    ntt_fem_Options += "NTTPath|" + folder + "\n"
     ntt_fem_Options += "COUNTY|" + County.find(@project.location.county_id).county_state_code + "\n"
     ntt_fem_Options += "Scenario|" + @scenario.name + "\n"
     #find if there are bmps with area taken from the field
@@ -548,12 +548,16 @@ class ScenariosController < ApplicationController
 		# take monthly avg max and min temp and get an average of those two
 		# take monthly rh to add to dringking water.
 		#county = County.find(Location.find(session[:location_id]).county_id)
-		county = @project.location.county_id
-	    if county != nil then
-	      client = Savon.client(wsdl: URL_Weather)
-	      response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "controlvalue5" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
-	      #response = client.call(:get_weather, message: {"path" => WP1 + "/" + county.wind_wp1_name + ".wp1"})
-	      weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
+		county = County.find(@project.location.county_id)
+	 if county != nil then
+	    client = Savon.client(wsdl: URL_SoilsInfo)
+	    response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "pgm" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
+
+      #response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "code" => county.county_state_code})
+      #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] 
+
+
+	    weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
 		  max_temp = weather_data[2].split
 		  min_temp = weather_data[3].split
 		  rh = weather_data[14].split
@@ -605,7 +609,7 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.tapr.to_s + "\t" + "! " + t("April") + "\n"
     apex_string += aplcat.tmay.to_s + "\t" + "! " + t("May") + "\n"
     apex_string += aplcat.tjun.to_s + "\t" + "! " + t("June") + "\n"
-    apex_string += aplcat.tjuly.to_s + "\t" + "! " + t("July") + "\n"
+    apex_string += aplcat.tjul.to_s + "\t" + "! " + t("July") + "\n"
     apex_string += aplcat.taug.to_s + "\t" + "! " + t("August") + "\n"
     apex_string += aplcat.tsep.to_s + "\t" + "! " + t("September") + "\n"
     apex_string += aplcat.toct.to_s + "\t" + "! " + t("October") + "\n"
@@ -620,7 +624,7 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.hapr.to_s + "\t" + "! " + t("April") + "\n"
     apex_string += aplcat.hmay.to_s + "\t" + "! " + t("May") + "\n"
     apex_string += aplcat.hjun.to_s + "\t" + "! " + t("June") + "\n"
-    apex_string += aplcat.hjuly.to_s + "\t" + "! " + t("July") + "\n"
+    apex_string += aplcat.hjul.to_s + "\t" + "! " + t("July") + "\n"
     apex_string += aplcat.haug.to_s + "\t" + "! " + t("August") + "\n"
     apex_string += aplcat.hsep.to_s + "\t" + "! " + t("September") + "\n"
     apex_string += aplcat.hoct.to_s + "\t" + "! " + t("October") + "\n"
@@ -852,6 +856,10 @@ class ScenariosController < ApplicationController
   	#@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     download_apex_files()
+  end
+
+  def download_aplcat
+    download_aplcat_files()
   end
 
   private

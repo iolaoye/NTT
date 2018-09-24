@@ -1,3 +1,4 @@
+<% aplcat = 0 %>
 <% if !(@project == nil) %>
   <!-- <span class="sidebar_font"> -->
   <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
@@ -63,17 +64,19 @@
             <% end %>
             <%= link_to t('menu.bmps') + " (" + Bmp.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_bmps_path(@project, @field, @scenario) %>
           </li>
-					<li class="<%= controller_name == "aplcat_parameters" ? "active" : controller_name == "grazing_parameters" ? "active" : controller_name == "supplement_parameters" ? "active" : "" %>">
-            <% if controller_name == "aplcat_parameters" or controller_name == "grazing_parameters" or controller_name == "supplement_parameters" %>
-              <div class="sub-header-icon">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              </div>
-            <% end %>
-            <%# unless ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" %>
-			      <% unless ENV["APP_VERSION"] == "modified" %>
-               <%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %> 
-            <% end %>
-          </li>
+          <% if aplcat == 1 %>
+  					<li class="<%= controller_name == "aplcat_parameters" ? "active" : controller_name == "grazing_parameters" ? "active" : controller_name == "supplement_parameters" ? "active" : "" %>">
+              <% if controller_name == "aplcat_parameters" or controller_name == "grazing_parameters" or controller_name == "supplement_parameters" %>
+                <div class="sub-header-icon">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </div>
+              <% end %>
+              <%# unless ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" %>
+  			      <% unless ENV["APP_VERSION"] == "modified" %>
+                 <%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %> 
+              <% end %>
+            </li>
+          <% end %>
         </ul>
 	    <% else %>
 	  		<%= link_to t('general.management') + " " + t('menu.scenarios'), project_field_scenarios_path(@project, @field, :locale=>I18n.locale) %></li>
