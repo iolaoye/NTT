@@ -86,6 +86,7 @@ NTTG3::Application.routes.draw do
 		    get 'copy_scenario', on: :member
         get 'copy_other_scenario', on: :collection
         post :download, on: :collection
+        post :download_aplcat, on: :collection
         resources :aplcat_parameters do
 	        get 'aplcat', on: :member
 		    end
@@ -139,7 +140,7 @@ NTTG3::Application.routes.draw do
       resources :apex_controls do
 		    get 'reset', on: :member
 	    end
-    
+
       resources :apex_soils
       resources :apex_layers
       resources :subareas

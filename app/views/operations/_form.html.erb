@@ -552,6 +552,7 @@
 		  	<% else %>
 		  		<div style="inline" id="div_access_to_stream">
 		  	<% end %>
+
 		  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
             <% if @operation.org_c == 1 %>
                 <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
@@ -803,12 +804,14 @@
 		  	<%= f.label :amount, t('operation.amount') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		  	<%# change to show access animal to stream %>
+
 		  	<% if ENV["APP_VERSION"] == "modified" %>
 		  		<div style="display:none" >
 		  	<% else %>
 		  		<div style="" id="div_access_to_stream">
 		  	<% end %>
 		  	  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+
             	<input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
 	        <div style="display:none" id="div_hours_in_stream">
 			  	<%= f.label :hours_in_stream, t('bmp.hours')%>
