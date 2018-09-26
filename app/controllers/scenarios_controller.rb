@@ -827,7 +827,7 @@ class ScenariosController < ApplicationController
     bmp = scenario.bmps.find_by_bmpsublist_id(16)
     new_scenario.subareas.each do |s|
       if bmp != nil
-        s.slp = subarea.slp / bmp.slope_reduction
+        s.slp = subarea.slp * (100-bmp.slope_reduction) / 100
       end
       s.pcof = subarea.pcof
       s.bcof = subarea.bcof
