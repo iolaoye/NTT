@@ -824,6 +824,9 @@ class ScenariosController < ApplicationController
   ####### update subareas after they have been created in case BMPs have been applied ######
   def update_subareas(new_scenario, subarea)
     new_scenario.subareas.each do |s|
+      s.pcof = subarea.pcof
+      s.bcof = subarea.bcof
+      s.bffl = subarea.bffl
       s.nirr = subarea.nirr
       s.iri = subarea.iri
       s.ira = subarea.ira
