@@ -822,7 +822,8 @@ class ScenariosController < ApplicationController
   end
 
   ####### update subareas after they have been created in case BMPs have been applied ######
-  def update_subareas(new_scenario, subarea)
+  def update_subareas(new_scenario, scenario)
+    subarea = scenario.subareas[0]
     bmp = scenario.bmps.find_by_bmpsublist_id(16)
     new_scenario.subareas.each do |s|
       if bmp != nil
@@ -899,7 +900,7 @@ class ScenariosController < ApplicationController
   		#3. Copy subareas info by scenario
   		add_scenario_to_soils(new_scenario)
       #3A. Update subarea with bmps informaiton
-      update_subareas(new_scenario, scenario.subareas[0])
+      update_subareas(new_scenario, scenario)
   		#4. Copy operations info
   		scenario.operations.each do |operation|
     			new_op = operation.dup
