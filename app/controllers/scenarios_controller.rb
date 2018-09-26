@@ -823,7 +823,7 @@ class ScenariosController < ApplicationController
 
   ####### update subareas after they have been created in case BMPs have been applied ######
   def update_subareas(new_scenario, scenario)
-    subarea = scenario..subareas[0]
+    subarea = scenario.subareas[0]
     bmp = scenario.bmps.find_by_bmpsublist_id(16)
     new_scenario.subareas.each do |s|
       if bmp != nil
