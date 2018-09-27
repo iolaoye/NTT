@@ -25,9 +25,11 @@ class SoilsController < ApplicationController
   def index
     msg = "OK"
     flash[:info] = nil
-    if @field.updated == true then
-      msg = request_soils()
-      if msg != "OK" then flash.now[:info] = msg end
+    if @project.location.state_id > 0
+      if @field.updated == true then
+        msg = request_soils()
+        if msg != "OK" then flash.now[:info] = msg end
+      end
     end
     @soils = @field.soils
     add_breadcrumb t('menu.soils')

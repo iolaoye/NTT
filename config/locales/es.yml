@@ -303,6 +303,7 @@ es:
     downloaded: " ha sido descargado/a."
     simulation: "Simulación fue Exitoso."
     all: "Todas las operaciones se han eliminado."
+    no_soils: "no hay suelos disponibles para esta parcela"
   helpers:
     select:
       prompt: Por favor seleccione
