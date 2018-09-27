@@ -97,14 +97,14 @@ class SoilsController < ApplicationController
     @soil = Soil.find(params[:id])
     #the wsa in subareas should be updated if % was updated as well as chl and rchl
     wsa_conversion = Field.find(@soil.field_id).field_area / 100 * AC_TO_HA
-    soil_id = @field.soils.where(:selected => true).last.id
+    #soil_id = @field.soils.where(:selected => true).last.id
     respond_to do |format|
       if @soil.update_attributes(soil_params)
-        if soil_id == @soil.id then
-          Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
-        else
-          Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
-        end
+        #if soil_id == @soil.id then
+          #Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
+        #else
+        Subarea.where(:soil_id => @soil.id).update_all(:wsa => @soil.percentage * wsa_conversion, :chl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :rchl => Math::sqrt(@soil.percentage * wsa_conversion * 0.01), :slp => @soil.slope / 100)
+        #end
         #then look for scenario with land leveling bmp and adjust slope.
         @soil.subareas.each do |sub1|
            ll_bmp = sub1.scenario.bmps.find_by_bmpsublist_id(16)  #find if there is a land leveling bmp for this field
