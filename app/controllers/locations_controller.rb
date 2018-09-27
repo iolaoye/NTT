@@ -160,21 +160,25 @@ class LocationsController < ApplicationController
   			 @location.state_id = state.id
   		  end
   		  county_name = params[:county]
-        if county_name == nil then
-  			  @location.county_id = 0
-  		  else
-  			  county_name.slice! " County"
-          county_name.slice! " Parish"   #Lousiana Counties
-          county_name.slice! "  Borough" #Alaska Counties.
-          county_name.slice! "'s"
-          county = state.counties.where("county_name like '%" + county_name + "%'").first
-  			  #county = County.find_by_county_name(county_name)
-  			  if county == nil then 
-  				  @location.county_id = 0
-  			  else
-  				  @location.county_id = county.id
-  			  end 
-  		  end
+        if @location.state_id > 0 
+          if county_name == nil then
+    			  @location.county_id = 0
+    		  else
+    			  county_name.slice! " County"
+            county_name.slice! " Parish"   #Lousiana Counties
+            county_name.slice! "  Borough" #Alaska Counties.
+            county_name.slice! "'s"
+            county = state.counties.where("county_name like '%" + county_name + "%'").first
+    			  #county = County.find_by_county_name(county_name)
+    			  if county == nil then 
+    				  @location.county_id = 0
+    			  else
+    				  @location.county_id = county.id
+    			  end 
+    		  end
+        else
+          @location.county_id = 0
+        end
         @location.coordinates = params[:parcelcoords]
         @location.save
         # step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
