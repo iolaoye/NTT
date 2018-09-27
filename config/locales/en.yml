@@ -303,6 +303,7 @@ en:
     downloaded: " has been downloaded."
     simulation: "Simulation was Successfull."
     all: "Operations deleted successfully."
+    no_soils: "There are not available soils for this field"
   helpers:
     select:
       prompt: Please select

@@ -22,8 +22,11 @@
       </tr>
     </thead>
     <% manure_operations = @scenario.operations.where("activity_id = ? and type_id > ?",2,1).count %>
-    <% county_id = County.find(@project.location.county_id).id %>
-
+    <% if @project.location.county_id == 0 %>
+      <% county_id = 0 %>
+    <% else %>
+      <% county_id = County.find(@project.location.county_id).id %>
+    <% end %>
     <% @bmps.each do |bmp| %>
       <tbody>
         <% if !(@project.location.state_id == 25 || @project.location.state_id == 26) && bmp.bmpsublist_id == 4 %>
