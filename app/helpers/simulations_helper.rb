@@ -329,7 +329,11 @@ module SimulationsHelper
     #client = Savon.client(wsdl: URL_Weather)
     client = Savon.client(wsdl: URL_SoilsInfo)
   	###### create wp1 file from weather and send to server ########
-  	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => county.county_state_code})
+    code = ""
+    if @project.location.state_id > 0
+      code = county.county_state_code
+    end
+  	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => code})
       if response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] == "created" then
   		return "OK"
   	else
@@ -2793,7 +2797,11 @@ module SimulationsHelper
       if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
       if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file
       if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
-      if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
+      if @project.location.state_id == 0 then 
+        if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
+      else
+        if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
+      end
       if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg  end
       @last_soil = 0
       @grazing = @scenario.operations.find_by_activity_id([7, 9])
