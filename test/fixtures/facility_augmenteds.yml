@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  lease_rate: 1.5
+  new_price: 1.5
+  current_price: 1.5
+  life_remaining: 1
+  maintenance_coeff: 1.5
+  loan_interest_rate: 1.5
+  length_loan: 1.5
+  interest_rate_equity: 1.5
+  proportion_debt: 1.5
+  year: 1
+
+two:
+  name: MyString
+  lease_rate: 1.5
+  new_price: 1.5
+  current_price: 1.5
+  life_remaining: 1
+  maintenance_coeff: 1.5
+  loan_interest_rate: 1.5
+  length_loan: 1.5
+  interest_rate_equity: 1.5
+  proportion_debt: 1.5
+  year: 1
