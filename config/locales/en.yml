@@ -446,6 +446,7 @@ en:
     body7: 'This version of NTT is available in<br> both English and Spanish.'
     name: 'Dr. Ali Saleh'
   menu:
+    fem: FEM
     welcome: Welcome
     projects: Projects
     location: Location
