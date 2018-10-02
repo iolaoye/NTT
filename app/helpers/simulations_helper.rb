@@ -1141,8 +1141,15 @@ module SimulationsHelper
     if _subarea_info.nirr > 0 then
       sLine += sprintf("%1d", _subarea_info.nirr)
     else
-      sLine += sprintf("%1d", _subarea_info.nirr)
+      #if not check if there is manual irrigaiton in the operations.
+      irrigation_op = _subarea_info.scenario.operations.find_by_activity_id(6)
+      if irrigation_op != nil then
+        sLine += sprintf("%1d", irrigation_op.type_id.to_s)
+      else
+        sLine += sprintf("%1d", _subarea_info.nirr)
+      end
     end
+
     sLine += sprintf("%4d", _subarea_info.iri)
     sLine += sprintf("%4d", _subarea_info.ira)
     sLine += sprintf("%4d", _subarea_info.lm)
