@@ -8,7 +8,8 @@ include ScenariosHelper
   def save_coordinates
     @weather.latitude = params[:weather][:latitude]
     @weather.longitude = params[:weather][:longitude]
-    weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
+    #weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
     data = weather_data.split(",")
     @weather.weather_file = data[0]
     data[2].slice! "\r\n"
@@ -28,7 +29,8 @@ include ScenariosHelper
     centroid = calculate_centroid()
     @weather.latitude = centroid.cy
     @weather.longitude = centroid.cx
-    weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
+    #weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
     data = weather_data.split(",")
     @weather.weather_file = data[0]
     data[2].slice! "\r\n"
@@ -40,6 +42,16 @@ include ScenariosHelper
     @weather.save
   end
 
+  def get_weather_file_name(lat, lon)
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:get_weather_file_name, message: {"nlat" => lat, "nlon" => lon})
+    if response.body[:get_weather_file_name_response][:get_weather_file_name_result].include? ".wth" then
+      return response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    else
+      return "Error" + response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    end
+  end
 ################################  Save Simulation   #################################
 # GET /weathers/1
 # GET /weathers/1.json
