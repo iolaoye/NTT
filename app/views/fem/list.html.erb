@@ -1,0 +1,141 @@
+<h1>FEM</h1>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#feed">Feed</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#equipment">Equipment</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#structure">Structure</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#other">Other</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="feed">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Selling Price</th>
+            <th>Purchase Price</th>
+            <th>Concentrate</th>
+            <th>Forage</th>
+            <th>Grain</th>
+            <th>Hay</th>
+            <th>Pasture</th>
+            <th>Silage</th>
+            <th>Supplement</th>
+        </tr>
+        <% @feeds.each do |feed| %>
+        <tr>
+            <td><%= feed.name %></td>
+            <td><%= feed.selling_price %></td>
+            <td><%= feed.purchase_price %></td>
+            <td><%= feed.concentrate %></td>
+            <td><%= feed.forage %></td>
+            <td><%= feed.grain %></td>
+            <td><%= feed.hay %></td>
+            <td><%= feed.pasture %></td>
+            <td><%= feed.silage %></td>
+            <td><%= feed.supplement %></td>
+        </tr>
+        <% end %>
+    </table>
+</div>
+
+<div class="tab-content" id="equipment">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Selling Price</th>
+            <th>Purchase Price</th>
+            <th>Concentrate</th>
+            <th>Forage</th>
+            <th>Grain</th>
+            <th>Hay</th>
+            <th>Pasture</th>
+            <th>Silage</th>
+            <th>Supplement</th>
+        </tr>
+        <% @feeds.each do |feed| %>
+        <tr>
+            <td><%= feed.name %></td>
+            <td><%= feed.selling_price %></td>
+            <td><%= feed.purchase_price %></td>
+            <td><%= feed.concentrate %></td>
+            <td><%= feed.forage %></td>
+            <td><%= feed.grain %></td>
+            <td><%= feed.hay %></td>
+            <td><%= feed.pasture %></td>
+            <td><%= feed.silage %></td>
+            <td><%= feed.supplement %></td>
+        </tr>
+        <% end %>
+    </table>
+</div>
+
+<div class="tab-content" id="structure">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Selling Price</th>
+            <th>Purchase Price</th>
+            <th>Concentrate</th>
+            <th>Forage</th>
+            <th>Grain</th>
+            <th>Hay</th>
+            <th>Pasture</th>
+            <th>Silage</th>
+            <th>Supplement</th>
+        </tr>
+        <% @feeds.each do |feed| %>
+        <tr>
+            <td><%= feed.name %></td>
+            <td><%= feed.selling_price %></td>
+            <td><%= feed.purchase_price %></td>
+            <td><%= feed.concentrate %></td>
+            <td><%= feed.forage %></td>
+            <td><%= feed.grain %></td>
+            <td><%= feed.hay %></td>
+            <td><%= feed.pasture %></td>
+            <td><%= feed.silage %></td>
+            <td><%= feed.supplement %></td>
+        </tr>
+        <% end %>
+    </table>
+</div>
+
+<div class="tab-content" id="other">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Selling Price</th>
+            <th>Purchase Price</th>
+            <th>Concentrate</th>
+            <th>Forage</th>
+            <th>Grain</th>
+            <th>Hay</th>
+            <th>Pasture</th>
+            <th>Silage</th>
+            <th>Supplement</th>
+        </tr>
+        <% @feeds.each do |feed| %>
+        <tr>
+            <td><%= feed.name %></td>
+            <td><%= feed.selling_price %></td>
+            <td><%= feed.purchase_price %></td>
+            <td><%= feed.concentrate %></td>
+            <td><%= feed.forage %></td>
+            <td><%= feed.grain %></td>
+            <td><%= feed.hay %></td>
+            <td><%= feed.pasture %></td>
+            <td><%= feed.silage %></td>
+            <td><%= feed.supplement %></td>
+        </tr>
+        <% end %>
+    </table>
+</div>
+
