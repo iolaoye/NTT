@@ -1,21 +1,22 @@
 <h1>FEM</h1>
 
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" id="fem-tabs" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" href="#feed">Feed</a>
+    <a class="nav-link active" data-toggle="tab" href="#feed">Feed</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#equipment">Equipment</a>
+    <a class="nav-link" data-toggle="tab" href="#equipment">Equipment</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#structure">Structure</a>
+    <a class="nav-link" data-toggle="tab" href="#structure">Structure</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="#other">Other</a>
+    <a class="nav-link" data-toggle="tab" href="#other">Other</a>
   </li>
 </ul>
 
-<div class="tab-content" id="feed">
+<div class="tab-content">
+    <div class="tab-pane" id="feed">
     <table>
         <tr>
             <th>Name</th>
@@ -44,98 +45,113 @@
         </tr>
         <% end %>
     </table>
+    </div>
+
+    <!-- <div class="tab-pane" id="equipment">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Lease Rate</th>
+            <th>New Price</th>
+            <th>New Hours</th>
+            <th>Current Price</th>
+            <th>Hours Remaining</th>
+            <th>Width</th>
+            <th>Speed</th>
+            <th>Field Efficiency</th>
+            <th>Horse Power</th>
+            <th>RF1</th>
+            <th>RF2</th>
+            <th>IR Loan</th>
+            <th>IR Equity</th>
+            <th>P Debt</th>
+            <th>Year</th>
+            <th>RV1</th>
+            <th>RV2</th>
+        </tr>
+        <%# @equipment.each do |e| %>
+        <tr>
+            <td><%#= e.name %></td>
+            <td><%#= e.selling_price %></td>
+            <td><%#= e.purchase_price %></td>
+            <td><%#= e.concentrate %></td>
+            <td><%#= feed.forage %></td>
+            <td><%#= feed.grain %></td>
+            <td><%#= feed.hay %></td>
+            <td><%#= feed.pasture %></td>
+            <td><%#= feed.silage %></td>
+            <td><%#= feed.supplement %></td>
+        </tr>
+        <%# end %>
+    </table>
+    </div> -->
+
+    <div class="tab-pane" id="structure">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Selling Price</th>
+            <th>Purchase Price</th>
+            <th>Concentrate</th>
+            <th>Forage</th>
+            <th>Grain</th>
+            <th>Hay</th>
+            <th>Pasture</th>
+            <th>Silage</th>
+            <th>Supplement</th>
+        </tr>
+        <% @feeds.each do |feed| %>
+        <tr>
+            <td><%= feed.name %></td>
+            <td><%= feed.selling_price %></td>
+            <td><%= feed.purchase_price %></td>
+            <td><%= feed.concentrate %></td>
+            <td><%= feed.forage %></td>
+            <td><%= feed.grain %></td>
+            <td><%= feed.hay %></td>
+            <td><%= feed.pasture %></td>
+            <td><%= feed.silage %></td>
+            <td><%= feed.supplement %></td>
+        </tr>
+        <% end %>
+        </table>
+    </div>
+
+    <div class="tab-pane" id="other">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Selling Price</th>
+            <th>Purchase Price</th>
+            <th>Concentrate</th>
+            <th>Forage</th>
+            <th>Grain</th>
+            <th>Hay</th>
+            <th>Pasture</th>
+            <th>Silage</th>
+            <th>Supplement</th>
+        </tr>
+        <% @feeds.each do |feed| %>
+        <tr>
+            <td><%= feed.name %></td>
+            <td><%= feed.selling_price %></td>
+            <td><%= feed.purchase_price %></td>
+            <td><%= feed.concentrate %></td>
+            <td><%= feed.forage %></td>
+            <td><%= feed.grain %></td>
+            <td><%= feed.hay %></td>
+            <td><%= feed.pasture %></td>
+            <td><%= feed.silage %></td>
+            <td><%= feed.supplement %></td>
+        </tr>
+        <% end %>
+    </table>
+    </div>
 </div>
 
-<div class="tab-content" id="equipment">
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Selling Price</th>
-            <th>Purchase Price</th>
-            <th>Concentrate</th>
-            <th>Forage</th>
-            <th>Grain</th>
-            <th>Hay</th>
-            <th>Pasture</th>
-            <th>Silage</th>
-            <th>Supplement</th>
-        </tr>
-        <% @feeds.each do |feed| %>
-        <tr>
-            <td><%= feed.name %></td>
-            <td><%= feed.selling_price %></td>
-            <td><%= feed.purchase_price %></td>
-            <td><%= feed.concentrate %></td>
-            <td><%= feed.forage %></td>
-            <td><%= feed.grain %></td>
-            <td><%= feed.hay %></td>
-            <td><%= feed.pasture %></td>
-            <td><%= feed.silage %></td>
-            <td><%= feed.supplement %></td>
-        </tr>
-        <% end %>
-    </table>
-</div>
-
-<div class="tab-content" id="structure">
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Selling Price</th>
-            <th>Purchase Price</th>
-            <th>Concentrate</th>
-            <th>Forage</th>
-            <th>Grain</th>
-            <th>Hay</th>
-            <th>Pasture</th>
-            <th>Silage</th>
-            <th>Supplement</th>
-        </tr>
-        <% @feeds.each do |feed| %>
-        <tr>
-            <td><%= feed.name %></td>
-            <td><%= feed.selling_price %></td>
-            <td><%= feed.purchase_price %></td>
-            <td><%= feed.concentrate %></td>
-            <td><%= feed.forage %></td>
-            <td><%= feed.grain %></td>
-            <td><%= feed.hay %></td>
-            <td><%= feed.pasture %></td>
-            <td><%= feed.silage %></td>
-            <td><%= feed.supplement %></td>
-        </tr>
-        <% end %>
-    </table>
-</div>
-
-<div class="tab-content" id="other">
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Selling Price</th>
-            <th>Purchase Price</th>
-            <th>Concentrate</th>
-            <th>Forage</th>
-            <th>Grain</th>
-            <th>Hay</th>
-            <th>Pasture</th>
-            <th>Silage</th>
-            <th>Supplement</th>
-        </tr>
-        <% @feeds.each do |feed| %>
-        <tr>
-            <td><%= feed.name %></td>
-            <td><%= feed.selling_price %></td>
-            <td><%= feed.purchase_price %></td>
-            <td><%= feed.concentrate %></td>
-            <td><%= feed.forage %></td>
-            <td><%= feed.grain %></td>
-            <td><%= feed.hay %></td>
-            <td><%= feed.pasture %></td>
-            <td><%= feed.silage %></td>
-            <td><%= feed.supplement %></td>
-        </tr>
-        <% end %>
-    </table>
-</div>
+<script>
+  $(function () {
+    $('#fem-tabs').tab('show')
+  })
+</script>
 
