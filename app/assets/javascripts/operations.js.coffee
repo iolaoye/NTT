@@ -117,7 +117,8 @@ getGrazingFields = ->
     #change year for start year
     $("#div_start_date")[0].children[0].innerText = "Start Year"
     $("#div_type")[0].children[0].innerText = "Animal Type"
-    $("#div_access_to_stream")[0].style.display = "inline"    
+    if $("#div_access_to_stream")[0] != undefined
+      $("#div_access_to_stream")[0].style.display = "inline"    
 
 updateTypes = ->
   $("#operation_nh4_n").hide()
