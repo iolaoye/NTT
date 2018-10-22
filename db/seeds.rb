@@ -3,12 +3,14 @@
 #######
 # encoding: utf-8
 
-	file = "db/seeds/crop_schedules.rb"
+	file = "db/seeds/crops.rb"
 	load file
 	
-	file = "db/seeds/schedules.rb"
-	load file
+	file = "db/seeds/parameters.rb"
+	load file	
 	
+	file = "db/seeds/controls.rb"
+	load file
 cont = false
 
 if cont then
