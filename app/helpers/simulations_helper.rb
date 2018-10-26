@@ -1910,7 +1910,6 @@ module SimulationsHelper
         one_result["qn"] = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
         one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
-        debugger
         one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC) * td_reduction
         one_result["qdrp"] = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
