@@ -1873,7 +1873,6 @@ module SimulationsHelper
     initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
     td_reduction = 1
     bmp = @scenario.bmps.find_by_bmpsublist_id(3)
-  debugger
     if !(bmp == nil)
       case bmp.irrigation_id
       when 0
