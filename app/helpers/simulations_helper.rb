@@ -1874,15 +1874,15 @@ module SimulationsHelper
     td_reduction = 1
     bmp = @scenario.bmps.find_by_bmpsublist_id(3)
     if !(bmp == nil)
-      case bmp.irrigation_id
-      when 0
-        td_reduction = 1   # no reduction
-      when 1
-        td_reduction = 1 - 0.18   # 18% reduction. Tile bioreactors
-      when 2
-        td_reduction = 1 - 0.33   # 33% reduction. Drainage Water Management
+      if bmp.irrigation_id == 1 and bmp.crop_id == 1 then
+        td_reduction = 0.5494
       else
-        td_reduction = 1   # no reduction
+        if bmp.irrigation_id == 1 then 
+          td_reduction = 1 - 0.18
+        end
+        if bmp.crop_id == 1 then
+          td_reduction = 1 - 0.33
+        end
       end
     end
     data.each_line do |tempa|
