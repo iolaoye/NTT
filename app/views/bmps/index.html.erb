@@ -147,24 +147,19 @@
             </tr>
             <tr>
               <td class="field indent" colspan="3">
-                <% case bmp.irrigation_id %>
-                <% when 0 %>
-                  <%= radio_button_tag :irrigation_id, "0", true%> <%= t('bmp.none')%>
-                  <%= radio_button_tag :irrigation_id, "1"%> <%= t('bmp.tile_bioreactors') %>
-                  <%= radio_button_tag :irrigation_id, "2"%> <%= t('bmp.drainage_management')%>
-                <% when 1 %>
-                  <%= radio_button_tag :irrigation_id, "0"%> <%= t('bmp.none')%>
-                  <%= radio_button_tag :irrigation_id, "1", true%> <%= t('bmp.tile_bioreactors')%>
-                  <%= radio_button_tag :irrigation_id, "2"%> <%= t('bmp.drainage_management')%>
-                <% when 2 %>
-                  <%= radio_button_tag :irrigation_id, "0"%> <%= t('bmp.none')%>
-                  <%= radio_button_tag :irrigation_id, "1"%> <%= t('bmp.tile_bioreactors')%>
-                  <%= radio_button_tag :irrigation_id, "2", true%> <%= t('bmp.drainage_management')%>
+                <% if bmp.irrigation_id == 1 %>
+                  <%= check_box_tag :irrigation_id, bmp.irrigation_id, true %><%="  " + t('bmp.tile_bioreactors')%>
                 <% else %>
-                  <%= radio_button_tag :irrigation_id, "0", true%> <%= t('bmp.none')%>
-                  <%= radio_button_tag :irrigation_id, "1"%> <%= t('bmp.tile_bioreactors') %>
-                  <%= radio_button_tag :irrigation_id, "2"%> <%= t('bmp.drainage_management')%>
-                <% end %>
+                  <%= check_box_tag :irrigation_id, bmp.irrigation_id, false %><%="  " + t('bmp.tile_bioreactors')%>
+                 <% end %>
+
+                <% if bmp.crop_id == 1 %>
+                  <%= check_box_tag :crop_id, bmp.irrigation_id, true %><%="  " + t('bmp.drainage_management')%>
+                <% else %>
+                  <%= check_box_tag :crop_id, bmp.irrigation_id, false %><%="  " + t('bmp.drainage_management')%>
+                 <% end %>
+
+
               </td>
             </tr>
           <% when 4 %>

@@ -710,6 +710,10 @@ es:
     days_grazed: '# días consecutivos en pastoreo a la vez (en cada subparcela)'
     rest_time: 'Tiempo de descanso de los pastos (días) entre pastoreos'
     application_rate_html: "Si zero (0.0), N se aplica a la tase requerida para el cultivo "
+    drainage_management_quiestion: Hay algun manejo de sistema de dranaje adicional?
+    tile_bioreactors: Systema de Bioreactores
+    drainage_management: Manejo de Aguas drenadas
+    none: Ninguno
   months:
     january: Enero
     february: Febrero
