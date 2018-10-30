@@ -9,7 +9,7 @@ load file
 file = "db/seeds/farm_generals.rb"
 load file
 
-file = "db/seeds/feeds_augmenteds.rb"
+file = "db/seeds/feed_augmenteds.rb"
 load file
 
 file = "db/seeds/machine_augmenteds.rb"
