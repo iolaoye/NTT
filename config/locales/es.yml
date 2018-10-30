@@ -448,6 +448,7 @@ es:
     final: 'Finalmente, como líder del proyecto NTT y con mi equipo de proyecto (Oscar Gallego y Edward Osei), nos gustaría darle las gracias a las fuentes de financiación y nuestros colegas, en particular, los agricultores y productores, por su contribución en el diseño de este programa.'
     name: 'Dr. Ali Saleh'
   menu:
+    fem: FEM
     welcome: Bienvenido
     projects: Proyectos
     location: Ubicación
