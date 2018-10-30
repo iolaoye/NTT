@@ -1,3 +1,4 @@
+<% aplcat = 0 %>
 <% if notice != nil %>
     <div class="success_alert">
 	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -56,15 +57,19 @@
     <% if @scenarios.count > 0 %>
 		<%= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %>
         <% unless ENV["APP_VERSION"] == "modified" %>
-    <%= submit_tag t('scenario.simulate') + ' ' + 'Aplcat', data: {disable_with: 'Please wait. Aplcat simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_aplcat" %>
+        	<% if aplcat == 1 %>
+    			<%= submit_tag t('scenario.simulate') + ' ' + 'APLCAT', data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_aplcat" %>
+    		<% end %>
     	<%#= submit_tag t('scenario.simulate') + ' ' + 'FEM', data: {disable_with: 'Please wait. FEM simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_fem" %>
         <% end %>
 	    <% if @field.annual_results.count > 0 %>
 		    <%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
 		    <% unless ENV["APP_VERSION"] == "modified" %>
-          <%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
-          <%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
-          <% end %>
+          		<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
+          		<% if aplcat == 1 %>
+          			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
+          		<% end %>
+          	<% end %>
         <% end %>
 	    <br>
         <br>

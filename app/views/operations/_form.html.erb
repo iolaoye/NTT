@@ -65,7 +65,7 @@
 		</div>
 		<%#= f.hidden_field :subtype_id, :value => @operation.subtype_id %>
 		<div id="div_fertilizer" class="field" style="display:none" >
-      <%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
+      		<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -76,6 +76,19 @@
 		  <%= f.label t('operation.plant_population') %>
 		  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
+		<%# change to show access animal to stream %>
+	  	<% if ENV["APP_VERSION"] == "modified" %>
+	  		<div style="display:none" >
+	  	<% else %>
+	  		<div style="display:none" id="div_access_to_stream" >
+	  	<% end %>
+	  	  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+        	<input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
+        	<div style="display:none" id="div_hours_in_stream">
+		  		<%= f.label :hours_in_stream, t('bmp.hours')%>
+		  		<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
+	  		</div>
+	  	</div>
 		<div class="field" id="div_depth" style="display:none">
 		  <%= f.label :depth, t('operation.depth') %>
 		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
@@ -156,7 +169,20 @@
 			<% end %>
 			<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
-		<div class="field" id="div_depth">
+ 		<%# change to show access animal to stream %>
+	  	<% if ENV["APP_VERSION"] == "modified" %>
+	  		<div style="display:none" >
+	  	<% else %>
+	  		<div style="display:none" id="div_access_to_stream" >
+	  	<% end %>
+	  	  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+        	<input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
+        	<div style="display:none" id="div_hours_in_stream">
+		  		<%= f.label :hours_in_stream, t('bmp.hours')%>
+		  		<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
+	  		</div>
+	  	</div>
+ 		<div class="field" id="div_depth">
 			<%= f.label :depth, t('operation.depth') %>
 			<%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
@@ -250,6 +276,19 @@
 		  <%= f.label :amount, t('operation.amount') %>
 		  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
+ 		<%# change to show access animal to stream %>
+	  	<% if ENV["APP_VERSION"] == "modified" %>
+	  		<div style="display:none" >
+	  	<% else %>
+	  		<div style="display:none" id="div_access_to_stream" >
+	  	<% end %>
+	  	  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+        	<input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
+        	<div style="display:none" id="div_hours_in_stream">
+		  		<%= f.label :hours_in_stream, t('bmp.hours')%>
+		  		<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
+	  		</div>
+	  	</div>
 		<div class="field" id="div_depth" style="display:none">
 		  <%= f.label :depth, t('operation.depth') %>
 		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
@@ -324,6 +363,19 @@
 		  <%= f.label :volume, t('operation.volume') %>
 		  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
+ 		<%# change to show access animal to stream %>
+	  	<% if ENV["APP_VERSION"] == "modified" %>
+	  		<div style="display:none" >
+	  	<% else %>
+	  		<div style="display:none" id="div_access_to_stream" >
+	  	<% end %>
+	  	  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+        	<input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
+        	<div style="display:none" id="div_hours_in_stream">
+		  		<%= f.label :hours_in_stream, t('bmp.hours')%>
+		  		<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
+	  		</div>
+	  	</div>
 		<div class="field" id="div_depth">
 		  <%= f.label :efficiency, t('bmp.irrigation_efficiency') %>
 		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
@@ -402,8 +454,9 @@
 		  	<% if ENV["APP_VERSION"] == "modified" %>
 		  		<div style="display:none">
 		  	<% else %>
-		  		<div style="">
+		  		<div style="inline" id="div_access_to_stream">
 		  	<% end %>
+
 		  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
             <% if @operation.org_c == 1 %>
                 <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
@@ -418,7 +471,6 @@
 			  	<%= f.label :hours_in_stream, t('bmp.hours')%>
 			  	<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
 		  	</div>
-		    </div>
 		</div>
 		<div class="field" id="div_depth">
 		  	<%= f.label :hours_in_field, t('operation.hours') %>
@@ -470,7 +522,7 @@
 		<div id="div_date" >
 			<%= f.label :stop, t('general.stop'), :class => 'field' %>
 			<%= f.label :year, t('general.year'), :class => 'field' %>
-			<%= select_tag "year1", options_for_select(listYears, :selected => operation.year), {:prompt => t('datetime.prompts.year')} %>
+			<%= select_tag "year1", options_for_select(listYears, :selected => operation.year), {:prompt => t('datetime.prompts.year')} %>	
 			<%= f.label :date, t('general.date'), :class => 'field' %>
 			<%= select_tag "month_id1", options_for_select(listMonths, :selected => operation.month_id), {:prompt => t('datetime.prompts.month')} %>
 			<%= select_tag "day1", options_for_select(listDays, :selected => operation.day), {:prompt => t('datetime.prompts.day')} %>
@@ -498,8 +550,9 @@
 		  	<% if ENV["APP_VERSION"] == "modified" %>
 		  		<div style="display:none">
 		  	<% else %>
-		  		<div style="">
+		  		<div style="inline" id="div_access_to_stream">
 		  	<% end %>
+
 		  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
             <% if @operation.org_c == 1 %>
                 <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
@@ -579,7 +632,7 @@
 			<% end %>
 		</div>
 		<div id="div_fertilizer" style="display:none" >
-      	<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
+      		<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
 				<%= collection_select :operation, :subtype_id, @fertilizers, :id, :name, {:prompt => 'Select Fertilizer', :selected => @operation.subtype_id} %>
 			<% else %>
@@ -590,6 +643,19 @@
 		  <%= f.label :amount, t('operation.amount') %>
 		  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
+		 <%# change to show access animal to stream %>
+	  	<% if ENV["APP_VERSION"] == "modified" %>
+	  		<div style="display:none" >
+	  	<% else %>
+	  		<div style="display:none" id="div_access_to_stream" >
+	  	<% end %>
+	  	  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+        	<input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
+        	<div style="display:none" id="div_hours_in_stream">
+		  		<%= f.label :hours_in_stream, t('bmp.hours')%>
+		  		<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
+	  		</div>
+	  	</div>
 		<div class="field" id="div_depth" style="display:none">
 		  <%= f.label :depth, t('operation.depth') %>
 		  <%= f.number_field :depth, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
@@ -738,16 +804,16 @@
 		  	<%= f.label :amount, t('operation.amount') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		  	<%# change to show access animal to stream %>
+
 		  	<% if ENV["APP_VERSION"] == "modified" %>
-		  		<div style="display:none">
+		  		<div style="display:none" >
 		  	<% else %>
-		  		<div style="">
+		  		<div style="" id="div_access_to_stream">
 		  	<% end %>
-		  	<div style="display:none" id="div_access_to_stream">
-			  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+		  	  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+
             	<input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
-	        </div>
-            <div style="display:none" id="div_hours_in_stream">
+	        <div style="display:none" id="div_hours_in_stream">
 			  	<%= f.label :hours_in_stream, t('bmp.hours')%>
 			  	<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
 		  	</div>

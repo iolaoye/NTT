@@ -821,33 +821,101 @@ class ScenariosController < ApplicationController
 	render "index"
   end
 
+  ####### update subareas after they have been created in case BMPs have been applied ######
+  def update_subareas(new_scenario, scenario)
+    subarea = scenario.subareas[0]
+    bmp = scenario.bmps.find_by_bmpsublist_id(16)
+    new_scenario.subareas.each do |s|
+      if bmp != nil
+        s.slp = s.slp * (100-bmp.slope_reduction) / 100
+      end
+      s.pcof = subarea.pcof
+      s.bcof = subarea.bcof
+      s.bffl = subarea.bffl
+      s.nirr = subarea.nirr
+      s.iri = subarea.iri
+      s.ira = subarea.ira
+      s.lm = subarea.lm
+      s.ifd = subarea.ifd
+      s.idr = subarea.idr
+      s.idf1 = subarea.idf1
+      s.idf2 = subarea.idf2
+      s.idf3 = subarea.idf3
+      s.idf4 = subarea.idf4
+      s.idf5 = subarea.idf5
+      s.bir = subarea.bir
+      s.efi = subarea.efi
+      s.vimx = subarea.vimx
+      s.armn = subarea.armn
+      s.armx = subarea.armx
+      s.bft = subarea.bft
+      s.fnp4 = subarea.fnp4
+      s.fmx = subarea.fmx
+      s.drt = subarea.drt
+      s.fdsf = subarea.fdsf
+      s.pec = subarea.pec
+      s.dalg = subarea.dalg
+      s.vlgn = subarea.vlgn
+      s.coww = subarea.coww
+      s.ddlg = subarea.ddlg
+      s.solq = subarea.solq
+      s.sflg = subarea.sflg
+      s.fnp2 = subarea.fnp2
+      s.fnp5 = subarea.fnp5
+      s.firg = subarea.firg
+      s.ny1 = subarea.ny1
+      s.ny2 = subarea.ny2
+      s.ny3 = subarea.ny3
+      s.ny4 = subarea.ny4
+      s.ny5 = subarea.ny5
+      s.ny6 = subarea.ny6
+      s.ny7 = subarea.ny7
+      s.ny8 = subarea.ny8
+      s.ny9 = subarea.ny9
+      s.ny10 = subarea.ny10
+      s.xtp1 = subarea.xtp1
+      s.xtp2 = subarea.xtp2
+      s.xtp3 = subarea.xtp3
+      s.xtp4 = subarea.xtp4
+      s.xtp5 = subarea.xtp5
+      s.xtp6 = subarea.xtp6
+      s.xtp7 = subarea.xtp7
+      s.xtp8 = subarea.xtp8
+      s.xtp9 = subarea.xtp9
+      s.xtp10 = subarea.xtp10
+      s.save
+    end #soils each do end
+  end
+
   def copy_other_scenario
-  	name = " copy"
-	scenario = Scenario.find(params[:scenario][:id])   #1. find scenario to copy
-	#2. copy scenario to new scenario
+    name = " copy"
+    scenario = Scenario.find(params[:scenario][:id])   #1. find scenario to copy
+    #2. copy scenario to new scenario
   	new_scenario = scenario.dup
-	new_scenario.name = scenario.name + name
-	new_scenario.field_id = @field.id
-	#new_scenario.last_simulation = ""
-	if new_scenario.save
-		#new_scenario_id = new_scenario.id
-		#3. Copy subareas info by scenario
-		add_scenario_to_soils(new_scenario)
-		#4. Copy operations info
-		scenario.operations.each do |operation|
-  			new_op = operation.dup
-			new_op.scenario_id = new_scenario.id
-			new_op.save
-			add_soil_operation(new_op)
-		end   # end bmps.each
-		#5. Copy bmps info
-		@new_scenario_id = new_scenario.id
-		scenario.bmps.each do |b|
-			duplicate_bmp(b)
-		end   # end bmps.each
-	else
-		return "Error Saving scenario"
-	end   # end if scenario saved
+    new_scenario.name = scenario.name + name
+    new_scenario.field_id = @field.id
+    #new_scenario.last_simulation = ""
+    if new_scenario.save
+  		#new_scenario_id = new_scenario.id
+  		#3. Copy subareas info by scenario
+  		add_scenario_to_soils(new_scenario)
+      #3A. Update subarea with bmps informaiton
+      update_subareas(new_scenario, scenario)
+  		#4. Copy operations info
+  		scenario.operations.each do |operation|
+    			new_op = operation.dup
+  			new_op.scenario_id = new_scenario.id
+  			new_op.save
+  			add_soil_operation(new_op)
+  		end   # end bmps.each
+  		#5. Copy bmps info
+  		@new_scenario_id = new_scenario.id
+  		scenario.bmps.each do |b|      
+  			duplicate_bmp(b)
+  		end   # end bmps.each
+    else
+		  return "Error Saving scenario"
+    end   # end if scenario saved
   	return "OK"
   end
 
