@@ -203,29 +203,91 @@ class ScenariosController < ApplicationController
   end
 
 ################################  FEM - simulate the selected scenario for FEM #################################
+  # def simulate_fem
+  #   @errors = Array.new
+  #   msg = "OK"
+  #   if params[:select_scenario] == nil then
+  #     @errors.push("Select at least one scenario to simulate ")
+  #     return "Select at least one scenario to simulate "
+  #   end
+  #   ActiveRecord::Base.transaction do
+  #     params[:select_scenario].each do |scenario_id|
+  #       @scenario = Scenario.find(scenario_id)
+  #       if @scenario.operations.count <= 0 then
+  #         @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+  #         return
+  #       end
+  #       #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
+  #       msg = run_fem
+  #       unless msg.eql?("OK")
+  #          @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+  #          raise ActiveRecord::Rollback
+  #       end # end unless msg
+  #     end # end each do params loop
+  #   end
+  #   return msg
+  # end
+
   def simulate_fem
-    @errors = Array.new
-    msg = "OK"
-    if params[:select_scenario] == nil then
-      @errors.push("Select at least one scenario to simulate ")
-      return "Select at least one scenario to simulate "
+    feedList = []
+    FeedsAugmented.all.each do |feed|
+      feedList.push(
+        feed.name.to_s + ',' +
+        feed.selling_price.to_s + ',' +
+        feed.purchase_price.to_s + ',' +
+        feed.concentrate.to_s + ',' +
+        feed.forage.to_s + ',' +
+        feed.grain.to_s + ',' +
+        feed.hay.to_s + ',' +
+        feed.pasture.to_s + ',' + 
+        feed.silage.to_s + ',' +
+        feed.supplement.to_s 
+      )
+    end    
+    machineList = []
+    MachineAugmented.all.each do |equip|
+      machineList.push(
+        equip.name.to_s + ',' +
+        equip.lease_rate.to_s + ',' +
+        equip.new_price.to_s + ',' +
+        equip.new_hours.to_s + ',' +
+        equip.current_price.to_s + ',' +
+        equip.hours_remaining.to_s + ',' +
+        equip.width.to_s + ',' +
+        equip.field_efficiency.to_s + ',' +
+        equip.horse_power.to_s + ',' +
+        equip.rf1.to_s + ',' +
+        equip.rf2.to_s + ',' +
+       equip.ir_loan.to_s + ',' +
+        equip.ir_equity.to_s + ',' +
+        equip.p_debt.to_s + ',' +
+        equip.year.to_s + ',' +
+        equip.rv1.to_s + ',' +
+        equip.rv2.to_s
+      )
     end
-    ActiveRecord::Base.transaction do
-      params[:select_scenario].each do |scenario_id|
-        @scenario = Scenario.find(scenario_id)
-        if @scenario.operations.count <= 0 then
-          @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-          return
-        end
-        #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
-        msg = run_fem
-        unless msg.eql?("OK")
-           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-           raise ActiveRecord::Rollback
-        end # end unless msg
-      end # end each do params loop
+    structureList = []
+    FacilityAugmented.all.each do |struct|
+      structureList.push(
+        struct.name.to_s + ',' +
+        struct.lease_rate.to_s + ',' +
+        struct.new_price.to_s + ',' +
+        struct.current_price.to_s + ',' +
+        struct.life_remaining.to_s + ',' +
+        struct.maintenance_coeff.to_s + ',' +
+        struct.loan_interest_rate.to_s + ',' +
+        struct.length_loan.to_s + ',' +
+        struct.interest_rate_equity.to_s + ',' +
+        struct.proportion_debt.to_s + ',' +
+        struct.year.to_s 
+      )
     end
-    return msg
+    otherList = []
+    FarmGeneral.all.each do |other|
+      otherList.push(other.to_s + ',')
+    end
+
+    puts structureList, machineList, otherList, feedList
   end
 
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################

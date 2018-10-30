@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  lease_rate: 1.5
+  new_price: 1.5
+  new_hours: 1
+  current_price: 1.5
+  hours_remaining: 1
+  width: 1.5
+  speed: 1.5
+  field_efficiency: 1.5
+  horse_power: 1.5
+  rf1: 1.5
+  rf2: 1.5
+  ir_loan: 1.5
+  l: 
+  ir_equity: 1.5
+  p_debt: 1.5
+  year: 1
+  rv1: 1.5
+  rv2: 1.5
+
+two:
+  name: MyString
+  lease_rate: 1.5
+  new_price: 1.5
+  new_hours: 1
+  current_price: 1.5
+  hours_remaining: 1
+  width: 1.5
+  speed: 1.5
+  field_efficiency: 1.5
+  horse_power: 1.5
+  rf1: 1.5
+  rf2: 1.5
+  ir_loan: 1.5
+  l: 
+  ir_equity: 1.5
+  p_debt: 1.5
+  year: 1
+  rv1: 1.5
+  rv2: 1.5
