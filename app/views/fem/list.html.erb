@@ -100,7 +100,7 @@
             <th>Silage</th>
             <th>Supplement</th>
         </tr>
-        <% @feeds.each do |feed| %>
+        <% @structure.each do |feed| %>
         <tr>
             <td><%= feed.name %></td>
             <td><%= feed.selling_price %></td>
@@ -131,7 +131,7 @@
             <th>Silage</th>
             <th>Supplement</th>
         </tr>
-        <% @feeds.each do |feed| %>
+        <% @other.each do |feed| %>
         <tr>
             <td><%= feed.name %></td>
             <td><%= feed.selling_price %></td>
