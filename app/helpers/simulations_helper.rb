@@ -10,7 +10,6 @@ module SimulationsHelper
   SoilPMaxForSoilDepth = 15.24
   SoilPDefault = 3.0
   CropMixedGrass = 367
-  COMA = ", "
 
   def create_control_file()
     @apex_control = ""
@@ -192,6 +191,25 @@ module SimulationsHelper
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
     response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_string1, "session_id" => session[:session_id]})
+    if response.body[:apex_files_response][:apex_files_result] == "created" then
+      return "OK"
+    else
+      return response.body[:apex_files_response][:apex_files_result]
+    end
+  end
+
+  def send_file_to_FEM(file1, file2, file3, file4, file_name)
+    apex_string1=""
+    if apex_string.kind_of? Array
+      apex_string.each do |as|
+        apex_string1 += as.gsub("\n", "*").gsub("\r", "")
+      end
+    else
+      apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "")
+    end 
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    #response = client.call(:apex_files, message: {"fileName" => file_name, "data" => file1,, "perm" => file2, "site" => file3, "wth" => file4 "session_id" => session[:session_id]})
     if response.body[:apex_files_response][:apex_files_result] == "created" then
       return "OK"
     else
@@ -1225,7 +1243,7 @@ module SimulationsHelper
     return "OK"
   end
 
-  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)    
+  def create_operations(soil_id, soil_percentage, operation_number, buffer_type) 
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @grazingb = false
