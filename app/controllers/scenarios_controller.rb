@@ -334,6 +334,7 @@ class ScenariosController < ApplicationController
 		apex_string += aplcat.fmbmm.to_s + "\t" + "! " + t('aplcat.fmbmm') + "\n"
 		apex_string += aplcat.dmd.to_s + "\t" + "! " + t('aplcat.dmd') + "\n"
 		apex_string += aplcat.vsim.to_s + "\t" + "! " + t('aplcat.vsim') + "\n"
+    apex_string += aplcat.vsim_gp.to_s + "\t" + "! " + t('aplcat.vsim') + "\n"
 		apex_string += aplcat.foue.to_s + "\t" + "! " + t('aplcat.foue') + "\n"
 		apex_string += aplcat.ash.to_s + "\t" + "! " + t('aplcat.ash') + "\n"
 		apex_string += aplcat.mmppfm.to_s + "\t" + "! " + t('aplcat.mmppfm') + "\n"
@@ -554,7 +555,7 @@ class ScenariosController < ApplicationController
 	    response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "pgm" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
 
       #response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "code" => county.county_state_code})
-      #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] 
+      #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result]
 
 
 	    weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
@@ -572,16 +573,18 @@ class ScenariosController < ApplicationController
 		  end
 		  apex_string += "\t" + "! " + t('aplcat.avg_rh') + "\n"
 		end
-		apex_string += aplcat.adwgbc.to_s + "\t" + "! " + t('aplcat.adwgbc') + "\n"
-		apex_string += aplcat.adwgbh.to_s + "\t" + "! " + t('aplcat.adwgbh') + "\n"
+		apex_string += aplcat.adwgbc_agp.to_s + "\t" + "! " + t('aplcat.adwgbc') + "\n"
+		apex_string += aplcat.adwgbh_agp.to_s + "\t" + "! " + t('aplcat.adwgbh') + "\n"
 		apex_string += aplcat.mrga.to_s + "\t" + "! " + t('aplcat.mrga') + "\n"
 		apex_string += aplcat.prh.to_s + "\t" + "! " + t('aplcat.prh') + "\n"
 		apex_string += aplcat.prb.to_s + "\t" + "! " + t('aplcat.prb') + "\n"
-		apex_string += aplcat.jdcc.to_s + "\t" + "! " + t('aplcat.jdcc') + "\n"
-		apex_string += aplcat.gpc.to_s + "\t" + "! " + t('aplcat.gpc') + "\n"
-		apex_string += aplcat.srop.to_s + "\t" + "! " + t('aplcat.srop') + "\n"
-		apex_string += aplcat.bwoc.to_s + "\t" + "! " + t('aplcat.bwoc') + "\n"
-		apex_string += aplcat.jdbs.to_s + "\t" + "! " + t('aplcat.jdbs') + "\n"
+		apex_string += aplcat.jdcc_agp.to_s + "\t" + "! " + t('aplcat.jdcc') + "\n"
+		apex_string += aplcat.gpc_agp.to_s + "\t" + "! " + t('aplcat.gpc') + "\n"
+    apex_string += aplcat.tpwg_agp.to_s + "\t" + "! " + t('aplcat.tpwg') + "\n"
+    apex_string += aplcat.csefa_agp.to_s + "\t" + "! " + t('aplcat.csefa') + "\n"
+		apex_string += aplcat.srop_agp.to_s + "\t" + "! " + t('aplcat.srop') + "\n"
+		apex_string += aplcat.bwoc_agp.to_s + "\t" + "! " + t('aplcat.bwoc') + "\n"
+		apex_string += aplcat.jdbs_agp.to_s + "\t" + "! " + t('aplcat.jdbs') + "\n"
 		apex_string += aplcat.platc.to_s + "\t" + "! " + t('aplcat.platc') + "\n"
 		apex_string += aplcat.pctbb.to_s + "\t" + "! " + t('aplcat.pctbb') + "\n"
 		apex_string += aplcat.rhaeba.to_s + "\t" + "! " + t('aplcat.rhaeba') + "\n"
@@ -596,6 +599,7 @@ class ScenariosController < ApplicationController
 		apex_string += aplcat.pgu.to_s + "\t" + "! " + t('aplcat.pgu') + "\n"
 		apex_string += aplcat.ada.to_s + "\t" + "! " + t('aplcat.ada') + "\n"
 		apex_string += aplcat.ape.to_s + "\t" + "! " + t('aplcat.ape') + "\n"
+    apex_string += aplcat.ape_wpp.to_s + "\t" + "! " + t('aplcat.ape') + "\n"
     apex_string += aplcat.drinkg.to_s + "\t" + "! " + t('aplcat.drinkg') + "\n"
     apex_string += aplcat.drinkl.to_s + "\t" + "! " + t('aplcat.drinkl') + "\n"
     apex_string += aplcat.drinkm.to_s + "\t" + "! " + t('aplcat.drinkm') + "\n"
@@ -798,7 +802,8 @@ class ScenariosController < ApplicationController
     apex_string += "\n"
     apex_string = "Input file for estimating Simulation Methods" + "\n"
 		apex_string += "\n"
-    apex_string += aplcat.mm_type.to_s + "\t" + "! " + t('aplcat.mm_type') + "\n"
+    apex_string += aplcat.mm_type_amp.to_s + "\t" + "! " + t('aplcat.mm_type') + "\n"
+    apex_string += aplcat.fmbmm_amp.to_s + "\t" + "! " + t('aplcat.fmbmm') + "\n"
     apex_string += aplcat.nit.to_s + "\t" + "! " + t('aplcat.nit') + "\n"
     apex_string += aplcat.fqd.to_s + "\t" + "! " + t('aplcat.fqd') + "\n"
     apex_string += aplcat.uovfi.to_s + "\t" + "! " + t('aplcat.uovfi') + "\n"
