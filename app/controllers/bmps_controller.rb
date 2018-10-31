@@ -133,9 +133,11 @@ class BmpsController < ApplicationController
   				end
   			end
   		end
-  		if !(params[:bmp_td][:depth] == "") then
-  			create(3)
-  		end
+      if !(params[:bmp_td] == nil)
+  		  if !(params[:bmp_td][:depth] == "") then
+  			 create(3)
+  		  end
+      end
   	 	if !(params[:bmp_ppnd] == nil)  # when this is hidden because it is not MO, MS states
     			if !(params[:bmp_ppnd][:width] == "") then
     				if params[:bmp_cb2] == "4" then
@@ -609,8 +611,10 @@ class BmpsController < ApplicationController
       if subarea != nil then
         case type
           when "create", "update"
-            subarea.idr = params[:bmp_td][:depth].to_f * FT_TO_MM
+             subarea.idr = params[:bmp_td][:depth].to_f * FT_TO_MM
 			       @bmp.depth = params[:bmp_td][:depth]
+             if !(params[:irrigation_id] == nil) then @bmp.irrigation_id = 1 else @bmp.irrigation_id = 0 end
+             if !(params[:crop_id] == nil) then @bmp.crop_id = 1 else @bmp.crop_id = 0 end
 			       subarea.drt = 2
           when "delete"
             subarea.idr = 0
