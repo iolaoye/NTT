@@ -14,7 +14,7 @@ class CreateMachineAugmenteds < ActiveRecord::Migration
       t.float :rf1
       t.float :rf2
       t.float :ir_loan
-      t.loan :l
+      t.float :l_loan
       t.float :ir_equity
       t.float :p_debt
       t.integer :year
