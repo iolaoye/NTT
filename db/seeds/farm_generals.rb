@@ -8,7 +8,8 @@ FarmGeneral.delete_all
 csv.each do |row| 
     puts row.to_hash
     FarmGeneral.create!(
-        {:name => row[1],
+        {:id => row[0],
+         :name => row[1],
          :values => row[2] 
         }, 
         #:without_protection => true

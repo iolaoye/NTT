@@ -8,7 +8,8 @@ FacilityAugmented.delete_all
 csv.each do |row| 
     puts row.to_hash
     FacilityAugmented.create!(
-        {:name => row[1],
+        {:id => row[0],
+         :name => row[1],
          :lease_rate => row[2],
          :new_price => row[3],
          :current_price => row[4],
