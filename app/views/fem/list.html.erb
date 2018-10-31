@@ -1,24 +1,47 @@
 <h1>FEM</h1>
 
+<style>
+.table-tab-wrapper {
+    width: 100%;
+    position: relative;
+}
+.table-tab-wrapper .tab-content * {
+    position: relative;
+    width: 100%; 
+    overflow: scroll;
+}
+.table-heading {
+    position: fixed;
+}
+.tab-pane {
+    border: 1px solid gray;
+}
+td,th {
+    min-width: 200px;
+    border: 1px solid black;
+}
+</style>
+
+<div class='table-tab-wrapper'>
 <ul class="nav nav-tabs" id="fem-tabs" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#feed">Feed</a>
+    <a class="nav-link fade in active" data-toggle="tab" href="#feed">Feed</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#equipment">Equipment</a>
+    <a class="nav-link fade in " data-toggle="tab" href="#equipment">Equipment</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#structure">Structure</a>
+    <a class="nav-link fade in " data-toggle="tab" href="#structure">Structure</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#other">Other</a>
+    <a class="nav-link fade in " data-toggle="tab" href="#other">Other</a>
   </li>
 </ul>
 
-<div class="tab-content">
-    <div class="tab-pane" id="feed">
-    <table>
-        <tr>
+<div class="tab-content container-fluid">
+    <div class="tab-pane fade in active" id="feed">
+    <table class='table'>
+        <tr class='table-heading'>
             <th>Name</th>
             <th>Selling Price</th>
             <th>Purchase Price</th>
@@ -47,8 +70,8 @@
     </table>
     </div>
 
-    <!-- <div class="tab-pane" id="equipment">
-    <table>
+    <div class="tab-pane  fade in " id="equipment">
+    <table class='table'>
         <tr>
             <th>Name</th>
             <th>Lease Rate</th>
@@ -69,80 +92,73 @@
             <th>RV1</th>
             <th>RV2</th>
         </tr>
-        <%# @equipment.each do |e| %>
+        <% @equipment.each do |e| %>
         <tr>
-            <td><%#= e.name %></td>
-            <td><%#= e.selling_price %></td>
-            <td><%#= e.purchase_price %></td>
-            <td><%#= e.concentrate %></td>
-            <td><%#= feed.forage %></td>
-            <td><%#= feed.grain %></td>
-            <td><%#= feed.hay %></td>
-            <td><%#= feed.pasture %></td>
-            <td><%#= feed.silage %></td>
-            <td><%#= feed.supplement %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.name %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.lease_rate %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.new_price %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.new_hours %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.current_price %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.hours_remaining %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.width %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.field_efficiency %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.horse_power %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.rf1 %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.rf2 %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.ir_loan %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.ir_equity %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.p_debt %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.year %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.rv1 %></td>
+            <td class="pt-3-half" contenteditable="true"><%= e.rv2 %></td>
+          
         </tr>
-        <%# end %>
+        <% end %>
     </table>
-    </div> -->
+    </div> 
 
-    <div class="tab-pane" id="structure">
-    <table>
+    <div class="tab-pane  fade in " id="structure">
+    <table class='table'>
         <tr>
             <th>Name</th>
-            <th>Selling Price</th>
-            <th>Purchase Price</th>
-            <th>Concentrate</th>
-            <th>Forage</th>
-            <th>Grain</th>
-            <th>Hay</th>
-            <th>Pasture</th>
-            <th>Silage</th>
-            <th>Supplement</th>
+            <th>Lease Rate</th>
+            <th>New Price</th>
+            <th>Current Price</th>
+            <th>Life Remaining</th>
+            <th>Maintenance Coeff</th>
+            <th>Loan Interest Rate</th>
+            <th>Length Loan</th>
+            <th>Interest Rate Equity</th>
+            <th>Proportion Debt</th>
+            <th>Year</th>
         </tr>
-        <% @structure.each do |feed| %>
+
+        <% @structure.each do |struct| %>
         <tr>
-            <td><%= feed.name %></td>
-            <td><%= feed.selling_price %></td>
-            <td><%= feed.purchase_price %></td>
-            <td><%= feed.concentrate %></td>
-            <td><%= feed.forage %></td>
-            <td><%= feed.grain %></td>
-            <td><%= feed.hay %></td>
-            <td><%= feed.pasture %></td>
-            <td><%= feed.silage %></td>
-            <td><%= feed.supplement %></td>
+            <td><%= struct.name %></td>
+            <td><%= struct.lease_rate %></td>
+            <td><%= struct.new_price %></td>
+            <td><%= struct.current_price %></td>
+            <td><%= struct.life_remaining %></td>
+            <td><%= struct.maintenance_coeff %></td>
+            <td><%= struct.loan_interest_rate %></td>
+            <td><%= struct.length_loan %></td>
+            <td><%= struct.interest_rate_equity %></td>
+            <td><%= struct.proportion_debt %></td>
+            <td><%= struct.year %></td>
         </tr>
         <% end %>
         </table>
     </div>
 
-    <div class="tab-pane" id="other">
-    <table>
+    <div class="tab-pane  fade in " id="other">
+    <table class='table'>
         <tr>
             <th>Name</th>
-            <th>Selling Price</th>
-            <th>Purchase Price</th>
-            <th>Concentrate</th>
-            <th>Forage</th>
-            <th>Grain</th>
-            <th>Hay</th>
-            <th>Pasture</th>
-            <th>Silage</th>
-            <th>Supplement</th>
         </tr>
-        <% @other.each do |feed| %>
+        <% @other.each do |other| %>
         <tr>
-            <td><%= feed.name %></td>
-            <td><%= feed.selling_price %></td>
-            <td><%= feed.purchase_price %></td>
-            <td><%= feed.concentrate %></td>
-            <td><%= feed.forage %></td>
-            <td><%= feed.grain %></td>
-            <td><%= feed.hay %></td>
-            <td><%= feed.pasture %></td>
-            <td><%= feed.silage %></td>
-            <td><%= feed.supplement %></td>
+            <td><%= other.name %></td>
         </tr>
         <% end %>
     </table>
@@ -154,4 +170,4 @@
     $('#fem-tabs').tab('show')
   })
 </script>
-
+</div>
