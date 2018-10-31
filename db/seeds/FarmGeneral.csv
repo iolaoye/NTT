@@ -2,7 +2,7 @@ ID,Name,Codes,Value
 1,Haul To Spread Distance,5
 2,Haul To Compost Distance,20
 3,Gas Price,3.39
-4,Diesel Price,,3.11
+4,Diesel Price,3.11
 5,Default Land Value,2000
 6,Default Land Rental Rate,30
 7,Average Labor Wage,12
