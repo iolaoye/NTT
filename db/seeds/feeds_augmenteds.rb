@@ -8,7 +8,8 @@ FeedsAugmented.delete_all
 csv.each do |row| 
     puts row.to_hash
     FeedsAugmented.create!(
-        {:name => row[1],
+        {:id => row[0],
+         :name => row[1],
          :selling_price => row[2],
          :purchase_price => row[3],
          :concentrate => row[4],
