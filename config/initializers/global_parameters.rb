@@ -99,3 +99,4 @@
 	SMZ = '_SMZ'
 	ROAD = '_Road'
 	Crop_Road = 191  #191 is the crop id but the number is 300
+    COMA = ", "

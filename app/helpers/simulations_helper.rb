@@ -10,7 +10,6 @@ module SimulationsHelper
   SoilPMaxForSoilDepth = 15.24
   SoilPDefault = 3.0
   CropMixedGrass = 367
-  COMA = ", "
 
   def create_control_file()
     @apex_control = ""
@@ -192,6 +191,25 @@ module SimulationsHelper
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
     response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_string1, "session_id" => session[:session_id]})
+    if response.body[:apex_files_response][:apex_files_result] == "created" then
+      return "OK"
+    else
+      return response.body[:apex_files_response][:apex_files_result]
+    end
+  end
+
+  def send_file_to_FEM(file1, file2, file3, file4, file_name)
+    apex_string1=""
+    if apex_string.kind_of? Array
+      apex_string.each do |as|
+        apex_string1 += as.gsub("\n", "*").gsub("\r", "")
+      end
+    else
+      apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "")
+    end 
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    #response = client.call(:apex_files, message: {"fileName" => file_name, "data" => file1,, "perm" => file2, "site" => file3, "wth" => file4 "session_id" => session[:session_id]})
     if response.body[:apex_files_response][:apex_files_result] == "created" then
       return "OK"
     else
@@ -1141,8 +1159,15 @@ module SimulationsHelper
     if _subarea_info.nirr > 0 then
       sLine += sprintf("%1d", _subarea_info.nirr)
     else
-      sLine += sprintf("%1d", _subarea_info.nirr)
+      #if not check if there is manual irrigaiton in the operations.
+      irrigation_op = _subarea_info.scenario.operations.find_by_activity_id(6)
+      if irrigation_op != nil then
+        sLine += sprintf("%1d", irrigation_op.type_id.to_s)
+      else
+        sLine += sprintf("%1d", _subarea_info.nirr)
+      end
     end
+
     sLine += sprintf("%4d", _subarea_info.iri)
     sLine += sprintf("%4d", _subarea_info.ira)
     sLine += sprintf("%4d", _subarea_info.lm)
@@ -1218,7 +1243,7 @@ module SimulationsHelper
     return "OK"
   end
 
-  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)    
+  def create_operations(soil_id, soil_percentage, operation_number, buffer_type) 
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @grazingb = false
@@ -1864,6 +1889,20 @@ module SimulationsHelper
     i=1
     #apex_control = ApexControl.where(:project_id => params[:project_id])
     initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
+    td_reduction = 1
+    bmp = @scenario.bmps.find_by_bmpsublist_id(3)
+    if !(bmp == nil)
+      if bmp.irrigation_id == 1 and bmp.crop_id == 1 then
+        td_reduction = 0.5494
+      else
+        if bmp.irrigation_id == 1 then 
+          td_reduction = 1 - 0.18
+        end
+        if bmp.crop_id == 1 then
+          td_reduction = 1 - 0.33
+        end
+      end
+    end
     data.each_line do |tempa|
       if i > 3 then
         year = tempa[7, 4].to_i
@@ -1889,7 +1928,7 @@ module SimulationsHelper
         one_result["qn"] = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
         one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
-        one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC) * td_reduction
         one_result["qdrp"] = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
         one_result["dprk"] = tempa[135, 9].to_f * MM_TO_IN
