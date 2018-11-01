@@ -1893,10 +1893,10 @@ module SimulationsHelper
     bmp = @scenario.bmps.find_by_bmpsublist_id(3)
     if !(bmp == nil)
       if bmp.irrigation_id == 1 and bmp.crop_id == 1 then
-        td_reduction = 0.5494
+        td_reduction = 1 - 0.50
       else
         if bmp.irrigation_id == 1 then 
-          td_reduction = 1 - 0.18
+          td_reduction = 1 - 0.43
         end
         if bmp.crop_id == 1 then
           td_reduction = 1 - 0.33
