@@ -8,7 +8,8 @@ MachineAugmented.delete_all
 csv.each do |row| 
     puts row.to_hash
     MachineAugmented.create!(
-        {:name => row[1],
+        {:id => row[0],
+         :name => row[1],
          :lease_rate => row[2],
          :new_price => row[3],
          :new_hours => row[4],

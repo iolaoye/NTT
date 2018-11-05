@@ -2,9 +2,25 @@
 # remember to run export RAILS_ENV=production
 #######
 # encoding: utf-8
+<<<<<<< HEAD
 	file = "db/seeds/crops.rb"
 	load file
 	
+=======
+
+file = "db/seeds/facility_augmenteds.rb"
+load file
+
+file = "db/seeds/farm_generals.rb"
+load file
+
+file = "db/seeds/feeds_augmenteds.rb"
+load file
+
+file = "db/seeds/machine_augmenteds.rb"
+load file
+
+>>>>>>> ebffa8cdc3884cde7f67d8716c8c446ae8686cc1
 cont = false
 
 if cont then
@@ -51,6 +67,15 @@ if cont then
 	file = "db/seeds/events.rb"
 	load file
 
+	file = "db/seeds/facility_augmenteds.rb"
+	load file
+
+	file = "db/seeds/farm_generals.rb"
+	load file
+
+	file = "db/seeds/feed_augmenteds.rb"
+	load file
+
 	file = "db/seeds/fertilizers.rb"
 	load file
 
@@ -64,6 +89,9 @@ if cont then
 	load file
 
 	file = "db/seeds/irrigations.rb"
+	load file
+
+	file = "db/seeds/machine_augmenteds.rb"
 	load file
 
 	file = "db/seeds/manure_controls.rb"

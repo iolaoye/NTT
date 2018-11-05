@@ -277,7 +277,7 @@ en:
       exist: already exists
       taken: has already been taken
       scenario_simulation: 'Select at least one Scenario to simulate.'
-      aplcat_simulation: 'Select at least one Aplcat to simulate.'
+      aplcat_simulation: 'Select at least one APLCAT to simulate.'
       too_long:
         one: is too long (maximum is 1 character)
         other: is too long (maximum is %{count} characters)
@@ -725,6 +725,10 @@ en:
     days_grazed: '# of consecutive days grazed in each paddock'
     rest_time: 'paddock rest time between grazing (days)'
     application_rate_html: 'If zero (0) N applied at the crop N required rate'
+    drainage_management_quiestion: There is any additional Tile Drainage Management?
+    tile_bioreactors: Tile Bioreactors
+    drainage_management: Drainage Water Management
+    none: None
   months:
     january: January
     february: February

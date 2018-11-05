@@ -5,13 +5,11 @@
     width: 100%;
     position: relative;
 }
-
 .table-tab-wrapper .tab-content * {
     position: relative;
     width: 100%; 
     overflow: scroll;
 }
-
 .table-heading {
     position: fixed;
 }
@@ -144,6 +142,7 @@ td,th {
             <th>Year</th>
             <th>Operations</th>
         </tr>
+
         <% @structure.each do |struct| %>
         <tr class='table-values'>
             <td class="pt-3-half" contenteditable="true"><%= struct.name %></td>

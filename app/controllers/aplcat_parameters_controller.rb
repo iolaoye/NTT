@@ -163,12 +163,12 @@ class AplcatParametersController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def aplcat_parameter_params
-      params.require(:aplcat_parameter).permit(:abwc, :abwh, :abwmb, :adwgbc, :noc, :nomb, :norh, :prh, :adwgbh, :mrga, :jdcc, :gpc,
-				 :tpwg, :csefa , :srop, :bwoc, :jdbs, :dmd, :dmi, :napanr, :napaip, :mpsm, :splm, :pmme, :rhaeba, :toaboba,
-				 :vsim, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape,
+      params.require(:aplcat_parameter).permit(:abwc, :abwh, :abwmb, :adwgbc, :adwgbc_agp, :noc, :nomb, :norh, :prh, :adwgbh, :adwgbh_agp, :mrga, :jdcc, :jdcc_agp, :gpc,
+				 :gpc_agp, :tpwg, :tpwg_agp, :csefa , :csefa_agp, :srop, :srop_agp, :bwoc, :bwoc_agp, :jdbs, :jdbs_agp, :dmd, :dmi, :napanr, :napaip, :mpsm, :splm, :pmme, :rhaeba, :toaboba,
+				 :vsim, :vsim_gp, :foue, :ash, :mmppfm, :cfmms, :fnemimms, :effn2ofmms, :dwawfga, :dwawflc, :dwawfmb, :pgu, :ada, :ape, :ape_wpp,
 				 :platc, :pctbb, :ptdife, :tnggbc, :prb, :abwrh, :nocrh, :abc, :forage_id, :jincrease, :stabilization, :decline, :opt4,
          :crude_low, :crude_high, :tdn_low, :tdn_high, :ndf_low, :ndf_high, :adf_low, :adf_high, :feed_low, :feed_high, :tripn, :freqtrip, :filedetails,
-         :cattlepro, :purpose, :codepurpose, :mdogfc, :mxdogfc, :cwsoj, :cweoj, :ewc, :nodew, :byosm, :eyosm, :mrgauh, :plac, :pcbb, :fmbmm, :domd,
+         :cattlepro, :purpose, :codepurpose, :mdogfc, :mxdogfc, :cwsoj, :cweoj, :ewc, :nodew, :byosm, :eyosm, :mrgauh, :plac, :pcbb, :fmbmm, :fmbmm_amp, :domd,
          :faueea, :acim, :mmppm, :cffm, :fnemm, :effd, :ptbd, :pocib, :bneap, :cneap, :hneap, :pobw, :posw, :posb, :poad, :poada, :cibo, :drinkg,
          :drinkl, :drinkm, :avgtm, :avghm, :rhae, :tabo, :mpism, :spilm, :pom, :srinr, :sriip, :pogu, :adoa, :ape, :n_tfa, :n_sr, :n_arnfa, :n_arpfa,
          :n_nfar, :n_pfar, :n_co2enfa, :n_co2epfp, :n_co2enfp, :n_lamf, :n_lan2of, :n_laco2f, :n_socc, :i_tfa, :i_sr, :i_arnfa, :i_arpfa,
@@ -182,6 +182,8 @@ class AplcatParametersController < ApplicationController
          :trailer_3, :trucks_3, :fuel_type_3, :same_vehicle_3, :loading_3, :carcass_3, :boneless_beef_3, :trans_4, :categories_trans_4, :categories_slaug_4,
          :avg_marweight_4, :num_animal_4, :mortality_rate_4, :distance_4, :trailer_4, :trucks_4, :fuel_type_4, :same_vehicle_4, :loading_4, :carcass_4, :boneless_beef_4,
          :second_avg_marweight_1, :second_num_animal_1, :second_avg_marweight_2, :second_num_animal_2, :second_avg_marweight_3, :second_num_animal_3, :second_avg_marweight_4, :second_num_animal_4,
-         :tjan, :tfeb, :tmar, :tapr, :tmay, :tjun, :tjul, :taug, :tsep, :toct, :tnov, :tdec, :hjan, :hfeb, :hmar, :hapr, :hmay, :hjun, :hjul, :haug, :hsep, :hoct, :hnov, :hdec)
+         :tjan, :tfeb, :tmar, :tapr, :tmay, :tjun, :tjul, :taug, :tsep, :toct, :tnov, :tdec, :hjan, :hfeb, :hmar, :hapr, :hmay, :hjun, :hjul, :haug, :hsep, :hoct, :hnov, :hdec, :mm_type,
+         :mm_type_amp)
+
     end
 end

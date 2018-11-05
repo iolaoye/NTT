@@ -203,32 +203,33 @@ class ScenariosController < ApplicationController
   end
 
 ################################  FEM - simulate the selected scenario for FEM #################################
-  # def simulate_fem
-  #   @errors = Array.new
-  #   msg = "OK"
-  #   if params[:select_scenario] == nil then
-  #     @errors.push("Select at least one scenario to simulate ")
-  #     return "Select at least one scenario to simulate "
-  #   end
-  #   ActiveRecord::Base.transaction do
-  #     params[:select_scenario].each do |scenario_id|
-  #       @scenario = Scenario.find(scenario_id)
-  #       if @scenario.operations.count <= 0 then
-  #         @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-  #         return
-  #       end
-  #       #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
-  #       msg = run_fem
-  #       unless msg.eql?("OK")
-  #          @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-  #          raise ActiveRecord::Rollback
-  #       end # end unless msg
-  #     end # end each do params loop
-  #   end
-  #   return msg
-  # end
-
   def simulate_fem
+    @errors = Array.new
+    msg = "OK"
+    #fem_tables()
+    if params[:select_scenario] == nil then
+      @errors.push("Select at least one scenario to simulate ")
+      return "Select at least one scenario to simulate "
+    end
+    ActiveRecord::Base.transaction do
+      params[:select_scenario].each do |scenario_id|
+        @scenario = Scenario.find(scenario_id)
+        if @scenario.operations.count <= 0 then
+          @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+          return
+        end
+        #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
+        msg = run_fem
+        unless msg.eql?("OK")
+          @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+          raise ActiveRecord::Rollback
+        end # end unless msg
+      end # end each do params loop
+    end
+    return msg
+  end
+
+  def fem_tables
     feedList = []
     FeedsAugmented.all.each do |feed|
       feedList.push(
@@ -292,8 +293,8 @@ class ScenariosController < ApplicationController
 
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################
   def run_fem
-    drive = "E:"
-    folder = drive + "\\NTTHTML5Files\\APEX" + session[:session_id]
+    drive = "D:"
+    folder = drive + "\\NTT_FEM_Files\\FEM" + session[:session_id]
     #create NTT_FEMOptions.txt file
     ntt_fem_Options = "ManureRateCode|Manure" + "\n"
     ntt_fem_Options += "LatLongFile|" + drive + '\NTT_FEM\Long_Lat.txt' + "\n"
@@ -314,20 +315,118 @@ class ScenariosController < ApplicationController
     crops = @scenario.crop_results.group(:name).average("yldf+yldg")
     crops.each do |c|
       crop = Crop.find_by_code(c[0])
-      ntt_fem_Options +=  "CROP|" + c[0] + "|" + c[1].round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s
+      crop_yield = (crop.conversion_factor * AC_TO_HA) / (crop.dry_matter/100) * c[1]
+      ntt_fem_Options +=  "CROP|" + c[0] + "|" + crop_yield.round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s + "\n"
     end
     #send the file to server
     msg = send_file_to_APEX(ntt_fem_Options, "NTT_FEMOptions.txt")
     #create fembat01.bat file
-    ntt_fem_Options = drive + "\\"
-    ntt_fem_Options += "cd " + folder
-    ntt_fem_Options += drive + "\\NTT_FEM\\new2.exe"
+    ntt_fem_Options = drive + "\n"
+    ntt_fem_Options += "cd " + folder + "\\" + "\n" 
+    ntt_fem_Options += drive + "\\NTT_FEM\\new2.exe" + "\n"
     #send the file to server
-    #msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
-
+    msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
+    state = State.find(@project.location.state_id).state_abbreviation
+    @fem_list = Array.new
+    #populate local.mdb and run FEM
+    @scenario.operations.each do |op|
+      get_operations(op, state)
+    end
+    
     return "OK"
   end
 
+  ################################  get_operations - get operations and send them to server and simulate fem #################################
+  def get_operations(op, state)
+    operation = SoilOperation.where(:operation_id => op.id).first
+    items = Array.new
+    values = Array.new
+    crop_ant = 0
+    oper_ant = 799
+    found = false
+    heta_units = 0.0
+    crop_name = ""
+    for i in 0..(8 - 1)
+      items[i] = ""
+      values[i] = 0
+    end
+    items[7] = "LATITUDE"
+    items[8] = "LONGITUDE"
+    apex_string = ""
+    if crop_ant != op.crop_id then
+      crop = Crop.find(op.crop_id)
+      if crop != nil then
+        lu_number = crop.lu_number
+        harvest_code = crop.harvest_code
+        heat_units = crop.type1
+        crop_name = crop.code
+      end
+      crop_ant = operation.apex_crop
+    end
+    case op.activity_id
+      when 1 #planting
+        items[0] = "Heat Units"
+        values[0] = operation.opv1
+        items[1] = "Curve Number"
+        values[1] = operation.opv2
+      when 2 # fertilizer            #fertilizer or fertilizer(folier)
+        items[0] = op.type_id   #fertilizer code'
+        values[0] = op.amount * AC_TO_HA
+        items[1] = "Depth"
+        values[1] = op.depth * IN_TO_MM
+      when 3 #tillage
+        items[0] = "Tillage"
+        values[0] = 0
+      when 4 #harvest
+        items[1] = "Curve Number"
+        values[1] = operation.opv2
+      when 5 #kill
+        items[0] = "Curve Number"
+        values[0] = operation.opv2
+        items[1] = "Time of Operation"
+        values[1] = operation.opv2
+      when 6 #irrigation
+        items[0] = "Irrigation"
+        values[0] = op.amount
+      when 7 # grazing              #Grazing - kind and number of animals
+        if @grazingb == false then
+          items[3] = "DryMatterIntake"
+          #create_herd file and send to APEX
+          current_oper = Operation.find(operation.operation_id)
+          values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
+          #animalB = operation.ApexTillCode
+          @grazingb = true
+          if current_oper.no3_n != 0 || current_oper.po4_p != 0 || current_oper.org_n != 0 || current_oper.org_p != 0 || current_oper.nh3 != 0 then
+            #animal_code = get_animal_code(operation.type_id)
+            change_fert_for_grazing(current_oper.no3_n, current_oper.po4_p, current_oper.org_n, current_oper.org_p, current_oper.type_id, current_oper.nh3)
+          end
+        end
+        items[0] = "Kind"
+        values[0] = operation.type_id
+        items[1] = "Animals"
+        values[1] = operation.opv1
+        items[2] = "Hours"
+        values[2] = operation.opv2
+      when 8 #stopGrazing
+        items[0] = "Stop Grazing"
+        values[0] = 0
+      when 11 # liming
+        items[0] = "Liming"
+        values[0] = op.amount
+      else #No entry needed.
+    end #end case true
+    operation_name = ""
+    case operation.activity_id
+      when 1, 3
+        operation_name = Tillage.find_by_code(operation.apex_operation).name
+      else
+        operation_name = Activity.find(operation.activity_id).name
+    end
+    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+                   COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
+                   values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
+  end  # end get_operations method
+  
   ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
     @errors = Array.new
@@ -395,6 +494,7 @@ class ScenariosController < ApplicationController
 		apex_string += aplcat.fmbmm.to_s + "\t" + "! " + t('aplcat.fmbmm') + "\n"
 		apex_string += aplcat.dmd.to_s + "\t" + "! " + t('aplcat.dmd') + "\n"
 		apex_string += aplcat.vsim.to_s + "\t" + "! " + t('aplcat.vsim') + "\n"
+    apex_string += aplcat.vsim_gp.to_s + "\t" + "! " + t('aplcat.vsim') + "\n"
 		apex_string += aplcat.foue.to_s + "\t" + "! " + t('aplcat.foue') + "\n"
 		apex_string += aplcat.ash.to_s + "\t" + "! " + t('aplcat.ash') + "\n"
 		apex_string += aplcat.mmppfm.to_s + "\t" + "! " + t('aplcat.mmppfm') + "\n"
@@ -615,7 +715,7 @@ class ScenariosController < ApplicationController
 	    response = client.call(:create_wp1_from_weather, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "pgm" => ApexControl.find_by_control_description_id(6).value.to_i.to_s})
 
       #response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => county.wind_wp1_name, "code" => county.county_state_code})
-      #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] 
+      #weather_data = response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result]
 
 
 	    weather_data = response.body[:create_wp1_from_weather_response][:create_wp1_from_weather_result][:string]
@@ -633,16 +733,18 @@ class ScenariosController < ApplicationController
 		  end
 		  apex_string += "\t" + "! " + t('aplcat.avg_rh') + "\n"
 		end
-		apex_string += aplcat.adwgbc.to_s + "\t" + "! " + t('aplcat.adwgbc') + "\n"
-		apex_string += aplcat.adwgbh.to_s + "\t" + "! " + t('aplcat.adwgbh') + "\n"
+		apex_string += aplcat.adwgbc_agp.to_s + "\t" + "! " + t('aplcat.adwgbc') + "\n"
+		apex_string += aplcat.adwgbh_agp.to_s + "\t" + "! " + t('aplcat.adwgbh') + "\n"
 		apex_string += aplcat.mrga.to_s + "\t" + "! " + t('aplcat.mrga') + "\n"
 		apex_string += aplcat.prh.to_s + "\t" + "! " + t('aplcat.prh') + "\n"
 		apex_string += aplcat.prb.to_s + "\t" + "! " + t('aplcat.prb') + "\n"
-		apex_string += aplcat.jdcc.to_s + "\t" + "! " + t('aplcat.jdcc') + "\n"
-		apex_string += aplcat.gpc.to_s + "\t" + "! " + t('aplcat.gpc') + "\n"
-		apex_string += aplcat.srop.to_s + "\t" + "! " + t('aplcat.srop') + "\n"
-		apex_string += aplcat.bwoc.to_s + "\t" + "! " + t('aplcat.bwoc') + "\n"
-		apex_string += aplcat.jdbs.to_s + "\t" + "! " + t('aplcat.jdbs') + "\n"
+		apex_string += aplcat.jdcc_agp.to_s + "\t" + "! " + t('aplcat.jdcc') + "\n"
+		apex_string += aplcat.gpc_agp.to_s + "\t" + "! " + t('aplcat.gpc') + "\n"
+    apex_string += aplcat.tpwg_agp.to_s + "\t" + "! " + t('aplcat.tpwg') + "\n"
+    apex_string += aplcat.csefa_agp.to_s + "\t" + "! " + t('aplcat.csefa') + "\n"
+		apex_string += aplcat.srop_agp.to_s + "\t" + "! " + t('aplcat.srop') + "\n"
+		apex_string += aplcat.bwoc_agp.to_s + "\t" + "! " + t('aplcat.bwoc') + "\n"
+		apex_string += aplcat.jdbs_agp.to_s + "\t" + "! " + t('aplcat.jdbs') + "\n"
 		apex_string += aplcat.platc.to_s + "\t" + "! " + t('aplcat.platc') + "\n"
 		apex_string += aplcat.pctbb.to_s + "\t" + "! " + t('aplcat.pctbb') + "\n"
 		apex_string += aplcat.rhaeba.to_s + "\t" + "! " + t('aplcat.rhaeba') + "\n"
@@ -657,6 +759,7 @@ class ScenariosController < ApplicationController
 		apex_string += aplcat.pgu.to_s + "\t" + "! " + t('aplcat.pgu') + "\n"
 		apex_string += aplcat.ada.to_s + "\t" + "! " + t('aplcat.ada') + "\n"
 		apex_string += aplcat.ape.to_s + "\t" + "! " + t('aplcat.ape') + "\n"
+    apex_string += aplcat.ape_wpp.to_s + "\t" + "! " + t('aplcat.ape') + "\n"
     apex_string += aplcat.drinkg.to_s + "\t" + "! " + t('aplcat.drinkg') + "\n"
     apex_string += aplcat.drinkl.to_s + "\t" + "! " + t('aplcat.drinkl') + "\n"
     apex_string += aplcat.drinkm.to_s + "\t" + "! " + t('aplcat.drinkm') + "\n"
@@ -859,7 +962,8 @@ class ScenariosController < ApplicationController
     apex_string += "\n"
     apex_string = "Input file for estimating Simulation Methods" + "\n"
 		apex_string += "\n"
-    apex_string += aplcat.mm_type.to_s + "\t" + "! " + t('aplcat.mm_type') + "\n"
+    apex_string += aplcat.mm_type_amp.to_s + "\t" + "! " + t('aplcat.mm_type') + "\n"
+    apex_string += aplcat.fmbmm_amp.to_s + "\t" + "! " + t('aplcat.fmbmm') + "\n"
     apex_string += aplcat.nit.to_s + "\t" + "! " + t('aplcat.nit') + "\n"
     apex_string += aplcat.fqd.to_s + "\t" + "! " + t('aplcat.fqd') + "\n"
     apex_string += aplcat.uovfi.to_s + "\t" + "! " + t('aplcat.uovfi') + "\n"
