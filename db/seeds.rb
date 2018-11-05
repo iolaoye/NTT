@@ -2,7 +2,6 @@
 # remember to run export RAILS_ENV=production
 #######
 # encoding: utf-8
-
 	file = "db/seeds/crops.rb"
 	load file
 	
@@ -104,6 +103,9 @@ if cont then
 	load file
 
 	file = "db/seeds/ways.rb"
+	load file
+
+	file = "db/seeds/farm_general.rb"
 	load file
 
 end

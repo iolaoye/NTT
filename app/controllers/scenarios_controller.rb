@@ -292,7 +292,6 @@ class ScenariosController < ApplicationController
 
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################
   def run_fem
-
     drive = "E:"
     folder = drive + "\\NTTHTML5Files\\APEX" + session[:session_id]
     #create NTT_FEMOptions.txt file
