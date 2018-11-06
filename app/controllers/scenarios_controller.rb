@@ -206,6 +206,7 @@ class ScenariosController < ApplicationController
   def simulate_fem
     @errors = Array.new
     msg = "OK"
+    #fem_tables()
     if params[:select_scenario] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
@@ -220,19 +221,80 @@ class ScenariosController < ApplicationController
         #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
         msg = run_fem
         unless msg.eql?("OK")
-           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-           raise ActiveRecord::Rollback
+          @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+          raise ActiveRecord::Rollback
         end # end unless msg
       end # end each do params loop
     end
     return msg
   end
 
+  def fem_tables
+    feedList = []
+    FeedsAugmented.all.each do |feed|
+      feedList.push(
+        feed.name.to_s + ',' +
+        feed.selling_price.to_s + ',' +
+        feed.purchase_price.to_s + ',' +
+        feed.concentrate.to_s + ',' +
+        feed.forage.to_s + ',' +
+        feed.grain.to_s + ',' +
+        feed.hay.to_s + ',' +
+        feed.pasture.to_s + ',' + 
+        feed.silage.to_s + ',' +
+        feed.supplement.to_s 
+      )
+    end    
+    machineList = []
+    MachineAugmented.all.each do |equip|
+      machineList.push(
+        equip.name.to_s + ',' +
+        equip.lease_rate.to_s + ',' +
+        equip.new_price.to_s + ',' +
+        equip.new_hours.to_s + ',' +
+        equip.current_price.to_s + ',' +
+        equip.hours_remaining.to_s + ',' +
+        equip.width.to_s + ',' +
+        equip.field_efficiency.to_s + ',' +
+        equip.horse_power.to_s + ',' +
+        equip.rf1.to_s + ',' +
+        equip.rf2.to_s + ',' +
+       equip.ir_loan.to_s + ',' +
+        equip.ir_equity.to_s + ',' +
+        equip.p_debt.to_s + ',' +
+        equip.year.to_s + ',' +
+        equip.rv1.to_s + ',' +
+        equip.rv2.to_s
+      )
+    end
+    structureList = []
+    FacilityAugmented.all.each do |struct|
+      structureList.push(
+        struct.name.to_s + ',' +
+        struct.lease_rate.to_s + ',' +
+        struct.new_price.to_s + ',' +
+        struct.current_price.to_s + ',' +
+        struct.life_remaining.to_s + ',' +
+        struct.maintenance_coeff.to_s + ',' +
+        struct.loan_interest_rate.to_s + ',' +
+        struct.length_loan.to_s + ',' +
+        struct.interest_rate_equity.to_s + ',' +
+        struct.proportion_debt.to_s + ',' +
+        struct.year.to_s 
+      )
+    end
+    otherList = []
+    FarmGeneral.all.each do |other|
+      otherList.push(other.to_s + ',')
+    end
+
+    puts structureList, machineList, otherList, feedList
+  end
+
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################
   def run_fem
-
-    drive = "E:"
-    folder = drive + "\\NTTHTML5Files\\APEX" + session[:session_id]
+    drive = "D:"
+    folder = drive + "\\NTT_FEM_Files\\FEM" + session[:session_id]
     #create NTT_FEMOptions.txt file
     ntt_fem_Options = "ManureRateCode|Manure" + "\n"
     ntt_fem_Options += "LatLongFile|" + drive + '\NTT_FEM\Long_Lat.txt' + "\n"
@@ -253,20 +315,118 @@ class ScenariosController < ApplicationController
     crops = @scenario.crop_results.group(:name).average("yldf+yldg")
     crops.each do |c|
       crop = Crop.find_by_code(c[0])
-      ntt_fem_Options +=  "CROP|" + c[0] + "|" + c[1].round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s
+      crop_yield = (crop.conversion_factor * AC_TO_HA) / (crop.dry_matter/100) * c[1]
+      ntt_fem_Options +=  "CROP|" + c[0] + "|" + crop_yield.round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s + "\n"
     end
     #send the file to server
     msg = send_file_to_APEX(ntt_fem_Options, "NTT_FEMOptions.txt")
     #create fembat01.bat file
-    ntt_fem_Options = drive + "\\"
-    ntt_fem_Options += "cd " + folder
-    ntt_fem_Options += drive + "\\NTT_FEM\\new2.exe"
+    ntt_fem_Options = drive + "\n"
+    ntt_fem_Options += "cd " + folder + "\\" + "\n" 
+    ntt_fem_Options += drive + "\\NTT_FEM\\new2.exe" + "\n"
     #send the file to server
-    #msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
-
+    msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
+    state = State.find(@project.location.state_id).state_abbreviation
+    @fem_list = Array.new
+    #populate local.mdb and run FEM
+    @scenario.operations.each do |op|
+      get_operations(op, state)
+    end
+    
     return "OK"
   end
 
+  ################################  get_operations - get operations and send them to server and simulate fem #################################
+  def get_operations(op, state)
+    operation = SoilOperation.where(:operation_id => op.id).first
+    items = Array.new
+    values = Array.new
+    crop_ant = 0
+    oper_ant = 799
+    found = false
+    heta_units = 0.0
+    crop_name = ""
+    for i in 0..(8 - 1)
+      items[i] = ""
+      values[i] = 0
+    end
+    items[7] = "LATITUDE"
+    items[8] = "LONGITUDE"
+    apex_string = ""
+    if crop_ant != op.crop_id then
+      crop = Crop.find(op.crop_id)
+      if crop != nil then
+        lu_number = crop.lu_number
+        harvest_code = crop.harvest_code
+        heat_units = crop.type1
+        crop_name = crop.code
+      end
+      crop_ant = operation.apex_crop
+    end
+    case op.activity_id
+      when 1 #planting
+        items[0] = "Heat Units"
+        values[0] = operation.opv1
+        items[1] = "Curve Number"
+        values[1] = operation.opv2
+      when 2 # fertilizer            #fertilizer or fertilizer(folier)
+        items[0] = op.type_id   #fertilizer code'
+        values[0] = op.amount * AC_TO_HA
+        items[1] = "Depth"
+        values[1] = op.depth * IN_TO_MM
+      when 3 #tillage
+        items[0] = "Tillage"
+        values[0] = 0
+      when 4 #harvest
+        items[1] = "Curve Number"
+        values[1] = operation.opv2
+      when 5 #kill
+        items[0] = "Curve Number"
+        values[0] = operation.opv2
+        items[1] = "Time of Operation"
+        values[1] = operation.opv2
+      when 6 #irrigation
+        items[0] = "Irrigation"
+        values[0] = op.amount
+      when 7 # grazing              #Grazing - kind and number of animals
+        if @grazingb == false then
+          items[3] = "DryMatterIntake"
+          #create_herd file and send to APEX
+          current_oper = Operation.find(operation.operation_id)
+          values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
+          #animalB = operation.ApexTillCode
+          @grazingb = true
+          if current_oper.no3_n != 0 || current_oper.po4_p != 0 || current_oper.org_n != 0 || current_oper.org_p != 0 || current_oper.nh3 != 0 then
+            #animal_code = get_animal_code(operation.type_id)
+            change_fert_for_grazing(current_oper.no3_n, current_oper.po4_p, current_oper.org_n, current_oper.org_p, current_oper.type_id, current_oper.nh3)
+          end
+        end
+        items[0] = "Kind"
+        values[0] = operation.type_id
+        items[1] = "Animals"
+        values[1] = operation.opv1
+        items[2] = "Hours"
+        values[2] = operation.opv2
+      when 8 #stopGrazing
+        items[0] = "Stop Grazing"
+        values[0] = 0
+      when 11 # liming
+        items[0] = "Liming"
+        values[0] = op.amount
+      else #No entry needed.
+    end #end case true
+    operation_name = ""
+    case operation.activity_id
+      when 1, 3
+        operation_name = Tillage.find_by_code(operation.apex_operation).name
+      else
+        operation_name = Activity.find(operation.activity_id).name
+    end
+    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+                   COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
+                   values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
+  end  # end get_operations method
+  
   ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
     @errors = Array.new
