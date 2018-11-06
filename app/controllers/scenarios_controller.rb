@@ -230,65 +230,72 @@ class ScenariosController < ApplicationController
   end
 
   def fem_tables
-    feedList = []
-    FeedsAugmented.all.each do |feed|
-      feedList.push(
-        feed.name.to_s + ',' +
-        feed.selling_price.to_s + ',' +
-        feed.purchase_price.to_s + ',' +
-        feed.concentrate.to_s + ',' +
-        feed.forage.to_s + ',' +
-        feed.grain.to_s + ',' +
-        feed.hay.to_s + ',' +
-        feed.pasture.to_s + ',' + 
-        feed.silage.to_s + ',' +
-        feed.supplement.to_s 
-      )
-    end    
-    machineList = []
-    MachineAugmented.all.each do |equip|
-      machineList.push(
-        equip.name.to_s + ',' +
-        equip.lease_rate.to_s + ',' +
-        equip.new_price.to_s + ',' +
-        equip.new_hours.to_s + ',' +
-        equip.current_price.to_s + ',' +
-        equip.hours_remaining.to_s + ',' +
-        equip.width.to_s + ',' +
-        equip.field_efficiency.to_s + ',' +
-        equip.horse_power.to_s + ',' +
-        equip.rf1.to_s + ',' +
-        equip.rf2.to_s + ',' +
-       equip.ir_loan.to_s + ',' +
-        equip.ir_equity.to_s + ',' +
-        equip.p_debt.to_s + ',' +
-        equip.year.to_s + ',' +
-        equip.rv1.to_s + ',' +
-        equip.rv2.to_s
-      )
-    end
-    structureList = []
-    FacilityAugmented.all.each do |struct|
-      structureList.push(
-        struct.name.to_s + ',' +
-        struct.lease_rate.to_s + ',' +
-        struct.new_price.to_s + ',' +
-        struct.current_price.to_s + ',' +
-        struct.life_remaining.to_s + ',' +
-        struct.maintenance_coeff.to_s + ',' +
-        struct.loan_interest_rate.to_s + ',' +
-        struct.length_loan.to_s + ',' +
-        struct.interest_rate_equity.to_s + ',' +
-        struct.proportion_debt.to_s + ',' +
-        struct.year.to_s 
-      )
-    end
-    otherList = []
-    FarmGeneral.all.each do |other|
-      otherList.push(other.to_s + ',')
+    xmlBuilder = Nokogiri::XML::Builder.new do |xml|
+      xml.root('FEM') {
+        FeedsAugmented.all.each do |feed|
+          xml.send('feed') {
+            xml.send("feed-name", feed.name.to_s)
+            xml.send("feed-selling-price", feed.selling_price.to_s)
+            xml.send("feed-purchase-price",feed.purchase_price.to_s)
+            xml.send("feed-concentrate", feed.concentrate.to_s)
+            xml.send("feed-forage",feed.forage.to_s)
+            xml.send("feed-grain",feed.grain.to_s)
+            xml.send("feed-hay",feed.hay.to_s )
+            xml.send("feed-pasture",feed.pasture.to_s) 
+            xml.send("feed-silage",feed.silage.to_s)
+            xml.send("feed-supplement",feed.supplement.to_s)
+          }
+        end
+
+        MachineAugmented.all.each do |equip|
+          xml.send('machine') {
+            xml.send("equip-name", equip.name.to_s)
+            xml.send("equip-lease_rate", equip.lease_rate.to_s)
+            xml.send("equip-new_price", equip.new_price.to_s)
+            xml.send("equip-new_hrs", equip.new_hours.to_s)
+            xml.send("equip-current_price", equip.current_price.to_s)
+            xml.send("equip-hrs_remaining", equip.hours_remaining.to_s )
+            xml.send("equip-width", equip.width.to_s )
+            xml.send("equip-field_efficiency", equip.field_efficiency.to_s)
+            xml.send("equip-horse_power", equip.horse_power.to_s)
+            xml.send("equip-rf1", equip.rf1.to_s)
+            xml.send("equip-rf2", equip.rf2.to_s)
+            xml.send("equip-ir_loan", equip.ir_loan.to_s)
+            xml.send("equip-ir_equity", equip.ir_equity.to_s)
+            xml.send("equip-debt", equip.p_debt.to_s)
+            xml.send("equip-year", equip.year.to_s )
+            xml.send("equip-rv2", equip.rv1.to_s)
+            xml.send("equip-rv2", equip.rv2.to_s)
+          }
+        end
+
+        FacilityAugmented.all.each do |struct|
+          xml.send('structure') {
+            xml.send("struct-name", struct.name.to_s)
+            xml.send("struct-lease_rate", struct.lease_rate.to_s)
+            xml.send("struct-new_price", struct.new_price.to_s)
+            xml.send("struct-current_price", struct.current_price.to_s)
+            xml.send("struct-life_remaining", struct.life_remaining.to_s)
+            xml.send("struct-maintenance_coeff", struct.name.to_s)
+            xml.send("struct-loan_interest_rate", struct.loan_interest_rate.to_s)
+            xml.send("struct-length_loan", struct.length_loan.to_s)
+            xml.send("struct-interest_rate_inequality", struct.interest_rate_equity.to_s)
+            xml.send("struct-proportion_debt", struct.proportion_debt.to_s)
+            xml.send("struct-year", struct.year.to_s )
+          }
+        end
+
+        FarmGeneral.all.each do |other|
+          xml.send('other') {
+            xml.send('other-name', other.to_s)
+          }
+        end
+      }
     end
 
-    puts structureList, machineList, otherList, feedList
+    xmlString = xmlBuilder.to_xml
+    msg = send_file_to_APEX(xmlString, "FEM")
+    puts xmlString
   end
 
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################

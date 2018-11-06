@@ -4,5 +4,6 @@ class AplcatResult < ActiveRecord::Base
   :fch_aws, :fch_dmi, :fch_gei, :fch_wi, :fch_sme, :fch_ni, :fch_tne, :fch_tnr, :fch_fne, :fch_une, :fch_eme, :fch_mme,
   :cow_aws, :cow_dmi, :cow_gei, :cow_wi, :cow_sme, :cow_ni, :cow_tne, :cow_tnr, :cow_fne, :cow_une, :cow_eme, :cow_mme,
   :bull_aws, :bull_dmi, :bull_gei, :bull_wi, :bull_sme, :bull_ni, :bull_tne, :bull_tnr, :bull_fne, :bull_une, :bull_eme, :bull_mme
-  
+
+  belongs_to :scenario
 end

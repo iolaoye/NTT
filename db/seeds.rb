@@ -2,6 +2,11 @@
 # remember to run export RAILS_ENV=production
 #######
 # encoding: utf-8
+<<<<<<< HEAD
+	file = "db/seeds/crops.rb"
+	load file
+	
+=======
 
 file = "db/seeds/facility_augmenteds.rb"
 load file
@@ -15,6 +20,7 @@ load file
 file = "db/seeds/machine_augmenteds.rb"
 load file
 
+>>>>>>> ebffa8cdc3884cde7f67d8716c8c446ae8686cc1
 cont = false
 
 if cont then
@@ -125,6 +131,9 @@ if cont then
 	load file
 
 	file = "db/seeds/ways.rb"
+	load file
+
+	file = "db/seeds/farm_general.rb"
 	load file
 
 end
