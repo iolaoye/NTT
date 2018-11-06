@@ -334,17 +334,26 @@ class ScenariosController < ApplicationController
     #send the file to server
     msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
     state = State.find(@project.location.state_id).state_abbreviation
-    @fem_list = Array.new
-    #populate local.mdb and run FEM
-    @scenario.operations.each do |op|
-      get_operations(op, state)
+    #@fem_list = Array.new
+    builder = Nokogiri::XML::Builder.new do |xml|
+      xml.operations {
+        #populate local.mdb and run FEM
+        @scenario.operations.each do |op|
+          get_operations(op, state, xml)
+        end
+      }
     end
-    
-    return "OK"
+    fem_list = builder.to_xml  #convert the Nokogiti XML file to XML file text
+    fem_list.gsub! "<", "["
+    fem_list.gsub! ">", "]"
+    fem_list.gsub! "\n", ""
+    fem_list.gsub! "[?xml version=\"1.0\"?]", ""
+    msg = send_file_to_APEX(fem_list, "Operations")
+    return msg
   end
 
   ################################  get_operations - get operations and send them to server and simulate fem #################################
-  def get_operations(op, state)
+  def get_operations(op, state, xml)
     operation = SoilOperation.where(:operation_id => op.id).first
     items = Array.new
     values = Array.new
@@ -429,9 +438,47 @@ class ScenariosController < ApplicationController
       else
         operation_name = Activity.find(operation.activity_id).name
     end
-    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
-                   COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
-                   values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
+
+        xml.operation {
+          #save operation information
+          xml.composite @scenario.name
+          xml.applies_to @scenario.name
+          xml.state state
+          xml.year operation.year
+          xml.month operation.month
+          xml.day operation.day
+          xml.apex_operation operation.apex_operation
+          xml.operation_name operation_name
+          xml.apex_crop operation.apex_crop
+          xml.crop_name crop_name 
+          xml.year_in_rotation @scenario.soil_operations.last.year
+          xml.rotation_length 0
+          xml.frequency 0
+          xml.item1 items[0]
+          xml.value1 values[0]
+          xml.item2 items[1]
+          xml.value2 values[1]
+          xml.item3 items[2]
+          xml.value3 values[2]
+          xml.item4 items[3]
+          xml.value4 values[3]
+          xml.item5 items[4]
+          xml.value5 values[4]
+          xml.item6 items[5]
+          xml.value6 values[5]
+          xml.item7 items[6]
+          xml.value7 values[6]
+          xml.item8 items[7]
+          xml.value8 values[7]
+          xml.item9 items[8]
+          xml.value9 values[8]
+        } # end xml.operation
+      #} #end xml operations
+    #end #builder do end
+
+    #@fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+                   #COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
+                   #values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
   end  # end get_operations method
   
   ################################  aplcat - simulate the selected scenario for aplcat #################################
