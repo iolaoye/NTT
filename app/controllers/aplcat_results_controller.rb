@@ -37,6 +37,11 @@ class AplcatResultsController < ApplicationController
 
   def new
     @aplcat_result = AplcatResult.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @aplcat_result }
+    end
   end
 
 
@@ -49,7 +54,6 @@ class AplcatResultsController < ApplicationController
 
   def create
     @aplcat_result = AplcatResult.new(aplcat_result_params)
-	@aplcat_result.scenario_id = params[:scenario_id]
     respond_to do |format|
       if @aplcat_result.save
         format.html { redirect_to project_field_scenario_aplcat_results_path(@project, @field, @scenario), notice: 'Aplcat Result was successfully created.' }
