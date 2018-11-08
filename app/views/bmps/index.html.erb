@@ -142,6 +142,26 @@
                 <%= number_field :bmp_td, :depth, :value => bmp.depth, :step => 'any', :class => "gvTitleStyleNumber", :min => 0 %>
               </td>
             </tr>
+            <tr>
+              <td class="field indent" colspan="3"><%= t("bmp.drainage_management_quiestion") %></td>
+            </tr>
+            <tr>
+              <td class="field indent" colspan="3">
+                <% if bmp.irrigation_id == 1 %>
+                  <%= check_box_tag :irrigation_id, bmp.irrigation_id, true %><%="  " + t('bmp.tile_bioreactors')%>
+                <% else %>
+                  <%= check_box_tag :irrigation_id, bmp.irrigation_id, false %><%="  " + t('bmp.tile_bioreactors')%>
+                 <% end %>
+
+                <% if bmp.crop_id == 1 %>
+                  <%= check_box_tag :crop_id, bmp.irrigation_id, true %><%="  " + t('bmp.drainage_management')%>
+                <% else %>
+                  <%= check_box_tag :crop_id, bmp.irrigation_id, false %><%="  " + t('bmp.drainage_management')%>
+                 <% end %>
+
+
+              </td>
+            </tr>
           <% when 4 %>
             <% if @project.location.state_id == 25 || @project.location.state_id == 26 %>
               <tr>
