@@ -206,7 +206,7 @@ class ScenariosController < ApplicationController
   def simulate_fem
     @errors = Array.new
     msg = "OK"
-    #fem_tables()
+    msg = fem_tables()
     if params[:select_scenario] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
@@ -230,72 +230,86 @@ class ScenariosController < ApplicationController
   end
 
   def fem_tables
+    #i=0
     xmlBuilder = Nokogiri::XML::Builder.new do |xml|
-      xml.root('FEM') {
+      xml.send('FEM') {
         FeedsAugmented.all.each do |feed|
+          #i+=1
           xml.send('feed') {
             xml.send("feed-name", feed.name.to_s)
-            xml.send("feed-selling-price", feed.selling_price.to_s)
-            xml.send("feed-purchase-price",feed.purchase_price.to_s)
-            xml.send("feed-concentrate", feed.concentrate.to_s)
-            xml.send("feed-forage",feed.forage.to_s)
-            xml.send("feed-grain",feed.grain.to_s)
-            xml.send("feed-hay",feed.hay.to_s )
-            xml.send("feed-pasture",feed.pasture.to_s) 
-            xml.send("feed-silage",feed.silage.to_s)
-            xml.send("feed-supplement",feed.supplement.to_s)
+            xml.send("selling-price", feed.selling_price.to_s)
+            xml.send("purchase-price",feed.purchase_price.to_s)
+            xml.send("concentrate", feed.concentrate.to_s)
+            xml.send("forage",feed.forage.to_s)
+            xml.send("grain",feed.grain.to_s)
+            xml.send("hay",feed.hay.to_s )
+            xml.send("pasture",feed.pasture.to_s) 
+            xml.send("silage",feed.silage.to_s)
+            xml.send("supplement",feed.supplement.to_s)
           }
+          #if i >= 10 then
+            #break
+          #end
         end
-
+#i=0
         MachineAugmented.all.each do |equip|
+          #i+=1
           xml.send('machine') {
-            xml.send("equip-name", equip.name.to_s)
-            xml.send("equip-lease_rate", equip.lease_rate.to_s)
-            xml.send("equip-new_price", equip.new_price.to_s)
-            xml.send("equip-new_hrs", equip.new_hours.to_s)
-            xml.send("equip-current_price", equip.current_price.to_s)
-            xml.send("equip-hrs_remaining", equip.hours_remaining.to_s )
-            xml.send("equip-width", equip.width.to_s )
-            xml.send("equip-field_efficiency", equip.field_efficiency.to_s)
-            xml.send("equip-horse_power", equip.horse_power.to_s)
-            xml.send("equip-rf1", equip.rf1.to_s)
-            xml.send("equip-rf2", equip.rf2.to_s)
-            xml.send("equip-ir_loan", equip.ir_loan.to_s)
-            xml.send("equip-ir_equity", equip.ir_equity.to_s)
-            xml.send("equip-debt", equip.p_debt.to_s)
-            xml.send("equip-year", equip.year.to_s )
-            xml.send("equip-rv2", equip.rv1.to_s)
-            xml.send("equip-rv2", equip.rv2.to_s)
+            xml.send("machine-name", equip.name.to_s)
+            xml.send("lease_rate", equip.lease_rate.to_s)
+            xml.send("new_price", equip.new_price.to_s)
+            xml.send("new_hours", equip.new_hours.to_s)
+            xml.send("current_price", equip.current_price.to_s)
+            xml.send("hours_remaining", equip.hours_remaining.to_s )
+            xml.send("width", equip.width.to_s )
+            xml.send("field_efficiency", equip.field_efficiency.to_s)
+            xml.send("horse_power", equip.horse_power.to_s)
+            xml.send("rf1", equip.rf1.to_s)
+            xml.send("rf2", equip.rf2.to_s)
+            xml.send("ir_loan", equip.ir_loan.to_s)
+            xml.send("ir_equity", equip.ir_equity.to_s)
+            xml.send("p_debt", equip.p_debt.to_s)
+            xml.send("year", equip.year.to_s )
+            xml.send("rv1", equip.rv1.to_s)
+            xml.send("rv2", equip.rv2.to_s)
           }
+          #if i >= 10 then
+            #break
+          #end
         end
 
         FacilityAugmented.all.each do |struct|
           xml.send('structure') {
             xml.send("struct-name", struct.name.to_s)
-            xml.send("struct-lease_rate", struct.lease_rate.to_s)
-            xml.send("struct-new_price", struct.new_price.to_s)
-            xml.send("struct-current_price", struct.current_price.to_s)
-            xml.send("struct-life_remaining", struct.life_remaining.to_s)
-            xml.send("struct-maintenance_coeff", struct.name.to_s)
-            xml.send("struct-loan_interest_rate", struct.loan_interest_rate.to_s)
-            xml.send("struct-length_loan", struct.length_loan.to_s)
-            xml.send("struct-interest_rate_inequality", struct.interest_rate_equity.to_s)
-            xml.send("struct-proportion_debt", struct.proportion_debt.to_s)
-            xml.send("struct-year", struct.year.to_s )
+            xml.send("lease_rate", struct.lease_rate.to_s)
+            xml.send("new_price", struct.new_price.to_s)
+            xml.send("current_price", struct.current_price.to_s)
+            xml.send("life_remaining", struct.life_remaining.to_s)
+            xml.send("maintenance_coeff", struct.name.to_s)
+            xml.send("loan_interest_rate", struct.loan_interest_rate.to_s)
+            xml.send("length_loan", struct.length_loan.to_s)
+            xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
+            xml.send("proportion_debt", struct.proportion_debt.to_s)
+            xml.send("year", struct.year.to_s )
           }
         end
 
         FarmGeneral.all.each do |other|
-          xml.send('other') {
-            xml.send('other-name', other.to_s)
+          xml.send("other") {
+            xml.send("other-name", other.name.to_s)
+            xml.send("value", other.values.to_s)
           }
         end
       }
     end
-
+ 
     xmlString = xmlBuilder.to_xml
+    xmlString.gsub! "<", "["
+    xmlString.gsub! ">", "]"
+    xmlString.gsub! "\n", ""
+    xmlString.gsub! "[?xml version=\"1.0\"?]", ""
     msg = send_file_to_APEX(xmlString, "FEM")
-    puts xmlString
+    #puts xmlString
   end
 
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################
