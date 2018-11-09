@@ -29,7 +29,7 @@ $(document).ready ->
       $("#div_soil_al").toggle(true)
   $("#field_soil_test").change ->
       check_soil_test()
-  $("#select_all").click ->
+  $("#select_all_fields").click ->
       change_select_fields()
   $("#load_scenarios").click ->
       load_scenarios()
