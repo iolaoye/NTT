@@ -1,377 +1,130 @@
 <div class="page-header"><h1><%= t("Aplcat Results") %></h1></div>
+<td><%= link_to t('aplcat.grazing') + " " + t('menu.parameters_file'), project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :title => t('aplcat_tooltip.go_to_gp'), :class => 'btn btn-primary' %></td>
+<td><%= link_to t('aplcat.supplement_parameters'), project_field_scenario_supplement_parameters_path(@project, @field, @scenario), :title => t('aplcat_tooltip.go_to_sp'), :class => 'btn btn-primary' %></td>
 <div class="main">
-  <table>
-    <tr><h4> Select Animal to view and edit its results</h4></tr><br>
+  <div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr class='gvHeaderStyle'>
+        <th style="text-align:center" class="gvCellStyleTitle" rowspan="2">Animals</th>
+        <th style="text-align:center" class="gvCellStyleTitle">Animal Growth Results</th>
+        <th style="text-align:center" class="gvCellStyleTitle" colspan="2">Feed Intake Rates</th>
+        <th style="text-align:center" class="gvCellStyleTitle">Water Intake Rates</th>
+        <th style="text-align:center" class="gvCellStyleTitle">Manure excretion Results</th>
+        <th style="text-align:center" class="gvCellStyleTitle" colspan="4">Nitrogen Balance Results</th>
+        <th style="text-align:center" class="gvCellStyleTitle">Grand Averages</th>
+        <th style="text-align:center" class="gvCellStyleTitle" colspan="2">Greenhouse gas Emissions</th>
+        <th style="text-align:center" class="gvCellStyleTitle" rowspan="2" colspan="2"><%= t('general.actions') %></th>
+      </tr>
       <tr>
-        <td><%= select_tag :animal_id, options_for_select(animals, :selected => 0, :required => true), {:prompt => t("Select Animal")} %></td>
-        <%#= select_tag :option_id, options_for_select(options, :selected => 0, :required => true), {:prompt => t("Select options")} %>
-          <div class="actions">
-        <%#= submit_tag t("general.view"), :id => "results", name: "button", :class => "btn btn-primary" %>
-        <td> <%= link_to 'Back', edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :class => "btn btn-primary" %></td>
-          </div>
-        </tr>
-      </table>
+        <th class="gvCellStyleTitle"> Animal Weights (lb|kg)</th>
+        <th class="gvCellStyleTitle"> Dry Matter Intake ('kg', daily|annual)</th>
+        <th class="gvCellStyleTitle"> Gross Energy Intake ('daily', Mcal|MJ)</th>
+        <th class="gvCellStyleTitle"> Water Intake ('L/year', Emb_feed|drinking)</th>
+        <th class="gvCellStyleTitle"> Solid Manure excr. ('kg_daily', manu|manu_N)</th>
+        <th class="gvCellStyleTitle"> Nitrogen Intake (g/day|kg/year)</th>
+        <th class="gvCellStyleTitle"> Total Nitrogen excretion (g/day|kg/year)</th>
+        <th class="gvCellStyleTitle"> Total Nitrogen retained (g/day|kg/year)</th>
+        <th class="gvCellStyleTitle"> Fecal Nitrogen excretion (g/day|kg/year)</th>
+        <th class="gvCellStyleTitle"> Urine Nitrogen excretion (g/day|kg/year)</th>
+        <th class="gvCellStyleTitle"> Enteric methane emission (g/day|kg/year)</th>
+        <th class="gvCellStyleTitle"> Manure methane emission (g/day|kg/year)</th>
+      </tr>
+    </thead>
 
-      <div id="calf" style=display:none>
-        <%= field_set_tag t("Results for Calf"), class:'fieldset' do%>
-        <h4> Animal growth Results</h4>
-        <div class="field">
-    		<%= t('aplcat_result.aws') %>
-        <%= number_field :calf, :calf_aws, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
+<tbody class="gvRowStyleOdd">
+      <tr>
+        <td> Calf <td>
+        <td> <%= @calf_aws %> </td>
+        <td> <%= @calf_dmi %> </td>
+        <td> <%= @calf_gei %> </td>
+        <td> <%= @calf_wi %> </td>
+        <td> <%= @calf_sme %> </td>
+        <td> <%= @calf_ni %> </td>
+        <td> <%= @calf_tne %> </td>
+        <td> <%= @calf_tnr %> </td>
+        <td> <%= @calf_fne %> </td>
+        <td> <%= @calf_une %> </td>
+        <td> <%= @calf_eme %> </td>
+        <td> <%= @calf_mme %> </td>
+        <td> <%= link_to image_tag("edit.png") %> </td>
+      </tr>
 
-        <h4> Feed Intake Rates </h4>
-        <div class="field">
-    		<%= t('aplcat_result.dmi') %>
-        <%= number_field :calf, :calf_dmi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.gei') %>
-        <%= number_field :calf, :calf_gei, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
 
-        <h4> Water Intake Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.wi') %>
-        <%= number_field :calf, :calf_wi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
+      <tr>
+        <td> Replacement Heifers <td>
+          <td> <%= @rh_aws %> </td>
+          <td> <%= @rh_dmi %> </td>
+          <td> <%= @rh_gei %> </td>
+          <td> <%= @rh_wi %> </td>
+          <td> <%= @rh_sme %> </td>
+          <td> <%= @rh_ni %> </td>
+          <td> <%= @rh_tne %> </td>
+          <td> <%= @rh_tnr %> </td>
+          <td> <%= @rh_fne %> </td>
+          <td> <%= @rh_une %> </td>
+          <td> <%= @rh_eme %> </td>
+          <td> <%= @rh_mme %> </td>
+          <td> <%= link_to image_tag("edit.png")%> </td>
+      </tr>
 
-        <h4> Manure excretion Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.sme') %>
-        <%= number_field :calf, :calf_sme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
+      <tr>
+        <td> First Calf Heifers <td>
+          <td> <%= @fch_aws %> </td>
+          <td> <%= @fch_dmi %> </td>
+          <td> <%= @fch_gei %> </td>
+          <td> <%= @fch_wi %> </td>
+          <td> <%= @fch_sme %> </td>
+          <td> <%= @fch_ni %> </td>
+          <td> <%= @fch_tne %> </td>
+          <td> <%= @fch_tnr %> </td>
+          <td> <%= @fch_fne %> </td>
+          <td> <%= @fch_une %> </td>
+          <td> <%= @fch_eme %> </td>
+          <td> <%= @fch_mme %> </td>
+          <td> <%= link_to image_tag("edit.png")%> </td>
+      </tr>
 
-        <h4> Nitrogen Balance Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.ni') %>
-        <%= number_field :calf, :calf_ni, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tne') %>
-        <%= number_field :calf, :calf_tne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tnr') %>
-        <%= number_field :calf, :calf_tnr, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.fne') %>
-        <%= number_field :calf, :calf_fne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
+      <tr>
+        <td> Cow <td>
+          <td> <%= @cow_aws %> </td>
+          <td> <%= @cow_dmi %> </td>
+          <td> <%= @cow_gei %> </td>
+          <td> <%= @cow_wi %> </td>
+          <td> <%= @cow_sme %> </td>
+          <td> <%= @cow_ni %> </td>
+          <td> <%= @cow_tne %> </td>
+          <td> <%= @cow_tnr %> </td>
+          <td> <%= @cow_fne %> </td>
+          <td> <%= @cow_une %> </td>
+          <td> <%= @cow_eme %> </td>
+          <td> <%= @cow_mme %> </td>
+          <td> <%= link_to image_tag("edit.png")%> </td>
+      </tr>
 
-        <h4> Grand Averages </h4>
-        <div class="field">
-    		<%= t('aplcat_result.une') %>
-        <%= number_field :calf, :calf_une, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
+      <tr>
+        <td> Bull <td>
+          <td> <%= @bull_aws %> </td>
+          <td> <%= @bull_dmi %> </td>
+          <td> <%= @bull_gei %> </td>
+          <td> <%= @bull_wi %> </td>
+          <td> <%= @bull_sme %> </td>
+          <td> <%= @bull_ni %> </td>
+          <td> <%= @bull_tne %> </td>
+          <td> <%= @bull_tnr %> </td>
+          <td> <%= @bull_fne %> </td>
+          <td> <%= @bull_une %> </td>
+          <td> <%= @bull_eme %> </td>
+          <td> <%= @bull_mme %> </td>
+          <td> <%= link_to image_tag("edit.png")%> </td>
+      </tr>
+      </tbody>
+  </table>
+  </div>
 
-        <h4> Greenhouse gas emissions </h4>
-        <div class="field">
-    		<%= t('aplcat_result.eme') %>
-        <%= number_field :calf, :calf_eme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.mme') %>
-        <%= number_field :calf, :calf_mme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <%end%>
-      </div>
-
-      <div id="replacement_heifers" style=display:none>
-        <%= field_set_tag t("Results for Replacement Heifers"), class:'fieldset' do%>
-        <h4> Animal growth Results</h4>
-        <div class="field">
-    		<%= t('aplcat_result.aws') %>
-        <%= number_field :r_h, :rh_aws, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Feed Intake Rates </h4>
-        <div class="field">
-    		<%= t('aplcat_result.dmi') %>
-        <%= number_field :r_h, :rh_dmi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.gei') %>
-        <%= number_field :r_h, :rh_gei, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Water Intake Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.wi') %>
-        <%= number_field :r_h, :rh_wi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Manure excretion Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.sme') %>
-        <%= number_field :r_h, :rh_sme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Nitrogen Balance Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.ni') %>
-        <%= number_field :r_h, :rh_ni, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tne') %>
-        <%= number_field :r_h, :rh_tne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tnr') %>
-        <%= number_field :r_h, :rh_tnr, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.fne') %>
-        <%= number_field :r_h, :rh_fne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Grand Averages </h4>
-        <div class="field">
-    		<%= t('aplcat_result.une') %>
-        <%= number_field :r_h, :rh_une, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Greenhouse gas emissions </h4>
-        <div class="field">
-    		<%= t('aplcat_result.eme') %>
-        <%= number_field :r_h, :rh_eme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.mme') %>
-        <%= number_field :r_h, :rh_mme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <%end%>
-      </div>
-
-      <div id="first_calf_heifers" style=display:none>
-        <%= field_set_tag t("Results for Calf Heifers"), class:'fieldset' do%>
-        <h4> Animal growth Results</h4>
-        <div class="field">
-    		<%= t('aplcat_result.aws') %>
-        <%= number_field :fch, :fch_aws, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Feed Intake Rates </h4>
-        <div class="field">
-    		<%= t('aplcat_result.dmi') %>
-        <%= number_field :fch, :fch_dmi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.gei') %>
-        <%= number_field :fch, :fch_gei, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Water Intake Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.wi') %>
-        <%= number_field :fch, :fch_wi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Manure excretion Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.sme') %>
-        <%= number_field :fch, :fch_sme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Nitrogen Balance Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.ni') %>
-        <%= number_field :fch, :fch_ni, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tne') %>
-        <%= number_field :fch, :fch_tne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tnr') %>
-        <%= number_field :fch, :fch_tnr, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.fne') %>
-        <%= number_field :fch, :fch_fne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Grand Averages </h4>
-        <div class="field">
-    		<%= t('aplcat_result.une') %>
-        <%= number_field :fch, :fch_une, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Greenhouse gas emissions </h4>
-        <div class="field">
-    		<%= t('aplcat_result.eme') %>
-        <%= number_field :fch, :fch_eme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.mme') %>
-        <%= number_field :fch, :fch_mme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <%end%>
-      </div>
-
-      <div id="cow" style=display:none>
-        <%= field_set_tag t("Results for Cow"), class:'fieldset' do%>
-        <h4> Animal growth Results</h4>
-        <div class="field">
-    		<%= t('aplcat_result.aws') %>
-        <%= number_field :cow, :cow_aws, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Feed Intake Rates </h4>
-        <div class="field">
-    		<%= t('aplcat_result.dmi') %>
-        <%= number_field :cow, :cow_dmi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.gei') %>
-        <%= number_field :cow, :cow_gei, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Water Intake Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.wi') %>
-        <%= number_field :cow, :cow_wi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Manure excretion Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.sme') %>
-        <%= number_field :cow, :cow_sme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Nitrogen Balance Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.ni') %>
-        <%= number_field :cow, :cow_ni, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tne') %>
-        <%= number_field :cow, :cow_tne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tnr') %>
-        <%= number_field :cow, :cow_tnr, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.fne') %>
-        <%= number_field :cow, :cow_fne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Grand Averages </h4>
-        <div class="field">
-    		<%= t('aplcat_result.une') %>
-        <%= number_field :cow, :cow_une, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Greenhouse gas emissions </h4>
-        <div class="field">
-    		<%= t('aplcat_result.eme') %>
-        <%= number_field :cow, :cow_eme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.mme') %>
-        <%= number_field :cow, :cow_mme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <%end%>
-      </div>
-
-      <div id="bull" style=display:none>
-        <%= field_set_tag t("Results for bull"), class:'fieldset' do%>
-        <h4> Animal growth Results</h4>
-        <div class="field">
-    		<%= t('aplcat_result.aws') %>
-        <%= number_field :bull, :bull_aws, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Feed Intake Rates </h4>
-        <div class="field">
-    		<%= t('aplcat_result.dmi') %>
-        <%= number_field :bull, :bull_dmi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.gei') %>
-        <%= number_field :bull, :bull_gei, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Water Intake Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.wi') %>
-        <%= number_field :bull, :bull_wi, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Manure excretion Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.sme') %>
-        <%= number_field :bull, :bull_sme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Nitrogen Balance Results </h4>
-        <div class="field">
-    		<%= t('aplcat_result.ni') %>
-        <%= number_field :bull, :bull_ni, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tne') %>
-        <%= number_field :bull, :bull_tne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.tnr') %>
-        <%= number_field :bull, :bull_tnr, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.fne') %>
-        <%= number_field :bull, :bull_fne, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Grand Averages </h4>
-        <div class="field">
-    		<%= t('aplcat_result.une') %>
-        <%= number_field :bull, :bull_une, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-
-        <h4> Greenhouse gas emissions </h4>
-        <div class="field">
-    		<%= t('aplcat_result.eme') %>
-        <%= number_field :bull, :bull_eme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <div class="field">
-    		<%= t('aplcat_result.mme') %>
-        <%= number_field :bull, :bull_mme, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-    	  </div>
-        <%end%>
-      </div>
-
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-            </script>
-            <script>
-            $(document).ready(function(){
-
-              $('#animal_id').on('change', function() {
-                if ( this.value == '')
-                {$("#all").hide();}
-                else
-                {$("#all").show();}
-                if ( this.value == '1')
-                {$("#calf").show();}
-                else
-                {$("#calf").hide();}
-                if ( this.value == '2')
-                {$("#replacement_heifers").show();}
-                else
-                {$("#replacement_heifers").hide();}
-                if ( this.value == '3')
-                {$("#first_calf_heifers").show();}
-                else
-                {$("#first_calf_heifers").hide();}
-                if ( this.value == '4')
-                {$("#cow").show();}
-                else
-                {$("#cow").hide();}
-                if ( this.value == '5')
-                {$("#bull").show();}
-                else
-                {$("#bull").hide();}
-            });
-            });
-            </script>
+<table>
+<tr>
+  <td><%= link_to t("New APLCAT Results"), new_project_field_scenario_aplcat_result_path(@project, @field, @scenario), :class => 'btn btn-success' %></td>
+  <td> <%= link_to 'Back', edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :title => t('aplcat_tooltip.go_to_ap'), :class => "btn btn-primary" %></td>
+</tr>
+</table>

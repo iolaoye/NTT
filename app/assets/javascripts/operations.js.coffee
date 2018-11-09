@@ -17,7 +17,8 @@ switch_view = ->
 upload_crop = (show) ->
   $("#div_new").toggle(show)
   $("#div_ccr").toggle(false)
-  $("#year").val($("#year").val() +"1")
+  #year = $("#year").val()
+  #$("#year").val(year + 1)
 
 upload_crop1 = (show) ->
   $("#bmp_ccr_crop_id").prop('required',true)
@@ -27,7 +28,7 @@ upload_crop1 = (show) ->
   $("#bmp_ccr_type_id").prop('required',true)
   $("#div_ccr").toggle(show)
   $("#div_new").toggle(false)
-  $("#year").val($("#year").val() +"1")
+  #$("#year").val($("#year").val() + 1)
 
 updatePlantPopulation = ->
   if ($("#operation_activity_id").val() == "1")
@@ -91,7 +92,6 @@ updateNutrients = (animal) ->
 getGrazingFields = ->
     url = "/fertilizers.json?id=animal"
     $("#div_fertilizer").hide()
-    $("#div_access_to_stream")[0].style.display = "inline"    
     $("#div_amount").show()
     $("#div_access_to_stream").show()
     $("#div_depth").show()
@@ -118,6 +118,8 @@ getGrazingFields = ->
     #change year for start year
     $("#div_start_date")[0].children[0].innerText = "Start Year"
     $("#div_type")[0].children[0].innerText = "Animal Type"
+    if $("#div_access_to_stream")[0] != undefined
+      $("#div_access_to_stream")[0].style.display = "inline"    
 
 updateTypes = ->
   $("#operation_nh4_n").hide()
