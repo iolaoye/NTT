@@ -22,7 +22,7 @@
 			<thead>
 				<tr>
 					<%if ENV["APP_VERSION"] == "standard" and field_simulation == 1 then%>
-						<th class="gvCellStyleTitle"><%= check_box_tag "select_all_fields" %></th>
+						<th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
 					<% end %>
 					<th><%= t('field.field_name')%></th>
 					<th class="gvTitleStyleNumber"><%= t('field.field_area') + " (ac)"%></th>
