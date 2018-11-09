@@ -162,7 +162,7 @@
   	<ul class="nav nav-pills nav-stacked nav-sidebar">
   		<li class="<%= (controller_name == "watersheds" || controller_name == "watershed_scenarios" || (controller_name == "results" && request.url.include?(url_for("/fields/0/results?"))) || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(@project, :locale=>I18n.locale) %></li>
       <% unless ENV["APP_VERSION"] == "modified" %>
-    	   <li class><%= link_to t('menu.fem'), fem_index_url(@project, :locale=>I18n.locale) %></li>
+    	   <% if fem == 1 %> <li class><%= link_to t('menu.fem'), fem_index_url(@project, :locale=>I18n.locale) %></li> <% end %>
       <% end %>  
     </ul>
   	<% if watershed_submenu %>
