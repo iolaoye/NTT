@@ -1,5 +1,5 @@
 <% aplcat = 0 %>
-<% fem = 0 %>
+<% fem = 1 %>
 <% if !(@project == nil) %>
   <!-- <span class="sidebar_font"> -->
   <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>

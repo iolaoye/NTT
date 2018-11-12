@@ -186,6 +186,7 @@ class ScenariosController < ApplicationController
   def show()
     @errors = Array.new
     ActiveRecord::Base.transaction do
+      debugger
   		msg = run_scenario
   		@scenarios = Scenario.where(:field_id => params[:field_id])
   		@project_name = Project.find(params[:project_id]).name
@@ -218,6 +219,7 @@ class ScenariosController < ApplicationController
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
         end
+        debugger
         #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
         msg = run_fem
         unless msg.eql?("OK")
@@ -229,12 +231,14 @@ class ScenariosController < ApplicationController
     return msg
   end
 
+################################  Update the FEM tables #################################
   def fem_tables
-    #i=0
+    debugger
+    i=0
     xmlBuilder = Nokogiri::XML::Builder.new do |xml|
       xml.send('FEM') {
         FeedsAugmented.all.each do |feed|
-          #i+=1
+          i+=1
           xml.send('feed') {
             xml.send("feed-name", feed.name.to_s)
             xml.send("selling-price", feed.selling_price.to_s)
@@ -247,13 +251,13 @@ class ScenariosController < ApplicationController
             xml.send("silage",feed.silage.to_s)
             xml.send("supplement",feed.supplement.to_s)
           }
-          #if i >= 10 then
-            #break
-          #end
+          if i >= 10 then
+            break
+          end
         end
-#i=0
+i=0
         MachineAugmented.all.each do |equip|
-          #i+=1
+          i+=1
           xml.send('machine') {
             xml.send("machine-name", equip.name.to_s)
             xml.send("lease_rate", equip.lease_rate.to_s)
@@ -273,33 +277,41 @@ class ScenariosController < ApplicationController
             xml.send("rv1", equip.rv1.to_s)
             xml.send("rv2", equip.rv2.to_s)
           }
-          #if i >= 10 then
-            #break
-          #end
+          if i >= 10 then
+            break
+          end
         end
-
+i=0
         FacilityAugmented.all.each do |struct|
+          i+=1
           xml.send('structure') {
             xml.send("struct-name", struct.name.to_s)
             xml.send("lease_rate", struct.lease_rate.to_s)
             xml.send("new_price", struct.new_price.to_s)
             xml.send("current_price", struct.current_price.to_s)
             xml.send("life_remaining", struct.life_remaining.to_s)
-            xml.send("maintenance_coeff", struct.name.to_s)
+            xml.send("maintenance_coeff", struct.maintenance_coeff .to_s)
             xml.send("loan_interest_rate", struct.loan_interest_rate.to_s)
             xml.send("length_loan", struct.length_loan.to_s)
             xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
             xml.send("proportion_debt", struct.proportion_debt.to_s)
             xml.send("year", struct.year.to_s )
           }
+                   if i >= 10 then
+            break
+          end
         end
-
+i=0
         FarmGeneral.all.each do |other|
+          i+=1
           xml.send("other") {
             xml.send("other-name", other.name.to_s)
             xml.send("value", other.values.to_s)
           }
         end
+                 if i >= 10 then
+            break
+          end
       }
     end
  
@@ -363,6 +375,7 @@ class ScenariosController < ApplicationController
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     msg = send_file_to_APEX(fem_list, "Operations")
+    debugger
     return msg
   end
 
