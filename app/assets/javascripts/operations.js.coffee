@@ -17,7 +17,8 @@ switch_view = ->
 upload_crop = (show) ->
   $("#div_new").toggle(show)
   $("#div_ccr").toggle(false)
-  $("#year").val($("#year").val() +"1")
+  #year = $("#year").val()
+  #$("#year").val(year + 1)
 
 upload_crop1 = (show) ->
   $("#bmp_ccr_crop_id").prop('required',true)
@@ -27,7 +28,7 @@ upload_crop1 = (show) ->
   $("#bmp_ccr_type_id").prop('required',true)
   $("#div_ccr").toggle(show)
   $("#div_new").toggle(false)
-  $("#year").val($("#year").val() +"1")
+  #$("#year").val($("#year").val() + 1)
 
 updatePlantPopulation = ->
   if ($("#operation_activity_id").val() == "1")

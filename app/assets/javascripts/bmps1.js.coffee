@@ -373,3 +373,11 @@ $(document).ready ->
         $("#td_n_rate").toggle(false)
     $("#bmp_cb1_2").click ->
         $("#td_n_rate").toggle(true)
+    $("#irrigation_id").click ->
+        if $("#irrigation_id")[0].checked == true
+            $("#crop_id")[0].checked = false
+            $("#irrigation_id")[0].checked = true
+    $("#crop_id").click ->
+        if $("#crop_id")[0].checked == true
+            $("#irrigation_id")[0].checked = false
+            $("#crop_id")[0].checked = true

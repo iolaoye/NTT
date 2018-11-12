@@ -1,4 +1,6 @@
 NTTG3::Application.routes.draw do
+  get 'fem/index' => 'fem#list'
+
   resources :crop_results
   resources :annual_results
   resources :faqs
@@ -196,6 +198,7 @@ NTTG3::Application.routes.draw do
   post 'apex_soils/download'
   post 'sites/download'
   post 'operations/delete_all'
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
