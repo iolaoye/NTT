@@ -1287,6 +1287,7 @@ en:
       theta: Theta (unit conversion constant) [Adopted from FEM]
       fge: Fuel use constant for gasoline engines
       fde: Fuel use constant for diesel engines
+      select_fmo: Select the number of Field Management operation
   aplcat_result:
       aws: Animal weights
       dmi: Dry matter intake

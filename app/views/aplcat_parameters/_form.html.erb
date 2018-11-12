@@ -1163,6 +1163,8 @@
     </div>
       <b><%= t("List of each field management operation performed in the year:") %></b><br><br>
       <div class="field">
+        <%=  t('aplcat.select_fmo') %>
+        <%= select_tag :num_fmo, options_for_select(num_fmo, :selected => 1) %>
         <table>
           <tr>
             <td></td>
@@ -1176,30 +1178,122 @@
               <td><%= f.number_field :first_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
               <td><%= select_tag :first_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
             </tr>
-            <tr>
+            <tr id="second" style="display:none">
               <td><%=  t("Second") %></td>
               <td><%= f.number_field :second_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
               <td><%= f.number_field :second_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
               <td><%= select_tag :second_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
             </tr>
-            <tr>
+            <tr id="third" style="display:none">
               <td><%=  t("Third") %></td>
               <td><%= f.number_field :third_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
               <td><%= f.number_field :third_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
               <td><%= select_tag :third_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
             </tr>
-            <tr>
+            <tr id="fourth" style="display:none">
               <td><%=  t("Fourth") %></td>
               <td><%= f.number_field :fourth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
               <td><%= f.number_field :fourth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
               <td><%= select_tag :fourth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
             </tr>
-            <tr>
+            <tr id="fifth" style="display:none">
               <td><%=  t("Fifth") %></td>
               <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
               <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
               <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
             </tr>
+
+            <tr id="sixth" style="display:none">
+              <td><%=  t("Sixth") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="seventh" style="display:none">
+              <td><%=  t("Seventh") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="eighth" style="display:none">
+              <td><%=  t("Eighth") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="ninth" style="display:none">
+              <td><%=  t("Ninth") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="tenth" style="display:none">
+              <td><%=  t("Tenth") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="eleventh" style="display:none">
+              <td><%=  t("Eleventh") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="twelveth" style="display:none">
+              <td><%=  t("Twelveth") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="thirteen" style="display:none">
+              <td><%=  t("Thirteen") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="fourteen" style="display:none">
+              <td><%=  t("Fourteen") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="fifteen" style="display:none">
+              <td><%=  t("Fifteen") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="sixteen" style="display:none">
+              <td><%=  t("Sixteen") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="seventeen" style="display:none">
+              <td><%=  t("Seventeen") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="eighteen" style="display:none">
+              <td><%=  t("Eighteen") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="ninteen" style="display:none">
+              <td><%=  t("Ninteen") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+            <tr id="twenty" style="display:none">
+              <td><%=  t("Twenty") %></td>
+              <td><%= f.number_field :fifth_area, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= f.number_field :fifth_equip, class: 'gvTitleStyleNumber', :step => 'any', min: 0 %></td>
+              <td><%= select_tag :fifth_fuel, options_for_select(fuel_id, :selected => 0, :required => true), {:prompt => t("Select Fuel")} %></td>
+            </tr>
+
         </table>
       </div>
       <%end%>
@@ -1378,4 +1472,69 @@ $(document).ready(function(){
     {$("#h_dec").hide();}
   });
   });
+</script>
+
+<script>
+$(document).ready(function(){
+  $('#num_fmo').on('change', function() {
+    if ( this.value == '1')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '2')
+    {$("#second").show();}
+    {$("#third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '3')
+    {$("#second, #third").show();}
+    {$("#fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '4')
+    {$("#second, #third, #fourth").show();}
+    {$("#fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '5')
+    {$("#second, #third, #fourth, #fifth").show();}
+    {$("#sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '6')
+    {$("#second, #third, #fourth, #fifth, #sixth").show();}
+    {$("#seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '7')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh").show();}
+    {$("#eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '8')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth").show();}
+    {$("#ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '9')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth").show();}
+    {$("#tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '10')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth").show();}
+    {$("#eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '11')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh").show();}
+    {$("#twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '12')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth").show();}
+    {$("#thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '13')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen").show();}
+    {$("#fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '14')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen").show();}
+    {$("#fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '15')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen").show();}
+    {$("#sixteen, #seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '16')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen").show();}
+    {$("#seventeen, #eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '17')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen").show();}
+    {$("#eighteen, #ninteen, #twenty").hide();}
+    if ( this.value == '18')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen").show();}
+    {$("#ninteen, #twenty").hide();}
+    if ( this.value == '19')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen").show();}
+    {$("#twenty").hide();}
+    if ( this.value == '20')
+    {$("#second, #third, #fourth, #fifth, #sixth, #seventh, #eighth, #ninth, #tenth, #eleventh, #twelveth, #thirteen, #fourteen, #fifteen, #sixteen, #seventeen, #eighteen, #ninteen, #twenty").show();}
+  });
+});
 </script>
