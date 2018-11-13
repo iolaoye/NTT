@@ -27,11 +27,14 @@ class ResultsController < ApplicationController
     #render "index"
   end
 
+  def fem_results
+    @type = t('activerecord.models.result.fem_results')
+    index
+  end
   ###############################  INDEX  ###################################
   # GET /results
   # GET /results.json
   def index
-    
     require 'enumerable/confidence_interval'
     if params[:simulation] != nil then
         session[:simulation] = params[:simulation]
@@ -196,12 +199,12 @@ class ResultsController < ApplicationController
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil) ? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
         when t("general.view"), 
-             t("result.summary"), 
-             t('result.all_years'),
-             t('result.dry_years'),
-             t('result.wet_years'),    
-             t("general.view") + " " + t("result.by_soil"), 
-             t("result.summary") + " " + t("result.by_soil")  
+            t("result.summary"), 
+            t('result.all_years'),
+            t('result.dry_years'),
+            t('result.wet_years'),    
+            t("general.view") + " " + t("result.by_soil"), 
+            t("result.summary") + " " + t("result.by_soil")  
         
             get_results = lambda do |scenario_id| 
                 if not (scenario_id.eql? "0" or scenario_id.eql? "") 
@@ -321,13 +324,11 @@ class ResultsController < ApplicationController
 
             @cis1, @averages1, @totals1, @cic1, @crops1, @total_area1 = get_results.call @scenario1
             @cis2, @averages2, @totals2, @cic2, @crops2, @total_area2 = get_results.call @scenario2
-            @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3
-            
-            session[:scenario1] = @scenario1    
-            session[:scenario2] = @scenario2
-            session[:scenario3] = @scenario3
-        
-
+            @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3           
+        when t('activerecord.models.result.fem_results')
+          if !(@scenario1 == "0") then @fem_results1 = Scenario.find(@scenario1).fem_result end
+          if !(@scenario2 == "0") then @fem_results2 = Scenario.find(@scenario2).fem_result end
+          if !(@scenario3 == "0") then @fem_results3 = Scenario.find(@scenario3).fem_result end
 =begin
             # Scenario 1
             if @scenario1 > "0" then
@@ -871,8 +872,10 @@ class ResultsController < ApplicationController
         
         
         end #end if params button summary
-
-    end # end case type
+      end # end case type
+      session[:scenario1] = @scenario1
+      session[:scenario2] = @scenario2
+      session[:scenario3] = @scenario3   
 
     if params[:format] == "pdf" then
       pdf = render_to_string pdf: "report",
@@ -883,8 +886,9 @@ class ResultsController < ApplicationController
       margin: {top: 40}
       send_data(pdf, :filename => "report.pdf")
       return
-    end # if format is pdf
-    if params[:action] == "index" then   # just run the format for Tabular => General menu option.
+    end
+     # if format is pdf
+    if params[:action] == "index" || params[:action] == "fem_results" then   # just run the format for Tabular => General menu option.
       respond_to do |format|
         format.html
         format.xlsx { response.headers['Content-Disposition'] = "attachment; filename=\"report-#{Date.today}.xlsx\"" }

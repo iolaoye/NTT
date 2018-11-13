@@ -42,6 +42,7 @@ en:
         by_soil: "By Soil"
         annual_charts: "Annual Charts"
         monthly_charts: "Monthly Charts"
+        fem_results: "FEM Results"
       apex:
         apex_file: "Apex Files"
         control: "Controls"

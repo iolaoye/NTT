@@ -54,7 +54,7 @@ class ScenariosController < ApplicationController
     end
   end
 
-################################  simualte either NTT or APLCAT  #################################
+################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
   	msg = "OK"
   	time_begin = Time.now
@@ -67,10 +67,11 @@ class ScenariosController < ApplicationController
       when params[:commit].include?("FEM")
         msg = simulate_fem
   	end
+    debugger
     if msg.eql?("OK") then
-	  @scenario = Scenario.find(params[:select_scenario])
-      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
-	  redirect_to project_field_scenarios_path(@project, @field)
+      @scenario = Scenario.find(params[:select_scenario])
+      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
+      redirect_to project_field_scenarios_path(@project, @field)
     else
       render "index", error: msg
     end # end if msg
@@ -207,7 +208,7 @@ class ScenariosController < ApplicationController
   def simulate_fem
     @errors = Array.new
     msg = "OK"
-    msg = fem_tables()
+    #msg = fem_tables()
     if params[:select_scenario] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
@@ -375,8 +376,23 @@ i=0
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     msg = send_file_to_APEX(fem_list, "Operations")
-    debugger
-    return msg
+    if !msg.include? "Error"
+
+      debugger
+      @scenario.fem_result.destroy
+      fem_result = FemResult.new
+      fem_res = msg.split(",")
+      fem_result.total_revenue = fem_res[0]
+      fem_result.total_cost = fem_res[1]
+      fem_result.net_return = fem_res[2]
+      fem_result.net_cash_flow = fem_res[3]
+      fem_result.scenario_id = @scenario.id
+      fem_result.save
+      debugger
+      return "OK"
+    else
+      return msg
+    end
   end
 
   ################################  get_operations - get operations and send them to server and simulate fem #################################
