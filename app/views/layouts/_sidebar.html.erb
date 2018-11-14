@@ -1,5 +1,5 @@
 <% aplcat = 0 %>
-<% fem = 0 %>
+<% fem = 1 %>
 <% if !(@project == nil) %>
   <!-- <span class="sidebar_font"> -->
   <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
@@ -126,7 +126,6 @@
             <%= link_to t('result.by_soil'), by_soils_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
           </li>
 	      <% end %>
-        <!-- <li class="results-label">Graphic</a></li> -->
         <li class="<%= (controller.action_name == "annual_charts") ? "active" : "" %>">
           <% if controller.action_name == "annual_charts" %>
             <div class="sub-header-icon">
@@ -143,6 +142,17 @@
           <% end %>
           <%= link_to t("result.monthly") + "-" + t('models.chart'), monthly_charts_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
         </li>
+
+        <% if ENV["APP_VERSION"] == "standard" %>
+          <li class="<%= (controller.action_name == "fem_results") ? "active" : "" %>">
+            <% if controller.action_name == "fem_results" %>
+              <div class="sub-header-icon">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </div>
+            <% end %>
+            <%= link_to t("result.fem") + "-" + t('models.results'), fem_results_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub"%>
+          </li>
+        <%end%>
       </ul>
     <% end %>
 
@@ -186,7 +196,6 @@
   		<% end %>
       <% if result_submenu || request.url.include?(url_for("/fields/0/results"))%>
          <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-           <!--<li class="results-label">Tabular</li>-->
            <li class="<%= (controller.action_name == "index") ? "active" : "0" %>">
              <% if controller.action_name == "index" %>
                <div class="sub-header-icon">
