@@ -67,7 +67,6 @@ class ScenariosController < ApplicationController
       when params[:commit].include?("FEM")
         msg = simulate_fem
   	end
-    debugger
     if msg.eql?("OK") then
       @scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
@@ -187,7 +186,6 @@ class ScenariosController < ApplicationController
   def show()
     @errors = Array.new
     ActiveRecord::Base.transaction do
-      debugger
   		msg = run_scenario
   		@scenarios = Scenario.where(:field_id => params[:field_id])
   		@project_name = Project.find(params[:project_id]).name
@@ -220,7 +218,6 @@ class ScenariosController < ApplicationController
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
         end
-        debugger
         #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
         msg = run_fem
         unless msg.eql?("OK")
@@ -234,7 +231,6 @@ class ScenariosController < ApplicationController
 
 ################################  Update the FEM tables #################################
   def fem_tables
-    debugger
     i=0
     xmlBuilder = Nokogiri::XML::Builder.new do |xml|
       xml.send('FEM') {
@@ -377,8 +373,6 @@ i=0
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     msg = send_file_to_APEX(fem_list, "Operations")
     if !msg.include? "Error"
-
-      debugger
       @scenario.fem_result.destroy
       fem_result = FemResult.new
       fem_res = msg.split(",")
@@ -388,7 +382,6 @@ i=0
       fem_result.net_cash_flow = fem_res[3]
       fem_result.scenario_id = @scenario.id
       fem_result.save
-      debugger
       return "OK"
     else
       return msg
