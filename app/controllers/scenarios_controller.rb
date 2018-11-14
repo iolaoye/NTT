@@ -54,7 +54,7 @@ class ScenariosController < ApplicationController
     end
   end
 
-################################  simualte either NTT or APLCAT  #################################
+################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
   	msg = "OK"
   	time_begin = Time.now
@@ -68,9 +68,9 @@ class ScenariosController < ApplicationController
         msg = simulate_fem
   	end
     if msg.eql?("OK") then
-	  @scenario = Scenario.find(params[:select_scenario])
-      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
-	  redirect_to project_field_scenarios_path(@project, @field)
+      @scenario = Scenario.find(params[:select_scenario])
+      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
+      redirect_to project_field_scenarios_path(@project, @field)
     else
       render "index", error: msg
     end # end if msg
@@ -206,7 +206,7 @@ class ScenariosController < ApplicationController
   def simulate_fem
     @errors = Array.new
     msg = "OK"
-    msg = fem_tables()
+    #msg = fem_tables()
     if params[:select_scenario] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
@@ -229,12 +229,13 @@ class ScenariosController < ApplicationController
     return msg
   end
 
+################################  Update the FEM tables #################################
   def fem_tables
-    #i=0
+    i=0
     xmlBuilder = Nokogiri::XML::Builder.new do |xml|
       xml.send('FEM') {
         FeedsAugmented.all.each do |feed|
-          #i+=1
+          i+=1
           xml.send('feed') {
             xml.send("feed-name", feed.name.to_s)
             xml.send("selling-price", feed.selling_price.to_s)
@@ -247,13 +248,13 @@ class ScenariosController < ApplicationController
             xml.send("silage",feed.silage.to_s)
             xml.send("supplement",feed.supplement.to_s)
           }
-          #if i >= 10 then
-            #break
-          #end
+          if i >= 10 then
+            break
+          end
         end
-#i=0
+i=0
         MachineAugmented.all.each do |equip|
-          #i+=1
+          i+=1
           xml.send('machine') {
             xml.send("machine-name", equip.name.to_s)
             xml.send("lease_rate", equip.lease_rate.to_s)
@@ -273,33 +274,41 @@ class ScenariosController < ApplicationController
             xml.send("rv1", equip.rv1.to_s)
             xml.send("rv2", equip.rv2.to_s)
           }
-          #if i >= 10 then
-            #break
-          #end
+          if i >= 10 then
+            break
+          end
         end
-
+i=0
         FacilityAugmented.all.each do |struct|
+          i+=1
           xml.send('structure') {
             xml.send("struct-name", struct.name.to_s)
             xml.send("lease_rate", struct.lease_rate.to_s)
             xml.send("new_price", struct.new_price.to_s)
             xml.send("current_price", struct.current_price.to_s)
             xml.send("life_remaining", struct.life_remaining.to_s)
-            xml.send("maintenance_coeff", struct.name.to_s)
+            xml.send("maintenance_coeff", struct.maintenance_coeff .to_s)
             xml.send("loan_interest_rate", struct.loan_interest_rate.to_s)
             xml.send("length_loan", struct.length_loan.to_s)
             xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
             xml.send("proportion_debt", struct.proportion_debt.to_s)
             xml.send("year", struct.year.to_s )
           }
+                   if i >= 10 then
+            break
+          end
         end
-
+i=0
         FarmGeneral.all.each do |other|
+          i+=1
           xml.send("other") {
             xml.send("other-name", other.name.to_s)
             xml.send("value", other.values.to_s)
           }
         end
+                 if i >= 10 then
+            break
+          end
       }
     end
  
@@ -363,7 +372,20 @@ class ScenariosController < ApplicationController
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     msg = send_file_to_APEX(fem_list, "Operations")
-    return msg
+    if !msg.include? "Error"
+      @scenario.fem_result.destroy
+      fem_result = FemResult.new
+      fem_res = msg.split(",")
+      fem_result.total_revenue = fem_res[0]
+      fem_result.total_cost = fem_res[1]
+      fem_result.net_return = fem_res[2]
+      fem_result.net_cash_flow = fem_res[3]
+      fem_result.scenario_id = @scenario.id
+      fem_result.save
+      return "OK"
+    else
+      return msg
+    end
   end
 
   ################################  get_operations - get operations and send them to server and simulate fem #################################
