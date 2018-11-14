@@ -373,7 +373,7 @@ i=0
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     msg = send_file_to_APEX(fem_list, "Operations")
     if !msg.include? "Error"
-      @scenario.fem_result.destroy
+      if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
       fem_result = FemResult.new
       fem_res = msg.split(",")
       fem_result.total_revenue = fem_res[0]
