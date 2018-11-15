@@ -61,7 +61,7 @@ td,th {
             <th>Operations</th>
         </tr>
         <% @feeds.each do |feed| %>
-        <tr class='table-values'>
+        <tr class='table-values feed'>
             <td class="pt-3-half" contenteditable="true"><%= feed.name %></td>
             <td class="pt-3-half" contenteditable="true"><%= feed.selling_price %></td>
             <td class="pt-3-half" contenteditable="true"><%= feed.purchase_price %></td>
@@ -98,11 +98,10 @@ td,th {
             <th>P Debt</th>
             <th>Year</th>
             <th>RV1</th>
-            <th>RV2</th>
             <th>Operations</th>
         </tr>
         <% @equipment.each do |e| %>
-        <tr class='table-values'>
+        <tr class='table-values equip'>
             <td class="pt-3-half" contenteditable="true"><%= e.name %></td>
             <td class="pt-3-half" contenteditable="true"><%= e.lease_rate %></td>
             <td class="pt-3-half" contenteditable="true"><%= e.new_price %></td>
@@ -144,7 +143,7 @@ td,th {
         </tr>
 
         <% @structure.each do |struct| %>
-        <tr class='table-values'>
+        <tr class='table-values struct'>
             <td class="pt-3-half" contenteditable="true"><%= struct.name %></td>
             <td class="pt-3-half" contenteditable="true"><%= struct.lease_rate %></td>
             <td class="pt-3-half" contenteditable="true"><%= struct.new_price %></td>
@@ -169,7 +168,7 @@ td,th {
             <th>Operations</th>
         </tr>
         <% @other.each do |other| %>
-        <tr class='table-values'>
+        <tr class='table-values other'>
             <td class="pt-3-half" contenteditable="true"><%= other.name %></td>
             <td><button class='btn-error'>Remove</button></td>
         </tr>
@@ -183,28 +182,69 @@ td,th {
     $('#fem-tabs').tab('show')
     // add handler for update.
     $('#update-fem').click(() => {
-        var feedHeaderNames = $('#feed > table .table-heading').find('th');
-        var feedRowValues = $('#feed > table .table-values');
-        console.log(feedRowValues)
-        feed = []
-        for (var i =0; i < feedRowValues.length; i++) {
-            values = feedRowValues[i]
-            console.log(values)
-            feed.push({
-                'Name':feedRowValues[i][0],
-                'selling_price':0,
-                'purchase_price':0,
-                'concentrate':0,
-                'forage':0,
-                'grain':0,
-                'hay':0,
-                'pasture':0,
-                'silage':0,
-                'supplement':0,  
-                'operations':0,
-                  
-            })
+        feedRows = $('.tab-pane .table .table-values.feed').find('td');
+        equipRows = $('.tab-pane .table .table-values.equip').find('td');
+        otherRows = $('.tab-pane .table .table-values.other').find('td');
+        
+        
+        //console.log(rows)
+        feedKeys = [
+          'name', 'selling_price', 'purchase_price','concentrate',
+          'forage','grain','hay','pasture','silage','supplement'
+        ]
+
+        equipKeys = [
+          'Name','Lease Rate','New Price','New Hours','Current Price','Hours Remaining', 'Width', 'Speed', 'Field Efficiency',
+          'Horse Power', 'RF1', 'RF2', 'IR Loan', 'IR Equity',  'P Debt' ,'Year', 'RV1', 'RV2'
+        ]
+
+        otherKeys = [
+            'Name'
+        ]
+
+        feed = {}, feeds = []
+        equip = {}, equips = []
+        other = {}, others = []
+
+        var i = 0
+        //console.log(rows)
+        for (var j = 0; j < feedRows.length-2; j++) {
+            feed[feedKeys[i]] = feedRows[j].innerText
+            i++;
+            if ((i % 11) === 0) {
+                i = 0; //j = 0;
+                feeds.push(feed);
+                feed = {}
+            }
         }
+
+        var i = 0
+        //console.log(rows)
+        for (var j = 0; j < equipRows.length-2; j++) {
+            equip[equipKeys[i]] = equipRows[j].innerText
+            i++;
+            if ((i % 18) === 0) {
+                i = 0; //j = 0;
+                equips.push(equip);
+                equip = {}
+            }
+        }
+
+        var i = 0
+        //console.log(rows)
+        for (var j = 0; j < otherRows.length-2; j++) {
+            other[otherKeys[i]] = otherRows[j].innerText
+            i++;
+            if ((i % 2) === 0) {
+                i = 0; //j = 0;
+                others.push(other);
+                other = {}
+            }
+        }
+
+        console.log("Feeds", feeds)
+        console.log("Equipment", equips)
+        console.log("Other", others)
     });
   });
 
