@@ -189,7 +189,7 @@ module SimulationsHelper
       apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "")
     end 
     client = Savon.client(wsdl: URL_SoilsInfo)
-    ###### create control, param, site, and weather files ########
+    ###### create control, param, site, and weather files, also fem_list########
     response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_string1, "session_id" => session[:session_id]})
     if response.body[:apex_files_response][:apex_files_result] == "created" then
       return "OK"
