@@ -1,4 +1,5 @@
 <% aplcat = 0 %>
+<% fem = 1 %>
 <% if !(@project == nil) %>
   <!-- <span class="sidebar_font"> -->
   <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
@@ -125,7 +126,6 @@
             <%= link_to t('result.by_soil'), by_soils_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
           </li>
 	      <% end %>
-        <!-- <li class="results-label">Graphic</a></li> -->
         <li class="<%= (controller.action_name == "annual_charts") ? "active" : "" %>">
           <% if controller.action_name == "annual_charts" %>
             <div class="sub-header-icon">
@@ -142,6 +142,17 @@
           <% end %>
           <%= link_to t("result.monthly") + "-" + t('models.chart'), monthly_charts_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
         </li>
+
+        <% if ENV["APP_VERSION"] == "standard" %>
+          <li class="<%= (controller.action_name == "fem_results") ? "active" : "" %>">
+            <% if controller.action_name == "fem_results" %>
+              <div class="sub-header-icon">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </div>
+            <% end %>
+            <%= link_to t("result.fem") + "-" + t('models.results'), fem_results_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub"%>
+          </li>
+        <%end%>
       </ul>
     <% end %>
 
@@ -160,8 +171,9 @@
   <% if (!(@project.location == nil) && @project.fields.count > 0) %>
   	<ul class="nav nav-pills nav-stacked nav-sidebar">
   		<li class="<%= (controller_name == "watersheds" || controller_name == "watershed_scenarios" || (controller_name == "results" && request.url.include?(url_for("/fields/0/results?"))) || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(@project, :locale=>I18n.locale) %></li>
-  	 <li class><%= link_to t('menu.fem'), 
-       fem_index_url(@project, :locale=>I18n.locale) %></li>
+      <% unless ENV["APP_VERSION"] == "modified" %>
+    	   <% if fem == 1 %> <li class><%= link_to t('menu.fem'), fem_index_url(@project, :locale=>I18n.locale) %></li> <% end %>
+      <% end %>  
     </ul>
   	<% if watershed_submenu %>
   		<% results = 0 %>
@@ -184,7 +196,6 @@
   		<% end %>
       <% if result_submenu || request.url.include?(url_for("/fields/0/results"))%>
          <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
-           <!--<li class="results-label">Tabular</li>-->
            <li class="<%= (controller.action_name == "index") ? "active" : "0" %>">
              <% if controller.action_name == "index" %>
                <div class="sub-header-icon">

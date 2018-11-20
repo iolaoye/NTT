@@ -125,22 +125,21 @@ td,th {
     </table>
     </div> 
 
-    <div class="tab-pane  fade in " id="structure">
-    <table class='table'>
-        <tr class='table-heading'>
-            <th>Name</th>
-            <th>Lease Rate</th>
-            <th>New Price</th>
-            <th>Current Price</th>
-            <th>Life Remaining</th>
-            <th>Maintenance Coeff</th>
-            <th>Loan Interest Rate</th>
-            <th>Length Loan</th>
-            <th>Interest Rate Equity</th>
-            <th>Proportion Debt</th>
-            <th>Year</th>
-            <th>Operations</th>
-        </tr>
+    <div class="tab-pane  fade in " id="structure" style="height:800px">
+        <table class='table'>
+            <tr>
+                <th>Name</th>
+                <th>Lease Rate</th>
+                <th>New Price</th>
+                <th>Current Price</th>
+                <th>Life Remaining</th>
+                <th>Maintenance Coeff</th>
+                <th>Loan Interest Rate</th>
+                <th>Length Loan</th>
+                <th>Interest Rate Equity</th>
+                <th>Proportion Debt</th>
+                <th>Year</th>
+            </tr>
 
         <% @structure.each do |struct| %>
         <tr class='table-values struct'>
@@ -247,6 +246,5 @@ td,th {
         console.log("Other", others)
     });
   });
-
 </script>
 </div>

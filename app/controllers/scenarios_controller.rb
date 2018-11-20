@@ -54,7 +54,7 @@ class ScenariosController < ApplicationController
     end
   end
 
-################################  simualte either NTT or APLCAT  #################################
+################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
   	msg = "OK"
   	time_begin = Time.now
@@ -68,9 +68,9 @@ class ScenariosController < ApplicationController
         msg = simulate_fem
   	end
     if msg.eql?("OK") then
-	  @scenario = Scenario.find(params[:select_scenario])
-      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
-	  redirect_to project_field_scenarios_path(@project, @field)
+      @scenario = Scenario.find(params[:select_scenario])
+      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
+      redirect_to project_field_scenarios_path(@project, @field)
     else
       render "index", error: msg
     end # end if msg
@@ -206,7 +206,7 @@ class ScenariosController < ApplicationController
   def simulate_fem
     @errors = Array.new
     msg = "OK"
-    #fem_tables()
+    #msg = fem_tables()
     if params[:select_scenario] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
@@ -229,73 +229,96 @@ class ScenariosController < ApplicationController
     return msg
   end
 
+################################  Update the FEM tables #################################
   def fem_tables
+    i=0
     xmlBuilder = Nokogiri::XML::Builder.new do |xml|
-      xml.root('FEM') {
+      xml.send('FEM') {
         FeedsAugmented.all.each do |feed|
+          i+=1
           xml.send('feed') {
             xml.send("feed-name", feed.name.to_s)
-            xml.send("feed-selling-price", feed.selling_price.to_s)
-            xml.send("feed-purchase-price",feed.purchase_price.to_s)
-            xml.send("feed-concentrate", feed.concentrate.to_s)
-            xml.send("feed-forage",feed.forage.to_s)
-            xml.send("feed-grain",feed.grain.to_s)
-            xml.send("feed-hay",feed.hay.to_s )
-            xml.send("feed-pasture",feed.pasture.to_s) 
-            xml.send("feed-silage",feed.silage.to_s)
-            xml.send("feed-supplement",feed.supplement.to_s)
+            xml.send("selling-price", feed.selling_price.to_s)
+            xml.send("purchase-price",feed.purchase_price.to_s)
+            xml.send("concentrate", feed.concentrate.to_s)
+            xml.send("forage",feed.forage.to_s)
+            xml.send("grain",feed.grain.to_s)
+            xml.send("hay",feed.hay.to_s )
+            xml.send("pasture",feed.pasture.to_s) 
+            xml.send("silage",feed.silage.to_s)
+            xml.send("supplement",feed.supplement.to_s)
           }
+          if i >= 10 then
+            break
+          end
         end
-
+i=0
         MachineAugmented.all.each do |equip|
+          i+=1
           xml.send('machine') {
-            xml.send("equip-name", equip.name.to_s)
-            xml.send("equip-lease_rate", equip.lease_rate.to_s)
-            xml.send("equip-new_price", equip.new_price.to_s)
-            xml.send("equip-new_hrs", equip.new_hours.to_s)
-            xml.send("equip-current_price", equip.current_price.to_s)
-            xml.send("equip-hrs_remaining", equip.hours_remaining.to_s )
-            xml.send("equip-width", equip.width.to_s )
-            xml.send("equip-field_efficiency", equip.field_efficiency.to_s)
-            xml.send("equip-horse_power", equip.horse_power.to_s)
-            xml.send("equip-rf1", equip.rf1.to_s)
-            xml.send("equip-rf2", equip.rf2.to_s)
-            xml.send("equip-ir_loan", equip.ir_loan.to_s)
-            xml.send("equip-ir_equity", equip.ir_equity.to_s)
-            xml.send("equip-debt", equip.p_debt.to_s)
-            xml.send("equip-year", equip.year.to_s )
-            xml.send("equip-rv2", equip.rv1.to_s)
-            xml.send("equip-rv2", equip.rv2.to_s)
+            xml.send("machine-name", equip.name.to_s)
+            xml.send("lease_rate", equip.lease_rate.to_s)
+            xml.send("new_price", equip.new_price.to_s)
+            xml.send("new_hours", equip.new_hours.to_s)
+            xml.send("current_price", equip.current_price.to_s)
+            xml.send("hours_remaining", equip.hours_remaining.to_s )
+            xml.send("width", equip.width.to_s )
+            xml.send("field_efficiency", equip.field_efficiency.to_s)
+            xml.send("horse_power", equip.horse_power.to_s)
+            xml.send("rf1", equip.rf1.to_s)
+            xml.send("rf2", equip.rf2.to_s)
+            xml.send("ir_loan", equip.ir_loan.to_s)
+            xml.send("ir_equity", equip.ir_equity.to_s)
+            xml.send("p_debt", equip.p_debt.to_s)
+            xml.send("year", equip.year.to_s )
+            xml.send("rv1", equip.rv1.to_s)
+            xml.send("rv2", equip.rv2.to_s)
           }
+          if i >= 10 then
+            break
+          end
         end
-
+i=0
         FacilityAugmented.all.each do |struct|
+          i+=1
           xml.send('structure') {
             xml.send("struct-name", struct.name.to_s)
-            xml.send("struct-lease_rate", struct.lease_rate.to_s)
-            xml.send("struct-new_price", struct.new_price.to_s)
-            xml.send("struct-current_price", struct.current_price.to_s)
-            xml.send("struct-life_remaining", struct.life_remaining.to_s)
-            xml.send("struct-maintenance_coeff", struct.name.to_s)
-            xml.send("struct-loan_interest_rate", struct.loan_interest_rate.to_s)
-            xml.send("struct-length_loan", struct.length_loan.to_s)
-            xml.send("struct-interest_rate_inequality", struct.interest_rate_equity.to_s)
-            xml.send("struct-proportion_debt", struct.proportion_debt.to_s)
-            xml.send("struct-year", struct.year.to_s )
+            xml.send("lease_rate", struct.lease_rate.to_s)
+            xml.send("new_price", struct.new_price.to_s)
+            xml.send("current_price", struct.current_price.to_s)
+            xml.send("life_remaining", struct.life_remaining.to_s)
+            xml.send("maintenance_coeff", struct.maintenance_coeff .to_s)
+            xml.send("loan_interest_rate", struct.loan_interest_rate.to_s)
+            xml.send("length_loan", struct.length_loan.to_s)
+            xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
+            xml.send("proportion_debt", struct.proportion_debt.to_s)
+            xml.send("year", struct.year.to_s )
           }
+                   if i >= 10 then
+            break
+          end
         end
-
+i=0
         FarmGeneral.all.each do |other|
-          xml.send('other') {
-            xml.send('other-name', other.to_s)
+          i+=1
+          xml.send("other") {
+            xml.send("other-name", other.name.to_s)
+            xml.send("value", other.values.to_s)
           }
         end
+                 if i >= 10 then
+            break
+          end
       }
     end
-
+ 
     xmlString = xmlBuilder.to_xml
+    xmlString.gsub! "<", "["
+    xmlString.gsub! ">", "]"
+    xmlString.gsub! "\n", ""
+    xmlString.gsub! "[?xml version=\"1.0\"?]", ""
     msg = send_file_to_APEX(xmlString, "FEM")
-    puts xmlString
+    #puts xmlString
   end
 
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################
@@ -334,17 +357,39 @@ class ScenariosController < ApplicationController
     #send the file to server
     msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
     state = State.find(@project.location.state_id).state_abbreviation
-    @fem_list = Array.new
-    #populate local.mdb and run FEM
-    @scenario.operations.each do |op|
-      get_operations(op, state)
+    #@fem_list = Array.new
+    builder = Nokogiri::XML::Builder.new do |xml|
+      xml.operations {
+        #populate local.mdb and run FEM
+        @scenario.operations.each do |op|
+          get_operations(op, state, xml)
+        end
+      }
     end
-    
-    return "OK"
+    fem_list = builder.to_xml  #convert the Nokogiti XML file to XML file text
+    fem_list.gsub! "<", "["
+    fem_list.gsub! ">", "]"
+    fem_list.gsub! "\n", ""
+    fem_list.gsub! "[?xml version=\"1.0\"?]", ""
+    msg = send_file_to_APEX(fem_list, "Operations")
+    if !msg.include? "Error"
+      if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
+      fem_result = FemResult.new
+      fem_res = msg.split(",")
+      fem_result.total_revenue = fem_res[0]
+      fem_result.total_cost = fem_res[1]
+      fem_result.net_return = fem_res[2]
+      fem_result.net_cash_flow = fem_res[3]
+      fem_result.scenario_id = @scenario.id
+      fem_result.save
+      return "OK"
+    else
+      return msg
+    end
   end
 
   ################################  get_operations - get operations and send them to server and simulate fem #################################
-  def get_operations(op, state)
+  def get_operations(op, state, xml)
     operation = SoilOperation.where(:operation_id => op.id).first
     items = Array.new
     values = Array.new
@@ -429,9 +474,47 @@ class ScenariosController < ApplicationController
       else
         operation_name = Activity.find(operation.activity_id).name
     end
-    @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
-                   COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
-                   values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
+
+        xml.operation {
+          #save operation information
+          xml.composite @scenario.name
+          xml.applies_to @scenario.name
+          xml.state state
+          xml.year operation.year
+          xml.month operation.month
+          xml.day operation.day
+          xml.apex_operation operation.apex_operation
+          xml.operation_name operation_name
+          xml.apex_crop operation.apex_crop
+          xml.crop_name crop_name 
+          xml.year_in_rotation @scenario.soil_operations.last.year
+          xml.rotation_length 0
+          xml.frequency 0
+          xml.item1 items[0]
+          xml.value1 values[0]
+          xml.item2 items[1]
+          xml.value2 values[1]
+          xml.item3 items[2]
+          xml.value3 values[2]
+          xml.item4 items[3]
+          xml.value4 values[3]
+          xml.item5 items[4]
+          xml.value5 values[4]
+          xml.item6 items[5]
+          xml.value6 values[5]
+          xml.item7 items[6]
+          xml.value7 values[6]
+          xml.item8 items[7]
+          xml.value8 values[7]
+          xml.item9 items[8]
+          xml.value9 values[8]
+        } # end xml.operation
+      #} #end xml operations
+    #end #builder do end
+
+    #@fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+                   #COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
+                   #values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
   end  # end get_operations method
   
   ################################  aplcat - simulate the selected scenario for aplcat #################################

@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :fem_results
   get 'fem/index' => 'fem#list'
 
   resources :crop_results
@@ -133,6 +134,7 @@ NTTG3::Application.routes.draw do
         get :by_soils, on: :member
         get :annual_charts, on: :member
         get :monthly_charts, on: :member
+        get :fem_results, on: :member
         get :download_apex_files, on: :member
       end
       resources :apex_parameters do
