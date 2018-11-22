@@ -206,7 +206,7 @@ class ScenariosController < ApplicationController
   def simulate_fem
     @errors = Array.new
     msg = "OK"
-    #msg = fem_tables()
+    #msg = fem_tables()  todo
     if params[:select_scenario] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
@@ -359,11 +359,17 @@ i=0
     state = State.find(@project.location.state_id).state_abbreviation
     #@fem_list = Array.new
     builder = Nokogiri::XML::Builder.new do |xml|
-      xml.operations {
-        #populate local.mdb and run FEM
-        @scenario.operations.each do |op|
-          get_operations(op, state, xml)
-        end
+      xml.additions {
+        xml.operations {
+          @scenario.operations.each do |op|
+            get_operations(op, state, xml)
+          end
+        }
+        xml.bmps {
+          @scenario.bmps.each do |bmp|
+            get_bmps(bmp, state, xml)
+          end
+        }
       }
     end
     fem_list = builder.to_xml  #convert the Nokogiti XML file to XML file text
@@ -371,6 +377,7 @@ i=0
     fem_list.gsub! ">", "]"
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
+    #populate local.mdb and run FEM
     msg = send_file_to_APEX(fem_list, "Operations")
     if !msg.include? "Error"
       if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
@@ -387,6 +394,109 @@ i=0
       return msg
     end
   end
+
+  ################################  get_operations - get operations and send them to server and simulate fem #################################
+  def get_bmps(bmp, state, xml)
+    items = Array.new
+    values = Array.new
+    case bmp.bmpsublist_id
+      when 1 #autoirrigation or autofertigation
+        items[0] = "Type"
+        values[0] = Irrigation.find(bmp.irrigation_id).name
+        items[1] = "Efficiency"
+        values[1] = bmp.irrigation_efficiency
+        items[2] = "Frequency"
+        values[2] = bmp.Days
+        items[3] = "Water Stress Factor"
+        values[3] = bmp.water_stress_factor
+        items[4] = "Maximum Single Application"
+        items[4] = bmp.maximum_single_application
+        if depth == 2 then   #autofertigaation
+          items[5] = "Application Depth"
+          values[5] = bmp.dry_manure
+        end
+      when 3 #Tile Drain
+        items[0] = "Depth"
+        values[0] = bmp.depth
+      when 4 #Pads and Pipes
+      when 5 #Pads and Pipes
+      when 6 #Pads and Pipes
+      when 7 # Pads and Pipes              #Grazing - kind and number of animals
+      when 8 #wetland
+        items[0] = "Area"
+        values[0] = bmp.area
+      when 9 #Ponds
+        items[0] = "Fraction"
+        values[0] = bmp.irrigation_efficiency
+      when 10   #stream Fencing
+        items[0] = "Fence Width"
+        values[0] = bmp.width
+      when 11 # Streambank stabilization
+      when 13   #Riparian forest (12) or Filter StrIp (13)
+        items[0] = "Area"
+        values[0] = bmp.area
+        items[1] = "Grass Width"
+        values[1] = bmp.width
+        items[3] = "Fraction treated by buffer"
+        values[3] = bmp.slope_reduction
+        if bmp.depth == 12
+          items[2] = "Forest width"
+          values[2] = bmp.grass_field_portion
+        else
+          items[4] = "Crop"
+          values[4] = Crop.find(bmp.crop_id).name
+        end
+      when 13  # Filter Strip
+      when 14  #waterways
+          items[4] = "Crop"
+          values[4] = Crop.find(bmp.crop_id).name
+          items[1] = "Width"
+          items[1] = bmp.width
+          items[3] = "Fraction treated by buffer"
+          values[3] = bmp.slop        
+      when 15  #contour buffer
+          items[4] = "Crop"
+          values[4] = Crop.find(bmp.crop_id).name
+          items[1] =  "Grass Buffer"
+          values[1] = bmp.width
+          items[2] = "Crop Buffer"
+          values[2] = bmp.crop_width        
+      when 16   #Land Leveling
+        items[0] = "Slope Reduction"
+        values[0] = bmp.slope_reduction
+      when 17  #Terrace System
+      when 18  #Manure nutrient change
+      else #No entry need
+    end #end case true
+    xml.bmp {
+      #save operation information
+      xml.composite @scenario.name
+      xml.applies_to @scenario.name
+      xml.state state
+      xml.operation_name Bmpsublist.find(bmp.bmpsublist_id).name
+      xml.item1 items[0]
+      xml.value1 values[0]
+      xml.item2 items[1]
+      xml.value2 values[1]
+      xml.item3 items[2]
+      xml.value3 values[2]
+      xml.item4 items[3]
+      xml.value4 values[3]
+      xml.item5 items[4]
+      xml.value5 values[4]
+      xml.item6 items[5]
+      xml.value6 values[5]
+      xml.item7 items[6]
+      xml.value7 values[6]
+      xml.item8 items[7]
+      xml.value8 values[7]
+      xml.item9 items[8]
+      xml.value9 values[8]
+    } # end xml.operation
+    #@fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
+                   #COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
+                   #values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
+  end  # end get_operations method
 
   ################################  get_operations - get operations and send them to server and simulate fem #################################
   def get_operations(op, state, xml)
