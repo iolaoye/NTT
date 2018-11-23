@@ -378,7 +378,7 @@ i=0
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     #populate local.mdb and run FEM
-    debugger
+    
     msg = send_file_to_APEX(fem_list, "Operations")
     if !msg.include? "Error"
       @scenario.fem_result.destroy
