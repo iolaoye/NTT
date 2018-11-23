@@ -378,6 +378,7 @@ i=0
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     #populate local.mdb and run FEM
+    
     msg = send_file_to_APEX(fem_list, "Operations")
     if !msg.include? "Error"
       if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
@@ -399,6 +400,12 @@ i=0
   def get_bmps(bmp, state, xml)
     items = Array.new
     values = Array.new
+    apex_op = ''
+    for i in 0..(8 - 1)
+      items[i] = ""
+      values[i] = 0
+    end
+
     case bmp.bmpsublist_id
       when 1 #autoirrigation or autofertigation
         items[0] = "Type"
@@ -411,27 +418,38 @@ i=0
         values[3] = bmp.water_stress_factor
         items[4] = "Maximum Single Application"
         items[4] = bmp.maximum_single_application
+        apex_op = "AI"
         if depth == 2 then   #autofertigaation
           items[5] = "Application Depth"
           values[5] = bmp.dry_manure
+          apex_op = "AF"
         end
       when 3 #Tile Drain
         items[0] = "Depth"
         values[0] = bmp.depth
+        apex_op = "TD"
       when 4 #Pads and Pipes
+        apex_op = "PP"
       when 5 #Pads and Pipes
+        apex_op = "PP"
       when 6 #Pads and Pipes
+        apex_op = "PP"
       when 7 # Pads and Pipes              #Grazing - kind and number of animals
+        apex_op = "PP"
       when 8 #wetland
         items[0] = "Area"
         values[0] = bmp.area
+        apex_op = "WL"
       when 9 #Ponds
         items[0] = "Fraction"
         values[0] = bmp.irrigation_efficiency
+        apex_op = "PND"
       when 10   #stream Fencing
         items[0] = "Fence Width"
         values[0] = bmp.width
+        apex_op = "SF"
       when 11 # Streambank stabilization
+        apex_op = "SB"
       when 13   #Riparian forest (12) or Filter StrIp (13)
         items[0] = "Area"
         values[0] = bmp.area
@@ -442,30 +460,37 @@ i=0
         if bmp.depth == 12
           items[2] = "Forest width"
           values[2] = bmp.grass_field_portion
+          apex_op = "RF"
         else
           items[4] = "Crop"
           values[4] = Crop.find(bmp.crop_id).name
+          apex_op = "FS"
         end
       when 13  # Filter Strip
       when 14  #waterways
-          items[4] = "Crop"
-          values[4] = Crop.find(bmp.crop_id).name
-          items[1] = "Width"
-          items[1] = bmp.width
-          items[3] = "Fraction treated by buffer"
-          values[3] = bmp.slop        
+        items[4] = "Crop"
+        values[4] = Crop.find(bmp.crop_id).name
+        items[1] = "Width"
+        items[1] = bmp.width
+        items[3] = "Fraction treated by buffer"
+        values[3] = bmp.slop        
+        apex_op = "PP"
       when 15  #contour buffer
-          items[4] = "Crop"
-          values[4] = Crop.find(bmp.crop_id).name
-          items[1] =  "Grass Buffer"
-          values[1] = bmp.width
-          items[2] = "Crop Buffer"
-          values[2] = bmp.crop_width        
+        items[4] = "Crop"
+        values[4] = Crop.find(bmp.crop_id).name
+        items[1] =  "Grass Buffer"
+        values[1] = bmp.width
+        items[2] = "Crop Buffer"
+        values[2] = bmp.crop_width        
+        apex_op = "CF"
       when 16   #Land Leveling
         items[0] = "Slope Reduction"
         values[0] = bmp.slope_reduction
+        apex_op = "LL"
       when 17  #Terrace System
+        apex_op = "TS"
       when 18  #Manure nutrient change
+        apex_op = "MA"
       else #No entry need
     end #end case true
     xml.bmp {
@@ -473,7 +498,16 @@ i=0
       xml.composite @scenario.name
       xml.applies_to @scenario.name
       xml.state state
+      xml.year 0
+      xml.month 0
+      xml.day 0
+      xml.apex_operation apex_op
       xml.operation_name Bmpsublist.find(bmp.bmpsublist_id).name
+      xml.apex_crop 0
+      xml.crop_name 'None' 
+      xml.year_in_rotation 0
+      xml.rotation_length 0
+      xml.frequency 0
       xml.item1 items[0]
       xml.value1 values[0]
       xml.item2 items[1]
@@ -493,9 +527,6 @@ i=0
       xml.item9 items[8]
       xml.value9 values[8]
     } # end xml.operation
-    #@fem_list.push(@scenario.name + COMA + @scenario.name + COMA + state + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
-                   #COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
-                   #values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
   end  # end get_operations method
 
   ################################  get_operations - get operations and send them to server and simulate fem #################################
@@ -596,7 +627,7 @@ i=0
           xml.apex_operation operation.apex_operation
           xml.operation_name operation_name
           xml.apex_crop operation.apex_crop
-          xml.crop_name crop_name 
+          xml.crop_name crop_name
           xml.year_in_rotation @scenario.soil_operations.last.year
           xml.rotation_length 0
           xml.frequency 0
