@@ -42,6 +42,7 @@ en:
         by_soil: "By Soil"
         annual_charts: "Annual Charts"
         monthly_charts: "Monthly Charts"
+        fem_results: "FEM Results"
       apex:
         apex_file: "Apex Files"
         control: "Controls"
@@ -725,7 +726,7 @@ en:
     days_grazed: '# of consecutive days grazed in each paddock'
     rest_time: 'paddock rest time between grazing (days)'
     application_rate_html: 'If zero (0) N applied at the crop N required rate'
-    drainage_management_quiestion: There is any additional Tile Drainage Management?
+    drainage_management_quiestion: Is there any additional Tile Drainage Management?
     tile_bioreactors: Tile Bioreactors
     drainage_management: Drainage Water Management
     none: None
@@ -1292,6 +1293,7 @@ en:
       theta: Theta (unit conversion constant) [Adopted from FEM]
       fge: Fuel use constant for gasoline engines
       fde: Fuel use constant for diesel engines
+      select_fmo: Select the number of Field Management operation
   aplcat_result:
       aws: Animal weights
       dmi: Dry matter intake

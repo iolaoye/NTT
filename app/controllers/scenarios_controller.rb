@@ -54,7 +54,7 @@ class ScenariosController < ApplicationController
     end
   end
 
-################################  simualte either NTT or APLCAT  #################################
+################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
   	msg = "OK"
   	time_begin = Time.now
@@ -68,9 +68,9 @@ class ScenariosController < ApplicationController
         msg = simulate_fem
   	end
     if msg.eql?("OK") then
-	  @scenario = Scenario.find(params[:select_scenario])
-      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (@scenario.last.last_simulation - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
-	  redirect_to project_field_scenarios_path(@project, @field)
+      @scenario = Scenario.find(params[:select_scenario])
+      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
+      redirect_to project_field_scenarios_path(@project, @field)
     else
       render "index", error: msg
     end # end if msg
@@ -206,7 +206,7 @@ class ScenariosController < ApplicationController
   def simulate_fem
     @errors = Array.new
     msg = "OK"
-    msg = fem_tables()
+    #msg = fem_tables()  todo
     if params[:select_scenario] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
@@ -229,12 +229,13 @@ class ScenariosController < ApplicationController
     return msg
   end
 
+################################  Update the FEM tables #################################
   def fem_tables
-    #i=0
+    i=0
     xmlBuilder = Nokogiri::XML::Builder.new do |xml|
       xml.send('FEM') {
         FeedsAugmented.all.each do |feed|
-          #i+=1
+          i+=1
           xml.send('feed') {
             xml.send("feed-name", feed.name.to_s)
             xml.send("selling-price", feed.selling_price.to_s)
@@ -247,13 +248,13 @@ class ScenariosController < ApplicationController
             xml.send("silage",feed.silage.to_s)
             xml.send("supplement",feed.supplement.to_s)
           }
-          #if i >= 10 then
-            #break
-          #end
+          if i >= 10 then
+            break
+          end
         end
-#i=0
+i=0
         MachineAugmented.all.each do |equip|
-          #i+=1
+          i+=1
           xml.send('machine') {
             xml.send("machine-name", equip.name.to_s)
             xml.send("lease_rate", equip.lease_rate.to_s)
@@ -273,33 +274,41 @@ class ScenariosController < ApplicationController
             xml.send("rv1", equip.rv1.to_s)
             xml.send("rv2", equip.rv2.to_s)
           }
-          #if i >= 10 then
-            #break
-          #end
+          if i >= 10 then
+            break
+          end
         end
-
+i=0
         FacilityAugmented.all.each do |struct|
+          i+=1
           xml.send('structure') {
             xml.send("struct-name", struct.name.to_s)
             xml.send("lease_rate", struct.lease_rate.to_s)
             xml.send("new_price", struct.new_price.to_s)
             xml.send("current_price", struct.current_price.to_s)
             xml.send("life_remaining", struct.life_remaining.to_s)
-            xml.send("maintenance_coeff", struct.name.to_s)
+            xml.send("maintenance_coeff", struct.maintenance_coeff .to_s)
             xml.send("loan_interest_rate", struct.loan_interest_rate.to_s)
             xml.send("length_loan", struct.length_loan.to_s)
             xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
             xml.send("proportion_debt", struct.proportion_debt.to_s)
             xml.send("year", struct.year.to_s )
           }
+                   if i >= 10 then
+            break
+          end
         end
-
+i=0
         FarmGeneral.all.each do |other|
+          i+=1
           xml.send("other") {
             xml.send("other-name", other.name.to_s)
             xml.send("value", other.values.to_s)
           }
         end
+                 if i >= 10 then
+            break
+          end
       }
     end
  
@@ -350,11 +359,17 @@ class ScenariosController < ApplicationController
     state = State.find(@project.location.state_id).state_abbreviation
     #@fem_list = Array.new
     builder = Nokogiri::XML::Builder.new do |xml|
-      xml.operations {
-        #populate local.mdb and run FEM
-        @scenario.operations.each do |op|
-          get_operations(op, state, xml)
-        end
+      xml.additions {
+        xml.operations {
+          @scenario.operations.each do |op|
+            get_operations(op, state, xml)
+          end
+        }
+        xml.bmps {
+          @scenario.bmps.each do |bmp|
+            get_bmps(bmp, state, xml)
+          end
+        }
       }
     end
     fem_list = builder.to_xml  #convert the Nokogiti XML file to XML file text
@@ -362,9 +377,157 @@ class ScenariosController < ApplicationController
     fem_list.gsub! ">", "]"
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
+    #populate local.mdb and run FEM
+    
     msg = send_file_to_APEX(fem_list, "Operations")
-    return msg
+    if !msg.include? "Error"
+      if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
+      fem_result = FemResult.new
+      fem_res = msg.split(",")
+      fem_result.total_revenue = fem_res[0]
+      fem_result.total_cost = fem_res[1]
+      fem_result.net_return = fem_res[2]
+      fem_result.net_cash_flow = fem_res[3]
+      fem_result.scenario_id = @scenario.id
+      fem_result.save
+      return "OK"
+    else
+      return msg
+    end
   end
+
+  ################################  get_operations - get operations and send them to server and simulate fem #################################
+  def get_bmps(bmp, state, xml)
+    items = Array.new
+    values = Array.new
+    apex_op = ''
+    for i in 0..(8 - 1)
+      items[i] = ""
+      values[i] = 0
+    end
+
+    case bmp.bmpsublist_id
+      when 1 #autoirrigation or autofertigation
+        items[0] = "Type"
+        values[0] = Irrigation.find(bmp.irrigation_id).name
+        items[1] = "Efficiency"
+        values[1] = bmp.irrigation_efficiency
+        items[2] = "Frequency"
+        values[2] = bmp.Days
+        items[3] = "Water Stress Factor"
+        values[3] = bmp.water_stress_factor
+        items[4] = "Maximum Single Application"
+        items[4] = bmp.maximum_single_application
+        apex_op = "AI"
+        if depth == 2 then   #autofertigaation
+          items[5] = "Application Depth"
+          values[5] = bmp.dry_manure
+          apex_op = "AF"
+        end
+      when 3 #Tile Drain
+        items[0] = "Depth"
+        values[0] = bmp.depth
+        apex_op = "TD"
+      when 4 #Pads and Pipes
+        apex_op = "PP"
+      when 5 #Pads and Pipes
+        apex_op = "PP"
+      when 6 #Pads and Pipes
+        apex_op = "PP"
+      when 7 # Pads and Pipes              #Grazing - kind and number of animals
+        apex_op = "PP"
+      when 8 #wetland
+        items[0] = "Area"
+        values[0] = bmp.area
+        apex_op = "WL"
+      when 9 #Ponds
+        items[0] = "Fraction"
+        values[0] = bmp.irrigation_efficiency
+        apex_op = "PND"
+      when 10   #stream Fencing
+        items[0] = "Fence Width"
+        values[0] = bmp.width
+        apex_op = "SF"
+      when 11 # Streambank stabilization
+        apex_op = "SB"
+      when 13   #Riparian forest (12) or Filter StrIp (13)
+        items[0] = "Area"
+        values[0] = bmp.area
+        items[1] = "Grass Width"
+        values[1] = bmp.width
+        items[3] = "Fraction treated by buffer"
+        values[3] = bmp.slope_reduction
+        if bmp.depth == 12
+          items[2] = "Forest width"
+          values[2] = bmp.grass_field_portion
+          apex_op = "RF"
+        else
+          items[4] = "Crop"
+          values[4] = Crop.find(bmp.crop_id).name
+          apex_op = "FS"
+        end
+      when 13  # Filter Strip
+      when 14  #waterways
+        items[4] = "Crop"
+        values[4] = Crop.find(bmp.crop_id).name
+        items[1] = "Width"
+        items[1] = bmp.width
+        items[3] = "Fraction treated by buffer"
+        values[3] = bmp.slop        
+        apex_op = "PP"
+      when 15  #contour buffer
+        items[4] = "Crop"
+        values[4] = Crop.find(bmp.crop_id).name
+        items[1] =  "Grass Buffer"
+        values[1] = bmp.width
+        items[2] = "Crop Buffer"
+        values[2] = bmp.crop_width        
+        apex_op = "CF"
+      when 16   #Land Leveling
+        items[0] = "Slope Reduction"
+        values[0] = bmp.slope_reduction
+        apex_op = "LL"
+      when 17  #Terrace System
+        apex_op = "TS"
+      when 18  #Manure nutrient change
+        apex_op = "MA"
+      else #No entry need
+    end #end case true
+    xml.bmp {
+      #save operation information
+      xml.composite @scenario.name
+      xml.applies_to @scenario.name
+      xml.state state
+      xml.year 0
+      xml.month 0
+      xml.day 0
+      xml.apex_operation apex_op
+      xml.operation_name Bmpsublist.find(bmp.bmpsublist_id).name
+      xml.apex_crop 0
+      xml.crop_name 'None' 
+      xml.year_in_rotation 0
+      xml.rotation_length 0
+      xml.frequency 0
+      xml.item1 items[0]
+      xml.value1 values[0]
+      xml.item2 items[1]
+      xml.value2 values[1]
+      xml.item3 items[2]
+      xml.value3 values[2]
+      xml.item4 items[3]
+      xml.value4 values[3]
+      xml.item5 items[4]
+      xml.value5 values[4]
+      xml.item6 items[5]
+      xml.value6 values[5]
+      xml.item7 items[6]
+      xml.value7 values[6]
+      xml.item8 items[7]
+      xml.value8 values[7]
+      xml.item9 items[8]
+      xml.value9 values[8]
+    } # end xml.operation
+  end  # end get_operations method
 
   ################################  get_operations - get operations and send them to server and simulate fem #################################
   def get_operations(op, state, xml)
@@ -464,7 +627,7 @@ class ScenariosController < ApplicationController
           xml.apex_operation operation.apex_operation
           xml.operation_name operation_name
           xml.apex_crop operation.apex_crop
-          xml.crop_name crop_name 
+          xml.crop_name crop_name
           xml.year_in_rotation @scenario.soil_operations.last.year
           xml.rotation_length 0
           xml.frequency 0
