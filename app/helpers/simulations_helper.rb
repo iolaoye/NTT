@@ -189,7 +189,7 @@ module SimulationsHelper
       apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "")
     end 
     client = Savon.client(wsdl: URL_SoilsInfo)
-    ###### create control, param, site, and weather files ########
+    ###### create control, param, site, and weather files, also fem_list########
     response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_string1, "session_id" => session[:session_id]})
     if response.body[:apex_files_response][:apex_files_result] == "created" then
       return "OK"
@@ -1893,10 +1893,10 @@ module SimulationsHelper
     bmp = @scenario.bmps.find_by_bmpsublist_id(3)
     if !(bmp == nil)
       if bmp.irrigation_id == 1 and bmp.crop_id == 1 then
-        td_reduction = 0.5494
+        td_reduction = 1 - 0.50
       else
         if bmp.irrigation_id == 1 then 
-          td_reduction = 1 - 0.18
+          td_reduction = 1 - 0.43
         end
         if bmp.crop_id == 1 then
           td_reduction = 1 - 0.33

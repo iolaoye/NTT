@@ -41,8 +41,16 @@ $(document).ready ->
         change_select_scenarios()
     $("#simulate_scenario").click ->
         loading_screen()
+        $("#simulate_fem").toggle(false)
+        $("#simulate_aplcat").toggle(false)
     $("#simulate_aplcat").click ->
         loading_screen()
+        $("#simulate_fem").toggle(false)
+        $("#simulate_scenario").toggle(false)
+    $("#simulate_fem").click ->
+        loading_screen()
+        $("#simulate_scenario").toggle(false)
+        $("#simulate_aplcat").toggle(false)
     $("#other_field_scenario").click ->
         copy_from_other_field()
     $("#field_id").change ->
