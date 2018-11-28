@@ -33,7 +33,7 @@
 <tbody class="gvRowStyleOdd">
   <% @aplcat_results.each do |aplcat_result| %>
       <tr>
-        <td> Calf <td>
+        <td> Calf </td>
         <td> <%= aplcat_result.calf_aws %> </td>
         <td> <%= aplcat_result.calf_dmi %> </td>
         <td> <%= aplcat_result.calf_gei %> </td>
@@ -46,11 +46,11 @@
         <td> <%= aplcat_result.calf_une %> </td>
         <td> <%= aplcat_result.calf_eme %> </td>
         <td> <%= aplcat_result.calf_mme %> </td>
-        <td colspan="5"> <%= link_to image_tag("delete.png"), project_field_scenario_aplcat_result_path(@project, @field, @scenario, aplcat_result), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td colspan="5"> <%= link_to image_tag("delete.png"), project_field_scenario_aplcat_result_path(@project, @field, @scenario, aplcat_result), method: :delete, data: { confirm: 'Are you sure?' }, :title => t('aplcat_tooltip.delete_all') %></td>
       </tr>
 
       <tr>
-        <td> Replacement Heifers <td>
+        <td> Replacement Heifers </td>
           <td> <%= aplcat_result.rh_aws %> </td>
           <td> <%= aplcat_result.rh_dmi %> </td>
           <td> <%= aplcat_result.rh_gei %> </td>
@@ -66,7 +66,7 @@
       </tr>
 
       <tr>
-        <td> First Calf Heifers <td>
+        <td> First Calf Heifers </td>
           <td> <%= aplcat_result.fch_aws %> </td>
           <td> <%= aplcat_result.fch_dmi %> </td>
           <td> <%= aplcat_result.fch_gei %> </td>
@@ -82,7 +82,7 @@
       </tr>
 
       <tr>
-        <td> Cow <td>
+        <td> Cow </td>
           <td> <%= aplcat_result.cow_aws %> </td>
           <td> <%= aplcat_result.cow_dmi %> </td>
           <td> <%= aplcat_result.cow_gei %> </td>
@@ -98,7 +98,7 @@
       </tr>
 
       <tr>
-        <td> Bull <td>
+        <td> Bull </td>
           <td> <%= aplcat_result.bull_aws %> </td>
           <td> <%= aplcat_result.bull_dmi %> </td>
           <td> <%= aplcat_result.bull_gei %> </td>
