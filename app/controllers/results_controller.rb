@@ -168,7 +168,9 @@ class ResultsController < ApplicationController
             @type = t("result.wet_years")
         # default to tabular / all years
         else
-           @type = t("result.summary")
+          if !(@type == t('activerecord.models.result.fem_results')) then 
+            @type = t("result.summary")
+          end
         end
     else
         if params[:button_annual] != nil
@@ -326,9 +328,9 @@ class ResultsController < ApplicationController
             @cis2, @averages2, @totals2, @cic2, @crops2, @total_area2 = get_results.call @scenario2
             @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3           
         when t('activerecord.models.result.fem_results')
-          if !(@scenario1 == "0") then @fem_results1 = Scenario.find(@scenario1).fem_result end
-          if !(@scenario2 == "0") then @fem_results2 = Scenario.find(@scenario2).fem_result end
-          if !(@scenario3 == "0") then @fem_results3 = Scenario.find(@scenario3).fem_result end
+          if @scenario1 != "0" && @scenario1 != "" then @fem_results1 = Scenario.find(@scenario1).fem_result end
+          if @scenario2 != "0" && @scenario2 != "" then @fem_results2 = Scenario.find(@scenario2).fem_result end
+          if @scenario3 != "0" && @scenario3 != "" then @fem_results3 = Scenario.find(@scenario3).fem_result end
 =begin
             # Scenario 1
             if @scenario1 > "0" then
