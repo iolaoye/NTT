@@ -10,6 +10,7 @@ class Scenario < ActiveRecord::Base
  	has_many :aplcat_parameters, :dependent => :destroy
 	has_many :grazing_parameters, :dependent => :destroy
 	has_many :supplement_parameters, :dependent => :destroy
+  has_many :aplcat_results, :dependent => :destroy
 	has_many :watershed_scenarios, :dependent => :destroy
 	has_many :annual_results, :dependent => :destroy
 	has_many :crop_results, :dependent => :destroy
@@ -71,6 +72,7 @@ class Scenario < ActiveRecord::Base
 		self.aplcat_parameters.delete_all
 		self.grazing_parameters.delete_all
 		self.supplement_parameters.delete_all
+    self.aplcat_results.delete_all
 		self.watershed_scenarios.delete_all
 		#navigate all of the operations to delete all of the soil_operations records and bmps
 		self.operations.each do |op|

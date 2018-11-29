@@ -1,5 +1,5 @@
 <% aplcat = 0 %>
-<% fem = 1 %>
+<% fem = 0 %>
 <% if !(@project == nil) %>
   <!-- <span class="sidebar_font"> -->
   <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
@@ -143,7 +143,7 @@
           <%= link_to t("result.monthly") + "-" + t('models.chart'), monthly_charts_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
         </li>
 
-        <% if ENV["APP_VERSION"] == "standard" %>
+        <% if ENV["APP_VERSION"] == "standard" and fem == 1 %>
           <li class="<%= (controller.action_name == "fem_results") ? "active" : "" %>">
             <% if controller.action_name == "fem_results" %>
               <div class="sub-header-icon">
