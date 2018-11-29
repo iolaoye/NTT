@@ -60,7 +60,7 @@ td,th {
         </tr>
         <% @feeds.each do |feed| %>
         <tr class='table-values feed'>
-            <td class="pt-3-half" contenteditable="true"><%= feed.name %></td>
+            <td class="pt-3-half" contenteditable="false"><%= feed.name %></td>
             <td class="pt-3-half" contenteditable="true"><%= feed.selling_price %></td>
             <td class="pt-3-half" contenteditable="true"><%= feed.purchase_price %></td>
             <td class="pt-3-half" contenteditable="true"><%= feed.concentrate %></td>
@@ -99,7 +99,7 @@ td,th {
         </tr>
         <% @equipment.each do |e| %>
         <tr class='table-values equip'>
-            <td class="pt-3-half" contenteditable="true"><%= e.name %></td>
+            <td class="pt-3-half" contenteditable="false"><%= e.name %></td>
             <td class="pt-3-half" contenteditable="true"><%= e.lease_rate %></td>
             <td class="pt-3-half" contenteditable="true"><%= e.new_price %></td>
             <td class="pt-3-half" contenteditable="true"><%= e.new_hours %></td>
@@ -140,7 +140,7 @@ td,th {
 
         <% @structure.each do |struct| %>
         <tr class='table-values struct'>
-            <td class="pt-3-half" contenteditable="true"><%= struct.name %></td>
+            <td class="pt-3-half" contenteditable="false"><%= struct.name %></td>
             <td class="pt-3-half" contenteditable="true"><%= struct.lease_rate %></td>
             <td class="pt-3-half" contenteditable="true"><%= struct.new_price %></td>
             <td class="pt-3-half" contenteditable="true"><%= struct.current_price %></td>
@@ -165,7 +165,7 @@ td,th {
         </tr>
         <% @other.each do |other| %>
         <tr class='table-values other'>
-            <td class="pt-3-half" contenteditable="true"><%= other.name %></td>
+            <td class="pt-3-half" contenteditable="false"><%= other.name %></td>
             
         </tr>
         <% end %>
@@ -182,7 +182,9 @@ td,th {
         equipRows = $('.tab-pane .table .table-values.equip').find('td');
         otherRows = $('.tab-pane .table .table-values.other').find('td');
         
-        console.log('Feed Rows', feedRows)
+        //console.log('Feed Rows', feedRows)
+        //console.log('Equip Rows', equipRows)
+        
         
         //console.log(rows)
         feedKeys = [
@@ -191,12 +193,14 @@ td,th {
         ]
 
         equipKeys = [
-          'Name','Lease Rate','New Price','New Hours','Current Price','Hours Remaining', 'Width', 'Speed', 'Field Efficiency',
-          'Horse Power', 'RF1', 'RF2', 'IR Loan', 'IR Equity',  'P Debt' ,'Year', 'RV1', 'RV2'
+          'name','lease_rate','new_price','new_hours','current_price','hours_remaining', 
+          'width', 'field_efficiency',
+          'horse_power', 'rf1', 'rf2', 'ir_loan', 'ir_equity',  'p_debt' ,'year', 'rv1', 
+          'rv2'
         ]
 
         otherKeys = [
-            'Name'
+            'name'
         ]
 
         feed = {}, feeds = []
@@ -219,6 +223,7 @@ td,th {
         //console.log(rows)
         for (var j = 0; j < equipRows.length-2; j++) {
             equip[equipKeys[i]] = equipRows[j].innerText
+            console.log('Equip', equip[equipKeys[i]], i)
             i++;
             if (i === equipKeys.length) {
                 i = 0; //j = 0;
@@ -239,9 +244,11 @@ td,th {
             }
         }
 
+        //TODO: REMOVE THIS AFTER FIXING ERRORNEOUS DATABASE ENTRY.
         feeds = feeds.slice(1)
         equips = equips.slice(1)
         others = others.slice(1)
+        
         $.ajax({
             url:'update', 
             type:'POST',
