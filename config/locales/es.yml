@@ -1286,27 +1286,27 @@ es:
     This page provides Contact informations.<br>
     Click <strong>Return to Table of Contents</strong> to go to the help page.
   help_html:
-    <strong>Help Page</strong><br></br>
-    This page helps user to navigate various tools in this website. User can learn about NTT and its fuctions, which are built in the website, by clicking various topics listed in the page.<br></br>
-    <strong>About NTT:</strong> This Page provides basic concept about NTT.<br>
-    <strong>Contact Information:</strong> This page provides contact informations if any question or support.<br>
-    <strong>System Requirements:</strong> This page provides information on what requirements user should have inorder to run NTT.<br>
-    <strong>Navigation Basics:</strong> This page provides navigation on various other pages linked on this website.<br>
-    <strong>Project Page:</strong> This page provides information on the Project screen.<br>
-    <strong>Location Page:</strong> This page provides information on the Location screen.<br>
-    <strong>Fields Page:</strong> This page provides information on the Fields screen.<br>
-    <strong>Soils Page:</strong> This page provides information on the Soils screen.<br>
-    <strong>Weather Page:</strong> This page provides information on the Weather screen.<br>
-    <strong>Management Page:</strong> This page provides information on the Management screen.<br>
-    <strong>Watershed Page:</strong> This page provides information on the Watershed screen.<br>
-    <strong>Simulation Page:</strong> This page provides information on the Simulation screen.<br>
-    <strong>Results Page:</strong> This page provides information on the Results screen.<br>
-    <strong>APEX Files Page:</strong> This page provides information on making modifications and downloading APEX folder.<br>
-    <strong>APEX:</strong> This page provides information on APEX.<br>
-    <strong>NTT Disclaimer:</strong> This page is about NTT Disclaimer.<br></br>
-    Click <strong>< Prev</strong> to go to the previous page.<br>
-    Click <strong>Next ></strong> to go to the next page.<br>
-    Click <strong>Return to Table of Contents</strong> to go to the NTT Table of Contents.<br>
+    <strong>Página de ayuda</strong><br></br>
+    Esta página ayuda al usuario a navegar por varias herramientas en este sitio web. El usuario puede aprender sobre NTT y sus funciones, que están integradas en la página web, haciendo clic en el tema de interés entre los presentados en la página<br></br>
+    <strong>Acerca de NTT:</strong> Esta página proporciona un concepto básico sobre NTT.<br>
+    <strong>Información de contacto:</strong> esta página proporciona información de contacto si tiene alguna pregunta o requiere ayuda.<br>
+    <strong>Requisitos del sistema:</strong> esta página proporciona información sobre los requisitos que el usuario debe tener para ejecutar NTT.<br>
+    <strong>Conceptos básicos de navegación:</strong> Esta página proporciona navegación en varias otras páginas vinculadas en este sitio web.<br>
+    <strong>Página de proyectos:</strong> esta página proporciona información sobre la pantalla del proyecto.<br>
+    <strong>Página de ubicación:</strong> esta página proporciona información sobre la pantalla de ubicación.<br>
+    <strong>Página de parcelas:</strong> esta página proporciona información sobre la pantalla de campos.<br>
+    <strong>Página de suelos:</strong> esta página proporciona información sobre la pantalla Suelos.<br>
+    <strong>Página del clima:</strong> esta página proporciona información sobre la pantalla del clima.<br>
+    <strong>Página de escenarios:</strong> esta página proporciona información sobre la pantalla de administración de escenarios.<br>
+    <strong>Página de la cuenca hidrográfica:</strong> esta página proporciona información sobre la pantalla de la cuenca hidrográfica.<br>
+    <strong>Página de resultados:</strong> esta página proporciona información sobre la pantalla de resultados.<br>
+    <strong>Página de archivos APEX:</strong> esta página proporciona información sobre cómo realizar modificaciones a los archivos de APEX.<br>
+    <strong>APEX:</strong>Esta página proporciona información sobre APEX.<br>
+    <strong>NTT descargo de responsabilidad:</strong> Esta página es sobre NTT descargo de responsabilidad.<br></br>
+    Haga clic en  <strong>< Prev</strong> Anterior para ir a la página anterior.<br>
+    Haga clic en <strong>Next ></strong> para ir a la página siguiente.<br>
+    Haga clic en  <strong>Volver a la tabla de contenido</strong> para ir a la tabla de contenido de NTT<br>
+    
   projpage:
     header: Iniciar un Proyecto
     statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'
