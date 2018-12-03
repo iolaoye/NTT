@@ -11,6 +11,7 @@ class FemController < ApplicationController
     feeds = params['feedsData']
     equip = params['equipData']
     other = params['otherData']
+    structs = params['structData']
 
     #byebug
 
@@ -32,6 +33,26 @@ class FemController < ApplicationController
             modifiedFeed.save()
         end
     end
+    for i in 0..structs.size-1
+        #byebug
+        currentStruct = structs[i.to_s]
+        modifiedFeed = FacilityAugmented.where(:name => currentFeed['name'])[0]
+        if modifiedFeed != nil
+            modifiedStruct.name = currentStruct['name']
+            modifiedStruct.lease_rate = currentStruct['lease_rate']
+            modifiedStruct.new_price = currentStruct['new_price']
+            modifiedStruct.current_price = currentStruct['current_price']
+            modifiedStruct.life_remaining = currentStruct['life_remaining']
+            modifiedStruct.maintenance_coeff = currentStruct['maintenance_coeff']
+            modifiedStruct.loan_interest_rate = currentStruct['loan_interest_rate']
+            modifiedStruct.length_loan = currentStruct['length_loan']
+            modifiedStruct.interest_rate_equity = currentStruct['interest_rate_equity']
+            modifiedStruct.proportion_debt = currentStruct['proportion_debt']
+
+            modifiedStruct.save()
+        end
+    end
+   
     for i in 0..equip.size-1
         #byebug
         currentEquip = equip[i.to_s]

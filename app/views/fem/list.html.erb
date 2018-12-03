@@ -181,7 +181,9 @@ td,th {
         feedRows = $('.tab-pane .table .table-values.feed').find('td');
         equipRows = $('.tab-pane .table .table-values.equip').find('td');
         otherRows = $('.tab-pane .table .table-values.other').find('td');
+        structRows = $('.tab-pane .table .table-values.struct').find('td');
         
+
         //console.log('Feed Rows', feedRows)
         //console.log('Equip Rows', equipRows)
         
@@ -199,6 +201,12 @@ td,th {
           'rv2'
         ]
 
+        structKeys = [
+            'name', 'lease_rate', 'new_price', 'current_price',
+            'life_remaining', 'maintenance_coeff', 'loan_interest_rate',
+            'length_loan', 'interest_rate_equity', 'proportion_debt', 'year'
+        ]
+
         otherKeys = [
             'name'
         ]
@@ -206,6 +214,7 @@ td,th {
         feed = {}, feeds = []
         equip = {}, equips = []
         other = {}, others = []
+        struct = {}, structs = []
 
         var i = 0
         //console.log(rows)
@@ -223,12 +232,25 @@ td,th {
         //console.log(rows)
         for (var j = 0; j < equipRows.length-2; j++) {
             equip[equipKeys[i]] = equipRows[j].innerText
-            console.log('Equip', equip[equipKeys[i]], i)
+            //console.log('Equip', equip[equipKeys[i]], i)
             i++;
             if (i === equipKeys.length) {
                 i = 0; //j = 0;
                 equips.push(equip);
                 equip = {}
+            }
+        }
+
+        var i = 0
+        //console.log(rows)
+        for (var j = 0; j < structRows.length-2; j++) {
+            struct[equipKeys[i]] = structRows[j].innerText
+            //console.log('Equip', equip[equipKeys[i]], i)
+            i++;
+            if (i === structKeys.length) {
+                i = 0; //j = 0;
+                structs.push(equip);
+                struct = {}
             }
         }
 
@@ -248,6 +270,7 @@ td,th {
         feeds = feeds.slice(1)
         equips = equips.slice(1)
         others = others.slice(1)
+        structs = structs.slice(1)
         
         $.ajax({
             url:'update', 
@@ -255,7 +278,8 @@ td,th {
             data: {
                 feedsData: feeds,
                 equipData: equips,
-                otherData: others
+                otherData: others,
+                structData: structs,
             },
             success:(data) => {
                 console.log('Sent data! received',data)
