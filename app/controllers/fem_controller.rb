@@ -61,7 +61,7 @@ class FemController < ApplicationController
     for i in 0..other.size - 1
         #byebug
         currentOther = other[i.to_s]
-        byebug
+        #byebug
         modifiedOther = FarmGeneral.where(:name => currentOther['name'])[0]
 
         if modifiedOther != nil
@@ -70,5 +70,9 @@ class FemController < ApplicationController
         end
     end
   end
+
+   respond_to do |format|
+       format.html
+   end 
 end
 
