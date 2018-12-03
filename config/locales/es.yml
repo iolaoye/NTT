@@ -636,7 +636,7 @@ es:
     rotational_grazing: Pastoreo Rotacional
     total_n: N Total (0-100%)
     total_p: P Total (0-100%)
-    application_rate: Cantidad Aplicada 
+    application_rate: Cantidad Aplicada
     access_to_stream: Los animales tienen acceso al rio?
   bmp:
     bmp_group: Grupo de BPG
@@ -682,7 +682,7 @@ es:
     length: Largo
     fence: Medidas de la Cerca
     distance: Distancia desde el rio hasta la cerca
-    zero_fence: Cero significa que no se crea un buffer 
+    zero_fence: Cero significa que no se crea un buffer
     buffer_width: Ancho del Buffer de pasto
     waterways_info: Incluyendo ambos lados del canal
     grass_field_portion: Porción del buffer que es pasto
@@ -908,9 +908,9 @@ es:
     references3: 'Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading. Soil and Water Conservation Society. November/December 2011 vol. 66 no. 6 400-410.'
     references4: 'Williams J.R., Arnold J.G., Srinivasan R. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
     references5: 'Winchell, M., D. Meals, S. Folle, J. Moore, D. Braun, C. DeLeo and K. Budreski. 2011. Identification of critical source areas of phosphorus within the Vermont sector of the Missisquoi Bay basin. Grand Isle, VT: Lake Champlain Basin Program.'
-  validation: 
+  validation:
     default: 'Este estado aún no ha sido validado'
-    in: 'Aqui va el texto que Rewati me va ha dar para Indiana' 
+    in: 'Aqui va el texto que Rewati me va ha dar para Indiana'
   contact1:
     header: 'Información de Contacto'
     statement: 'Para preguntas o comentarios acerca de la Herramient de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
@@ -1286,27 +1286,27 @@ es:
     This page provides Contact informations.<br>
     Click <strong>Return to Table of Contents</strong> to go to the help page.
   help_html:
-    <strong>Help Page</strong><br></br>
-    This page helps user to navigate various tools in this website. User can learn about NTT and its fuctions, which are built in the website, by clicking various topics listed in the page.<br></br>
-    <strong>About NTT:</strong> This Page provides basic concept about NTT.<br>
-    <strong>Contact Information:</strong> This page provides contact informations if any question or support.<br>
-    <strong>System Requirements:</strong> This page provides information on what requirements user should have inorder to run NTT.<br>
-    <strong>Navigation Basics:</strong> This page provides navigation on various other pages linked on this website.<br>
-    <strong>Project Page:</strong> This page provides information on the Project screen.<br>
-    <strong>Location Page:</strong> This page provides information on the Location screen.<br>
-    <strong>Fields Page:</strong> This page provides information on the Fields screen.<br>
-    <strong>Soils Page:</strong> This page provides information on the Soils screen.<br>
-    <strong>Weather Page:</strong> This page provides information on the Weather screen.<br>
-    <strong>Management Page:</strong> This page provides information on the Management screen.<br>
-    <strong>Watershed Page:</strong> This page provides information on the Watershed screen.<br>
-    <strong>Simulation Page:</strong> This page provides information on the Simulation screen.<br>
-    <strong>Results Page:</strong> This page provides information on the Results screen.<br>
-    <strong>APEX Files Page:</strong> This page provides information on making modifications and downloading APEX folder.<br>
-    <strong>APEX:</strong> This page provides information on APEX.<br>
-    <strong>NTT Disclaimer:</strong> This page is about NTT Disclaimer.<br></br>
-    Click <strong>< Prev</strong> to go to the previous page.<br>
-    Click <strong>Next ></strong> to go to the next page.<br>
-    Click <strong>Return to Table of Contents</strong> to go to the NTT Table of Contents.<br>
+    <strong>Página de ayuda</strong><br></br>
+    Esta página ayuda al usuario a navegar por varias herramientas en este sitio web. El usuario puede aprender sobre NTT y sus funciones, que están integradas en la página web, haciendo clic en el tema de interés entre los presentados en la página<br></br>
+    <strong>Acerca de NTT:</strong> Esta página proporciona un concepto básico sobre NTT.<br>
+    <strong>Información de contacto:</strong> esta página proporciona información de contacto si tiene alguna pregunta o requiere ayuda.<br>
+    <strong>Requisitos del sistema:</strong> esta página proporciona información sobre los requisitos que el usuario debe tener para ejecutar NTT.<br>
+    <strong>Conceptos básicos de navegación:</strong> Esta página proporciona navegación en varias otras páginas vinculadas en este sitio web.<br>
+    <strong>Página de proyectos:</strong> esta página proporciona información sobre la pantalla del proyecto.<br>
+    <strong>Página de ubicación:</strong> esta página proporciona información sobre la pantalla de ubicación.<br>
+    <strong>Página de parcelas:</strong> esta página proporciona información sobre la pantalla de campos.<br>
+    <strong>Página de suelos:</strong> esta página proporciona información sobre la pantalla Suelos.<br>
+    <strong>Página del clima:</strong> esta página proporciona información sobre la pantalla del clima.<br>
+    <strong>Página de escenarios:</strong> esta página proporciona información sobre la pantalla de administración de escenarios.<br>
+    <strong>Página de la cuenca hidrográfica:</strong> esta página proporciona información sobre la pantalla de la cuenca hidrográfica.<br>
+    <strong>Página de resultados:</strong> esta página proporciona información sobre la pantalla de resultados.<br>
+    <strong>Página de archivos APEX:</strong> esta página proporciona información sobre cómo realizar modificaciones a los archivos de APEX.<br>
+    <strong>APEX:</strong>Esta página proporciona información sobre APEX.<br>
+    <strong>NTT descargo de responsabilidad:</strong> Esta página es sobre NTT descargo de responsabilidad.<br></br>
+    Haga clic en  <strong>< Prev</strong> Anterior para ir a la página anterior.<br>
+    Haga clic en <strong>Next ></strong> para ir a la página siguiente.<br>
+    Haga clic en  <strong>Volver a la tabla de contenido</strong> para ir a la tabla de contenido de NTT<br>
+    
   projpage:
     header: Iniciar un Proyecto
     statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'
@@ -1339,30 +1339,32 @@ es:
         body2: ''
         body3: 'El cerrar un Proyecto activo borrará toda la información de ese Proyecto. Debido a esto, si usted necesitara usar el pryecto mas tarde, eis extremadamente importante que salve le Proyecto antes de cerrarlo. Presionando el botón <b>Cerrar Proyecto Activo</b> , la información será borrada (y perdida si no se salvo previamente). Si usted no ha salvado el Proyecto y lo quiere hacer, presione cancelar y siga las instrucciones para “Salvar Proyecto Activo” antes mencionadas.'
   projpage_html:
-    <strong>Iniciar un Proyecto</strong> <br></br>
-    Bienvenido al sistema de ayuda para Nutrient Tracking Tool (NTT). Esta aplicación fue diseñada para proveer un uso simple pero exhaustivo de una herramienta seguimiento de nutrientes, evaluació y reporte para lograr un entendimiento 
-    básico de como navegar en la aplicación de <strong>NTT</strong>.<br><br>
-  proj_body1: Hay <b>tres opciones iniciales</b> para iniciar un nuevo proyecto:<br>
+    <strong>Inicio de un proyecto</strong> <br></br>
+    Bienvenido al sistema de ayuda para la herramienta de seguimiento de nutrientes (NTT). Esta aplicación esta basada en la web y fue diseñada para proporcionar una herramienta de seguimiento, evaluación e informe de nutrientes, fácil de usar pero completa para obtener una comprensión
+   básica de cómo navegar la aplicación <strong>NTT</strong>.<br><br>
+  proj_body1: <b>Para iniciar un proyecto</b><br> Hay <b>tres opciones iniciales</b> para comenzar un nuevo proyecto:<br>
   proj_body1_modified: Hay <b>dos opciones iniciales</b> para iniciar un nuevo proyecto:<br>
-  proj_body2: Seleccione la opción <b>Projecto Nuevo</b> para iniciar un proyect desde el principio<br>
-    Seleccione la opción <b>Subir Proyecto</b> para iniciar con un proyecto <b>salvado previamente</b>.<br>
-  proj_body3: Seleccione la opción <b>Subir Ejemplo</b> para iniciar con un <b>ejemplo predefinido</b>.<br><br>
+  proj_body2: Seleccione la opción <b>Crear nuevo proyecto</b> para iniciar un proyect desde cero<br>
+    Seleccione la opción <b>Subir Proyecto</b> para iniciar un proyecto <b>previamente guardado</b>.<br>
+  proj_body3: Seleccione la opción <b>Subir Ejemplo</b> para iniciar un projecto de un <b>ejemplo predefinido</b>.<br><br>
   proj_body4: <strong>1. Opción Crear Proyecto Nuevo</strong><br>
-    Seleccionando el botón <strong>Proyecto Nuevo</strong> pregutará por el nombre del proyecto, y la descripción.
-    Después de haber entrado la información, precione el botón <strong>Salvar</strong> para salvar la información y continuar. Si no, click <strong>Cancelar</strong>.<br><br>
+    Seleccionando el botón <strong>Crear nuevo proyecto</strong>se solicita al usuario el nombre del proyecto y la información
+    de la descripción. Una vez que haya ingresado la información, haga clic en el botón <strong>Guardar</strong> para guardar la información y continuar. Si no, haga clic en <strong>Cancelar</strong>. .<br><br>
     <strong>2. Opción Subir Proyecto</strong><br>
-    Puede también usar el botón <strong>Subir Proyecto</strong> para recuperar un proyecto de NTT con información previamente salvado.<br><br>
+    También puede usar el botón <strong>Subir Proyecto</strong> para recuperar un archivo
+    guardado de NTT que contenga información previamente guardada. Haga clic en <strong>Elegir archivo</strong> para seleccionar un proyecto para subir<br><br>
   proj_body5: <strong>3. Opción Subir Proyecto Ejemplo</strong><br>
-    Puede también usar el botón <b>Subir Ejemplo</b>, y luego seleccionar un exmplo de la lista presentada para subir el proyecto deseado.
-    Presione el botón <img src="/serve_image/download.gif"> para salvar el proyecto en el que esta actualmente trabajando.<br><br>
+    También puedeusar el botón <b>Subir Ejemplo</b>, y luego seleccionar de las opciones para cargar un archivo
+    de proyecto de muestra. Una vez que haya cargado el archivo, haga clic en el botón <img src="/serve_image/download.gif">subir ejemplo para guardar la información y continuar.<br><br>
   proj_body6: <strong>Bajar un Proyecto</strong><br>
-     <strong>Importante:</strong> Si usted usa su propio archivo del clima, es importante subir ese archivo de nuevo antes de correr una nueva simulación, ya que estos archivos subidos no son salvados cuando el archivo es salvado.<br></br>
-    <strong>Editar un Proyecto</strong><br>
-    Para cambiar el nombre o la descripción de un proyecto presione <img src="/serve_image/edit.png">.<br><br>
-    <strong>Copiar un Proyecto</strong><br>
-    Para duplicar un proyecto presione <img src="/serve_image/copy.jpg">.<br><br>
-    <strong>Borrar un Proyecto</strong><br>
-    Para borrar cualquier proyecto presione <img src="/serve_image/delete.png">.
+    Puede hacer clic en el botón para bajar el proyecto actual en el que está trabajando.<br><strong>Importante</strong> si ha
+    cargado sus propios archivos meteorológicos, es importante que los cargue y simule nuevamente, ya que estos archivos no se guardarán cuando baje el proyecto activo..<br></br>
+    <strong>Editar Proyecto</strong><br>
+    Para editar el nombre o la descripción del proyecto, haga clic en <img src="/serve_image/edit.png">.<br><br>
+    <strong>Copiar Proyecto</strong><br>
+    Para copiar y crear otro proyecto igual, haga clic en <img src="/serve_image/copy.jpg">.<br><br>
+    <strong>Eliminar proyecto</strong><br>
+    Para eliminar cualquier proyecto, haga clic en <img src="/serve_image/delete.png">.
   about_ntt_html:
     <strong>About Page</strong><br></br>
     This page is about Nutrient Tracking Tool (NTT).<br></br>
@@ -1911,7 +1913,7 @@ es:
             header: Cambiar vista
             body1: 'Al hacer clic en Cambiar vista en la parte superior de la página, puede cambiar su vista de una organizada por cultivo y tipo de operación a una que esté organizada por fecha.'
             body2: 'Una vez que esté satisfecho con su programa de recorte, haga clic en Continuar en la parte superior de la página. Pasará a la página de Prácticas de Conservación donde puede indicar cualquier práctica de conservación que esté presente en el parcela.'
- 
+
   watershedpage_html:
     <strong>Field Routing (Watershed)</strong><br></br>
     The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.<br></br>
@@ -1928,7 +1930,7 @@ es:
   watershed_scenarios_html:
     <strong>Adding Scenarios</strong><br></br>
     In this page, the user can add scenarios by clicking <strong>Add Field/scenario</strong> button. After clicking the button, user can select the field from <strong>Select Field</strong> dropdown menu and choose corresponding scenario by clicking <strong>Select Scenario</strong> dropdown menu. User can add or delete the selected scenarios by clicking <img src="/serve_image/delete.png"> in the <strong>Action</strong> column. After adding scenarios, user can then go back to begin simulation. The selected fields and scenarios are routed from one to the next one.
-  
+
   conservation:
     header: Prácticas de conservación
     body1: 'Una vez que se hayan agregado el programa y las operaciones de cultivo, haga clic en el botón <strong> Continuar </strong> en la parte superior de la página de Operaciones. Esto avanzará a la página <strong> Prácticas de conservación </strong>. En esta página, los usuarios indicarán las prácticas de conservación estructural que están vigentes en el parcela. Si no existen prácticas de conservación en el parcela, simplemente haga clic en <strong> Guardar y continuar </strong> en la parte inferior de la página Prácticas de conservación, que devolverá al usuario a la página Escenario de gestión. Alternativamente, los usuarios pueden navegar directamente a la página Escenario de gestión utilizando los enlaces de navegación de la izquierda.'
@@ -2090,7 +2092,7 @@ es:
   #       header: Saving the Results to a PDF file
   #       body1: 'The results presented in the NTT screens can be saved to a PDF file. To access this utility, select the <strong>Create PDF</strong> button from the Results page. The NTT program writes a report file in PDF format that contains summary features of the scenarios, as well as the results produced from the simulations. The default name of the project report file can be changed by the user. The default location can also be change by the user depending on the browser options available. The first page of the results report file will look like the following.'
   #       body2: 'In addition to the results of the simulations, the report file also contains detailed information about the soils and management information used as input for the NTT simulations.'
-  
+
   resultspage:
     header: Página de resultados
     body1: 'La página de resultados le permite ver los resultados de las combinaciones de parcela / escenario que simuló. No puede revisar los resultados a menos que el parcela / escenario haya sido simulado. Ver simulando escenarios para más información.'
@@ -2207,7 +2209,7 @@ es:
     To <strong>View</strong> this site, click the <img src="/serve_image/view.png"> icon.<br>
     To <strong>Edit</strong> this site, click <img src="/serve_image/edit.png"> icon.<br>
     To <strong>Delete</strong> this site, click <img src="/serve_image/delete.png"> under action column.<br>
-  
+
   routing:
     header: Escenarios de enrutamiento de parcela (cuenca hidrográfica)
     body1: 'La función de enrutamiento de parcela / cuenca hidrográfica permite a los usuarios simular el enrutamiento entre parcelas. Alternativamente, los usuarios pueden usar la función de enrutamiento de parcela para simular una cuenca hidrográfica, donde en lugar de parcelas, los AOI representan subcuencas. Un escenario de enrutamiento enviará la escorrentía, los sedimentos y los nutrientes de un parcela a otro (o de una subcuenca a la siguiente si se utilizan para estimular la cuenca hidrográfica) en el orden especificado. Para cada escenario de enrutamiento / cuenca hidrográfica creado por el usuario, el usuario deberá enumerar el orden de enrutamiento del escenario de parcela. Al ver los resultados, puede observar que la carga en la salida de la cuenca hidrográfica es menor que la suma de las cargas del borde de parcela para cada parcela / subcuenca individualmente simulado. Esto se debe a que NTT simula los efectos de atenuación del agua y los nutrientes a medida que fluyen sobre el paisaje.'
@@ -2242,7 +2244,7 @@ es:
     downloading:
         header: descargar la carpeta APEX
         body1: 'El usuario puede descargar los archivos correspondientes a la ÚLTIMA SIMULACIÓN haciendo clic en <strong> Descargar la carpeta APEX </strong>. Sin embargo, para que los cambios sean visibles aquí, el usuario necesita ejecutar una simulación. Además, si está ejecutando varios escenarios o campos, la carpeta APEX contendrá los archivos que se ejecutaron en la última simulación que fue divertida. Dado que se necesita una simulación diferente para diferentes escenarios y campos, puede ver qué simulación se ejecutó por última vez al ver la página <a href=/help/page_10?locale=en> Simulación </a>, que le dará el tiempo de simulación para todos los escenarios / campos / subproyectos. Para cambiar el orden de la simulación, puede hacerlo también en la página <a href=/help/page_10?locale=en> Simulación </a>. El último escenario / campo / subproyecto agregado a la página de simulación será el último en simular y también los archivos que contendrá la carpeta APEX. '
-  
+
   # modpage:
   #   header: Modifications Page Help
   #   body1: 'The modifications page allows you to make changes directly to the APEX file. This page is intended to be used by people with APEX knowledge. <strong>The changes made on the Modifications page will not be reflected on previous pages, but changes made on previous pages WILL be reflected on the Modifications page.</strong>'
