@@ -119,7 +119,7 @@
 
 <table>
 <tr>
-  <td><%= link_to t("New APLCAT Results"), new_project_field_scenario_aplcat_result_path(@project, @field, @scenario), :class => 'btn btn-success' %></td>
+  <td><%= link_to ('New APLCAT Results'), new_project_field_scenario_aplcat_result_path(@project, @field, @scenario), :class => 'btn btn-success' %></td>
   <td> <%= link_to 'Back', edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :title => t('aplcat_tooltip.go_to_ap'), :class => "btn btn-primary" %></td>
 </tr>
 </table>

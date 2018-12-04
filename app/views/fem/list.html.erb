@@ -165,8 +165,7 @@ td,th {
         </tr>
         <% @other.each do |other| %>
         <tr class='table-values other'>
-            <td class="pt-3-half" contenteditable="true"><%= other.name %></td>
-            
+            <td class="pt-3-half" contenteditable="true"><%= other.name %></td>            
         </tr>
         <% end %>
     </table>
@@ -181,7 +180,6 @@ td,th {
         feedRows = $('.tab-pane .table .table-values.feed').find('td');
         equipRows = $('.tab-pane .table .table-values.equip').find('td');
         otherRows = $('.tab-pane .table .table-values.other').find('td');
-        
         console.log('Feed Rows', feedRows)
         
         //console.log(rows)
@@ -199,10 +197,19 @@ td,th {
             'Name'
         ]
 
+        structKeys = [
+            'name', 'lease_rate', 'new_price', 'current_price',
+            'life_remaining', 'maintenance_coeff', 'loan_interest_rate',
+            'length_loan', 'interest_rate_equity', 'proportion_debt', 'year'
+        ]
+
+        otherKeys = [
+            'name'
+        ]
+
         feed = {}, feeds = []
         equip = {}, equips = []
         other = {}, others = []
-
         var i = 0
         //console.log(rows)
         for (var j = 0; j < feedRows.length-2; j++) {
