@@ -187,6 +187,7 @@ td,th {
         //console.log('Feed Rows', feedRows)
         //console.log('Equip Rows', equipRows)
         
+        console.log('Feed Rows', feedRows)
         
         //console.log(rows)
         feedKeys = [
@@ -271,7 +272,6 @@ td,th {
         equips = equips.slice(1)
         others = others.slice(1)
         structs = structs.slice(1)
-        
         $.ajax({
             url:'update', 
             type:'POST',
