@@ -1443,7 +1443,7 @@ en:
       freqtrip: Frequency of trip (once/how many years)
       filedetails: File name containing the details for the trip
       purpose: Purpose of the trip (Buying/Selling)
-
+      delete_all: Delete all
       n_tfa: Total farm area
       n_sr: Stoking rate (ac/cow)
       n_arnfa: Area receiving N fertilizer application (acres)
