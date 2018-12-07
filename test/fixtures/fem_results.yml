@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  total_revenue: 1.5
+  total_cost: 1.5
+  net_return: 1.5
+  net_cash_flow: 1.5
+
+two:
+  total_revenue: 1.5
+  total_cost: 1.5
+  net_return: 1.5
+  net_cash_flow: 1.5
