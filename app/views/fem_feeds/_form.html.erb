@@ -1,0 +1,55 @@
+<%= form_for([@project, @fem_feed]) do |f| %>
+  <% if @fem_feed.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t('activerecord.form_errors', :count => @fem_feed.errors.count, :model => t('models.field').downcase) %></h2>
+      <ul>
+      <% @fem_feed.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :selling_price %><br>
+    <%= f.text_field :selling_price %>
+  </div>
+  <div class="field">
+    <%= f.label :purchase_price %><br>
+    <%= f.text_field :purchase_price %>
+  </div>
+  <div class="field">
+    <%= f.label :concentrate %><br>
+    <%= f.text_field :concentrate %>
+  </div>
+  <div class="field">
+    <%= f.label :forage %><br>
+    <%= f.text_field :forage %>
+  </div>
+  <div class="field">
+    <%= f.label :grain %><br>
+    <%= f.text_field :grain %>
+  </div>
+  <div class="field">
+    <%= f.label :hay %><br>
+    <%= f.text_field :hay %>
+  </div>
+  <div class="field">
+    <%= f.label :pasture %><br>
+    <%= f.text_field :pasture %>
+  </div>
+  <div class="field">
+    <%= f.label :silage %><br>
+    <%= f.text_field :silage %>
+  </div>
+  <div class="field">
+    <%= f.label :supplement %><br>
+    <%= f.text_field :supplement %>
+  </div>
+    <%= f.submit :class => "btn btn-primary" %>
+    <%= link_to 'Back', project_fem_feeds_path(@project), :class => "btn btn-primary" %>
+<% end %>

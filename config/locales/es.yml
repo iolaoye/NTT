@@ -716,6 +716,11 @@ es:
     tile_bioreactors: Sistema de Bioreactores
     drainage_management: Manejo de Aguas drenadas
     none: Ninguno
+  fem:
+    general: Entradas Generales
+    equipment: Equipos
+    facility: Estructuras
+    feed: Alimentos
   months:
     january: Enero
     february: Febrero
@@ -1306,7 +1311,6 @@ es:
     Haga clic en  <strong>< Prev</strong> Anterior para ir a la página anterior.<br>
     Haga clic en <strong>Next ></strong> para ir a la página siguiente.<br>
     Haga clic en  <strong>Volver a la tabla de contenido</strong> para ir a la tabla de contenido de NTT<br>
-
   projpage:
     header: Iniciar un Proyecto
     statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'

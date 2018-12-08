@@ -1,0 +1,22 @@
+<%= form_for([@project, @fem_general]) do |f| %>
+  <% if @fem_general.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t('activerecord.form_errors', :count => @fem_general.errors.count, :model => t('models.field').downcase) %></h2>
+      <ul>
+      <% @fem_general.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :value %><br>
+    <%= f.text_field :value %>
+  </div>
+    <%= f.submit :class => "btn btn-primary" %>
+    <%= link_to 'Back', project_fem_generals_path(@project), :class => "btn btn-primary" %>
+<% end %>

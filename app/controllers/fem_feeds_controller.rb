@@ -1,0 +1,65 @@
+class FemFeedsController < ApplicationController
+  before_action :set_fem_feed, only: [:show, :edit, :update, :destroy]
+
+  # GET /fem_feeds
+  def index
+    @fem_feeds = FemFeed.all.order(:name)
+  end
+
+  # GET /fem_feeds/1
+  def show
+  end
+
+  # GET /fem_feeds/new
+  def new
+    @fem_feed = FemFeed.new
+  end
+
+  # GET /fem_feeds/1/edit
+  def edit
+    @fem_feed = FemFeed.find(params[:id])
+  end
+
+  # POST /fem_feeds
+  def create
+    @fem_feed = FemFeed.new(fem_feed_params)
+
+    if @fem_feed.save
+      redirect_to @fem_feed, notice: 'Fem feed was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  # PATCH/PUT /fem_feeds/1
+  def update
+    @fem_feed = FemFeed.find(params[:id])
+
+    respond_to do |format|
+      if @fem_feed.update_attributes(fem_feed_params)
+        format.html { redirect_to project_fem_feeds_path(@project), notice: 'General Input was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @fem_feed.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /fem_feeds/1
+  def destroy
+    @fem_feed.destroy
+    redirect_to fem_feeds_url, notice: 'Fem feed was successfully destroyed.'
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_fem_feed
+      @fem_feed = FemFeed.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def fem_feed_params
+      params.require(:fem_feed).permit(:name, :selling_price, :purchase_price, :concentrate, :forage, :grain, :hay, :pasture, :silage, :supplement)
+    end
+end

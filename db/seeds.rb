@@ -3,18 +3,18 @@
 #######
 # encoding: utf-8
 
-file = "db/seeds/facility_augmenteds.rb"
-load file
+	file = "db/seeds/feeds_augmenteds.rb"
+	load file
 
-file = "db/seeds/farm_generals.rb"
-load file
+	file = "db/seeds/farm_generals.rb"
+	load file
 
-file = "db/seeds/feeds_augmenteds.rb"
-load file
 
-file = "db/seeds/machine_augmenteds.rb"
-load file
-
+	file = "db/seeds/facility_augmenteds.rb"
+	load file
+	
+		file = "db/seeds/machine_augmenteds.rb"
+	load file
 cont = false
 
 if cont then
@@ -67,7 +67,7 @@ if cont then
 	file = "db/seeds/farm_generals.rb"
 	load file
 
-	file = "db/seeds/feed_augmenteds.rb"
+	file = "db/seeds/feeds_augmenteds.rb"
 	load file
 
 	file = "db/seeds/fertilizers.rb"

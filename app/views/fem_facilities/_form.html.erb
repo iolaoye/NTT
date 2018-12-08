@@ -1,0 +1,22 @@
+<%= form_for([@project, @fem_facility]) do |f| %>
+  <% if @fem_facility.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t('activerecord.form_errors', :count => @fem_facility.errors.count, :model => t('models.field').downcase) %></h2>
+      <ul>
+      <% @fem_facility.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :lease_rate %><br>
+    <%= f.text_field :lease_rate %>
+  </div>
+    <%= f.submit :class => "btn btn-primary" %>
+    <%= link_to 'Back', project_fem_facilities_path(@project), :class => "btn btn-primary" %>
+<% end %>
