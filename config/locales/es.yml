@@ -928,7 +928,7 @@ es:
     phone: '(254)968-9079 (Teléfono)'
     fax: '(254)968-9790 (Fax)'
     email: 'saleh@tarleton.edu'
-  contact2:
+  contact3:
     statement: 'Para preguntas <b>técnicas</b> o comentarios acerca de Nutrient Tracking Tool <b>(NTT)</b>, pueden contactarse con:'
     name: 'Oscar Gallego'
     position: 'Asociado Principal de Investigación'
@@ -1292,7 +1292,7 @@ es:
     Click <strong>Return to Table of Contents</strong> to go to the help page.
   help_html:
     <strong>Página de ayuda</strong><br></br>
-    Esta página ayuda al usuario a navegar por varias herramientas en este sitio web. El usuario puede aprender sobre NTT y sus funciones, que están integradas en la página web, haciendo clic en el tema de interés entre los presentados en la página<br></br>
+  help_body1: Esta página ayuda al usuario a navegar por varias herramientas en este sitio web. El usuario puede aprender sobre NTT y sus funciones, que están integradas en la página web, haciendo clic en el tema de interés entre los presentados en la página<br></br>
     <strong>Acerca de NTT:</strong> Esta página proporciona un concepto básico sobre NTT.<br>
     <strong>Información de contacto:</strong> esta página proporciona información de contacto si tiene alguna pregunta o requiere ayuda.<br>
     <strong>Requisitos del sistema:</strong> esta página proporciona información sobre los requisitos que el usuario debe tener para ejecutar NTT.<br>
@@ -1301,8 +1301,8 @@ es:
     <strong>Página de ubicación:</strong> esta página proporciona información sobre la pantalla de ubicación.<br>
     <strong>Página de parcelas:</strong> esta página proporciona información sobre la pantalla de campos.<br>
     <strong>Página de suelos:</strong> esta página proporciona información sobre la pantalla Suelos.<br>
-    <strong>Página del clima:</strong> esta página proporciona información sobre la pantalla del clima.<br>
-    <strong>Página de escenarios:</strong> esta página proporciona información sobre la pantalla de administración de escenarios.<br>
+  help_weather: <strong>Página del clima:</strong> esta página proporciona información sobre la pantalla del clima.<br>
+  help_body2: <strong>Página de escenarios:</strong> esta página proporciona información sobre la pantalla de administración de escenarios.<br>
     <strong>Página de la cuenca hidrográfica:</strong> esta página proporciona información sobre la pantalla de la cuenca hidrográfica.<br>
     <strong>Página de resultados:</strong> esta página proporciona información sobre la pantalla de resultados.<br>
     <strong>Página de archivos APEX:</strong> esta página proporciona información sobre cómo realizar modificaciones a los archivos de APEX.<br>
@@ -1311,7 +1311,6 @@ es:
     Haga clic en  <strong>< Prev</strong> Anterior para ir a la página anterior.<br>
     Haga clic en <strong>Next ></strong> para ir a la página siguiente.<br>
     Haga clic en  <strong>Volver a la tabla de contenido</strong> para ir a la tabla de contenido de NTT<br>
-    
   projpage:
     header: Iniciar un Proyecto
     statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'
@@ -1782,13 +1781,13 @@ es:
                 item3: '<strong>Width:</strong> This is the width in feet of the shading. Shadings are typically narrow in width. This can be any value greater than 0.'
                 item4: '<strong>Buffer Slope Ration to Upland:</strong> This value is a fraction between 0.25 and 1.00 and indicates the slope towards the farmland (which is upland).'
   managepage_html:
-      <strong>Scenarios</strong><br></br>
-      The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario, for example “Baseline” or “Alternative” or “Auto-Irrigation”. After giving a name to the scenario the user needs to click the <strong>Save</strong> button which will create the scenario and advances the user to the operation page.<br><br>
-      The user can copy scenarios from other projects and use it in the existing project. to copy scenarios click <strong>Copy Scenario..</strong> which will create a copy of the selected scenario.<br><br>
-      You can add as many scenarios as necessary. To simulate scenario(s), user needs to select which scenario to simulate and click <strong>Simulate Selected Scenario</strong>.<br><br>
-      To view results of the simulated scenario(s), click on <strong>View Results</strong>.<br><br>
-      <strong>Actions</strong><br>
-      Once a scenario has been created, user can edit by clicking <img src="/serve_image/edit.png">. User can copy the scenario and create a same new scenario by clicking <img src="/serve_image/copy.jpg">. User can remove any scenario by clicking <img src="/serve_image/delete.png">.
+      <strong>Escenarios</strong><br></br>
+      El usuario puede crear un escenario dando clic en el botón  <b>Agregar nuevo escenario</b>. Esto abrirá una nueva página donde el usuario debe dar un nombre al escenario, por ejemplo, "Baseline" o "Alternativa" o "Riego automático", etc. Después de dar un nombre al escenario, el usuario debe dar clic en el botón <strong>Guardar</strong>, que creará el escenario y lo llevará a la página de operaciones.<br><br>
+      El usuario puede copiar escenarios de otras parcelas y usarlos en el proyecto existente. para copiar escenarios, haga clic en el botón <strong>Copiar escenario de otra parcela</strong> que creará una copia del escenario seleccionado.<br><br>
+      Puede agregar tantos escenarios como sea necesario. Para simular escenarios, el usuario debe seleccionar los escenarios a simular y hacer clic en botón <strong>Simular NTT</strong>.<br><br>
+      Para ver los resultados de los escenarios simulados, de clic in el botón <strong>Ver Resultados</strong>.<br><br>
+      <strong>Opciones</strong><br>
+      Una vez que se ha creado un escenario, el usuario puede editar haciendo clic en el icono <img src="/serve_image/edit.png">.El usuario puede copiar un escenario y crear un nuevo haciendo clic en el icono <img src="/serve_image/copy.jpg">. El usuario puede eliminar cualquier escenario haciendo clic en el icono <img src="/serve_image/delete.png">.
   operation_html:
       <strong>Operations</strong><br></br>
       The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices.

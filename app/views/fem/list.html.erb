@@ -57,7 +57,6 @@ td,th {
             <th>Pasture</th>
             <th>Silage</th>
             <th>Supplement</th>
-            <th>Operations</th>
         </tr>
         <% @feeds.each do |feed| %>
         <tr class='table-values feed'>
@@ -97,7 +96,6 @@ td,th {
             <th>P Debt</th>
             <th>Year</th>
             <th>RV1</th>
-            <th>Operations</th>
         </tr>
         <% @equipment.each do |e| %>
         <tr class='table-values equip'>
@@ -124,21 +122,21 @@ td,th {
     </table>
     </div> 
 
-    <div class="tab-pane  fade in " id="structure" style="height:800px">
-        <table class='table'>
-            <tr>
-                <th>Name</th>
-                <th>Lease Rate</th>
-                <th>New Price</th>
-                <th>Current Price</th>
-                <th>Life Remaining</th>
-                <th>Maintenance Coeff</th>
-                <th>Loan Interest Rate</th>
-                <th>Length Loan</th>
-                <th>Interest Rate Equity</th>
-                <th>Proportion Debt</th>
-                <th>Year</th>
-            </tr>
+    <div class="tab-pane  fade in " id="structure">
+    <table class='table'>
+        <tr class='table-heading'>
+            <th>Name</th>
+            <th>Lease Rate</th>
+            <th>New Price</th>
+            <th>Current Price</th>
+            <th>Life Remaining</th>
+            <th>Maintenance Coeff</th>
+            <th>Loan Interest Rate</th>
+            <th>Length Loan</th>
+            <th>Interest Rate Equity</th>
+            <th>Proportion Debt</th>
+            <th>Year</th>
+        </tr>
 
         <% @structure.each do |struct| %>
         <tr class='table-values struct'>
@@ -167,8 +165,7 @@ td,th {
         </tr>
         <% @other.each do |other| %>
         <tr class='table-values other'>
-            <td class="pt-3-half" contenteditable="true"><%= other.name %></td>
-            
+            <td class="pt-3-half" contenteditable="true"><%= other.name %></td>            
         </tr>
         <% end %>
     </table>
@@ -183,7 +180,7 @@ td,th {
         feedRows = $('.tab-pane .table .table-values.feed').find('td');
         equipRows = $('.tab-pane .table .table-values.equip').find('td');
         otherRows = $('.tab-pane .table .table-values.other').find('td');
-        
+        console.log('Feed Rows', feedRows)
         
         //console.log(rows)
         feedKeys = [
@@ -200,16 +197,25 @@ td,th {
             'Name'
         ]
 
+        structKeys = [
+            'name', 'lease_rate', 'new_price', 'current_price',
+            'life_remaining', 'maintenance_coeff', 'loan_interest_rate',
+            'length_loan', 'interest_rate_equity', 'proportion_debt', 'year'
+        ]
+
+        otherKeys = [
+            'name'
+        ]
+
         feed = {}, feeds = []
         equip = {}, equips = []
         other = {}, others = []
-
         var i = 0
         //console.log(rows)
         for (var j = 0; j < feedRows.length-2; j++) {
             feed[feedKeys[i]] = feedRows[j].innerText
             i++;
-            if ((i % 11) === 0) {
+            if (i === feedKeys.length) {
                 i = 0; //j = 0;
                 feeds.push(feed);
                 feed = {}
@@ -221,7 +227,7 @@ td,th {
         for (var j = 0; j < equipRows.length-2; j++) {
             equip[equipKeys[i]] = equipRows[j].innerText
             i++;
-            if ((i % 18) === 0) {
+            if (i === equipKeys.length) {
                 i = 0; //j = 0;
                 equips.push(equip);
                 equip = {}
@@ -233,16 +239,35 @@ td,th {
         for (var j = 0; j < otherRows.length-2; j++) {
             other[otherKeys[i]] = otherRows[j].innerText
             i++;
-            if ((i % 2) === 0) {
+            if (i === otherKeys.length) {
                 i = 0; //j = 0;
                 others.push(other);
                 other = {}
             }
         }
 
-        console.log("Feeds", feeds)
-        console.log("Equipment", equips)
-        console.log("Other", others)
+        feeds = feeds.slice(1)
+        equips = equips.slice(1)
+        others = others.slice(1)
+        $.ajax({
+            url:'update', 
+            type:'POST',
+            data: {
+                feedsData: feeds,
+                equipData: equips,
+                otherData: others
+            },
+            success:(data) => {
+                console.log('Sent data! received',data)
+            },
+            error:() => {
+                console.log('failed to send data')
+            }
+        });
+
+        //console.log("Feeds", feeds)
+        //console.log("Equipment", equips)
+        //console.log("Other", others)
     });
   });
 </script>
