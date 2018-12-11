@@ -3,7 +3,12 @@ class FemGeneralsController < ApplicationController
 
   # GET /fem_generals
   def index
-    @fem_generals = FemGeneral.all.order(:name)
+    session[:simulation] = "fem"
+    @fem_generals = FemGeneral.where(:project_id => @project.id).order(:name)
+    if @fem_generals == [] then
+      load_generals
+      @fem_generals = FemGeneral.where(:project_id => @project.id).order(:name)    
+    end
   end
 
   # GET /fem_generals/1

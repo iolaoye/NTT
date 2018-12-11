@@ -4,10 +4,10 @@ csv_text = File.read(Rails.root.join('db', 'seeds', 'machinAugmented.csv'))
 csv  = CSV.parse(csv_text, :headers => true)
 puts csv_text
 
-FemMachine.delete_all
+Machine.delete_all
 csv.each do |row| 
     puts row.to_hash
-    FemMachine.create!(
+    Machine.create!(
         {:id => row[0],
          :name => row[1],
          :lease_rate => row[4],
@@ -27,8 +27,9 @@ csv.each do |row|
          :p_debt => row[18],
          :year => row[19],
          :rv1 => row[20],
-         :rv2 => row[21]
-        }, 
+         :rv2 => row[21],
+         :project_id => @project.id
+     }, 
         #:without_protection => true
     )
 end
