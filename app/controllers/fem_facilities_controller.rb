@@ -1,5 +1,6 @@
 class FemFacilitiesController < ApplicationController
   before_action :set_fem_facility, only: [:show, :edit, :update, :destroy]
+  include FemHelper
 
   # GET /fem_facilities
   def index

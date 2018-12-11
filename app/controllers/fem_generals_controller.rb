@@ -1,6 +1,6 @@
 class FemGeneralsController < ApplicationController
   #before_action :set_fem_general, only: [:show, :edit, :update, :destroy]
-
+  include FemHelper
   # GET /fem_generals
   def index
     session[:simulation] = "fem"
