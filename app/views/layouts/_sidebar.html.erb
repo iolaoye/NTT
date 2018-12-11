@@ -10,7 +10,7 @@
   <%#= controller.action_name %>
   <%#= url_for %>
   <%#= @type %>
-  <% request.url %>
+  <%# request.url %>
       
   <% if params[:field_id] == nil || params[:field_id] == "0" %>
   	<% field_name = "" %>
@@ -172,83 +172,51 @@
   	<ul class="nav nav-pills nav-stacked nav-sidebar">
   		<li class="<%= (controller_name == "watersheds" || controller_name == "watershed_scenarios" || (controller_name == "results" && request.url.include?(url_for("/fields/0/results?"))) || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(@project, :locale=>I18n.locale) %></li>
       <% unless ENV["APP_VERSION"] == "modified" %>
-
-   <li class="<%= ((controller_name == "fields") || (controller_name == "weathers") || (controller_name == "soils") || (controller_name == "layers") ||  (controller_name == "scenarios") || (controller_name == "operations") || (controller_name == "bmps") || ((controller_name == "results") && request.url.include?(url_for("simulation=scenario"))) || (controller_name == "apex_controls") || (controller_name == "apex_parameters")|| (controller_name == "subareas") || (controller_name == "apex_soils")|| (controller_name == "soil_operations") || (controller_name == "sites") || (session[:simulation] == 'scenario')) ? "active" : "" %>">
-      <%= link_to t('menu.fem'), project_fields_path(@project, :locale=>I18n.locale) %>
-    </li>
-    <%# if result_submenu %>
-      <ul class="nav nav-pills nav-stacked nav-sidebar-sub">
-        <li class="<%= (controller.action_name == "index") ? "active" : "0" %>">
-
-          <% if controller_name == "fem_facilities" %>
-            <div class="sub-header-icon">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            </div>
-          <% end %>
-          <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub-sub">
-             <li> 
-                <%= link_to t("fem.feed"), project_fem_feeds_path(@project, :button => t('fem.feed'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
-             </li>
-             <li> 
-                <%= link_to t("fem.machine"), project_fem_machines_path(@project, :button => t('fem.machine'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
-             </li>
-             <li> 
-                <%= link_to t("fem.facility"), project_fem_facilities_path(@project, :button => t('fem.facility'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
-             </li>            
-             <li> 
-                <%= link_to t("fem.general"), project_fem_generals_path(@project, :button => t('fem.general'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
-             </li>
-         </ul>
+        <li class="<%= ((controller_name == "fem_generals") || (controller_name == "fem_feeds") || (controller_name == "fem_machines") || (controller_name == "fem_facilities")) ? "active" : "" %>">
+          <%= link_to t('menu.fem'), project_fem_feeds_path(@project, :button => t('fem.feed'), :locale=>I18n.locale), :class=>"results-label-sub"%>
         </li>
-        <% if ENV["APP_VERSION"] == "modified, standard" %>
-          <li class="<%= (controller.action_name == "by_soils") ? "active" : "" %>">
-            <% if controller.action_name == "by_soils" %>
-              <div class="sub-header-icon">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              </div>
-            <% end %>
-            <%= link_to t('result.by_soil'), by_soils_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
-          </li>
-        <%# end %>
+        <% if fem_submenu %>
+          <ul class="nav nav-pills nav-stacked ">
+            <li class="<%= (controller.action_name == "index") ? "active" : "0" %>">
+              <ul class="nav nav-pills nav-stacked nav-sidebar-sub">
+                 <% if controller_name == "fem_feeds" %>
+                   <div class="header-icon">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                   </div>
+                 <% end %>
+                 <li> 
+                    <%= link_to t("fem.feed"), project_fem_feeds_path(@project, :button => t('fem.feed'), :locale=>I18n.locale), :class=>"results-label-sub" %>
+                 </li>
+                 <% if controller_name == "fem_machines" %>
+                   <div class="header-icon">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                   </div>
+                 <% end %>
+                 <li> 
+                    <%= link_to t("fem.equipment"), project_fem_machines_path(@project, :button => t('fem.equipment'), :locale=>I18n.locale), :class=>"results-label-sub" %>
+                 </li>
+                 <% if controller_name == "fem_facilities" %>
+                   <div class="header-icon">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                   </div>
+                 <% end %>
+                 <li> 
+                    <%= link_to t("fem.facility"), project_fem_facilities_path(@project, :button => t('fem.facility'), :locale=>I18n.locale), :class=>"results-label-sub" %>
+                 </li>            
+                 <% if controller_name == "fem_generals" %>
+                   <div class="header-icon">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                   </div>
+                 <% end %>
+                 <li> 
+                    <%= link_to t("fem.general"), project_fem_generals_path(@project, :button => t('fem.general'), :locale=>I18n.locale), :class=>"results-label-sub" %>
+                 </li>
+             </ul>
+            </li>
 
-
-
-
-        <li class="<%= (controller.action_name == "annual_charts") ? "active" : "" %>">
-          <% if controller.action_name == "annual_charts" %>
-            <div class="sub-header-icon">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            </div>
-          <% end %>
-          <%= link_to t("result.annual") + "-" + t('models.chart'), annual_charts_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub"%>
-        </li>
-        <li class="<%= (controller.action_name == "monthly_charts") ? "active" : "" %>">
-          <% if controller.action_name == "monthly_charts" %>
-            <div class="sub-header-icon">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            </div>
-          <% end %>
-          <%= link_to t("result.monthly") + "-" + t('models.chart'), monthly_charts_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub" %>
-        </li>
-
-        <% if ENV["APP_VERSION"] == "standard" and fem == 1 %>
-          <li class="<%= (controller.action_name == "fem_results") ? "active" : "" %>">
-            <% if controller.action_name == "fem_results" %>
-              <div class="sub-header-icon">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              </div>
-            <% end %>
-            <%= link_to t("result.fem") + "-" + t('models.results'), fem_results_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub"%>
-          </li>
-        <%end%>
       </ul>
     <% end %>
-
-
-
-
-
-      <% end %>  
+  <% end %>  
     </ul>
   	<% if watershed_submenu %>
   		<% results = 0 %>

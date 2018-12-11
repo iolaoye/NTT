@@ -6,6 +6,7 @@ puts csv_text
 
 FemFeed.delete_all
 csv.each do |row| 
+    debugger
     puts row.to_hash
     FemFeed.create!(
         {:id => row[0],
@@ -18,7 +19,8 @@ csv.each do |row|
          :hay => row[8],
          :pasture => row[9],
          :silage => row[10],
-         :supplement => row[11]
+         :supplement => row[11],
+         :project_id => @project.id
         }, 
         #:without_protection => true
     )
