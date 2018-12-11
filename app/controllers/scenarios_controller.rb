@@ -272,7 +272,7 @@ class ScenariosController < ApplicationController
             xml.send("pasture",feed.pasture.to_s) 
             xml.send("silage",feed.silage.to_s)
             xml.send("supplement",feed.supplement.to_s)
-            xml.send("codes"),feed.codes.to_s)
+            xml.send("codes",feed.codes.to_s)
           }
           #if i >= 10 then
             #break
