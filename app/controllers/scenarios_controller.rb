@@ -232,7 +232,6 @@ class ScenariosController < ApplicationController
 
 ################################  Update the FEM tables #################################
   def fem_tables
-    debugger
     feeds = FemFeed.where(:project_id => @project.id)
     if feeds == [] then
       load_feeds
