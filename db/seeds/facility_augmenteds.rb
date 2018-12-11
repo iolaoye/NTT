@@ -4,10 +4,10 @@ csv_text = File.read(Rails.root.join('db', 'seeds', 'facilityAugmented.csv'))
 csv  = CSV.parse(csv_text, :headers => true)
 puts csv_text
 
-FemFacility.delete_all
+Facility.delete_all
 csv.each do |row| 
     puts row.to_hash
-    FemFacility.create!(
+    Facility.create!(
         {:id => row[0],
          :name => row[1],
          :lease_rate => row[4],
@@ -20,7 +20,8 @@ csv.each do |row|
          :length_loan => row[11],
          :interest_rate_equity => row[12],
          :proportion_debt => row[13],
-         :year => row[14]
+         :year => row[14],
+         :project_id => @project.id
         }, 
         #:without_protection => true
     )

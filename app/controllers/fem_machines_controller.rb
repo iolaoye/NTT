@@ -3,7 +3,12 @@ class FemMachinesController < ApplicationController
 
   # GET /fem_machines
   def index
+    session[:simulation] = "fem"
     @fem_machines = FemMachine.all.order(:name)
+    if @fem_machines == [] then
+      load_machines
+      @fem_machines = FemMachine.where(:project_id => @project.id).order(:name)    
+    end
   end
 
   # GET /fem_machines/1

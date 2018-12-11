@@ -1,9 +1,14 @@
 class FemFeedsController < ApplicationController
   before_action :set_fem_feed, only: [:show, :edit, :update, :destroy]
-
+  include FemFeedsHelper
   # GET /fem_feeds
   def index
-    @fem_feeds = FemFeed.all.order(:name)
+    session[:simulation] = "fem"
+    @fem_feeds = FemFeed.where(:project_id => @project.id).order(:name)
+    if @fem_feeds == [] then
+      load_feeds
+      @fem_feeds = FemFeed.where(:project_id => @project.id).order(:name)    
+    end
   end
 
   # GET /fem_feeds/1
