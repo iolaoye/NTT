@@ -388,6 +388,7 @@ class ScenariosController < ApplicationController
     msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
     state = State.find(@project.location.state_id).state_abbreviation
     #@fem_list = Array.new
+
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.additions {
         xml.operations {
@@ -395,11 +396,12 @@ class ScenariosController < ApplicationController
             get_operations(op, state, xml)
           end
         }
-        xml.bmps {
-          @scenario.bmps.each do |bmp|
-            get_bmps(bmp, state, xml)
-          end
-        }
+        #todo add bmps 
+        #xml.bmps {
+          #@scenario.bmps.each do |bmp|
+            #get_bmps(bmp, state, xml)
+          #end
+        #}
       }
     end
     fem_list = builder.to_xml  #convert the Nokogiti XML file to XML file text
