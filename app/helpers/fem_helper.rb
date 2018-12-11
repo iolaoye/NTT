@@ -1,7 +1,6 @@
 module FemHelper
     #Load fem feeds if project is new
     def load_feeds
-    	debugger
       require 'csv'
 
       csv_text = File.read(Rails.root.join('db', 'seeds', 'feedsAugmented.csv'))
