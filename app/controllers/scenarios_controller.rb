@@ -272,7 +272,7 @@ class ScenariosController < ApplicationController
             xml.send("pasture",feed.pasture.to_s) 
             xml.send("silage",feed.silage.to_s)
             xml.send("supplement",feed.supplement.to_s)
-            xml.send("codes"),feed.codes.to_s)
+            xml.send("codes",feed.codes.to_s)
           }
           #if i >= 10 then
             #break
@@ -300,7 +300,7 @@ class ScenariosController < ApplicationController
             xml.send("rv1", equip.rv1.to_s)
             xml.send("rv2", equip.rv2.to_s)
             xml.send("codes", equip.codes.to_s)
-            xml.send("ownership", equip.ownership
+            xml.send("ownership", equip.ownership)
           }
           #if i >= 10 then
             #break
