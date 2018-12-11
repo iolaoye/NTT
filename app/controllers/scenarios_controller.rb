@@ -272,6 +272,7 @@ class ScenariosController < ApplicationController
             xml.send("pasture",feed.pasture.to_s) 
             xml.send("silage",feed.silage.to_s)
             xml.send("supplement",feed.supplement.to_s)
+            xml.send("codes"),feed.codes.to_s)
           }
           #if i >= 10 then
             #break
@@ -298,6 +299,8 @@ class ScenariosController < ApplicationController
             xml.send("year", equip.year.to_s )
             xml.send("rv1", equip.rv1.to_s)
             xml.send("rv2", equip.rv2.to_s)
+            xml.send("codes", equip.codes.to_s)
+            xml.send("ownership", equip.ownership
           }
           #if i >= 10 then
             #break
@@ -317,7 +320,9 @@ class ScenariosController < ApplicationController
             xml.send("length_loan", struct.length_loan.to_s)
             xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
             xml.send("proportion_debt", struct.proportion_debt.to_s)
-            xml.send("year", struct.year.to_s )
+            xml.send("year", struct.year.to_s)
+            xml.send("codes", struct.codes.to_s)
+            xml.send("ownership", struct.ownership.to_s)
           }
           #if i >= 10 then
             #break
