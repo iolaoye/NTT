@@ -1,6 +1,6 @@
 class FemFeedsController < ApplicationController
   before_action :set_fem_feed, only: [:show, :edit, :update, :destroy]
-  include FemFeedsHelper
+  include FemHelper
   # GET /fem_feeds
   def index
     session[:simulation] = "fem"

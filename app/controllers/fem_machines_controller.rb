@@ -1,5 +1,6 @@
 class FemMachinesController < ApplicationController
   before_action :set_fem_machine, only: [:show, :edit, :update, :destroy]
+  include FemHelper
 
   # GET /fem_machines
   def index

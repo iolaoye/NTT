@@ -3,18 +3,6 @@
 #######
 # encoding: utf-8
 
-	file = "db/seeds/feeds_augmenteds.rb"
-	load file
-
-	file = "db/seeds/farm_generals.rb"
-	load file
-
-
-	file = "db/seeds/facility_augmenteds.rb"
-	load file
-	
-		file = "db/seeds/machine_augmenteds.rb"
-	load file
 cont = false
 
 if cont then
@@ -61,15 +49,6 @@ if cont then
 	file = "db/seeds/events.rb"
 	load file
 
-	file = "db/seeds/facility_augmenteds.rb"
-	load file
-
-	file = "db/seeds/farm_generals.rb"
-	load file
-
-	file = "db/seeds/feeds_augmenteds.rb"
-	load file
-
 	file = "db/seeds/fertilizers.rb"
 	load file
 
@@ -83,9 +62,6 @@ if cont then
 	load file
 
 	file = "db/seeds/irrigations.rb"
-	load file
-
-	file = "db/seeds/machine_augmenteds.rb"
 	load file
 
 	file = "db/seeds/manure_controls.rb"
