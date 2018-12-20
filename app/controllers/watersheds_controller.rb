@@ -6,6 +6,33 @@ class WatershedsController < ApplicationController
 
   before_filter :set_notifications
 
+  def simulate_fem
+    @errors = Array.new
+    msg = "OK"
+    #msg = fem_tables()  
+    byebug
+    if params[:select_watershed] == nil then
+      @errors.push("Select at least one watershed to simulate ")
+      return "Select at least one watershed to simulate "
+    end
+    ActiveRecord::Base.transaction do
+      params[:select_watershed].each do |id|
+        @watershed = Watershed.find(id)
+        if @watershed.operations.count <= 0 then
+          @errors.push(@watershed.name + " " + t('scenario.add_crop_rotation'))
+          return
+        end
+        #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
+        msg = run_fem
+        unless msg.eql?("OK")
+          @errors.push("Error simulating watershed " + @watershed.name + " (" + msg + ")")
+          raise ActiveRecord::Rollback
+        end # end unless msg
+      end # end each do params loop
+    end
+    return msg
+  end
+
   def set_notifications
 	@notice = nil
 	@error = nil
@@ -89,7 +116,9 @@ class WatershedsController < ApplicationController
   def simulate
     #@project = Project.find(params[:project_id])
     @errors = Array.new
-	if !(params[:commit].include?("Simulate")) then
+    if !(params[:commit].include?("FEM")) then
+        msg = simulate_fem
+	elsif !(params[:commit].include?("Simulate")) then
 		#update watershed_scenarios
 		@watershed_name = params[:commit]
 		@watershed_name.slice! "Add to "
