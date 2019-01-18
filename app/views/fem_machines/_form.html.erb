@@ -1,0 +1,90 @@
+<%= form_for([@project, @fem_machine]) do |f| %>
+  <% if @fem_machine.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t('activerecord.form_errors', :count => @fem_machine.errors.count, :model => t('models.field').downcase) %></h2>
+      <ul>
+      <% @fem_machine.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, :readonly => true %>
+  </div>
+  <div class="field">
+    <%= f.label :lease_rate %><br>
+    <%= f.text_field :lease_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :new_price %><br>
+    <%= f.text_field :new_price %>
+  </div>
+  <div class="field">
+    <%= f.label :new_hours %><br>
+    <%= f.text_field :new_hours %>
+  </div>
+  <div class="field">
+    <%= f.label :current_price %><br>
+    <%= f.text_field :current_price %>
+  </div>
+  <div class="field">
+    <%= f.label :hours_remaining %><br>
+    <%= f.text_field :hours_remaining%>
+  </div>
+  <div class="field">
+    <%= f.label :width %><br>
+    <%= f.text_field :width %>
+  </div>
+  <div class="field">
+    <%= f.label :speed %><br>
+    <%= f.text_field :speed %>
+  </div>
+  <div class="field">
+    <%= f.label :field_efficiency %><br>
+    <%= f.text_field :field_efficiency %>
+  </div>
+  <div class="field">
+    <%= f.label :horse_power %><br>
+    <%= f.text_field :horse_power %>
+  </div>
+  <div class="field">
+    <%= f.label :rf1 %><br>
+    <%= f.text_field :rf1 %>
+  </div>
+  <div class="field">
+    <%= f.label :rf2 %><br>
+    <%= f.text_field :rf2 %>
+  </div>
+  <div class="field">
+    <%= f.label :ir_loan %><br>
+    <%= f.text_field :ir_loan %>
+  </div>
+  <div class="field">
+    <%= f.label :l_loan %><br>
+    <%= f.text_field :l_loan %>
+  </div>
+  <div class="field">
+    <%= f.label :ir_equite %><br>
+    <%= f.text_field :ir_equity %>
+  </div>
+  <div class="field">
+    <%= f.label :p_debt %><br>
+    <%= f.text_field :p_debt %>
+  </div>
+  <div class="field">
+    <%= f.label :year %><br>
+    <%= f.text_field :year %>
+  </div>
+  <div class="field">
+    <%= f.label :rv1 %><br>
+    <%= f.text_field :rv1 %>
+  </div>
+  <div class="field">
+    <%= f.label :rv2 %><br>
+    <%= f.text_field :rv2 %>
+  </div>
+    <%= f.submit :class => "btn btn-primary" %>
+    <%= link_to 'Back', project_fem_machines_path(@project), :class => "btn btn-primary" %>
+<% end %>

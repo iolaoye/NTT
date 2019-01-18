@@ -6,7 +6,8 @@ class ScenariosController < ApplicationController
   include SimulationsHelper
   include ProjectsHelper
   include ApplicationHelper
-################################  scenario bmps #################################
+  include FemHelper
+  ##############################  scenario bmps #################################
 # GET /scenarios/1
 # GET /1/scenarios.json
   def scenario_bmps
@@ -206,7 +207,7 @@ class ScenariosController < ApplicationController
   def simulate_fem
     @errors = Array.new
     msg = "OK"
-    #msg = fem_tables()  todo
+    msg = fem_tables()  
     if params[:select_scenario] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
@@ -231,11 +232,35 @@ class ScenariosController < ApplicationController
 
 ################################  Update the FEM tables #################################
   def fem_tables
-    i=0
+    feeds = FemFeed.where(:project_id => @project.id)
+    if feeds == [] then
+      load_feeds
+      feeds = FemFeed.where(:project_id => @project.id)
+    end
+
+    machines = FemMachine.where(:project_id => @project.id)
+    if machines == [] then
+      load_machines
+      machines = FemMachine.where(:project_id => @project.id)
+    end
+
+    facilities = FemFacility.where(:project_id => @project.id)
+    if facilities == [] then
+      load_facilities
+      facilities = FemFacility.where(:project_id => @project.id)
+    end
+
+    generals = FemGeneral.where(:project_id => @project.id)
+    if generals == [] then
+      load_generals
+      generals = FemGeneral.where(:project_id => @project.id)
+    end
+
+    #i=0
     xmlBuilder = Nokogiri::XML::Builder.new do |xml|
       xml.send('FEM') {
-        FeedsAugmented.all.each do |feed|
-          i+=1
+        feeds.each do |feed|
+          #i+=1
           xml.send('feed') {
             xml.send("feed-name", feed.name.to_s)
             xml.send("selling-price", feed.selling_price.to_s)
@@ -247,14 +272,15 @@ class ScenariosController < ApplicationController
             xml.send("pasture",feed.pasture.to_s) 
             xml.send("silage",feed.silage.to_s)
             xml.send("supplement",feed.supplement.to_s)
+            xml.send("codes",feed.codes.to_s)
           }
-          if i >= 10 then
-            break
-          end
+          #if i >= 10 then
+            #break
+          #end
         end
-i=0
-        MachineAugmented.all.each do |equip|
-          i+=1
+#i=0
+        machines.each do |equip|
+          #i+=1
           xml.send('machine') {
             xml.send("machine-name", equip.name.to_s)
             xml.send("lease_rate", equip.lease_rate.to_s)
@@ -273,14 +299,16 @@ i=0
             xml.send("year", equip.year.to_s )
             xml.send("rv1", equip.rv1.to_s)
             xml.send("rv2", equip.rv2.to_s)
+            xml.send("codes", equip.codes.to_s)
+            xml.send("ownership", equip.ownership)
           }
-          if i >= 10 then
-            break
-          end
+          #if i >= 10 then
+            #break
+          #end
         end
-i=0
-        FacilityAugmented.all.each do |struct|
-          i+=1
+#i=0
+        facilities.each do |struct|
+          #i+=1
           xml.send('structure') {
             xml.send("struct-name", struct.name.to_s)
             xml.send("lease_rate", struct.lease_rate.to_s)
@@ -292,23 +320,25 @@ i=0
             xml.send("length_loan", struct.length_loan.to_s)
             xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
             xml.send("proportion_debt", struct.proportion_debt.to_s)
-            xml.send("year", struct.year.to_s )
+            xml.send("year", struct.year.to_s)
+            xml.send("codes", struct.codes.to_s)
+            xml.send("ownership", struct.ownership.to_s)
           }
-                   if i >= 10 then
-            break
-          end
+          #if i >= 10 then
+            #break
+          #end
         end
-i=0
-        FarmGeneral.all.each do |other|
-          i+=1
+#i=0
+        generals.each do |other|
+          #i+=1
           xml.send("other") {
             xml.send("other-name", other.name.to_s)
-            xml.send("value", other.values.to_s)
+            xml.send("value", other.value.to_s)
           }
         end
-                 if i >= 10 then
-            break
-          end
+          #if i >= 10 then
+            #break
+          #end
       }
     end
  
@@ -358,6 +388,7 @@ i=0
     msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
     state = State.find(@project.location.state_id).state_abbreviation
     #@fem_list = Array.new
+
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.additions {
         xml.operations {
@@ -365,11 +396,12 @@ i=0
             get_operations(op, state, xml)
           end
         }
-        xml.bmps {
-          @scenario.bmps.each do |bmp|
-            get_bmps(bmp, state, xml)
-          end
-        }
+        #todo add bmps 
+        #xml.bmps {
+          #@scenario.bmps.each do |bmp|
+            #get_bmps(bmp, state, xml)
+          #end
+        #}
       }
     end
     fem_list = builder.to_xml  #convert the Nokogiti XML file to XML file text

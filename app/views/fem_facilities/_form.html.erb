@@ -1,0 +1,62 @@
+<%= form_for([@project, @fem_facility]) do |f| %>
+  <% if @fem_facility.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t('activerecord.form_errors', :count => @fem_facility.errors.count, :model => t('models.field').downcase) %></h2>
+      <ul>
+      <% @fem_facility.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, :readonly => true %>
+  </div>
+  <div class="field">
+    <%= f.label :lease_rate %><br>
+    <%= f.text_field :lease_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :new_price %><br>
+    <%= f.text_field :new_price %>
+  </div>
+  <div class="field">
+    <%= f.label :new_life %><br>
+    <%= f.text_field :new_life %>
+  </div>
+  <div class="field">
+    <%= f.label :current_price %><br>
+    <%= f.text_field :current_price %>
+  </div>
+  <div class="field">
+    <%= f.label :life_remaining %><br>
+    <%= f.text_field :life_remaining %>
+  </div>
+  <div class="field">
+    <%= f.label :maintenance_coeff %><br>
+    <%= f.text_field :maintenance_coeff %>
+  </div>
+  <div class="field">
+    <%= f.label :loan_interest_rate %><br>
+    <%= f.text_field :loan_interest_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :length_loan %><br>
+    <%= f.text_field :length_loan %>
+  </div>
+  <div class="field">
+    <%= f.label :interest_rate_equity %><br>
+    <%= f.text_field :interest_rate_equity %>
+  </div>
+  <div class="field">
+    <%= f.label :proportion_debt %><br>
+    <%= f.text_field :proportion_debt %>
+  </div>
+  <div class="field">
+    <%= f.label :year %><br>
+    <%= f.text_field :year %>
+  </div>
+    <%= f.submit :class => "btn btn-primary" %>
+    <%= link_to 'Back', project_fem_facilities_path(@project), :class => "btn btn-primary" %>
+<% end %>

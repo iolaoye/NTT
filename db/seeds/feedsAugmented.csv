@@ -1,4 +1,5 @@
 ID,Name,Codes,Selling price,Purchase price,concentrate,forage,grain,hay,pasture,silage,supplement
+1,Name,9999,0.13,0.11,12110,12120,12130,12140,12150,12160,12170
 2,alfalfa,12001,3.18,3.18,0,1,0,1,0,0,0
 3,coastal,12002,6.4,6.4,0,1,0,1,0,0,0
 4,silage,12003,4,4,0,1,0,0,0,1,0

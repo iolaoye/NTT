@@ -1,5 +1,5 @@
 class FemController < ApplicationController
-  def list
+  def show
     @feeds = FeedsAugmented.order(:name)
     @equipment = MachineAugmented.order(:name)
     @structure = FacilityAugmented.order(:name)
@@ -11,9 +11,6 @@ class FemController < ApplicationController
     feeds = params['feedsData']
     equip = params['equipData']
     other = params['otherData']
-
-    byebug
-
     for i in 0..feeds.size 
         #byebug
         currentFeed = feeds[i.to_s]

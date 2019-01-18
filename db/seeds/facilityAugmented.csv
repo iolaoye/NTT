@@ -1,5 +1,4 @@
 ID,Name,Codes,Ownership,Lease Rate,New Price,New Life,Current Price,Life Remaining,Maintenance Coefficient,Loan Interest Rate,Length of Loan,Interest Rate on Equity,Proportion of Debt,Year
-1,Name,9999,102,103,104,105,106,107,119,114,115,116,117,118
 2,Commodity Barn,32000100,1,500,30000,30,30000,30,0.035,0.07,7,0.07,0.5,5
 3,Equipment Shed 1,32000200,1,500,1749.84,30,1749.84,30,0.035,0.07,7,0.07,0.5,5
 4,Equipment Shed 2,32000300,1,500,3982.34,30,3982.34,30,0.035,0.07,7,0.07,0.5,5
