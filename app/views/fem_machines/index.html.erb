@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header"><h1><%=t("fem.equipment")%></h1></div>
+  <div class="table-responsive">
+    <div class="panel panel-default">
+      <table class='table table-striped'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Lease Rate</th>
+            <th>New Price</th>
+            <th>New Hours</th>
+            <th>Current Price</th>
+            <th>Hours Remain</th>
+            <th>Width</th>
+            <th>Speed</th>
+            <th>Field Eff.</th>
+            <th>Hours Power</th>
+            <th>Rf1</th>
+            <th>Rf2</th>
+            <th>Ir Loan</th>
+            <th>L Loan</th>
+            <th>Ir Equity</th>
+            <th>P Debt</th>
+            <th>Year</th>
+            <th>Rv1</th>
+            <th>Rv2</th>
+            <th><%=t('general.actions')%></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @fem_machines.each do |fem_machine| %>
+            <tr>
+              <td><%= fem_machine.name %></td>
+              <td><%= fem_machine.lease_rate %></td>
+              <td><%= fem_machine.new_price %></td>
+              <td><%= fem_machine.new_hours %></td>
+              <td><%= fem_machine.current_price %></td>
+              <td><%= fem_machine.hours_remaining %></td>
+              <td><%= fem_machine.width %></td>
+              <td><%= fem_machine.speed%></td>
+              <td><%= fem_machine.field_efficiency %></td>
+              <td><%= fem_machine.horse_power %></td>
+              <td><%= fem_machine.rf1 %></td>
+              <td><%= fem_machine.rf2 %></td>
+              <td><%= fem_machine.ir_loan%></td>
+              <td><%= fem_machine.l_loan%></td>
+              <td><%= fem_machine.ir_equity%></td>
+              <td><%= fem_machine.p_debt%></td>
+              <td><%= fem_machine.year %></td>
+              <td><%= fem_machine.rv1 %></td>
+              <td><%= fem_machine.rv2 %></td>
+              <td><%= link_to image_tag("edit.png"), edit_project_fem_machine_path(@project, fem_machine) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<br>

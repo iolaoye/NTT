@@ -423,24 +423,24 @@
       <tr>
         <th><div class="field">
           <%=  t('aplcat.mdogfc') %>
-          <%= f.number_field :mdogfc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.mdogfc'), :step => 'any', min: 0 %>
+          <%= f.number_field :mdogfc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.mdogfc'), :value=> 283, :step => 'any', min: 0 %>
         </div>
       </th>
       <th><div class="field">
         <%=  t('aplcat.mxdogfc') %>
-        <%= f.number_field :mxdogfc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.mxdogfc'), :step => 'any', min: 0 %>
+        <%= f.number_field :mxdogfc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.mxdogfc'), :value=> 284, :step => 'any', min: 0 %>
       </div>
     </th>
   </tr>
   <tr>
     <th><div class="field">
       <%=  t('aplcat.cwsoj') %>
-      <%= f.number_field :cwsoj, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.cwsoj'), :step => 'any', min: 1, max: 366 %>
+      <%= f.number_field :cwsoj, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.cwsoj'), :value=> 81, :step => 'any', min: 1, max: 366 %>
     </div>
   </th>
     <th><div class="field">
       <%=  t('aplcat.cweoj') %>
-      <%= f.number_field :cweoj, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.cweoj'), :step => 'any', min: 1, max: 366 %>
+      <%= f.number_field :cweoj, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.cweoj'), :value=> 83, :step => 'any', min: 1, max: 366 %>
     </div>
   </th>
 </tr>
@@ -454,19 +454,19 @@
   </th>
     <th><div class="field">
       <%=  t('aplcat.nodew') %>
-      <%= f.number_field :nodew, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.nodew'), :step => 'any', min: 7, max: 44 %>
+      <%= f.number_field :nodew, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.nodew'), :value=> 7, :step => 'any', min: 7, max: 44 %>
     </div>
   </th>
   </tr>
     <tr>
       <th><div class="field">
         <%=  t('aplcat.byosm') %>
-        <%= f.number_field :byosm, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.byosm'), :step => 'any', min: 0 %>
+        <%= f.number_field :byosm, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.byosm'), :value=> 2012, :step => 'any', min: 0 %>
       </div>
     </th>
     <th><div class="field">
       <%=  t('aplcat.eyosm') %>
-      <%= f.number_field :eyosm, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.eyosm'), :step => 'any', min: 0 %>
+      <%= f.number_field :eyosm, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.eyosm'), :value=> 2014, :step => 'any', min: 0 %>
     </div>
   </th>
   </tr>
@@ -479,55 +479,55 @@
     <%= field_set_tag t('aplcat.divv_11'), class:'fieldset' do %>
     <div class="field">
       <%=  t('aplcat.drinkg') %>
-      <%= f.number_field :drinkg, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.drinkg'), :step => '0.001', min: 0.001, max: 1.0 %>
+      <%= f.number_field :drinkg, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.drinkg'), :value=> 0.0330, :step => '0.001', min: 0.001, max: 1.0 %>
     </div>
     <div class="field">
       <%=  t('aplcat.drinkl') %>
-      <%= f.number_field :drinkl, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.drinkl'), :step => '0.001', min: 0.001, max: 1.0 %>
+      <%= f.number_field :drinkl, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.drinkl'), :value=> 0.015, :step => '0.001', min: 0.001, max: 1.0 %>
     </div>
     <div class="field">
       <%=  t('aplcat.drinkm') %>
-      <%= f.number_field :drinkm, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.drinkm'), :step => '0.001', min: 0.001, max: 1.0 %>
+      <%= f.number_field :drinkm, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.drinkm'), :value=> 0.019, :step => '0.001', min: 0.001, max: 1.0 %>
     </div>
     <div class="field">
       <%=  t('aplcat.avgtm') %><br>
 			<%= select_tag "month_id1", options_for_select(listMonths, :selected => 0), {:prompt => t("Select each months")} %><br>
       <%#= f.number_field :avgtm, class: 'gvTitleStyleNumber', :step => '0.1', min: 0.0, max: 125.0 %>
       <div style='display:none' id="t_jan">
-      <%= f.number_field :tjan, class: 'gvTitleStyleNumber', :placeholder => "January", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tjan, class: 'gvTitleStyleNumber', :placeholder => "January", :value=> 42.0, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_feb">
-      <%= f.number_field :tfeb, class: 'gvTitleStyleNumber', :placeholder => "February", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tfeb, class: 'gvTitleStyleNumber', :placeholder => "February", :value=> 45.9, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_mar">
-      <%= f.number_field :tmar, class: 'gvTitleStyleNumber', :placeholder => "March", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tmar, class: 'gvTitleStyleNumber', :placeholder => "March", :value=> 54.1, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_apr">
-      <%= f.number_field :tapr, class: 'gvTitleStyleNumber', :placeholder => "April", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tapr, class: 'gvTitleStyleNumber', :placeholder => "April", :value=> 62.6, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_may">
-      <%= f.number_field :tmay, class: 'gvTitleStyleNumber', :placeholder => "May", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tmay, class: 'gvTitleStyleNumber', :placeholder => "May", :value=> 71.6, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_jun">
-      <%= f.number_field :tjun, class: 'gvTitleStyleNumber', :placeholder => "June", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tjun, class: 'gvTitleStyleNumber', :placeholder => "June", :value=> 79.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_jul">
-      <%= f.number_field :tjul, class: 'gvTitleStyleNumber', :placeholder => "July", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tjul, class: 'gvTitleStyleNumber', :placeholder => "July", :value=> 84.4, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_aug">
-      <%= f.number_field :taug, class: 'gvTitleStyleNumber', :placeholder => "August", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :taug, class: 'gvTitleStyleNumber', :placeholder => "August", :value=> 84.0, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_sep">
-      <%= f.number_field :tsep, class: 'gvTitleStyleNumber', :placeholder => "September", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tsep, class: 'gvTitleStyleNumber', :placeholder => "September", :value=> 75.7, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_oct">
-      <%= f.number_field :toct, class: 'gvTitleStyleNumber', :placeholder => "October", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :toct, class: 'gvTitleStyleNumber', :placeholder => "October", :value=> 64.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_nov">
-      <%= f.number_field :tnov, class: 'gvTitleStyleNumber', :placeholder => "November", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tnov, class: 'gvTitleStyleNumber', :placeholder => "November", :value=> 52.7, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="t_dec">
-      <%= f.number_field :tdec, class: 'gvTitleStyleNumber', :placeholder => "December", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tdec, class: 'gvTitleStyleNumber', :placeholder => "December", :value=> 42.8, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
     </div>
     <div class="field">
@@ -535,81 +535,81 @@
 			<%= select_tag "month_id2", options_for_select(listMonths, :selected => 0), {:prompt => t("Select each months")} %>
       <%#= f.number_field :avghm, class: 'gvTitleStyleNumber', :step => '0.1', min: 20.0, max: 100.0 %>
       <div style='display:none' id="h_jan">
-      <%= f.number_field :hjan, class: 'gvTitleStyleNumber', :placeholder => "January", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hjan, class: 'gvTitleStyleNumber', :placeholder => "January", :value=> 66.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_feb">
-      <%= f.number_field :hfeb, class: 'gvTitleStyleNumber', :placeholder => "February", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hfeb, class: 'gvTitleStyleNumber', :placeholder => "February", :value=> 66.0, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_mar">
-      <%= f.number_field :hmar, class: 'gvTitleStyleNumber', :placeholder => "March", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hmar, class: 'gvTitleStyleNumber', :placeholder => "March", :value=> 62.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_apr">
-      <%= f.number_field :hapr, class: 'gvTitleStyleNumber', :placeholder => "April", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hapr, class: 'gvTitleStyleNumber', :placeholder => "April", :value=> 63.0, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_may">
-      <%= f.number_field :hmay, class: 'gvTitleStyleNumber', :placeholder => "May", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hmay, class: 'gvTitleStyleNumber', :placeholder => "May", :value=> 68.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_jun">
-      <%= f.number_field :hjun, class: 'gvTitleStyleNumber', :placeholder => "June", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hjun, class: 'gvTitleStyleNumber', :placeholder => "June", :value=> 66.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_jul">
-      <%= f.number_field :hjul, class: 'gvTitleStyleNumber', :placeholder => "July", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hjul, class: 'gvTitleStyleNumber', :placeholder => "July", :value=> 60.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_aug">
-      <%= f.number_field :haug, class: 'gvTitleStyleNumber', :placeholder => "August", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :haug, class: 'gvTitleStyleNumber', :placeholder => "August", :value=> 60.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_sep">
-      <%= f.number_field :hsep, class: 'gvTitleStyleNumber', :placeholder => "September", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hsep, class: 'gvTitleStyleNumber', :placeholder => "September", :value=> 65.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_oct">
-      <%= f.number_field :hoct, class: 'gvTitleStyleNumber', :placeholder => "October", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hoct, class: 'gvTitleStyleNumber', :placeholder => "October", :value=> 65.5, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_nov">
-      <%= f.number_field :hnov, class: 'gvTitleStyleNumber', :placeholder => "November", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hnov, class: 'gvTitleStyleNumber', :placeholder => "November", :value=> 65.0, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
       <div style='display:none' id="h_dec">
-      <%= f.number_field :hdec, class: 'gvTitleStyleNumber', :placeholder => "December", :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :hdec, class: 'gvTitleStyleNumber', :placeholder => "December", :value=> 66.0, :step => '0.1', min: 0.0, max: 125.0 %>
       </div>
     </div>
     <div class="field">
       <%=  t('aplcat.rhae') %>
-      <%= f.number_field :rhae, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.rhae'), :step => '0.1', min: 20.0, max: 100.0 %>
+      <%= f.number_field :rhae, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.rhae'), :value=> 95.0, :step => '0.1', min: 20.0, max: 100.0 %>
     </div>
     <div class="field">
       <%=  t('aplcat.tabo') %>
-      <%= f.number_field :tabo, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.tabo'), :step => '0.1', min: 0.0, max: 125.0 %>
+      <%= f.number_field :tabo, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.tabo'), :value=> 95.0, :step => '0.1', min: 0.0, max: 125.0 %>
     </div>
     <div class="field">
       <%=  t('aplcat.mpism') %>
-      <%= f.number_field :mpism, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.mpism'), :step => '0.1', min: 75.0, max: 92.0 %>
+      <%= f.number_field :mpism, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.mpism'), :value=> 88, :step => '0.1', min: 75.0, max: 92.0 %>
     </div>
     <div class="field">
       <%=  t('aplcat.spilm') %>
-      <%= f.number_field :spilm, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.spilm'), :step => '0.1', min: 3.0, max: 7.0 %>
+      <%= f.number_field :spilm, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.spilm'), :value=> 5.0, :step => '0.1', min: 3.0, max: 7.0 %>
     </div>
     <div class="field">
       <%=  t('aplcat.pom') %>
-      <%= f.number_field :pom, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.pom'), :step => '0.1', min: 30.0, max: 50.0 %>
+      <%= f.number_field :pom, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.pom'), :value=> 40.0, :step => '0.1', min: 30.0, max: 50.0 %>
     </div>
     <div class="field">
       <%=  t('aplcat.srinr') %>
-      <%= f.number_field :srinr, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.srinr'), :step => '0.001', min: 0.050, max: 0.200 %>
+      <%= f.number_field :srinr, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.srinr'), :value=> 0.078, :step => '0.001', min: 0.050, max: 0.200 %>
     </div>
     <div class="field">
       <%=  t('aplcat.sriip') %>
-      <%= f.number_field :sriip, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.sriip'), :step => '0.001', min: 0.1, max: 0.4 %>
+      <%= f.number_field :sriip, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.sriip'), :value=> 0.214, :step => '0.001', min: 0.1, max: 0.4 %>
     </div>
     <div class="field">
       <%=  t('aplcat.pogu') %>
-      <%= f.number_field :pogu, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.pogu'), :step => '0.01', min: 0.01, max: 100.00 %>
+      <%= f.number_field :pogu, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.pogu'), :value=> 100.0, :step => '0.01', min: 0.01, max: 100.00 %>
     </div>
     <div class="field">
       <%=  t('aplcat.adoa') %>
-      <%= f.number_field :adoa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.adoa'), :step => '0.1', min: 1.0, max: 10000.0 %>
+      <%= f.number_field :adoa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.adoa'), :value=> 46.8, :step => '0.1', min: 1.0, max: 10000.0 %>
     </div>
     <div class="field">
       <%=  t('aplcat.ape') %>
-      <%= f.number_field :ape, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.ape'), :step => '0.1', min: 40.0, max: 70.0 %>
+      <%= f.number_field :ape, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.ape'), :value=> 55, :step => '0.1', min: 40.0, max: 70.0 %>
     </div>
 <% end %>
 </div>
@@ -618,23 +618,23 @@
   <%= field_set_tag t('aplcat.forage_quantity_input'), class:'fieldset' do %>
   <div class="field">
   <%=  t('aplcat.forage_id_html') %>
-  <%= f.number_field :forage_id, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.forage_id'), :step => 'any', min: 1, max: 177 %>
+  <%= f.number_field :forage_id, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.forage_id'), :value=> 127, :step => 'any', min: 1, max: 177 %>
   </div>
   <div class="field">
   <%=  t('aplcat.jdi') %><br>
     <table>
       <tr>
         <th><%=  t('aplcat.increase') %><br>
-          <%= f.number_field :jincrease, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.bti'), :step => 'any', min: 1, max: 366 %>
+          <%= f.number_field :jincrease, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.bti'), :value=> 91, :step => 'any', min: 1, max: 366 %>
         </th>
         <th><%=  t('aplcat.stabilization') %><br>
-          <%= f.number_field :stabilization, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.sts'), :step => 'any', min: 1, max: 366 %>
+          <%= f.number_field :stabilization, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.sts'), :value=> 105, :step => 'any', min: 1, max: 366 %>
         </th>
         <th><%=  t('aplcat.decline') %><br>
-          <%= f.number_field :decline, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.eos'), :step => 'any', min: 1, max: 366 %>
+          <%= f.number_field :decline, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.eos'), :value=> 120, :step => 'any', min: 1, max: 366 %>
         </th>
         <th><%=  t('aplcat.opt4') %><br>
-          <%= f.number_field :opt4, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.std'), :step => 'any', min: 1, max: 366 %>
+          <%= f.number_field :opt4, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.std'), :value=> 134, :step => 'any', min: 1, max: 366 %>
         </th>
       </tr>
     </table>
@@ -644,10 +644,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :cpl_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.lcpl'), :step => '0.1', min: 0.0, max: 5.0 %>
+        <%= f.number_field :cpl_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.lcpl'), :value=> 8.3, :step => '0.1', min: 0.0, max: 5.0 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :cpl_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.hcpl'), :step => '0.1', min: 0.0, max: 5.0 %>
+        <%= f.number_field :cpl_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.hcpl'), :value=> 17.6, :step => '0.1', min: 0.0, max: 5.0 %>
       </th>
     </tr>
   </table>
@@ -657,10 +657,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :tdn_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.ltdn'), :step => '0.1', min: 0.0, max: 5.9 %>
+        <%= f.number_field :tdn_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.ltdn'), :value=> 56.2, :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :tdn_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.htdn'), :step => '0.1', min: 0.0, max: 5.9 %>
+        <%= f.number_field :tdn_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.htdn'), :value=> 60.7, :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
     </tr>
   </table>
@@ -670,10 +670,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :ndf_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.lndf'), :step => '0.1', min: 0.0, max: 5.9 %>
+        <%= f.number_field :ndf_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.lndf'), :value=> 0, :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :ndf_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.hndf'), :step => '0.1', min: 0.0, max: 5.9 %>
+        <%= f.number_field :ndf_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.hndf'), :value=> 0, :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
     </tr>
   </table>
@@ -683,10 +683,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :adf_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.ladf'), :step => '0.1', min: 0.0, max: 5.9 %>
+        <%= f.number_field :adf_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.ladf'), :value=> 42.0, :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :adf_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.hadf'), :step => '0.1', min: 0.0, max: 5.9 %>
+        <%= f.number_field :adf_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.hadf'), :value=> 35.5, :step => '0.1', min: 0.0, max: 5.9 %>
       </th>
     </tr>
   </table>
@@ -696,10 +696,10 @@
   <table>
     <tr>
       <th><%=  t('aplcat.lowest') %><br>
-        <%= f.number_field :fir_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.lfir'), :step => '0.001', min: 0.001, max: 5.0 %>
+        <%= f.number_field :fir_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.lfir'), :value=> 1.8, :step => '0.001', min: 0.001, max: 5.0 %>
       </th>
       <th><%=  t('aplcat.highest') %><br>
-        <%= f.number_field :fir_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.hfir'), :step => '0.001', min: 0.001, max: 5.0 %>
+        <%= f.number_field :fir_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.hfir'), :value=> 2.5, :step => '0.001', min: 0.001, max: 5.0 %>
       </th>
     </tr>
   </table>
@@ -1035,110 +1035,110 @@
         <h2><%= t('aplcat.nativer') %></h2>
         <div class="field">
           <%=  t('aplcat.n_tfa') %>
-          <%= f.number_field :n_tfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_tfa'), :step => 'any' %>
+          <%= f.number_field :n_tfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_tfa'), :value=> 1463, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_sr') %>
-          <%= f.number_field :n_sr, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_sr'), :step => 'any' %>
+          <%= f.number_field :n_sr, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_sr'), :value=> 4.68, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_arnfa') %>
-          <%= f.number_field :n_arnfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_arnfa'), :step => 'any' %>
+          <%= f.number_field :n_arnfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_arnfa'), :value=> 1463, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_arpfa') %>
-          <%= f.number_field :n_arpfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_arpfa'), :step => 'any' %>
+          <%= f.number_field :n_arpfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_arpfa'), :value=> 0, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_nfar') %>
-          <%= f.number_field :n_nfar, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_nfar'), :step => 'any' %>
+          <%= f.number_field :n_nfar, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_nfar'), :value=> 118.5, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_pfar') %>
-          <%= f.number_field :n_npfar, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_pfar'), :step => 'any' %>
+          <%= f.number_field :n_npfar, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_pfar'), :value=> 0, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_co2enfp') %>
-          <%= f.number_field :n_co2enfp, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2enfp'), :step => 'any' %>
+          <%= f.number_field :n_co2enfp, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2enfp'), :value=> 3.31, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_co2enfa') %>
-          <%= f.number_field :n_co2enfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2enfa'), :step => 'any' %>
+          <%= f.number_field :n_co2enfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2enfa'), :value=> 0, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_co2epfp') %>
-          <%= f.number_field :n_co2epfp, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2epfp'), :step => 'any' %>
+          <%= f.number_field :n_co2epfp, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2epfp'), :value=> 1.03, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_lamf') %>
-          <%= f.number_field :n_lamf, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_lamf'), :step => 'any' %>
+          <%= f.number_field :n_lamf, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_lamf'), :value=> -63, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_lan2of') %>
-          <%= f.number_field :n_lan2of, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_lan2of'), :step => 'any' %>
+          <%= f.number_field :n_lan2of, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_lan2of'), :value=> 1213, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_laco2f') %>
-          <%= f.number_field :n_laco2f, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_laco2f'), :step => 'any' %>
+          <%= f.number_field :n_laco2f, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_laco2f'), :value=> 0.0, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.n_socc') %>
-          <%= f.number_field :n_socc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_socc'), :step => 'any' %>
+          <%= f.number_field :n_socc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_socc'), :value=> -3600, :step => 'any' %>
         </div>
       </div>
       <div class="field" id="introduced_pasture" style=display:none>
         <h2><%= t('aplcat.introducedp') %></h2>
         <div class="field">
           <%=  t('aplcat.i_tfa') %>
-          <%= f.number_field :i_tfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_tfa'), :step => 'any' %>
+          <%= f.number_field :i_tfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_tfa'), :value=> 0, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_sr') %>
-          <%= f.number_field :i_sr, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_sr'), :step => 'any' %>
+          <%= f.number_field :i_sr, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_sr'), :value=> 4.68, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_arnfa') %>
-          <%= f.number_field :i_arnfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_arnfa'), :step => 'any' %>
+          <%= f.number_field :i_arnfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_arnfa'), :value=> 1100, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_arpfa') %>
-          <%= f.number_field :i_arpfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_arpfa'), :step => 'any' %>
+          <%= f.number_field :i_arpfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_arpfa'), :value=> 0, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_nfar') %>
-          <%= f.number_field :i_nfar, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_nfar'), :step => 'any' %>
+          <%= f.number_field :i_nfar, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_nfar'), :value=> 56, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_pfar') %>
-          <%= f.number_field :i_npfar, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_pfar'), :step => 'any' %>
+          <%= f.number_field :i_npfar, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_pfar'), :value=> 0, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_co2enfp') %>
-          <%= f.number_field :i_co2enfp, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2enfp'), :step => 'any' %>
+          <%= f.number_field :i_co2enfp, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2enfp'), :value=> 3.31, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_co2enfa') %>
-          <%= f.number_field :i_co2enfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2enfa'), :step => 'any' %>
+          <%= f.number_field :i_co2enfa, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2enfa'), :value=> 35.25, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_co2epfp') %>
-          <%= f.number_field :i_co2epfp, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2epfp'), :step => 'any' %>
+          <%= f.number_field :i_co2epfp, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_co2epfp'), :value=> 1.03, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_lamf') %>
-          <%= f.number_field :i_lamf, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_lamf'), :step => 'any' %>
+          <%= f.number_field :i_lamf, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_lamf'), :value=> -63, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_lan2of') %>
-          <%= f.number_field :i_lan2of, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_lan2of'), :step => 'any' %>
+          <%= f.number_field :i_lan2of, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_lan2of'), :value=> 520, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_laco2f') %>
-          <%= f.number_field :i_laco2f, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_laco2f'), :step => 'any' %>
+          <%= f.number_field :i_laco2f, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_laco2f'), :value=> -367, :step => 'any' %>
         </div>
         <div class="field">
           <%=  t('aplcat.i_socc') %>
-          <%= f.number_field :i_socc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_socc'), :step => 'any' %>
+          <%= f.number_field :i_socc, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.n_socc'), :value=> -1416, :step => 'any' %>
         </div>
       </div>
       <%end%>

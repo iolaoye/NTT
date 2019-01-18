@@ -11,9 +11,6 @@ class FemController < ApplicationController
     feeds = params['feedsData']
     equip = params['equipData']
     other = params['otherData']
-
-    byebug
-
     for i in 0..feeds.size 
         #byebug
         currentFeed = feeds[i.to_s]

@@ -1,7 +1,6 @@
 NTTG3::Application.routes.draw do
   resources :fem_results
-  get 'fem/index' => 'fem#list'
-
+  #get 'fem/index' => 'fem#list'
   resources :crop_results
   resources :annual_results
   resources :faqs
@@ -69,6 +68,10 @@ NTTG3::Application.routes.draw do
   post 'projects/upload_project'
 
   resources :projects do
+    resources :fem_generals
+    resources :fem_facilities
+    resources :fem_machines
+    resources :fem_feeds
     resources :watersheds do
   		post :simulate, on: :collection
   		get :list, on: :member
