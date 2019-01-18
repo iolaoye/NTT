@@ -6,6 +6,110 @@ class WatershedsController < ApplicationController
 
   before_filter :set_notifications
 
+  def run_fem
+    drive = "D:"
+    folder = drive + "\\NTT_FEM_Files\\FEM" + session[:session_id]
+    #create NTT_FEMOptions.txt file
+    ntt_fem_Options = "ManureRateCode|Manure" + "\n"
+    ntt_fem_Options += "LatLongFile|" + drive + '\NTT_FEM\Long_Lat.txt' + "\n"
+    ntt_fem_Options += "FileDir|" + drive + '\NTT_FEM' + "\n"
+    ntt_fem_Options += "FEMPath|" + drive + '\NTT_FEM' + "\n"
+    ntt_fem_Options += "FEMFilesPath|" + folder + '\\' + "\n"
+    ntt_fem_Options += "MMSDir|" + drive + '\NTT_FEM' + "\n"
+    ntt_fem_Options += "FEMProgPath|" + drive + '\NTT_FEM' + "\n"
+    ntt_fem_Options += "OperationsLibraryFile|" + folder + '\\Local.mdb' + "\n"
+    ntt_fem_Options += "FEMOutputFile|" + folder + '\\NTTFEMOut.mdb' + "\n"
+    ntt_fem_Options += "TimeHorizon|" + @project.apex_controls[0].value.to_s + "\n"
+    ntt_fem_Options += "NTTPath|" + folder + "\n"
+    ntt_fem_Options += "COUNTY|" + County.find(@project.location.county_id).county_state_code + "\n"
+    ntt_fem_Options += "Scenario|" + @watershed.name + "\n"
+    #find if there are bmps with area taken from the field
+    bmps_area = @watershed.bmps.where("area>0").sum(:area)
+    #find the crops in the scenario a take crop, yield, unit, field area, field area without bmps.
+    crops = @watershed.crop_results.group(:name).average("yldf+yldg")
+    crops.each do |c|
+      crop = Crop.find_by_code(c[0])
+      crop_yield = (crop.conversion_factor * AC_TO_HA) / (crop.dry_matter/100) * c[1]
+      ntt_fem_Options +=  "CROP|" + c[0] + "|" + crop_yield.round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s + "\n"
+    end
+    #send the file to server
+    msg = send_file_to_APEX(ntt_fem_Options, "NTT_FEMOptions.txt")
+    #create fembat01.bat file
+    ntt_fem_Options = drive + "\n"
+    ntt_fem_Options += "cd " + folder + "\\" + "\n" 
+    ntt_fem_Options += drive + "\\NTT_FEM\\new2.exe" + "\n"
+    #send the file to server
+    msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
+    state = State.find(@project.location.state_id).state_abbreviation
+    #@fem_list = Array.new
+
+    builder = Nokogiri::XML::Builder.new do |xml|
+      xml.additions {
+        xml.operations {
+          @watershed.operations.each do |op|
+            get_operations(op, state, xml)
+          end
+        }
+        #todo add bmps 
+        #xml.bmps {
+          #@scenario.bmps.each do |bmp|
+            #get_bmps(bmp, state, xml)
+          #end
+        #}
+      }
+    end
+    fem_list = builder.to_xml  #convert the Nokogiti XML file to XML file text
+    fem_list.gsub! "<", "["
+    fem_list.gsub! ">", "]"
+    fem_list.gsub! "\n", ""
+    fem_list.gsub! "[?xml version=\"1.0\"?]", ""
+    #populate local.mdb and run FEM
+    
+    msg = send_file_to_APEX(fem_list, "Operations")
+    if !msg.include? "Error"
+      if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
+      fem_result = FemResult.new
+      fem_res = msg.split(",")
+      fem_result.total_revenue = fem_res[0]
+      fem_result.total_cost = fem_res[1]
+      fem_result.net_return = fem_res[2]
+      fem_result.net_cash_flow = fem_res[3]
+      fem_result.scenario_id = @scenario.id
+      fem_result.save
+      return "OK"
+    else
+      return msg
+    end
+  end
+
+
+  def simulate_fem
+    @errors = Array.new
+    msg = "OK"
+    #msg = fem_tables()  
+    if params[:select_watershed] == nil then
+      @errors.push("Select at least one watershed to simulate ")
+      return "Select at least one watershed to simulate "
+    end
+    ActiveRecord::Base.transaction do
+      params[:select_watershed].each do |id|
+        @watershed = Watershed.find(id)
+        byebug
+        # if @watershed.operations.count <= 0 then
+        #   @errors.push(@watershed.name + " " + t('scenario.add_crop_rotation'))
+        #   return
+        # end
+        #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
+        msg = run_fem
+        unless msg.eql?("OK")
+          @errors.push("Error simulating watershed " + @watershed.name + " (" + msg + ")")
+          raise ActiveRecord::Rollback
+        end # end unless msg
+      end # end each do params loop
+    end
+    return msg
+  end
+
   def set_notifications
 	@notice = nil
 	@error = nil
@@ -89,7 +193,9 @@ class WatershedsController < ApplicationController
   def simulate
     #@project = Project.find(params[:project_id])
     @errors = Array.new
-	if !(params[:commit].include?("Simulate")) then
+    if !(params[:commit].include?("FEM")) then
+        msg = simulate_fem
+	elsif !(params[:commit].include?("Simulate")) then
 		#update watershed_scenarios
 		@watershed_name = params[:commit]
 		@watershed_name.slice! "Add to "
