@@ -1,5 +1,5 @@
 class FemController < ApplicationController
-  def list
+  def show
     @feeds = FeedsAugmented.order(:name)
     @equipment = MachineAugmented.order(:name)
     @structure = FacilityAugmented.order(:name)
