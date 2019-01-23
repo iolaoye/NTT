@@ -416,7 +416,7 @@ class ProjectsController < ApplicationController
       xml.weather_initial_year weather.weather_initial_year
       xml.weather_final_year weather.weather_final_year
     } #weather info end
-  end. # end method
+  end # end method
 
   def save_site_info(xml, site)
     xml.site {
@@ -571,7 +571,7 @@ class ProjectsController < ApplicationController
         end # end soil_operations.each
       } # end xml.soil_operations
     } # xml each operation end
-  end. # end method
+  end # end method
 
   def save_control_information(xml, control)
     xml.control {
@@ -680,7 +680,7 @@ class ProjectsController < ApplicationController
         end # end soil_operations.each
       } # end xml.soil_operations
     } # xml bmp end
-  end.   # end method
+  end   # end method
 
   def save_soil_operation_information(xml, soil_operation)
     xml.soil_operation {
