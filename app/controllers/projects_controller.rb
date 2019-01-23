@@ -471,7 +471,7 @@ class ProjectsController < ApplicationController
         end # end layers.each
       } # end xml.layers
     } # end xml.soil
-  end.   # end method
+  end  # end method
 
   def save_layer_information(xml, layer)
     xml.layer {
