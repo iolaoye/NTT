@@ -5,9 +5,9 @@
 
 cont = false
 
-	file = "db/seeds/feeds_augmenteds.rb"
+	file = "db/seeds/parameters.rb"
 	load file
-
+	
 if cont then
 
 	file = "db/seeds/activities.rb"
