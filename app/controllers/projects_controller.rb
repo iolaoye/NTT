@@ -128,9 +128,9 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-  @user = User.find(params[:user_id])
+    @user = User.find(params[:user_id])
     @project = Project.find(params[:id])
-  @project.version = "NTTG3"
+    @project.version = "NTTG3"
     respond_to do |format|
       if @project.update_attributes(project_params)
         format.html { redirect_to user_projects_path(params[:user_id]), info: t('models.project') + "" + t('notices.updated') }
@@ -187,13 +187,11 @@ class ProjectsController < ApplicationController
 
  ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_prj
-    
-    @inps1 = 0
+      @inps1 = 0
     saved = false
     msg = ""
     @upload_id = 0
     ActiveRecord::Base.transaction do
-      
       #begin
       msg = "OK"
       @upload_id = 0
@@ -221,7 +219,6 @@ class ProjectsController < ApplicationController
         end # end case examples
       end
       @data.root.elements.each do |node|
-        
         case node.name
         when "project"
           msg = upload_project_new_version(node)
@@ -232,7 +229,6 @@ class ProjectsController < ApplicationController
         when "FarmInfo"
           msg = upload_location_info1(node)
         when "FieldInfo"
-          
           msg = upload_field_info(node)
           msg = renumber_subareas()
         when "SiteInfo"
@@ -265,10 +261,6 @@ class ProjectsController < ApplicationController
         raise ActiveRecord::Rollback
       end
       #rescue NoMethodError => e
-      #msg = e.inspect
-    #saved = false
-      #raise ActiveRecord::Rollback
-      #end
     end
     return saved
   end
@@ -424,9 +416,7 @@ class ProjectsController < ApplicationController
       xml.weather_initial_year weather.weather_initial_year
       xml.weather_final_year weather.weather_final_year
     } #weather info end
-  end
-
-  # end method
+  end # end method
 
   def save_site_info(xml, site)
     xml.site {
@@ -441,9 +431,7 @@ class ProjectsController < ApplicationController
       xml.xlog site.xlog
       xml.ylat site.ylat
     } # end xml.site
-  end
-
-  #site method
+  end  # end site method
 
   def save_soil_information(xml, soil)
     #soils and layers information
@@ -483,9 +471,7 @@ class ProjectsController < ApplicationController
         end # end layers.each
       } # end xml.layers
     } # end xml.soil
-  end
-
-  # end method
+  end  # end method
 
   def save_layer_information(xml, layer)
     xml.layer {
@@ -514,9 +500,7 @@ class ProjectsController < ApplicationController
       xml.soil_test_id layer.soil_test_id
       xml.soil_p_initial layer.soil_p_initial
     } # layer xml
-  end
-
-  # end layer method
+  end  # end layer method
 
   def save_scenario_information(xml, scenario)
     xml.scenario {
@@ -562,9 +546,7 @@ class ProjectsController < ApplicationController
         end # end charts.each
       } # end xml.charts
     } # end xml.scenario
-  end
-
-  #end scenario method
+  end  #end scenario method
 
   def save_operation_information(xml, operation)
     xml.operation {
@@ -589,9 +571,7 @@ class ProjectsController < ApplicationController
         end # end soil_operations.each
       } # end xml.soil_operations
     } # xml each operation end
-  end
-
-  # end method
+  end # end method
 
   def save_control_information(xml, control)
     xml.control {
@@ -610,8 +590,6 @@ class ProjectsController < ApplicationController
   def save_result_information(xml, result)
     xml.result {
       xml.watershed_id result.watershed_id
-    #xml.field_id result.field_id
-    #xml.soil_id result.soil_id
       xml.scenario_id result.scenario_id
       xml.sub1 result.sub1
       xml.year result.year
@@ -638,8 +616,6 @@ class ProjectsController < ApplicationController
   def save_crop_result_information(xml, result)
     xml.result {
       xml.watershed_id result.watershed_id
-    #xml.field_id result.field_id
-    #xml.soil_id result.soil_id
       xml.scenario_id result.scenario_id
       xml.name result.name
       xml.sub1 result.sub1
@@ -704,9 +680,7 @@ class ProjectsController < ApplicationController
         end # end soil_operations.each
       } # end xml.soil_operations
     } # xml bmp end
-  end
-
-  # end method
+  end   # end method
 
   def save_soil_operation_information(xml, soil_operation)
     xml.soil_operation {
@@ -730,9 +704,7 @@ class ProjectsController < ApplicationController
       xml.apex_operation soil_operation.apex_operation
       xml.tractor_id soil_operation.tractor_id
     } # xml each soil_operation end
-  end
-
-  # end method
+  end    # end method
 
   def save_subarea_information(xml, subarea)
     xml.subarea {
@@ -907,9 +879,7 @@ class ProjectsController < ApplicationController
       xml.field_id watershed_scenario.field_id
       xml.scenario_id watershed_scenario.scenario_id
     }
-  end
-
-  # end method
+  end  # end method
 
   private
   # Use this method to whitelist the permissible parameters. Example:
@@ -3405,7 +3375,19 @@ class ProjectsController < ApplicationController
       node.elements.each do |p|
         case p.name
           when "Code"
-            control.control_description_id = ControlDescription.find_by_code(p.text.strip).control_desc_id
+            control_text = p.text.strip
+            case control_text
+              when "BUS1"
+                control_text= "BUS(1)"
+              when "BUS2"
+                control_text = "BUS(2)"
+              when "BUS3"
+                control_text = "BUS(3)"
+              when "BUS4"
+                control_text = "BUS(4)"
+            end # end case p.text.strip
+
+            control.control_description_id = ControlDescription.find_by_code(control_text).control_desc_id
             case control.control_description_id
               when 1 # get number of years of simulation from weather
                 weather = Weather.find_by_field_id(session[:field_id])
