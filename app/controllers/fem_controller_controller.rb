@@ -1,0 +1,2 @@
+class FemControllerController < ApplicationController
+end

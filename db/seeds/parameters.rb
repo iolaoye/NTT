@@ -14,7 +14,7 @@ Parameter.create!({:id => 11, :number => 11, :default_value => -100, :state_id =
 Parameter.create!({:id => 12, :number => 12, :default_value => 2.5, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 13, :number => 13, :default_value => 2, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 14, :number => 14, :default_value => 0.2, :state_id => 99}, :without_protection => true)
-Parameter.create!({:id => 15, :number => 15, :default_value => 0.05, :state_id => 99}, :without_protection => true)
+Parameter.create!({:id => 15, :number => 15, :default_value => 0.00, :state_id => 99}, :without_protection => true) # changed 01/23/2019 0.05 to 0.00
 Parameter.create!({:id => 16, :number => 16, :default_value => 1, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 17, :number => 17, :default_value => 0.2, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 18, :number => 18, :default_value => 1.5, :state_id => 99}, :without_protection => true)
@@ -31,9 +31,9 @@ Parameter.create!({:id => 28, :number => 28, :default_value => 5, :state_id => 9
 Parameter.create!({:id => 29, :number => 29, :default_value => 0.25, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 30, :number => 30, :default_value => 1.4, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 31, :number => 31, :default_value => 0.3, :state_id => 99}, :without_protection => true)
-Parameter.create!({:id => 32, :number => 32, :default_value => 1.25, :state_id => 99}, :without_protection => true)
+Parameter.create!({:id => 32, :number => 32, :default_value => 1.00, :state_id => 99}, :without_protection => true)   # changed 01/23/2019 1.25 to 1.00
 Parameter.create!({:id => 33, :number => 33, :default_value => 2, :state_id => 99}, :without_protection => true)
-Parameter.create!({:id => 34, :number => 34, :default_value => 0.6, :state_id => 99}, :without_protection => true)
+Parameter.create!({:id => 34, :number => 34, :default_value => 0.48, :state_id => 99}, :without_protection => true)  # changed 01/23/2019 0.6 to 0.48
 Parameter.create!({:id => 35, :number => 35, :default_value => 1.01, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 36, :number => 36, :default_value => 0.001, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 37, :number => 37, :default_value => 0.6, :state_id => 99}, :without_protection => true)
@@ -41,7 +41,7 @@ Parameter.create!({:id => 38, :number => 38, :default_value => 1, :state_id => 9
 Parameter.create!({:id => 39, :number => 39, :default_value => 0.00001, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 40, :number => 40, :default_value => 0.001, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 41, :number => 41, :default_value => 0.5, :state_id => 99}, :without_protection => true)
-Parameter.create!({:id => 42, :number => 42, :default_value => 1.8, :state_id => 99}, :without_protection => true)
+Parameter.create!({:id => 42, :number => 42, :default_value => 0.50, :state_id => 99}, :without_protection => true)   # changed 01/23/2019 1.8 to 0.50
 Parameter.create!({:id => 43, :number => 43, :default_value => 0.0508, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 44, :number => 44, :default_value => 1.5, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 45, :number => 45, :default_value => 3, :state_id => 99}, :without_protection => true)
@@ -67,7 +67,7 @@ Parameter.create!({:id => 64, :number => 64, :default_value => 1, :state_id => 9
 Parameter.create!({:id => 65, :number => 65, :default_value => 0.001, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 66, :number => 66, :default_value => 1, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 67, :number => 67, :default_value => 10, :state_id => 99}, :without_protection => true)
-Parameter.create!({:id => 68, :number => 68, :default_value => 0.25, :state_id => 99}, :without_protection => true)
+Parameter.create!({:id => 68, :number => 68, :default_value => 0.75, :state_id => 99}, :without_protection => true)  # changed 01/23/2019 0.25 to 0.75
 Parameter.create!({:id => 69, :number => 69, :default_value => 1, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 70, :number => 70, :default_value => 1, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 71, :number => 71, :default_value => 1.15, :state_id => 99}, :without_protection => true)
@@ -82,7 +82,7 @@ Parameter.create!({:id => 79, :number => 79, :default_value => 1, :state_id => 9
 Parameter.create!({:id => 80, :number => 80, :default_value => 1, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 81, :number => 81, :default_value => 0, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 82, :number => 82, :default_value => 0, :state_id => 99}, :without_protection => true)
-Parameter.create!({:id => 83, :number => 83, :default_value => 1, :state_id => 99}, :without_protection => true)
+Parameter.create!({:id => 83, :number => 83, :default_value => 2, :state_id => 99}, :without_protection => true)   # changed 01/23/2019 1.0 to 2.0
 Parameter.create!({:id => 84, :number => 84, :default_value => 0.0001, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 85, :number => 85, :default_value => 0.0001, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 86, :number => 86, :default_value => 0.1, :state_id => 99}, :without_protection => true)
