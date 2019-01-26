@@ -62,7 +62,7 @@
     			<%= submit_tag t('scenario.simulate') + ' ' + 'APLCAT', data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_aplcat" %>
     		<% end %>
     		<% if fem == 1 %>
-    			<%= submit_tag t('scenario.simulate') + ' ' + 'FEM', data: {disable_with: 'Please wait. FEM simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_fem" %>
+    			<%#= submit_tag t('scenario.simulate') + ' ' + 'FEM', data: {disable_with: 'Please wait. FEM simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_fem" %>
     		<% end %>
         <% end %>
 	    <% if @field.annual_results.count > 0 %>
