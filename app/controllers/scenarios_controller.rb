@@ -207,7 +207,7 @@ class ScenariosController < ApplicationController
   def simulate_fem
     @errors = Array.new
     msg = "OK"
-    msg = fem_tables()  
+    msg = fem_tables()
     if params[:select_scenario] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
@@ -269,7 +269,7 @@ class ScenariosController < ApplicationController
             xml.send("forage",feed.forage.to_s)
             xml.send("grain",feed.grain.to_s)
             xml.send("hay",feed.hay.to_s )
-            xml.send("pasture",feed.pasture.to_s) 
+            xml.send("pasture",feed.pasture.to_s)
             xml.send("silage",feed.silage.to_s)
             xml.send("supplement",feed.supplement.to_s)
             xml.send("codes",feed.codes.to_s)
@@ -341,7 +341,7 @@ class ScenariosController < ApplicationController
           #end
       }
     end
- 
+
     xmlString = xmlBuilder.to_xml
     xmlString.gsub! "<", "["
     xmlString.gsub! ">", "]"
@@ -382,7 +382,7 @@ class ScenariosController < ApplicationController
     msg = send_file_to_APEX(ntt_fem_Options, "NTT_FEMOptions.txt")
     #create fembat01.bat file
     ntt_fem_Options = drive + "\n"
-    ntt_fem_Options += "cd " + folder + "\\" + "\n" 
+    ntt_fem_Options += "cd " + folder + "\\" + "\n"
     ntt_fem_Options += drive + "\\NTT_FEM\\new2.exe" + "\n"
     #send the file to server
     msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
@@ -396,7 +396,7 @@ class ScenariosController < ApplicationController
             get_operations(op, state, xml)
           end
         }
-        #todo add bmps 
+        #todo add bmps
         #xml.bmps {
           #@scenario.bmps.each do |bmp|
             #get_bmps(bmp, state, xml)
@@ -410,7 +410,7 @@ class ScenariosController < ApplicationController
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     #populate local.mdb and run FEM
-    
+
     msg = send_file_to_APEX(fem_list, "Operations")
     if !msg.include? "Error"
       if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
@@ -505,7 +505,7 @@ class ScenariosController < ApplicationController
         items[1] = "Width"
         items[1] = bmp.width
         items[3] = "Fraction treated by buffer"
-        values[3] = bmp.slop        
+        values[3] = bmp.slop
         apex_op = "PP"
       when 15  #contour buffer
         items[4] = "Crop"
@@ -513,7 +513,7 @@ class ScenariosController < ApplicationController
         items[1] =  "Grass Buffer"
         values[1] = bmp.width
         items[2] = "Crop Buffer"
-        values[2] = bmp.crop_width        
+        values[2] = bmp.crop_width
         apex_op = "CF"
       when 16   #Land Leveling
         items[0] = "Slope Reduction"
@@ -536,7 +536,7 @@ class ScenariosController < ApplicationController
       xml.apex_operation apex_op
       xml.operation_name Bmpsublist.find(bmp.bmpsublist_id).name
       xml.apex_crop 0
-      xml.crop_name 'None' 
+      xml.crop_name 'None'
       xml.year_in_rotation 0
       xml.rotation_length 0
       xml.frequency 0
@@ -689,7 +689,7 @@ class ScenariosController < ApplicationController
                    #COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    #values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
   end  # end get_operations method
-  
+
   ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
     @errors = Array.new
@@ -1232,6 +1232,74 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.uovfi.to_s + "\t" + "! " + t('aplcat.uovfi') + "\n"
     apex_string += aplcat.srwc.to_s + "\t" + "! " + t('aplcat.srwc') + "\n"
     apex_string += "\n"
+    msg = send_file_to_APEX(apex_string, "AplcatResults.txt")
+    apex_string = "Input file for Aplcat Results" + "\n"
+    apex_string = "Calf" + "\n"
+    apex_string += aplcat_result.calf_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
+    apex_string += aplcat_result.calf_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
+    apex_string += aplcat_result.calf_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
+    apex_string += aplcat_result.calf_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
+    apex_string += aplcat_result.calf_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
+    apex_string += aplcat_result.calf_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
+    apex_string += aplcat_result.calf_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
+    apex_string += aplcat_result.calf_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
+    apex_string += aplcat_result.calf_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
+    apex_string += aplcat_result.calf_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
+    apex_string += aplcat_result.calf_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
+    apex_string += aplcat_result.calf_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
+    apex_string = "Replacement Heifers" + "\n"
+    apex_string += aplcat_result.rh_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
+    apex_string += aplcat_result.rh_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
+    apex_string += aplcat_result.rh_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
+    apex_string += aplcat_result.rh_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
+    apex_string += aplcat_result.rh_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
+    apex_string += aplcat_result.rh_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
+    apex_string += aplcat_result.rh_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
+    apex_string += aplcat_result.rh_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
+    apex_string += aplcat_result.rh_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
+    apex_string += aplcat_result.rh_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
+    apex_string += aplcat_result.rh_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
+    apex_string += aplcat_result.rh_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
+    apex_string = "First Calf Heifers" + "\n"
+    apex_string += aplcat_result.fch_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
+    apex_string += aplcat_result.fch_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
+    apex_string += aplcat_result.fch_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
+    apex_string += aplcat_result.fch_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
+    apex_string += aplcat_result.fch_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
+    apex_string += aplcat_result.fch_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
+    apex_string += aplcat_result.fch_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
+    apex_string += aplcat_result.fch_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
+    apex_string += aplcat_result.fch_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
+    apex_string += aplcat_result.fch_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
+    apex_string += aplcat_result.fch_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
+    apex_string += aplcat_result.fch_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
+    apex_string = "Cow" + "\n"
+    apex_string += aplcat_result.cow_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
+    apex_string += aplcat_result.cow_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
+    apex_string += aplcat_result.cow_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
+    apex_string += aplcat_result.cow_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
+    apex_string += aplcat_result.cow_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
+    apex_string += aplcat_result.cow_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
+    apex_string += aplcat_result.cow_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
+    apex_string += aplcat_result.cow_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
+    apex_string += aplcat_result.cow_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
+    apex_string += aplcat_result.cow_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
+    apex_string += aplcat_result.cow_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
+    apex_string += aplcat_result.cow_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
+    apex_string = "Bull" + "\n"
+    apex_string += aplcat_result.bull_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
+    apex_string += aplcat_result.bull_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
+    apex_string += aplcat_result.bull_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
+    apex_string += aplcat_result.bull_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
+    apex_string += aplcat_result.bull_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
+    apex_string += aplcat_result.bull_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
+    apex_string += aplcat_result.bull_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
+    apex_string += aplcat_result.bull_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
+    apex_string += aplcat_result.bull_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
+    apex_string += aplcat_result.bull_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
+    apex_string += aplcat_result.bull_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
+    apex_string += aplcat_result.bull_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
+    apex_string += "\n"
     msg = send_file_to_APEX(apex_string, "EmmisionTransportAndSimulationCowCalf.txt")
 	    if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
 	    if msg.include?("Bull output file") then msg="OK" end
@@ -1338,7 +1406,7 @@ class ScenariosController < ApplicationController
   		end   # end bmps.each
   		#5. Copy bmps info
   		@new_scenario_id = new_scenario.id
-  		scenario.bmps.each do |b|      
+  		scenario.bmps.each do |b|
   			duplicate_bmp(b)
   		end   # end bmps.each
     else
