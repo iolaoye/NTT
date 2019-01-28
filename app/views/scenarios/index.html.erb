@@ -1,5 +1,5 @@
 <% aplcat = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
-<% fem = 1 %>
+<% fem = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% if notice != nil %>
     <div class="success_alert">
 	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
