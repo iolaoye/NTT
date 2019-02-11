@@ -263,19 +263,21 @@ class ScenariosController < ApplicationController
         xml.send('FEM') {
           feeds.each do |feed|
             #i+=1
-            xml.send('feed') {
-              xml.send("feed-name", feed.name.to_s)
-              xml.send("selling-price", feed.selling_price.to_s)
-              xml.send("purchase-price",feed.purchase_price.to_s)
-              xml.send("concentrate", feed.concentrate.to_s)
-              xml.send("forage",feed.forage.to_s)
-              xml.send("grain",feed.grain.to_s)
-              xml.send("hay",feed.hay.to_s)
-              xml.send("pasture",feed.pasture.to_s)
-              xml.send("silage",feed.silage.to_s)
-              xml.send("supplement",feed.supplement.to_s)
-              xml.send("codes",feed.codes.to_s)
-            }
+            if feed.updated then
+              xml.send('feed') {
+                xml.send("feed-name", feed.name.to_s)
+                xml.send("selling-price", feed.selling_price.to_s)
+                xml.send("purchase-price",feed.purchase_price.to_s)
+                xml.send("concentrate", feed.concentrate.to_s)
+                xml.send("forage",feed.forage.to_s)
+                xml.send("grain",feed.grain.to_s)
+                xml.send("hay",feed.hay.to_s)
+                xml.send("pasture",feed.pasture.to_s)
+                xml.send("silage",feed.silage.to_s)
+                xml.send("supplement",feed.supplement.to_s)
+                xml.send("codes",feed.codes.to_s)
+              }
+            end
             #if i >= 10 then
               #break
             #end
@@ -297,29 +299,31 @@ class ScenariosController < ApplicationController
         xml.send('FEM') {
           machines.each do |equip|
             #i+=1
-            xml.send('machine') {
-              xml.send("machine-name", equip.name.to_s)
-              xml.send("lease_rate", equip.lease_rate.to_s)
-              xml.send("new_price", equip.new_price.to_s)
-              xml.send("new_hours", equip.new_hours.to_s)
-              xml.send("current_price", equip.current_price.to_s)
-              xml.send("hours_remaining", equip.hours_remaining.to_s )
-              xml.send("width", equip.width.to_s)
-              xml.send("speed", equip.speed.to_s)
-              xml.send("field_efficiency", equip.field_efficiency.to_s)
-              xml.send("horse_power", equip.horse_power.to_s)
-              xml.send("rf1", equip.rf1.to_s)
-              xml.send("rf2", equip.rf2.to_s)
-              xml.send("ir_loan", equip.ir_loan.to_s)
-              xml.send("l_loan", equip.l_loan.to_s)
-              xml.send("ir_equity", equip.ir_equity.to_s)
-              xml.send("p_debt", equip.p_debt.to_s)
-              xml.send("year", equip.year.to_s )
-              xml.send("rv1", equip.rv1.to_s)
-              xml.send("rv2", equip.rv2.to_s)
-              xml.send("codes", equip.codes.to_s)
-              xml.send("ownership", equip.ownership.to_s)
-            }
+            if equip.updated then
+              xml.send('machine') {
+                xml.send("machine-name", equip.name.to_s)
+                xml.send("lease_rate", equip.lease_rate.to_s)
+                xml.send("new_price", equip.new_price.to_s)
+                xml.send("new_hours", equip.new_hours.to_s)
+                xml.send("current_price", equip.current_price.to_s)
+                xml.send("hours_remaining", equip.hours_remaining.to_s )
+                xml.send("width", equip.width.to_s)
+                xml.send("speed", equip.speed.to_s)
+                xml.send("field_efficiency", equip.field_efficiency.to_s)
+                xml.send("horse_power", equip.horse_power.to_s)
+                xml.send("rf1", equip.rf1.to_s)
+                xml.send("rf2", equip.rf2.to_s)
+                xml.send("ir_loan", equip.ir_loan.to_s)
+                xml.send("l_loan", equip.l_loan.to_s)
+                xml.send("ir_equity", equip.ir_equity.to_s)
+                xml.send("p_debt", equip.p_debt.to_s)
+                xml.send("year", equip.year.to_s )
+                xml.send("rv1", equip.rv1.to_s)
+                xml.send("rv2", equip.rv2.to_s)
+                xml.send("codes", equip.codes.to_s)
+                xml.send("ownership", equip.ownership.to_s)
+              }
+            end
             #if i >= 10 then
               #break
             #end
@@ -340,22 +344,24 @@ class ScenariosController < ApplicationController
         xml.send('FEM') {
           facilities.each do |struct|
             #i+=1
-            xml.send('structure') {
-              xml.send("struct-name", struct.name.to_s)
-              xml.send("lease_rate", struct.lease_rate.to_s)
-              xml.send("new_price", struct.new_price.to_s)
-              xml.send("new_life", struct.new_life.to_s)
-              xml.send("current_price", struct.current_price.to_s)
-              xml.send("life_remaining", struct.life_remaining.to_s)
-              xml.send("maintenance_coeff", struct.maintenance_coeff .to_s)
-              xml.send("loan_interest_rate", struct.loan_interest_rate.to_s)
-              xml.send("length_loan", struct.length_loan.to_s)
-              xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
-              xml.send("proportion_debt", struct.proportion_debt.to_s)
-              xml.send("year", struct.year.to_s)
-              xml.send("codes", struct.codes.to_s)
-              xml.send("ownership", struct.ownership.to_s)
-            }
+            if struct.updated then
+              xml.send('structure') {
+                xml.send("struct-name", struct.name.to_s)
+                xml.send("lease_rate", struct.lease_rate.to_s)
+                xml.send("new_price", struct.new_price.to_s)
+                xml.send("new_life", struct.new_life.to_s)
+                xml.send("current_price", struct.current_price.to_s)
+                xml.send("life_remaining", struct.life_remaining.to_s)
+                xml.send("maintenance_coeff", struct.maintenance_coeff .to_s)
+                xml.send("loan_interest_rate", struct.loan_interest_rate.to_s)
+                xml.send("length_loan", struct.length_loan.to_s)
+                xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
+                xml.send("proportion_debt", struct.proportion_debt.to_s)
+                xml.send("year", struct.year.to_s)
+                xml.send("codes", struct.codes.to_s)
+                xml.send("ownership", struct.ownership.to_s)
+              }
+            end
             #if i >= 10 then
               #break
             #end
@@ -376,10 +382,12 @@ class ScenariosController < ApplicationController
         xml.send('FEM') {
           generals.each do |other|
             #i+=1
-            xml.send("other") {
-              xml.send("other-name", other.name.to_s)
-              xml.send("value", other.value.to_s)
-            }
+            if fee.updated then
+              xml.send("other") {
+                xml.send("other-name", other.name.to_s)
+                xml.send("value", other.value.to_s)
+              }
+            end
             #if i >= 10 then
               #break
             #end
