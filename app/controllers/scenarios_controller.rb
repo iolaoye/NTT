@@ -256,98 +256,145 @@ class ScenariosController < ApplicationController
       generals = FemGeneral.where(:project_id => @project.id)
     end
 
+    send_file = true
     #i=0
-    xmlBuilder = Nokogiri::XML::Builder.new do |xml|
-      xml.send('FEM') {
-        feeds.each do |feed|
-          #i+=1
-          xml.send('feed') {
-            xml.send("feed-name", feed.name.to_s)
-            xml.send("selling-price", feed.selling_price.to_s)
-            xml.send("purchase-price",feed.purchase_price.to_s)
-            xml.send("concentrate", feed.concentrate.to_s)
-            xml.send("forage",feed.forage.to_s)
-            xml.send("grain",feed.grain.to_s)
-            xml.send("hay",feed.hay.to_s )
-            xml.send("pasture",feed.pasture.to_s)
-            xml.send("silage",feed.silage.to_s)
-            xml.send("supplement",feed.supplement.to_s)
-            xml.send("codes",feed.codes.to_s)
-          }
-          #if i >= 10 then
-            #break
-          #end
-        end
-#i=0
-        machines.each do |equip|
-          #i+=1
-          xml.send('machine') {
-            xml.send("machine-name", equip.name.to_s)
-            xml.send("lease_rate", equip.lease_rate.to_s)
-            xml.send("new_price", equip.new_price.to_s)
-            xml.send("new_hours", equip.new_hours.to_s)
-            xml.send("current_price", equip.current_price.to_s)
-            xml.send("hours_remaining", equip.hours_remaining.to_s )
-            xml.send("width", equip.width.to_s )
-            xml.send("field_efficiency", equip.field_efficiency.to_s)
-            xml.send("horse_power", equip.horse_power.to_s)
-            xml.send("rf1", equip.rf1.to_s)
-            xml.send("rf2", equip.rf2.to_s)
-            xml.send("ir_loan", equip.ir_loan.to_s)
-            xml.send("ir_equity", equip.ir_equity.to_s)
-            xml.send("p_debt", equip.p_debt.to_s)
-            xml.send("year", equip.year.to_s )
-            xml.send("rv1", equip.rv1.to_s)
-            xml.send("rv2", equip.rv2.to_s)
-            xml.send("codes", equip.codes.to_s)
-            xml.send("ownership", equip.ownership)
-          }
-          #if i >= 10 then
-            #break
-          #end
-        end
-#i=0
-        facilities.each do |struct|
-          #i+=1
-          xml.send('structure') {
-            xml.send("struct-name", struct.name.to_s)
-            xml.send("lease_rate", struct.lease_rate.to_s)
-            xml.send("new_price", struct.new_price.to_s)
-            xml.send("current_price", struct.current_price.to_s)
-            xml.send("life_remaining", struct.life_remaining.to_s)
-            xml.send("maintenance_coeff", struct.maintenance_coeff .to_s)
-            xml.send("loan_interest_rate", struct.loan_interest_rate.to_s)
-            xml.send("length_loan", struct.length_loan.to_s)
-            xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
-            xml.send("proportion_debt", struct.proportion_debt.to_s)
-            xml.send("year", struct.year.to_s)
-            xml.send("codes", struct.codes.to_s)
-            xml.send("ownership", struct.ownership.to_s)
-          }
-          #if i >= 10 then
-            #break
-          #end
-        end
-#i=0
-        generals.each do |other|
-          #i+=1
-          xml.send("other") {
-            xml.send("other-name", other.name.to_s)
-            xml.send("value", other.value.to_s)
-          }
-        end
-          #if i >= 10 then
-            #break
-          #end
-      }
+    if send_file == true 
+      xmlBuilder = Nokogiri::XML::Builder.new do |xml|
+        xml.send('FEM') {
+          feeds.each do |feed|
+            #i+=1
+            xml.send('feed') {
+              xml.send("feed-name", feed.name.to_s)
+              xml.send("selling-price", feed.selling_price.to_s)
+              xml.send("purchase-price",feed.purchase_price.to_s)
+              xml.send("concentrate", feed.concentrate.to_s)
+              xml.send("forage",feed.forage.to_s)
+              xml.send("grain",feed.grain.to_s)
+              xml.send("hay",feed.hay.to_s)
+              xml.send("pasture",feed.pasture.to_s)
+              xml.send("silage",feed.silage.to_s)
+              xml.send("supplement",feed.supplement.to_s)
+              xml.send("codes",feed.codes.to_s)
+            }
+            #if i >= 10 then
+              #break
+            #end
+          end
+        }
+      end
+      xmlString = xmlBuilder.to_xml
+      xmlString.gsub! "<", "["
+      xmlString.gsub! ">", "]"
+      xmlString.gsub! "\n", ""
+      xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+      xmlString.gsub! "]    [", "] ["
+      msg = send_file_to_APEX(xmlString, "FEM_feed")
     end
 
-    xmlString = xmlBuilder.to_xml
-    xmlString.gsub! "<", "["
-    xmlString.gsub! ">", "]"
-    xmlString.gsub! "\n", ""
-    xmlString.gsub! "[?xml version=\"1.0\"?]", ""
-    msg = send_file_to_APEX(xmlString, "FEM")
+        #i=0
+    if send_file == false 
+      xmlBuilder = Nokogiri::XML::Builder.new do |xml|
+        xml.send('FEM') {
+          machines.each do |equip|
+            #i+=1
+            xml.send('machine') {
+              xml.send("machine-name", equip.name.to_s)
+              xml.send("lease_rate", equip.lease_rate.to_s)
+              xml.send("new_price", equip.new_price.to_s)
+              xml.send("new_hours", equip.new_hours.to_s)
+              xml.send("current_price", equip.current_price.to_s)
+              xml.send("hours_remaining", equip.hours_remaining.to_s )
+              xml.send("width", equip.width.to_s)
+              xml.send("speed", equip.speed.to_s)
+              xml.send("field_efficiency", equip.field_efficiency.to_s)
+              xml.send("horse_power", equip.horse_power.to_s)
+              xml.send("rf1", equip.rf1.to_s)
+              xml.send("rf2", equip.rf2.to_s)
+              xml.send("ir_loan", equip.ir_loan.to_s)
+              xml.send("l_loan", equip.l_loan.to_s)
+              xml.send("ir_equity", equip.ir_equity.to_s)
+              xml.send("p_debt", equip.p_debt.to_s)
+              xml.send("year", equip.year.to_s )
+              xml.send("rv1", equip.rv1.to_s)
+              xml.send("rv2", equip.rv2.to_s)
+              xml.send("codes", equip.codes.to_s)
+              xml.send("ownership", equip.ownership.to_s)
+            }
+            #if i >= 10 then
+              #break
+            #end
+          end
+        }
+      end
+      xmlString = xmlBuilder.to_xml
+      xmlString.gsub! "<", "["
+      xmlString.gsub! ">", "]"
+      xmlString.gsub! "\n", ""
+      xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+      xmlString.gsub! "]    [", "] ["
+      msg = send_file_to_APEX(xmlString, "FEM_machine")
+    end
+       #i=0
+    if send_file == false 
+      xmlBuilder = Nokogiri::XML::Builder.new do |xml|
+        xml.send('FEM') {
+          facilities.each do |struct|
+            #i+=1
+            xml.send('structure') {
+              xml.send("struct-name", struct.name.to_s)
+              xml.send("lease_rate", struct.lease_rate.to_s)
+              xml.send("new_price", struct.new_price.to_s)
+              xml.send("new_life", struct.new_life.to_s)
+              xml.send("current_price", struct.current_price.to_s)
+              xml.send("life_remaining", struct.life_remaining.to_s)
+              xml.send("maintenance_coeff", struct.maintenance_coeff .to_s)
+              xml.send("loan_interest_rate", struct.loan_interest_rate.to_s)
+              xml.send("length_loan", struct.length_loan.to_s)
+              xml.send("interest_rate_inequality", struct.interest_rate_equity.to_s)
+              xml.send("proportion_debt", struct.proportion_debt.to_s)
+              xml.send("year", struct.year.to_s)
+              xml.send("codes", struct.codes.to_s)
+              xml.send("ownership", struct.ownership.to_s)
+            }
+            #if i >= 10 then
+              #break
+            #end
+          end
+        }
+      end
+      xmlString = xmlBuilder.to_xml
+      xmlString.gsub! "<", "["
+      xmlString.gsub! ">", "]"
+      xmlString.gsub! "\n", ""
+      xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+      xmlString.gsub! "]    [", "] ["
+      msg = send_file_to_APEX(xmlString, "FEM_facility")
+    end
+        #i=0
+    if send_file == true 
+      xmlBuilder = Nokogiri::XML::Builder.new do |xml|
+        xml.send('FEM') {
+          generals.each do |other|
+            #i+=1
+            xml.send("other") {
+              xml.send("other-name", other.name.to_s)
+              xml.send("value", other.value.to_s)
+            }
+            #if i >= 10 then
+              #break
+            #end
+          end
+        }
+      end
+
+      xmlString = xmlBuilder.to_xml
+      xmlString.gsub! "<", "["
+      xmlString.gsub! ">", "]"
+      xmlString.gsub! "\n", ""
+      xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+      xmlString.gsub! "]    [", "] ["
+      msg = send_file_to_APEX(xmlString, "FEM_farm")
+    end
     #puts xmlString
   end
 
@@ -412,6 +459,7 @@ class ScenariosController < ApplicationController
     #populate local.mdb and run FEM
 
     msg = send_file_to_APEX(fem_list, "Operations")
+    
     if !msg.include? "Error"
       if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
       fem_result = FemResult.new
