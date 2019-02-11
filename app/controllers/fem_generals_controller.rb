@@ -39,7 +39,7 @@ class FemGeneralsController < ApplicationController
   # PATCH/PUT /fem_generals/1
   def update
     @fem_general = FemGeneral.find(params[:id])
-
+    @fem_general.updated = true
     respond_to do |format|
       if @fem_general.update_attributes(fem_general_params)
         format.html { redirect_to project_fem_generals_path(@project), notice: 'General Input was successfully updated.' }
