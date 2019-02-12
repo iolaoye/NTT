@@ -821,7 +821,7 @@ class ScenariosController < ApplicationController
 		apex_string += aplcat.fmbmm.to_s + "\t" + "! " + t('aplcat.fmbmm') + "\n"
 		apex_string += aplcat.dmd.to_s + "\t" + "! " + t('aplcat.dmd') + "\n"
 		apex_string += aplcat.vsim.to_s + "\t" + "! " + t('aplcat.vsim') + "\n"
-    apex_string += aplcat.vsim_gp.to_s + "\t" + "! " + t('aplcat.vsim') + "\n"
+    #apex_string += aplcat.vsim_gp.to_s + "\t" + "! " + t('aplcat.vsim') + "\n"
 		apex_string += aplcat.foue.to_s + "\t" + "! " + t('aplcat.foue') + "\n"
 		apex_string += aplcat.ash.to_s + "\t" + "! " + t('aplcat.ash') + "\n"
 		apex_string += aplcat.mmppfm.to_s + "\t" + "! " + t('aplcat.mmppfm') + "\n"
