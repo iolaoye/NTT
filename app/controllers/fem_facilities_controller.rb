@@ -40,7 +40,7 @@ class FemFacilitiesController < ApplicationController
   # PATCH/PUT /fem_facilities/1
   def update
     @fem_facility = FemFacility.find(params[:id])
-
+    @fem_facility.updated = true
     respond_to do |format|
       if @fem_facility.update_attributes(fem_facility_params)
         format.html { redirect_to project_fem_facilities_path(@project), notice: 'General Input was successfully updated.' }
@@ -68,6 +68,6 @@ class FemFacilitiesController < ApplicationController
     def fem_facility_params
       params.require(:fem_facility).permit(:name, :lease_rate, :new_price, :new_life, :current_price, 
         :life_remaining, :maintenance_coeff, :loan_interest_rate, :length_loan,:interest_rate_equity,
-        :proportion_debt,:year)
+        :proportion_debt, :year, :updated)
     end
 end

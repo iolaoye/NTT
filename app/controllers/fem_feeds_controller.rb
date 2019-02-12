@@ -39,6 +39,7 @@ class FemFeedsController < ApplicationController
   # PATCH/PUT /fem_feeds/1
   def update
     @fem_feed = FemFeed.find(params[:id])
+    @fem_feed.updated = true
 
     respond_to do |format|
       if @fem_feed.update_attributes(fem_feed_params)
@@ -65,6 +66,6 @@ class FemFeedsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fem_feed_params
-      params.require(:fem_feed).permit(:name, :selling_price, :purchase_price, :concentrate, :forage, :grain, :hay, :pasture, :silage, :supplement)
+      params.require(:fem_feed).permit(:name, :selling_price, :purchase_price, :concentrate, :forage, :grain, :hay, :pasture, :silage, :supplement, :updated)
     end
 end
