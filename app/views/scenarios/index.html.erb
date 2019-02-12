@@ -72,6 +72,9 @@
           		<% if aplcat == 1 %>
           			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
           		<% end %>
+         		<% if fem == 1 %>
+          			<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
+          		<% end %>
           	<% end %>
         <% end %>
 	    <br>

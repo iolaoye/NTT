@@ -31,6 +31,8 @@
 
 #APLCAT folders.
 	APLCAT_FOLDER = "D:/NTTHTML5Files"
+#APLCAT folders.
+	FEM_FOLDER = "D:/NTT_FEM_Files"
 
 #folder for examples
 	EXAMPLES = "public/Examples"

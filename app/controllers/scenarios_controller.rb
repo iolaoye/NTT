@@ -63,7 +63,7 @@ class ScenariosController < ApplicationController
   	case true
   		when params[:commit].include?('NTT')
   			msg = simulate_ntt
-  		when params[:commit].include?("Aplcat")
+  		when params[:commit].include?("APLCAT")
   			msg = simulate_aplcat
       when params[:commit].include?("FEM")
         msg = simulate_fem
@@ -776,6 +776,7 @@ class ScenariosController < ApplicationController
   	end
   end  # end method simulate_aplcat
 
+  ################################  aplcat - run the selected scenario for aplcat #################################
   def run_aplcat
 	    msg = "OK"
 	    #find the aplcat parameters for the sceanrio selected
@@ -787,7 +788,7 @@ class ScenariosController < ApplicationController
 			aplcat.scenario_id = params[:select_scenario][0]
 			aplcat.save
 		end
-	    msg = send_file_to_APEX("APLCAT", session[:session_id])  #this operation will create APLCAT+session folder from APLCAT folder
+	    msg = send_file_to_APEX("APLCAT", "APLCAT")  #this operation will create APLCAT+session folder from APLCAT folder
 		# create string for the Cow_Calf_EME_final.txt file
 		apex_string = "This is the input file containing nutritional information for cattle in the cow-calf system" + "\n"
 		apex_string += "\n"
@@ -1478,15 +1479,16 @@ class ScenariosController < ApplicationController
   	return "OK"
   end
 
-
   def download
-  	#@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     download_apex_files()
   end
 
   def download_aplcat
     download_aplcat_files()
+  end
+
+  def download_fem
+    download_fem_files()
   end
 
   private
