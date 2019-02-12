@@ -258,6 +258,7 @@ class ScenariosController < ApplicationController
 
     send_file = true
     #i=0
+    debugger
     if send_file == true 
       xmlBuilder = Nokogiri::XML::Builder.new do |xml|
         xml.send('FEM') {
@@ -285,16 +286,18 @@ class ScenariosController < ApplicationController
         }
       end
       xmlString = xmlBuilder.to_xml
-      xmlString.gsub! "<", "["
-      xmlString.gsub! ">", "]"
-      xmlString.gsub! "\n", ""
-      xmlString.gsub! "[?xml version=\"1.0\"?]", ""
-      xmlString.gsub! "]    [", "] ["
-      msg = send_file_to_APEX(xmlString, "FEM_feed")
+      if xmlString.include? "feed"
+        xmlString.gsub! "<", "["
+        xmlString.gsub! ">", "]"
+        xmlString.gsub! "\n", ""
+        xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+        xmlString.gsub! "]    [", "] ["
+        msg = send_file_to_APEX(xmlString, "FEM_feed")
+      end
     end
 
         #i=0
-    if send_file == false 
+    if send_file == true 
       xmlBuilder = Nokogiri::XML::Builder.new do |xml|
         xml.send('FEM') {
           machines.each do |equip|
@@ -331,15 +334,17 @@ class ScenariosController < ApplicationController
         }
       end
       xmlString = xmlBuilder.to_xml
-      xmlString.gsub! "<", "["
-      xmlString.gsub! ">", "]"
-      xmlString.gsub! "\n", ""
-      xmlString.gsub! "[?xml version=\"1.0\"?]", ""
-      xmlString.gsub! "]    [", "] ["
-      msg = send_file_to_APEX(xmlString, "FEM_machine")
+      if xmlString.include? "feed"
+        xmlString.gsub! "<", "["
+        xmlString.gsub! ">", "]"
+        xmlString.gsub! "\n", ""
+        xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+        xmlString.gsub! "]    [", "] ["
+        msg = send_file_to_APEX(xmlString, "FEM_machine")
+      end
     end
        #i=0
-    if send_file == false 
+    if send_file == true 
       xmlBuilder = Nokogiri::XML::Builder.new do |xml|
         xml.send('FEM') {
           facilities.each do |struct|
@@ -369,12 +374,14 @@ class ScenariosController < ApplicationController
         }
       end
       xmlString = xmlBuilder.to_xml
-      xmlString.gsub! "<", "["
-      xmlString.gsub! ">", "]"
-      xmlString.gsub! "\n", ""
-      xmlString.gsub! "[?xml version=\"1.0\"?]", ""
-      xmlString.gsub! "]    [", "] ["
-      msg = send_file_to_APEX(xmlString, "FEM_facility")
+      if xmlString.include? "feed"
+        xmlString.gsub! "<", "["
+        xmlString.gsub! ">", "]"
+        xmlString.gsub! "\n", ""
+        xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+        xmlString.gsub! "]    [", "] ["
+        msg = send_file_to_APEX(xmlString, "FEM_facility")
+      end
     end
         #i=0
     if send_file == true 
@@ -382,7 +389,7 @@ class ScenariosController < ApplicationController
         xml.send('FEM') {
           generals.each do |other|
             #i+=1
-            if fee.updated then
+            if other.updated then
               xml.send("other") {
                 xml.send("other-name", other.name.to_s)
                 xml.send("value", other.value.to_s)
@@ -394,14 +401,15 @@ class ScenariosController < ApplicationController
           end
         }
       end
-
       xmlString = xmlBuilder.to_xml
-      xmlString.gsub! "<", "["
-      xmlString.gsub! ">", "]"
-      xmlString.gsub! "\n", ""
-      xmlString.gsub! "[?xml version=\"1.0\"?]", ""
-      xmlString.gsub! "]    [", "] ["
-      msg = send_file_to_APEX(xmlString, "FEM_farm")
+      if xmlString.include? "feed"
+        xmlString.gsub! "<", "["
+        xmlString.gsub! ">", "]"
+        xmlString.gsub! "\n", ""
+        xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+        xmlString.gsub! "]    [", "] ["
+        msg = send_file_to_APEX(xmlString, "FEM_farm")
+      end
     end
     #puts xmlString
   end
