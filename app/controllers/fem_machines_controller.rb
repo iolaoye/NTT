@@ -40,7 +40,7 @@ class FemMachinesController < ApplicationController
   # PATCH/PUT /fem_machines/1
   def update
     @fem_machine = FemMachine.find(params[:id])
-
+    @fem_machine.updated = true
     respond_to do |format|
       if @fem_machine.update_attributes(fem_machine_params)
         format.html { redirect_to project_fem_machines_path(@project), notice: 'General Input was successfully updated.' }
@@ -85,6 +85,7 @@ class FemMachinesController < ApplicationController
               :p_debt,
               :year,
               :rv1,
-              :rv2)
+              :rv2,
+              :updated)
     end
 end
