@@ -39,21 +39,21 @@ class AplcatParametersController < ApplicationController
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
 	@aplcat = Hash.new
-	@aplcat[t('aplcat.animal_parameters')] = 1
-	@aplcat[t('aplcat.animal_growth_parameters')] = 2
-	@aplcat[t('aplcat.animal_manure_parameters')] = 3
-	@aplcat[t('aplcat.environmental_parameters')] = 4
-	@aplcat[t('aplcat.greenhouse_parameters')] = 5
-	@aplcat[t('aplcat.water_use_pumping_parameters')] = 6
-	@aplcat[t('aplcat.other_parameters')] = 7
-  @aplcat[t('aplcat.simulation_parameters')] = 8
-  @aplcat[t('aplcat.simulation_methods')] = 9
+  @aplcat[t('aplcat.animal_growth_parameters')] = 1
+  @aplcat[t('aplcat.animal_manure_parameters')] = 2
+  @aplcat[t('aplcat.animal_parameters')] = 3
+  @aplcat[t('aplcat.animal_transport_input')] = 4
+  @aplcat[t('aplcat.co2_balance_input')] = 5
+  @aplcat[t('aplcat.environmental_parameters')] = 6
+  @aplcat[t('aplcat.forage_quantity_input')] = 7
+  @aplcat[t('aplcat.greenhouse_parameters')] = 8
+  @aplcat[t('aplcat.other_parameters')] = 9
   @aplcat[t('aplcat.scenario_file')] = 10
-  @aplcat[t('aplcat.divv_11')] = 11
-  @aplcat[t('aplcat.forage_quantity_input')] = 12
-  @aplcat[t('aplcat.animal_transport_input')] = 13
-  @aplcat[t('aplcat.co2_balance_input')] = 14
-  @aplcat[t('aplcat.secondary_emissions_input')] = 15
+  @aplcat[t('aplcat.secondary_emissions_input')] = 11
+  @aplcat[t('aplcat.simulation_methods')] = 12
+  @aplcat[t('aplcat.simulation_parameters')] = 13
+  @aplcat[t('aplcat.divv_11')] = 14 #water estimation parameters
+	@aplcat[t('aplcat.water_use_pumping_parameters')] = 15
 
 	add_breadcrumb 'Aplcat'
   	if params[:id] == nil then
