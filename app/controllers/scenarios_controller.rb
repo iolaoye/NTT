@@ -258,7 +258,6 @@ class ScenariosController < ApplicationController
 
     send_file = true
     #i=0
-    debugger
     if send_file == true 
       xmlBuilder = Nokogiri::XML::Builder.new do |xml|
         xml.send('FEM') {
