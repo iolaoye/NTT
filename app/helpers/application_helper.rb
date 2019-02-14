@@ -144,23 +144,47 @@ module ApplicationHelper
 			end
 	  	end
 
+	  	def download_fem_files
+		    client = Savon.client(wsdl: URL_SoilsInfo)
+		    response = client.call(:download_fem_folder, message: {"NTTFilesFolder" => FEM_FOLDER + "/FEM", "session1" => session[:session_id], "type" => "fem"})
+		    path_source = response.body[:download_fem_folder_response][:download_fem_folder_result]
+			if path_source.nil?
+				flash[:info] = "Error: No simulations exist in this session. " +
+												"Please run a simulation before downloading APLCAT files."
+				redirect_to project_field_scenarios_path(@project, @field)
+			else
+			    file_name = path_source.split("\\")
+			    path = File.join(DOWNLOAD, file_name[2])
+			    require 'open-uri'
+			    File.open(path, "wb") do |saved_file|
+					# the following "open" is provided by open-uri
+				    open("http://ntt.ama.cbntt.org//NTTRails//NNRestService.ashx?test=zip&path=" + path_source, "rb") do |read_file|
+				    #open("http://nn.tarleton.edu//NTTRails//NNRestService.ashx?test=zip&path=" + path_source + ".zip", "rb") do |read_file|
+				      saved_file.write(read_file.read)
+			      	end
+					send_file path, :type => "application/xml", :x_sendfile => true
+				end
+	  		end
+		end
+
 	  	def download_aplcat_files
 		    client = Savon.client(wsdl: URL_SoilsInfo)
 		    response = client.call(:download_aplcat_folder, message: {"NTTFilesFolder" => APLCAT_FOLDER + "/APLCAT", "session1" => session[:session_id], "type" => "aplcat"})
-		    path = response.body[:download_aplcat_folder_response][:download_aplcat_folder_result]
-			if path.nil?
+		    path_source = response.body[:download_aplcat_folder_response][:download_aplcat_folder_result]
+			if path_source.nil?
 				flash[:info] = "Error: No simulations exist in this session. " +
-												"Please run a simulation before downloading APEX files."
+												"Please run a simulation before downloading APLCAT files."
 				redirect_to project_field_scenarios_path(@project, @field)
 			else
-			    file_name = path.split("\\")
+			    file_name = path_source.split("\\")
 			    path = File.join(DOWNLOAD, file_name[2])
 			    require 'open-uri'
-			    File.open(DOWNLOAD + "/" + file_name[2], "wb") do |saved_file|
+			    File.open(path, "wb") do |saved_file|
 					# the following "open" is provided by open-uri
-					open(REMOTE + file_name[2], "rb") do |read_file|
-					  saved_file.write(read_file.read)
-					end
+				    open("http://ntt.ama.cbntt.org//NTTRails//NNRestService.ashx?test=zip&path=" + path_source, "rb") do |read_file|
+				    #open("http://nn.tarleton.edu//NTTRails//NNRestService.ashx?test=zip&path=" + path_source + ".zip", "rb") do |read_file|
+				      saved_file.write(read_file.read)
+			      	end
 					send_file path, :type => "application/xml", :x_sendfile => true
 				end
 	  		end

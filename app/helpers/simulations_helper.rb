@@ -66,13 +66,6 @@ module SimulationsHelper
   end
 
   def send_files_to_APEX(file)
-    #uri = URI(URL_TIAER)
-    #res = Net::HTTP.post_form(uri, "data" => @apex_control, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @apex_parm, "site" => @apex_site, "wth" => @apex_wth, "rg" => "")
-    #if res.body.include?("Created") then
-      #return "OK"
-    #else
-      #return res.body
-    #end
     apex_string = ""
     for i in 1..4
       case i
@@ -125,17 +118,7 @@ module SimulationsHelper
     if stop != nil
       rotational_grazing += "|" + stop.day.to_s + "|" + stop.month_id.to_s + "|" + stop.year.to_s
     end
-    #url = URI.parse(URL_TIAER)
-    #http = Net::HTTP.new(url.host,url.port)
-    #http.read_timeout = 2000   #seconds
-    #req = Net::HTTP::Post.new(url.path)
-    #req.set_form_data({"data" => "RUN", "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => @soil_list, "site" => @subarea_file, "wth" => @opcs_list_file, "rg" => rotational_grazing})
-    #res = http.request(req)
-    #if res.body.include?("Created") then
-      #return "OK"
-    #else
-      #return res.body
-    #end
+
     for i in 1..3
       case i
       when 1
@@ -173,13 +156,6 @@ module SimulationsHelper
   end
 
   def send_file_to_APEX(apex_string, file)
-    #uri = URI(URL_TIAER)
-    #res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
-    #if res.body.include?("Created") then
-      #return "OK"
-    #else
-      #return res.body
-    #end
     apex_string1=""
     if apex_string.kind_of? Array
       apex_string.each do |as|

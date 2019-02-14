@@ -62,7 +62,7 @@
     			<%= submit_tag t('scenario.simulate') + ' ' + 'APLCAT', data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_aplcat" %>
     		<% end %>
     		<% if fem == 1 %>
-    			<%#= submit_tag t('scenario.simulate') + ' ' + 'FEM', data: {disable_with: 'Please wait. FEM simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_fem" %>
+    			<%= submit_tag t('scenario.simulate') + ' ' + 'FEM', data: {disable_with: 'Please wait. FEM simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_fem" %>
     		<% end %>
         <% end %>
 	    <% if @field.annual_results.count > 0 %>
@@ -71,6 +71,9 @@
           		<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
           		<% if aplcat == 1 %>
           			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
+          		<% end %>
+         		<% if fem == 1 %>
+          			<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
           		<% end %>
           	<% end %>
         <% end %>

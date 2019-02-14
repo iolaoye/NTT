@@ -205,17 +205,17 @@ class ProjectsController < ApplicationController
       else
         @upload_id = 1
         case params[:examples]  # No example was selected
-          when "0"
-            respond_to do |format|
-        format.html { redirect_to projects_upload_path(@upload_id)}
-        format.json { head :no_content }
-        flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
-      end
-          when "1" # Load OH two fields
-            @data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
-      when "2"  # load just the saved project to be copied
-        @data = Nokogiri::XML(File.open(@path))
-      @upload_id = 2
+        when "0"
+          respond_to do |format|
+            format.html { redirect_to projects_upload_path(@upload_id)}
+            format.json { head :no_content }
+            flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('general.one') and return false
+          end
+        when "1" # Load OH two fields
+          @data = Nokogiri::XML(File.open(EXAMPLES + "/OH_MultipleFields.xml"))
+        when "2"  # load just the saved project to be copied
+          @data = Nokogiri::XML(File.open(@path))
+          @upload_id = 2
         end # end case examples
       end
       @data.root.elements.each do |node|
@@ -935,21 +935,19 @@ class ProjectsController < ApplicationController
     #end
   end
 
-  def upload_project_new_version(node)
-    
+  def upload_project_new_version(node)    
     #begin
       @project = Project.new
       @project.user_id = session[:user_id]
       node.elements.each do |p|
-        
         case p.name
-          when "project_name" #if project name exists, save fails
-      @project.name = p.text
-      if params[:examples] == "2"
-        @project.name = @project.name + " copy"
-      end
-          when "project_description"
-            @project.description = p.text
+        when "project_name" #if project name exists, save fails
+          @project.name = p.text
+          if params[:examples] == "2"
+            @project.name = @project.name + " copy"
+          end
+        when "project_description"
+          @project.description = p.text
         end
       end
       @project.version = "NTTG3"
@@ -957,7 +955,7 @@ class ProjectsController < ApplicationController
         #session[:project_id] = @project.id
         return "OK"
       else
-        return t('activerecord.errors.messages.projects.no_saved')
+        return t('activerecord.errors.messages.projects.no_saved') + " - " + t('activerecord.errors.messages.projects.exist')
       end
     #rescue
       return t('activerecord.errors.messages.projects.no_saved')

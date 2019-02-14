@@ -39,6 +39,7 @@ class FemGeneralsController < ApplicationController
   # PATCH/PUT /fem_generals/1
   def update
     @fem_general = FemGeneral.find(params[:id])
+    @fem_general.updated = true
 
     respond_to do |format|
       if @fem_general.update_attributes(fem_general_params)
@@ -65,6 +66,6 @@ class FemGeneralsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fem_general_params
-      params.require(:fem_general).permit(:name, :value)
+      params.require(:fem_general).permit(:name, :value, :updated)
     end
 end
