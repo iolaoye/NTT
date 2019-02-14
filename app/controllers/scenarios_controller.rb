@@ -258,7 +258,7 @@ class ScenariosController < ApplicationController
 
     send_file = true
     #i=0
-    if send_file == true 
+    if send_file == true
       xmlBuilder = Nokogiri::XML::Builder.new do |xml|
         xml.send('FEM') {
           feeds.each do |feed|
@@ -296,7 +296,7 @@ class ScenariosController < ApplicationController
     end
 
         #i=0
-    if send_file == true 
+    if send_file == true
       xmlBuilder = Nokogiri::XML::Builder.new do |xml|
         xml.send('FEM') {
           machines.each do |equip|
@@ -343,7 +343,7 @@ class ScenariosController < ApplicationController
       end
     end
        #i=0
-    if send_file == true 
+    if send_file == true
       xmlBuilder = Nokogiri::XML::Builder.new do |xml|
         xml.send('FEM') {
           facilities.each do |struct|
@@ -383,7 +383,7 @@ class ScenariosController < ApplicationController
       end
     end
         #i=0
-    if send_file == true 
+    if send_file == true
       xmlBuilder = Nokogiri::XML::Builder.new do |xml|
         xml.send('FEM') {
           generals.each do |other|
@@ -474,7 +474,7 @@ class ScenariosController < ApplicationController
     #populate local.mdb and run FEM
 
     msg = send_file_to_APEX(fem_list, "Operations")
-    
+
     if !msg.include? "Error"
       if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
       fem_result = FemResult.new
@@ -1060,18 +1060,18 @@ class ScenariosController < ApplicationController
 		  end
 		  apex_string += "\t" + "! " + t('aplcat.avg_rh') + "\n"
 		end
-		apex_string += aplcat.adwgbc_agp.to_s + "\t" + "! " + t('aplcat.adwgbc') + "\n"
-		apex_string += aplcat.adwgbh_agp.to_s + "\t" + "! " + t('aplcat.adwgbh') + "\n"
+    apex_string += aplcat.adwgbc.to_s + "\t" + "! " + t('aplcat.adwgbc') + "\n"
+		apex_string += aplcat.adwgbh.to_s + "\t" + "! " + t('aplcat.adwgbh') + "\n"
 		apex_string += aplcat.mrga.to_s + "\t" + "! " + t('aplcat.mrga') + "\n"
 		apex_string += aplcat.prh.to_s + "\t" + "! " + t('aplcat.prh') + "\n"
 		apex_string += aplcat.prb.to_s + "\t" + "! " + t('aplcat.prb') + "\n"
-		apex_string += aplcat.jdcc_agp.to_s + "\t" + "! " + t('aplcat.jdcc') + "\n"
-		apex_string += aplcat.gpc_agp.to_s + "\t" + "! " + t('aplcat.gpc') + "\n"
-    apex_string += aplcat.tpwg_agp.to_s + "\t" + "! " + t('aplcat.tpwg') + "\n"
-    apex_string += aplcat.csefa_agp.to_s + "\t" + "! " + t('aplcat.csefa') + "\n"
-		apex_string += aplcat.srop_agp.to_s + "\t" + "! " + t('aplcat.srop') + "\n"
-		apex_string += aplcat.bwoc_agp.to_s + "\t" + "! " + t('aplcat.bwoc') + "\n"
-		apex_string += aplcat.jdbs_agp.to_s + "\t" + "! " + t('aplcat.jdbs') + "\n"
+		apex_string += aplcat.jdcc.to_s + "\t" + "! " + t('aplcat.jdcc') + "\n"
+		apex_string += aplcat.gpc.to_s + "\t" + "! " + t('aplcat.gpc') + "\n"
+    apex_string += aplcat.tpwg.to_s + "\t" + "! " + t('aplcat.tpwg') + "\n"
+    apex_string += aplcat.csefa.to_s + "\t" + "! " + t('aplcat.csefa') + "\n"
+		apex_string += aplcat.srop.to_s + "\t" + "! " + t('aplcat.srop') + "\n"
+		apex_string += aplcat.bwoc.to_s + "\t" + "! " + t('aplcat.bwoc') + "\n"
+		apex_string += aplcat.jdbs.to_s + "\t" + "! " + t('aplcat.jdbs') + "\n"
 		apex_string += aplcat.platc.to_s + "\t" + "! " + t('aplcat.platc') + "\n"
 		apex_string += aplcat.pctbb.to_s + "\t" + "! " + t('aplcat.pctbb') + "\n"
 		apex_string += aplcat.rhaeba.to_s + "\t" + "! " + t('aplcat.rhaeba') + "\n"
@@ -1086,7 +1086,7 @@ class ScenariosController < ApplicationController
 		apex_string += aplcat.pgu.to_s + "\t" + "! " + t('aplcat.pgu') + "\n"
 		apex_string += aplcat.ada.to_s + "\t" + "! " + t('aplcat.ada') + "\n"
 		apex_string += aplcat.ape.to_s + "\t" + "! " + t('aplcat.ape') + "\n"
-    apex_string += aplcat.ape_wpp.to_s + "\t" + "! " + t('aplcat.ape') + "\n"
+    apex_string += aplcat.ape.to_s + "\t" + "! " + t('aplcat.ape') + "\n"
     apex_string += aplcat.drinkg.to_s + "\t" + "! " + t('aplcat.drinkg') + "\n"
     apex_string += aplcat.drinkl.to_s + "\t" + "! " + t('aplcat.drinkl') + "\n"
     apex_string += aplcat.drinkm.to_s + "\t" + "! " + t('aplcat.drinkm') + "\n"
@@ -1289,80 +1289,12 @@ class ScenariosController < ApplicationController
     apex_string += "\n"
     apex_string = "Input file for estimating Simulation Methods" + "\n"
 		apex_string += "\n"
-    apex_string += aplcat.mm_type_amp.to_s + "\t" + "! " + t('aplcat.mm_type') + "\n"
-    apex_string += aplcat.fmbmm_amp.to_s + "\t" + "! " + t('aplcat.fmbmm') + "\n"
-    apex_string += aplcat.nit.to_s + "\t" + "! " + t('aplcat.nit') + "\n"
-    apex_string += aplcat.fqd.to_s + "\t" + "! " + t('aplcat.fqd') + "\n"
-    apex_string += aplcat.uovfi.to_s + "\t" + "! " + t('aplcat.uovfi') + "\n"
-    apex_string += aplcat.srwc.to_s + "\t" + "! " + t('aplcat.srwc') + "\n"
-    apex_string += "\n"
-    msg = send_file_to_APEX(apex_string, "AplcatResults.txt")
-    apex_string = "Input file for Aplcat Results" + "\n"
-    apex_string = "Calf" + "\n"
-    apex_string += aplcat_result.calf_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
-    apex_string += aplcat_result.calf_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
-    apex_string += aplcat_result.calf_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
-    apex_string += aplcat_result.calf_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
-    apex_string += aplcat_result.calf_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
-    apex_string += aplcat_result.calf_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
-    apex_string += aplcat_result.calf_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
-    apex_string += aplcat_result.calf_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
-    apex_string += aplcat_result.calf_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
-    apex_string += aplcat_result.calf_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
-    apex_string += aplcat_result.calf_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
-    apex_string += aplcat_result.calf_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
-    apex_string = "Replacement Heifers" + "\n"
-    apex_string += aplcat_result.rh_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
-    apex_string += aplcat_result.rh_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
-    apex_string += aplcat_result.rh_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
-    apex_string += aplcat_result.rh_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
-    apex_string += aplcat_result.rh_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
-    apex_string += aplcat_result.rh_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
-    apex_string += aplcat_result.rh_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
-    apex_string += aplcat_result.rh_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
-    apex_string += aplcat_result.rh_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
-    apex_string += aplcat_result.rh_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
-    apex_string += aplcat_result.rh_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
-    apex_string += aplcat_result.rh_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
-    apex_string = "First Calf Heifers" + "\n"
-    apex_string += aplcat_result.fch_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
-    apex_string += aplcat_result.fch_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
-    apex_string += aplcat_result.fch_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
-    apex_string += aplcat_result.fch_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
-    apex_string += aplcat_result.fch_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
-    apex_string += aplcat_result.fch_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
-    apex_string += aplcat_result.fch_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
-    apex_string += aplcat_result.fch_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
-    apex_string += aplcat_result.fch_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
-    apex_string += aplcat_result.fch_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
-    apex_string += aplcat_result.fch_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
-    apex_string += aplcat_result.fch_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
-    apex_string = "Cow" + "\n"
-    apex_string += aplcat_result.cow_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
-    apex_string += aplcat_result.cow_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
-    apex_string += aplcat_result.cow_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
-    apex_string += aplcat_result.cow_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
-    apex_string += aplcat_result.cow_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
-    apex_string += aplcat_result.cow_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
-    apex_string += aplcat_result.cow_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
-    apex_string += aplcat_result.cow_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
-    apex_string += aplcat_result.cow_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
-    apex_string += aplcat_result.cow_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
-    apex_string += aplcat_result.cow_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
-    apex_string += aplcat_result.cow_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
-    apex_string = "Bull" + "\n"
-    apex_string += aplcat_result.bull_aws.to_s + "\t" + "! " + t('aplcat_result.aws') + "\n"
-    apex_string += aplcat_result.bull_dmi.to_s + "\t" + "! " + t('aplcat_result.dmi') + "\n"
-    apex_string += aplcat_result.bull_gei.to_s + "\t" + "! " + t('aplcat_result.gei') + "\n"
-    apex_string += aplcat_result.bull_wi.to_s + "\t" + "! " + t('aplcat_result.wi') + "\n"
-    apex_string += aplcat_result.bull_sme.to_s + "\t" + "! " + t('aplcat_result.sme') + "\n"
-    apex_string += aplcat_result.bull_ni.to_s + "\t" + "! " + t('aplcat_result.ni') + "\n"
-    apex_string += aplcat_result.bull_tne.to_s + "\t" + "! " + t('aplcat_result.tne') + "\n"
-    apex_string += aplcat_result.bull_tnr.to_s + "\t" + "! " + t('aplcat_result.tnr') + "\n"
-    apex_string += aplcat_result.bull_fne.to_s + "\t" + "! " + t('aplcat_result.fne') + "\n"
-    apex_string += aplcat_result.bull_une.to_s + "\t" + "! " + t('aplcat_result.une') + "\n"
-    apex_string += aplcat_result.bull_eme.to_s + "\t" + "! " + t('aplcat_result.eme') + "\n"
-    apex_string += aplcat_result.bull_mme.to_s + "\t" + "! " + t('aplcat_result.mme') + "\n"
+    apex_string += aplcat.mm_type.to_s + "\t" + "! " + t('aplcat.mm_type') + "\n"
+    apex_string += aplcat.fmbmm.to_s + "\t" + "! " + t('aplcat.fmbmm') + "\n"
+    #apex_string += aplcat.nit.to_s + "\t" + "! " + t('aplcat.nit') + "\n"
+    #apex_string += aplcat.fqd.to_s + "\t" + "! " + t('aplcat.fqd') + "\n"
+    #apex_string += aplcat.uovfi.to_s + "\t" + "! " + t('aplcat.uovfi') + "\n"
+    #apex_string += aplcat.srwc.to_s + "\t" + "! " + t('aplcat.srwc') + "\n"
     apex_string += "\n"
     msg = send_file_to_APEX(apex_string, "EmmisionTransportAndSimulationCowCalf.txt")
 	    if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
