@@ -940,7 +940,6 @@ class ProjectsController < ApplicationController
       @project = Project.new
       @project.user_id = session[:user_id]
       node.elements.each do |p|
-        debugger
         case p.name
         when "project_name" #if project name exists, save fails
           @project.name = p.text
