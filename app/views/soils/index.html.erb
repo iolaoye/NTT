@@ -13,7 +13,7 @@
 
 <div class="page-header"><h1><%= t("menu.soils") %></h1></div>
 
-<% if @soils.count > 0 %>
+<%# if @soils.count > 0 %>
 	<%= form_for [@project, @field] do |f| %>
 	    <div class="field" title="Name of Field">
 			<%= f.label t('field.field_name') %>
@@ -24,7 +24,7 @@
 			<%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any", :required => true, :min => 0 %>
 			<%= '(ac.)' %>
 	    </div>
-		<% if ENV["APP_VERSION"] != "modified" %>
+		<% if ENV["APP_VERSION"] == "modified" %>
 			<div class="field">
 				<%= label :soil_test_laboratory, t('soil.test') %>
 				<td><%= collection_select :field, :soil_test, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @field.soil_test}, {:required => true} %></td>
@@ -37,6 +37,7 @@
 				<%= t('soil.soilp') %>
 				<%= f.number_field :soilp, :class => 'gvTitleStyleNumber', :step => "0.01", :min => 0 %>
 			</div>
+		<% else %>
 			<div>
 				<%= link_to t('general.new') + ' ' + t('models.soil'), new_project_field_soil_path, :class => 'btn btn-primary' %>
 			</div>
@@ -93,12 +94,12 @@
 			<div class="actions"><%= submit_tag t('submit.savecontinue'), :class => "btn btn-primary" %></div>
 		</div>
 	<% end %>
-<%else%>
+<%#else%><%#
 	<div class="flash_alert">
 		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-		<%= t('notices.no_soils') %>
+		<%= t('notices.no_soils') %> <%#
 	</div>
 	<div>
 		<%= link_to t('general.new') + ' ' + t('models.soil'), new_project_field_soil_path, :class => 'btn btn-primary' %>
-	</div>
+	<%#</div><%#
 <% end %>
