@@ -24,7 +24,7 @@
 			<%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any", :required => true, :min => 0 %>
 			<%= '(ac.)' %>
 	    </div>
-		<% if ENV["APP_VERSION"] == "modified" %>
+		<% if ENV["APP_VERSION"] != "modified" %>
 			<div class="field">
 				<%= label :soil_test_laboratory, t('soil.test') %>
 				<td><%= collection_select :field, :soil_test, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @field.soil_test}, {:required => true} %></td>
@@ -36,6 +36,9 @@
 			<div class="field" title="">
 				<%= t('soil.soilp') %>
 				<%= f.number_field :soilp, :class => 'gvTitleStyleNumber', :step => "0.01", :min => 0 %>
+			</div>
+			<div>
+				<%= link_to t('general.new') + ' ' + t('models.soil'), new_project_field_soil_path, :class => 'btn btn-primary' %>
 			</div>
 		<% end %>
 		<div class="table-responsive">
