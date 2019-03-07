@@ -1254,11 +1254,11 @@ end
     @soils = Soil.where(:field_id => params[:field_id])
     i = 0
     @soils.each do |soil|
-      if soil.selected
+      #if soil.selected
         if @slope > soil.slope then
           @slope = soil.slope
         end
-      end
+      #end
       subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
       if subarea != nil then
         #if i == 0 then
@@ -1349,11 +1349,11 @@ end
       #i = 0
       #@inps = i
       @soils.each do |soil|
-        if soil.selected
+        #if soil.selected
           if @slope > soil.slope then
             @slope = soil.slope
           end
-        end
+        #end
         subarea = @scenario.subareas.find_by_soil_id(soil.id)
         @inps = 1
         if subarea != nil then
@@ -1361,9 +1361,9 @@ end
             #@inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
             #i += 1
           #end
-          if soil.selected
+          #if soil.selected
             @iops = subarea.iops + 1 #selected the last iops to inform the subarea the folowing iops to create.
-          end
+          #end
         end
       end
       if id == 15 then   #contour buffer
@@ -1464,20 +1464,20 @@ end
       @soils = Soil.where(:field_id => params[:field_id])
       i = 0
       @soils.each do |soil|
-        if soil.selected
+        #if soil.selected
           if @slope > soil.slope then
             @slope = soil.slope
           end
-        end
+        #end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
         if subarea != nil then
           if i == 0 then
             @inps = subarea.inps #select the first soil, which is with bigest area
             i += 1
           end
-          if soil.selected
+          #if soil.selected
             @iops = subarea.iops #selected the last iops to inform the subarea the folowing iops to create.
-          end
+          #end
         end
       end
       subarea = Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => name).first

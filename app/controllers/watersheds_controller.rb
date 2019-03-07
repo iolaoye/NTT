@@ -265,10 +265,10 @@ class WatershedsController < ApplicationController
 					@grazing = @scenario.operations.find_by_activity_id([7, 9])
 					if @grazing == nil then
 						#@soils = @field.soils.where(:selected => true)
-						@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
+						@soils = Soil.where(:field_id => p.field_id)
 					else
 						#@soils = @field.soils.where(:selected => true).limit(1)
-						@soils = Soil.where(:field_id => p.field_id).where(:selected => true).limit(1)
+						@soils = Soil.where(:field_id => p.field_id).limit(1)
 					end
 				  	#@soils = Soil.where(:field_id => p.field_id).where(:selected => true)
 				  	if msg.eql?("OK") then msg = create_apex_soils() else return msg end
