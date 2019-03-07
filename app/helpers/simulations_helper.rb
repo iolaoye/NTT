@@ -863,7 +863,6 @@ module SimulationsHelper
   #this is the new subarea creation method. This take first the subareas for the scenario and then choose those soils selected and bmp buffers.
   def create_subareas(operation_number)  # operation_number is used for subprojects. for simple scenarios is 1
     last_owner1 = 0
-    debugger
     i=0
   	nirr = 0
     if @grazing == nil then
@@ -885,7 +884,6 @@ module SimulationsHelper
   	subareas = @scenario.subareas.where("bmp_id > 0")
   	buffer_type = 2
   	subareas.each do |subarea|
-      debugger
   		add_subarea_file(subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
   		if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
   			if subarea.subarea_type == "RF" then
@@ -961,7 +959,6 @@ module SimulationsHelper
   end  #end method create_subarea1
 
   def add_subarea_file(_subarea_info, operation_number, last_owner1, i, nirr, buffer, total_soils)
-    debugger
     j = i + 1
     #/line 1
     if buffer then

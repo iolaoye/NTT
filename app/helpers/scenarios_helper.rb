@@ -168,8 +168,7 @@ module ScenariosHelper
 			subarea.upn = 0.24
 			subarea.ffpq = FSEFF
 		end
-		#line 5
-		debugger
+		#line 5		
 		subarea.rchl = subarea.chl
 		subarea.rchl *= 0.9 unless i < total_selected  #just the last subarea is going to have different chl and rchl
 		subarea.rchd = 0.0
