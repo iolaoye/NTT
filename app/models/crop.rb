@@ -21,10 +21,6 @@ class Crop < ActiveRecord::Base
 
   def self.load_crops(state_id)
 	cropping_systems = CropSchedule.where(:status => true, :class_id => 1).where("state_id LIKE ? OR state_id LIKE ?", "%#{state_id}%","*")
-    #cropping_systems = CropSchedule.where(:state_id => state_id, :status => true).where("class_id < 3")
-    #if cropping_systems == nil or cropping_systems.blank? then
-      #cropping_systems = CropSchedule.where(:state_id => *, :status => true)
-    #end
 	crops = Array.new
 	cropping_systems.each do |cs|
 		events = Schedule.where(:crop_schedule_id => cs.id)
@@ -32,6 +28,12 @@ class Crop < ActiveRecord::Base
 			crops.push(e.apex_crop) unless crops.include?(e.apex_crop)
 		end # end each event
 	end # end croping system
+	crops.push(25)
+	crops.push(11)
+	crops.push(85)
+	crops.push(64)
+	crops.push(23)
+	crops.push(33)
 	if I18n.locale.eql?(:en) then
 		return self.select("id, name, type1").where(number: crops).sort_by(&:name)
 	else
