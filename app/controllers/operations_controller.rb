@@ -324,7 +324,6 @@ def index
 
 ################################  CALL WHEN CLICK IN UPLOAD CROPPING SYSTEM  #################################
   def cropping_system
-debugger
     @operations = @scenario.operations
     
     @count = @operations.count
