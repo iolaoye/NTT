@@ -435,7 +435,6 @@ module SimulationsHelper
     cprh = Array.new
     rt = Array.new
     ssaCode = ""
-    #series_name ""
     albedo = 0
     #added to control when information is not available
     texture = ["sandy clay loam", "silty clay loam", "loamy sand", "sandy loam", "sandy clay", "silt loam", "clay loam", "silty clay", "sand", "loam", "silt", "clay"]
@@ -447,7 +446,6 @@ module SimulationsHelper
     last_soil1 = 0
     #last_soil = 0
     soil_info = Array.new
-    #APEXStrings1 = 0
     #check to see if there are soils selected
     selected = false
     @soils.each do |soil|
@@ -471,9 +469,9 @@ module SimulationsHelper
     i = 0
     @soils.each do |soil|
       soil_info.clear
-      if soil.selected == false
-        next
-      end
+      #if soil.selected == false
+        #next
+      #end
       layers = soil.layers
       last_soil1 = @last_soil + i + 1
       soil_file_name = "APEX" + "00" + last_soil1.to_s + ".sol"
@@ -490,11 +488,6 @@ module SimulationsHelper
         hsg = soil.group
       end
       layers.each do |layer|
-        # try to find texture from texture description from database
-        #for j = 0 To texture.Length - 1
-        #    if layer("texture").Contains(texture(j))  Exit for
-        #end
-
         if layer_number == 1
           #validate if this layer is going to be used for Agriculture Lands
           if layer.depth <= 5 && layer.sand == 0 && layer.silt == 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
@@ -509,7 +502,6 @@ module SimulationsHelper
 
         depth[layer_number] = layer.depth * IN_TO_CM
         #if current layer is deeper than maxDept  no more layers are needed.
-        #if Depth[layer_number] > maxDepth(i) && maxDepth(i) > 0  Exit for
         #These statements were added to control duplicated layers in the soil.
         if layer_number > 1
           if depth[layer_number] == depth[layer_number - 1]
@@ -675,32 +667,6 @@ module SimulationsHelper
       @bulk_density = bulk_density
       #if first layer is less than 0.1 m a new layer is added as first one
       initial_layer = 1
-      #if (depth[initial_layer] / 100).round(3) > 0.100
-        #initial_layer = 0
-        #depth[initial_layer] = 10.0
-        #bulk_density[initial_layer] = bulk_density[initial_layer + 1]
-        #uw[initial_layer] = uw[initial_layer + 1]
-        #fc[initial_layer] = fc[initial_layer + 1]
-        #sand[initial_layer] = sand[initial_layer + 1]
-        #silt[initial_layer] = silt[initial_layer + 1]
-        #wn[initial_layer] = wn[initial_layer + 1]
-        #ph[initial_layer] = ph[initial_layer + 1]
-        #smb[initial_layer] = smb[initial_layer + 1]
-        #woc[initial_layer] = woc[initial_layer + 1]
-        #cac[initial_layer] = cac[initial_layer + 1]
-        #cec[initial_layer] = cec[initial_layer + 1]
-        #rok[initial_layer] = rok[initial_layer + 1]
-        #cnds[initial_layer] = cnds[initial_layer + 1]
-        #ssf[initial_layer] = ssf[initial_layer + 1]
-        #rsd[initial_layer] = rsd[initial_layer + 1]
-        #bdd[initial_layer] = bdd[initial_layer + 1]
-        #psp[initial_layer] = psp[initial_layer + 1]
-        #satc[initial_layer] = satc[initial_layer + 1]
-        #hcl[initial_layer] = hcl[initial_layer + 1]
-        #wpo[initial_layer] = wpo[initial_layer + 1]
-        #cprv[initial_layer] = cprv[initial_layer + 1]
-        #cprh[initial_layer] = cprh[initial_layer + 1]
-      #end #end depth
       #Line 2 and line 3 col 5 and 7
       if albedo == 0
         albedo = 0.2
@@ -844,9 +810,6 @@ module SimulationsHelper
   			 ssf[layers] = 0
   		  end
         #commented according to Ali. No max value for soilp P to allow sooil p caculation using soil test and override by user input.
-        #if ssf[layers] > SoilPMaxForSoilDepth
-          #ssf[layers] = SoilPDefault
-        #end
         if ssf[layers] == 0 || ssf[layers] == nil
           ssf[layers] = SoilPDefault
         end
@@ -891,7 +854,6 @@ module SimulationsHelper
       #INSERT LINES 25, 26, 27, 28
       @soil_list.push("  " + sprintf("%3d", last_soil1) + " " + soil_file_name + "\n")
       i += 1
-      #print_array_to_file(soil_info, soil_file_name)
       msg = send_file_to_APEX(soil_info, soil_file_name)
     end # end soils do
     @last_soil = last_soil1
@@ -911,12 +873,12 @@ module SimulationsHelper
     end
   	subareas.each do |subarea|
       soil = subarea.soil
-  		if soil.selected then
-  			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
-  			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
-  			i+=1
-  			@soil_number += 1
-  		end  # end if soil.selected
+  		#if soil.selected then
+			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
+			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
+			i+=1
+			@soil_number += 1
+  		#end  # end if soil.selected
   	end  # end subareas.each for soil_id > 0
   	#add subareas and operations for buffer BMPs.
   	subareas = @scenario.subareas.where("bmp_id > 0")
@@ -2821,9 +2783,9 @@ module SimulationsHelper
       @last_soil = 0
       @grazing = @scenario.operations.find_by_activity_id([7, 9])
       if @grazing == nil then
-        @soils = @field.soils.where(:selected => true)
+        @soils = @field.soils
       else
-        @soils = @field.soils.where(:selected => true).limit(1)
+        @soils = @field.soils.limit(1)
       end
       @soil_list = Array.new
       if msg.eql?("OK") then msg = create_apex_soils() else return msg  end
