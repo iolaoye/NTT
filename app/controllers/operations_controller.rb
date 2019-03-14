@@ -87,6 +87,8 @@ def index
 # GET /operations/1/edit
   def edit
     @operation = Operation.find(params[:id])
+    #find the crop lu_number to know if it is tree or not
+    @lu_number = Crop.find(@operation.crop_id).lu_number
     if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
       @operation.po4_p = (@operation.po4_p / PO4_TO_P2O5).round(1)
     end
