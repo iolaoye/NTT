@@ -1021,6 +1021,9 @@ module SimulationsHelper
     @subarea_file.push(sLine + "\n")
     #/line 4
     _subarea_info.wsa = _subarea_info.wsa.round(2)
+    if _subarea_info.wsa = 0.00 then
+      _subarea_info.wsa = 0.01
+    end
     if _subarea_info.wsa > 0 && i > 0 && !buffer then
       sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
     else
