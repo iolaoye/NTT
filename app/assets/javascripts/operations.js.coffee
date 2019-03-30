@@ -33,13 +33,13 @@ upload_crop1 = (show) ->
 updatePlantPopulation = ->
   if ($("#operation_activity_id").val() == "1")
      url = "/crops/" + $("#operation_crop_id").val() + ".json"
-	 $.getJSON url, (crop) ->
-      if (crop.lu_number == 28)
-        $("#div_amount")[0].children[0].innerText = "Plant Population (trees/ac)(*optional)"
-        $("#operation_amount").val(crop.plant_population_ac)
-      else
-        $("#div_amount")[0].children[0].innerText = "Plant population (seeds sq/ft)(*optional)"
-        $("#operation_amount").val(crop.plant_population_ft)
+	   $.getJSON url, (crop) ->
+        if (crop.lu_number == 28)
+          $("#div_amount")[0].children[0].innerText = "Plant Population (trees/ac)(*optional)"
+          $("#operation_amount").val(crop.plant_population_ac)
+        else
+          $("#div_amount")[0].children[0].innerText = "Plant population (seeds sq/ft)(*optional)"
+          $("#operation_amount").val(crop.plant_population_ft)
 
 updateNutrients = (animal) ->
   if (animal == 1)
