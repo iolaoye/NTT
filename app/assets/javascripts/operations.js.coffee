@@ -368,7 +368,8 @@ $(document).ready ->
 
     $("#operation_type_id").change ->
       updateFerts()
-      updatePlantPopulation()
+      if ($("#operation_activity_id").val() == "1")
+        updatePlantPopulation()
       take_efficiency()
 
     $("#operation_subtype_id").change ->
