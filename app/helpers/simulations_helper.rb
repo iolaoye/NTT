@@ -912,7 +912,7 @@ module SimulationsHelper
         #if !(bmps.CBCWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBBWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBCrop > 0) then
         #addSubareaFile(soil._scenariosInfo(currentScenarioNumber)._subareasInfo, operation_number, last_soil1, last_owner1, @soil_number, nirr, false)
         #operation number is used to control subprojects. Therefore here is going to be 1.
-        add_subarea_file(Subarea.find_by_soil_id_and_scenario_id(soil.id, @scenario.id), operation_number, last_owner1, i, nirr, false, @soils.count)
+        add_subarea_file(Subarea.find_by_soil_id_and_scenario_id(soil.id, @scenario.id), operation_number, last_owner1, i, nirr, false, @soils.count)        
         @soil_number += 1
         i+=1
       end
@@ -1021,7 +1021,7 @@ module SimulationsHelper
     @subarea_file.push(sLine + "\n")
     #/line 4
     _subarea_info.wsa = _subarea_info.wsa.round(2)
-    if _subarea_info.wsa = 0.00 then
+    if _subarea_info.wsa == 0.00 then
       _subarea_info.wsa = 0.01
     end
     if _subarea_info.wsa > 0 && i > 0 && !buffer then
