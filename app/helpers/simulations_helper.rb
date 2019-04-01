@@ -883,13 +883,17 @@ module SimulationsHelper
   	#add subareas and operations for buffer BMPs.
   	subareas = @scenario.subareas.where("bmp_id > 0")
   	buffer_type = 2
+    bmp = 1
   	subareas.each do |subarea|
   		add_subarea_file(subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
   		if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
   			if subarea.subarea_type == "RF" then
   				buffer_type = 1
   			end
-  			create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
+        if !(subarea.subarea_type == "CB" and bmp > 1) then
+  			   create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
+           bmp += 1
+        end
   			i+=1
   			@soil_number += 1
   		end # end if bmp types PPDE and PPTW
