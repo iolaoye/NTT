@@ -941,7 +941,6 @@ end
         return create_new_subarea("CB",15)
       end
     when "delete"
-      debugger
       @bmp.crop_width = 0
       @bmp.width = 0
       @bmp.crop_id = 0
