@@ -941,11 +941,13 @@ end
         return create_new_subarea("CB",15)
       end
     when "delete"
+      debugger
       @bmp.crop_width = 0
       @bmp.width = 0
       @bmp.crop_id = 0
       #delete all of CB subarea_type 
-      @scenario.subareas.where(:subarea_type => "CB").destroy_all
+      subareas = @scenario.subareas.where(:subarea_type => "CB")
+      subareas.destroy_all
       #delete all of the SoilOperations ofor CB
       @bmp.soil_operations.delete_all
       # now restore the area of the subareas with "Soil" as subarea_type
