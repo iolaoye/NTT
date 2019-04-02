@@ -1553,7 +1553,7 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
-      when 11 # liming
+      when 12 # liming
         apex_string += sprintf("%5d", 0) #
         apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
       else #No entry needed.
