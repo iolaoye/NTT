@@ -65,18 +65,71 @@ module SimulationsHelper
   	msg = "OK"
   end
 
+  def calculate_centroid()
+    #https://en.wikipedia.org/wiki/Centroid.
+    centroid_structure = Struct.new(:cy, :cx)
+    centroid = centroid_structure.new(0.0, 0.0)
+    points = @field.coordinates.split(" ")
+    i=0
+
+    points.each do |point|
+      i+=1
+      centroid.cx += point.split(",")[0].to_f
+      centroid.cy += point.split(",")[1].to_f
+    end
+    centroid.cx = centroid.cx / (i)
+    centroid.cy = centroid.cy / (i)
+    return centroid
+  end
+
+  def get_future_climate(option, lat, lon)
+    debugger
+    i_year = 2020
+    f_year = 2050
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### get future climate depending on the user selection ########
+    response = client.call(:get_future_climate, message: {"file" => "WTH", "i_year" => 2020, "f_year" => 2050, "option" => option.to_i, "lat" => lat, "lon" => lon})
+    if !response.body[:get_future_climate_response][:get_future_climate_result].include? "Error" then
+      return response.body[:get_future_climate_response][:get_future_climate_result] #return weather information
+    else
+      return response.body[:get_future_climage_response][:get_future_climate_result]  # Return error 
+    end
+  end
+
   def send_files_to_APEX(file)
+    debugger
+    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 28)  #find if there is future climate bmp
     apex_string = ""
     for i in 1..4
       case i
       when 1
+        if !(bmp == nil) then
+          #change the period to simulate
+        end
         apex_string = @apex_control
       when 2
         apex_string = @apex_parm
       when 3
         apex_string = @apex_site
       when 4
-        apex_string = @apex_wth        
+        #apex_string = @apex_wth   
+        if !(bmp == nil) then
+          centroid = calculate_centroid()
+          #get file name for the future
+          client = Savon.client(wsdl: URL_SoilsInfo)
+          ###### cget weather file name ########
+          response = client.call(:get_future_climate, message: {"file" => file, "i_year" => 2020, "f_year" => 2050, "option1" => bmp.depth.to_i, "lat" => centroid[0], "lon" => centroid[1]})
+          if response.body[:apex_files_response][:apex_files_result] == "created" then
+            return "OK"
+          else
+            return response.body[:apex_files_response][:apex_files_result]
+          end
+          apex_string = @field.weather.weather_file 
+        else
+          #get file name for the current
+          apex_string = @field.weather.weather_file 
+        end
+      end     
       end
       apex_string1=""
       if apex_string.kind_of? Hash
@@ -94,8 +147,8 @@ module SimulationsHelper
       when 3
         apex_site = apex_string1
       when 4
+        #apex_string = @apex_wth
         apex_wth = apex_string1
-      end
     end   # end for
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
@@ -194,13 +247,6 @@ module SimulationsHelper
   end
 
   def send_file1_to_APEX(apex_string, file)
-    #uri = URI(URL_TIAER)
-    #res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
-    #if res.body.include?("Created") then
-      #return "OK"
-    #else
-      #return res.body
-    #end
     if session[:simulation].eql? "scenario"
       i_year = @field.weather.weather_initial_year
       f_year = @field.weather.weather_final_year
@@ -336,29 +382,36 @@ module SimulationsHelper
   end
 
   def create_weather_file(dir_name, field_id)
-    #todo weather file are more than one when there are different fields such as in watershed simulation.
+    #define if there is future climate bmp for this scenario
+    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 28)
+    if !(bmp == nil) then
+      centroid = calculate_centroid()
+      @apex_wth = get_future_climate(bmp.depth, centroid[0], centroid[1])
+      if @apex_wth[:string].include? "Error"
+        return @apex_wth[:string]
+      else
+        return "OK"
+      end    # end if error
+    end   #end if bmp
     weather = Weather.find_by_field_id(field_id)
     if (weather.way_id == 2)
       #copy the file path
       path = File.join(OWN, weather.weather_file)
-	  if File.exist?(path) then FileUtils.cp_r(path, dir_name + "/APEX.wth") else return "You need to upload your weather file before trying to simulate scenarios" end
-      @apex_wth = read_file(File.join(OWN, weather.weather_file), true)
-    else
-      path = File.join(PRISM1, weather.weather_file)
-      #client = Savon.client(wsdl: URL_Weather)
-      #response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
-      #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-      #print_array_to_file(PATH, "APEX.wth")
-      @apex_wth = send_file1_to_APEX("WTH", path)
-      if @apex_wth.include? "Error"
-        return @apex_wth
+	    if File.exist?(path) then FileUtils.cp_r(path, dir_name + "/APEX.wth") else return "You need to upload your weather file before trying to simulate scenarios" end
+        @apex_wth = read_file(File.join(OWN, weather.weather_file), true)
+      else
+        path = File.join(PRISM1, weather.weather_file)
+        #print_array_to_file(PATH, "APEX.wth")
+        @apex_wth = send_file1_to_APEX("WTH", path)
+        if @apex_wth.include? "Error"
+          return @apex_wth
+        end
       end
-    end
-    #todo after file is copied if climate bmp is in place modified the weather file.
-    bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)
-    climate_array = Array.new
-    climates = Climate.where(:bmp_id => bmp_id)
-    climates.each do |climate|
+      #todo after file is copied if climate bmp is in place modified the weather file.
+      bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)
+      climate_array = Array.new
+      climates = Climate.where(:bmp_id => bmp_id)
+      climates.each do |climate|
       climate_array = update_hash(climate, climate_array)
     end
     if climates.first != nil
@@ -396,9 +449,6 @@ module SimulationsHelper
         end #end if pcp
       end # end each
     end #end if
-    #msg = send_file_to_APEX(@apex_wth, "APEX.wth")
-    #todo fix widn and wp1 files with the real name
-    #msg = send_files_to_APEX("FILES")
     return "OK"
   end
 
@@ -2780,7 +2830,7 @@ module SimulationsHelper
       if msg.eql?("OK") then msg = create_control_file() else return msg end                  #this prepares the apexcont.dat file
       if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
       if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file
-      if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
+      #if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
       if @project.location.state_id == 0 then 
         if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
       else
