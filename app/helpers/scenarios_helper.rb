@@ -202,7 +202,7 @@ module ScenariosHelper
         subarea.nirr = 0
         subarea.iri = 0
         subarea.ira = 0
-        subarea.lm = 0
+        subarea.lm = 1
         subarea.ifd = 0
         subarea.idr = 0
         subarea.idf1 = 0

@@ -717,6 +717,9 @@ es:
     tile_bioreactors: Sistema de Bioreactores
     drainage_management: Manejo de Aguas drenadas
     none: Ninguno
+    best_scenario: Mejor Escenario
+    normal_scenario: Normal Escenario
+    worst_scenario: Peor Escenario
   fem:
     general: Entradas Generales
     equipment: Equipos

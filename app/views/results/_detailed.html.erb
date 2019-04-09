@@ -330,10 +330,10 @@
 			</tr>
 			<%# Other Information %>
 			<% row_id = t + "row" + "90" %>
-			<tr class="gvRowStyleOdd", id = <%=row_id%> style="display:none">
+			<tr class="gvRowStyleOdd", id = <%=row_id%><% style="display:none" unless ENV["APP_VERSION"] == "standard" %>>
 				<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
 					<a id="show24" class="gvTotalText"><%= "Other Information" + " " %></a>
-					<%= check_box_tag "Total P" %>
+					<%= check_box_tag "Total Others" %>
 				</th>
 				<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9">
 					<%#= sprintf("%8.1f", @averages1[0][12]+@averages1[0][13]) + " (" + sprintf("%8.1f",@cis1[0][13]+@cis1[0][14]) + ")" %></td>
@@ -350,17 +350,17 @@
 					<td class= "gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 				<% end %>
 			</tr>
-			<% row_id = t + "row" + "93" %>
+			<% row_id = t + "row" + "92" %>
 			<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show25" class="gvTotalText"><%= "Carbon" + " (" + "lbs/ac" + ")" %></a></th>
-				<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @averages1[0][14]) + " (" + sprintf("%8.1f", @cis1[0][15]) + ")" %></td>
+				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show25" class="gvTotalText"><%= "N2O_N" + " (" + "lbs/ac" + ")" %></a></th>
+				<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.4f", @averages1[0][15]) + " (" + sprintf("%8.1f", @cis1[0][16]) + ")" %></td>
 				<% if @scenario2 != "0" && @scenario2 != "" then %>
-					<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @averages2[0][14]) + " (" + sprintf("%8.1f", @cis2[0][15]) + ")" %></td>
-					<td class=<%= if @averages2[0][14]-@averages1[0][14] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.2f", @averages2[0][14]-@averages1[0][14]) + " (" + sprintf("%8.2f", ((@averages2[0][14]-@averages1[0][14]) / @averages1[0][14]) * 100) + ")" %></td>
+					<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.4f", @averages2[0][15]) + " (" + sprintf("%8.1f", @cis2[0][16]) + ")" %></td>
+					<td class=<%= if @averages2[0][15]-@averages1[0][15] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.4f", @averages2[0][15]-@averages1[0][15]) + " (" + sprintf("%8.2f", ((@averages2[0][15]-@averages1[0][15]) / @averages1[0][15]) * 100) + ")" %></td>
 				<% end %>
 				<% if @scenario3 != "0" && @scenario3 != "" then %>
-					<td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", @averages3[0][14]) + " (" + sprintf("%8.1f", @cis3[0][15]) + ")" %></td>
-					<td class=<%= if @averages3[0][14]-@averages1[0][14] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", @averages3[0][14]-@averages1[0][14]) + " (" + sprintf("%8.2f", ((@averages3[0][14]-@averages1[0][14]) / @averages1[0][14]) * 100) + ")" %></td>
+					<td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.4f", @averages3[0][15]) + " (" + sprintf("%8.1f", @cis3[0][15]) + ")" %></td>
+					<td class=<%= if @averages3[0][15]-@averages1[0][15] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.4f", @averages3[0][15]-@averages1[0][15]) + " (" + sprintf("%8.2f", ((@averages3[0][15]-@averages1[0][15]) / @averages1[0][15]) * 100) + ")" %></td>
 				<% end %>
 			</tr>
 			<%# Crops %>
