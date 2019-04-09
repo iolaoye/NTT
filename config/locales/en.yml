@@ -731,6 +731,9 @@ en:
     tile_bioreactors: Tile Bioreactors
     drainage_management: Drainage Water Management
     none: None
+    best_scenario: Best Scenario
+    normal_scenario: Normal Scenario
+    worst_scenario: Worst Scenario
   fem:
     general: General Inputs
     equipment: Equipments
