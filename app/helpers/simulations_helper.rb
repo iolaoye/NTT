@@ -126,7 +126,7 @@ module SimulationsHelper
           #get file name for the current
           apex_string = PRISM1 + "/" + @field.weather.weather_file 
         end    
-      end
+      end  # case i end 
       apex_string1=""
       if apex_string.kind_of? Hash
         apex_string[:string].each do |as|
@@ -145,7 +145,8 @@ module SimulationsHelper
       when 4
         #apex_string = @apex_wth
         apex_wth = apex_string1
-    end   # end for
+      end   # end case i
+    end # end for
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
     response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_control, "parm" => apex_parm, "site" => apex_site, "wth" => apex_wth, "session_id" => session[:session_id]})
