@@ -78,7 +78,7 @@ module ScenariosHelper
 		    when 3
 		      operation.type_id = event.apex_operation
 		    else
-		    operation.amount = event.apex_opv1
+		      operation.amount = event.apex_opv1
 		  end #end case
 		  operation.depth = event.apex_opv2
 		  operation.scenario_id = scenario_id
@@ -202,7 +202,7 @@ module ScenariosHelper
         subarea.nirr = 0
         subarea.iri = 0
         subarea.ira = 0
-        subarea.lm = 0
+        subarea.lm = 1
         subarea.ifd = 0
         subarea.idr = 0
         subarea.idf1 = 0
@@ -891,7 +891,7 @@ module ScenariosHelper
     	#end
     	opv1 = @field.field_area * AC_TO_HA / operation.amount
     when 12 #liming
-        opv1 = operation.amount / THA_TO_TAC #converts input t/ac to APEX t/ha
+        opv1 = operation.amount / LBS_AC_TO_T_HA #converts input lbs/ac to APEX t/ha
     end
     return opv1
   end

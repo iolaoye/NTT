@@ -98,6 +98,7 @@
 	FSEFF = 1.0
 	MAX_STRIPS = 6
 	PO4_TO_P2O5 = 0.4364
+	LBS_AC_TO_T_HA = 0.00112085
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'

@@ -226,7 +226,7 @@ class BmpsController < ApplicationController
         create(27)
       end
       # =>  Future Climate
-      if params.has_key?(:select) && !params[:select][:"28"].nil? then
+      if params.has_key?(:select) && !params[:select][:"28"].nil? and params[:bmp_clm1] != nil then
         create(28)
       end
   		redirect_to project_field_scenarios_path(@project, @field)
@@ -1235,7 +1235,7 @@ end
           when "create", "update"
             subarea.lm = 0.0
           when "delete"
-            subarea.pec = 1.0
+            subarea.lm = 1.0
         end
         if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil

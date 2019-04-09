@@ -83,7 +83,6 @@ module SimulationsHelper
   end
 
   def get_future_climate(option, lat, lon)
-    debugger
     i_year = 2020
     f_year = 2050
     client = Savon.client(wsdl: URL_SoilsInfo)
@@ -97,7 +96,6 @@ module SimulationsHelper
   end
 
   def send_files_to_APEX(file)
-    debugger
     bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 28)  #find if there is future climate bmp
     apex_string = ""
     for i in 1..4
@@ -118,18 +116,16 @@ module SimulationsHelper
           #get file name for the future
           client = Savon.client(wsdl: URL_SoilsInfo)
           ###### cget weather file name ########
-          response = client.call(:get_future_climate, message: {"file" => file, "i_year" => 2020, "f_year" => 2050, "option1" => bmp.depth.to_i, "lat" => centroid[0], "lon" => centroid[1]})
-          if response.body[:apex_files_response][:apex_files_result] == "created" then
-            return "OK"
+          response = client.call(:get_future_climate, message: {"file" => file, "i_year" => 2020, "f_year" => 2050, "option1" => bmp.depth.to_i, "nlat" => centroid[0], "nlon" => centroid[1]})
+          if response.body[:get_future_climate_response][:get_future_climate_result].include? "Error" then
+            return response.body[:get_future_climate_response][:get_future_climate_result]
           else
-            return response.body[:apex_files_response][:apex_files_result]
+            apex_string = response.body[:get_future_climate_response][:get_future_climate_result]
           end
-          apex_string = @field.weather.weather_file 
         else
           #get file name for the current
-          apex_string = @field.weather.weather_file 
-        end
-      end     
+          apex_string = PRISM1 + "/" + @field.weather.weather_file 
+        end    
       end
       apex_string1=""
       if apex_string.kind_of? Hash
@@ -1603,7 +1599,7 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
-      when 11 # liming
+      when 12 # liming
         apex_string += sprintf("%5d", 0) #
         apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
       else #No entry needed.
