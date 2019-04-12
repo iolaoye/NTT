@@ -25,5 +25,5 @@ Bmpsublist.create!({:id => 23,:name => "Asphalt or Concrete",:status => false,:b
 Bmpsublist.create!({:id => 24,:name => "Grass Cover",:status => false,:bmplist_id => 8,:spanish_name => "Cubierta de Pasto"}, :without_protection => true)
 Bmpsublist.create!({:id => 25,:name => "Slope Adjustment",:status => false,:bmplist_id => 8,:spanish_name => "Ajuste de la inclinacion"}, :without_protection => true)
 Bmpsublist.create!({:id => 26,:name => "Shading",:status => false,:bmplist_id => 8,:spanish_name => "Shading"}, :without_protection => true)
-Bmpsublist.create!({:id => 27,:name => "Auto Lime Application",:status => false,:bmplist_id => 6,:spanish_name => "Aplication Auto Encalado"}, :without_protection => true)
-Bmpsublist.create!({:id => 28,:name => "Future Climate",:status => false,:bmplist_id => 7,:spanish_name => "Clima en el Futuro"}, :without_protection => true)
+Bmpsublist.create!({:id => 27,:name => "Auto Lime Application",:status => true,:bmplist_id => 6,:spanish_name => "Aplication Auto Encalado"}, :without_protection => true)
+Bmpsublist.create!({:id => 28,:name => "Future Climate",:status => true,:bmplist_id => 7,:spanish_name => "Clima en el Futuro"}, :without_protection => true)
