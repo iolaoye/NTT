@@ -187,7 +187,7 @@ include ScenariosHelper
 		end
       else
         @weather.way_id = 2
-		upload_weather
+		    msg = upload_weather
       end
     end
 
@@ -200,12 +200,17 @@ include ScenariosHelper
     end
 
     respond_to do |format|
-      if @weather.save
-        format.html { redirect_to edit_project_field_weather_path(@project, @field, @weather), notice: t('models.weather') + " " + t('general.updated') }
-        format.json { head :no_content }
-      else
+      if msg != "OK" then
         format.html { render action: "edit" }
-        format.json { render json: @weather.errors, status: :unprocessable_entity }
+        format.json { render json: msg, status: :unprocessable_entity }
+      else
+        if @weather.save
+          format.html { redirect_to edit_project_field_weather_path(@project, @field, @weather), notice: t('models.weather') + " " + t('general.updated') }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @weather.errors, status: :unprocessable_entity }
+        end
       end
     end
 
@@ -238,7 +243,14 @@ include ScenariosHelper
     # open the weather file for writing.
     weather_file = open(path, "w")
     #File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) } 
-    input_file = params[:weather][:weather_file].read.split(/\r\n/)
+    original_data = params[:weather][:weather_file].read
+    input_file = original_data.split(/\r\n/)
+    if input_file.count == 1 then 
+      input_file = original_data.split(/\n/)
+    end
+    if input_file.count == 1 then 
+      input_file = original_data.split(/\r/)
+    end
     i=0
     data = ""
     #File.open(path, "r").each_line do |line|
@@ -255,6 +267,9 @@ include ScenariosHelper
         i = i + 1
       end
   	  # print the new wehater file in the correct format
+      year = sprintf("%4d",data[0].to_i)
+      month = sprintf("%4d",data[1].to_i)
+      day = sprintf("%4d",data[2].to_i)
   	  sr = ""
   	  tmax = ""
   	  tmin = ""
@@ -264,39 +279,47 @@ include ScenariosHelper
   	  if data.length < 7 then 
   		  return "There are missing empty values in this file in " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + ". Please fix the problem and try again."
       end 
-  	  if data[3].to_f < -900 then sr = sprintf("%6.1f",data[3]) else sr = sprintf("%6.2f",data[3]) end
-  	  if data[4].to_f < -900 then tmax = sprintf("%6.1f",data[4]) else tmax = sprintf("%6.2f",data[4]) end
-  	  if data[5].to_f < -900 then tmin = sprintf("%6.1f",data[5]) else tmin = sprintf("%6.2f",data[5]) end 
-  	  if data[6].to_f < -900 then pcp = sprintf("%6.1f",data[6]) else pcp = sprintf("%6.2f",data[6]) end
-      rh = sprintf("%6.2f",0)
-      ws = sprintf("%6.2f",0)
+  	  if data[3].to_f < -90 then sr = sprintf("%7.1f",data[3]) else sr = sprintf("%7.2f",data[3]) end
+  	  if data[4].to_f < -90 then tmax = sprintf("%7.1f",data[4]) else tmax = sprintf("%7.2f",data[4]) end
+  	  if data[5].to_f < -90 then tmin = sprintf("%7.1f",data[5]) else tmin = sprintf("%7.2f",data[5]) end 
+  	  if data[6].to_f < -90 then pcp = sprintf("%7.1f",data[6]) else pcp = sprintf("%7.2f",data[6]) end
+      rh = sprintf("%7.2f",0)
+      ws = sprintf("%7.2f",0)
   	  case data.length
   		when 8
-  			if data[7].to_f < -900 then rh = sprintf("%6.1f",data[7]) else rh = sprintf("%6.2f",data[7]) end
+  			if data[7].to_f < -90 then rh = sprintf("%7.1f",data[7]) else rh = sprintf("%7.2f",data[7]) end
   		when 9
-  			if data[8].to_f < -900 then ws = sprintf("%6.1f",data[8]) else ws = sprintf("%6.2f",data[8]) end
+  			if data[8].to_f < -90 then ws = sprintf("%7.1f",data[8]) else ws = sprintf("%7.2f",data[8]) end
   	  end   # end case data.len
-      weather_file.write("  " + sprintf("%4d",data[0].to_i) + sprintf("%4d",data[1].to_i) + sprintf("%4d",data[2].to_i) + sr + tmax + tmin + pcp + rh + ws + "\n")
-    end  # end file.open
+      weather_file.write("  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*")
+    end  # end do file.open
   	weather_file.close
-  	#verify that there are more than 5 years of weather period.
-  	if @weather.simulation_initial_year >= @weather.weather_final_year then
-  		@weather.simulation_initial_year = @weather.weather_initial_year
-  		@weather.weather_initial_year -= 5 
-  	end
-    @weather.weather_file = name
-    @weather.way_id = 2
-    @weather.save
-    if @weather.save then
-      return "OK"
+    weather_file = open(path, "r")
+    original_data = weather_file.read
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:apex_files, message: {"fileName" => "UploadWeather", "data" => name, "parm" => "", "site" => "", "wth" => original_data, "session_id" => session[:session_id]})
+    if response.body[:apex_files_response][:apex_files_result] == "created" then
+      #verify that there are more than 5 years of weather period.
+      if @weather.simulation_initial_year >= @weather.weather_final_year then
+        @weather.simulation_initial_year = @weather.weather_initial_year
+        @weather.weather_initial_year -= 5 
+      end
+      @weather.weather_file = name
+      @weather.way_id = 2
+      @weather.save
+      if @weather.save then
+        return "OK"
+      else
+        return msg
+      end
     else
-      return msg
+      return response.body[:apex_files_response][:apex_files_result]
     end
     return
   end
-
+  
   private
-
 # Use this method to whitelist the permissible parameters. Example:
 # params.require(:person).permit(:name, :age)
 # Also, you can specialize this method with per-user checking of permissible attributes.
