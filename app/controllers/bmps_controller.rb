@@ -50,6 +50,9 @@ class BmpsController < ApplicationController
 	  @climates = Climate.where(:id => 0)
 
   	bmpsublists.each do |bmpsublist|
+      if !(bmpsublist.id == 27 or bmpsublist.id == 28) and !(request.url.include? "ntt.bk" or request.url.include? "localhost") then
+        next
+      end
   		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(params[:scenario_id], bmpsublist.id)
   		if bmp.blank? || bmp == nil then
   			bmp = Bmp.new
