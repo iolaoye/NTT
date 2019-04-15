@@ -44,15 +44,16 @@ class BmpsController < ApplicationController
 
 ################################  Get CURRENT BMPS #########################
   def get_bmps
-    bmpsublists = Bmpsublist.where(:status => true)
+    if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+      bmpsublists = Bmpsublist.where(:status => true)
+    else
+      bmpsublists = Bmpsublist.where(:status => true).where("id != 27 and id != 28")
+    end
     @bmps = Bmp.where(:bmpsublist_id => 0)
     @bmps[0] = Bmp.new
 	  @climates = Climate.where(:id => 0)
 
   	bmpsublists.each do |bmpsublist|
-      if !(bmpsublist.id == 27 or bmpsublist.id == 28) and !(request.url.include? "ntt.bk" or request.url.include? "localhost") then
-        next
-      end
   		bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(params[:scenario_id], bmpsublist.id)
   		if bmp.blank? || bmp == nil then
   			bmp = Bmp.new
