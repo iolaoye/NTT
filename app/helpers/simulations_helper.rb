@@ -65,19 +65,68 @@ module SimulationsHelper
   	msg = "OK"
   end
 
+  def calculate_centroid()
+    #https://en.wikipedia.org/wiki/Centroid.
+    centroid_structure = Struct.new(:cy, :cx)
+    centroid = centroid_structure.new(0.0, 0.0)
+    points = @field.coordinates.split(" ")
+    i=0
+
+    points.each do |point|
+      i+=1
+      centroid.cx += point.split(",")[0].to_f
+      centroid.cy += point.split(",")[1].to_f
+    end
+    centroid.cx = centroid.cx / (i)
+    centroid.cy = centroid.cy / (i)
+    return centroid
+  end
+
+  def get_future_climate(option, lat, lon)
+    i_year = 2020
+    f_year = 2050
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### get future climate depending on the user selection ########
+    response = client.call(:get_future_climate, message: {"file" => "WTH", "i_year" => 2020, "f_year" => 2050, "option" => option.to_i, "lat" => lat, "lon" => lon})
+    if !response.body[:get_future_climate_response][:get_future_climate_result].include? "Error" then
+      return response.body[:get_future_climate_response][:get_future_climate_result] #return weather information
+    else
+      return response.body[:get_future_climage_response][:get_future_climate_result]  # Return error 
+    end
+  end
+
   def send_files_to_APEX(file)
+    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 28)  #find if there is future climate bmp
     apex_string = ""
     for i in 1..4
       case i
       when 1
+        if !(bmp == nil) then
+          #change the period to simulate
+        end
         apex_string = @apex_control
       when 2
         apex_string = @apex_parm
       when 3
         apex_string = @apex_site
       when 4
-        apex_string = @apex_wth        
-      end
+        #apex_string = @apex_wth   
+        if !(bmp == nil) then
+          centroid = calculate_centroid()
+          #get file name for the future
+          client = Savon.client(wsdl: URL_SoilsInfo)
+          ###### cget weather file name ########
+          response = client.call(:get_future_climate, message: {"file" => file, "i_year" => 2020, "f_year" => 2050, "option1" => bmp.depth.to_i, "nlat" => centroid[0], "nlon" => centroid[1]})
+          if response.body[:get_future_climate_response][:get_future_climate_result].include? "Error" then
+            return response.body[:get_future_climate_response][:get_future_climate_result]
+          else
+            apex_string = response.body[:get_future_climate_response][:get_future_climate_result]
+          end
+        else
+          #get file name for the current
+          apex_string = PRISM1 + "/" + @field.weather.weather_file 
+        end    
+      end  # case i end 
       apex_string1=""
       if apex_string.kind_of? Hash
         apex_string[:string].each do |as|
@@ -94,9 +143,10 @@ module SimulationsHelper
       when 3
         apex_site = apex_string1
       when 4
+        #apex_string = @apex_wth
         apex_wth = apex_string1
-      end
-    end   # end for
+      end   # end case i
+    end # end for
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
     response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_control, "parm" => apex_parm, "site" => apex_site, "wth" => apex_wth, "session_id" => session[:session_id]})
@@ -194,13 +244,6 @@ module SimulationsHelper
   end
 
   def send_file1_to_APEX(apex_string, file)
-    #uri = URI(URL_TIAER)
-    #res = Net::HTTP.post_form(uri, "data" => apex_string, "file" => file, "folder" => session[:session_id], "rails" => "yes", "parm" => "", "site" => "", "wth" => "", "rg" => "")
-    #if res.body.include?("Created") then
-      #return "OK"
-    #else
-      #return res.body
-    #end
     if session[:simulation].eql? "scenario"
       i_year = @field.weather.weather_initial_year
       f_year = @field.weather.weather_final_year
@@ -336,29 +379,36 @@ module SimulationsHelper
   end
 
   def create_weather_file(dir_name, field_id)
-    #todo weather file are more than one when there are different fields such as in watershed simulation.
+    #define if there is future climate bmp for this scenario
+    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 28)
+    if !(bmp == nil) then
+      centroid = calculate_centroid()
+      @apex_wth = get_future_climate(bmp.depth, centroid[0], centroid[1])
+      if @apex_wth[:string].include? "Error"
+        return @apex_wth[:string]
+      else
+        return "OK"
+      end    # end if error
+    end   #end if bmp
     weather = Weather.find_by_field_id(field_id)
     if (weather.way_id == 2)
       #copy the file path
       path = File.join(OWN, weather.weather_file)
-	  if File.exist?(path) then FileUtils.cp_r(path, dir_name + "/APEX.wth") else return "You need to upload your weather file before trying to simulate scenarios" end
-      @apex_wth = read_file(File.join(OWN, weather.weather_file), true)
-    else
-      path = File.join(PRISM1, weather.weather_file)
-      #client = Savon.client(wsdl: URL_Weather)
-      #response = client.call(:get_weather, message:{"path" => PRISM + "/" + weather.weather_file})
-      #weather_data = response.body[:get_weather_response][:get_weather_result][:string]
-      #print_array_to_file(PATH, "APEX.wth")
-      @apex_wth = send_file1_to_APEX("WTH", path)
-      if @apex_wth.include? "Error"
-        return @apex_wth
+	    if File.exist?(path) then FileUtils.cp_r(path, dir_name + "/APEX.wth") else return "You need to upload your weather file before trying to simulate scenarios" end
+        @apex_wth = read_file(File.join(OWN, weather.weather_file), true)
+      else
+        path = File.join(PRISM1, weather.weather_file)
+        #print_array_to_file(PATH, "APEX.wth")
+        @apex_wth = send_file1_to_APEX("WTH", path)
+        if @apex_wth.include? "Error"
+          return @apex_wth
+        end
       end
-    end
-    #todo after file is copied if climate bmp is in place modified the weather file.
-    bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)
-    climate_array = Array.new
-    climates = Climate.where(:bmp_id => bmp_id)
-    climates.each do |climate|
+      #todo after file is copied if climate bmp is in place modified the weather file.
+      bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)
+      climate_array = Array.new
+      climates = Climate.where(:bmp_id => bmp_id)
+      climates.each do |climate|
       climate_array = update_hash(climate, climate_array)
     end
     if climates.first != nil
@@ -396,9 +446,6 @@ module SimulationsHelper
         end #end if pcp
       end # end each
     end #end if
-    #msg = send_file_to_APEX(@apex_wth, "APEX.wth")
-    #todo fix widn and wp1 files with the real name
-    #msg = send_files_to_APEX("FILES")
     return "OK"
   end
 
@@ -435,7 +482,6 @@ module SimulationsHelper
     cprh = Array.new
     rt = Array.new
     ssaCode = ""
-    #series_name ""
     albedo = 0
     #added to control when information is not available
     texture = ["sandy clay loam", "silty clay loam", "loamy sand", "sandy loam", "sandy clay", "silt loam", "clay loam", "silty clay", "sand", "loam", "silt", "clay"]
@@ -447,7 +493,6 @@ module SimulationsHelper
     last_soil1 = 0
     #last_soil = 0
     soil_info = Array.new
-    #APEXStrings1 = 0
     #check to see if there are soils selected
     selected = false
     @soils.each do |soil|
@@ -471,9 +516,9 @@ module SimulationsHelper
     i = 0
     @soils.each do |soil|
       soil_info.clear
-      if soil.selected == false
-        next
-      end
+      #if soil.selected == false
+        #next
+      #end
       layers = soil.layers
       last_soil1 = @last_soil + i + 1
       soil_file_name = "APEX" + "00" + last_soil1.to_s + ".sol"
@@ -490,11 +535,6 @@ module SimulationsHelper
         hsg = soil.group
       end
       layers.each do |layer|
-        # try to find texture from texture description from database
-        #for j = 0 To texture.Length - 1
-        #    if layer("texture").Contains(texture(j))  Exit for
-        #end
-
         if layer_number == 1
           #validate if this layer is going to be used for Agriculture Lands
           if layer.depth <= 5 && layer.sand == 0 && layer.silt == 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
@@ -509,7 +549,6 @@ module SimulationsHelper
 
         depth[layer_number] = layer.depth * IN_TO_CM
         #if current layer is deeper than maxDept  no more layers are needed.
-        #if Depth[layer_number] > maxDepth(i) && maxDepth(i) > 0  Exit for
         #These statements were added to control duplicated layers in the soil.
         if layer_number > 1
           if depth[layer_number] == depth[layer_number - 1]
@@ -675,32 +714,6 @@ module SimulationsHelper
       @bulk_density = bulk_density
       #if first layer is less than 0.1 m a new layer is added as first one
       initial_layer = 1
-      #if (depth[initial_layer] / 100).round(3) > 0.100
-        #initial_layer = 0
-        #depth[initial_layer] = 10.0
-        #bulk_density[initial_layer] = bulk_density[initial_layer + 1]
-        #uw[initial_layer] = uw[initial_layer + 1]
-        #fc[initial_layer] = fc[initial_layer + 1]
-        #sand[initial_layer] = sand[initial_layer + 1]
-        #silt[initial_layer] = silt[initial_layer + 1]
-        #wn[initial_layer] = wn[initial_layer + 1]
-        #ph[initial_layer] = ph[initial_layer + 1]
-        #smb[initial_layer] = smb[initial_layer + 1]
-        #woc[initial_layer] = woc[initial_layer + 1]
-        #cac[initial_layer] = cac[initial_layer + 1]
-        #cec[initial_layer] = cec[initial_layer + 1]
-        #rok[initial_layer] = rok[initial_layer + 1]
-        #cnds[initial_layer] = cnds[initial_layer + 1]
-        #ssf[initial_layer] = ssf[initial_layer + 1]
-        #rsd[initial_layer] = rsd[initial_layer + 1]
-        #bdd[initial_layer] = bdd[initial_layer + 1]
-        #psp[initial_layer] = psp[initial_layer + 1]
-        #satc[initial_layer] = satc[initial_layer + 1]
-        #hcl[initial_layer] = hcl[initial_layer + 1]
-        #wpo[initial_layer] = wpo[initial_layer + 1]
-        #cprv[initial_layer] = cprv[initial_layer + 1]
-        #cprh[initial_layer] = cprh[initial_layer + 1]
-      #end #end depth
       #Line 2 and line 3 col 5 and 7
       if albedo == 0
         albedo = 0.2
@@ -844,9 +857,6 @@ module SimulationsHelper
   			 ssf[layers] = 0
   		  end
         #commented according to Ali. No max value for soilp P to allow sooil p caculation using soil test and override by user input.
-        #if ssf[layers] > SoilPMaxForSoilDepth
-          #ssf[layers] = SoilPDefault
-        #end
         if ssf[layers] == 0 || ssf[layers] == nil
           ssf[layers] = SoilPDefault
         end
@@ -891,7 +901,6 @@ module SimulationsHelper
       #INSERT LINES 25, 26, 27, 28
       @soil_list.push("  " + sprintf("%3d", last_soil1) + " " + soil_file_name + "\n")
       i += 1
-      #print_array_to_file(soil_info, soil_file_name)
       msg = send_file_to_APEX(soil_info, soil_file_name)
     end # end soils do
     @last_soil = last_soil1
@@ -911,23 +920,27 @@ module SimulationsHelper
     end
   	subareas.each do |subarea|
       soil = subarea.soil
-  		if soil.selected then
-  			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
-  			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
-  			i+=1
-  			@soil_number += 1
-  		end  # end if soil.selected
+  		#if soil.selected then
+			create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
+			add_subarea_file(subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
+			i+=1
+			@soil_number += 1
+  		#end  # end if soil.selected
   	end  # end subareas.each for soil_id > 0
   	#add subareas and operations for buffer BMPs.
   	subareas = @scenario.subareas.where("bmp_id > 0")
   	buffer_type = 2
+    bmp = 1
   	subareas.each do |subarea|
   		add_subarea_file(subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
   		if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
   			if subarea.subarea_type == "RF" then
   				buffer_type = 1
   			end
-  			create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
+        if !(subarea.subarea_type == "CB" and bmp > 1) then
+  			   create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
+           bmp += 1
+        end
   			i+=1
   			@soil_number += 1
   		end # end if bmp types PPDE and PPTW
@@ -950,7 +963,7 @@ module SimulationsHelper
         #if !(bmps.CBCWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBBWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBCrop > 0) then
         #addSubareaFile(soil._scenariosInfo(currentScenarioNumber)._subareasInfo, operation_number, last_soil1, last_owner1, @soil_number, nirr, false)
         #operation number is used to control subprojects. Therefore here is going to be 1.
-        add_subarea_file(Subarea.find_by_soil_id_and_scenario_id(soil.id, @scenario.id), operation_number, last_owner1, i, nirr, false, @soils.count)
+        add_subarea_file(Subarea.find_by_soil_id_and_scenario_id(soil.id, @scenario.id), operation_number, last_owner1, i, nirr, false, @soils.count)        
         @soil_number += 1
         i+=1
       end
@@ -1059,6 +1072,9 @@ module SimulationsHelper
     @subarea_file.push(sLine + "\n")
     #/line 4
     _subarea_info.wsa = _subarea_info.wsa.round(2)
+    if _subarea_info.wsa == 0.00 then
+      _subarea_info.wsa = 0.01
+    end
     if _subarea_info.wsa > 0 && i > 0 && !buffer then
       sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
     else
@@ -1584,7 +1600,7 @@ module SimulationsHelper
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv4. No entry needed.
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
-      when 11 # liming
+      when 12 # liming
         apex_string += sprintf("%5d", 0) #
         apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
       else #No entry needed.
@@ -2811,7 +2827,7 @@ module SimulationsHelper
       if msg.eql?("OK") then msg = create_control_file() else return msg end                  #this prepares the apexcont.dat file
       if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
       if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file
-      if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
+      #if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
       if @project.location.state_id == 0 then 
         if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
       else
@@ -2821,9 +2837,9 @@ module SimulationsHelper
       @last_soil = 0
       @grazing = @scenario.operations.find_by_activity_id([7, 9])
       if @grazing == nil then
-        @soils = @field.soils.where(:selected => true)
+        @soils = @field.soils
       else
-        @soils = @field.soils.where(:selected => true).limit(1)
+        @soils = @field.soils.limit(1)
       end
       @soil_list = Array.new
       if msg.eql?("OK") then msg = create_apex_soils() else return msg  end

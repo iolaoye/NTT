@@ -42,7 +42,8 @@
 
 #folder for Prism weather, wind, and wp1 files
 	PRISM = 'D:/Weather/weatherFiles/US'
-	PRISM1 = 'D:/Weather/weatherFiles/1981-2015'
+	PRISM1 = 'D:/Weather/1981-2015'
+	FUTURE = 'D:/Syncplicity/Future_Weather'
 	#PRISM2 = 'E:/Weather/weatherFiles/borrar'
 	WP1 = 'D:/Weather/wp1File'
 	WIND = 'D:/Weather/wndFile'
@@ -97,6 +98,7 @@
 	FSEFF = 1.0
 	MAX_STRIPS = 6
 	PO4_TO_P2O5 = 0.4364
+	LBS_AC_TO_T_HA = 0.00112085
 #field constants
 	SMZ = '_SMZ'
 	ROAD = '_Road'

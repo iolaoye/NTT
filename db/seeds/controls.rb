@@ -38,7 +38,8 @@ Control.create!({:id => 35,:default_value => 0.0,:state_id => 99,:number => 35},
 Control.create!({:id => 36,:default_value => 1.0,:state_id => 99,:number => 36}, :without_protection => true)
 Control.create!({:id => 37,:default_value => 0.0,:state_id => 99,:number => 37}, :without_protection => true)
 Control.create!({:id => 38,:default_value => 0.0,:state_id => 99,:number => 38}, :without_protection => true)
-Control.create!({:id => 39,:default_value => 0.8,:state_id => 99,:number => 39}, :without_protection => true)
+#Control.create!({:id => 39,:default_value => 0.8,:state_id => 99,:number => 39}, :without_protection => true) 04012019 Ali
+Control.create!({:id => 39,:default_value => 1.5,:state_id => 99,:number => 39}, :without_protection => true)
 Control.create!({:id => 40,:default_value => 365.0,:state_id => 99,:number => 40}, :without_protection => true)
 Control.create!({:id => 41,:default_value => 0.0,:state_id => 99,:number => 41}, :without_protection => true)
 Control.create!({:id => 42,:default_value => 0.0,:state_id => 99,:number => 42}, :without_protection => true)
@@ -50,10 +51,13 @@ Control.create!({:id => 47,:default_value => 0.0,:state_id => 99,:number => 47},
 Control.create!({:id => 48,:default_value => 0.1,:state_id => 99,:number => 48}, :without_protection => true)
 Control.create!({:id => 49,:default_value => 1.0,:state_id => 99,:number => 49}, :without_protection => true)
 Control.create!({:id => 50,:default_value => 20.0,:state_id => 99,:number => 50}, :without_protection => true)
-Control.create!({:id => 51,:default_value => 0.01,:state_id => 99,:number => 51}, :without_protection => true)
+#Control.create!({:id => 51,:default_value => 0.01,:state_id => 99,:number => 51}, :without_protection => true) 04012019 Ali
+Control.create!({:id => 51,:default_value => 0.10,:state_id => 99,:number => 51}, :without_protection => true)
 Control.create!({:id => 52,:default_value => 50.0,:state_id => 99,:number => 52}, :without_protection => true)
-Control.create!({:id => 53,:default_value => 10.0,:state_id => 99,:number => 53}, :without_protection => true)
-Control.create!({:id => 54,:default_value => 0.4,:state_id => 99,:number => 54}, :without_protection => true)
+#Control.create!({:id => 53,:default_value => 10.0,:state_id => 99,:number => 53}, :without_protection => true) 04012019 Ali
+Control.create!({:id => 53,:default_value => 5.0,:state_id => 99,:number => 53}, :without_protection => true)
+#Control.create!({:id => 54,:default_value => 0.4,:state_id => 99,:number => 54}, :without_protection => true) 04012019 Ali
+Control.create!({:id => 54,:default_value => 0.6,:state_id => 99,:number => 54}, :without_protection => true)
 Control.create!({:id => 55,:default_value => 1.0,:state_id => 99,:number => 55}, :without_protection => true)
 Control.create!({:id => 56,:default_value => 2.0,:state_id => 99,:number => 56}, :without_protection => true)
 Control.create!({:id => 57,:default_value => 2.0,:state_id => 99,:number => 57}, :without_protection => true)
@@ -62,7 +66,8 @@ Control.create!({:id => 59,:default_value => 0.0,:state_id => 99,:number => 59},
 Control.create!({:id => 60,:default_value => 0.0,:state_id => 99,:number => 60}, :without_protection => true)
 Control.create!({:id => 61,:default_value => 0.0,:state_id => 99,:number => 61}, :without_protection => true)
 Control.create!({:id => 62,:default_value => 0.0,:state_id => 99,:number => 62}, :without_protection => true)
-Control.create!({:id => 63,:default_value => 50.0,:state_id => 99,:number => 63}, :without_protection => true)
+#Control.create!({:id => 63,:default_value => 50.0,:state_id => 99,:number => 63}, :without_protection => true) 04012019 Ali
+Control.create!({:id => 63,:default_value => 20.0,:state_id => 99,:number => 63}, :without_protection => true)
 Control.create!({:id => 64,:default_value => 0.0,:state_id => 99,:number => 64}, :without_protection => true)
 Control.create!({:id => 65,:default_value => 0.0,:state_id => 99,:number => 65}, :without_protection => true)
 Control.create!({:id => 66,:default_value => 1.0,:state_id => 99,:number => 66}, :without_protection => true)

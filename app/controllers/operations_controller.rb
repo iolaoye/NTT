@@ -15,10 +15,8 @@ def index
     end
     crop_schedule()
     @operations = @operations.reorder("year, month_id, day, rotation, crop_id")
-    @rotations = @scenario.operations.where(:activity_id => 1).reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
-    #array_of_ids = @scenario.operations.order(:rotation, :activity_id, :year).map(&:rotation&:crop_id)
-    #@crops = Crop.find(array_of_ids).index_by(&:id).slice(*array_of_ids).values
-    #@operations.sort_by { |date| [date.year, date.month_id, date.day] }
+    #@rotations = @scenario.operations.where(:activity_id => 1).reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
+    @rotations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
     if @operations.last != nil
       @highest_year = @operations.last.year
       else
@@ -67,14 +65,7 @@ def index
     @operation.rotation = params[:rotation]
     @operation.activity_id = params[:operation]  #this is used only in Add specific operation i.e "Add Planting Operation" in crop view. Otherwise is nil.
     @operation.crop_id = params[:crop]
-    #if @scenario.operations != nil then
-      #@operation.year = @scenario.operations.where(:rotation => @operation.rotation, :crop_id => @operation.crop_id).last.year
-    #end
-    #@fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true)
     @crops = Crop.load_crops(@project.location.state_id)
-    #@cover_crops = Crop.where("type1 like '%CC%'")
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
 
     cc_operation = @scenario.operations.where(:activity_id => 5).last
@@ -96,6 +87,8 @@ def index
 # GET /operations/1/edit
   def edit
     @operation = Operation.find(params[:id])
+    #find the crop lu_number to know if it is tree or not
+    @lu_number = Crop.find(@operation.crop_id).lu_number
     if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
       @operation.po4_p = (@operation.po4_p / PO4_TO_P2O5).round(1)
     end
@@ -159,7 +152,6 @@ def index
         end
         saved = true
         #operations should be created in soils too. but not for rotational grazing
-        #msg = add_soil_operation() unless @operation.activity_id == 9
         if msg.eql?("OK")
           soil_op_saved = true
         else
@@ -305,9 +297,6 @@ def index
   def destroy
     operation = Operation.find(params[:id])
     soil_operations = SoilOperation.where(:operation_id => operation.id)
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     if operation.activity_id == 7 || operation.activity_id == 9 then
       #delete stop grazing linked to this grazing operation
       stop_op = Operation.find_by_type_id(operation.id)
@@ -327,9 +316,6 @@ def index
 
 ##############################  DESTROY ALL  ###############################
   def delete_all
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations.where(:crop_id => params[:id], :rotation => params[:rotation])
     @operations.destroy_all
     respond_to do |format|
@@ -340,9 +326,6 @@ def index
 
 ################################  CALL WHEN CLICK IN UPLOAD CROPPING SYSTEM  #################################
   def cropping_system
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     @operations = @scenario.operations
     
     @count = @operations.count
@@ -495,7 +478,6 @@ def index
       end #end if tillage_id != ""
     end # end if tillage != nil
 
-    #@operations = Operation.where(:scenario_id => params[:scenario_id])
     if params[:language] != nil then
       if params[:language][:language].eql?("es")
           I18n.locale = :es
@@ -512,10 +494,6 @@ def index
     events.each do |event|
       operation = Operation.new
       operation.scenario_id = params[:scenario_id]
-      #get crop_id from croppingsystem and state_id
-      #state_id = Location.find(session[:location_id]).state_id
-      #@crop = Crop.find_by_number_and_state_id(event.apex_crop, state_id)
-      #if crop is nil the model will look at the table for the year and scenario operarions to find the crop. If not nothins will be added.
       if @crop == nil then
         @crop_temp = Operation.where("year = ? and scenario_id = ? and activity_id > ?", event.year, params[:scenario_id], 0).last
         if @crop_temp == nil or @crop_temp.blank? then  #if @crop still nil finish
@@ -572,10 +550,6 @@ def index
 
 ########################################### DOWNLOAD OPERATION IN XML FORMAT ##################
   def download
-    #require 'open-uri'
-    #require 'net/http'
-    #require 'rubygems'
-
     operations = Operation.where(:scenario_id => params[:scenario_id])
 
     builder = Nokogiri::XML::Builder.new do |xml|
@@ -596,12 +570,6 @@ def index
         xml.org_p operation.org_p
         xml.nh3 operation.nh3
         xml.subtype_id operation.subtype_id
-        #soil_operations = SoilOperation.where(:operation_id => operation.id)
-        #xml.soil_operations {
-        #soil_operations.each do |so|
-          #save_soil_operation_information(xml, so)
-        #end # end soil_operations.each
-        #} # end xml.soil_operation
       } # xml each operation end
     end # end operations.each
       } # end xml.operations
@@ -674,11 +642,7 @@ def index
   end
 
   def add_soil_operation(operation)
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
     soils = @field.soils
-    #soils = Soil.where(:field_id => Scenario.find(@operation.scenario_id).field_id)
     msg = "OK"
     soils.each do |soil|
       if msg.eql?("OK")
@@ -738,10 +702,5 @@ def index
       return "Error saving operation"
     end
   end
-
-  #def update_amount()
-    #if @operation.activity_id == 2 and @operation.type_id == 2 then @operation.amount *= 2000 end
-    #@operation.save
-  #end
 
 end #end class
