@@ -330,39 +330,41 @@
 			</tr>
 			<%# Other Information %>
 			<% row_id = t + "row" + "90" %>
-			<tr class="gvRowStyleOdd", id = <%=row_id%> style="display:none">
-				<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-					<a id="show24" class="gvTotalText"><%= "Other Information" + " " %></a>
-					<%= check_box_tag "Total P" %>
-				</th>
-				<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9">
-					<%#= sprintf("%8.1f", @averages1[0][12]+@averages1[0][13]) + " (" + sprintf("%8.1f",@cis1[0][13]+@cis1[0][14]) + ")" %></td>
-				<% if @scenario2 != "0" && @scenario2 != "" then %>
-					<td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.1f", @averages2[0][12]+@averages2[0][13]) + " (" + sprintf("%8.1f",@cis2[0][13]+@cis2[0][14]) + ")" %></td>
-					<%# difference1 = @averages2[0][12]+@averages2[0][13]-(@averages1[0][12]+@averages1[0][13]) %>
-					<%# reduction1 = difference1 / (@averages1[0][12]+@averages1[0][13]) * 100 %>
-					<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
-				<% end %>
-				<% if @scenario3 > "0" && @scenario3 != "" then %>
-					<td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.1f", @averages3[0][12]+@averages3[0][13]) + " (" + sprintf("%8.1f",@cis3[0][13]+@cis3[0][14]) + ")" %></td>
-					<%# difference1 = @averages3[0][12]+@averages3[0][13]-(@averages1[0][12]+@averages1[0][13]) %>
-					<%# reduction1 = difference1 / (@averages1[0][12]+@averages1[0][13]) * 100 %>
-					<td class= "gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
-				<% end %>
-			</tr>
-			<% row_id = t + "row" + "93" %>
-			<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
-				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show25" class="gvTotalText"><%= "Carbon" + " (" + "lbs/ac" + ")" %></a></th>
-				<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @averages1[0][14]) + " (" + sprintf("%8.1f", @cis1[0][15]) + ")" %></td>
-				<% if @scenario2 != "0" && @scenario2 != "" then %>
-					<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @averages2[0][14]) + " (" + sprintf("%8.1f", @cis2[0][15]) + ")" %></td>
-					<td class=<%= if @averages2[0][14]-@averages1[0][14] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.2f", @averages2[0][14]-@averages1[0][14]) + " (" + sprintf("%8.2f", ((@averages2[0][14]-@averages1[0][14]) / @averages1[0][14]) * 100) + ")" %></td>
-				<% end %>
-				<% if @scenario3 != "0" && @scenario3 != "" then %>
-					<td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.2f", @averages3[0][14]) + " (" + sprintf("%8.1f", @cis3[0][15]) + ")" %></td>
-					<td class=<%= if @averages3[0][14]-@averages1[0][14] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.2f", @averages3[0][14]-@averages1[0][14]) + " (" + sprintf("%8.2f", ((@averages3[0][14]-@averages1[0][14]) / @averages1[0][14]) * 100) + ")" %></td>
-				<% end %>
-			</tr>
+			<% if ENV["APP_VERSION"] == "Removed because APEX does not have N2O" then%>
+				<tr class="gvRowStyleOdd", id = <%=row_id%>>
+					<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
+						<a id="show24" class="gvTotalText"><%= "Other Information" + " " %></a>
+						<%= check_box_tag "Total Others" %>
+					</th>
+					<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9">
+						<%#= sprintf("%8.1f", @averages1[0][12]+@averages1[0][13]) + " (" + sprintf("%8.1f",@cis1[0][13]+@cis1[0][14]) + ")" %></td>
+					<% if @scenario2 != "0" && @scenario2 != "" then %>
+						<td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.1f", @averages2[0][12]+@averages2[0][13]) + " (" + sprintf("%8.1f",@cis2[0][13]+@cis2[0][14]) + ")" %></td>
+						<%# difference1 = @averages2[0][12]+@averages2[0][13]-(@averages1[0][12]+@averages1[0][13]) %>
+						<%# reduction1 = difference1 / (@averages1[0][12]+@averages1[0][13]) * 100 %>
+						<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+					<% end %>
+					<% if @scenario3 > "0" && @scenario3 != "" then %>
+						<td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.1f", @averages3[0][12]+@averages3[0][13]) + " (" + sprintf("%8.1f",@cis3[0][13]+@cis3[0][14]) + ")" %></td>
+						<%# difference1 = @averages3[0][12]+@averages3[0][13]-(@averages1[0][12]+@averages1[0][13]) %>
+						<%# reduction1 = difference1 / (@averages1[0][12]+@averages1[0][13]) * 100 %>
+						<td class= "gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+					<% end %>
+				</tr>
+				<% row_id = t + "row" + "92" %>
+				<tr class="gvRowStyleEven" id = <%=row_id%> style="display:none">
+					<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show25" class="gvTotalText"><%= "N2O_N" + " (" + "lbs/ac" + ")" %></a></th>
+					<td class="gvCellStyleNumber bottom_border" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.4f", @averages1[0][15]) + " (" + sprintf("%8.1f", @cis1[0][16]) + ")" %></td>
+					<% if @scenario2 != "0" && @scenario2 != "" then %>
+						<td class="gvCellStyleNumber bottom_border" style="background-color:#DEFFFD"><%= sprintf("%8.4f", @averages2[0][15]) + " (" + sprintf("%8.1f", @cis2[0][16]) + ")" %></td>
+						<td class=<%= if @averages2[0][15]-@averages1[0][15] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.4f", @averages2[0][15]-@averages1[0][15]) + " (" + sprintf("%8.2f", ((@averages2[0][15]-@averages1[0][15]) / @averages1[0][15]) * 100) + ")" %></td>
+					<% end %>
+					<% if @scenario3 != "0" && @scenario3 != "" then %>
+						<td class="gvCellStyleNumber bottom_border" style="background-color:#CADCFF"><%= sprintf("%8.4f", @averages3[0][15]) + " (" + sprintf("%8.1f", @cis3[0][15]) + ")" %></td>
+						<td class=<%= if @averages3[0][15]-@averages1[0][15] <= 0 then "nutrients_positive bottom_border" else "nutrients_negative bottom_border" end %> style="background-color:#CADCFF"><%= sprintf("%8.4f", @averages3[0][15]-@averages1[0][15]) + " (" + sprintf("%8.2f", ((@averages3[0][15]-@averages1[0][15]) / @averages1[0][15]) * 100) + ")" %></td>
+					<% end %>
+				</tr>
+			<%end%>
 			<%# Crops %>
 			<% row_id = t + "row" + "70" %>
 			<tr class="gvRowStyleOdd", id = <%=row_id%>>
@@ -386,7 +388,11 @@
 			<% @crops1.each do |cr1| %>
 				<% crop_result = Hash.new %>
 				<% crop_result["name"] = cr1[5] %>
-				<% crop_result["yield1"] = cr1[0] %>
+				<% if crop_result["name"].include? "COT" then %>
+					<% crop_result["yield1"] = cr1[6] %>
+				<% else %>
+					<% crop_result["yield1"] = cr1[0] %>
+				<% end %>				
 				<% if @cic1.assoc(cr1[5]) != nil %>
 					<% crop_result["ci1"] = @cic1.assoc(cr1[5])[1] %>
 				<% else %>
@@ -411,7 +417,11 @@
 				<% if @scenario2 != "0" && @scenario2 != "" then%>
 					<% @crops2.each do |cr2| %>
 						<% if cr2[5] == cr1[5] then %>
-							<% crop_result["yield2"] = cr2[0] %>
+							<% if crop_result["name"].include? "COT" then %>
+								<% crop_result["yield2"] = cr2[6] %>
+							<% else %>
+								<% crop_result["yield2"] = cr2[0] %>
+							<% end %>	
 							<% if @cic2.assoc(cr2[5]) != nil %>
 								<% crop_result["ci2"] = @cic2.assoc(cr2[5])[1] %>
 							<% else %>
@@ -427,7 +437,11 @@
 				<% if @scenario3 != "0" && @scenario3 != "" then%>
 					<% @crops3.each do |cr3| %>
 						<% if cr3[5] == cr1[5] then %>
-							<% crop_result["yield3"] = cr3[0] %>
+							<% if crop_result["name"].include? "COT" then %>
+								<% crop_result["yield3"] = cr3[6] %>
+							<% else %>
+								<% crop_result["yield3"] = cr3[0] %>
+							<% end %>	
 							<% if @cic3.assoc(cr3[5]) != nil %>
 								<% crop_result["ci3"] = @cic3.assoc(cr3[5])[1] %>
 							<% else %>
@@ -461,7 +475,11 @@
 						<% crop_result["ns1"] = 0 %>
 						<% crop_result["ps1"] = 0 %>
 						<% crop_result["ts1"] = 0 %>
-						<% crop_result["yield2"] = cr2[0] %>
+						<% if crop_result["name"].include? "COT" then %>
+							<% crop_result["yield2"] = cr2[6] %>
+						<% else %>
+							<% crop_result["yield2"] = cr2[0] %>
+						<% end %>	
 						<% if @cic2.assoc(cr2[5]) != nil %>
 							<% crop_result["ci2"] = @cic2.assoc(cr2[5])[1] %>
 						<% else %>
@@ -480,7 +498,11 @@
 						<% if @scenario3 != "0" && @scenario3 != "" then %>
 							<% @crops3.each do |cr3| %>
 								<% if cr3[5] == cr2[5] then %>
-									<% crop_result["yield3"] = cr3[0] %>
+									<% if crop_result["name"].include? "COT" then %>
+										<% crop_result["yield3"] = cr3[6] %>
+									<% else %>
+										<% crop_result["yield3"] = cr3[0] %>
+									<% end %>	
 									<% if @cic3.assoc(cr3[5]) != nil %>
 										<% crop_result["ci3"] = @cic3.assoc(cr3[5])[1] %>
 									<% else %>
@@ -522,7 +544,11 @@
 						<% crop_result["ns2"] = 0 %>
 						<% crop_result["ps2"] = 0 %>
 						<% crop_result["ts2"] = 0 %>
-						<% crop_result["yield3"] = cr3[0] %>
+						<% if crop_result["name"].include? "COT" then %>
+							<% crop_result["yield3"] = cr3[6] %>
+						<% else %>
+							<% crop_result["yield3"] = cr3[0] %>
+						<% end %>	
 						<% if @cic3.assoc(cr3[5]) != nil %>
 							<% crop_result["ci3"] = @cic3.assoc(cr3[5])[1] %>
 						<% else %>

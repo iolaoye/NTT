@@ -78,7 +78,7 @@ module ScenariosHelper
 		    when 3
 		      operation.type_id = event.apex_operation
 		    else
-		    operation.amount = event.apex_opv1
+		      operation.amount = event.apex_opv1
 		  end #end case
 		  operation.depth = event.apex_opv2
 		  operation.scenario_id = scenario_id
@@ -99,8 +99,8 @@ module ScenariosHelper
 		field = Field.find(scenario.field_id)
 		soils = field.soils
 		i = 0
-		total_percentage = soils.where(:selected => true).sum(:percentage)
-		total_selected = soils.where(:selected => true).count
+		total_percentage = soils.sum(:percentage)
+		total_selected = soils.count
 		soils.each do |soil|
 			i+=1
 			soil_area = (soil.percentage * field.field_area / 100)
@@ -168,7 +168,7 @@ module ScenariosHelper
 			subarea.upn = 0.24
 			subarea.ffpq = FSEFF
 		end
-		#line 5
+		#line 5		
 		subarea.rchl = subarea.chl
 		subarea.rchl *= 0.9 unless i < total_selected  #just the last subarea is going to have different chl and rchl
 		subarea.rchd = 0.0
@@ -202,7 +202,7 @@ module ScenariosHelper
         subarea.nirr = 0
         subarea.iri = 0
         subarea.ira = 0
-        subarea.lm = 0
+        subarea.lm = 1
         subarea.ifd = 0
         subarea.idr = 0
         subarea.idf1 = 0
@@ -733,7 +733,7 @@ module ScenariosHelper
     end
 
 	def update_wsa(operation, wsa)
-		soils = @field.soils.where(:selected => true)
+		soils = @field.soils
 		#soils = Soil.where(:field_id => params[:field_id], :selected => true)
 		soils.each do |soil|
 			subarea = @scenario.subareas.find_by_soil_id(soil.id)
@@ -891,7 +891,7 @@ module ScenariosHelper
     	#end
     	opv1 = @field.field_area * AC_TO_HA / operation.amount
     when 12 #liming
-        opv1 = operation.amount / THA_TO_TAC #converts input t/ac to APEX t/ha
+        opv1 = operation.amount / LBS_AC_TO_T_HA #converts input lbs/ac to APEX t/ha
     end
     return opv1
   end
@@ -980,7 +980,7 @@ module ScenariosHelper
       #return res.body
     #end
     client = Savon.client(wsdl: URL_SoilsInfo)
- 	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id]})
+ 	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
     if response.body[:send_soils_response][:send_soils_result] != "Error" then
       msg = "OK"
       msg = create_new_soils(YAML.load(response.body[:send_soils_response][:send_soils_result]))
@@ -1092,6 +1092,9 @@ module ScenariosHelper
       layer.clay = 100 - layer.sand - layer.silt
       layer.bulk_density = layers[layer_number]["bd"]
       layer.organic_matter = layers[layer_number]["om"]
+      if layer.organic_matter < 0.5 then 
+      	layer.organic_matter = 0.5
+      end
       layer.ph = layers[layer_number]["ph"]
       layer.depth = layers[layer_number]["depth"]
 

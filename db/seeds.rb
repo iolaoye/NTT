@@ -4,10 +4,9 @@
 # encoding: utf-8
 
 cont = false
-
-	file = "db/seeds/parameters.rb"
+	file = "db/seeds/bmpsublists.rb"
 	load file
-	
+
 if cont then
 
 	file = "db/seeds/activities.rb"

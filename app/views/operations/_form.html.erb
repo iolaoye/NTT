@@ -33,8 +33,6 @@
 		<%= label :crop_id, t('operation.crop') %>
 		<%= collection_select :operation, :crop_id, @crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id} %>
 	</div>
-		<%#= label :crop_id, t('operation.crop') %>
-		<%#= collection_select :operation, :cover_crop_id, @cover_crops, :id, :name, {:prompt => t('operation.select_crop'), :selected => @operation.crop_id} %>
 	<div id="div_start_date" class="field">
 		<% if @operation.activity_id == 7 %>
 			<%= f.label :start, t('general.start') + " " %>
@@ -63,7 +61,6 @@
 				<%= collection_select :operation, :type_id, Tillage.where(:activity_id => @operation.activity_id, :status => true), :code, :spanish_name, {:prompt => t('general.select'), :selected => @operation.type_id}, {:required => true} %>
 			<% end %>
 		</div>
-		<%#= f.hidden_field :subtype_id, :value => @operation.subtype_id %>
 		<div id="div_fertilizer" class="field" style="display:none" >
       		<%= f.label :type_id, t('operation.fertilizer') + " " + t('general.type')%>
 			<% if I18n.locale.eql?(:en) %>
@@ -73,7 +70,11 @@
 			<% end %>
 		</div>
 		<div class="field" id="div_amount">
-		  <%= f.label t('operation.plant_population') %>
+		  <% if @lu_number == 28 %>
+		  	<%= f.label t('operation.plant_population_trees') %>
+		  <% else %>
+		  	<%= f.label t('operation.plant_population') %>
+		  <% end %>
 		  <%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		</div>
 		<%# change to show access animal to stream %>
@@ -605,14 +606,6 @@
 				<%= f.label :org_c, t('operation.total_n_con') %>
 				<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 			</div>
-			<!-- <div class="field">
-				<%= f.label :nh4_n, t('operation.total_p_con') %>
-				<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
-			</div>
-			<div class="field">
-				<%= f.label :moisture, t('operation.moisture_con') %>
-				<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
-			</div> -->
 		</div>
 	<% when 12 # liming %>
 		<div id="div_date" style="display:none" >

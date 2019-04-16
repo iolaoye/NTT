@@ -44,7 +44,11 @@ class BmpsController < ApplicationController
 
 ################################  Get CURRENT BMPS #########################
   def get_bmps
-    bmpsublists = Bmpsublist.where(:status => true)
+    if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+      bmpsublists = Bmpsublist.where(:status => true)
+    else
+      bmpsublists = Bmpsublist.where(:status => true).where("id != 27 and id != 28")
+    end
     @bmps = Bmp.where(:bmpsublist_id => 0)
     @bmps[0] = Bmp.new
 	  @climates = Climate.where(:id => 0)
@@ -79,7 +83,7 @@ class BmpsController < ApplicationController
   				end
   			end
   		end
-  		bmp_list = 18
+  		bmp_list = 28
       if bmp.bmpsublist_id == 19 then   # cover crop. This BMP is not active any more. In case we need bmp.bmpsublist_id greater than 19 changes to bmpsublist table need to be done or to the @bmps active record.
         if bmp.id == nil then
           operation = @scenario.operations.where(:activity_id => 5).last
@@ -221,7 +225,14 @@ class BmpsController < ApplicationController
   		if !(params[:select] == nil) and params[:select][:"21"] == "1" then
   			create(21)
   		end
-      #flash[:error] = @bmp.errors.to_a
+      # =>  liming
+      if params.has_key?(:select) && !params[:select][:"27"].nil? then
+        create(27)
+      end
+      # =>  Future Climate
+      if params.has_key?(:select) && !params[:select][:"28"].nil? and params[:bmp_clm1] != nil then
+        create(28)
+      end
   		redirect_to project_field_scenarios_path(@project, @field)
 	  else
 		    redirect_to scenarios_path
@@ -417,6 +428,10 @@ class BmpsController < ApplicationController
         return slope_adjustment(type)
       when 25
         return shading(type)
+      when 27
+        return liming(type)
+      when 28
+        return future_climate(type)
       else
         return "OK"
     end
@@ -945,7 +960,8 @@ end
       @bmp.width = 0
       @bmp.crop_id = 0
       #delete all of CB subarea_type 
-      @scenario.subareas.where(:subarea_type => "CB").destroy_all
+      subareas = @scenario.subareas.where(:subarea_type => "CB")
+      subareas.destroy_all
       #delete all of the SoilOperations ofor CB
       @bmp.soil_operations.delete_all
       # now restore the area of the subareas with "Soil" as subarea_type
@@ -1043,7 +1059,6 @@ end
     return "OK"
   end
 
-
 ### ID: 23
   def asphalt_concrete(type)
     @soils = Soil.where(:field_id => params[:field_id])
@@ -1100,11 +1115,10 @@ end
 
   # end method
 
-### ID: 22
+### ID: 25
   def slope_adjustment(type)
     terrace_and_slope(type)
   end
-
 
 ### ID: 23
   def shading(type)
@@ -1215,7 +1229,32 @@ end
     end
   end
 
-## USED FOR TERRACE SYSTEM(ID: 17) AND FOR SLOPE ADJUSTEMNT(ID: 22)
+  ## Liming. No paramters required. Only change the lm in subarea from 1 to 0
+  def liming(type)
+    @soils = Soil.where(:field_id => params[:field_id])
+    @soils.each do |soil|
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+      if subarea != nil then
+        case type
+          when "create", "update"
+            subarea.lm = 0.0
+          when "delete"
+            subarea.lm = 1.0
+        end
+        if !subarea.save then return "Enable to save value in the subarea file" end
+      end #end if subarea !nil
+    end # end soils.each
+    return "OK"
+  end  # end method
+
+  ## future climate. Save the selected scenario
+  def future_climate(type)
+    @bmp.depth = params[:bmp_clm1]
+    return "OK"
+  end  # end method
+
+
+  ## USED FOR TERRACE SYSTEM(ID: 17) AND FOR SLOPE ADJUSTEMNT(ID: 22)
   def terrace_and_slope(type)
     @soils = Soil.where(:field_id => params[:field_id])
     @soils.each do |soil|
@@ -1254,11 +1293,11 @@ end
     @soils = Soil.where(:field_id => params[:field_id])
     i = 0
     @soils.each do |soil|
-      if soil.selected
+      #if soil.selected
         if @slope > soil.slope then
           @slope = soil.slope
         end
-      end
+      #end
       subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
       if subarea != nil then
         #if i == 0 then
@@ -1349,11 +1388,11 @@ end
       #i = 0
       #@inps = i
       @soils.each do |soil|
-        if soil.selected
+        #if soil.selected
           if @slope > soil.slope then
             @slope = soil.slope
           end
-        end
+        #end
         subarea = @scenario.subareas.find_by_soil_id(soil.id)
         @inps = 1
         if subarea != nil then
@@ -1361,9 +1400,9 @@ end
             #@inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
             #i += 1
           #end
-          if soil.selected
+          #if soil.selected
             @iops = subarea.iops + 1 #selected the last iops to inform the subarea the folowing iops to create.
-          end
+          #end
         end
       end
       if id == 15 then   #contour buffer
@@ -1464,20 +1503,20 @@ end
       @soils = Soil.where(:field_id => params[:field_id])
       i = 0
       @soils.each do |soil|
-        if soil.selected
+        #if soil.selected
           if @slope > soil.slope then
             @slope = soil.slope
           end
-        end
+        #end
         subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
         if subarea != nil then
           if i == 0 then
             @inps = subarea.inps #select the first soil, which is with bigest area
             i += 1
           end
-          if soil.selected
+          #if soil.selected
             @iops = subarea.iops #selected the last iops to inform the subarea the folowing iops to create.
-          end
+          #end
         end
       end
       subarea = Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => name).first
