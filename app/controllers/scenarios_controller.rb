@@ -960,6 +960,15 @@ class ScenariosController < ApplicationController
 		#***** send file to server "
 		msg = send_file_to_APEX(apex_string, "SimulParms.txt")
 
+    apex_string += aplcat.mdogfc.to_s + "\t" + "! " + t('aplcat.mdogfc') + "\n"
+    apex_string += aplcat.mxdogfc.to_s + "\t" + "! " + t('aplcat.mxdogfc') + "\n"
+    apex_string += aplcat.cwsoj.to_s + "\t" + "! " + t('aplcat.cwsoj') + "\n"
+    apex_string += aplcat.cweoj.to_s + "\t" + "! " + t('aplcat.cweoj') + "\n"
+    #apex_string += sprintf("%.2f", aplcat.ewc) + "\t" + "! " + t('aplcat.ewc') + "\n"
+    apex_string += aplcat.nodew.to_s + "\t" + "! " + t('aplcat.nodew') + "\n"
+    #***** send file to server "
+		msg = send_file_to_APEX(apex_string, "SimFileAPLCAT.txt")
+
     apex_string += aplcat.mrga.to_s + "\t" + "! " + t('aplcat.mrga') + "\n"
 		apex_string += aplcat.platc.to_s + "\t" + "! " + t('aplcat.platc') + "\n"
 		apex_string += aplcat.pctbb.to_s + "\t" + "! " + t('aplcat.pctbb') + "\n"
@@ -973,12 +982,6 @@ class ScenariosController < ApplicationController
 		apex_string += aplcat.fnemimms.to_s + "\t" + "! " + t('aplcat.fnemimms') + "\n"
 		apex_string += aplcat.effn2ofmms.to_s + "\t" + "! " + t('aplcat.effn2ofmms') + "\n"
 		apex_string += aplcat.ptdife.to_s + "\t" + "! " + t('aplcat.ptdife') + "\n"
-    apex_string += aplcat.mdogfc.to_s + "\t" + "! " + t('aplcat.mdogfc') + "\n"
-    apex_string += aplcat.mxdogfc.to_s + "\t" + "! " + t('aplcat.mxdogfc') + "\n"
-    apex_string += aplcat.cwsoj.to_s + "\t" + "! " + t('aplcat.cwsoj') + "\n"
-    apex_string += aplcat.cweoj.to_s + "\t" + "! " + t('aplcat.cweoj') + "\n"
-    #apex_string += sprintf("%.2f", aplcat.ewc) + "\t" + "! " + t('aplcat.ewc') + "\n"
-    apex_string += aplcat.nodew.to_s + "\t" + "! " + t('aplcat.nodew') + "\n"
     apex_string += aplcat.byosm.to_s + "\t" + "! " + t('aplcat.byosm') + "\n"
 		apex_string += "\n"
 		apex_string += "Data on animalfeed (grasses, hay and concentrates)" + "\n"
@@ -987,7 +990,7 @@ class ScenariosController < ApplicationController
 		for i in 0..grazing.count-1
 			apex_string += "\t"
 		end
-		apex_string += "| " + t('graze.total') + "\n\n"
+		apex_string += "| " + t('graze.total') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].code) + "\t"
 		end
