@@ -57,6 +57,7 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
+    debugger
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
@@ -69,8 +70,8 @@ class ScenariosController < ApplicationController
         msg = simulate_fem
   	end
     if msg.eql?("OK") then
-      @scenario = Scenario.find(params[:select_scenario])
-      flash[:notice] = @scenario.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios.count > 0
+      #@scenario = Scenario.find(params[:select_scenario])
+      flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
       redirect_to project_field_scenarios_path(@project, @field)
     else
       render "index", error: msg
@@ -79,14 +80,17 @@ class ScenariosController < ApplicationController
 
 ################################  Simulate NTT for selected scenarios  #################################
   def simulate_ntt
+    debugger
     @errors = Array.new
     msg = "OK"
-  	if params[:select_scenario] == nil then
-  		@errors.push("Select at least one scenario to simulate ")
-  		return "Select at least one scenario to simulate "
+    if params[:select_scenario] == nil and params[:select_1501] == nil then msg = "Select at least one scenario to simulate " end
+  	if msg != "OK" then
+  		@errors.push(msg)
+  		return msg
   	end
+    if params[:select_scenario] == nil then @scenarios_selected = params[:select_1501] else  @scenarios_selected = params[:select_scenario] end
     ActiveRecord::Base.transaction do
-  	  params[:select_scenario].each do |scenario_id|
+  	  @scenarios_selected.each do |scenario_id|
   		  @scenario = Scenario.find(scenario_id)
   		  if @scenario.operations.count <= 0 then
   		  	@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
