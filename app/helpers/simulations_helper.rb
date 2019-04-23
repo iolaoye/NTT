@@ -2872,7 +2872,6 @@ module SimulationsHelper
       @subarea_file = Array.new
       @soil_number = 0
       if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
-        debugger
       if @apex_version == 1501 then
         if msg.eql?("OK") then msg = send_files1_to_APEX("RUN1501") else return msg  end  #this operation will run a simulation and return ntt file.
       else
