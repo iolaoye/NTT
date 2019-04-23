@@ -1085,7 +1085,7 @@ module ScenariosHelper
       layer.cec = layers[layer_number]["cec"]
       layer.soil_p = 0
       if layer.save then
-        return 
+        saved = 1
       else
         saved = 0
       end
