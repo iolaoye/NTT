@@ -305,6 +305,7 @@ en:
     simulation: "Simulation was Successfull."
     all: "Operations deleted successfully."
     no_soils: "There are not available soils for this field"
+    no_layers: "There are not available layers for this soil"
   helpers:
     select:
       prompt: Please select
@@ -479,7 +480,7 @@ en:
     layers: Layers
     state: States
     utility_file: Utility Files
-    aplcat: Aplcat
+    aplcat: APLCAT
     download_aplcat: Download APLCAT Files
   project:
     project: Project
@@ -1073,6 +1074,8 @@ en:
     reduction: Reduction
     total_area: Total Area
   aplcat:
+      other_scenario: Copy APLCAT from other scenario
+      select_scenario: Please select scenario to copy its APLCAT
       noc: Number of Cows
       nomb: Number of mature bulls
       norh: Number of First Calf Heifers
@@ -1126,7 +1129,7 @@ en:
       environmental_parameters: Environmental Parameters
       greenhouse_parameters: Greenhouse Parameters
       simulation_parameters: Simulation Parameters
-      forage_quantity_input: Forage Quantity Input
+      forage_quantity_input: Forage Quality Input
       forage_id_html: Forage Id (refer to <a href="/FCT-NASEM-2018.txt" target="_blank">"<u>FCT-NASEM-2018.txt</u>"</a>)
       jdi: 'Forage Quantity Improvement:'
       increase: Begin to increase
@@ -1303,6 +1306,29 @@ en:
       fge: Fuel use constant for gasoline engines
       fde: Fuel use constant for diesel engines
       select_fmo: Select the number of Field Management operation
+      parameter1: Parameter 1
+      parameter2: Parameter 2
+      parameter3: Parameter 3
+      parameter4: Parameter 4
+      parameter5: Parameter 5
+      parameter6: Parameter 6
+      parameter7: Parameter 7
+      parameter8: Parameter 8
+      parameter9: Parameter 9
+      parameter10: Parameter 10
+      parameter11: Parameter 11
+      parameter12: Parameter 12
+      parameter13: Parameter 13
+      parameter14: Parameter 14
+      parameter15: Parameter 15
+      parameter16: Parameter 16
+      parameter17: Parameter 17
+      parameter18: Parameter 18
+      parameter19: Parameter 19
+      parameter20: Parameter 20
+      parameter21: Parameter 21
+      parameter22: Parameter 22
+      parameter23: Parameter 23
   aplcat_result:
       aws: Animal weights
       dmi: Dry matter intake
