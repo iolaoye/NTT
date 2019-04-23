@@ -305,6 +305,7 @@ en:
     simulation: "Simulation was Successfull."
     all: "Operations deleted successfully."
     no_soils: "There are not available soils for this field"
+    no_layers: "There are not available layers for this soil"
   helpers:
     select:
       prompt: Please select
