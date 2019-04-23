@@ -57,7 +57,6 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
-    debugger
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
@@ -80,15 +79,21 @@ class ScenariosController < ApplicationController
 
 ################################  Simulate NTT for selected scenarios  #################################
   def simulate_ntt
-    debugger
     @errors = Array.new
     msg = "OK"
+    @apex_version = 806
     if params[:select_scenario] == nil and params[:select_1501] == nil then msg = "Select at least one scenario to simulate " end
   	if msg != "OK" then
   		@errors.push(msg)
   		return msg
   	end
-    if params[:select_scenario] == nil then @scenarios_selected = params[:select_1501] else  @scenarios_selected = params[:select_scenario] end
+    if params[:select_scenario] == nil then 
+      @scenarios_selected = params[:select_1501]
+      @apex_version = 1501
+    else  
+      @scenarios_selected = params[:select_scenario]
+      apex_version = 806
+    end
     ActiveRecord::Base.transaction do
   	  @scenarios_selected.each do |scenario_id|
   		  @scenario = Scenario.find(scenario_id)
