@@ -1085,9 +1085,9 @@ module ScenariosHelper
       layer.cec = layers[layer_number]["cec"]
       layer.soil_p = 0
       if layer.save then
-        saved = 1
+        return "OK"
       else
-        saved = 0
+        return "Error saving some layers"
       end
     end #end for create_layers
   end
