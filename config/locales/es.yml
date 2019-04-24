@@ -306,6 +306,7 @@ es:
     all: "Todas las operaciones se han eliminado."
     no_soils: "No hay suelos disponibles para esta parcela"
     no_layers: "No hay capas disponibles para este suelo"
+    no_weather: "El archivo que esta tratando de subir tiene problemas. Por favor corrija el problema e intente de nuevo"
   helpers:
     select:
       prompt: Por favor seleccione
