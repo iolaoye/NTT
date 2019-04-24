@@ -201,6 +201,7 @@ include ScenariosHelper
 
     respond_to do |format|
       if msg != "OK" then
+        @weather.errors.add(:upload, t('notices.no_weather'))
         format.html { render action: "edit" }
         format.json { render json: msg, status: :unprocessable_entity }
       else
@@ -259,6 +260,9 @@ include ScenariosHelper
       data = line.split(" ")
       break if data[0].blank?
       year = data[0].to_i
+      if year < 1 or year > 3000 then
+        return t('notices.no_weather')
+      end
       @weather.simulation_final_year = year
       @weather.weather_final_year = year
       if i == 0
