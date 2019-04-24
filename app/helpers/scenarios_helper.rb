@@ -966,14 +966,15 @@ module ScenariosHelper
   end
 
   def request_soils()
+  	debugger
     client = Savon.client(wsdl: URL_SoilsInfo)
  	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
-    if response.body[:send_soils_response][:send_soils_result] != "Error" then
+    if !(response.body[:send_soils_response][:send_soils_result].downcase.include? "error") then
       msg = "OK"
       msg = create_new_soils(YAML.load(response.body[:send_soils_response][:send_soils_result]))
       return msg
     else
-      return response.body
+      return response.body[:send_soils_response][:send_soils_result]
     end
   end
 
@@ -990,6 +991,7 @@ module ScenariosHelper
       	return t('notices.no_soils')
     end
     data.each do |soil|
+    	debugger
       #todo check for erros to soils level as well as layers level.
       if soil[0] == "soils" || soil[1]["lay_number"] == 0 then
         next
@@ -1032,7 +1034,7 @@ module ScenariosHelper
       end
 
       if @soil.save then
-          msg = create_layers(soil[1])
+        msg = create_layers(soil[1])
       else
         msg = "Soils was not saved " + @soil.name
       end
@@ -1059,8 +1061,11 @@ module ScenariosHelper
     end #end Scenario each do
     @field.field_average_slope = @field.soils.average(:slope)
     @field.updated = false
-    @field.save
-    return msg
+    if @field.save then
+    	return msg
+    else
+    	return "Error saving soils"
+    end
   end
 
   ###################################### create_soil layers ######################################
@@ -1068,6 +1073,7 @@ module ScenariosHelper
   def create_layers(layers)
   	if layers == nil then return t('notices.no_layers') end
     for l in 1..layers["lay_number"].to_i
+    	debugger
       layer_number = "layer" + l.to_s
       layer = @soil.layers.new
       layer.sand = layers[layer_number]["sand"]
@@ -1085,9 +1091,9 @@ module ScenariosHelper
       layer.cec = layers[layer_number]["cec"]
       layer.soil_p = 0
       if layer.save then
-        return "OK"
+        msg = "OK"
       else
-        return "Error saving some layers"
+        msg = "Error saving some layers"
       end
     end #end for create_layers
   end
