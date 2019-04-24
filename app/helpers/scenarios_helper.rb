@@ -966,7 +966,6 @@ module ScenariosHelper
   end
 
   def request_soils()
-  	debugger
     client = Savon.client(wsdl: URL_SoilsInfo)
  	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
     if !(response.body[:send_soils_response][:send_soils_result].downcase.include? "error") then
@@ -991,7 +990,6 @@ module ScenariosHelper
       	return t('notices.no_soils')
     end
     data.each do |soil|
-    	debugger
       #todo check for erros to soils level as well as layers level.
       if soil[0] == "soils" || soil[1]["lay_number"] == 0 then
         next
@@ -1073,7 +1071,6 @@ module ScenariosHelper
   def create_layers(layers)
   	if layers == nil then return t('notices.no_layers') end
     for l in 1..layers["lay_number"].to_i
-    	debugger
       layer_number = "layer" + l.to_s
       layer = @soil.layers.new
       layer.sand = layers[layer_number]["sand"]
