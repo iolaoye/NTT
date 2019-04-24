@@ -306,6 +306,7 @@ en:
     all: "Operations deleted successfully."
     no_soils: "There are not available soils for this field"
     no_layers: "There are not available layers for this soil"
+    no_weather: "The file you are trying to upload has problems. Please fix the problems and try again"
   helpers:
     select:
       prompt: Please select
