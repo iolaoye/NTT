@@ -1093,6 +1093,7 @@ module ScenariosHelper
         msg = "Error saving some layers"
       end
     end #end for create_layers
+    return msg
   end
 
 end
