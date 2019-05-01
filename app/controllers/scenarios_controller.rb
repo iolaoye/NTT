@@ -221,14 +221,18 @@ class ScenariosController < ApplicationController
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
     end
+    @scenarios_selected = params[:select_scenario]
     ActiveRecord::Base.transaction do
-      params[:select_scenario].each do |scenario_id|
+      @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
         if @scenario.operations.count <= 0 then
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
         end
-        #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
+        if @scenario.crop_results.count <=0 then
+          @errors.push("Error simulating scenario " + @scenario.name + " (You should run 'Simulate NTT' before simulating FEM )")
+          return
+        end
         msg = run_fem
         unless msg.eql?("OK")
           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
@@ -769,8 +773,9 @@ class ScenariosController < ApplicationController
   		@errors.push("Select at least one Aplcat to simulate ")
   		return "Select at least one Aplcat to simulate "
   	end
+    @scenarios_selected = params[:select_scenario]
     ActiveRecord::Base.transaction do
-  	  params[:select_scenario].each do |scenario_id|
+  	  @scenarios_selected.each do |scenario_id|
   		  @scenario = Scenario.find(scenario_id)
   		  msg = run_aplcat
   		  unless msg.eql?("OK")
