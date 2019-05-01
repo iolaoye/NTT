@@ -69,7 +69,6 @@ class ScenariosController < ApplicationController
         msg = simulate_fem
   	end
     if msg.eql?("OK") then
-      debugger
       #@scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
       redirect_to project_field_scenarios_path(@project, @field)
