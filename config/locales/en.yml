@@ -305,6 +305,8 @@ en:
     simulation: "Simulation was Successfull."
     all: "Operations deleted successfully."
     no_soils: "There are not available soils for this field"
+    no_layers: "There are not available layers for this soil"
+    no_weather: "The file you are trying to upload has problems. Please fix the problems and try again"
   helpers:
     select:
       prompt: Please select
@@ -1531,9 +1533,9 @@ en:
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
     ln10: 'Green water footprint (litres of water required to produce one kg of animal feed)'
   documents_basic_html:
-    <a href="/basic_help.pdf" download="User_Manual.pdf"><u>User Manual</u></a>
+    <a href="/basic_help_04062019.pdf" download="User_Manual.pdf"><u>Download User Manual</u></a>
   documents_re_html:
-    <a href="/re_help.pdf" download="User_Manual.pdf"><u>User Manual</u></a>
+    <a href="/re_help_04062019.pdf" download="User_Manual.pdf"><u>Download User Manual</u></a>
   instructions:
     projects: To select an existing project, click on the project name
     fields: To select a field, click on the field name

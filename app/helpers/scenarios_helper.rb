@@ -966,27 +966,14 @@ module ScenariosHelper
   end
 
   def request_soils()
-    #url = URI.parse(URL_TIAER)
-    #http = Net::HTTP.new(url.host,url.port)
-    #http.read_timeout = 2000   #seconds
-    #req = Net::HTTP::Post.new(url.path)
-    #req.set_form_data({"data" => "Soils", "file" => "soils", "folder" => session[:session_id], "rails" => "yes", "parm" => State.find(@project.location.state_id).state_name, "site" => County.find(@project.location.county_id).county_state_code, "wth" => @field.coordinates.strip, "rg" => "yes"})
-    #res = http.request(req)
-    #if !res.body.include?("error") then
-      #msg = "OK"
-      #msg = create_new_soils(YAML.load(res.body))
-      #return msg
-    #else
-      #return res.body
-    #end
     client = Savon.client(wsdl: URL_SoilsInfo)
  	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
-    if response.body[:send_soils_response][:send_soils_result] != "Error" then
+    if !(response.body[:send_soils_response][:send_soils_result].downcase.include? "error") then
       msg = "OK"
       msg = create_new_soils(YAML.load(response.body[:send_soils_response][:send_soils_result]))
       return msg
     else
-      return response.body
+      return response.body[:send_soils_response][:send_soils_result]
     end
   end
 
@@ -999,9 +986,11 @@ module ScenariosHelper
     #soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
     total_percentage = 0
 
+    if data.include? "Error" or data.include? "error"
+      	return t('notices.no_soils')
+    end
     data.each do |soil|
       #todo check for erros to soils level as well as layers level.
-    #for j in 1..params["field#{i}soils"].to_i
       if soil[0] == "soils" || soil[1]["lay_number"] == 0 then
         next
       end #
@@ -1043,9 +1032,7 @@ module ScenariosHelper
       end
 
       if @soil.save then
-        #if soil[0] != "error" then
-          create_layers(soil[1])
-        #end
+        msg = create_layers(soil[1])
       else
         msg = "Soils was not saved " + @soil.name
       end
@@ -1072,19 +1059,18 @@ module ScenariosHelper
     end #end Scenario each do
     @field.field_average_slope = @field.soils.average(:slope)
     @field.updated = false
-    @field.save
-    return msg
+    if @field.save then
+    	return msg
+    else
+    	return "Error saving soils"
+    end
   end
 
   ###################################### create_soil layers ######################################
   ## Create layers receiving from map for each soil.
   def create_layers(layers)
-    #for l in 1..params["field#{i}soil#{j}layers"].to_i
+  	if layers == nil then return t('notices.no_layers') end
     for l in 1..layers["lay_number"].to_i
-    #layers.each do |l|
-      #if !l[0].include?("layer") then
-        #next
-      #end
       layer_number = "layer" + l.to_s
       layer = @soil.layers.new
       layer.sand = layers[layer_number]["sand"]
@@ -1097,25 +1083,17 @@ module ScenariosHelper
       end
       layer.ph = layers[layer_number]["ph"]
       layer.depth = layers[layer_number]["depth"]
-
-      #layer.sand = l[1]["sand"]
-      #layer.silt = l[1]["silt"]
-      #layer.clay = l[1]["clay"]
-      #layer.bulk_density = l[1]["bd"]
-      #layer.organic_matter = l[1]["om"]
-      #layer.ph = l[1]["ph"]
-      #layer.depth = l[1]["depth"]
       layer.depth /= IN_TO_CM
       layer.depth = layer.depth.round(2)
-      #layer.cec = l[1]["cec"]
       layer.cec = layers[layer_number]["cec"]
       layer.soil_p = 0
       if layer.save then
-        saved = 1
+        msg = "OK"
       else
-        saved = 0
+        msg = "Error saving some layers"
       end
     end #end for create_layers
+    return msg
   end
 
 end

@@ -31,13 +31,19 @@ module SimulationsHelper
       @apex_controls.each do |c|
         case c.control_description_id
           when 1..19 #line 1
+            if c.control_description_id == 2 and @apex_version == 1501 then @apex_control += " " end
             @apex_control += sprintf("%4d", c.value)
           when 20
             @apex_control += sprintf("%4d", c.value) + "\n"
           when 21..37 #line 2
             @apex_control += sprintf("%4d", c.value)
           when 38
-            @apex_control += sprintf("%4d", c.value) + "\n"
+            if @apex_version == 1501 then
+              #add five additional columns
+              @apex_control += sprintf("%4d", c.value) + sprintf("%4d", 0) + sprintf("%4d", 0) + sprintf("%4d", 0) + sprintf("%4d", 0) + sprintf("%4d", 0) + "\n"
+            else
+              @apex_control += sprintf("%4d", c.value) + "\n"
+            end            
           when 39..47 #line 3
             @apex_control += sprintf("%8.2f", c.value)
           when 48
@@ -54,11 +60,11 @@ module SimulationsHelper
             @apex_control += sprintf("%8.2f", c.value)
           when 78
             @apex_control += sprintf("%8.2f", c.value) + "\n"
-  		  #line 7
-  		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BNO3  Line 7 col 1
-  		  @apex_control += sprintf("%8.2f", 60)  #todo. this is temporary adding BAP(1)  Line 7 col 2
-  		  @apex_control += sprintf("%8.2f", 120)  #todo. this is temporary adding BAP(2)  Line 7 col 3
-  		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BAP(3)  Line 7 col 4
+      		  #line 7
+      		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BNO3  Line 7 col 1
+      		  @apex_control += sprintf("%8.2f", 60)  #todo. this is temporary adding BAP(1)  Line 7 col 2
+      		  @apex_control += sprintf("%8.2f", 120)  #todo. this is temporary adding BAP(2)  Line 7 col 3
+      		  @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BAP(3)  Line 7 col 4
         end
       end
       #msg = send_file_to_APEX(apex_string, "Apexcont.dat")
@@ -197,12 +203,13 @@ module SimulationsHelper
     end   # end for
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
-    response = client.call(:run_apex, message: {"soil_dat" => soil_list, "opcs_dat" => opcs_list_file, "subarea" => subarea_file, "session_id" => session[:session_id], "rg" => rotational_grazing})
-    #if response.body[:run_apex_response][:run_apex_result] != "Error" then
+    if @apex_version == 1501 then
+      response = client.call(:run_apex1501, message: {"soil_dat" => soil_list, "opcs_dat" => opcs_list_file, "subarea" => subarea_file, "session_id" => session[:session_id], "rg" => rotational_grazing})
+      return response.body[:run_apex1501_response][:run_apex1501_result]
+    else
+      response = client.call(:run_apex, message: {"soil_dat" => soil_list, "opcs_dat" => opcs_list_file, "subarea" => subarea_file, "session_id" => session[:session_id], "rg" => rotational_grazing})
       return response.body[:run_apex_response][:run_apex_result]
-    #else
-      #return "OK"
-    #end
+    end
   end
 
   def send_file_to_APEX(apex_string, file)
@@ -322,9 +329,17 @@ module SimulationsHelper
           @apex_parm += sprintf("%8.2f", p.value)
       end #end case p.line
     end #end each do p
+    if @apex_version == 1501 then
+      @apex_parm +="    0.00" + "\n"     #print 100 parm
+      @apex_parm +="    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00" + "\n"     #print 101 to 110 parms
+    end
     @apex_parm +="\n"
     @apex_parm +="    .044     31.     .51     .57     10." + "\n"
+    if @apex_version == 1501 then
+      @apex_parm +="    0.00    0.00    0.00    0.00" + "\n"     #print new params
+    end
     @apex_parm +=" " + "\n"
+
     #msg = send_files_to_APEX("FILES")
 	return "OK"
   end
@@ -1066,6 +1081,9 @@ module SimulationsHelper
     sLine += sprintf("%8.2f", _subarea_info.yct)
     sLine += sprintf("%8.2f", _subarea_info.xct)
     sLine += sprintf("%8.2f", _subarea_info.azm)
+    if @apex_version == 1501 then
+      sLine += sprintf("%8.2f", 0)   #add SAEL column
+    end
     sLine += sprintf("%8.2f", _subarea_info.fl)
     sLine += sprintf("%8.2f", _subarea_info.fw)
     sLine += sprintf("%8.2f", _subarea_info.angl)
@@ -1112,6 +1130,10 @@ module SimulationsHelper
     sLine += sprintf("%8.4f", _subarea_info.rchk)
     sLine += sprintf("%8.0f", _subarea_info.rfpw)
     sLine += sprintf("%8.4f", _subarea_info.rfpl)
+    if @apex_version == 1501 then
+      sLine += sprintf("%8.2f", 0)   #add SAT1 column
+      sLine += sprintf("%8.2f", 0)   #add FPS1 column
+    end    
     @subarea_file.push(sLine + "\n")
     #/line 6
     sLine = sprintf("%8.2f", _subarea_info.rsee)
@@ -1159,7 +1181,6 @@ module SimulationsHelper
         sLine += sprintf("%1d", _subarea_info.nirr)
       end
     end
-
     sLine += sprintf("%4d", _subarea_info.iri)
     sLine += sprintf("%4d", _subarea_info.ira)
     sLine += sprintf("%4d", _subarea_info.lm)
@@ -1170,6 +1191,11 @@ module SimulationsHelper
     sLine += sprintf("%4d", _subarea_info.idf3)
     sLine += sprintf("%4d", _subarea_info.idf4)
     sLine += sprintf("%4d", _subarea_info.idf5)
+    if @apex_version == 1501 then
+      sLine += sprintf("%4d", 0)   #add idf6 column
+      sLine += sprintf("%4d", 0)   #add irrs column
+      sLine += sprintf("%4d", 0)   #add irrw column
+    end    
     @subarea_file.push(sLine + "\n")
     #/line 9
     if _subarea_info.nirr > 0 then
@@ -2794,7 +2820,7 @@ module SimulationsHelper
       return bioConsumed
     end #end create_herd_file
 
-        ################################  run_scenario - run simulation called from show or index  #################################
+    ################################  run_scenario - run simulation called from show or index  #################################
     def run_scenario()
       @last_herd = 0
       @herd_list = Array.new
@@ -2846,7 +2872,11 @@ module SimulationsHelper
       @subarea_file = Array.new
       @soil_number = 0
       if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
-      if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
+      if @apex_version == 1501 then
+        if msg.eql?("OK") then msg = send_files1_to_APEX("RUN1501") else return msg  end  #this operation will run a simulation and return ntt file.
+      else
+        if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
+      end
       if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
       @scenario.last_simulation = Time.now
       if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
