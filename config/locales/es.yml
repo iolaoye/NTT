@@ -304,7 +304,9 @@ es:
     downloaded: " ha sido descargado/a."
     simulation: "Simulación fue Exitoso."
     all: "Todas las operaciones se han eliminado."
-    no_soils: "no hay suelos disponibles para esta parcela"
+    no_soils: "No hay suelos disponibles para esta parcela"
+    no_layers: "No hay capas disponibles para este suelo"
+    no_weather: "El archivo que esta tratando de subir tiene problemas. Por favor corrija el problema e intente de nuevo"
   helpers:
     select:
       prompt: Por favor seleccione
@@ -1197,9 +1199,9 @@ es:
     ln5: 'Dry Matter Intake (DMI) code  1: Use proportion of animal weight  2: Use absolute rates'
     ln10: 'Line 10: Green water footprint (litres of water required to produce one kg of animal feed)'
   documents_basic_html:
-    <a href="/basic_help.pdf" download="Manual_de_usuario.pdf"><u>Manual de usuario</u></a>
+    <a href="/basic_help_04062019.pdf" download="Manual_de_usuario.pdf"><u>Bajar Manual del usuario</u></a>
   documents_re_html:
-    <a href="/re_help.pdf" download="Manual_de_usuario.pdf"><u>Manual de usuario</u></a>
+    <a href="/re_help_04062019.pdf" download="Manual_de_usuario.pdf"><u>Bajar Manual del usuario</u></a>
   instructions:
     projects: Para seleccionar un proyecto existente, haga clic en el nombre del proyecto
     fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
