@@ -87,10 +87,10 @@ class ScenariosController < ApplicationController
   		@errors.push(msg)
   		return msg
   	end
-    if params[:select_scenario] == nil then 
+    if params[:select_scenario] == nil then
       @scenarios_selected = params[:select_1501]
       @apex_version = 1501
-    else  
+    else
       @scenarios_selected = params[:select_scenario]
       apex_version = 806
     end
@@ -973,6 +973,37 @@ class ScenariosController < ApplicationController
     apex_string += "\n"
 		#***** send file to server "
 		msg = send_file_to_APEX(apex_string, "SimulParms.txt")
+
+    apex_string += aplcat.mm_type.to_s + "\t" + "! " + t('aplcat.parameter1') + "\n"
+    apex_string += aplcat.nit.to_s + "\t" + "! " + t('aplcat.parameter2') + "\n"
+    apex_string += aplcat.fqd.to_s + "\t" + "! " + t('aplcat.parameter3') + "\n"
+    apex_string += aplcat.uovfi.to_s + "\t" + "! " + t('aplcat.parameter4') + "\n"
+    apex_string += aplcat.srwc.to_s + "\t" + "! " + t('aplcat.parameter5') + "\n"
+    apex_string += aplcat.byos.to_s + "\t" + "! " + t('aplcat.parameter6') + "\n"
+    apex_string += aplcat.eyos.to_s + "\t" + "! " + t('aplcat.parameter7') + "\n"
+    apex_string += "\n"
+		apex_string += "Details of model parameters on simulation methods" + "\n"
+		apex_string += "\n"
+    apex_string += "Parameter 1" + "\t" + t('aplcat.mm_type') + "\n"
+    apex_string += "Parameter 2" + "\t" + t('aplcat.nit') + "\n"
+    apex_string += "Parameter 3" + "\t" + t('aplcat.fqd') + "\n"
+    apex_string += "Parameter 4" + "\t" + t('aplcat.uovfi') + "\n"
+    apex_string += "Parameter 5" + "\t" + t('aplcat.srwc') + "\n"
+    apex_string += "Parameter 6" + "\t" + t('aplcat.byos') + "\n"
+    apex_string += "Parameter 7" + "\t" + t('aplcat.eyos') + "\n"
+    apex_string += "\n"
+		apex_string += "PARAMETER FORMAT AND RANGE" + "\n"
+		apex_string += "\n"
+    apex_string += "Parameter 1" + "\t" + "integer" + "1 or 2" + "\n"
+    apex_string += "Parameter 2" + "\t" + "integer" + "1,2, or 3" + "\n"
+    apex_string += "Parameter 3" + "\t" + "integer" + "1 or 0" + "\n"
+    apex_string += "Parameter 4" + "\t" + "integer" + "1 or 0" + "\n"
+    apex_string += "Parameter 5" + "\t" + "integer" + "1 or 0" + "\n"
+    apex_string += "Parameter 6" + "\t" + "integer" + "Four digit year" + "\n"
+    apex_string += "Parameter 7" + "\t" + "integer" + "Four digit year" + "\n"
+    apex_string += "\n"
+		#***** send file to server "
+		msg = send_file_to_APEX(apex_string, "SimulMethods.txt")
 
     apex_string += aplcat.mdogfc.to_s + "\t" + "! " + t('aplcat.mdogfc') + "\n"
     apex_string += aplcat.mxdogfc.to_s + "\t" + "! " + t('aplcat.mxdogfc') + "\n"
