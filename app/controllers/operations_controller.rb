@@ -89,9 +89,9 @@ def index
     @operation = Operation.find(params[:id])
     #find the crop lu_number to know if it is tree or not
     @lu_number = Crop.find(@operation.crop_id).lu_number
-    if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
-      @operation.po4_p = (@operation.po4_p / PO4_TO_P2O5).round(1)
-    end
+    #if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
+      #@operation.po4_p = (@operation.po4_p / PO4_TO_P2O5).round(1)
+    #end
     if @operation.activity_id == 1 && @operation.subtype_id == 1 then
       @crops = Crop.where("type1 like '%CC%'")
     else
@@ -122,9 +122,9 @@ def index
         end
       end
       operation = Operation.new(operation_params)
-      if operation.activity_id == 2 && operation.type_id == 1 && operation.po4_p > 0 && operation.po4_p < 100 then
-        operation.po4_p *= PO4_TO_P2O5
-      end
+      #if operation.activity_id == 2 && operation.type_id == 1 && operation.po4_p > 0 && operation.po4_p < 100 then
+        #operation.po4_p *= PO4_TO_P2O5
+      #end
 
       operation.scenario_id = params[:scenario_id]
       if operation.activity_id == 9 then
@@ -233,10 +233,10 @@ def index
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     respond_to do |format|
       if @operation.update_attributes(operation_params)
-        if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
-          @operation.po4_p *= PO4_TO_P2O5
-          @operation.save
-        end
+        #if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
+          #@operation.po4_p *= PO4_TO_P2O5
+          #@operation.save
+        #end
 
         if params[:operation][:activity_id] == "7" || params[:operation][:activity_id] == "9" 
           if params[:access] != nil
