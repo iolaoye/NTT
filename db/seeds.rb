@@ -4,8 +4,10 @@
 # encoding: utf-8
 
 cont = false
-	file = "db/seeds/bmpsublists.rb"
+	
+	file = "db/seeds/schedules.rb"
 	load file
+
 
 if cont then
 
