@@ -5,7 +5,7 @@
 
 cont = false
 	
-	file = "db/seeds/schedules.rb"
+	file = "db/seeds/tillages.rb"
 	load file
 
 
