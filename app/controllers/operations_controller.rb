@@ -224,6 +224,7 @@ def index
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
+    debugger
     if params[:operation][:activity_id] != "7" && params[:operation][:activity_id] != "9"
       calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f)
     end
@@ -625,6 +626,7 @@ def index
   end
 
   def calculate_nutrients(total_n_con, moisture, total_p_con)
+    debugger
     if params[:operation][:activity_id] == "2" && params[:operation][:type_id] != "1"
       if params[:operation][:type_id] == "2" #solid manure
         total_n = (total_n_con/2000)/((100-moisture)/100)
