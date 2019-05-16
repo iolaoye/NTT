@@ -18,7 +18,11 @@ include ScenariosHelper
     @weather.weather_initial_year = data[1]
     @weather.simulation_initial_year = @weather.weather_initial_year + 5
     @weather.way_id = 3
-    @weather.save
+    if @weather.save
+      return "OK"
+    else
+      retunr "Error Saving coordinates"
+    end
   end
 
 ################################  Save Prism data #################################
@@ -39,7 +43,11 @@ include ScenariosHelper
     @weather.weather_initial_year = data[1]
     @weather.simulation_initial_year = @weather.weather_initial_year + 5
     @weather.way_id = 1
-    @weather.save
+    if @weather.save
+      return "OK"
+    else
+      retunr "Error Saving PRISM"
+    end
   end
 
   def get_weather_file_name(lat, lon)
@@ -192,7 +200,7 @@ include ScenariosHelper
     end
 
     if (params[:weather][:way_id] == "3")
-      save_coordinates
+      msg = save_coordinates
     end
 
     if (params[:weather][:way_id] == "1")
