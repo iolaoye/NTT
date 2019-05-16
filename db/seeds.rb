@@ -5,7 +5,7 @@
 
 cont = false
 	
-	file = "db/seeds/tillages.rb"
+	file = "db/seeds/counties.rb"
 	load file
 
 
