@@ -186,4 +186,5 @@ Schedule.create!({:id => 301,:schedule_id => nil,:event_order => 5,:month => 10,
 Schedule.create!({:id => 307,:schedule_id => nil,:event_order => 1,:month => 1,:day => 1,:year => 1,:activity_id => 1,:apex_operation => 132,:apex_crop => 38,:apex_fertilizer => 0,:apex_opv1 => 0.0,:apex_opv2 => 0.0,:crop_schedule_id => 64}, :without_protection => true)
 Schedule.create!({:id => 308,:schedule_id => nil,:event_order => 1,:month => 3,:day => 5,:year => 1,:activity_id => 1,:apex_operation => 126,:apex_crop => 168,:apex_fertilizer => 0,:apex_opv1 => 0.0,:apex_opv2 => 0.0,:crop_schedule_id => 65}, :without_protection => true)
 Schedule.create!({:id => 309,:schedule_id => nil,:event_order => 1,:month => 3,:day => 5,:year => 1,:activity_id => 1,:apex_operation => 126,:apex_crop => 199,:apex_fertilizer => 0,:apex_opv1 => 0.0,:apex_opv2 => 0.0,:crop_schedule_id => 66}, :without_protection => true)
-#last schedule id is 313.
+Schedule.create!({:id => 314,:schedule_id => nil,:event_order => 1,:month => 4,:day => 1,:year => 1,:activity_id => 1,:apex_operation => 132,:apex_crop => 88,:apex_fertilizer => 0,:apex_opv1 => 0.0,:apex_opv2 => 0.0,:crop_schedule_id => 67}, :without_protection => true)
+#last schedule id is 314.
