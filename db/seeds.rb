@@ -4,11 +4,13 @@
 # encoding: utf-8
 
 cont = false
+		file = "db/seeds/schedules.rb"
+	load file
 	
-	file = "db/seeds/counties.rb"
+	file = "db/seeds/crop_schedules.rb"
 	load file
 
-
+	
 if cont then
 
 	file = "db/seeds/activities.rb"
