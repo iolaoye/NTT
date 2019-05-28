@@ -372,9 +372,9 @@ module SimulationsHelper
   	end
       if county != nil then
   		wind_wp1_name = county.wind_wp1_name
-  		@wind_wp1_code = county.wind_wp1_code
+  		wind_wp1_code = county.wind_wp1_code
   	else
-  		@wind_wp1_name = "CHINAG"
+  		wind_wp1_name = "CHINAG"
   		wind_wp1_code = 999
   	end
     apex_run_string = "APEX001   1IWPNIWND   1   0   0"
@@ -384,6 +384,8 @@ module SimulationsHelper
     @code = ""
     if @project.location.state_id > 0
       @code = county.county_state_code
+    else
+      @code = wind_wp1_code
     end
   	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => @code})
       if response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] == "created" then
