@@ -38,3 +38,4 @@ CropSchedule.create!({:id => 62,:name => "Millet",:state_id => "6",:class_id => 
 CropSchedule.create!({:id => 64,:name => "Pasture, Winter",:state_id => "*",:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 65,:name => "Bananas",:state_id => "52",:class_id => 1,:status => true}, :without_protection => true)
 CropSchedule.create!({:id => 66,:name => "Plantains",:state_id => "52",:class_id => 1,:status => true}, :without_protection => true)
+CropSchedule.create!({:id => 67,:name => "Big Bluestem Grass",:state_id => "17,37,44",:class_id => 1,:status => true}, :without_protection => true)
