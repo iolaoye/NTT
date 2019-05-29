@@ -341,7 +341,7 @@ module SimulationsHelper
     @apex_parm +=" " + "\n"
 
     #msg = send_files_to_APEX("FILES")
-	return "OK"
+	  return "OK"
   end
 
   def create_site_file(field_id)
@@ -360,7 +360,7 @@ module SimulationsHelper
     end # end for
     #msg = send_files_to_APEX("FILES")
     #print_array_to_file(site_file, "APEX.sit")
-	return "OK"
+	  return "OK"
   end
 
   def create_wind_wp1_files()
@@ -381,11 +381,13 @@ module SimulationsHelper
     #client = Savon.client(wsdl: URL_Weather)
     client = Savon.client(wsdl: URL_SoilsInfo)
   	###### create wp1 file from weather and send to server ########
-    code = ""
+    @code = ""
     if @project.location.state_id > 0
-      code = county.county_state_code
+      @code = county.county_state_code
+    else
+      @code = wind_wp1_code
     end
-  	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => code})
+  	response = client.call(:create_wp1_from_weather2, message: {"loc" => APEX_FOLDER + "/APEX" + session[:session_id], "wp1name" => wind_wp1_name, "code" => @code})
       if response.body[:create_wp1_from_weather2_response][:create_wp1_from_weather2_result] == "created" then
   		return "OK"
   	else
@@ -1261,7 +1263,7 @@ module SimulationsHelper
     return "OK"
   end
 
-  def create_operations(soil_id, soil_percentage, operation_number, buffer_type) 
+  def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
     #This suroutine create operation files using information entered by user.
     nirr = 0
     @grazingb = false
@@ -1485,15 +1487,12 @@ module SimulationsHelper
         else
           apex_string += sprintf("%5d", 0) #TIME TO MATURITY       #APEX0604
         end
-        #if operation.opv1 == 0 then
-        #uri = URI.parse(URL_HU +  "?op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(@field.id).latitude.to_s + "&nlon=" + Weather.find_by_field_id(@field.id).longitude.to_s)
-        #uri.open
-        #operation.opv1 = uri.read
-        #operation.opv1 = endpoint.post("op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(@field.id).latitude + "&nlon=" + Weather.find_by_field_id(@field.id).longitude)
-        #Dim getHu As New GetHU
-        #operation.opv1 = getHu.calcHU(operation.apex_crop, wp1Files + "\" + _startInfo.Wp1Name + ".WP1", folder + "\App_Data\PHUCRP.DAT")
-        #operation.opv1 = calcHU(operation.apex_crop, _crops, _startInfo)
-        #end
+        # update heat units from calcHU program. for now just in bk
+        if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+          client = Savon.client(wsdl: URL_SoilsInfo)
+          response = client.call(:get_hu, message: {"path" => APEX_FOLDER + "/APEX" + session[:session_id], "crop" => operation.apex_crop, "code" => @code})
+          operation.opv1 = response.body[:get_hu_response][:get_hu_result]
+        end
         apex_string += sprintf("%8.2f", operation.opv1)
         items[0] = "Heat Units"
         values[0] = operation.opv1

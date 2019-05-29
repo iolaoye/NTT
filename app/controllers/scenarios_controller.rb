@@ -87,10 +87,11 @@ class ScenariosController < ApplicationController
   		@errors.push(msg)
   		return msg
   	end
-    if params[:select_scenario] == nil then
+    if params[:select_scenario] == nil then 
       @scenarios_selected = params[:select_1501]
       @apex_version = 1501
-    else
+    else  
+
       @scenarios_selected = params[:select_scenario]
       apex_version = 806
     end
