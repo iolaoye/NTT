@@ -1487,12 +1487,12 @@ module SimulationsHelper
         else
           apex_string += sprintf("%5d", 0) #TIME TO MATURITY       #APEX0604
         end
-        # update heat units from calcHU program. for now just in bk
-        if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+        # update heat units from calcHU program. for now just in bk. extended to all of the versions. Dr. Saleh 05/29/19
+        #if request.url.include? "ntt.bk" or request.url.include? "localhost" then
           client = Savon.client(wsdl: URL_SoilsInfo)
           response = client.call(:get_hu, message: {"path" => APEX_FOLDER + "/APEX" + session[:session_id], "crop" => operation.apex_crop, "code" => @code})
           operation.opv1 = response.body[:get_hu_response][:get_hu_result]
-        end
+        #end
         apex_string += sprintf("%8.2f", operation.opv1)
         items[0] = "Heat Units"
         values[0] = operation.opv1
