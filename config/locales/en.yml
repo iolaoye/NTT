@@ -1188,6 +1188,8 @@ en:
       vr1: Variable rate
       ib2: As indicated below
       srwc: Simulate realistic weight change in proportion to availability of animal
+      byos: Beginning year of simulation
+      eyos: Ending year of simulation
       syes: Yes, Simulate
       sno: No, Don't simulate
       scenario_file: Scenario File
