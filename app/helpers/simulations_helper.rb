@@ -1487,20 +1487,11 @@ module SimulationsHelper
         else
           apex_string += sprintf("%5d", 0) #TIME TO MATURITY       #APEX0604
         end
-        # update heat units from calcHU program.
-        client = Savon.client(wsdl: URL_SoilsInfo)
-        response = client.call(:get_hu, message: {"path" => APEX_FOLDER + "/APEX" + session[:session_id], "crop" => operation.apex_crop, "code" => @code})
-        #if !response.body[:get_hu_response][:get_hu_result] == "Error" then
-        #end
-        operation.opv1 = response.body[:get_hu_response][:get_hu_result]
-        #if operation.opv1 == 0 then
-        #uri = URI.parse(URL_HU +  "?op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(@field.id).latitude.to_s + "&nlon=" + Weather.find_by_field_id(@field.id).longitude.to_s)
-        #uri.open
-        #operation.opv1 = uri.read
-        #operation.opv1 = endpoint.post("op=getHU&crop=operation.apex_crop&nlat=" + Weather.find_by_field_id(@field.id).latitude + "&nlon=" + Weather.find_by_field_id(@field.id).longitude)
-        #Dim getHu As New GetHU
-        #operation.opv1 = getHu.calcHU(operation.apex_crop, wp1Files + "\" + _startInfo.Wp1Name + ".WP1", folder + "\App_Data\PHUCRP.DAT")
-        #operation.opv1 = calcHU(operation.apex_crop, _crops, _startInfo)
+        # update heat units from calcHU program. for now just in bk. extended to all of the versions. Dr. Saleh 05/29/19
+        #if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+          client = Savon.client(wsdl: URL_SoilsInfo)
+          response = client.call(:get_hu, message: {"path" => APEX_FOLDER + "/APEX" + session[:session_id], "crop" => operation.apex_crop, "code" => @code})
+          operation.opv1 = response.body[:get_hu_response][:get_hu_result]
         #end
         apex_string += sprintf("%8.2f", operation.opv1)
         items[0] = "Heat Units"

@@ -18,6 +18,13 @@
       <td><%= link_to t('menu.aplcat') + " " + t('menu.results'), project_field_scenario_aplcat_results_path(@project, @field, @scenario), :title => t('aplcat_tooltip.go_to_ar'), :class => 'btn btn-primary' %></td>
     </tr>
       </table>
+
+      <div id="copy_aplcat">
+        <h4><%#= t('aplcat.other_scenario') %></h4>
+        <td><%#= t('aplcat.select_scenario') %> <%#= collection_select :scenario, :id, Scenario.where(:field_id => 0), :id, :name, {:prompt => t('helpers.select.scenario')} %></td>
+        <td><%#= submit_tag t('general.copy'), data: {disable_with: 'Please wait....'}, method: :get, :class => "btn btn-primary" %></td>
+      </div>
+
       <table>
         <tr>
       <td><h4><%= label :bmp_id, t('general.select') %></h4></td>
@@ -1008,8 +1015,8 @@
   <%= field_set_tag t('aplcat.simulation_methods'), class:'fieldset' do %>
   <div class="field">
     <%= t('aplcat.mm_type') %><br>
-    <%= radio_button_tag :mm_type, "1"%> <%= t('aplcat.ipcc') %><br>
-    <%= radio_button_tag :mm_type, "2"%> <%= t('aplcat.chianese') %><br>
+    <%= radio_button_tag :mm_type_but, "1"%> <%= t('aplcat.ipcc') %><br>
+    <%= radio_button_tag :mm_type_but, "2"%> <%= t('aplcat.chianese') %><br>
   </div>
   <div class="field">
     <%= t('aplcat.nit') %><br>
@@ -1032,6 +1039,15 @@
     <%= radio_button_tag :srwc, "1"%> <%= t('aplcat.syes') %><br>
     <%= radio_button_tag :srwc, "2"%> <%= t('aplcat.sno') %><br>
   </div>
+  <div class="field">
+    <%= t('aplcat.byos') %>
+    <%= f.number_field :byos, class: 'gvTitleStyleNumber', :min => 1000, :max => 9999, :value => 2018 %>
+  </div>
+  <div class="field">
+    <%= t('aplcat.eyos') %>
+    <%= f.number_field :eyos, class: 'gvTitleStyleNumber', :min => 1000, :max => 9999, :value => 2019 %>
+  </div>
+
 <%end%>
   </div>
 
