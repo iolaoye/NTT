@@ -899,8 +899,6 @@ class ProjectsController < ApplicationController
         return "Name"
       when t('general.last_modified')
         return "updated_at"
-      when t('models.user')
-        return "User"
     end
     return "Name"
     #sortable_columns.include?(params[:column]) ? params[:column] : "Name"
