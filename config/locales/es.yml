@@ -494,7 +494,7 @@ es:
     project_name: 'Nombre del Proyecto'
     description: 'Descripción del Proyecto'
   footer:
-    instructions: Instrucciones para esta página
+    instructions: Página de Instrucciones
     contact_us: 'Contactarnos'
     about_ntt: 'Acerca de NTT'
     help: Ayuda
