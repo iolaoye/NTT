@@ -494,7 +494,7 @@ es:
     project_name: 'Nombre del Proyecto'
     description: 'Descripción del Proyecto'
   footer:
-    instructions: Instrucciones para esta página
+    instructions: Página de Instrucciones
     contact_us: 'Contactarnos'
     about_ntt: 'Acerca de NTT'
     help: Ayuda
@@ -641,6 +641,7 @@ es:
     total_p: P Total (0-100%)
     application_rate: Cantidad Aplicada
     access_to_stream: Los animales tienen acceso al rio?
+    planting_year: Año de cultivo
   bmp:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
@@ -703,8 +704,8 @@ es:
     select_vege: Seleccione la Vegetación
     select_animal: Seleccione el tipo de Animal
     pp: Almohadillas y Tuberias
-    autoirrigation: Irrigacion Automatica
-    autofertigation: Fertirrigacion Automatica
+    autoirrigation: Irrigación Automática
+    autofertigation: Fertirrigación Automática
     manure_control: Control de estiércol
     pad: Almohadilla
     additional_land: Esta el área del buffer incluida en el Area de Interes?
