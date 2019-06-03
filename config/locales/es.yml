@@ -796,12 +796,12 @@ es:
     layer_file: Capas
     operation_file: Operación
   navbar:
-    by_soil: Por+Suelo
+    by_soil: Por Suelo
   result:
     summary: Resumen
-    all_years: "All Years"
-    dry_years: "Dry Years"
-    wet_years: "Wet Years"
+    all_years: "Todos los años"
+    dry_years: "Años secos"
+    wet_years: "Años lluviosos"
     by_soil: Por Suelo
     download_pdf: Descargar PDF
     download_csv: Descargar CSV
