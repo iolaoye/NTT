@@ -895,9 +895,9 @@ class ProjectsController < ApplicationController
 
   def sort_column
     case params[:column]
-      when "Project Name"
+      when t('project.project_name')
         return "Name"
-      when "Last Modified"
+      when t('general.last_modified')
         return "updated_at"
     end
     return "Name"
