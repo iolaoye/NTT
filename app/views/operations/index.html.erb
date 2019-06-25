@@ -438,74 +438,74 @@
 			 	<% i=1 %>
 				<%# @operations1 = @operations.sort_by { |t| [t.year, t.month_id, t.day, t.rotation] } %>
 				<% @operations.each do |operation| %>
-				<% if (i % 2  == 0) %>
-				  <tr id="rowIdEven" class="gvRowStyleEven">
-				<% else %>
-				  <tr id="rowIdOdd" class="gvRowStyleOdd">
-				<% end %>
-					<% i = i + 1 %>
-					<% if (I18n.locale == :en) %>
-						<td class="gvCellStyleText"><%= Crop.find(operation.crop_id).name %></td>
-						<td id="operationType" class="gvCellStyleText"><%= Activity.find(operation.activity_id).name %></td>
+					<% if (i % 2  == 0) %>
+					  <tr id="rowIdEven" class="gvRowStyleEven">
 					<% else %>
-						<td class="gvCellStyleText"><%= Crop.find(operation.crop_id).spanish_name %></td>
-						<td id="operationType" class="gvCellStyleText"><%= Activity.find(operation.activity_id).spanish_name %></td>
+					  <tr id="rowIdOdd" class="gvRowStyleOdd">
 					<% end %>
-					<td class="gvCellStyleNumber"><%= listYears.detect { |val, index| index == operation.year}[0] %></td>
-					<td class="gvCellStyleText"><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
-					<td class="gvCellStyleNumber"><%= operation.day %></td>
-					<% if (I18n.locale.eql?(:en)) %>
-						<% case operation.activity_id %>
-						  <% when 1, 13 # planting and cover crop %>
-							<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
-						  <% when 2  # fertilizer %>
-							<td class="gvCellStyleText"><%= FertilizerType.find(operation.type_id).name %></td>
-						  <% when 3  # tillage %>
-							<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
-						  <% when 6  # irrigation %>
-							<td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).name %></td>
-						  <% when 7, 9 # grazing%>
-							<td class="gvCellStyleText"><%= Fertilizer.find(operation.type_id).name %></td>
-						  <% else # harvest, kill, stop grazin, burn, liming%>
-							<td class="gvCellStyleText"><%= :"" %></td>
+						<% i = i + 1 %>
+						<% if (I18n.locale == :en) %>
+							<td class="gvCellStyleText"><%= Crop.find(operation.crop_id).name %></td>
+							<td id="operationType" class="gvCellStyleText"><%= Activity.find(operation.activity_id).name %></td>
+						<% else %>
+							<td class="gvCellStyleText"><%= Crop.find(operation.crop_id).spanish_name %></td>
+							<td id="operationType" class="gvCellStyleText"><%= Activity.find(operation.activity_id).spanish_name %></td>
 						<% end %>
-					<% else %>
-						<% case operation.activity_id %>
-						  <% when 1, 13  # planting%>
-							<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).spanish_name %></td>
-						  <% when 3  # tillage%>
-							<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).spanish_name %></td>
-						  <% when 2  # fertilizer %>
-							<td class="gvCellStyleText"><%= Fertilizer.find(operation.subtype_id).spanish_name %></td>
-						  <% when 6  # irrigation %>
-							<td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).spanish_name %></td>
-						  <% when 7, 9  # grazing%>
-							<td class="gvCellStyleText"><%= Fertilizer.find(operation.type_id).spanish_name %></td>
-						  <% else # harvest, kill, stop grazin, burn, liming%>
-							<td class="gvCellStyleText"><%= :"" %></td>
+						<td class="gvCellStyleNumber"><%= listYears.detect { |val, index| index == operation.year}[0] %></td>
+						<td class="gvCellStyleText"><%= listMonths.detect { |val, index| index == operation.month_id}[0] %></td>
+						<td class="gvCellStyleNumber"><%= operation.day %></td>
+						<% if (I18n.locale.eql?(:en)) %>
+							<% case operation.activity_id %>
+							  <% when 1, 13 # planting and cover crop %>
+								<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
+							  <% when 2  # fertilizer %>
+								<td class="gvCellStyleText"><%= FertilizerType.find(operation.type_id).name %></td>
+							  <% when 3  # tillage %>
+								<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).eqp %></td>
+							  <% when 6  # irrigation %>
+								<td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).name %></td>
+							  <% when 7, 9 # grazing%>
+								<td class="gvCellStyleText"><%= Fertilizer.find(operation.type_id).name %></td>
+							  <% else # harvest, kill, stop grazin, burn, liming%>
+								<td class="gvCellStyleText"><%= :"" %></td>
+							<% end %>
+						<% else %>
+							<% case operation.activity_id %>
+							  <% when 1, 13  # planting%>
+								<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).spanish_name %></td>
+							  <% when 3  # tillage%>
+								<td class="gvCellStyleText"><%= Tillage.find_by_code(operation.type_id).spanish_name %></td>
+							  <% when 2  # fertilizer %>
+								<td class="gvCellStyleText"><%= Fertilizer.find(operation.subtype_id).spanish_name %></td>
+							  <% when 6  # irrigation %>
+								<td class="gvCellStyleText"><%= Irrigation.find(operation.type_id).spanish_name %></td>
+							  <% when 7, 9  # grazing%>
+								<td class="gvCellStyleText"><%= Fertilizer.find(operation.type_id).spanish_name %></td>
+							  <% else # harvest, kill, stop grazin, burn, liming%>
+								<td class="gvCellStyleText"><%= :"" %></td>
+							<% end %>
 						<% end %>
-					<% end %>
-					<% if operation.activity_id == 2 and operation.type_id == 2 then %>
-						<td class="gvCellStyleNumber"><%= operation.amount  %></td>
-					<% else %>
-						<td class="gvCellStyleNumber"><%= operation.amount %></td>
-					<% end %>
-					<td class="gvCellStyleNumber"><%= operation.depth %></td>
-					<td class="gvCellStyleNumber"><%= operation.moisture %></td>
-					<td class="gvCellStyleNumber"><%= operation.no3_n %></td>
-					<td class="gvCellStyleNumber"><%= operation.po4_p %></td>
-					<td class="gvCellStyleNumber"><%= operation.org_n %></td>
-					<td class="gvCellStyleNumber"><%= operation.org_p %></td>
-					<td >
-						<%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.edit') unless operation.activity_id == 8 %>
-						<%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } unless operation.activity_id == 8%>
-					</td>
-				</tr>
-			  <% end %>
+						<% if operation.activity_id == 2 and operation.type_id == 2 then %>
+							<td class="gvCellStyleNumber"><%= operation.amount  %></td>
+						<% else %>
+							<td class="gvCellStyleNumber"><%= operation.amount %></td>
+						<% end %>
+						<td class="gvCellStyleNumber"><%= operation.depth %></td>
+						<td class="gvCellStyleNumber"><%= operation.moisture %></td>
+						<td class="gvCellStyleNumber"><%= operation.no3_n %></td>
+						<td class="gvCellStyleNumber"><%= operation.po4_p %></td>
+						<td class="gvCellStyleNumber"><%= operation.org_n %></td>
+						<td class="gvCellStyleNumber"><%= operation.org_p %></td>
+						<td >
+							<%= link_to image_tag("edit.png"), edit_project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.edit') unless operation.activity_id == 8 %>
+							<%= link_to image_tag("delete.png"), project_field_scenario_operation_path(@project, @field, @scenario, operation), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } unless operation.activity_id == 8%>
+						</td>
+					</tr>
+			  	<% end %>
 		  	</tbody>
 		</table>
-	  </div>
 	</div>
+</div>
 <%# end %>
 
 <script>

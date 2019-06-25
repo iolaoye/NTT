@@ -2,7 +2,16 @@
 <% fem = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost") %>
 <% if !(@project == nil) %>
   <!-- <span class="sidebar_font"> -->
-  <li class="<%= controller_name == "locations" ? "active" : "" %>"><%= link_to t('menu.location'), project_location_path(@project, @project.location) %></li>
+  <li class="<%= controller_name == "locations" ? "active" : "" %>">
+    <% county = "" %>
+    <% if @project.location.state_id != nil then %>
+      <% if @project.location.state_id != 0 and @project.location.county_id != 0 then %>
+        <% county = County.find(@project.location.county_id).county_name %>
+        <% county += ", " + State.find(@project.location.state_id).state_name %>
+      <% end %>
+    <% end %>
+    <%= link_to t('menu.location') + " (" + county + ")", project_location_path(@project, @project.location) %>
+  </li>
   <%#= controller_name %>
   <%#= scenario_submenu %>
   <%#= field_submenu %>

@@ -79,8 +79,9 @@ updateNutrients = (animal) ->
             $("#div_nutrients")[0].children[2].children[0].innerHTML = "P (0-100%)"
             $("#operation_po4_p").attr("readonly", true)
           else
-            $("#operation_po4_p").val(Math.round(fertilizer.qp/0.4364))
-            $("#div_nutrients")[0].children[2].children[0].innerHTML = "P<sub>2</sub>O<sub>5</sub> (0-100%)"
+            $("#operation_po4_p").val(fertilizer.qp)
+            #$("#operation_po4_p").val(Math.round(fertilizer.qp/0.4364))
+            #$("#div_nutrients")[0].children[2].children[0].innerHTML = "P<sub>2</sub>O<sub>5</sub> (0-100%)"
             $("#operation_po4_p").attr("readonly", false)
           $("#operation_org_n").val(fertilizer.yn)
           $("#operation_org_p").val(fertilizer.yp)

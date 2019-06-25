@@ -1,61 +1,4 @@
-﻿<!--<div id="instructionBox" style="display: none">
-  <%case%>
-    <% when  request.original_url.include?('/projects') %>
-      <%= raw t('instructionbox.projects')%>
-    <% when request.original_url.include?('/locations') %>
-      <%= raw t('instructionbox.locations')%>
-    <% when request.original_url.include?('/fields') %>
-      <%= raw t('instructionbox.fields')%>
-    <% when request.original_url.include?('/watersheds') %>
-      <%= raw t('instructionbox.watersheds')%>
-    <% when request.original_url.include?('/watershed_scenarios') %>
-      <%= raw t('instructionbox.watershed_scenarios')%>
-    <% when request.original_url.include?('/weathers') %>
-      <%= raw t('instructionbox.weathers')%>
-    <% when request.original_url.include?('/soils') %>
-      <%= raw t('instructionbox.soils')%>
-    <% when request.original_url.include?('/layers') %>
-      <%= raw t('instructionbox.layers')%>
-    <% when request.original_url.include?('/scenarios') %>
-      <%= raw t('instructionbox.scenarios')%>
-    <% when request.original_url.include?('/results') %>
-      <%= raw t('instructionbox.results')%>
-    <% when request.original_url.include?('/operations') %>
-      <%= raw t('instructionbox.operations')%>
-    <% when request.original_url.include?('/bmps') %>
-      <%= raw t('instructionbox.bmps')%>
-    <% when request.original_url.include?('/apex_controls') %>
-      <%= raw t('instructionbox.apex_controls')%>
-    <% when request.original_url.include?('/apex_parameters') %>
-      <%= raw t('instructionbox.apex_parameters')%>
-    <% when request.original_url.include?('/subareas') %>
-      <%= raw t('instructionbox.subareas')%>
-    <% when request.original_url.include?('/apex_soils') %>
-      <%= raw t('instructionbox.apex_soils')%>
-    <% when request.original_url.include?('/apex_layers') %>
-      <%= raw t('instructionbox.apex_layers')%>
-    <% when request.original_url.include?('/soil_operations') %>
-      <%= raw t('instructionbox.soil_operations')%>
-    <% when request.original_url.include?('/sites') %>
-      <%= raw t('instructionbox.sites')%>
-  <% end %>
-</div>
-<div id='cssmenu'>
-    <ul id="mnuFooter" >
-      <li><a <#%= link_to_function t('footer.instructions'), "toggle_visibility('instructionBox')"%></a></li>
-      <li><a <#%= link_to t("footer.contact_us"), contact_path %></a></li>
-      <li><a <#%= link_to t("footer.about_ntt"), about_path %></a></li>
-      <li><a <#%= link_to t("footer.help"), help_path("index") %></a></li>
-      <li class='active has-sub'><#%= link_to t("footer.Language") %>
-        <ul id="cssSubMenu" >
-          <li><#%= link_to t("languages.english"), :locale=>'en'%></li>
-          <li><#%= link_to t("languages.spanish"), :locale=>'es'%></li>
-        </ul>
-      </li>
-    </ul>
-</div>-->
-
-<% request.url %>
+﻿<% request.url %>
 <footer class="footer">
     <nav class="navbar navbar-default navbar-custom">
         <div class="container-fluid">
@@ -70,8 +13,8 @@
                     <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                   <% end %>
                   <%if request.url.include?(url_for=("/fields?")) || request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/layers?")) || request.url.include?(url_for=("/list?")) || request.url.include?(url_for=("/operations?"))%>
-                        <%if request.url.include?(url_for=("/fields?"))%>
-                        <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
+                      <%if request.url.include?(url_for=("/fields?"))%>
+                          <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                         <% end %>
                         <%if !(ENV["APP_VERSION"] == "modified") %>
                         <%if request.url.include?(url_for=("/soils?")) || request.url.include?(url_for=("/apex_soils?"))%>
@@ -82,7 +25,7 @@
                           <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                         <% end %>
                         <%if request.url.include?(url_for=("/operations?")) %>
-                        <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
+                          <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>
                         <%end%>
                       <% end %>
                   <% end %>
@@ -263,7 +206,7 @@
       Stephenville, TX 76402<br>
       (254)968-9079 (Phone)<br>
       (254)968-9790 (Fax)<br>
-      saleh@tarleton.edu</li></ul>
+      <a href="mailto:saleh@tarleton.edu">saleh@tarleton.edu</a></li></ul>
       <br>
 
       <% if ENV["APP_VERSION"] == "modified" %>
@@ -285,7 +228,7 @@
       Stephenville, TX 76402<br>
       (254)968-9787 (Phone)<br>
       (254)968-9790 (Fax)<br>
-      gallego@tiaer.tarleton.edu</ul>
+      <a href="mailto:gallego@tarleton.edu">gallego@tarleton.edu</a></ul>
 
     </div>
     <div class="modal-footer">
