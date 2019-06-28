@@ -448,6 +448,7 @@ en:
     body6: 'Finally, as the NTT project leader and behalf of all of my project team (Oscar Gallego and Edward Osei), I would like to thank the funding sources and our colleagues, in particular the farmers and producers, for their contribution in designing this program.'
     body7: 'This version of NTT is available in<br> both English and Spanish.'
     name: 'Dr. Ali Saleh'
+    initial_welcome: Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets.
   menu:
     fem: FEM
     welcome: Welcome
@@ -590,7 +591,7 @@ en:
     amount: 'Amount(lbs/ac)'
     bmp: BMP
     irrigation: Irrigation
-    plant_population: 'Plant Population (seeds sq/ft)(*optional)'
+    plant_population: 'Plant Population (seeds/ft2)(*optional)'
     plant_population_trees: 'Plant Population (trees/ac)(*optional)'
     load_operation: Load Operation
     sum: 'total nutrients should be less or equal to 100'
@@ -622,7 +623,8 @@ en:
     liming: Liming
     start_grazing: Grazing
     stop_grazing: Stop Grazing
-    seed: 'Seeding Amount (seeds/sq ft)(optional)'
+    seed: 'Seeding (seeds/ft2)(*optional)'
+    seed_trees: 'Seeding (trees/ac)(*optional)'
     amount_applied: 'Amount Applied'
     add_planting: 'Add Planting Operation'
     add_fertilizer: 'Add Fertilizer Operation'
@@ -868,6 +870,7 @@ en:
     confirmation: Password confirmation
     company: Company
     user: User
+    forgot_password: Forgot Password
   subarea:
     subarea_type: Subarea Type
     subarea_number: Subarea Number
@@ -2171,7 +2174,7 @@ en:
         item1:
             header: Planting
             body1: 'Plant method: User must indicate the planting method using the pick-list of planting equipment provided.'
-            body2: 'Seeding Amount (seeds/sq. ft.): This field is pre-filled with standard seeding rates for each crop type. If the user has more specific information on seeding rate they may enter it here.'
+            body2: 'Seeding Amount (seeds/ft2 or trees/ac): This field is pre-filled with standard seeding rates for each crop type. If the user has more specific information on seeding rate they may enter it here.'
         item2:
             header: Fertilizer
             body1: 'Fertilizer category: User must indicate the fertilizer category (commercial, liquid manure, or solid manure).'
