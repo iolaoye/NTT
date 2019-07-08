@@ -108,6 +108,7 @@ module SimulationsHelper
       case i
       when 1
         if !(bmp == nil) then
+          @apex_control["351981"]= "312020"
           #change the period to simulate
         end
         apex_string = @apex_control
