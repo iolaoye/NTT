@@ -89,8 +89,8 @@ module SimulationsHelper
   end
 
   def get_future_climate(option, lat, lon)
-    i_year = 2020
-    f_year = 2050
+    #i_year = 2020
+    #f_year = 2050
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### get future climate depending on the user selection ########
     response = client.call(:get_future_climate, message: {"file" => "WTH", "i_year" => 2020, "f_year" => 2050, "option" => option.to_i, "lat" => lat, "lon" => lon})
@@ -108,7 +108,8 @@ module SimulationsHelper
       case i
       when 1
         if !(bmp == nil) then
-          @apex_control["351981"]= "312020"
+          @apex_control[2..3]= (2050 - 2020 + 1).to_s
+          @apex_control[4..7]= 2020.to_s
           #change the period to simulate
         end
         apex_string = @apex_control
