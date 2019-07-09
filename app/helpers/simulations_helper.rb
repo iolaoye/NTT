@@ -108,9 +108,9 @@ module SimulationsHelper
       case i
       when 1
         if !(bmp == nil) then
+          #change the period to simulate
           @apex_control[2..3]= (2050 - 2020 + 1).to_s
           @apex_control[4..7]= 2020.to_s
-          #change the period to simulate
         end
         apex_string = @apex_control
       when 2
