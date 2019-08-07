@@ -450,6 +450,7 @@ es:
     note2: '2.  Esta versión de NTT esta escrita tanto en Inglés como en Español.'
     final: 'Finalmente, como líder del proyecto NTT y con mi equipo de proyecto (Oscar Gallego y Edward Osei), nos gustaría darle las gracias a las fuentes de financiación y nuestros colegas, en particular, los agricultores y productores, por su contribución en el diseño de este programa.'
     name: 'Dr. Ali Saleh'
+    initial_welcome: Bienvenido a el Nutrient Tracking Tool (NTT) – una herramienta para estimar perdiad de nutrientes y sedimento de cultivos y pastoreo. NTT fue desarrollado pro Texas Institute for Applied Environmental Research (TIAER) en Tarleton State University con fundos y suporte técnico de la ofcina de mercados del medio ambiente de USDA.
   menu:
     fem: FEM
     welcome: Bienvenido
@@ -618,7 +619,8 @@ es:
     liming: Encalado
     start_grazing: Pasteo
     stop_grazing: Terminar Pasteo
-    seed: 'Cantidad de Siembra (semillas/ft)(opcional)'
+    seed: 'Siembra (semillas/ft2 o árboles/ac)(*opcional)'
+    seed_trees: 'Siembre (árboles/ac)(*optional)'
     amount_applied: 'Cantidad Aplicada'
     add_planting: 'Añadir operación de Plantar'
     add_fertilizer: 'Añadir operación de Fertilizante'
@@ -853,6 +855,7 @@ es:
     confirmation: Confirmación de la contraseña
     company: Empresa
     user: Usuario
+    forgot_password: Olvidó Contraseña
   subarea:
     subarea_type: Tipo de Subárea
     subarea_number: Número Subárea
