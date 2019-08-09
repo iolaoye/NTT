@@ -50,17 +50,17 @@
 				<% if @scenario1 != "0" && @scenario1 != "" then %>
 					<tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Total Revenue" %>
+							<%= "Total Revenue ($/ac)" %>
 						</th>
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @fem_results1.total_revenue) %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @fem_results1.total_revenue).gsub(/(\d)(?=\d{3}+\.)/, '\1,') %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @fem_results2.total_revenue) %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @fem_results2.total_revenue).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 							<% difference1 = @fem_results1.total_revenue - @fem_results2.total_revenue %>
 							<% reduction1 = difference1 / @fem_results1.total_revenue * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 						<% end %>
 						<% if @scenario3 > "0" then %>
-							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @fem_results3.total_revenue) %></td>
+							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @fem_results3.total_revenue).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 							<% difference1 = @fem_results1.total_revenue - @fem_results3.total_revenue %>
 							<% reduction1 = difference1 / @fem_results1.total_revenue * 100 %>
 							<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
@@ -68,18 +68,18 @@
 					</tr>
 					<tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Total Cost" %>
+							<%= "Total Cost ($/ac)" %>
 						</th>
 					
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @fem_results1.total_cost) %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @fem_results1.total_cost).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @fem_results2.total_cost) %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @fem_results2.total_cost).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 							<% difference1 = @fem_results1.total_cost - @fem_results2.total_cost %>
 							<% reduction1 = difference1 / @fem_results1.total_cost * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 						<% end %>
 						<% if @scenario3 > "0" then %>
-							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @fem_results3.total_cost) %></td>
+							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @fem_results3.total_cost).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 							<% difference1 = @fem_results1.total_cost - @fem_results3.total_cost %>
 							<% reduction1 = difference1 / @fem_results1.total_cost * 100 %>
 							<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
@@ -87,17 +87,17 @@
 					</tr>
 					<tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Net Return" %>
+							<%= "Net Return ($/ac)" %>
 						</th>
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @fem_results1.net_return) %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @fem_results1.net_return).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @fem_results2.net_return) %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @fem_results2.net_return).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 							<% difference1 = @fem_results1.net_return - @fem_results2.net_return %>
 							<% reduction1 = difference1 / @fem_results1.net_return * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 						<% end %>
 						<% if @scenario3 > "0" then %>
-							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @fem_results3.net_return) %></td>
+							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @fem_results3.net_return).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 							<% difference1 = @fem_results1.net_return - @fem_results3.net_return %>
 							<% reduction1 = difference1 / @fem_results1.net_return * 100 %>
 							<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
@@ -105,17 +105,17 @@
 					</tr>
 					<tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Cash Flow" %>
+							<%= "Cash Flow ($/ac)" %>
 						</th>
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @fem_results1.net_cash_flow) %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @fem_results1.net_cash_flow).gsub(/(\d)(?=\d{3}+\.)/, '\1,') %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @fem_results2.net_cash_flow) %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @fem_results2.net_cash_flow).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 							<% difference1 = @fem_results1.net_cash_flow - @fem_results2.net_cash_flow %>
 							<% reduction1 = difference1 / @fem_results1.net_cash_flow * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 						<% end %>
 						<% if @scenario3 > "0" then %>
-							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @fem_results3.net_cash_flow) %></td>
+							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @fem_results3.net_cash_flow).gsub(/(\d)(?=\d{3}+\.)/, '\1,')  %></td>
 							<% difference1 = @fem_results1.net_cash_flow - @fem_results3.net_cash_flow %>
 							<% reduction1 = difference1 / @fem_results1.net_cash_flow * 100 %>
 							<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
