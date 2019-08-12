@@ -17,7 +17,11 @@ module ScenariosHelper
 		    @crop = Crop.find_by_number_and_state_id(event.apex_crop, '**')
 		  end
 		  operation.crop_id = @crop.id
-		  plant_population = @crop.plant_population_ft
+		  if @crop.lu_number == 28 then
+		  	plant_population = @crop.plant_population_ac
+		  else
+		  	plant_population = @crop.plant_population_ft
+		  end
 		  operation.activity_id = event.activity_id
 		  operation.day = event.day
 		  operation.month_id = event.month
@@ -835,13 +839,15 @@ module ScenariosHelper
           	if operation.amount == nil then
           		operation.amount = 0
           	end
-            if operation.amount / FT2_TO_M2 < 1 then
-              return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
-            else
-              return (operation.amount / FT2_TO_M2).round(0) #plant population converte from ft2 to m2 if it is not tree
-            end
+            #if operation.amount / FT2_TO_M2 < 1 then
+              #return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
+            #else
+              #return (operation.amount / FT2_TO_M2).round(0) #plant population converte from ft2 to m2 if it is not tree
+            #end
             if lu_number == 28 then
-              return (operation.amount / FT_TO_HA).round(0) #plant population converte from ft2 to ha if it is tree
+              return (operation.amount / AC_TO_HA).round(0) #plant population converte from ac to ha if it is tree
+	         else
+	          return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
             end
           end
         end
