@@ -17,7 +17,11 @@ module ScenariosHelper
 		    @crop = Crop.find_by_number_and_state_id(event.apex_crop, '**')
 		  end
 		  operation.crop_id = @crop.id
-		  plant_population = @crop.plant_population_ft
+		  if @crop.lu_number == 28 then
+		  	plant_population = @crop.plant_population_ac
+		  else
+		  	plant_population = @crop.plant_population_ft
+		  end
 		  operation.activity_id = event.activity_id
 		  operation.day = event.day
 		  operation.month_id = event.month
