@@ -691,8 +691,8 @@
             } /*else if (elementIDNum == 19) {
                 validationsBmpCc();
             }*/
-          } if (elementIDNum > 12 && elementIDNum < 16) {
-              if (elementIDNum == 13 && ($('#select_12').is(':checked') || $('#select_14').is(':checked') || $('#select_15').is(':checked'))) {
+          } if (elementIDNum == 13 || elementIDNum == 15) {
+              if (elementIDNum == 13 && ($('#select_12').is(':checked') || $('#select_15').is(':checked'))) {
                 if (prompt_user()) {
                   validationsBmpFs(0);
                 } else { confirm_check(elementIDNum); }
@@ -700,7 +700,7 @@
                 if (prompt_user()) {
                   validationsBmpWw(0);
                 } else { confirm_check(elementIDNum); }
-              } else if (elementIDNum == 15 && ($('#select_12').is(':checked') || $('#select_13').is(':checked') || $('#select_14').is(':checked'))) {
+              } else if (elementIDNum == 15 && ($('#select_12').is(':checked') || $('#select_13').is(':checked'))) {
                 if (prompt_user()) {
                   validationsBmpCb(0);
                 } else { confirm_check(elementIDNum); }
