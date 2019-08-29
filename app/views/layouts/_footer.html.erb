@@ -79,7 +79,7 @@
                 <li>
                   <div class="language"><%= t('footer.validation') %>
                     <span class="tooltiptext scrollable-menu">
-                      <% states_validated = [1,3,4,5,6,9,11,13,14,15,16,18,23,24,25,26,27,34,35,36,37,38,39,40,41,42,43,44,45,46,47,49,50,51] %>
+                      <% states_validated = [1,3,4,5,6,9,11,13,14,15,16,18,23,24,25,26,27,34,36,37,38,39,40,41,42,43,44,45,46,47,49,50,51] %>
                       <% states.each do |state| %>
                         <%# @state = state.state_abbreviation + '-' + state.state_name %>
                         <% if states_validated.include?(state.id) %>
