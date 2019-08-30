@@ -1266,7 +1266,7 @@ module SimulationsHelper
   end
 
   def create_operations(soil_id, soil_percentage, operation_number, buffer_type)
-    #This suroutine create operation files using information entered by user.
+    #This subroutine create operation files using information entered by user.
     nirr = 0
     @grazingb = false
     @opcs_file = Array.new
@@ -1347,7 +1347,7 @@ module SimulationsHelper
           cc_hash[cc_number] = s_o_new_kill
         end #if bmp  != nill
       end #end c_cs each
-      cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day], v[:id]]}
+      cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day], v[:activity_id], v[:type_id]]}
       cc_hash_sorted.each do |soil_operation|
         # ask for 1=planting, 5=kill, 3=tillage
         if soil_operation[1].apex_crop == CropMixedGrass && (soil_operation[1].activity_id == 1 || soil_operation[1].activity_id == 5 || soil_operation[1].activity_id == 3) then
@@ -1395,7 +1395,7 @@ module SimulationsHelper
         for j in i..@soil_operations.count - 1
           @soil_operations[j].year = "1"
         end
-        @soil_operations = @soil_operations.reorder("year, month, day, activity_id, id")  #reorder
+        @soil_operations = @soil_operations.reorder("year, month, day, activity_id, type_id")  #reorder
       end
     end
   end
