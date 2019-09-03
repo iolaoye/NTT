@@ -268,8 +268,16 @@ module ScenariosHelper
 		#bmps = Bmp.where(:bmpsublist => [1, 2, 3])
 		temp_length = Math.sqrt(buffer_length * AC_TO_KM2)
 
-		#the default values are going to be overwritten if the addition is a buffer
-		case bmpsublist_id
+		#the default values are going to be overwritten if the addition is a buffer or the bmp modifies the subarea.
+		scenario = Scenario.find(scenario_id)
+		if scenario != nil then
+			if scenario.bmps != nil then
+				bmp1 = scenario.bmps[0]
+			end
+		end
+		case bmp1.bmpsublist_id
+			when 3  #tile drain
+				subarea.idr = bmp1.depth * FT_TO_MM  # update the tile drain depth in mm.
 			when 6, 7    #PPDE
 				#line 2
 				subarea.number = 106
