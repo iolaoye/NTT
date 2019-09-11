@@ -473,11 +473,13 @@ class ScenariosController < ApplicationController
           end
         }
         #todo add bmps
+
         xml.bmps {
           @scenario.bmps.each do |bmp|
             get_bmps(bmp, state, xml)
           end
         }
+
       }
     end
     fem_list = builder.to_xml  #convert the Nokogiti XML file to XML file text
@@ -486,6 +488,8 @@ class ScenariosController < ApplicationController
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     #populate local.mdb and run FEM
+
+
     msg = send_file_to_APEX(fem_list, "Operations")
 
     if !msg.include? "Error"
@@ -513,6 +517,7 @@ class ScenariosController < ApplicationController
       items[i] = ""
       values[i] = 0
     end
+
     case bmp.bmpsublist_id
       when 1 #autoirrigation or autofertigation
         items[0] = "Type"
@@ -520,13 +525,17 @@ class ScenariosController < ApplicationController
         items[1] = "Efficiency"
         values[1] = bmp.irrigation_efficiency
         items[2] = "Frequency"
+
         values[2] = bmp.days
+
         items[3] = "Water Stress Factor"
         values[3] = bmp.water_stress_factor
         items[4] = "Maximum Single Application"
         items[4] = bmp.maximum_single_application
         apex_op = "AI"
+
         if bmp.depth == 2 then   #autofertigaation
+
           items[5] = "Application Depth"
           values[5] = bmp.dry_manure
           apex_op = "AF"
@@ -573,7 +582,9 @@ class ScenariosController < ApplicationController
           values[4] = Crop.find(bmp.crop_id).name
           apex_op = "FS"
         end
+
       when 12  # Filter Strip
+
       when 14  #waterways
         items[4] = "Crop"
         values[4] = Crop.find(bmp.crop_id).name
@@ -598,10 +609,12 @@ class ScenariosController < ApplicationController
         apex_op = "TS"
       when 18  #Manure nutrient change
         apex_op = "MA"
+
       when 28  #future climate
         items[0] = "Scenario Simulated"
         values[0] = bmp.depth   #1=Best, 2=Normal, 3=Worst
         apex_op = "FC"
+
       else #No entry need
     end #end case true
     xml.bmp {
