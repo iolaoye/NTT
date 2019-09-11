@@ -20,6 +20,7 @@ class StatesController < ApplicationController
   # GET /states/1
   # GET /states/1.json
   def show
+    debugger
     @state = State.find(params[:id])
 
     respond_to do |format|
