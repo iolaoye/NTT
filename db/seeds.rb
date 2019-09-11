@@ -5,10 +5,8 @@
 
 cont = false
 
-
-
-	file = "db/seeds/parameters.rb"
-	load file
+file = "db/seeds/parameters.rb"
+load file
 	
 if cont then
 

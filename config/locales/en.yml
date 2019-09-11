@@ -43,6 +43,7 @@ en:
         annual_charts: "Annual Charts"
         monthly_charts: "Monthly Charts"
         fem_results: "FEM Results"
+        aplcat_results: "APLCAT Results"
       apex:
         apex_file: "Apex Files"
         control: "Controls"

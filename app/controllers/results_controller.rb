@@ -8,7 +8,7 @@ class ResultsController < ApplicationController
   end
   ###############################  ANNUAL CHART  ###################################
   def annual_charts
-    @type = t('general.view') + ' ' + t('result.annual') + "-" + t('result.charts') 
+    @type = t('general.view') + ' ' + t('result.annual') + "-" + t('result.charts')
     index
     #render "index"
   end
@@ -29,6 +29,11 @@ class ResultsController < ApplicationController
 
   def fem_results
     @type = t('activerecord.models.result.fem_results')
+    index
+  end
+
+  def aplcat_results
+    @type = t('activerecord.models.result.aplcat_results')
     index
   end
   ###############################  INDEX  ###################################
@@ -136,19 +141,19 @@ class ResultsController < ApplicationController
       @present = true
       @before_button_clicked = false
       @errors = Array.new
-    end # end if 
-    
+    end # end if
+
     if params[:button] != nil
         #@type = params[:button]
         # dry years menu item was clicked
-        if (params[:button] == t('result.dry_years')) 
+        if (params[:button] == t('result.dry_years'))
             @type = t("result.dry_years")
         # wet years menu item was clicked
         elsif params[:button] == t('result.wet_years')
             @type = t("result.wet_years")
         # default to tabular / all years
         else
-          if !(@type == t('activerecord.models.result.fem_results')) then 
+          if !(@type == t('activerecord.models.result.fem_results')) then
             @type = t("result.summary")
           end
         end
@@ -159,7 +164,7 @@ class ResultsController < ApplicationController
         end
         if params[:button_monthly] != nil
             @type = t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
-        end 
+        end
     end
 
     if params[:year_type] != nil
@@ -180,20 +185,20 @@ class ResultsController < ApplicationController
       @cis1 = nil
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil) ? @soil = params[:result4][:soil_id] : @soil = "0"
       case @type
-        when t("general.view"), 
-            t("result.summary"), 
+        when t("general.view"),
+            t("result.summary"),
             t('result.all_years'),
             t('result.dry_years'),
-            t('result.wet_years'),    
-            t("general.view") + " " + t("result.by_soil"), 
-            t("result.summary") + " " + t("result.by_soil")  
-        
-            get_results = lambda do |scenario_id| 
-                if not (scenario_id.eql? "0" or scenario_id.eql? "") 
+            t('result.wet_years'),
+            t("general.view") + " " + t("result.by_soil"),
+            t("result.summary") + " " + t("result.by_soil")
+
+            get_results = lambda do |scenario_id|
+                if not (scenario_id.eql? "0" or scenario_id.eql? "")
 
                     results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where(:sub1 => 0, simul.to_sym => scenario_id)
                     results_data.each do |rs|
-                      if rs.co2 == nil 
+                      if rs.co2 == nil
                         rs.co2 = 0
                         rs.save
                       end
@@ -203,11 +208,11 @@ class ResultsController < ApplicationController
                         count = results_data.size * 0.25
                     elsif @type.eql? t('result.wet_years') then
                         order = 'DESC'
-                        count = results_data.size * 0.25          
+                        count = results_data.size * 0.25
                     else
                         count = results_data.size
                     end
-    
+
                     if session[:simulation] == 'scenario'
                         total_area = @field.field_area
                         bmps = Scenario.find(scenario_id).bmps
@@ -215,7 +220,7 @@ class ResultsController < ApplicationController
                             case b.bmpsublist_id
                                 when 13, 8
                                     if b.sides == 1 then
-                                        total_area -= b.area 
+                                        total_area -= b.area
                                     end
                                 when 14, 15
                                     total_area -= b.area
@@ -232,24 +237,24 @@ class ResultsController < ApplicationController
                         end
                       end
                     end
-                    
+
                     # determine which scenario this is.
                     cis = results_data.order('pcp '+order)
                                       .limit(count)
-                                      .group_by(&:sub1).map { |k, v| 
-                        [k, v.map(&:orgn).confidence_interval, 
-                                 v.map(&:qn).confidence_interval, 
-                                 v.map(&:no3).confidence_interval, 
-                                 v.map(&:qdrn).confidence_interval, 
-                                 v.map(&:orgp).confidence_interval, 
-                                 v.map(&:po4).confidence_interval, 
-                                 v.map(&:qdrp).confidence_interval, 
-                                 v.map(&:surface_flow).confidence_interval, 
-                                 v.map(&:flow).confidence_interval, 
-                                 v.map(&:qdr).confidence_interval, 
-                                 v.map(&:irri).confidence_interval, 
-                                 v.map(&:dprk).confidence_interval, 
-                                 v.map(&:sed).confidence_interval, 
+                                      .group_by(&:sub1).map { |k, v|
+                        [k, v.map(&:orgn).confidence_interval,
+                                 v.map(&:qn).confidence_interval,
+                                 v.map(&:no3).confidence_interval,
+                                 v.map(&:qdrn).confidence_interval,
+                                 v.map(&:orgp).confidence_interval,
+                                 v.map(&:po4).confidence_interval,
+                                 v.map(&:qdrp).confidence_interval,
+                                 v.map(&:surface_flow).confidence_interval,
+                                 v.map(&:flow).confidence_interval,
+                                 v.map(&:qdr).confidence_interval,
+                                 v.map(&:irri).confidence_interval,
+                                 v.map(&:dprk).confidence_interval,
+                                 v.map(&:sed).confidence_interval,
                                  v.map(&:ymnu).confidence_interval,
                                  v.map(&:co2).confidence_interval,
                                  v.map(&:n2o).confidence_interval
@@ -257,42 +262,42 @@ class ResultsController < ApplicationController
 
                     values = []
                     averages = []
-                    fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow', 
+                    fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow',
                       'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2','n2o']
                     fields.each do |f|
                       values.push(results_data.order('pcp ' + order).limit(count).pluck(f).inject(:+) / count)
                     end
 
                     averages.push(values)
-              
+
                     totals = AnnualResult.where(:sub1 => 0, simul.to_sym => scenario_id)
                                          .order('pcp ' + order)
                                          .limit(count)
-                                         .pluck('avg(orgn)*' + total_area.to_s, 
-                                                'avg(qn)*'  + total_area.to_s, 
+                                         .pluck('avg(orgn)*' + total_area.to_s,
+                                                'avg(qn)*'  + total_area.to_s,
                                                 'avg(no3-qn)*' + total_area.to_s,
-                                                'avg(qdrn)*' + total_area.to_s, 
+                                                'avg(qdrn)*' + total_area.to_s,
                                                 'avg(orgp)*' + total_area.to_s,
-                                                'avg(po4)*' + total_area.to_s, 
+                                                'avg(po4)*' + total_area.to_s,
                                                 'avg(qdrp)*' + total_area.to_s,
-                                                'avg(surface_flow)*' + total_area.to_s, 
+                                                'avg(surface_flow)*' + total_area.to_s,
                                                 'avg(flow-surface_flow)*' + total_area.to_s,
                                                 'avg(qdr)*' + total_area.to_s,
                                                 'avg(irri)*' + total_area.to_s,
                                                 'avg(dprk)*' + total_area.to_s,
                                                 'avg(sed)*' + total_area.to_s,
-                                                'avg(ymnu)*' + total_area.to_s, 
+                                                'avg(ymnu)*' + total_area.to_s,
                                                 'avg(co2)*' + total_area.to_s,
-                                                'avg(n2o)*' + total_area.to_s)  
+                                                'avg(n2o)*' + total_area.to_s)
                     crops_data = CropResult.select('*', 'yldg+yldf AS yield')
                                       .where(simul + " = ? AND yldg+yldf > ?", scenario_id, 0)
-                    
+
                     years = results_data.order('pcp '+order).limit(count).map(&:year)
                     crops_data = crops_data.where(:year => years)
                     cic = Hash[*crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval] }.flatten]
 
                     crops = crops_data.where(simul + " = ? AND (yldg + yldf) > ?", scenario_id, 0)
-                                        .order("name")                                        
+                                        .order("name")
                                         .group(:name)
                                         .pluck('avg(yldg+yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name','avg(yldg)')
 
@@ -304,11 +309,17 @@ class ResultsController < ApplicationController
 
             @cis1, @averages1, @totals1, @cic1, @crops1, @total_area1 = get_results.call @scenario1
             @cis2, @averages2, @totals2, @cic2, @crops2, @total_area2 = get_results.call @scenario2
-            @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3           
+            @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3
         when t('activerecord.models.result.fem_results')
           if @scenario1 != "0" && @scenario1 != "" then @fem_results1 = Scenario.find(@scenario1).fem_result end
           if @scenario2 != "0" && @scenario2 != "" then @fem_results2 = Scenario.find(@scenario2).fem_result end
           if @scenario3 != "0" && @scenario3 != "" then @fem_results3 = Scenario.find(@scenario3).fem_result end
+
+          when t('activerecord.models.result.aplcat_results')
+            if @scenario1 != "0" && @scenario1 != "" then @aplcat_results1 = Scenario.find(@scenario1).aplcat_result end
+            if @scenario2 != "0" && @scenario2 != "" then @aplcat_results2 = Scenario.find(@scenario2).aplcat_result end
+            if @scenario3 != "0" && @scenario3 != "" then @aplcat_results3 = Scenario.find(@scenario3).aplcat_result end
+
         when t('result.download_pdf')
           #@result_selected = t('result.summary')
 
@@ -364,7 +375,7 @@ class ResultsController < ApplicationController
                 @title = ""
                 @y = ""
               end
-        
+
         when t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
           @x = "Month"
           if params[:result6] != nil && params[:result6][:description_id] != "" then
@@ -406,13 +417,13 @@ class ResultsController < ApplicationController
             @title = ""
             @y = ""
           end
-        
-        
+
+
         end #end if params button summary
       end # end case type
       session[:scenario1] = @scenario1
       session[:scenario2] = @scenario2
-      session[:scenario3] = @scenario3   
+      session[:scenario3] = @scenario3
 
     if params[:format] == "pdf" then
       pdf = render_to_string pdf: "report",
@@ -546,21 +557,21 @@ class ResultsController < ApplicationController
             end
         end
         first_year = params[:sim_initial_year].to_i
-        if first_year == 0 then 
+        if first_year == 0 then
             first_year = Field.find(params[:field_id]).weather.simulation_initial_year + 1
         end
         if @chart_type > 0 then
             chart_values = Chart.select("month_year, value")
-                                .where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?", 
+                                .where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?",
                                         params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").reverse
         else
             if session[:simulation] != 'scenario'
                 chart_values = Chart.select("month_year, value")
-                                    .where("field_id = ? AND watershed_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", 0, 
+                                    .where("field_id = ? AND watershed_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", 0,
                                             scenario_id, @soil, @description, first_year).order("month_year desc").reverse
             else
                 chart_values = Chart.select("month_year, value")
-                                    .where("field_id = ? AND scenario_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", 
+                                    .where("field_id = ? AND scenario_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?",
                                             params[:field_id], scenario_id, @soil, @description, first_year).order("month_year desc").reverse
             end
         end
@@ -615,7 +626,7 @@ class ResultsController < ApplicationController
             end
         else
             last_year = params[:sim_final_year].to_i
-            if last_year == 0 then 
+            if last_year == 0 then
                 last_year = Field.find(params[:field_id]).weather.simulation_final_year
             end
             chart_values.each do |c|
@@ -635,7 +646,7 @@ class ResultsController < ApplicationController
                     charts[i] = chart
                     current_year +=1
                     i += 1
-                    if i > last_year then break end             
+                    if i > last_year then break end
                     #if i > 11 then break end
                 end
             end
@@ -703,9 +714,9 @@ class ResultsController < ApplicationController
             chart_description = "sed AS value"
         when "62"
             chart_description = "ymnu AS value"
-        when "70" 
+        when "70"
             chart_description = "yldg+yldf AS value"
-        when "92" 
+        when "92"
             chart_description = "n2o AS value"
         when "100"
             chart_description = "pcp AS value"
@@ -714,4 +725,3 @@ class ResultsController < ApplicationController
         end
     end
 end
-

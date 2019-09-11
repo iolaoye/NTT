@@ -224,11 +224,11 @@
 		    <% if @operation.type_id == 3 %> <% units = " (lbs/1000 gallons)" %> <% end %>
 			<div class="field" id="div_other_nutrients" <% if @operation.type_id == 1 %> style='display:none;' <% end %>>
 				<div class="field">
-					<%= f.label :org_c, t('operation.total_n_con') %>
+					<%= f.label :org_c, t('operation.total_n_con') + units %>
 					<%= f.number_field :org_c, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
-					<%= f.label :nh4_n, t('operation.total_p_con') %>
+					<%= f.label :nh4_n, t('operation.total_p_con') + units  %>
 					<%= f.number_field :nh4_n, :class => "gvTitleStyleNumber" %>
 				</div>
 				<div class="field">
