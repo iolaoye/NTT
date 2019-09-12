@@ -84,10 +84,9 @@
     <div id="welcome", :style = "display: inline-block">
       <table>
         <tr>
-      <h1>Welcome</h1>
+      <h1><%= t('models.welcome') %></h1>
     </tr>
-      <!--<p><font color="red">This site will be down for upgrade and maintenance untill 5:00 PM Monday April 2, 2018.</font></p><br>-->
-      <p>Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets. </p>
+      <p><%= t('welcome_note.initial_welcome') %></p>
       <%= render :template => "sessions/index", :style => "white-space: normal;" %>
       <%= image_tag 'tiaer_logo.png', :align=> "left", :style => "margin-left: 2%; max-height: 70px;  " %>
       <%= image_tag 'USDA_logo.png', :align=> "right", :style => "margin-left: 2%; margin-right: 2%; max-height: 45px; margin-top: 3.6%" %>
@@ -97,7 +96,7 @@
   <div id="welcome_info">
     <center style="margin-top:-3%">
       <p><a href='#' id='icon1'><%= image_tag 'info_icon.png', :style => "height: 50px;" %><br>About NTT</a></p>
-      <p><a href='#' id='icon2'><%= image_tag 'future_icon.png', :style => "height: 50px;" %><br>What's New</a></p>
+      <blink><p><a href='#' id='icon2'><%= image_tag 'future_icon.png', :style => "height: 50px;"%><br>What's New</a></p></blink>
       <!--<p><a href='#' onclick="show('popup2')"><%= image_tag 'what_how_icon.png', :style => "height: 55px;" %><br>Other Models</a></p>-->
       <p><a href='#' id='icon3'><%= image_tag 'video2.png', :style => "height: 50px;" %><br>Presentations</a></p>
       <p><a href='#' id='icon4'><%= image_tag 'contact_icon.png', :style => "height: 45px" %><br>Contact Us</a></p>
@@ -152,6 +151,8 @@
     NTT is constantly being improved, so please visit this page for the latest updates.</p><br>
     <strong>UPDATES</strong><br>
     <li> 7/10/2018: Ntt Validation (Stage 1) for the States of Indiana, Iowa, and Winconsin are completed. Please view validation icon at the bottom of NTT Welcome Page.</li>
+    <li> September 1, 2019. Tier 1 Validation has been completed for all of the lower 48 states. Parameter files have been updated in NTT. Ohio and Minnesota have been validated using field-scale data (Tier 2 Validation). Where we have field scale data we will continue to improve parameters in NTT. Please review the validation information available by clicking on “validation” on the bottom of the home page. Stay tuned for more updates.</li>
+    <li> Currently, the soil surface slope is calculated based on one centroid pixel  (30-m or lass)  representing each soil type within the area of interest (AOI). Now, the modified slope routine in NTT will calculate the average slope for all existing  pixels for each soil type within the AOI. This improve the value of calculated slope for AOI in most cases.</li>    
   </div>
   <!-- Contact icon -->
   <div class="popup" id="popup4">

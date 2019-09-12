@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :aplcat_results
   resources :fem_results
   #get 'fem/index' => 'fem#list'
   resources :crop_results
@@ -58,12 +59,12 @@ NTTG3::Application.routes.draw do
   resources :welcomes
   resources :apex_soils
   resources :apex_layers
+  resources :locations
   resources :users do
     resources :projects
   end
 
   get '/serve_image/:filename' => 'application#serve'
-
   get 'projects/upload'
   post 'projects/upload_project'
 
@@ -138,6 +139,7 @@ NTTG3::Application.routes.draw do
         get :by_soils, on: :member
         get :annual_charts, on: :member
         get :monthly_charts, on: :member
+        get :aplcat_results, on: :member
         get :fem_results, on: :member
         get :download_apex_files, on: :member
       end
@@ -204,7 +206,7 @@ NTTG3::Application.routes.draw do
   post 'apex_soils/download'
   post 'sites/download'
   post 'operations/delete_all'
-  
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

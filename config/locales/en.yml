@@ -43,6 +43,7 @@ en:
         annual_charts: "Annual Charts"
         monthly_charts: "Monthly Charts"
         fem_results: "FEM Results"
+        aplcat_results: "APLCAT Results"
       apex:
         apex_file: "Apex Files"
         control: "Controls"
@@ -574,6 +575,30 @@ en:
   location:
     new_location: New Location
     edit: Editing Location
+    option1: Option1
+    areaofinterest: Area of Interest
+    selection: Selection
+    shapefilenote: The files should be in the format of ESRI Shapefile using the Geographic Coordinate System WGS 1984.
+    option2: Option2
+    zoomanddraw: Zoom and draw
+    zoomanddrawnote: "Enter the site's address, latitude and longitude, or select the state and county to focus the map on the site location."
+    option2A: A. Zoom to the AOI using one of the following choices
+    option2B: B. Use the drawing utility  Google Map Drawing on the map to draw the AOIs.
+    option2A1: "1. Address (Ex.1802 Paddock, Stephenville, TX)"
+    option2A2: "2. Latitude, Longitude (32.231012, -98.215376)"
+    option2A3: "3. State and Coounty"
+    option2A4: "4. Manual zoom on the map"
+    option2B_1: "B. Use the drawing utility"
+    option2B_2: "on the map to draw the AOIs"
+    drawigntools: Drawing tools
+    howtodraw: How to draw AOIs
+    drawfield: "Used to draw a field"
+    movemap: "Used to move the map"
+    zoom: "Used to zoom in or out"
+    howtodrawnote1: "First, select the polygon icon in the middle-top of the map and draw the first AOI. Enter a name for the AOI. Repeat for each additional AOI."
+    howtodrawnote2: "o edit a polygon, select the 'AOI' polygon on the map, and then drag the vertices to edit the boundaries."
+    howtodrawnote3: "To delete a polygon, select the 'AOI' polygon on the map, and then click the remove button."
+    howtodrawnote4: "When finished, click the 'Submit' button to proceed."
   operation:
     new_operation: Add New Operation
     edit: Editing Operation
@@ -1337,6 +1362,7 @@ en:
       parameter22: Parameter 22
       parameter23: Parameter 23
   aplcat_result:
+      aplcat_results: APLCAT Results
       aws: Animal weights
       dmi: Dry matter intake
       gei: Gross energy intake
