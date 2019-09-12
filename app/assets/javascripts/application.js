@@ -15,7 +15,7 @@
 //= require bootstrap
 //= require_tree .
 //= require chartkick
-//= require gmaps/google
+
 $('.dropdown-toggle').dropdown()
 
 function rbtnStation_onclick(way) {
