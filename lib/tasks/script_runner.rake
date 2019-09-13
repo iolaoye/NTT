@@ -13,6 +13,4 @@
 #		filepath = Rails.root.join('lib', 'external_scripts', 'ruby_script.rb')
 #		@output = `ruby #{filepath}`
 #	end
-
-
 #end
