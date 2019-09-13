@@ -1,4 +1,3 @@
-<% debugger %>
 
     <style type="text/css">       
         #map, html, body {
@@ -155,15 +154,15 @@
                                 <tr>
                                     <td>
                                         <%= form_for [@project, @location], :url => project_locations_upload_shapefile_path(@project, @field, @weather), :action => "upload_shapefile", method: :post do |f| %>
-                                        <div id="fsetUploadShapeFile" class="panel panel-default">
-      <div class="panel-heading"><%= t('weather.choose_file_lenged') %></div>
-      <div class="panel-body">
-        <%= f.file_field :shapefile %>
-        <br>
-        <%= f.submit t('operation.upload') + " Shapefile", name: 'update', :class => "btn btn-primary" %>
-      </div>
-    </div>
-    <%end %>
+                                            <div id="fsetUploadShapeFile" class="panel panel-default">
+                                              <div class="panel-heading"><%= t('weather.choose_file_lenged') %></div>
+                                              <div class="panel-body">
+                                                <%= f.file_field :shapefile %>
+                                                <br>
+                                                <%= f.submit t('operation.upload') + " Shapefile", name: 'update', :class => "btn btn-primary" %>
+                                              </div>
+                                            </div>
+                                        <%end %>
                                     </td>
 
                                 </tr>
