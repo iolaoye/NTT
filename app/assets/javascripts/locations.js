@@ -27,7 +27,7 @@
     var strStateCounty;
     var boundsPreDraw = null;
     var infoWindow;
-    var infowindow = new google.maps.InfoWindow();
+    var infowindow = null;
     var marker;
 
     function showText(text) {
@@ -650,7 +650,7 @@
 
     function initialize() {
         //put lables in hidden input controls
-        document.getElementById("bntDelete").value = document.getElementById("lblDelete").value;
+        //document.getElementById("bntDelete").value = document.getElementById("lblDelete").value;
         document.getElementById("lblZoomToState").label = document.getElementById("lblZoomState").value;
         var tableId = '0IMZAFCwR-t7jZnVzaW9udGFibGVzOjIxMDIxNw';
         var locationColumn = 'State-County';
@@ -809,7 +809,7 @@
         // map is clicked.
         google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
         google.maps.event.addListener(map, 'click', clearSelection);
-        google.maps.event.addDomListener(document.getElementById('bntDelete'), 'click', deleteSelectedShape);
+        google.maps.event.addDomListener(document.getElementById('bntDelete1'), 'click', deleteSelectedShape);
         google.maps.event.addDomListener(document.getElementById('bntInfo'), 'click', showSelectedShapeInfo);
         //google.maps.event.addDomListener(document.getElementById('savebutton'), 'click', saveSelectedShapeInfo);
         google.maps.event.addDomListener(window, 'load', initialize);
