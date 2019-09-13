@@ -815,11 +815,6 @@
         google.maps.event.addDomListener(window, 'load', initialize);
         findAddress("United States");
         //
-        //var inputAddress = '<%= @preAddress %>';
-        //if (inputAddress != "") {
-            //codeAddress(inputAddress);
-        //}
-        //
         var inputLatLng = '<%= @prelatlng %>';
         if (inputLatLng != "") {
             codeLatLng(inputLatLng);
