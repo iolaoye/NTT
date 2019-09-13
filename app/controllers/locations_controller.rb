@@ -5,7 +5,6 @@ class LocationsController < ApplicationController
 ################################  Load Shapefile  #################################
 # 
   def upload_shapefile
-    debugger
     #shpfile = '/path/to/realtor_neighborhoods/realtor_neighborhoods'
     #ShpFile.open(shpfile) do |shp|
       #shp.each do |shape|
@@ -16,14 +15,16 @@ class LocationsController < ApplicationController
     #end
     #ENV["Template"] = template.name
     #ENV["Theme"] = theme.name
-    @output=""
-    Rake::Task['script_runner:hello_world_r'].invoke
+    #@output=""
+    #Rake::Task['script_runner:hello_world_r'].invoke
+    filepath = Rails.root.join("lib", "external_scripts", "hello_world.R")
+    output = `Rscript --vanilla #{filepath}`
+    found_fields = output.split("Field:")
   end
 ################################  INDEX  #################################
 # GET /locations
 # GET /locations.json
   def index
-    debugger
     @location = @project.location
     if params[:update] == "Upload Shapefile" then
       upload_shapefile
