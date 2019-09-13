@@ -1882,6 +1882,7 @@ module SimulationsHelper
     prkn_sum = 0
     n2o_sum = 0
     pcp = 0
+    biom = 0
     total_subs = 0
     i=1
     #apex_control = ApexControl.where(:project_id => params[:project_id])
@@ -1934,6 +1935,7 @@ module SimulationsHelper
         one_result["prkn"] = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result["n2o"] = tempa[153, 9].to_f
         one_result["co2"] = tempa[163, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["biom"] = tempa[324, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         if subs == 0 then
           one_result["qdr"] = qdr_sum / total_subs
           one_result["qdrn"] = qdrn_sum / total_subs
@@ -1943,6 +1945,7 @@ module SimulationsHelper
           one_result["prkn"] = prkn_sum / total_subs
           one_result["n2o"] = n2o_sum / total_subs
           one_result["pcp"] = pcp / total_subs
+          one_result["biom"] = biom / total_subs
           qdr_sum = 0
           qdrn_sum = 0
           qdrp_sum = 0
@@ -1951,6 +1954,7 @@ module SimulationsHelper
           prkn_sum = 0
           n2o_sum = 0
           pcp = 0
+          biom = 0
           total_subs = 0
         else
           qdr_sum += one_result["qdr"]
@@ -1961,6 +1965,7 @@ module SimulationsHelper
           prkn_sum += one_result["prkn"]
           n2o_sum += one_result["n2o"]
           pcp += one_result["pcp"]
+          biom += one_result["biom"]
         end  # end if sub == 0
         if subs == 0 then
           results_data.push(one_result)
