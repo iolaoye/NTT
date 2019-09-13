@@ -17,28 +17,44 @@ class LocationsController < ApplicationController
     #ENV["Theme"] = theme.name
     #@output=""
     #Rake::Task['script_runner:hello_world_r'].invoke
-    filepath = Rails.root.join("lib", "external_scripts", "hello_world.R")
+    @shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
+    filepath = Rails.root.join("lib", "external_scripts", "get_coords.r /Users/gallego/Downloads/NTT_Example/NTT_Example.shp")
     output = `Rscript --vanilla #{filepath}`
-    found_fields = output.split("Field:")
+    debugger
+    @found_fields = output.split("Field:")
   end
 ################################  INDEX  #################################
 # GET /locations
 # GET /locations.json
   def index
     @location = @project.location
-    if params[:update] == "Upload Shapefile" then
-      upload_shapefile
-    end
-    first=true
+    first=0
     @states = State.all
     @counties = County.where(:state_id => 1)
     @preDrawnAOI = 'farm: farm, '
-    @project.location.fields.each do |field|
-      if first then
-        @preDrawnAOI = @preDrawnAOI + field.coordinates + " " + field.coordinates.split(/ / )[0]
-        first = false
+    if params[:update] == "Upload Shapefile" then
+      upload_shapefile
+      @found_fields.each do |field|
+        debugger
+        if first == 0 then
+          first += 1
+         next 
+       end
+        field_parts = field.split("|")
+        if first == 1 then 
+          @preDrawnAOI = @preDrawnAOI + field_parts[1]
+          first += 1
+        end
+        @preDrawnAOI = @preDrawnAOI + " field: " + field_parts[0] + ", " + "0.00" + ", " + field_parts[1]
       end
-      @preDrawnAOI = @preDrawnAOI + " field: " + field.field_name + ", " + field.field_area.to_s + ", " + field.coordinates + " " + field.coordinates.split(/ / )[0]
+    else
+      @project.location.fields.each do |field|
+        if first==0 then
+          @preDrawnAOI = @preDrawnAOI + field.coordinates + " " + field.coordinates.split(/ / )[0]
+          first = 1
+        end
+        @preDrawnAOI = @preDrawnAOI + " field: " + field.field_name + ", " + field.field_area.to_s + ", " + field.coordinates + " " + field.coordinates.split(/ / )[0]
+      end
     end
     #@preDrawnAOI = 'farm: farm, -93.453614,43.694913 -93.453485,43.687559 -93.446705,43.687559 -93.446061,43.686938 -93.445546,43.686472 -93.444859,43.686162 -93.444173,43.686131 -93.443572,43.686286 -93.443572,43.694882  -93.453614,43.694913
     #  field: Field1, 0, -93.453614,43.694913 -93.453485,43.687559 -93.446705,43.687559 -93.446061,43.686938 -93.445546,43.686472 -93.444859,43.686162 -93.444173,43.686131 -93.443572,43.686286 -93.443572,43.694882  -93.453614,43.694913'

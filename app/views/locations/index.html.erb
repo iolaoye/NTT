@@ -152,13 +152,16 @@
                                     </td>
                                 </tr>
                                 <tr>
+
+   
                                     <td>
-                                        <%= form_for [@project, @location], :url => project_locations_upload_shapefile_path(@project, @field, @weather), :action => "upload_shapefile", method: :post do |f| %>
+                                        <%= form_for [@project, @location] do |f| %>
                                             <div id="fsetUploadShapeFile" class="panel panel-default">
                                               <div class="panel-heading"><%= t('weather.choose_file_lenged') %></div>
                                               <div class="panel-body">
-                                                <%= f.file_field :shapefile %>
-                                                <br>
+                                                <%= f.file_field :shapefile, :multiple => true, name: 'foo' %>
+                                              </div>
+                                              <div>  
                                                 <%= f.submit t('operation.upload') + " Shapefile", name: 'update', :class => "btn btn-primary" %>
                                               </div>
                                             </div>
