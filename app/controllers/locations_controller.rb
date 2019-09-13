@@ -16,8 +16,14 @@ class LocationsController < ApplicationController
     #end
     #ENV["Template"] = template.name
     #ENV["Theme"] = theme.name
-    @output=""
-    Rake::Task['script_runner:hello_world_r'].invoke
+    filepath = Rails.root.join('lib', 'external_scripts', 'hello_world.r')
+    @output = `Rscript --vanilla #{filepath}`
+    #Rake.load_rakefile Rails.root.join('Rakefile')
+
+    filepath = Rails.root.join('lib', 'external_scripts', 'ruby_script.rb')
+    @output1 = `ruby #{filepath}`
+    #@output=""
+    #Rake::Task['script_runner:hello_world_r'].invoke
   end
 ################################  INDEX  #################################
 # GET /locations
