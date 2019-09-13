@@ -1,10 +1,34 @@
 include LocationsHelper
 include ScenariosHelper
 class LocationsController < ApplicationController
+
+################################  Load Shapefile  #################################
+# 
+  def upload_shapefile
+    #shpfile = '/path/to/realtor_neighborhoods/realtor_neighborhoods'
+    #ShpFile.open(shpfile) do |shp|
+      #shp.each do |shape|
+      # This gets the first (and only) Polygon from each MultiPolygon
+        #polygon = shape.geometry.geometries.first 
+        #puts polygon.inspect
+      #end
+    #end
+    #ENV["Template"] = template.name
+    #ENV["Theme"] = theme.name
+    #@output=""
+    #Rake::Task['script_runner:hello_world_r'].invoke
+    filepath = Rails.root.join("lib", "external_scripts", "hello_world.R")
+    output = `Rscript --vanilla #{filepath}`
+    found_fields = output.split("Field:")
+  end
 ################################  INDEX  #################################
 # GET /locations
 # GET /locations.json
   def index
+    @location = @project.location
+    if params[:update] == "Upload Shapefile" then
+      upload_shapefile
+    end
     first=true
     @states = State.all
     @counties = County.where(:state_id => 1)
@@ -37,8 +61,6 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@project = Project.find(params[:project_id])
     add_breadcrumb t('menu.location')
     @project_name = @project.name
     session[:location_id] = params[:id]
