@@ -5,7 +5,7 @@ gem 'tzinfo-data'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'sqlite3', '1.4.1'
 gem 'will_paginate', '3.0.3'
 gem 'coffee-script-source', '1.8.0'
 # Gems used only for assets and not required
@@ -60,4 +60,8 @@ gem 'wkhtmltopdf-binary'
 gem 'cancan'
 gem 'rack-timeout', '0.4.2'
 gem 'mysql2', '~> 0.3.18'
+#gem 'gmaps4rails'
+#gem 'georuby'
+#gem 'dbf'
+gem 'rake'
 

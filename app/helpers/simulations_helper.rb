@@ -1469,7 +1469,6 @@ module SimulationsHelper
         end
         apex_string += sprintf("%5d", oper_ant) #Operation Code        #APEX0604
       else
-        #apex_string += operation.ApexTillCode.ToString.PadLeft(5))    #Operation Code        #APEX0604
         apex_string += sprintf("%5d", operation.apex_operation) #Operation Code        #APEX0604
       end
     end #end if 1, 3, or 4
@@ -1512,23 +1511,18 @@ module SimulationsHelper
 
         operation.opv5 == nil ? apex_string += sprintf("%8.2f", 0) : operation.opv5 < 0.01 ? apex_string += sprintf("%8.6f", operation.opv5) : apex_string += sprintf("%8.2f", operation.opv5) #Opv 5 Plant Population.
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
-        #if operation.activetApexTillName.ToString.ToLower.Contains("fert") then
+        if operation.opv1 <= 0 then operation.opv1 = 1 end
         oper = Operation.where(:id => operation.operation_id).first
 		    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
         #divide by 100 to convert percentage to fraction
         org_c = 0
         if oper.activity_id == 2 then
           case oper.type_id
-          when 2 # solid Manure
-              #if Operation.find(operation.operation_id).type_id == 57 then
-            org_c = 0.25 
-              #else
-              #end
+          when 2 # solid Manure              
+            org_c = 0.25               
           when 3  #liquid manure
             org_c = 0.10
-          end#
-        #else
-          #org_c = oper.org_c / 100
+          end#          
         end
 		    if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
 			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
@@ -1537,11 +1531,7 @@ module SimulationsHelper
 		    end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
-        #if oper.activity_id == 2 && oper.type_id == 2
-          #apex_string += sprintf("%8.2f", operation.opv1 * 2000) #kg/ha of fertilizer applied
-        #else
         apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied
-        #end
         values[0] = operation.opv1
         apex_string += sprintf("%8.2f", operation.opv2)
         items[1] = "Depth"
@@ -1589,18 +1579,15 @@ module SimulationsHelper
         nirr = 1
         apex_string += sprintf("%8.2f", 0) #opval2. No entry needed
         apex_string += sprintf("%8.2f", 0) #Opv3. No entry needed.
-        #apex_string += sprintf("%8.2f", 0) and sprintf("%8.2f", operation.opv2) #Opv4 Irrigation Efficiency
         apex_string += sprintf("%8.2f", operation.opv4) #Opv4 Irrigation Efficiency
         apex_string += sprintf("%8.2f", 0) #Opv5. No entry neede.
       when 7 # grazing              #Grazing - kind and number of animals
         apex_string += sprintf("%5d", 0) #
-        #if number of animals were enter in modify page and it is the first grazing operation
         if @grazingb == false then
           items[3] = "DryMatterIntake"
           #create_herd file and send to APEX
           current_oper = Operation.find(operation.operation_id)
           values[3] = create_herd_file(current_oper.amount, current_oper.depth, current_oper.type_id, soil_percentage)
-          #animalB = operation.ApexTillCode
           @grazingb = true
           if current_oper.no3_n != 0 || current_oper.po4_p != 0 || current_oper.org_n != 0 || current_oper.org_p != 0 || current_oper.nh3 != 0 then
             #animal_code = get_animal_code(operation.type_id)
@@ -1645,8 +1632,6 @@ module SimulationsHelper
     @opcs_file.push(apex_string + "\n")
 
     #add operations in list for fem.
-    #scenario = Scenario.find(params[:id])
-    #With _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)
     operation_name = ""
     case operation.activity_id
       when 1, 3
@@ -1864,12 +1849,8 @@ module SimulationsHelper
           @scenario.charts.delete_all
           @scenario.annual_results.delete_all
           @scenario.crop_results.delete_all
-          #Result.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
-          #Chart.where(:scenario_id => @scenario.id, :field_id => params[:field_id]).delete_all
   		  else
           # clean results for watershed to avoid keeping some results from previous simulation
-          #Result.where(:watershed_id => @watershed.id).delete_all
-          #Chart.where(:watershed_id => @watershed.id).delete_all
           @watershed.results.delete_all
           @watershed.charts.delete_all
           @watershed.annual_results.delete_all
@@ -1878,9 +1859,6 @@ module SimulationsHelper
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
         apex_start_year = @field.weather.simulation_initial_year - 5 + 1
-        #start_year = Weather.find_by_field_id(Scenario.find(@scenario.id).field_id).simulation_initial_year - 5
-        #apex_start_year = start_year + 1
-        #take results from .NTT file for all but crops
         msg = load_results_annual(apex_start_year, msg)
         msg = load_crop_results(apex_start_year)
       rescue => e
@@ -1931,7 +1909,6 @@ module SimulationsHelper
         if subs != 0 and subs != sub_ant then
           total_subs += 1
         end
-        #next if (subs == sub_ant || (session[:simulation] == "watershed" && subs != 0)) && subs != 0 #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
         next if subs == sub_ant  #if subs and subant equal means there are more than one CROP. So info is going to be duplicated. Just one record saved
         sub_ant = subs
         one_result = Hash.new
@@ -2011,7 +1988,6 @@ module SimulationsHelper
   def load_crop_results(apex_start_year)
     msg = "OK"
     crops_data = Array.new
-    #oneCrop = Struct.new(:sub1, :name, :year, :yield, :ws, :ts, :ns, :ps, :as1)
     data = get_file_from_APEX("ACY") #this operation will ask for ACY file
     #todo validate that the file was uploaded correctly
     j = 1
@@ -2031,7 +2007,6 @@ module SimulationsHelper
         one_crop["ns"] = tempa[73, 9].to_f
         one_crop["ps"] = tempa[83, 9].to_f
         one_crop["ts"] = tempa[93, 9].to_f
-        #one_crop["as1 = tempa[103, 9].to_f
         crops_data.push(one_crop)
       end # end if j>=10
       j+=1
@@ -2256,7 +2231,6 @@ module SimulationsHelper
 
   def average_totals(results_data)
     #0:sub1,1:year,2:flow,3:qdr,4:surface_flow,5:sed,6:ymnu,7:orgp,8:po4,9:orgn,10:no3,11:qdrn,12:qdrp,13:qn,14:dprk,15:irri,16:pcp)
-    #Results description_ids
     require 'enumerable/confidence_interval'
     #calculate average and confidence interval
     orgn = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:orgn).mean] }
@@ -2285,8 +2259,6 @@ module SimulationsHelper
     add_summary_to_results_table(runoff, 41, runoff_ci)
     sub_surface_flow= results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:flow).mean - v.map(&:surface_flow).mean] }
     sub_surface_flow_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:flow).confidence_interval - v.map(&:surface_flow).confidence_interval] }
-    #sub_surface_flow = flow - runoff
-    #sub_surface_flow_ci = flow_ci - runoff_ci
     add_summary_to_results_table(sub_surface_flow, 42, sub_surface_flow_ci)
     tile_drain_flow = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:qdr).mean] }
     tile_drain_flow_ci = results_data.group_by(&:sub1).map { |k, v| [k, v.map(&:qdr).confidence_interval] }
@@ -2333,16 +2305,6 @@ module SimulationsHelper
     		po4 += total_manure * op.depth * op.po4_p
     		org_n += total_manure * op.depth * op.org_n
     		org_p += total_manure * op.depth * op.org_p
-    		#if session[:simulation] == 'scenario'
-    		  #soils = @field.soils.where(:selected => true)
-    		  #soils.each do |soil|
-      			#results = @scenario.annual_results.where(:soil_id => soil.id)
-      			#results.each do |result|
-      			  #update_value_of_results(result, false, @field.field_area * (soil.percentage / 100), no3, po4, org_n, org_p)
-      			  #result.save
-      			#end
-    		  #end
-        #end
     		if session[:simulation] == 'scenario'
     		  results = @scenario.annual_results.where(:sub1 => 0)
     		else
@@ -2362,11 +2324,6 @@ module SimulationsHelper
   end
 
   def update_value_of_results(result, is_total, percentage, no3, po4, org_n, org_p)
-    #if is_total
-      #percentage = 1
-    #else
-      #percentage = soil.percentage / 100
-    #end
     case result.description_id
       when 20
         result.value += no3 / percentage + org_n / percentage
@@ -2424,13 +2381,6 @@ module SimulationsHelper
   end
 
   def add_summary_to_results_table(values, description_id, cis)
-    #total Area =10, main area= 11, additional area 12..19
-    #total N = 20, orgn=21, runoffn=22, subsurface n=23, tile drain n = 24
-    #total p = 30, orgp=31, po4_p=32, tile drain p = 33
-    #total Flow = 40, surface runoff = 41, subsurface runoff = 42, tile drain flow = 43
-    #total other water info = 50, irrigation = 51, deep percolation = 52
-    #total sediment = 60, sediment = 61, manure erosion = 62
-    #total other N = 90, leaching = 91, n20 = 92
     for i in 0..values.count-1
 	# todo. this is not taken the buffer subareas such as FS, WL, etc.
 	  if values[i][0] <= @soils.count then
@@ -2692,9 +2642,6 @@ module SimulationsHelper
   end
 
   def create_herd_file(animals, hours, animal_code, soil_percentage)
-    #Dim manureProduced, bioConsumed, urineProduced As Single
-    #Dim manureId
-    #Dim animalField As Integer
     #calculate number of animals.
     case animal_code
         when 43		#"Dairy"    '1
@@ -2702,41 +2649,11 @@ module SimulationsHelper
             bioConsumed = 9.1
             urineProduced = 8.2
             manureId = 43
-        #when "Dairy-dry cow"    '2
-        #    manureProduced = 5.5
-        #    bioConsumed = 9.1
-        #    urineProduced = 11.8
-        #    manureId = 43
-        #when "Dairy-calf and heifer"     '3
-        #    manureProduced = 5.5
-        #    bioConsumed = 9.1
-        #    urineProduced = 11.8
-        #    manureId = 43
-        #when "Dairy bull"     '4
-        #    manureProduced = 3.9
-        #    bioConsumed = 9.1
-        #    urineProduced = 8.2
-        #    manureId = 43
         when 44   #"Beef"    '5
             manureProduced = 4.5
             bioConsumed = 9.1
             urineProduced = 8.2
             manureId = 44
-        #when "Beef-bull"     '6
-        #    manureProduced = 3.9
-        #    bioConsumed = 9.1
-        #    urineProduced = 8.2
-        #    manureId = 44
-        #when "Beef-feeder yearling"    '7
-        #    manureProduced = 3.9
-        #    bioConsumed = 9.1
-        #    urineProduced = 8.2
-        #    manureId = 44
-        #when "Beef-calf"    '8
-        #    manureProduced = 3.9
-        #    bioConsumed = 9.1
-        #    urineProduced = 8.2
-        #    manureId = 44
         when 47   #"Sheep"    '9
             manureProduced = 5
             bioConsumed = 9.0
@@ -2747,31 +2664,6 @@ module SimulationsHelper
             bioConsumed = 9.1
             urineProduced = 4.5
             manureId = 49
-        #when "Llama"    '11
-        #    manureProduced = 5
-        #    bioConsumed = 9.1
-        #    urineProduced = 6.8
-        #    manureId = 52
-        #when "Alpaca"   '12
-        #    manureProduced = 5.1
-        #    bioConsumed = 9.1
-        #    urineProduced = 6.8
-        #    manureId = 52
-        #when "Buffalo"   '13
-        #    manureProduced = 3.9
-        #    bioConsumed = 9.1
-        #    urineProduced = 8.2
-        #    manureId = 52
-        #when "Emu (breeding stock)"   '14
-        #    manureProduced = 10
-        #    bioConsumed = 9.1
-        #    urineProduced = 6.8
-        #    manureId = 52
-        #when "Emu (young birds)"    '15
-        #    manureProduced = 9.8
-        #    bioConsumed = 9.0
-        #    urineProduced = 6.8
-        #    manureId = 52
         when 46   #"Swine"    '16
             manureProduced = 5
             bioConsumed = 9.1
@@ -2792,23 +2684,10 @@ module SimulationsHelper
       if animals < 1 then
           animals = 1
       end
-      #If _animals.Count = 0 Then LoadAnimalUnits()
-      #For Each animal In _animals
-      #    If animal.Number.Split("|")(0) = manureId Then
-      #        conversionUnit = animal.ConversionUnit
-      #    End If
-      #Next
 	    conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
       @last_herd += 1
       #commented because in grazing just one soil is used. 
-      #animalField = animals * soil_percentage / 100
       herdFile = sprintf("%4d", @last_herd) #For different owners
-      #comentarized because there is not field divided anymore
-      #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
-      #    herdFile &= Format(CInt((animalField(0) / 2) * conversionUnit), "#####0.0").PadLeft(8)
-      #Else
-      #    herdFile &= Format(CInt(animalField(i) * conversionUnit), "#####0.0").PadLeft(8)
-      #End If
       herdFile += sprintf("%8.1f", (animals * conversion_unit).round(0))
       herdFile += sprintf("%8.1f", animal_code)
       herdFile += sprintf("%8.2f",(24 - hours) / 24)
@@ -2816,10 +2695,6 @@ module SimulationsHelper
       herdFile += sprintf("%8.2f",manureProduced)
       herdFile += sprintf("%8.2f",urineProduced)
       @herd_list.push(herdFile + "\n")
-      #duplicate in case it is just one soil because the area is divided in two equal fields.
-      #If _fieldsInfo1(currentFieldNumber)._soilsInfo.Count = 1 Then
-      #    herdList.Add(herdFile)
-      #End If
 
       herdFile += ""
 	    msg = send_file_to_APEX(@herd_list, "HERD.dat")
@@ -2835,7 +2710,6 @@ module SimulationsHelper
       if !File.exists?(dir_name)
         FileUtils.mkdir_p(dir_name)
       end
-      #FileUtils.cp_r(Dir[APEX_ORIGINAL + '/*'], Dir[dir_name])
       #CREATE structure for nutrients that go with fert file
       @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
       @current_nutrients = Array.new

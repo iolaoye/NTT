@@ -2,6 +2,53 @@ include LocationsHelper
 include ScenariosHelper
 class LocationsController < ApplicationController
 
+################################  Load Shapefile  #################################
+# 
+  def upload_shapefile
+    #shpfile = '/path/to/realtor_neighborhoods/realtor_neighborhoods'
+    #ShpFile.open(shpfile) do |shp|
+      #shp.each do |shape|
+      # This gets the first (and only) Polygon from each MultiPolygon
+        #polygon = shape.geometry.geometries.first 
+        #puts polygon.inspect
+      #end
+    #end
+    #ENV["Template"] = template.name
+    #ENV["Theme"] = theme.name
+    #@output=""
+    #Rake::Task['script_runner:hello_world_r'].invoke
+    filepath = Rails.root.join("lib", "external_scripts", "hello_world.R")
+    output = `Rscript --vanilla #{filepath}`
+    found_fields = output.split("Field:")
+  end
+################################  INDEX  #################################
+# GET /locations
+# GET /locations.json
+  def index
+    @location = @project.location
+    if params[:update] == "Upload Shapefile" then
+      upload_shapefile
+    end
+    first=true
+    @states = State.all
+    @counties = County.where(:state_id => 1)
+    @preDrawnAOI = 'farm: farm, '
+    @project.location.fields.each do |field|
+      if first then
+        @preDrawnAOI = @preDrawnAOI + field.coordinates + " " + field.coordinates.split(/ / )[0]
+        first = false
+      end
+      @preDrawnAOI = @preDrawnAOI + " field: " + field.field_name + ", " + field.field_area.to_s + ", " + field.coordinates + " " + field.coordinates.split(/ / )[0]
+    end
+    #@preDrawnAOI = 'farm: farm, -93.453614,43.694913 -93.453485,43.687559 -93.446705,43.687559 -93.446061,43.686938 -93.445546,43.686472 -93.444859,43.686162 -93.444173,43.686131 -93.443572,43.686286 -93.443572,43.694882  -93.453614,43.694913
+    #  field: Field1, 0, -93.453614,43.694913 -93.453485,43.687559 -93.446705,43.687559 -93.446061,43.686938 -93.445546,43.686472 -93.444859,43.686162 -93.444173,43.686131 -93.443572,43.686286 -93.443572,43.694882  -93.453614,43.694913'
+    add_breadcrumb t('menu.soils'), project_locations_path(@project)
+    add_breadcrumb t('menu.layers') 
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @locations }
+    end
+  end
   # GET /locations
   # GET /locations.json
   def location_fields
@@ -14,8 +61,6 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location = Location.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@project = Project.find(params[:project_id])
     add_breadcrumb t('menu.location')
     @project_name = @project.name
     session[:location_id] = params[:id]
