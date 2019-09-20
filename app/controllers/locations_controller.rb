@@ -8,8 +8,8 @@ class LocationsController < ApplicationController
     @shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
     filepath = Rails.root.join("lib", "external_scripts", "get_coords.r /Users/gallego/Downloads/NTT_Example/NTT_Example.shp")
     output = `Rscript --vanilla #{filepath}`
-    debugger
     @found_fields = output.split("Field:")
+    
   end
 ################################  INDEX  #################################
 # GET /locations
@@ -431,5 +431,4 @@ class LocationsController < ApplicationController
       end # end control all
     end # end if
   end  #end method
-
 end
