@@ -5,18 +5,6 @@ class LocationsController < ApplicationController
 ################################  Load Shapefile  #################################
 # 
   def upload_shapefile
-    #shpfile = '/path/to/realtor_neighborhoods/realtor_neighborhoods'
-    #ShpFile.open(shpfile) do |shp|
-      #shp.each do |shape|
-      # This gets the first (and only) Polygon from each MultiPolygon
-        #polygon = shape.geometry.geometries.first 
-        #puts polygon.inspect
-      #end
-    #end
-    #ENV["Template"] = template.name
-    #ENV["Theme"] = theme.name
-    #@output=""
-    #Rake::Task['script_runner:hello_world_r'].invoke
     @shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
     filepath = Rails.root.join("lib", "external_scripts", "get_coords.r /Users/gallego/Downloads/NTT_Example/NTT_Example.shp")
     output = `Rscript --vanilla #{filepath}`

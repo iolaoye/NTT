@@ -11,3 +11,4 @@ for (i in 1:npoly){​
   		cat(paste0(shfile@polygons[[i]]@Polygons[[1]]@coords[j,1],",",shfile@polygons[[i]]@Polygons[[1]]@coords[j,2])​," ")
 	}
 }​
+
