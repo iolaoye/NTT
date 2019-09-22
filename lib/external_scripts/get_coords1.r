@@ -1,6 +1,7 @@
+args = commandArgs(trailingOnly = TRUE)
 require(rgdal)
 ​
-shfile <- readOGR("/Users/gallego/Downloads/NTT_Example/NTT_Example.shp", layer="NTT_Example")​
+shfile <- readOGR(args[1], layer="NTT_Example")​
 polys = attr(shfile,'polygons')​
 npoly<-length(polys)​
 for (i in 1:npoly){​
