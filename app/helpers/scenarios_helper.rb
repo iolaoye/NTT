@@ -1112,4 +1112,40 @@ module ScenariosHelper
     return msg
   end
 
+  def get_weather_file_name(lat, lon)
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:get_weather_file_name, message: {"nlat" => lat, "nlon" => lon})
+    if response.body[:get_weather_file_name_response][:get_weather_file_name_result].include? ".wth" then
+      return response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    else
+      return "Error" + response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    end
+  end
+
+################################  Save Prism data #################################
+# GET /weathers/1
+# GET /weathers/1.json
+  def save_prism
+    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
+    centroid = calculate_centroid()
+    @weather.latitude = centroid.cy
+    @weather.longitude = centroid.cx
+    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
+    #weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+    data = weather_data.split(",")
+    @weather.weather_file = data[0]
+    data[2].slice! "\r\n"
+    @weather.simulation_final_year = data[2]
+    @weather.weather_final_year = @weather.simulation_final_year
+    @weather.weather_initial_year = data[1]
+    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+    @weather.way_id = 1
+    if @weather.save
+      return "OK"
+    else
+      retunr "Error Saving PRISM"
+    end
+  end
+  
 end
