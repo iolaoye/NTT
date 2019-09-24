@@ -1,89 +1,4 @@
-<style type="text/css">       
-    #map, html, body {
-    padding: 0;
-    margin: 0;
-    height: 10%;
-    }
-   
-    #dvPanel {
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-    float: right;
-    margin: 0px;
-    }
 
-    #color-palette {
-    clear: both;
-    }
-
-    .color-button {
-    width: 14px;
-    height: 14px;
-    font-size: 0;
-    margin: 2px;
-    float: left;
-    cursor: pointer;
-    }
-   
-    #delete-button {
-    margin-top: 10px;
-    }
-    
-    #info-button {
-    margin-top: 10px;
-    }
-
-    #savebutton {
-    margin-top: 10px;
-    }
-
-    #TOPNAV {
-    margin-top: 10px;
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-    float: right;
-    }
-    
-    #dataPanel {
-    margin-top: 10px;
-    }
-    p.margin
-    {
-    margin: 0; 
-    }
-    #textLong
-    {
-        width: 208px;
-    }
-    #lblFarm
-    {
-        width: 60px;
-    }
-    #lblField
-    {
-        width: 59px;
-    }
-    #bntDelete
-    {
-        width: 93px;
-    }        
-    .btnStyle
-    {
-        background-color:#0033CC; font-weight: bold; font-style: italic; font-size:small; Color:White;
-    }
-    
-    .trStyle
-    {
-        text-align:center;
-        font-size: 16px; font-weight: bold; font-style: italic; font-variant: normal; color: #000000; background-color: #99CCFF;
-    }
-    .tableStyle
-    {
-        width: 100%;
-        border-style: solid;
-        border-width:thin;
-    }
-</style>
 
 <body onload="initialize()" style="background-color:White; width:100%; height:100%">  
   <input type="hidden" id="hdnLat" />
@@ -117,7 +32,7 @@
                             <table class="tableStyle" id="tblUploadAOI">
                                 <tr>
                                     <td colspan="2">
-                                      <label style="font-weight:bold"><%= t('location.option1') + ": " + t('operation.upload') + " Shapefile"%></label>                                   
+                                      <label style="font-weight:bold"><%= t('location.option1') + ": " + t('operation.upload') + " Shapefile"%></label>                        
                                         <input id="imgUpload" type="image" onclick="return showText('UploadShow')" src="/serve_image/add.png"  />
                                     </td>
                                 </tr>                          
@@ -126,46 +41,21 @@
                                         <label id="lblNote2" contenteditable="false" rows="6" cols="50" style="font-size:small; background-color: #EFEFEF; border-style: none; overflow: hidden; height: 50px; display:none"><%= t('location.shapefilenote')%></label>
                                     </td>
                                 </tr>
-                                <tr style="display:none">
-                                    <td >
-                                        <asp:Label ID="lblFarmShp"  Text="Choose farm shapefile" ></asp:Label>
-                                    </td>
-                                </tr>
-                                <tr style="display:none">
-                                    <td >
-                                        <asp:FileUpload ID="fileUploadFarmShapefile" />        
-                                    </td>
-                                </tr>
-                                <tr >
-                                    <td>
-                                        <asp:Label ID="lblFieldShp"  Text="Choose field(s) shapefile"></asp:Label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td >
-                                        <asp:FileUpload ID="fileUploadFieldShapefile"  />
-                                    </td>
-                                </tr>
+                                <!--<tr style="display:none"><td ><asp:Label ID="lblFarmShp"  Text="Choose farm shapefile" ></asp:Label></td></tr>
+                                <tr style="display:none"><td ><asp:FileUpload ID="fileUploadFarmShapefile" /></td></tr>
+                                <tr><td><asp:Label ID="lblFieldShp"  Text="Choose field(s) shapefile"></asp:Label></td></tr>
+                                 <tr><td ><asp:FileUpload ID="fileUploadFieldShapefile"  /></td></tr>
+                                <tr><td><asp:Button ID="bntUpload"  Text="Upload Shapfile"/></td></tr> -->
                                 <tr>
                                     <td>
-                                        <asp:Button ID="bntUpload"  Text="Upload Shapfile"/>
+                                        <div id="fsetUploadShapeFile" class="panel panel-default">
+                                          <div class="panel-heading"><%= t('weather.choose_file_lenged') %></div>
+                                          <div class="panel-body"><%= f.file_field :shapefile %></div>
+                                          <div>  
+                                            <%= f.submit t('operation.upload') + " Shapefile", name: 'submit', :class => "btn btn-primary" %>
+                                          </div>
+                                        </div>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        
-                                            <div id="fsetUploadShapeFile" class="panel panel-default">
-                                              <div class="panel-heading"><%= t('weather.choose_file_lenged') %></div>
-                                              <div class="panel-body">
-                                                <%= f.file_field :shapefile %>
-                                              </div>
-                                              <div>  
-                                                <%= f.submit t('operation.upload') + " Shapefile", name: 'submit', :class => "btn btn-primary" %>
-                                              </div>
-                                            </div>
-
-                                    </td>
-
                                 </tr>
                             </table>
                         </td>
@@ -173,43 +63,38 @@
                     <tr id="trShapeFile"  style="width: 100%">
                         <td>
                             <table >
-                                <tr>
-                                    <td >
-                                      <label style="font-weight:bold"><%= t('location.option2') + ": " + t('location.zoomanddraw') + " AOI"%></label>
-                                        <input id="imgZoomIn" type="image" onclick="return showText('ZoomInShow')" src="/serve_image/add.png"  />
-                                    </td>
-                                </tr>
+                                <tr><td >
+                                    <label style="font-weight:bold"><%= t('location.option2') + ": " + t('location.zoomanddraw') + " AOI"%></label>
+                                    <input id="imgZoomIn" type="image" onclick="return showText('ZoomInShow')" src="/serve_image/add.png"  />
+                                </td></tr>
                                 <tr><td ><label id="lblNoteNavigation" style="display:none" ><%= t('location.zoomanddrawnote')%></label></td></tr>
                                 <tr><td ><label id="lblAZoom"  /><%= t('location.option2A')%></label></td></tr>
                                 <tr><td ><label><%= t('location.option2A1')%></label></td></tr>
-                                <tr><td><input id="address" name="textAddress" type="text" /></td>
-                                    <td style="text-align: left">
+                                <tr><td><input id="address" name="textAddress" type="text" width="45" />
+                                <!-- </td><td style="text-align: left"> -->
                                         <input id="imgUpload" type="image" onclick="codeAddress()" src="/serve_image/search.png"  />
                                     </td>
                                 </tr>
                                 <tr><td ><label><%= t('location.option2A2')%></label></tr>
-                                <tr><td><input id="latlng" name="textlatlng" type="text"/></td>
-                                    <td style="text-align:center">
+                                <tr><td><input id="latlng" name="textlatlng" type="text"/>
+                                <!-- </td><td style="text-align:center"> -->
                                         <input id="imgUpload" type="image" onclick="codeLatLng()" src="/serve_image/search.png"  /></td></td>
                                 </tr>
                                 <tr><td colspan="2"><tr><td ><label><%= t('location.option2A3')%></label></td></tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <input id="lblZoomState" type="hidden" />
-                                        <%= select_tag :stateselect, options_from_collection_for_select(@states, :id, :state_name), :include_blank => "Select State"%>
-                                        <option value="" id="lblZoomToState"></option>
-                                        <input id="lblZoomCounty" type="hidden" />
-                                        <%= select_tag :countyselect, options_from_collection_for_select(@counties, :id, :county_name), :onchange => "findCounty()"%>
-                                        <option value="" id="lblZoomToConty"></option>
-                                    </td>
-                                </tr>
+                                <tr><td colspan="4">
+                                    <!-- <input id="lblZoomState" type="hidden" /> -->
+                                    <%= select_tag :stateselect, options_from_collection_for_select(@states, :id, :state_name), :include_blank => "Select State"%>
+                                    <!-- <option value="" id="lblZoomToState"></option> -->
+                                    <input id="lblZoomCounty" type="hidden" />
+                                    <%= select_tag :countyselect, options_from_collection_for_select(@counties, :id, :county_name), :onchange => "findCounty()"%>
+                                    <option value="" id="lblZoomToConty"></option>
+                                </td></tr>
                                 <tr><td colspan="2"><label><%= t('location.option2A4')%></label></td></tr>
                                 <tr><td >
-                                        <label><%= t('location.option2B_1')%></label>
-                                        <input id="imgUpload" type="image" src="/serve_image/drawing_tool.png" />
-                                        <label><%= t('location.option2B_2')%></label>
-                                    </td>
-                                </tr>
+                                    <label><%= t('location.option2B_1')%></label>
+                                    <input id="imgUpload" type="image" src="/serve_image/drawing_tool.png" />
+                                    <label><%= t('location.option2B_2')%></label>
+                                </td></tr>
                             </table>
                         </td>
                     </tr>
@@ -221,7 +106,7 @@
                             <input type="radio" name="polyType" id="polyTypeFarm" value="To Draw Farm" />
                             <label id="lblFarm" runat="server" style="display:none"></label>
                             <input type="radio" name="polyType" id="polyTypeField" value="To Draw Fields" style="display:none"/>
-                            <label id="lblField" value="Field"></label>
+                            <label id="lblField" name="lblField" value="AOI" innerHTML="AOI"></label>
                         </td>
                     </tr>
                     <tr class="trStyle">
@@ -243,7 +128,7 @@
                                 <tr><td colspan="2"><label id="lblToolsNote5" contenteditable="false" rows="6" cols="50" style="font-size:small; background-color: #EFEFEF; border-style: none; overflow: hidden; height: 50px; display:none"><%= t('location.howtodrawnote4')%></label></td></tr>
                                 <tr>
                                     <td style="align:left"><input type="button" id="bntDelete1" style="font-size:xsmall; width=100%" class="btnStyle" value="Remove AOI"/></td>
-                                    <td><input type="button" id="bntInfo1" style="font-size:small" class="btnStyle" value="Submit"/>
+                                    <td>
                                      <%= f.submit "Submit", name: 'submit', id: 'bntInfo', onclick: 'submitSelection("Submit")', :class => "btn btn-primary" %></td>
                                     <!-- <td><input id="lblDelete" type="hidden" /></td> -->
                                 </tr>
@@ -259,7 +144,6 @@
                             </table>
                         </td>
                     </tr>
-                    
                 </table>
             </div>
         <%end %>
