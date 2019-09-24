@@ -933,3 +933,63 @@ function turnOffControls() {
     document.getElementById("map").style.display = "none";
     document.getElementById("dvWait").style.display = "";
 }
+
+function showText(text) {
+    switch (text) {
+        case "UploadShow":
+            //document.getElementById("_lblNote1").style.display = "";
+            document.getElementById("lblNote2").style.display = "";
+            document.getElementById("imgUpload").onclick = function onclick(event) { return showText('UploadHide') };
+            document.getElementById("imgUpload").src = "/serve_image/delete.png";
+            break;
+        case "UploadHide":
+            //document.getElementById("_lblNote1").style.display = "none";
+            document.getElementById("lblNote2").style.display = "none";
+            document.getElementById("imgUpload").onclick = function onclick(event) { return showText('UploadShow') };
+            document.getElementById("imgUpload").src = "/serve_image/add.png";
+            break;
+        case "ZoomInShow":
+            document.getElementById("lblNoteNavigation").style.display = "";
+            document.getElementById("imgZoomIn").onclick = function onclick(event) { return showText('ZoomInHide') };
+            document.getElementById("imgZoomIn").src = "/serve_image/delete.png";
+            break;
+        case "ZoomInHide":
+            document.getElementById("lblNoteNavigation").style.display = "none";
+            document.getElementById("imgZoomIn").onclick = function onclick(event) { return showText('ZoomInShow') };
+            document.getElementById("imgZoomIn").src = "/serve_image/add.png";
+            break;
+        case "HowToDrawShow":
+            document.getElementById("lblToolsNote1").style.display = "";
+            document.getElementById("lblToolsNote2").style.display = "";
+            document.getElementById("lblToolsNote3").style.display = "";
+            document.getElementById("lblToolsNote4").style.display = "";
+            document.getElementById("lblToolsNote5").style.display = "";
+            document.getElementById("imgHowToDraw").onclick = function onclick(event) { return showText('HowToDrawHide') };
+            document.getElementById("imgHowToDraw").src = "/serve_image/delete.png";
+            break;
+        case "HowToDrawHide":
+            document.getElementById("lblToolsNote1").style.display = "none";
+            document.getElementById("lblToolsNote2").style.display = "none";
+            document.getElementById("lblToolsNote3").style.display = "none";
+            document.getElementById("lblToolsNote4").style.display = "none";
+            document.getElementById("lblToolsNote5").style.display = "none";
+            document.getElementById("imgHowToDraw").onclick = function onclick(event) { return showText('HowToDrawShow') };
+            document.getElementById("imgHowToDraw").src = "/serve_image/add.png";
+            break;
+        case "CopyShow":
+            document.getElementById("lblNote5").style.display = "";
+            document.getElementById("imgCopy").onclick = function onclick(event) { return showText('CopyHide') };
+            document.getElementById("imgCopy").src = "/serve_image/delete.png";
+            break;
+        case "CopyHide":
+            document.getElementById("lblNote5").style.display = "none";
+            document.getElementById("imgCopy").onclick = function onclick(event) { return showText('CopyShow') };
+            document.getElementById("imgCopy").src = "/serve_image/add.png";
+            break;
+    }
+    return false;
+}
+
+window.onload = function() {
+  initialize();
+};

@@ -3,9 +3,9 @@ include ScenariosHelper
 class LocationsController < ApplicationController
 
 ################################  Load Shapefile  #################################
-# 
   def upload_shapefile
-    @shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
+    @shp_path = File.absolute_path(params[:location][:shapefile].original_filename)
+    #@shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
     filepath = Rails.root.join("lib", "external_scripts", "get_coords.r /Users/gallego/Downloads/NTT_Example/NTT_Example.shp")
     output = `Rscript --vanilla #{filepath}`
     @found_fields = output.split("Field:")    
@@ -13,33 +13,15 @@ class LocationsController < ApplicationController
 ################################  INDEX  #################################
 # GET /locations
 # GET /locations.json
-  def index
+  def edit
     @location = @project.location
     first=0
     @states = State.all
     @counties = County.where(:state_id => 1)
     @preAddress = params[:textAddress]
     @prelatLng = params[:textlatlng]
-    @preDrawnAOI = 'farm: farm, '
-    case params[:submit]
-    when "Submit"
-      receive_from_mapping_site1
-      redirect_to project_fields_path(@project.id)
-    when "Upload Shapefile" 
-      upload_shapefile
-      @found_fields.each do |field|
-        if first == 0 then
-          first += 1
-         next 
-       end
-        field_parts = field.split("|")
-        if first == 1 then 
-          @preDrawnAOI = @preDrawnAOI + field_parts[1]
-          first += 1
-        end
-        @preDrawnAOI = @preDrawnAOI + " field: " + field_parts[0] + ", " + "0.00" + ", " + field_parts[1]
-      end
-    else
+    if @preDrawnAOI == nil or @preDrawnAOI == "" 
+      @preDrawnAOI = 'farm: farm, '
       @project.location.fields.each do |field|
         if first==0 then
           @preDrawnAOI = @preDrawnAOI + field.coordinates.strip + " " + field.coordinates.strip.split(/ / )[0]
@@ -51,6 +33,8 @@ class LocationsController < ApplicationController
         format.html # index.html.erb
         format.json { render json: @locations }
       end
+    else
+      render 'edit'
     end
     #@preDrawnAOI = 'farm: farm, -93.453614,43.694913 -93.453485,43.687559 -93.446705,43.687559 -93.446061,43.686938 -93.445546,43.686472 -93.444859,43.686162 -93.444173,43.686131 -93.443572,43.686286 -93.443572,43.694882  -93.453614,43.694913
     #  field: Field1, 0, -93.453614,43.694913 -93.453485,43.687559 -93.446705,43.687559 -93.446061,43.686938 -93.445546,43.686472 -93.444859,43.686162 -93.444173,43.686131 -93.443572,43.686286 -93.443572,43.694882  -93.453614,43.694913'
@@ -58,6 +42,7 @@ class LocationsController < ApplicationController
     add_breadcrumb t('menu.layers') 
 
   end
+
   # GET /locations
   # GET /locations.json
   def location_fields
@@ -68,7 +53,7 @@ class LocationsController < ApplicationController
   ###################################### SHOW ######################################
   # GET /locations/1
   # GET /locations/1.json
-  def show
+  def index
     @location = Location.find(params[:id])
     add_breadcrumb t('menu.location')
     @project_name = @project.name
@@ -367,7 +352,7 @@ class LocationsController < ApplicationController
 
   ###################################### EDIT ######################################
   # GET /locations/1/edit
-  def edit
+  def show
     @location = Location.find(params[:id])
   end
 
@@ -392,15 +377,29 @@ class LocationsController < ApplicationController
   # PATCH/PUT /locations/1.json
   def update
     @location = Location.find(params[:id])
-
-    respond_to do |format|
-      if @location.update_attributes(location_params)
-        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @location.errors, status: :unprocessable_entity }
+    first=0
+    @preDrawnAOI = 'farm: farm, '
+    if params[:location][:shapefile] != nil
+      @shp_path = 
+      upload_shapefile
+      @found_fields.each do |field|
+        if first == 0 then
+          first += 1
+         next 
+        end
+        field_parts = field.split("|")
+        if first == 1 then 
+          @preDrawnAOI = @preDrawnAOI + field_parts[1]
+          first += 1
+        end
+        @preDrawnAOI = @preDrawnAOI + " field: " + field_parts[0] + ", " + "0.00" + ", " + field_parts[1]
       end
+      edit()
+    elsif params[:location][:submit] == "submit"
+            receive_from_mapping_site1
+      redirect_to project_fields_path(@project.id)
+    else
+
     end
   end
 
