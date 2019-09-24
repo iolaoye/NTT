@@ -267,7 +267,7 @@ class LocationsController < ApplicationController
           # find or create field
           @field = @location.fields.where(:field_name => fields[i]).first || @location.fields.build(:field_name => fields[i])
           @field.coordinates = params[:FieldsXY].split(" ,")[i]
-          @field.field_area = params[:FieldArea].split(",")[i].to_f / AC_TO_M2
+          @field.field_area = (params[:FieldArea].split(",")[i].to_f / AC_TO_M2).round(2)
           @field.updated = true
           if @field.save
              #create_soils(i, @field.id, @field.field_type).  #commented because the solils will be gotten in fields page

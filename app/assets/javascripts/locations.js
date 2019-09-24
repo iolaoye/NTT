@@ -6,12 +6,15 @@ var shapes = [];
 var selectedShape;
 var strFarmName;
 var strFarmXY;
+var drawingManager;
+var map = null;
+var geocoder = null;
+var inputStr;
 function initialize() {
     //put lables in hidden input controls
     //document.getElementById("bntDelete").value = document.getElementById("lblDelete").value;
     //latLng = document.getElementById("latlng").value
-
-    document.getElementById("lblZoomToState").label = document.getElementById("lblZoomState").value;
+    //document.getElementById("lblZoomToState").label = document.getElementById("lblZoomState").value;
     var tableId = '0IMZAFCwR-t7jZnVzaW9udGFibGVzOjIxMDIxNw';
     var locationColumn = 'State-County';
     var lat;
@@ -96,13 +99,13 @@ function initialize() {
                 }
             } else {
                 newShape.content = "field: ";
-                person = prompt("Please enter the " + lblField.innerHTML + " name:", lblField.innerHTML.concat(shapes.length - 1));
+                person = prompt("Please enter the " + lblField.attributes[2].value + " name:", lblField.attributes[2].value.concat(shapes.length - 1));
                 if (person != null && person != "") {
                     newShape.content += person + ", ";
                     arrayFieldsNames.push(person);
                 }
                 else {
-                    alert("You did not specify " + lblField.innerHTML + " name! A default value will be assigned.");
+                    alert("You did not specify " + lblField.attributes[2].value + " name! A default value will be assigned.");
                     person = "field".concat(shapes.length - 1);
                     newShape.content += person + ", ";
                     arrayFieldsNames.push(person);
@@ -328,7 +331,7 @@ function getBoundsForPoly(poly) {
     return bounds;
 }
 
-    function codeLatLngState(callback) {
+function codeLatLngState(callback) {
     var latlngStr = inputStr.split(',', 2);
     var lat = parseFloat(latlngStr[1]);
     var lng = parseFloat(latlngStr[0]);
@@ -573,7 +576,7 @@ function deleteSelectedShape() {
                     arrayFieldsNames.splice(j, 1);
                     arrayFieldsArea.splice(j, 1);
                     arrayFieldsXY.splice(j, 1);
-                    alert('You just deleted a ' + lblField.innerHTML);
+                    alert('You just deleted a ' + lblField.attributes[2].value);
                 }
             }
 
@@ -608,7 +611,7 @@ function showSelectedShapeInfo() {
 
         google.maps.event.addListener(selectedShape, 'click', function (e) {
             var content = "<div class='infowindow'>";
-            content += lblField.innerHTML + "'s Name: " + strFiledName + "<br/>";
+            content += lblField.attributes[2].value + "'s Name: " + strFiledName + "<br/>";
             content += "Current location's latitude is: " + e.latLng.lat() + ", ";
             content += "longitude is: " + e.latLng.lng() + "</div>";
 
@@ -694,13 +697,13 @@ function handlerFieldClick() {
     var btnFarmClick = document.getElementById('polyTypeFarm').style.display;
     if (strDrawnAOI == "" && btnFarmClick != 'none') {
         if (strFarmName == null) {
-            alert('Please select a ' + lblFarm.innerHTML + ' first, then select the ' + lblField.innerHTML + 's.');
+            alert('Please select a ' + lblFarm.innerHTML + ' first, then select the ' + lblField.attributes[2].value + 's.');
             document.getElementById("polyTypeFarm").checked = true;
         }
     }
     else {
         if (strFarmName == "" && btnFarmClick != 'none') {
-            alert('Please select a ' + lblFarm.innerHTML + ' first, then select the ' + lblField.innerHTML + 's.');
+            alert('Please select a ' + lblFarm.innerHTML + ' first, then select the ' + lblField.attributes[2].value + 's.');
             document.getElementById("polyTypeFarm").checked = true;
         }
     }
@@ -871,6 +874,57 @@ function submitSelection(type) {
             alert('Please select only one ' + lblFarm.innerHTML + ' and at least one' + lblField.innerHTML + '!');
         }
         return false;
+    }
+}
+
+function updateMap(layer, tableId, locationColumn) {
+    var delivery = document.getElementById('countyselect').value;
+    if (delivery) {
+        layer.setOptions({
+            query: {
+                select: locationColumn,
+                from: tableId,
+                where: "'State-County' = '" + delivery + "'"
+            }
+        });
+    } else {
+        layer.setOptions({
+            query: {
+                select: locationColumn,
+                from: tableId
+            }
+        });
+    }
+}
+
+function findCounty(address) {
+    var addressStr = document.getElementById("countyselect").value;
+    var stateAbr = document.getElementById("stateselect")[document.getElementById("stateselect").selectedIndex].value;
+
+    if (!address && (addressStr != '')) {
+        //var countyState = addressStr.split("-");
+        //address = "County of " + addressStr;
+        //address = countyState[1].trim() + " County, " + countyState[0];
+        address = $("#countyselect")[0].selectedOptions[0].text + " County" + ", " + stateAbr;
+    } else
+        address = addressStr;
+
+    if ((address != '') && geocoder) {
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+                    if (results && results[0] && results[0].geometry && results[0].geometry.viewport) {
+                        map.fitBounds(results[0].geometry.viewport);
+                        //document.getElementById("trNavigation").style.display = "none";
+                        document.getElementById("trTools").style.display = "";
+                    }
+                } else {
+                    alert("No results found");
+                }
+            } else {
+                alert("Geocode was not successful for the following reason: " + status);
+            }
+        });
     }
 }
 
