@@ -42,18 +42,19 @@
             <%= hidden_field_tag(:hdnLat) %>
             <%= hidden_field_tag(:hdnLong) %>
             <textarea id="preDrawnAOI" rows="10" cols="50" style="display:none"><%=@preDrawnAOI%></textarea>
-                  <input id="FarmName" name="FarmName" style="display:none"></input>
-                  <input id="FarmXY" name="FarmXY" style="display:none"></input>
-                  <input id="FieldsName" name="FieldsName" style="display:none"></input>
-                  <input id="FieldsArea" name="FieldArea" style="display:none"></input>
-                  <input id="FieldsXY" name="FieldsXY" style="display:none"></input>
-                  <input id="CountryAbbr" name="CountryAbbr" style="display:none"></input>
-                  <input id="StateName" name="StateName" style="display:none"></input>
-                  <input id="StateAbbr" name="StateAbbr" style="display:none"></input>
-                  <input id="CountyName" name="CountyName" style="display:none"></input>
-                  <input id="CountryName" name="CountryName" style="display:none"></input>
-                  <textarea id="Textlatlng" rows="1" cols="1" style="display:none"><%=@prelatLng%></textarea>
-                  <textarea id="TextAddress" rows="1" cols="1" style="display:none"><%=@preAddress%></textarea>
+            <textarea id="savedata" rows="20" cols="38" style="display:none"></textarea>
+            <input id="FarmName" name="FarmName" style="display:none"></input>
+            <input id="FarmXY" name="FarmXY" style="display:none"></input>
+            <input id="FieldsName" name="FieldsName" style="display:none"></input>
+            <input id="FieldsArea" name="FieldArea" style="display:none"></input>
+            <input id="FieldsXY" name="FieldsXY" style="display:none"></input>
+            <input id="CountryAbbr" name="CountryAbbr" style="display:none"></input>
+            <input id="StateName" name="StateName" style="display:none"></input>
+            <input id="StateAbbr" name="StateAbbr" style="display:none"></input>
+            <input id="CountyName" name="CountyName" style="display:none"></input>
+            <input id="CountryName" name="CountryName" style="display:none"></input>
+            <textarea id="Textlatlng" rows="1" cols="1" style="display:none"><%=@prelatLng%></textarea>
+            <textarea id="TextAddress" rows="1" cols="1" style="display:none"><%=@preAddress%></textarea>
             <table class="tableStyle" id="tblUploadAOI">
               <tr class="trStyle">
                 <th style="font-weight:bold">
@@ -149,7 +150,7 @@
                                 <tr>
                                     <td style="align:left"><input type="button" id="bntDelete1" style="font-size:xsmall; width=100%" class="btnStyle" value="Remove AOI"/></td>
                                     <td>
-                                     <%= f.submit "Submit", name: 'submit', id: 'bntInfo', onclick: 'submitSelection("Submit")', :class => "btn btn-primary" %></td>
+                                     <%= submit_tag "Submit", name: 'submit', id: 'bntInfo', onclick: 'submitSelection("Submit")', :class => "btn btn-primary" %></td>
                                     <!-- <td><input id="lblDelete" type="hidden" /></td> -->
                                 </tr>
                                 <tr><td>
@@ -165,8 +166,11 @@
                         </td>
                     </tr>
                 </table>
-          </td>
-        </tr>
-      </table>
+        </td>
+        <td id="dvWait"  
+       style="font-size: large; font-style: italic; color: #009900; display:none; background-color: #FFFF00;">            Please Wait........
+        </td>
+      </tr>
+    </table>
   </div>
 <%end%>

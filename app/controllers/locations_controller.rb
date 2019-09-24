@@ -395,7 +395,7 @@ class LocationsController < ApplicationController
         @preDrawnAOI = @preDrawnAOI + " field: " + field_parts[0] + ", " + "0.00" + ", " + field_parts[1]
       end
       edit()
-    elsif params[:location][:submit] == "submit"
+    elsif params[:submit] == "Submit"
             receive_from_mapping_site1
       redirect_to project_fields_path(@project.id)
     else
