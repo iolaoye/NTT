@@ -6,9 +6,6 @@ var shapes = [];
 var selectedShape;
 var strFarmName;
 var strFarmXY;
-var arrayFieldsNames = [];
-var arrayFieldsArea = [];
-var arrayFieldsXY = [];
 function initialize() {
     //put lables in hidden input controls
     //document.getElementById("bntDelete").value = document.getElementById("lblDelete").value;

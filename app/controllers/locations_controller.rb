@@ -267,13 +267,13 @@ class LocationsController < ApplicationController
           # find or create field
           @field = @location.fields.where(:field_name => fields[i]).first || @location.fields.build(:field_name => fields[i])
           @field.coordinates = params[:FieldsXY].split(" ,")[i]
-          @field.field_area = params[:FieldArea].split(",")[i]
+          @field.field_area = params[:FieldArea].split(",")[i].to_f / AC_TO_M2
           @field.updated = true
-            if @field.save
-               #create_soils(i, @field.id, @field.field_type).  #commented because the solils will be gotten in fields page
-            else
-               msg = "Error saving soils"
-            end 
+          if @field.save
+             #create_soils(i, @field.id, @field.field_type).  #commented because the solils will be gotten in fields page
+          else
+             msg = "Error saving soils"
+          end 
           #step 3 find or create site
           site = Site.find_by_field_id(@field.id)
           if (site == nil) then
@@ -302,11 +302,12 @@ class LocationsController < ApplicationController
             @weather = Weather.find(@field.weather_id)
           end #end weather validation
           save_prism()
-         @field.weather_id = @weather.id
-         # end
+          @field.weather_id = @weather.id
+          # end
           if @field.save then
             flash[:notice] = t('models.field') + "(s)" + t('notices.multiple_created')
             @weather.field_id = @field.id
+            @weather.save
             session[:field_id] = @field.id
           end
           #@weather.save
