@@ -99,7 +99,7 @@ function initialize() {
                 }
             } else {
                 newShape.content = "field: ";
-                person = prompt("Please enter the " + lblField.attributes[2].value + " name:", lblField.attributes[2].value.concat(shapes.length - 1));
+                person = prompt("Please enter the " + lblField.attributes[2].value + " name:", lblField.attributes[2].value.concat(shapes.length));
                 if (person != null && person != "") {
                     newShape.content += person + ", ";
                     arrayFieldsNames.push(person);
