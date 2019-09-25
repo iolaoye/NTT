@@ -69,6 +69,7 @@
 * @constructor
 * @param {InfoBoxOptions} [opt_opts]
 */
+
 function InfoBox(opt_opts) {
 
     opt_opts = opt_opts || {};
