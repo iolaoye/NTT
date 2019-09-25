@@ -69,7 +69,6 @@
 * @constructor
 * @param {InfoBoxOptions} [opt_opts]
 */
-
 function InfoBox(opt_opts) {
 
     opt_opts = opt_opts || {};
@@ -102,9 +101,6 @@ function InfoBox(opt_opts) {
     this.fixedWidthSet_ = null;
 }
 
-/* InfoBox extends OverlayView in the Google Maps API v3.
-*/
-InfoBox.prototype = new google.maps.OverlayView();
 
 /**
 * Creates the DIV representing the InfoBox.
@@ -167,7 +163,10 @@ InfoBox.prototype.createInfoBoxDiv_ = function () {
         google.maps.event.trigger(this, "domready");
     }
 };
+/* InfoBox extends OverlayView in the Google Maps API v3.
+*/
 
+InfoBox.prototype = new google.maps.OverlayView();
 /**
 * Returns the HTML <IMG> tag for the close box.
 * @private
