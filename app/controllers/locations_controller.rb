@@ -379,27 +379,32 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
     first=0
     @preDrawnAOI = 'farm: farm, '
-    if params[:location][:shapefile] != nil
-      @shp_path = 
-      upload_shapefile
-      @found_fields.each do |field|
-        if first == 0 then
-          first += 1
-         next 
+    case true
+    when params[:location] !=nil
+      if params[:location][:shapefile] != nil
+        @shp_path = 
+        upload_shapefile
+        @found_fields.each do |field|
+          if first == 0 then
+            first += 1
+           next 
+          end
+          field_parts = field.split("|")
+          if first == 1 then 
+            @preDrawnAOI = @preDrawnAOI + field_parts[1]
+            first += 1
+          end
+          @preDrawnAOI = @preDrawnAOI + " field: " + field_parts[0] + ", " + "0.00" + ", " + field_parts[1]
         end
-        field_parts = field.split("|")
-        if first == 1 then 
-          @preDrawnAOI = @preDrawnAOI + field_parts[1]
-          first += 1
-        end
-        @preDrawnAOI = @preDrawnAOI + " field: " + field_parts[0] + ", " + "0.00" + ", " + field_parts[1]
+        edit()
       end
-      edit()
-    elsif params[:submit] == "Submit"
-            receive_from_mapping_site1
-      redirect_to project_fields_path(@project.id)
+    when params[:submit] != nil  
+      if params[:submit] == "Submit"
+        receive_from_mapping_site1
+        redirect_to project_fields_path(@project.id)
+    end
     else
-
+      edit()
     end
   end
 
