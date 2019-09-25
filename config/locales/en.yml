@@ -584,9 +584,9 @@ en:
     zoomanddrawnote: "Enter the site's address, latitude and longitude, or select the state and county to focus the map on the site location."
     option2A: A. Zoom to the AOI using one of the following choices
     option2B: B. Use the drawing utility  Google Map Drawing on the map to draw the AOIs.
-    option2A1: "1. Address (Ex.1802 Paddock, Stephenville, TX)"
+    option2A1: "1. Address (1802 Paddock, Stephenville, TX)"
     option2A2: "2. Latitude, Longitude (32.231012, -98.215376)"
-    option2A3: "3. State and Coounty"
+    option2A3: "3. State and County"
     option2A4: "4. Manual zoom on the map"
     option2B_1: "B. Use the drawing utility"
     option2B_2: "on the map to draw the AOIs"
@@ -596,7 +596,7 @@ en:
     movemap: "Used to move the map"
     zoom: "Used to zoom in or out"
     howtodrawnote1: "First, select the polygon icon in the middle-top of the map and draw the first AOI. Enter a name for the AOI. Repeat for each additional AOI."
-    howtodrawnote2: "o edit a polygon, select the 'AOI' polygon on the map, and then drag the vertices to edit the boundaries."
+    howtodrawnote2: "or edit a polygon, select the 'AOI' polygon on the map, and then drag the vertices to edit the boundaries."
     howtodrawnote3: "To delete a polygon, select the 'AOI' polygon on the map, and then click the remove button."
     howtodrawnote4: "When finished, click the 'Submit' button to proceed."
   operation:
