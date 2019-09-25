@@ -569,8 +569,32 @@ es:
     simulation_success: escenarios simulados con éxito en
     other_scenario: Copiar Escenario de otra parcela
   location:
-    new_location: Localización Nuevo
-    edit: Revisión de Localización
+    new_location: Nueva Ubicación
+    edit: Revisión de Ubicación
+    option1: Opción1
+    areaofinterest: Area de Interes
+    selection: Selección
+    shapefilenote: Los archivos deben estar en formato ESRI Shapefile usando el Geographic Coordinate System WGS 1984.
+    option2: Opción2
+    zoomanddraw: Enfocar y Dibujar
+    zoomanddrawnote: "Entre la dirección del sitio, latitud y longitud, o seleccione el estado/county para enfocar el mapa en el sitio deseado."
+    option2A: A. Enfocar a el AOI usando una de las siguientes opciones.
+    option2B: "B. Use la herramienta de dibujo, Google Map Drawing, en el mapa para dibujar las Areas de Interes."
+    option2A1: "1. Dirección (1802 Paddock, Stephenville, TX)"
+    option2A2: "2. Latitud, Longitud (32.231012, -98.215376)"
+    option2A3: "3. Estado y Condado"
+    option2A4: "4. Enfoque manual en el mapa"
+    option2B_1: "B. Use la herramienta de dibujo"
+    option2B_2: "en el mapa para dibujar las Areas de Interes"
+    drawigntools: Herramientas de dibujo
+    howtodraw: Como dibujar las Areas de Interes
+    drawfield: "Usado para dibujar una parcela"
+    movemap: "Usado para mover el mapa"
+    zoom: "Usado para acercar o alejar el enfoque"
+    howtodrawnote1: "Primero, seleccione el icono del polígono en la parte media-superior del mapa y dibuje la primera Area de Interes. Entre un nombre para la parcela. Repeta para cada parcela adicional."
+    howtodrawnote2: "o edite un polígono, seleccione el polígono de interese en el mapa, y luego seleccione y arrastre el vertice de limite deseado"
+    howtodrawnote3: "Para borrar un polígono, seleccione polígono de interese en el mapa, y luego precione el botón 'Borrar AOI'"
+    howtodrawnote4: "When finished, click the 'Submit' button to proceed."
   operation:
     new_operation: Adicionar Nueva Operación
     edit: Revisión de Operación
