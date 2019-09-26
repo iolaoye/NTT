@@ -4,11 +4,24 @@ class LocationsController < ApplicationController
 
 ################################  Load Shapefile  #################################
   def upload_shapefile
-    @shp_path = File.absolute_path(params[:location][:shapefile].original_filename)
+    dir_path = File.join(DOWNLOAD, params[:location][:shapefile].original_filename.gsub(".zip", ""))
+    extract_zip(params[:location][:shapefile].tempfile, dir_path)
+    shp_path = File.join(dir_path, params[:location][:shapefile].original_filename.gsub("zip", "shp"))
     #@shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
-    filepath = Rails.root.join("lib", "external_scripts", "get_coords.r /Users/gallego/Downloads/NTT_Example/NTT_Example.shp")
+    filepath = Rails.root.join("lib", "external_scripts", "get_coords.r " + shp_path)
     output = `Rscript --vanilla #{filepath}`
-    @found_fields = output.split("Field:")    
+    @found_fields = output.split("Field:")
+    FileUtils.rm_rf(dir_path)
+  end
+
+  def extract_zip(file, destination)
+    FileUtils.mkdir_p(destination)
+    Zip::File.open(file) do |zip_file|
+      zip_file.each do |f|
+        fpath = File.join(destination, f.name)
+        zip_file.extract(f, fpath) unless File.exist?(fpath)
+      end
+    end
   end
 ################################  INDEX  #################################
 # GET /locations
@@ -382,7 +395,6 @@ class LocationsController < ApplicationController
     case true
     when params[:location] !=nil
       if params[:location][:shapefile] != nil
-        @shp_path = 
         upload_shapefile
         @found_fields.each do |field|
           if first == 0 then
