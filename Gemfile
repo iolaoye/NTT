@@ -44,7 +44,7 @@ gem 'protected_attributes'
 gem 'byebug', '~> 9.0', '>= 9.0.6'
 
 gem 'bcrypt-ruby', '3.1.5'
-gem 'bcrypt', '3.1.11'
+gem 'bcrypt', '>=3.1.11'
 # rest API for NTT call
 gem "nokogiri", '1.6.8'
 gem 'savon', '>= 2.0'
@@ -65,4 +65,6 @@ gem 'mysql2', '~> 0.3.18'
 #gem 'georuby'
 #gem 'dbf'
 gem 'rake'
+gem 'rgeo', '1.1.2'
+gem 'rgeo-shapefile', '1.0.0'
 
