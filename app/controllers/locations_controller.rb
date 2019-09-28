@@ -4,6 +4,7 @@ class LocationsController < ApplicationController
 
 ################################  Load Shapefile  #################################
   def upload_shapefile
+
     dir_path = File.join(DOWNLOAD, params[:location][:shapefile].original_filename.gsub(".zip", ""))
     extract_zip(params[:location][:shapefile].tempfile, dir_path)
     shp_path = File.join(dir_path, params[:location][:shapefile].original_filename.gsub("zip", "shp"))
@@ -11,7 +12,7 @@ class LocationsController < ApplicationController
     filepath = Rails.root.join("lib", "external_scripts", "get_coords.r " + shp_path)
     output = `Rscript --vanilla #{filepath}`
     @found_fields = output.split("Field:")
-    FileUtils.rm_rf(dir_path)
+    #FileUtils.rm_rf(dir_path)
   end
 
   def extract_zip(file, destination)
