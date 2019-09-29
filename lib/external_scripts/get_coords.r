@@ -1,6 +1,6 @@
 #args = commandArgs(trailingOnly = TRUE)
 require(rgdal)
-setwd("/var/www/ntt.226.cbntt.org/public/download/NTT_Example")
+setwd("\var\www\ntt.226.cbntt.org\public\download\NTT_Example")
 print("antes")
 print(getwd())
 ​shfile = readOGR("NTT_Example.shp", layer='NTT_Example', verbose=TRUE)​
