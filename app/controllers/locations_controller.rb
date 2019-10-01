@@ -4,7 +4,6 @@ class LocationsController < ApplicationController
 
 ################################  Load Shapefile  #################################
   def upload_shapefile
-debugger
     dir_path = File.join(DOWNLOAD, params[:location][:shapefile].original_filename.gsub(".zip", ""))
     extract_zip(params[:location][:shapefile].tempfile, dir_path)
     shp_path = Rails.root.join(dir_path, params[:location][:shapefile].original_filename.gsub("zip", "shp"))
