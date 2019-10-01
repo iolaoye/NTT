@@ -23,6 +23,7 @@ class LocationsController < ApplicationController
         if file.name.match(Regexp.union(file_needed))
           file_name = File.basename(file.name)
           fpath = File.join(destination, file_name)
+          File.delete(fpath) if File.exist?(fpath)
           zip_file.extract(file, fpath)
         end
       end
