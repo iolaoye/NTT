@@ -41,7 +41,7 @@ class ProjectsController < ApplicationController
     when @location.fields.count > 0 && @project.version == "NTTG3"  # load fields
       redirect_to project_fields_path(@project)
     else # Load map
-      redirect_to project_location_path(@project, @location)
+      redirect_to edit_project_location_path(@project, @location)
     end # end case true
   end
 
