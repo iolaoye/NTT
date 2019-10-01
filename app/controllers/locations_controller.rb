@@ -12,7 +12,7 @@ class LocationsController < ApplicationController
     r_parm = filepath.to_s + shp_path.to_s
     output = `Rscript --vanilla #{r_parm}`
     @found_fields = output.split("Field:")
-    FileUtils.rm_rf(dir_path)
+    #FileUtils.rm_rf(dir_path)
   end
 
   def extract_zip(file, destination)
