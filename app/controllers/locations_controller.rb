@@ -6,7 +6,7 @@ class LocationsController < ApplicationController
   def upload_shapefile
     dir_path = File.join(DOWNLOAD, params[:location][:shapefile].original_filename.gsub(".zip", ""))
     extract_zip(params[:location][:shapefile].tempfile, dir_path)
-    shp_path = Rails.root.join(dir_path, params[:location][:shapefile].original_filename.gsub("zip", "shp"))
+    shp_path = Rails.root.join(dir_path)
     #@shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
     filepath = Rails.root.join("lib", "external_scripts", "get_coords.r ")
     r_parm = filepath.to_s + shp_path.to_s
