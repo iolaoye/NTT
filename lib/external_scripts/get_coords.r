@@ -3,7 +3,7 @@ require(rgdal)
 #setwd("public/download/NTT_Example")
 #print("antes")
 #print(getwd())
-​shape_file = readOGR(dsn=args[1], layer='NTT_Example', verbose=TRUE)​
+​shape_file = readOGR(dsn=args[1], layer='NTT_Example')​
 #print(shfile)
 
 polys = attr(​shape_file,'polygons')​
