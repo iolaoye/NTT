@@ -4,23 +4,28 @@ class LocationsController < ApplicationController
 
 ################################  Load Shapefile  #################################
   def upload_shapefile
-
+debugger
     dir_path = File.join(DOWNLOAD, params[:location][:shapefile].original_filename.gsub(".zip", ""))
     extract_zip(params[:location][:shapefile].tempfile, dir_path)
-    shp_path = File.join(dir_path, params[:location][:shapefile].original_filename.gsub("zip", "shp"))
+    shp_path = Rails.root.join(dir_path, params[:location][:shapefile].original_filename.gsub("zip", "shp"))
     #@shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
-    filepath = Rails.root.join("lib", "external_scripts", "get_coords.r " + shp_path)
-    output = `Rscript --vanilla #{filepath}`
+    filepath = Rails.root.join("lib", "external_scripts", "get_coords.r ")
+    r_parm = filepath.to_s + shp_path.to_s
+    output = `Rscript --vanilla #{r_parm}`
     @found_fields = output.split("Field:")
-    #FileUtils.rm_rf(dir_path)
+    FileUtils.rm_rf(dir_path)
   end
 
   def extract_zip(file, destination)
+    file_needed=[".shp", ".dbf", ".prj", ".shx"]
     FileUtils.mkdir_p(destination)
     Zip::File.open(file) do |zip_file|
-      zip_file.each do |f|
-        fpath = File.join(destination, f.name)
-        zip_file.extract(f, fpath) unless File.exist?(fpath)
+      zip_file.each do |file|
+        if file.name.match(Regexp.union(file_needed))
+          file_name = File.basename(file.name)
+          fpath = File.join(destination, file_name)
+          zip_file.extract(file, fpath)
+        end
       end
     end
   end
