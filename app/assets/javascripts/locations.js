@@ -1,334 +1,337 @@
-var latLng = "";
-var arrayFieldsNames = [];
-var arrayFieldsXY = [];
-var arrayFieldsArea = [];
-var shapes = [];
-var selectedShape;
-var strFarmName;
-var strFarmXY;
+
+
 var drawingManager;
+var selectedShape;
 var map = null;
 var geocoder = null;
 var inputStr;
-function initialize() {
-    //put lables in hidden input controls
-    //document.getElementById("bntDelete").value = document.getElementById("lblDelete").value;
-    //latLng = document.getElementById("latlng").value
-    //document.getElementById("lblZoomToState").label = document.getElementById("lblZoomState").value;
-    var tableId = '0IMZAFCwR-t7jZnVzaW9udGFibGVzOjIxMDIxNw';
-    var locationColumn = 'State-County';
-    var lat;
-    var long;
-    var zoomSize;
-    if (document.getElementById("hdnLat").value == "" || document.getElementById("hdnLong").value == "") { lat = 39.10960; long = -96.5; zoomSize = 5; }
-    else { lat = document.getElementById("hdnLat").value; long = document.getElementById("hdnLong").value; zoomSize = 10; }
+var shapes = [];
+var strFarmName;
+var strFarmXY;
+var arrayFieldsNames = [];
+var arrayFieldsXY = [];
+var arrayFieldsArea = [];
+var latLng = "";
 
-    geocoder = new google.maps.Geocoder();
-    //
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: zoomSize,
-        center: new google.maps.LatLng(lat, long),
-        mapTypeId: google.maps.MapTypeId.HYBRID,
-        mapTypeControl: true,
-        navigationControl: true,
-        scaleControl: true,
-        overviewMapControl: true,
-        fullscreenControl: true,
-        zoomControl: true
-    });
-    infoWindow = new google.maps.InfoWindow({
-        maxWidth: 520,
-        styles: [{ "featureType": "water",
-            "stylers": [{ "visibility": "on" }, { "color": "#000000" }, { "hue": "#000000"}]
-        }]
-    });
-    //
-    var polyOptions = {
-        strokeWeight: 0,
-        fillOpacity: 0.3,
-        editable: true
-    };
-    // Creates a drawing manager attached to the map that allows the user to draw
-    // markers, lines, and shapes. //google.maps.drawing.OverlayType.POLYGON
-    drawingManager = new google.maps.drawing.DrawingManager({
-        drawingMode: null,
-        drawingControl: true,
-        drawingControlOptions: {
-            position: google.maps.ControlPosition.TOP_CENTER,
-            drawingModes: [google.maps.drawing.OverlayType.POLYGON]
-        },
-        markerOptions: {
-            draggable: true
-        },
-        polylineOptions: {
-            editable: true
-        },
-        rectangleOptions: polyOptions,
-        circleOptions: polyOptions,
-        polygonOptions: polyOptions,
-        map: map
-    });
-    //strDrawnAOI = '<%= @preDrawnAOI %>';
-    strDrawnAOI=document.getElementById("preDrawnAOI").value;
-    //document.getElementById("savedata").value = "";
-    if (strDrawnAOI.indexOf('farm') != -1 || strDrawnAOI.indexOf('field') != -1) {
-        drawPreSavedAOI(strDrawnAOI);
-    }
-    google.maps.event.addListener(drawingManager, 'overlaycomplete', function (e) {
-        if (e.type != google.maps.drawing.OverlayType.MARKER) {
-            // Switch back to non-drawing mode after drawing a shape.
-            drawingManager.setDrawingMode(null);
-            // Add an event listener that selects the newly-drawn shape when the user
-            // mouses down on it.
-            var newShape = e.overlay;
-            shapes.push(newShape);
-            newShape.type = e.type;
-
-            if (document.getElementById("polyTypeFarm").checked) {
-                newShape.content = "farm: ";
-                var person = prompt('Please enter the ' + lblFarm.innerHTML + ' name:', lblFarm.innerHTML);
-                if (person != null && person != "") {
-                    newShape.content += person + ", ";
-                    strFarmName = person;
-                }
-                else {
-                    alert("Your did not specify " + lblFarm.innerHTML + " name! A default value will be assigned.");
-                    person = "farm";
-                    newShape.content += person + ", ";
-                    strFarmName = person;
-                }
-            } else {
-                newShape.content = "field: ";
-                person = prompt("Please enter the " + lblField.attributes[2].value + " name:", lblField.attributes[2].value.concat(shapes.length));
-                if (person != null && person != "") {
-                    newShape.content += person + ", ";
-                    arrayFieldsNames.push(person);
-                }
-                else {
-                    alert("You did not specify " + lblField.attributes[2].value + " name! A default value will be assigned.");
-                    person = "field".concat(shapes.length - 1);
-                    newShape.content += person + ", ";
-                    arrayFieldsNames.push(person);
-                }
-
-                var areaPoly = google.maps.geometry.spherical.computeArea(newShape.getPath());
-                newShape.content += "area: " + areaPoly + ", ";
-                // a brand new polygon
-                arrayFieldsArea.push(areaPoly);
-                // if the user modifies polygon
-                google.maps.event.addListener(newShape.getPath(), 'insert_at', function () {
-
-                    //add a new point;
-                    var strTempDeletePolyInfo = newShape.content;
-                    var strTempInfo = strTempDeletePolyInfo.split(',');
-                    var intIndex = strTempInfo[0].indexOf(":");
-                    var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
-                    for (var j = 0; j < arrayFieldsNames.length; j++) {
-                        if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
-                            var areaPolyTemp = google.maps.geometry.spherical.computeArea(newShape.getPath());
-                            arrayFieldsArea[j] = areaPolyTemp;
-                        }
-                    }
-                });
-                google.maps.event.addListener(newShape.getPath(), 'set_at', function () {
-
-                    //modify at point;
-                    var strTempDeletePolyInfo = newShape.content;
-                    var strTempInfo = strTempDeletePolyInfo.split(',');
-                    var intIndex = strTempInfo[0].indexOf(":");
-                    var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
-                    for (var j = 0; j < arrayFieldsNames.length; j++) {
-                        if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
-                            var areaPolyTemp = google.maps.geometry.spherical.computeArea(newShape.getPath());
-                            arrayFieldsArea[j] = areaPolyTemp;
-                        }
-                    }
-                });
-                google.maps.event.addListener(newShape.getPath(), 'remove_at', function () {
-                    //remove a point;
-                    var strTempDeletePolyInfo = newShape.content;
-                    var strTempInfo = strTempDeletePolyInfo.split(',');
-                    var intIndex = strTempInfo[0].indexOf(":");
-                    var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
-                    for (var j = 0; j < arrayFieldsNames.length; j++) {
-                        if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
-                            var areaPolyTemp = google.maps.geometry.spherical.computeArea(newShape.getPath());
-                            arrayFieldsArea[j] = areaPolyTemp;
-                        }
-                    }
-                });
-                SetLable(newShape, person);
-            }
-            strDrawnAOI += newShape.content;
-
-            google.maps.event.addListener(newShape, 'click', function () {
-                setSelection(newShape);
-            });
-            setSelection(newShape);
-        }
-
-    });
-    // Clear the current selection when the drawing mode is changed, or when the
-    // map is clicked.
-    google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
-    google.maps.event.addListener(map, 'click', clearSelection);
-    google.maps.event.addDomListener(document.getElementById('bntDelete1'), 'click', deleteSelectedShape);
-    google.maps.event.addDomListener(document.getElementById('bntInfo'), 'click', showSelectedShapeInfo);
-    //google.maps.event.addDomListener(document.getElementById('savebutton'), 'click', saveSelectedShapeInfo);
-    google.maps.event.addDomListener(window, 'load', initialize);
-    findAddress("United States");
-    //
-    var inputLatLng = document.getElementById("Textlatlng").value;
-    if (inputLatLng != "") {
-        codeLatLng(inputLatLng);
-        document.getElementById("Textlatlng").value = "";
-    }
-    var inputAddress = document.getElementById("TextAddress").value
-    if (inputAddress != "") {
-        codeAddress(inputAddress);
-        document.getElementById("TextAddress").value = "";
-    }
-
-    if (strDrawnAOI != "") {
-        document.getElementById("polyTypeFarm").checked = false;
-        document.getElementById("polyTypeField").checked = true;
-    }
-    else {
-        document.getElementById("polyTypeFarm").checked = true;
-        document.getElementById("polyTypeField").checked = false;
-    }
-
-    var btnFieldClick = document.getElementById('polyTypeField');
-    btnFieldClick.onclick = handlerFieldClick;
-
-    var btnFarmClick = document.getElementById('polyTypeFarm');
-    btnFarmClick.onclick = handlerFarmClick;
-
-    if (boundsPreDraw != null) {
-        map.fitBounds(boundsPreDraw);
-    }
-    //add counties
-    var layer = new google.maps.FusionTablesLayer({
-        query: {
-            select: locationColumn,
-            from: tableId
-        },
-        styles: [{
-            polygonOptions: {
-                fillColor: '#FFFFFF',
-                fillOpacity: 0.01,
-                strokeColor: '#FF0000',
-                strokeWeight: 1
-            }
-        }],
-        map: map
-    });
-
-    google.maps.event.addDomListener(document.getElementById('countyselect'),
-    'change', function () {
-        updateMap(layer, tableId, locationColumn);
-    });
+function turnOffControls() {
+    document.getElementById("dvForm").style.display = "none";
+    document.getElementById("map").style.display = "none";
+    document.getElementById("dvWait").style.display = "";
 }
 
-function drawPreSavedAOI(strDrawnAOI) {
-    // parse the information when ready creating a table of information
-    x = strDrawnAOI.split('field:');
-    // extract the coordinates and store them in the array countyCoordinates
-    for (i = 0; i < x.length; i++) {
-        var arrayIfXY = x[i].split(', ');
-        var newShape;
-        var countyCoordinates = [];
-        var points = [];
-        var a;
-        var n;
-        var strTempName = "";
-        if (arrayIfXY[0].indexOf('farm:') != -1) {
-            //farm
-            strFarmName = arrayIfXY[0].slice(6, arrayIfXY[0].length);
-            strFarmXY = arrayIfXY[1];
-            a = arrayIfXY[1].split(' ');
-            for (var j = 0; j < a.length - 1; j++) {
-                if (a[j] != "") {
-                    var strCoor = a[j].split(',');
-                    var Latit = parseFloat(strCoor[1]);
-                    var Longit = parseFloat(strCoor[0]);
-                    var ll = new google.maps.LatLng(Latit, Longit);
-                    points.push(ll);
+function showText(text) {
+    switch (text) {
+        case "UploadShow":
+            //document.getElementById("_lblNote1").style.display = "";
+            document.getElementById("lblNote2").style.display = "";
+            document.getElementById("imgUpload").onclick = function onclick(event) { return showText('UploadHide') };
+            document.getElementById("imgUpload").src = "/serve_image/delete.png";
+            break;
+        case "UploadHide":
+            //document.getElementById("_lblNote1").style.display = "none";
+            document.getElementById("lblNote2").style.display = "none";
+            document.getElementById("imgUpload").onclick = function onclick(event) { return showText('UploadShow') };
+            document.getElementById("imgUpload").src = "/serve_image/add.png";
+            break;
+        case "ZoomInShow":
+            document.getElementById("lblNoteNavigation").style.display = "";
+            document.getElementById("imgZoomIn").onclick = function onclick(event) { return showText('ZoomInHide') };
+            document.getElementById("imgZoomIn").src = "/serve_image/delete.png";
+            break;
+        case "ZoomInHide":
+            document.getElementById("lblNoteNavigation").style.display = "none";
+            document.getElementById("imgZoomIn").onclick = function onclick(event) { return showText('ZoomInShow') };
+            document.getElementById("imgZoomIn").src = "/serve_image/add.png";
+            break;
+        case "HowToDrawShow":
+            document.getElementById("lblToolsNote1").style.display = "";
+            document.getElementById("lblToolsNote2").style.display = "";
+            document.getElementById("lblToolsNote3").style.display = "";
+            document.getElementById("lblToolsNote4").style.display = "";
+            document.getElementById("lblToolsNote5").style.display = "";
+            document.getElementById("imgHowToDraw").onclick = function onclick(event) { return showText('HowToDrawHide') };
+            document.getElementById("imgHowToDraw").src = "/serve_image/delete.png";
+            break;
+        case "HowToDrawHide":
+            document.getElementById("lblToolsNote1").style.display = "none";
+            document.getElementById("lblToolsNote2").style.display = "none";
+            document.getElementById("lblToolsNote3").style.display = "none";
+            document.getElementById("lblToolsNote4").style.display = "none";
+            document.getElementById("lblToolsNote5").style.display = "none";
+            document.getElementById("imgHowToDraw").onclick = function onclick(event) { return showText('HowToDrawShow') };
+            document.getElementById("imgHowToDraw").src = "/serve_image/add.png";
+            break;
+        case "CopyShow":
+            document.getElementById("lblNote5").style.display = "";
+            document.getElementById("imgCopy").onclick = function onclick(event) { return showText('CopyHide') };
+            document.getElementById("imgCopy").src = "/serve_image/delete.png";
+            break;
+        case "CopyHide":
+            document.getElementById("lblNote5").style.display = "none";
+            document.getElementById("imgCopy").onclick = function onclick(event) { return showText('CopyShow') };
+            document.getElementById("imgCopy").src = "/serve_image/add.png";
+            break;
+    }
+    return false;
+}
+
+function clearSelection() {
+    if (document.getElementById("polyTypeFarm").checked == false && document.getElementById("polyTypeField").checked == false && drawingManager.drawingMode != null) {
+        alert('Please specify the Area of Interest type: ' + lblFarm.innerHTML + " or " + lblFiled.innerHTML + '?');
+        document.getElementById("polyTypeFarm").checked = true;
+    }
+    if (strFarmName != null && document.getElementById("polyTypeFarm").checked == true && drawingManager.drawingMode != null) {
+        if (strFarmName != "") {
+            alert('Only one ' + lblFarm.innerHTML + ' can be selected.');
+            document.getElementById("polyTypeField").checked = true;
+        }
+    }
+    if (selectedShape) {
+        selectedShape.setEditable(false);
+        selectedShape = null;
+    }
+}
+
+function setSelection(shape) {
+    clearSelection();
+    selectedShape = shape;
+    shape.setEditable(true);
+    if (shape.content.indexOf('farm:') == -1) {
+        showSelectedShapeInfo();
+    }
+
+    if (document.getElementById("polyTypeField").checked) {
+        google.maps.event.addListener(shape.getPath(), 'insert_at', function () {
+
+            var strTempDeletePolyInfo = shape.content;
+            var strTempInfo = strTempDeletePolyInfo.split(',');
+            var intIndex = strTempInfo[0].indexOf(":");
+            var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
+            for (var j = 0; j < arrayFieldsNames.length; j++) {
+                if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
+                    var areaPolyTemp = google.maps.geometry.spherical.computeArea(shape.getPath());
+                    arrayFieldsArea[j] = areaPolyTemp;
                 }
             }
-            newShape = new google.maps.Polygon({
-                paths: points,
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 1,
-                fillColor: '#1E90FF',
-                fillOpacity: 0.3
-            });
-            newShape.content = arrayIfXY[0] + ", ";
-            boundsPreDraw = getBoundsForPoly(newShape);
-            var polyCenter = strFarmXY.split(' ');
-            inputStr = polyCenter[0];
-            codeLatLngState(function (addr) {
-                document.getElementById("StateAbbr").value = addr;
-            });
+        });
+        google.maps.event.addListener(shape.getPath(), 'set_at', function () {
 
-            codeLatLngCountry(function (addr) {
-                document.getElementById("CountryName").value = addr;
-            });
+            var strTempDeletePolyInfo = shape.content;
+            var strTempInfo = strTempDeletePolyInfo.split(',');
+            var intIndex = strTempInfo[0].indexOf(":");
+            var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
+            for (var j = 0; j < arrayFieldsNames.length; j++) {
+                if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
+                    var areaPolyTemp = google.maps.geometry.spherical.computeArea(shape.getPath());
+                    arrayFieldsArea[j] = areaPolyTemp;
+                }
+            }
+        });
+        google.maps.event.addListener(shape.getPath(), 'remove_at', function () {
+            var strTempDeletePolyInfo = shape.content;
+            var strTempInfo = strTempDeletePolyInfo.split(',');
+            var intIndex = strTempInfo[0].indexOf(":");
+            var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
+            for (var j = 0; j < arrayFieldsNames.length; j++) {
+                if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
+                    var areaPolyTemp = google.maps.geometry.spherical.computeArea(shape.getPath());
+                    arrayFieldsArea[j] = areaPolyTemp;
+                }
+            }
+        });
 
-            codeLatLngStateLong(function (addr) {
-                document.getElementById("StateName").value = addr;
-            });
+    }
+    if (shape.content.indexOf('field') != -1) {
+        var vertices = shape.getPath();
+        inputStr = vertices.getAt(0).lng() + "," + vertices.getAt(0).lat();
+        codeLatLngCountry(function (addr) {
+            document.getElementById("CountryName").value = addr;
+        });
 
-            codeLatLngCounty(function (addr) {
-                document.getElementById("CountyName").value = addr;
-            });
+        codeLatLngStateLong(function (addr) {
+            document.getElementById("StateName").value = addr;
+        });
+
+
+        codeLatLngState(function (addr) {
+            document.getElementById("StateAbbr").value = addr;
+        });
+
+        codeLatLngCounty(function (addr) {
+            document.getElementById("CountyName").value = addr;
+        });
+        selectedShape.set('fillColor', '#FF1493');
+    } else {
+        selectedShape.set('fillColor', '#FF1493');
+    }
+}
+
+function SetLable(shape, lable) {
+    var regionsOptions;
+    var regionLabel;
+    var bounds = new google.maps.LatLngBounds();
+    var i;
+    var coordinates = shape.getPath().getArray();
+    var totalLat = 0;
+    var totalLong = 0;
+
+    for (i = 0; i < coordinates.length; i++) {
+        totalLat = totalLat + coordinates[i].lat();
+        totalLong = totalLong + coordinates[i].lng();
+    }
+    totalLat = totalLat / coordinates.length;
+    totalLong = totalLong / coordinates.length;
+    var latLng = new google.maps.LatLng(totalLat, totalLong);
+
+    regionsOptions = {
+        content: lable,
+        boxStyle: { textAlign: "left",
+            fontSize: "14px",
+            whiteSpace: "nowrap",
+            lineHeight: "16px",
+            fontWeight: "bold",
+            fontFamily: "Tahoma",
+            color: "white"
+        },
+        disableAutoPan: true,
+        position: latLng,
+        closeBoxURL: "",
+        isHidden: false,
+        pane: "floatPane",
+        enableEventPropagation: true,
+        boxClass: "regionLabel"
+    };
+    regionLabel = new InfoBox(regionsOptions);
+    if (lable == "DeleteLabel") {
+        regionsOptions = { content: "" };
+        regionLabel.open(map)
+    }   //regionLabel.setMap(null) }   //regionLabel.close(map);
+    else { regionLabel.open(map); }
+}
+
+function deleteSelectedShape() {
+    if (selectedShape) {
+        selectedShape.setMap(null);
+        // Find and remove item from an array
+        var i = shapes.indexOf(selectedShape);
+        if (i != -1) {
+            shapes.splice(i, 1);
+        }
+
+        // Delete polygon's content
+        var strTempDeletePolyInfo = selectedShape.content;
+        var strTempInfo = strTempDeletePolyInfo.split(',');
+        var intIndex = strTempInfo[0].indexOf(":");
+        var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
+        if (strTempDeletePolyName == strFarmName.replace(/^\s+|\s+$/g, '')) {
+            strFarmName = "";
+            strFarmXY = "";
+            alert('You just deleted a ' + lblFarm.innerHTML);
         }
         else {
-            //field
-            arrayFieldsNames.push(arrayIfXY[0].slice(1, arrayIfXY[0].length));
-            arrayFieldsXY.push(arrayIfXY[2]);
-            a = arrayIfXY[2].trim().split(' ');
-            for (var jfield = 0; jfield < a.length - 1; jfield++) {
-                if (a[jfield] != "") {
-                    var strCoorfield = a[jfield].split(',');
-                    var fieldLatit = parseFloat(strCoorfield[1]);
-                    var fieldLongit = parseFloat(strCoorfield[0]);
-                    var fieldll = new google.maps.LatLng(fieldLatit, fieldLongit);
-                    points.push(fieldll);
+            for (var j = 0; j < arrayFieldsNames.length; j++) {
+                if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
+                    arrayFieldsNames.splice(j, 1);
+                    arrayFieldsArea.splice(j, 1);
+                    arrayFieldsXY.splice(j, 1);
+                    alert('You just deleted a ' + lblField.attributes[2].value);
                 }
             }
-            newShape = new google.maps.Polygon({
-                paths: points,
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 1,
-                fillColor: '#FF1493',
-                fillOpacity: 0.3
-            });
-            var areaPolyTemp = google.maps.geometry.spherical.computeArea(newShape.getPath().getArray());
-            arrayFieldsArea.push(areaPolyTemp);
-            newShape.content = "field: ";
-            newShape.content += arrayIfXY[0] + ", " + arrayIfXY[1] + ", ";
-            SetLable(newShape, arrayIfXY[0].slice(1, arrayIfXY[0].length));
-            //added to just have the field part of the map
-            shapes.push(newShape);
-            newShape.setMap(map);
 
-            google.maps.event.addListener(newShape, 'click', function () {
-                this.setEditable(true);
-                setSelection(this);
-            });
         }
+
+        if (shapes.length == 0) {
+            document.getElementById("polyTypeFarm").checked = true;
+        }
+
     }
 }
 
-function getBoundsForPoly(poly) {
-    var bounds = new google.maps.LatLngBounds;
-    poly.getPath().forEach(function (latLng) {
-        bounds.extend(latLng);
+function showSelectedShapeInfo() {
+    if (selectedShape) {
+        var strTempInfo = selectedShape.content.split(':');
+        var intIndex = strTempInfo[1].indexOf(",");
+        var strFiledName = strTempInfo[1].slice(1, intIndex);
+        var bounds = new google.maps.LatLngBounds();
+        var polyCenter = bounds.getCenter();
+        inputStr = polyCenter.lat() + "," + polyCenter.lng();
+        var myLatlng = new google.maps.LatLng(inputStr);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            labelContent: strFiledName,
+            labelAnchor: new google.maps.Point(95, 20),
+            labelClass: "labels",
+            labelStyle: { opacity: 0.75 },
+            zIndex: 999999,
+            map: map
+        })
+
+        google.maps.event.addListener(selectedShape, 'click', function (e) {
+            var content = "<div class='infowindow'>";
+            content += lblField.attributes[2].value + "'s Name: " + strFiledName + "<br/>";
+            content += "Current location's latitude is: " + e.latLng.lat() + ", ";
+            content += "longitude is: " + e.latLng.lng() + "</div>";
+
+            HandleInfoWindow(e.latLng, content);
+        });
+    }
+}
+
+function codeLatLng(inputLatLng) {
+    var input;
+    if (document.getElementById('latlng').value != "") {
+        input = document.getElementById('latlng').value
+    }
+    else {
+        input = inputLatLng;
+    }
+    document.getElementById("Textlatlng").value = input;
+    var latlngStr = input.split(',', 2);
+    var lat = parseFloat(latlngStr[0]);
+    var lng = parseFloat(latlngStr[1]);
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+                map.setCenter(results[1].geometry.location);
+                map.setZoom(20);
+                marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map
+                });
+                infowindow.setContent(results[1].formatted_address);
+                infowindow.open(map, marker);
+            } else {
+                alert('No results found');
+            }
+        } else {
+            alert('Geocoder failed due to: ' + status);
+        }
     });
-    return bounds;
+}
+
+function codeAddress(inputAddress) {
+    var address;
+    if (document.getElementById('address').value != "") {
+        address = document.getElementById('address').value
+    }
+    else {
+        address = inputAddress;
+    }
+    document.getElementById("TextAddress").value = address;
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            map.setZoom(20);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
 }
 
 function codeLatLngState(callback) {
@@ -491,135 +494,6 @@ function codeLatLngCounty(callback) {
     }
 }
 
-function SetLable(shape, lable) {
-    var regionsOptions;
-    var regionLabel;
-    var bounds = new google.maps.LatLngBounds();
-    var i;
-    var coordinates = shape.getPath().getArray();
-    var totalLat = 0;
-    var totalLong = 0;
-
-    for (i = 0; i < coordinates.length; i++) {
-        totalLat = totalLat + coordinates[i].lat();
-        totalLong = totalLong + coordinates[i].lng();
-    }
-    totalLat = totalLat / coordinates.length;
-    totalLong = totalLong / coordinates.length;
-    var latLng = new google.maps.LatLng(totalLat, totalLong);
-
-    regionsOptions = {
-        content: lable,
-        boxStyle: { textAlign: "left",
-            fontSize: "14px",
-            whiteSpace: "nowrap",
-            lineHeight: "16px",
-            fontWeight: "bold",
-            fontFamily: "Tahoma",
-            color: "white"
-        },
-        disableAutoPan: true,
-        position: latLng,
-        closeBoxURL: "",
-        isHidden: false,
-        pane: "floatPane",
-        enableEventPropagation: true,
-        boxClass: "regionLabel"
-    };
-    regionLabel = new InfoBox(regionsOptions);
-    if (lable == "DeleteLabel") {
-        regionsOptions = { content: "" };
-        regionLabel.open(map)
-    }   //regionLabel.setMap(null) }   //regionLabel.close(map);
-    else { regionLabel.open(map); }
-}
-
-function clearSelection() {
-    if (document.getElementById("polyTypeFarm").checked == false && document.getElementById("polyTypeField").checked == false && drawingManager.drawingMode != null) {
-        alert('Please specify the Area of Interest type: ' + lblFarm.innerHTML + " or " + lblFiled.innerHTML + '?');
-        document.getElementById("polyTypeFarm").checked = true;
-    }
-    if (strFarmName != null && document.getElementById("polyTypeFarm").checked == true && drawingManager.drawingMode != null) {
-        if (strFarmName != "") {
-            alert('Only one ' + lblFarm.innerHTML + ' can be selected.');
-            document.getElementById("polyTypeField").checked = true;
-        }
-    }
-    if (selectedShape) {
-        selectedShape.setEditable(false);
-        selectedShape = null;
-    }
-}
-
-function deleteSelectedShape() {
-    if (selectedShape) {
-        selectedShape.setMap(null);
-        // Find and remove item from an array
-        var i = shapes.indexOf(selectedShape);
-        if (i != -1) {
-            shapes.splice(i, 1);
-        }
-
-        // Delete polygon's content
-        var strTempDeletePolyInfo = selectedShape.content;
-        var strTempInfo = strTempDeletePolyInfo.split(',');
-        var intIndex = strTempInfo[0].indexOf(":");
-        var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
-        if (strTempDeletePolyName == strFarmName.replace(/^\s+|\s+$/g, '')) {
-            strFarmName = "";
-            strFarmXY = "";
-            alert('You just deleted a ' + lblFarm.innerHTML);
-        }
-        else {
-            for (var j = 0; j < arrayFieldsNames.length; j++) {
-                if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
-                    arrayFieldsNames.splice(j, 1);
-                    arrayFieldsArea.splice(j, 1);
-                    arrayFieldsXY.splice(j, 1);
-                    alert('You just deleted a ' + lblField.attributes[2].value);
-                }
-            }
-
-        }
-
-        if (shapes.length == 0) {
-            document.getElementById("polyTypeFarm").checked = true;
-        }
-
-    }
-}
-
-function showSelectedShapeInfo() {
-    if (selectedShape) {
-        var strTempInfo = selectedShape.content.split(':');
-        var intIndex = strTempInfo[1].indexOf(",");
-        var strFiledName = strTempInfo[1].slice(1, intIndex);
-        var bounds = new google.maps.LatLngBounds();
-        var polyCenter = bounds.getCenter();
-        inputStr = polyCenter.lat() + "," + polyCenter.lng();
-        var myLatlng = new google.maps.LatLng(inputStr);
-
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            labelContent: strFiledName,
-            labelAnchor: new google.maps.Point(95, 20),
-            labelClass: "labels",
-            labelStyle: { opacity: 0.75 },
-            zIndex: 999999,
-            map: map
-        })
-
-        google.maps.event.addListener(selectedShape, 'click', function (e) {
-            var content = "<div class='infowindow'>";
-            content += lblField.attributes[2].value + "'s Name: " + strFiledName + "<br/>";
-            content += "Current location's latitude is: " + e.latLng.lat() + ", ";
-            content += "longitude is: " + e.latLng.lng() + "</div>";
-
-            HandleInfoWindow(e.latLng, content);
-        });
-    }
-}
-
 function findAddress(address) {
 
     var addressStr = document.getElementById("stateselect")[document.getElementById("stateselect").selectedIndex].text;
@@ -658,167 +532,6 @@ function findAddress(address) {
             }
         });
     }
-}
-
-function codeLatLng(inputLatLng) {
-    var input;
-    if (document.getElementById('latlng').value != "") {
-        input = document.getElementById('latlng').value
-    }
-    else {
-        input = inputLatLng;
-    }
-    document.getElementById("Textlatlng").value = input;
-    var latlngStr = input.split(',', 2);
-    var lat = parseFloat(latlngStr[0]);
-    var lng = parseFloat(latlngStr[1]);
-    var latlng = new google.maps.LatLng(lat, lng);
-    geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-                map.setCenter(results[1].geometry.location);
-                map.setZoom(20);
-                marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map
-                });
-                infowindow.setContent(results[1].formatted_address);
-                infowindow.open(map, marker);
-            } else {
-                alert('No results found');
-            }
-        } else {
-            alert('Geocoder failed due to: ' + status);
-        }
-    });
-}
-
-function handlerFieldClick() {
-    var btnFarmClick = document.getElementById('polyTypeFarm').style.display;
-    if (strDrawnAOI == "" && btnFarmClick != 'none') {
-        if (strFarmName == null) {
-            alert('Please select a ' + lblFarm.innerHTML + ' first, then select the ' + lblField.attributes[2].value + 's.');
-            document.getElementById("polyTypeFarm").checked = true;
-        }
-    }
-    else {
-        if (strFarmName == "" && btnFarmClick != 'none') {
-            alert('Please select a ' + lblFarm.innerHTML + ' first, then select the ' + lblField.attributes[2].value + 's.');
-            document.getElementById("polyTypeFarm").checked = true;
-        }
-    }
-}
-
-function handlerFarmClick() {
-    if (strDrawnAOI != "") {
-        if (strFarmName != "") {
-            alert('Only one ' + lblFarm.innerHTML + ' is allowed.');
-            document.getElementById("polyTypeField").checked = true;
-        }
-    }
-}
-
-function codeAddress(inputAddress) {
-    var address;
-    if (document.getElementById('address').value != "") {
-        address = document.getElementById('address').value
-    }
-    else {
-        address = inputAddress;
-    }
-    document.getElementById("TextAddress").value = address;
-    geocoder.geocode({ 'address': address }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            map.setCenter(results[0].geometry.location);
-            map.setZoom(20);
-            var marker = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location
-            });
-        } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-        }
-    });
-}
-
-function setSelection(shape) {
-    clearSelection();
-    selectedShape = shape;
-    shape.setEditable(true);
-    if (shape.content.indexOf('farm:') == -1) {
-        showSelectedShapeInfo();
-    }
-
-    if (document.getElementById("polyTypeField").checked) {
-        google.maps.event.addListener(shape.getPath(), 'insert_at', function () {
-
-            var strTempDeletePolyInfo = shape.content;
-            var strTempInfo = strTempDeletePolyInfo.split(',');
-            var intIndex = strTempInfo[0].indexOf(":");
-            var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
-            for (var j = 0; j < arrayFieldsNames.length; j++) {
-                if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
-                    var areaPolyTemp = google.maps.geometry.spherical.computeArea(shape.getPath());
-                    arrayFieldsArea[j] = areaPolyTemp;
-                }
-            }
-        });
-        google.maps.event.addListener(shape.getPath(), 'set_at', function () {
-
-            var strTempDeletePolyInfo = shape.content;
-            var strTempInfo = strTempDeletePolyInfo.split(',');
-            var intIndex = strTempInfo[0].indexOf(":");
-            var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
-            for (var j = 0; j < arrayFieldsNames.length; j++) {
-                if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
-                    var areaPolyTemp = google.maps.geometry.spherical.computeArea(shape.getPath());
-                    arrayFieldsArea[j] = areaPolyTemp;
-                }
-            }
-        });
-        google.maps.event.addListener(shape.getPath(), 'remove_at', function () {
-            var strTempDeletePolyInfo = shape.content;
-            var strTempInfo = strTempDeletePolyInfo.split(',');
-            var intIndex = strTempInfo[0].indexOf(":");
-            var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
-            for (var j = 0; j < arrayFieldsNames.length; j++) {
-                if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
-                    var areaPolyTemp = google.maps.geometry.spherical.computeArea(shape.getPath());
-                    arrayFieldsArea[j] = areaPolyTemp;
-                }
-            }
-        });
-
-    }
-    if (shape.content.indexOf('farm') != -1) {
-        var vertices = shape.getPath();
-        inputStr = vertices.getAt(0).lng() + "," + vertices.getAt(0).lat();
-        codeLatLngCountry(function (addr) {
-            document.getElementById("CountryName").value = addr;
-        });
-
-        codeLatLngStateLong(function (addr) {
-            document.getElementById("StateName").value = addr;
-        });
-
-
-        codeLatLngState(function (addr) {
-            document.getElementById("StateAbbr").value = addr;
-        });
-
-        codeLatLngCounty(function (addr) {
-            document.getElementById("CountyName").value = addr;
-        });
-        selectedShape.set('fillColor', '#1E90FF');
-    } else {
-        selectedShape.set('fillColor', '#FF1493');
-    }
-}
-
-function HandleInfoWindow(latLng, content) {
-    infoWindow.setContent(content);
-    infoWindow.setPosition(latLng);
-    infoWindow.open(map);
 }
 
 function submitSelection(type) {
@@ -877,24 +590,351 @@ function submitSelection(type) {
     }
 }
 
-function updateMap(layer, tableId, locationColumn) {
-    var delivery = document.getElementById('countyselect').value;
-    if (delivery) {
-        layer.setOptions({
-            query: {
-                select: locationColumn,
-                from: tableId,
-                where: "'State-County' = '" + delivery + "'"
-            }
-        });
-    } else {
-        layer.setOptions({
-            query: {
-                select: locationColumn,
-                from: tableId
-            }
-        });
+function initialize() {
+    //put lables in hidden input controls
+    //document.getElementById("bntDelete").value = document.getElementById("lblDelete").value;
+    //latLng = document.getElementById("latlng").value
+    //document.getElementById("lblZoomToState").label = document.getElementById("lblZoomState").value;
+    var tableId = '0IMZAFCwR-t7jZnVzaW9udGFibGVzOjIxMDIxNw';
+    var locationColumn = 'State-County';
+    var lat;
+    var long;
+    var zoomSize;
+    if (document.getElementById("hdnLat").value == "" || document.getElementById("hdnLong").value == "") { lat = 39.10960; long = -96.5; zoomSize = 5; }
+    else { lat = document.getElementById("hdnLat").value; long = document.getElementById("hdnLong").value; zoomSize = 10; }
+
+    geocoder = new google.maps.Geocoder();
+    //
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: zoomSize,
+        center: new google.maps.LatLng(lat, long),
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+        mapTypeControl: true,
+        navigationControl: true,
+        scaleControl: true,
+        overviewMapControl: true,
+        fullscreenControl: true,
+        zoomControl: true
+    });
+    infoWindow = new google.maps.InfoWindow({
+        maxWidth: 520,
+        styles: [{ "featureType": "water",
+            "stylers": [{ "visibility": "on" }, { "color": "#000000" }, { "hue": "#000000"}]
+        }]
+    });
+    //
+    var polyOptions = {
+        strokeWeight: 0,
+        fillOpacity: 0.3,
+        editable: true
+    };
+    // Creates a drawing manager attached to the map that allows the user to draw
+    // markers, lines, and shapes. //google.maps.drawing.OverlayType.POLYGON
+    drawingManager = new google.maps.drawing.DrawingManager({
+        drawingMode: null,
+        drawingControl: true,
+        drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: [google.maps.drawing.OverlayType.POLYGON]
+        },
+        markerOptions: {
+            draggable: true
+        },
+        polylineOptions: {
+            editable: true
+        },
+        rectangleOptions: polyOptions,
+        circleOptions: polyOptions,
+        polygonOptions: polyOptions,
+        map: map
+    });
+    //strDrawnAOI = '<%= @preDrawnAOI %>';
+    strDrawnAOI=document.getElementById("preDrawnAOI").value;
+    //document.getElementById("savedata").value = "";
+    //if (strDrawnAOI.indexOf('farm') != -1 || strDrawnAOI.indexOf('field') != -1) {
+    if (strDrawnAOI.indexOf('field') != -1) {
+        drawPreSavedAOI(strDrawnAOI);
     }
+    google.maps.event.addListener(drawingManager, 'overlaycomplete', function (e) {
+        if (e.type != google.maps.drawing.OverlayType.MARKER) {
+            // Switch back to non-drawing mode after drawing a shape.
+            drawingManager.setDrawingMode(null);
+            // Add an event listener that selects the newly-drawn shape when the user
+            // mouses down on it.
+            var newShape = e.overlay;
+            shapes.push(newShape);
+            newShape.type = e.type;
+            document.getElementById("polyTypeFarm").checked=false
+            if (document.getElementById("polyTypeFarm").checked) {
+                newShape.content = "farm: ";
+                var person = prompt('Please enter the ' + lblFarm.innerHTML + ' name:', lblFarm.innerHTML);
+                if (person != null && person != "") {
+                    newShape.content += person + ", ";
+                    strFarmName = person;
+                }
+                else {
+                    alert("Your did not specify " + lblFarm.innerHTML + " name! A default value will be assigned.");
+                    person = "farm";
+                    newShape.content += person + ", ";
+                    strFarmName = person;
+                }
+            } else {
+                newShape.content = "field: ";
+                person = prompt("Please enter the " + lblField.attributes[2].value + " name:", lblField.attributes[2].value.concat(shapes.length));
+                if (person != null && person != "") {
+                    newShape.content += person + ", ";
+                    arrayFieldsNames.push(person);
+                }
+                else {
+                    alert("You did not specify " + lblField.attributes[2].value + " name! A default value will be assigned.");
+                    person = "field".concat(shapes.length - 1);
+                    newShape.content += person + ", ";
+                    arrayFieldsNames.push(person);
+                }
+
+                var areaPoly = google.maps.geometry.spherical.computeArea(newShape.getPath());
+                newShape.content += "area: " + areaPoly + ", ";
+                // a brand new polygon
+                arrayFieldsArea.push(areaPoly);
+                // if the user modifies polygon
+                google.maps.event.addListener(newShape.getPath(), 'insert_at', function () {
+
+                    //add a new point;
+                    var strTempDeletePolyInfo = newShape.content;
+                    var strTempInfo = strTempDeletePolyInfo.split(',');
+                    var intIndex = strTempInfo[0].indexOf(":");
+                    var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
+                    for (var j = 0; j < arrayFieldsNames.length; j++) {
+                        if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
+                            var areaPolyTemp = google.maps.geometry.spherical.computeArea(newShape.getPath());
+                            arrayFieldsArea[j] = areaPolyTemp;
+                        }
+                    }
+                });
+                google.maps.event.addListener(newShape.getPath(), 'set_at', function () {
+
+                    //modify at point;
+                    var strTempDeletePolyInfo = newShape.content;
+                    var strTempInfo = strTempDeletePolyInfo.split(',');
+                    var intIndex = strTempInfo[0].indexOf(":");
+                    var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
+                    for (var j = 0; j < arrayFieldsNames.length; j++) {
+                        if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
+                            var areaPolyTemp = google.maps.geometry.spherical.computeArea(newShape.getPath());
+                            arrayFieldsArea[j] = areaPolyTemp;
+                        }
+                    }
+                });
+                google.maps.event.addListener(newShape.getPath(), 'remove_at', function () {
+                    //remove a point;
+                    var strTempDeletePolyInfo = newShape.content;
+                    var strTempInfo = strTempDeletePolyInfo.split(',');
+                    var intIndex = strTempInfo[0].indexOf(":");
+                    var strTempDeletePolyName = strTempInfo[0].substring(intIndex + 1).replace(/^\s+|\s+$/g, '');
+                    for (var j = 0; j < arrayFieldsNames.length; j++) {
+                        if (strTempDeletePolyName == arrayFieldsNames[j].replace(/^\s+|\s+$/g, '')) {
+                            var areaPolyTemp = google.maps.geometry.spherical.computeArea(newShape.getPath());
+                            arrayFieldsArea[j] = areaPolyTemp;
+                        }
+                    }
+                });
+                SetLable(newShape, person);
+            }
+            strDrawnAOI += newShape.content;
+
+            google.maps.event.addListener(newShape, 'click', function () {
+                setSelection(newShape);
+            });
+            setSelection(newShape);
+        }
+
+    });
+    // Clear the current selection when the drawing mode is changed, or when the
+    // map is clicked.
+    google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
+    google.maps.event.addListener(map, 'click', clearSelection);
+    google.maps.event.addDomListener(document.getElementById('bntDelete1'), 'click', deleteSelectedShape);
+    google.maps.event.addDomListener(document.getElementById('bntInfo'), 'click', showSelectedShapeInfo);
+    //google.maps.event.addDomListener(document.getElementById('savebutton'), 'click', saveSelectedShapeInfo);
+    google.maps.event.addDomListener(window, 'load', initialize);
+    findAddress("United States");
+    //
+    var inputLatLng = document.getElementById("Textlatlng").value;
+    if (inputLatLng != "") {
+        codeLatLng(inputLatLng);
+        document.getElementById("Textlatlng").value = "";
+    }
+    var inputAddress = document.getElementById("TextAddress").value
+    if (inputAddress != "") {
+        codeAddress(inputAddress);
+        document.getElementById("TextAddress").value = "";
+    }
+
+    if (strDrawnAOI != "") {
+        document.getElementById("polyTypeFarm").checked = false;
+        document.getElementById("polyTypeField").checked = true;
+    }
+    else {
+        document.getElementById("polyTypeFarm").checked = true;
+        document.getElementById("polyTypeField").checked = false;
+    }
+
+    var btnFieldClick = document.getElementById('polyTypeField');
+    btnFieldClick.onclick = handlerFieldClick;
+
+    var btnFarmClick = document.getElementById('polyTypeFarm');
+    btnFarmClick.onclick = handlerFarmClick;
+
+    if (boundsPreDraw != null) {
+        map.fitBounds(boundsPreDraw);
+    }
+    //add counties
+    var layer = new google.maps.FusionTablesLayer({
+        query: {
+            select: locationColumn,
+            from: tableId
+        },
+        styles: [{
+            polygonOptions: {
+                fillColor: '#FFFFFF',
+                fillOpacity: 0.01,
+                strokeColor: '#FF0000',
+                strokeWeight: 1
+            }
+        }],
+        map: map
+    });
+
+    google.maps.event.addDomListener(document.getElementById('countyselect'),
+    'change', function () {
+        updateMap(layer, tableId, locationColumn);
+    });
+}
+
+function handlerFieldClick() {
+    var btnFarmClick = document.getElementById('polyTypeFarm').style.display;
+    // if (strDrawnAOI == "" && btnFarmClick != 'none') {
+    //    if (strFarmName == null) {
+    //       alert('Please select a ' + lblFarm.innerHTML + ' first, then select the ' + lblField.attributes[2].value + 's.');
+    //        document.getElementById("polyTypeFarm").checked = true;
+    //    }
+    //}
+    //else {
+    //    if (strFarmName == "" && btnFarmClick != 'none') {
+    //        alert('Please select a ' + lblFarm.innerHTML + ' first, then select the ' + lblField.attributes[2].value + 's.');
+    //        document.getElementById("polyTypeFarm").checked = true;
+    //    }
+    //} 
+}
+
+function handlerFarmClick() {
+    //if (strDrawnAOI != "") {
+    //    if (strFarmName != "") {
+    //        alert('Only one ' + lblFarm.innerHTML + ' is allowed.');
+    //        document.getElementById("polyTypeField").checked = true;
+    //    }
+    //}
+}
+
+function drawPreSavedAOI(strDrawnAOI) {
+    // parse the information when ready creating a table of information
+    x = strDrawnAOI.split('field:');
+    // extract the coordinates and store them in the array countyCoordinates
+    for (i = 0; i < x.length; i++) {
+        var arrayIfXY = x[i].split(', ');
+        var newShape;
+        var countyCoordinates = [];
+        var points = [];
+        var a;
+        var n;
+        var strTempName = "";
+        if (arrayIfXY[0].indexOf('farm:') != -1) {
+            //farm
+            strFarmName = arrayIfXY[0].slice(6, arrayIfXY[0].length);
+            strFarmXY = arrayIfXY[1];
+            a = arrayIfXY[1].split(' ');
+            for (var j = 0; j < a.length - 1; j++) {
+                if (a[j] != "") {
+                    var strCoor = a[j].split(',');
+                    var Latit = parseFloat(strCoor[1]);
+                    var Longit = parseFloat(strCoor[0]);
+                    var ll = new google.maps.LatLng(Latit, Longit);
+                    points.push(ll);
+                }
+            }
+            newShape = new google.maps.Polygon({
+                paths: points,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 1,
+                fillColor: '#1E90FF',
+                fillOpacity: 0.3
+            });
+            newShape.content = arrayIfXY[0] + ", ";
+            boundsPreDraw = getBoundsForPoly(newShape);
+            var polyCenter = strFarmXY.split(' ');
+            inputStr = polyCenter[0];
+            codeLatLngState(function (addr) {
+                document.getElementById("StateAbbr").value = addr;
+            });
+
+            codeLatLngCountry(function (addr) {
+                document.getElementById("CountryName").value = addr;
+            });
+
+            codeLatLngStateLong(function (addr) {
+                document.getElementById("StateName").value = addr;
+            });
+
+            codeLatLngCounty(function (addr) {
+                document.getElementById("CountyName").value = addr;
+            });
+        }
+        else {
+            //field
+            arrayFieldsNames.push(arrayIfXY[0].slice(1, arrayIfXY[0].length));
+            arrayFieldsXY.push(arrayIfXY[2]);
+            a = arrayIfXY[2].trim().split(' ');
+            for (var jfield = 0; jfield < a.length - 1; jfield++) {
+                if (a[jfield] != "") {
+                    var strCoorfield = a[jfield].split(',');
+                    var fieldLatit = parseFloat(strCoorfield[1]);
+                    var fieldLongit = parseFloat(strCoorfield[0]);
+                    var fieldll = new google.maps.LatLng(fieldLatit, fieldLongit);
+                    points.push(fieldll);
+                }
+            }
+            newShape = new google.maps.Polygon({
+                paths: points,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 1,
+                fillColor: '#FF1493',
+                fillOpacity: 0.3
+            });
+            var areaPolyTemp = google.maps.geometry.spherical.computeArea(newShape.getPath().getArray());
+            arrayFieldsArea.push(areaPolyTemp);
+            newShape.content = "field: ";
+            newShape.content += arrayIfXY[0] + ", " + arrayIfXY[1] + ", ";
+            SetLable(newShape, arrayIfXY[0].slice(1, arrayIfXY[0].length));
+            //added to just have the field part of the map
+            shapes.push(newShape);
+            newShape.setMap(map);
+
+            google.maps.event.addListener(newShape, 'click', function () {
+                this.setEditable(true);
+                setSelection(this);
+            });
+        }
+    }
+}
+
+function getBoundsForPoly(poly) {
+    var bounds = new google.maps.LatLngBounds;
+    poly.getPath().forEach(function (latLng) {
+        bounds.extend(latLng);
+    });
+    return bounds;
 }
 
 function findCounty(address) {
@@ -928,68 +968,35 @@ function findCounty(address) {
     }
 }
 
-function turnOffControls() {
-    document.getElementById("dvForm").style.display = "none";
-    document.getElementById("map").style.display = "none";
-    document.getElementById("dvWait").style.display = "";
+function updateMap(layer, tableId, locationColumn) {
+    var delivery = document.getElementById('countyselect').value;
+    if (delivery) {
+        layer.setOptions({
+            query: {
+                select: locationColumn,
+                from: tableId,
+                where: "'State-County' = '" + delivery + "'"
+            }
+        });
+    } else {
+        layer.setOptions({
+            query: {
+                select: locationColumn,
+                from: tableId
+            }
+        });
+    }
 }
 
-function showText(text) {
-    switch (text) {
-        case "UploadShow":
-            //document.getElementById("_lblNote1").style.display = "";
-            document.getElementById("lblNote2").style.display = "";
-            document.getElementById("imgUpload").onclick = function onclick(event) { return showText('UploadHide') };
-            document.getElementById("imgUpload").src = "/serve_image/delete.png";
-            break;
-        case "UploadHide":
-            //document.getElementById("_lblNote1").style.display = "none";
-            document.getElementById("lblNote2").style.display = "none";
-            document.getElementById("imgUpload").onclick = function onclick(event) { return showText('UploadShow') };
-            document.getElementById("imgUpload").src = "/serve_image/add.png";
-            break;
-        case "ZoomInShow":
-            document.getElementById("lblNoteNavigation").style.display = "";
-            document.getElementById("imgZoomIn").onclick = function onclick(event) { return showText('ZoomInHide') };
-            document.getElementById("imgZoomIn").src = "/serve_image/delete.png";
-            break;
-        case "ZoomInHide":
-            document.getElementById("lblNoteNavigation").style.display = "none";
-            document.getElementById("imgZoomIn").onclick = function onclick(event) { return showText('ZoomInShow') };
-            document.getElementById("imgZoomIn").src = "/serve_image/add.png";
-            break;
-        case "HowToDrawShow":
-            document.getElementById("lblToolsNote1").style.display = "";
-            document.getElementById("lblToolsNote2").style.display = "";
-            document.getElementById("lblToolsNote3").style.display = "";
-            document.getElementById("lblToolsNote4").style.display = "";
-            document.getElementById("lblToolsNote5").style.display = "";
-            document.getElementById("imgHowToDraw").onclick = function onclick(event) { return showText('HowToDrawHide') };
-            document.getElementById("imgHowToDraw").src = "/serve_image/delete.png";
-            break;
-        case "HowToDrawHide":
-            document.getElementById("lblToolsNote1").style.display = "none";
-            document.getElementById("lblToolsNote2").style.display = "none";
-            document.getElementById("lblToolsNote3").style.display = "none";
-            document.getElementById("lblToolsNote4").style.display = "none";
-            document.getElementById("lblToolsNote5").style.display = "none";
-            document.getElementById("imgHowToDraw").onclick = function onclick(event) { return showText('HowToDrawShow') };
-            document.getElementById("imgHowToDraw").src = "/serve_image/add.png";
-            break;
-        case "CopyShow":
-            document.getElementById("lblNote5").style.display = "";
-            document.getElementById("imgCopy").onclick = function onclick(event) { return showText('CopyHide') };
-            document.getElementById("imgCopy").src = "/serve_image/delete.png";
-            break;
-        case "CopyHide":
-            document.getElementById("lblNote5").style.display = "none";
-            document.getElementById("imgCopy").onclick = function onclick(event) { return showText('CopyShow') };
-            document.getElementById("imgCopy").src = "/serve_image/add.png";
-            break;
-    }
-    return false;
+function HandleInfoWindow(latLng, content) {
+    infoWindow.setContent(content);
+    infoWindow.setPosition(latLng);
+    infoWindow.open(map);
 }
 
 window.onload = function() {
   initialize();
 };
+
+
+
