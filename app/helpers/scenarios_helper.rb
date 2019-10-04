@@ -275,7 +275,7 @@ module ScenariosHelper
 				bmp1 = scenario.bmps[0]
 			end
 		end
-		if (!bmp1==nil)
+		if !(bmp1==nil)
 			case bmp1.bmpsublist_id
 				when 3  #tile drain
 					subarea.idr = bmp1.depth * FT_TO_MM  # update the tile drain depth in mm.
@@ -518,6 +518,7 @@ module ScenariosHelper
 						add_buffer_operation(139, 79, 350, 1900, -64, 22, 1, scenario_id)
 						add_buffer_operation(139, 49, 0, 1400, 0, 22, 1, scenario_id)
 					else  # filter strip
+						
 						#line 2
 						subarea.number = 103
 						subarea.iops = soil_id
@@ -564,6 +565,7 @@ module ScenariosHelper
 						add_buffer_operation(139, 49, 0, 1400, 0, 22, 2, scenario_id)
 					end
 				when 13    #Filter Strip
+					if @bmp.width == 0 then return end
 					#line 2
 					subarea.number = 101
 					subarea.iops = soil_id
