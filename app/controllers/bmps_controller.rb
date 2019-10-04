@@ -188,7 +188,7 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_fs][:width] == "") then
   			if !(params[:bmp_cb3] == nil)
   				if params[:bmp_cb3] == "12" then
-  					create(13)   #riparian forest
+  					create(12)   #riparian forest
   				end
   				if params[:bmp_cb3] == "13" then
   					create(13)   #filter strip
@@ -400,8 +400,8 @@ class BmpsController < ApplicationController
         return stream_fencing(type)
       when 11
         return streambank_stabilization(type)
-      #when 12
-      #  return riparian_forest(type)
+      when 12
+        return riparian_forest(type)
       when 13
         return filter_strip(type)
       when 14
@@ -844,7 +844,7 @@ end
     return "OK"
   end    # end method
 
-### ID: 12
+### ID: 12 
   def riparian_forest(type)
     case type
       when "create"

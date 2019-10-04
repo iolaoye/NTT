@@ -241,6 +241,7 @@ module ScenariosHelper
 		if forestry && field_name == ROAD then
 			subarea.pec = 0
 		end
+
 		#/line 11
 		subarea.ny1 = 0
         subarea.ny2 = 0
@@ -275,7 +276,7 @@ module ScenariosHelper
 				bmp1 = scenario.bmps[0]
 			end
 		end
-		if (!bmp1==nil)
+		if !(bmp1==nil)
 			case bmp1.bmpsublist_id
 				when 3  #tile drain
 					subarea.idr = bmp1.depth * FT_TO_MM  # update the tile drain depth in mm.
@@ -518,6 +519,7 @@ module ScenariosHelper
 						add_buffer_operation(139, 79, 350, 1900, -64, 22, 1, scenario_id)
 						add_buffer_operation(139, 49, 0, 1400, 0, 22, 1, scenario_id)
 					else  # filter strip
+						
 						#line 2
 						subarea.number = 103
 						subarea.iops = soil_id
