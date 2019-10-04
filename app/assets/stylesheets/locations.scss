@@ -1,0 +1,63 @@
+   #map, html, body {
+    padding: 0;
+    margin: 0;
+    height: 10%;
+    }
+   
+    #dvPanel {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    float: right;
+    margin: 0px;
+    }
+
+    #color-palette {clear: both;}
+
+    .color-button {
+    width: 14px;
+    height: 14px;
+    font-size: 0;
+    margin: 2px;
+    float: left;
+    cursor: pointer;
+    }
+   
+    #delete-button {margin-top: 10px;}
+    
+    #info-button {margin-top: 10px;}
+
+    #savebutton {
+    margin-top: 10px;
+    }
+
+    #TOPNAV {
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    float: right;
+    }
+    
+    #dataPanel {margin-top: 10px;}
+    
+    p.margin{margin: 0; }
+
+    #textLong{width: 208px;}
+    
+    #lblFarm{ width: 60px; }
+    
+    #lblField { width: 59px; }
+    
+    #bntDelete {  width: 93px;  }        
+    .btnStyle {  background-color:#0033CC; font-weight: bold; font-style: italic; font-size:small; Color:White; }
+    
+    .trStyle
+    {
+        text-align:center;
+        font-size: 16px; font-weight: bold; font-style: italic; font-variant: normal; color: #000000; background-color: #99CCFF;
+    }
+    .tableStyle
+    {
+        width: 100%;
+        border-style: solid;
+        border-width:thin;
+    }

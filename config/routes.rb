@@ -69,6 +69,7 @@ NTTG3::Application.routes.draw do
   post 'projects/upload_project'
 
   resources :projects do
+    post 'locations/upload_shapefile'
     resources :fem_generals
     resources :fem_facilities
     resources :fem_machines

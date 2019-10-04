@@ -56,125 +56,380 @@
           <% if @scenario1 != "0" && @scenario1 != "" then %>
           <tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Animal Growth Results" %>
+							<a class="gvTotalText"><%= "Animal Growth Results" %></a>
+              <label><input type="checkbox" id="checkbox1"></label>
 						</th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.AGR) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.AGR)%></td>
+            <%# difference1 = @aplcat_results1.AGR - @aplcat_results2.AGR %>
+            <%# reduction1 = difference1 / @aplcat_results1.AGR * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
             <% end %>
-
-            <%# if @scenario2 != "0" && @scenario2 != "" then %>
-            <%# end %>
-            <%# if @scenario3 > "0" then %>
-            <%# end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.AGR)%></td>
+            <%# difference1 = @aplcat_results1.AGR - @aplcat_results3.AGR %>
+            <%# reduction1 = difference1 / @aplcat_results1.AGR * 100 %>
+            <td class= "gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
+            <% end %>
 					</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Animal Weights (lb|kg)" %></a></th>
+          <tr id = "row1" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Animal Weights (lb|kg)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_aws) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_aws) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_aws) %></td>
+            <% end %>
     			</tr>
 
 
           <tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Feed Intake Rates" %>
+							<a class="gvTotalText"><%= "Feed Intake Rates" %>
+              <label><input type="checkbox" id="checkbox2"></label>
 						</th>
-
-            <%# if @scenario2 != "0" && @scenario2 != "" then %>
-            <%# end %>
-            <%# if @scenario3 > "0" then %>
-            <%# end %>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.FIR) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.FIR)%></td>
+            <%# difference1 = @aplcat_results1.FIR - @aplcat_results2.FIR %>
+            <%# reduction1 = difference1 / @aplcat_results1.FIR * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.FIR)%></td>
+            <%# difference1 = @aplcat_results1.FIR - @aplcat_results3.FIR %>
+            <%# reduction1 = difference1 / @aplcat_results1.FIR * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
 					</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Dry Matter Intake  ('kg', daily|annual)" %></a></th>
+          <tr id = "row2" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Dry Matter Intake  ('kg', daily|annual)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_dmi) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_dmi) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_dmi) %></td>
+            <% end %>
     			</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Gross Energy Intake ('daily', Mcal|MJ)" %></a></th>
+          <tr id = "row3" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Gross Energy Intake ('daily', Mcal|MJ)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_gei) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_gei) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_gei) %></td>
+            <% end %>
     			</tr>
 
 
           <tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Water Intake Rates" %>
+							<a class="gvTotalText"><%= "Water Intake Rates" %>
+              <label><input type="checkbox" id="checkbox3"></label>
 						</th>
-
-            <%# if @scenario2 != "0" && @scenario2 != "" then %>
-            <%# end %>
-            <%# if @scenario3 > "0" then %>
-            <%# end %>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.WIR) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.WIR)%></td>
+            <%# difference1 = @aplcat_results1.WIR - @aplcat_results2.WIR %>
+            <%# reduction1 = difference1 / @aplcat_results1.WIR * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.WIR)%></td>
+            <%# difference1 = @aplcat_results1.WIR - @aplcat_results3.WIR %>
+            <%# reduction1 = difference1 / @aplcat_results1.WIR * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
 					</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Water Intake ('L/year', Emb_feed|drinking)" %></a></th>
+          <tr id = "row4" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Water Intake ('L/year')" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_wi) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_wi) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_wi) %></td>
+            <% end %>
+    			</tr>
+          <tr id = "row5" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Water Intake (Emb_feed|drinking)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_wi) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_wi) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_wi) %></td>
+            <% end %>
     			</tr>
 
 
           <tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Manure Excretion Results" %>
+							<a class="gvTotalText"><%= "Manure Excretion Results" %>
+              <label><input type="checkbox" id="checkbox4"></label>
 						</th>
-
-            <%# if @scenario2 != "0" && @scenario2 != "" then %>
-            <%# end %>
-            <%# if @scenario3 > "0" then %>
-            <%# end %>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.MER) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.MER)%></td>
+            <%# difference1 = @aplcat_results1.MER - @aplcat_results2.MER %>
+            <%# reduction1 = difference1 / @aplcat_results1.MER * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.MER)%></td>
+            <%# difference1 = @aplcat_results1.MER - @aplcat_results3.MER %>
+            <%# reduction1 = difference1 / @aplcat_results1.MER * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
 					</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Solid Manure excr. ('kg_daily', manu|manu_N)" %></a></th>
+          <tr id = "row6" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Solid Manure excr. ('kg_daily')" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_sme) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_sme) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_sme) %></td>
+            <% end %>
+    			</tr>
+          <tr id = "row7" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Solid Manure excr. (manu|manu_N)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_sme) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_sme) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_sme) %></td>
+            <% end %>
     			</tr>
 
 
           <tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Nigtrogen Balance Results" %>
+							<a class="gvTotalText"><%= "Nigtrogen Balance Results" %>
+              <label><input type="checkbox" id="checkbox5"></label>
 						</th>
-
-            <%# if @scenario2 != "0" && @scenario2 != "" then %>
-            <%# end %>
-            <%# if @scenario3 > "0" then %>
-            <%# end %>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.NBR) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.NBR)%></td>
+            <%# difference1 = @aplcat_results1.NBR - @aplcat_results2.NBR %>
+            <%# reduction1 = difference1 / @aplcat_results1.NBR * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.NBR)%></td>
+            <%# difference1 = @aplcat_results1.NBR - @aplcat_results3.NBR %>
+            <%# reduction1 = difference1 / @aplcat_results1.NBR * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
 					</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Nitrogen Intake (g/day|kg/year)" %></a></th>
+          <tr id = "row8" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Nitrogen Intake (g/day|kg/year)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_ni) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_ni) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_ni) %></td>
+            <% end %>
     			</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Total Nitrogen excretion (g/day|kg/year)" %></a></th>
+          <tr id = "row9" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Total Nitrogen excretion (g/day|kg/year)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_tne) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_tne) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_tne) %></td>
+            <% end %>
     			</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Total Nitrogen retained (g/day|kg/year)" %></a></th>
+          <tr id = "row10" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Total Nitrogen retained (g/day|kg/year)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_tnr) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_tnr) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_tnr) %></td>
+            <% end %>
     			</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Fecal Nitrogen excretion (g/day|kg/year)" %></a></th>
+          <tr id = "row11" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Fecal Nitrogen excretion (g/day|kg/year)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_fne) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_fne) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_fne) %></td>
+            <% end %>
     			</tr>
 
 
           <tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Grand Averages" %>
+							<a class="gvTotalText"><%= "Grand Averages" %>
+              <label><input type="checkbox" id="checkbox6"></label>
 						</th>
-
-            <%# if @scenario2 != "0" && @scenario2 != "" then %>
-            <%# end %>
-            <%# if @scenario3 > "0" then %>
-            <%# end %>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.GA) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.GA)%></td>
+            <%# difference1 = @aplcat_results1.GA - @aplcat_results2.GA %>
+            <%# reduction1 = difference1 / @aplcat_results1.GA * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.GA)%></td>
+            <%# difference1 = @aplcat_results1.GA - @aplcat_results3.GA %>
+            <%# reduction1 = difference1 / @aplcat_results1.GA * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
 					</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Urine Nitrogen excretion (g/day|kg/year)" %></a></th>
+          <tr id = "row12" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Urine Nitrogen excretion (g/day|kg/year)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_une) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_une) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_une) %></td>
+            <% end %>
     			</tr>
 
 
           <tr class="gvRowStyleOdd">
 						<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
-							<%= "Greenhouse gas Emissions" %>
+						<a class="gvTotalText"><%= "Greenhouse gas Emissions" %>
+              <label><input type="checkbox" id="checkbox7"></label>
 						</th>
-
-            <%# if @scenario2 != "0" && @scenario2 != "" then %>
-            <%# end %>
-            <%# if @scenario3 > "0" then %>
-            <%# end %>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.GGE) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" style="background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.GGE)%></td>
+            <%# difference1 = @aplcat_results1.GGE - @aplcat_results2.GGE %>
+            <%# reduction1 = difference1 / @aplcat_results1.GGE * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" style="background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.GGE)%></td>
+            <%# difference1 = @aplcat_results1.GGE - @aplcat_results3.GGE %>
+            <%# reduction1 = difference1 / @aplcat_results1.GGE * 100 %>
+            <td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
+            <% end %>
 					</tr>
-          <tr class="gvRowStyleEven">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Enteric methane emission (g/day|kg/year)" %></a></th>
+          <tr id = "row13" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Enteric methane emission (g/day)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_eme) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_eme) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_eme) %></td>
+            <% end %>
     			</tr>
-          <tr class="gvRowStyleEven">
-            <th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a id="show2" class="gvTotalText"><%= "Manure methane emission (g/day|kg/year)" %></a></th>
+          <tr id = "row14" class="gvRowStyleEven" style="display:none">
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Enteric methane emission (kg/year)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_eme) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_eme) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_eme) %></td>
+            <% end %>
+    			</tr>
+          <tr id = "row15" class="gvRowStyleEven" style="display:none">
+            <th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Manure methane emission (g/day)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_mme) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_mme) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_mme) %></td>
+            <% end %>
+          </tr>
+          <tr id = "row16" class="gvRowStyleEven" style="display:none">
+            <th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Manure methane emission (kg/year)" %></a></th>
+            <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%#= sprintf("%8.2f", @aplcat_results1.calf_mme) %></td>
+            <% if @scenario2 != "0" && @scenario2 != "" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.calf_mme) %></td>
+            <% end %>
+            <% if @scenario3 > "0" then %>
+            <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#CADCFF"><%#= sprintf("%8.2f", @aplcat_results3.calf_mme) %></td>
+            <% end %>
           </tr>
 
+          <% end %>
           </tbody>
     </table>
 </div>
 </form>
+
+<script type="text/javascript">
+  $(function () {
+          $("#checkbox1").click(function () {
+              if ($(this).is(":checked")) {
+                  $("#row1").hide();
+                  $("#row1").show();
+              } else {
+                  $("#row1").show();
+                  $("#row1").hide();
+              }
+          });
+          $("#checkbox2").click(function () {
+              if ($(this).is(":checked")) {
+                  $("#row2, #row3").hide();
+                  $("#row2, #row3").show();
+              } else {
+                  $("#row2, #row3").show();
+                  $("#row2, #row3").hide();
+              }
+          });
+          $("#checkbox3").click(function () {
+              if ($(this).is(":checked")) {
+                  $("#row4, #row5").hide();
+                  $("#row4, #row5").show();
+              } else {
+                  $("#row4, #row5").show();
+                  $("#row4, #row5").hide();
+              }
+          });
+          $("#checkbox4").click(function () {
+              if ($(this).is(":checked")) {
+                  $("#row6, #row7").hide();
+                  $("#row6, #row7").show();
+              } else {
+                  $("#row6, #row7").show();
+                  $("#row6, #row7").hide();
+              }
+          });
+          $("#checkbox5").click(function () {
+              if ($(this).is(":checked")) {
+                  $("#row8, #row9, #row10, #row11").hide();
+                  $("#row8, #row9, #row10, #row11").show();
+              } else {
+                  $("#row8, #row9, #row10, #row11").show();
+                  $("#row8, #row9, #row10, #row11").hide();
+              }
+          });
+          $("#checkbox6").click(function () {
+              if ($(this).is(":checked")) {
+                  $("#row12").hide();
+                  $("#row12").show();
+              } else {
+                  $("#row12").show();
+                  $("#row12").hide();
+              }
+          });
+          $("#checkbox7").click(function () {
+              if ($(this).is(":checked")) {
+                  $("#row13, #row14, #row15, #row16").hide();
+                  $("#row13, #row14, #row15, #row16").show();
+              } else {
+                  $("#row13, #row14, #row15, #row16").show();
+                  $("#row13, #row14, #row15, #row16").hide();
+              }
+          });
+
+      });</script>

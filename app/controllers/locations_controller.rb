@@ -1,30 +1,67 @@
 include LocationsHelper
 include ScenariosHelper
 class LocationsController < ApplicationController
+
+################################  Load Shapefile  #################################
+  def upload_shapefile
+    dir_path = File.join(DOWNLOAD, params[:location][:shapefile].original_filename.gsub(".zip", ""))
+    extract_zip(params[:location][:shapefile].tempfile, dir_path)
+    shp_path = Rails.root.join(dir_path)
+    #@shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
+    filepath = Rails.root.join("lib", "external_scripts", "get_coords.r ")
+    r_parm = filepath.to_s + shp_path.to_s
+    output = `Rscript --vanilla #{r_parm}`
+    @found_fields = output.split("Field:")
+    #FileUtils.rm_rf(dir_path)
+  end
+
+  def extract_zip(file, destination)
+    file_needed=[".shp", ".dbf", ".prj", ".shx"]
+    FileUtils.mkdir_p(destination)
+    Zip::File.open(file) do |zip_file|
+      zip_file.each do |file|
+        if file.name.match(Regexp.union(file_needed))
+          file_name = File.basename(file.name)
+          fpath = File.join(destination, file_name)
+          File.delete(fpath) if File.exist?(fpath)
+          zip_file.extract(file, fpath)
+        end
+      end
+    end
+  end
 ################################  INDEX  #################################
 # GET /locations
 # GET /locations.json
-  def index
-    first=true
+  def edit
+    @location = @project.location
+    first=0
     @states = State.all
     @counties = County.where(:state_id => 1)
-    @preDrawnAOI = 'farm: farm, '
-    @project.location.fields.each do |field|
-      if first then
-        @preDrawnAOI = @preDrawnAOI + field.coordinates + " " + field.coordinates.split(/ / )[0]
-        first = false
+    @preAddress = params[:textAddress]
+    @prelatLng = params[:textlatlng]
+    if @preDrawnAOI == nil or @preDrawnAOI == "" 
+      @preDrawnAOI = 'farm: farm, '
+      @project.location.fields.each do |field|
+        if first==0 then
+          @preDrawnAOI = @preDrawnAOI + field.coordinates.strip + " " + field.coordinates.strip.split(/ / )[0]
+          first = 1
+        end
+        @preDrawnAOI = @preDrawnAOI + " field: " + field.field_name + ", " + field.field_area.to_s + ", " + field.coordinates.strip + " " + field.coordinates.strip.split(/ / )[0]
       end
-      @preDrawnAOI = @preDrawnAOI + " field: " + field.field_name + ", " + field.field_area.to_s + ", " + field.coordinates + " " + field.coordinates.split(/ / )[0]
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @locations }
+      end
+    else
+      render 'edit'
     end
     #@preDrawnAOI = 'farm: farm, -93.453614,43.694913 -93.453485,43.687559 -93.446705,43.687559 -93.446061,43.686938 -93.445546,43.686472 -93.444859,43.686162 -93.444173,43.686131 -93.443572,43.686286 -93.443572,43.694882  -93.453614,43.694913
     #  field: Field1, 0, -93.453614,43.694913 -93.453485,43.687559 -93.446705,43.687559 -93.446061,43.686938 -93.445546,43.686472 -93.444859,43.686162 -93.444173,43.686131 -93.443572,43.686286 -93.443572,43.694882  -93.453614,43.694913'
     add_breadcrumb t('menu.soils'), project_locations_path(@project)
     add_breadcrumb t('menu.layers') 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @locations }
-    end
+
   end
+
   # GET /locations
   # GET /locations.json
   def location_fields
@@ -35,10 +72,8 @@ class LocationsController < ApplicationController
   ###################################### SHOW ######################################
   # GET /locations/1
   # GET /locations/1.json
-  def show
+  def index
     @location = Location.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@project = Project.find(params[:project_id])
     add_breadcrumb t('menu.location')
     @project_name = @project.name
     session[:location_id] = params[:id]
@@ -70,7 +105,6 @@ class LocationsController < ApplicationController
   ###################################### receive_from_mapping_site ######################################
   def receive_from_mapping_site
     @location = Location.find_by_project_id(params[:id])
-    #@project = Project.find(params[:project_id])
     if (params[:error] == "") then
       if (session[:session_id] == params[:source_id]) then
         # step 1: delete fields not found
@@ -213,9 +247,117 @@ class LocationsController < ApplicationController
       format.html # Runs receive_from_mapping_site.html.erb view in location folder
 	  end
   end
-
   #end method receiving from map site
 
+ ###################################### receive_from_mapping_site ######################################
+  def receive_from_mapping_site1
+    if (params[:error] == "" or params[:error] == nil) then
+        #get the number of fields submitted
+        fields = params[:FieldsName].split(",")
+        # step 1: delete fields not found
+        @location.fields.each do |field|
+          isFound = false
+          for i in 0..fields.count - 1
+            if (field.field_name == fields[i]) then
+              isFound = true
+            end
+          end
+          if (!isFound) then
+            field.destroy
+          end # end if isFound
+        end # end Location do
+        # step 2: update or create remaining fields
+        for i in 0..fields.count - 1
+          # find or create field
+          @field = @location.fields.where(:field_name => fields[i]).first || @location.fields.build(:field_name => fields[i])
+          @field.coordinates = params[:FieldsXY].split(" ,")[i]
+          @field.field_area = (params[:FieldArea].split(",")[i].to_f / AC_TO_M2).round(2)
+          @field.updated = true
+          if @field.save
+             #create_soils(i, @field.id, @field.field_type).  #commented because the solils will be gotten in fields page
+          else
+             msg = "Error saving soils"
+          end 
+          #step 3 find or create site
+          site = Site.find_by_field_id(@field.id)
+          if (site == nil) then
+            #create the site for this field
+            site = Site.new
+          end #end weather validation
+          centroid = calculate_centroid()
+          site.ylat = centroid.cy
+          site.xlog = centroid.cx
+          site.elev = 0
+          site.apm = 1
+          site.co2x = 0
+          site.cqnx = 0
+          site.rfnx = 0
+          site.upr = 0
+          site.unr = 0
+          site.fir0 = 0
+          site.field_id = @field.id
+          site.save
+          #step 4 find or create weather
+          if (@field.weather_id == nil or @field.weather == nil) then
+            #create the weather for this field
+            @weather = Weather.new
+          else
+            #update the weather for this field
+            @weather = Weather.find(@field.weather_id)
+          end #end weather validation
+          save_prism()
+          @field.weather_id = @weather.id
+          # end
+          if @field.save then
+            flash[:notice] = t('models.field') + "(s)" + t('notices.multiple_created')
+            @weather.field_id = @field.id
+            @weather.save
+            session[:field_id] = @field.id
+          end
+          #@weather.save
+        end # end for fields
+        # step 5: update location
+        state_abbreviation = params[:StateAbbr]
+        if state_abbreviation.length > 2 then  #if state_abbreviation.length > 2 means it is state name
+         state = State.find_by_state_name(state_abbreviation.strip)     
+        else
+         state = State.find_by_state_abbreviation(state_abbreviation)
+        end
+        if state == nil then
+         @location.state_id = 0
+        else
+         @location.state_id = state.id
+        end
+        county_name = params[:CountyName]
+        if @location.state_id > 0 
+          if county_name == nil then
+            @location.county_id = 0
+          else
+            county_name.slice! " County"
+            county_name.slice! " Parish"   #Lousiana Counties
+            county_name.slice! "  Borough" #Alaska Counties.
+            county_name.slice! "'s"
+            county = state.counties.where("county_name like '%" + county_name + "%'").first
+            #county = County.find_by_county_name(county_name)
+            if county == nil then 
+              @location.county_id = 0
+            else
+              @location.county_id = county.id
+            end 
+          end
+        else
+          @location.county_id = 0
+        end
+        @location.coordinates = params[:FarmXY]
+        @location.save
+        # step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
+        load_controls()
+        load_parameters(0)
+      #end # end if of session_id check
+    end # end if error
+  end
+  #end method receiving from map site
+ ###################################### new######################################  
   # GET /locations/new
   # GET /locations/new.json
   def new
@@ -229,7 +371,7 @@ class LocationsController < ApplicationController
 
   ###################################### EDIT ######################################
   # GET /locations/1/edit
-  def edit
+  def show
     @location = Location.find(params[:id])
   end
 
@@ -254,15 +396,33 @@ class LocationsController < ApplicationController
   # PATCH/PUT /locations/1.json
   def update
     @location = Location.find(params[:id])
-
-    respond_to do |format|
-      if @location.update_attributes(location_params)
-        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @location.errors, status: :unprocessable_entity }
+    first=0
+    @preDrawnAOI = 'farm: farm, '
+    case true
+    when params[:location] !=nil
+      if params[:location][:shapefile] != nil
+        upload_shapefile
+        @found_fields.each do |field|
+          if first == 0 then
+            first += 1
+           next 
+          end
+          field_parts = field.split("|")
+          if first == 1 then 
+            @preDrawnAOI = @preDrawnAOI + field_parts[1]
+            first += 1
+          end
+          @preDrawnAOI = @preDrawnAOI + " field: " + field_parts[0] + ", " + "0.00" + ", " + field_parts[1]
+        end
+        edit()
       end
+    when params[:submit] != nil  
+      if params[:submit] == "Submit"
+        receive_from_mapping_site1
+        redirect_to project_fields_path(@project.id)
+    end
+    else
+      edit()
     end
   end
 
@@ -405,5 +565,4 @@ class LocationsController < ApplicationController
       end # end control all
     end # end if
   end  #end method
-
 end

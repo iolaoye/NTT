@@ -241,6 +241,7 @@ module ScenariosHelper
 		if forestry && field_name == ROAD then
 			subarea.pec = 0
 		end
+
 		#/line 11
 		subarea.ny1 = 0
         subarea.ny2 = 0
@@ -275,7 +276,7 @@ module ScenariosHelper
 				bmp1 = scenario.bmps[0]
 			end
 		end
-		if (!bmp1==nil)
+		if !(bmp1==nil)
 			case bmp1.bmpsublist_id
 				when 3  #tile drain
 					subarea.idr = bmp1.depth * FT_TO_MM  # update the tile drain depth in mm.
@@ -518,6 +519,7 @@ module ScenariosHelper
 						add_buffer_operation(139, 79, 350, 1900, -64, 22, 1, scenario_id)
 						add_buffer_operation(139, 49, 0, 1400, 0, 22, 1, scenario_id)
 					else  # filter strip
+						
 						#line 2
 						subarea.number = 103
 						subarea.iops = soil_id
@@ -1112,4 +1114,40 @@ module ScenariosHelper
     return msg
   end
 
+  def get_weather_file_name(lat, lon)
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:get_weather_file_name, message: {"nlat" => lat, "nlon" => lon})
+    if response.body[:get_weather_file_name_response][:get_weather_file_name_result].include? ".wth" then
+      return response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    else
+      return "Error" + response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    end
+  end
+
+################################  Save Prism data #################################
+# GET /weathers/1
+# GET /weathers/1.json
+  def save_prism
+    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
+    centroid = calculate_centroid()
+    @weather.latitude = centroid.cy
+    @weather.longitude = centroid.cx
+    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
+    #weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+    data = weather_data.split(",")
+    @weather.weather_file = data[0]
+    data[2].slice! "\r\n"
+    @weather.simulation_final_year = data[2]
+    @weather.weather_final_year = @weather.simulation_final_year
+    @weather.weather_initial_year = data[1]
+    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+    @weather.way_id = 1
+    if @weather.save
+      return "OK"
+    else
+      retunr "Error Saving PRISM"
+    end
+  end
+  
 end
