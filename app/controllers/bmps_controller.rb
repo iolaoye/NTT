@@ -121,7 +121,7 @@ class BmpsController < ApplicationController
   		bmps = Bmp.where(:scenario_id => params[:scenario_id])
   		bmps.each do |bmp|
   			@bmp = bmp
-  			msg = input_fields("delete")
+  			msg = input_fields("delete", 0)
   			if msg == "OK" then
   				bmp.destroy
   			end
@@ -184,17 +184,22 @@ class BmpsController < ApplicationController
   				create(11)
   			end
   		end
-		  #filter strip and riparian forest
-  		if !(params[:bmp_fs][:width] == "") then
+		  #riparian forest
+  		if !(params[:bmp_fs][:grass_field_portion] == "") then
   			if !(params[:bmp_cb3] == nil)
   				if params[:bmp_cb3] == "12" then
   					create(12)   #riparian forest
   				end
+        end
+      end
+      if !(params[:bmp_fs][:width] == "") then
+        if !(params[:bmp_cb3] == nil)
   				if params[:bmp_cb3] == "13" then
   					create(13)   #filter strip
   				end
-  			end
-  		end
+        end
+			end
+
   		if !(params[:bmp_ww][:width] == "") then
   			create(14)
   		end
@@ -306,7 +311,7 @@ class BmpsController < ApplicationController
     #@irrigation = Irrigation.arel_table
     @climate_array = create_hash()
     @state = Location.find(Location.find_by_project_id(@project.id)).state_id
-    msg = input_fields("create")
+    msg = input_fields("create", bmpsublist)
     if msg == "OK" then
       if @bmp.save then
     	 #sss
@@ -335,7 +340,7 @@ class BmpsController < ApplicationController
     if @bmp.bmpsublist_id == 21
       @climate_array = populate_array(@climates, @climate_array)
     end
-    msg = input_fields("update")
+    msg = input_fields("update", 0)
 
     respond_to do |format|
       if msg == "OK"
@@ -363,7 +368,7 @@ class BmpsController < ApplicationController
     @slope = 100
     Bmp.where(:scenario_id => params[:scenario_id]).delete_all
 
-    msg = input_fields("delete")
+    msg = input_fields("delete",0)
     if @bmp.destroy
       flash[:notice] = t('models.bmp') + " " + Bmpsublist.find(@bmp.bmpsublist_id).name + t('notices.deleted')
     end
@@ -376,7 +381,7 @@ class BmpsController < ApplicationController
 
 ##############################  INPUT FIELDS  ###############################
 
-  def input_fields(type)
+  def input_fields(type, bmpsublist)
     case @bmp.bmpsublist_id
       when 1
         return autoirrigation(type)
@@ -403,7 +408,7 @@ class BmpsController < ApplicationController
       when 12
         return riparian_forest(type)
       when 13
-        return filter_strip(type)
+        if bmpsublist == 13 then return filter_strip(type) else return riparian_forest(type) end
       when 14
         return waterway(type)
       when 15
@@ -852,13 +857,20 @@ end
     		@bmp.width = params[:bmp_fs][:width]
     		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
     		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
+        @bmp.slope_reduction = params[:bmp_fs][:floodplain_flow]
     		@bmp.crop_id = 1 #record not found error
-			if params[:bmp_fs][:buffer_land] == nil then
-				@bmp.sides = 0
-			else
-				@bmp.sides = 1
-			end
+        @bmp.bmpsublist_id = 13
+  			if params[:bmp_fs][:buffer_land] == nil then
+  				@bmp.sides = 0
+  			else
+  				@bmp.sides = 1
+  			end
     		@bmp.depth = params[:bmp_cb3]
+        if @bmp.area == 0 || @bmp.area == nil then
+          length = Math.sqrt(@field.field_area * AC_TO_M2)    #convert ac to m2 and take sqrt to find lenght
+          width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_M  # convert width ft to width m
+          @bmp.area = (length * width) / AC_TO_M2   # calculate area in m2 and convert back to ac
+        end
     		if @bmp.save then
   			  return create_new_subarea("RF", 12)
 		    end
@@ -893,11 +905,6 @@ end
           @bmp.grass_field_portion = 0.00
         end
     		if @bmp.area == 0 || @bmp.area == nil then
-          #previous area calculation
-    			#length = Math.sqrt(@field.field_area)			# find the length of the field
-    			#width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_KM			# convert width from ft to km
-    			#@bmp.area = (length * width / AC_TO_KM2).round(2)	# calculate area in km and convert to ac
-          #change the calculation on 2/26/18 accordin to Ali e-mail
           length = Math.sqrt(@field.field_area * AC_TO_M2)    #convert ac to m2 and take sqrt to find lenght
           width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_M  # convert width ft to width m
           @bmp.area = (length * width) / AC_TO_M2   # calculate area in m2 and convert back to ac
@@ -1362,7 +1369,7 @@ end
         end
       when 12
 	      @bmp.buffer_slope_upland = 1			# buffer_slope_upland is not used anymore; therefor it is set to 1
-        if @bmp.area != nil && @bmp.width != nil && @bmp.grass_field_portion != nil && @bmp.buffer_slope_upland != nil
+        if @bmp.grass_field_portion != nil && @bmp.buffer_slope_upland != nil
           is_filled = true;
         end
       when 13
