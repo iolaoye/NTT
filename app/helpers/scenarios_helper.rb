@@ -241,7 +241,7 @@ module ScenariosHelper
 		if forestry && field_name == ROAD then
 			subarea.pec = 0
 		end
-		
+
 		#/line 11
 		subarea.ny1 = 0
         subarea.ny2 = 0
@@ -566,7 +566,6 @@ module ScenariosHelper
 						add_buffer_operation(139, 49, 0, 1400, 0, 22, 2, scenario_id)
 					end
 				when 13    #Filter Strip
-					if @bmp.width == 0 then return end
 					#line 2
 					subarea.number = 101
 					subarea.iops = soil_id
