@@ -241,6 +241,7 @@ module ScenariosHelper
 		if forestry && field_name == ROAD then
 			subarea.pec = 0
 		end
+		
 		#/line 11
 		subarea.ny1 = 0
         subarea.ny2 = 0
