@@ -419,7 +419,7 @@ class LocationsController < ApplicationController
     when params[:submit] != nil  
       if params[:submit] == "Submit"
         receive_from_mapping_site1
-        redirect_to project_fields_path(@project.id)
+        redirect_to project_fields_path(@project.id) 
     end
     else
       edit()
