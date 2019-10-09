@@ -946,7 +946,7 @@ function findCounty(address) {
         //var countyState = addressStr.split("-");
         //address = "County of " + addressStr;
         //address = countyState[1].trim() + " County, " + countyState[0];
-        address = document.getElementById("countyselect").selectedOptions[0].text
+        address = document.getElementById("countyselect")[document.getElementById("countyselect").selectedIndex].text
         //address = $("#countyselect")[0].selectedOptions[0].text + " County" + ", " + stateAbr;
     } else
         address = addressStr;
