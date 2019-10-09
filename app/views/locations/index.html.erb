@@ -1,29 +1,157 @@
-<h1>Listing locations</h1>
-
-<table>
-  <tr>
-    <th>State</th>
-    <th>County</th>
-    <th>Status</th>
-    <th>Project</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @locations.each do |location| %>
-  <tr>
-    <td><%= location.state_id %></td>
-    <td><%= location.county_id %></td>
-    <td><%= location.status %></td>
-    <td><%= location.project_id %></td>
-    <td><%= link_to t('general.show'), shows_location_path %></td>
-    <td><%= link_to t('general.edit'), edit_location_path(location) %></td>
-    <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: t('general.confirm') } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br>
-
-<%= link_to 'New Location', new_location_path %>
+<body onload="initialize()" style="background-color:White; width:100%; height:100%">  
+  <input type="hidden" id="hdnLat" />
+  <input type="hidden" id="hdnLong" />
+  <div style="width:105%">
+    <div id="dvPanel" style="background-color:Menu; width: 36%; border-width:medium" >
+      <form id="Form1" action="" >
+        <%= form_for [@project, @location] do |f| %>
+            <div style="" id="dvForm">
+                <table class="tableStyle" >
+                    <tr class="trStyle">
+                        <td>
+                        <strong><label style="font-weight:bold"><%= t('location.areaofinterest') + " (AOI)"%></label>
+                    </tr>
+                    <tr id="trNavigation" >
+                        <td >
+                            <textarea id="preDrawnAOI" rows="10" cols="50" style="display:none"><%=@preDrawnAOI%></textarea>
+                            <input id="FarmName" name="FarmName" style="display:none"></input>
+                            <input id="FarmXY" name="FarmXY" style="display:none"></input>
+                            <input id="FieldsName" name="FieldsName" style="display:none"></input>
+                            <input id="FieldsArea" name="FieldArea" style="display:none"></input>
+                            <input id="FieldsXY" name="FieldsXY" style="display:none"></input>
+                            <input id="CountryAbbr" name="CountryAbbr" style="display:none"></input>
+                            <input id="StateName" name="StateName" style="display:none"></input>
+                            <input id="StateAbbr" name="StateAbbr" style="display:none"></input>
+                            <input id="CountyName" name="CountyName" style="display:none"></input>
+                            <input id="CountryName" name="CountryName" style="display:none"></input>
+                            <textarea id="savedata" rows="20" cols="38" style="display:none"></textarea>
+                            <textarea id="Textlatlng" rows="1" cols="1" style="display:none"><%=@prelatLng%></textarea>
+                            <textarea id="TextAddress" rows="1" cols="1" style="display:none"><%=@preAddress%></textarea>
+                            <table class="tableStyle" id="tblUploadAOI">
+                                <tr>
+                                    <td colspan="2">
+                                      <label style="font-weight:bold"><%= t('location.option1') + ": " + t('operation.upload') + " Shapefile"%></label>                        
+                                        <input id="imgUpload" type="image" onclick="return showText('UploadShow')" src="/serve_image/add.png"  />
+                                    </td>
+                                </tr>                          
+                                <tr>
+                                    <td colspan="2">
+                                        <label id="lblNote2" contenteditable="false" rows="6" cols="50" style="font-size:small; background-color: #EFEFEF; border-style: none; overflow: hidden; height: 50px; display:none"><%= t('location.shapefilenote')%></label>
+                                    </td>
+                                </tr>
+                                <!--<tr style="display:none"><td ><asp:Label ID="lblFarmShp"  Text="Choose farm shapefile" ></asp:Label></td></tr>
+                                <tr style="display:none"><td ><asp:FileUpload ID="fileUploadFarmShapefile" /></td></tr>
+                                <tr><td><asp:Label ID="lblFieldShp"  Text="Choose field(s) shapefile"></asp:Label></td></tr>
+                                 <tr><td ><asp:FileUpload ID="fileUploadFieldShapefile"  /></td></tr>
+                                <tr><td><asp:Button ID="bntUpload"  Text="Upload Shapfile"/></td></tr> -->
+                                <tr>
+                                    <td>
+                                        <div id="fsetUploadShapeFile" class="panel panel-default">
+                                          <div class="panel-heading"><%= t('weather.choose_file_lenged') %></div>
+                                          <div class="panel-body"><%= f.file_field :shapefile %></div>
+                                          <div>  
+                                            <%= f.submit t('operation.upload') + " Shapefile", name: 'submit', :class => "btn btn-primary" %>
+                                          </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr id="trShapeFile"  style="width: 100%">
+                        <td>
+                            <table >
+                                <tr><td >
+                                    <label style="font-weight:bold"><%= t('location.option2') + ": " + t('location.zoomanddraw') + " AOI"%></label>
+                                    <input id="imgZoomIn" type="image" onclick="return showText('ZoomInShow')" src="/serve_image/add.png"  />
+                                </td></tr>
+                                <tr><td ><label id="lblNoteNavigation" style="display:none" ><%= t('location.zoomanddrawnote')%></label></td></tr>
+                                <tr><td ><label id="lblAZoom"  /><%= t('location.option2A')%></label></td></tr>
+                                <tr><td ><label><%= t('location.option2A1')%></label></td></tr>
+                                <tr><td><input id="address" name="textAddress" type="text" width="45" />
+                                <!-- </td><td style="text-align: left"> -->
+                                        <input id="imgUpload" type="image" onclick="codeAddress()" src="/serve_image/search.png"  />
+                                    </td>
+                                </tr>
+                                <tr><td ><label><%= t('location.option2A2')%></label></tr>
+                                <tr><td><input id="latlng" name="textlatlng" type="text"/>
+                                <!-- </td><td style="text-align:center"> -->
+                                        <input id="imgUpload" type="image" onclick="codeLatLng()" src="/serve_image/search.png"  /></td></td>
+                                </tr>
+                                <tr><td colspan="2"><tr><td ><label><%= t('location.option2A3')%></label></td></tr>
+                                <tr><td colspan="4">
+                                    <!-- <input id="lblZoomState" type="hidden" /> -->
+                                    <%= select_tag :stateselect, options_from_collection_for_select(@states, :id, :state_name), :include_blank => "Select State"%>
+                                    <!-- <option value="" id="lblZoomToState"></option> -->
+                                    <input id="lblZoomCounty" type="hidden" />
+                                    <%= select_tag :countyselect, options_from_collection_for_select(@counties, :id, :county_name), :onchange => "findCounty()"%>
+                                    <option value="" id="lblZoomToConty"></option>
+                                </td></tr>
+                                <tr><td colspan="2"><label><%= t('location.option2A4')%></label></td></tr>
+                                <tr><td >
+                                    <label><%= t('location.option2B_1')%></label>
+                                    <input id="imgUpload" type="image" src="/serve_image/drawing_tool.png" />
+                                    <label><%= t('location.option2B_2')%></label>
+                                </td></tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>   
+                
+                <table class="tableStyle">
+                    <tr runat="server" id="trFarm" style="display:none">
+                        <td colspan="2">
+                            <input type="radio" name="polyType" id="polyTypeFarm" value="To Draw Farm" />
+                            <label id="lblFarm" runat="server" style="display:none"></label>
+                            <input type="radio" name="polyType" id="polyTypeField" value="To Draw Fields" style="display:none"/>
+                            <label id="lblField" name="lblField" value="AOI" innerHTML="AOI"></label>
+                        </td>
+                    </tr>
+                    <tr class="trStyle">
+                        <td ><label style="font-weight:bold"><%= t('location.drawigntools')%></label></td>
+                    </tr>
+                    <tr  id="trTools"  >
+                        <td>
+                            <table class="tableStyle" id="tblSelectAOI" >
+                                <tr>
+                                    <td colspan="2">
+                                        <b><label  style="font-size:14px; font-weight:bold"><%= t('location.howtodraw')%></label> </b>
+                                        <input id="imgHowToDraw" type="image" onclick="return showText('HowToDrawShow')" src="/serve_image/add.png"  />
+                                    </td>
+                                </tr>
+                                <tr style="display:none"><td colspan="2"><label id="lblToolsNote1"  style="display:none"/></td></tr>
+                                <tr><td colspan="2"><label id="lblToolsNote2" contenteditable="false" rows="6" cols="50" style="font-size:small; background-color: #EFEFEF; border-style: none; overflow: hidden; height: 50px; display:none"><%= t('location.howtodrawnote1')%></label></td></tr>
+                                <tr><td colspan="2"><label id="lblToolsNote3" contenteditable="false" rows="6" cols="50" style="font-size:small; background-color: #EFEFEF; border-style: none; overflow: hidden; height: 50px; display:none"><%= t('location.howtodrawnote2')%></label></td></tr>
+                                <tr><td colspan="2"><label id="lblToolsNote4" contenteditable="false" rows="6" cols="50" style="font-size:small; background-color: #EFEFEF; border-style: none; overflow: hidden; height: 50px; display:none"><%= t('location.howtodrawnote3')%></label></td></tr>
+                                <tr><td colspan="2"><label id="lblToolsNote5" contenteditable="false" rows="6" cols="50" style="font-size:small; background-color: #EFEFEF; border-style: none; overflow: hidden; height: 50px; display:none"><%= t('location.howtodrawnote4')%></label></td></tr>
+                                <tr>
+                                    <td style="align:left"><input type="button" id="bntDelete1" style="font-size:xsmall; width=100%" class="btnStyle" value="Remove AOI"/></td>
+                                    <td>
+                                     <%= f.submit "Submit", name: 'submit', id: 'bntInfo', onclick: 'submitSelection("Submit")', :class => "btn btn-primary" %></td>
+                                    <!-- <td><input id="lblDelete" type="hidden" /></td> -->
+                                </tr>
+                                <tr><td>
+                                  <input id="imgUpload" type="image" src="/serve_image/drawing_tool.png" />
+                                  <label style="font-size: 12px"><%= t('location.drawfield')%></label></td></tr>
+                                <tr><td>
+                                  <input id="imgUpload" type="image" src="/serve_image/google_map_moving_tool_.png" />
+                                  <label style="font-size: 12px"><%= t('location.movemap')%></label></td></tr>
+                                <tr><td>
+                                  <input id="imgUpload" type="image" src="/serve_image/google_map_Zooming_tool_.png" />
+                                  <label style="font-size: 12px"><%= t('location.zoom')%></label></td></tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        <%end %>
+      </form>
+    </div>
+    <div id="map" style="height:700px; width:64%; background-color:Menu; border-width:medium" >
+        <cc3:msgBox id="MsgBox1" postback="true"> </cc3:msgBox>
+    </div>  
+    <div id="dvWait"  
+       style="font-size: large; font-style: italic; color: #009900; display:none; background-color: #FFFF00;">            Please Wait........
+    </div>
+  </div>
+</body>

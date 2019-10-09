@@ -59,16 +59,17 @@ NTTG3::Application.routes.draw do
   resources :welcomes
   resources :apex_soils
   resources :apex_layers
+  resources :locations
   resources :users do
     resources :projects
   end
 
   get '/serve_image/:filename' => 'application#serve'
-
   get 'projects/upload'
   post 'projects/upload_project'
 
   resources :projects do
+    post 'locations/upload_shapefile'
     resources :fem_generals
     resources :fem_facilities
     resources :fem_machines
