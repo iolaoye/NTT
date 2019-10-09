@@ -12,6 +12,7 @@ var arrayFieldsNames = [];
 var arrayFieldsXY = [];
 var arrayFieldsArea = [];
 var latLng = "";
+var boundsPreDraw = null;
 
 function turnOffControls() {
     document.getElementById("dvForm").style.display = "none";
