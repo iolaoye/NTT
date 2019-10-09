@@ -241,6 +241,7 @@ module ScenariosHelper
 		if forestry && field_name == ROAD then
 			subarea.pec = 0
 		end
+
 		#/line 11
 		subarea.ny1 = 0
         subarea.ny2 = 0
@@ -275,7 +276,7 @@ module ScenariosHelper
 				bmp1 = scenario.bmps[0]
 			end
 		end
-		if (!bmp1==nil)
+		if !(bmp1==nil)
 			case bmp1.bmpsublist_id
 				when 3  #tile drain
 					subarea.idr = bmp1.depth * FT_TO_MM  # update the tile drain depth in mm.
@@ -451,103 +452,152 @@ module ScenariosHelper
 					add_buffer_operation(136, bmp.crop_id, 0, 1400, 0, 22, 2, scenario_id)
 					#add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
 				when 12    #Riperian Forest
-					grass_field_portion = @bmp.grass_field_portion / (@bmp.width + @bmp.grass_field_portion)
-					if !checker
-						#line 2
-						subarea.number = 102
-						if @bmp.width > 0 then
-							subarea.iops = soil_id + 1
-						else
-							subarea.iops = soil_id
-						end
-						#subarea.iow = 1
-						#line 5					
-						#subarea.rchl = (@bmp.width * FT_TO_KM * (1 - @bmp.grass_field_portion)).round(4)
-						if @bmp.width > 0 then
-							subarea.rchl = (@bmp.width * FT_TO_KM * grass_field_portion).round(4)
-						else
-							subarea.rchl = (FT_TO_KM * grass_field_portion).round(4)
-						end
-						#line 4
-						if soil_area != nil
-							#s_area = soil_area * AC_TO_HA * (1-@bmp.grass_field_portion)
-							fs_area = soil_area * AC_TO_HA * (grass_field_portion)
-							subarea.wsa = fs_area       #soil_area here is the reservior area
-						else
-							subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA      # KM2_TO_HA
-							fs_area = subarea.wsa
-						end
-						if @bmp.sides == 0 then
-							update_wsa("-", subarea	.wsa)
-						end
-						subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
-						subarea.slp = subarea.slp * @bmp.buffer_slope_upland
-						subarea.splg = calculate_slope_length(subarea.slp * 100)
-						## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
-						subarea.chn = 0.2
-						subarea.upn = 0.30
-						subarea.ffpq = params[:bmp_fs][:floodplain_flow]
-						#line 5
-						rchc_buff = 0.01
-						rchk_buff = 0.2
-						#subarea.rchl = subarea.rfpl    #soil_area here is the reservior area
-						subarea.rchn = 0.1
-						subarea.rchc = 0.2 
-						subarea.rchk = 0.2 
-						if subarea.rchc > 0.01
-							subarea.rchc = 0.01
-						end
-						if subarea.rchc < rchc_buff
-							subarea.rchc = rchc_buff
-						end
-						if subarea.rchk < rchk_buff
-							subarea.rchk = rchk_buff
-						end
-						subarea.rfpw = (subarea.wsa * HA_TO_M2) / (subarea.rchl * KM_TO_M)
-						subarea.rfpl = subarea.rchl
-						#line 10
-						subarea.pec = 1.0
-						if @bmp.width > 0 then
-							if type == "create"
-								create_subarea("RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "create")
+
+				when 13    #Filter Strip and reparian forest
+					if bmp1.depth == 12 then
+						grass_field_portion = @bmp.grass_field_portion / (@bmp.width + @bmp.grass_field_portion)
+						if !checker
+							#line 2
+							subarea.number = 102
+							if @bmp.width > 0 then
+								subarea.iops = soil_id + 1
 							else
-								update_wsa("-", subarea.wsa)
-								update_subarea(subarea, "RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
+								subarea.iops = soil_id
 							end
+							#subarea.iow = 1
+							#line 5					
+							#subarea.rchl = (@bmp.width * FT_TO_KM * (1 - @bmp.grass_field_portion)).round(4)
+							if @bmp.width > 0 then
+								subarea.rchl = (@bmp.width * FT_TO_KM * grass_field_portion).round(4)
+							else
+								subarea.rchl = (FT_TO_KM * grass_field_portion).round(4)
+							end
+							#line 4
+							if soil_area != nil
+								#s_area = soil_area * AC_TO_HA * (1-@bmp.grass_field_portion)
+								fs_area = soil_area * AC_TO_HA * (grass_field_portion)
+								subarea.wsa = fs_area       #soil_area here is the reservior area
+							else
+								subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA      # KM2_TO_HA
+								fs_area = subarea.wsa
+							end
+							if @bmp.sides == 0 then
+								update_wsa("-", subarea	.wsa)
+							end
+							subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
+							subarea.slp = subarea.slp * @bmp.buffer_slope_upland
+							subarea.splg = calculate_slope_length(subarea.slp * 100)
+							## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
+							subarea.chn = 0.2
+							subarea.upn = 0.30
+							subarea.ffpq = params[:bmp_fs][:floodplain_flow]
+							#line 5
+							rchc_buff = 0.01
+							rchk_buff = 0.2
+							#subarea.rchl = subarea.rfpl    #soil_area here is the reservior area
+							subarea.rchn = 0.1
+							subarea.rchc = 0.2 
+							subarea.rchk = 0.2 
+							if subarea.rchc > 0.01
+								subarea.rchc = 0.01
+							end
+							if subarea.rchc < rchc_buff
+								subarea.rchc = rchc_buff
+							end
+							if subarea.rchk < rchk_buff
+								subarea.rchk = rchk_buff
+							end
+							subarea.rfpw = (subarea.wsa * HA_TO_M2) / (subarea.rchl * KM_TO_M)
+							subarea.rfpl = subarea.rchl
+							#line 10
+							subarea.pec = 1.0
+							if @bmp.width > 0 then
+								if type == "create"
+									create_subarea("RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "create")
+								else
+									update_wsa("-", subarea.wsa)
+									update_subarea(subarea, "RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
+								end
+							end
+							add_buffer_operation(139, 79, 350, 1900, -64, 22, 1, scenario_id)
+							add_buffer_operation(139, 49, 0, 1400, 0, 22, 1, scenario_id)
+						else  # filter strip
+							
+							#line 2
+							subarea.number = 103
+							subarea.iops = soil_id
+							#subarea.iow = 1
+							#line 5
+							subarea.rchl = (@bmp.width * FT_TO_KM * (1-grass_field_portion)).round(4)    #soil_area here is the reservior area
+							#line 4
+							if soil_area != nil
+								subarea.wsa = soil_area * AC_TO_HA * (1-grass_field_portion)     #soil_area here is the reservior area
+							else
+								subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA       # KM2_TO_HA
+							end
+							#subarea.wsa = subarea.wsa
+							if @bmp.sides == 0 then
+								update_wsa("-", subarea.wsa)
+							end
+							subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
+							subarea.slp = subarea.slp * @bmp.buffer_slope_upland
+							subarea.splg = calculate_slope_length(subarea.slp * 100)
+							## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
+							subarea.chn = 0.1
+							subarea.upn = 0.24
+							subarea.ffpq = params[:bmp_fs][:floodplain_flow]
+							#line 5
+							rchc_buff = 0.01
+							rchk_buff = 0.2
+							#subarea.rchl = subarea.rfpl    #soil_area here is the reservior area
+							subarea.rchn = 0.1
+							subarea.rchc = 0.2 
+							subarea.rchk = 0.2 
+							if subarea.rchc > 0.01
+								subarea.rchc = 0.01
+							end
+							if subarea.rchc < rchc_buff
+								subarea.rchc = rchc_buff
+							end
+							if subarea.rchk < rchk_buff
+								subarea.rchk = rchk_buff
+							end
+							subarea.rfpw = 0
+							subarea.rfpl = 0
+							#line 10
+							subarea.pec = 1.0
+							add_buffer_operation(139, 49, 0, 1400, 0, 22, 2, scenario_id)
 						end
-						add_buffer_operation(139, 79, 350, 1900, -64, 22, 1, scenario_id)
-						add_buffer_operation(139, 49, 0, 1400, 0, 22, 1, scenario_id)
-					else  # filter strip
+					else
 						#line 2
-						subarea.number = 103
+						subarea.number = 101
 						subarea.iops = soil_id
 						#subarea.iow = 1
 						#line 5
-						subarea.rchl = (@bmp.width * FT_TO_KM * (1-grass_field_portion)).round(4)    #soil_area here is the reservior area
+						subarea.rchl = (@bmp.width * FT_TO_KM).round(4)   #soil_area here is the reservior area
 						#line 4
 						if soil_area != nil
-							subarea.wsa = soil_area * AC_TO_HA * (1-grass_field_portion)     #soil_area here is the reservior area
+							temp_length = soil_area * AC_TO_KM2  / subarea.rchl
+							subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
 						else
 							subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA       # KM2_TO_HA
+							soil_area = subarea.wsa * HA_TO_AC
 						end
-						#subarea.wsa = subarea.wsa
 						if @bmp.sides == 0 then
 							update_wsa("-", subarea.wsa)
 						end
 						subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
+						## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
 						subarea.slp = subarea.slp * @bmp.buffer_slope_upland
 						subarea.splg = calculate_slope_length(subarea.slp * 100)
-						## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
+						subarea.chs = 0   #was subarea.slp before. Public of NTT is 0.
 						subarea.chn = 0.1
 						subarea.upn = 0.24
 						subarea.ffpq = params[:bmp_fs][:floodplain_flow]
 						#line 5
-						rchc_buff = 0.01
-						rchk_buff = 0.2
-						#subarea.rchl = subarea.rfpl    #soil_area here is the reservior area
 						subarea.rchn = 0.1
-						subarea.rchc = 0.2 
-						subarea.rchk = 0.2 
+						subarea.rchc = 0.2 #TODO
+						subarea.rchk = 0.2 #TODO
 						if subarea.rchc > 0.01
 							subarea.rchc = 0.01
 						end
@@ -557,54 +607,10 @@ module ScenariosHelper
 						if subarea.rchk < rchk_buff
 							subarea.rchk = rchk_buff
 						end
-						subarea.rfpw = 0
-						subarea.rfpl = 0
 						#line 10
 						subarea.pec = 1.0
-						add_buffer_operation(139, 49, 0, 1400, 0, 22, 2, scenario_id)
+						add_buffer_operation(136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
 					end
-				when 13    #Filter Strip
-					#line 2
-					subarea.number = 101
-					subarea.iops = soil_id
-					#subarea.iow = 1
-					#line 5
-					subarea.rchl = (@bmp.width * FT_TO_KM).round(4)   #soil_area here is the reservior area
-					#line 4
-					if soil_area != nil
-						temp_length = soil_area * AC_TO_KM2  / subarea.rchl
-						subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
-					else
-						subarea.wsa = temp_length * subarea.rchl * KM2_TO_HA       # KM2_TO_HA
-						soil_area = subarea.wsa * HA_TO_AC
-					end
-					if @bmp.sides == 0 then
-						update_wsa("-", subarea.wsa)
-					end
-					subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
-					## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
-					subarea.slp = subarea.slp * @bmp.buffer_slope_upland
-					subarea.splg = calculate_slope_length(subarea.slp * 100)
-					subarea.chs = 0   #was subarea.slp before. Public of NTT is 0.
-					subarea.chn = 0.1
-					subarea.upn = 0.24
-					subarea.ffpq = params[:bmp_fs][:floodplain_flow]
-					#line 5
-					subarea.rchn = 0.1
-					subarea.rchc = 0.2 #TODO
-					subarea.rchk = 0.2 #TODO
-					if subarea.rchc > 0.01
-						subarea.rchc = 0.01
-					end
-					if subarea.rchc < rchc_buff
-						subarea.rchc = rchc_buff
-					end
-					if subarea.rchk < rchk_buff
-						subarea.rchk = rchk_buff
-					end
-					#line 10
-					subarea.pec = 1.0
-					add_buffer_operation(136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
 				when 14    #Waterway
 					#line 2
 					subarea.number = 104
@@ -1112,4 +1118,40 @@ module ScenariosHelper
     return msg
   end
 
+  def get_weather_file_name(lat, lon)
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:get_weather_file_name, message: {"nlat" => lat, "nlon" => lon})
+    if response.body[:get_weather_file_name_response][:get_weather_file_name_result].include? ".wth" then
+      return response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    else
+      return "Error" + response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    end
+  end
+
+################################  Save Prism data #################################
+# GET /weathers/1
+# GET /weathers/1.json
+  def save_prism
+    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
+    centroid = calculate_centroid()
+    @weather.latitude = centroid.cy
+    @weather.longitude = centroid.cx
+    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
+    #weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
+    data = weather_data.split(",")
+    @weather.weather_file = data[0]
+    data[2].slice! "\r\n"
+    @weather.simulation_final_year = data[2]
+    @weather.weather_final_year = @weather.simulation_final_year
+    @weather.weather_initial_year = data[1]
+    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+    @weather.way_id = 1
+    if @weather.save
+      return "OK"
+    else
+      retunr "Error Saving PRISM"
+    end
+  end
+  
 end

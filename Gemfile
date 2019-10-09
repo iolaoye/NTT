@@ -5,7 +5,7 @@ gem 'tzinfo-data'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'sqlite3', '1.4.1'
 gem 'will_paginate', '3.0.3'
 gem 'coffee-script-source', '1.8.0'
 # Gems used only for assets and not required
@@ -43,7 +43,8 @@ gem 'protected_attributes'
 # To use debugger
 gem 'byebug', '~> 9.0', '>= 9.0.6'
 
-gem 'bcrypt-ruby', require: 'bcrypt'
+gem 'bcrypt-ruby', '3.1.5'
+gem 'bcrypt', '>=3.1.11'
 # rest API for NTT call
 gem "nokogiri", '1.6.8'
 gem 'savon', '>= 2.0'
@@ -56,8 +57,15 @@ gem 'wkhtmltopdf-binary'
 # gem 'wkhtmltopdf-binary'
 # gem 'prawn'
 # gem 'pdfkit'
-
+#gem 'dbf'
 gem 'cancan'
 gem 'rack-timeout', '0.4.2'
 gem 'mysql2', '~> 0.3.18'
+#gem 'gmaps4rails'
+#gem 'georuby', require: 'geo_ruby/shp', require: 'georuby'
+#gem 'dbf'
+gem 'rake'
+#gem 'rgeo'
+#gem 'rgeo-shapefile'
+gem 'rubyzip', '~> 1.0.0', require: 'zip'
 

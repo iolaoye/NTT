@@ -10,7 +10,8 @@
         <% county += ", " + State.find(@project.location.state_id).state_name %>
       <% end %>
     <% end %>
-    <%= link_to t('menu.location') + " (" + county + ")", project_location_path(@project, @project.location) %>
+    <%#= link_to t('menu.location') + " (" + county + ")", project_location_path(@project, @project.location) %>
+     <%= link_to t('menu.location') + " (" + county + ")", edit_project_location_path(@project, @project.location) %>
   </li>
   <%#= controller_name %>
   <%#= scenario_submenu %>
